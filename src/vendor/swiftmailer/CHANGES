@@ -1,0 +1,9 @@
+Changelog for Swift Mailer, since Version 4.1.x
+-----------------------------------------------
+
+4.1.0
+-----
+
+ * added NullTransport
+ * added BlackholePlugin and RedirectingPlugin
+ * added a way to send messages asynchronously (Spool)

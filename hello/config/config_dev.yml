@@ -1,0 +1,10 @@
+imports:
+  - { resource: config.yml }
+
+web.debug:
+  exception: %kernel.debug%
+  toolbar:   %kernel.debug%
+
+zend.logger:
+  priority: info
+  path:     %kernel.root_dir%/logs/%kernel.environment%.log
