@@ -3,14 +3,14 @@ A Quick Tour of Symfony 2.0: The Bundles
 
 You are my hero! Who would have thought that you will still be there after the
 first three parts? Your efforts will be well rewarded soon. This part starts
-to scratch the surface of one of the greatest and more powerful feature of
+to scratch the surface of one of the greatest and more powerful features of
 Symfony, its bundle system.
 
 The Bundle System
 -----------------
 
 A bundle is kind of like a plugin in other software. But why is it called
-bundle and not plugin then? Because, everything is a bundle in Symfony, from
+bundle and not plugin then? Because everything is a bundle in Symfony, from
 the core framework features to the code you write for your application.
 Bundles are first-class citizens in Symfony. It gives you the flexibility to
 use pre-built features packaged in third-party bundles or to distribute your
@@ -119,9 +119,9 @@ adding the following lines:
 
     # hello/config/config.yml
     doctrine.dbal:
-      driver:   PDOMySql # can be any of OCI8, PDOMsSql, PDOMySql, 'PDOOracle, PDOPgSql, or PDOSqlite
+      driver:   PDOMySql # can be any of OCI8, PDOMsSql, PDOMySql, PDOOracle, PDOPgSql, or PDOSqlite
       dbname:   your_db_name
-      username: root
+      user:     root
       password: your_password # or null if there is none
 
 That's all there is to it. You can now use a connection object to interact
@@ -140,7 +140,7 @@ with the database from any action:
       return $this->render(...);
     }
 
-The `$this->getDatabaseConnection()` expression returns a an object that work
+The `$this->getDatabaseConnection()` expression returns an object that work
 like the PDO one, based on the configuration of `config.yml`.
 
 Sending Emails

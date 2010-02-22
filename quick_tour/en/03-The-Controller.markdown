@@ -164,5 +164,5 @@ Final Thoughts
 
 That's all there is to it, and I'm not even sure we have spent the allocated
 10 minutes. In the previous part, we have seen how to extend the templating
-system with the help of helpers. Extending the controller can also be easily
-done thanks to bundles. That's the topic of the next part of this tutorial.
+system with helpers. Extending the controller can also be easily done thanks
+to bundles. That's the topic of the next part of this tutorial.

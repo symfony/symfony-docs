@@ -99,7 +99,7 @@ Include other Templates
 The best way to share a snippet of code between several distinct templates is
 to define a template that can then be included in any other one.
 
-Create an `hello.php` template:
+Create a `hello.php` template:
 
     [php]
     # src/Application/HelloBundle/Resources/views/Hello/hello.php
@@ -120,7 +120,7 @@ Embed other Actions
 -------------------
 
 And what if you want to embed the result of another action in a template?
-That's very useful when working with Ajax, or when the embedded template need
+That's very useful when working with Ajax, or when the embedded template needs
 some variable not available in the main template.
 
 If you create a `fancy` action, and want to include it into the `index`
@@ -153,13 +153,13 @@ makes an internal sub-request; so it should be avoided in favor of faster
 alternatives whenever possible.
 
 But where is the `$view->actions` property defined? Like `$view->slots`, it's
-called a template helper, and the next section tells you more about it.
+called a template helper, and the next section tells you more about those.
 
 Template Helpers
 ----------------
 
 The Symfony templating system can be easily extended via helpers. Helpers are
-PHP objects that provides features useful in a template context. `actions` and
+PHP objects that provide features useful in a template context. `actions` and
 `slots` are just two of the built-in Symfony helpers.
 
 ### Links between Pages
@@ -186,7 +186,7 @@ and the values should at least cover the route pattern placeholders:
 
 ### Using Assets: images, JavaScripts, and stylesheets
 
-What would be the Internet without images, JavaScripts, and stylesheets?
+What would the Internet be without images, JavaScripts, and stylesheets?
 Symfony provides three helpers to deal with them easily: `assets`,
 `javascripts`, and `stylesheets`.
 
@@ -195,7 +195,7 @@ Symfony provides three helpers to deal with them easily: `assets`,
 
     <img src="<?php echo $view->assets->getUrl('images/logo.png') ?>" />
 
-The `assets` helper main purpose is to make your application more portable.
+The `assets` helpers main purpose is to make your application more portable.
 Thanks to it, you can move the application root directory anywhere under your
 web root directory without changing anything in your templates code.
 
@@ -227,6 +227,6 @@ do pretty amazing stuff with it. That's the power of Symfony. Learning the
 basics is easy, and you will soon learn that this simplicity is hidden under a
 very flexible architecture.
 
-But I get ahead of myself. Before, you need to learn more about the controller
+But I get ahead of myself. First, you need to learn more about the controller
 and that's exactly the topic of the next part of this tutorial. Ready for
 another 10 minutes with Symfony?

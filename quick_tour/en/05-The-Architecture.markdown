@@ -3,7 +3,7 @@ A Quick Tour of Symfony 2.0: The Architecture
 
 The first four parts of this tutorial give you a quick overview of Symfony
 2.0. But they don't have a deep look at the default directory structure of a
-project. As it makes Symfony stands apart from the framework crowd, let's dive
+project. As it makes Symfony stand apart from the framework crowd, let's dive
 into it now.
 
 The directory structure of a Symfony application is rather flexible. This
@@ -46,7 +46,7 @@ bootstrap the application.
 The `HelloKernel` class is the main entry point of the application
 configuration and as such, it is stored in the `hello/` directory.
 
-This class must implements five methods:
+This class must implement five methods:
 
   * `registerRootDir()`: Returns the configuration root directory;
 
@@ -170,7 +170,7 @@ Zend Framework classes.
 Cache and Logs
 --------------
 
-Symfony is probably one of the fastest full-stack framework around. But how
+Symfony is probably one of the fastest full-stack frameworks around. But how
 can it be so fast if it parses and interprets tens of YAML and XML files for
 each request? This is partly due to its cache system. The application
 configuration is only parsed for the very first request and then compiled down
@@ -179,9 +179,9 @@ development environment, Symfony is smart enough to flush the cache when you
 change a file. But in the production one, it is your responsibility to clear
 the cache when you update your code or change its configuration.
 
-When developing a web application, things can wreak havoc. The log files in
-the `logs/` application directory tells you everything about the requests and
-helps you fix the problem in no time.
+When developing a web application, things can go wrong in many ways. The log
+files in the `logs/` application directory tell you everything about the
+requests and helps you fix the problem in no time.
 
 The Command Line Interface
 --------------------------
@@ -190,7 +190,7 @@ Each application comes with a command line interface tool (`console`) that
 helps you maintain your application. It provides commands that boost your
 productivity by automating tedious and repetitive tasks.
 
-Run it without any argument to learn more about its capabilities:
+Run it without any arguments to learn more about its capabilities:
 
     $ php hello/console
 
@@ -202,13 +202,13 @@ Final Thoughts
 --------------
 
 Call me crazy, but after reading this part, you should be comfortable with
-moving things around and makes Symfony works for you. Everything is done in
+moving things around and making Symfony works for you. Everything is done in
 Symfony to stand out of your way. So, feel free to rename and move directories
 around as you see fit.
 
 You are just one step away from becoming a Symfony master. That's right, after
 reading the next part about how to extend the framework, you will be able to
-code the most demanding application with Symfony.
+code the most demanding applications with Symfony.
 
 [1]: http://groups.google.com/group/php-standards/web/psr-0-final-proposal
 [2]: http://pear.php.net/

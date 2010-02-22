@@ -91,7 +91,7 @@ routing configuration file:
       resource: HelloBundle/Resources/config/routing.yml
 
 The file is written in [YAML](http://www.yaml.org/), a simple format that
-makes very easy the description of configuration settings. All the
+makes the description of configuration settings very easy. All the
 configuration files in Symfony can be written in XML, YAML, or even in plain
 PHP code. This tutorial uses the YAML format as it is more concise and easier
 to read for beginners. Of course, "enterprise people" would probably have used
@@ -133,7 +133,7 @@ The controller is responsible for returning a representation of the resource
 The code is pretty straightforward but let's explain this code line by line:
 
  * `namespace Application\HelloBundle\Controller;`: Symfony takes advantage of
-   PHP 5.3 new features and as such, all controllers are properly namespaced
+   new PHP 5.3 features and as such, all controllers are properly namespaced
    (the namespace contains the `_bundle` routing value: `HelloBundle`).
 
  * `class HelloController extends Controller`: The controller name is the
@@ -160,7 +160,7 @@ In our example, we only have one bundle, `HelloBundle`.
 
 So, the controller renders the `HelloBundle:Hello:index` template. But what's
 in a template name? `HelloBundle` is the bundle name, `Hello` is the
-controller, and `index`, the template file name. The template itself is made
+controller, and `index` the template file name. The template itself is made
 of HTML and simple PHP expressions:
 
     [php]
@@ -178,7 +178,7 @@ Environments
 
 Now that you have a better understanding on how Symfony works, have a closer
 look at the bottom of the page; you will notice a small bar with the Symfony
-and PHP logos. It is called the "Web Debug Toolbar" and it is the developer
+and PHP logos. It is called the "Web Debug Toolbar" and it is the developer's
 best friend. Of course, such a tool must not be displayed when you deploy your
 application to your production servers. That's why you will find another front
 controller in the `web/` directory (`index.php`), optimized for the production
@@ -191,9 +191,9 @@ part of the URL:
 
     http://localhost/sandbox/web/hello/Fabien
 
-Last but not the least, on the production servers, you should point your web
-root directory to the `web/` directory to secure your installation and have an
-even better looking URL:
+Last but not least, on the production servers, you should point your web root
+directory to the `web/` directory to secure your installation and have an even
+better looking URL:
 
     http://localhost/hello/Fabien
 
