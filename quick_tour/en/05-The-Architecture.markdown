@@ -156,7 +156,7 @@ array that maps namespaces to any valid directory (local or global ones):
 So, when you reference the `HelloBundle` in a controller name or in a template
 name, Symfony will look for it under the given directories.
 
-Do you understand now why Symfony is so flexibile? Share your bundles between
+Do you understand now why Symfony is so flexible? Share your bundles between
 applications, store them locally or globally, your choice.
 
 Vendors
