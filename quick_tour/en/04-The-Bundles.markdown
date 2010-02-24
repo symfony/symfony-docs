@@ -84,7 +84,7 @@ following line to `config.yml`:
 
     [yml]
     # hello/config/config.yml
-    web:user: ~
+    web.user: ~
 
 Storing and retrieving information from the user can be easily achieved from
 any controller:
