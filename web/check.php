@@ -52,12 +52,12 @@ check(is_writable(__DIR__.'/../hello/logs'), sprintf('Checking that the logs/ di
 
 // warnings
 echo_title("Optional checks");
-check(class_exists('DomDocument'), 'Checking that the PHP-XML module is installed', 'Install the php-xml module', false);
-check(function_exists('token_get_all'), 'Checking that the token_get_all() function is available', 'Install token_get_all() function (highly recommended)', false);
-check(function_exists('mb_strlen'), 'Checking that the mb_strlen() function is available', 'Install mb_strlen() function', false);
-check(function_exists('iconv'), 'Checking that the iconv() function is available', 'Install iconv() function', false);
-check(function_exists('utf8_decode'), 'Checking that the utf8_decode() is available', 'Install utf8_decode() function', false);
-check(function_exists('posix_isatty'), 'Checking that the posix_isatty() is available', 'Enable the php_posix extension (used to colorized the CLI output)', false);
+check(class_exists('DomDocument'), 'Checking that the PHP-XML module is installed', 'Install and enable the php-xml module', false);
+check(function_exists('token_get_all'), 'Checking that the token_get_all() function is available', 'Install and enable the Tokenizer extension (highly recommended)', false);
+check(function_exists('mb_strlen'), 'Checking that the mb_strlen() function is available', 'Install and enable the mbstring extension', false);
+check(function_exists('iconv'), 'Checking that the iconv() function is available', 'Install and enable the iconv extension', false);
+check(function_exists('utf8_decode'), 'Checking that the utf8_decode() is available', 'Install and enable the XML extension', false);
+check(function_exists('posix_isatty'), 'Checking that the posix_isatty() is available', 'Install and enable the php_posix extension (used to colorized the CLI output)', false);
 
 $accelerator = 
   (function_exists('apc_store') && ini_get('apc.enabled'))
