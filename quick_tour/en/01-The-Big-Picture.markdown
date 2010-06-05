@@ -69,7 +69,7 @@ What's going on here? Let's dissect the URL:
  * `index_dev.php`: This is a "front controller". It is the unique entry point
    of the hello application and it responds to all user requests;
 
- * `/hello/Fabien`: This is the "virtual" path to the resource the user want
+ * `/hello/Fabien`: This is the "virtual" path to the resource the user wants
    to access.
 
 Your responsibility as a developer is to write the code that maps the user

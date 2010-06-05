@@ -1,7 +1,7 @@
 A Quick Tour of Symfony 2.0: The Bundles
 ========================================
 
-You are my hero! Who would have thought that you will still be there after the
+You are my hero! Who would have thought that you would still be here after the
 first three parts? Your efforts will be well rewarded soon. This part starts
 to scratch the surface of one of the greatest and more powerful features of
 Symfony, its bundle system.
@@ -12,12 +12,12 @@ The Bundle System
 A bundle is kind of like a plugin in other software. But why is it called
 bundle and not plugin then? Because everything is a bundle in Symfony, from
 the core framework features to the code you write for your application.
-Bundles are first-class citizens in Symfony. It gives you the flexibility to
+Bundles are first-class citizens in Symfony. This gives you the flexibility to
 use pre-built features packaged in third-party bundles or to distribute your
 own bundles. It makes it so easy to pick and choose which features to enable
-in your application and optimize it the way you want.
+in your application and optimize them the way you want.
 
-An application is made of bundles as defined in the `registerBundles()`
+An application is made up of bundles as defined in the `registerBundles()`
 method of the `HelloKernel` class:
 
     [php]
@@ -140,7 +140,7 @@ with the database from any action:
       return $this->render(...);
     }
 
-The `$this->getDatabaseConnection()` expression returns an object that work
+The `$this->getDatabaseConnection()` expression returns an object that works
 like the PDO one, based on the configuration of `config.yml`.
 
 Sending Emails
@@ -180,7 +180,7 @@ method.
 Final Thoughts
 --------------
 
-This part wraps up the discovering of the basic features of Symfony. Play with
+This part wraps up discovering the basic features of Symfony. Play with
 Symfony, develop small applications with it, and when you feel comfortable
 enough, resume your tour of Symfony with the next part, where we talk more
 about how Symfony works, and how to configure it to fit your needs.

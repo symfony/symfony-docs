@@ -113,7 +113,7 @@ stored in the `src/` directory:
     set_include_path(__DIR__.'/vendor/zend/library'.PATH_SEPARATOR.__DIR__.'/vendor/swiftmailer/lib'.PATH_SEPARATOR.get_include_path());
 
 The `UniversalClassLoader` from Symfony is used to autoload files that
-respects either the technical interoperability [standards][1] for PHP 5.3
+respect either the technical interoperability [standards][1] for PHP 5.3
 namespaces or the PEAR naming [convention][2] for classes. As you can see
 here, all dependencies are stored under the `vendor/` directory, but this is
 just a convention. You can store them wherever you want, globally on your
@@ -202,7 +202,7 @@ Final Thoughts
 --------------
 
 Call me crazy, but after reading this part, you should be comfortable with
-moving things around and making Symfony works for you. Everything is done in
+moving things around and making Symfony work for you. Everything is done in
 Symfony to stand out of your way. So, feel free to rename and move directories
 around as you see fit.
 

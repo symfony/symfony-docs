@@ -45,13 +45,13 @@ controller element is empty, so the corresponding file is directly stored in
 The `$view->slots->output('_content')` expression is replaced by the content
 of the child template, `index.php` (more on this in the next section).
 
-As you can see, Symfony provides method on a mysterious `$view` object. In a
+As you can see, Symfony provides methods on a mysterious `$view` object. In a
 template, `$view` refers to a special object that provides a bunch of methods
 and properties that make the template engine tick.
 
-Symfony also support multiple decoration levels: a layout can itself be
+Symfony also supports multiple decoration levels: a layout can itself be
 decorated by another one. This technique is really useful for large projects
-and it is made even more powerful when used in combination with slots.
+and is made even more powerful when used in combination with slots.
 
 Slots
 -----
@@ -195,9 +195,9 @@ Symfony provides three helpers to deal with them easily: `assets`,
 
     <img src="<?php echo $view->assets->getUrl('images/logo.png') ?>" />
 
-The `assets` helpers main purpose is to make your application more portable.
-Thanks to it, you can move the application root directory anywhere under your
-web root directory without changing anything in your templates code.
+The `assets` helper's main purpose is to make your application more portable.
+Thanks to this helper, you can move the application root directory anywhere under your
+web root directory without changing anything in your templates' code.
 
 Similarly, you can manage your stylesheets and JavaScripts with the
 `stylesheets` and `JavaScripts` helpers:
@@ -222,7 +222,7 @@ templates in a logical and extensible way. In the later part, you will learn
 how to configure the default behavior of the templating system and how to
 extend it by adding new helpers.
 
-You are only working with Symfony since about 20 minutes, and you can already
+You have only been working with Symfony for about 20 minutes, and you can already
 do pretty amazing stuff with it. That's the power of Symfony. Learning the
 basics is easy, and you will soon learn that this simplicity is hidden under a
 very flexible architecture.
