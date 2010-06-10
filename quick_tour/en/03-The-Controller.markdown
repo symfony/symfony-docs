@@ -1,9 +1,8 @@
-A Quick Tour of Symfony 2.0: The Controller
-===========================================
+Symfony2 Quick Tour: The Controller
+===================================
 
 Still with us after the first two parts? You are already becoming a Symfony
-addict! Without further ado, let's discover what controllers can do for you in
-this third part.
+addict! Without further ado, let's discover what controllers can do for you.
 
 Formats
 -------
@@ -18,7 +17,7 @@ value of `xml`:
     # src/Application/HelloBundle/Resources/config/routing.yml
     hello:
       pattern:  /hello/:name
-      defaults: { _bundle: HelloBundle, _controller: Hello, _action: index, _format: xml }
+      defaults: { _controller: HelloBundle:Hello:index, _format: xml }
 
 Then, add an `index.xml.php` template along side `index.php`:
 
@@ -37,7 +36,7 @@ action, use the `:_format` placeholder in the pattern instead:
     # src/Application/HelloBundle/Resources/config/routing.yml
     hello:
       pattern:      /hello/:name.:_format
-      defaults:     { _bundle: HelloBundle, _controller: Hello, _action: index, _format: html }
+      defaults:     { _controller: HelloBundle:Hello: index, _format: html }
       requirements: { _format: (html|xml|json) }
 
 The controller will now be called for URLs like `/hello/Fabien.xml` or
@@ -47,7 +46,7 @@ format.
 
 The `requirements` entry defines regular expressions that placeholders must
 match. In this example, if you try to request the `/hello/Fabien.js` resource,
-you will get a 404 HTTP error, as it does not match the `_route` requirement.
+you will get a 404 HTTP error, as it does not match the `_format` requirement.
 
 The Response Object
 -------------------
@@ -82,8 +81,8 @@ some milliseconds:
       return $this->createResponse('Hello '.$name);
     }
 
-This is more useful when a controller needs to send back a JSON response, for
-an Ajax request for instance.
+This is really useful when a controller needs to send back a JSON response for
+an Ajax request.
 
 Error Management
 ----------------
@@ -158,6 +157,40 @@ helper:
 
     [php]
     <?php echo $view->request->getParameter('page') ?>
+
+The User
+--------
+
+Even if the HTTP protocol is stateless, Symfony provides a nice user object
+that represents the client (be it a real person using a browser, a bot, or a
+web service). Between two requests, Symfony stores the attributes in a cookie
+by using the native PHP sessions.
+
+This feature is provided by `WebBundle` and it can be enabled by adding the
+following line to `config.yml`:
+
+    [yml]
+    # hello/config/config.yml
+    web.user: ~
+
+Storing and retrieving information from the user can be easily achieved from
+any controller:
+
+    [php]
+    // store an attribute for reuse during a later user request
+    $this->getUser()->setAttribute('foo', 'bar');
+
+    // in another controller for another request
+    $this->getUser()->getAttribute('foo');
+
+    // get/set the user culture
+    $this->getUser()->setCulture('fr');
+
+You can also store small messages that will only be available for the very
+next request:
+
+    [php]
+    $this->getUser()->setFlash('notice', 'Congratulations, your action succeeded!')
 
 Final Thoughts
 --------------

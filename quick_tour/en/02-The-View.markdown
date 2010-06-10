@@ -1,5 +1,5 @@
-A Quick Tour of Symfony 2.0: The View
-=====================================
+Symfony2 Quick Tour: The View
+=============================
 
 After reading the first part of this tutorial, you have decided that Symfony
 was worth another 10 minutes. Good for you. In this second part, you will
@@ -148,10 +148,6 @@ Here, the `HelloBundle:Hello:fancy` string refers to the `fancy` action of the
       // ...
     }
 
-You should be aware that this technique is powerful but also rather slow as it
-makes an internal sub-request; so it should be avoided in favor of faster
-alternatives whenever possible.
-
 But where is the `$view->actions` property defined? Like `$view->slots`, it's
 called a template helper, and the next section tells you more about those.
 
@@ -218,14 +214,12 @@ Final Thoughts
 
 The Symfony templating system is simple and powerful. Thanks to layouts,
 slots, templating and action inclusions, it is very easy to organize your
-templates in a logical and extensible way. In the later part, you will learn
-how to configure the default behavior of the templating system and how to
-extend it by adding new helpers.
+templates in a logical and extensible way.
 
-You have only been working with Symfony for about 20 minutes, and you can already
-do pretty amazing stuff with it. That's the power of Symfony. Learning the
-basics is easy, and you will soon learn that this simplicity is hidden under a
-very flexible architecture.
+You have only been working with Symfony for about 20 minutes, and you can
+already do pretty amazing stuff with it. That's the power of Symfony. Learning
+the basics is easy, and you will soon learn that this simplicity is hidden
+under a very flexible architecture.
 
 But I get ahead of myself. First, you need to learn more about the controller
 and that's exactly the topic of the next part of this tutorial. Ready for

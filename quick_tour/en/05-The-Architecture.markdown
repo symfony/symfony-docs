@@ -1,19 +1,17 @@
-A Quick Tour of Symfony 2.0: The Architecture
-=============================================
+Symfony2 Quick Tour: The Architecture
+=====================================
 
-The first four parts of this tutorial give you a quick overview of Symfony
-2.0. But they don't have a deep look at the default directory structure of a
-project. As it makes Symfony stand apart from the framework crowd, let's dive
-into it now.
-
-The directory structure of a Symfony application is rather flexible. This
-tutorial describes the recommended structure but as you will soon understand,
-everything is customizable.
+You are my hero! Who would have thought that you would still be here after the
+first three parts? Your efforts will be well rewarded soon. The first four
+parts of this tutorial give you a quick overview of Symfony 2.0. But they
+don't have a deep look at the architecture of the framework. As it makes
+Symfony stand apart from the framework crowd, let's dive into it now.
 
 The Directory Structure
 -----------------------
 
-The directory structure of a sandbox reflects the typical and recommended
+The directory structure of a Symfony application is rather flexible but the
+directory structure of a sandbox reflects the typical and recommended
 structure of a Symfony application:
 
  * `hello/`: This directory, named after your application, contains the
@@ -36,7 +34,7 @@ live:
     require_once __DIR__.'/../hello/HelloKernel.php';
 
     $kernel = new HelloKernel('prod', false);
-    $kernel->run();
+    $kernel->handle()->send();
 
 Like any front controller, `index.php` uses a Kernel Class, `HelloKernel`, to
 bootstrap the application.
@@ -77,13 +75,12 @@ configured in the `registerRoutes()`:
 This is also where you can switch from using YAML configuration files to XML
 ones or plain PHP code if that fits you better.
 
-To make things work together, the kernel requires two files from the `src/`
+To make things work together, the kernel requires one file from the `src/`
 directory:
 
     [php]
     # hello/HelloKernel.php
     require_once __DIR__.'/../src/autoload.php';
-    require_once __DIR__.'/../src/vendor/symfony/src/Symfony/Foundation/bootstrap.php';
 
 ### The Source Directory
 
@@ -98,19 +95,20 @@ stored in the `src/` directory:
 
     $loader = new UniversalClassLoader();
     $loader->registerNamespaces(array(
-      'Symfony'     => __DIR__.'/vendor/symfony/src',
-      'Application' => __DIR__,
-      'Bundle'      => __DIR__,
-      'Doctrine'    => __DIR__.'/vendor/doctrine/lib',
+      'Symfony'                    => __DIR__.'/vendor/symfony/src',
+      'Application'                => __DIR__,
+      'Bundle'                     => __DIR__,
+      'Doctrine\\Common'           => __DIR__.'/vendor/doctrine/lib/vendor/doctrine-common/lib',
+      'Doctrine\\DBAL\\Migrations' => __DIR__.'/vendor/doctrine-migrations/lib',
+      'Doctrine\\DBAL'             => __DIR__.'/vendor/doctrine/lib/vendor/doctrine-dbal/lib',
+      'Doctrine'                   => __DIR__.'/vendor/doctrine/lib',
+      'Zend'                       => __DIR__.'/vendor/zend/library',
     ));
     $loader->registerPrefixes(array(
       'Swift_' => __DIR__.'/vendor/swiftmailer/lib/classes',
-      'Zend_'  => __DIR__.'/vendor/zend/library',
+      'Twig_'  => __DIR__.'/vendor/twig/lib',
     ));
     $loader->register();
-
-    // for Zend Framework & SwiftMailer
-    set_include_path(__DIR__.'/vendor/zend/library'.PATH_SEPARATOR.__DIR__.'/vendor/swiftmailer/lib'.PATH_SEPARATOR.get_include_path());
 
 The `UniversalClassLoader` from Symfony is used to autoload files that
 respect either the technical interoperability [standards][1] for PHP 5.3
@@ -119,8 +117,69 @@ here, all dependencies are stored under the `vendor/` directory, but this is
 just a convention. You can store them wherever you want, globally on your
 server or locally in your projects.
 
-More about Bundles
-------------------
+The Bundle System
+-----------------
+
+This section starts to scratch the surface of one of the greatest and more
+powerful features of Symfony, its bundle system.
+
+A bundle is kind of like a plugin in other software. But why is it called
+bundle and not plugin then? Because everything is a bundle in Symfony, from
+the core framework features to the code you write for your application.
+Bundles are first-class citizens in Symfony. This gives you the flexibility to
+use pre-built features packaged in third-party bundles or to distribute your
+own bundles. It makes it so easy to pick and choose which features to enable
+in your application and optimize them the way you want.
+
+An application is made up of bundles as defined in the `registerBundles()`
+method of the `HelloKernel` class:
+
+    [php]
+    # hello/HelloKernel.php
+    public function registerBundles()
+    {
+      return array(
+        new Symfony\Foundation\Bundle\KernelBundle(),
+        new Symfony\Framework\WebBundle\Bundle(),
+        new Symfony\Framework\DoctrineBundle\Bundle(),
+        new Symfony\Framework\SwiftmailerBundle\Bundle(),
+        new Symfony\Framework\ZendBundle\Bundle(),
+        new Application\HelloBundle\Bundle(),
+      );
+    }
+
+Along side the `HelloBundle` we have already talked about, notice that the
+kernel also enables `KernelBundle`, `WebBundle`, `DoctrineBundle`,
+`SwiftmailerBundle`, and `ZendBundle`. They are all part of the core
+framework.
+
+Each bundle can be customized via configuration files written in YAML or XML.
+Have a look at the default configuration:
+
+    [yml]
+    # hello/config/config.yml
+    kernel.config: ~
+    web.web: ~
+    web.templating: ~
+
+Each entry like `kernel.config` defines the configuration of a bundle. Some
+bundles can have several entries if they provide many features like
+`WebBundle`, which has two entries: `web.web` and `web.templating`.
+
+Each environment can override the default configuration by providing a
+specific configuration file:
+
+    [yml]
+    # hello/config/config_dev.yml
+    imports:
+      - { resource: config.yml }
+
+    profiler.config:
+      toolbar: %kernel.debug%
+
+    zend.logger:
+      priority: info
+      path:     %kernel.root_dir%/logs/%kernel.environment%.log
 
 As we have seen in the previous part, an application is made of bundles as
 defined in the `registerBundles()` method:
@@ -164,8 +223,8 @@ Vendors
 
 Odds are your application will depend on third-party libraries. Those should
 be stored in the `src/vendor/` directory. It already contains the Symfony
-libraries, the SwiftMailer library, the Doctrine ORM, and a selection of the
-Zend Framework classes.
+libraries, the SwiftMailer library, the Doctrine ORM, the Propel ORM, the Twig
+templating system, and a selection of the Zend Framework classes.
 
 Cache and Logs
 --------------
@@ -207,7 +266,7 @@ Symfony to stand out of your way. So, feel free to rename and move directories
 around as you see fit.
 
 You are just one step away from becoming a Symfony master. That's right, after
-reading the next part about how to extend the framework, you will be able to
+reading the next parts about various built-in bundles, you will be able to
 code the most demanding applications with Symfony.
 
 [1]: http://groups.google.com/group/php-standards/web/psr-0-final-proposal

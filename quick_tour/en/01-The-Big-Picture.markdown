@@ -1,5 +1,5 @@
-A Quick Tour of Symfony 2.0: The Big Picture
-============================================
+Symfony2 Quick Tour: The Big Picture
+====================================
 
 So, you want to try out Symfony but only have 10 minutes or so? This first
 part of this tutorial has been written for you. It explains how to get started
@@ -11,7 +11,7 @@ with Symfony 2.0.
 Download and Install
 --------------------
 
-First, check that you have at least PHP 5.3.0 installed and correctly
+First, check that you have at least PHP 5.3.2 installed and correctly
 configured to work with a web server like Apache.
 
 Ready? Let's start by downloading Symfony. To get started even faster, we are
@@ -21,8 +21,8 @@ the basic configuration is already done. The great advantage of the sandbox
 over other types of installation is that you can start experimenting with
 Symfony immediately.
 
-Download the [sandbox][1], and unpack it in your root web directory. You should
-now have a `sandbox/` directory:
+Download the [sandbox][1], and unpack it in your root web directory. You
+should now have a `sandbox/` directory:
 
     www/ <- your web root directory
       sandbox/ <- the unpacked archive
@@ -85,7 +85,7 @@ routing configuration file:
     # hello/config/routing.yml
     homepage:
       pattern:  /
-      defaults: { _bundle: WebBundle, _controller: Default, _action: index }
+      defaults: { _controller: WebBundle:Default:index }
 
     hello:
       resource: HelloBundle/Resources/config/routing.yml
@@ -105,11 +105,11 @@ line, which imports another routing configuration file that reads as follows:
     # src/Application/HelloBundle/Resources/config/routing.yml
     hello:
       pattern:  /hello/:name
-      defaults: { _bundle: HelloBundle, _controller: Hello, _action: index }
+      defaults: { _controller: HelloBundle:Hello:index }
 
 Here we go! As you can see, the "`/hello/:name`" resource pattern (a string
 beginning with a colon like `:name` is a placeholder) is mapped to a
-controller, referenced by the `_bundle`, `_controller`, and `_action` values.
+controller, referenced by the `_controller` value.
 
 ### Controllers
 
@@ -134,17 +134,19 @@ The code is pretty straightforward but let's explain this code line by line:
 
  * `namespace Application\HelloBundle\Controller;`: Symfony takes advantage of
    new PHP 5.3 features and as such, all controllers are properly namespaced
-   (the namespace contains the `_bundle` routing value: `HelloBundle`).
+   (the namespace is the first part of the `_controler` routing value:
+   `HelloBundle`).
 
  * `class HelloController extends Controller`: The controller name is the
-   concatenation of the `_controller` routing value (`Hello`) and
-   `Controller`. It extends the built-in `Controller` class, which provides
-   useful shortcuts (as we will see later in this tutorial).
+   concatenation of the second part of the `_controller` routing value
+   (`Hello`) and `Controller`. It extends the built-in `Controller` class,
+   which provides useful shortcuts (as we will see later in this tutorial).
 
  * `public function indexAction($name)`: Each controller is made of several
    actions. As per the configuration, the hello page is handled by the `index`
-   action (`_action` routing value). This method receives the resource
-   placeholder values as arguments (`$name` in our case).
+   action (the third part of the `_controller` routing value). This method
+   receives the resource placeholder values as arguments (`$name` in our
+   case).
 
  * `return $this->render('HelloBundle:Hello:index', array('name' => $name));`:
    The `render()` method loads and renders a template
