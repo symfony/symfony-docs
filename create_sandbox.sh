@@ -15,6 +15,6 @@ cd ..
 # avoid the creation of ._* files
 export COPY_EXTENDED_ATTRIBUTES_DISABLE=true
 export COPYFILE_DISABLE=true
-tar zcpf $DIR/sandbox_2_0_PR1.tgz sandbox
-rm $DIR/sandbox_2_0_PR1.zip
-zip -rq $DIR/sandbox_2_0_PR1.zip sandbox
+tar zcpf $DIR/sandbox_2_0_PR2.tgz sandbox
+sudo rm -f $DIR/sandbox_2_0_PR2.zip
+zip -rq $DIR/sandbox_2_0_PR2.zip sandbox

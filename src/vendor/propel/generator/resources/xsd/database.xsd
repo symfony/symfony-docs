@@ -1,0 +1,862 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+	<!-- XML Schema for the Propel schema file
+      An additional xml schema: custom_datatypes.xsd is
+		  also included.  -->
+
+	<xs:include schemaLocation="custom_datatypes.xsd"/>
+
+	<xs:element name="database" type="database"/>
+
+	<xs:element name="vendor" type="vendor"/>
+
+	<xs:simpleType name="file">
+		<xs:restriction base="xs:string">
+			<!-- Match any relative or absolute path and file containing letters, numbers and _ -->
+			<xs:pattern value="((\.{1,2}|[\w_]*)/)*([\w_]*\.?)+"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="default_datatypes">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="BIT"/>
+			<xs:enumeration value="TINYINT"/>
+			<xs:enumeration value="SMALLINT"/>
+			<xs:enumeration value="INTEGER"/>
+			<xs:enumeration value="BIGINT"/>
+			<xs:enumeration value="FLOAT"/>
+			<xs:enumeration value="REAL"/>
+			<xs:enumeration value="NUMERIC"/>
+			<xs:enumeration value="DECIMAL"/>
+			<xs:enumeration value="CHAR"/>
+			<xs:enumeration value="VARCHAR"/>
+			<xs:enumeration value="LONGVARCHAR"/>
+			<xs:enumeration value="DATE"/>
+			<xs:enumeration value="TIME"/>
+			<xs:enumeration value="TIMESTAMP"/>
+			<xs:enumeration value="BINARY"/>
+			<xs:enumeration value="VARBINARY"/>
+			<xs:enumeration value="LONGVARBINARY"/>
+			<xs:enumeration value="NULL"/>
+			<xs:enumeration value="OTHER"/>
+			<xs:enumeration value="PHP_OBJECT"/>
+			<xs:enumeration value="DISTINCT"/>
+			<xs:enumeration value="STRUCT"/>
+			<xs:enumeration value="ARRAY"/>
+			<xs:enumeration value="BLOB"/>
+			<xs:enumeration value="CLOB"/>
+			<xs:enumeration value="REF"/>
+			<xs:enumeration value="BOOLEANINT"/>
+			<xs:enumeration value="BOOLEANCHAR"/>
+			<xs:enumeration value="DOUBLE"/>
+			<xs:enumeration value="BOOLEAN"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="datatype">
+		<xs:union memberTypes="default_datatypes custom_datatypes"/>
+	</xs:simpleType>
+
+	<xs:simpleType name="dbidmethod">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="native"/>
+			<xs:enumeration value="none"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="tbidmethod">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="autoincrement"/>
+			<xs:enumeration value="sequence"/>
+			<xs:enumeration value="null"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="idmethod">
+		<xs:union memberTypes="dbidmethod tbidmethod"/>
+	</xs:simpleType>
+
+	<xs:simpleType name="phpnamingmethod">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="nochange"/>
+			<xs:enumeration value="underscore"/>
+			<xs:enumeration value="phpname"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="delete">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="cascade"/>
+			<xs:enumeration value="CASCADE"/>
+			<xs:enumeration value="set null"/>
+			<xs:enumeration value="SET NULL"/>
+			<xs:enumeration value="setnull"/>
+			<xs:enumeration value="SETNULL"/>
+			<xs:enumeration value="restrict"/>
+			<xs:enumeration value="RESTRICT"/>
+			<xs:enumeration value="none"/>
+			<xs:enumeration value="NONE"/>
+			<xs:enumeration value=""/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="update">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="cascade"/>
+			<xs:enumeration value="CASCADE"/>
+			<xs:enumeration value="set null"/>
+			<xs:enumeration value="SET NULL"/>
+			<xs:enumeration value="setnull"/>
+			<xs:enumeration value="SETNULL"/>
+			<xs:enumeration value="restrict"/>
+			<xs:enumeration value="RESTRICT"/>
+			<xs:enumeration value="none"/>
+			<xs:enumeration value="NONE"/>
+			<xs:enumeration value=""/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="rulename">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="match"/>
+			<xs:enumeration value="maxLength"/>
+			<xs:enumeration value="maxValue"/>
+			<xs:enumeration value="minLength"/>
+			<xs:enumeration value="minValue"/>
+			<xs:enumeration value="notMatch"/>
+			<xs:enumeration value="required"/>
+			<xs:enumeration value="type"/>
+			<xs:enumeration value="unique"/>
+			<xs:enumeration value="validValues"/>
+			<!-- the next validators don't seem to be implemented, keeping them for BC -->
+			<xs:enumeration value="mask"/>
+			<xs:enumeration value="class"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="inh_option">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="single"/>
+			<xs:enumeration value="false"/>
+		</xs:restriction>
+	</xs:simpleType>
+	
+	<xs:simpleType name="sql_type">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="[\w\s\[\]\(\),\.']+"/>
+		</xs:restriction>
+	</xs:simpleType>
+	
+	<xs:simpleType name="php_type">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="[\w_]+"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="treemode">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="AdjacencyList"/>
+			<xs:enumeration value="MaterializedPath"/>
+			<xs:enumeration value="NestedSet"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<!-- Visibility for column accessor and mutator methods -->
+	<xs:simpleType name="visibility">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="public"/>
+			<xs:enumeration value="protected"/>
+			<xs:enumeration value="private"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<!-- Restrict column name to letters (upper- and lowercase), numbers and the _ -->
+	<xs:simpleType name="column_name">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="[\w_]+"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<!-- Restrict php name to letters (upper- and lowercase), numbers and the _ -->
+	<xs:simpleType name="php_name">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="[\w_]+"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<!-- Restrict php class name to letters (upper- and lowercase), numbers and the _. Dot seperated -->
+	<xs:simpleType name="php_class">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="([\w_]+.?)+"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<!-- Restrict php namespaces name to letters (upper- and lowercase), numbers and the backslash Dot seperated -->
+	<xs:simpleType name="php_namespace">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="(\\?[\w_]+)+"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<!-- Restrict table name to letters (upper- and lowercase), numbers and the _ -->
+	<xs:simpleType name="table_name">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="[\w_]+"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<!-- Restrict index name to letters (upper- and lowercase), numbers and the _ -->
+	<xs:simpleType name="index_name">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="[\w_]+"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<!-- Restrict foreign column name to letters (upper- and lowercase), numbers and the _ -->
+	<xs:simpleType name="foreign_name">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="[\w_]+"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:complexType name="parameter">
+		<xs:attribute name="name" type="xs:string" use="required"/>
+		<xs:attribute name="value" type="xs:string" use="required"/>
+	</xs:complexType>
+
+	<xs:complexType name="validator">
+		<xs:sequence>
+			<xs:element name="rule" type="rule" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<xs:attribute name="column" type="column_name" use="required"/>
+		<xs:attribute name="translate" type="xs:string" use="optional"/>
+	</xs:complexType>
+
+	<xs:complexType name="vendor">
+		<xs:sequence>
+			<xs:element name="parameter" type="parameter" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<xs:attribute name="type" use="required"/>
+	</xs:complexType>
+
+	<xs:complexType name="rule">
+		<xs:attribute name="name" type="rulename" use="required"/>
+		<xs:attribute name="value" type="xs:string" use="optional"/>
+		<xs:attribute name="size" type="xs:positiveInteger" use="optional"/>
+		<xs:attribute name="message" type="xs:string" use="optional"/>
+		<xs:attribute name="class" type="xs:string" use="optional"/>
+	</xs:complexType>
+
+	<xs:complexType name="id-method-parameter">
+		<xs:attribute name="name" type="xs:string" use="optional"/>
+		<xs:attribute name="value" type="xs:string" use="required"/>
+	</xs:complexType>
+
+	<xs:complexType name="index">
+		<xs:choice maxOccurs="unbounded">
+			<xs:element name="index-column" type="index-column" minOccurs="1" maxOccurs="unbounded"/>
+			<xs:element ref="vendor" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:choice>
+		<xs:attribute name="name" type="index_name" use="optional"/>
+	</xs:complexType>
+
+	<xs:complexType name="unique">
+		<xs:choice maxOccurs="unbounded">
+			<xs:element name="unique-column" type="unique-column" minOccurs="1" maxOccurs="unbounded"/>
+			<xs:element ref="vendor" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:choice>
+		<xs:attribute name="name" type="index_name" use="optional"/>
+	</xs:complexType>
+
+	<xs:complexType name="index-column">
+		<xs:sequence>
+			<xs:element ref="vendor" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<xs:attribute name="name" type="column_name" use="required"/>
+		<xs:attribute name="size" type="xs:positiveInteger" use="optional"/>
+	</xs:complexType>
+
+	<xs:complexType name="unique-column">
+		<xs:sequence>
+			<xs:element ref="vendor" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<xs:attribute name="name" type="column_name" use="required"/>
+		<xs:attribute name="size" type="xs:positiveInteger" use="optional"/>
+	</xs:complexType>
+
+	<xs:complexType name="inheritance">
+		<xs:attribute name="key" type="xs:string" use="required"/>
+		<xs:attribute name="class" type="xs:string" use="required"/>
+		<xs:attribute name="package" type="xs:string" use="optional"/>
+		<xs:attribute name="extends" type="xs:string" use="optional"/>
+	</xs:complexType>
+
+	<xs:complexType name="reference">
+		<xs:attribute name="local" type="column_name" use="required"/>
+		<xs:attribute name="foreign" type="column_name" use="required"/>
+	</xs:complexType>
+
+	<xs:complexType name="behavior">
+		<xs:choice maxOccurs="unbounded">
+			<xs:element name="parameter" type="parameter" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:choice>
+		<xs:attribute name="name" type="xs:string" use="required"/>
+	</xs:complexType>
+
+	<xs:complexType name="column">
+		<xs:choice maxOccurs="unbounded">
+			<xs:element name="inheritance" type="inheritance" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element ref="vendor" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:choice>
+		<xs:attribute name="name" type="column_name" use="required">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">
+					The name of the column as it appears in the database.
+				</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="phpName" type="php_name" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">
+					Name used in PHP code to reference this column (in getters, setters, etc.). Defaults to the name transformed by the phpNamingMethod, which defaults to a CamelCase converter. So by default, a column named 'author_id' receives 'AuthorId' as phpName.
+				</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="peerName" type="php_class" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">
+					Name used for the class constant corresponding to this column in PHP code. Defaults to the uppercase name, so a column named 'author_id' receives 'AUTHOR_ID' as peerName.
+				</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="prefix" type="column_name" use="optional"/>
+		<xs:attribute name="accessorVisibility" type="visibility" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">
+					Visibility for the column accessor method. 'public' by default, also accepts 'protected' and 'private'.
+				</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="mutatorVisibility" type="visibility" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">
+					Visibility for the column mutator method. 'public' by default, also accepts 'protected' and 'private'.
+				</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="primaryKey" type="xs:boolean" default="false">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">
+					Set to true to add a primary key on this column.
+				</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="required" type="xs:boolean" default="false">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">
+					Set to true to forbid NULL values.
+				</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="type" type="datatype" default="VARCHAR">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">
+					Any of the Propel supported data types. These types are database-agnostic, and converted to the native database type according to the connection.
+				</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="sqlType" type="sql_type" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">
+					Native database column type.
+				</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="phpType" type="php_type" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">
+					PHP type for te column in PHP code. This column's setter uses type casting with the set php_type; besides, generated phpDoc in the model classes use this attribute for code completion.
+				</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="size" type="xs:nonNegativeInteger" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">
+					Numeric length of the column.
+				</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="scale" type="xs:nonNegativeInteger" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">
+					Digits after decimal place
+				</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="default" type="xs:string" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">
+					Synonym for defaultValue
+				</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="defaultValue" type="xs:string" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">
+					The default value that the object will have for this column in the PHP instance after creating a "new Object". This value is always interpreted as a string. See defaultExpr for setting an SQL function as a default value.
+				</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="defaultExpr" type="xs:string" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">
+					The default value for this column as expressed in SQL. This value is used solely for the "sql" target which builds your database from the schema.xml file. The defaultExpr is the SQL expression used as the "default" for the column.
+				</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="autoIncrement" type="xs:boolean" default="false"/>
+		<xs:attribute name="inheritance" type="inh_option" default="false"/>
+		<xs:attribute name="inputValidator" type="xs:string" use="optional"/>
+		<xs:attribute name="phpNamingMethod" type="phpnamingmethod" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">
+					Name of the method used to transform the column name into a phpName. Defaults to 'clean', which Removes any character that is not a letter or a number and capitilizes the first letter of the name, the first letter of each alphanumeric block, and converts the rest of the letters to lowercase. Possible values: any of the PhpNameGenerator CONV_METHOD_XXX constants (clean, underscore, phpName, nochange).
+				</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="description" type="xs:string" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">
+					A text description of the column. It gets added to the SQL CREATE table as a comment, and appears in the phpDoc bloc of the related getter and setter methods in the ActiveRecord class.
+				</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="lazyLoad" type="xs:boolean" default="false">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">
+					Set to true to skip this column by default during hydration. That means that this column will be hydrated on demand, using a supplementary query. Mostly useful for LOB columns.
+				</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="nodeKeySep" type="xs:string" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">
+					(DEPRECATED) For use with treeMode table attribute.
+				</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="nodeKey" type="xs:string" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">
+					(DEPRECATED) For use with treeMode table attribute.
+				</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="nestedSetLeftKey" type="xs:boolean" default="false">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">
+					(DEPRECATED) For use with treeMode table attribute.
+				</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="nestedSetRightKey" type="xs:boolean" default="false">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">
+					(DEPRECATED) For use with treeMode table attribute.
+				</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="treeScopeKey" type="xs:boolean" default="false">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">
+					(DEPRECATED) For use with treeMode table attribute.
+				</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="primaryString" type="xs:boolean" default="false">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">
+					 A column defined as primary string serves as default value for a `__toString()` method in the generated Propel object.
+				</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+
+	<xs:complexType name="foreign-key">
+		<xs:choice maxOccurs="unbounded">
+			<xs:element name="reference" type="reference" minOccurs="1" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">
+						A reference between a local and a foreign column. Composite foreign keys can have several references.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element ref="vendor" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:choice>
+		<xs:attribute name="foreignTable" type="table_name" use="required">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">
+					The other table name
+				</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="name" type="foreign_name" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">
+					Name for this foreign key
+				</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="phpName" type="php_name" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">
+					Name for the foreign object in methods generated in this class.
+				</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="refPhpName" type="php_name" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">
+					Name for this object in methods generated in the foreign class
+				</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="defaultJoin" type="xs:string" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">
+					This affects the default join type used in the generated `joinXXX()` methods in the model query class. Propel uses an INNER JOIN for foreign keys attached to a required column, and a LEFT JOIN for foreign keys attached to a non-required column, but you can override this in the foreign key element.
+				</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="onDelete" type="delete" default="none"/>
+		<xs:attribute name="onUpdate" type="update" default="none"/>
+	</xs:complexType>
+
+	<xs:complexType name="external-schema">
+		<xs:attribute name="filename" type="file" use="required">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">
+					The (absolute or relative to this schema dir name) path to the external schema file.
+				</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+
+	<xs:complexType name="table">
+
+		<xs:choice maxOccurs="unbounded">
+		
+			<xs:element name="column" type="column" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">
+						A column of the table
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			
+			<xs:element name="foreign-key" type="foreign-key" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">
+						A foreign key on one or several columns in this table, referencing a foreign table
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			
+			<xs:element name="index" type="index" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">
+						An index on one or several columns of the current table
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			
+			<xs:element name="unique" type="unique" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">
+						A unique index on one or several columns of the current table
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			
+			<xs:element name="id-method-parameter" type="id-method-parameter" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">
+						If you are using a database that uses sequences for auto-increment columns (e.g. PostgreSQL or Oracle), you can customize the name of the sequence using this tag
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			
+			<xs:element name="validator" type="validator" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">
+						A validator to be executed on a given column at runtime
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			
+			<xs:element name="behavior" type="behavior" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">
+						A behavior to be added to the current table. Can modify the table structure, as well as modify the runtime code of the generated Model objects linked to this table. Bundled behaviors include alternative_coding_standards, auto_add_pk, timestampable, sluggable, soft_delete, sortable, nested_set, query_cache, and concrete_inheritance.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			
+			<xs:element ref="vendor" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">
+						table attributes specific to a database vendor. Only supports MySQL specific table attributes for now (Charset, Collate, Checksum, Pack_keys, Delay_key_write).
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			
+		</xs:choice>
+		<xs:attribute name="name" type="table_name" use="required">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">
+					The name of the table as it appears in the database.
+				</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="phpName" type="php_class" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">
+					The name of the ActiveRecord class generated for this table. Defaults to the name transformed by the phpNamingMethod, which defaults to a CamelCase converter. So by default, a table named 'foo_author' receives 'FooAuthor' as phpName.
+				</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="namespace" type="php_namespace" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">
+					The PHP 5.3 namespace to use for the generated model classes.
+				</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="columnPrefix" type="column_name" use="optional"/>
+		<xs:attribute name="defaultAccessorVisibility" type="visibility" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">
+					Default visibility for column accessor methods. 'public' by default, also accepts 'protected' and 'private'.
+				</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="defaultMutatorVisibility" type="visibility" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">
+					Default visibility for column mutator methods. 'public' by default, also accepts 'protected' and 'private'.
+				</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="idMethod" type="idmethod" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">
+					Id method to use for auto-increment columns.
+				</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="allowPkInsert" type="xs:boolean" default="false" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">
+					 Can be used if you want to define the primary key of a new object being inserted. By default if idMethod is "native", Propel would throw an exception. However, in some cases this feature is useful, for example if you do some replication of data in an master-master environment.
+				</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="skipSql" type="xs:boolean" default="false">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">
+					Instructs Propel not to generate DDL SQL for the specified table. This can be used together with readOnly for supperting VIEWS in Propel
+				</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="readOnly" type="xs:boolean" default="false">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">
+					Suppresses the mutator/setter methods, save() and delete() methods.
+				</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="abstract" type="xs:boolean" default="false">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">
+					Whether the generated stub class will be abstract (e.g. if you're using inheritance)
+				</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="baseClass" type="php_class" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">
+					Allows you to specify a class that the generated Propel objects should extend (in place of propel.om.BaseObject)
+				</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="basePeer" type="php_class" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">
+					Instructs Propel to use a different SQL-generating BasePeer class (or sub-class of BasePeer).
+				</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="alias" type="table_name" use="optional"/>
+		<xs:attribute name="package" type="xs:string" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">
+					Specifies the "package" for the generated classes. Classes are created in subdirectories according to the package attribute value.
+				</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="interface" type="xs:string" use="optional"/>
+		<xs:attribute name="phpNamingMethod" type="phpnamingmethod" use='optional'>
+			<xs:annotation>
+				<xs:documentation xml:lang="en">
+					Name of the method used to transform the table name into a phpName. Defaults to 'clean', which Removes any character that is not a letter or a number and capitilizes the first letter of the name, the first letter of each alphanumeric block, and converts the rest of the letters to lowercase. Possible values: any of the PhpNameGenerator CONV_METHOD_XXX constants (clean, underscore, phpName, nochange).
+				</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="heavyIndexing" type="xs:boolean" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">
+					Adds indexes for each component of the primary key (when using composite primary keys)
+				</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="description" type="xs:string" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">
+					A text description of the table. It gets added to the SQL CREATE table as a comment, and appears in the phpDoc bloc of the related ActiveRecord class.
+				</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="treeMode" type="treemode" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">
+					Used to indicate that this table is part of a node tree. Currently the only supported values are "NestedSet" and "MaterializedPath" (DEPRECATED: use nested_set behavior instead).
+				</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="reloadOnInsert" type="xs:boolean" default="false">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">
+					Indicate that the object should be reloaded from the database when an INSERT is performed.  This is useful if you have triggers (or other server-side functionality like column default expressions) that alters the database row on INSERT.
+				</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="reloadOnUpdate" type="xs:boolean" default="false">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">
+					 Indicate that the object should be reloaded from the database when an UPDATE is performed.  This is useful if you have triggers (or other server-side functionality like column default expressions) that alters the database row on UPDATE.
+				</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="isCrossRef" type="xs:boolean" default="false">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">
+					Set to true if the current table is a cross-reference table in a many-to-many relationship to allow generation of getter and setter in each of the tables of the relationship.
+				</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+
+	<xs:complexType name="database">
+		<xs:choice maxOccurs="unbounded">
+			<xs:element name="external-schema" type="external-schema" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">
+						Embed an external schema file into the current schema. Accepts absolute and relative schema file paths.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="table" type="table" minOccurs="1" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">
+						A table using the database connection.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="behavior" type="behavior" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">
+						Behavior to be applied to all the database tables
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:choice>
+		<xs:attribute name="name" type="xs:string" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">
+					The name of the table in the database. Propel advocates the use of singular table names.
+				</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="defaultIdMethod" type="dbidmethod" default="none">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">
+					Default id method to use for auto-increment columns
+				</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="defaultTranslateMethod" type="xs:string" use="optional"/>
+		<xs:attribute name="defaultAccessorVisibility" type="visibility" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">
+					Default visibility for column accessor methods. 'public' by default, also accepts 'protected' and 'private'.
+				</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="defaultMutatorVisibility" type="visibility" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">
+					Default visibility for column mutator methods. 'public' by default, also accepts 'protected' and 'private'.
+				</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="package" type="php_class" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">
+					Specifies the "package" for the generated classes. Classes are created in subdirectories according to the package attribute value.
+				</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="namespace" type="php_namespace" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">
+					The PHP 5.3 namespace to use for the generated model classes of the database. Can be overridden on a per-table basis.
+				</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="baseClass" type="php_class" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">
+					Allows to specify a default base class that all generated Propel objects should extend (in place of propel.om.BaseObject)
+				</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="basePeer" type="php_class" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">
+					Instructs Propel to use a different SQL-generating BasePeer class (or sub-class of BasePeer) for all generated objects
+				</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="defaultPhpNamingMethod" type="phpnamingmethod" default="underscore">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">
+					The default naming method to use in this database.
+				</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="heavyIndexing" type="xs:boolean" default="false">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">
+					Adds indexes for each component of the primary key (when using composite primary keys)
+				</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="tablePrefix" type="xs:string" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">
+					Adds a prefix to all the SQL table names
+				</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+</xs:schema>

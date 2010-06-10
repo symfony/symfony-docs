@@ -1,3 +1,6 @@
+parameters:
+    kernel.include_core_classes: false
+
 kernel.config: ~
 web.web: ~
 web.templating: ~

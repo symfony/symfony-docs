@@ -3,10 +3,9 @@
 namespace Symfony\Framework\WebBundle\Controller;
 
 use Symfony\Framework\WebBundle\Controller;
-use Symfony\Components\RequestHandler\Request;
 
 /*
- * This file is part of the symfony framework.
+ * This file is part of the Symfony framework.
  *
  * (c) Fabien Potencier <fabien.potencier@symfony-project.com>
  *
@@ -15,15 +14,16 @@ use Symfony\Components\RequestHandler\Request;
  */
 
 /**
- * 
+ * DefaultController.
  *
- * @package    symfony
+ * @package    Symfony
+ * @subpackage Framework_WebBundle
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
  */
 class DefaultController extends Controller
 {
-  public function indexAction()
-  {
-    return $this->render('WebBundle:Default:index');
-  }
+    public function indexAction()
+    {
+        return $this->render('WebBundle:Default:index');
+    }
 }

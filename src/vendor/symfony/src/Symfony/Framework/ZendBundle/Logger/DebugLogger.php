@@ -2,8 +2,10 @@
 
 namespace Symfony\Framework\ZendBundle\Logger;
 
+use Zend\Log\Writer\AbstractWriter;
+
 /*
- * This file is part of the symfony framework.
+ * This file is part of the Symfony framework.
  *
  * (c) Fabien Potencier <fabien.potencier@symfony-project.com>
  *
@@ -12,32 +14,32 @@ namespace Symfony\Framework\ZendBundle\Logger;
  */
 
 /**
- * 
+ * DebugLogger.
  *
- * @package    symfony
+ * @package    Symfony
+ * @subpackage Framework_ZendBundle
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
  */
-class DebugLogger extends \Zend_Log_Writer_Abstract
+class DebugLogger extends AbstractWriter
 {
-  protected $logs = array();
+    protected $logs = array();
 
-  public function getLogs()
-  {
-    return $this->logs;
-  }
+    public function getLogs()
+    {
+        return $this->logs;
+    }
 
-  /**
-   * Write a message to the log.
-   *
-   * @param  array  $event  event data
-   * @return void
-   */
-  protected function _write($event)
-  {
-    $this->logs[] = $event;
-  }
+    /**
+     * Write a message to the log.
+     *
+     * @param array $event Event data
+     */
+    protected function _write($event)
+    {
+        $this->logs[] = $event;
+    }
 
-  static public function factory($config)
-  {
-  }
+    static public function factory($config = array())
+    {
+    }
 }

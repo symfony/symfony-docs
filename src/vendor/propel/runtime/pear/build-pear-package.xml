@@ -1,0 +1,121 @@
+<?xml version="1.0"?>
+
+<!--
+	This build file creates a minimal package of propel-runtime files,
+	builds a package.xml for installation using PEAR and creates the necessary TGZ file.
+
+-->
+
+<project name="propel_runtime" default="main">
+
+	<property name="propel.home" value=".."/>
+	<property name="build.base.dir" value="build"/>
+	<property name="pkgname" value="${phing.project.name}-${version}"/>
+	<property name="build.src.dir" value="${build.base.dir}/${pkgname}"/>
+
+	<!-- some default properties -->
+	<property name="notes"><![CDATA[
+		This is a release of the 1.5 branch of the Propel Generator. 
+		See http://bit.ly/dskpCk for CHANGELOG.
+	]]></property>
+	<property name="state" value="stable"/>
+
+	<taskdef
+    name="pear-package"
+    classname="BuildPropelPEARPackageTask" classpath="."/>
+
+	<fileset dir="${propel.home}/lib" id="classes">
+		<include name="**"/>
+	</fileset>
+
+	<!--
+		==============================================
+		Main entry point
+		==============================================
+	-->
+	<target name="main" if="version" depends="versioncheck">
+		<phingcall target="build"/>
+		<phingcall target="pear-package"/>
+		<phingcall target="tar"/>
+	</target>
+
+	<!--
+	 ===================================================================
+	 Target: checks if language was given, otherwise fail
+	 ===================================================================
+	-->
+	<target name="versioncheck" unless="version">
+		<echo message="====================================================="/>
+		<echo message="Version not specified. You must enter a version. In"/>
+		<echo message="the future you can add this to build.properties or"/>
+		<echo message="enter it on the command line: "/>
+		<echo message=" "/>
+		<echo message="-Dversion=1.0.0"/>
+		<echo message="====================================================="/>
+		<input propertyname="version" promptChar=":">Propel version for package</input>
+
+		<property name="pkgname" value="${phing.project.name}-${version}" override="true"/>
+		<property name="build.src.dir" value="${build.base.dir}/${pkgname}" override="true"/>
+
+	</target>
+
+	<!--
+		==============================================
+		Copy the desired files into the build/ dir
+		making sure to put them in the directory
+		structure that will be needed for PEAR install
+		==============================================
+	-->
+	<target name="build">
+		<echo>-----------------------------</echo>
+		<echo>| Creating directory layout |</echo>
+		<echo>-----------------------------</echo>
+
+		<delete dir="${build.base.dir}"/>
+		<mkdir dir="${build.base.dir}"/>
+
+		<copy todir="${build.src.dir}">
+			<fileset refid="classes"/>
+		</copy>
+
+	</target>
+
+	<!--
+		==============================================
+		Create a PEAR package.xml which will guide the
+		installation.
+		==============================================
+	-->
+	<target name="pear-package">
+
+		<echo>-----------------------------</echo>
+		<echo>| Creating PEAR package.xml |</echo>
+		<echo>-----------------------------</echo>
+		<echo></echo>
+
+		<pear-package dir="${build.src.dir}" destFile="${build.base.dir}/package.xml" version="${version}" state="${state}" notes="${notes}">
+
+			<fileset dir="${build.src.dir}">
+				<include name="**"/>
+			</fileset>
+
+		</pear-package>
+
+	</target>
+
+	<!--
+		==============================================
+		Create a tar.gz of the files, which will be
+		installed by pear package manager.
+		==============================================
+	-->
+	<target name="tar">
+		<echo>-----------------------------</echo>
+		<echo>| Creating tar.gz package   |</echo>
+		<echo>-----------------------------</echo>
+		<property name="tarfile" value="${build.base.dir}/${pkgname}.tgz"/>
+		<delete	file="${tarfile}"/>
+		<tar destFile="${tarfile}" basedir="${build.base.dir}" />
+	</target>
+
+</project>

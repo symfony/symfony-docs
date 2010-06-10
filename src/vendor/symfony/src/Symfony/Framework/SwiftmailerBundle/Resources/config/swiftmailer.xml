@@ -7,6 +7,7 @@
   <parameters>
     <parameter key="swiftmailer.class">Swift_Mailer</parameter>
 
+    <parameter key="swiftmailer.transport.name">smtp</parameter>
     <parameter key="swiftmailer.transport.smtp.class">Swift_Transport_EsmtpTransport</parameter>
     <parameter key="swiftmailer.transport.sendmail.class">Swift_Transport_SendmailTransport</parameter>
     <parameter key="swiftmailer.transport.mail.class">Swift_Transport_MailTransport</parameter>
@@ -21,7 +22,7 @@
     <parameter key="swiftmailer.transport.failover.class">Swift_Transport_FailoverTransport</parameter>
     <parameter key="swiftmailer.spool.file.class">Swift_FileSpool</parameter>
 
-    <parameter key="swiftmailer.init_file">swift_init.php</parameter>
+    <parameter key="swiftmailer.init_file">%swiftmailer.base_dir%/swift_init.php</parameter>
 
     <parameter key="swiftmailer.plugin.redirecting.class">Swift_Plugins_RedirectingPlugin</parameter>
     <parameter key="swiftmailer.plugin.blackhole.class">Swift_Plugins_BlackholePlugin</parameter>

@@ -8,13 +8,6 @@
  * file that was distributed with this source code.
  */
 
-//@require 'Swift/Transport/AbstractSmtpTransport.php';
-//@require 'Swift/Transport/EsmtpHandler.php';
-//@require 'Swift/Transport/IoBuffer.php';
-//@require 'Swift/Transport/SmtpAgent.php';
-//@require 'Swift/TransportException.php';
-//@require 'Swift/Mime/Message.php';
-//@require 'Swift/Events/EventDispatcher.php';
 
 /**
  * Sends Messages over SMTP with ESMTP support.
@@ -239,16 +232,17 @@ class Swift_Transport_EsmtpTransport
       $response = $this->executeCommand(
         sprintf("EHLO %s\r\n", $this->_domain), array(250)
         );
-      $this->_capabilities = $this->_getCapabilities($response);
-      $this->_setHandlerParams();
-      foreach ($this->_getActiveHandlers() as $handler)
-      {
-        $handler->afterEhlo($this);
-      }
     }
     catch (Swift_TransportException $e)
     {
-      parent::_doHeloCommand();
+      return parent::_doHeloCommand();
+    }
+
+    $this->_capabilities = $this->_getCapabilities($response);
+    $this->_setHandlerParams();
+    foreach ($this->_getActiveHandlers() as $handler)
+    {
+      $handler->afterEhlo($this);
     }
   }
   

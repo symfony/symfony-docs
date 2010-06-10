@@ -6,7 +6,7 @@ use Symfony\Components\DependencyInjection\BuilderConfiguration;
 use Symfony\Components\DependencyInjection\FileResource;
 
 /*
- * This file is part of the symfony framework.
+ * This file is part of the Symfony framework.
  *
  * (c) Fabien Potencier <fabien.potencier@symfony-project.com>
  *
@@ -17,41 +17,44 @@ use Symfony\Components\DependencyInjection\FileResource;
 /**
  * IniFileLoader loads parameters from INI files.
  *
- * @package    symfony
- * @subpackage dependency_injection
+ * @package    Symfony
+ * @subpackage Components_DependencyInjection
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
  */
 class IniFileLoader extends FileLoader
 {
-  /**
-   * Loads a resource.
-   *
-   * @param  string $file An INI file path
-   *
-   * @return BuilderConfiguration A BuilderConfiguration instance
-   */
-  public function load($file)
-  {
-    $path = $this->findFile($file);
-
-    $configuration = new BuilderConfiguration();
-
-    $configuration->addResource(new FileResource($path));
-
-    $result = parse_ini_file($path, true);
-    if (false === $result || array() === $result)
+    /**
+     * Loads a resource.
+     *
+     * @param mixed                $resource       The resource
+     * @param Boolean              $main           Whether this is the main load() call
+     * @param BuilderConfiguration $configuration  A BuilderConfiguration instance to use for the configuration
+     *
+     * @return BuilderConfiguration A BuilderConfiguration instance
+     *
+     * @throws \InvalidArgumentException When ini file is not valid
+     */
+    public function load($file, $main = true, BuilderConfiguration $configuration = null)
     {
-      throw new \InvalidArgumentException(sprintf('The %s file is not valid.', $file));
-    }
+        $path = $this->findFile($file);
 
-    if (isset($result['parameters']) && is_array($result['parameters']))
-    {
-      foreach ($result['parameters'] as $key => $value)
-      {
-        $configuration->setParameter(strtolower($key), $value);
-      }
-    }
+        if (null === $configuration) {
+            $configuration = new BuilderConfiguration();
+        }
 
-    return $configuration;
-  }
+        $configuration->addResource(new FileResource($path));
+
+        $result = parse_ini_file($path, true);
+        if (false === $result || array() === $result) {
+            throw new \InvalidArgumentException(sprintf('The %s file is not valid.', $file));
+        }
+
+        if (isset($result['parameters']) && is_array($result['parameters'])) {
+            foreach ($result['parameters'] as $key => $value) {
+                $configuration->setParameter(strtolower($key), $value);
+            }
+        }
+
+        return $configuration;
+    }
 }

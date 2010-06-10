@@ -1,7 +1,5 @@
 <?php
 /*
- *  $Id$
- *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
  * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
@@ -22,7 +20,8 @@
 namespace Doctrine\ORM;
 
 use Doctrine\ORM\Mapping\AssociationMapping,
-    \Closure;
+    Doctrine\Common\Collections\Collection,
+    Closure;
 
 /**
  * A PersistentCollection represents a collection of elements that have persistent state.
@@ -40,7 +39,7 @@ use Doctrine\ORM\Mapping\AssociationMapping,
  * @author    Roman Borschel <roman@code-factory.org>
  * @author    Giorgio Sironi <piccoloprincipeazzurro@gmail.com>
  */
-final class PersistentCollection implements \Doctrine\Common\Collections\Collection
+final class PersistentCollection implements Collection
 {
     /**
      * A snapshot of the collection at the moment it was fetched from the database.
@@ -133,17 +132,7 @@ final class PersistentCollection implements \Doctrine\Common\Collections\Collect
     {
         $this->_owner = $entity;
         $this->_association = $assoc;
-        
-        // Check for bidirectionality
-        if ( ! $assoc->isOwningSide) {
-            // For sure bi-directional
-            $this->_backRefFieldName = $assoc->mappedByFieldName;
-        } else {
-            if (isset($this->_typeClass->inverseMappings[$assoc->sourceEntityName][$assoc->sourceFieldName])) {
-                // Bi-directional
-                $this->_backRefFieldName = $this->_typeClass->inverseMappings[$assoc->sourceEntityName][$assoc->sourceFieldName]->sourceFieldName;
-            }
-        }
+        $this->_backRefFieldName = $assoc->inversedBy ?: $assoc->mappedBy;
     }
 
     /**
@@ -165,31 +154,23 @@ final class PersistentCollection implements \Doctrine\Common\Collections\Collect
     /**
      * INTERNAL:
      * Adds an element to a collection during hydration. This will automatically
-     * complete bidirectional associations.
+     * complete bidirectional associations in the case of a one-to-many association.
      * 
      * @param mixed $element The element to add.
      */
     public function hydrateAdd($element)
     {
         $this->_coll->add($element);
-        
-        // If _backRefFieldName is set, then the association is bidirectional
-        // and we need to set the back reference.
-        if ($this->_backRefFieldName) {
+        // If _backRefFieldName is set and its a one-to-many association,
+        // we need to set the back reference.
+        if ($this->_backRefFieldName && $this->_association->isOneToMany()) {
             // Set back reference to owner
-            if ($this->_association->isOneToMany()) {
-                // OneToMany
-                $this->_typeClass->reflFields[$this->_backRefFieldName]
-                        ->setValue($element, $this->_owner);
-                $this->_em->getUnitOfWork()->setOriginalEntityProperty(
-                        spl_object_hash($element),
-                        $this->_backRefFieldName,
-                        $this->_owner);
-            } else {
-                // ManyToMany
-                $this->_typeClass->reflFields[$this->_backRefFieldName] 
-                        ->getValue($element)->unwrap()->add($this->_owner);
-            }
+            $this->_typeClass->reflFields[$this->_backRefFieldName]
+                    ->setValue($element, $this->_owner);
+            $this->_em->getUnitOfWork()->setOriginalEntityProperty(
+                    spl_object_hash($element),
+                    $this->_backRefFieldName,
+                    $this->_owner);
         }
     }
     
@@ -203,20 +184,12 @@ final class PersistentCollection implements \Doctrine\Common\Collections\Collect
     public function hydrateSet($key, $element)
     {
         $this->_coll->set($key, $element);
-        
         // If _backRefFieldName is set, then the association is bidirectional
         // and we need to set the back reference.
-        if ($this->_backRefFieldName) {
+        if ($this->_backRefFieldName && $this->_association->isOneToMany()) {
             // Set back reference to owner
-            if ($this->_association->isOneToMany()) {
-                // OneToMany
-                $this->_typeClass->reflFields[$this->_backRefFieldName]
-                        ->setValue($element, $this->_owner);
-            } else {
-                // ManyToMany
-                $this->_typeClass->reflFields[$this->_backRefFieldName] 
-                        ->getValue($element)->set($key, $this->_owner);
-            }
+            $this->_typeClass->reflFields[$this->_backRefFieldName]
+                    ->setValue($element, $this->_owner);
         }
     }
 
@@ -305,7 +278,12 @@ final class PersistentCollection implements \Doctrine\Common\Collections\Collect
      */
     private function _changed()
     {
-        $this->_isDirty = true;
+        if ( ! $this->_isDirty) {
+            $this->_isDirty = true;
+            //if ($this->_isNotifyRequired) {
+                //$this->_em->getUnitOfWork()->scheduleCollectionUpdate($this);
+            //}
+        }
     }
 
     /**
@@ -381,7 +359,7 @@ final class PersistentCollection implements \Doctrine\Common\Collections\Collect
                 $this->_em->getUnitOfWork()->scheduleOrphanRemoval($removed);
             }
         }
-        
+
         return $removed;
     }
 
@@ -453,10 +431,10 @@ final class PersistentCollection implements \Doctrine\Common\Collections\Collect
     /**
      * {@inheritdoc}
      */
-    public function search($element)
+    public function indexOf($element)
     {
         $this->_initialize();
-        return $this->_coll->search($element);
+        return $this->_coll->indexOf($element);
     }
 
     /**
@@ -539,9 +517,7 @@ final class PersistentCollection implements \Doctrine\Common\Collections\Collect
     public function map(Closure $func)
     {
         $this->_initialize();
-        $result = $this->_coll->map($func);
-        $this->_changed();
-        return $result;
+        return $this->_coll->map($func);
     }
 
     /**

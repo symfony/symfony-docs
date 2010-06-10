@@ -2,10 +2,8 @@
 
 namespace Symfony\Components\Templating\Helper;
 
-use Symfony\Components\Templating\Engine;
-
 /*
- * This file is part of the symfony package.
+ * This file is part of the Symfony package.
  *
  * (c) Fabien Potencier <fabien.potencier@symfony-project.com>
  *
@@ -16,30 +14,30 @@ use Symfony\Components\Templating\Engine;
 /**
  * HelperInterface is the interface all helpers must implement.
  *
- * @package    symfony
- * @subpackage templating
+ * @package    Symfony
+ * @subpackage Components_Templating
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
  */
 interface HelperInterface
 {
-  /**
-   * Returns the canonical name of this helper.
-   *
-   * @return string The canonical name
-   */
-  function getName();
+    /**
+     * Returns the canonical name of this helper.
+     *
+     * @return string The canonical name
+     */
+    function getName();
 
-  /**
-   * Sets the engine associated with this helper.
-   *
-   * @param Engine $engine A Engine instance
-   */
-  function setEngine(Engine $engine = null);
+    /**
+     * Sets the default charset.
+     *
+     * @param string $charset The charset
+     */
+    function setCharset($charset);
 
-  /**
-   * Gets the engine associated with this helper.
-   *
-   * @return Engine A Engine instance
-   */
-  function getEngine();
+    /**
+     * Gets the default charset.
+     *
+     * @return string The default charset
+     */
+    function getCharset();
 }

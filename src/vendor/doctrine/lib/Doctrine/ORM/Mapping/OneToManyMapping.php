@@ -1,7 +1,5 @@
 <?php
 /*
- *  $Id$
- *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
  * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
@@ -32,7 +30,7 @@ namespace Doctrine\ORM\Mapping;
  * <b>IMPORTANT NOTE:</b>
  *
  * The fields of this class are only public for 2 reasons:
- * 1) To allow fast, internal READ access.
+ * 1) To allow fast READ access.
  * 2) To drastically reduce the size of a serialized instance (private/protected members
  *    get the whole class name, namespace inclusive, prepended to every property in
  *    the serialized representation).
@@ -43,24 +41,25 @@ namespace Doctrine\ORM\Mapping;
  * @author Roman Borschel <roman@code-factory.org>
  * @author Giorgio Sironi <piccoloprincipeazzurro@gmail.com>
  * @since 2.0
+ * @todo Potentially remove if assoc mapping objects get replaced by simple arrays.
  */
 class OneToManyMapping extends AssociationMapping
 {
-    /** Whether to delete orphaned elements (removed from the collection) */
+    /**
+     * READ-ONLY: Whether to delete orphaned elements (removed from the collection)
+     *
+     * @var boolean
+     */
     public $orphanRemoval = false;
+
     /** FUTURE: The key column mapping, if any. The key column holds the keys of the Collection. */
     //public $keyColumn;
 
     /**
-     * Initializes a new OneToManyMapping.
-     *
-     * @param array $mapping  The mapping information.
+     * READ-ONLY: Order this collection by the given SQL snippet.
      */
-    public function __construct(array $mapping)
-    {
-        parent::__construct($mapping);
-    }
-    
+    public $orderBy;
+
     /**
      * Validates and completes the mapping.
      *
@@ -77,8 +76,16 @@ class OneToManyMapping extends AssociationMapping
             throw MappingException::oneToManyRequiresMappedBy($mapping['fieldName']);
         }
         
+        //TODO: if orphanRemoval, cascade=remove is implicit!
         $this->orphanRemoval = isset($mapping['orphanRemoval']) ?
                 (bool) $mapping['orphanRemoval'] : false;
+
+        if (isset($mapping['orderBy'])) {
+            if (!is_array($mapping['orderBy'])) {
+                throw new \InvalidArgumentException("'orderBy' is expected to be an array, not ".gettype($mapping['orderBy']));
+            }
+            $this->orderBy = $mapping['orderBy'];
+        }
     }
     
     /**
@@ -93,8 +100,6 @@ class OneToManyMapping extends AssociationMapping
     
     /**
      * {@inheritdoc}
-     *
-     * @override
      */
     public function isOneToMany()
     {
@@ -109,23 +114,31 @@ class OneToManyMapping extends AssociationMapping
      * @param $em The EntityManager to use.
      * @param $joinColumnValues 
      * @return void
+     * @todo Remove
      */
     public function load($sourceEntity, $targetCollection, $em, array $joinColumnValues = array())
     {
-        $persister = $em->getUnitOfWork()->getEntityPersister($this->targetEntityName);
-        // a one-to-many is always inverse (does not have foreign key)
-        $sourceClass = $em->getClassMetadata($this->sourceEntityName);
-        $owningAssoc = $em->getClassMetadata($this->targetEntityName)->associationMappings[$this->mappedByFieldName];
-        // TRICKY: since the association is specular source and target are flipped
-        foreach ($owningAssoc->targetToSourceKeyColumns as $sourceKeyColumn => $targetKeyColumn) {
-            // getting id
-            if (isset($sourceClass->fieldNames[$sourceKeyColumn])) {
-                $conditions[$targetKeyColumn] = $sourceClass->reflFields[$sourceClass->fieldNames[$sourceKeyColumn]]->getValue($sourceEntity);
-            } else {
-                $conditions[$targetKeyColumn] = $joinColumnValues[$sourceKeyColumn];
-            }
-        }
+        $em->getUnitOfWork()->getEntityPersister($this->targetEntityName)->loadOneToManyCollection($this, $sourceEntity, $targetCollection);
+    }
 
-        $persister->loadOneToManyCollection($conditions, $targetCollection);
+    /**
+     * Determines which fields get serialized.
+     *
+     * It is only serialized what is necessary for best unserialization performance.
+     * That means any metadata properties that are not set or empty or simply have
+     * their default value are NOT serialized.
+     *
+     * @return array The names of all the fields that should be serialized.
+     */
+    public function __sleep()
+    {
+        $serialized = parent::__sleep();
+        if ($this->orderBy) {
+            $serialized[] = 'orderBy';
+        }
+        if ($this->orphanRemoval) {
+            $serialized[] = 'orphanRemoval';
+        }
+        return $serialized;
     }
 }

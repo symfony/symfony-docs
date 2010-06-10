@@ -5,7 +5,7 @@ namespace Symfony\Framework\WebBundle\Console;
 use Symfony\Components\Console\Shell as BaseShell;
 
 /*
- * This file is part of the symfony framework.
+ * This file is part of the Symfony framework.
  *
  * (c) Fabien Potencier <fabien.potencier@symfony-project.com>
  *
@@ -14,21 +14,22 @@ use Symfony\Components\Console\Shell as BaseShell;
  */
 
 /**
- * 
+ * Shell.
  *
- * @package    symfony
+ * @package    Symfony
+ * @subpackage Framework_WebBundle
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
  */
 class Shell extends BaseShell
 {
-  /**
-   * Returns the shell header.
-   *
-   * @return string The header string
-   */
-  protected function getHeader()
-  {
-    return <<<EOF
+    /**
+     * Returns the shell header.
+     *
+     * @return string The header string
+     */
+    protected function getHeader()
+    {
+        return <<<EOF
 <info>
       _____                  __                    ___  
      / ____|                / _|                  |__ \ 
@@ -41,6 +42,6 @@ class Shell extends BaseShell
 
 </info>
 EOF
-    .parent::getHeader();
-  }
+        .parent::getHeader();
+    }
 }

@@ -29,7 +29,7 @@ use Doctrine\Common\Cache\ArrayCache,
     Doctrine\Common\Util\Inflector;
 
 /**
- * The DatabaseDriver reverse engineers the mapping metadata from a database
+ * The DatabaseDriver reverse engineers the mapping metadata from a database.
  *
  * @license http://www.opensource.org/licenses/lgpl-license.php LGPL
  * @link    www.doctrine-project.org
@@ -60,14 +60,14 @@ class DatabaseDriver implements Driver
     public function loadMetadataForClass($className, ClassMetadataInfo $metadata)
     {
         $tableName = $className;
-        $className = Inflector::classify($tableName);
+        $className = Inflector::classify(strtolower($tableName));
 
         $metadata->name = $className;
-        $metadata->primaryTable['name'] = $tableName;
+        $metadata->table['name'] = $tableName;
 
         $columns = $this->_sm->listTableColumns($tableName);
         
-        if($this->_sm->getDatabasePlatform()->supportsForeignKeyConstraints()) {
+        if ($this->_sm->getDatabasePlatform()->supportsForeignKeyConstraints()) {
             $foreignKeys = $this->_sm->listTableForeignKeys($tableName);
         } else {
             $foreignKeys = array();
@@ -78,13 +78,6 @@ class DatabaseDriver implements Driver
         $ids = array();
         $fieldMappings = array();
         foreach ($columns as $column) {
-            // Skip columns that are foreign keys
-            foreach ($foreignKeys as $foreignKey) {
-                if (in_array(strtolower($column->getName()), array_map('strtolower', $foreignKey->getColumns()))) {
-                    continue(2);
-                }
-            }
-
             $fieldMapping = array();
             if (isset($indexes['primary']) && in_array($column->getName(), $indexes['primary']->getColumns())) {
                 $fieldMapping['id'] = true;
@@ -100,7 +93,7 @@ class DatabaseDriver implements Driver
             } else if ($column->getType() instanceof \Doctrine\DBAL\Types\IntegerType) {
                 $fieldMapping['unsigned'] = $column->getUnsigned();
             }
-            $fieldMapping['notnull'] = $column->getNotNull();
+            $fieldMapping['nullable'] = $column->getNotNull() ? false : true;
 
             if (isset($fieldMapping['id'])) {
                 $ids[] = $fieldMapping;
@@ -124,30 +117,21 @@ class DatabaseDriver implements Driver
         }
 
         foreach ($foreignKeys as $foreignKey) {
-            if (count($foreignKey->getColumns()) != 1) {
-                throw new MappingException(
-                    "Cannot generate mapping for table '".$tableName."' with foreign keys with multiple local columns."
-                );
-            }
             $cols = $foreignKey->getColumns();
             $localColumn = current($cols);
 
             $fkCols = $foreignKey->getForeignColumns();
-            if (count($fkCols) != 1) {
-                throw new MappingException(
-                    "Cannot generate mapping for table '".$tableName."' with foreign keys with multiple foreign columns."
-                );
-            }
-            $foreignColumn = current($fkCols);
 
             $associationMapping = array();
             $associationMapping['fieldName'] = Inflector::camelize(str_ireplace('_id', '', $localColumn));
-            $associationMapping['columnName'] = $localColumn;
             $associationMapping['targetEntity'] = Inflector::classify($foreignKey->getForeignTableName());
-            $associationMapping['joinColumns'][] = array(
-                'name' => $localColumn,
-                'referencedColumnName' => $foreignColumn
-            );
+
+            for ($i = 0; $i < count($cols); $i++) {
+                $associationMapping['joinColumns'][] = array(
+                    'name' => $cols[$i],
+                    'referencedColumnName' => $fkCols[$i],
+                );
+            }
 
             $metadata->mapManyToOne($associationMapping);
         }
@@ -169,7 +153,9 @@ class DatabaseDriver implements Driver
         $classes = array();
         
         foreach ($this->_sm->listTables() as $table) {
-            $classes[] = $table->getName(); // TODO: Why is this not correct? Inflector::classify($table->getName());
+            // This method must return an array of table names because we need
+            // to know the table name after we inflect it to create the entity class name.
+            $classes[] = $table->getName();
         }
 
         return $classes;

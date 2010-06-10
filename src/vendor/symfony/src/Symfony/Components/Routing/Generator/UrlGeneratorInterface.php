@@ -3,7 +3,7 @@
 namespace Symfony\Components\Routing\Generator;
 
 /*
- * This file is part of the symfony framework.
+ * This file is part of the Symfony framework.
  *
  * (c) Fabien Potencier <fabien.potencier@symfony-project.com>
  *
@@ -14,20 +14,20 @@ namespace Symfony\Components\Routing\Generator;
 /**
  * UrlGeneratorInterface is the interface that all URL generator classes must implements.
  *
- * @package    symfony
- * @subpackage routing
+ * @package    Symfony
+ * @subpackage Components_Routing
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
  */
 interface UrlGeneratorInterface
 {
-  /**
-   * Generates a URL from the given parameters.
-   *
-   * @param  string  $name       The name of the route
-   * @param  array   $parameters An array of parameters
-   * @param  Boolean $absolute   Whether to generate an absolute URL
-   *
-   * @return string The generated URL
-   */
-  public function generate($name, array $parameters, $absolute = false);
+    /**
+     * Generates a URL from the given parameters.
+     *
+     * @param  string  $name       The name of the route
+     * @param  array   $parameters An array of parameters
+     * @param  Boolean $absolute   Whether to generate an absolute URL
+     *
+     * @return string The generated URL
+     */
+    public function generate($name, array $parameters, $absolute = false);
 }

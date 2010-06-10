@@ -64,8 +64,8 @@ class PhpExporter extends AbstractExporter
             $lines[] = "\$metadata->customRepositoryClassName = '" . $metadata->customRepositoryClassName . "';";
         }
 
-        if ($metadata->primaryTable) {
-            $lines[] = '$metadata->setPrimaryTable(' . $this->_varExport($metadata->primaryTable) . ');';
+        if ($metadata->table) {
+            $lines[] = '$metadata->setPrimaryTable(' . $this->_varExport($metadata->table) . ');';
         }
 
         if ($metadata->discriminatorColumn) {
@@ -80,6 +80,14 @@ class PhpExporter extends AbstractExporter
             $lines[] = '$metadata->setChangeTrackingPolicy(ClassMetadataInfo::CHANGETRACKING_' . $this->_getChangeTrackingPolicyString($metadata->changeTrackingPolicy) . ');';
         }
 
+        if ($metadata->lifecycleCallbacks) {
+            foreach ($metadata->lifecycleCallbacks as $event => $callbacks) {
+                foreach ($callbacks as $callback) {
+                    $lines[] = "\$metadata->addLifecycleCallback('$callback', '$event');";
+                }
+            }
+        }
+
         foreach ($metadata->fieldMappings as $fieldMapping) {
             $lines[] = '$metadata->mapField(' . $this->_varExport($fieldMapping) . ');';
         }
@@ -89,22 +97,22 @@ class PhpExporter extends AbstractExporter
         }
 
         foreach ($metadata->associationMappings as $associationMapping) {
+            $cascade = array('remove', 'persist', 'refresh', 'merge', 'detach');
+            foreach ($cascade as $key => $value) {
+                if ( ! $associationMapping->{'isCascade'.ucfirst($value)}) {
+                    unset($cascade[$key]);
+                }
+            }
             $associationMappingArray = array(
                 'fieldName'    => $associationMapping->sourceFieldName,
                 'targetEntity' => $associationMapping->targetEntityName,
-                'cascade'     => array(
-                    'remove'  => $associationMapping->isCascadeRemove,
-                    'persist' => $associationMapping->isCascadePersist,
-                    'refresh' => $associationMapping->isCascadeRefresh,
-                    'merge'   => $associationMapping->isCascadeMerge,
-                    'detach'  => $associationMapping->isCascadeDetach,
-                ),
+                'cascade'     => $cascade,
             );
             
             if ($associationMapping instanceof \Doctrine\ORM\Mapping\OneToOneMapping) {
                 $method = 'mapOneToOne';
                 $oneToOneMappingArray = array(
-                    'mappedBy'      => $associationMapping->mappedByFieldName,
+                    'mappedBy'      => $associationMapping->mappedBy,
                     'joinColumns'   => $associationMapping->joinColumns,
                     'orphanRemoval' => $associationMapping->orphanRemoval,
                 );
@@ -113,20 +121,23 @@ class PhpExporter extends AbstractExporter
             } else if ($associationMapping instanceof \Doctrine\ORM\Mapping\OneToManyMapping) {
                 $method = 'mapOneToMany';
                 $oneToManyMappingArray = array(
-                    'mappedBy'      => $associationMapping->mappedByFieldName,
+                    'mappedBy'      => $associationMapping->mappedBy,
                     'orphanRemoval' => $associationMapping->orphanRemoval,
+                    'orderBy' => $associationMapping->orderBy
                 );
                 
                 $associationMappingArray = array_merge($associationMappingArray, $oneToManyMappingArray);
             } else if ($associationMapping instanceof \Doctrine\ORM\Mapping\ManyToManyMapping) {
                 $method = 'mapManyToMany';
                 $manyToManyMappingArray = array(
-                    'mappedBy'  => $associationMapping->mappedByFieldName,
+                    'mappedBy'  => $associationMapping->mappedBy,
                     'joinTable' => $associationMapping->joinTable,
+                    'orderBy' => $associationMapping->orderBy
                 );
                 
                 $associationMappingArray = array_merge($associationMappingArray, $manyToManyMappingArray);
             }
+            
             $lines[] = '$metadata->' . $method . '(' . $this->_varExport($associationMappingArray) . ');';
         }
 

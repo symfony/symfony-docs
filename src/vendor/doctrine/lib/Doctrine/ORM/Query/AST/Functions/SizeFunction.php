@@ -33,6 +33,7 @@ use Doctrine\ORM\Query\Lexer;
  * @author  Guilherme Blanco <guilhermeblanco@hotmail.com>
  * @author  Jonathan Wage <jonwage@gmail.com>
  * @author  Roman Borschel <roman@code-factory.org>
+ * @author  Benjamin Eberlei <kontakt@beberlei.de>
  */
 class SizeFunction extends FunctionNode
 {
@@ -40,6 +41,7 @@ class SizeFunction extends FunctionNode
 
     /**
      * @override
+     * @todo If the collection being counted is already joined, the SQL can be simpler (more efficient).
      */
     public function getSql(\Doctrine\ORM\Query\SqlWalker $sqlWalker)
     {
@@ -53,10 +55,10 @@ class SizeFunction extends FunctionNode
         
         if ($assoc->isOneToMany()) {
             $targetClass = $sqlWalker->getEntityManager()->getClassMetadata($assoc->targetEntityName);
-            $targetAssoc = $targetClass->associationMappings[$assoc->mappedByFieldName];
+            $targetAssoc = $targetClass->associationMappings[$assoc->mappedBy];
             
-            $targetTableAlias = $sqlWalker->getSqlTableAlias($targetClass->primaryTable['name']);
-            $sourceTableAlias = $sqlWalker->getSqlTableAlias($qComp['metadata']->primaryTable['name'], $dqlAlias);
+            $targetTableAlias = $sqlWalker->getSqlTableAlias($targetClass->table['name']);
+            $sourceTableAlias = $sqlWalker->getSqlTableAlias($qComp['metadata']->table['name'], $dqlAlias);
             
             $whereSql = '';
 
@@ -65,14 +67,11 @@ class SizeFunction extends FunctionNode
                            . $targetTableAlias . '.' . $sourceKeyColumn . ' = ' 
                            . $sourceTableAlias . '.' . $targetKeyColumn;
             }
-            
-            $sql = '(SELECT COUNT(' 
-                 . "$targetTableAlias." . implode(", $targetTableAlias.", $targetAssoc->targetToSourceKeyColumns)
-                 . ') FROM ' . $targetClass->primaryTable['name'] . ' ' . $targetTableAlias .  $whereSql . ')';
+
+            $tableName = $targetClass->table['name'];
         } else if ($assoc->isManyToMany()) {
-            // TODO
             $targetTableAlias = $sqlWalker->getSqlTableAlias($assoc->joinTable['name']);
-            $sourceTableAlias = $sqlWalker->getSqlTableAlias($qComp['metadata']->primaryTable['name'], $dqlAlias);
+            $sourceTableAlias = $sqlWalker->getSqlTableAlias($qComp['metadata']->table['name'], $dqlAlias);
             
             $whereSql = '';
 
@@ -82,12 +81,10 @@ class SizeFunction extends FunctionNode
                            . $sourceTableAlias . '.' . $sourceKeyColumn;
             }
 
-            $sql = '(SELECT COUNT(' 
-                 . "$targetTableAlias." . implode(", $targetTableAlias.", $assoc->joinTableColumns)
-                 . ') FROM ' . $assoc->joinTable['name'] . ' ' . $targetTableAlias . $whereSql . ')';
+            $tableName = $assoc->joinTable['name'];
         }
         
-        return $sql;
+        return '(SELECT COUNT(*) FROM ' . $tableName . ' ' . $targetTableAlias . $whereSql . ')';
     }
 
     /**

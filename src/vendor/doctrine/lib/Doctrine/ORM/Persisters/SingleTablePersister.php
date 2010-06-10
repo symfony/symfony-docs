@@ -1,7 +1,5 @@
 <?php
 /*
- *  $Id$
- *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
  * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
@@ -21,66 +19,54 @@
 
 namespace Doctrine\ORM\Persisters;
 
-use Doctrine\DBAL\Types\Type;
+use Doctrine\ORM\Mapping\ClassMetadata;
 
 /**
  * Persister for entities that participate in a hierarchy mapped with the
  * SINGLE_TABLE strategy.
  *
- * @author      Roman Borschel <roman@code-factory.org>
- * @license     http://www.opensource.org/licenses/lgpl-license.php LGPL
- * @version     $Revision: 3406 $
- * @link        www.doctrine-project.org
- * @since       2.0
+ * @author Roman Borschel <roman@code-factory.org>
+ * @since 2.0
+ * @link http://martinfowler.com/eaaCatalog/singleTableInheritance.html
  */
-class SingleTablePersister extends StandardEntityPersister
+class SingleTablePersister extends AbstractEntityInheritancePersister
 {
-    /** @override */
-    protected function _prepareData($entity, array &$result, $isInsert = false)
+    /** {@inheritdoc} */
+    protected function _getDiscriminatorColumnTableName()
     {
-        parent::_prepareData($entity, $result, $isInsert);
-        // Populate the discriminator column
-        if ($isInsert) {
-            $discColumn = $this->_class->getQuotedDiscriminatorColumnName($this->_platform);
-            $result[$this->_class->getQuotedTableName($this->_platform)][$discColumn] =
-                    $this->_class->discriminatorValue;
-        }
+        return $this->_class->table['name'];
     }
-    
-    /** @override */
-    protected function _getSelectColumnList()
+
+    /** {@inheritdoc} */
+    protected function _getSelectColumnListSQL()
     {
-        $setResultColumnNames = empty($this->_resultColumnNames);
-        $columnList = parent::_getSelectColumnList();
+        $columnList = parent::_getSelectColumnListSQL();
+
         // Append discriminator column
-        $columnList .= ', ' . $this->_class->getQuotedDiscriminatorColumnName($this->_platform);
-        
-        if ($setResultColumnNames) {
-            $resultColumnName = $this->_platform->getSqlResultCasing($this->_class->discriminatorColumn['name']);
-            $this->_resultColumnNames[$resultColumnName] = $this->_class->discriminatorColumn['name'];
-        }
-        
-        ///$tableAlias = $this->_class->getQuotedTableName($this->_platform);
+        $discrColumn = $this->_class->discriminatorColumn['name'];
+        $columnList .= ", $discrColumn";
+        $rootClass = $this->_em->getClassMetadata($this->_class->rootEntityName);
+        $tableAlias = $this->_getSQLTableAlias($rootClass->name);
+        $resultColumnName = $this->_platform->getSQLResultCasing($discrColumn);
+        $this->_resultColumnNames[$resultColumnName] = $discrColumn;
+
+        // Append subclass columns
         foreach ($this->_class->subClasses as $subClassName) {
             $subClass = $this->_em->getClassMetadata($subClassName);
-            // Append subclass columns
+            // Regular columns
             foreach ($subClass->fieldMappings as $fieldName => $mapping) {
                 if ( ! isset($mapping['inherited'])) {
-                    $columnList .= ', ' . $subClass->getQuotedColumnName($fieldName, $this->_platform);
-                    if ($setResultColumnNames) {
-                        $resultColumnName = $this->_platform->getSqlResultCasing($mapping['columnName']);
-                        $this->_resultColumnNames[$resultColumnName] = $mapping['columnName'];
-                    }
+                    $columnList .= ', ' . $this->_getSelectColumnSQL($fieldName, $subClass);
                 }
             }
-            
-            // Append subclass foreign keys
+            // Foreign key columns
             foreach ($subClass->associationMappings as $assoc) {
-                if ($assoc->isOwningSide && $assoc->isOneToOne() && ! isset($subClass->inheritedAssociationFields[$assoc->sourceFieldName])) {
+                if ($assoc->isOwningSide && $assoc->isOneToOne() && ! $assoc->inherited) {
                     foreach ($assoc->targetToSourceKeyColumns as $srcColumn) {
-                        $columnList .= ', ' /*. $tableAlias . '.'*/ . $assoc->getQuotedJoinColumnName($srcColumn, $this->_platform);
-                        if ($setResultColumnNames) {
-                            $resultColumnName = $this->_platform->getSqlResultCasing($srcColumn);
+                        $columnAlias = $srcColumn . $this->_sqlAliasCounter++;
+                        $columnList .= ', ' . $tableAlias . ".$srcColumn AS $columnAlias";
+                        $resultColumnName = $this->_platform->getSQLResultCasing($columnAlias);
+                        if ( ! isset($this->_resultColumnNames[$resultColumnName])) {
                             $this->_resultColumnNames[$resultColumnName] = $srcColumn;
                         }
                     }
@@ -90,20 +76,39 @@ class SingleTablePersister extends StandardEntityPersister
 
         return $columnList;
     }
-    
-    /** @override */
+
+    /** {@inheritdoc} */
     protected function _getInsertColumnList()
     {
         $columns = parent::_getInsertColumnList();
         // Add discriminator column to the INSERT SQL
-        $columns[] = $this->_class->getQuotedDiscriminatorColumnName($this->_platform);
-        
+        $columns[] = $this->_class->discriminatorColumn['name'];
+
         return $columns;
     }
-    
-    /** @override */
-    protected function _processSqlResult(array $sqlResult)
+
+    /** {@inheritdoc} */
+    protected function _getSQLTableAlias($className)
     {
-        return $this->_processSqlResultInheritanceAware($sqlResult);
+        return parent::_getSQLTableAlias($this->_class->rootEntityName);
+    }
+
+    /** {@inheritdoc} */
+    protected function _getSelectConditionSQL(array $criteria, $assoc = null)
+    {
+        $conditionSql = parent::_getSelectConditionSQL($criteria, $assoc);
+
+        // Append discriminator condition
+        if ($conditionSql) $conditionSql .= ' AND ';
+        $values = array($this->_conn->quote($this->_class->discriminatorValue));
+        $discrValues = array_flip($this->_class->discriminatorMap);
+        foreach ($this->_class->subClasses as $subclassName) {
+            $values[] = $this->_conn->quote($discrValues[$subclassName]);
+        }
+        $conditionSql .= $this->_getSQLTableAlias($this->_class->name) . '.'
+                . $this->_class->discriminatorColumn['name']
+                . ' IN (' . implode(', ', $values) . ')';
+
+        return $conditionSql;
     }
 }

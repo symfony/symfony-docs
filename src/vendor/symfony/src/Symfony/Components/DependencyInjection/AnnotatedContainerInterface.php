@@ -3,7 +3,7 @@
 namespace Symfony\Components\DependencyInjection;
 
 /*
- * This file is part of the symfony framework.
+ * This file is part of the Symfony framework.
  *
  * (c) Fabien Potencier <fabien.potencier@symfony-project.com>
  *
@@ -14,18 +14,18 @@ namespace Symfony\Components\DependencyInjection;
 /**
  * AnnotatedContainerInterface is the interface implemented when a container knows how to deals with annotations.
  *
- * @package    symfony
- * @subpackage dependency_injection
+ * @package    Symfony
+ * @subpackage Components_DependencyInjection
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
  */
 interface AnnotatedContainerInterface
 {
-  /**
-   * Returns service ids for a given annotation.
-   *
-   * @param string $name The annotation name
-   *
-   * @return array An array of annotations
-   */
-  public function findAnnotatedServiceIds($name);
+    /**
+     * Returns service ids for a given annotation.
+     *
+     * @param string $name The annotation name
+     *
+     * @return array An array of annotations
+     */
+    public function findAnnotatedServiceIds($name);
 }

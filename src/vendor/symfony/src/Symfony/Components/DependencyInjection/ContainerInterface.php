@@ -3,7 +3,7 @@
 namespace Symfony\Components\DependencyInjection;
 
 /*
- * This file is part of the symfony framework.
+ * This file is part of the Symfony framework.
  *
  * (c) Fabien Potencier <fabien.potencier@symfony-project.com>
  *
@@ -14,27 +14,27 @@ namespace Symfony\Components\DependencyInjection;
 /**
  * ContainerInterface is the interface implemented by service container classes.
  *
- * @package    symfony
- * @subpackage dependency_injection
+ * @package    Symfony
+ * @subpackage Components_DependencyInjection
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
  */
 interface ContainerInterface
 {
-  public function setParameters(array $parameters);
+    public function setParameters(array $parameters);
 
-  public function addParameters(array $parameters);
+    public function addParameters(array $parameters);
 
-  public function getParameters();
+    public function getParameters();
 
-  public function getParameter($name);
+    public function getParameter($name);
 
-  public function setParameter($name, $value);
+    public function setParameter($name, $value);
 
-  public function hasParameter($name);
+    public function hasParameter($name);
 
-  public function setService($id, $service);
+    public function setService($id, $service);
 
-  public function getService($id);
+    public function getService($id);
 
-  public function hasService($name);
+    public function hasService($name);
 }

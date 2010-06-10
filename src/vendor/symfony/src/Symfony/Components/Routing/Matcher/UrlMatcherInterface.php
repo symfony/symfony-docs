@@ -3,7 +3,7 @@
 namespace Symfony\Components\Routing\Matcher;
 
 /*
- * This file is part of the symfony framework.
+ * This file is part of the Symfony framework.
  *
  * (c) Fabien Potencier <fabien.potencier@symfony-project.com>
  *
@@ -14,20 +14,20 @@ namespace Symfony\Components\Routing\Matcher;
 /**
  * UrlMatcherInterface is the interface that all URL matcher classes must implements.
  *
- * @package    symfony
- * @subpackage routing
+ * @package    Symfony
+ * @subpackage Components_Routing
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
  */
 interface UrlMatcherInterface
 {
-  /**
-   * Tries to match a URL with a set of routes.
-   *
-   * Returns false if no route matches the URL.
-   *
-   * @param  string $url URL to be parsed
-   *
-   * @return array|false An array of parameters or false if no route matches
-   */
-  public function match($url);
+    /**
+     * Tries to match a URL with a set of routes.
+     *
+     * Returns false if no route matches the URL.
+     *
+     * @param  string $url URL to be parsed
+     *
+     * @return array|false An array of parameters or false if no route matches
+     */
+    public function match($url);
 }

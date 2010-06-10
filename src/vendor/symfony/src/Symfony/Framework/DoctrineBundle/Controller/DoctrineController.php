@@ -3,11 +3,9 @@
 namespace Symfony\Framework\DoctrineBundle\Controller;
 
 use Symfony\Framework\WebBundle\Controller;
-use Symfony\Components\RequestHandler\Request;
-use Symfony\Components\RequestHandler\Exception\NotFoundHttpException;
 
 /*
- * This file is part of the symfony framework.
+ * This file is part of the Symfony framework.
  *
  * (c) Fabien Potencier <fabien.potencier@symfony-project.com>
  *
@@ -16,25 +14,62 @@ use Symfony\Components\RequestHandler\Exception\NotFoundHttpException;
  */
 
 /**
- * 
+ * Doctrine ORM controller gives you access to entity managers and DQL queries.
  *
- * @package    symfony
+ * @package    Symfony
+ * @subpackage Framework_DoctrineBundle
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
+ * @author     Jonathan H. Wage <jonwage@gmail.com>
  */
 class DoctrineController extends Controller
 {
-  protected function getManager()
-  {
-    return $this->container->getDoctrine_ORM_ManagerService();
-  }
+    public function getDatabaseConnection($name = null)
+    {
+        if ($name) {
+            return $this->container->getService(sprintf('doctrine.dbal.%s_connection', $name));
+        } else {
+            return $this->container->getDatabaseConnectionService();
+        }
+    }
 
-  public function createQueryBuilder()
-  {
-    return $this->getManager()->createQueryBuilder();
-  }
+    /**
+     * Get the default entity manager service or the entity manager
+     * with the given name.
+     *
+     * @param string $name Optional entity manager service name
+     *
+     * @return object
+     */
+    protected function getEntityManager($name = null)
+    {
+        if ($name) {
+            return $this->container->getService(sprintf('doctrine.orm.%s_entity_manager', $name));
+        } else {
+            return $this->container->getDoctrine_ORM_EntityManagerService();
+        }
+    }
 
-  public function createQuery($dql = '')
-  {
-    return $this->getManager()->createQuery($dql);
-  }
+    /**
+     * Create a new QueryBuilder instance.
+     *
+     * @param string $name Optional entity manager service name
+     * @return object QueryBuilder
+     */
+    public function createQueryBuilder($name = null)
+    {
+        return $this->getEntityManager($name)->createQueryBuilder();
+    }
+
+    /**
+     * Create a new Query instance.
+     *
+     * @param string $dql  Optional Dql string to create the query from
+     * @param string $name Optional entity manager service name
+     *
+     * @return object QueryBuilder
+     */
+    public function createQuery($dql = '', $name = null)
+    {
+        return $this->getEntityManager($name)->createQuery($dql);
+    }
 }

@@ -1,7 +1,5 @@
 <?php
 /*
- *  $Id$
- *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
  * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
@@ -21,7 +19,7 @@
 
 namespace Doctrine\ORM\Id;
 
-use Doctrine\ORM\EntityManager;
+use Serializable, Doctrine\ORM\EntityManager;
 
 /**
  * Represents an ID generator that uses a database sequence.
@@ -29,7 +27,7 @@ use Doctrine\ORM\EntityManager;
  * @since 2.0
  * @author Roman Borschel <roman@code-factory.org>
  */
-class SequenceGenerator extends AbstractIdGenerator implements \Serializable
+class SequenceGenerator extends AbstractIdGenerator implements Serializable
 {
     private $_allocationSize;
     private $_sequenceName;
@@ -61,7 +59,7 @@ class SequenceGenerator extends AbstractIdGenerator implements \Serializable
         if ($this->_maxValue === null || $this->_nextValue == $this->_maxValue) {
             // Allocate new values
             $conn = $em->getConnection();
-            $sql = $conn->getDatabasePlatform()->getSequenceNextValSql($this->_sequenceName);
+            $sql = $conn->getDatabasePlatform()->getSequenceNextValSQL($this->_sequenceName);
             $this->_nextValue = $conn->fetchColumn($sql);
             $this->_maxValue = $this->_nextValue + $this->_allocationSize;
         }

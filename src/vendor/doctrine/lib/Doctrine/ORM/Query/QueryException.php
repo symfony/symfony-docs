@@ -33,19 +33,20 @@ use Doctrine\ORM\Query\AST\PathExpression;
  * @author  Guilherme Blanco <guilhermeblanco@hotmail.com>
  * @author  Jonathan Wage <jonwage@gmail.com>
  * @author  Roman Borschel <roman@code-factory.org>
+ * @author  Benjamin Eberlei <kontakt@beberlei.de>
  */
-class QueryException extends \Doctrine\Common\DoctrineException 
+class QueryException extends \Doctrine\ORM\ORMException
 {
     public static function syntaxError($message)
     {
         return new self('[Syntax Error] ' . $message);
     }
-    
+
     public static function semanticalError($message)
     {
         return new self('[Semantical Error] ' . $message);
     }
-    
+
     public static function invalidParameterPosition($pos)
     {
         return new self('Invalid parameter position: ' . $pos);
@@ -65,13 +66,17 @@ class QueryException extends \Doctrine\Common\DoctrineException
     {
         return new self("Invalid parameter: token ".$key." is not defined in the query.");
     }
-    
+
     public static function invalidPathExpression($pathExpr)
     {
         return new self(
-            "Invalid PathExpression '" . $pathExpr->identificationVariable . 
+            "Invalid PathExpression '" . $pathExpr->identificationVariable .
             "." . implode('.', $pathExpr->parts) . "'."
         );
+    }
+
+    public static function invalidLiteral($literal) {
+        return new self("Invalid literal '$literal'");
     }
 
     /**
@@ -82,6 +87,48 @@ class QueryException extends \Doctrine\Common\DoctrineException
         return new self(
             "Invalid query operation: Not allowed to iterate over fetch join collections ".
             "in class ".$assoc->sourceEntityName." assocation ".$assoc->sourceFieldName
+        );
+    }
+
+    public static function partialObjectsAreDangerous()
+    {
+        return new self(
+            "Loading partial objects is dangerous. Fetch full objects or consider " .
+            "using a different fetch mode. If you really want partial objects, " .
+            "set the doctrine.forcePartialLoad query hint to TRUE."
+        );
+    }
+
+    public static function overwritingJoinConditionsNotYetSupported($assoc)
+    {
+        return new self(
+            "Unsupported query operation: It is not yet possible to overwrite the join ".
+            "conditions in class ".$assoc->sourceEntityName." assocation ".$assoc->sourceFieldName.". ".
+            "Use WITH to append additional join conditions to the association."
+        );
+    }
+
+    public static function associationPathInverseSideNotSupported()
+    {
+        return new self(
+            "A single-valued association path expression to an inverse side is not supported".
+            " in DQL queries. Use an explicit join instead."
+        );
+    }
+
+    public static function iterateWithFetchJoinNotAllowed($assoc) {
+        return new self(
+            "Iterate with fetch join in class " . $assoc->sourceEntityName .
+            " using association " . $assoc->sourceFieldName . " not allowed."
+        );
+    }
+
+    public static function associationPathCompositeKeyNotSupported()
+    {
+        return new self(
+            "A single-valued association path expression to an entity with a composite primary ".
+            "key is not supported. Explicitly name the components of the composite primary key ".
+            "in the query."
         );
     }
 }

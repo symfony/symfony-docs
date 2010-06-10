@@ -1,7 +1,5 @@
 <?php
 /*
- *  $Id: Hydrate.php 3192 2007-11-19 17:55:23Z romanb $
- *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
  * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
@@ -21,17 +19,16 @@
 
 namespace Doctrine\ORM\Internal\Hydration;
 
-use Doctrine\DBAL\Connection,
-    Doctrine\DBAL\Types\Type;
+use PDO,
+    Doctrine\DBAL\Connection,
+    Doctrine\DBAL\Types\Type,
+    Doctrine\ORM\EntityManager;
 
 /**
  * Base class for all hydrators. A hydrator is a class that provides some form
  * of transformation of an SQL result set into another structure.
  *
- * @license     http://www.opensource.org/licenses/lgpl-license.php LGPL
- * @link        www.doctrine-project.org
  * @since       2.0
- * @version     $Revision: 3192 $
  * @author      Konsta Vesterinen <kvesteri@cc.hut.fi>
  * @author      Roman Borschel <roman@code-factory.org>
  */
@@ -54,7 +51,7 @@ abstract class AbstractHydrator
 
     /** @var Statement The statement that provides the data to hydrate. */
     protected $_stmt;
-    
+
     /** @var array The query hints. */
     protected $_hints;
 
@@ -63,7 +60,7 @@ abstract class AbstractHydrator
      *
      * @param Doctrine\ORM\EntityManager $em The EntityManager to use.
      */
-    public function __construct(\Doctrine\ORM\EntityManager $em)
+    public function __construct(EntityManager $em)
     {
         $this->_em = $em;
         $this->_platform = $em->getConnection()->getDatabasePlatform();
@@ -112,18 +109,18 @@ abstract class AbstractHydrator
      */
     public function hydrateRow()
     {
-        $row = $this->_stmt->fetch(Connection::FETCH_ASSOC);
+        $row = $this->_stmt->fetch(PDO::FETCH_ASSOC);
         if ( ! $row) {
             $this->_cleanup();
             return false;
         }
-        $result = $this->_getRowContainer();
+        $result = array();
         $this->_hydrateRow($row, $this->_cache, $result);
         return $result;
     }
 
     /**
-     * Excutes one-time preparation tasks once each time hydration is started
+     * Excutes one-time preparation tasks, once each time hydration is started
      * through {@link hydrateAll} or {@link iterate()}.
      */
     protected function _prepare()
@@ -149,7 +146,7 @@ abstract class AbstractHydrator
      * @param array $cache The cache to use.
      * @param mixed $result The result to fill.
      */
-    protected function _hydrateRow(array &$data, array &$cache, array &$result)
+    protected function _hydrateRow(array $data, array &$cache, array &$result)
     {
         throw new HydrationException("_hydrateRow() not implemented by this hydrator.");
     }
@@ -158,14 +155,6 @@ abstract class AbstractHydrator
      * Hydrates all rows from the current statement instance at once.
      */
     abstract protected function _hydrateAll();
-
-    /**
-     * Gets the row container used during row-by-row hydration through {@link iterate()}.
-     */
-    protected function _getRowContainer()
-    {
-        return array();        
-    }
 
     /**
      * Processes a row of the result set.
@@ -178,7 +167,7 @@ abstract class AbstractHydrator
      * @return array  An array with all the fields (name => value) of the data row,
      *                grouped by their component alias.
      */
-    protected function _gatherRowData(&$data, &$cache, &$id, &$nonemptyComponents)
+    protected function _gatherRowData(array $data, array &$cache, array &$id, array &$nonemptyComponents)
     {
         $rowData = array();
 
@@ -254,7 +243,7 @@ abstract class AbstractHydrator
                     $fieldName = $this->_rsm->fieldMappings[$key];
                     $classMetadata = $this->_em->getClassMetadata($this->_rsm->declaringClasses[$key]);
                     $cache[$key]['fieldName'] = $fieldName;
-                    $cache[$key]['type'] = Type::getType($classMetadata->getTypeOfField($fieldName));
+                    $cache[$key]['type'] = Type::getType($classMetadata->fieldMappings[$fieldName]['type']);
                     $cache[$key]['dqlAlias'] = $this->_rsm->columnOwnerMap[$key];
                 } else {
                     // Meta column (has meaning in relational schema only, i.e. foreign keys or discriminator columns).

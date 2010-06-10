@@ -1,7 +1,5 @@
 <?php
 /*
- *  $Id$
- *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
  * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
@@ -38,14 +36,14 @@ class ScalarHydrator extends AbstractHydrator
     {
         $result = array();
         $cache = array();
-        while ($data = $this->_stmt->fetch(Connection::FETCH_ASSOC)) {
+        while ($data = $this->_stmt->fetch(\PDO::FETCH_ASSOC)) {
             $result[] = $this->_gatherScalarRowData($data, $cache);
         }
         return $result;
     }
 
     /** @override */
-    protected function _hydrateRow(array &$data, array &$cache, array &$result)
+    protected function _hydrateRow(array $data, array &$cache, array &$result)
     {
         $result[] = $this->_gatherScalarRowData($data, $cache);
     }

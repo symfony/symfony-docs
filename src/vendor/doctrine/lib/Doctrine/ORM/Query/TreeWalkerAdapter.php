@@ -35,7 +35,7 @@ abstract class TreeWalkerAdapter implements TreeWalker
     private $_queryComponents;
     
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function __construct($query, $parserResult, array $queryComponents)
     {
@@ -43,10 +43,33 @@ abstract class TreeWalkerAdapter implements TreeWalker
         $this->_parserResult = $parserResult;
         $this->_queryComponents = $queryComponents;
     }
-    
+
+    /**
+     * @return array
+     */
     protected function _getQueryComponents()
     {
         return $this->_queryComponents;
+    }
+
+    /**
+     * Retrieve Query Instance reponsible for the current walkers execution.
+     *
+     * @return Doctrine\ORM\Query
+     */
+    protected function _getQuery()
+    {
+        return $this->_query;
+    }
+
+    /**
+     * Retrieve ParserResult
+     *
+     * @return Doctrine\ORM\Query\ParserResult
+     */
+    protected function _getParserResult()
+    {
+        return $this->_parserResult;
     }
     
     /**
@@ -230,6 +253,14 @@ abstract class TreeWalkerAdapter implements TreeWalker
     public function walkWhereClause($whereClause) {}
 
     /**
+     * Walks down a ConditionalExpression AST node, thereby generating the appropriate SQL.
+     *
+     * @param ConditionalExpression
+     * @return string The SQL.
+     */
+    public function walkConditionalExpression($condExpr) {}
+
+    /**
      * Walks down a ConditionalTerm AST node, thereby generating the appropriate SQL.
      *
      * @param ConditionalTerm
@@ -244,6 +275,14 @@ abstract class TreeWalkerAdapter implements TreeWalker
      * @return string The SQL.
      */
     public function walkConditionalFactor($factor) {}
+
+    /**
+     * Walks down a ConditionalPrimary AST node, thereby generating the appropriate SQL.
+     *
+     * @param ConditionalPrimary
+     * @return string The SQL.
+     */
+    public function walkConditionalPrimary($primary) {}
 
     /**
      * Walks down an ExistsExpression AST node, thereby generating the appropriate SQL.

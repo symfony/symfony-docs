@@ -10,7 +10,7 @@ use Symfony\Components\Console\Output\Output;
 use Symfony\Components\Routing\Matcher\Dumper\ApacheMatcherDumper;
 
 /*
- * This file is part of the symfony framework.
+ * This file is part of the Symfony framework.
  *
  * (c) Fabien Potencier <fabien.potencier@symfony-project.com>
  *
@@ -19,33 +19,33 @@ use Symfony\Components\Routing\Matcher\Dumper\ApacheMatcherDumper;
  */
 
 /**
- * 
+ * RouterApacheDumperCommand.
  *
- * @package    symfony
- * @subpackage console
+ * @package    Symfony
+ * @subpackage Framework_WebBundle
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
  */
 class RouterApacheDumperCommand extends Command
 {
-  /**
-   * @see Command
-   */
-  protected function configure()
-  {
-    $this
-      ->setName('router:dump-apache')
-    ;
-  }
+    /**
+     * @see Command
+     */
+    protected function configure()
+    {
+        $this
+            ->setName('router:dump-apache')
+        ;
+    }
 
-  /**
-   * @see Command
-   */
-  protected function execute(InputInterface $input, OutputInterface $output)
-  {
-    $router = $this->container->getService('router');
+    /**
+     * @see Command
+     */
+    protected function execute(InputInterface $input, OutputInterface $output)
+    {
+        $router = $this->container->getService('router');
 
-    $dumper = new ApacheMatcherDumper($router->getRouteCollection());
+        $dumper = new ApacheMatcherDumper($router->getRouteCollection());
 
-    $output->writeln($dumper->dump(), Output::OUTPUT_RAW);
-  }
+        $output->writeln($dumper->dump(), Output::OUTPUT_RAW);
+    }
 }

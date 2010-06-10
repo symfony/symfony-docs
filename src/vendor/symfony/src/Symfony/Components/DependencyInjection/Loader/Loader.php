@@ -3,7 +3,7 @@
 namespace Symfony\Components\DependencyInjection\Loader;
 
 /*
- * This file is part of the symfony framework.
+ * This file is part of the Symfony framework.
  *
  * (c) Fabien Potencier <fabien.potencier@symfony-project.com>
  *
@@ -14,33 +14,33 @@ namespace Symfony\Components\DependencyInjection\Loader;
 /**
  * Loader is the abstract class used by all built-in loaders.
  *
- * @package    symfony
- * @subpackage dependency_injection
+ * @package    Symfony
+ * @subpackage Components_DependencyInjection
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
  */
 abstract class Loader implements LoaderInterface
 {
-  static protected $extensions = array();
+    static protected $extensions = array();
 
-  /**
-   * Registers an extension.
-   *
-   * @param LoaderExtensionInterface $extension An extension instance
-   */
-  static public function registerExtension(LoaderExtensionInterface $extension)
-  {
-    static::$extensions[$extension->getAlias()] = static::$extensions[$extension->getNamespace()] = $extension;
-  }
+    /**
+     * Registers an extension.
+     *
+     * @param LoaderExtensionInterface $extension An extension instance
+     */
+    static public function registerExtension(LoaderExtensionInterface $extension)
+    {
+        static::$extensions[$extension->getAlias()] = static::$extensions[$extension->getNamespace()] = $extension;
+    }
 
-  /**
-   * Returns an extension by alias or namespace.
-   *
-   * @param string $name An alias or a namespace
-   *
-   * @return LoaderExtensionInterface An extension instance
-   */
-  static public function getExtension($name)
-  {
-    return isset(static::$extensions[$name]) ? static::$extensions[$name] : null;
-  }
+    /**
+     * Returns an extension by alias or namespace.
+     *
+     * @param string $name An alias or a namespace
+     *
+     * @return LoaderExtensionInterface An extension instance
+     */
+    static public function getExtension($name)
+    {
+        return isset(static::$extensions[$name]) ? static::$extensions[$name] : null;
+    }
 }

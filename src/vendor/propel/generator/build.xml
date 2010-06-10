@@ -1,0 +1,184 @@
+<!--
+    Use this file to faciliate easy per-project building.
+    
+    Simply create a build.properties file in your project directory,
+    for example ./projects/bookstore/build.properties, that contains
+    any needed (i.e. to override) values for that project.
+    
+    Call this build script and specify the name of the project and
+    (optionally) the name of the target you wish to execute (default is
+    'main' target) of build-propel.xml.
+
+    Normal use:
+    $> phing   -Dproject=bookstore
+    
+    Specific target: 
+    $> phing -Dproject=bookstore -Dtarget=insert-sql
+
+-->
+<project name="propel-project-builder" default="main">
+
+<!-- in case ${project.dir} was specified on command line, we set the project.dir
+     property here.  If it wasn't set, then this will be bogus, but it will
+     be overridden by the "set-project-dir" target. -->    
+<resolvepath propertyName="propel.project.dir" file="${project.dir}" dir="${application.startdir}"/>
+
+<!-- set a default target if none provided -->
+<property name="target" value="main"/>
+
+<!-- Set a default name for the build.properties file.
+		This allows for overriding the name of the build.properties file; however,
+		Propel still expects to find the file in the ${propel.project.dir}.
+ -->
+<property name="build.properties" value="build.properties"/>
+	
+<target name="check-buildprops-exists">
+  <available file="${propel.project.dir}/${build.properties}" property="projBuildPopertiesExists"/>  
+</target>
+
+<target name="check-buildprops" unless="projBuildPopertiesExists" depends="check-buildprops-exists">
+		<echo message="====================================================="/>
+		<echo message="Could not open ${build.properties} file:"/>
+		<echo message="		${propel.project.dir}/${build.properties}"/>
+		<echo message=" "/>
+		<echo message="Make sure that '${propel.project.dir}' is a valid path"/>
+		<echo message="and that it contains a ${build.properties} file."/>
+		<echo message="====================================================="/>	
+		
+		<fail message="Missing configuration file (see description above)."/>
+</target>
+
+<target name="check-project-or-dir-set">
+  <condition property="projectOrDirSet">
+  		<or>
+			<isset property="project"/>
+			<isset property="project.dir"/>
+		</or>
+  </condition>
+</target>
+
+<target name="check-buildprops-for-propel-gen" if="using.propel-gen" unless="projBuildPopertiesExists" depends="check-buildprops-exists">
+	<echo message="=========================================================="/>
+	<echo message="Could not open ${build.properties} file:"/>
+	<echo message="		${propel.project.dir}/${build.properties}"/>
+	<echo message=" "/>
+	<echo message="Project directory not specified or invalid. You must "/>
+	<echo message="specify the path to your project directory and your "/>
+	<echo message="project directory must contain your ${build.properties} "/>
+	<echo message="and schema.xml files.                                "/>
+	<echo message=" "/>
+	<echo message="Usage: "/>
+	<echo message=" "/>
+	<echo message="$&gt; propel-gen /path/to/projectdir [target]"/>
+	<echo message=" "/>
+	<echo message="=========================================================="/>	
+	<fail message="No project directory specified."/>
+</target>
+
+<target name="check-project-set" unless="projectOrDirSet" depends="check-project-or-dir-set">
+		<echo message="====================================================="/>
+		<echo message="Project not specified. You must enter a project name. "/>
+		<echo message="In the future you can enter it on the command line: "/>
+		<echo message=" "/>
+		<echo message="-Dproject=bookstore"/>
+		<echo message=" "/>
+		<echo message="This will attempt to find your project directory in"/>
+		<echo message="the default directory (./projects/bookstore)."/>
+		<echo message=" "/>
+		<echo message="You can also avoid this message and specicfy a custom "/>
+		<echo message="directory, using the project.dir property:"/>
+		<echo message=" "/>
+		<echo message="-Dproject.dir=/path/to/bookstore"/>
+		<echo message="====================================================="/>	
+		<input propertyname="project" promptChar=":">Project name</input>
+		<property name="propel.project" value="${project}" override="true"/>
+</target>
+
+<target name="set-project-dir" unless="project.dir" depends="check-project-set">
+	<echo>No project.dir was specified, using default path: ./projects/${project}</echo>
+	<property name="propel.project.dir" value="./projects/${project}" override="true"/>
+</target>
+
+<target name="configure" depends="set-project-dir,check-buildprops-for-propel-gen,check-buildprops">
+	<if>
+		<isset property="additional.properties"/>
+		<then>
+			<echo>Processing additional properties file: ${additional.properties}</echo>
+			<resolvepath propertyName="additional.properties.resolved" file="${additional.properties}" dir="${application.startdir}"/>
+			<property file="${additional.properties.resolved}"/>
+		</then>
+	</if>
+	<echo msg="Loading project-specific props from ${propel.project.dir}/${build.properties}"/>
+	<property file="${propel.project.dir}/${build.properties}"/>
+</target>
+
+<target name="main" depends="configure" description="The main target. Includes project-specific build.properties and calls the build-propel.xml script">
+
+ <phing phingfile="./build-propel.xml" target="${target}"/>
+ 
+</target>
+
+<!-- 
+ Convenience mappings to build-propel.xml main targets 
+ 
+ This makes it possible to use this buildfile w/o needing to specify
+ target as a property, e.g.:
+ 
+ $> phing -Dproject=bookstore insert-sql
+ 
+ The main reason for this is just consistency w/ old build-propel.xml file
+ (primarily for documentation & user confusion avoidance reasons).  There are relatively
+ few & infrequently changing main targets of build-propel.xml, so it's a non-
+ issue as far as maintenance is concerned.
+-->
+
+<target name="convert-conf" depends="configure">
+	<phing phingfile="build-propel.xml" target="convert-conf"/>
+</target>
+
+<target name="create-db" depends="configure">
+	<phing phingfile="build-propel.xml" target="create-db"/>
+</target>
+
+<target name="reverse" depends="configure">
+	<phing phingfile="build-propel.xml" target="reverse"/>
+</target>
+
+<target name="datadtd" depends="configure">
+	<phing phingfile="build-propel.xml" target="datadtd"/>
+</target>
+
+<target name="datadump" depends="configure">
+	<phing phingfile="build-propel.xml" target="datadump"/>
+</target>
+
+<target name="datasql" depends="configure">
+	<phing phingfile="build-propel.xml" target="datasql"/>
+</target>
+
+<target name="insert-sql" depends="configure">
+	<phing phingfile="build-propel.xml" target="insert-sql"/>
+</target>
+
+<target name="om" depends="configure">
+	<phing phingfile="build-propel.xml" target="om"/>
+</target>
+
+<target name="new-om" depends="configure">
+	<phing phingfile="build-propel.xml" target="new-om"/>
+</target>
+
+<target name="sql" depends="configure">
+	<phing phingfile="build-propel.xml" target="sql"/>
+</target>
+
+<target name="old-sql" depends="configure">
+	<phing phingfile="build-propel.xml" target="old-sql"/>
+</target>
+
+<target name="graphviz" depends="configure">
+	<phing phingfile="build-propel.xml" target="graphviz"/>
+</target>
+
+
+</project>

@@ -3,7 +3,7 @@
 namespace Symfony\Foundation;
 
 /*
- * This file is part of the symfony framework.
+ * This file is part of the Symfony framework.
  *
  * (c) Fabien Potencier <fabien.potencier@symfony-project.com>
  *
@@ -12,28 +12,29 @@ namespace Symfony\Foundation;
  */
 
 /**
- * 
+ * LoggerInterface.
  *
- * @package    symfony
+ * @package    Symfony
+ * @subpackage Foundation
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
  */
 interface LoggerInterface
 {
-  public function log($message, $priority);
+    public function log($message, $priority);
 
-  public function emerg($message);
+    public function emerg($message);
 
-  public function alert($message);
+    public function alert($message);
 
-  public function crit($message);
+    public function crit($message);
 
-  public function err($message);
+    public function err($message);
 
-  public function warn($message);
+    public function warn($message);
 
-  public function notice($message);
+    public function notice($message);
 
-  public function info($message);
+    public function info($message);
 
-  public function debug($message);
+    public function debug($message);
 }

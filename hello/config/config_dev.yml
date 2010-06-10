@@ -1,10 +1,9 @@
 imports:
-  - { resource: config.yml }
+    - { resource: config.yml }
 
-web.debug:
-  exception: %kernel.debug%
-  toolbar:   %kernel.debug%
+profiler.config:
+    toolbar: %kernel.debug%
 
 zend.logger:
-  priority: info
-  path:     %kernel.root_dir%/logs/%kernel.environment%.log
+    priority: info
+    path:     %kernel.root_dir%/logs/%kernel.environment%.log

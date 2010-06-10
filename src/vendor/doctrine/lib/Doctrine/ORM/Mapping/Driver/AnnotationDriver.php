@@ -1,7 +1,5 @@
 <?php
 /*
- *  $Id$
- *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
  * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
@@ -31,24 +29,21 @@ require __DIR__ . '/DoctrineAnnotations.php';
 /**
  * The AnnotationDriver reads the mapping metadata from docblock annotations.
  *
- * @license 	http://www.opensource.org/licenses/lgpl-license.php LGPL
- * @link    	www.doctrine-project.org
- * @since   	2.0
- * @version     $Revision$
- * @author		Benjamin Eberlei <kontakt@beberlei.de>
- * @author		Guilherme Blanco <guilhermeblanco@hotmail.com>
- * @author      Jonathan H. Wage <jonwage@gmail.com>
- * @author      Roman Borschel <roman@code-factory.org>
+ * @since 2.0
+ * @author Benjamin Eberlei <kontakt@beberlei.de>
+ * @author Guilherme Blanco <guilhermeblanco@hotmail.com>
+ * @author Jonathan H. Wage <jonwage@gmail.com>
+ * @author Roman Borschel <roman@code-factory.org>
  */
 class AnnotationDriver implements Driver
 {
-    /** 
+    /**
      * The AnnotationReader.
      *
      * @var AnnotationReader
      */
     private $_reader;
-    
+
     /**
      * The paths where to look for mapping files.
      *
@@ -62,6 +57,11 @@ class AnnotationDriver implements Driver
      * @var string
      */
     protected $_fileExtension = '.php';
+
+    /**
+     * @param array
+     */
+    protected $_classNames;
     
     /**
      * Initializes a new AnnotationDriver that uses the given AnnotationReader for reading
@@ -73,7 +73,6 @@ class AnnotationDriver implements Driver
     public function __construct(AnnotationReader $reader, $paths = null)
     {
         $this->_reader = $reader;
-        
         if ($paths) {
             $this->addPaths((array) $paths);
         }
@@ -88,7 +87,7 @@ class AnnotationDriver implements Driver
     {
         $this->_paths = array_unique(array_merge($this->_paths, $paths));
     }
-    
+
     /**
      * Retrieve the defined metadata lookup paths.
      *
@@ -126,7 +125,7 @@ class AnnotationDriver implements Driver
     public function loadMetadataForClass($className, ClassMetadataInfo $metadata)
     {
         $class = $metadata->getReflectionClass();
-        
+
         $classAnnotations = $this->_reader->getClassAnnotations($class);
 
         // Evaluate Entity annotation
@@ -139,14 +138,14 @@ class AnnotationDriver implements Driver
             throw MappingException::classIsNotAValidEntityOrMappedSuperClass($className);
         }
 
-        // Evaluate DoctrineTable annotation
+        // Evaluate Table annotation
         if (isset($classAnnotations['Doctrine\ORM\Mapping\Table'])) {
             $tableAnnot = $classAnnotations['Doctrine\ORM\Mapping\Table'];
             $primaryTable = array(
                 'name' => $tableAnnot->name,
                 'schema' => $tableAnnot->schema
             );
-            
+
             if ($tableAnnot->indexes !== null) {
                 foreach ($tableAnnot->indexes as $indexAnnot) {
                     $primaryTable['indexes'][$indexAnnot->name] = array(
@@ -154,7 +153,7 @@ class AnnotationDriver implements Driver
                     );
                 }
             }
-            
+
             if ($tableAnnot->uniqueConstraints !== null) {
                 foreach ($tableAnnot->uniqueConstraints as $uniqueConstraint) {
                     $primaryTable['uniqueConstraints'][$uniqueConstraint->name] = array(
@@ -162,14 +161,14 @@ class AnnotationDriver implements Driver
                     );
                 }
             }
-            
+
             $metadata->setPrimaryTable($primaryTable);
         }
 
         // Evaluate InheritanceType annotation
         if (isset($classAnnotations['Doctrine\ORM\Mapping\InheritanceType'])) {
             $inheritanceTypeAnnot = $classAnnotations['Doctrine\ORM\Mapping\InheritanceType'];
-            $metadata->setInheritanceType(constant('\Doctrine\ORM\Mapping\ClassMetadata::INHERITANCE_TYPE_' . $inheritanceTypeAnnot->value));
+            $metadata->setInheritanceType(constant('Doctrine\ORM\Mapping\ClassMetadata::INHERITANCE_TYPE_' . $inheritanceTypeAnnot->value));
         }
 
         // Evaluate DiscriminatorColumn annotation
@@ -191,7 +190,7 @@ class AnnotationDriver implements Driver
         // Evaluate DoctrineChangeTrackingPolicy annotation
         if (isset($classAnnotations['Doctrine\ORM\Mapping\ChangeTrackingPolicy'])) {
             $changeTrackingAnnot = $classAnnotations['Doctrine\ORM\Mapping\ChangeTrackingPolicy'];
-            $metadata->setChangeTrackingPolicy($changeTrackingAnnot->value);
+            $metadata->setChangeTrackingPolicy(constant('Doctrine\ORM\Mapping\ClassMetadata::CHANGETRACKING_' . $changeTrackingAnnot->value));
         }
 
         // Evaluate annotations on properties/fields
@@ -209,7 +208,7 @@ class AnnotationDriver implements Driver
 
             // Check for JoinColummn/JoinColumns annotations
             $joinColumns = array();
-            
+
             if ($joinColumnAnnot = $this->_reader->getPropertyAnnotation($property, 'Doctrine\ORM\Mapping\JoinColumn')) {
                 $joinColumns[] = array(
                     'name' => $joinColumnAnnot->name,
@@ -240,7 +239,7 @@ class AnnotationDriver implements Driver
                 if ($columnAnnot->type == null) {
                     throw MappingException::propertyTypeIsRequired($className, $property->getName());
                 }
-                
+
                 $mapping['type'] = $columnAnnot->type;
                 $mapping['length'] = $columnAnnot->length;
                 $mapping['precision'] = $columnAnnot->precision;
@@ -250,27 +249,27 @@ class AnnotationDriver implements Driver
                 if ($columnAnnot->options) {
                     $mapping['options'] = $columnAnnot->options;
                 }
-                
+
                 if (isset($columnAnnot->name)) {
                     $mapping['columnName'] = $columnAnnot->name;
                 }
-                
+
                 if (isset($columnAnnot->columnDefinition)) {
                     $mapping['columnDefinition'] = $columnAnnot->columnDefinition;
                 }
-                
+
                 if ($idAnnot = $this->_reader->getPropertyAnnotation($property, 'Doctrine\ORM\Mapping\Id')) {
                     $mapping['id'] = true;
                 }
-                
+
                 if ($generatedValueAnnot = $this->_reader->getPropertyAnnotation($property, 'Doctrine\ORM\Mapping\GeneratedValue')) {
                     $metadata->setIdGeneratorType(constant('Doctrine\ORM\Mapping\ClassMetadata::GENERATOR_TYPE_' . $generatedValueAnnot->strategy));
                 }
-                
+
                 if ($versionAnnot = $this->_reader->getPropertyAnnotation($property, 'Doctrine\ORM\Mapping\Version')) {
                     $metadata->setVersionMapping($mapping);
                 }
-                
+
                 $metadata->mapField($mapping);
 
                 // Check for SequenceGenerator/TableGenerator definition
@@ -287,6 +286,7 @@ class AnnotationDriver implements Driver
                 $mapping['targetEntity'] = $oneToOneAnnot->targetEntity;
                 $mapping['joinColumns'] = $joinColumns;
                 $mapping['mappedBy'] = $oneToOneAnnot->mappedBy;
+                $mapping['inversedBy'] = $oneToOneAnnot->inversedBy;
                 $mapping['cascade'] = $oneToOneAnnot->cascade;
                 $mapping['orphanRemoval'] = $oneToOneAnnot->orphanRemoval;
                 $mapping['fetch'] = constant('Doctrine\ORM\Mapping\AssociationMapping::FETCH_' . $oneToOneAnnot->fetch);
@@ -297,22 +297,28 @@ class AnnotationDriver implements Driver
                 $mapping['cascade'] = $oneToManyAnnot->cascade;
                 $mapping['orphanRemoval'] = $oneToManyAnnot->orphanRemoval;
                 $mapping['fetch'] = constant('Doctrine\ORM\Mapping\AssociationMapping::FETCH_' . $oneToManyAnnot->fetch);
+
+                if ($orderByAnnot = $this->_reader->getPropertyAnnotation($property, 'Doctrine\ORM\Mapping\OrderBy')) {
+                    $mapping['orderBy'] = $orderByAnnot->value;
+                }
+
                 $metadata->mapOneToMany($mapping);
             } else if ($manyToOneAnnot = $this->_reader->getPropertyAnnotation($property, 'Doctrine\ORM\Mapping\ManyToOne')) {
                 $mapping['joinColumns'] = $joinColumns;
                 $mapping['cascade'] = $manyToOneAnnot->cascade;
+                $mapping['inversedBy'] = $manyToOneAnnot->inversedBy;
                 $mapping['targetEntity'] = $manyToOneAnnot->targetEntity;
                 $mapping['fetch'] = constant('Doctrine\ORM\Mapping\AssociationMapping::FETCH_' . $manyToOneAnnot->fetch);
                 $metadata->mapManyToOne($mapping);
             } else if ($manyToManyAnnot = $this->_reader->getPropertyAnnotation($property, 'Doctrine\ORM\Mapping\ManyToMany')) {
                 $joinTable = array();
-                
+
                 if ($joinTableAnnot = $this->_reader->getPropertyAnnotation($property, 'Doctrine\ORM\Mapping\JoinTable')) {
                     $joinTable = array(
                         'name' => $joinTableAnnot->name,
                         'schema' => $joinTableAnnot->schema
                     );
-                    
+
                     foreach ($joinTableAnnot->joinColumns as $joinColumn) {
                         $joinTable['joinColumns'][] = array(
                             'name' => $joinColumn->name,
@@ -337,46 +343,52 @@ class AnnotationDriver implements Driver
                         );
                     }
                 }
-                
+
                 $mapping['joinTable'] = $joinTable;
                 $mapping['targetEntity'] = $manyToManyAnnot->targetEntity;
                 $mapping['mappedBy'] = $manyToManyAnnot->mappedBy;
+                $mapping['inversedBy'] = $manyToManyAnnot->inversedBy;
                 $mapping['cascade'] = $manyToManyAnnot->cascade;
                 $mapping['fetch'] = constant('Doctrine\ORM\Mapping\AssociationMapping::FETCH_' . $manyToManyAnnot->fetch);
+
+                if ($orderByAnnot = $this->_reader->getPropertyAnnotation($property, 'Doctrine\ORM\Mapping\OrderBy')) {
+                    $mapping['orderBy'] = $orderByAnnot->value;
+                }
+
                 $metadata->mapManyToMany($mapping);
             }
         }
-        
-        // Evaluate HasLifecycleCallbacks annotation
+
+        // Evaluate @HasLifecycleCallbacks annotation
         if (isset($classAnnotations['Doctrine\ORM\Mapping\HasLifecycleCallbacks'])) {
             foreach ($class->getMethods() as $method) {
                 if ($method->isPublic()) {
                     $annotations = $this->_reader->getMethodAnnotations($method);
-                    
+
                     if (isset($annotations['Doctrine\ORM\Mapping\PrePersist'])) {
                         $metadata->addLifecycleCallback($method->getName(), \Doctrine\ORM\Events::prePersist);
                     }
-                    
+
                     if (isset($annotations['Doctrine\ORM\Mapping\PostPersist'])) {
                         $metadata->addLifecycleCallback($method->getName(), \Doctrine\ORM\Events::postPersist);
                     }
-                    
+
                     if (isset($annotations['Doctrine\ORM\Mapping\PreUpdate'])) {
                         $metadata->addLifecycleCallback($method->getName(), \Doctrine\ORM\Events::preUpdate);
                     }
-                    
+
                     if (isset($annotations['Doctrine\ORM\Mapping\PostUpdate'])) {
                         $metadata->addLifecycleCallback($method->getName(), \Doctrine\ORM\Events::postUpdate);
                     }
-                    
+
                     if (isset($annotations['Doctrine\ORM\Mapping\PreRemove'])) {
                         $metadata->addLifecycleCallback($method->getName(), \Doctrine\ORM\Events::preRemove);
                     }
-                    
+
                     if (isset($annotations['Doctrine\ORM\Mapping\PostRemove'])) {
                         $metadata->addLifecycleCallback($method->getName(), \Doctrine\ORM\Events::postRemove);
                     }
-                    
+
                     if (isset($annotations['Doctrine\ORM\Mapping\PostLoad'])) {
                         $metadata->addLifecycleCallback($method->getName(), \Doctrine\ORM\Events::postLoad);
                     }
@@ -397,50 +409,76 @@ class AnnotationDriver implements Driver
     public function isTransient($className)
     {
         $classAnnotations = $this->_reader->getClassAnnotations(new \ReflectionClass($className));
-        
+
         return ! isset($classAnnotations['Doctrine\ORM\Mapping\Entity']) &&
                ! isset($classAnnotations['Doctrine\ORM\Mapping\MappedSuperclass']);
     }
-    
+
     /**
      * {@inheritDoc}
      */
     public function getAllClassNames()
     {
-        $classes = array();
-    
-        if ($this->_paths) {
-            $declared = get_declared_classes();
-            
-            foreach ((array) $this->_paths as $path) {
-                if ( ! is_dir($path)) {
-                    throw MappingException::annotationDriverRequiresConfiguredDirectoryPath();
-                }
-            
-                $iterator = new \RecursiveIteratorIterator(
-                    new \RecursiveDirectoryIterator($path),
-                    \RecursiveIteratorIterator::LEAVES_ONLY
-                );
-        
-                foreach ($iterator as $file) {
-                    if (($fileName = $file->getBasename($this->_fileExtension)) == $file->getBasename()) {
-                        continue;
-                    }
-                    
-                    require_once $file->getPathName();
-                }
-            }
-            
-            $declared = array_diff(get_declared_classes(), $declared);
+        if ($this->_classNames !== null) {
+            return $this->_classNames;
+        }
 
-            foreach ($declared as $className) {                 
-                if ( ! $this->isTransient($className)) {
-                    $classes[] = $className;
+        if (!$this->_paths) {
+            throw MappingException::pathRequired();
+        }
+
+        $classes = array();
+        $includedFiles = array();
+
+        foreach ($this->_paths as $path) {
+            if ( ! is_dir($path)) {
+                throw MappingException::fileMappingDriversRequireConfiguredDirectoryPath();
+            }
+
+            $iterator = new \RecursiveIteratorIterator(
+                new \RecursiveDirectoryIterator($path),
+                \RecursiveIteratorIterator::LEAVES_ONLY
+            );
+
+            foreach ($iterator as $file) {
+                if (($fileName = $file->getBasename($this->_fileExtension)) == $file->getBasename()) {
+                    continue;
                 }
+
+                $sourceFile = realpath($file->getPathName());
+                require_once $sourceFile;
+                $includedFiles[] = $sourceFile;
             }
         }
-        
+
+        $declared = get_declared_classes();
+
+        foreach ($declared as $className) {
+            $rc = new \ReflectionClass($className);
+            $sourceFile = $rc->getFileName();
+            if (in_array($sourceFile, $includedFiles) && ! $this->isTransient($className)) {
+                $classes[] = $className;
+            }
+        }
+
+        $this->_classNames = $classes;
+
         return $classes;
     }
-    
+
+    /**
+     * Factory method for the Annotation Driver
+     * 
+     * @param array|string $paths
+     * @param AnnotationReader $reader
+     * @return AnnotationDriver
+     */
+    static public function create($paths = array(), AnnotationReader $reader = null)
+    {
+        if ($reader == null) {
+            $reader = new AnnotationReader();
+            $reader->setDefaultAnnotationNamespace('Doctrine\ORM\Mapping\\');
+        }
+        return new self($reader, $paths);
+    }
 }

@@ -8,7 +8,7 @@ use Symfony\Components\DependencyInjection\Loader\Loader;
 use Symfony\Framework\SwiftmailerBundle\DependencyInjection\SwiftmailerExtension;
 
 /*
- * This file is part of the symfony framework.
+ * This file is part of the Symfony framework.
  *
  * (c) Fabien Potencier <fabien.potencier@symfony-project.com>
  *
@@ -17,15 +17,23 @@ use Symfony\Framework\SwiftmailerBundle\DependencyInjection\SwiftmailerExtension
  */
 
 /**
- * 
+ * Bundle.
  *
- * @package    symfony
+ * @package    Symfony
+ * @subpackage Framework_SwiftmailerBundle
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
  */
 class Bundle extends BaseBundle
 {
-  public function buildContainer(ContainerInterface $container)
-  {
-    Loader::registerExtension(new SwiftmailerExtension());
-  }
+    /**
+     * Customizes the Container instance.
+     *
+     * @param Symfony\Components\DependencyInjection\ContainerInterface $container A ContainerInterface instance
+     *
+     * @return Symfony\Components\DependencyInjection\BuilderConfiguration A BuilderConfiguration instance
+     */
+    public function buildContainer(ContainerInterface $container)
+    {
+        Loader::registerExtension(new SwiftmailerExtension());
+    }
 }

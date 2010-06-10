@@ -17,20 +17,24 @@
  * @subpackage Formatter
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: Firebug.php 20096 2010-01-06 02:05:09Z bkarwin $
+ * @version    $Id$
  */
 
-/** Zend_Log_Formatter_Interface */
-require_once 'Zend/Log/Formatter/Interface.php';
+/**
+ * @namespace
+ */
+namespace Zend\Log\Formatter;
+use \Zend\Log\Formatter;
 
 /**
+ * @uses       \Zend\Log\Formatter\FormatterInterface
  * @category   Zend
  * @package    Zend_Log
  * @subpackage Formatter
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_Log_Formatter_Firebug implements Zend_Log_Formatter_Interface
+class Firebug implements Formatter
 {
     /**
      * This method formats the event for the firebug writer.

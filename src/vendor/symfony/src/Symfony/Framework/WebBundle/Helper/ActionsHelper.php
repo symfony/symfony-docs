@@ -3,11 +3,11 @@
 namespace Symfony\Framework\WebBundle\Helper;
 
 use Symfony\Components\Templating\Helper\Helper;
-use Symfony\Components\DependencyInjection\ContainerInterface;
 use Symfony\Components\OutputEscaper\Escaper;
+use Symfony\Framework\WebBundle\Controller\ControllerManager;
 
 /*
- * This file is part of the symfony framework.
+ * This file is part of the Symfony framework.
  *
  * (c) Fabien Potencier <fabien.potencier@symfony-project.com>
  *
@@ -16,42 +16,69 @@ use Symfony\Components\OutputEscaper\Escaper;
  */
 
 /**
- * 
+ * ActionsHelper.
  *
- * @package    symfony
+ * @package    Symfony
+ * @subpackage Framework_WebBundle
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
  */
 class ActionsHelper extends Helper
 {
-  protected $container;
+    protected $manager;
 
-  /**
-   * Constructor.
-   *
-   * @param Constructor $container A ContainerInterface instance
-   */
-  public function __construct(ContainerInterface $container)
-  {
-    $this->container = $container;
-  }
+    /**
+     * Constructor.
+     *
+     * @param Constructor $container A ContainerInterface instance
+     */
+    public function __construct(ControllerManager $manager)
+    {
+        $this->manager = $manager;
+    }
 
-  public function output($controller, array $parameters = array())
-  {
-    echo $this->render($controller, $parameters);
-  }
+    /**
+     * Outputs the Response content for a given controller.
+     *
+     * @param string $controller A controller name to execute (a string like BlogBundle:Post:index), or a relative URI
+     * @param array  $options    An array of options
+     *
+     * @see render()
+     */
+    public function output($controller, array $options = array())
+    {
+        echo $this->render($controller, $options);
+    }
 
-  public function render($controller, array $parameters = array())
-  {
-    return $this->container->getControllerLoaderService()->run($controller, Escaper::unescape($parameters))->getContent();
-  }
+    /**
+     * Returns the Response content for a given controller or URI.
+     *
+     * @param string $controller A controller name to execute (a string like BlogBundle:Post:index), or a relative URI
+     * @param array  $options    An array of options
+     *
+     * @see Symfony\Framework\WebBundle\Controller\ControllerManager::render()
+     */
+    public function render($controller, array $options = array())
+    {
+        if (isset($options['path']))
+        {
+            $options['path'] = Escaper::unescape($options['path']);
+        }
 
-  /**
-   * Returns the canonical name of this helper.
-   *
-   * @return string The canonical name
-   */
-  public function getName()
-  {
-    return 'actions';
-  }
+        if (isset($options['query']))
+        {
+            $options['query'] = Escaper::unescape($options['query']);
+        }
+
+        return $this->manager->render($controller, $options);
+    }
+
+    /**
+     * Returns the canonical name of this helper.
+     *
+     * @return string The canonical name
+     */
+    public function getName()
+    {
+        return 'actions';
+    }
 }

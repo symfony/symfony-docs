@@ -1,7 +1,5 @@
 <?php 
 /*
- *  $Id$
- *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
  * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
@@ -32,23 +30,12 @@ final class NativeQuery extends AbstractQuery
     private $_sql;
 
     /**
-     * Initializes a new instance of the <tt>NativeQuery</tt> class that is bound
-     * to the given EntityManager.
-     *
-     * @param EntityManager $em The EntityManager to use.
-     */
-    public function __construct(EntityManager $em)
-    {
-        parent::__construct($em);
-    }
-
-    /**
      * Sets the SQL of the query.
      *
      * @param string $sql
-     * @return Doctrine\ORM\AbstractQuery
+     * @return NativeQuery This query instance.
      */
-    public function setSql($sql)
+    public function setSQL($sql)
     {
         $this->_sql = $sql;
         return $this;
@@ -60,37 +47,27 @@ final class NativeQuery extends AbstractQuery
      * @return mixed The built SQL query or an array of all SQL queries.
      * @override
      */
-    public function getSql()
+    public function getSQL()
     {
         return $this->_sql;
     }
 
     /**
-     * Executes the query.
-     *
-     * @param array $params
-     * @return Statement The Statement handle.
-     * @override
-     */
-    protected function _doExecute(array $params)
-    {
-        return $this->_em->getConnection()->execute($this->_sql, $this->_prepareParams($params));
-    }
-    
-    /**
      * {@inheritdoc}
-     * 
-     * @override
      */
-    protected function _prepareParams(array $params)
+    protected function _doExecute()
     {
-        $sqlParams = array();
-        
+        $stmt = $this->_em->getConnection()->prepare($this->_sql);
+        $params = $this->_params;
         foreach ($params as $key => $value) {
-            $sqlParams[$key] = $value;
+            if (isset($this->_paramTypes[$key])) {
+                $stmt->bindValue($key, $value, $this->_paramTypes[$key]);
+            } else {
+                $stmt->bindValue($key, $value);
+            }
         }
-        ksort($sqlParams);
-        
-        return array_values($sqlParams);
+        $stmt->execute();
+
+        return $stmt;
     }
 }

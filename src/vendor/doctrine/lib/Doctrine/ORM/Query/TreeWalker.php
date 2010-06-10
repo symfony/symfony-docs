@@ -23,7 +23,7 @@ namespace Doctrine\ORM\Query;
 
 /**
  * Interface for walkers of DQL ASTs (abstract syntax trees).
- * 
+ *
  * @author Roman Borschel <roman@code-factory.org>
  * @since 2.0
  */
@@ -36,8 +36,8 @@ interface TreeWalker
      * @param ParserResult $parserResult The result of the parsing process.
      * @param array $queryComponents Query components (symbol table)
      */
-    function __construct($query, $parserResult, array $queryComponents);
-    
+    public function __construct($query, $parserResult, array $queryComponents);
+
     /**
      * Walks down a SelectStatement AST node, thereby generating the appropriate SQL.
      *
@@ -219,6 +219,14 @@ interface TreeWalker
     function walkWhereClause($whereClause);
 
     /**
+     * Walks down a ConditionalExpression AST node, thereby generating the appropriate SQL.
+     *
+     * @param ConditionalExpression
+     * @return string The SQL.
+     */
+    function walkConditionalExpression($condExpr);
+
+    /**
      * Walks down a ConditionalTerm AST node, thereby generating the appropriate SQL.
      *
      * @param ConditionalTerm
@@ -235,13 +243,21 @@ interface TreeWalker
     function walkConditionalFactor($factor);
 
     /**
+     * Walks down a ConditionalPrimary AST node, thereby generating the appropriate SQL.
+     *
+     * @param ConditionalPrimary
+     * @return string The SQL.
+     */
+    function walkConditionalPrimary($primary);
+
+    /**
      * Walks down an ExistsExpression AST node, thereby generating the appropriate SQL.
      *
      * @param ExistsExpression
      * @return string The SQL.
      */
     function walkExistsExpression($existsExpr);
-    
+
     /**
      * Walks down a CollectionMemberExpression AST node, thereby generating the appropriate SQL.
      *
@@ -249,7 +265,7 @@ interface TreeWalker
      * @return string The SQL.
      */
     function walkCollectionMemberExpression($collMemberExpr);
-    
+
     /**
      * Walks down an EmptyCollectionComparisonExpression AST node, thereby generating the appropriate SQL.
      *
@@ -369,10 +385,10 @@ interface TreeWalker
      * @return string The SQL.
      */
     function walkPathExpression($pathExpr);
-    
+
     /**
      * Gets an executor that can be used to execute the result of this walker.
-     * 
+     *
      * @return AbstractExecutor
      */
     function getExecutor($AST);

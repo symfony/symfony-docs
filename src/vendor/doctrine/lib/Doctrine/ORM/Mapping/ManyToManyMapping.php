@@ -1,7 +1,5 @@
 <?php
 /*
- *  $Id$
- *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
  * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
@@ -28,7 +26,7 @@ namespace Doctrine\ORM\Mapping;
  * <b>IMPORTANT NOTE:</b>
  *
  * The fields of this class are only public for 2 reasons:
- * 1) To allow fast, internal READ access.
+ * 1) To allow fast READ access.
  * 2) To drastically reduce the size of a serialized instance (private/protected members
  *    get the whole class name, namespace inclusive, prepended to every property in
  *    the serialized representation).
@@ -39,42 +37,39 @@ namespace Doctrine\ORM\Mapping;
  * @since 2.0
  * @author Roman Borschel <roman@code-factory.org>
  * @author Giorgio Sironi <piccoloprincipeazzurro@gmail.com>
+ * @todo Potentially remove if assoc mapping objects get replaced by simple arrays.
  */
 class ManyToManyMapping extends AssociationMapping
 {
     /**
-     * Maps the columns in the relational table to the columns in the source table.
+     * READ-ONLY: Maps the columns in the relational table to the columns in the source table.
      */
     public $relationToSourceKeyColumns = array();
 
     /**
-     * Maps the columns in the relation table to the columns in the target table.
+     * READ-ONLY: Maps the columns in the relation table to the columns in the target table.
      */
     public $relationToTargetKeyColumns = array();
 
     /**
-     * List of aggregated column names on the join table.
+     * READ-ONLY: List of aggregated column names on the join table.
      */
     public $joinTableColumns = array();
     
     /** FUTURE: The key column mapping, if any. The key column holds the keys of the Collection. */
     //public $keyColumn;
-    
+
     /**
-     * Initializes a new ManyToManyMapping.
+     * READ-ONLY: Order this collection by the given DQL snippet.
+     * 
+     * Only simple unqualified field names and ASC|DESC are allowed
      *
-     * @param array $mapping The mapping definition.
+     * @var array
      */
-    public function __construct(array $mapping)
-    {
-        parent::__construct($mapping);
-    }
-    
+    public $orderBy;
+
     /**
-     * Validates and completes the mapping.
-     *
-     * @param array $mapping
-     * @override
+     * {@inheritdoc}
      */
     protected function _validateAndCompleteMapping(array $mapping)
     {
@@ -90,13 +85,15 @@ class ManyToManyMapping extends AssociationMapping
                     'joinColumns' => array(
                         array(
                             'name' => $sourceShortName . '_id',
-                            'referencedColumnName' => 'id'
+                            'referencedColumnName' => 'id',
+                            'onDelete' => 'CASCADE'
                         )
                     ),
                     'inverseJoinColumns' => array(
                         array(
                             'name' => $targetShortName . '_id',
-                            'referencedColumnName' => 'id'
+                            'referencedColumnName' => 'id',
+                            'onDelete' => 'CASCADE'
                         )
                     )
                 );
@@ -117,40 +114,23 @@ class ManyToManyMapping extends AssociationMapping
                 );
             }
             
-            foreach ($mapping['joinTable']['joinColumns'] as &$joinColumn) {
-                if ($joinColumn['name'][0] == '`') {
-                    $joinColumn['name'] = trim($joinColumn['name'], '`');
-                    $joinColumn['quoted'] = true;
-                }
+            foreach ($mapping['joinTable']['joinColumns'] as $joinColumn) {
                 $this->relationToSourceKeyColumns[$joinColumn['name']] = $joinColumn['referencedColumnName'];
                 $this->joinTableColumns[] = $joinColumn['name'];
             }
             
-            foreach ($mapping['joinTable']['inverseJoinColumns'] as &$inverseJoinColumn) {
-                if ($inverseJoinColumn['name'][0] == '`') {
-                    $inverseJoinColumn['name'] = trim($inverseJoinColumn['name'], '`');
-                    $inverseJoinColumn['quoted'] = true;
-                }
+            foreach ($mapping['joinTable']['inverseJoinColumns'] as $inverseJoinColumn) {
                 $this->relationToTargetKeyColumns[$inverseJoinColumn['name']] = $inverseJoinColumn['referencedColumnName'];
                 $this->joinTableColumns[] = $inverseJoinColumn['name'];
             }
         }
-    }
 
-    public function getJoinTableColumnNames()
-    {
-        return $this->joinTableColumns;
-        //return array_merge(array_keys($this->relationToSourceKeyColumns), array_keys($this->relationToTargetKeyColumns));
-    }
-    
-    public function getRelationToSourceKeyColumns()
-    {
-        return $this->relationToSourceKeyColumns;
-    }
-
-    public function getRelationToTargetKeyColumns()
-    {
-        return $this->relationToTargetKeyColumns;
+        if (isset($mapping['orderBy'])) {
+            if ( ! is_array($mapping['orderBy'])) {
+                throw new \InvalidArgumentException("'orderBy' is expected to be an array, not ".gettype($mapping['orderBy']));
+            }
+            $this->orderBy = $mapping['orderBy'];
+        }
     }
 
     /**
@@ -161,61 +141,37 @@ class ManyToManyMapping extends AssociationMapping
      * @param object The owner of the collection.
      * @param object The collection to populate.
      * @param array
+     * @todo Remove
      */
     public function load($sourceEntity, $targetCollection, $em, array $joinColumnValues = array())
     {
-        $sourceClass = $em->getClassMetadata($this->sourceEntityName);
-        $joinTableConditions = array();
-        if ($this->isOwningSide) {
-            foreach ($this->relationToSourceKeyColumns as $relationKeyColumn => $sourceKeyColumn) {
-                // getting id
-                if (isset($sourceClass->fieldNames[$sourceKeyColumn])) {
-                    $joinTableConditions[$relationKeyColumn] = $sourceClass->reflFields[$sourceClass->fieldNames[$sourceKeyColumn]]->getValue($sourceEntity);
-                } else {
-                    throw MappingException::joinColumnMustPointToMappedField(
-                        $sourceClass->name, $sourceKeyColumn
-                    );
-                }
-            }
-        } else {
-            $owningAssoc = $em->getClassMetadata($this->targetEntityName)->associationMappings[$this->mappedByFieldName];
-            // TRICKY: since the association is inverted source and target are flipped
-            foreach ($owningAssoc->relationToTargetKeyColumns as $relationKeyColumn => $sourceKeyColumn) {
-                // getting id
-                if (isset($sourceClass->fieldNames[$sourceKeyColumn])) {
-                    $joinTableConditions[$relationKeyColumn] = $sourceClass->reflFields[$sourceClass->fieldNames[$sourceKeyColumn]]->getValue($sourceEntity);
-                } else {
-                    throw MappingException::joinColumnMustPointToMappedField(
-                        $sourceClass->name, $sourceKeyColumn
-                    );
-                }
-            }
-        }
-
-        $persister = $em->getUnitOfWork()->getEntityPersister($this->targetEntityName);
-        $persister->loadManyToManyCollection($this, $joinTableConditions, $targetCollection);
+        $em->getUnitOfWork()->getEntityPersister($this->targetEntityName)->loadManyToManyCollection($this, $sourceEntity, $targetCollection);
     }
 
-    /**
-     * {@inheritdoc}
-     */
+    /** {@inheritdoc} */
     public function isManyToMany()
     {
         return true;
     }
-    
+
     /**
-     * Gets the (possibly quoted) column name of a join column that is safe to use
-     * in an SQL statement.
-     * 
-     * @param string $joinColumn
-     * @param AbstractPlatform $platform
-     * @return string
+     * Determines which fields get serialized.
+     *
+     * It is only serialized what is necessary for best unserialization performance.
+     * That means any metadata properties that are not set or empty or simply have
+     * their default value are NOT serialized.
+     *
+     * @return array The names of all the fields that should be serialized.
      */
-    public function getQuotedJoinColumnName($joinColumn, $platform)
+    public function __sleep()
     {
-        return isset($this->joinTable['joinColumns'][$joinColumn]['quoted']) ?
-                $platform->quoteIdentifier($joinColumn) :
-                $joinColumn;
+        $serialized = parent::__sleep();
+        $serialized[] = 'joinTableColumns';
+        $serialized[] = 'relationToSourceKeyColumns';
+        $serialized[] = 'relationToTargetKeyColumns';
+        if ($this->orderBy) {
+            $serialized[] = 'orderBy';
+        }
+        return $serialized;
     }
 }

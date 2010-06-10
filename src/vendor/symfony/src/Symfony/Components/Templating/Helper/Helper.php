@@ -2,10 +2,8 @@
 
 namespace Symfony\Components\Templating\Helper;
 
-use Symfony\Components\Templating\Engine;
-
 /*
- * This file is part of the symfony package.
+ * This file is part of the Symfony package.
  *
  * (c) Fabien Potencier <fabien.potencier@symfony-project.com>
  *
@@ -16,31 +14,34 @@ use Symfony\Components\Templating\Engine;
 /**
  * Helper is the base class for all helper classes.
  *
- * @package    symfony
- * @subpackage templating
+ * Most of the time, a Helper is an adapter around an existing
+ * class that exposes a read-only interface for templates.
+ *
+ * @package    Symfony
+ * @subpackage Components_Templating
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
  */
 abstract class Helper implements HelperInterface
 {
-  protected $engine;
+    protected $charset = 'UTF-8';
 
-  /**
-   * Sets the engine associated with this helper.
-   *
-   * @param Engine $engine A Engine instance
-   */
-  public function setEngine(Engine $engine = null)
-  {
-    $this->engine = $engine;
-  }
+    /**
+     * Sets the default charset.
+     *
+     * @param string $charset The charset
+     */
+    public function setCharset($charset)
+    {
+        $this->charset = $charset;
+    }
 
-  /**
-   * Gets the engine associated with this helper.
-   *
-   * @return Engine A Engine instance
-   */
-  public function getEngine()
-  {
-    return $this->engine;
-  }
+    /**
+     * Gets the default charset.
+     *
+     * @return string The default charset
+     */
+    public function getCharset()
+    {
+        return $this->charset;
+    }
 }

@@ -7,12 +7,10 @@ use Symfony\Components\Console\Input\InputOption;
 use Symfony\Components\Console\Input\InputInterface;
 use Symfony\Components\Console\Output\OutputInterface;
 use Symfony\Components\Console\Output\Output;
-use Symfony\Framework\WebBundle\Util\Filesystem;
-use Doctrine\Common\Cli\Configuration;
-use Doctrine\Common\Cli\CliController as DoctrineCliController;
+use Doctrine\ORM\Tools\Console\Command\GenerateProxiesCommand;
 
 /*
- * This file is part of the symfony framework.
+ * This file is part of the Symfony framework.
  *
  * (c) Fabien Potencier <fabien.potencier@symfony-project.com>
  *
@@ -21,55 +19,34 @@ use Doctrine\Common\Cli\CliController as DoctrineCliController;
  */
 
 /**
- * 
+ * Generate the Doctrine ORM entity proxies to your cache directory.
  *
- * @package    symfony
- * @subpackage console
+ * @package    Symfony
+ * @subpackage Framework_DoctrineBundle
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
+ * @author     Jonathan H. Wage <jonwage@gmail.com>
  */
-class GenerateProxiesDoctrineCommand extends DoctrineCommand
+class GenerateProxiesDoctrineCommand extends GenerateProxiesCommand
 {
-  /**
-   * @see Command
-   */
-  protected function configure()
-  {
-    $this
-      ->setName('doctrine:generate-proxies')
-    ;
-  }
-
-  /**
-   * @see Command
-   */
-  protected function execute(InputInterface $input, OutputInterface $output)
-  {
-    $configuration = new Configuration();
-    $configuration->setAttribute('em', $this->container->getDoctrine_Orm_ManagerService());
-
-    $dirs = array();
-    $bundleDirs = $this->container->getKernelService()->getBundleDirs();
-    foreach ($this->container->getKernelService()->getBundles() as $bundle)
+    protected function configure()
     {
-      $tmp = dirname(str_replace('\\', '/', get_class($bundle)));
-      $namespace = dirname($tmp);
-      $class = basename($tmp);
+        parent::configure();
 
-      if (isset($bundleDirs[$namespace]) && is_dir($dir = $bundleDirs[$namespace].'/'.$class.'/Model/Doctrine'))
-      {
-        $dirs[] = $dir;
-      }
+        $this
+            ->setName('doctrine:generate:proxies')
+            ->addOption('em', null, InputOption::PARAMETER_OPTIONAL, 'The entity manager to use for this command.')
+            ->setHelp(<<<EOT
+The <info>doctrine:generate:proxies</info> command generates proxy classes for your entities:
+
+  <info>./symfony doctrine:generate:proxies</info>
+EOT
+        );
     }
 
-    if (!is_dir($dir = $this->container->getParameter('kernel.cache_dir').'/doctrine/Proxies'))
+    protected function execute(InputInterface $input, OutputInterface $output)
     {
-      mkdir($dir, 0777, true);
-    }
+        DoctrineCommand::setApplicationEntityManager($this->application, $input->getOption('em'));
 
-    $cli = new DoctrineCliController($configuration);
-    foreach ($dirs as $dir)
-    {
-      $cli->run(array('doctrine', 'orm:generate-proxies', '--class-dir='.$dir));
+        return parent::execute($input, $output);
     }
-  }
 }

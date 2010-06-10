@@ -8,10 +8,6 @@
  * file that was distributed with this source code.
  */
 
-//@require 'Swift/ByteStream/AbstractFilterableInputStream.php';
-//@require 'Swift/InputByteStream.php';
-//@require 'Swift/FileStream.php';
-//@require 'Swift/IoException.php';
 
 /**
  * Allows reading and writing of bytes to and from a file.
@@ -51,7 +47,7 @@ class Swift_ByteStream_FileByteStream
   {
     $this->_path = $path;
     $this->_mode = $writable ? 'w+b' : 'rb';
-    $this->_quotes = get_magic_quotes_runtime();
+    $this->_quotes = ini_get('magic_quotes_runtime');
   }
   
   /**
@@ -79,12 +75,12 @@ class Swift_ByteStream_FileByteStream
     {
       if ($this->_quotes)
       {
-        set_magic_quotes_runtime(0);
+        ini_set('magic_quotes_runtime', 0);
       }
       $bytes = fread($fp, $length);
       if ($this->_quotes)
       {
-        set_magic_quotes_runtime(1);
+        ini_set('magic_quotes_runtime', 1);
       }
       $this->_offset = ftell($fp);
       return $bytes;
@@ -152,16 +148,6 @@ class Swift_ByteStream_FileByteStream
       }
     }
     return $this->_writer;
-  }
-  
-  /** Force a reload of the resource for writing */
-  private function _resetWriteHandle()
-  {
-    if (isset($this->_writer))
-    {
-      fclose($this->_writer);
-      $this->_writer = null;
-    }
   }
   
   /** Force a reload of the resource for reading */

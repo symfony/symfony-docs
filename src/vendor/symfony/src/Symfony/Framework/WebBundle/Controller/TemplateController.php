@@ -3,10 +3,9 @@
 namespace Symfony\Framework\WebBundle\Controller;
 
 use Symfony\Framework\WebBundle\Controller;
-use Symfony\Components\RequestHandler\Request;
 
 /*
- * This file is part of the symfony framework.
+ * This file is part of the Symfony framework.
  *
  * (c) Fabien Potencier <fabien.potencier@symfony-project.com>
  *
@@ -15,15 +14,16 @@ use Symfony\Components\RequestHandler\Request;
  */
 
 /**
- * 
+ * TemplateController.
  *
- * @package    symfony
+ * @package    Symfony
+ * @subpackage Framework_WebBundle
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
  */
 class TemplateController extends Controller
 {
-  public function templateAction($template)
-  {
-    return $this->render($template);
-  }
+    public function templateAction($template)
+    {
+        return $this->render($template);
+    }
 }

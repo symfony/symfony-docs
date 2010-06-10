@@ -3,11 +3,13 @@
 namespace Symfony\Framework\WebBundle\Listener;
 
 use Symfony\Components\DependencyInjection\ContainerInterface;
+use Symfony\Components\EventDispatcher\EventDispatcher;
 use Symfony\Components\EventDispatcher\Event;
 use Symfony\Foundation\LoggerInterface;
+use Symfony\Components\HttpKernel\HttpKernelInterface;
 
 /*
- * This file is part of the symfony framework.
+ * This file is part of the Symfony framework.
  *
  * (c) Fabien Potencier <fabien.potencier@symfony-project.com>
  *
@@ -16,70 +18,67 @@ use Symfony\Foundation\LoggerInterface;
  */
 
 /**
- * 
+ * ExceptionHandler.
  *
- * @package    symfony
+ * @package    Symfony
+ * @subpackage Framework_WebBundle
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
  */
 class ExceptionHandler
 {
-  protected $container;
-  protected $bundle;
-  protected $controller;
-  protected $action;
-  protected $logger;
+    protected $container;
+    protected $controller;
+    protected $logger;
 
-  public function __construct(ContainerInterface $container, LoggerInterface $logger = null, $bundle, $controller, $action)
-  {
-    $this->container = $container;
-    $this->logger = $logger;
-
-    $this->bundle = $bundle;
-    $this->controller = $controller;
-    $this->action = $action;
-  }
-
-  public function register()
-  {
-    $this->container->getEventDispatcherService()->connect('core.exception', array($this, 'handle'));
-  }
-
-  public function handle(Event $event)
-  {
-    if (!$event->getParameter('main_request'))
+    public function __construct(ContainerInterface $container, LoggerInterface $logger = null, $controller)
     {
-      return false;
+        $this->container = $container;
+        $this->logger = $logger;
+
+        $this->controller = $controller;
     }
 
-    $exception = $event->getParameter('exception');
-
-    if (null !== $this->logger)
+    /**
+     * Registers a core.exception listener.
+     *
+     * @param Symfony\Components\EventDispatcher\EventDispatcher $dispatcher An EventDispatcher instance
+     */
+    public function register(EventDispatcher $dispatcher)
     {
-      $this->logger->err(sprintf('%s (uncaught %s exception)', $exception->getMessage(), get_class($exception)));
+        $dispatcher->connect('core.exception', array($this, 'handle'));
     }
 
-    $parameters = array(
-      '_bundle'         => $this->bundle,
-      '_controller'     => $this->controller,
-      '_action'         => $this->action,
-      'exception'       => $exception,
-      'originalRequest' => $event->getParameter('request'),
-      'logs'            => $this->container->hasService('zend.logger.writer.debug') ? $this->container->getService('zend.logger.writer.debug')->getLogs() : array(),
-    );
-
-    $request = $event->getParameter('request')->duplicate(array('path' => $parameters));
-
-    try
+    public function handle(Event $event)
     {
-      $response = $event->getSubject()->handleRaw($request);
-    }
-    catch (\Exception $e)
-    {
-      return false;
-    }
+        if (HttpKernelInterface::MASTER_REQUEST !== $event->getParameter('request_type')) {
+            return false;
+        }
 
-    $event->setReturnValue($response);
+        $exception = $event->getParameter('exception');
 
-    return true;
-  }
+        if (null !== $this->logger) {
+            $this->logger->err(sprintf('%s (uncaught %s exception)', $exception->getMessage(), get_class($exception)));
+        }
+
+        $parameters = array(
+            '_controller'     => $this->controller,
+            'exception'       => $exception,
+            'originalRequest' => $event->getParameter('request'),
+            'logs'            => $this->container->hasService('zend.logger.writer.debug') ? $this->container->getService('zend.logger.writer.debug')->getLogs() : array(),
+        );
+
+        $request = $event->getParameter('request')->duplicate(null, null, $parameters);
+
+        try {
+            $response = $event->getSubject()->handle($request, HttpKernelInterface::FORWARDED_REQUEST, true);
+
+            error_log(sprintf('%s: %s', get_class($exception), $exception->getMessage()));
+        } catch (\Exception $e) {
+            return false;
+        }
+
+        $event->setReturnValue($response);
+
+        return true;
+    }
 }

@@ -1,7 +1,5 @@
 <?php
 /*
- *  $Id$
- *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
  * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
@@ -28,67 +26,73 @@ namespace Doctrine\ORM\Mapping;
  */
 class MappingException extends \Doctrine\ORM\ORMException
 {
+    public static function pathRequired()
+    {
+        return new self("Specifying the paths to your entities is required ".
+            "in the AnnotationDriver to retrieve all class names.");
+    }
+
     public static function identifierRequired($entityName)
     {
         return new self("No identifier/primary key specified for Entity '$entityName'."
                 . " Every Entity must have an identifier/primary key.");
     }
-    
-    public static function invalidInheritanceType($type)
+
+    public static function invalidInheritanceType($entityName, $type)
     {
-        return new self("The inheritance type '$type' does not exist.");
+        return new self("The inheritance type '$type' specified for '$entityName' does not exist.");
     }
-    
+
     public static function generatorNotAllowedWithCompositeId()
     {
         return new self("Id generators can't be used with a composite id.");
     }
-    
+
     public static function missingFieldName()
     {
         return new self("The association mapping misses the 'fieldName' attribute.");
     }
-    
+
     public static function missingTargetEntity($fieldName)
     {
         return new self("The association mapping '$fieldName' misses the 'targetEntity' attribute.");
     }
-    
+
     public static function missingSourceEntity($fieldName)
     {
         return new self("The association mapping '$fieldName' misses the 'sourceEntity' attribute.");
     }
-    
-    public static function mappingFileNotFound($fileName)
+
+    public static function mappingFileNotFound($entityName, $fileName)
     {
-        return new self("No mapping file found named '$fileName'.");
+        return new self("No mapping file found named '$fileName' for class '$entityName'.");
     }
-    
+
     public static function mappingNotFound($fieldName)
     {
         return new self("No mapping found for field '$fieldName'.");
     }
-    
+
     public static function oneToManyRequiresMappedBy($fieldName)
     {
         return new self("OneToMany mapping on field '$fieldName' requires the 'mappedBy' attribute.");
     }
-    
+
     public static function joinTableRequired($fieldName)
     {
         return new self("The mapping of field '$fieldName' requires an the 'joinTable' attribute.");
     }
-    
+
     /**
      * Called if a required option was not found but is required
-     * 
+     *
      * @param string $field which field cannot be processed?
      * @param string $expectedOption which option is required
-     * @param string $hint  Can optionally be used to supply a tip for common mistakes, 
+     * @param string $hint  Can optionally be used to supply a tip for common mistakes,
      *                      e.g. "Did you think of the plural s?"
-     * @return MappingException 
+     * @return MappingException
      */
-    static function missingRequiredOption($field, $expectedOption, $hint = '') 
+    static function missingRequiredOption($field, $expectedOption, $hint = '')
     {
         $message = "The mapping of field '{$field}' is invalid: The option '{$expectedOption}' is required.";
 
@@ -98,7 +102,7 @@ class MappingException extends \Doctrine\ORM\ORMException
 
         return new self($message);
     }
-    
+
     /**
      * Generic exception for invalid mappings.
      *
@@ -108,12 +112,12 @@ class MappingException extends \Doctrine\ORM\ORMException
     {
         return new self("The mapping of field '$fieldName' is invalid.");
     }
-    
+
     /**
      * Exception for reflection exceptions - adds the entity name,
      * because there might be long classnames that will be shortened
      * within the stacktrace
-     * 
+     *
      * @param string $entity The entity's name
      * @param \ReflectionException $previousException
      */
@@ -121,7 +125,7 @@ class MappingException extends \Doctrine\ORM\ORMException
     {
         return new self('An error occurred in ' . $entity, 0, $previousException);
     }
-    
+
     public static function joinColumnMustPointToMappedField($className, $joinColumn)
     {
         return new self('The column ' . $joinColumn . ' must be mapped to a field in class '
@@ -165,9 +169,34 @@ class MappingException extends \Doctrine\ORM\ORMException
                         .'is not supported by Doctrine.'
         );
     }
-    
-    public static function annotationDriverRequiresConfiguredDirectoryPath()
+
+    public static function fileMappingDriversRequireConfiguredDirectoryPath()
     {
-        return new self('The annotation driver needs to have a directory path');
+        return new self('File mapping drivers must have a directory path');
+    }
+
+    /**
+     * Throws an exception that indicates that a class used in a discriminator map does not exist.
+     * An example would be an outdated (maybe renamed) classname.
+     *
+     * @param string $className The class that could not be found
+     * @param string $owningClass The class that declares the discriminator map.
+     * @return self
+     */
+    public static function invalidClassInDiscriminatorMap($className, $owningClass) {
+        return new self(
+            "Entity class '$className' used in the discriminator map of class '$owningClass' ".
+            "does not exist."
+        );
+    }
+
+    /**
+     * @param  string $className
+     * @param  string $columnName
+     * @return self
+     */
+    public static function duplicateColumnName($className, $columnName)
+    {
+        return new self("Duplicate definition of column '".$columnName."' on entity '".$className."' in a field or discriminator column mapping.");
     }
 }

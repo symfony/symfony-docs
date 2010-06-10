@@ -7,7 +7,7 @@ use Symfony\Components\Templating\Storage\FileStorage;
 use Symfony\Components\Templating\Storage\StringStorage;
 
 /*
- * This file is part of the symfony package.
+ * This file is part of the Symfony package.
  *
  * (c) Fabien Potencier <fabien.potencier@symfony-project.com>
  *
@@ -18,41 +18,38 @@ use Symfony\Components\Templating\Storage\StringStorage;
 /**
  * PhpRenderer is a renderer for PHP templates.
  *
- * @package    symfony
- * @subpackage templating
+ * @package    Symfony
+ * @subpackage Components_Templating
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
  */
 class PhpRenderer extends Renderer
 {
-  /**
-   * Evaluates a template.
-   *
-   * @param Storage $template   The template to render
-   * @param array   $parameters An array of parameters to pass to the template
-   *
-   * @return string|false The evaluated template, or false if the renderer is unable to render the template
-   */
-  public function evaluate(Storage $template, array $parameters = array())
-  {
-    if ($template instanceof FileStorage)
+    /**
+     * Evaluates a template.
+     *
+     * @param Storage $template   The template to render
+     * @param array   $parameters An array of parameters to pass to the template
+     *
+     * @return string|false The evaluated template, or false if the renderer is unable to render the template
+     */
+    public function evaluate(Storage $template, array $parameters = array())
     {
-      extract($parameters);
-      $view = $this->engine;
-      ob_start();
-      require $template;
+        if ($template instanceof FileStorage) {
+            extract($parameters);
+            $view = $this->engine;
+            ob_start();
+            require $template;
 
-      return ob_get_clean();
+            return ob_get_clean();
+        } else if ($template instanceof StringStorage) {
+            extract($parameters);
+            $view = $this->engine;
+            ob_start();
+            eval('; ?>'.$template.'<?php ;');
+
+            return ob_get_clean();
+        }
+
+        return false;
     }
-    else if ($template instanceof StringStorage)
-    {
-      extract($parameters);
-      $view = $this->engine;
-      ob_start();
-      eval('; ?>'.$template.'<?php ;');
-
-      return ob_get_clean();
-    }
-
-    return false;
-  }
 }

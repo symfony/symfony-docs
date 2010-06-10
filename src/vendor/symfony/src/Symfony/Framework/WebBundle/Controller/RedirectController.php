@@ -3,10 +3,9 @@
 namespace Symfony\Framework\WebBundle\Controller;
 
 use Symfony\Framework\WebBundle\Controller;
-use Symfony\Components\RequestHandler\Request;
 
 /*
- * This file is part of the symfony framework.
+ * This file is part of the Symfony framework.
  *
  * (c) Fabien Potencier <fabien.potencier@symfony-project.com>
  *
@@ -15,37 +14,37 @@ use Symfony\Components\RequestHandler\Request;
  */
 
 /**
- * 
  *
- * @package    symfony
+ *
+ * @package    Symfony
+ * @subpackage Framework_WebBundle
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
  */
 class RedirectController extends Controller
 {
-  /*
-   * Redirects to another route.
-   *
-   * It expects a route path parameter.
-   * By default, the response status code is 301.
-   *
-   * If the route empty, the status code will be 410.
-   * If the permanent path parameter is set, the status code will be 302.
-   */
-  public function redirectAction($route, $permanent = false)
-  {
-    if (!$route)
+    /*
+     * Redirects to another route.
+     *
+     * It expects a route path parameter.
+     * By default, the response status code is 301.
+     *
+     * If the route empty, the status code will be 410.
+     * If the permanent path parameter is set, the status code will be 302.
+     */
+    public function redirectAction($route, $permanent = false)
     {
-      $response = $this->container->getResponseService();
-      $response->setStatusCode(410);
+        if (!$route) {
+            $response = $this->container->getResponseService();
+            $response->setStatusCode(410);
 
-      return $response;
+            return $response;
+        }
+
+        $code = $permanent ? 301 : 302;
+
+        $parameters = $this->getRequest()->getPathParameters();
+        unset($parameters['_route'], $parameters['route']);
+
+        return $this->redirect($this->container->getRouterService()->generate($route, $parameters), $code);
     }
-
-    $code = $permanent ? 302 : 301;
-
-    $parameters = $this->getRequest()->getPathParameters();
-    unset($parameters['_route'], $parameters['route']);
-
-    return $this->redirect($this->container->getRouterService()->generate($route, $parameters), $code);
-  }
 }

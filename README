@@ -21,7 +21,7 @@ and consumes half the memory.
 Requirements
 ------------
 
-Symfony is only supported on PHP 5.3.0 and up. To check the compatibility of
+Symfony is only supported on PHP 5.3.2 and up. To check the compatibility of
 your environment with Symfony, you can run the `web/check.php` script, bundled
 with this sandbox.
 

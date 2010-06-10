@@ -1,7 +1,5 @@
 <?php
 /*
- *  $Id$
- *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
  * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
@@ -33,24 +31,22 @@ use Doctrine\ORM\EntityManager,
 abstract class AbstractCollectionPersister
 {
     /**
-     *
      * @var EntityManager
      */
     protected $_em;
 
     /**
-     * @var \Doctrine\DBAL\Connection
+     * @var Doctrine\DBAL\Connection
      */
     protected $_conn;
 
     /**
-     *
-     * @var \Doctrine\ORM\UnitOfWork
+     * @var Doctrine\ORM\UnitOfWork
      */
     protected $_uow;
 
     /**
-     * Initializes a new instance of a class derived from {@link AbstractCollectionPersister}.
+     * Initializes a new instance of a class derived from AbstractCollectionPersister.
      *
      * @param Doctrine\ORM\EntityManager $em
      */
@@ -61,14 +57,6 @@ abstract class AbstractCollectionPersister
         $this->_conn = $em->getConnection();
     }
 
-    /*public function recreate(PersistentCollection $coll)
-    {
-        if ($coll->getRelation()->isInverseSide()) {
-            return;
-        }
-        //...
-    }*/
-
     /**
      * Deletes the persistent state represented by the given collection.
      *
@@ -76,11 +64,11 @@ abstract class AbstractCollectionPersister
      */
     public function delete(PersistentCollection $coll)
     {
-        if ($coll->getMapping()->isInverseSide()) {
+        if ( ! $coll->getMapping()->isOwningSide) {
             return; // ignore inverse side
         }
-        $sql = $this->_getDeleteSql($coll);
-        $this->_conn->executeUpdate($sql, $this->_getDeleteSqlParameters($coll));
+        $sql = $this->_getDeleteSQL($coll);
+        $this->_conn->executeUpdate($sql, $this->_getDeleteSQLParameters($coll));
     }
 
     /**
@@ -88,7 +76,7 @@ abstract class AbstractCollectionPersister
      *
      * @param PersistentCollection $coll
      */
-    abstract protected function _getDeleteSql(PersistentCollection $coll);
+    abstract protected function _getDeleteSQL(PersistentCollection $coll);
 
     /**
      * Gets the SQL parameters for the corresponding SQL statement to delete
@@ -96,7 +84,7 @@ abstract class AbstractCollectionPersister
      *
      * @param PersistentCollection $coll
      */
-    abstract protected function _getDeleteSqlParameters(PersistentCollection $coll);
+    abstract protected function _getDeleteSQLParameters(PersistentCollection $coll);
 
     /**
      * Updates the given collection, synchronizing it's state with the database
@@ -106,7 +94,7 @@ abstract class AbstractCollectionPersister
      */
     public function update(PersistentCollection $coll)
     {
-        if ($coll->getMapping()->isInverseSide()) {
+        if ( ! $coll->getMapping()->isOwningSide) {
             return; // ignore inverse side
         }
         $this->deleteRows($coll);
@@ -117,9 +105,9 @@ abstract class AbstractCollectionPersister
     public function deleteRows(PersistentCollection $coll)
     {        
         $deleteDiff = $coll->getDeleteDiff();
-        $sql = $this->_getDeleteRowSql($coll);
+        $sql = $this->_getDeleteRowSQL($coll);
         foreach ($deleteDiff as $element) {
-            $this->_conn->executeUpdate($sql, $this->_getDeleteRowSqlParameters($coll, $element));
+            $this->_conn->executeUpdate($sql, $this->_getDeleteRowSQLParameters($coll, $element));
         }
     }
     
@@ -129,9 +117,9 @@ abstract class AbstractCollectionPersister
     public function insertRows(PersistentCollection $coll)
     {
         $insertDiff = $coll->getInsertDiff();
-        $sql = $this->_getInsertRowSql($coll);
+        $sql = $this->_getInsertRowSQL($coll);
         foreach ($insertDiff as $element) {
-            $this->_conn->executeUpdate($sql, $this->_getInsertRowSqlParameters($coll, $element));
+            $this->_conn->executeUpdate($sql, $this->_getInsertRowSQLParameters($coll, $element));
         }
     }
 
@@ -140,7 +128,7 @@ abstract class AbstractCollectionPersister
      * 
      * @param PersistentCollection $coll
      */
-    abstract protected function _getDeleteRowSql(PersistentCollection $coll);
+    abstract protected function _getDeleteRowSQL(PersistentCollection $coll);
 
     /**
      * Gets the SQL parameters for the corresponding SQL statement to delete the given
@@ -149,21 +137,21 @@ abstract class AbstractCollectionPersister
      * @param PersistentCollection $coll
      * @param mixed $element
      */
-    abstract protected function _getDeleteRowSqlParameters(PersistentCollection $coll, $element);
+    abstract protected function _getDeleteRowSQLParameters(PersistentCollection $coll, $element);
 
     /**
      * Gets the SQL statement used for updating a row in the collection.
      *
      * @param PersistentCollection $coll
      */
-    abstract protected function _getUpdateRowSql(PersistentCollection $coll);
+    abstract protected function _getUpdateRowSQL(PersistentCollection $coll);
 
     /**
      * Gets the SQL statement used for inserting a row in the collection.
      *
      * @param PersistentCollection $coll
      */
-    abstract protected function _getInsertRowSql(PersistentCollection $coll);
+    abstract protected function _getInsertRowSQL(PersistentCollection $coll);
 
     /**
      * Gets the SQL parameters for the corresponding SQL statement to insert the given
@@ -172,5 +160,5 @@ abstract class AbstractCollectionPersister
      * @param PersistentCollection $coll
      * @param mixed $element
      */
-    abstract protected function _getInsertRowSqlParameters(PersistentCollection $coll, $element);
+    abstract protected function _getInsertRowSQLParameters(PersistentCollection $coll, $element);
 }

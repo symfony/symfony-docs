@@ -21,17 +21,9 @@
 
 namespace Doctrine\ORM\Tools;
 
-use Doctrine\Common\DoctrineException,
-    Doctrine\ORM\Mapping\ClassMetadataInfo,
+use Doctrine\ORM\Mapping\ClassMetadataInfo,
     Doctrine\ORM\Tools\Export\Driver\AbstractExporter,
     Doctrine\Common\Util\Inflector;
-
-if ( ! class_exists('sfYaml', false)) {
-    require_once __DIR__ . '/../../../vendor/sfYaml/sfYaml.class.php';
-    require_once __DIR__ . '/../../../vendor/sfYaml/sfYamlDumper.class.php';
-    require_once __DIR__ . '/../../../vendor/sfYaml/sfYamlInline.class.php';
-    require_once __DIR__ . '/../../../vendor/sfYaml/sfYamlParser.class.php';
-}
 
 /**
  * Class to help with converting Doctrine 1 schema files to Doctrine 2 mapping files
@@ -49,14 +41,15 @@ class ConvertDoctrine1Schema
     private $_legacyTypeMap = array(
         // TODO: This list may need to be updated
         'clob' => 'text',
-        'timestamp' => 'datetime'
+        'timestamp' => 'datetime',
+        'enum' => 'string'
     );
 
     /**
      * Constructor passes the directory or array of directories
      * to convert the Doctrine 1 schema files from
      *
-     * @param string $from 
+     * @param array $from
      * @author Jonathan Wage
      */
     public function __construct($from)
@@ -70,17 +63,17 @@ class ConvertDoctrine1Schema
      *
      * @return array $metadatas  An array of ClassMetadataInfo instances
      */
-    public function getMetadatasFromSchema()
+    public function getMetadata()
     {
         $schema = array();
         foreach ($this->_from as $path) {
             if (is_dir($path)) {
                 $files = glob($path . '/*.yml');
                 foreach ($files as $file) {
-                    $schema = array_merge($schema, (array) \sfYaml::load($file));
+                    $schema = array_merge($schema, (array) \Symfony\Components\Yaml\Yaml::load($file));
                 }
             } else {
-                $schema = array_merge($schema, (array) \sfYaml::load($path));
+                $schema = array_merge($schema, (array) \Symfony\Components\Yaml\Yaml::load($path));
             }
         }
 
@@ -109,10 +102,10 @@ class ConvertDoctrine1Schema
         if (isset($model['tableName']) && $model['tableName']) {
             $e = explode('.', $model['tableName']);
             if (count($e) > 1) {
-                $metadata->primaryTable['schema'] = $e[0];
-                $metadata->primaryTable['name'] = $e[1];
+                $metadata->table['schema'] = $e[0];
+                $metadata->table['name'] = $e[1];
             } else {
-                $metadata->primaryTable['name'] = $e[0];
+                $metadata->table['name'] = $e[0];
             }
         }
     }
@@ -169,7 +162,7 @@ class ConvertDoctrine1Schema
             $column['type'] = $this->_legacyTypeMap[$column['type']];
         }
         if ( ! \Doctrine\DBAL\Types\Type::hasType($column['type'])) {
-            throw DoctrineException::couldNotMapDoctrine1Type($column['type']);
+            throw ToolsException::couldNotMapDoctrine1Type($column['type']);
         }
 
         $fieldMapping = array();
@@ -215,8 +208,8 @@ class ConvertDoctrine1Schema
             foreach ($model['indexes'] as $name => $index) {
                 $type = (isset($index['type']) && $index['type'] == 'unique')
                     ? 'uniqueConstraints' : 'indexes';
-                    
-                $metadata->primaryTable[$type][$name] = array(
+
+                $metadata->table[$type][$name] = array(
                     'columns' => $index['fields']
                 );
             }
@@ -246,6 +239,7 @@ class ConvertDoctrine1Schema
                 if (isset($relation['refClass'])) {
                     $type = 'many';
                     $foreignType = 'many';
+                    $joinColumns = array();
                 } else {
                     $type = isset($relation['type']) ? $relation['type'] : 'one';
                     $foreignType = isset($relation['foreignType']) ? $relation['foreignType'] : 'many';

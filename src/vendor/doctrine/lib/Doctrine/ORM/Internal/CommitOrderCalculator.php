@@ -1,7 +1,5 @@
 <?php
 /*
- *  $Id$
- *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
  * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
@@ -79,19 +77,18 @@ class CommitOrderCalculator
                 $this->_visitNode($node);
             }
         }
-        
+
         $sorted = array_reverse($this->_sorted);
-        
-        $this->_sorted =
-        $this->_nodeStates = array();
-        
+
+        $this->_sorted = $this->_nodeStates = array();
+
         return $sorted;
     }
-    
+
     private function _visitNode($node)
     {
         $this->_nodeStates[$node->name] = self::IN_PROGRESS;
-        
+
         if (isset($this->_relatedClasses[$node->name])) {
             foreach ($this->_relatedClasses[$node->name] as $relatedNode) {
                 if ($this->_nodeStates[$relatedNode->name] == self::NOT_VISITED) {
@@ -99,7 +96,7 @@ class CommitOrderCalculator
                 }
             }
         }
-        
+
         $this->_nodeStates[$node->name] = self::VISITED;
         $this->_sorted[] = $node;
     }

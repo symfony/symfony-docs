@@ -3,7 +3,7 @@
 namespace Symfony\Foundation;
 
 /*
- * This file is part of the symfony package.
+ * This file is part of the Symfony package.
  *
  * (c) Fabien Potencier <fabien.potencier@symfony-project.com>
  *
@@ -12,12 +12,12 @@ namespace Symfony\Foundation;
  */
 
 /**
- * UniversalClassLoader implements a "universal" autoloder for PHP 5.3.
+ * UniversalClassLoader implements a "universal" autoloader for PHP 5.3.
  *
  * It is able to load classes that use either:
  *
  *  * The technical interoperability standards for PHP 5.3 namespaces and
- *    class names (http://groups.google.com/group/php-standards/web/final-proposal);
+ *    class names (http://groups.google.com/group/php-standards/web/psr-0-final-proposal);
  *
  *  * The PEAR naming convention for classes (http://pear.php.net/).
  *
@@ -49,107 +49,108 @@ namespace Symfony\Foundation;
  * directory, and it will then fallback to the framework/ directory if not
  * found before giving up.
  *
- * @package    symfony
- * @subpackage foundation
+ * @package    Symfony
+ * @subpackage Foundation
  * @author     Fabien Potencier <fabien.potencier@symfony-project.org>
  */
 class UniversalClassLoader
 {
-  protected $namespaces = array();
-  protected $prefixes = array();
+    protected $namespaces = array();
+    protected $prefixes = array();
 
-  /**
-   * Registers an array of namespaces
-   *
-   * @param array $namespaces An array of namespaces (namespaces as keys and locations as values)
-   */
-  public function registerNamespaces(array $namespaces)
-  {
-    $this->namespaces = array_merge($this->namespaces, $namespaces);
-  }
-
-  /**
-   * Registers a namespace.
-   *
-   * @param string $namespace The namespace
-   * @param string $path      The location of the namespace
-   */
-  public function registerNamespace($namespace, $path)
-  {
-    $this->namespaces[$namespace] = $path;
-  }
-
-  /**
-   * Registers an array of classes using the PEAR naming convention.
-   *
-   * @param array $classes An array of classes (prefixes as keys and locations as values)
-   */
-  public function registerPrefixes(array $classes)
-  {
-    $this->prefixes = array_merge($this->prefixes, $classes);
-  }
-
-  /**
-   * Registers a set of classes using the PEAR naming convention.
-   *
-   * @param string $prefix The classes prefix
-   * @param string $path   The location of the classes
-   */
-  public function registerPrefix($prefix, $path)
-  {
-    $this->prefixes[$prefix] = $path;
-  }
-
-  /**
-   * Registers this instance as an autoloader.
-   */
-  public function register()
-  {
-    spl_autoload_register(array($this, 'loadClass'));
-  }
-
-  /**
-   * Loads the given class or interface.
-   *
-   * @param string $class The name of the class
-   */
-  public function loadClass($class)
-  {
-    if (false !== ($pos = strripos($class, '\\')))
+    public function getNamespaces()
     {
-      // namespaced class name
-      $namespace = substr($class, 0, $pos);
-      foreach ($this->namespaces as $ns => $dir)
-      {
-        if (0 === strpos($namespace, $ns))
-        {
-          $class = substr($class, $pos + 1);
-          $file = $dir.DIRECTORY_SEPARATOR.str_replace('\\', DIRECTORY_SEPARATOR, $namespace).DIRECTORY_SEPARATOR.str_replace('_', DIRECTORY_SEPARATOR, $class).'.php';
-          if (file_exists($file))
-          {
-            require $file;
-          }
-
-          return;
-        }
-      }
+        return $this->namespaces;
     }
-    else
+
+    public function getPrefixes()
     {
-      // PEAR-like class name
-      foreach ($this->prefixes as $prefix => $dir)
-      {
-        if (0 === strpos($class, $prefix))
-        {
-          $file = $dir.DIRECTORY_SEPARATOR.str_replace('_', DIRECTORY_SEPARATOR, $class).'.php';
-          if (file_exists($file))
-          {
-            require $file;
-          }
-
-          return;
-        }
-      }
+        return $this->prefixes;
     }
-  }
+
+    /**
+     * Registers an array of namespaces
+     *
+     * @param array $namespaces An array of namespaces (namespaces as keys and locations as values)
+     */
+    public function registerNamespaces(array $namespaces)
+    {
+        $this->namespaces = array_merge($this->namespaces, $namespaces);
+    }
+
+    /**
+     * Registers a namespace.
+     *
+     * @param string $namespace The namespace
+     * @param string $path      The location of the namespace
+     */
+    public function registerNamespace($namespace, $path)
+    {
+        $this->namespaces[$namespace] = $path;
+    }
+
+    /**
+     * Registers an array of classes using the PEAR naming convention.
+     *
+     * @param array $classes An array of classes (prefixes as keys and locations as values)
+     */
+    public function registerPrefixes(array $classes)
+    {
+        $this->prefixes = array_merge($this->prefixes, $classes);
+    }
+
+    /**
+     * Registers a set of classes using the PEAR naming convention.
+     *
+     * @param string $prefix The classes prefix
+     * @param string $path   The location of the classes
+     */
+    public function registerPrefix($prefix, $path)
+    {
+        $this->prefixes[$prefix] = $path;
+    }
+
+    /**
+     * Registers this instance as an autoloader.
+     */
+    public function register()
+    {
+        spl_autoload_register(array($this, 'loadClass'));
+    }
+
+    /**
+     * Loads the given class or interface.
+     *
+     * @param string $class The name of the class
+     */
+    public function loadClass($class)
+    {
+        if (false !== ($pos = strripos($class, '\\'))) {
+            // namespaced class name
+            $namespace = substr($class, 0, $pos);
+            foreach ($this->namespaces as $ns => $dir) {
+                if (0 === strpos($namespace, $ns)) {
+                    $class = substr($class, $pos + 1);
+                    $file = $dir.DIRECTORY_SEPARATOR.str_replace('\\', DIRECTORY_SEPARATOR, $namespace).DIRECTORY_SEPARATOR.str_replace('_', DIRECTORY_SEPARATOR, $class).'.php';
+                    if (file_exists($file)) {
+                        require $file;
+                    }
+
+                    return;
+                }
+            }
+        } else {
+            // PEAR-like class name
+            foreach ($this->prefixes as $prefix => $dir) {
+                if (0 === strpos($class, $prefix)) {
+                    $file = $dir.DIRECTORY_SEPARATOR.str_replace('_', DIRECTORY_SEPARATOR, $class).'.php';
+                    if (file_exists($file)) {
+                        require $file;
+                    }
+
+                    return;
+                }
+            }
+        }
+    }
 }

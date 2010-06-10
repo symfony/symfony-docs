@@ -3,7 +3,7 @@
 namespace Symfony\Components\DependencyInjection;
 
 /*
- * This file is part of the symfony framework.
+ * This file is part of the Symfony framework.
  *
  * (c) Fabien Potencier <fabien.potencier@symfony-project.com>
  *
@@ -14,25 +14,25 @@ namespace Symfony\Components\DependencyInjection;
 /**
  * ResourceInterface is the interface that must be implemented by all Resource classes.
  *
- * @package    symfony
- * @subpackage dependency_injection
+ * @package    Symfony
+ * @subpackage Components_DependencyInjection
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
  */
 interface ResourceInterface
 {
-  /**
-   * Returns true if the resource has not been updated since the given timestamp.
-   *
-   * @param timestamp $timestamp The last time the resource was loaded
-   *
-   * @return Boolean true if the resource has not been updated, false otherwise
-   */
-  function isUptodate($timestamp);
+    /**
+     * Returns true if the resource has not been updated since the given timestamp.
+     *
+     * @param int $timestamp The last time the resource was loaded
+     *
+     * @return Boolean true if the resource has not been updated, false otherwise
+     */
+    function isUptodate($timestamp);
 
-  /**
-   * Returns the resource tied to this Resource.
-   *
-   * @return mixed The resource
-   */
-  function getResource();
+    /**
+     * Returns the resource tied to this Resource.
+     *
+     * @return mixed The resource
+     */
+    function getResource();
 }

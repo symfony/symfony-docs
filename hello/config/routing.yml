@@ -1,6 +1,6 @@
 homepage:
-  pattern:  /
-  defaults: { _bundle: WebBundle, _controller: Default, _action: index }
+    pattern:  /
+    defaults: { _controller: WebBundle:Default:index }
 
 hello:
-  resource: HelloBundle/Resources/config/routing.yml
+    resource: HelloBundle/Resources/config/routing.yml

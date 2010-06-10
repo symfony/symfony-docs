@@ -1,7 +1,5 @@
 <?php
 /*
- *  $Id$
- *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
  * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
@@ -21,7 +19,7 @@
 
 namespace Doctrine\ORM\Internal\Hydration;
 
-use Doctrine\DBAL\Connection;
+use PDO, Doctrine\DBAL\Connection;
 
 /**
  * The ArrayHydrator produces a nested array "graph" that is often (not always)
@@ -60,7 +58,7 @@ class ArrayHydrator extends AbstractHydrator
     {
         $result = array();
         $cache = array();
-        while ($data = $this->_stmt->fetch(Connection::FETCH_ASSOC)) {
+        while ($data = $this->_stmt->fetch(PDO::FETCH_ASSOC)) {
             $this->_hydrateRow($data, $cache, $result);
         }
 
@@ -68,7 +66,7 @@ class ArrayHydrator extends AbstractHydrator
     }
 
     /** @override */
-    protected function _hydrateRow(array &$data, array &$cache, array &$result)
+    protected function _hydrateRow(array $data, array &$cache, array &$result)
     {
         // 1) Initialize
         $id = $this->_idTemplate; // initialize the id-memory
@@ -79,6 +77,9 @@ class ArrayHydrator extends AbstractHydrator
         if (isset($rowData['scalars'])) {
             $scalars = $rowData['scalars'];
             unset($rowData['scalars']);
+            if (empty($rowData)) {
+                ++$this->_resultCounter;
+            }
         }
 
         // 2) Now hydrate the data found in the current row.
@@ -129,7 +130,7 @@ class ArrayHydrator extends AbstractHydrator
                             }
                             end($baseElement[$relationAlias]);
                             $this->_identifierMap[$path][$id[$parent]][$id[$dqlAlias]] =
-                            key($baseElement[$relationAlias]);
+                                    key($baseElement[$relationAlias]);
                         }
                     } else if ( ! isset($baseElement[$relationAlias])) {
                         $baseElement[$relationAlias] = array();
@@ -177,6 +178,10 @@ class ArrayHydrator extends AbstractHydrator
                     $this->_identifierMap[$dqlAlias][$id[$dqlAlias]] = key($result);
                 } else {
                     $index = $this->_identifierMap[$dqlAlias][$id[$dqlAlias]];
+                    /*if ($this->_rsm->isMixed) {
+                        $result[] =& $result[$index];
+                        ++$this->_resultCounter;
+                    }*/
                 }
                 $this->updateResultPointer($result, $index, $dqlAlias, false);
             }

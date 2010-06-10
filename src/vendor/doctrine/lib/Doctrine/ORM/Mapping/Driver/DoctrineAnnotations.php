@@ -37,7 +37,6 @@ final class DiscriminatorColumn extends Annotation {
     public $length;
 }
 final class DiscriminatorMap extends Annotation {}
-/*final class SubClasses extends Annotation {}*/
 final class Id extends Annotation {}
 final class GeneratedValue extends Annotation {
     public $strategy = 'AUTO';
@@ -70,9 +69,9 @@ final class Column extends Annotation {
 final class OneToOne extends Annotation {
     public $targetEntity;
     public $mappedBy;
+    public $inversedBy;
     public $cascade;
     public $fetch = 'LAZY';
-    public $optional;
     public $orphanRemoval = false;
 }
 final class OneToMany extends Annotation {
@@ -86,11 +85,12 @@ final class ManyToOne extends Annotation {
     public $targetEntity;
     public $cascade;
     public $fetch = 'LAZY';
-    public $optional;
+    public $inversedBy;
 }
 final class ManyToMany extends Annotation {
     public $targetEntity;
     public $mappedBy;
+    public $inversedBy;
     public $cascade;
     public $fetch = 'LAZY';
 }
@@ -123,6 +123,7 @@ final class SequenceGenerator extends Annotation {
     public $initialValue = 1;
 }
 final class ChangeTrackingPolicy extends Annotation {}
+final class OrderBy extends Annotation {}
 
 /* Annotations for lifecycle callbacks */
 final class HasLifecycleCallbacks extends Annotation {}

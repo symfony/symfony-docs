@@ -1,7 +1,5 @@
 <?php
 /*
- *  $Id$
- *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
  * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
@@ -22,18 +20,44 @@
 namespace Doctrine\ORM;
 
 /**
- * OptimisticLockException
+ * An OptimisticLockException is thrown when a version check on an object
+ * that uses optimistic locking through a version field fails.
  *
- * @author      Roman Borschel <roman@code-factory.org>
- * @license     http://www.opensource.org/licenses/lgpl-license.php LGPL
- * @link        www.doctrine-project.org
- * @since       2.0
- * @version     $Revision$
+ * @author Roman Borschel <roman@code-factory.org>
+ * @author Benjamin Eberlei <kontakt@beberlei.de>
+ * @since 2.0
  */
 class OptimisticLockException extends ORMException
 {
-    public static function lockFailed()
+    private $entity;
+
+    public function __construct($msg, $entity)
     {
-        return new self("The optimistic lock failed.");
+        $this->entity = $entity;
+    }
+
+    /**
+     * Gets the entity that caused the exception.
+     *
+     * @return object
+     */
+    public function getEntity()
+    {
+        return $this->entity;
+    }
+
+    public static function lockFailed($entity)
+    {
+        return new self("The optimistic lock on an entity failed.", $entity);
+    }
+
+    public static function lockFailedVersionMissmatch($entity, $expectedLockVersion, $actualLockVersion)
+    {
+        return new self("The optimistic lock failed, version " . $expectedLockVersion . " was expected, but is actually ".$actualLockVersion, $entity);
+    }
+
+    public static function notVersioned($entityName)
+    {
+        return new self("Cannot obtain optimistic lock on unversioned entity " . $entityName, null);
     }
 }

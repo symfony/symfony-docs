@@ -3,7 +3,7 @@
 namespace Symfony\Components\Templating\Storage;
 
 /*
- * This file is part of the symfony package.
+ * This file is part of the Symfony package.
  *
  * (c) Fabien Potencier <fabien.potencier@symfony-project.com>
  *
@@ -14,14 +14,19 @@ namespace Symfony\Components\Templating\Storage;
 /**
  * StringStorage represents a template stored in a string.
  *
- * @package    symfony
- * @subpackage templating
+ * @package    Symfony
+ * @subpackage Components_Templating
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
  */
 class StringStorage extends Storage
 {
-  public function getContent()
-  {
-    return $this->template;
-  }
+    /**
+     * Returns the content of the template.
+     *
+     * @return string The template content
+     */
+    public function getContent()
+    {
+        return $this->template;
+    }
 }
