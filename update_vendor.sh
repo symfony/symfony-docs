@@ -27,6 +27,12 @@ cd propel
 rm -rf contrib docs test WHATS_NEW INSTALL CHANGELOG
 cd ..
 
+# Phing
+svn co http://svn.phing.info/tags/2.3.3 phing
+cd phing
+rm -rf README bin docs etc pear test
+cd ..
+
 # Swiftmailer
 git clone git://github.com/swiftmailer/swiftmailer.git swiftmailer
 cd swiftmailer
