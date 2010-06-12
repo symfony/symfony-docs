@@ -41,7 +41,7 @@ rm -rf CHANGES README* build* docs notes test-suite tests create_pear_package.ph
 cd ..
 
 # Symfony
-git clone git://github.com/symfony/symfony.git symfony
+git clone git://github.com/fabpot/symfony.git symfony
 cd symfony
 rm -rf README phpunit.xml.dist tests
 cd ..

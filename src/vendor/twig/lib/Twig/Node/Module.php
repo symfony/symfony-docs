@@ -27,7 +27,6 @@ class Twig_Node_Module extends Twig_Node
     public function compile($compiler)
     {
         $this->compileTemplate($compiler);
-        $this->compileMacros($compiler);
     }
 
     protected function compileTemplate($compiler)
@@ -48,6 +47,8 @@ class Twig_Node_Module extends Twig_Node
 
         $this->compileGetName($compiler);
 
+        $this->compileMacros($compiler);
+
         $this->compileClassFooter($compiler);
     }
 
@@ -60,6 +61,11 @@ class Twig_Node_Module extends Twig_Node
                     $compiler->subcompile($node);
                 }
             }
+
+            $compiler
+                ->write("if (null === \$this->parent) {\n")
+                ->indent();
+            ;
 
             if ($this->parent instanceof Twig_Node_Expression_Constant) {
                 $compiler
@@ -83,6 +89,8 @@ class Twig_Node_Module extends Twig_Node
 
             $compiler
                 ->write("\$this->parent->pushBlocks(\$this->blocks);\n")
+                ->outdent()
+                ->write("}\n")
                 ->write("\$this->parent->display(\$context);\n")
             ;
         } else {
@@ -170,19 +178,6 @@ class Twig_Node_Module extends Twig_Node
 
     protected function compileMacros($compiler)
     {
-        $compiler
-            ->write("\n")
-            ->write('class '.$compiler->getEnvironment()->getTemplateClass($this['filename']).'_Macro extends Twig_Macro'."\n")
-            ->write("{\n")
-            ->indent()
-        ;
-
-        // macros
         $compiler->subcompile($this->macros);
-
-        $compiler
-            ->outdent()
-            ->write("}\n")
-        ;
     }
 }

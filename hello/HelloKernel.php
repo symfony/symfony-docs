@@ -20,8 +20,8 @@ class HelloKernel extends Kernel
             new Symfony\Framework\WebBundle\Bundle(),
             new Symfony\Framework\ZendBundle\Bundle(),
             new Symfony\Framework\SwiftmailerBundle\Bundle(),
-            new Symfony\Framework\DoctrineBundle\Bundle(),
-            //new Symfony\Framework\PropelBundle\Bundle(),
+            //new Symfony\Framework\DoctrineBundle\Bundle(),
+            new Symfony\Framework\PropelBundle\Bundle(),
             new Symfony\Framework\TwigBundle\Bundle(),
             new Application\HelloBundle\Bundle(),
         );

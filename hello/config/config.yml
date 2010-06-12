@@ -4,3 +4,7 @@ parameters:
 kernel.config: ~
 web.web: ~
 web.templating: ~
+
+propel.config:
+  path:       %kernel.root_dir%/../src/vendor/propel
+  phing_path: %kernel.root_dir%/../src/vendor/phing
