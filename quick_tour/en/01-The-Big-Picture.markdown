@@ -84,11 +84,11 @@ routing configuration file:
     [yml]
     # hello/config/routing.yml
     homepage:
-      pattern:  /
-      defaults: { _controller: WebBundle:Default:index }
+        pattern:  /
+        defaults: { _controller: WebBundle:Default:index }
 
     hello:
-      resource: HelloBundle/Resources/config/routing.yml
+        resource: HelloBundle/Resources/config/routing.yml
 
 The file is written in [YAML](http://www.yaml.org/), a simple format that
 makes the description of configuration settings very easy. All the
@@ -104,8 +104,8 @@ line, which imports another routing configuration file that reads as follows:
     [yml]
     # src/Application/HelloBundle/Resources/config/routing.yml
     hello:
-      pattern:  /hello/:name
-      defaults: { _controller: HelloBundle:Hello:index }
+        pattern:  /hello/:name
+        defaults: { _controller: HelloBundle:Hello:index }
 
 Here we go! As you can see, the "`/hello/:name`" resource pattern (a string
 beginning with a colon like `:name` is a placeholder) is mapped to a
@@ -124,10 +124,10 @@ The controller is responsible for returning a representation of the resource
 
     class HelloController extends Controller
     {
-      public function indexAction($name)
-      {
-        return $this->render('HelloBundle:Hello:index', array('name' => $name));
-      }
+        public function indexAction($name)
+        {
+            return $this->render('HelloBundle:Hello:index', array('name' => $name));
+        }
     }
 
 The code is pretty straightforward but let's explain this code line by line:

@@ -16,15 +16,15 @@ value of `xml`:
     [yml]
     # src/Application/HelloBundle/Resources/config/routing.yml
     hello:
-      pattern:  /hello/:name
-      defaults: { _controller: HelloBundle:Hello:index, _format: xml }
+        pattern:  /hello/:name
+        defaults: { _controller: HelloBundle:Hello:index, _format: xml }
 
 Then, add an `index.xml.php` template along side `index.php`:
 
     [xml]
     # src/Application/HelloBundle/Resources/views/Hello/index.xml.php
     <hello>
-      <name><?php echo $name ?></name>
+        <name><?php echo $name ?></name>
     </hello>
 
 That's all there is to it. No need to change the controller. For standard
@@ -35,9 +35,9 @@ action, use the `:_format` placeholder in the pattern instead:
     [yml]
     # src/Application/HelloBundle/Resources/config/routing.yml
     hello:
-      pattern:      /hello/:name.:_format
-      defaults:     { _controller: HelloBundle:Hello: index, _format: html }
-      requirements: { _format: (html|xml|json) }
+        pattern:      /hello/:name.:_format
+        defaults:     { _controller: HelloBundle:Hello: index, _format: html }
+        requirements: { _format: (html|xml|json) }
 
 The controller will now be called for URLs like `/hello/Fabien.xml` or
 `/hello/Fabien.json`. As the default value for `_format` is `html`, the
@@ -56,7 +56,7 @@ Now, let's get back to the `Hello` controller.
     [php]
     public function indexAction($name)
     {
-      return $this->render('HelloBundle:Hello:index', array('name' => $name));
+        return $this->render('HelloBundle:Hello:index', array('name' => $name));
     }
 
 The `render()` method renders a template and returns a `Response` object. The
@@ -66,10 +66,10 @@ change the default `Content-Type`:
     [php]
     public function indexAction($name)
     {
-      $response = $this->render('HelloBundle:Hello:index', array('name' => $name));
-      $response->setHeader('Content-Type', 'text/plain');
+        $response = $this->render('HelloBundle:Hello:index', array('name' => $name));
+        $response->setHeader('Content-Type', 'text/plain');
 
-      return $response;
+        return $response;
     }
 
 For simple templates, you can even create a `Response` object by hand and save
@@ -78,7 +78,7 @@ some milliseconds:
     [php]
     public function indexAction($name)
     {
-      return $this->createResponse('Hello '.$name);
+        return $this->createResponse('Hello '.$name);
     }
 
 This is really useful when a controller needs to send back a JSON response for
@@ -96,13 +96,12 @@ exception:
 
     public function indexAction()
     {
-      $product = // retrieve the object from database
-      if (!$product)
-      {
-        throw new NotFoundHttpException('The product does not exist.');
-      }
+        $product = // retrieve the object from database
+        if (!$product) {
+            throw new NotFoundHttpException('The product does not exist.');
+        }
 
-      return $this->render(...);
+        return $this->render(...);
     }
 
 The `NotFoundHttpException` will return a 404 HTTP response back to the
@@ -181,7 +180,7 @@ any controller:
     $this->getUser()->setAttribute('foo', 'bar');
 
     // in another controller for another request
-    $this->getUser()->getAttribute('foo');
+    $foo = $this->getUser()->getAttribute('foo');
 
     // get/set the user culture
     $this->getUser()->setCulture('fr');
@@ -190,12 +189,16 @@ You can also store small messages that will only be available for the very
 next request:
 
     [php]
-    $this->getUser()->setFlash('notice', 'Congratulations, your action succeeded!')
+    // store a message for the very next request
+    $this->getUser()->setFlash('notice', 'Congratulations, your action succeeded!');
+
+    // get the message back in the next request
+    $notice = $this->getUser()->getFlash('notice');
 
 Final Thoughts
 --------------
 
 That's all there is to it, and I'm not even sure we have spent the allocated
-10 minutes. In the previous part, we saw how to extend the templating
-system with helpers. Extending the controller can also be easily done thanks
-to bundles. That's the topic of the next part of this tutorial.
+10 minutes. Templates and controllers are the bread and butter of web
+developers. Oh wait, and bugs too! But there is an easy way to avoid most of
+them: automated tests. That's the topic of the next part.

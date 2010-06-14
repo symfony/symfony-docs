@@ -20,12 +20,12 @@ Let's have a look at the `layout.php` file:
     # src/Application/HelloBundle/Resources/views/layout.php
     <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
     <html>
-      <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-      </head>
-      <body>
-        <?php $view->slots->output('_content') ?>
-      </body>
+        <head>
+            <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        </head>
+        <body>
+            <?php $view->slots->output('_content') ?>
+        </body>
     </html>
 
 The `index` template is decorated by `layout.php`, thanks to the `extend()`
@@ -73,13 +73,13 @@ And change the layout to output the title in the header:
     [php]
     # src/Application/HelloBundle/Resources/views/layout.php
     <html>
-      <head>
-        <title><?php $view->slots->output('title', 'Default Title') ?></title>
-        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-      </head>
-      <body>
-        <?php $view->slots->output('_content') ?>
-      </body>
+        <head>
+            <title><?php $view->slots->output('title', 'Default Title') ?></title>
+            <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        </head>
+        <body>
+            <?php $view->slots->output('_content') ?>
+        </body>
     </html>
 
 The `output()` method inserts the content of a slot and optionally takes a
@@ -90,7 +90,7 @@ For large slots, there is also an extended syntax:
 
     [php]
     <?php $view->slots->start('title') ?>
-      Some large amount of HTML
+        Some large amount of HTML
     <?php $view->slots->stop() ?>
 
 Include other Templates
@@ -137,15 +137,15 @@ Here, the `HelloBundle:Hello:fancy` string refers to the `fancy` action of the
     # src/Application/HelloBundle/Controller/HelloController.php
     class HelloController extends Controller
     {
-      public function fancyAction($name, $color)
-      {
-        // create some object, based on the $color variable
-        $object = ...;
+        public function fancyAction($name, $color)
+        {
+            // create some object, based on the $color variable
+            $object = ...;
 
-        return $this->render('HelloBundle:Hello:fancy', array('name' => $name, 'object' => $object));
-      }
+            return $this->render('HelloBundle:Hello:fancy', array('name' => $name, 'object' => $object));
+        }
 
-      // ...
+        // ...
     }
 
 But where is the `$view->actions` property defined? Like `$view->slots`, it's
@@ -167,7 +167,7 @@ can be easily updated by changing the configuration.
 
     [php]
     <a href="<?php echo $view->router->generate('hello', array('name' => 'Thomas')) ?>">
-      Greet Thomas!
+        Greet Thomas!
     </a>
 
 The `generate()` method takes the route name and an array of values as
@@ -177,8 +177,8 @@ and the values should at least cover the route pattern placeholders:
     [yml]
     # src/Application/HelloBundle/Resources/config/routing.yml
     hello: # The route name
-      pattern:  /hello/:name
-      defaults: { _bundle: HelloBundle, _controller: Hello, _action: index }
+        pattern:  /hello/:name
+        defaults: { _bundle: HelloBundle, _controller: Hello, _action: index }
 
 ### Using Assets: images, JavaScripts, and stylesheets
 

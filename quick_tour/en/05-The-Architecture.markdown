@@ -2,7 +2,7 @@ Symfony2 Quick Tour: The Architecture
 =====================================
 
 You are my hero! Who would have thought that you would still be here after the
-first three parts? Your efforts will be well rewarded soon. The first four
+first four parts? Your efforts will be well rewarded soon. The first four
 parts of this tutorial give you a quick overview of Symfony 2.0. But they
 don't have a deep look at the architecture of the framework. As it makes
 Symfony stand apart from the framework crowd, let's dive into it now.
@@ -67,9 +67,9 @@ configured in the `registerRoutes()`:
     [php]
     public function registerRoutes()
     {
-      $loader = new RoutingLoader($this->getBundleDirs());
+        $loader = new RoutingLoader($this->getBundleDirs());
 
-      return $loader->load(__DIR__.'/config/routing.yml');
+        return $loader->load(__DIR__.'/config/routing.yml');
     }
 
 This is also where you can switch from using YAML configuration files to XML
@@ -95,18 +95,18 @@ stored in the `src/` directory:
 
     $loader = new UniversalClassLoader();
     $loader->registerNamespaces(array(
-      'Symfony'                    => __DIR__.'/vendor/symfony/src',
-      'Application'                => __DIR__,
-      'Bundle'                     => __DIR__,
-      'Doctrine\\Common'           => __DIR__.'/vendor/doctrine/lib/vendor/doctrine-common/lib',
-      'Doctrine\\DBAL\\Migrations' => __DIR__.'/vendor/doctrine-migrations/lib',
-      'Doctrine\\DBAL'             => __DIR__.'/vendor/doctrine/lib/vendor/doctrine-dbal/lib',
-      'Doctrine'                   => __DIR__.'/vendor/doctrine/lib',
-      'Zend'                       => __DIR__.'/vendor/zend/library',
+        'Symfony'                    => __DIR__.'/vendor/symfony/src',
+        'Application'                => __DIR__,
+        'Bundle'                     => __DIR__,
+        'Doctrine\\Common'           => __DIR__.'/vendor/doctrine/lib/vendor/doctrine-common/lib',
+        'Doctrine\\DBAL\\Migrations' => __DIR__.'/vendor/doctrine-migrations/lib',
+        'Doctrine\\DBAL'             => __DIR__.'/vendor/doctrine/lib/vendor/doctrine-dbal/lib',
+        'Doctrine'                   => __DIR__.'/vendor/doctrine/lib',
+        'Zend'                       => __DIR__.'/vendor/zend/library',
     ));
     $loader->registerPrefixes(array(
-      'Swift_' => __DIR__.'/vendor/swiftmailer/lib/classes',
-      'Twig_'  => __DIR__.'/vendor/twig/lib',
+        'Swift_' => __DIR__.'/vendor/swiftmailer/lib/classes',
+        'Twig_'  => __DIR__.'/vendor/twig/lib',
     ));
     $loader->register();
 
@@ -138,14 +138,14 @@ method of the `HelloKernel` class:
     # hello/HelloKernel.php
     public function registerBundles()
     {
-      return array(
-        new Symfony\Foundation\Bundle\KernelBundle(),
-        new Symfony\Framework\WebBundle\Bundle(),
-        new Symfony\Framework\DoctrineBundle\Bundle(),
-        new Symfony\Framework\SwiftmailerBundle\Bundle(),
-        new Symfony\Framework\ZendBundle\Bundle(),
-        new Application\HelloBundle\Bundle(),
-      );
+        return array(
+            new Symfony\Foundation\Bundle\KernelBundle(),
+            new Symfony\Framework\WebBundle\Bundle(),
+            new Symfony\Framework\DoctrineBundle\Bundle(),
+            new Symfony\Framework\SwiftmailerBundle\Bundle(),
+            new Symfony\Framework\ZendBundle\Bundle(),
+            new Application\HelloBundle\Bundle(),
+        );
     }
 
 Along side the `HelloBundle` we have already talked about, notice that the
@@ -172,14 +172,14 @@ specific configuration file:
     [yml]
     # hello/config/config_dev.yml
     imports:
-      - { resource: config.yml }
+        - { resource: config.yml }
 
     profiler.config:
-      toolbar: %kernel.debug%
+        toolbar: %kernel.debug%
 
     zend.logger:
-      priority: info
-      path:     %kernel.root_dir%/logs/%kernel.environment%.log
+        priority: info
+        path:     %kernel.root_dir%/logs/%kernel.environment%.log
 
 As we have seen in the previous part, an application is made of bundles as
 defined in the `registerBundles()` method:
@@ -188,14 +188,14 @@ defined in the `registerBundles()` method:
     # hello/HelloKernel.php
     public function registerBundles()
     {
-      return array(
-        new Symfony\Foundation\Bundle\KernelBundle(),
-        new Symfony\Framework\WebBundle\Bundle(),
-        new Symfony\Framework\DoctrineBundle\Bundle(),
-        new Symfony\Framework\SwiftmailerBundle\Bundle(),
-        new Symfony\Framework\ZendBundle\Bundle(),
-        new Application\HelloBundle\Bundle(),
-      );
+        return array(
+            new Symfony\Foundation\Bundle\KernelBundle(),
+            new Symfony\Framework\WebBundle\Bundle(),
+            new Symfony\Framework\DoctrineBundle\Bundle(),
+            new Symfony\Framework\SwiftmailerBundle\Bundle(),
+            new Symfony\Framework\ZendBundle\Bundle(),
+            new Application\HelloBundle\Bundle(),
+        );
     }
 
 But how does Symfony know where to look for bundles? Symfony is quite flexible
@@ -205,11 +205,11 @@ array that maps namespaces to any valid directory (local or global ones):
     [php]
     public function registerBundleDirs()
     {
-      return array(
-        'Application'        => __DIR__.'/../src/Application',
-        'Bundle'             => __DIR__.'/../src/Bundle',
-        'Symfony\\Framework' => __DIR__.'/../src/vendor/symfony/src/Symfony/Framework',
-      );
+        return array(
+            'Application'        => __DIR__.'/../src/Application',
+            'Bundle'             => __DIR__.'/../src/Bundle',
+            'Symfony\\Framework' => __DIR__.'/../src/vendor/symfony/src/Symfony/Framework',
+        );
     }
 
 So, when you reference the `HelloBundle` in a controller name or in a template
