@@ -1,6 +1,9 @@
 imports:
     - { resource: config_dev.yml }
 
+profiler.config:
+    toolbar: false
+
 zend.logger:
     priority: debug
 
