@@ -174,8 +174,8 @@ specific configuration file:
     imports:
         - { resource: config.yml }
 
-    profiler.config:
-        toolbar: %kernel.debug%
+    web.config:
+        toolbar: true
 
     zend.logger:
         priority: info

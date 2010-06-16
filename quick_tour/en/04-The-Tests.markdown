@@ -34,8 +34,8 @@ sub-directories:
 
 Running the test suite for a given application is straightforward:
 
-    # specify the configuration on the command line
-    $ phpunit --configuration hello/phpunit.xml.dist
+    # specify the configuration directory on the command line
+    $ phpunit -c hello/
 
     # or run phpunit from within the application directory
     $ cd hello/
@@ -61,10 +61,10 @@ If you want to run tests for a given file or directory, this is also very
 easy:
 
     # run all tests for the Model
-    $ phpunit --configuration hello/phpunit.xml.dist Application/HelloBundle/Tests/Model/
+    $ phpunit -c hello Application/HelloBundle/Tests/Model/
 
     # run tests for the Article class
-    $ phpunit --configuration hello/phpunit.xml.dist Application/HelloBundle/Tests/Model/ArticleTest.php
+    $ phpunit -c hello Application/HelloBundle/Tests/Model/ArticleTest.php
 
 Functional Tests
 ----------------
@@ -77,11 +77,13 @@ run in their own environment and have their own configuration stored in
     [yml]
     # config_test.yml
     imports:
-      - { resource: config.yml }
+        - { resource: config_dev.yml }
+
+    web.config:
+        toolbar: false
 
     zend.logger:
-      priority: debug
-      path:     %kernel.logs_dir%/%kernel.environment%.log
+        priority: debug
 
     kernel.test: ~
 
