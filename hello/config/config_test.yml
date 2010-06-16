@@ -1,7 +1,7 @@
 imports:
     - { resource: config_dev.yml }
 
-profiler.config:
+web.config:
     toolbar: false
 
 zend.logger:
