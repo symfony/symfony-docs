@@ -167,6 +167,17 @@ class PropelPDO extends PDO
 	}
 	
 	/**
+	 * Check whether the connection contains a transaction that can be committed.
+	 * To be used in an evironment where Propelexceptions are caught.
+	 *
+	 * @return boolean True if the connection is in a committable transaction
+	 */
+	public function isCommitable()
+	{
+		return $this->isInTransaction() && !$this->isUncommitable;
+	}
+	
+	/**
 	 * Overrides PDO::beginTransaction() to prevent errors due to already-in-progress transaction.
 	 */
 	public function beginTransaction()

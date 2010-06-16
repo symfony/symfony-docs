@@ -172,16 +172,7 @@ abstract class OMBuilder extends DataModelBuilder
 	 */
 	public function getNamespace()
 	{
-		if (strpos($this->getTable()->getNamespace(), '\\') === 0) {
-			// absolute table namespace
-			return substr($this->getTable()->getNamespace(), 1);
-		} elseif ($this->getDatabase()->getNamespace() && $this->getTable()->getNamespace()) {
-			return $this->getDatabase()->getNamespace() . '\\' . $this->getTable()->getNamespace();
-		} elseif ($this->getDatabase()->getNamespace()) {
-			return $this->getDatabase()->getNamespace();
-		} else {
-			return $this->getTable()->getNamespace();
-		}
+		return $this->getTable()->getNamespace();
 	}
 	
 	public function declareClassNamespace($class, $namespace = '')
@@ -240,7 +231,9 @@ abstract class OMBuilder extends DataModelBuilder
 	{
 		$declaredClasses = $this->declaredClasses;
 		unset($declaredClasses[$ignoredNamespace]);
+		ksort($declaredClasses);
 		foreach ($declaredClasses as $namespace => $classes) {
+			sort($classes);
 			foreach ($classes as $class) {
 				$script .= sprintf("use %s\\%s;
 ", $namespace, $class);

@@ -1,7 +1,5 @@
 <?php
 /*
- *  $Id$
- *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
  * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
@@ -389,7 +387,7 @@ class MySqlPlatform extends AbstractPlatform
 
         // get the type of the table
         if (isset($options['engine'])) {
-            $optionStrings[] = 'ENGINE = ' . $engine;
+            $optionStrings[] = 'ENGINE = ' . $options['engine'];
         } else {
             // default to innodb
             $optionStrings[] = 'ENGINE = InnoDB';
@@ -587,5 +585,34 @@ class MySqlPlatform extends AbstractPlatform
     public function getReadLockSQL()
     {
         return 'LOCK IN SHARE MODE';
+    }
+
+    protected function initializeDoctrineTypeMappings()
+    {
+        $this->doctrineTypeMapping = array(
+            'tinyint'       => 'boolean',
+            'smallint'      => 'smallint',
+            'mediumint'     => 'integer',
+            'int'           => 'integer',
+            'integer'       => 'integer',
+            'bigint'        => 'bigint',
+            'tinytext'      => 'text',
+            'mediumtext'    => 'text',
+            'longtext'      => 'text',
+            'text'          => 'text',
+            'varchar'       => 'string',
+            'string'        => 'string',
+            'char'          => 'string',
+            'date'          => 'date',
+            'datetime'      => 'datetime',
+            'timestamp'     => 'datetime',
+            'time'          => 'time',
+            'float'         => 'decimal',
+            'double'        => 'decimal',
+            'real'          => 'decimal',
+            'decimal'       => 'decimal',
+            'numeric'       => 'decimal',
+            'year'          => 'date',
+        );
     }
 }

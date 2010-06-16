@@ -1,6 +1,6 @@
 <?php
 
-namespace Symfony\Framework\ProfilerBundle;
+namespace Symfony\Components\HttpKernel\Profiler;
 
 /*
  * This file is part of the Symfony framework.
@@ -15,7 +15,7 @@ namespace Symfony\Framework\ProfilerBundle;
  * ProfilerStorage.
  *
  * @package    Symfony
- * @subpackage Framework_ProfilerBundle
+ * @subpackage Components_HttpKernel
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
  */
 class ProfilerStorage
@@ -23,12 +23,14 @@ class ProfilerStorage
     protected $token;
     protected $data;
     protected $store;
+    protected $lifetime;
 
-    public function __construct($store, $token = null)
+    public function __construct($store, $token = null, $lifetime = 86400)
     {
         $this->store = $store;
         $this->token = null === $token ? uniqid() : $token;
         $this->data = null;
+        $this->lifetime = (int) $lifetime;
     }
 
     public function hasData()
@@ -46,7 +48,13 @@ class ProfilerStorage
             return $this->data;
         }
 
-        return isset($this->data[$name]) ? $this->data[$name] : null;
+        return isset($this->data[$name]) ? $this->data[$name] : array();
+    }
+
+    public function setToken($token)
+    {
+        $this->token = $token;
+        $this->data = null;
     }
 
     public function getToken()
@@ -92,7 +100,7 @@ class ProfilerStorage
         } elseif (class_exists('\PDO') && in_array('sqlite', \PDO::getAvailableDrivers(), true)) {
             $db = new \PDO('sqlite:'.$this->store);
         } else {
-            throw new \RuntimeException('You need to enable either the SQLite or PDO_SQLite extension for the ProfilerBundle to run properly.');
+            throw new \RuntimeException('You need to enable either the SQLite or PDO_SQLite extension for the profiler to run properly.');
         }
 
         $db->exec('CREATE TABLE IF NOT EXISTS data (token STRING, data STRING, created_at INTEGER)');
@@ -134,10 +142,10 @@ class ProfilerStorage
         }
     }
 
-    public function purge($lifetime)
+    public function purge()
     {
         $db = $this->initDb(false);
-        $args = array(':time' => time() - (int) $lifetime);
+        $args = array(':time' => time() - $this->lifetime);
         $this->exec($db, 'DELETE FROM data WHERE created_at < :time', $args);
         $this->close($db);
     }

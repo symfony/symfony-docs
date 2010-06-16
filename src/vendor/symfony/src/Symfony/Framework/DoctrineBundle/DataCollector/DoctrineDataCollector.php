@@ -2,7 +2,8 @@
 
 namespace Symfony\Framework\DoctrineBundle\DataCollector;
 
-use Symfony\Framework\ProfilerBundle\DataCollector\DataCollector;
+use Symfony\Components\HttpKernel\Profiler\DataCollector\DataCollector;
+use Symfony\Components\DependencyInjection\ContainerInterface;
 
 /*
  * This file is part of the Symfony framework.
@@ -22,16 +23,31 @@ use Symfony\Framework\ProfilerBundle\DataCollector\DataCollector;
  */
 class DoctrineDataCollector extends DataCollector
 {
-    protected function collect()
+    protected $container;
+
+    public function __construct(ContainerInterface $container)
     {
-        $data = array();
+        $this->container = $container;
+    }
+
+    public function collect()
+    {
+        $this->data = array();
         if ($this->container->hasService('doctrine.dbal.logger')) {
-            $data = array(
+            $this->data = array(
                 'queries' => $this->container->getDoctrine_Dbal_LoggerService()->queries,
             );
         }
+    }
 
-        return $data;
+    public function getQueryCount()
+    {
+        return count($this->data['queries']);
+    }
+
+    public function getQueries()
+    {
+        return $this->data['queries'];
     }
 
     public function getSummary()

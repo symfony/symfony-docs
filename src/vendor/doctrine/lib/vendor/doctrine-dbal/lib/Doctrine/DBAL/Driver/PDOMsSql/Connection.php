@@ -1,5 +1,7 @@
 <?php
 /*
+ *  $Id$
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
  * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
@@ -19,17 +21,17 @@
 
 namespace Doctrine\DBAL\Driver\PDOMsSql;
 
-use PDO, Doctrine\DBAL\Driver\Connection as DriverConnection;
-
 /**
  * MsSql Connection implementation.
  *
  * @since 2.0
  */
-class Connection extends PDO implements DriverConnection
+class Connection extends \PDO implements \Doctrine\DBAL\Driver\Connection
 {
     /**
-     * {@inheritdoc}
+     * Performs the rollback.
+     * 
+     * @override
      */
     public function rollback()
     {
@@ -37,7 +39,9 @@ class Connection extends PDO implements DriverConnection
     }
 
     /**
-     * {@inheritdoc}
+     * Performs the commit.
+     * 
+     * @override
      */
     public function commit()
     {
@@ -45,21 +49,12 @@ class Connection extends PDO implements DriverConnection
     }
 
     /**
-     * {@inheritdoc}
+     * Begins a database transaction.
+     * 
+     * @override
      */
     public function beginTransaction()
     {
         $this->exec('BEGIN TRANSACTION');
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function lastInsertId($name = null)
-    {
-        $stmt = $this->query('SELECT SCOPE_IDENTITY()');
-        $id = $stmt->fetchColumn();
-        $stmt->closeCursor();
-        return $id;
     }
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace Symfony\Framework\ProfilerBundle\DataCollector;
+namespace Symfony\Components\HttpKernel\Profiler\DataCollector;
 
 /*
  * This file is part of the Symfony framework.
@@ -15,16 +15,21 @@ namespace Symfony\Framework\ProfilerBundle\DataCollector;
  * MemoryDataCollector.
  *
  * @package    Symfony
- * @subpackage Framework_ProfilerBundle
+ * @subpackage Components_HttpKernel
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
  */
 class MemoryDataCollector extends DataCollector
 {
-    protected function collect()
+    public function collect()
     {
-        return array(
+        $this->data = array(
             'memory' => memory_get_peak_usage(true),
         );
+    }
+
+    public function getMemory()
+    {
+        return $this->data['memory'];
     }
 
     public function getSummary()

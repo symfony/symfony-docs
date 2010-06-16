@@ -1,8 +1,10 @@
 <?php
 
-namespace Symfony\Framework\ProfilerBundle\DataCollector;
+namespace Symfony\Framework\WebBundle\DataCollector;
 
 use Symfony\Foundation\Kernel;
+use Symfony\Components\HttpKernel\Profiler\DataCollector\DataCollector;
+use Symfony\Components\DependencyInjection\ContainerInterface;
 
 /*
  * This file is part of the Symfony framework.
@@ -17,17 +19,24 @@ use Symfony\Foundation\Kernel;
  * ConfigDataCollector.
  *
  * @package    Symfony
- * @subpackage Framework_ProfilerBundle
+ * @subpackage Framework_WebBundle
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
  */
 class ConfigDataCollector extends DataCollector
 {
-    protected function collect()
+    protected $container;
+
+    public function __construct(ContainerInterface $container)
+    {
+        $this->container = $container;
+    }
+
+    public function collect()
     {
         $kernel = $this->container->getKernelService();
 
-        return array(
-            'token'           => $this->manager->getProfilerStorage()->getToken(),
+        $this->data = array(
+            'token'           => $this->profiler->getProfilerStorage()->getToken(),
             'symfony_version' => Kernel::VERSION,
             'name'            => $kernel->getName(),
             'env'             => $kernel->getEnvironment(),

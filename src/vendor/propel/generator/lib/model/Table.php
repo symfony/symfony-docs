@@ -29,7 +29,7 @@ require_once 'model/Behavior.php';
  * @author     John McNally <jmcnally@collab.net> (Torque)
  * @author     Daniel Rall <dlr@collab.net> (Torque)
  * @author     Byron Foster <byron_foster@yahoo.com> (Torque)
- * @version    $Revision: 1781 $
+ * @version    $Revision: 1802 $
  * @package    propel.generator.model
  */
 class Table extends XMLElement implements IDMethod
@@ -313,6 +313,15 @@ class Table extends XMLElement implements IDMethod
 		// retrieves the method for converting from specified name to a PHP name.
 		$this->phpNamingMethod = $this->getAttribute("phpNamingMethod", $this->getDatabase()->getDefaultPhpNamingMethod());
 		$this->phpName = $this->getAttribute("phpName", $this->buildPhpName($this->getAttribute('name')));
+		
+		$namespace = $this->getAttribute("namespace", '');
+		$package = $this->getAttribute("package");
+		if ($namespace && !$package && $this->getDatabase()->getBuildProperty('namespaceAutoPackage')) {
+			$package = str_replace('\\', '.', $namespace);
+		}
+		$this->namespace = $namespace;
+		$this->pkg = $package;
+		
 		$this->namespace = $this->getAttribute("namespace");
 		$this->idMethod = $this->getAttribute("idMethod", $this->getDatabase()->getDefaultIdMethod());
 		$this->allowPkInsert = $this->booleanValue($this->getAttribute("allowPkInsert"));
@@ -321,7 +330,6 @@ class Table extends XMLElement implements IDMethod
 		$this->skipSql = $this->booleanValue($this->getAttribute("skipSql"));
 		$this->readOnly = $this->booleanValue($this->getAttribute("readOnly"));
 
-		$this->pkg = $this->getAttribute("package");
 		$this->abstractValue = $this->booleanValue($this->getAttribute("abstract"));
 		$this->baseClass = $this->getAttribute("baseClass");
 		$this->basePeer = $this->getAttribute("basePeer");
@@ -946,7 +954,16 @@ class Table extends XMLElement implements IDMethod
 	 */
 	public function getNamespace()
 	{
-		return $this->namespace;
+		if (strpos($this->namespace, '\\') === 0) {
+			// absolute table namespace
+			return substr($this->namespace, 1);
+		} elseif ($this->namespace && $this->getDatabase() && $this->getDatabase()->getNamespace()) {
+			return $this->getDatabase()->getNamespace() . '\\' . $this->namespace;
+		} elseif ($this->getDatabase() && $this->getDatabase()->getNamespace()) {
+			return $this->getDatabase()->getNamespace();
+		} else {
+			return $this->namespace;
+		}
 	}
 
 	/**

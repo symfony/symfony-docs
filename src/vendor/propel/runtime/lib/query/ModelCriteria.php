@@ -22,7 +22,7 @@
  * @method     ModelCriteria innerJoin($relation) Adds a INNER JOIN clause to the query
  *
  * @author     François Zaninotto
- * @version    $Revision: 1747 $
+ * @version    $Revision: 1799 $
  * @package    propel.runtime.query
  */
 class ModelCriteria extends Criteria
@@ -928,6 +928,31 @@ class ModelCriteria extends Criteria
 		
 		return $criteria->getFormatter()->init($criteria)->formatOne($stmt);
 	}
+
+	/**
+	 * Issue a SELECT ... LIMIT 1 query based on the current ModelCriteria
+	 * and format the result with the current formatter
+	 * By default, returns a model object
+	 * 
+	 * @param     PropelPDO $con an optional connection object
+	 *
+	 * @return    mixed the result, formatted by the current formatter
+	 */
+	public function findOneOrCreate($con = null)
+	{
+		$criteria = $this->isKeepQuery() ? clone $this : $this;
+		$criteria->limit(1);
+		$stmt = $criteria->getSelectStatement($con);
+		if (!$ret = $this->findOne($con)) {
+			$class = $this->getModelName();
+			$obj = new $class();
+			foreach ($this->keys() as $key) {
+				$obj->setByName($key, $this->getValue($key), BasePeer::TYPE_COLNAME);
+			}
+			$ret = $this->getFormatter()->formatRecord($obj);
+		}
+		return $ret;
+	}
 	
 	/**
 	 * Find object by primary key
@@ -1011,9 +1036,13 @@ class ModelCriteria extends Criteria
 			BasePeer::populateStmtValues($stmt, $params, $dbMap, $db);
 			$stmt->execute();
 			$con->commit();
-		} catch (PropelException $e) {
-			$con->rollback();
-			throw $e;
+		} catch (Exception $e) {
+			if ($stmt) {
+				$stmt = null; // close
+			}
+			$con->rollBack();
+			Propel::log($e->getMessage(), Propel::LOG_ERR);
+			throw new PropelException(sprintf('Unable to execute SELECT statement [%s]', $sql), $e);
 		}
 		
 		return $stmt;

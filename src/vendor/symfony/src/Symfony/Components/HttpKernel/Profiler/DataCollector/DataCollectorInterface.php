@@ -1,6 +1,8 @@
 <?php
 
-namespace Symfony\Framework\ProfilerBundle\DataCollector;
+namespace Symfony\Components\HttpKernel\Profiler\DataCollector;
+
+use Symfony\Components\HttpKernel\Profiler\Profiler;
 
 /*
  * This file is part of the Symfony framework.
@@ -15,14 +17,18 @@ namespace Symfony\Framework\ProfilerBundle\DataCollector;
  * DataCollectorInterface.
  *
  * @package    Symfony
- * @subpackage Framework_ProfilerBundle
+ * @subpackage Components_HttpKernel
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
  */
 interface DataCollectorInterface
 {
-    public function setCollectorManager(DataCollectorManager $manager);
+    function getData();
 
-    public function getData();
+    function setData($data);
 
-    public function getName();
+    function getName();
+
+    function collect();
+
+    function setProfiler(Profiler $profiler);
 }

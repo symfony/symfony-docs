@@ -24,6 +24,11 @@ class Twig_Node_Module extends Twig_Node
         parent::__construct(array('parent' => $parent, 'body' => $body, 'blocks' => $blocks, 'macros' => $macros), array('filename' => $filename), 1);
     }
 
+    /**
+     * Compiles the node to PHP.
+     *
+     * @param Twig_Compiler A Twig_Compiler instance
+     */
     public function compile($compiler)
     {
         $this->compileTemplate($compiler);
@@ -44,8 +49,6 @@ class Twig_Node_Module extends Twig_Node
         $this->compileDisplayFooter($compiler);
 
         $compiler->subcompile($this->blocks);
-
-        $this->compileGetName($compiler);
 
         $this->compileMacros($compiler);
 
@@ -144,19 +147,6 @@ class Twig_Node_Module extends Twig_Node
         $compiler
             ->write("public function display(array \$context)\n", "{\n")
             ->indent()
-        ;
-    }
-
-    protected function compileGetName($compiler)
-    {
-        $compiler
-            ->write("public function getName()\n", "{\n")
-            ->indent()
-            ->write('return ')
-            ->string($this['filename'])
-            ->raw(";\n")
-            ->outdent()
-            ->write("}\n\n")
         ;
     }
 

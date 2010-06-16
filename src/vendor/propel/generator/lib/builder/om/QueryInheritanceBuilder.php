@@ -107,7 +107,6 @@ require '".$requiredClassFilePath."';
 		$baseClassname = $baseBuilder->getClassname();
 
 		$script .= "
-
 /**
  * Skeleton subclass for representing a query for one of the subclasses of the '$tableName' table.
  *

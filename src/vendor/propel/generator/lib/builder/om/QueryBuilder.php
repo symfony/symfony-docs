@@ -73,7 +73,6 @@ class QueryBuilder extends OMBuilder
 		$parentClass = $this->getBehaviorContent('parentClass');
 		$parentClass = null === $parentClass ? 'ModelCriteria' : $parentClass;
 		$script .= "
-
 /**
  * Base class that represents a query for the '$tableName' table.
  *
@@ -132,7 +131,9 @@ class QueryBuilder extends OMBuilder
 
 		// override the signature of ModelCriteria::findOne() to specify the class of the returned object, for IDE completion
 		$script .= "
- * @method     $modelClass findOne(PropelPDO \$con = null) Return the first $modelClass matching the query";
+ * @method     $modelClass findOne(PropelPDO \$con = null) Return the first $modelClass matching the query
+ * @method     $modelClass findOneOrCreate(PropelPDO \$con = null) Return the first $modelClass matching the query, or a new $modelClass object populated from the query conditions when no match is found
+ *";
 
 		// magic findBy() methods, for IDE completion
 		foreach ($this->getTable()->getColumns() as $column) {

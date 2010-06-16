@@ -1,6 +1,9 @@
 <?php
 
-namespace Symfony\Framework\ProfilerBundle\DataCollector;
+namespace Symfony\Framework\WebBundle\DataCollector;
+
+use Symfony\Components\HttpKernel\Profiler\DataCollector\DataCollector;
+use Symfony\Components\DependencyInjection\ContainerInterface;
 
 /*
  * This file is part of the Symfony framework.
@@ -15,21 +18,38 @@ namespace Symfony\Framework\ProfilerBundle\DataCollector;
  * AppDataCollector.
  *
  * @package    Symfony
- * @subpackage Framework_ProfilerBundle
+ * @subpackage Framework_WebBundle
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
  */
 class AppDataCollector extends DataCollector
 {
-    protected function collect()
+    protected $container;
+
+    public function __construct(ContainerInterface $container)
+    {
+        $this->container = $container;
+    }
+
+    public function collect()
     {
         $request = $this->container->getRequestService();
 
-        return array(
+        $this->data = array(
             'route'        => $request->path->get('_route') ? $request->path->get('_route') : '<span style="color: #a33">NONE</span>',
             'format'       => $request->getRequestFormat(),
-            'content_type' => $this->manager->getResponse()->headers->get('Content-Type') ? $this->manager->getResponse()->headers->get('Content-Type') : 'text/html',
-            'code'         => $this->manager->getResponse()->getStatusCode(),
+            'content_type' => $this->profiler->getResponse()->headers->get('Content-Type') ? $this->profiler->getResponse()->headers->get('Content-Type') : 'text/html',
+            'code'         => $this->profiler->getResponse()->getStatusCode(),
         );
+    }
+
+    public function getRoute()
+    {
+        return $this->data['route'];
+    }
+
+    public function getFormat()
+    {
+        return $this->data['format'];
     }
 
     public function getSummary()

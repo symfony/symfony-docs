@@ -13,7 +13,7 @@
  * format() returns a PDO statement
  *
  * @author     Francois Zaninotto
- * @version    $Revision: 1612 $
+ * @version    $Revision: 1796 $
  * @package    propel.runtime.formatter
  */
 class PropelStatementFormatter extends PropelFormatter
@@ -30,6 +30,11 @@ class PropelStatementFormatter extends PropelFormatter
 		} else {
 			return $stmt;
 		}
+	}
+	
+	public function formatRecord($record = null)
+	{
+		throw new PropelException('The Statement formatter cannot transform a record into a statement');
 	}
 
 	public function isObjectFormatter()

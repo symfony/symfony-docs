@@ -1,6 +1,9 @@
 <?php
 
-namespace Symfony\Framework\ProfilerBundle\DataCollector;
+namespace Symfony\Framework\WebBundle\DataCollector;
+
+use Symfony\Components\HttpKernel\Profiler\DataCollector\DataCollector;
+use Symfony\Components\DependencyInjection\ContainerInterface;
 
 /*
  * This file is part of the Symfony framework.
@@ -15,16 +18,28 @@ namespace Symfony\Framework\ProfilerBundle\DataCollector;
  * TimerDataCollector.
  *
  * @package    Symfony
- * @subpackage Framework_ProfilerBundle
+ * @subpackage Framework_WebBundle
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
  */
 class TimerDataCollector extends DataCollector
 {
-    protected function collect()
+    protected $container;
+
+    public function __construct(ContainerInterface $container)
     {
-        return array(
+        $this->container = $container;
+    }
+
+    public function collect()
+    {
+        $this->data = array(
             'time' => microtime(true) - $this->container->getKernelService()->getStartTime(),
         );
+    }
+
+    public function getTime()
+    {
+        return $this->data['time'];
     }
 
     public function getSummary()

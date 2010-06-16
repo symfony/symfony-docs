@@ -1,13 +1,12 @@
 <?php
 
-namespace Symfony\Framework\ProfilerBundle\Listener;
+namespace Symfony\Components\HttpKernel\Listener;
 
-use Symfony\Components\DependencyInjection\ContainerInterface;
 use Symfony\Components\EventDispatcher\EventDispatcher;
 use Symfony\Components\EventDispatcher\Event;
 use Symfony\Components\HttpKernel\Response;
 use Symfony\Components\HttpKernel\HttpKernelInterface;
-use Symfony\Framework\ProfilerBundle\DataCollector\DataCollectorManager;
+use Symfony\Components\HttpKernel\Profiler\Profiler;
 
 /*
  * This file is part of the Symfony framework.
@@ -27,13 +26,11 @@ use Symfony\Framework\ProfilerBundle\DataCollector\DataCollectorManager;
  */
 class WebDebugToolbar
 {
-    protected $container;
-    protected $collectorManager;
+    protected $profiler;
 
-    public function __construct(ContainerInterface $container, DataCollectorManager $collectorManager)
+    public function __construct(Profiler $profiler)
     {
-        $this->container = $container;
-        $this->collectorManager = $collectorManager;
+        $this->profiler = $profiler;
     }
 
     /**
@@ -52,7 +49,7 @@ class WebDebugToolbar
             return $response;
         }
 
-        $request = $this->container->getRequestService();
+        $request = $event->getParameter('request');
 
         if ('3' === substr($response->getStatusCode(), 0, 1)
             || ($response->headers->has('Content-Type') && false === strpos($response->headers->get('Content-Type'), 'html'))
@@ -77,7 +74,7 @@ class WebDebugToolbar
     protected function injectToolbar(Response $response)
     {
         $data = '';
-        foreach ($this->collectorManager->getCollectors() as $name => $collector) {
+        foreach ($this->profiler->getCollectors() as $name => $collector) {
             $data .= $collector->getSummary();
         }
 
