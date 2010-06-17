@@ -2,9 +2,5 @@ parameters:
     kernel.include_core_classes: false
 
 kernel.config: ~
-web.web: ~
+web.config: ~
 web.templating: ~
-
-propel.config:
-  path:       %kernel.root_dir%/../src/vendor/propel
-  phing_path: %kernel.root_dir%/../src/vendor/phing
