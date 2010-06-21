@@ -10,6 +10,6 @@ class HelloControllerTest extends WebTestCase
     {
         $client = $this->createClient();
         $client->request('GET', '/hello/Fabien');
-        $client->assertResponseSelectExists('html:contains("Hello Fabien")');
+        $this->assertResponseSelectExists('html:contains("Hello Fabien")');
     }
 }
