@@ -105,7 +105,7 @@ The sandbox comes with a simple test class for `HelloController`:
         {
             $client = $this->createClient();
             $client->request('GET', '/hello/Fabien');
-            $client->assertResponseSelectExists('html:contains("Hello Fabien")');
+            $this->assertResponseSelectExists('html:contains("Hello Fabien")');
         }
     }
 
@@ -181,23 +181,11 @@ standard PHPUnit assertion method, but Symfony2 provides some specialized
 ones:
 
     [php]
-    // Asserts the value of a request parameter.
-    $this->assertRequestParameter($key, $value)
-
-    // Asserts that the request is in the given format.
-    $this->assertRequestFormat($format)
-
-    // Asserts if the current HTTP method matches the given one.
-    $this->assertRequestMethod($method)
-
-    // Asserts that the value of a cookie matches a regexp.
-    $this->assertRequestCookieRegExp($name, $regexp)
-
     // Asserts that the response matches a given CSS selector.
-    $this->assertResponseSelectEquals($selector, $arguments, $expected)
+    $this->assertResponseSelectEquals($expected, $selector, $arguments)
 
     // Asserts that the response matches a given CSS selector n times.
-    $this->assertResponseSelectCount($selector, $count)
+    $this->assertResponseSelectCount($count, $selector)
 
     // Asserts that the response matches a given CSS selector.
     $this->assertResponseSelectExists($selector)
@@ -206,7 +194,7 @@ ones:
     $this->assertResponseNotSelectExists($selector)
 
     // Asserts the a response header has the given value.
-    $this->assertResponseHeaderEquals($key, $value)
+    $this->assertResponseHeaderEquals($value, $key)
 
     // Asserts that the response content matches a regexp.
     $this->assertResponseRegExp($regex)
