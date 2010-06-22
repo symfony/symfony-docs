@@ -17,13 +17,13 @@ class HelloKernel extends Kernel
     {
         $bundles = array(
             new Symfony\Foundation\Bundle\KernelBundle(),
-            new Symfony\Framework\WebBundle\Bundle(),
-            new Symfony\Framework\ZendBundle\Bundle(),
-            new Symfony\Framework\SwiftmailerBundle\Bundle(),
-            new Symfony\Framework\DoctrineBundle\Bundle(),
-            //new Symfony\Framework\PropelBundle\Bundle(),
-            new Symfony\Framework\TwigBundle\Bundle(),
-            new Application\HelloBundle\Bundle(),
+            new Symfony\Framework\WebBundle\WebBundle(),
+            new Symfony\Framework\ZendBundle\ZendBundle(),
+            new Symfony\Framework\SwiftmailerBundle\SwiftmailerBundle(),
+            new Symfony\Framework\DoctrineBundle\DoctrineBundle(),
+            //new Symfony\Framework\PropelBundle\PropelBundle(),
+            new Symfony\Framework\TwigBundle\TwigBundle(),
+            new Application\HelloBundle\HelloBundle(),
         );
 
         if ($this->isDebug()) {
