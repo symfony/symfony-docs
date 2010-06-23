@@ -104,8 +104,9 @@ The sandbox comes with a simple test class for `HelloController`:
         public function testIndex()
         {
             $client = $this->createClient();
-            $client->request('GET', '/hello/Fabien');
-            $this->assertResponseSelectExists('html:contains("Hello Fabien")');
+            $crawler = $client->request('GET', '/hello/Fabien');
+
+            $this->assertTrue($crawler->filter('html:contains("Hello Fabien")')->count());
         }
     }
 
@@ -133,7 +134,7 @@ a CSS selector, then use the client to click on it:
     [php]
     $link = $crawler->filter('a:contains("Greet")')->eq(1)->link();
 
-    $client->click($link);
+    $crawler = $client->click($link);
 
 Submitting a form is very similar; select a form button, optionally override
 some form values, and submit the corresponding form:
@@ -145,7 +146,7 @@ some form values, and submit the corresponding form:
     $form['name'] = 'Lucas';
 
     // submit the form
-    $client->submit($form);
+    $crawler = $client->submit($form);
 
 Each `Form` field has specialized methods depending on its type:
 
@@ -166,7 +167,7 @@ Instead of changing one field at a time, you can also pass an array of values
 to the `submit()` method:
 
     [php]
-    $client->submit($form, array(
+    $crawler = $client->submit($form, array(
         'name'         => 'Lucas',
         'country'      => 'France',
         'like_symfony' => true,
@@ -176,40 +177,28 @@ to the `submit()` method:
 ### Assertions
 
 Now that you can easily navigate through an application, let's see how you can
-test that it actually does what you expect it to. You can of course use any
-standard PHPUnit assertion method, but Symfony2 provides some specialized
-ones:
+test that it actually does what you expect it to. The following code shows the
+most common and useful tests you might want to do on the response:
 
     [php]
-    // Asserts that the response matches a given CSS selector.
-    $this->assertResponseSelectEquals($expected, $selector, $arguments)
+    // Assert that the response matches a given CSS selector.
+    $this->assertFalse($crawler->filter($selector)->isEmpty());
 
-    // Asserts that the response matches a given CSS selector n times.
-    $this->assertResponseSelectCount($count, $selector)
+    // Assert that the response matches a given CSS selector n times.
+    $this->assertEquals($count, $crawler->filter($selector)->count());
 
-    // Asserts that the response matches a given CSS selector.
-    $this->assertResponseSelectExists($selector)
+    // Assert the a response header has the given value.
+    $this->assertTrue($client->getResponse()->headers->contains($key, $value));
 
-    // Asserts that the response does not match a given CSS selector.
-    $this->assertResponseNotSelectExists($selector)
+    // Assert that the response content matches a regexp.
+    $this->assertRegExp($regexp, $client->getResponse()->getContent());
 
-    // Asserts the a response header has the given value.
-    $this->assertResponseHeaderEquals($value, $key)
+    // Assert the response status code.
+    $this->assertTrue($client->getResponse()->isSuccessful());
+    $this->assertTrue($client->getResponse()->isNotFound());
+    $this->assertEquals(200, $client->getResponse()->getStatusCode());
 
-    // Asserts that the response content matches a regexp.
-    $this->assertResponseRegExp($regex)
-
-    // Asserts that the response content does not match a regexp.
-    $this->assertResponseNotRegExp($regex)
-
-    // Asserts the response status code.
-    $this->assertResponseStatusCode($statusCode = 200)
-
-    // Asserts that the response status code is a redirect.
-    $this->assertResponseStatusCodeRedirect($location = null)
-
->**TIP**
->Symfony2 provides more assertion methods than the one listed above. Have a
->look at the API for more information.
+    // Assert that the response status code is a redirect.
+    $this->assertTrue($client->getResponse()->isRedirected('google.com'));
 
 [1]: http://www.phpunit.de/manual/3.5/en/
