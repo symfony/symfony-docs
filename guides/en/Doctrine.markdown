@@ -1,5 +1,5 @@
-A Quick Tour of Symfony 2.0: Doctrine
-=====================================
+Doctrine
+========
 
 The Doctrine Project is the home of a selected set of PHP libraries primarily focused on
 providing persistence services and related functionality. The integration between Symfony2

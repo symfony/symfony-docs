@@ -1,5 +1,5 @@
-A Quick Tour of Symfony 2.0: The Forms
-======================================
+Forms
+=====
 
 In the last part you learnt a lot about data validation. Data validation is
 hardly useful though if no-one provides you with data. Symfony 2.0 features

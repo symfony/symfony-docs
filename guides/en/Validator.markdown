@@ -1,11 +1,5 @@
-A Quick Tour of Symfony 2.0: The Validator
-==========================================
-
-You survived the last part about the architecture and are still with us? 
-Nothing seems to stop you from becoming a true Symfony 2.0 expert! Since you
-are now pretty familiar with the core of Symfony 2.0, let's learn about some
-tools that help with rapid application development. In this part we will have 
-a closer look at the Validator component.
+Validator
+=========
 
 The Basics
 ----------
@@ -413,10 +407,5 @@ method `loadValidatorMetadata()` to the classes that you want to validate.
     
 You can use either of the configuration drivers, or all together. Symfony will
 merge all the information it can find.
-
-
-Final Thoughts
---------------
-
 
 [1]: http://jcp.org/en/jsr/detail?id=303

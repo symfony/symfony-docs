@@ -199,6 +199,6 @@ Final Thoughts
 --------------
 
 That's all there is to it, and I'm not even sure we have spent the allocated
-10 minutes. Templates and controllers are the bread and butter of web
-developers. Oh wait, and bugs too! But there is an easy way to avoid most of
-them: automated tests. That's the topic of the next part.
+10 minutes. In the previous part, we saw how to extend the templating system
+with helpers. But everything can extended or replaced in Symfony2 with
+bundles. That's the topic of the next part of this tutorial.

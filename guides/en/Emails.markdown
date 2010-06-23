@@ -1,5 +1,5 @@
-Symfony2 Quick Tour: Sending Emails
-===================================
+Emails
+======
 
 Sending emails with Symfony is a snap. First, enable the `SwiftmailerBundle`
 and configure how you want them to be sent:

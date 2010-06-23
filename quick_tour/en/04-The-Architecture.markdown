@@ -2,7 +2,7 @@ Symfony2 Quick Tour: The Architecture
 =====================================
 
 You are my hero! Who would have thought that you would still be here after the
-first four parts? Your efforts will be well rewarded soon. The first four
+first three parts? Your efforts will be well rewarded soon. The first three
 parts of this tutorial give you a quick overview of Symfony 2.0. But they
 don't have a deep look at the architecture of the framework. As it makes
 Symfony stand apart from the framework crowd, let's dive into it now.
@@ -265,9 +265,11 @@ moving things around and making Symfony work for you. Everything is done in
 Symfony to stand out of your way. So, feel free to rename and move directories
 around as you see fit.
 
-You are just one step away from becoming a Symfony master. That's right, after
-reading the next parts about various built-in bundles, you will be able to
-code the most demanding applications with Symfony.
+And that's all for the quick tour. From testing to sending emails, you still
+need to learn of lot to become a Symfony master. Ready to dig into these
+topics now? Look no further, go to the official [guides][3] page and pick any
+topic you want.
 
 [1]: http://groups.google.com/group/php-standards/web/psr-0-final-proposal
 [2]: http://pear.php.net/
+[3]: http://www.symfony-reloaded/learn

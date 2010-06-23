@@ -1,9 +1,9 @@
-Symfony2 Quick Tour: The Tests
-==============================
+Testing
+=======
 
 Whenever you write a new line of code, you also potentially add new bugs.
-Automated tests should have you covered and this fourth part is all about
-writing unit and functional tests for your Symfony2 application.
+Automated tests should have you covered and this tutorial is all about writing
+unit and functional tests for your Symfony2 application.
 
 Testing Framework
 -----------------
@@ -211,14 +211,5 @@ ones:
 >**TIP**
 >Symfony2 provides more assertion methods than the one listed above. Have a
 >look at the API for more information.
-
-Final Thoughts
---------------
-
-PHPUnit and Symfony2 makes unit and functional testing a breeze. Now that you
-can test your application, you should have a good understanding of the main
-Symfony2 concepts. Specific topics are documented in the following sections,
-but first, let's see how you can extend Symfony2 easily with bundles. That's
-the topic of the next part of this tutorial.
 
 [1]: http://www.phpunit.de/manual/3.5/en/
