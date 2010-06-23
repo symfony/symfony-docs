@@ -106,7 +106,7 @@ The sandbox comes with a simple test class for `HelloController`:
             $client = $this->createClient();
             $crawler = $client->request('GET', '/hello/Fabien');
 
-            $this->assertTrue($crawler->filter('html:contains("Hello Fabien")')->count());
+            $this->assertFalse($crawler->filter('html:contains("Hello Fabien")')->isEmpty());
         }
     }
 
