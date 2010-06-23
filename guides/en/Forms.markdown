@@ -1,9 +1,8 @@
 Forms
 =====
 
-In the last part you learnt a lot about data validation. Data validation is
-hardly useful though if no-one provides you with data. Symfony 2.0 features
-a sophisticated Form component that allows you to easily create mighty HTML forms.
+Symfony 2.0 features a sophisticated Form component that allows you to easily
+create mighty HTML forms.
 
 Creating Forms
 --------------
