@@ -49,7 +49,8 @@ This class must implement five methods:
   * `registerRootDir()`: Returns the configuration root directory;
 
   * `registerBundles()`: Returns an array of all bundles needed to run the
-    application (notice the reference to `Application\HelloBundle\Bundle`);
+    application (notice the reference to
+    `Application\HelloBundle\HelloBundle`);
 
   * `registerBundleDirs()`: Returns an array associating namespaces and their
     home directories;
@@ -140,11 +141,11 @@ method of the `HelloKernel` class:
     {
         return array(
             new Symfony\Foundation\Bundle\KernelBundle(),
-            new Symfony\Framework\WebBundle\Bundle(),
-            new Symfony\Framework\DoctrineBundle\Bundle(),
-            new Symfony\Framework\SwiftmailerBundle\Bundle(),
-            new Symfony\Framework\ZendBundle\Bundle(),
-            new Application\HelloBundle\Bundle(),
+            new Symfony\Framework\WebBundle\WebBundle(),
+            new Symfony\Framework\DoctrineBundle\DoctrineBundle(),
+            new Symfony\Framework\SwiftmailerBundle\SwiftmailerBundle(),
+            new Symfony\Framework\ZendBundle\ZendBundle(),
+            new Application\HelloBundle\HelloBundle(),
         );
     }
 
@@ -190,11 +191,11 @@ defined in the `registerBundles()` method:
     {
         return array(
             new Symfony\Foundation\Bundle\KernelBundle(),
-            new Symfony\Framework\WebBundle\Bundle(),
-            new Symfony\Framework\DoctrineBundle\Bundle(),
-            new Symfony\Framework\SwiftmailerBundle\Bundle(),
-            new Symfony\Framework\ZendBundle\Bundle(),
-            new Application\HelloBundle\Bundle(),
+            new Symfony\Framework\WebBundle\WebBundle(),
+            new Symfony\Framework\DoctrineBundle\DoctrineBundle(),
+            new Symfony\Framework\SwiftmailerBundle\SwiftmailerBundle(),
+            new Symfony\Framework\ZendBundle\ZendBundle(),
+            new Application\HelloBundle\HelloBundle(),
         );
     }
 
