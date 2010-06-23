@@ -12,6 +12,6 @@ class HelloControllerTest extends WebTestCase
 
         $crawler = $client->request('GET', '/hello/Fabien');
 
-        $this->assertTrue($crawler->filter('html:contains("Hello Fabien")')->count());
+        $this->assertFalse($crawler->filter('html:contains("Hello Fabien")')->isEmpty());
     }
 }
