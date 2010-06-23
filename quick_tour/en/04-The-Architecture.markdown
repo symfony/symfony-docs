@@ -272,4 +272,4 @@ topic you want.
 
 [1]: http://groups.google.com/group/php-standards/web/psr-0-final-proposal
 [2]: http://pear.php.net/
-[3]: http://www.symfony-reloaded/learn
+[3]: http://www.symfony-reloaded.org/learn
