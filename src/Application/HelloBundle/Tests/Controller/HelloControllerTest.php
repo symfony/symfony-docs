@@ -9,7 +9,9 @@ class HelloControllerTest extends WebTestCase
     public function testIndex()
     {
         $client = $this->createClient();
-        $client->request('GET', '/hello/Fabien');
-        $this->assertResponseSelectExists('html:contains("Hello Fabien")');
+
+        $crawler = $client->request('GET', '/hello/Fabien');
+
+        $this->assertTrue($crawler->filter('html:contains("Hello Fabien")')->count());
     }
 }
