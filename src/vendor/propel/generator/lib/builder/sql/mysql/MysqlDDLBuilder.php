@@ -132,19 +132,16 @@ CREATE TABLE ".$this->quoteIdentifier($table->getName())."
 		$script .= "
 )";
 
-		$mysqlTableType = $this->getBuildProperty("mysqlTableType");
-		if (!$mysqlTableType) {
-			$vendorSpecific = $table->getVendorInfoForType($this->getPlatform()->getDatabaseType());
-			if ($vendorSpecific->hasParameter('Type')) {
-				$mysqlTableType = $vendorSpecific->getParameter('Type');
-			} elseif ($vendorSpecific->hasParameter('Engine')) {
-				$mysqlTableType = $vendorSpecific->getParameter('Engine');
-			} else {
-				$mysqlTableType = 'MyISAM';
-			}
+		$vendorSpecific = $table->getVendorInfoForType($this->getPlatform()->getDatabaseType());
+		if ($vendorSpecific->hasParameter('Type')) {
+			$mysqlTableType = $vendorSpecific->getParameter('Type');
+		} elseif ($vendorSpecific->hasParameter('Engine')) {
+			$mysqlTableType = $vendorSpecific->getParameter('Engine');
+		} else {
+			$mysqlTableType = $this->getBuildProperty("mysqlTableType");
 		}
 
-		$script .= "Type=$mysqlTableType";
+		$script .= sprintf(' %s=%s', $this->getBuildProperty("mysqlTableEngineKeyword"), $mysqlTableType);
 
 		$dbVendorSpecific = $table->getDatabase()->getVendorInfoForType($databaseType);
 		$tableVendorSpecific = $table->getVendorInfoForType($databaseType);

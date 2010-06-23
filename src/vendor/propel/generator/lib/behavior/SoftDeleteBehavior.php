@@ -14,7 +14,7 @@
  * And an additional condition for every read query to only consider rows with no deletion date
  *
  * @author     François Zaninotto
- * @version    $Revision: 1636 $
+ * @version    $Revision: 1807 $
  * @package    propel.generator.behavior
  */
 class SoftDeleteBehavior extends Behavior
@@ -85,8 +85,9 @@ public function unDelete(PropelPDO \$con = null)
 		return <<<EOT
 if (!empty(\$ret) && {$builder->getStubQueryBuilder()->getClassname()}::isSoftDeleteEnabled()) {
 	\$this->{$this->getColumnSetter()}(time());
-	\$this->save();
+	\$this->save(\$con);
 	\$con->commit();
+	{$builder->getStubPeerBuilder()->getClassname()}::removeInstanceFromPool(\$this);
 	return;
 }
 EOT;
@@ -266,6 +267,7 @@ EOT;
 
 	public function staticMethods($builder)
 	{
+		$builder->declareClassFromBuilder($builder->getStubQueryBuilder());
 		$this->builder = $builder;
 		$script = '';
 		$this->addPeerEnableSoftDelete($script);
@@ -288,6 +290,8 @@ EOT;
 public static function enableSoftDelete()
 {
 	{$this->builder->getStubQueryBuilder()->getClassname()}::enableSoftDelete();
+	// some soft_deleted objects may be in the instance pool
+	{$this->builder->getStubPeerBuilder()->getClassname()}::clearInstancePool();
 }
 ";
 	}

@@ -322,14 +322,7 @@ class Request
         }
         ksort($parts);
 
-        $elements = array();
-        foreach ($parts as $key => $value) {
-            $elements[] = "$key=$value";
-        }
-
-        if (count($elements)) {
-            return implode('&', $elements);
-        }
+        return http_build_query($parts);
     }
 
     public function isSecure()
@@ -351,7 +344,7 @@ class Request
     public function getHost()
     {
         if ($host = $this->headers->get('X_FORWARDED_HOST')) {
-            $elements = implode(',', $host);
+            $elements = explode(',', $host);
 
             return trim($elements[count($elements) - 1]);
         } else {

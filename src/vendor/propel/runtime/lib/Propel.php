@@ -22,7 +22,7 @@
  * @author     Martin Poeschl <mpoeschl@marmot.at> (Torque)
  * @author     Henning P. Schmiedehausen <hps@intermeta.de> (Torque)
  * @author     Kurt Schrader <kschrader@karmalab.org> (Torque)
- * @version    $Revision: 1781 $
+ * @version    $Revision: 1813 $
  * @package    propel.runtime
  */
 class Propel
@@ -30,7 +30,7 @@ class Propel
 	/**
 	 * The Propel version.
 	 */
-	const VERSION = '1.5.2-dev';
+	const VERSION = '1.5.3-dev';
 	
 	/**
 	 * A constant for <code>default</code>.

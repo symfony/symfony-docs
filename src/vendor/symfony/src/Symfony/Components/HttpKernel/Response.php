@@ -88,15 +88,34 @@ class Response
     }
 
     /**
-     * Returns the response content after sending the headers.
+     * Returns the response content as it will be sent (with the headers).
      *
      * @return string The response content
      */
     public function __toString()
     {
-        $this->sendHeaders();
+        $content = '';
 
-        return (string) $this->getContent();
+        if (!$this->headers->has('Content-Type')) {
+            $this->headers->set('Content-Type', 'text/html');
+        }
+
+        // status
+        $content .= sprintf('HTTP/%s %s %s', $this->version, $this->statusCode, $this->statusText)."\n";
+
+        // headers
+        foreach ($this->headers->all() as $name => $value) {
+            $content .= "$name: $value\n";
+        }
+
+        // cookies
+        foreach ($this->cookies as $cookie) {
+            $content .= sprintf('Set-Cookie: %s=%s; expires=%s; path=%s; domain=%s%s%s', $cookie['name'], $cookie['value'], $cookie['expire'], $cookie['path'], $cookie['domain'], $cookie['secure'] ? '; secure' : '', $cookie['httpOnly'] ? '; HttpOnly' : '')."\n";
+        }
+
+        $content .= "\n".$this->getContent();
+
+        return $content;
     }
 
     /**
@@ -232,6 +251,30 @@ class Response
     public function getCookies()
     {
         return $this->cookies;
+    }
+
+    /**
+     * Retrieves a cookies by name.
+     *
+     * @param string $name The cookie name
+     *
+     * @return array|false An array of cookie parameters, or false if the cookie does not exist
+     */
+    public function getCookie($name)
+    {
+        return isset($this->cookies[$name]) ? $this->cookies[$name] : false;
+    }
+
+    /**
+     * Returns true if the cookie is defined.
+     *
+     * @param string $name The cookie name
+     *
+     * @return Boolean true if the cookie is defined, false otherwise
+     */
+    public function hasCookie($name)
+    {
+        return isset($this->cookies[$name]);
     }
 
     /**
@@ -686,5 +729,10 @@ class Response
     public function isEmpty()
     {
         return in_array($this->statusCode, array(201, 204, 304));
+    }
+
+    public function isRedirected($location)
+    {
+        return $this->isRedirect() && $location == $this->headers->get('Location');
     }
 }
