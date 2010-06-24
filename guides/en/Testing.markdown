@@ -97,7 +97,7 @@ The sandbox comes with a simple test class for `HelloController`:
     // src/Application/HelloBundle/Tests/Controller/HelloControllerTest.php
     namespace Application\HelloBundle\Tests\Controller;
 
-    use Symfony\Framework\WebBundle\Test\WebTestCase;
+    use Symfony\Framework\FoundationBundle\Test\WebTestCase;
 
     class HelloControllerTest extends WebTestCase
     {

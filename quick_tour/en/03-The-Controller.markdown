@@ -165,7 +165,7 @@ that represents the client (be it a real person using a browser, a bot, or a
 web service). Between two requests, Symfony stores the attributes in a cookie
 by using the native PHP sessions.
 
-This feature is provided by `WebBundle` and it can be enabled by adding the
+This feature is provided by `FoundationBundle` and it can be enabled by adding the
 following line to `config.yml`:
 
     [yml]

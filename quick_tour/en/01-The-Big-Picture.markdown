@@ -85,7 +85,7 @@ routing configuration file:
     # hello/config/routing.yml
     homepage:
         pattern:  /
-        defaults: { _controller: WebBundle:Default:index }
+        defaults: { _controller: FoundationBundle:Default:index }
 
     hello:
         resource: HelloBundle/Resources/config/routing.yml
@@ -120,7 +120,7 @@ The controller is responsible for returning a representation of the resource
     # src/Application/HelloBundle/Controller/HelloController.php
     namespace Application\HelloBundle\Controller;
 
-    use Symfony\Framework\WebBundle\Controller;
+    use Symfony\Framework\FoundationBundle\Controller;
 
     class HelloController extends Controller
     {

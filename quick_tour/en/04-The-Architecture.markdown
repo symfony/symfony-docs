@@ -141,7 +141,7 @@ method of the `HelloKernel` class:
     {
         return array(
             new Symfony\Foundation\Bundle\KernelBundle(),
-            new Symfony\Framework\WebBundle\WebBundle(),
+            new Symfony\Framework\FoundationBundle\FoundationBundle(),
             new Symfony\Framework\DoctrineBundle\DoctrineBundle(),
             new Symfony\Framework\SwiftmailerBundle\SwiftmailerBundle(),
             new Symfony\Framework\ZendBundle\ZendBundle(),
@@ -150,7 +150,7 @@ method of the `HelloKernel` class:
     }
 
 Along side the `HelloBundle` we have already talked about, notice that the
-kernel also enables `KernelBundle`, `WebBundle`, `DoctrineBundle`,
+kernel also enables `KernelBundle`, `FoundationBundle`, `DoctrineBundle`,
 `SwiftmailerBundle`, and `ZendBundle`. They are all part of the core
 framework.
 
@@ -165,7 +165,7 @@ Have a look at the default configuration:
 
 Each entry like `kernel.config` defines the configuration of a bundle. Some
 bundles can have several entries if they provide many features like
-`WebBundle`, which has two entries: `web.web` and `web.templating`.
+`FoundationBundle`, which has two entries: `web.web` and `web.templating`.
 
 Each environment can override the default configuration by providing a
 specific configuration file:
@@ -191,7 +191,7 @@ defined in the `registerBundles()` method:
     {
         return array(
             new Symfony\Foundation\Bundle\KernelBundle(),
-            new Symfony\Framework\WebBundle\WebBundle(),
+            new Symfony\Framework\FoundationBundle\FoundationBundle(),
             new Symfony\Framework\DoctrineBundle\DoctrineBundle(),
             new Symfony\Framework\SwiftmailerBundle\SwiftmailerBundle(),
             new Symfony\Framework\ZendBundle\ZendBundle(),
