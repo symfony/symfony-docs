@@ -1,16 +1,16 @@
 Symfony2 Quick Tour: The Controller
 ===================================
 
-Still with us after the first two parts? You are already becoming a Symfony
+Still with us after the first two parts? You are already becoming a Symfony2
 addict! Without further ado, let's discover what controllers can do for you.
 
 Formats
 -------
 
 Nowadays, a web application should be able to deliver more than just HTML
-pages. From XML for RSS feeds or Web Services to JSON for Ajax requests, there
-are plenty of different formats to choose from. Supporting those formats in
-Symfony is straightforward. Edit `routing.yml` and add a `_format` with a
+pages. From XML for RSS feeds or Web Services, to JSON for Ajax requests,
+there are plenty of different formats to choose from. Supporting those formats
+in Symfony is straightforward. Edit `routing.yml` and add a `_format` with a
 value of `xml`:
 
     [yml]
@@ -36,7 +36,7 @@ action, use the `:_format` placeholder in the pattern instead:
     # src/Application/HelloBundle/Resources/config/routing.yml
     hello:
         pattern:      /hello/:name.:_format
-        defaults:     { _controller: HelloBundle:Hello: index, _format: html }
+        defaults:     { _controller: HelloBundle:Hello:index, _format: html }
         requirements: { _format: (html|xml|json) }
 
 The controller will now be called for URLs like `/hello/Fabien.xml` or
@@ -147,9 +147,9 @@ to the `Request` object:
 
     $request->getPreferredLanguage(array('en', 'fr'));
 
-    $request->getQueryParameter('page'); // get a $_GET parameter
+    $request->query->get('page'); // get a $_GET parameter
 
-    $request->getRequestParameter('page'); // get a $_POST parameter
+    $request->request->get('page'); // get a $_POST parameter
 
 In a template, you can also access the request object via the `request`
 helper:

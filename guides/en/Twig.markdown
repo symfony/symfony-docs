@@ -97,6 +97,10 @@ specialized tags.
     {% javascripts %}
     {% stylesheets %}
 
+    {# generate a URL for an asset #}
+    {% asset 'css/blog.css' %}
+    {% asset 'images/logo.png' %}
+
     {# generate a route #}
     {% route 'blog_post' with ['id': post.id] %}
 

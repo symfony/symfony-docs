@@ -3,8 +3,7 @@ Symfony2 Quick Tour: The Architecture
 
 You are my hero! Who would have thought that you would still be here after the
 first three parts? Your efforts will be well rewarded soon. The first three
-parts of this tutorial give you a quick overview of Symfony 2.0. But they
-don't have a deep look at the architecture of the framework. As it makes
+parts don't have a deep look at the architecture of the framework. As it makes
 Symfony stand apart from the framework crowd, let's dive into it now.
 
 The Directory Structure
@@ -137,15 +136,23 @@ method of the `HelloKernel` class:
 
     [php]
     # hello/HelloKernel.php
+
+    use Symfony\Foundation\Bundle\KernelBundle;
+    use Symfony\Framework\FoundationBundle\FoundationBundle;
+    use Symfony\Framework\DoctrineBundle\DoctrineBundle;
+    use Symfony\Framework\SwiftmailerBundle\SwiftmailerBundle;
+    use Symfony\Framework\ZendBundle\ZendBundle;
+    use Application\HelloBundle\HelloBundle;
+
     public function registerBundles()
     {
         return array(
-            new Symfony\Foundation\Bundle\KernelBundle(),
-            new Symfony\Framework\FoundationBundle\FoundationBundle(),
-            new Symfony\Framework\DoctrineBundle\DoctrineBundle(),
-            new Symfony\Framework\SwiftmailerBundle\SwiftmailerBundle(),
-            new Symfony\Framework\ZendBundle\ZendBundle(),
-            new Application\HelloBundle\HelloBundle(),
+            new KernelBundle(),
+            new FoundationBundle(),
+            new DoctrineBundle(),
+            new SwiftmailerBundle(),
+            new ZendBundle(),
+            new HelloBundle(),
         );
     }
 
@@ -160,12 +167,12 @@ Have a look at the default configuration:
     [yml]
     # hello/config/config.yml
     kernel.config: ~
-    web.web: ~
+    web.config: ~
     web.templating: ~
 
 Each entry like `kernel.config` defines the configuration of a bundle. Some
 bundles can have several entries if they provide many features like
-`FoundationBundle`, which has two entries: `web.web` and `web.templating`.
+`FoundationBundle`, which has two entries: `web.config` and `web.templating`.
 
 Each environment can override the default configuration by providing a
 specific configuration file:
@@ -183,25 +190,10 @@ specific configuration file:
         path:     %kernel.root_dir%/logs/%kernel.environment%.log
 
 As we have seen in the previous part, an application is made of bundles as
-defined in the `registerBundles()` method:
-
-    [php]
-    # hello/HelloKernel.php
-    public function registerBundles()
-    {
-        return array(
-            new Symfony\Foundation\Bundle\KernelBundle(),
-            new Symfony\Framework\FoundationBundle\FoundationBundle(),
-            new Symfony\Framework\DoctrineBundle\DoctrineBundle(),
-            new Symfony\Framework\SwiftmailerBundle\SwiftmailerBundle(),
-            new Symfony\Framework\ZendBundle\ZendBundle(),
-            new Application\HelloBundle\HelloBundle(),
-        );
-    }
-
-But how does Symfony know where to look for bundles? Symfony is quite flexible
-in this regard. The `registerBundleDirs()` method must return an associative
-array that maps namespaces to any valid directory (local or global ones):
+defined in the `registerBundles()` method but how does Symfony know where to
+look for bundles? Symfony is quite flexible in this regard. The
+`registerBundleDirs()` method must return an associative array that maps
+namespaces to any valid directory (local or global ones):
 
     [php]
     public function registerBundleDirs()
