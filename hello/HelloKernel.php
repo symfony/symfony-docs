@@ -11,6 +11,8 @@ use Symfony\Framework\FoundationBundle\FoundationBundle;
 use Symfony\Framework\ZendBundle\ZendBundle;
 use Symfony\Framework\SwiftmailerBundle\SwiftmailerBundle;
 use Symfony\Framework\DoctrineBundle\DoctrineBundle;
+use Symfony\Framework\DoctrineMigrationsBundle\DoctrineMigrationsBundle;
+use Symfony\Framework\DoctrineMongoDBBundle\DoctrineMongoDBBundle;
 use Symfony\Framework\PropelBundle\PropelBundle;
 use Symfony\Framework\TwigBundle\TwigBundle;
 use Application\HelloBundle\HelloBundle;
@@ -30,8 +32,10 @@ class HelloKernel extends Kernel
             new ZendBundle(),
             new SwiftmailerBundle(),
             new DoctrineBundle(),
+            //new DoctrineMigrationsBundle(),
+            //new DoctrineMongoDBBundle(),
             //new PropelBundle(),
-            new TwigBundle(),
+            //new TwigBundle(),
             new HelloBundle(),
         );
 

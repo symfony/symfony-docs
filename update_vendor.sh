@@ -20,6 +20,12 @@ cd doctrine-migrations
 rm -rf tests build*
 cd ..
 
+# Doctrine MongoDB
+git clone git://github.com/doctrine/mongodb-odm.git doctrine-mongodb
+cd doctrine-mongodb
+rm -rf tests build* tools
+cd ..
+
 # Propel
 # git clone git://github.com/fzaninotto/propel.git propel
 svn co http://svn.propelorm.org/branches/1.5/ propel
