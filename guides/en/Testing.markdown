@@ -2,8 +2,8 @@ Testing
 =======
 
 Whenever you write a new line of code, you also potentially add new bugs.
-Automated tests should have you covered and this tutorial is all about writing
-unit and functional tests for your Symfony2 application.
+Automated tests should have you covered and this tutorial shows you how to
+write unit and functional tests for your Symfony2 application.
 
 Testing Framework
 -----------------
