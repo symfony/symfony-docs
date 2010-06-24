@@ -2,7 +2,7 @@
 
 namespace Application\HelloBundle\Tests\Controller;
 
-use Symfony\Framework\WebBundle\Test\WebTestCase;
+use Symfony\Framework\FoundationBundle\Test\WebTestCase;
 
 class HelloControllerTest extends WebTestCase
 {

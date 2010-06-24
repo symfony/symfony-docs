@@ -6,6 +6,15 @@ use Symfony\Foundation\Kernel;
 use Symfony\Components\DependencyInjection\Loader\YamlFileLoader as ContainerLoader;
 use Symfony\Components\Routing\Loader\YamlFileLoader as RoutingLoader;
 
+use Symfony\Foundation\Bundle\KernelBundle;
+use Symfony\Framework\FoundationBundle\FoundationBundle;
+use Symfony\Framework\ZendBundle\ZendBundle;
+use Symfony\Framework\SwiftmailerBundle\SwiftmailerBundle;
+use Symfony\Framework\DoctrineBundle\DoctrineBundle;
+use Symfony\Framework\PropelBundle\PropelBundle;
+use Symfony\Framework\TwigBundle\TwigBundle;
+use Application\HelloBundle\HelloBundle;
+
 class HelloKernel extends Kernel
 {
     public function registerRootDir()
@@ -16,14 +25,14 @@ class HelloKernel extends Kernel
     public function registerBundles()
     {
         $bundles = array(
-            new Symfony\Foundation\Bundle\KernelBundle(),
-            new Symfony\Framework\WebBundle\WebBundle(),
-            new Symfony\Framework\ZendBundle\ZendBundle(),
-            new Symfony\Framework\SwiftmailerBundle\SwiftmailerBundle(),
-            new Symfony\Framework\DoctrineBundle\DoctrineBundle(),
-            //new Symfony\Framework\PropelBundle\PropelBundle(),
-            new Symfony\Framework\TwigBundle\TwigBundle(),
-            new Application\HelloBundle\HelloBundle(),
+            new KernelBundle(),
+            new FoundationBundle(),
+            new ZendBundle(),
+            new SwiftmailerBundle(),
+            new DoctrineBundle(),
+            //new PropelBundle(),
+            new TwigBundle(),
+            new HelloBundle(),
         );
 
         if ($this->isDebug()) {
