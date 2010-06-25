@@ -41,6 +41,25 @@ clean PHP process, thus avoiding any side-effects.
 >As an insulated client is slower, you can keep one client in the main process,
 >and insulate the other ones.
 
+Testing Redirection
+-------------------
+
+By default, the Client follows HTTP redirects. But if you want to get the
+Response before the redirection and redirect yourself, calls the
+`followRedirects()` method:
+
+    [php]
+    $client->followRedirects(false);
+
+    $crawler = $this->request('GET', '/');
+
+    // do something with the redirect response
+
+    // follow the redirection manually
+    $crawler = $this->followRedirect();
+
+    $client->followRedirects(true);
+
 HTTP Authorization
 ------------------
 
@@ -49,6 +68,14 @@ as HTTP headers to `createClient()`:
 
     [php]
     $client = $this->createClient(array(), array(
+        'PHP_AUTH_USER' => 'username',
+        'PHP_AUTH_PW'   => 'pa$$word',
+    ));
+
+You can also override it on a per request basis:
+
+    [php]
+    $client->request('DELETE', '/post/12', array(), array(
         'PHP_AUTH_USER' => 'username',
         'PHP_AUTH_PW'   => 'pa$$word',
     ));

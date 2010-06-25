@@ -80,6 +80,14 @@ second argument of `createClient()`:
         'HTTP_USER_AGENT' => 'MySuperBrowser/1.0',
     ));
 
+You can also override HTTP headers on a per request basis:
+
+    [php]
+    $client->request('GET', '/', array(), array(
+        'HTTP_HOST'       => 'en.example.com',
+        'HTTP_USER_AGENT' => 'MySuperBrowser/1.0',
+    ));
+
 >**TIP**
 >To provide your own Client, override the `test.client.class` parameter, or
 >define a `test.client` service.
