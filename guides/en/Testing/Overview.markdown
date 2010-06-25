@@ -13,10 +13,10 @@ conventions. This part does not document PHPUnit itself, but if you don't know
 it yet, you can read its excellent [documentation][1].
 
 >**NOTE**
->The PHPUnit integration relies on PHPUnit 3.5 or later.
+>Symfony2 works with PHPUnit 3.5 or later.
 
 The default PHPUnit configuration looks for tests under `Tests/`
-sub-directories:
+sub-directories of your bundles:
 
     [xml]
     <!-- hello/phpunit.xml.dist -->
@@ -41,7 +41,6 @@ Running the test suite for a given application is straightforward:
     $ cd hello/
     $ phpunit
 
-
 >**TIP**
 >Code coverage can be generated with the `--coverage-html` option.
 
@@ -49,16 +48,16 @@ Unit Tests
 ----------
 
 Writing Symony2 unit tests is no different than writing standard PHPUnit unit
-tests. By convention, its better to replicate the bundle directory structure
-under the `Tests/` sub-directory of a bundle. So, write tests for the
+tests. By convention, it's recommended to replicate the bundle directory
+structure under its `Tests/` sub-directory. So, write tests for the
 `Application\HelloBundle\Model\Article` class in the
 `Application/HelloBundle/Tests/Model/ArticleTest.php` file.
 
-In a unit test, autoloading is automatically done based on `src/autoload.php`
-file (as configured by default in the `phpunit.xml.dist` file).
+In a unit test, autoloading is automatically enabled via the
+`src/autoload.php` file (as configured by default in the `phpunit.xml.dist`
+file).
 
-If you want to run tests for a given file or directory, this is also very
-easy:
+Running tests for a given file or directory is also very easy:
 
     # run all tests for the Model
     $ phpunit -c hello Application/HelloBundle/Tests/Model/
@@ -69,29 +68,20 @@ easy:
 Functional Tests
 ----------------
 
-Functional tests are no different from unit tests as far as PHPUnit is
-concerned. But as functional tests exercise controllers and views, they are
-run in their own environment and have their own configuration stored in
-`config_test.yml`:
+Functional tests check the integration of the different layers of an
+application (from the routing to the views). They are no different from unit
+tests as far as PHPUnit is concerned, but they have a very specific workflow:
 
-    [yml]
-    # config_test.yml
-    imports:
-        - { resource: config_dev.yml }
+ * Make a request;
+ * Test the response;
+ * Click on a link or submit a form;
+ * Test the response;
+ * Rinse and repeat.
 
-    web.config:
-        toolbar: false
-
-    zend.logger:
-        priority: debug
-
-    kernel.test: ~
-
-A Symfony2 functional tests also extend a special test case class that
-provides tools that simulate a client. This client is enabled with the
-`kernel.test` configuration block above.
-
-The sandbox comes with a simple test class for `HelloController`:
+Requests, clicks, and submissions are done by a client that knows how to talk
+to the application. To access such a client, your tests need to extends the
+Symfony2 `WebTestCase` class. The sandbox provides a simple functional test
+for `HelloController` that reads as follows:
 
     [php]
     // src/Application/HelloBundle/Tests/Controller/HelloControllerTest.php
@@ -110,26 +100,20 @@ The sandbox comes with a simple test class for `HelloController`:
         }
     }
 
-A test is made of two parts: the client, returned by the `createClient()`
-method and used to browse the application, and assertions to write tests.
-
-### The Client
-
-The `createClient()` method returns a client tied to the current application.
-It can be used to browse the application by making simple requests:
+The `createClient()` method returns a client tied to the current application:
 
     [php]
     $crawler = $client->request('GET', 'hello/Fabien');
 
-The `request` method returns a `Crawler` object. It can be used to click on
-links or to submit forms.
+The `request()` method returns a `Crawler` object which can be used to select
+elements in the Response, to click on links, and to submit forms.
 
 >**TIP**
->You can get the `Response` object for a given request with the `getResponse()`
->method of the client object.
+>The Crawler can only be used if the Response content is an XML or an HTML
+>document.
 
-Click on a link by first selecting it with the crawler using either a XPath or
-a CSS selector, then use the client to click on it:
+Click on a link by first selecting it with the Crawler using either a XPath
+expression or a CSS selector, then use the Client to click on it:
 
     [php]
     $link = $crawler->filter('a:contains("Greet")')->eq(1)->link();
@@ -174,31 +158,19 @@ to the `submit()` method:
         'photo'        => '/path/to/lucas.jpg',
     ));
 
-### Assertions
-
-Now that you can easily navigate through an application, let's see how you can
-test that it actually does what you expect it to. The following code shows the
-most common and useful tests you might want to do on the response:
+Now that you can easily navigate through an application, use assertions to
+test that it actually does what you expect it to. Use the Crawler to make
+assertions on the DOM:
 
     [php]
     // Assert that the response matches a given CSS selector.
-    $this->assertFalse($crawler->filter($selector)->isEmpty());
+    $this->assertFalse($crawler->filter('h1')->isEmpty());
 
-    // Assert that the response matches a given CSS selector n times.
-    $this->assertEquals($count, $crawler->filter($selector)->count());
+Or, test against the Response content directly if you just want to assert that
+the content contains some text, or if the Response is not an XML/HTML
+document:
 
-    // Assert the a response header has the given value.
-    $this->assertTrue($client->getResponse()->headers->contains($key, $value));
-
-    // Assert that the response content matches a regexp.
-    $this->assertRegExp($regexp, $client->getResponse()->getContent());
-
-    // Assert the response status code.
-    $this->assertTrue($client->getResponse()->isSuccessful());
-    $this->assertTrue($client->getResponse()->isNotFound());
-    $this->assertEquals(200, $client->getResponse()->getStatusCode());
-
-    // Assert that the response status code is a redirect.
-    $this->assertTrue($client->getResponse()->isRedirected('google.com'));
+    [php]
+    $this->assertRegExp('/Hello Fabien/', $client->getResponse()->getContent());
 
 [1]: http://www.phpunit.de/manual/3.5/en/
