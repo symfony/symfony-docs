@@ -136,7 +136,7 @@ useful assertions:
 
     [php]
     // Assert that the response matches a given CSS selector.
-    $this->assertFalse($crawler->filter($selector)->isEmpty());
+    $this->assertTrue(count($crawler->filter($selector)) > 0);
 
     // Assert that the response matches a given CSS selector n times.
     $this->assertEquals($count, $crawler->filter($selector)->count());
