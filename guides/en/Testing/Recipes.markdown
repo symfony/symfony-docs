@@ -99,3 +99,31 @@ HTTP layer.
 >**TIP**
 >If the information you need to check are available from the profiler, use them
 >instead.
+
+Useful Assertions
+-----------------
+
+After some time, you will notice that you always write the same kind of
+assertions. To get you started faster, here is a list of the most common and
+useful assertions:
+
+    [php]
+    // Assert that the response matches a given CSS selector.
+    $this->assertFalse($crawler->filter($selector)->isEmpty());
+
+    // Assert that the response matches a given CSS selector n times.
+    $this->assertEquals($count, $crawler->filter($selector)->count());
+
+    // Assert the a response header has the given value.
+    $this->assertTrue($client->getResponse()->headers->contains($key, $value));
+
+    // Assert that the response content matches a regexp.
+    $this->assertRegExp($regexp, $client->getResponse()->getContent());
+
+    // Assert the response status code.
+    $this->assertTrue($client->getResponse()->isSuccessful());
+    $this->assertTrue($client->getResponse()->isNotFound());
+    $this->assertEquals(200, $client->getResponse()->getStatusCode());
+
+    // Assert that the response status code is a redirect.
+    $this->assertTrue($client->getResponse()->isRedirected('google.com'));
