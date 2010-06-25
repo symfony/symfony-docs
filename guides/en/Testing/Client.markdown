@@ -98,6 +98,7 @@ You can also get the objects related to the latest request:
     $request = $client->getRequest();
     $response = $client->getResponse();
     $crawler = $client->getCrawler();
+    $profiler = $client->getProfiler();
 
 If your requests are not insulated, you can also access the `Container` and
 the `Kernel`:

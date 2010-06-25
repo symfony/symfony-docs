@@ -93,8 +93,7 @@ But before writing assertions, always check that the profiler is indeed
 available (it is enabled by default in the `test` environment):
 
     [php]
-    $profiler = $this->getProfiler($client->getResponse());
-    if ($profiler) {
+    if ($profiler = $client->getProfiler()) {
         // check the number of requests
         $this->assertTrue($profiler['db']->getQueryCount() < 10);
 
