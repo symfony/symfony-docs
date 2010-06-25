@@ -28,6 +28,8 @@ following:
 
 After creation, you can add more nodes:
 
+ | Method              | Description                      |
+ | ------------------- | -------------------------------- |
  | `addHTMLDocument()` | An HTML document                 |
  | `addXMLDocument()`  | An XML document                  |
  | `addDOMDocument()`  | A `DOMDocument` instance         |
@@ -42,6 +44,8 @@ Traversing
 Like JQuery, the Crawler has methods to traverse the DOM of an HTML/XML
 document:
 
+ | Method              | Description                               |
+ | ------------------- | ----------------------------------------- |
  | `filter('h1')`      | Nodes that match the CSS selector         |
  | `filterXpath('h1')` | Nodes that match the XPath expression     |
  | `eq(1)`             | Node for the specified index              |
