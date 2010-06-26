@@ -11,8 +11,8 @@ the project has to offer for working with relational databases, such as:
  * Database Migrations
 
 >**TIP**
->You can learn more about the ORM API and functionality by reading the
->dedicated [documentation][2].
+>You can learn more about the [DBAL API][2] and [ORM API][3] on the official
+>Doctrine2 website.
 
 Doctrine DBAL
 -------------
@@ -29,7 +29,7 @@ exist today. In order to start using the DBAL, configure it:
         user:     root
         password: null
 
-You can then access the connection from your controllers by getting the
+Access the connection from your controllers by getting the
 `database_connection` service:
 
     [php]
@@ -46,10 +46,6 @@ You can then access the connection from your controllers by getting the
 You can then execute a query and fetch the results as show above with the
 `fetchAll()` method.
 
->**TIP**
->You can learn more about the DBAL API and functionality by reading the
->dedicated [documentation][3].
-
 Doctrine Object Relational Mapper
 ---------------------------------
 
@@ -58,7 +54,7 @@ Doctrine Project umbrella. It is built on top of the Doctrine DBAL (Database
 Abstraction Layer) and offers transparent persistence of PHP5 objects to a
 relational database.
 
-Before using the ORM, enable it in the configuation:
+Before using the ORM, enable it in the configuration:
 
     [php]
     # config/config.yml
@@ -167,5 +163,5 @@ Eventually, use your entity and manage its persistent state with Doctrine:
     }
 
 [1]: http://www.doctrine-project.org/
-[3]: http://www.doctrine-project.org/projects/orm/2.0/docs/en
 [2]: http://www.doctrine-project.org/projects/dbal/2.0/docs/en
+[3]: http://www.doctrine-project.org/projects/orm/2.0/docs/en
