@@ -87,7 +87,7 @@ managing its persistent state with Doctrine:
             $user = new User();
             $user->setName('Jonathan H. Wage');
 
-            $dm = $this->container->getService('doctrine.orm.mongodb.document_manager');
+            $dm = $this->container->getService('doctrine_odm.mongodb.document_manager');
             $dm->persist($user);
             $dm->flush();
 
@@ -96,7 +96,7 @@ managing its persistent state with Doctrine:
 
         public function editAction($id)
         {
-            $dm = $this->container->getService('doctrine.orm.mongodb.document_manager');
+            $dm = $this->container->getService('doctrine_odm.mongodb.document_manager');
             $user = $dm->createQuery('HelloBundle:User')
                 ->where('id', $id)
                 ->getSingleResult();
@@ -106,7 +106,7 @@ managing its persistent state with Doctrine:
 
         public function deleteAction($id)
         {
-            $dm = $this->container->getService('doctrine.orm.mongodb.document_manager');
+            $dm = $this->container->getService('doctrine_odm.mongodb.document_manager');
             $user = $dm->createQuery('HelloBundle:User')
                 ->where('id', $id)
                 ->getSingleResult();
