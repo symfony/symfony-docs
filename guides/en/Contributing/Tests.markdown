@@ -78,4 +78,4 @@ browser.
 >The code coverage only works if you have XDebug enabled and all dependencies
 >installed.
 
-[1]: http://www.symfony-reloaded.org/contributing/Patches
+[1]: http://www.symfony-reloaded.org/guides/Contributing/Patches
