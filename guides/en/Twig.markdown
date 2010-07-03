@@ -1,5 +1,5 @@
-Twig
-====
+Twig & Symfony2
+===============
 
 [Twig][1] is a flexible, fast, and secure template language for PHP. Symfony2
 has native support for Twig through `TwigBundle`.
@@ -7,8 +7,7 @@ has native support for Twig through `TwigBundle`.
 Installation & Configuration
 ----------------------------
 
-To use Twig in your Symfony2 project, first enable the Twig bundle in your
-kernel:
+Enable the `TwigBundle` in your kernel:
 
     [php]
     public function registerBundles()
@@ -38,9 +37,9 @@ Then, configure it:
 Usage
 -----
 
-Using Twig instead of PHP for your templates is really easy. When you want to
-render a Twig template, just add the `:twig` suffix at the end of the template
-name. The controller below renders the `index.twig` template:
+To render a Twig template instead of a PHP one, add the `:twig` suffix at the
+end of the template name. The controller below renders the `index.twig`
+template:
 
     [php]
     public function indexAction($name)
@@ -48,9 +47,9 @@ name. The controller below renders the `index.twig` template:
         return $this->render('HelloBundle:Hello:index:twig', array('name' => $name));
     }
 
-The `:twig` suffix is only needed when there is no context. When you want to
-extend or include a template from a Twig template, Symfony2 will switch the
-default engine to Twig automatically:
+The `:twig` suffix is only needed when there is no context, like in a
+controller. But when you extend or include a template from a Twig template,
+Symfony2 automatically switches the default engine to Twig:
 
     [twig]
     {# index.twig #}
@@ -65,8 +64,8 @@ default engine to Twig automatically:
         {% render 'HelloBundle:Hello:sidebar' %}
     {% endblock %}
 
-Of course, you can embed a PHP template in a Twig one very easily, just add
-the `:php` suffix to the template name:
+To embed a PHP template in a Twig one, add the `:php` suffix to the template
+name:
 
     [twig]
     {# index.twig #}
@@ -83,8 +82,8 @@ And the opposite is also true:
 Helpers
 -------
 
-The default Symfony2 helpers are natively available within a Twig template via
-specialized tags.
+The default Symfony2 helpers are available within a Twig template via
+specialized tags:
 
     [twig]
     {# add a javascript #}
