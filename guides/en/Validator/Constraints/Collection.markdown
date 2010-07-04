@@ -28,6 +28,11 @@ Options
 Example 1 (YAML):
 -----------------
 
+Let's validate an array with two indexes `firstName` and `lastName`. The value
+of `firstName` must not be blank, while the value of `lastName` must not be
+blank with a minimum length of four characters. Furthermore, both keys
+may not exist in the array.
+
 **Listing 1**
 
     [yml]
@@ -38,9 +43,9 @@ Example 1 (YAML):
           - Collection:
               fields:
                 firstName:
-                  - NotNull: ~
+                  - NotBlank: ~
                 lastName:
-                  - NotNull: ~
+                  - NotBlank: ~
                   - MinLength: 4
               allowMissingFields: true
             
@@ -97,8 +102,6 @@ This example shows the mapping from Example 1 with Docblock Annotations.
 
     [php]
     // Application/HelloBundle/Author.php
-    namespace Application\HelloBundle;
-    
     class Author
     {
         /**
