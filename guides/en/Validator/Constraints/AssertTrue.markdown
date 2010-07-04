@@ -24,8 +24,6 @@ put the logic in a method which returns either `true` or `false`.
 
     [php]
     // Application/HelloBundle/Author.php
-    namespace Application\HelloBundle;
-    
     class Author
     {
         protected $token;
