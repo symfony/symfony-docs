@@ -14,7 +14,7 @@ software:
 
  * PHP version 5.3.2 or above;
 
- * PHPUnit 5.3.0 or above.
+ * PHPUnit 3.5.0 or above.
 
 Set up your user information with your real name and a working email address:
 
