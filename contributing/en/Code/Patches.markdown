@@ -113,7 +113,7 @@ follow the following conventions:
     (`git://github.com/USERNAME/symfony.git BRANCH_NAME`);
 
   * The body must then describe what the patch does (reference a ticket, or
-    copy and paste log messages).
+    copy and paste the commit message).
 
 Based on the feedback, you might need to rework your patch. Before
 re-submitting the patch, rebase with master, don't merge; and force the push
