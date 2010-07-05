@@ -71,7 +71,7 @@ in mind the following:
   * Do atomic and logically separate commits (use the power of `git rebase` to
     have a clean and logical history);
 
-  * Write good log messages.
+  * Write good commit messages.
 
 >**TIP**
 >A good commit message is composed of a summary (the first line), optionally
