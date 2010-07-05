@@ -1,14 +1,11 @@
 The Event Dispatcher
 ====================
 
-Objected Oriented code has gone a long way to ensuring code written for your
-projects is extensible. By creating classes that have well defined
-responsibilities, your code becomes more flexible.
-
-If a user wants to modify a class's behavior, he can extend it using a
-subclass to override the behaviour. But if the user wants to share his changes
-with other users who have made their own subclasses to change the behaviour,
-code inheritance is moot.
+Objected Oriented code has gone a long way to ensuring code extensibility. By
+creating classes that have well defined responsibilities, your code becomes
+more flexible as a developer can extend them with sub-classes to modify their
+behaviors. But if he wants to share his changes with other developers who have
+also made their own subclasses, code inheritance is moot.
 
 A real-world example is when you want to provide a plugin system for your
 project. A plugin should be able to add methods, or do something before or
@@ -16,83 +13,63 @@ after a method is executed, without interfering with other plugins. This is
 not an easy problem to solve with single inheritance, and multiple inheritance
 (were it possible with PHP) has its own drawbacks.
 
-The Symfony Event Dispatcher Component implements the [Observer][1] pattern in
-a simple and effective way to make all these things possible and make your
-projects truly extensible (see the recipes section for some possible
-implementations of these patterns).
+The Symfony2 Event Dispatcher implements the [Observer][1] pattern in a simple
+and effective way to make all these things possible and make your projects
+truly extensible (see the [recipes][2] section for some implementation
+examples).
 
-The main goal of Symfony Event Dispatcher is to allow objects to communicate
-together without knowing each other. It is possible thanks to a central
-object, the *dispatcher*.
-
-Objects (*listeners*) can *connect* to the dispatcher to listen to specific
-events, and some others can *notify* an *event* to the dispatcher. Whenever an
-event is notified, the dispatcher will call the listeners.
+The Event Dispatcher provides *dispatcher* that allows objects to communicate
+together without knowing each others. Objects (*listeners*) can *connect* to
+the dispatcher to listen to specific events, and some others can *notify* an
+*event* to the dispatcher. Whenever an event is notified, the dispatcher will
+call all the connected listeners.
 
 Events
 ------
 
-Unlike many other observer implementations, you don't need to create a class
-to create a new event. All events are of course still objects, but all events
-are instances of the built-in `Event` class.
+Unlike many other implementations of the Observer pattern, you don't need to
+create a class to define a new event. All events are instead instances of the
+`Event` class and are uniquely identified by their names, a string that
+optionally follows simple naming conventions:
+
+  * use only lowercase letters, numbers, and underscores (`_`);
+
+  * prefix names with a namespace followed by a dot (`.`);
+
+  * use a verb to indicate what action will be done.
+
+Here are some examples of good event names:
+
+    [php]
+    change_culture
+    response.filter_content
 
 >**NOTE**
 >You can of course extends the `Event` class to specialize an event further, or
 >enforce some constraints, but most of the time it adds an unnecessary level of
 >complexity.
 
-An event is uniquely identified by a string. By convention, it is better to
-use lowercase letters, numbers and underscores (`_`) for event names.
-Furthermore, to better organize your events, a good convention is to prefix
-the event name with a namespace followed by a dot (`.`).
-
-Here are examples of good event names:
-
-    [php]
-    change_culture
-    response.filter_content
-
-As you might have noticed, event names contain a verb to indicate that they
-relate to something that happens.
-
-The Dispatcher
---------------
-
-The dispatcher is the object responsible for maintaining a register of
-listeners and calling them whenever an event is notified.
-
-By default, the dispatcher class is `EventDispatcher`:
-
-    [php]
-    use Symfony\Components\EventDispatcher\EventDispatcher;
-
-    $dispatcher = new EventDispatcher();
-
-Event Objects
--------------
-
-The event object, of class `Event`, stores information about the notified
-event. Its constructor takes three arguments:
+Besides its name, an `Event` instance can store additional data about the
+notified event:
 
   * The *subject* of the event (most of the time, this is the object notifying
-    the event, but it can also be `null`);
+    the event, but it can be any other object or `null`);
 
   * The event name;
 
   * An array of parameters to pass to the listeners (an empty array by
     default).
 
-As most of the time an event is called from an object context, the first
-argument is almost always `$this`:
+These data are passed as arguments to the `Event` constructor:
 
     [php]
     use Symfony\Components\EventDispatcher\Event;
 
     $event = new Event($this, 'user.change_culture', array('culture' => $culture));
 
-The event object has several methods to get event information:
+The event object has several methods to get the event data:
 
-  * `getName()`: Returns the identifier of the event.
+  * `getName()`: Returns the event name;
 
   * `getSubject()`: Gets the subject object attached to the event;
 
@@ -104,12 +81,26 @@ parameters:
     [php]
     echo $event['culture'];
 
+The Dispatcher
+--------------
+
+The dispatcher maintains a register of listeners and calls them whenever an
+event is notified:
+
+    [php]
+    use Symfony\Components\EventDispatcher\EventDispatcher;
+
+    $dispatcher = new EventDispatcher();
+
 Connecting Listeners
 --------------------
 
 Obviously, you need to connect some listeners to the dispatcher before it can
 be useful. A call to the dispatcher `connect()` method associates a PHP
-callable to an event.
+callable to an event:
+
+    [php]
+    $dispatcher->connect('user.change_culture', $callable);
 
 The `connect()` method takes two arguments:
 
@@ -118,27 +109,20 @@ The `connect()` method takes two arguments:
   * A PHP callable to call when the event is notified.
 
 >**NOTE**
->A [PHP callable][2] is a PHP variable that can be used by the
+>A [PHP callable][3] is a PHP variable that can be used by the
 >`call_user_func()` function and returns `true` when passed to the
->`is_callable()` function. A string represents a function, and an array can
->represent an object method or a class method.
-
-    [php]
-    $dispatcher->connect('user.change_culture', $callable);
+>`is_callable()` function. It can be a `\Closure` instance, a string
+>representing a function, or an array representing an object method or a class
+>method.
 
 Once a listener is registered with the dispatcher, it waits until the event is
-notified. The event dispatcher keeps a record of all event listeners, and
-knows which ones to call when an event is notified.
+notified. For the above example, the dispatcher calls `$callable` whenever the
+`user.change_culture` event is notified; the listener receives an `Event`
+instance as an argument.
 
 >**NOTE**
 >The listeners are called by the event dispatcher in the same order you
 >connected them.
-
-For the example above, `$callable` will be called by the dispatcher whenever
-the `user.change_culture` event is notified by an object.
-
-When calling the listeners, the dispatcher passes them an `Event` object as a
-parameter. So, the listener receives the event object as its first argument.
 
 Notifying Events
 ----------------
@@ -146,7 +130,9 @@ Notifying Events
 Events can be notified by using three methods:
 
  * `notify()`
+
  * `notifyUntil()`
+
  * `filter()`
 
 ### `notify`
@@ -157,8 +143,7 @@ The `notify()` method notifies all listeners in turn.
     $dispatcher->notify($event);
 
 By using the `notify()` method, you make sure that all the listeners
-registered on the notified event are executed but none can return a value to
-the subject.
+registered for the event are executed but their return values is ignored.
 
 ### `notifyUntil`
 
@@ -171,7 +156,12 @@ listeners until one returns `true`, and then stop the event notification:
     $dispatcher->notifyUntil($event);
 
 The listener that stops the chain may also call the `setReturnValue()` method
-to return back some value to the subject.
+to return back some value to the subject:
+
+    [php]
+    $event->setReturnValue('foo');
+
+    return true;
 
 The notifier can check if a listener has processed the event by calling the
 `isProcessed()` method:
@@ -192,6 +182,14 @@ the second argument:
     [php]
     $dispatcher->filter($event, $response->getContent());
 
+    $listener = function (Event $event, $content)
+    {
+        // do something with $content
+
+        // don't forget to return the content
+        return $content;
+    };
+
 All listeners are passed the value and they must return the filtered value,
 whether they altered it or not. All listeners are guaranteed to be executed.
 
@@ -202,4 +200,5 @@ method:
     $ret = $event->getReturnValue();
 
 [1]: http://en.wikipedia.org/wiki/Observer_pattern
+[1]: http://www.symfony-reloaded.org/guides/Event-Dispatcher/Recipes
 [2]: http://www.php.net/manual/en/function.is-callable.php
