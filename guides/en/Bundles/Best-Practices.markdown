@@ -150,8 +150,8 @@ must provide two slots: `content` and `head`).
 Configuration
 -------------
 
-Configuration must be done via the Symfony2 built-in [mechanism][2].
+Configuration must be done via the Symfony2 built-in [mechanism][2]. A bundle
+should provide all its default configurations in XML.
 
 [1]: http://www.symfony-reloaded.org/contributing/Code/Standards
 [2]: http://www.symfony-reloaded.org/guides/Bundles/Configuration
-
