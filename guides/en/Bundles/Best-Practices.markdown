@@ -103,7 +103,10 @@ class name is `Bundle\HelloBundle\Controller\HelloController`.
 All classes and files must follow the Symfony2 coding [standards][1].
 
 Some classes should be seen as facades and should be as short as possible,
-like Commands, Helpers, and Controllers.
+like Commands, Helpers, Listeners, and Controllers.
+
+Classes that connects to the Event Dispatcher should have a name that ends
+with `Listener`.
 
 Vendors
 -------
