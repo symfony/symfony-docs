@@ -108,6 +108,8 @@ like Commands, Helpers, Listeners, and Controllers.
 Classes that connects to the Event Dispatcher should have a name that ends
 with `Listener`.
 
+Exceptions classes should be stored in an `Exception` sub-namespace.
+
 Vendors
 -------
 

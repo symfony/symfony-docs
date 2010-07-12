@@ -6,7 +6,7 @@ The Finder Component helps you find files and directories quickly and easily.
 Usage
 -----
 
-To find files and/or directories, use the `Finder` class:
+The `Finder` class finds files and/or directories:
 
     [php]
     use Symfony\Components\Finder\Finder;
@@ -18,12 +18,14 @@ To find files and/or directories, use the `Finder` class:
         print $file->getRealpath()."\n";
     }
 
+The `$file` is an instance of [`SplFileInfo`][1].
+
 The above code prints the names of all the files in the current directory
 recursively. The Finder class uses a fluent interface, so all methods return
 the Finder instance.
 
 >**TIP**
->A Finder instance is a PHP [`Iterator`][1]. So, instead of iterating over the
+>A Finder instance is a PHP [`Iterator`][2]. So, instead of iterating over the
 >Finder with `foreach`, you can also convert it to an array with the
 >`iterator_to_array()` method, or get the number of items with
 >`iterator_count()`.
@@ -50,7 +52,7 @@ Exclude directories from matching with the `exclude()` method:
     $finder->in(__DIR__)->exclude('ruby');
 
 As the Finder uses PHP iterators, you can pass any URL with a supported
-[protocol][2]:
+[protocol][3]:
 
     [php]
     $finder->in('ftp://example.com/pub/');
@@ -72,7 +74,7 @@ And it also works with user-defined streams:
     }
 
 >**NOTE**
->Read the [Streams][3] documentation to learn how to create your own streams.
+>Read the [Streams][4] documentation to learn how to create your own streams.
 
 ### Files or Directories
 
@@ -152,7 +154,7 @@ The comparison operator can be any of the following: `>`, `>=`, `<`, '<=',
 
 The target value may use magnitudes of kilobytes (`k`, `ki`), megabytes (`m`,
 `mi`), or gigabytes (`g`, `gi`). Those suffixed with an `i` use the
-appropriate `2**n` version in accordance with the [IEC standard][4].
+appropriate `2**n` version in accordance with the [IEC standard][5].
 
 ### File Date
 
@@ -165,7 +167,7 @@ The comparison operator can be any of the following: `>`, `>=`, `<`, '<=',
 '=='. You can also use `since` or `after` as an alias for `>`, and `until` or
 `before` as an alias for `<`.
 
-The target value can be any date supported by the [`strtotime()`][5] function.
+The target value can be any date supported by the [`strtotime()`][6] function.
 
 ### Directory Depth
 
@@ -192,12 +194,12 @@ To restrict the matching file with your own strategy, use `filter()`:
     $finder->files()->filter($filter);
 
 The `filter()` methods takes a Closure as an argument. For each matching file,
-it is called with the file as a [`SplFileInfo`][6] instance. The file is
+it is called with the file as a [`SplFileInfo`][1] instance. The file is
 excluded from the result set if the Closure returns `false`.
 
-[1]: http://www.php.net/manual/en/spl.iterators.php
-[2]: http://www.php.net/manual/en/wrappers.php
-[3]: http://www.php.net/streams
-[4]: http://physics.nist.gov/cuu/Units/binary.html
-[5]: http://www.php.net/manual/en/datetime.formats.php
-[6]: http://www.php.net/manual/en/class.splfileinfo.php
+[1]: http://www.php.net/manual/en/class.splfileinfo.php
+[2]: http://www.php.net/manual/en/spl.iterators.php
+[3]: http://www.php.net/manual/en/wrappers.php
+[4]: http://www.php.net/streams
+[5]: http://physics.nist.gov/cuu/Units/binary.html
+[6]: http://www.php.net/manual/en/datetime.formats.php
