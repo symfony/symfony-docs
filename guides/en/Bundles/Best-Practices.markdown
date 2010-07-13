@@ -113,7 +113,8 @@ Exceptions classes should be stored in an `Exception` sub-namespace.
 Vendors
 -------
 
-A bundle must not embed third-party libraries. It should rely on the standard
+A bundle must not embed third-party libraries (be they in PHP, JavaScript, or
+any other language). For PHP libraries, it should rely on the standard
 Symfony2 autoloading instead.
 
 Tests
