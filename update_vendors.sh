@@ -5,8 +5,14 @@ CURRENT=`pwd`/vendor
 # Symfony
 cd $CURRENT/symfony && git pull
 
-# Doctrine
+# Doctrine ORM
 cd $CURRENT/doctrine && git pull
+
+# Doctrine DBAL
+cd $CURRENT/doctrine-dbal && git pull
+
+# Doctrine common
+cd $CURRENT/doctrine-common && git pull
 
 # Doctrine migrations
 cd $CURRENT/doctrine-migrations && git pull

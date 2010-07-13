@@ -12,12 +12,14 @@ cd vendor
 # Symfony
 git clone git://github.com/symfony/symfony.git symfony
 
-# Doctrine
+# Doctrine ORM
 git clone git://github.com/doctrine/doctrine2.git doctrine
-cd doctrine
-git submodule init
-git submodule update
-cd ..
+
+# Doctrine DBAL
+git clone git://github.com/doctrine/dbal.git doctrine-dbal
+
+# Doctrine Common
+git clone git://github.com/doctrine/common.git doctrine-common
 
 # Doctrine migrations
 git clone git://github.com/doctrine/migrations.git doctrine-migrations
