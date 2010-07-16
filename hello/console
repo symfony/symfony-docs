@@ -3,7 +3,7 @@
 
 require_once __DIR__.'/HelloKernel.php';
 
-use Symfony\Framework\FoundationBundle\Console\Application;
+use Symfony\Bundle\FrameworkBundle\Console\Application;
 
 $kernel = new HelloKernel('dev', true);
 

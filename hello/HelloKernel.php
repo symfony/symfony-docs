@@ -49,9 +49,9 @@ class HelloKernel extends Kernel
     public function registerBundleDirs()
     {
         return array(
-            'Application'        => __DIR__.'/../src/Application',
-            'Bundle'             => __DIR__.'/../src/Bundle',
-            'Symfony\\Framework' => __DIR__.'/../src/vendor/symfony/src/Symfony/Framework',
+            'Application'     => __DIR__.'/../src/Application',
+            'Bundle'          => __DIR__.'/../src/Bundle',
+            'Symfony\\Bundle' => __DIR__.'/../src/vendor/symfony/src/Symfony/Bundle',
         );
     }
 
