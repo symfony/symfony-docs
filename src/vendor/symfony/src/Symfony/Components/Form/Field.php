@@ -42,8 +42,11 @@ abstract class Field extends Configurable implements FieldInterface
         $this->addOption('property_path', (string)$key);
 
         $this->key = (string)$key;
-        $this->locale = class_exists('\Locale', false) ? \Locale::getDefault() : 'en';
         $this->generator = new HtmlGenerator();
+
+        if ($this->locale === null) {
+            $this->locale = class_exists('\Locale', false) ? \Locale::getDefault() : 'en';
+        }
 
         parent::__construct($options);
 
@@ -88,7 +91,7 @@ abstract class Field extends Configurable implements FieldInterface
      */
     public function setPropertyPath($propertyPath)
     {
-        $this->propertyPath = empty($propertyPath) ? null : new PropertyPath($propertyPath);
+        $this->propertyPath = $propertyPath === null || $propertyPath === '' ? null : new PropertyPath($propertyPath);
     }
 
     /**
@@ -451,7 +454,6 @@ abstract class Field extends Configurable implements FieldInterface
     public function updateFromObject(&$objectOrArray)
     {
         // TODO throw exception if not object or array
-
         if ($this->propertyPath !== null) {
             $this->propertyPath->rewind();
             $this->setData($this->readPropertyPath($objectOrArray, $this->propertyPath));

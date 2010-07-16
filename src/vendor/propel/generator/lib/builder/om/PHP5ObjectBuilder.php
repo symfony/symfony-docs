@@ -4243,7 +4243,7 @@ abstract class ".$this->getClassname()." extends ".$parentClass." ";
 				return \$this->getVirtualColumn(\$virtualColumn);
 			}
 		}
-		throw new PropelException('Call to undefined method: ' . \$name);
+		return parent::__call(\$name, \$params);
 	}
 ";
 	}

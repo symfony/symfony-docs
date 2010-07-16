@@ -238,25 +238,6 @@ class ClassMetadata
         $this->rootDocumentName = $documentName;
         $this->reflClass = new \ReflectionClass($documentName);
         $this->namespace = $this->reflClass->getNamespaceName();
-
-        $e = explode('\\', $documentName);
-        if (count($e) > 1) {
-            $e = array_map(function($value) {
-                return strtolower($value);
-            }, $e);
-            $collection = array_pop($e);
-        } else {
-            $collection = strtolower($documentName);
-        }
-        $this->setCollection($collection);
-
-        foreach ($this->reflClass->getProperties() as $property) {
-            $fieldName = $property->getName();
-            $mapping = array(
-                'fieldName' => $fieldName
-            );
-            $this->mapField($mapping);
-        }
     }
 
     /**
@@ -569,21 +550,6 @@ class ClassMetadata
         }
         $mapping['name'] = $mapping['fieldName'];
 
-        // unset transient fields
-        if (isset($mapping['transient']) && $mapping['transient']) {
-            unset($this->fieldMappings[$mapping['fieldName']]);
-            return;
-        }
-
-        if ($mapping['fieldName'] === 'id') {
-            $mapping['id'] = true;
-            $mapping['type'] = isset($mapping['type']) ? $mapping['type'] : 'id';
-        }
-
-        if ( ! isset($mapping['type'])) {
-            $mapping['type'] = 'string';
-        }
-
         if (isset($mapping['targetDocument']) && strpos($mapping['targetDocument'], '\\') === false && strlen($this->namespace)) {
             $mapping['targetDocument'] = $this->namespace . '\\' . $mapping['targetDocument'];
         }
@@ -614,6 +580,7 @@ class ClassMetadata
             $this->file = $mapping['fieldName'];
         }
         if (isset($mapping['id']) && $mapping['id'] === true) {
+            $mapping['type'] = isset($mapping['type']) ? $mapping['type'] : 'id';
             $this->identifier = $mapping['fieldName'];
         }
         if ( ! isset($mapping['nullable'])) {
@@ -760,7 +727,7 @@ class ClassMetadata
             return (string) $this->reflFields[$this->identifier]->getValue($document);
         } else {
             $identifier = $this->identifier;
-            return isset($document->$identifier) ? (string) $document->identifier : null;
+            return isset($document->$identifier) ? (string) $document->$identifier : null;
         }
     }
 

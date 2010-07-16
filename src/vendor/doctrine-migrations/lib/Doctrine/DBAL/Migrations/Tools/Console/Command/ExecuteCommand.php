@@ -51,7 +51,6 @@ class ExecuteCommand extends AbstractCommand
             ->addOption('dry-run', null, InputOption::PARAMETER_NONE, 'Execute the migration as a dry run.')
             ->addOption('up', null, InputOption::PARAMETER_NONE, 'Execute the migration down.')
             ->addOption('down', null, InputOption::PARAMETER_NONE, 'Execute the migration down.')
-            ->addOption('configuration', null, InputOption::PARAMETER_OPTIONAL, 'The path to a migrations configuration file.')
             ->setHelp(<<<EOT
 The <info>%command.name%</info> command executes a single migration version up or down manually:
 
@@ -70,6 +69,8 @@ Or you can output the would be executed SQL statements to a file with <comment>-
     <info>%command.full_name% YYYYMMDDHHMMSS --write-sql</info>
 EOT
         );
+
+        parent::configure();
     }
 
     public function execute(InputInterface $input, OutputInterface $output)
@@ -84,7 +85,12 @@ EOT
             $path = is_bool($path) ? getcwd() : $path;
             $version->writeSqlFile($path, $direction);
         } else {
-            $version->execute($direction, $input->getOption('dry-run') ? true : false);
+            $confirmation = $this->getHelper('dialog')->askConfirmation($output, '<question>WARNING! You are about to execute a database migration that could result in schema changes and data lost. Are you sure you wish to continue? (y/n)</question>', 'y');
+            if ($confirmation === true) {
+                $version->execute($direction, $input->getOption('dry-run') ? true : false);
+            } else {
+                $output->writeln('<error>Migration cancelled!</error>');
+            }
         }
     }
 }

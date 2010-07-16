@@ -11,7 +11,7 @@
 
 class Twig_Environment
 {
-    const VERSION = '0.9.8-DEV';
+    const VERSION = '0.9.9-DEV';
 
     protected $charset;
     protected $loader;
@@ -147,7 +147,7 @@ class Twig_Environment
         $this->cache = $cache;
 
         if ($this->cache && !is_dir($this->cache)) {
-            mkdir($this->cache, 0755, true);
+            mkdir($this->cache, 0777, true);
         }
     }
 

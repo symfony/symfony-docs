@@ -96,7 +96,9 @@ class MongoCursor implements \Iterator
             $current = $this->_mongoCursor->current();
         }
         if ($this->_hydrate) {
-            return $this->_uow->getOrCreateDocument($this->_class->name, $current);
+            $document = $this->_uow->getOrCreateDocument($this->_class->name, $current);
+            $this->_uow->registerManaged($document, $this->_class->getPHPIdentifierValue($current['_id']), $current);
+            return $document;
         } else {
             return $current;
         }

@@ -5,7 +5,7 @@ namespace Symfony\Components\DependencyInjection\Dumper;
 use Symfony\Components\DependencyInjection\Definition;
 use Symfony\Components\DependencyInjection\Reference;
 use Symfony\Components\DependencyInjection\Parameter;
-use Symfony\Components\DependencyInjection\Builder;
+use Symfony\Components\DependencyInjection\ContainerBuilder;
 
 /*
  * This file is part of the Symfony framework.
@@ -111,13 +111,13 @@ class GraphvizDumper extends Dumper
         $edges = array();
         foreach ($arguments as $argument) {
             if (is_object($argument) && $argument instanceof Parameter) {
-                $argument = $this->container->hasParameter($argument) ? $this->container->getParameter($argument) : null;
+                $argument = $this->container->getParameterBag()->has($argument) ? $this->container->getParameter($argument) : null;
             } elseif (is_string($argument) && preg_match('/^%([^%]+)%$/', $argument, $match)) {
-                $argument = $this->container->hasParameter($match[1]) ? $this->container->getParameter($match[1]) : null;
+                $argument = $this->container->getParameterBag()->has($match[1]) ? $this->container->getParameter($match[1]) : null;
             }
 
             if ($argument instanceof Reference) {
-                if (!$this->container->hasService((string) $argument)) {
+                if (!$this->container->has((string) $argument)) {
                     $this->nodes[(string) $argument] = array('name' => $name, 'required' => $required, 'class' => '', 'attributes' => $this->options['node.missing']);
                 }
 
@@ -137,13 +137,13 @@ class GraphvizDumper extends Dumper
         $container = clone $this->container;
 
         foreach ($container->getDefinitions() as $id => $definition) {
-            $nodes[$id] = array('class' => str_replace('\\', '\\\\', $this->getValue($definition->getClass())), 'attributes' => array_merge($this->options['node.definition'], array('style' => $definition->isShared() ? 'filled' : 'dotted')));
+            $nodes[$id] = array('class' => str_replace('\\', '\\\\', $this->container->getParameterBag()->resolveValue($definition->getClass())), 'attributes' => array_merge($this->options['node.definition'], array('style' => $definition->isShared() ? 'filled' : 'dotted')));
 
             $container->setDefinition($id, new Definition('stdClass'));
         }
 
         foreach ($container->getServiceIds() as $id) {
-            $service = $container->getService($id);
+            $service = $container->get($id);
 
             if (in_array($id, array_keys($container->getAliases()))) {
                 continue;
@@ -157,14 +157,9 @@ class GraphvizDumper extends Dumper
         return $nodes;
     }
 
-    protected function getValue($value, $default = '')
-    {
-        return Builder::resolveValue($value, $this->container->getParameters());
-    }
-
     protected function startDot()
     {
-        $parameters = var_export($this->container->getParameters(), true);
+        $parameters = var_export($this->container->getParameterBag()->all(), true);
 
         return sprintf("digraph sc {\n  %s\n  node [%s];\n  edge [%s];\n\n",
             $this->addOptions($this->options['graph']),

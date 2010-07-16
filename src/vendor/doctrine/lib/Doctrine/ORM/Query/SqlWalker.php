@@ -320,7 +320,10 @@ class SqlWalker implements TreeWalker
 
             if ($class->isInheritanceTypeSingleTable()) {
                 $conn = $this->_em->getConnection();
-                $values = array($conn->quote($class->discriminatorValue));
+                $values = array();
+                if ($class->discriminatorValue !== null) { // discrimnators can be 0
+                    $values[] = $conn->quote($class->discriminatorValue);
+                }
 
                 foreach ($class->subClasses as $subclassName) {
                     $values[] = $conn->quote($this->_em->getClassMetadata($subclassName)->discriminatorValue);
@@ -494,7 +497,6 @@ class SqlWalker implements TreeWalker
 
                     $sql .= reset($assoc->targetToSourceKeyColumns);
                 } else {
-                    // 2- Inverse side: NOT (YET?) SUPPORTED
                     throw QueryException::associationPathInverseSideNotSupported();
                 }
                 break;
@@ -615,6 +617,13 @@ class SqlWalker implements TreeWalker
 
         foreach ($firstIdentificationVarDecl->joinVariableDeclarations as $joinVarDecl) {
             $sql .= $this->walkJoinVariableDeclaration($joinVarDecl);
+        }
+
+        if ($firstIdentificationVarDecl->indexBy) {
+            $this->_rsm->addIndexBy(
+                $firstIdentificationVarDecl->indexBy->simpleStateFieldPathExpression->identificationVariable,
+                $firstIdentificationVarDecl->indexBy->simpleStateFieldPathExpression->parts[0]
+            );
         }
 
         return $this->_platform->appendLockHint($sql, $this->_query->getHint(Query::HINT_LOCK_MODE));
@@ -1193,26 +1202,16 @@ class SqlWalker implements TreeWalker
         $useTableAliasesBefore = $this->_useSqlTableAliases;
         $this->_useSqlTableAliases = false;
 
-        $sql = '';
-        $dqlAlias = $updateItem->identificationVariable;
-        $qComp = $this->_queryComponents[$dqlAlias];
-
-        if ($this->_useSqlTableAliases) {
-            $sql .= $this->getSqlTableAlias($qComp['metadata']->getTableName()) . '.';
-        }
-
-        $sql .= $qComp['metadata']->getQuotedColumnName($updateItem->field, $this->_platform) . ' = ';
+        $sql = $this->walkPathExpression($updateItem->pathExpression) . ' = ';
 
         $newValue = $updateItem->newValue;
 
-        if ($newValue instanceof AST\Node) {
+        if ($newValue === null) {
+            $sql .= 'NULL';
+        } else if ($newValue instanceof AST\Node) {
             $sql .= $newValue->dispatch($this);
-        } else if (is_string($newValue)) {
-            if (strcasecmp($newValue, 'NULL') === 0) {
-                $sql .= 'NULL';
-            } else {
-                $sql .= $this->_conn->quote($newValue);
-            }
+        } else {
+            $sql .= $this->_conn->quote($newValue);
         }
 
         $this->_useSqlTableAliases = $useTableAliasesBefore;

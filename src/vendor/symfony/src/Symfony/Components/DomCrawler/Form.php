@@ -70,41 +70,6 @@ class Form implements \ArrayAccess
     }
 
     /**
-     * Gets the value of a field.
-     *
-     * @param string $name The field name
-     *
-     * @throws \InvalidArgumentException if the field does not exist
-     */
-    public function getValue($name)
-    {
-        if (!$this->hasField($name)) {
-            throw new \InvalidArgumentException(sprintf('The form field "%s" does not exist', $name));
-        }
-
-        return $this->fields[$name]->getValue();
-    }
-
-    /**
-     * Sets the value of a field.
-     *
-     * @param string       $name  The field name
-     * @param string|array $value The value of the field
-     *
-     * @throws \InvalidArgumentException if the field does not exist
-     */
-    public function setValue($name, $value)
-    {
-        if (!$this->hasField($name)) {
-            throw new \InvalidArgumentException(sprintf('The form field "%s" does not exist', $name));
-        }
-
-        $this->fields[$name]->setValue($value);
-
-        return $this;
-    }
-
-    /**
      * Sets the value of the fields.
      *
      * @param array $values An array of field values
@@ -112,7 +77,7 @@ class Form implements \ArrayAccess
     public function setValues(array $values)
     {
         foreach ($values as $name => $value) {
-            $this->setValue($name, $value);
+            $this[$name] = $value;
         }
 
         return $this;
@@ -204,17 +169,18 @@ class Form implements \ArrayAccess
     public function getUri($absolute = true)
     {
         $uri = $this->node->getAttribute('action');
+        $urlHaveScheme = 'http' === substr($uri, 0, 4);
 
         if (!in_array($this->getMethod(), array('post', 'put', 'delete')) && $queryString = http_build_query($this->getValues(), null, '&')) {
             $sep = false === strpos($uri, '?') ? '?' : '&';
             $uri .= $sep.$queryString;
         }
 
-        if ($uri && '/' !== $uri[0]) {
+        if ($uri && '/' !== $uri[0] && !$urlHaveScheme) {
             $uri = $this->path.$uri;
         }
 
-        if ($absolute && null !== $this->host) {
+        if ($absolute && null !== $this->host && !$urlHaveScheme) {
             return $this->host.$uri;
         }
 
@@ -242,7 +208,7 @@ class Form implements \ArrayAccess
      *
      * @param string $name The field name
      *
-     * @param Boolean true if the field exists, false otherwise
+     * @return Boolean true if the field exists, false otherwise
      */
     public function hasField($name)
     {
@@ -333,11 +299,11 @@ class Form implements \ArrayAccess
      *
      * @param string $name The field name
      *
-     * @param Boolean true if the field exists, false otherwise
+     * @return Boolean true if the field exists, false otherwise
      */
     public function offsetExists($name)
     {
-        return $this->hasValue($name);
+        return $this->hasField($name);
     }
 
     /**
@@ -345,11 +311,17 @@ class Form implements \ArrayAccess
      *
      * @param string $name The field name
      *
+     * @return Symfony\Components\DomCrawler\Field The associated Field instance
+     *
      * @throws \InvalidArgumentException if the field does not exist
      */
     public function offsetGet($name)
     {
-        return $this->getValue($name);
+        if (!$this->hasField($name)) {
+            throw new \InvalidArgumentException(sprintf('The form field "%s" does not exist', $name));
+        }
+
+        return $this->fields[$name];
     }
 
     /**
@@ -362,7 +334,11 @@ class Form implements \ArrayAccess
      */
     public function offsetSet($name, $value)
     {
-        $this->setValue($name, $value);
+        if (!$this->hasField($name)) {
+            throw new \InvalidArgumentException(sprintf('The form field "%s" does not exist', $name));
+        }
+
+        $this->fields[$name]->setValue($value);
     }
 
     /**

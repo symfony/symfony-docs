@@ -146,9 +146,9 @@ class DocumentManager
         $this->_queryParser = new Parser($this);
         $this->_unitOfWork = new UnitOfWork($this);
         $this->_proxyFactory = new ProxyFactory($this,
-                $config->getProxyDir(),
-                $config->getProxyNamespace(),
-                $config->getAutoGenerateProxyClasses());
+                $this->_config->getProxyDir(),
+                $this->_config->getProxyNamespace(),
+                $this->_config->getAutoGenerateProxyClasses());
     }
 
     /**
@@ -592,7 +592,7 @@ class DocumentManager
     /**
      * Throws an exception if the DocumentManager is closed or currently not active.
      *
-     * @throws ORMException If the DocumentManager is closed.
+     * @throws MongoDBException If the DocumentManager is closed.
      */
     private function _errorIfClosed()
     {

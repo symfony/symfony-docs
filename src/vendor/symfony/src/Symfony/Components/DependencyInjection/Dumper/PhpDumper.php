@@ -2,8 +2,9 @@
 
 namespace Symfony\Components\DependencyInjection\Dumper;
 
-use Symfony\Components\DependencyInjection\Builder;
+use Symfony\Components\DependencyInjection\ContainerBuilder;
 use Symfony\Components\DependencyInjection\Container;
+use Symfony\Components\DependencyInjection\ContainerInterface;
 use Symfony\Components\DependencyInjection\Reference;
 use Symfony\Components\DependencyInjection\Parameter;
 
@@ -86,13 +87,21 @@ EOF;
     {
         $class = $this->dumpValue($definition->getClass());
 
+        if (0 === strpos($class, "'") && !preg_match('/^\'[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*(\\\{2}[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*)*\'$/', $class)) {
+            throw new \InvalidArgumentException(sprintf('"%s" is not a valid class name.', $class));
+        }
+
         $arguments = array();
         foreach ($definition->getArguments() as $value) {
             $arguments[] = $this->dumpValue($value);
         }
 
-        if (null !== $definition->getConstructor()) {
-            $code = sprintf("        \$instance = call_user_func(array(%s, '%s')%s);\n", $class, $definition->getConstructor(), $arguments ? ', '.implode(', ', $arguments) : '');
+        if (null !== $definition->getFactoryMethod()) {
+            if (null !== $definition->getFactoryService()) {
+                $code = sprintf("        \$instance = %s->%s(%s);\n", $this->getServiceCall($definition->getFactoryService()), $definition->getFactoryMethod(), implode(', ', $arguments));
+            } else {
+                $code = sprintf("        \$instance = call_user_func(array(%s, '%s')%s);\n", $class, $definition->getFactoryMethod(), $arguments ? ', '.implode(', ', $arguments) : '');
+            }
         } elseif ($class != "'".str_replace('\\', '\\\\', $definition->getClass())."'") {
             $code = sprintf("        \$class = %s;\n        \$instance = new \$class(%s);\n", $class, implode(', ', $arguments));
         } else {
@@ -141,8 +150,13 @@ EOF;
     protected function addService($id, $definition)
     {
         $name = Container::camelize($id);
-        $class = $definition->getClass();
-        $type = 0 === strpos($class, '%') ? 'Object' : $class;
+
+        $return = '';
+        if ($class = $definition->getClass()) {
+            $return = sprintf("@return %s A %s instance.", 0 === strpos($class, '%') ? 'Object' : $class, $class);
+        } elseif ($definition->getFactoryService()) {
+            $return = sprintf('@return Object An instance returned by %s::%s().', $definition->getFactoryService(), $definition->getFactoryMethod());
+        }
 
         $doc = '';
         if ($definition->isShared()) {
@@ -159,7 +173,7 @@ EOF;
     /**
      * Gets the '$id' service.$doc
      *
-     * @return $type A $class instance.
+     * $return
      */
     protected function get{$name}Service()
     {
@@ -252,38 +266,22 @@ EOF;
 
     protected function startClass($class, $baseClass)
     {
-        $properties = array();
-        foreach ($this->container->getDefinitions() as $id => $definition) {
-            $type = 0 === strpos($definition->getClass(), '%') ? 'Object' : $definition->getClass();
-            $properties[] = sprintf(' * @property %s $%s', $type, $id);
-        }
-
-        foreach ($this->container->getAliases() as $alias => $id) {
-            $type = 'Object';
-            if ($this->container->hasDefinition($id)) {
-                $sclass = $this->container->getDefinition($id)->getClass();
-                $type = 0 === strpos($sclass, '%') ? 'Object' : $sclass;
-            }
-
-            $properties[] = sprintf(' * @property %s $%s', $type, $alias);
-        }
-        $properties = implode("\n", $properties);
-        if ($properties) {
-            $properties = "\n *\n".$properties;
-        }
+        $bagClass = $this->container->isFrozen() ? 'FrozenParameterBag' : 'ParameterBag';
 
         return <<<EOF
 <?php
 
+use Symfony\Components\DependencyInjection\ContainerInterface;
 use Symfony\Components\DependencyInjection\Container;
 use Symfony\Components\DependencyInjection\Reference;
 use Symfony\Components\DependencyInjection\Parameter;
+use Symfony\Components\DependencyInjection\ParameterBag\\$bagClass;
 
 /**
  * $class
  *
  * This class has been auto-generated
- * by the Symfony Dependency Injection Component.$properties
+ * by the Symfony Dependency Injection Component.
  */
 class $class extends $baseClass
 {
@@ -294,9 +292,7 @@ EOF;
 
     protected function addConstructor()
     {
-        if (!$this->container->getParameters()) {
-            return '';
-        }
+        $bagClass = $this->container->isFrozen() ? 'FrozenParameterBag' : 'ParameterBag';
 
         return <<<EOF
 
@@ -305,9 +301,7 @@ EOF;
      */
     public function __construct()
     {
-        parent::__construct();
-
-        \$this->parameters = \$this->getDefaultParameters();
+        parent::__construct(new $bagClass(\$this->getDefaultParameters()));
     }
 
 EOF;
@@ -315,11 +309,11 @@ EOF;
 
     protected function addDefaultParametersMethod()
     {
-        if (!$this->container->getParameters()) {
+        if (!$this->container->getParameterBag()->all()) {
             return '';
         }
 
-        $parameters = $this->exportParameters($this->container->getParameters());
+        $parameters = $this->exportParameters($this->container->getParameterBag()->all());
 
         return <<<EOF
 
@@ -364,13 +358,13 @@ EOF;
 
     protected function wrapServiceConditionals($value, $code)
     {
-        if (!$services = Builder::getServiceConditionals($value)) {
+        if (!$services = ContainerBuilder::getServiceConditionals($value)) {
             return $code;
         }
 
         $conditions = array();
         foreach ($services as $service) {
-            $conditions[] = sprintf("\$this->hasService('%s')", $service);
+            $conditions[] = sprintf("\$this->has('%s')", $service);
         }
 
         // re-indent the wrapped code
@@ -379,28 +373,29 @@ EOF;
         return sprintf("        if (%s) {\n%s        }\n", implode(' && ', $conditions), $code);
     }
 
-    protected function dumpValue($value)
+    protected function dumpValue($value, $interpolate = true)
     {
         if (is_array($value)) {
             $code = array();
             foreach ($value as $k => $v) {
-                $code[] = sprintf('%s => %s', $this->dumpValue($k), $this->dumpValue($v));
+                $code[] = sprintf('%s => %s', $this->dumpValue($k, $interpolate), $this->dumpValue($v, $interpolate));
             }
 
             return sprintf('array(%s)', implode(', ', $code));
         } elseif (is_object($value) && $value instanceof Reference) {
             return $this->getServiceCall((string) $value, $value);
         } elseif (is_object($value) && $value instanceof Parameter) {
-            return sprintf("\$this->getParameter('%s')", strtolower($value));
-        } elseif (is_string($value)) {
+            return $this->dumpParameter($value);
+        } elseif (true === $interpolate && is_string($value)) {
             if (preg_match('/^%([^%]+)%$/', $value, $match)) {
                 // we do this to deal with non string values (boolean, integer, ...)
                 // the preg_replace_callback converts them to strings
-                return sprintf("\$this->getParameter('%s')", strtolower($match[1]));
+                return $this->dumpParameter(strtolower($match[1]));
             } else {
-                $replaceParameters = function ($match)
+                $that = $this;
+                $replaceParameters = function ($match) use ($that)
                 {
-                    return sprintf("'.\$this->getParameter('%s').'", strtolower($match[2]));
+                    return sprintf("'.".$that->dumpParameter(strtolower($match[2])).".'");
                 };
 
                 $code = str_replace('%%', '%', preg_replace_callback('/(?<!%)(%)([^%]+)\1/', $replaceParameters, var_export($value, true)));
@@ -417,14 +412,23 @@ EOF;
         }
     }
 
+    public function dumpParameter($name)
+    {
+        if ($this->container->isFrozen() && $this->container->getParameterBag()->has($name)) {
+            return $this->dumpValue($this->container->getParameter($name), false);
+        }
+
+        return sprintf("\$this->getParameter('%s')", strtolower($name));
+    }
+
     protected function getServiceCall($id, Reference $reference = null)
     {
         if ('service_container' === $id) {
             return '$this';
         }
 
-        if (null !== $reference && Container::EXCEPTION_ON_INVALID_REFERENCE !== $reference->getInvalidBehavior()) {
-            return sprintf('$this->getService(\'%s\', Container::NULL_ON_INVALID_REFERENCE)', $id);
+        if (null !== $reference && ContainerInterface::EXCEPTION_ON_INVALID_REFERENCE !== $reference->getInvalidBehavior()) {
+            return sprintf('$this->get(\'%s\', ContainerInterface::NULL_ON_INVALID_REFERENCE)', $id);
         } else {
             if ($this->container->hasAlias($id)) {
                 $id = $this->container->getAlias($id);
@@ -434,7 +438,7 @@ EOF;
                 return sprintf('$this->get%sService()', Container::camelize($id));
             }
 
-            return sprintf('$this->getService(\'%s\')', $id);
+            return sprintf('$this->get(\'%s\')', $id);
         }
     }
 }

@@ -24,7 +24,7 @@
  * @author     John D. McNally <jmcnally@collab.net> (Torque)
  * @author     Brett McLaughlin <bmclaugh@algx.net> (Torque)
  * @author     Stephen Haberman <stephenh@chase3000.com> (Torque)
- * @version    $Revision: 1772 $
+ * @version    $Revision: 1819 $
  * @package    propel.runtime.util
  */
 class BasePeer
@@ -110,7 +110,12 @@ class BasePeer
 	{
 		$db = Propel::getDB($criteria->getDbName());
 		$dbMap = Propel::getDatabaseMap($criteria->getDbName());
-
+		
+		//join are not supported with DELETE statement
+		if (count($criteria->getJoins())) {
+			throw new PropelException('Delete does not support join');
+		}
+		
 		// Set up a list of required tables (one DELETE statement will
 		// be executed per table)
 		$tables = $criteria->getTablesColumns();

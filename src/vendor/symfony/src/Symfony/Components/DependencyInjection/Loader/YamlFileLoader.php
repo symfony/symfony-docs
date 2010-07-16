@@ -2,11 +2,11 @@
 
 namespace Symfony\Components\DependencyInjection\Loader;
 
-use Symfony\Components\DependencyInjection\Container;
+use Symfony\Components\DependencyInjection\ContainerInterface;
 use Symfony\Components\DependencyInjection\Definition;
 use Symfony\Components\DependencyInjection\Reference;
-use Symfony\Components\DependencyInjection\BuilderConfiguration;
-use Symfony\Components\DependencyInjection\FileResource;
+use Symfony\Components\DependencyInjection\ContainerBuilder;
+use Symfony\Components\DependencyInjection\Resource\FileResource;
 use Symfony\Components\Yaml\Yaml;
 
 /*
@@ -32,63 +32,49 @@ class YamlFileLoader extends FileLoader
     /**
      * Loads an array of Yaml files.
      *
-     * @param mixed                $resource       The resource
-     * @param Boolean              $main           Whether this is the main load() call
-     * @param BuilderConfiguration $configuration  A BuilderConfiguration instance to use for the configuration
-     *
-     * @return BuilderConfiguration A BuilderConfiguration instance
+     * @param mixed $resource The resource
      */
-    public function load($file, $main = true, BuilderConfiguration $configuration = null)
+    public function load($file)
     {
         $path = $this->findFile($file);
 
         $content = $this->loadFile($path);
 
-        if (null === $configuration) {
-            $configuration = new BuilderConfiguration();
-        }
-
-        $configuration->addResource(new FileResource($path));
+        $this->container->addResource(new FileResource($path));
 
         if (!$content) {
-            return $configuration;
+            return;
         }
 
         // imports
-        $this->parseImports($configuration, $content, $file);
+        $this->parseImports($content, $file);
 
         // extensions
-        $this->loadFromExtensions($configuration, $content);
-
-        if ($main) {
-            $configuration->mergeExtensionsConfiguration();
-        }
+        $this->loadFromExtensions($content);
 
         // parameters
         if (isset($content['parameters'])) {
             foreach ($content['parameters'] as $key => $value) {
-                $configuration->setParameter(strtolower($key), $this->resolveServices($value));
+                $this->container->setParameter($key, $this->resolveServices($value));
             }
         }
 
         // services
-        $this->parseDefinitions($configuration, $content, $file);
-
-        return $configuration;
+        $this->parseDefinitions($content, $file);
     }
 
-    protected function parseImports(BuilderConfiguration $configuration, $content, $file)
+    protected function parseImports($content, $file)
     {
         if (!isset($content['imports'])) {
             return;
         }
 
         foreach ($content['imports'] as $import) {
-            $this->parseImport($configuration, $import, $file);
+            $this->parseImport($import, $file);
         }
     }
 
-    protected function parseImport(BuilderConfiguration $configuration, $import, $file)
+    protected function parseImport($import, $file)
     {
         $class = null;
         if (isset($import['class']) && $import['class'] !== get_class($this)) {
@@ -105,40 +91,48 @@ class YamlFileLoader extends FileLoader
             }
         }
 
-        $loader = null === $class ? $this : new $class($this->paths);
+        $loader = null === $class ? $this : new $class($this->container, $this->paths);
 
         $importedFile = $this->getAbsolutePath($import['resource'], dirname($file));
 
-        return $loader->load($importedFile, false, $configuration);
+        $loader->load($importedFile);
     }
 
-    protected function parseDefinitions(BuilderConfiguration $configuration, $content, $file)
+    protected function parseDefinitions($content, $file)
     {
         if (!isset($content['services'])) {
             return;
         }
 
         foreach ($content['services'] as $id => $service) {
-            $this->parseDefinition($configuration, $id, $service, $file);
+            $this->parseDefinition($id, $service, $file);
         }
     }
 
-    protected function parseDefinition(BuilderConfiguration $configuration, $id, $service, $file)
+    protected function parseDefinition($id, $service, $file)
     {
         if (is_string($service) && 0 === strpos($service, '@')) {
-            $configuration->setAlias($id, substr($service, 1));
+            $this->container->setAlias($id, substr($service, 1));
 
             return;
         }
 
-        $definition = new Definition($service['class']);
+        $definition = new Definition();
+
+        if (isset($service['class'])) {
+            $definition->setClass($service['class']);
+        }
 
         if (isset($service['shared'])) {
             $definition->setShared($service['shared']);
         }
 
-        if (isset($service['constructor'])) {
-            $definition->setConstructor($service['constructor']);
+        if (isset($service['factory_method'])) {
+            $definition->setFactoryMethod($service['factory_method']);
+        }
+
+        if (isset($service['factory_service'])) {
+            $definition->setFactoryService($service['factory_service']);
         }
 
         if (isset($service['file'])) {
@@ -172,7 +166,7 @@ class YamlFileLoader extends FileLoader
             }
         }
 
-        $configuration->setDefinition($id, $definition);
+        $this->container->setDefinition($id, $definition);
     }
 
     protected function loadFile($file)
@@ -201,7 +195,7 @@ class YamlFileLoader extends FileLoader
             // can it be handled by an extension?
             if (false !== strpos($key, '.')) {
                 list($namespace, $tag) = explode('.', $key);
-                if (!static::getExtension($namespace)) {
+                if (!$this->container->hasExtension($namespace)) {
                     throw new \InvalidArgumentException(sprintf('There is no extension able to load the configuration for "%s" (in %s).', $key, $file));
                 }
 
@@ -219,7 +213,7 @@ class YamlFileLoader extends FileLoader
         if (is_array($value)) {
             $value = array_map(array($this, 'resolveServices'), $value);
         } else if (is_string($value) && 0 === strpos($value, '@@')) {
-            $value = new Reference(substr($value, 2), Container::IGNORE_ON_INVALID_REFERENCE);
+            $value = new Reference(substr($value, 2), ContainerInterface::IGNORE_ON_INVALID_REFERENCE);
         } else if (is_string($value) && 0 === strpos($value, '@')) {
             $value = new Reference(substr($value, 1));
         }
@@ -227,7 +221,7 @@ class YamlFileLoader extends FileLoader
         return $value;
     }
 
-    protected function loadFromExtensions(BuilderConfiguration $configuration, $content)
+    protected function loadFromExtensions($content)
     {
         foreach ($content as $key => $values) {
             if (in_array($key, array('imports', 'parameters', 'services'))) {
@@ -240,7 +234,7 @@ class YamlFileLoader extends FileLoader
                 $values = array();
             }
 
-            $configuration->loadFromExtension($this->getExtension($namespace), $tag, $values);
+            $this->container->loadFromExtension($this->container->getExtension($namespace), $tag, $values);
         }
     }
 }

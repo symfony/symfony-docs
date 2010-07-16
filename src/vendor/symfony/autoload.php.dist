@@ -1,14 +1,15 @@
 <?php
 
-require_once __DIR__.'/src/Symfony/Foundation/UniversalClassLoader.php';
+require_once __DIR__.'/src/Symfony/Framework/UniversalClassLoader.php';
 
-use Symfony\Foundation\UniversalClassLoader;
+use Symfony\Framework\UniversalClassLoader;
 
 $loader = new UniversalClassLoader();
 $loader->registerNamespaces(array(
-    'Doctrine\\Common'           => __DIR__.'/vendor/doctrine/lib/vendor/doctrine-common/lib',
+    'Symfony'                    => __DIR__.'/src',
+    'Doctrine\\Common'           => __DIR__.'/vendor/doctrine-common/lib',
     'Doctrine\\DBAL\\Migrations' => __DIR__.'/vendor/doctrine-migrations/lib',
-    'Doctrine\\DBAL'             => __DIR__.'/vendor/doctrine/lib/vendor/doctrine-dbal/lib',
+    'Doctrine\\DBAL'             => __DIR__.'/vendor/doctrine-dbal/lib',
     'Doctrine'                   => __DIR__.'/vendor/doctrine/lib',
     'Zend'                       => __DIR__.'/vendor/zend/library',
 ));

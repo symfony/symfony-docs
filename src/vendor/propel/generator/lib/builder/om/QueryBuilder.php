@@ -524,6 +524,9 @@ abstract class ".$this->getClassname()." extends " . $parentClass . "
 		} else {
 			// composite primary key
 			$script .= "
+		if (empty(\$keys)) {
+			return \$this->add(null, '1<>1', Criteria::CUSTOM);
+		}
 		foreach (\$keys as \$key) {";
 			$i = 0;
 			foreach ($pks as $col) {

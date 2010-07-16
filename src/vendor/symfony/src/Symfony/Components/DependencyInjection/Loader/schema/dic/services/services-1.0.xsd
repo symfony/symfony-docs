@@ -24,11 +24,11 @@
       ]]></xsd:documentation>
     </xsd:annotation>
     <xsd:sequence>
-      <xsd:any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="unbounded" />
+      <xsd:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded" />
       <xsd:element name="imports" type="imports" minOccurs="0" maxOccurs="1" />
       <xsd:element name="parameters" type="parameters" minOccurs="0" maxOccurs="1" />
       <xsd:element name="services" type="services" minOccurs="0" maxOccurs="1" />
-      <xsd:any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="unbounded" />
+      <xsd:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded" />
     </xsd:sequence>
   </xsd:complexType>
 
@@ -89,7 +89,8 @@
     <xsd:attribute name="id" type="xsd:string" />
     <xsd:attribute name="class" type="xsd:string" />
     <xsd:attribute name="shared" type="boolean" />
-    <xsd:attribute name="constructor" type="xsd:string" />
+    <xsd:attribute name="factory-method" type="xsd:string" />
+    <xsd:attribute name="factory-service" type="xsd:string" />
     <xsd:attribute name="alias" type="xsd:string" />
   </xsd:complexType>
 

@@ -65,12 +65,12 @@ class Cookie
             $cookie .= '; expires='.substr(\DateTime::createFromFormat('U', $this->expires, new \DateTimeZone('UTC'))->format(static::DATE_FORMAT), 0, -5);
         }
 
-        if ('/' !== $this->path) {
-            $cookie .= '; path='.$this->path;
-        }
-
         if ('' !== $this->domain) {
             $cookie .= '; domain='.$this->domain;
+        }
+
+        if ('/' !== $this->path) {
+            $cookie .= '; path='.$this->path;
         }
 
         if ($this->secure) {
@@ -90,7 +90,7 @@ class Cookie
      * @param string $cookie A Set-Cookie header value
      * @param string $url    The base URL
      *
-     * @param Symfony\Components\BrowserKit\Cookie A Cookie instance
+     * @return Symfony\Components\BrowserKit\Cookie A Cookie instance
      */
     static public function fromString($cookie, $url = null)
     {

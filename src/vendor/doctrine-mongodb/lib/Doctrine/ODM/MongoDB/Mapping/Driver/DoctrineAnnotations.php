@@ -53,16 +53,17 @@ final class Index extends Annotation
     public $options = array();
 }
 
-final class Id extends Annotation
+class Field extends Annotation
+{
+    public $name;
+    public $type = 'string';
+    public $nullable = false;
+}
+final class Id extends Field
 {
     public $id = true;
     public $type = 'id';
     public $custom = false;
-}
-class Field extends Annotation
-{
-    public $type = 'string';
-    public $nullable = false;
 }
 final class Hash extends Field
 {
@@ -167,9 +168,8 @@ final class ReferenceMany extends Field
     public $cascade;
     public $strategy = 'set';
 }
-final class Transient extends Annotation {}
-final class NotSaved extends Annotation {}
-final class AlsoLoad extends Annotation {
+final class NotSaved extends Field {}
+final class AlsoLoad extends Field {
     public $name;
 }
 /* Annotations for lifecycle callbacks */

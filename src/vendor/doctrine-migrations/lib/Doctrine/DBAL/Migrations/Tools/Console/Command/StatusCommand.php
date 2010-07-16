@@ -47,13 +47,14 @@ class StatusCommand extends AbstractCommand
         $this
             ->setName('migrations:status')
             ->setDescription('View the status of a set of migrations.')
-            ->addOption('configuration', null, InputOption::PARAMETER_OPTIONAL, 'The path to a migrations configuration file.')
             ->setHelp(<<<EOT
 The <info>%command.name%</info> command outputs the status of a set of migrations:
 
     <info>%command.full_name%</info>
 EOT
         );
+
+        parent::configure();
     }
 
     public function execute(InputInterface $input, OutputInterface $output)
@@ -80,6 +81,8 @@ EOT
 
         $info = array(
             'Name'                  => $configuration->getName() ? $configuration->getName() : 'Doctrine Database Migrations',
+            'Database Driver'       => $configuration->getConnection()->getDriver()->getName(),
+            'Database Name'         => $configuration->getConnection()->getDatabase(),
             'Configuration Source'  => $configuration instanceof \Doctrine\DBAL\Migrations\Configuration\AbstractFileConfiguration ? $configuration->getFile() : 'manually configured',
             'Version Table Name'    => $configuration->getMigrationsTableName(),
             'Migrations Namespace'  => $configuration->getMigrationsNamespace(),

@@ -15,7 +15,7 @@
  * @author     Hans Lellelid <hans@xmpl.org> (Propel)
  * @author     Frank Y. Kim <frank.kim@clearink.com> (Torque)
  * @author     John D. McNally <jmcnally@collab.net> (Torque)
- * @version    $Revision: 1673 $
+ * @version    $Revision: 1820 $
  * @package    propel.runtime.om
  */
 abstract class BaseObject
@@ -316,4 +316,12 @@ abstract class BaseObject
 		return array_keys(get_object_vars($this));
 	}
 
+	/** 
+	 * Catches calls to undefined methods
+	 * Allows to define default __call() behavior if you use a custom BaseObject
+	 */ 
+	public function __call($name, $params) 
+	{ 
+		throw new PropelException('Call to undefined method: ' . $name); 
+	} 
 }

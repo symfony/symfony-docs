@@ -172,7 +172,7 @@ class DocumentRepository
         }
 
         if ( ! isset($arguments[0])) {
-            throw ORMException::findByRequiresParameter($method.$by);
+            throw MongoDBException::findByRequiresParameter($method.$by);
         }
 
         $fieldName = lcfirst(\Doctrine\Common\Util\Inflector::classify($by));

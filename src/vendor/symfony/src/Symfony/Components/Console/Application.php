@@ -86,7 +86,7 @@ class Application
             new InputOption('--quiet',          '-q', InputOption::PARAMETER_NONE, 'Do not output any message.'),
             new InputOption('--verbose',        '-v', InputOption::PARAMETER_NONE, 'Increase verbosity of messages.'),
             new InputOption('--version',        '-V', InputOption::PARAMETER_NONE, 'Display this program version.'),
-            new InputOption('--color',          '-c', InputOption::PARAMETER_NONE, 'Force ANSI color output.'),
+            new InputOption('--ansi',           '-a', InputOption::PARAMETER_NONE, 'Force ANSI output.'),
             new InputOption('--no-interaction', '-n', InputOption::PARAMETER_NONE, 'Do not ask any interactive question.'),
         ));
     }
@@ -143,9 +143,9 @@ class Application
      */
     public function doRun(InputInterface $input, OutputInterface $output)
     {
-        $name = $input->getFirstArgument('command');
+        $name = $this->getCommandName($input);
 
-        if (true === $input->hasParameterOption(array('--color', '-c'))) {
+        if (true === $input->hasParameterOption(array('--ansi', '-a'))) {
             $output->setDecorated(true);
         }
 
@@ -530,7 +530,7 @@ class Application
     /**
      * Returns an array of possible abbreviations given a set of names.
      *
-     * @param array An array of names
+     * @param array $names An array of names
      *
      * @return array An array of abbreviations
      */
@@ -709,7 +709,12 @@ class Application
         }
     }
 
-    private function sortCommands($commands)
+    protected function getCommandName(InputInterface $input)
+    {
+        return $input->getFirstArgument('command');
+    }
+
+    protected function sortCommands($commands)
     {
         $namespacedCommands = array();
         foreach ($commands as $name => $command) {
@@ -730,7 +735,7 @@ class Application
         return $namespacedCommands;
     }
 
-    private function getAbbreviationSuggestions($abbrevs)
+    protected function getAbbreviationSuggestions($abbrevs)
     {
         return sprintf('%s, %s%s', $abbrevs[0], $abbrevs[1], count($abbrevs) > 2 ? sprintf(' and %d more', count($abbrevs) - 2) : '');
     }

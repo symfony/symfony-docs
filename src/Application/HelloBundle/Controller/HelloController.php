@@ -2,7 +2,7 @@
 
 namespace Application\HelloBundle\Controller;
 
-use Symfony\Framework\FoundationBundle\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller;
 
 class HelloController extends Controller
 {

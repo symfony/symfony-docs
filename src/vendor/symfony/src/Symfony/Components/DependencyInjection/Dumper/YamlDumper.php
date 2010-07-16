@@ -3,7 +3,7 @@
 namespace Symfony\Components\DependencyInjection\Dumper;
 
 use Symfony\Components\Yaml\Yaml;
-use Symfony\Components\DependencyInjection\Container;
+use Symfony\Components\DependencyInjection\ContainerInterface;
 use Symfony\Components\DependencyInjection\Parameter;
 use Symfony\Components\DependencyInjection\Reference;
 
@@ -40,7 +40,9 @@ class YamlDumper extends Dumper
     protected function addService($id, $definition)
     {
         $code = "  $id:\n";
-        $code .= sprintf("    class: %s\n", $definition->getClass());
+        if ($definition->getClass()) {
+            $code .= sprintf("    class: %s\n", $definition->getClass());
+        }
 
         $annotationsCode = '';
         foreach ($definition->getAnnotations() as $name => $annotations) {
@@ -62,8 +64,12 @@ class YamlDumper extends Dumper
             $code .= sprintf("    file: %s\n", $definition->getFile());
         }
 
-        if ($definition->getConstructor()) {
-            $code .= sprintf("    constructor: %s\n", $definition->getConstructor());
+        if ($definition->getFactoryMethod()) {
+            $code .= sprintf("    factory_method: %s\n", $definition->getFactoryMethod());
+        }
+
+        if ($definition->getFactoryService()) {
+            $code .= sprintf("    factory_service: %s\n", $definition->getFactoryService());
         }
 
         if ($definition->getArguments()) {
@@ -118,11 +124,17 @@ class YamlDumper extends Dumper
 
     protected function addParameters()
     {
-        if (!$this->container->getParameters()) {
+        if (!$this->container->getParameterBag()->all()) {
             return '';
         }
 
-        return Yaml::dump(array('parameters' => $this->prepareParameters($this->container->getParameters())), 2);
+        if ($this->container->isFrozen()) {
+            $parameters = $this->prepareParameters($this->container->getParameterBag()->all());
+        } else {
+            $parameters = $this->container->getParameterBag()->all();
+        }
+
+        return Yaml::dump(array('parameters' => $parameters), 2);
     }
 
     /**
@@ -150,7 +162,7 @@ class YamlDumper extends Dumper
 
     protected function getServiceCall($id, Reference $reference = null)
     {
-        if (null !== $reference && Container::EXCEPTION_ON_INVALID_REFERENCE !== $reference->getInvalidBehavior()) {
+        if (null !== $reference && ContainerInterface::EXCEPTION_ON_INVALID_REFERENCE !== $reference->getInvalidBehavior()) {
             return sprintf('@@%s', $id);
         } else {
             return sprintf('@%s', $id);

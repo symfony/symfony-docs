@@ -2,19 +2,20 @@
 
 require_once __DIR__.'/../src/autoload.php';
 
-use Symfony\Foundation\Kernel;
+use Symfony\Framework\Kernel;
 use Symfony\Components\DependencyInjection\Loader\YamlFileLoader as ContainerLoader;
 use Symfony\Components\Routing\Loader\YamlFileLoader as RoutingLoader;
+use Symfony\Components\DependencyInjection\ContainerBuilder;
 
-use Symfony\Foundation\Bundle\KernelBundle;
-use Symfony\Framework\FoundationBundle\FoundationBundle;
-use Symfony\Framework\ZendBundle\ZendBundle;
-use Symfony\Framework\SwiftmailerBundle\SwiftmailerBundle;
-use Symfony\Framework\DoctrineBundle\DoctrineBundle;
-use Symfony\Framework\DoctrineMigrationsBundle\DoctrineMigrationsBundle;
-use Symfony\Framework\DoctrineMongoDBBundle\DoctrineMongoDBBundle;
-use Symfony\Framework\PropelBundle\PropelBundle;
-use Symfony\Framework\TwigBundle\TwigBundle;
+use Symfony\Framework\KernelBundle;
+use Symfony\Bundle\FrameworkBundle\FrameworkBundle;
+use Symfony\Bundle\ZendBundle\ZendBundle;
+use Symfony\Bundle\SwiftmailerBundle\SwiftmailerBundle;
+use Symfony\Bundle\DoctrineBundle\DoctrineBundle;
+use Symfony\Bundle\DoctrineMigrationsBundle\DoctrineMigrationsBundle;
+use Symfony\Bundle\DoctrineMongoDBBundle\DoctrineMongoDBBundle;
+use Symfony\Bundle\PropelBundle\PropelBundle;
+use Symfony\Bundle\TwigBundle\TwigBundle;
 use Application\HelloBundle\HelloBundle;
 
 class HelloKernel extends Kernel
@@ -28,7 +29,7 @@ class HelloKernel extends Kernel
     {
         $bundles = array(
             new KernelBundle(),
-            new FoundationBundle(),
+            new FrameworkBundle(),
             new ZendBundle(),
             new SwiftmailerBundle(),
             new DoctrineBundle(),
@@ -56,9 +57,11 @@ class HelloKernel extends Kernel
 
     public function registerContainerConfiguration()
     {
-        $loader = new ContainerLoader($this->getBundleDirs());
+        $container = new ContainerBuilder();
+        $loader = new ContainerLoader($container, $this->getBundleDirs());
+        $loader->load(__DIR__.'/config/config_'.$this->getEnvironment().'.yml');
 
-        return $loader->load(__DIR__.'/config/config_'.$this->getEnvironment().'.yml');
+        return $container;
     }
 
     public function registerRoutes()

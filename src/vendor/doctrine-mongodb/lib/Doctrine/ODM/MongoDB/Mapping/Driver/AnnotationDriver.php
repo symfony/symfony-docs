@@ -128,33 +128,30 @@ class AnnotationDriver implements Driver
             $class->isEmbeddedDocument = true;
         }
 
+        $methods = $reflClass->getMethods();
+
         foreach ($reflClass->getProperties() as $property) {
             $mapping = array();
             $mapping['fieldName'] = $property->getName();
 
             if ($alsoLoad = $this->_reader->getPropertyAnnotation($property, 'Doctrine\ODM\MongoDB\Mapping\AlsoLoad')) {
-                $class->fieldMappings[$mapping['fieldName']]['alsoLoadFields'] = (array) $alsoLoad->value;
+                $mapping['alsoLoadFields'] = (array) $alsoLoad->value;
             }
             if ($notSaved = $this->_reader->getPropertyAnnotation($property, 'Doctrine\ODM\MongoDB\Mapping\NotSaved')) {
-                $class->fieldMappings[$mapping['fieldName']]['notSaved'] = true;
+                $mapping['notSaved'] = true;
             }
 
-            $types = array(
-                'Id', 'Increment', 'File', 'Field', 'String', 'Boolean', 'Int', 'Float', 'Date',
-                'Key', 'Bin', 'BinFunc', 'BinUUID', 'BinMD5', 'BinCustom', 'EmbedOne',
-                'EmbedMany', 'ReferenceOne', 'ReferenceMany', 'Timestamp', 'Hash', 'Collection'
-            );
-            foreach ($types as $type) {
-                if ($fieldAnnot = $this->_reader->getPropertyAnnotation($property, 'Doctrine\ODM\MongoDB\Mapping\\' . $type)) {
-                    if ($type === 'Id' && $fieldAnnot->custom) {
+            foreach ($this->_reader->getPropertyAnnotations($property) as $fieldAnnot) {
+                if ($fieldAnnot instanceof \Doctrine\ODM\MongoDB\Mapping\Field) {
+                    if ($fieldAnnot instanceof \Doctrine\ODM\MongoDB\Mapping\Id && $fieldAnnot->custom) {
                         $fieldAnnot->type = 'custom_id';
                         $class->setAllowCustomId(true);
                     }
                     $mapping = array_merge($mapping, (array) $fieldAnnot);
                     $class->mapField($mapping);
-                    break;
                 }
             }
+
             $types = array('Embed', 'Reference');
             foreach ($types as $type) {
                 if ($fieldAnnot = $this->_reader->getPropertyAnnotation($property, 'Doctrine\ODM\MongoDB\Mapping\\' . $type)) {
@@ -173,13 +170,8 @@ class AnnotationDriver implements Driver
                     $class->mapField($mapping);
                 }
             }
-            // Remove transient fields
-            if ($transientAnnot = $this->_reader->getPropertyAnnotation($property, 'Doctrine\ODM\MongoDB\Mapping\Transient')) {
-                unset($class->fieldMappings[$mapping['fieldName']]);
-            }
         }
 
-        $methods = $reflClass->getMethods();
         foreach ($methods as $method) {
             if ($method->isPublic()) {
                 if ($alsoLoad = $this->_reader->getMethodAnnotation($method, 'Doctrine\ODM\MongoDB\Mapping\AlsoLoad')) {
@@ -189,7 +181,7 @@ class AnnotationDriver implements Driver
                     );
                 }
             }
-        }   
+        }
         if (isset($classAnnotations['Doctrine\ODM\MongoDB\Mapping\HasLifecycleCallbacks'])) {
             foreach ($methods as $method) {
                 if ($method->isPublic()) {

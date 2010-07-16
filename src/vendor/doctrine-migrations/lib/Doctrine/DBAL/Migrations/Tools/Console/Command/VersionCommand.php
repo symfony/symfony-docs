@@ -50,7 +50,6 @@ class VersionCommand extends AbstractCommand
             ->addArgument('version', InputArgument::REQUIRED, 'The version to add or delete.', null)
             ->addOption('add', null, InputOption::PARAMETER_NONE, 'Add the specified version.')
             ->addOption('delete', null, InputOption::PARAMETER_NONE, 'Delete the specified version.')
-            ->addOption('configuration', null, InputOption::PARAMETER_OPTIONAL, 'The path to a migrations configuration file.')
             ->setHelp(<<<EOT
 The <info>%command.name%</info> command allows you to manually add and delete migration versions from the version table:
 
@@ -61,6 +60,8 @@ If you want to delete a version you can use the <comment>--delete</comment> opti
     <info>%command.full_name% YYYYMMDDHHMMSS --delete</info>
 EOT
         );
+
+        parent::configure();
     }
 
     public function execute(InputInterface $input, OutputInterface $output)
@@ -73,22 +74,23 @@ EOT
         }
 
         $version = $input->getArgument('version');
-        $migrated = $input->getOption('add') ? true : false;
+        $markMigrated = $input->getOption('add') ? true : false;
 
         if ( ! $configuration->hasVersion($version)) {
             throw MigrationException::unknownMigrationVersion($version);
         }
 
         $version = $configuration->getVersion($version);
-        if ($migrated && $configuration->hasVersionMigrated($version)) {
+        if ($markMigrated && $configuration->hasVersionMigrated($version)) {
             throw new \InvalidArgumentException(sprintf('The version "%s" already exists in the version table.', $version));
         }
 
-        if ( ! $migrated && ! $configuration->hasVersionMigrated($version)) {
+        if ( ! $markMigrated && ! $configuration->hasVersionMigrated($version)) {
             throw new \InvalidArgumentException(sprintf('The version "%s" does not exists in the version table.', $version));
         }
 
-
-        $version->isMigrated($migrated);
+        if ($markMigrated) {
+            $version->markMigrated();
+        }
     }
 }

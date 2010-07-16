@@ -20,9 +20,10 @@
 namespace Doctrine\ORM\Persisters;
 
 use PDO,
+    Doctrine\DBAL\LockMode,
+    Doctrine\DBAL\Types\Type,
     Doctrine\ORM\ORMException,
     Doctrine\ORM\OptimisticLockException,
-    Doctrine\DBAL\Types\Type,
     Doctrine\ORM\EntityManager,
     Doctrine\ORM\Query,
     Doctrine\ORM\PersistentCollection,
@@ -57,9 +58,9 @@ use PDO,
  *
  *   - {@link load} : Loads (the state of) a single, managed entity.
  *   - {@link loadAll} : Loads multiple, managed entities.
- *   - {@link loadOneToOneEntity} : Loads a one/many-to-one association (lazy-loading).
- *   - {@link loadOneToManyCollection} : Loads a one-to-many association (lazy-loading).
- *   - {@link loadManyToManyCollection} : Loads a many-to-many association (lazy-loading).
+ *   - {@link loadOneToOneEntity} : Loads a one/many-to-one entity association (lazy-loading).
+ *   - {@link loadOneToManyCollection} : Loads a one-to-many entity association (lazy-loading).
+ *   - {@link loadManyToManyCollection} : Loads a many-to-many entity association (lazy-loading).
  *
  * The BasicEntityPersister implementation provides the default behavior for
  * persisting and querying entities that are mapped to a single database table.
@@ -335,6 +336,45 @@ class BasicEntityPersister
     }
 
     /**
+     * @todo Add check for platform if it supports foreign keys/cascading.
+     * @param array $identifier
+     * @return void
+     */
+    protected function deleteJoinTableRecords($identifier)
+    {
+        foreach ($this->_class->associationMappings AS $mapping) {
+            /* @var $mapping \Doctrine\ORM\Mapping\AssociationMapping */
+            if ($mapping->isManyToMany()) {
+                // @Todo this only covers scenarios with no inheritance or of the same level. Is there something
+                // like self-referential relationship between different levels of an inheritance hierachy? I hope not!
+                $selfReferential = ($mapping->targetEntityName == $mapping->sourceEntityName);
+                
+                if (!$mapping->isOwningSide) {
+                    $relatedClass = $this->_em->getClassMetadata($mapping->targetEntityName);
+                    $mapping = $relatedClass->associationMappings[$mapping->mappedBy];
+                    $keys = array_keys($mapping->relationToTargetKeyColumns);
+                    if ($selfReferential) {
+                        $otherKeys = array_keys($mapping->relationToSourceKeyColumns);
+                    }
+                } else {
+                    $keys = array_keys($mapping->relationToSourceKeyColumns);
+                    if ($selfReferential) {
+                        $otherKeys = array_keys($mapping->relationToTargetKeyColumns);
+                    }
+                }
+
+                if(!$mapping->isOnDeleteCascade) {
+                    $this->_conn->delete($mapping->joinTable['name'], array_combine($keys, $identifier));
+
+                    if ($selfReferential) {
+                        $this->_conn->delete($mapping->joinTable['name'], array_combine($otherKeys, $identifier));
+                    }
+                }
+            }
+        }
+    }
+
+    /**
      * Deletes a managed entity.
      *
      * The entity to delete must be managed and have a persistent identifier.
@@ -346,10 +386,10 @@ class BasicEntityPersister
      */
     public function delete($entity)
     {
-        $id = array_combine(
-            $this->_class->getIdentifierColumnNames(),
-            $this->_em->getUnitOfWork()->getEntityIdentifier($entity)
-        );
+        $identifier = $this->_em->getUnitOfWork()->getEntityIdentifier($entity);
+        $this->deleteJoinTableRecords($identifier);
+
+        $id = array_combine($this->_class->getIdentifierColumnNames(), $identifier);
         $this->_conn->delete($this->_class->table['name'], $id);
     }
 
@@ -393,7 +433,7 @@ class BasicEntityPersister
         }
 
         foreach ($uow->getEntityChangeSet($entity) as $field => $change) {
-            if ($versioned && $versionField == $field) { //TODO: Needed?
+            if ($versioned && $versionField == $field) {
                 continue;
             }
 
@@ -712,7 +752,7 @@ class BasicEntityPersister
      * Creates or fills a single entity object from an SQL result.
      * 
      * @param $result The SQL result.
-     * @param object $entity The entity object to fill.
+     * @param object $entity The entity object to fill, if any.
      * @param array $hints Hints for entity creation.
      * @return object The filled and managed entity object or NULL, if the SQL result is empty.
      */
@@ -792,9 +832,9 @@ class BasicEntityPersister
                 : '';
 
         $lockSql = '';
-        if ($lockMode == \Doctrine\DBAL\LockMode::PESSIMISTIC_READ) {
+        if ($lockMode == LockMode::PESSIMISTIC_READ) {
             $lockSql = ' ' . $this->_platform->getReadLockSql();
-        } else if ($lockMode == \Doctrine\DBAL\LockMode::PESSIMISTIC_WRITE) {
+        } else if ($lockMode == LockMode::PESSIMISTIC_WRITE) {
             $lockSql = ' ' . $this->_platform->getWriteLockSql();
         }
 
@@ -1006,7 +1046,7 @@ class BasicEntityPersister
      * 
      * @param string $className
      * @return string The SQL table alias.
-     * @todo Remove. Binding table aliases to class names is not such a good idea.
+     * @todo Reconsider. Binding table aliases to class names is not such a good idea.
      */
     protected function _getSQLTableAlias($className)
     {
@@ -1030,17 +1070,28 @@ class BasicEntityPersister
     {
         $conditionSql = $this->_getSelectConditionSQL($criteria);
 
-        if ($lockMode == \Doctrine\DBAL\LockMode::PESSIMISTIC_READ) {
+        if ($lockMode == LockMode::PESSIMISTIC_READ) {
             $lockSql = $this->_platform->getReadLockSql();
-        } else if ($lockMode == \Doctrine\DBAL\LockMode::PESSIMISTIC_WRITE) {
+        } else if ($lockMode == LockMode::PESSIMISTIC_WRITE) {
             $lockSql = $this->_platform->getWriteLockSql();
         }
 
-        $sql = 'SELECT 1 FROM ' . $this->_class->getQuotedTableName($this->_platform) . ' '
-             . $this->_getSQLTableAlias($this->_class->name)
+        $sql = 'SELECT 1 '
+             . $this->getLockTablesSql()
              . ($conditionSql ? ' WHERE ' . $conditionSql : '') . ' ' . $lockSql;
         $params = array_values($criteria);
         $this->_conn->executeQuery($sql, $params);
+    }
+
+    /**
+     * Get the FROM and optionally JOIN conditions to lock the entity managed by this persister.
+     *
+     * @return string
+     */
+    protected function getLockTablesSql()
+    {
+        return 'FROM ' . $this->_class->getQuotedTableName($this->_platform) . ' '
+                . $this->_getSQLTableAlias($this->_class->name);
     }
 
     /**
@@ -1106,6 +1157,22 @@ class BasicEntityPersister
             $coll->hydrateAdd($this->_createEntity($result));
         }
         $stmt->closeCursor();
+    }
+
+    /**
+     * Checks whether the given managed entity exists in the database.
+     *
+     * @param object $entity
+     * @return boolean TRUE if the entity exists in the database, FALSE otherwise.
+     */
+    public function exists($entity)
+    {
+        $criteria = $this->_class->getIdentifierValues($entity);
+        $sql = 'SELECT 1 FROM ' . $this->_class->getQuotedTableName($this->_platform)
+                . ' ' . $this->_getSQLTableAlias($this->_class->name)
+                . ' WHERE ' . $this->_getSelectConditionSQL($criteria);
+
+        return (bool) $this->_conn->fetchColumn($sql, array_values($criteria));
     }
 
     //TODO

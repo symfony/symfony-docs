@@ -13,7 +13,7 @@
  * Uses two additional columns storing the creation and update date
  *
  * @author     François Zaninotto
- * @version    $Revision: 1683 $
+ * @version    $Revision: 1817 $
  * @package    propel.generator.behavior
  */
 class TimestampableBehavior extends Behavior
@@ -54,14 +54,19 @@ class TimestampableBehavior extends Behavior
 		return 'set' . $this->getColumnForParameter($column)->getPhpName();
 	}
 	
+	protected function getColumnConstant($columnName, $builder)
+	{
+		return $builder->getColumnConstant($this->getColumnForParameter($columnName));
+	}
+	
 	/**
 	 * Add code in ObjectBuilder::preUpdate
 	 *
 	 * @return    string The code to put at the hook
 	 */
-	public function preUpdate()
+	public function preUpdate($builder)
 	{
-		return "if (\$this->isModified() && !\$this->isColumnModified(" . $this->getColumnForParameter('update_column')->getConstantName() . ")) {
+		return "if (\$this->isModified() && !\$this->isColumnModified(" . $this->getColumnConstant('update_column', $builder) . ")) {
 	\$this->" . $this->getColumnSetter('update_column') . "(time());
 }";
 	}
@@ -71,12 +76,12 @@ class TimestampableBehavior extends Behavior
 	 *
 	 * @return    string The code to put at the hook
 	 */
-	public function preInsert()
+	public function preInsert($builder)
 	{
-		return "if (!\$this->isColumnModified(" . $this->getColumnForParameter('create_column')->getConstantName() . ")) {
+		return "if (!\$this->isColumnModified(" . $this->getColumnConstant('create_column', $builder) . ")) {
 	\$this->" . $this->getColumnSetter('create_column') . "(time());
 }
-if (!\$this->isColumnModified(" . $this->getColumnForParameter('update_column')->getConstantName() . ")) {
+if (!\$this->isColumnModified(" . $this->getColumnConstant('update_column', $builder) . ")) {
 	\$this->" . $this->getColumnSetter('update_column') . "(time());
 }";
 	}
@@ -91,7 +96,7 @@ if (!\$this->isColumnModified(" . $this->getColumnForParameter('update_column')-
  */
 public function keepUpdateDateUnchanged()
 {
-	\$this->modifiedColumns[] = " . $this->getColumnForParameter('update_column')->getConstantName() . ";
+	\$this->modifiedColumns[] = " . $this->getColumnConstant('update_column', $builder) . ";
 	return \$this;
 }
 ";
@@ -100,8 +105,8 @@ public function keepUpdateDateUnchanged()
 	public function queryMethods($builder)
 	{
 		$queryClassName = $builder->getStubQueryBuilder()->getClassname();
-		$updateColumnConstant = $this->getColumnForParameter('update_column')->getConstantName();
-		$createColumnConstant = $this->getColumnForParameter('create_column')->getConstantName();
+		$updateColumnConstant = $this->getColumnConstant('update_column', $builder);
+		$createColumnConstant = $this->getColumnConstant('create_column', $builder);
 		return "
 /**
  * Filter by the latest updated

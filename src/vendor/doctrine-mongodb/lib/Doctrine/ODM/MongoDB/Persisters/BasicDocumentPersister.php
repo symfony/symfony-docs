@@ -26,7 +26,8 @@ use Doctrine\ODM\MongoDB\DocumentManager,
     Doctrine\ODM\MongoDB\Mapping\Types\Type,
     Doctrine\Common\Collections\Collection,
     Doctrine\ODM\MongoDB\ODMEvents,
-    Doctrine\ODM\MongoDB\Event\OnUpdatePreparedArgs;
+    Doctrine\ODM\MongoDB\Event\OnUpdatePreparedArgs,
+    Doctrine\ODM\MongoDB\MongoDBException;
 
 /**
  * The BasicDocumentPersister is responsible for actual persisting the calculated
@@ -322,11 +323,11 @@ class BasicDocumentPersister
             }
             $old = isset($changeset[$mapping['fieldName']][0]) ? $changeset[$mapping['fieldName']][0] : null;
             $new = isset($changeset[$mapping['fieldName']][1]) ? $changeset[$mapping['fieldName']][1] : null;
-            if ($this->_class->isIdentifier($mapping['fieldName'])) {
-                continue;
-            }
             $new = $this->_prepareValue($mapping, $new);
             $old = $this->_prepareValue($mapping, $old);
+            if ($this->_class->isIdentifier($mapping['fieldName']) && ! $this->_equals($new, $old)) {
+                throw MongoDBException::identifierCannotBeUpdated();
+            }
             if (($mapping['type'] === 'many') || $mapping['type'] === 'collection') {
                 $this->_addArrayUpdateAtomicOperator($mapping, (array) $new, (array) $old, $result);
             } else {
@@ -400,12 +401,15 @@ class BasicDocumentPersister
      * @param array $hints Hints for document creation.
      * @return object The loaded and managed document instance or NULL if the document can not be found.
      * @todo Check identity map? loadById method? Try to guess whether $criteria is the id?
+     * @todo Modify DocumentManager to use this method instead of its own hard coded
      */
     public function load(array $query = array(), array $select = array())
     {
         $result = $this->_collection->findOne($query, $select);
         if ($result !== null) {
-            return $this->_uow->getOrCreateDocument($this->_documentName, $result);
+            $document = $this->_uow->getOrCreateDocument($this->_documentName, $result);
+            $this->_uow->registerManaged($document, $this->_class->getPHPIdentifierValue($result['_id']), $result);
+            return $document;
         }
         return null;
     }
@@ -422,7 +426,9 @@ class BasicDocumentPersister
             '_id' => $this->_class->getDatabaseIdentifierValue($id)
         ));
         if ($result !== null) {
-            return $this->_uow->getOrCreateDocument($this->_documentName, $result);
+            $document = $this->_uow->getOrCreateDocument($this->_documentName, $result);
+            $this->_uow->registerManaged($document, $this->_class->getPHPIdentifierValue($result['_id']), $result);
+            return $document;
         }
         return null;
     }
@@ -573,8 +579,8 @@ class BasicDocumentPersister
                 if (isset($mapping['embedded'])) {
                     if ($mapping['type'] == 'many') {
                         $value = array();
-                        foreach ($rawValue as $doc) {
-                            $value[] = $this->_prepareDocEmbeded($classMetadata, $doc);
+                        foreach ($rawValue as $embeddedDoc) {
+                            $value[] = $this->_prepareDocEmbeded($classMetadata, $embeddedDoc);
                         }
                     } elseif ($mapping['type'] == 'one') {
                         $value = $this->_prepareDocEmbeded($classMetadata, $rawValue);
@@ -582,8 +588,8 @@ class BasicDocumentPersister
                 } elseif (isset($mapping['reference'])) {
                     if ($mapping['type'] == 'many') {
                          $value = array();
-                        foreach ($rawValue as $doc) {
-                            $value[] = $this->_prepareDocReference($classMetadata, $doc);
+                        foreach ($rawValue as $referencedDoc) {
+                            $value[] = $this->_prepareDocReference($classMetadata, $referencedDoc);
                         }
                     } else {
                         $value = $this->_prepareDocReference($classMetadata, $rawValue);
