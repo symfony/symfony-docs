@@ -64,7 +64,7 @@ HTTP Authorization
 ------------------
 
 If your application needs HTTP authentication, pass the username and password
-as HTTP headers to `createClient()`:
+as server variables to `createClient()`:
 
     [php]
     $client = $this->createClient(array(), array(
@@ -135,7 +135,7 @@ useful assertions:
 
     [php]
     // Assert that the response matches a given CSS selector.
-    $this->assertFalse($crawler->filter($selector)->isEmpty());
+    $this->assertTrue(count($crawler->filter($selector)) > 0);
 
     // Assert that the response matches a given CSS selector n times.
     $this->assertEquals($count, $crawler->filter($selector)->count());

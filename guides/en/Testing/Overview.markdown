@@ -96,7 +96,7 @@ for `HelloController` that reads as follows:
             $client = $this->createClient();
             $crawler = $client->request('GET', '/hello/Fabien');
 
-            $this->assertFalse($crawler->filter('html:contains("Hello Fabien")')->isEmpty());
+            $this->assertEquals(1, $crawler->filter('html:contains("Hello Fabien")'));
         }
     }
 
@@ -164,7 +164,7 @@ assertions on the DOM:
 
     [php]
     // Assert that the response matches a given CSS selector.
-    $this->assertFalse($crawler->filter('h1')->isEmpty());
+    $this->assertTrue(count($crawler->filter('h1')) > 0);
 
 Or, test against the Response content directly if you just want to assert that
 the content contains some text, or if the Response is not an XML/HTML

@@ -45,10 +45,10 @@ additional arguments of the `request()` method:
     $client->request('POST', '/submit', array('name' => 'Fabien'));
 
     // Form submission with a file upload
-    $client->request('POST', '/submit', array('name' => 'Fabien'), array(), array('photo' => '/path/to/photo'));
+    $client->request('POST', '/submit', array('name' => 'Fabien'), array('photo' => '/path/to/photo'));
 
     // Specify HTTP headers
-    $client->request('DELETE', '/post/12', array(), array('PHP_AUTH_USER' => 'username', 'PHP_AUTH_PW' => 'pa$$word'));
+    $client->request('DELETE', '/post/12', array(), array(), array('PHP_AUTH_USER' => 'username', 'PHP_AUTH_PW' => 'pa$$word'));
 
 When a request returns a redirect response, the client automatically follows
 it. This behavior can be changed with the `followRedirects()` method:

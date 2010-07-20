@@ -36,7 +36,7 @@ methods prefixed with "get" or "is". Let's look at a sample configuration.
     
 This snippet shows a very simple `Author` class with a property and a getter. 
 Each constraint has a name, most of them also have a couple of options. Here we
-configured the constraints with annotations, but Symfony 2.0 also offers many
+configured the constraints with annotations, but Symfony2 also offers many
 other configuration drivers.
 
 Because the annotation driver depends on the Doctrine library, it is not enabled
