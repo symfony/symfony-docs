@@ -125,7 +125,7 @@ Now, create the schema by running the following command:
 Eventually, use your entity and manage its persistent state with Doctrine:
 
     [php]
-    use Application\HelloBundle\Entites\User;
+    use Application\HelloBundle\Entities\User;
 
     class UserController extends Controller
     {
