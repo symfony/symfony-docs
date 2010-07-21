@@ -112,7 +112,7 @@ Then, create a class that will host the listener:
     [php]
     class Bar
     {
-        public function addBarMethodToFoo(sfEvent $event)
+        public function addBarMethodToFoo(Event $event)
         {
             // we only want to respond to the calls to the 'bar' method
             if ('bar' != $event['method']) {
@@ -158,7 +158,7 @@ beginning of the method:
         public function render($template, $arguments = array())
         {
             // filter the arguments
-            $event = new sfEvent($this, 'foo.filter_arguments');
+            $event = new Event($this, 'foo.filter_arguments');
             $this->dispatcher->filter($event, $arguments);
 
             // get the filtered arguments
@@ -172,7 +172,7 @@ And here is a filter example:
     [php]
     class Bar
     {
-        public function filterFooArguments(sfEvent $event, $arguments)
+        public function filterFooArguments(Event $event, $arguments)
         {
             $arguments['processed'] = true;
 
