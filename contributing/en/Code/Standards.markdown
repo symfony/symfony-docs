@@ -50,9 +50,7 @@ Structure
 
   * Declare class properties before methods;
 
-  * Declare public methods first, then protected ones;
-
-  * Don't use private methods.
+  * Declare public methods first, then protected ones and finally private ones.
 
 Naming Conventions
 ------------------
