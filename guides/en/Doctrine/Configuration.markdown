@@ -4,8 +4,6 @@ Doctrine Configuration
 DBAL Configuration
 ------------------
 
-
-
     [yml]
     # config/config.yml
     doctrine.dbal:
@@ -61,14 +59,14 @@ but you must pass it an argument with the name of the connection you want to get
 ORM Configuration
 -----------------
 
-doctrine.orm:
-  default_entity_manager:   default
-  cache_driver:             apc           # array, apc, memcache, xcache
-  entity_managers:
-    default:
-      connection:           default
-    customer:
-      connection:           customer
+    doctrine.orm:
+      default_entity_manager:   default
+      cache_driver:             apc           # array, apc, memcache, xcache
+      entity_managers:
+        default:
+          connection:           default
+        customer:
+          connection:           customer
 
 Just like the DBAL, if you have configured multiple `EntityManager` instances and want to
 get a specific one you can use the `getEntityManager()` method by just passing it an argument
@@ -106,11 +104,6 @@ you just need to run the following command:
 
 Now your database will be updated and the new column added to the database
 table.
-
-MongoDB Configuration
----------------------
-
-
 
 Console Commands
 ----------------
