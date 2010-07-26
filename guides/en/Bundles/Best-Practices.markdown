@@ -26,7 +26,7 @@ A bundle is also a PHP namespace, composed of several segments:
 The bundle name must follow the following rules:
 
   * Use only alphanumeric characters and underscores;
-  * Use a camelCased name;
+  * Use a CamelCased name;
   * Use a descriptive and short name (no more than 2 words);
   * Prefix the name with the concatenation of the vendor and category
     namespaces;
