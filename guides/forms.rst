@@ -108,7 +108,6 @@ Basic Fields
 
 Symfony2 ships with all fields available in plain HTML:
 
-
 ============= ==================
 Field         Name Description
 ============= ==================
@@ -138,6 +137,7 @@ BirthdayField An extension of DateField for selecting birthdays
 TimeField     A text field or multiple drop-downs for entering a time
 DateTimeField A combination of DateField and TimeField
 TimezoneField An extension of ChoiceField for selecting a timezone
+============= ==================
 
 Field Groups
 ~~~~~~~~~~~~
