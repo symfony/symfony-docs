@@ -1,3 +1,6 @@
+.. index::
+   single: Event Dispatcher; Recipes
+
 Event Dispatcher Recipes
 ========================
 

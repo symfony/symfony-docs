@@ -1,3 +1,7 @@
+.. index::
+   single: YAML
+   single: Configuration; YAML
+
 YAML
 ====
 

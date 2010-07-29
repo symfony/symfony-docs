@@ -1,3 +1,6 @@
+.. index::
+   single: Doctrine; Migrations
+
 Doctrine Migrations
 ===================
 

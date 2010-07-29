@@ -1,8 +1,18 @@
+.. index::
+   single: Controller
+   single: MVC; Controller
+
 The Controller
 ==============
 
 Still with us after the first two parts? You are already becoming a Symfony2
 addict! Without further ado, let's discover what controllers can do for you.
+
+.. index::
+   single: Formats
+   single: Controller; Formats
+   single: Routing; Formats
+   single: View; Formats
 
 Formats
 -------
@@ -51,6 +61,9 @@ The ``requirements`` entry defines regular expressions that placeholders must
 match. In this example, if you try to request the ``/hello/Fabien.js`` resource,
 you will get a 404 HTTP error, as it does not match the ``_format`` requirement.
 
+.. index::
+   single: Response
+
 The Response Object
 -------------------
 
@@ -84,6 +97,9 @@ some milliseconds::
 This is really useful when a controller needs to send back a JSON response for
 an Ajax request.
 
+.. index::
+   single: Exceptions
+
 Error Management
 ----------------
 
@@ -110,6 +126,10 @@ use the base ``HttpException`` and pass the HTTP error as the exception code::
 
     throw new HttpException('Unauthorized access.', 401);
 
+.. index::
+   single: Controller; Redirect
+   single: Controller; Forward
+
 Redirecting and Forwarding
 --------------------------
 
@@ -129,6 +149,9 @@ need arises::
     $response = $this->forward('HelloBundle:Hello:fancy', array('name' => $name, 'color' => 'green'));
 
     // do something with the response or return it directly
+
+.. index::
+   single: Request
 
 The Request Object
 ------------------

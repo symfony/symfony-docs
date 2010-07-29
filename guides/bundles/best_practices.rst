@@ -1,3 +1,6 @@
+.. index::
+   single: Bundles; Best Practices
+
 Bundle Best Practices
 =====================
 
@@ -5,6 +8,9 @@ A bundle is a directory that has a well-defined structure and can host
 anything from classes to controllers and web resources. Even if bundles are
 very flexible, you should follow some best practices if you want to distribute
 them.
+
+.. index::
+   pair: Bundles; Naming Conventions
 
 Bundle Name
 -----------

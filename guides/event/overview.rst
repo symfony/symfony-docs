@@ -1,3 +1,6 @@
+.. index::
+   single: Event Dispatcher
+
 The Event Dispatcher
 ====================
 
@@ -23,6 +26,9 @@ together without knowing each others. Objects (*listeners*) can *connect* to
 the dispatcher to listen to specific events, and some others can *notify* an
 *event* to the dispatcher. Whenever an event is notified, the dispatcher will
 call all the connected listeners.
+
+.. index::
+   pair: Event Dispatcher; Naming Conventions
 
 Events
 ------
@@ -88,6 +94,9 @@ event is notified::
 
     $dispatcher = new EventDispatcher();
 
+.. index::
+   single: Event Dispatcher; Listeners
+
 Connecting Listeners
 --------------------
 
@@ -118,6 +127,9 @@ instance as an argument.
 .. note::
    The listeners are called by the event dispatcher in the same order you
    connected them.
+
+.. index::
+   single: Event Dispatcher; Notification
 
 Notifying Events
 ----------------

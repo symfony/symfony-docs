@@ -1,3 +1,6 @@
+.. index::
+   pair: Autoloader; Configuration
+
 Autoloader
 ==========
 

@@ -1,3 +1,6 @@
+.. index::
+   single: Forms
+
 Forms
 =====
 
@@ -89,6 +92,9 @@ All the data is stored in a POST parameter with the name of the form::
     
 Congratulations! You just created your first fully-functional form with
 Symfony2.
+
+.. index::
+   single: Forms; Fields
 
 Form Fields
 -----------
@@ -217,6 +223,9 @@ If you set the option "modifiable" to ``true``, you can even add or remove rows
 in the collection via Javascript! The ``CollectionField`` will notice it and
 resize the underlying array accordingly.
 
+.. index::
+   single: Forms; Validation
+
 Form Validation
 ---------------
 
@@ -282,6 +291,9 @@ Now we can easily adapt the form in the controller::
 The big benefit of this refactoring is that we can reuse the ``Registration``
 class. Extending the application to allow users to sign up via XML is no 
 problem at all!
+
+.. index::
+   single: Forms; View
 
 Customizing the View
 --------------------

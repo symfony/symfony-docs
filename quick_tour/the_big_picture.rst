@@ -8,6 +8,9 @@ fast with Symfony by showing you the structure of a simple ready-made project.
 If you have ever used a web framework before, you should feel right at home
 with Symfony 2.0.
 
+.. index::
+   pair: Sandbox; Download
+
 Download and Install
 --------------------
 
@@ -39,6 +42,9 @@ should now have a ``sandbox/`` directory::
             symfony/
         web/
 
+.. index::
+   single: Installation; Check
+
 Check the Configuration
 -----------------------
 
@@ -66,6 +72,8 @@ to be greeted by Symfony (replace Fabien with your first name):
 
 What's going on here? Let's dissect the URL:
 
+.. index:: Font Controller
+
 * ``index_dev.php``: This is a "front controller". It is the unique entry
   point of the hello application and it responds to all user requests;
 
@@ -75,6 +83,10 @@ What's going on here? Let's dissect the URL:
 Your responsibility as a developer is to write the code that maps the user
 request (``/hello/Fabien``) to the resource associated with it (``Hello
 Fabien!``).
+
+.. index::
+   single: Routing
+   pair: Configuration; Routing
 
 Routing
 ~~~~~~~
@@ -112,6 +124,10 @@ line, which imports another routing configuration file that reads as follows:
 Here we go! As you can see, the "``/hello/:name``" resource pattern (a string
 beginning with a colon like ``:name`` is a placeholder) is mapped to a
 controller, referenced by the ``_controller`` value.
+
+.. index::
+   single: Controller
+   single: MVC; Controller
 
 Controllers
 ~~~~~~~~~~~
@@ -180,6 +196,10 @@ of HTML and simple PHP expressions:
 Congratulations! You have looked at your first Symfony piece of code. That was
 not so hard, was it? Symfony makes it really easy to implement web sites
 better and faster.
+
+.. index::
+   single: Environment
+   single: Configuration; Environment
 
 Environments
 ------------

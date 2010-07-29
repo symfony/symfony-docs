@@ -1,3 +1,6 @@
+.. index::
+   single: Doctrine
+
 Doctrine
 ========
 
@@ -13,6 +16,9 @@ the project has to offer for working with relational databases, such as:
 .. tip::
    You can learn more about the `DBAL API`_ and `ORM API`_ on the official
    Doctrine2 website.
+
+.. index::
+   single: Doctrine; DBAL
 
 Doctrine DBAL
 -------------
@@ -46,6 +52,9 @@ Access the connection from your controllers by getting the
 
 You can then execute a query and fetch the results as show above with the
 ``fetchAll()`` method.
+
+.. index::
+   single: Doctrine; ORM
 
 Doctrine Object Relational Mapper
 ---------------------------------

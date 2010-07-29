@@ -1,8 +1,16 @@
+.. index::
+   single: Twig
+   single: View; Twig
+
 Twig & Symfony2
 ===============
 
 `Twig`_ is a flexible, fast, and secure template language for PHP. Symfony2
 has native support for Twig through ``TwigBundle``.
+
+.. index::
+   single: Twig; Installation
+   single: Twig; Configuration
 
 Installation & Configuration
 ----------------------------
@@ -78,6 +86,9 @@ And the opposite is also true::
     {# index.php #}
 
     <?php $view->render('HelloBundle:Hello:sidebar:twig') ?>
+
+.. index::
+   single: Twig; Helpers
 
 Helpers
 -------

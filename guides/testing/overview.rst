@@ -1,3 +1,6 @@
+.. index::
+   single: Tests
+
 Testing
 =======
 
@@ -46,6 +49,9 @@ Running the test suite for a given application is straightforward:
 .. tip::
    Code coverage can be generated with the ``--coverage-html`` option.
 
+.. index::
+   single: Tests; Unit Tests
+
 Unit Tests
 ----------
 
@@ -68,6 +74,9 @@ Running tests for a given file or directory is also very easy:
 
     # run tests for the Article class
     $ phpunit -c hello Application/HelloBundle/Tests/Model/ArticleTest.php
+
+.. index::
+   single: Tests; Functional Tests
 
 Functional Tests
 ----------------

@@ -1,3 +1,6 @@
+.. index::
+   single: Tests; Client
+
 The Test Client
 ===============
 

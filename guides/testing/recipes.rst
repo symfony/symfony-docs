@@ -1,3 +1,6 @@
+.. index::
+   single: Tests; Recipes
+
 Testing Recipes
 ===============
 
@@ -57,6 +60,9 @@ Response before the redirection and redirect yourself, calls the
 
     $client->followRedirects(true);
 
+.. index::
+   single: Tests; HTTP Authorization
+
 HTTP Authorization
 ------------------
 
@@ -74,6 +80,9 @@ You can also override it on a per request basis::
         'PHP_AUTH_USER' => 'username',
         'PHP_AUTH_PW'   => 'pa$$word',
     ));
+
+.. index::
+   single: Tests; Profiling
 
 Profiling
 ---------
@@ -118,6 +127,9 @@ HTTP layer.
 .. tip::
    If the information you need to check are available from the profiler, use them
    instead.
+
+.. index::
+   single: Tests; Assertions
 
 Useful Assertions
 -----------------

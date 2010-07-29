@@ -1,3 +1,7 @@
+.. index::
+   single: View
+   single: MVC; View
+
 The View
 ========
 
@@ -8,9 +12,13 @@ as its default template engine but adds some nice features on top of if to
 make it more powerful.
 
 .. tip::
-   Instead of PHP, you can also use :doc:`Twig </guides/Twig>` as the default template engine
-   with Symfony2. If makes your templates more concise and more web designer
-   friendly.
+   Instead of PHP, you can also use :doc:`Twig </guides/Twig>` as the default
+   template engine with Symfony2. If makes your templates more concise and
+   more web designer friendly.
+
+.. index::
+  single: Templating; Layout
+  single: Layout
 
 Decorating Templates
 --------------------
@@ -61,6 +69,10 @@ Symfony also supports multiple decoration levels: a layout can itself be
 decorated by another one. This technique is really useful for large projects
 and is made even more powerful when used in combination with slots.
 
+.. index::
+   single: Templating; Slot
+   single: Slot
+
 Slots
 -----
 
@@ -103,6 +115,9 @@ For large slots, there is also an extended syntax:
         Some large amount of HTML
     <?php $view->slots->stop() ?>
 
+.. index::
+   single: Templating; Include
+
 Include other Templates
 -----------------------
 
@@ -127,6 +142,9 @@ And change the ``index.php`` template to include it:
 
 The ``render()`` method evaluates and returns the content of another template
 (this is the exact same method as the one used in the controller).
+
+.. index::
+   single: Templating; Embedding Pages
 
 Embed other Actions
 -------------------
@@ -163,6 +181,9 @@ Here, the ``HelloBundle:Hello:fancy`` string refers to the ``fancy`` action of t
 
 But where is the ``$view->actions`` property defined? Like ``$view->slots``, it's
 called a template helper, and the next section tells you more about those.
+
+.. index::
+   single: Templating; Helpers
 
 Template Helpers
 ----------------

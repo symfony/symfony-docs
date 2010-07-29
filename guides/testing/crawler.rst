@@ -1,3 +1,6 @@
+.. index::
+   single: Tests; Crawler
+
 The Crawler
 ===========
 

@@ -1,3 +1,6 @@
+.. index::
+   single: Finder
+
 The Finder
 ==========
 

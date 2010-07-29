@@ -1,3 +1,6 @@
+.. index::
+   single: Bundles; Configuration
+
 Bundle Configuration
 ====================
 
@@ -38,6 +41,10 @@ Retrieve the configuration parameters in your code from the container::
 
 Even if this mechanism is simple enough, you are highly encouraged to use the
 semantic configuration described below.
+
+.. index::
+   single: Configuration; Semantic
+   single: Bundle; Extension Configuration
 
 Semantic Configuration
 ----------------------

@@ -1,5 +1,11 @@
+.. index::
+   pair: Tests; Configuration
+
 Testing Configuration
 =====================
+
+.. index::
+   pair: PHPUnit; Configuration
 
 PHPUnit Configuration
 ---------------------

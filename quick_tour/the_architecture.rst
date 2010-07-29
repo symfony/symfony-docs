@@ -6,6 +6,9 @@ first three parts? Your efforts will be well rewarded soon. The first three
 parts don't have a deep look at the architecture of the framework. As it makes
 Symfony stand apart from the framework crowd, let's dive into it now.
 
+.. index::
+   single: Directory Structure
+
 The Directory Structure
 -----------------------
 
@@ -39,6 +42,9 @@ live:
 
 Like any front controller, ``index.php`` uses a Kernel Class, ``HelloKernel``, to
 bootstrap the application.
+
+.. index::
+   single: Kernel
 
 The Application Directory
 ~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -117,6 +123,9 @@ namespaces or the PEAR naming `convention`_ for classes. As you can see
 here, all dependencies are stored under the ``vendor/`` directory, but this is
 just a convention. You can store them wherever you want, globally on your
 server or locally in your projects.
+
+.. index::
+   single: Bundles
 
 The Bundle System
 -----------------
@@ -212,6 +221,9 @@ name, Symfony will look for it under the given directories.
 Do you understand now why Symfony is so flexible? Share your bundles between
 applications, store them locally or globally, your choice.
 
+.. index::
+   single: Vendors
+
 Vendors
 -------
 
@@ -219,6 +231,10 @@ Odds are your application will depend on third-party libraries. Those should
 be stored in the ``src/vendor/`` directory. It already contains the Symfony
 libraries, the SwiftMailer library, the Doctrine ORM, the Propel ORM, the Twig
 templating system, and a selection of the Zend Framework classes.
+
+.. index::
+   single: Cache
+   single: Logs
 
 Cache and Logs
 --------------
@@ -235,6 +251,10 @@ the cache when you update your code or change its configuration.
 When developing a web application, things can go wrong in many ways. The log
 files in the ``logs/`` application directory tell you everything about the
 requests and helps you fix the problem in no time.
+
+.. index::
+   single: CLI
+   single: Command Line
 
 The Command Line Interface
 --------------------------

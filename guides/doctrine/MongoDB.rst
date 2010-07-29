@@ -1,3 +1,7 @@
+.. index::
+   single: Doctrine; MongoDB
+   single: MongoDB
+
 MongoDB
 =======
 
