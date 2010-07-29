@@ -108,35 +108,17 @@ Basic Fields
 
 Symfony2 ships with all fields available in plain HTML:
 
-.. code-block:: html
 
-    <table>
-    <tr><th>Field Name</th><th>Description</th></tr>
-    <tr>
-      <td>TextField</td>
-      <td>An input tag for entering short text</td>
-    </tr>
-    <tr>
-      <td>TextareaField</td>
-      <td>A textarea tag for entering long text</td>
-    </tr>
-    <tr>
-      <td>CheckboxField</td>
-      <td>A checkbox</td>
-    </tr>
-    <tr>
-      <td>ChoiceField</td>
-      <td>A drop-down or multiple radio-buttons/checkboxes for selecting values</td>
-    </tr>
-    <tr>
-      <td>PasswordField</td>
-      <td>A password input tag</td>
-    </tr>
-    <tr>
-      <td>HiddenField</td>
-      <td>A hidden input tag</td>
-    </tr>
-    </table>
+============= ==================
+Field         Name Description
+============= ==================
+TextField     An input tag for entering short text
+TextareaField A textarea tag for entering long text
+CheckboxField A checkbox
+ChoiceField   A drop-down or multiple radio-buttons/checkboxes for selecting values
+PasswordField A password input tag
+HiddenField   A hidden input tag
+============= ==================
 
 Localized Fields
 ~~~~~~~~~~~~~~~~
@@ -144,47 +126,18 @@ Localized Fields
 The Form component also features fields that render differently depending on
 the locale of the user:
 
-.. code-block:: html
-
-    <table>
-    <tr><th>Field Name</th><th>Description</th></tr>
-    <tr>
-      <td>NumberField</td>
-      <td>A text field for entering numbers</td>
-    </tr>
-    <tr>
-      <td>IntegerField</td>
-      <td>A text field for entering integers</td>
-    </tr>
-    <tr>
-      <td>PercentField</td>
-      <td>A text field for entering percent values</td>
-    </tr>
-    <tr>
-      <td>MoneyField</td>
-      <td>A text field for entering money values</td>
-    </tr>
-    <tr>
-      <td>DateField</td>
-      <td>A text field or multiple drop-downs for entering dates</td>
-    </tr>
-    <tr>
-      <td>BirthdayField</td>
-      <td>An extension of DateField for selecting birthdays</td>
-    </tr>
-    <tr>
-      <td>TimeField</td>
-      <td>A text field or multiple drop-downs for entering a time</td>
-    </tr>
-    <tr>
-      <td>DateTimeField</td>
-      <td>A combination of DateField and TimeField</td>
-    </tr>
-    <tr>
-      <td>TimezoneField</td>
-      <td>An extension of ChoiceField for selecting a timezone</td>
-    </tr>
-    </table>
+============= ==================
+Field         Name Description
+============= ==================
+NumberField   A text field for entering numbers
+IntegerField  A text field for entering integers
+PercentField  A text field for entering percent values
+MoneyField    A text field for entering money values
+DateField     A text field or multiple drop-downs for entering dates
+BirthdayField An extension of DateField for selecting birthdays
+TimeField     A text field or multiple drop-downs for entering a time
+DateTimeField A combination of DateField and TimeField
+TimezoneField An extension of ChoiceField for selecting a timezone
 
 Field Groups
 ~~~~~~~~~~~~
