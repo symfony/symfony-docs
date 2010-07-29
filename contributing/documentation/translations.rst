@@ -63,7 +63,8 @@ When the team is confident that the repository is in a consistent and stable
 state (everything is translated, or non-translated documents have been removed
 from the toctrees -- files named ``index.rst`` and ``map.rst.inc``), the team
 manager can ask that the repository is added to the list of official *master*
-repositories by sending an email to `Fabien`_.
+repositories by sending an email to Fabien (fabien.potencier at
+symfony-project.org).
 
 Maintenance
 -----------
@@ -78,4 +79,3 @@ repository and apply changes to the translated documents as soon as possible.
    repositories as obsolete documentation is dangerous.
 
 .. _Symfony docs mailing-list: http://groups.google.com/group/symfony-docs
-.. _Fabien: fabien.potencier at symfony-project.org
