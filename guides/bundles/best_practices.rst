@@ -63,7 +63,7 @@ follows::
                     LICENSE
                 config/
                 doc/
-                    01-Overview.markdown
+                    index.rst
                 views/
                 web/
             Tests/
@@ -74,8 +74,7 @@ The following files are mandatory:
 
 * ``HelloBundle.php``;
 * ``Resources/meta/LICENSE``: The full license for the code;
-* ``Resources/doc/01-Overview.markdown``: A quick overview of the features
-  provided by the bundle.
+* ``Resources/doc/index.rst``: The root file for the Bundle documentation.
 
 .. note::
    These conventions ensure that automated tools can rely on this default
@@ -151,9 +150,9 @@ Documentation
 
 All classes and functions must come with full PHPDoc.
 
-Extensive documentation should also be provided in the Markdown format, under
-the ``Resources/doc/`` directory; the ``Resources/doc/01-Overview.markdown`` file
-is the only mandatory file.
+Extensive documentation should also be provided in the :doc:`reStructuredText
+</contributing/documentation/format>` format, under the ``Resources/doc/``
+directory; the ``Resources/doc/index.rst`` file is the only mandatory file.
 
 Templates
 ---------
