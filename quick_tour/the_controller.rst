@@ -122,7 +122,7 @@ change the default ``Content-Type``::
     public function indexAction($name)
     {
         $response = $this->render('HelloBundle:Hello:index', array('name' => $name));
-        $response->setHeader('Content-Type', 'text/plain');
+        $response->headers->set('Content-Type', 'text/plain');
 
         return $response;
     }
