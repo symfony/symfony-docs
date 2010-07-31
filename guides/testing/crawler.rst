@@ -120,7 +120,7 @@ The Client ``click()`` method takes a ``Link`` instance as returned by the
     $client->click($link);
 
 .. tip::
-   The ``links()`` method returns an array of ``Link``s for all nodes.
+   The ``links()`` method returns an array of ``Link`` objects for all nodes.
 
 Forms
 -----
