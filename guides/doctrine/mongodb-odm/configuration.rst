@@ -10,6 +10,7 @@ Configuration
     # config/config.yml
     doctrine_odm.mongodb:
       server: mongodb://localhost:27017
+      default_database: hello_%kernel.environment%
       options:
         connect: true
       metadata_cache_driver: array # array, apc, xcache, memcache
@@ -21,6 +22,7 @@ If you wish to use memcache to cache your metadata and you need to configure the
     # config/config.yml
     doctrine_odm.mongodb:
       server: mongodb://localhost:27017
+      default_database: hello_%kernel.environment%
       options:
         connect: true
       metadata_cache_driver:
@@ -38,6 +40,7 @@ If you need multiple connections and document managers you can use the following
 .. code-block:: yaml
 
     doctrine_odm.mongodb:
+      default_database: hello_%kernel.environment%
       default_connection: conn2
       default_document_manager: dm2
       metadata_cache_driver: apc
@@ -86,7 +89,10 @@ Simple Single Connection:
         xsi:schemaLocation="http://www.symfony-project.org/schema/dic/services http://www.symfony-project.org/schema/dic/services/services-1.0.xsd
                             http://www.symfony-project.org/schema/dic/doctrine/odm/mongodb http://www.symfony-project.org/schema/dic/doctrine/odm/mongodb/mongodb-1.0.xsd">
 
-        <doctrine:mongodb server="mongodb://localhost:27017">
+        <doctrine:mongodb
+                server="mongodb://localhost:27017"
+                default_database="hello_%kernel.environment%"
+            >
             <metadata_cache_driver type="memcache">
                 <class>Doctrine\Common\Cache\MemcacheCache</class>
                 <host>localhost</host>
@@ -112,6 +118,7 @@ Multiple Connections:
                             http://www.symfony-project.org/schema/dic/doctrine/odm/mongodb http://www.symfony-project.org/schema/dic/doctrine/odm/mongodb/mongodb-1.0.xsd">
 
         <doctrine:mongodb
+                default_database="hello_%kernel.environment%"
                 metadata_cache_driver="apc"
                 default_document_manager="dm2"
                 default_connection="dm2"
