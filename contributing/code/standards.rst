@@ -73,8 +73,4 @@ Documentation
 
 * Add PHPDoc blocks for all classes, methods, and functions;
 
-* All `@package` values must be `Symfony`;
-
-* The `@subpackage` is the second element of the namespace; except for
-  components where the third element is also added after an underscore
-  (`Foundation`, `Components_Console`, ...).
+* The `@package` and `@subpackage` annotations are not used.
