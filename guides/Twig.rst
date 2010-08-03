@@ -116,6 +116,9 @@ specialized tags:
     {% route 'blog_post' with ['id': post.id] %}
 
     {# render a template #}
+    {% include 'BlogBundle:Post:list' %}
+
+    {# embed another controller response #}
     {% render 'BlogBundle:Post:list' with ['path': ['limit': 2], 'alt': 'BlogBundle:Post:error'] %}
 
 .. _Twig:        http://www.twig-project.org/
