@@ -94,30 +94,15 @@ Routing
 But how does Symfony route the request to your code? Simply by reading the
 routing configuration file:
 
+.. code-block:: yaml
 
-Possibilité de rendre tout (format HTML avec des tabs)
- ou seulement une configuration en fonction d'une config (que YAML -> pour le PDF)
- ou seulement une config + les autres en annexes (avec référence -> bouquin papier)
+    # hello/config/routing.yml
+    homepage:
+        pattern:  /
+        defaults: { _controller: FoundationBundle:Default:index }
 
-.. configuration-block::
-
-    .. code-block:: yaml
-
-        # hello/config/routing.yml
-        homepage:
-            pattern:  /
-            defaults: { _controller: FoundationBundle:Default:index }
-
-        hello:
-            resource: HelloBundle/Resources/config/routing.yml
-
-    .. code-block:: xml
-
-        XML config
-
-    .. code-block:: php
-
-        PHP config
+    hello:
+        resource: HelloBundle/Resources/config/routing.yml
 
 The file is written in `YAML`, a simple format that makes the description of
 configuration settings very easy. All the configuration files in Symfony can
