@@ -130,7 +130,7 @@ Enabling Custom Extensions
 To enable a Twig extension, add it as a regular service in one of your
 configuration, and add a ``twig.extension`` annotation:
 
-.. code-block: yaml
+.. code-block:: yaml
 
     services:
         twig.extension.your_extension_name:
