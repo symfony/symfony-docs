@@ -123,3 +123,16 @@ specialized tags:
 
 .. _Twig:        http://www.twig-project.org/
 .. _constructor: http://www.twig-project.org/book/03-Twig-for-Developers
+
+Enabling Custom Extensions
+--------------------------
+
+To enable a Twig extension, add it as a regular service in one of your
+configuration, and add a ``twig.extension`` annotation:
+
+.. code-block: yaml
+
+    services:
+        twig.extension.your_extension_name:
+            class:      Fully\Qualified\Extension\Class\Name
+            annotation: { name: twig.extension }
