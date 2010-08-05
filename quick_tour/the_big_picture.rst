@@ -1,9 +1,7 @@
 The Big Picture
 ===============
 
-So, you want to try out Symfony but only have 10 minutes or so? This first
-part of this tutorial has been written for you. It explains how to get started
-fast with Symfony by showing you the structure of a simple ready-made project.
+Итак, вы хотите попробовать Symfony, но у вас только 10 минут или того меньше? Эта первая часть туториала была написана для Вас. It explains how to get started fast with Symfony by showing you the structure of a simple ready-made project.
 
 If you have ever used a web framework before, you should feel right at home
 with Symfony 2.0.

@@ -121,8 +121,7 @@ specialized tags:
     {# embed another controller response #}
     {% render 'BlogBundle:Post:list' with ['path': ['limit': 2], 'alt': 'BlogBundle:Post:error'] %}
 
-.. _Twig:        http://www.twig-project.org/
-.. _constructor: http://www.twig-project.org/book/03-Twig-for-Developers
+.. _twig_extensions::
 
 Enabling Custom Extensions
 --------------------------
@@ -136,3 +135,6 @@ configuration, and add a ``twig.extension`` annotation:
         twig.extension.your_extension_name:
             class:      Fully\Qualified\Extension\Class\Name
             annotation: { name: twig.extension }
+
+.. _Twig:        http://www.twig-project.org/
+.. _constructor: http://www.twig-project.org/book/03-Twig-for-Developers
