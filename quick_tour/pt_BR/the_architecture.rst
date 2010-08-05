@@ -26,9 +26,8 @@ de uma aplicação do Symfony:
 O Diretorio Web
 ~~~~~~~~~~~~~~~
 
-The web root directory is the home of all public and static files like images,
-stylesheets, and JavaScript files. It is also where the front controllers
-live:
+O diretorio web é a casa de todos os arquivos publicos e estaticos como imagens,
+folha de estilo, e arquivos JavaScript. É onde os front controllers vivem:
 
 .. code-block:: html+php
 
@@ -40,33 +39,32 @@ live:
     $kernel = new HelloKernel('prod', false);
     $kernel->handle()->send();
 
-Like any front controller, ``index.php`` uses a Kernel Class, ``HelloKernel``, to
-bootstrap the application.
+Como qualquer front controllers, ``index.php`` usa a ``HelloKernel``, que é uma classe Kernel 
+para inicializar a aplicação.
 
 .. index::
    single: Kernel
 
-The Application Directory
-~~~~~~~~~~~~~~~~~~~~~~~~~
+O Diretorio Aplicação
+~~~~~~~~~~~~~~~~~~~~~
 
-The ``HelloKernel`` class is the main entry point of the application
-configuration and as such, it is stored in the ``hello/`` directory.
+A classe ``HelloKernel`` é o ponto de entrada principal de configuraçãp 
+da aplicação e como tal, é armazenada no diretorio ``hello/``.
 
-This class must implement five methods:
+Esta classe deve implementar cinco metodos:
 
-* ``registerRootDir()``: Returns the configuration root directory;
+* ``registerRootDir()``: Retorna o diretorio raiz de configurações;
 
-* ``registerBundles()``: Returns an array of all bundles needed to run the
-  application (notice the reference to
-  ``Application\HelloBundle\HelloBundle``);
+* ``registerBundles()``: Retorna um array de todos os pacotes necessários para executar o
+  aplicação (observe a referencia a ``Application\HelloBundle\HelloBundle``);
 
-* ``registerBundleDirs()``: Returns an array associating namespaces and their
-  home directories;
+* ``registerBundleDirs()``: Retorna uma matriz que associa namespaces e seus
+  diretórios;
 
-* ``registerContainerConfiguration()``: Returns the main configuration object
-  (more on this later);
+* ``registerContainerConfiguration()``: Retorna o objeto principal de configuração
+  (Mais sobre isso depois);
 
-* ``registerRoutes()``: Returns the routing configuration.
+* ``registerRoutes()``: Retorna a configuração de roteamento.
 
 Have a look at the default implementation of these methods to better
 understand the flexibility of the framework. At the beginning of this
