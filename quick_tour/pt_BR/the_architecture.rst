@@ -66,10 +66,9 @@ Esta classe deve implementar cinco metodos:
 
 * ``registerRoutes()``: Retorna a configuração de roteamento.
 
-Have a look at the default implementation of these methods to better
-understand the flexibility of the framework. At the beginning of this
-tutorial, you opened the ``hello/config/routing.yml`` file. The path is
-configured in the ``registerRoutes()``::
+De uma olhada na implememtação padrão destes metodos para entender melhor a 
+flexibilidade do framework. No começo deste tutprial, você abriu o arquivo 
+``hello/config/routing.yml``. O caminho é configurado em ``registerRoutes()``::
 
     public function registerRoutes()
     {
@@ -78,20 +77,19 @@ configured in the ``registerRoutes()``::
         return $loader->load(__DIR__.'/config/routing.yml');
     }
 
-This is also where you can switch from using YAML configuration files to XML
-ones or plain PHP code if that fits you better.
+Aqui é também onde você pode alternar entre usar arquivos de configuração YAML para XML
+ou código PHP normal, no que você se encaixa melhor.
 
-To make things work together, the kernel requires one file from the ``src/``
-directory::
+Para fazer as coisas trabalharem juntas, o kernel requer um arquivo do diretorio ``scr/``::
 
     // hello/HelloKernel.php
     require_once __DIR__.'/../src/autoload.php';
 
-The Source Directory
-~~~~~~~~~~~~~~~~~~~~
+O Diretorio Source
+~~~~~~~~~~~~~~~~~~
 
-The ``src/autoload.php`` file is responsible for autoloading all the files
-stored in the ``src/`` directory::
+O arquivo ``src/autoload.php`` é responsavél por autocarregar todos os arquivos internos 
+do diretorio ``scr/``::
 
     // src/autoload.php
     require_once __DIR__.'/vendor/symfony/src/Symfony/Foundation/UniversalClassLoader.php';
