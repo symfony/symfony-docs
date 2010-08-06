@@ -94,15 +94,49 @@ Routing
 But how does Symfony route the request to your code? Simply by reading the
 routing configuration file:
 
-.. code-block:: yaml
+.. configuration-block::
 
-    # hello/config/routing.yml
-    homepage:
-        pattern:  /
-        defaults: { _controller: FoundationBundle:Default:index }
+    .. code-block:: yaml
 
-    hello:
-        resource: HelloBundle/Resources/config/routing.yml
+        # hello/config/routing.yml
+        homepage:
+            pattern:  /
+            defaults: { _controller: FoundationBundle:Default:index }
+
+        hello:
+            resource: HelloBundle/Resources/config/routing.yml
+
+    .. code-block:: xml
+
+        <!-- hello/config/routing.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+
+        <routes xmlns="http://www.symfony-project.org/schema/routing"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://www.symfony-project.org/schema/routing http://www.symfony-project.org/schema/routing/routing-1.0.xsd">
+
+            <route id="homepage" pattern="/">
+                <default key="_controller">FoundationBundle:Default:index</default>
+            </route>
+
+            <import resource="HelloBundle/Resources/config/routing.xml" />
+        </routes>
+
+    .. code-block:: php
+
+        // hello/config/routing.php
+        use Symfony\Components\Routing\RouteCollection;
+        use Symfony\Components\Routing\Route;
+
+        $collection = new RouteCollection();
+
+        $collection->addRoute('homepage', new Route('/', array(
+            '_controller' => 'FoundationBundle:Default:index',
+        )));
+
+        $collection->import('HelloBundle/Resources/config/routing.php');
+
+        return $collection;
 
 The file is written in `YAML`, a simple format that makes the description of
 configuration settings very easy. All the configuration files in Symfony can
@@ -114,12 +148,41 @@ The first three lines of the routing configuration file define which code to
 call when the user requests the "``/``" resource. More interesting is the last
 line, which imports another routing configuration file that reads as follows:
 
-.. code-block:: yaml
+.. configuration-block::
 
-    # src/Application/HelloBundle/Resources/config/routing.yml
-    hello:
-        pattern:  /hello/:name
-        defaults: { _controller: HelloBundle:Hello:index }
+    .. code-block:: yaml
+
+        # src/Application/HelloBundle/Resources/config/routing.yml
+        hello:
+            pattern:  /hello/:name
+            defaults: { _controller: HelloBundle:Hello:index }
+
+    .. code-block:: xml
+
+        <!-- src/Application/HelloBundle/Resources/config/routing.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+
+        <routes xmlns="http://www.symfony-project.org/schema/routing"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://www.symfony-project.org/schema/routing http://www.symfony-project.org/schema/routing/routing-1.0.xsd">
+
+            <route id="hello" pattern="/hello/:name">
+                <default key="_controller">HelloBundle:Hello:index</default>
+            </route>
+        </routes>
+
+    .. code-block:: php
+
+        // src/Application/HelloBundle/Resources/config/routing.php
+        use Symfony\Components\Routing\RouteCollection;
+        use Symfony\Components\Routing\Route;
+
+        $collection = new RouteCollection();
+        $collection->addRoute('hello', new Route('/hello/:name', array(
+            '_controller' => 'HelloBundle:Hello:index',
+        )));
+
+        return $collection;
 
 Here we go! As you can see, the "``/hello/:name``" resource pattern (a string
 beginning with a colon like ``:name`` is a placeholder) is mapped to a

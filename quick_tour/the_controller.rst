@@ -23,12 +23,30 @@ there are plenty of different formats to choose from. Supporting those formats
 in Symfony is straightforward. Edit ``routing.yml`` and add a ``_format`` with a
 value of ``xml``:
 
-.. code-block:: yaml
+.. configuration-block::
 
-    # src/Application/HelloBundle/Resources/config/routing.yml
-    hello:
-        pattern:  /hello/:name
-        defaults: { _controller: HelloBundle:Hello:index, _format: xml }
+    .. code-block:: yaml
+
+        # src/Application/HelloBundle/Resources/config/routing.yml
+        hello:
+            pattern:  /hello/:name
+            defaults: { _controller: HelloBundle:Hello:index, _format: xml }
+
+    .. code-block:: xml
+
+        <!-- src/Application/HelloBundle/Resources/config/routing.xml -->
+        <route id="hello" pattern="/hello/:name">
+            <default key="_controller">HelloBundle:Hello:index</default>
+            <default key="_format">xml</default>
+        </route>
+
+    .. code-block:: php
+
+        // src/Application/HelloBundle/Resources/config/routing.php
+        $collection->addRoute('hello', new Route('/hello/:name', array(
+            '_controller' => 'HelloBundle:Hello:index',
+            '_format'     => 'xml',
+        )));
 
 Then, add an ``index.xml.php`` template along side ``index.php``:
 
@@ -44,13 +62,34 @@ formats, Symfony will also automatically choose the best ``Content-Type`` header
 for the response. If you want to support different formats for a single
 action, use the ``:_format`` placeholder in the pattern instead:
 
-.. code-block:: yaml
+.. configuration-block::
 
-    # src/Application/HelloBundle/Resources/config/routing.yml
-    hello:
-        pattern:      /hello/:name.:_format
-        defaults:     { _controller: HelloBundle:Hello:index, _format: html }
-        requirements: { _format: (html|xml|json) }
+    .. code-block:: yaml
+
+        # src/Application/HelloBundle/Resources/config/routing.yml
+        hello:
+            pattern:      /hello/:name.:_format
+            defaults:     { _controller: HelloBundle:Hello:index, _format: html }
+            requirements: { _format: (html|xml|json) }
+
+    .. code-block:: xml
+
+        <!-- src/Application/HelloBundle/Resources/config/routing.xml -->
+        <route id="hello" pattern="/hello/:name.:_format">
+            <default key="_controller">HelloBundle:Hello:index</default>
+            <default key="_format">html</default>
+            <requirement key="_format">(html|xml|json)</requirement>
+        </route>
+
+    .. code-block:: php
+
+        // src/Application/HelloBundle/Resources/config/routing.php
+        $collection->addRoute('hello', new Route('/hello/:name.:_format', array(
+            '_controller' => 'HelloBundle:Hello:index',
+            '_format'     => 'html',
+        ), array(
+            '_format' => '(html|xml|json)',
+        )));
 
 The controller will now be called for URLs like ``/hello/Fabien.xml`` or
 ``/hello/Fabien.json``. As the default value for ``_format`` is ``html``, the
@@ -187,10 +226,12 @@ by using the native PHP sessions.
 This feature is provided by ``FoundationBundle`` and it can be enabled by adding the
 following line to ``config.yml``:
 
-.. code-block:: yaml
+.. configuration-block::
 
-    # hello/config/config.yml
-    web.user: ~
+    .. code-block:: yaml
+
+        # hello/config/config.yml
+        web.user: ~
 
 Storing and retrieving information from the user can be easily achieved from
 any controller::

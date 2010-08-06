@@ -32,7 +32,7 @@ live:
 
 .. code-block:: html+php
 
-    # web/index.php
+    <!-- web/index.php -->
     <?php
 
     require_once __DIR__.'/../hello/HelloKernel.php';
@@ -65,8 +65,6 @@ This class must implement five methods:
 
 * ``registerContainerConfiguration()``: Returns the main configuration object
   (more on this later);
-
-* ``registerRoutes()``: Returns the routing configuration.
 
 Have a look at the default implementation of these methods to better
 understand the flexibility of the framework. At the beginning of this

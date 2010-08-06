@@ -32,7 +32,7 @@ The ``index`` template is decorated by ``layout.php``, thanks to the
 
 .. code-block:: html+php
 
-    # src/Application/HelloBundle/Resources/views/Hello/index.php
+    <!-- src/Application/HelloBundle/Resources/views/Hello/index.php -->
     <?php $view->extend('HelloBundle::layout') ?>
 
     Hello <?php echo $name ?>!
@@ -46,7 +46,7 @@ Now, let's have a look at the ``layout.php`` file:
 
 .. code-block:: html+php
 
-    # src/Application/HelloBundle/Resources/views/layout.php
+    <!-- src/Application/HelloBundle/Resources/views/layout.php -->
     <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
     <html>
         <head>
@@ -81,7 +81,7 @@ decorating the template. In the index template, define a ``title`` slot:
 
 .. code-block:: html+php
 
-    # src/Application/HelloBundle/Resources/views/Hello/index.php
+    <!-- src/Application/HelloBundle/Resources/views/Hello/index.php -->
     <?php $view->extend('HelloBundle::layout') ?>
 
     <?php $view->slots->set('title', 'Hello World app') ?>
@@ -92,7 +92,7 @@ And change the layout to output the title in the header:
 
 .. code-block:: html+php
 
-    # src/Application/HelloBundle/Resources/views/layout.php
+    <!-- src/Application/HelloBundle/Resources/views/layout.php -->
     <html>
         <head>
             <title><?php $view->slots->output('title', 'Default Title') ?></title>
@@ -128,14 +128,14 @@ Create a ``hello.php`` template:
 
 .. code-block:: html+php
 
-    # src/Application/HelloBundle/Resources/views/Hello/hello.php
+    <!-- src/Application/HelloBundle/Resources/views/Hello/hello.php -->
     Hello <?php echo $name ?>!
 
 And change the ``index.php`` template to include it:
 
 .. code-block:: html+php
 
-    # src/Application/HelloBundle/Resources/views/Hello/index.php
+    <!-- src/Application/HelloBundle/Resources/views/Hello/index.php -->
     <?php $view->extend('HelloBundle::layout') ?>
 
     <?php echo $view->render('HelloBundle:Hello:hello', array('name' => $name)) ?>
@@ -158,7 +158,7 @@ template, simply use the following code:
 
 .. code-block:: html+php
 
-    # src/Application/HelloBundle/Resources/views/Hello/index.php
+    <!-- src/Application/HelloBundle/Resources/views/Hello/index.php -->
     <?php $view->actions->output('HelloBundle:Hello:fancy', array('name' => $name, 'color' => 'green')) ?>
 
 Here, the ``HelloBundle:Hello:fancy`` string refers to the ``fancy`` action of the
