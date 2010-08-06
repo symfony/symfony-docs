@@ -1,8 +1,9 @@
 .. index::
    single: Doctrine; Migrations
+   single: Migrations
 
-Doctrine Migrations
-===================
+Migrations
+==========
 
 The database migrations feature is an extension of the database abstraction
 layer and offers you the ability to programmatically deploy new versions of

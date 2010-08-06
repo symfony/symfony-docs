@@ -1,31 +1,9 @@
 .. index::
-   single: Doctrine; MongoDB
-   single: MongoDB
-
-MongoDB
-=======
-
-The `MongoDB`_ Object Document Mapper is much like the Doctrine2 ORM in the
-way it works and architecture. You only deal with plain PHP objects and they are persisted
-transparently without imposing on your domain model.
-
-.. tip::
-   You can read more about the Doctrine MongoDB Object Document Mapper on the
-   projects `documentation`_.
+   single: Doctrine; MongoDB ODM; Configuration
+   single: Configuration
 
 Configuration
--------------
-
-To get started working with Doctrine and the MongoDB Object Document Mapper you just need
-to enable it:
-
-.. code-block:: yaml
-
-    # config/config.yml
-    doctrine_odm.mongodb: ~
-
-The above YAML is the most simple example and uses all of the default values provided, if
-you need to customize more you can specify the complete configuration:
+=============
 
 .. code-block:: yaml
 
@@ -87,8 +65,8 @@ Now you can retrieve the configured services connection services::
 And you can also retrieve the configured document manager services which utilize the above
 connection services::
 
-    $dm1 = $container->getService('doctrine.odm.mongodb.dm1_connection');
-    $dm2 = $container->getService('doctrine.odm.mongodb.dm1_connection');
+    $dm1 = $container->getService('doctrine.odm.mongodb.dm1_document_manager');
+    $dm2 = $container->getService('doctrine.odm.mongodb.dm1_document_manager');
 
 XML
 ~~~
