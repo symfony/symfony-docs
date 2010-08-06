@@ -51,6 +51,45 @@ the highlighted pseudo-language:
 .. note::
    A list of supported languages is available on the `Pygments website`_.
 
+Configuration Blocks
+~~~~~~~~~~~~~~~~~~~~
+
+Whenever you show a configuration, you must use the ``configuration-block``
+directive to show the configuration in all supported configuration formats
+(``PHP``, ``YAML``, and ``XML``):
+
+.. code-block:: rst
+
+    .. configuration-block::
+
+        .. code-block:: yaml
+
+            # Configuration in YAML
+
+        .. code-block:: xml
+
+            <!-- Configuration in XML //-->
+
+        .. code-block:: php
+
+            // Configuration in XML
+
+The previous reST snippet renders as follow:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # Configuration in YAML
+
+    .. code-block:: xml
+
+        <!-- Configuration in XML //-->
+
+    .. code-block:: php
+
+        // Configuration in XML
+
 .. _reStructuredText:        http://docutils.sf.net/rst.html
 .. _Sphinx:                  http://sphinx.pocoo.org/
 .. _documents:               http://github.com/symfony/symfony-docs
