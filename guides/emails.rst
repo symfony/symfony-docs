@@ -4,11 +4,12 @@
 Emails
 ======
 
-Installation & Configuration
-----------------------------
+Symfony2 leverages the power of `Swiftmailer`_ to send emails.
 
-Sending emails with Symfony is a snap. First, enable ``SwiftmailerBundle`` in
-your kernel::
+Installation
+------------
+
+Enable ``SwiftmailerBundle`` in your kernel::
 
     public function registerBundles()
     {
@@ -20,9 +21,10 @@ your kernel::
       // ...
     }
 
-Then, configure how you want emails to be sent. The only mandatory parameter
-is ``transport``; it can be any of ``smtp``, ``mail``, ``sendmail``, or
-``gmail``:
+Configuration
+-------------
+
+The only mandatory configuration parameter is ``transport``:
 
 .. configuration-block::
 
@@ -63,6 +65,20 @@ is ``transport``; it can be any of ``smtp``, ``mail``, ``sendmail``, or
             'username'   => "your_username",
             'password'   => "your_password",
         ));
+
+The following configuration attribute are available:
+
+* ``transport`` (``smtp``, ``mail``, ``sendmail``, or ``gmail``)
+* ``username``
+* ``password``
+* ``host``
+* ``port``
+* ``encryption`` (``tls``, or ``ssl``)
+* ``auth_mode`` (``plain``, ``login``, or ``cram-md5``)
+* ``type``
+* ``delivery_strategy`` (``realtime``, ``spool``, ``single_address``, or ``none``)
+* ``delivery_address`` (an email address where to send ALL emails)
+* ``disable_delivery``
 
 Sending Emails
 --------------
@@ -127,3 +143,5 @@ If you want to use your Gmail account to send emails, use the special
             'username'  => "your_gmail_username",
             'password'  => "your_gmail_password",
         ));
+
+.. _`Swiftmailer`: http://www.swiftmailer.org/
