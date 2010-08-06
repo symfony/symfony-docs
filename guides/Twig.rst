@@ -29,14 +29,37 @@ Enable the ``TwigBundle`` in your kernel::
 
 Then, configure it:
 
-.. code-block:: yaml
+.. configuration-block::
 
-    # config/config.yml
-    twig.config: ~
+    .. code-block:: yaml
 
-    # config/config_dev.yml
-    twig.config:
-        auto_reload: true
+        # config/config.yml
+        twig.config: ~
+
+        # config/config_dev.yml
+        twig.config:
+            auto_reload: true
+
+    .. code-block:: xml
+
+        <!--
+        xmlns:twig="http://www.symfony-project.org/schema/dic/twig"
+        xsi:schemaLocation="http://www.symfony-project.org/schema/dic/twig http://www.symfony-project.org/schema/dic/twig/twig-1.0.xsd
+        -->
+
+        <!-- config/config.xml -->
+        <twig:config />
+
+        <!-- config/config_dev.xml -->
+        <twig:config auto_reload="true" />
+
+    .. code-block:: php
+
+        // config/config.php
+        $container->loadFromExtension('twig', 'config');
+
+        // config/config_dev.php
+        $container->loadFromExtension('twig', 'config', array('auto_reload' => true));
 
 .. tip::
    The configuration options are the same as the ones you pass to the
@@ -83,7 +106,7 @@ name:
 
 And the opposite is also true::
 
-    {# index.php #}
+    // index.php
 
     <?php $view->render('HelloBundle:Hello:sidebar:twig') ?>
 
@@ -121,20 +144,35 @@ specialized tags:
     {# embed another controller response #}
     {% render 'BlogBundle:Post:list' with ['path': ['limit': 2], 'alt': 'BlogBundle:Post:error'] %}
 
-.. _twig_extensions::
+.. _twig_extensions:
 
-Enabling Custom Extensions
---------------------------
+Enabling Custom Twig Extensions
+-------------------------------
 
 To enable a Twig extension, add it as a regular service in one of your
 configuration, and add a ``twig.extension`` annotation:
 
-.. code-block:: yaml
+.. configuration-block::
 
-    services:
-        twig.extension.your_extension_name:
-            class:      Fully\Qualified\Extension\Class\Name
-            annotation: { name: twig.extension }
+    .. code-block:: yaml
+
+        services:
+            twig.extension.your_extension_name:
+                class: Fully\Qualified\Extension\Class\Name
+                tag:   { name: twig.extension }
+
+    .. code-block:: xml
+
+        <service id="twig.extension.your_extension_name" class="Fully\Qualified\Extension\Class\Name">
+            <tag name="twig.extension" />
+        </service>
+
+    .. code-block:: php
+
+        $container
+            ->register('twig.extension.your_extension_name', 'Fully\Qualified\Extension\Class\Name')
+            ->addTag('twig.extension')
+        ;
 
 .. _Twig:        http://www.twig-project.org/
 .. _constructor: http://www.twig-project.org/book/03-Twig-for-Developers

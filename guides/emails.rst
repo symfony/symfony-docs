@@ -4,23 +4,75 @@
 Emails
 ======
 
-Sending emails with Symfony is a snap. First, enable the ``SwiftmailerBundle``
-and configure how you want them to be sent:
+Installation & Configuration
+----------------------------
 
-.. code-block:: yaml
+Sending emails with Symfony is a snap. First, enable ``SwiftmailerBundle`` in
+your kernel::
 
-    # hello/config/config.yml
-    swift.mailer:
-        transport: gmail # can be any of smtp, mail, sendmail, or gmail
-        username:  your_gmail_username
-        password:  your_gmail_password
+    public function registerBundles()
+    {
+      $bundles = array(
+        // ...
+        new Symfony\Framework\SwiftmailerBundle\Bundle(),
+      );
 
-Then, use the mailer from any action::
+      // ...
+    }
+
+Then, configure how you want emails to be sent. The only mandatory parameter
+is ``transport``; it can be any of ``smtp``, ``mail``, ``sendmail``, or
+``gmail``:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # hello/config/config.yml
+        swift.mailer:
+            transport:  smtp
+            encryption: ssl
+            auth_mode:  login
+            host:       smtp.gmail.com
+            username:   your_username
+            password:   your_password
+
+    .. code-block:: xml
+
+        <!--
+        xmlns:swift="http://www.symfony-project.org/schema/dic/swiftmailer"
+        http://www.symfony-project.org/schema/dic/swiftmailer http://www.symfony-project.org/schema/dic/swiftmailer/swiftmailer-1.0.xsd
+        -->
+
+        <swift:mailer
+            transport="smtp"
+            encryption="ssl"
+            auth_mode="login"
+            host="smtp.gmail.com"
+            username="your_username"
+            password="your_password" />
+
+    .. code-block:: php
+
+        // hello/config/config.php
+        $container->loadFromExtension('swift', 'mailer', array(
+            'transport'  => "smtp",
+            'encryption' => "ssl",
+            'auth_mode'  => "login",
+            'host'       => "smtp.gmail.com",
+            'username'   => "your_username",
+            'password'   => "your_password",
+        ));
+
+Sending Emails
+--------------
+
+The mailer is accessible via the ``mailer`` service; from an action::
 
     public function indexAction($name)
     {
         // get the mailer first (mandatory to initialize Swift Mailer)
-        $mailer = $this->getMailer();
+        $mailer = $this->container['mailer'];
 
         $message = \Swift_Message::newInstance()
             ->setSubject('Hello Email')
@@ -33,5 +85,45 @@ Then, use the mailer from any action::
         return $this->render(...);
     }
 
-The email body is stored in a template, rendered with the ``renderView()``
-method.
+.. note::
+   To keep things decoupled, the email body has been stored in a template,
+   rendered with the ``renderView()`` method.
+
+Using Gmail
+-----------
+
+If you want to use your Gmail account to send emails, use the special
+``gmail`` transport:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # hello/config/config.yml
+        swift.mailer:
+            transport: gmail
+            username:  your_gmail_username
+            password:  your_gmail_password
+
+    .. code-block:: xml
+
+        <!--
+        xmlns:swift="http://www.symfony-project.org/schema/dic/swiftmailer"
+        http://www.symfony-project.org/schema/dic/swiftmailer http://www.symfony-project.org/schema/dic/swiftmailer/swiftmailer-1.0.xsd
+        -->
+
+        <!-- hello/config/config.yml -->
+
+        <swift:mailer
+            transport="gmail"
+            username="your_gmail_username"
+            password="your_gmail_password" />
+
+    .. code-block:: php
+
+        // hello/config/config.php
+        $container->loadFromExtension('swift', 'mailer', array(
+            'transport' => "gmail",
+            'username'  => "your_gmail_username",
+            'password'  => "your_gmail_password",
+        ));
