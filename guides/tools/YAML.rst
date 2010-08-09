@@ -11,8 +11,8 @@ it has a syntax for simple types like strings, booleans, floats, or integers.
 But unlike PHP, it makes a difference between arrays (sequences) and hashes
 (mappings).
 
-The Symfony2 YAML Component knows how to parse YAML and dump a PHP array to
-YAML.
+The Symfony2 :namespace:`Symfony\\Components\\Yaml` Component knows how to
+parse YAML and dump a PHP array to YAML.
 
 .. note::
    Even if the YAML format can describe complex nested data structure, this guide
@@ -22,8 +22,8 @@ YAML.
 Reading YAML Files
 ------------------
 
-The ``Parser::parse()`` method parses a YAML string and converts it to a PHP
-array::
+The :method:`Symfony\\Components\\Yaml\\Parser::parse` method parses a YAML
+string and converts it to a PHP array::
 
     use Symfony\Components\Yaml\Parser;
 
@@ -45,8 +45,8 @@ occurred::
    As the parser is reentrant, you can use the same parser object to load
    different YAML strings.
 
-When loading a YAML file, it is sometimes better to use the ``Yaml::load()``
-wrapper method::
+When loading a YAML file, it is sometimes better to use the
+:method:`Symfony\\Components\\Yaml\\Yaml::load` wrapper method::
 
     use Symfony\Components\Yaml\Yaml;
 
@@ -66,7 +66,8 @@ bonuses:
 Writing YAML Files
 ------------------
 
-The ``Dumper::dump()`` method dumps any PHP array to its YAML representation::
+The :method:`Symfony\\Components\\Yaml\\Dumper::dump` method dumps any PHP
+array to its YAML representation::
 
     use Symfony\Components\Yaml\Dumper;
 
@@ -80,8 +81,8 @@ The ``Dumper::dump()`` method dumps any PHP array to its YAML representation::
    There are some limitations: the dumper is not able to dump resources and
    dumping PHP objects is considered an alpha feature.
 
-If you only need to dump one array, you can use the ``Yaml::dump()`` static
-method shortcut::
+If you only need to dump one array, you can use the
+:method:`Symfony\\Components\\Yaml\\Yaml::dump` static method shortcut::
 
     $yaml = Yaml::dump($array, $inline);
 
