@@ -1,6 +1,6 @@
 .. index::
-   single: Doctrine; MongoDB ODM; Configuration
-   single: Configuration
+   single: Configuration; Doctrine MongoDB ODM
+   single: Doctrine; MongoDB ODM configuration
 
 Configuration
 =============

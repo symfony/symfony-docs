@@ -1,6 +1,6 @@
 .. index::
-   single: Doctrine; DBAL; Configuration
-   single: Configuration
+   single: Configuration; Doctrine DBAL
+   single: Doctrine; DBAL configuration
 
 Configuration
 =============

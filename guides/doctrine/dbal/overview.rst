@@ -1,6 +1,5 @@
 .. index::
-   single: Doctrine; DBAL
-   single: DBAL
+   pair: Doctrine; DBAL
 
 DBAL
 ====

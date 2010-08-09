@@ -1,6 +1,5 @@
 .. index::
-   single: Doctrine; ORM
-   single: ORM
+   pair: Doctrine; ORM
 
 ORM
 ===

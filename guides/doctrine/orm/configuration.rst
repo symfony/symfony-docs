@@ -1,6 +1,6 @@
 .. index::
-   single: Doctrine; ORM; Configuration
-   single: Configuration
+   single: Configuration; Doctrine ORM
+   single: Doctrine; ORM Configuration
 
 Configuration
 =============

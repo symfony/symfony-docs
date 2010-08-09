@@ -1,6 +1,6 @@
 .. index::
-   single: Doctrine; ORM; Console Commands
-   single: Console Commands
+   single: Doctrine; ORM Console Commands
+   single: CLI; Doctrine ORM
 
 Console Commands
 ================

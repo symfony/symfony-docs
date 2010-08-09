@@ -1,6 +1,5 @@
 .. index::
-   single: Doctrine; MongoDB ODM
-   single: MongoDB ODM
+   pair: Doctrine; MongoDB ODM
 
 MongoDB ODM
 ===========

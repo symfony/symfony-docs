@@ -1,6 +1,5 @@
 .. index::
-   single: Doctrine; Migrations
-   single: Migrations
+   pair: Doctrine; Migrations
 
 Migrations
 ==========
