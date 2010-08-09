@@ -5,3 +5,4 @@ Database Abstraction Layer
    :maxdepth: 2
 
    Overview <overview>
+   configuration

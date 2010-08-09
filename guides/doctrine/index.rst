@@ -4,7 +4,7 @@ Doctrine
 Learn about the Doctrine integration with Symfony2:
 
 .. toctree::
-    :hidden:
+    :maxdepth: 2
 
     orm/index
     dbal/index

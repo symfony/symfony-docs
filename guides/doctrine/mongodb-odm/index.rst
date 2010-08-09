@@ -5,3 +5,4 @@ MongoDB Object Document Mapper
    :maxdepth: 2
 
    Overview <overview>
+   configuration

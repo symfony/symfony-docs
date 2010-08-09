@@ -23,7 +23,7 @@ to enable it:
     doctrine_odm.mongodb: ~
 
 Now you can start writing documents and mapping them with annotations, xml, or yaml. In this
-example we will use annotations:
+example we will use annotations::
 
     // Application/HelloBundle/Document/User.php
 

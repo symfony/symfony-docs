@@ -23,7 +23,7 @@ To get started you just need to enable the ORM:
     doctrine.orm: ~
 
 Now you can start writing entities and mapping them with annotations, xml, or yaml. In this
-example we will use annotations:
+example we will use annotations::
 
     // Application/HelloBundle/Entity/User.php
 
@@ -125,5 +125,5 @@ Eventually, use your entity and manage its persistent state with Doctrine::
         }
     }
 
-.. _documentation http://www.doctrine-project.org/projects/orm/2.0/docs/en
-.. _Doctrine: http://www.doctrine-project.org
+.. _documentation: http://www.doctrine-project.org/projects/orm/2.0/docs/en
+.. _Doctrine:      http://www.doctrine-project.org
