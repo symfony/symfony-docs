@@ -5,5 +5,5 @@ web.config:
     toolbar: true
 
 zend.logger:
-    priority: info
+    priority: debug
     path:     %kernel.root_dir%/logs/%kernel.environment%.log

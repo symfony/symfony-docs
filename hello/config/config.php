@@ -1,12 +1,22 @@
 <?php
 
-$container->loadFromExtension('kernel', 'config');
+$container->loadFromExtension('kernel', 'config', array(
+    'charset'       => 'UTF-8',
+    'error_handler' => null,
+));
 
 $container->loadFromExtension('web', 'config', array(
     'router'     => array('resource' => '%kernel.root_dir%/config/routing.php'),
     'validation' => array('enabled' => true, 'annotations' => true),
 ));
 
+$container->loadFromExtension('web', 'templating', array(
+    'escaping'       => "htmlspecialchars",
+#    'assets_version' => "SomeVersionScheme",
+));
+
+// Sessions
+/*
 $container->loadFromExtension('kernel', 'session', array(
     'default_locale' => "fr",
     'session' => array(
@@ -15,8 +25,7 @@ $container->loadFromExtension('kernel', 'session', array(
         'lifetime' => "3600",
     )
 ));
-
-$container->loadFromExtension('web', 'templating');
+*/
 
 // Twig Configuration
 /*
