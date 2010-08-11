@@ -35,6 +35,7 @@ svn co http://svn.phing.info/tags/2.3.3 phing
 
 # Swiftmailer
 git clone git://github.com/swiftmailer/swiftmailer.git swiftmailer
+git checkout -b 4.1 origin/4.1
 
 # Twig
 git clone git://github.com/fabpot/Twig.git twig

@@ -6,60 +6,50 @@ rm -rf vendor
 mkdir vendor
 cd vendor
 
+cp -r ../../vendor/* .
+
 # Doctrine
-git clone git://github.com/doctrine/doctrine2.git doctrine
 cd doctrine
-git submodule init
-git submodule update
 rm -rf UPGRADE* build* bin tests tools lib/vendor/doctrine-common/build* lib/vendor/doctrine-common/tests lib/vendor/doctrine-dbal/bin lib/vendor/doctrine-dbal/tests lib/vendor/doctrine-dbal/tools lib/vendor/doctrine-dbal/build* lib/vendor/doctrine-dbal/UPGRADE*
 cd ..
 
 # Doctrine migrations
-git clone git://github.com/doctrine/migrations.git doctrine-migrations
 cd doctrine-migrations
 rm -rf tests build*
 cd ..
 
 # Doctrine MongoDB
-git clone git://github.com/doctrine/mongodb-odm.git doctrine-mongodb
 cd doctrine-mongodb
 rm -rf tests build* tools
 cd ..
 
 # Propel
 # git clone git://github.com/fzaninotto/propel.git propel
-svn co http://svn.propelorm.org/branches/1.5/ propel
 cd propel
 rm -rf contrib docs test WHATS_NEW INSTALL CHANGELOG
 cd ..
 
 # Phing
-svn co http://svn.phing.info/tags/2.3.3 phing
 cd phing
 rm -rf README bin docs etc pear test
 cd ..
 
 # Swiftmailer
-git clone git://github.com/swiftmailer/swiftmailer.git swiftmailer
 cd swiftmailer
-git checkout -b 4.1 origin/4.1
 rm -rf CHANGES README* build* docs notes test-suite tests create_pear_package.php package*
 cd ..
 
 # Symfony
-git clone git://github.com/fabpot/symfony.git symfony
 cd symfony
 rm -rf README phpunit.xml.dist tests
 cd ..
 
 # Twig
-git clone git://github.com/fabpot/Twig.git twig
 cd twig
 rm -rf AUTHORS CHANGELOG README.markdown bin doc package.xml.tpl phpunit.xml test
 cd ..
 
 # Zend Framework
-git clone git://github.com/zendframework/zf2.git zend
 cd zend
 rm -rf INSTALL.txt README* bin demos documentation resources tests tools working
 mkdir library/tmp
