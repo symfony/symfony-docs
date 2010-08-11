@@ -5,17 +5,6 @@ require_once __DIR__.'/../src/autoload.php';
 use Symfony\Framework\Kernel;
 use Symfony\Components\DependencyInjection\Loader\LoaderInterface;
 
-use Symfony\Framework\KernelBundle;
-use Symfony\Bundle\FrameworkBundle\FrameworkBundle;
-use Symfony\Bundle\ZendBundle\ZendBundle;
-use Symfony\Bundle\SwiftmailerBundle\SwiftmailerBundle;
-use Symfony\Bundle\DoctrineBundle\DoctrineBundle;
-use Symfony\Bundle\DoctrineMigrationsBundle\DoctrineMigrationsBundle;
-use Symfony\Bundle\DoctrineMongoDBBundle\DoctrineMongoDBBundle;
-use Symfony\Bundle\PropelBundle\PropelBundle;
-use Symfony\Bundle\TwigBundle\TwigBundle;
-use Application\HelloBundle\HelloBundle;
-
 class HelloKernel extends Kernel
 {
     public function registerRootDir()
@@ -26,16 +15,16 @@ class HelloKernel extends Kernel
     public function registerBundles()
     {
         $bundles = array(
-            new KernelBundle(),
-            new FrameworkBundle(),
-            new ZendBundle(),
-            new SwiftmailerBundle(),
-            new DoctrineBundle(),
-            //new DoctrineMigrationsBundle(),
-            //new DoctrineMongoDBBundle(),
-            //new PropelBundle(),
-            //new TwigBundle(),
-            new HelloBundle(),
+            new Symfony\Framework\KernelBundle(),
+            new Symfony\Bundle\FrameworkBundle\FrameworkBundle(),
+            new Symfony\Bundle\ZendBundle\ZendBundle(),
+            new Symfony\Bundle\SwiftmailerBundle\SwiftmailerBundle(),
+            new Symfony\Bundle\DoctrineBundle\DoctrineBundle(),
+            //new Symfony\Bundle\DoctrineMigrationsBundle\DoctrineMigrationsBundle(),
+            //new Symfony\Bundle\DoctrineMongoDBBundle\DoctrineMongoDBBundle(),
+            //new Symfony\Bundle\PropelBundle\PropelBundle(),
+            //new Symfony\Bundle\TwigBundle\TwigBundle(),
+            new Application\HelloBundle\HelloBundle(),
         );
 
         if ($this->isDebug()) {
