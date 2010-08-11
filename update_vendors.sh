@@ -1,36 +1,40 @@
 #!/bin/sh
 
-CURRENT=`pwd`/vendor
+CURRENT=`pwd`
+VENDOR=$CURRENT/vendor
 
 # Symfony
-cd $CURRENT/symfony && git pull
+cd $VENDOR/symfony && git pull
+cp $VENDOR/symfony/src/Symfony/Bundle/FrameworkBundle/Resources/skeleton/application/php/config/config* $CURRENT/hello/config/
+cp $VENDOR/symfony/src/Symfony/Bundle/FrameworkBundle/Resources/skeleton/application/yml/config/config* $CURRENT/hello/config/
+cp $VENDOR/symfony/src/Symfony/Bundle/FrameworkBundle/Resources/skeleton/application/xml/config/config* $CURRENT/hello/config/
 
 # Doctrine ORM
-cd $CURRENT/doctrine && git pull
+cd $VENDOR/doctrine && git pull
 
 # Doctrine DBAL
-cd $CURRENT/doctrine-dbal && git pull
+cd $VENDOR/doctrine-dbal && git pull
 
 # Doctrine common
-cd $CURRENT/doctrine-common && git pull
+cd $VENDOR/doctrine-common && git pull
 
 # Doctrine migrations
-cd $CURRENT/doctrine-migrations && git pull
+cd $VENDOR/doctrine-migrations && git pull
 
 # Doctrine MongoDB
-cd $CURRENT/doctrine-mongodb && git pull
+cd $VENDOR/doctrine-mongodb && git pull
 
 # Propel
-cd $CURRENT/propel && svn up
+cd $VENDOR/propel && svn up
 
 # Phing
-cd $CURRENT/phing && svn up
+cd $VENDOR/phing && svn up
 
 # Swiftmailer
-cd $CURRENT/swiftmailer && git pull
+cd $VENDOR/swiftmailer && git pull
 
 # Twig
-cd $CURRENT/twig && git pull
+cd $VENDOR/twig && git pull
 
 # Zend Framework
-cd $CURRENT/zend && git pull
+cd $VENDOR/zend && git pull
