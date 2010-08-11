@@ -1,7 +1,5 @@
 <?php
 
-$container->setParameter('kernel.include_core_classes', 0);
-
 $container->loadFromExtension('kernel', 'config');
 
 $container->loadFromExtension('web', 'config', array(

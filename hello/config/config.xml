@@ -14,10 +14,6 @@
                         http://www.symfony-project.org/schema/dic/twig http://www.symfony-project.org/schema/dic/twig/twig-1.0.xsd
                         http://www.symfony-project.org/schema/dic/swiftmailer http://www.symfony-project.org/schema/dic/swiftmailer/swiftmailer-1.0.xsd">
 
-    <parameters>
-        <parameter key="kernel.include_core_classes">0</parameter>
-    </parameters>
-
     <kernel:config />
 
     <web:config>
