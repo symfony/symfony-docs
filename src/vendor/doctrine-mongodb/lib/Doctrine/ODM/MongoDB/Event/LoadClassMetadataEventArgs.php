@@ -33,15 +33,15 @@ use Doctrine\Common\EventArgs,
  */
 class LoadClassMetadataEventArgs extends EventArgs
 {
-    private $_classMetadata;
+    private $classMetadata;
 
     public function __construct(ClassMetadata $classMetadata)
     {
-        $this->_classMetadata = $classMetadata;
+        $this->classMetadata = $classMetadata;
     }
 
     public function getClassMetadata()
     {
-        return $this->_classMetadata;
+        return $this->classMetadata;
     }
 }

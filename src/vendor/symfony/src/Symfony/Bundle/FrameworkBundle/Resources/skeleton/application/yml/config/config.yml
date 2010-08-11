@@ -1,0 +1,22 @@
+kernel.config:
+    charset:       UTF-8
+    error_handler: null
+
+web.config:
+    router: { resource: "%kernel.root_dir%/config/routing.yml" }
+
+web.templating:
+    escaping:       htmlspecialchars
+    assets_version: SomeVersionScheme
+
+doctrine.dbal:
+    dbname:   xxxxxxxx
+    user:     root
+    password: ~
+
+doctrine.orm: ~
+
+swift.mailer:
+    transport: gmail
+    username:  xxxxxxxx
+    password:  xxxxxxxx

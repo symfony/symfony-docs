@@ -18,8 +18,6 @@ namespace Symfony\Components\OutputEscaper;
  * into an iterator with each value escaped.
  *
  * @see        Escaper
- * @package    Symfony
- * @subpackage Components_OutputEscaper
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
  * @author     Mike Squire <mike@somosis.co.uk>
  */
@@ -35,8 +33,8 @@ class IteratorDecorator extends ObjectDecorator implements \Iterator, \Countable
     /**
      * Constructs a new escaping iterator using the escaping method and value supplied.
      *
-     * @param string      $escaper The escaping method to use
-     * @param \Traversable $value         The iterator to escape
+     * @param string       $escaper The escaping method to use
+     * @param \Traversable $value   The iterator to escape
      */
     public function __construct($escaper, \Traversable $value)
     {

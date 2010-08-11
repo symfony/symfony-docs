@@ -6,6 +6,9 @@ use Symfony\Components\DomCrawler\Crawler;
 use Symfony\Components\DomCrawler\Link;
 use Symfony\Components\DomCrawler\Form;
 use Symfony\Components\Process\PhpProcess;
+use Symfony\Components\BrowserKit\Request;
+use Symfony\Components\BrowserKit\Response;
+use Symfony\Components\BrowserKit\Client;
 
 /*
  * This file is part of the Symfony package.
@@ -24,8 +27,6 @@ use Symfony\Components\Process\PhpProcess;
  * If you want to be able to run requests in their own process (insulated flag),
  * you need to also implement the getScript() method.
  *
- * @package    Symfony
- * @subpackage Components_BrowserKit
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
  */
 abstract class Client
@@ -43,9 +44,9 @@ abstract class Client
     /**
      * Constructor.
      *
-     * @param array                                   $server    The server parameters (equivalent of $_SERVER)
-     * @param Symfony\Components\BrowserKit\History   $history   A History instance to store the browser history
-     * @param Symfony\Components\BrowserKit\CookieJar $cookieJar A CookieJar instance to store the cookies
+     * @param array     $server    The server parameters (equivalent of $_SERVER)
+     * @param History   $history   A History instance to store the browser history
+     * @param CookieJar $cookieJar A CookieJar instance to store the cookies
      */
     public function __construct(array $server = array(), History $history = null, CookieJar $cookieJar = null)
     {
@@ -100,7 +101,7 @@ abstract class Client
     /**
      * Returns the History instance.
      *
-     * @return Symfony\Components\BrowserKit\History A History instance
+     * @return History A History instance
      */
     public function getHistory()
     {
@@ -110,7 +111,7 @@ abstract class Client
     /**
      * Returns the CookieJar instance.
      *
-     * @return Symfony\Components\BrowserKit\CookieJar A CookieJar instance
+     * @return CookieJar A CookieJar instance
      */
     public function getCookieJar()
     {
@@ -120,7 +121,7 @@ abstract class Client
     /**
      * Returns the current Crawler instance.
      *
-     * @return Symfony\Components\DomCrawler\Crawler A Crawler instance
+     * @return Crawler A Crawler instance
      */
     public function getCrawler()
     {
@@ -130,7 +131,7 @@ abstract class Client
     /**
      * Returns the current Response instance.
      *
-     * @return Symfony\Components\BrowserKit\Response A Response instance
+     * @return Response A Response instance
      */
     public function getResponse()
     {
@@ -140,7 +141,7 @@ abstract class Client
     /**
      * Returns the current Request instance.
      *
-     * @return Symfony\Components\BrowserKit\Request A Request instance
+     * @return Request A Request instance
      */
     public function getRequest()
     {
@@ -150,7 +151,7 @@ abstract class Client
     /**
      * Clicks on a given link.
      *
-     * @param Symfony\Components\BrowserKit\Link $link A Link instance
+     * @param Link $link A Link instance
      */
     public function click(Link $link)
     {
@@ -160,8 +161,8 @@ abstract class Client
     /**
      * Submits a form.
      *
-     * @param Symfony\Components\BrowserKit\Form $form   A Form instance
-     * @param array                              $values An array of form field values
+     * @param Form  $form   A Form instance
+     * @param array $values An array of form field values
      */
     public function submit(Form $form, array $values = array())
     {
@@ -180,7 +181,7 @@ abstract class Client
      * @param array   $server        The server parameters (HTTP headers are referenced with a HTTP_ prefix as PHP does)
      * @param Boolean $changeHistory Whether to update the history or not (only used internally for back(), forward(), and reload())
      *
-     * @return Symfony\Components\DomCrawler\Crawler
+     * @return Crawler
      */
     public function request($method, $uri, array $parameters = array(), array $files = array(), array $server = array(), $changeHistory = true)
     {
@@ -309,7 +310,7 @@ abstract class Client
     /**
      * Follow redirects?
      *
-     * @return Symfony\Components\BrowserKit\Client
+     * @return Client
      *
      * @throws \LogicException If request was not a redirect
      */
@@ -370,10 +371,10 @@ abstract class Client
     /**
      * Makes a request from a Request object directly.
      *
-     * @param Symfony\Components\BrowserKit\Request $request       A Request instance
-     * @param Boolean                               $changeHistory Whether to update the history or not (only used internally for back(), forward(), and reload())
+     * @param Request $request       A Request instance
+     * @param Boolean $changeHistory Whether to update the history or not (only used internally for back(), forward(), and reload())
      *
-     * @return Symfony\Components\DomCrawler\Crawler
+     * @return Crawler
      */
     protected function requestFromRequest(Request $request, $changeHistory = true)
     {

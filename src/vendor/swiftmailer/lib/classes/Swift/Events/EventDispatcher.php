@@ -8,6 +8,8 @@
  * file that was distributed with this source code.
  */
 
+//@require 'Swift/Events/EventListener.php';
+//@require 'Swift/Event.php';
 
 /**
  * Interface for the EventDispatcher which handles the event dispatching layer.

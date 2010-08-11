@@ -46,6 +46,7 @@ final class DiscriminatorField extends Annotation
     public $fieldName;
 }
 final class DiscriminatorMap extends Annotation {}
+final class DiscriminatorValue extends Annotation {}
 
 final class Index extends Annotation
 {
@@ -129,28 +130,25 @@ final class Increment extends Field
 final class Collection extends Field
 {
     public $type = 'collection';
+    public $strategy = 'pushPull'; // pushPull, set
 }
 final class EmbedOne extends Field
 {
     public $type = 'one';
     public $embedded = true;
     public $targetDocument;
-}
-final class Embed extends Field
-{
-    public $embedded = true;
-    public $targetDocument;
+    public $discriminatorField;
+    public $discriminatorMap;
+    public $cascade;
 }
 final class EmbedMany extends Field
 {
     public $type = 'many';
     public $embedded = true;
     public $targetDocument;
-}
-final class Reference extends Field
-{
-    public $reference = true;
-    public $targetDocument;
+    public $discriminatorField;
+    public $discriminatorMap;
+    public $strategy = 'pushPull'; // pushPull, set
     public $cascade;
 }
 final class ReferenceOne extends Field
@@ -158,6 +156,8 @@ final class ReferenceOne extends Field
     public $type = 'one';
     public $reference = true;
     public $targetDocument;
+    public $discriminatorField;
+    public $discriminatorMap;
     public $cascade;
 }
 final class ReferenceMany extends Field
@@ -165,13 +165,17 @@ final class ReferenceMany extends Field
     public $type = 'many';
     public $reference = true;
     public $targetDocument;
+    public $discriminatorField;
+    public $discriminatorMap;
     public $cascade;
-    public $strategy = 'set';
+    public $strategy = 'pushPull'; // pushPull, set
 }
 final class NotSaved extends Field {}
 final class AlsoLoad extends Field {
     public $name;
 }
+final class ChangeTrackingPolicy extends Annotation {}
+
 /* Annotations for lifecycle callbacks */
 final class HasLifecycleCallbacks extends Annotation {}
 final class PrePersist extends Annotation {}

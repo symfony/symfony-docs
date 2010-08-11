@@ -8,6 +8,9 @@
  * file that was distributed with this source code.
  */
 
+//@require 'Swift/Encoder.php';
+//@require 'Swift/InputByteStream.php';
+//@require 'Swift/OutputByteStream.php';
 
 /**
  * Interface for all Transfer Encoding schemes.

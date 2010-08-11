@@ -8,6 +8,8 @@
  * file that was distributed with this source code.
  */
 
+//@require 'Swift/Transport/EsmtpTransport.php';
+//@require 'Swift/DependencyContainer.php';
 
 /**
  * Sends Messages over SMTP with ESMTP support.

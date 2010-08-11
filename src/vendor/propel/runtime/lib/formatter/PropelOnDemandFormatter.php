@@ -14,7 +14,7 @@
  * This formatter consumes less memory than the PropelObjectFormatter, but doesn't use Instance Pool
  *
  * @author     Francois Zaninotto
- * @version    $Revision: 1733 $
+ * @version    $Revision: 1895 $
  * @package    propel.runtime.formatter
  */
 class PropelOnDemandFormatter extends PropelObjectFormatter
@@ -58,7 +58,7 @@ class PropelOnDemandFormatter extends PropelObjectFormatter
 	{
 		$col = 0;
 		// main object
-		$class = $this->isSingleTableInheritance ? call_user_func(array($his->peer, 'getOMClass'), $row, $col, false) : $this->class;
+		$class = $this->isSingleTableInheritance ? call_user_func(array($this->peer, 'getOMClass'), $row, $col, false) : $this->class;
 		$obj = $this->getSingleObjectFromRow($row, $class, $col);
 		// related objects using 'with'
 		foreach ($this->getWith() as $modelWith) {

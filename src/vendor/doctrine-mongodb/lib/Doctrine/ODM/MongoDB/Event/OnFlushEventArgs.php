@@ -37,11 +37,11 @@ class OnFlushEventArgs extends EventArgs
     /**
      * @var DocumentManager
      */
-    private $_dm;
+    private $dm;
 
     public function __construct($dm)
     {
-        $this->_dm = $dm;
+        $this->dm = $dm;
     }
 
     /**
@@ -49,6 +49,6 @@ class OnFlushEventArgs extends EventArgs
      */
     public function getDocumentManager()
     {
-        return $this->_dm;
+        return $this->dm;
     }
 }

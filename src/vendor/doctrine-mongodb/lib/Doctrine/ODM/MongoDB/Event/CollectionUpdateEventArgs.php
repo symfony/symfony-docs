@@ -31,28 +31,28 @@ use Doctrine\Common\EventArgs;
  */
 class CollectionUpdateEventArgs extends CollectionEventArgs
 {
-    private $_invoker;
-    private $_data;
+    private $invoker;
+    private $data;
 
     public function __construct($invoker, &$criteria, &$newObj)
     {
-        $this->_invoker = $invoker;
-        $this->_criteria = $criteria;
-        $this->_newObj = $newObj;
+        $this->invoker = $invoker;
+        $this->criteria = $criteria;
+        $this->newObj = $newObj;
     }
 
     public function getInvoker()
     {
-        return $this->_invoker;
+        return $this->invoker;
     }
 
     public function getCriteria()
     {
-        return $this->_criteria;
+        return $this->criteria;
     }
 
     public function getNewObj()
     {
-        return $this->_newObj;
+        return $this->newObj;
     }
 }

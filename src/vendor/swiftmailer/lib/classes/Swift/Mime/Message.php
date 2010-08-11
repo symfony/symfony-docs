@@ -8,6 +8,7 @@
  * file that was distributed with this source code.
  */
 
+//@require 'Swift/Mime/MimeEntity.php';
 
 /**
  * A Message (RFC 2822) object.

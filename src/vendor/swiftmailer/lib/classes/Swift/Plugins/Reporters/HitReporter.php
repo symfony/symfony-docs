@@ -8,6 +8,8 @@
  * file that was distributed with this source code.
  */
 
+//@require 'Swift/Plugins/Reporter.php';
+//@require 'Swift/Mime/Message.php';
 
 /**
  * A reporter which "collects" failures for the Reporter plugin.

@@ -18,8 +18,6 @@ use Symfony\Components\Routing\Resource\FileResource;
 /**
  * XmlFileLoader loads XML routing files.
  *
- * @package    Symfony
- * @subpackage Components_Routing
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
  */
 class XmlFileLoader extends FileLoader
@@ -53,7 +51,10 @@ class XmlFileLoader extends FileLoader
                     $this->parseRoute($collection, $node, $path);
                     break;
                 case 'import':
-                    $this->parseImport($collection, $node, $path);
+                    $resource = (string) $node->getAttribute('resource');
+                    $prefix = (string) $node->getAttribute('prefix');
+                    $this->currentDir = dirname($path);
+                    $collection->addCollection($this->import($resource), $prefix);
                     break;
                 default:
                     throw new \InvalidArgumentException(sprintf('Unable to parse tag "%s"', $node->tagName));
@@ -61,6 +62,18 @@ class XmlFileLoader extends FileLoader
         }
 
         return $collection;
+    }
+
+    /**
+     * Returns true if this class supports the given resource.
+     *
+     * @param  mixed $resource A resource
+     *
+     * @return Boolean true if this class supports the given resource, false otherwise
+     */
+    public function supports($resource)
+    {
+        return is_string($resource) && 'xml' === pathinfo($resource, PATHINFO_EXTENSION);
     }
 
     protected function parseRoute(RouteCollection $collection, $definition, $file)
@@ -94,27 +107,6 @@ class XmlFileLoader extends FileLoader
         $collection->addRoute((string) $definition->getAttribute('id'), $route);
     }
 
-    protected function parseImport(RouteCollection $collection, $node, $file)
-    {
-        $class = null;
-        if ($node->hasAttribute('class') && $import->getAttribute('class') !== get_class($this)) {
-            $class = (string) $node->getAttribute('class');
-        } else {
-            // try to detect loader with the extension
-            switch (pathinfo((string) $node->getAttribute('resource'), PATHINFO_EXTENSION)) {
-                case 'yml':
-                    $class = 'Symfony\\Components\\Routing\\Loader\\YamlFileLoader';
-                    break;
-            }
-        }
-
-        $loader = null === $class ? $this : new $class($this->paths);
-
-        $importedFile = $this->getAbsolutePath((string) $node->getAttribute('resource'), dirname($file));
-
-        $collection->addCollection($loader->load($importedFile), (string) $node->getAttribute('prefix'));
-    }
-
     /**
      * @throws \InvalidArgumentException When loading of XML file returns error
      */
@@ -139,7 +131,7 @@ class XmlFileLoader extends FileLoader
     protected function validate($dom, $file)
     {
         $parts = explode('/', str_replace('\\', '/', __DIR__.'/schema/routing/routing-1.0.xsd'));
-        $drive = '\\' === DIRECTORY_SEPARATOR ? array_shift($parts) : '';
+        $drive = '\\' === DIRECTORY_SEPARATOR ? array_shift($parts).'/' : '';
         $location = 'file:///'.$drive.implode('/', array_map('rawurlencode', $parts));
 
         $current = libxml_use_internal_errors(true);

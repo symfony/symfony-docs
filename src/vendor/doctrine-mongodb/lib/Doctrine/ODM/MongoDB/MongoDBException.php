@@ -100,8 +100,8 @@ class MongoDBException extends \Exception
         return new self("Unknown Document namespace alias '$documentNamespaceAlias'.");
     }
 
-    public static function identifierCannotBeUpdated()
+    public static function cannotPersistEmbeddedDocumentOrMappedSuperclass($className)
     {
-        return new self("Document idetifier updates are not allowed");
+        return new self('Cannot persist an embedded document or mapped superclass ' . $className);
     }
 }

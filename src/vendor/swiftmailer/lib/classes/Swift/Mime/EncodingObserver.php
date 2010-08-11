@@ -8,6 +8,7 @@
  * file that was distributed with this source code.
  */
 
+//@require 'Swift/Mime/ContentEncoder.php';
 
 /**
  * Observes changes for a Mime entity's ContentEncoder.

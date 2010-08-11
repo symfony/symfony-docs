@@ -25,6 +25,7 @@ use Closure, Exception,
     Doctrine\DBAL\LockMode,
     Doctrine\ORM\Mapping\ClassMetadata,
     Doctrine\ORM\Mapping\ClassMetadataFactory,
+    Doctrine\ORM\Query\ResultSetMapping,
     Doctrine\ORM\Proxy\ProxyFactory;
 
 /**
@@ -225,7 +226,14 @@ class EntityManager
     }
 
     /**
-     * Returns the metadata for a class.
+     * Returns the ORM metadata descriptor for a class.
+     *
+     * The class name must be the fully-qualified class name without a leading backslash
+     * (as it is returned by get_class($obj)) or an aliased class name.
+     * 
+     * Examples:
+     * MyProject\Domain\User
+     * sales:PriceRequest
      *
      * @return Doctrine\ORM\Mapping\ClassMetadata
      * @internal Performance-sensitive method.
@@ -268,7 +276,7 @@ class EntityManager
      * @param ResultSetMapping $rsm The ResultSetMapping to use.
      * @return NativeQuery
      */
-    public function createNativeQuery($sql, \Doctrine\ORM\Query\ResultSetMapping $rsm)
+    public function createNativeQuery($sql, ResultSetMapping $rsm)
     {
         $query = new NativeQuery($this);
         $query->setSql($sql);
@@ -330,17 +338,15 @@ class EntityManager
 
     /**
      * Gets a reference to the entity identified by the given type and identifier
-     * without actually loading it.
+     * without actually loading it, if the entity is not yet loaded.
      *
-     * If partial objects are allowed, this method will return a partial object that only
-     * has its identifier populated. Otherwise a proxy is returned that automatically
-     * loads itself on first access.
-     *
+     * @param string $entityName The name of the entity type.
+     * @param mixed $identifier The entity identifier.
      * @return object The entity reference.
      */
     public function getReference($entityName, $identifier)
     {
-        $class = $this->metadataFactory->getMetadataFor($entityName);
+        $class = $this->metadataFactory->getMetadataFor(ltrim($entityName, '\\'));
 
         // Check identity map first, if its already in there just return it.
         if ($entity = $this->unitOfWork->tryGetById($identifier, $class->rootEntityName)) {
@@ -350,6 +356,44 @@ class EntityManager
             $identifier = array($class->identifier[0] => $identifier);
         }
         $entity = $this->proxyFactory->getProxy($class->name, $identifier);
+        $this->unitOfWork->registerManaged($entity, $identifier, array());
+
+        return $entity;
+    }
+
+    /**
+     * Gets a partial reference to the entity identified by the given type and identifier
+     * without actually loading it, if the entity is not yet loaded.
+     *
+     * The returned reference may be a partial object if the entity is not yet loaded/managed.
+     * If it is a partial object it will not initialize the rest of the entity state on access.
+     * Thus you can only ever safely access the identifier of an entity obtained through
+     * this method.
+     *
+     * The use-cases for partial references involve maintaining bidirectional associations
+     * without loading one side of the association or to update an entity without loading it.
+     * Note, however, that in the latter case the original (persistent) entity data will
+     * never be visible to the application (especially not event listeners) as it will
+     * never be loaded in the first place.
+     *
+     * @param string $entityName The name of the entity type.
+     * @param mixed $identifier The entity identifier.
+     * @return object The (partial) entity reference.
+     */
+    public function getPartialReference($entityName, $identifier)
+    {
+        $class = $this->metadataFactory->getMetadataFor(ltrim($entityName, '\\'));
+
+        // Check identity map first, if its already in there just return it.
+        if ($entity = $this->unitOfWork->tryGetById($identifier, $class->rootEntityName)) {
+            return $entity;
+        }
+        if ( ! is_array($identifier)) {
+            $identifier = array($class->identifier[0] => $identifier);
+        }
+
+        $entity = $class->newInstance();
+        $class->setIdentifierValues($entity, $identifier);
         $this->unitOfWork->registerManaged($entity, $identifier, array());
 
         return $entity;
@@ -498,11 +542,12 @@ class EntityManager
     /**
      * Gets the repository for an entity class.
      *
-     * @param string $entityName  The name of the Entity.
-     * @return EntityRepository  The repository.
+     * @param string $entityName The name of the entity.
+     * @return EntityRepository The repository class.
      */
     public function getRepository($entityName)
     {
+        $entityName = ltrim($entityName, '\\');
         if (isset($this->repositories[$entityName])) {
             return $this->repositories[$entityName];
         }

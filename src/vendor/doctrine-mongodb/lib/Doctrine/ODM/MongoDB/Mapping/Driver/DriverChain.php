@@ -37,7 +37,7 @@ class DriverChain implements Driver
     /**
      * @var array
      */
-    private $_drivers = array();
+    private $drivers = array();
 
     /**
      * Add a nested driver.
@@ -47,7 +47,7 @@ class DriverChain implements Driver
      */
     public function addDriver(Driver $nestedDriver, $namespace)
     {
-        $this->_drivers[$namespace] = $nestedDriver;
+        $this->drivers[$namespace] = $nestedDriver;
     }
 
     /**
@@ -57,7 +57,7 @@ class DriverChain implements Driver
      */
     public function getDrivers()
     {
-        return $this->_drivers;
+        return $this->drivers;
     }
 
     /**
@@ -65,7 +65,7 @@ class DriverChain implements Driver
      */
     public function loadMetadataForClass($className, ClassMetadata $class)
     {
-        foreach ($this->_drivers as $namespace => $driver) {
+        foreach ($this->drivers as $namespace => $driver) {
             if (strpos($className, $namespace) === 0) {
                 $driver->loadMetadataForClass($className, $class);
                 return;

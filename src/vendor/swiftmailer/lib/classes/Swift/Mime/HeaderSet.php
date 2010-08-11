@@ -8,6 +8,7 @@
  * file that was distributed with this source code.
  */
 
+//@require 'Swift/Mime/CharsetObserver.php';
 
 /**
  * A collection of MIME headers.

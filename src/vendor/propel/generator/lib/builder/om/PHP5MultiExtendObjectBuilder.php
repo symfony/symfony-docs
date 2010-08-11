@@ -116,7 +116,12 @@ class PHP5MultiExtendObjectBuilder extends ObjectBuilder
 	protected function addClassOpen(&$script)
 	{
 		if ($this->getChild()->getAncestor()) {
-			$this->declareClassFromBuilder($this->getNewStubObjectBuilder($this->getDatabase()->getTableByPhpName($this->getChild()->getAncestor())));
+			$ancestorClassName = $this->getChild()->getAncestor();
+		  if ($this->getDatabase()->hasTableByPhpName($ancestorClassName)) {
+		    $this->declareClassFromBuilder($this->getNewStubObjectBuilder($this->getDatabase()->getTableByPhpName($ancestorClassName)));
+		  } else {
+		  	$this->declareClassNamespace($ancestorClassName, $this->getNamespace());
+		  }
 		} else {
 			$this->declareClassFromBuilder($this->getObjectBuilder());
 		}

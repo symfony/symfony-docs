@@ -8,6 +8,8 @@
  * file that was distributed with this source code.
  */
 
+//@require 'Swift/CharacterStream.php';
+//@require 'Swift/OutputByteStream.php';
 
 
 /**

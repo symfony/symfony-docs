@@ -4,6 +4,7 @@ namespace Symfony\Components\HttpKernel;
 
 use Symfony\Components\EventDispatcher\Event;
 use Symfony\Components\EventDispatcher\EventDispatcher;
+use Symfony\Components\HttpKernel\Controller\ControllerResolverInterface;
 use Symfony\Components\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Components\HttpFoundation\Request;
 use Symfony\Components\HttpFoundation\Response;
@@ -20,23 +21,24 @@ use Symfony\Components\HttpFoundation\Response;
 /**
  * HttpKernel notifies events to convert a Request object to a Response one.
  *
- * @package    Symfony
- * @subpackage Components_HttpKernel
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
  */
 class HttpKernel implements HttpKernelInterface
 {
     protected $dispatcher;
+    protected $resolver;
     protected $request;
 
     /**
      * Constructor
      *
-     * @param EventDispatcher $dispatcher An event dispatcher instance
+     * @param EventDispatcher             $dispatcher An event dispatcher instance
+     * @param ControllerResolverInterface $resolver A ControllerResolverInterface instance
      */
-    public function __construct(EventDispatcher $dispatcher)
+    public function __construct(EventDispatcher $dispatcher, ControllerResolverInterface $resolver)
     {
         $this->dispatcher = $dispatcher;
+        $this->resolver = $resolver;
     }
 
     /**
@@ -56,8 +58,8 @@ class HttpKernel implements HttpKernelInterface
      * for user management.
      *
      * @param Request $request A Request instance
-     * @param integer $type    The type of the request (one of HttpKernelInterface::MASTER_REQUEST, HttpKernelInterface::FORWARDED_REQUEST, or HttpKernelInterface::EMBEDDED_REQUEST)
-     * @param Boolean $raw     Whether to catch exceptions or not
+     * @param integer $type The type of the request (one of HttpKernelInterface::MASTER_REQUEST, HttpKernelInterface::FORWARDED_REQUEST, or HttpKernelInterface::EMBEDDED_REQUEST)
+     * @param Boolean $raw Whether to catch exceptions or not
      *
      * @return Response A Response instance
      *
@@ -101,11 +103,11 @@ class HttpKernel implements HttpKernelInterface
      * Exceptions are not caught.
      *
      * @param Request $request A Request instance
-     * @param integer $type    The type of the request (one of HttpKernelInterface::MASTER_REQUEST, HttpKernelInterface::FORWARDED_REQUEST, or HttpKernelInterface::EMBEDDED_REQUEST)
+     * @param integer $type The type of the request (one of HttpKernelInterface::MASTER_REQUEST, HttpKernelInterface::FORWARDED_REQUEST, or HttpKernelInterface::EMBEDDED_REQUEST)
      *
      * @return Response A Response instance
      *
-     * @throws \LogicException       If one of the listener does not behave as expected
+     * @throws \LogicException If one of the listener does not behave as expected
      * @throws NotFoundHttpException When controller cannot be found
      */
     protected function handleRaw(Request $request, $type = self::MASTER_REQUEST)
@@ -117,30 +119,23 @@ class HttpKernel implements HttpKernelInterface
         }
 
         // load controller
-        $event = $this->dispatcher->notifyUntil(new Event($this, 'core.load_controller', array('request_type' => $type, 'request' => $request)));
-        if (!$event->isProcessed()) {
+        if (false === $controller = $this->resolver->getController($request)) {
             throw new NotFoundHttpException('Unable to find the controller.');
         }
 
-        list($controller, $arguments) = $event->getReturnValue();
+        $event = $this->dispatcher->filter(new Event($this, 'core.controller', array('request_type' => $type, 'request' => $request)), $controller);
+        $controller = $event->getReturnValue();
 
         // controller must be a callable
         if (!is_callable($controller)) {
             throw new \LogicException(sprintf('The controller must be a callable (%s).', var_export($controller, true)));
         }
 
-        // controller
-        $event = $this->dispatcher->notifyUntil(new Event($this, 'core.controller', array('request_type' => $type, 'request' => $request, 'controller' => &$controller, 'arguments' => &$arguments)));
-        if ($event->isProcessed()) {
-            try {
-                return $this->filterResponse($event->getReturnValue(), $request, 'A "core.controller" listener returned a non response object.', $type);
-            } catch (\Exception $e) {
-                $retval = $event->getReturnValue();
-            }
-        } else {
-            // call controller
-            $retval = call_user_func_array($controller, $arguments);
-        }
+        // controller arguments
+        $arguments = $this->resolver->getArguments($request, $controller);
+
+        // call controller
+        $retval = call_user_func_array($controller, $arguments);
 
         // view
         $event = $this->dispatcher->filter(new Event($this, 'core.view', array('request_type' => $type, 'request' => $request)), $retval);
@@ -183,8 +178,8 @@ class HttpKernel implements HttpKernelInterface
      * Filters a response object.
      *
      * @param Response $response A Response instance
-     * @param string   $message  A error message in case the response is not a Response object
-     * @param integer  $type    The type of the request (one of HttpKernelInterface::MASTER_REQUEST, HttpKernelInterface::FORWARDED_REQUEST, or HttpKernelInterface::EMBEDDED_REQUEST)
+     * @param string   $message A error message in case the response is not a Response object
+     * @param integer  $type The type of the request (one of HttpKernelInterface::MASTER_REQUEST, HttpKernelInterface::FORWARDED_REQUEST, or HttpKernelInterface::EMBEDDED_REQUEST)
      *
      * @return Response The filtered Response instance
      *

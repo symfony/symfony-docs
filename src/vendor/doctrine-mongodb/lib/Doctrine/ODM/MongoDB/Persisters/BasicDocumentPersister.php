@@ -27,7 +27,8 @@ use Doctrine\ODM\MongoDB\DocumentManager,
     Doctrine\Common\Collections\Collection,
     Doctrine\ODM\MongoDB\ODMEvents,
     Doctrine\ODM\MongoDB\Event\OnUpdatePreparedArgs,
-    Doctrine\ODM\MongoDB\MongoDBException;
+    Doctrine\ODM\MongoDB\MongoDBException,
+    Doctrine\ODM\MongoDB\PersistentCollection;
 
 /**
  * The BasicDocumentPersister is responsible for actual persisting the calculated
@@ -45,60 +46,60 @@ class BasicDocumentPersister
      *
      * @var Doctrine\ODM\MongoDB\DocumentManager
      */
-    private $_dm;
+    private $dm;
 
     /**
      * The UnitOfWork instance.
      *
      * @var Doctrine\ODM\MongoDB\UnitOfWork
      */
-    private $_uow;
+    private $uow;
 
     /**
      * The ClassMetadata instance for the document type being persisted.
      *
      * @var Doctrine\ODM\MongoDB\Mapping\ClassMetadata
      */
-    private $_class;
+    protected $class;
 
     /**
      * The MongoCollection instance for this document.
      *
      * @var Doctrine\ODM\MongoDB\MongoCollection
      */
-    private $_collection;
+    private $collection;
 
     /**
      * The string document name being persisted.
      *
      * @var string
      */
-    private $_documentName;
+    private $documentName;
 
     /**
      * Array of quered inserts for the persister to insert.
      *
      * @var array
      */
-    private $_queuedInserts = array();
+    private $queuedInserts = array();
 
     /**
      * Documents to be updated, used in executeReferenceUpdates() method
      * @var array
      */
-    private $_documentsToUpdate = array();
+    private $documentsToUpdate = array();
 
     /**
      * Fields to update, used in executeReferenceUpdates() method
      * @var array
      */
-    private $_fieldsToUpdate = array();
+    private $fieldsToUpdate = array();
 
     /**
      * Mongo command prefix
      * @var string
      */
-    private $_cmd;
+    private $cmd;
 
     /**
      * Initializes a new BasicDocumentPersister instance.
@@ -108,12 +109,12 @@ class BasicDocumentPersister
      */
     public function __construct(DocumentManager $dm, ClassMetadata $class)
     {
-        $this->_dm = $dm;
-        $this->_uow = $dm->getUnitOfWork();
-        $this->_class = $class;
-        $this->_documentName = $class->getName();
-        $this->_collection = $dm->getDocumentCollection($class->name);
-        $this->_cmd = $this->_dm->getConfiguration()->getMongoCmd();
+        $this->dm = $dm;
+        $this->uow = $dm->getUnitOfWork();
+        $this->class = $class;
+        $this->documentName = $class->getName();
+        $this->collection = $dm->getDocumentCollection($class->name);
+        $this->cmd = $this->dm->getConfiguration()->getMongoCmd();
     }
 
     /**
@@ -124,7 +125,7 @@ class BasicDocumentPersister
      */
     public function addInsert($document)
     {
-        $this->_queuedInserts[spl_object_hash($document)] = $document;
+        $this->queuedInserts[spl_object_hash($document)] = $document;
     }
 
     /**
@@ -138,14 +139,13 @@ class BasicDocumentPersister
      */
     public function executeInserts()
     {
-        if ( ! $this->_queuedInserts) {
+        if ( ! $this->queuedInserts) {
             return;
         }
 
         $postInsertIds = array();
         $inserts = array();
-
-        foreach ($this->_queuedInserts as $oid => $document) {
+        foreach ($this->queuedInserts as $oid => $document) {
             $data = $this->prepareInsertData($document);
             if ( ! $data) {
                 continue;
@@ -155,16 +155,16 @@ class BasicDocumentPersister
         if (empty($inserts)) {
             return;
         }
-        $this->_collection->batchInsert($inserts);
+        $this->collection->batchInsert($inserts);
 
         foreach ($inserts as $oid => $data) {
-            $document = $this->_queuedInserts[$oid];
+            $document = $this->queuedInserts[$oid];
             $postInsertIds[] = array($data['_id'], $document);
-            if ($this->_class->isFile()) {
-                $this->_dm->getHydrator()->hydrate($this->_class, $document, $data);
+            if ($this->class->isFile()) {
+                $this->dm->getHydrator()->hydrate($document, $data);
             }
         }
-        $this->_queuedInserts = array();
+        $this->queuedInserts = array();
 
         return $postInsertIds;
     }
@@ -175,25 +175,25 @@ class BasicDocumentPersister
      */
     public function executeReferenceUpdates()
     {
-        foreach ($this->_documentsToUpdate as $oid => $document)
+        foreach ($this->documentsToUpdate as $oid => $document)
         {
             $update = array();
-            foreach ($this->_fieldsToUpdate[$oid] as $fieldName => $fieldData)
+            foreach ($this->fieldsToUpdate[$oid] as $fieldName => $fieldData)
             {
                 list ($mapping, $value) = $fieldData;
-                $update[$fieldName] = $this->_prepareValue($mapping, $value);
+                $update[$fieldName] = $this->prepareValue($mapping, $value);
             }
-            $classMetadata = $this->_dm->getClassMetadata(get_class($document));
-            $id = $this->_uow->getDocumentIdentifier($document);
+            $classMetadata = $this->dm->getClassMetadata(get_class($document));
+            $id = $this->uow->getDocumentIdentifier($document);
             $id = $classMetadata->getDatabaseIdentifierValue($id);
-            $this->_collection->update(array(
+            $this->collection->update(array(
                 '_id' => $id
             ), array(
-                $this->_cmd . 'set' => $update
+                $this->cmd . 'set' => $update
             ));
-            unset($this->_documentsToUpdate[$oid]);
-            unset($this->_fieldsToUpdate[$oid]);
         }
+        $this->documentsToUpdate = array();
+        $this->fieldsToUpdate = array();
     }
 
     /**
@@ -203,42 +203,49 @@ class BasicDocumentPersister
      */
     public function update($document)
     {
-        $id = $this->_uow->getDocumentIdentifier($document);
+        $id = $this->uow->getDocumentIdentifier($document);
 
         $update = $this->prepareUpdateData($document);
         if ( ! empty($update)) {
-            if ($this->_dm->getEventManager()->hasListeners(ODMEvents::onUpdatePrepared)) {
-                $this->_dm->getEventManager()->dispatchEvent(
-                    ODMEvents::onUpdatePrepared, new OnUpdatePreparedArgs($this->_dm, $document, $update)
+            if ($this->dm->getEventManager()->hasListeners(ODMEvents::onUpdatePrepared)) {
+                $this->dm->getEventManager()->dispatchEvent(
+                    ODMEvents::onUpdatePrepared, new OnUpdatePreparedArgs($this->dm, $document, $update)
                 );
             }
+            $id = $this->class->getDatabaseIdentifierValue($id);
+
+            if ((isset($update[$this->cmd . 'pushAll']) || isset($update[$this->cmd . 'pullAll'])) && isset($update[$this->cmd . 'set'])) {
+                $tempUpdate = array($this->cmd . 'set' => $update[$this->cmd . 'set']);
+                unset($update[$this->cmd . 'set']);
+                $this->collection->update(array('_id' => $id), $tempUpdate);
+            }
+
             /**
              * temporary fix for @link http://jira.mongodb.org/browse/SERVER-1050
              * atomic modifiers $pushAll and $pullAll, $push, $pop and $pull
              * are not allowed on the same field in one update
              */
-            $id = $this->_class->getDatabaseIdentifierValue($id);
-            if (isset($update[$this->_cmd . 'pushAll']) && isset($update[$this->_cmd . 'pullAll'])) {
+            if (isset($update[$this->cmd . 'pushAll']) && isset($update[$this->cmd . 'pullAll'])) {
                 $fields = array_intersect(
-                    array_keys($update[$this->_cmd . 'pushAll']),
-                    array_keys($update[$this->_cmd . 'pullAll'])
+                    array_keys($update[$this->cmd . 'pushAll']),
+                    array_keys($update[$this->cmd . 'pullAll'])
                 );
                 if ( ! empty($fields)) {
                     $tempUpdate = array();
                     foreach ($fields as $field) {
-                        $tempUpdate[$field] = $update[$this->_cmd . 'pullAll'][$field];
-                        unset($update[$this->_cmd . 'pullAll'][$field]);
+                        $tempUpdate[$field] = $update[$this->cmd . 'pullAll'][$field];
+                        unset($update[$this->cmd . 'pullAll'][$field]);
                     }
-                    if (empty($update[$this->_cmd . 'pullAll'])) {
-                        unset($update[$this->_cmd . 'pullAll']);
+                    if (empty($update[$this->cmd . 'pullAll'])) {
+                        unset($update[$this->cmd . 'pullAll']);
                     }
                     $tempUpdate = array(
-                        $this->_cmd . 'pullAll' => $tempUpdate
+                        $this->cmd . 'pullAll' => $tempUpdate
                     );
-                    $this->_collection->update(array('_id' => $id), $tempUpdate);
+                    $this->collection->update(array('_id' => $id), $tempUpdate);
                 }
             }
-            $this->_collection->update(array('_id' => $id), $update);
+            $this->collection->update(array('_id' => $id), $update);
         }
     }
 
@@ -249,10 +256,10 @@ class BasicDocumentPersister
      */
     public function delete($document)
     {
-        $id = $this->_uow->getDocumentIdentifier($document);
+        $id = $this->uow->getDocumentIdentifier($document);
 
-        $this->_collection->remove(array(
-            '_id' => $this->_class->getDatabaseIdentifierValue($id)
+        $this->collection->remove(array(
+            '_id' => $this->class->getDatabaseIdentifierValue($id)
         ));
     }
 
@@ -265,9 +272,9 @@ class BasicDocumentPersister
     public function prepareInsertData($document)
     {
         $oid = spl_object_hash($document);
-        $changeset = $this->_uow->getDocumentChangeSet($document);
-        $result = array();
-        foreach ($this->_class->fieldMappings as $mapping) {
+        $changeset = $this->uow->getDocumentChangeSet($document);
+        $insertData = array();
+        foreach ($this->class->fieldMappings as $mapping) {
             if (isset($mapping['notSaved']) && $mapping['notSaved'] === true) {
                 continue;
             }
@@ -275,35 +282,38 @@ class BasicDocumentPersister
             if ($new === null && $mapping['nullable'] === false) {
                 continue;
             }
-            $changeset[$mapping['fieldName']] = array();
-            if ($this->_class->isIdentifier($mapping['fieldName'])) {
-                $result['_id'] = $this->_prepareValue($mapping, $new);
+            if ($this->class->isIdentifier($mapping['fieldName'])) {
+                $insertData['_id'] = $this->prepareValue($mapping, $new);
                 continue;
             }
-            $result[$mapping['fieldName']] = $this->_prepareValue($mapping, $new);
+            $insertData[$mapping['fieldName']] = $this->prepareValue($mapping, $new);
             if (isset($mapping['reference'])) {
                 $scheduleForUpdate = false;
                 if ($mapping['type'] === 'one') {
-                    if (null === $result[$mapping['fieldName']][$this->_cmd . 'id']) {
+                    if (null === $insertData[$mapping['fieldName']][$this->cmd . 'id']) {
                         $scheduleForUpdate = true;
                     }
                 } elseif ($mapping['type'] === 'many') {
-                    foreach ($result[$mapping['fieldName']] as $ref) {
-                        if (null === $ref[$this->_cmd . 'id']) {
+                    foreach ($insertData[$mapping['fieldName']] as $ref) {
+                        if (null === $ref[$this->cmd . 'id']) {
                             $scheduleForUpdate = true;
                             break;
                         }
                     }
                 }
                 if ($scheduleForUpdate) {
-                    unset($result[$mapping['fieldName']]);
+                    unset($insertData[$mapping['fieldName']]);
                     $id = spl_object_hash($document);
-                    $this->_documentsToUpdate[$id] = $document;
-                    $this->_fieldsToUpdate[$id][$mapping['fieldName']] = array($mapping, $new);
+                    $this->documentsToUpdate[$id] = $document;
+                    $this->fieldsToUpdate[$id][$mapping['fieldName']] = array($mapping, $new);
                 }
             }
         }
-        return $result;
+        // add discriminator if the class has one
+        if ($this->class->hasDiscriminator()) {
+            $insertData[$this->class->discriminatorField['name']] = $this->class->discriminatorValue;
+        }
+        return $insertData;
     }
 
     /**
@@ -315,23 +325,83 @@ class BasicDocumentPersister
     public function prepareUpdateData($document)
     {
         $oid = spl_object_hash($document);
-        $changeset = $this->_uow->getDocumentChangeSet($document);
+        $class = $this->dm->getClassMetadata(get_class($document));
+        $changeset = $this->uow->getDocumentChangeSet($document);
         $result = array();
-        foreach ($this->_class->fieldMappings as $mapping) {
+        foreach ($class->fieldMappings as $mapping) {
             if (isset($mapping['notSaved']) && $mapping['notSaved'] === true) {
                 continue;
             }
             $old = isset($changeset[$mapping['fieldName']][0]) ? $changeset[$mapping['fieldName']][0] : null;
             $new = isset($changeset[$mapping['fieldName']][1]) ? $changeset[$mapping['fieldName']][1] : null;
-            $new = $this->_prepareValue($mapping, $new);
-            $old = $this->_prepareValue($mapping, $old);
-            if ($this->_class->isIdentifier($mapping['fieldName']) && ! $this->_equals($new, $old)) {
-                throw MongoDBException::identifierCannotBeUpdated();
-            }
-            if (($mapping['type'] === 'many') || $mapping['type'] === 'collection') {
-                $this->_addArrayUpdateAtomicOperator($mapping, (array) $new, (array) $old, $result);
+
+            if ($mapping['type'] === 'many' || $mapping['type'] === 'collection') {               
+                if (isset($mapping['embedded']) && $new) {
+                    foreach ($new as $k => $v) {
+                        if ( ! isset($old[$k])) {
+                            continue;
+                        }
+                        $update = $this->prepareUpdateData($v);
+                        foreach ($update as $cmd => $values) {
+                            foreach ($values as $key => $value) {
+                                $result[$cmd][$mapping['fieldName'] . '.' . $k . '.' . $key] = $value;
+                            }
+                        }
+                    }
+                }
+                if ($mapping['strategy'] === 'pushPull') {
+                    if ($old !== $new) {
+                        $old = $old ? $old : array();
+                        $new = $new ? $new : array();
+                        $deleteDiff = array_udiff_assoc($old, $new, function($a, $b) {return $a === $b ? 0 : 1; });
+                        $insertDiff = array_udiff_assoc($new, $old, function($a, $b) {return $a === $b ? 0 : 1;});
+
+                        // insert diff
+                        if ($insertDiff) {
+                            $result[$this->cmd . 'pushAll'][$mapping['fieldName']] = $this->prepareValue($mapping, $insertDiff);
+                        }
+                        // delete diff
+                        if ($deleteDiff) {
+                            $result[$this->cmd . 'pullAll'][$mapping['fieldName']] = $this->prepareValue($mapping, $deleteDiff);
+                        }
+                    }
+                } elseif ($mapping['strategy'] === 'set') {
+                    if ($old !== $new) {
+                        $new = $this->prepareValue($mapping, $new);
+                        $old = $this->prepareValue($mapping, $old);
+                        $result[$this->cmd . 'set'][$mapping['fieldName']] = $new;
+                    }
+                }
             } else {
-                $this->_addFieldUpdateAtomicOperator($mapping, $new, $old, $result);
+                if ($old !== $new) {
+                    if ($mapping['type'] === 'increment') {
+                        $new = $this->prepareValue($mapping, $new);
+                        $old = $this->prepareValue($mapping, $old);
+                        if ($new >= $old) {
+                            $result[$this->cmd . 'inc'][$mapping['fieldName']] = $new - $old;
+                        } else {
+                            $result[$this->cmd . 'inc'][$mapping['fieldName']] = ($old - $new) * -1;
+                        }
+                    } else {
+                        if (isset($mapping['embedded']) && $mapping['type'] === 'one') {
+                            $embeddedDocument = $class->getFieldValue($document, $mapping['fieldName']);
+                            $update = $this->prepareUpdateData($embeddedDocument);
+                            foreach ($update as $cmd => $values) {
+                                foreach ($values as $key => $value) {
+                                    $result[$cmd][$mapping['fieldName'] . '.' . $key] = $value;
+                                }
+                            }
+                        } else {
+                            $old = $this->prepareValue($mapping, $old);
+                            $new = $this->prepareValue($mapping, $new);
+                            if (isset($new) || $mapping['nullable'] === true) {
+                                $result[$this->cmd . 'set'][$mapping['fieldName']] = $new;
+                            } else {
+                                $result[$this->cmd . 'unset'][$mapping['fieldName']] = true;
+                            }
+                        }
+                    }
+                }
             }
         }
         return $result;
@@ -342,30 +412,29 @@ class BasicDocumentPersister
      * @param array $mapping
      * @param mixed $value
      */
-    private function _prepareValue(array $mapping, $value) {
-        if ( ! isset($value)) {
+    private function prepareValue(array $mapping, $value)
+    {
+        if ($value === null) {
             return null;
         }
         if ($mapping['type'] === 'many') {
-            $values = $value;
-            $value = array();
-            foreach ($values as $rawValue) {
-                $value[] = $this->_prepareValue(array_merge($mapping, array(
-                    'type' => 'one'
-                )), $rawValue);
+            $prepared = array();
+
+            $oneMapping = $mapping;
+            $oneMapping['type'] = 'one';
+            foreach ($value as $rawValue) {
+                $prepared[] = $this->prepareValue($oneMapping, $rawValue);
             }
-            unset($values, $rawValue);
-        } elseif ((isset($mapping['reference'])) || isset($mapping['embedded'])) {
-            $targetClass = $this->_dm->getClassMetadata($mapping['targetDocument']);
+        } elseif (isset($mapping['reference']) || isset($mapping['embedded'])) {
             if (isset($mapping['embedded'])) {
-                $value = $this->_prepareDocEmbeded($targetClass, $value);
-            } else if (isset($mapping['reference'])) {
-                $value = $this->_prepareDocReference($targetClass, $value);
+                $prepared = $this->prepareEmbeddedDocValue($mapping, $value);
+            } elseif (isset($mapping['reference'])) {
+                $prepared = $this->prepareReferencedDocValue($mapping, $value);
             }
         } else {
-            $value = Type::getType($mapping['type'])->convertToDatabaseValue($this->_getScalar($value));
+            $prepared = Type::getType($mapping['type'])->convertToDatabaseValue($value);
         }
-        return $value;
+        return $prepared;
     }
 
     /**
@@ -375,7 +444,7 @@ class BasicDocumentPersister
      */
     public function getClassMetadata()
     {
-        return $this->_class;
+        return $this->class;
     }
 
     /**
@@ -385,9 +454,9 @@ class BasicDocumentPersister
      */
     public function refresh($document)
     {
-        $id = $this->_uow->getDocumentIdentifier($document);
-        if ($this->_dm->loadByID($this->_class->name, $id) === null) {
-            throw new \InvalidArgumentException(sprintf('Could not loadByID because ' . $this->_class->name . ' '.$id . ' does not exist anymore.'));
+        $id = $this->uow->getDocumentIdentifier($document);
+        if ($this->dm->loadByID($this->class->name, $id) === null) {
+            throw new \InvalidArgumentException(sprintf('Could not loadByID because ' . $this->class->name . ' '.$id . ' does not exist anymore.'));
         }
     }
 
@@ -405,11 +474,9 @@ class BasicDocumentPersister
      */
     public function load(array $query = array(), array $select = array())
     {
-        $result = $this->_collection->findOne($query, $select);
+        $result = $this->collection->findOne($query, $select);
         if ($result !== null) {
-            $document = $this->_uow->getOrCreateDocument($this->_documentName, $result);
-            $this->_uow->registerManaged($document, $this->_class->getPHPIdentifierValue($result['_id']), $result);
-            return $document;
+            return $this->uow->getOrCreateDocument($this->documentName, $result);
         }
         return null;
     }
@@ -422,13 +489,11 @@ class BasicDocumentPersister
      */
     public function loadById($id)
     {
-        $result = $this->_collection->findOne(array(
-            '_id' => $this->_class->getDatabaseIdentifierValue($id)
+        $result = $this->collection->findOne(array(
+            '_id' => $this->class->getDatabaseIdentifierValue($id)
         ));
         if ($result !== null) {
-            $document = $this->_uow->getOrCreateDocument($this->_documentName, $result);
-            $this->_uow->registerManaged($document, $this->_class->getPHPIdentifierValue($result['_id']), $result);
-            return $document;
+            return $this->uow->getOrCreateDocument($this->documentName, $result);
         }
         return null;
     }
@@ -441,165 +506,103 @@ class BasicDocumentPersister
      */
     public function loadAll(array $query = array(), array $select = array())
     {
-        $cursor = $this->_collection->find($query, $select);
-        return new MongoCursor($this->_dm, $this->_dm->getHydrator(), $this->_class, $cursor);
-    }
-
-    /**
-     * Add the atomic operator to update or remove a field from a document
-     * based on whether or not the value has changed.
-     *
-     * @param string $fieldName
-     * @param string $new
-     * @param string $old
-     * @param string $result
-     */
-    private function _addFieldUpdateAtomicOperator(array $mapping, $new, $old, array &$result)
-    {
-        if ($this->_equals($old, $new)) {
-            return;
-        }
-
-        if ($mapping['type'] === 'increment') {
-            if ($new >= $old) {
-                $result[$this->_cmd . 'inc'][$mapping['fieldName']] = $new - $old;
-            } else {
-                $result[$this->_cmd . 'inc'][$mapping['fieldName']] = ($old - $new) * -1;
-            }
-        } else {
-            if (isset($new) || $mapping['nullable'] === true) {
-                $result[$this->_cmd . 'set'][$mapping['fieldName']] = $new;
-            } else {
-                $result[$this->_cmd . 'unset'][$mapping['fieldName']] = true;
-            }
-        }
-    }
-
-    /**
-     * Add the atomic operator to add new values to an array and to remove values
-     * from an array.
-     *
-     * @param string $fieldName
-     * @param array $new
-     * @param array $old
-     * @param string $result
-     */
-    private function _addArrayUpdateAtomicOperator(array $mapping, array $new, array $old, array &$result)
-    {
-        foreach ($old as $val) {
-            if ( ! in_array($val, $new)) {
-                $result[$this->_cmd . 'pullAll'][$mapping['fieldName']][] = $val;
-            }
-        }
-        foreach ($new as $val) {
-            if ( ! in_array($val, $old)) {
-                $result[$this->_cmd . 'pushAll'][$mapping['fieldName']][] = $val;
-            }
-        }
-    }
-
-    /**
-     * Performs value comparison
-     * @param mixed $old
-     * @param mixed $new
-     */
-    private function _equals($old, $new)
-    {
-        $old = is_scalar($old) ? $old : $this->_getScalar($old);
-        $new = is_scalar($new) ? $new : $this->_getScalar($new);
-        return $new === $old;
-    }
-
-    /**
-     * Converts value for comparison
-     * @param mixed $val
-     * @todo this conversion might not even be necessary, needs re-thinking
-     */
-    private function _getScalar($val)
-    {
-        if ($val instanceof \MongoDate) {
-            return $val->sec;
-        } else if ($val instanceof \DateTime) {
-            return $val->getTimestamp();
-        } else if ($val instanceof \MongoBinData) {
-            return Type::getType('bin')->convertToPHPValue($val);
-        } else if (($val instanceof \MongoId) || ($val instanceof \MongoTimestamp)) {
-            return (string) $val;
-        } else if (($val instanceof \MongoMaxKey) || ($val instanceof \MongoMinKey)) {
-            return Type::getType('key')->convertToPHPValue($val);
-        } else {
-            return $val;
-        }
+        $cursor = $this->collection->find($query, $select);
+        return new MongoCursor($this->dm, $this->dm->getHydrator(), $this->class, $cursor);
     }
 
     /**
      * Returns the reference representation to be stored in mongodb or null if not applicable.
      *
-     * @param ClassMetadata $class
-     * @param Document $doc
+     * @param array $referenceMapping
+     * @param Document $document
      * @return array|null
      */
-    private function _prepareDocReference(ClassMetadata $class, $doc)
+    private function prepareReferencedDocValue(array $referenceMapping, $document)
     {
-        if ( ! is_object($doc)) {
-            return $doc;
-        }
-        $id = $this->_uow->getDocumentIdentifier($doc);
+        $class = $this->dm->getClassMetadata(get_class($document));
+        $id = $this->uow->getDocumentIdentifier($document);
         if (null !== $id) {
-            $id = $class->getPHPIdentifierValue($id);
+            $id = $class->getDatabaseIdentifierValue($id);
         }
         $ref = array(
-            $this->_cmd . 'ref' => $class->getCollection(),
-            $this->_cmd . 'id' => $id,
-            $this->_cmd . 'db' => $class->getDB()
+            $this->cmd . 'ref' => $class->getCollection(),
+            $this->cmd . 'id' => $id,
+            $this->cmd . 'db' => $class->getDB()
         );
+        if ( ! isset($referenceMapping['targetDocument'])) {
+            $discriminatorField = isset($referenceMapping['discriminatorField']) ? $referenceMapping['discriminatorField'] : '_doctrine_class_name';
+            $discriminatorValue = isset($referenceMapping['discriminatorMap']) ? array_search($class->getName(), $referenceMapping['discriminatorMap']) : $class->getName();
+            $ref[$discriminatorField] = $discriminatorValue;
+        }
         return $ref;
     }
 
     /**
      * Prepares array of values to be stored in mongo to represent embedded object.
      *
-     * @param ClassMetadata $class
-     * @param Document $doc
+     * @param array $embeddedMapping
+     * @param Document $embeddedDocument
      * @return array
      */
-    private function _prepareDocEmbeded(ClassMetadata $class, $doc)
+    private function prepareEmbeddedDocValue(array $embeddedMapping, $embeddedDocument)
     {
-        if ( ! is_object($doc)) {
-            return $doc;
-        }
-        $changeset = array();
+        $className = is_object($embeddedDocument) ? get_class($embeddedDocument) : $embeddedDocument['className'];
+        $class = $this->dm->getClassMetadata($className);
+        $embeddedDocumentValue = array();
         foreach ($class->fieldMappings as $mapping) {
-            $rawValue = $class->getFieldValue($doc, $mapping['fieldName']);
-            if ( ! isset($rawValue)) {
+            if (is_object($embeddedDocument)) {
+                $rawValue = $class->getFieldValue($embeddedDocument, $mapping['fieldName']);
+            } else {
+                $rawValue = isset($embeddedDocument[$mapping['fieldName']]) ? $embeddedDocument[$mapping['fieldName']] : null;
+            }
+            if (isset($mapping['notSaved']) && $mapping['notSaved'] === true) {
+                continue;
+            }
+            if ($rawValue === null && $mapping['nullable'] === false) {
                 continue;
             }
             if (isset($mapping['embedded']) || isset($mapping['reference'])) {
-                $classMetadata = $this->_dm->getClassMetadata($mapping['targetDocument']);
                 if (isset($mapping['embedded'])) {
                     if ($mapping['type'] == 'many') {
                         $value = array();
                         foreach ($rawValue as $embeddedDoc) {
-                            $value[] = $this->_prepareDocEmbeded($classMetadata, $embeddedDoc);
+                            $value[] = $this->prepareEmbeddedDocValue($mapping, $embeddedDoc);
                         }
                     } elseif ($mapping['type'] == 'one') {
-                        $value = $this->_prepareDocEmbeded($classMetadata, $rawValue);
+                        $value = $this->prepareEmbeddedDocValue($mapping, $rawValue);
                     }
                 } elseif (isset($mapping['reference'])) {
                     if ($mapping['type'] == 'many') {
                          $value = array();
                         foreach ($rawValue as $referencedDoc) {
-                            $value[] = $this->_prepareDocReference($classMetadata, $referencedDoc);
+                            $value[] = $this->prepareReferencedDocValue($mapping, $referencedDoc);
                         }
                     } else {
-                        $value = $this->_prepareDocReference($classMetadata, $rawValue);
+                        $value = $this->prepareReferencedDocValue($mapping, $rawValue);
                     }
                 }
             } else {
                 $value = Type::getType($mapping['type'])->convertToDatabaseValue($rawValue);
             }
-            $changeset[$mapping['fieldName']] = $value;
+            $embeddedDocumentValue[$mapping['fieldName']] = $value;
         }
-        return $changeset;
+        if ( ! isset($embeddedMapping['targetDocument'])) {
+            $discriminatorField = isset($embeddedMapping['discriminatorField']) ? $embeddedMapping['discriminatorField'] : '_doctrine_class_name';
+            $discriminatorValue = isset($embeddedMapping['discriminatorMap']) ? array_search($class->getName(), $embeddedMapping['discriminatorMap']) : $class->getName();
+            $embeddedDocumentValue[$discriminatorField] = $discriminatorValue;
+        }
+        return $embeddedDocumentValue;
+    }
+
+    /**
+     * Checks whether the given managed document exists in the database.
+     *
+     * @param object $document
+     * @return boolean TRUE if the document exists in the database, FALSE otherwise.
+     */
+    public function exists($document)
+    {
+        $id = $this->class->getIdentifierObject($document);
+        return (bool) $this->collection->findOne(array(array('_id' => $id)), array('_id'));
     }
 }

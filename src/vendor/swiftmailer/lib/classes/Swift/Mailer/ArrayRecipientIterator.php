@@ -8,6 +8,7 @@
  * file that was distributed with this source code.
  */
 
+//@require 'Swift/Mailer/RecipientIterator.php';
 
 /**
  * Wraps a standard PHP array in an interator.

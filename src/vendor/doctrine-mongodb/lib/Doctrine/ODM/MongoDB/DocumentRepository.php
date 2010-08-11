@@ -37,17 +37,17 @@ class DocumentRepository
     /**
      * @var string
      */
-    protected $_documentName;
+    protected $documentName;
 
     /**
      * @var DocumentManager
      */
-    protected $_dm;
+    protected $dm;
 
     /**
      * @var Doctrine\ODM\MongoDB\Mapping\ClassMetadata
      */
-    protected $_class;
+    protected $class;
 
     /**
      * Initializes a new <tt>DocumentRepository</tt>.
@@ -57,9 +57,9 @@ class DocumentRepository
      */
     public function __construct($dm, Mapping\ClassMetadata $class)
     {
-        $this->_documentName = $class->name;
-        $this->_dm = $dm;
-        $this->_class = $class;
+        $this->documentName = $class->name;
+        $this->dm = $dm;
+        $this->class = $class;
     }
 
     /**
@@ -69,8 +69,8 @@ class DocumentRepository
      */
     public function createQuery()
     {
-        return $this->_dm->createQuery()
-            ->from($this->_documentName);
+        return $this->dm->createQuery()
+            ->from($this->documentName);
     }
 
     /**
@@ -78,7 +78,7 @@ class DocumentRepository
      */
     public function clear()
     {
-        $this->_dm->clear($this->_class->rootDocumentName);
+        $this->dm->clear($this->class->rootDocumentName);
     }
 
     /**
@@ -92,13 +92,13 @@ class DocumentRepository
     public function find($query = array(), array $select = array())
     {
         if (is_string($query)) {
-            if ($document = $this->_dm->getUnitOfWork()->tryGetById($query, $this->_documentName)) {
+            if ($document = $this->dm->getUnitOfWork()->tryGetById($query, $this->documentName)) {
                 return $document; // Hit!
             }
 
-            return $this->_dm->getUnitOfWork()->getDocumentPersister($this->_documentName)->loadById($query);
+            return $this->dm->getUnitOfWork()->getDocumentPersister($this->documentName)->loadById($query);
         } else {
-            return $this->_dm->getUnitOfWork()->getDocumentPersister($this->_documentName)->loadAll($query, $select);
+            return $this->dm->getUnitOfWork()->getDocumentPersister($this->documentName)->loadAll($query, $select);
         }
     }
 
@@ -112,7 +112,7 @@ class DocumentRepository
      */
     public function findOne(array $query = array(), array $select = array())
     {
-        return $this->_dm->getUnitOfWork()->getDocumentPersister($this->_documentName)->load($query, $select);
+        return $this->dm->getUnitOfWork()->getDocumentPersister($this->documentName)->load($query, $select);
     }
 
     /**
@@ -177,10 +177,10 @@ class DocumentRepository
 
         $fieldName = lcfirst(\Doctrine\Common\Util\Inflector::classify($by));
 
-        if ($this->_class->hasField($fieldName)) {
+        if ($this->class->hasField($fieldName)) {
             return $this->$method(array($fieldName => $arguments[0]));
         } else {
-            throw MongoDBException::invalidFindByCall($this->_documentName, $fieldName, $method.$by);
+            throw MongoDBException::invalidFindByCall($this->documentName, $fieldName, $method.$by);
         }
     }
 
@@ -189,7 +189,7 @@ class DocumentRepository
      */
     public function getDocumentName()
     {
-        return $this->_documentName;
+        return $this->documentName;
     }
 
     /**
@@ -197,7 +197,7 @@ class DocumentRepository
      */
     public function getDocumentManager()
     {
-        return $this->_dm;
+        return $this->dm;
     }
 
     /**
@@ -205,6 +205,6 @@ class DocumentRepository
      */
     public function getClassMetadata()
     {
-        return $this->_class;
+        return $this->class;
     }
 }

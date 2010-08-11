@@ -17,8 +17,6 @@ use Symfony\Components\HttpKernel\Client;
 /**
  * WebTestCase is the base class for functional tests.
  *
- * @package    Symfony
- * @subpackage Components_HttpKernel
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
  */
 abstract class WebTestCase extends \PHPUnit_Framework_TestCase
@@ -30,7 +28,7 @@ abstract class WebTestCase extends \PHPUnit_Framework_TestCase
      * @param Boolean $debug   The debug flag
      * @param array   $server  An array of server parameters
      *
-     * @return Symfony\Framework\Client A Client instance
+     * @return Client A Client instance
      */
     abstract public function createClient(array $options = array(), array $server = array());
 }

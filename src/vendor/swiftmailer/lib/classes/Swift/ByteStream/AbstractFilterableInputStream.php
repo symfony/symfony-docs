@@ -8,6 +8,9 @@
  * file that was distributed with this source code.
  */
 
+//@require 'Swift/InputByteStream.php';
+//@require 'Swift/Filterable.php';
+//@require 'Swift/StreamFilter.php';
 
 /**
  * Provides the base functionality for an InputStream supporting filters.

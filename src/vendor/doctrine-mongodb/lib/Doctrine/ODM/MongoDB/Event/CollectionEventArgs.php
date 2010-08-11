@@ -31,22 +31,22 @@ use Doctrine\Common\EventArgs;
  */
 class CollectionEventArgs extends EventArgs
 {
-    private $_invoker;
-    private $_data;
+    private $invoker;
+    private $data;
 
     public function __construct($invoker, &$data)
     {
-        $this->_invoker = $invoker;
-        $this->_data = $data;
+        $this->invoker = $invoker;
+        $this->data = $data;
     }
 
     public function getInvoker()
     {
-        return $this->_invoker;
+        return $this->invoker;
     }
 
     public function getData()
     {
-        return $this->_data;
+        return $this->data;
     }
 }

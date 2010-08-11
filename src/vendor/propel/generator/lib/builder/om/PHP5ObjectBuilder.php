@@ -2599,18 +2599,20 @@ abstract class ".$this->getClassname()." extends ".$parentClass." ";
 		$table = $this->getTable();
 
 		$varName = $this->getFKVarName($fk);
-		$pCollName = $this->getFKPhpNameAffix($fk, $plural = true);
 		
-		$fkPeerBuilder = $this->getNewPeerBuilder($this->getForeignTable($fk));
 		$fkQueryBuilder = $this->getNewStubQueryBuilder($this->getForeignTable($fk));
 		$fkObjectBuilder = $this->getNewObjectBuilder($this->getForeignTable($fk))->getStubObjectBuilder();
 		$className = $fkObjectBuilder->getClassname(); // get the Classname that has maybe a prefix
 		
 		$and = "";
-		$comma = "";
 		$conditional = "";
-		$argmap = array(); // foreign -> local mapping
-		$argsize = 0;
+		$localColumns = array(); // foreign key local attributes names
+
+		// If the related columns are a primary key on the foreign table
+		// then use retrieveByPk() instead of doSelect() to take advantage
+		// of instance pooling
+		$useRetrieveByPk = $fk->isForeignPrimaryKey();
+
 		foreach ($fk->getLocalColumns() as $columnName) {
 			
 			$lfmap = $fk->getLocalForeignMapping();
@@ -2621,6 +2623,7 @@ abstract class ".$this->getClassname()." extends ".$parentClass." ";
 			$column = $table->getColumn($columnName);
 			$cptype = $column->getPhpType();
 			$clo = strtolower($column->getName());
+			$localColumns[$foreignColumn->getPosition()] = '$this->'.$clo;
 			
 			if ($cptype == "integer" || $cptype == "float" || $cptype == "double") {
 				$conditional .= $and . "\$this->". $clo ." != 0";
@@ -2630,15 +2633,12 @@ abstract class ".$this->getClassname()." extends ".$parentClass." ";
 				$conditional .= $and . "\$this->" . $clo ." !== null";
 			}
 			
-			$argmap[] = array('foreign' => $foreignColumn, 'local' => $localColumn);
 			$and = " && ";
-			$comma = ", ";
-			$argsize = $argsize + 1;
 		}
-		
-		// If the related column is a primary kay and if it's a simple association,
-		// The use retrieveByPk() instead of doSelect() to take advantage of instance pooling
-		$useRetrieveByPk = count($argmap) == 1 && $argmap[0]['foreign']->isPrimaryKey();
+
+		ksort($localColumns); // restoring the order of the foreign PK
+		$localColumns = count($localColumns) > 1 ?
+				('array('.implode(', ', $localColumns).')') : reset($localColumns);
 
 		$script .= "
 
@@ -2655,7 +2655,7 @@ abstract class ".$this->getClassname()." extends ".$parentClass." ";
 		if (\$this->$varName === null && ($conditional)) {";
 		if ($useRetrieveByPk) {
 			$script .= "
-			\$this->$varName = ".$fkQueryBuilder->getClassname()."::create()->findPk(\$this->$clo, \$con);";
+			\$this->$varName = ".$fkQueryBuilder->getClassname()."::create()->findPk($localColumns, \$con);";
 		} else {
 			$script .= "
 			\$this->$varName = ".$fkQueryBuilder->getClassname()."::create()

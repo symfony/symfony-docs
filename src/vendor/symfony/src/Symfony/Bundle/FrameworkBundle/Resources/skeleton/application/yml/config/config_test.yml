@@ -1,0 +1,13 @@
+imports:
+    - { resource: config_dev.yml }
+
+kernel.config:
+    error_handler: false
+
+zend.logger:
+    priority: debug
+
+web.config:
+    toolbar: false
+
+kernel.test: ~

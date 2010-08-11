@@ -8,6 +8,7 @@
  * file that was distributed with this source code.
  */
 
+//@require 'Swift/DependencyContainer.php';
 
 /**
  * Changes some global preference settings in Swift Mailer.

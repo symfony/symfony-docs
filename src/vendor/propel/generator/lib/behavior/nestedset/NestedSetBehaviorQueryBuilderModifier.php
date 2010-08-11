@@ -120,7 +120,7 @@ public function descendantsOf($objectName)
 		}
 		$script .= "
 		->addUsingAlias({$this->peerClassname}::LEFT_COL, {$objectName}->getLeftValue(), Criteria::GREATER_THAN)
-		->addUsingAlias({$this->peerClassname}::RIGHT_COL, {$objectName}->getRightValue(), Criteria::LESS_THAN);
+		->addUsingAlias({$this->peerClassname}::LEFT_COL, {$objectName}->getRightValue(), Criteria::LESS_THAN);
 }
 ";
 	}
@@ -146,7 +146,7 @@ public function branchOf($objectName)
 		}
 		$script .= "
 		->addUsingAlias({$this->peerClassname}::LEFT_COL, {$objectName}->getLeftValue(), Criteria::GREATER_EQUAL)
-		->addUsingAlias({$this->peerClassname}::RIGHT_COL, {$objectName}->getRightValue(), Criteria::LESS_EQUAL);
+		->addUsingAlias({$this->peerClassname}::LEFT_COL, {$objectName}->getRightValue(), Criteria::LESS_EQUAL);
 }
 ";
 	}

@@ -8,6 +8,7 @@
  * file that was distributed with this source code.
  */
 
+//@require 'Swift/SwiftException.php';
 
 /**
  * RFC Compliance Exception class.

@@ -8,6 +8,8 @@
  * file that was distributed with this source code.
  */
 
+//@require 'Swift/Events/EventListener.php';
+//@require 'Swift/Events/TransportChangeEvent.php';
 
 /**
  * Listens for changes within the Transport system.

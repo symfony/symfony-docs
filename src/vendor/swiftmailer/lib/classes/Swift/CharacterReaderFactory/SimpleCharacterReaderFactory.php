@@ -8,6 +8,7 @@
  * file that was distributed with this source code.
  */
 
+//@require 'Swift/CharacterReaderFactory.php';
 
 /**
  * Standard factory for creating CharacterReaders.

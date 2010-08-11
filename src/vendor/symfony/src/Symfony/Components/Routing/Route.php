@@ -14,8 +14,6 @@ namespace Symfony\Components\Routing;
 /**
  * A Route describes a route and its parameters.
  *
- * @package    Symfony
- * @subpackage Components_Routing
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
  */
 class Route
@@ -154,7 +152,7 @@ class Route
     }
 
     /**
-     * Get an default value.
+     * Gets a default value.
      *
      * @param string $name A variable name
      *
@@ -163,6 +161,17 @@ class Route
     public function getDefault($name)
     {
         return isset($this->defaults[$name]) ? $this->defaults[$name] : null;
+    }
+
+    /**
+     * Sets a default value.
+     *
+     * @param string $name    A variable name
+     * @param mixed  $default The default value
+     */
+    public function setDefault($name, $default)
+    {
+        $this->defaults[$name] = $default;
     }
 
     /**

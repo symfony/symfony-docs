@@ -23,7 +23,7 @@ require_once 'model/Behavior.php';
  * @author     Martin Poeschl<mpoeschl@marmot.at> (Torque)
  * @author     Daniel Rall<dlr@collab.net> (Torque)
  * @author     Byron Foster <byron_foster@yahoo.com> (Torque)
- * @version    $Revision: 1802 $
+ * @version    $Revision: 1848 $
  * @package    propel.generator.model
  */
 class Database extends XMLElement
@@ -301,6 +301,7 @@ class Database extends XMLElement
 
 	/**
 	 * Check whether the database has a table.
+	 * @param      string $name the name of the table (e.g. 'my_table')
 	 * @return     boolean
 	 */
 	public function hasTable($name)
@@ -321,6 +322,16 @@ class Database extends XMLElement
 		return null; // just to be explicit
 	}
 
+	/**
+	 * Check whether the database has a table.
+	 * @param      string $phpName the PHP Name of the table (e.g. 'MyTable')
+	 * @return     boolean
+	 */
+	public function hasTableByPhpName($phpName)
+	{
+		return array_key_exists($phpName, $this->tablesByPhpName);
+	}
+	
 	/**
 	 * Return the table with the specified phpName.
 	 * @param      string $phpName the PHP Name of the table (e.g. 'MyTable')

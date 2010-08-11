@@ -8,6 +8,7 @@
  * file that was distributed with this source code.
  */
 
+//@require 'Swift/Mime/Message.php';
 
 /**
  * The Reporter plugin sends pass/fail notification to a Reporter.

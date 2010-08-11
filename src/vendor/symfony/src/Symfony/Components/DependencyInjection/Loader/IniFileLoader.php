@@ -17,8 +17,6 @@ use Symfony\Components\DependencyInjection\Resource\FileResource;
 /**
  * IniFileLoader loads parameters from INI files.
  *
- * @package    Symfony
- * @subpackage Components_DependencyInjection
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
  */
 class IniFileLoader extends FileLoader
@@ -46,5 +44,17 @@ class IniFileLoader extends FileLoader
                 $this->container->setParameter($key, $value);
             }
         }
+    }
+
+    /**
+     * Returns true if this class supports the given resource.
+     *
+     * @param  mixed $resource A resource
+     *
+     * @return Boolean true if this class supports the given resource, false otherwise
+     */
+    public function supports($resource)
+    {
+        return is_string($resource) && 'ini' === pathinfo($resource, PATHINFO_EXTENSION);
     }
 }

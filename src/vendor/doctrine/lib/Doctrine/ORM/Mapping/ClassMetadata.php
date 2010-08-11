@@ -158,14 +158,10 @@ class ClassMetadata extends ClassMetadataInfo
      * @param mixed $id
      * @todo Rename to assignIdentifier()
      */
-    public function setIdentifierValues($entity, $id)
+    public function setIdentifierValues($entity, array $id)
     {
-        if ($this->isIdentifierComposite) {
-            foreach ($id as $idField => $idValue) {
-                $this->reflFields[$idField]->setValue($entity, $idValue);
-            }
-        } else {
-            $this->reflFields[$this->identifier[0]]->setValue($entity, $id);
+        foreach ($id as $idField => $idValue) {
+            $this->reflFields[$idField]->setValue($entity, $idValue);
         }
     }
 
@@ -197,12 +193,12 @@ class ClassMetadata extends ClassMetadataInfo
      *
      * @param AssociationMapping $assocMapping
      */
-    protected function _storeAssociationMapping(AssociationMapping $assocMapping)
+    protected function _storeAssociationMapping(array $assocMapping)
     {
         parent::_storeAssociationMapping($assocMapping);
 
         // Store ReflectionProperty of mapped field
-        $sourceFieldName = $assocMapping->sourceFieldName;
+        $sourceFieldName = $assocMapping['fieldName'];
 
         $refProp = $this->reflClass->getProperty($sourceFieldName);
         $refProp->setAccessible(true);
@@ -236,6 +232,19 @@ class ClassMetadata extends ClassMetadataInfo
         return isset($this->table['quoted']) ?
                 $platform->quoteIdentifier($this->table['name']) :
                 $this->table['name'];
+    }
+
+    /**
+     * Gets the (possibly quoted) name of the join table.
+     *
+     * @param AbstractPlatform $platform
+     * @return string
+     */
+    public function getQuotedJoinTableName(array $assoc, $platform)
+    {
+        return isset($assoc['joinTable']['quoted'])
+            ? $platform->quoteIdentifier($assoc['joinTable']['name'])
+            : $assoc['joinTable']['name'];
     }
 
     /**
@@ -341,8 +350,8 @@ class ClassMetadata extends ClassMetadataInfo
         }
 
         foreach ($this->associationMappings as $field => $mapping) {
-            if ($mapping->declared) {
-                $reflField = new ReflectionProperty($mapping->declared, $field);
+            if (isset($mapping['declared'])) {
+                $reflField = new ReflectionProperty($mapping['declared'], $field);
             } else {
                 $reflField = $this->reflClass->getProperty($field);
             }

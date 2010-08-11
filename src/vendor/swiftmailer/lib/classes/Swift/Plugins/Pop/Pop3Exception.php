@@ -8,6 +8,7 @@
  * file that was distributed with this source code.
  */
 
+//@require 'Swift/IoException.php';
 
 /**
  * Pop3Exception thrown when an error occurs connecting to a POP3 host.

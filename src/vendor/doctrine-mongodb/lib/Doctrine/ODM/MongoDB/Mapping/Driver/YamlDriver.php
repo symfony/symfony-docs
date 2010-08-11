@@ -37,7 +37,7 @@ class YamlDriver extends AbstractFileDriver
      *
      * @var string
      */
-    protected $_fileExtension = '.dcm.yml';
+    protected $fileExtension = '.dcm.yml';
 
     /**
      * {@inheritdoc}
@@ -86,8 +86,17 @@ class YamlDriver extends AbstractFileDriver
         if (isset($element['discriminatorMap'])) {
             $class->setDiscriminatorMap($element['discriminatorMap']);
         }
+        if (isset($element['changeTrackingPolicy'])) {
+            $class->setChangeTrackingPolicy(constant('Doctrine\ODM\MongoDB\Mapping\ClassMetadata::CHANGETRACKING_'
+                    . strtoupper($element['changeTrackingPolicy'])));
+        }
         if (isset($element['fields'])) {
             foreach ($element['fields'] as $fieldName => $mapping) {
+                if (is_string($mapping)) {
+                    $type = $mapping;
+                    $mapping = array();
+                    $mapping['type'] = $type;
+                }
                 if ( ! isset($mapping['fieldName'])) {
                     $mapping['fieldName'] = $fieldName;
                 }
@@ -96,25 +105,25 @@ class YamlDriver extends AbstractFileDriver
         }
         if (isset($element['embedOne'])) {
             foreach ($element['embedOne'] as $fieldName => $embed) {
-                $mapping = $this->_getMappingFromEmbed($fieldName, $embed, 'one');
+                $mapping = $this->getMappingFromEmbed($fieldName, $embed, 'one');
                 $class->mapField($mapping);
             }
         }
         if (isset($element['embedMany'])) {
             foreach ($element['embedMany'] as $fieldName => $embed) {
-                $mapping = $this->_getMappingFromEmbed($fieldName, $embed, 'many');
+                $mapping = $this->getMappingFromEmbed($fieldName, $embed, 'many');
                 $class->mapField($mapping);
             }
         }
         if (isset($element['referenceOne'])) {
             foreach ($element['referenceOne'] as $fieldName => $reference) {
-                $mapping = $this->_getMappingFromReference($fieldName, $reference, 'one');
+                $mapping = $this->getMappingFromReference($fieldName, $reference, 'one');
                 $class->mapField($mapping);
             }
         }
         if (isset($element['referenceMany'])) {
             foreach ($element['referenceMany'] as $fieldName => $reference) {
-                $mapping = $this->_getMappingFromReference($fieldName, $reference, 'many');
+                $mapping = $this->getMappingFromReference($fieldName, $reference, 'many');
                 $class->mapField($mapping);
             }
         }
@@ -127,31 +136,31 @@ class YamlDriver extends AbstractFileDriver
         }
     }
 
-    private function _getMappingFromEmbed($fieldName, $embed, $type)
+    private function getMappingFromEmbed($fieldName, $embed, $type)
     {
         $mapping = array(
-            'name'           => $fieldName,
-            'embedded'       => true,
+            'cascade'        => isset($embed['cascade']) ? $embed['cascade'] : null,
             'type'           => $type,
-            'targetDocument' => $embed['targetDocument'],
+            'embedded'       => true,
+            'targetDocument' => isset($embed['targetDocument']) ? $embed['targetDocument'] : null,
+            'name'           => $fieldName,
         );
         return $mapping;
     }
 
-    private function _getMappingFromReference($fieldName, $reference, $type)
+    private function getMappingFromReference($fieldName, $reference, $type)
     {
         $mapping = array(
             'cascade'        => isset($reference['cascade']) ? $reference['cascade'] : null,
             'type'           => $type,
             'reference'      => true,
-            'targetDocument' => $reference['targetDocument'],
+            'targetDocument' => isset($reference['targetDocument']) ? $reference['targetDocument'] : null,
             'name'           => $fieldName,
-            'strategy'         => (isset($reference['strategy'])) ? $reference['strategy'] : 'set',
         );
         return $mapping;
     }
 
-    protected function _loadMappingFile($file)
+    protected function loadMappingFile($file)
     {
         return \Symfony\Components\Yaml\Yaml::load($file);
     }

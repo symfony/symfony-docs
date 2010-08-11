@@ -8,6 +8,7 @@
  * file that was distributed with this source code.
  */
 
+//@require 'Swift/CharacterReader.php';
 
 /**
  * Analyzes UTF-8 characters.

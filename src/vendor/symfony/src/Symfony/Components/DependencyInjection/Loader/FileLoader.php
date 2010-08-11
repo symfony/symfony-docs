@@ -16,19 +16,18 @@ use Symfony\Components\DependencyInjection\ContainerBuilder;
 /**
  * FileLoader is the abstract class used by all built-in loaders that are file based.
  *
- * @package    Symfony
- * @subpackage Components_DependencyInjection
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
  */
 abstract class FileLoader extends Loader
 {
+    protected $currentDir;
     protected $paths;
 
     /**
      * Constructor.
      *
-     * @param \Symfony\Components\DependencyInjection\ContainerBuilder $container A ContainerBuilder instance
-     * @param string|array $paths A path or an array of paths where to look for resources
+     * @param ContainerBuilder $container A ContainerBuilder instance
+     * @param string|array     $paths A path or an array of paths where to look for resources
      */
     public function __construct(ContainerBuilder $container, $paths = array())
     {
@@ -39,6 +38,22 @@ abstract class FileLoader extends Loader
         }
 
         $this->paths = $paths;
+    }
+
+    /**
+     * Adds definitions and parameters from a resource.
+     *
+     * @param mixed $resource A Resource
+     */
+    public function import($resource)
+    {
+        $loader = $this->resolve($resource);
+
+        if ($loader instanceof FileLoader && null !== $this->currentDir) {
+            $resource = $this->getAbsolutePath($resource, $this->currentDir);
+        }
+
+        $loader->load($resource);
     }
 
     /**

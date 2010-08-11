@@ -31,29 +31,29 @@ use Doctrine\ODM\MongoDB\DocumentManager;
  */
 class OnUpdatePreparedArgs extends LifecycleEventArgs
 {
-    private $_dm;
-    private $_document;
-    private $_update;
+    private $dm;
+    private $document;
+    private $update;
 
     public function __construct(DocumentManager $dm, $document, array &$update)
     {
-        $this->_dm = $dm;
-        $this->_document = $document;
-        $this->_update = $update;
+        $this->dm = $dm;
+        $this->document = $document;
+        $this->update = $update;
     }
 
     public function getDocumentManager()
     {
-        return $this->_dm;
+        return $this->dm;
     }
 
     public function getDocument()
     {
-        return $this->_document;
+        return $this->document;
     }
 
     public function &getUpdate()
     {
-        return $this->_update;
+        return $this->update;
     }
 }

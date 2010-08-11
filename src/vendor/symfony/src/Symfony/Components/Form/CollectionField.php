@@ -14,8 +14,6 @@ use Symfony\Components\Form\Exception\UnexpectedTypeException;
  */
 
 /**
- * @package    symfony
- * @subpackage form
  * @author     Bernhard Schussek <bernhard.schussek@symfony-project.com>
  * @version    SVN: $Id: FieldGroup.php 79 2009-12-08 12:53:15Z bernhard $
  */
@@ -53,7 +51,7 @@ class CollectionField extends FieldGroup
 
     public function setData($collection)
     {
-        if (!is_array($collection) && !$collection instanceof Traversable) {
+        if (!is_array($collection) && !$collection instanceof \Traversable) {
             throw new UnexpectedTypeException('The data must be an array');
         }
 

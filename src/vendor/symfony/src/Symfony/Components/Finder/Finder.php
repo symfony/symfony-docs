@@ -23,8 +23,6 @@ namespace Symfony\Components\Finder;
  * $finder = new Finder();
  * $finder = $finder->files()->name('*.php')->in(__DIR__);
  *
- * @package    Symfony
- * @subpackage Components_Finder
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
  */
 class Finder implements \IteratorAggregate
@@ -45,7 +43,7 @@ class Finder implements \IteratorAggregate
     /**
      * Restricts the matching to directories only.
      *
-     * @return Symfony\Components\Finder\Finder The current Finder instance
+     * @return Finder The current Finder instance
      */
     public function directories()
     {
@@ -57,7 +55,7 @@ class Finder implements \IteratorAggregate
     /**
      * Restricts the matching to files only.
      *
-     * @return Symfony\Components\Finder\Finder The current Finder instance
+     * @return Finder The current Finder instance
      */
     public function files()
     {
@@ -76,7 +74,7 @@ class Finder implements \IteratorAggregate
      *
      * @param  int $level The depth level expression
      *
-     * @return Symfony\Components\Finder\Finder The current Finder instance
+     * @return Finder The current Finder instance
      *
      * @see Symfony\Components\Finder\Iterator\DepthRangeFilterIterator
      * @see Symfony\Components\Finder\Comparator\NumberComparator
@@ -100,7 +98,7 @@ class Finder implements \IteratorAggregate
      *
      * @param  string $date A date rage string
      *
-     * @return Symfony\Components\Finder\Finder The current Finder instance
+     * @return Finder The current Finder instance
      *
      * @see strtotime
      * @see Symfony\Components\Finder\Iterator\DateRangeFilterIterator
@@ -124,7 +122,7 @@ class Finder implements \IteratorAggregate
      *
      * @param  string $pattern A pattern (a regexp, a glob, or a string)
      *
-     * @return Symfony\Components\Finder\Finder The current Finder instance
+     * @return Finder The current Finder instance
      *
      * @see Symfony\Components\Finder\Iterator\FilenameFilterIterator
      */
@@ -140,7 +138,7 @@ class Finder implements \IteratorAggregate
      *
      * @param  string $pattern A pattern (a regexp, a glob, or a string)
      *
-     * @return Symfony\Components\Finder\Finder The current Finder instance
+     * @return Finder The current Finder instance
      *
      * @see Symfony\Components\Finder\Iterator\FilenameFilterIterator
      */
@@ -160,7 +158,7 @@ class Finder implements \IteratorAggregate
      *
      * @param string $size A size range string
      *
-     * @return Symfony\Components\Finder\Finder The current Finder instance
+     * @return Finder The current Finder instance
      *
      * @see Symfony\Components\Finder\Iterator\SizeRangeFilterIterator
      * @see Symfony\Components\Finder\Comparator\NumberComparator
@@ -177,7 +175,7 @@ class Finder implements \IteratorAggregate
      *
      * @param  string $dir A directory to exclude
      *
-     * @return Symfony\Components\Finder\Finder The current Finder instance
+     * @return Finder The current Finder instance
      *
      * @see Symfony\Components\Finder\Iterator\ExcludeDirectoryFilterIterator
      */
@@ -191,7 +189,7 @@ class Finder implements \IteratorAggregate
     /**
      * Forces the finder to ignore version control directories.
      *
-     * @return Symfony\Components\Finder\Finder The current Finder instance
+     * @return Finder The current Finder instance
      *
      * @see Symfony\Components\Finder\Iterator\IgnoreVcsFilterIterator
      */
@@ -211,7 +209,7 @@ class Finder implements \IteratorAggregate
      *
      * @param  Closure $closure An anonymous function
      *
-     * @return Symfony\Components\Finder\Finder The current Finder instance
+     * @return Finder The current Finder instance
      *
      * @see Symfony\Components\Finder\Iterator\SortableIterator
      */
@@ -227,7 +225,7 @@ class Finder implements \IteratorAggregate
      *
      * This can be slow as all the matching files and directories must be retrieved for comparison.
      *
-     * @return Symfony\Components\Finder\Finder The current Finder instance
+     * @return Finder The current Finder instance
      *
      * @see Symfony\Components\Finder\Iterator\SortableIterator
      */
@@ -243,7 +241,7 @@ class Finder implements \IteratorAggregate
      *
      * This can be slow as all the matching files and directories must be retrieved for comparison.
      *
-     * @return Symfony\Components\Finder\Finder The current Finder instance
+     * @return Finder The current Finder instance
      *
      * @see Symfony\Components\Finder\Iterator\SortableIterator
      */
@@ -262,7 +260,7 @@ class Finder implements \IteratorAggregate
      *
      * @param  Closure $closure An anonymous function
      *
-     * @return Symfony\Components\Finder\Finder The current Finder instance
+     * @return Finder The current Finder instance
      *
      * @see Symfony\Components\Finder\Iterator\CustomFilterIterator
      */
@@ -276,7 +274,7 @@ class Finder implements \IteratorAggregate
     /**
      * Forces the following of symlinks.
      *
-     * @return Symfony\Components\Finder\Finder The current Finder instance
+     * @return Finder The current Finder instance
      */
     public function followLinks()
     {
@@ -290,7 +288,7 @@ class Finder implements \IteratorAggregate
      *
      * @param  string|array $dirs A directory path or an array of directories
      *
-     * @return Symfony\Components\Finder\Finder The current Finder instance
+     * @return Finder The current Finder instance
      *
      * @throws \InvalidArgumentException if one of the directory does not exist
      */

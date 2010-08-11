@@ -18,6 +18,7 @@
  
  */
  
+//@require 'Swift/Transport/MailInvoker.php';
 
 /**
  * This is the implementation class for {@link Swift_Transport_MailInvoker}.

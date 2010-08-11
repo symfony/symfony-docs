@@ -27,7 +27,7 @@
  * @author     Jon S. Stevens <jon@latchkey.com> (Torque)
  * @author     Brett McLaughlin <bmclaugh@algx.net> (Torque)
  * @author     Daniel Rall <dlr@finemaltcoding.com> (Torque)
- * @version    $Revision: 1612 $
+ * @version    $Revision: 1844 $
  * @package    propel.runtime.adapter
  */
 abstract class DBAdapter
@@ -46,6 +46,7 @@ abstract class DBAdapter
 		'mysqli' => 'DBMySQLi',
 		'mssql'  => 'DBMSSQL',
 		'dblib'  => 'DBMSSQL',
+		'sqlsrv' => 'DBSQLSRV',	
 		'sybase' => 'DBSybase',
 		'oracle' => 'DBOracle',
 		'oci'    => 'DBOracle',

@@ -8,6 +8,9 @@
  * file that was distributed with this source code.
  */
 
+//@require 'Swift/Mime/Attachment.php';
+//@require 'Swift/ByteStream/FileByteStream.php';
+//@require 'Swift/DependencyContainer.php';
 
 /**
  * Attachment class for attaching files to a {@link Swift_Mime_Message}.

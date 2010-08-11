@@ -36,22 +36,22 @@ class LifecycleEventArgs extends EventArgs
     /**
      * @var DocumentManager
      */
-    private $_dm;
+    private $dm;
 
     /**
      * @var object
      */
-    private $_document;
+    private $document;
     
     public function __construct($document, $em)
     {
-        $this->_document = $document;
-        $this->_dm = $em;
+        $this->document = $document;
+        $this->dm = $em;
     }
     
     public function getDocument()
     {
-        return $this->_document;
+        return $this->document;
     }
 
     /**
@@ -59,6 +59,6 @@ class LifecycleEventArgs extends EventArgs
      */
     public function getDocumentManager()
     {
-        return $this->_dm;
+        return $this->dm;
     }
 }

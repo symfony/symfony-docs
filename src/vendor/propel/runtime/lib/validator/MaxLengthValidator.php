@@ -26,14 +26,15 @@
  * </code>
  *
  * @author     Michael Aichler <aichler@mediacluster.de>
- * @version    $Revision: 1612 $
+ * @version    $Revision: 1849 $
  * @package    propel.runtime.validator
  */
 class MaxLengthValidator implements BasicValidator
 {
 
-  public function isValid (ValidatorMap $map, $str)
-  {
-	return strlen($str) <= intval($map->getValue());
-  }
+	public function isValid (ValidatorMap $map, $str)
+	{
+		$len = function_exists('mb_strlen') ? mb_strlen($str) : strlen($str);
+		return $len <= intval($map->getValue());
+	}
 }

@@ -30,7 +30,7 @@ namespace Doctrine\ODM\MongoDB;
 class MongoDB
 {
     /** The PHP MongoDB instance being wrapped */
-    private $_mongoDB;
+    private $mongoDB;
 
     /**
      * Create a new MongoDB instance which wraps a PHP MongoDB instance.
@@ -39,12 +39,12 @@ class MongoDB
      */
     public function __construct(\MongoDB $mongoDB)
     {
-        $this->_mongoDB = $mongoDB;
+        $this->mongoDB = $mongoDB;
     }
 
     public function getName()
     {
-        return (string) $this->_mongoDB;
+        return (string) $this->mongoDB;
     }
 
     /**
@@ -54,19 +54,19 @@ class MongoDB
      */
     public function getMongoDB()
     {
-        return $this->_mongoDB;
+        return $this->mongoDB;
     }
 
     public function selectCollection($collection)
     {
-        return $this->_mongoDB->selectCollection($collection);
+        return $this->mongoDB->selectCollection($collection);
     }
 
     /** @proxy */
     public function __call($method, $arguments)
     {
-        if (method_exists($this->_mongoDB, $method)) {
-            return call_user_func_array(array($this->_mongoDB, $method), $arguments);
+        if (method_exists($this->mongoDB, $method)) {
+            return call_user_func_array(array($this->mongoDB, $method), $arguments);
         }
         throw new \BadMethodCallException(sprintf('Method %s does not exist on %s', $method, get_class($this)));
     }

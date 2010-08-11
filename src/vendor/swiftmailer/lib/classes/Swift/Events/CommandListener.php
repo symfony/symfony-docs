@@ -8,6 +8,8 @@
  * file that was distributed with this source code.
  */
 
+//@require 'Swift/Events/EventListener.php';
+//@require 'Swift/Events/CommandEvent.php';
 
 /**
  * Listens for Transports to send commands to the server.

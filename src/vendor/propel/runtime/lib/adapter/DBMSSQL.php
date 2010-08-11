@@ -12,7 +12,7 @@
  * This is used to connect to a MSSQL database.
  *
  * @author     Hans Lellelid <hans@xmpl.org> (Propel)
- * @version    $Revision: 1700 $
+ * @version    $Revision: 1844 $
  * @package    propel.runtime.adapter
  */
 class DBMSSQL extends DBAdapter
@@ -211,5 +211,12 @@ class DBMSSQL extends DBAdapter
 		//ROW_NUMBER() starts at 1 not 0
 		$sql = $outerSelect . ' (' . $innerSelect . ' ' . $fromStatement . ') AS derivedb WHERE RowNumber BETWEEN ' . ($offset + 1) . ' AND ' . ($limit + $offset);
 		return;
+	}
+
+	/**
+	 * @see        parent::getTimestampFormatter()
+	 */
+	public function getTimestampFormatter() {
+		return "Y-m-d H:i:s.u";
 	}
 }

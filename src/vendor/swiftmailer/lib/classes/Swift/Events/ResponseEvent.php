@@ -8,6 +8,7 @@
  * file that was distributed with this source code.
  */
 
+//@require 'Swift/Events/EventObject.php';
 
 /**
  * Generated when a response is received on a SMTP connection.

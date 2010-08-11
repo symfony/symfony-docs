@@ -22,7 +22,7 @@
  * @method     ModelCriteria innerJoin($relation) Adds a INNER JOIN clause to the query
  *
  * @author     François Zaninotto
- * @version    $Revision: 1799 $
+ * @version    $Revision: 1880 $
  * @package    propel.runtime.query
  */
 class ModelCriteria extends Criteria
@@ -49,6 +49,7 @@ class ModelCriteria extends Criteria
 	protected $isWithOneToMany = false;
 	protected $previousJoin = null; // this is introduced to prevent useQuery->join from going wrong
 	protected $isKeepQuery = false; // whether to clone the current object before termination methods
+	protected $select = null;  // this is for the select method
 		
 	/**
 	 * Creates a new instance with the default capacity which corresponds to
@@ -445,6 +446,76 @@ class ModelCriteria extends Criteria
 	}
 	
 	/**
+	* Makes the ModelCriteria return a string, array, or PropelArrayCollection
+	* Examples:
+	*   ArticleQuery::create()->select('Name')->find();
+	*   => PropelArrayCollection Object ('Foo', 'Bar')
+	*
+	*   ArticleQuery::create()->select('Name')->findOne();
+	*   => string 'Foo'
+	*
+	*   ArticleQuery::create()->select(array('Id', 'Name'))->find();
+	*   => PropelArrayCollection Object (
+	*        array('Id' => 1, 'Name' => 'Foo'),
+	*        array('Id' => 2, 'Name' => 'Bar')
+	*      )
+	*
+	*   ArticleQuery::create()->select(array('Id', 'Name'))->findOne();
+	*   => array('Id' => 1, 'Name' => 'Foo')
+	*
+	* @param       mixed $columnArray A list of column names (e.g. array('Title', 'Category.Name', 'c.Content')) or a single column name (e.g. 'Name')
+	*
+	* @return     ModelCriteria The current object, for fluid interface
+	*/
+	public function select($columnArray)
+	{
+		if (!count($columnArray) || $columnArray == '') {
+			throw new PropelException('You must ask for at least one column');
+		}
+		
+		if ($columnArray == '*') {
+			$columnArray = array();
+			foreach (call_user_func(array($this->modelPeerName, 'getFieldNames'), BasePeer::TYPE_PHPNAME) as $column) {
+				$columnArray []= $this->modelName . '.' . $column;
+			}
+		}
+		
+		$this->select = $columnArray;
+		
+		return $this;
+	}
+	
+	protected function configureSelectColumns()
+	{
+		if (is_null($this->select)) {
+			// leave early
+			return;
+		}
+		
+		// select() needs the PropelSimpleArrayFormatter
+		$this->setFormatter('PropelSimpleArrayFormatter');
+		
+		// clear only the selectColumns, clearSelectColumns() clears asColumns too
+		$this->selectColumns = array();
+		
+		// We need to set the primary table name, since in the case that there are no WHERE columns
+		// it will be impossible for the BasePeer::createSelectSql() method to determine which
+		// tables go into the FROM clause.
+		$this->setPrimaryTableName(constant($this->modelPeerName . '::TABLE_NAME'));
+		
+		// Add requested columns which are not withColumns
+		$columnNames = is_array($this->select) ? $this->select : array($this->select);
+		foreach ($columnNames as $columnName) {
+			// check if the column was added by a withColumn, if not add it
+			if (!array_key_exists($columnName, $this->getAsColumns())) {
+				$column = $this->getColumnFromName ($columnName);
+				// always put quotes around the columnName to be safe, we strip them in the formatter
+				$this->addAsColumn('"' . $columnName . '"', $column[1]);
+			}
+		}
+	}
+	
+	/**
 	 * This method returns the previousJoin for this ModelCriteria,
 	 * by default this is null, but after useQuery this is set the to the join of that use
 	 * 
@@ -558,8 +629,12 @@ class ModelCriteria extends Criteria
 	 */
 	public function addJoinObject(Join $join, $name = null)
 	{
-	  if (!in_array($join, $this->joins)) { // compare equality, NOT identity
-			$this->joins[$name] = $join;
+		if (!in_array($join, $this->joins)) { // compare equality, NOT identity
+			if (null === $name) {
+				$this->joins[] = $join;
+			} else {
+				$this->joins[$name] = $join;
+			}
 		}
 		return $this;
 	}
@@ -1027,6 +1102,8 @@ class ModelCriteria extends Criteria
 			$this->addSelfSelectColumns();
 		}
 		
+		$this->configureSelectColumns();
+		
 		$con->beginTransaction();
 		try {
 			$this->basePreSelect($con);
@@ -1181,6 +1258,8 @@ class ModelCriteria extends Criteria
 		if (!$this->hasSelectClause() && !$this->getPrimaryCriteria()) {
 			$this->addSelfSelectColumns();
 		}
+		
+		$this->configureSelectColumns();
 
 		$needsComplexCount = $this->getGroupByColumns()
 			|| $this->getOffset()
@@ -1812,7 +1891,7 @@ EOT;
 				$joinType = strtoupper($type) . ' JOIN';
 				// Test if first argument is suplied, else don't provide an alias to joinXXX (default value)
         if (!isset($arguments[0])) {
-          $arguments[0] = '';
+          $arguments[0] = null;
         } 
 				array_push($arguments, $joinType);
 				$method = substr($name, $pos);

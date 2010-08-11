@@ -184,7 +184,7 @@ class Syslog extends AbstractWriter
     public function setFacility($facility)
     {
         if ($this->_facility === $facility) {
-            return;
+            return $this;
         }
 
         if (!count($this->_validFacilities)) {
@@ -192,19 +192,18 @@ class Syslog extends AbstractWriter
         }
 
         if (!in_array($facility, $this->_validFacilities)) {
-            require_once 'Zend/Log/Exception.php';
-            throw new Zend_Log_Exception('Invalid log facility provided; please see http://php.net/openlog for a list of valid facility values');
+            throw new Log\Exception('Invalid log facility provided; please see http://php.net/openlog for a list of valid facility values');
         }
 
         if ('WIN' == strtoupper(substr(PHP_OS, 0, 3))
             && ($facility !== LOG_USER)
         ) {
-            require_once 'Zend/Log/Exception.php';
-            throw new Zend_Log_Exception('Only LOG_USER is a valid log facility on Windows');
+            throw new Log\Exception('Only LOG_USER is a valid log facility on Windows');
         }
 
         $this->_facility = $facility;
         $this->_initializeSyslog();
+        return $this;
     }
 
     /**
@@ -216,10 +215,11 @@ class Syslog extends AbstractWriter
     public function setApplicationName($application)
     {
         if ($this->_application === $application) {
-            return;
+            return $this;
         }
         $this->_application = $application;
         $this->_initializeSyslog();
+        return $this;
     }
 
     /**

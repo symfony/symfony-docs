@@ -1,7 +1,5 @@
 <?php
 /*
- *  $Id$
- *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
  * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
@@ -29,7 +27,6 @@ use Doctrine\ORM\Query\Lexer;
  * @license http://www.opensource.org/licenses/lgpl-license.php LGPL
  * @link    www.doctrine-project.org
  * @since   2.0
- * @version $Revision: 3938 $
  * @author  Guilherme Blanco <guilhermeblanco@hotmail.com>
  * @author  Jonathan Wage <jonwage@gmail.com>
  * @author  Roman Borschel <roman@code-factory.org>
@@ -45,46 +42,66 @@ class SizeFunction extends FunctionNode
      */
     public function getSql(\Doctrine\ORM\Query\SqlWalker $sqlWalker)
     {
+        $platform = $sqlWalker->getConnection()->getDatabasePlatform();
         $dqlAlias = $this->collectionPathExpression->identificationVariable;
-        $parts = $this->collectionPathExpression->parts;
-        $assocField = array_pop($parts);
-
-        $qComp = $sqlWalker->getQueryComponent(implode('.', array_merge((array) $dqlAlias, $parts)));
-        $assoc = $qComp['metadata']->associationMappings[$assocField];
-        $sql = '';
+        $assocField = $this->collectionPathExpression->field;
         
-        if ($assoc->isOneToMany()) {
-            $targetClass = $sqlWalker->getEntityManager()->getClassMetadata($assoc->targetEntityName);
-            $targetAssoc = $targetClass->associationMappings[$assoc->mappedBy];
-            
+        $qComp = $sqlWalker->getQueryComponent($dqlAlias);
+        $class = $qComp['metadata'];
+        $assoc = $class->associationMappings[$assocField];
+        $sql = 'SELECT COUNT(*) FROM ';
+
+        if ($assoc['type'] == \Doctrine\ORM\Mapping\ClassMetadata::ONE_TO_MANY) {
+            $targetClass = $sqlWalker->getEntityManager()->getClassMetadata($assoc['targetEntity']);
             $targetTableAlias = $sqlWalker->getSqlTableAlias($targetClass->table['name']);
-            $sourceTableAlias = $sqlWalker->getSqlTableAlias($qComp['metadata']->table['name'], $dqlAlias);
+            $sourceTableAlias = $sqlWalker->getSqlTableAlias($class->table['name'], $dqlAlias);
+
+            $sql .= $targetClass->getQuotedTableName($platform) . ' ' . $targetTableAlias . ' WHERE ';
+
+            $owningAssoc = $targetClass->associationMappings[$assoc['mappedBy']];
+
+            $first = true;
             
-            $whereSql = '';
+            foreach ($owningAssoc['targetToSourceKeyColumns'] as $targetColumn => $sourceColumn) {
+                if ($first) $first = false; else $sql .= ' AND ';
 
-            foreach ($targetAssoc->targetToSourceKeyColumns as $targetKeyColumn => $sourceKeyColumn) {
-                $whereSql .= (($whereSql == '') ? ' WHERE ' : ' AND ')
-                           . $targetTableAlias . '.' . $sourceKeyColumn . ' = ' 
-                           . $sourceTableAlias . '.' . $targetKeyColumn;
+                $sql .= $targetTableAlias . '.' . $sourceColumn
+                      . ' = '
+                      . $sourceTableAlias . '.' . $class->getQuotedColumnName($class->fieldNames[$targetColumn], $platform);
             }
+        } else { // many-to-many
+            $targetClass = $sqlWalker->getEntityManager()->getClassMetadata($assoc['targetEntity']);
 
-            $tableName = $targetClass->table['name'];
-        } else if ($assoc->isManyToMany()) {
-            $targetTableAlias = $sqlWalker->getSqlTableAlias($assoc->joinTable['name']);
-            $sourceTableAlias = $sqlWalker->getSqlTableAlias($qComp['metadata']->table['name'], $dqlAlias);
-            
-            $whereSql = '';
+            $owningAssoc = $assoc['isOwningSide'] ? $assoc : $targetClass->associationMappings[$assoc['mappedBy']];
+            $joinTable = $owningAssoc['joinTable'];
 
-            foreach ($assoc->relationToSourceKeyColumns as $targetKeyColumn => $sourceKeyColumn) {
-                $whereSql .= (($whereSql == '') ? ' WHERE ' : ' AND ')
-                           . $targetTableAlias . '.' . $targetKeyColumn . ' = ' 
-                           . $sourceTableAlias . '.' . $sourceKeyColumn;
+            // SQL table aliases
+            $joinTableAlias = $sqlWalker->getSqlTableAlias($joinTable['name']);
+            $sourceTableAlias = $sqlWalker->getSqlTableAlias($class->table['name'], $dqlAlias);
+
+            // join to target table
+            $sql .= $targetClass->getQuotedJoinTableName($owningAssoc, $platform) . ' ' . $joinTableAlias . ' WHERE ';
+
+            $joinColumns = $assoc['isOwningSide']
+                ? $joinTable['joinColumns']
+                : $joinTable['inverseJoinColumns'];
+
+            $first = true;
+
+            foreach ($joinColumns as $joinColumn) {
+                if ($first) $first = false; else $sql .= ' AND ';
+
+                $sourceColumnName = $class->getQuotedColumnName(
+                    $class->fieldNames[$joinColumn['referencedColumnName']], $platform
+                );
+
+                $sql .= $joinTableAlias . '.' . $joinColumn['name']
+                      . ' = '
+                      . $sourceTableAlias . '.' . $sourceColumnName;
             }
-
-            $tableName = $assoc->joinTable['name'];
         }
         
-        return '(SELECT COUNT(*) FROM ' . $tableName . ' ' . $targetTableAlias . $whereSql . ')';
+        return '(' . $sql . ')';
     }
 
     /**

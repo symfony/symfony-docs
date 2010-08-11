@@ -40,14 +40,14 @@ class AnnotationDriver implements Driver
      *
      * @var AnnotationReader
      */
-    private $_reader;
+    private $reader;
 
     /**
      * The paths where to look for mapping files.
      *
      * @var array
      */
-    private $_paths = array();
+    private $paths = array();
 
     /**
      * Initializes a new AnnotationDriver that uses the given AnnotationReader for reading
@@ -58,7 +58,7 @@ class AnnotationDriver implements Driver
      */
     public function __construct(AnnotationReader $reader, $paths = null)
     {
-        $this->_reader = $reader;
+        $this->reader = $reader;
         if ($paths) {
             $this->addPaths((array) $paths);
         }
@@ -71,7 +71,7 @@ class AnnotationDriver implements Driver
      */
     public function addPaths(array $paths)
     {
-        $this->_paths = array_unique(array_merge($this->_paths, $paths));
+        $this->paths = array_unique(array_merge($this->paths, $paths));
     }
 
     /**
@@ -81,7 +81,7 @@ class AnnotationDriver implements Driver
      */
     public function getPaths()
     {
-        return $this->_paths;
+        return $this->paths;
     }
 
     /**
@@ -91,41 +91,52 @@ class AnnotationDriver implements Driver
     {
         $reflClass = $class->getReflectionClass();
 
-        $classAnnotations = $this->_reader->getClassAnnotations($reflClass);
+        $classAnnotations = $this->reader->getClassAnnotations($reflClass);
         if (isset($classAnnotations['Doctrine\ODM\MongoDB\Mapping\Document'])) {
             $documentAnnot = $classAnnotations['Doctrine\ODM\MongoDB\Mapping\Document'];
-            if ($documentAnnot->db) {
-                $class->setDB($documentAnnot->db);
-            }
-            if ($documentAnnot->collection) {
-                $class->setCollection($documentAnnot->collection);
-            }
-            if ($documentAnnot->repositoryClass) {
-                $class->setCustomRepositoryClass($documentAnnot->repositoryClass);
-            }
-            if ($documentAnnot->indexes) {
-                foreach($documentAnnot->indexes as $index) {
-                    $class->addIndex($index->keys, $index->options);
-                }
-            }
-            if (isset($classAnnotations['Doctrine\ODM\MongoDB\Mapping\InheritanceType'])) {
-                $inheritanceTypeAnnot = $classAnnotations['Doctrine\ODM\MongoDB\Mapping\InheritanceType'];
-                $class->setInheritanceType(constant('Doctrine\ODM\MongoDB\Mapping\ClassMetadata::INHERITANCE_TYPE_' . $inheritanceTypeAnnot->value));
-            }
-            if (isset($classAnnotations['Doctrine\ODM\MongoDB\Mapping\DiscriminatorField'])) {
-                $discrFieldAnnot = $classAnnotations['Doctrine\ODM\MongoDB\Mapping\DiscriminatorField'];
-                $class->setDiscriminatorField(array(
-                    'fieldName' => $discrFieldAnnot->fieldName,
-                ));
-            }
-            if (isset($classAnnotations['Doctrine\ODM\MongoDB\Mapping\DiscriminatorMap'])) {
-                $discrMapAnnot = $classAnnotations['Doctrine\ODM\MongoDB\Mapping\DiscriminatorMap'];
-                $class->setDiscriminatorMap($discrMapAnnot->value);
-            }
-        } else if (isset($classAnnotations['Doctrine\ODM\MongoDB\Mapping\MappedSuperclass'])) {
+        } elseif (isset($classAnnotations['Doctrine\ODM\MongoDB\Mapping\MappedSuperclass'])) {
+            $documentAnnot = $classAnnotations['Doctrine\ODM\MongoDB\Mapping\MappedSuperclass'];
             $class->isMappedSuperclass = true;
-        } else if (isset($classAnnotations['Doctrine\ODM\MongoDB\Mapping\EmbeddedDocument'])) {
+        } elseif (isset($classAnnotations['Doctrine\ODM\MongoDB\Mapping\EmbeddedDocument'])) {
+            $documentAnnot = $classAnnotations['Doctrine\ODM\MongoDB\Mapping\EmbeddedDocument'];
             $class->isEmbeddedDocument = true;
+        }
+
+        if (isset($documentAnnot->db)) {
+            $class->setDB($documentAnnot->db);
+        }
+        if (isset($documentAnnot->collection)) {
+            $class->setCollection($documentAnnot->collection);
+        }
+        if (isset($documentAnnot->repositoryClass)) {
+            $class->setCustomRepositoryClass($documentAnnot->repositoryClass);
+        }
+        if (isset($documentAnnot->indexes)) {
+            foreach($documentAnnot->indexes as $index) {
+                $class->addIndex($index->keys, $index->options);
+            }
+        }
+        if (isset($classAnnotations['Doctrine\ODM\MongoDB\Mapping\InheritanceType'])) {
+            $inheritanceTypeAnnot = $classAnnotations['Doctrine\ODM\MongoDB\Mapping\InheritanceType'];
+            $class->setInheritanceType(constant('Doctrine\ODM\MongoDB\Mapping\ClassMetadata::INHERITANCE_TYPE_' . $inheritanceTypeAnnot->value));
+        }
+        if (isset($classAnnotations['Doctrine\ODM\MongoDB\Mapping\DiscriminatorField'])) {
+            $discrFieldAnnot = $classAnnotations['Doctrine\ODM\MongoDB\Mapping\DiscriminatorField'];
+            $class->setDiscriminatorField(array(
+                'fieldName' => $discrFieldAnnot->fieldName,
+            ));
+        }
+        if (isset($classAnnotations['Doctrine\ODM\MongoDB\Mapping\DiscriminatorMap'])) {
+            $discrMapAnnot = $classAnnotations['Doctrine\ODM\MongoDB\Mapping\DiscriminatorMap'];
+            $class->setDiscriminatorMap($discrMapAnnot->value);
+        }
+        if (isset($classAnnotations['Doctrine\ODM\MongoDB\Mapping\DiscriminatorValue'])) {
+            $discrValueAnnot = $classAnnotations['Doctrine\ODM\MongoDB\Mapping\DiscriminatorValue'];
+            $class->setDiscriminatorValue($discrValueAnnot->value);
+        }
+        if (isset($classAnnotations['Doctrine\ODM\MongoDB\Mapping\ChangeTrackingPolicy'])) {
+            $changeTrackingAnnot = $classAnnotations['Doctrine\ODM\MongoDB\Mapping\ChangeTrackingPolicy'];
+            $class->setChangeTrackingPolicy(constant('Doctrine\ODM\MongoDB\Mapping\ClassMetadata::CHANGETRACKING_' . $changeTrackingAnnot->value));
         }
 
         $methods = $reflClass->getMethods();
@@ -134,14 +145,14 @@ class AnnotationDriver implements Driver
             $mapping = array();
             $mapping['fieldName'] = $property->getName();
 
-            if ($alsoLoad = $this->_reader->getPropertyAnnotation($property, 'Doctrine\ODM\MongoDB\Mapping\AlsoLoad')) {
+            if ($alsoLoad = $this->reader->getPropertyAnnotation($property, 'Doctrine\ODM\MongoDB\Mapping\AlsoLoad')) {
                 $mapping['alsoLoadFields'] = (array) $alsoLoad->value;
             }
-            if ($notSaved = $this->_reader->getPropertyAnnotation($property, 'Doctrine\ODM\MongoDB\Mapping\NotSaved')) {
+            if ($notSaved = $this->reader->getPropertyAnnotation($property, 'Doctrine\ODM\MongoDB\Mapping\NotSaved')) {
                 $mapping['notSaved'] = true;
             }
 
-            foreach ($this->_reader->getPropertyAnnotations($property) as $fieldAnnot) {
+            foreach ($this->reader->getPropertyAnnotations($property) as $fieldAnnot) {
                 if ($fieldAnnot instanceof \Doctrine\ODM\MongoDB\Mapping\Field) {
                     if ($fieldAnnot instanceof \Doctrine\ODM\MongoDB\Mapping\Id && $fieldAnnot->custom) {
                         $fieldAnnot->type = 'custom_id';
@@ -151,41 +162,22 @@ class AnnotationDriver implements Driver
                     $class->mapField($mapping);
                 }
             }
-
-            $types = array('Embed', 'Reference');
-            foreach ($types as $type) {
-                if ($fieldAnnot = $this->_reader->getPropertyAnnotation($property, 'Doctrine\ODM\MongoDB\Mapping\\' . $type)) {
-                    // This is a blatant hack to see if the defined default
-                    // value is an array so we can make the embed/reference many
-                    // instead of one. This won't be necessary once the ReflectionProperty
-                    // class has a getDefaultValue() method: http://bugs.php.net/bug.php?id=41670
-                    $property->setAccessible(true);
-                    $default = $property->getValue(new $class->name);
-                    $mapping = array_merge($mapping, (array) $fieldAnnot);
-                    if (is_array($default)) {
-                        $mapping['type'] = 'many';
-                    } else {
-                        $mapping['type'] = 'one';
-                    }
-                    $class->mapField($mapping);
-                }
-            }
         }
 
         foreach ($methods as $method) {
             if ($method->isPublic()) {
-                if ($alsoLoad = $this->_reader->getMethodAnnotation($method, 'Doctrine\ODM\MongoDB\Mapping\AlsoLoad')) {
-                    $class->fieldMappings[$mapping['fieldName']]['alsoLoadMethods'][] = array(
-                        'name' => (array) $alsoLoad->value,
-                        'method' => $method->getName()
-                    );
+                if ($alsoLoad = $this->reader->getMethodAnnotation($method, 'Doctrine\ODM\MongoDB\Mapping\AlsoLoad')) {
+                    $fields = (array) $alsoLoad->value;
+                    foreach ($fields as $value) {
+                        $class->fieldMappings[$value]['alsoLoadMethods'][] = $method->getName();
+                    }
                 }
             }
         }
         if (isset($classAnnotations['Doctrine\ODM\MongoDB\Mapping\HasLifecycleCallbacks'])) {
             foreach ($methods as $method) {
                 if ($method->isPublic()) {
-                    $annotations = $this->_reader->getMethodAnnotations($method);
+                    $annotations = $this->reader->getMethodAnnotations($method);
 
                     if (isset($annotations['Doctrine\ODM\MongoDB\Mapping\PrePersist'])) {
                         $class->addLifecycleCallback($method->getName(), \Doctrine\ODM\MongoDB\ODMEvents::prePersist);
@@ -217,5 +209,22 @@ class AnnotationDriver implements Driver
                 }
             }
         }
+    }
+
+
+    /**
+     * Factory method for the Annotation Driver
+     * 
+     * @param array|string $paths
+     * @param AnnotationReader $reader
+     * @return AnnotationDriver
+     */
+    static public function create($paths = array(), AnnotationReader $reader = null)
+    {
+        if ($reader == null) {
+            $reader = new AnnotationReader();
+            $reader->setDefaultAnnotationNamespace('Doctrine\ODM\MongoDB\Mapping\\');
+        }
+        return new self($reader, $paths);
     }
 }

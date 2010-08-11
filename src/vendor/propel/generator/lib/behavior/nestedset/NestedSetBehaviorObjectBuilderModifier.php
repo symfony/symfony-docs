@@ -116,19 +116,31 @@ $peerClassname::shiftRLValues(-2, \$this->getRightValue() + 1, null" . ($this->b
 		
 		$this->addProcessNestedSetQueries($script);
 		
-		$this->addGetLeft($script);
-		$this->addGetRight($script);
-		$this->addGetLevel($script);
-		if ($this->getParameter('use_scope') == 'true')
-		{
+		if ($this->getColumnPhpName('left_column') != 'LeftValue') {
+			$this->addGetLeft($script);
+		}
+		if ($this->getColumnPhpName('right_column') != 'RightValue') {
+			$this->addGetRight($script);
+		}
+		if ($this->getColumnPhpName('level_column') != 'Level') {
+			$this->addGetLevel($script);
+		}
+		if ($this->getParameter('use_scope') == 'true'
+		 && $this->getColumnPhpName('scope_column') != 'ScopeValue') {
 			$this->addGetScope($script);
 		}
-
-		$this->addSetLeft($script);
-		$this->addSetRight($script);
-		$this->addSetLevel($script);
-		if ($this->getParameter('use_scope') == 'true')
-		{
+		
+		if ($this->getColumnPhpName('left_column') != 'LeftValue') {
+			$this->addSetLeft($script);
+		}
+		if ($this->getColumnPhpName('right_column') != 'RightValue') {
+			$this->addSetRight($script);
+		}
+		if ($this->getColumnPhpName('level_column') != 'Level') {
+			$this->addSetLevel($script);
+		}
+		if ($this->getParameter('use_scope') == 'true'
+		 && $this->getColumnPhpName('scope_column') != 'ScopeValue') {
 			$this->addSetScope($script);
 		}
 		

@@ -8,6 +8,8 @@
  * file that was distributed with this source code.
  */
 
+//@require 'Swift/Mime/HeaderSet.php';
+//@require 'Swift/Mime/HeaderFactory.php';
 
 /**
  * A collection of MIME headers.

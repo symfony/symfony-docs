@@ -24,8 +24,6 @@ use Symfony\Components\HttpKernel\HttpKernelInterface;
  *
  *  * Edge Architecture Specification (http://www.w3.org/TR/edge-arch)
  *
- * @package    Symfony
- * @subpackage Components_HttpKernel
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
  */
 class Esi
@@ -46,7 +44,7 @@ class Esi
     /**
      * Checks that at least one surrogate has ESI/1.0 capability.
      *
-     * @param Symfony\Components\HttpFoundation\Request $request A Request instance
+     * @param Request $request A Request instance
      *
      * @return Boolean true if one surrogate has ESI/1.0 capability, false otherwise
      */
@@ -62,7 +60,7 @@ class Esi
     /**
      * Adds ESI/1.0 capability to the given Request.
      *
-     * @param Symfony\Components\HttpFoundation\Request $request A Request instance
+     * @param Request $request A Request instance
      */
     public function addSurrogateEsiCapability(Request $request)
     {
@@ -77,7 +75,7 @@ class Esi
      *
      * This method only adds an ESI HTTP header if the Response has some ESI tags.
      *
-     * @param Symfony\Components\HttpFoundation\Response $response A Response instance
+     * @param Response $response A Response instance
      */
     public function addSurrogateControl(Response $response)
     {
@@ -89,7 +87,7 @@ class Esi
     /**
      * Checks that the Response needs to be parsed for ESI tags.
      *
-     * @param Symfony\Components\HttpFoundation\Response $response A Response instance
+     * @param Response $response A Response instance
      *
      * @return Boolean true if the Response needs to be parsed, false otherwise
      */
@@ -128,8 +126,8 @@ class Esi
     /**
      * Replaces a Response ESI tags with the included resource content.
      *
-     * @param Symfony\Components\HttpFoundation\Request  $request  A Request instance
-     * @param Symfony\Components\HttpFoundation\Response $response A Response instance
+     * @param Request  $request  A Request instance
+     * @param Response $response A Response instance
      */
     public function process(Request $request, Response $response)
     {
@@ -139,7 +137,8 @@ class Esi
             $type = 'text/html';
         }
 
-        if (!in_array($type, $this->contentTypes)) {
+        $parts = explode(';', $type);
+        if (!in_array($parts[0], $this->contentTypes)) {
             return $response;
         }
 
@@ -164,10 +163,10 @@ class Esi
     /**
      * Handles an ESI from the cache.
      *
-     * @param Symfony\Components\HttpKernel\Cache\Cache $cache        A Cache instance
-     * @param string                                    $uri          The main URI
-     * @param string                                    $alt          An alternative URI
-     * @param Boolean                                   $ignoreErrors Whether to ignore errors or not
+     * @param Cache   $cache        A Cache instance
+     * @param string  $uri          The main URI
+     * @param string  $alt          An alternative URI
+     * @param Boolean $ignoreErrors Whether to ignore errors or not
      */
     public function handle(Cache $cache, $uri, $alt, $ignoreErrors)
     {

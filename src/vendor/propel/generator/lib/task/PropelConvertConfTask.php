@@ -331,6 +331,18 @@ class PropelConvertConfTask extends AbstractPropelDataModelTask
 								$classMap[$builder->getFullyQualifiedClassname()] = $builder->getClassFilePath();
 							}
 						}
+						
+						// ----------------------------------
+						// Add classes added by behaviors
+						// ----------------------------------
+						if ($table->hasAdditionalBuilders()) {
+							foreach ($table->getAdditionalBuilders() as $builderClass) {
+								$builder = new $builderClass($table);
+								$builder->setGeneratorConfig($generatorConfig);
+								$this->log("Adding class mapping: " . $builder->getClassname() . ' => ' . $builder->getClassFilePath());
+								$classMap[$builder->getFullyQualifiedClassname()] = $builder->getClassFilePath();
+							}
+						}
 
 					} // if (!$table->isReferenceOnly())
 				}
@@ -338,6 +350,9 @@ class PropelConvertConfTask extends AbstractPropelDataModelTask
 				$phpconfClassmap = array_merge($phpconfClassmap, $classMap);
 			}
 		}
+		
+		// sort the classmap by class name, to avoid discrepancies between OS
+		ksort($phpconfClassmap);
 		
 		return $phpconfClassmap;
 	}

@@ -114,18 +114,18 @@ class QueryBuilder extends OMBuilder
 			$relationName = $this->getFKPhpNameAffix($fk);
 
 			$script .= "
- * @method     $queryClass leftJoin" . $relationName . "(\$relationAlias = '') Adds a LEFT JOIN clause to the query using the " . $relationName . " relation
- * @method     $queryClass rightJoin" . $relationName . "(\$relationAlias = '') Adds a RIGHT JOIN clause to the query using the " . $relationName . " relation
- * @method     $queryClass innerJoin" . $relationName . "(\$relationAlias = '') Adds a INNER JOIN clause to the query using the " . $relationName . " relation
+ * @method     $queryClass leftJoin" . $relationName . "(\$relationAlias = null) Adds a LEFT JOIN clause to the query using the " . $relationName . " relation
+ * @method     $queryClass rightJoin" . $relationName . "(\$relationAlias = null) Adds a RIGHT JOIN clause to the query using the " . $relationName . " relation
+ * @method     $queryClass innerJoin" . $relationName . "(\$relationAlias = null) Adds a INNER JOIN clause to the query using the " . $relationName . " relation
  *";
 		}
 		foreach ($this->getTable()->getReferrers() as $refFK) {
 			$relationName = $this->getRefFKPhpNameAffix($refFK);
 
 			$script .= "
- * @method     $queryClass leftJoin" . $relationName . "(\$relationAlias = '') Adds a LEFT JOIN clause to the query using the " . $relationName . " relation
- * @method     $queryClass rightJoin" . $relationName . "(\$relationAlias = '') Adds a RIGHT JOIN clause to the query using the " . $relationName . " relation
- * @method     $queryClass innerJoin" . $relationName . "(\$relationAlias = '') Adds a INNER JOIN clause to the query using the " . $relationName . " relation
+ * @method     $queryClass leftJoin" . $relationName . "(\$relationAlias = null) Adds a LEFT JOIN clause to the query using the " . $relationName . " relation
+ * @method     $queryClass rightJoin" . $relationName . "(\$relationAlias = null) Adds a RIGHT JOIN clause to the query using the " . $relationName . " relation
+ * @method     $queryClass innerJoin" . $relationName . "(\$relationAlias = null) Adds a INNER JOIN clause to the query using the " . $relationName . " relation
  *";
 		}
 
@@ -747,7 +747,7 @@ abstract class ".$this->getClassname()." extends " . $parentClass . "
 	 *
 	 * @return    ". $queryClass . " The current query, for fluid interface
 	 */
-	public function join" . $relationName . "(\$relationAlias = '', \$joinType = " . $joinType . ")
+	public function join" . $relationName . "(\$relationAlias = null, \$joinType = " . $joinType . ")
 	{
 		\$tableMap = \$this->getTableMap();
 		\$relationMap = \$tableMap->getRelation('" . $relationName . "');
@@ -819,7 +819,7 @@ abstract class ".$this->getClassname()." extends " . $parentClass . "
 	 *
 	 * @return    $queryClass A secondary query class using the current class as primary query
 	 */
-	public function use" . $relationName . "Query(\$relationAlias = '', \$joinType = " . $joinType . ")
+	public function use" . $relationName . "Query(\$relationAlias = null, \$joinType = " . $joinType . ")
 	{
 		return \$this
 			->join" . $relationName . "(\$relationAlias, \$joinType)

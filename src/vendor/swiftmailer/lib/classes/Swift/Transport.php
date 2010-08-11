@@ -8,6 +8,8 @@
  * file that was distributed with this source code.
  */
 
+//@require 'Swift/Mime/Message.php';
+//@require 'Swift/Events/EventListener.php';
 
 /**
  * Sends Messages via an abstract Transport subsystem.

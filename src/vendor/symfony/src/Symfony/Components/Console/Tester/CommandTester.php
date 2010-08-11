@@ -16,8 +16,6 @@ use Symfony\Components\Console\Output\StreamOutput;
  */
 
 /**
- * @package    Symfony
- * @subpackage Components_Console
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
  */
 class CommandTester
@@ -51,7 +49,7 @@ class CommandTester
      */
     public function execute(array $input, array $options = array())
     {
-        $this->input = new ArrayInput(array_merge($input, array('command' => $this->command->getFullName())));
+        $this->input = new ArrayInput($input);
         if (isset($options['interactive'])) {
             $this->input->setInteractive($options['interactive']);
         }

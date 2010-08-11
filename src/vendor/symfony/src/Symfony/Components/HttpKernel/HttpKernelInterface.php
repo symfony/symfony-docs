@@ -16,8 +16,6 @@ use Symfony\Components\HttpFoundation\Request;
 /**
  * HttpKernelInterface.
  *
- * @package    Symfony
- * @subpackage Components_HttpKernel
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
  */
 interface HttpKernelInterface
@@ -30,8 +28,8 @@ interface HttpKernelInterface
      * Handles a request to convert it to a response.
      *
      * @param  Request $request A Request instance
-     * @param  integer $type    The type of the request (one of HttpKernelInterface::MASTER_REQUEST, HttpKernelInterface::FORWARDED_REQUEST, or HttpKernelInterface::EMBEDDED_REQUEST)
-     * @param  Boolean $raw     Whether to catch exceptions or not
+     * @param  integer $type The type of the request (one of HttpKernelInterface::MASTER_REQUEST, HttpKernelInterface::FORWARDED_REQUEST, or HttpKernelInterface::EMBEDDED_REQUEST)
+     * @param  Boolean $raw Whether to catch exceptions or not
      *
      * @return Response $response A Response instance
      */

@@ -8,6 +8,10 @@
  * file that was distributed with this source code.
  */
 
+//@require 'Swift/KeyCache.php';
+//@require 'Swift/KeyCacheInputStream.php';
+//@require 'Swift/InputByteStream.php';
+//@require 'Swift/OutputByteStrean.php';
 
 /**
  * A null KeyCache that does not cache at all.

@@ -8,6 +8,8 @@
  * file that was distributed with this source code.
  */
 
+//@require 'Swift/Image.php';
+//@require 'Swift/ByteStream/FileByteStream.php';
 
 /**
  * An image, embedded in a multipart message.

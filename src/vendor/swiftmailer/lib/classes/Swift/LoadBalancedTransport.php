@@ -8,6 +8,8 @@
  * file that was distributed with this source code.
  */
 
+//@require 'Swift/Transport/LoadBalancedTransport.php';
+//@require 'Swift/DependencyContainer.php';
 
 /**
  * Redudantly and rotationally uses several Transport implementations when sending.

@@ -39,22 +39,22 @@ use Doctrine\ODM\MongoDB\DocumentManager,
 class ClassMetadataFactory
 {
     /** The DocumentManager instance */
-    private $_dm;
+    private $dm;
 
     /** The array of loaded ClassMetadata instances */
-    private $_loadedMetadata;
+    private $loadedMetadata;
 
     /** The used metadata driver. */
-    private $_driver;
+    private $driver;
 
     /** The event manager instance */
-    private $_evm;
+    private $evm;
 
     /** The used cache driver. */
-    private $_cacheDriver;
+    private $cacheDriver;
 
     /** Whether factory has been lazily initialized yet */
-    private $_initialized = false;
+    private $initialized = false;
 
     /**
      * Creates a new factory instance that uses the given DocumentManager instance.
@@ -63,18 +63,18 @@ class ClassMetadataFactory
      */
     public function __construct(DocumentManager $dm)
     {
-        $this->_dm = $dm;
+        $this->dm = $dm;
     }
 
     /**
      * Lazy initialization of this stuff, especially the metadata driver,
      * since these are not needed at all when a metadata cache is active.
      */
-    private function _initialize()
+    private function initialize()
     {
-        $this->_driver = $this->_dm->getConfiguration()->getMetadataDriverImpl();
-        $this->_evm = $this->_dm->getEventManager();
-        $this->_initialized = true;
+        $this->driver = $this->dm->getConfiguration()->getMetadataDriverImpl();
+        $this->evm = $this->dm->getEventManager();
+        $this->initialized = true;
     }
 
     /**
@@ -84,7 +84,7 @@ class ClassMetadataFactory
      */
     public function setCacheDriver($cacheDriver)
     {
-        $this->_cacheDriver = $cacheDriver;
+        $this->cacheDriver = $cacheDriver;
     }
 
     /**
@@ -94,7 +94,7 @@ class ClassMetadataFactory
      */
     public function getCacheDriver()
     {
-        return $this->_cacheDriver;
+        return $this->cacheDriver;
     }
 
     /**
@@ -104,7 +104,7 @@ class ClassMetadataFactory
      */
     public function getLoadedMetadata()
     {
-        return $this->_loadedMetadata;
+        return $this->loadedMetadata;
     }
 
     /**
@@ -115,43 +115,43 @@ class ClassMetadataFactory
      */
     public function getMetadataFor($className)
     {
-        if ( ! isset($this->_loadedMetadata[$className])) {
+        if ( ! isset($this->loadedMetadata[$className])) {
             $realClassName = $className;
 
             // Check for namespace alias
             if (strpos($className, ':') !== false) {
                 list($namespaceAlias, $simpleClassName) = explode(':', $className);
-                $realClassName = $this->_dm->getConfiguration()->getDocumentNamespace($namespaceAlias) . '\\' . $simpleClassName;
+                $realClassName = $this->dm->getConfiguration()->getDocumentNamespace($namespaceAlias) . '\\' . $simpleClassName;
 
-                if (isset($this->_loadedMetadata[$realClassName])) {
+                if (isset($this->loadedMetadata[$realClassName])) {
                     // We do not have the alias name in the map, include it
-                    $this->_loadedMetadata[$className] = $this->_loadedMetadata[$realClassName];
+                    $this->loadedMetadata[$className] = $this->loadedMetadata[$realClassName];
 
-                    return $this->_loadedMetadata[$realClassName];
+                    return $this->loadedMetadata[$realClassName];
                 }
             }
 
-            if ($this->_cacheDriver) {
-                if (($cached = $this->_cacheDriver->fetch("$realClassName\$MONGODBODMCLASSMETADATA")) !== false) {
-                    $this->_loadedMetadata[$realClassName] = $cached;
+            if ($this->cacheDriver) {
+                if (($cached = $this->cacheDriver->fetch("$realClassName\$MONGODBODMCLASSMETADATA")) !== false) {
+                    $this->loadedMetadata[$realClassName] = $cached;
                 } else {
-                    foreach ($this->_loadMetadata($realClassName) as $loadedClassName) {
-                        $this->_cacheDriver->save(
-                            "$loadedClassName\$MONGODBODMCLASSMETADATA", $this->_loadedMetadata[$loadedClassName], null
+                    foreach ($this->loadMetadata($realClassName) as $loadedClassName) {
+                        $this->cacheDriver->save(
+                            "$loadedClassName\$MONGODBODMCLASSMETADATA", $this->loadedMetadata[$loadedClassName], null
                         );
                     }
                 }
             } else {
-                $this->_loadMetadata($realClassName);
+                $this->loadMetadata($realClassName);
             }
 
             if ($className != $realClassName) {
                 // We do not have the alias name in the map, include it
-                $this->_loadedMetadata[$className] = $this->_loadedMetadata[$realClassName];
+                $this->loadedMetadata[$className] = $this->loadedMetadata[$realClassName];
             }
         }
 
-        return $this->_loadedMetadata[$className];
+        return $this->loadedMetadata[$className];
     }
 
     /**
@@ -161,40 +161,41 @@ class ClassMetadataFactory
      * @param string $name The name of the class for which the metadata should get loaded.
      * @param array  $tables The metadata collection to which the loaded metadata is added.
      */
-    private function _loadMetadata($className)
+    private function loadMetadata($className)
     {
-        if ( ! $this->_initialized) {
-            $this->_initialize();
+        if ( ! $this->initialized) {
+            $this->initialize();
         }
 
         $loaded = array();
 
-        $parentClasses = $this->_getParentClasses($className);
+        $parentClasses = $this->getParentClasses($className);
         $parentClasses[] = $className;
 
         // Move down the hierarchy of parent classes, starting from the topmost class
         $parent = null;
         $visited = array();
         foreach ($parentClasses as $className) {
-            if (isset($this->_loadedMetadata[$className])) {
-                $parent = $this->_loadedMetadata[$className];
+            if (isset($this->loadedMetadata[$className])) {
+                $parent = $this->loadedMetadata[$className];
                 if ( ! $parent->isMappedSuperclass) {
                     array_unshift($visited, $className);
                 }
                 continue;
             }
 
-            $class = $this->_newClassMetadataInstance($className);
+            $class = $this->newClassMetadataInstance($className);
 
             if ($parent) {
                 $class->setInheritanceType($parent->inheritanceType);
                 $class->setDiscriminatorField($parent->discriminatorField);
-                $this->_addInheritedFields($class, $parent);
+                $this->addInheritedFields($class, $parent);
                 $class->setIdentifier($parent->identifier);
                 $class->setDiscriminatorMap($parent->discriminatorMap);
+                $class->setLifecycleCallbacks($parent->lifecycleCallbacks);
             }
 
-            $this->_driver->loadMetadataForClass($className, $class);
+            $this->driver->loadMetadataForClass($className, $class);
 
             if ($parent && $parent->isInheritanceTypeSingleCollection()) {
                 $class->setDB($parent->getDB());
@@ -207,17 +208,17 @@ class ClassMetadataFactory
                     'fieldName' => 'id'
                 ));
             }
-            $db = $class->getDB() ?: $this->_dm->getConfiguration()->getDefaultDB();
-            $class->setDB($this->_dm->formatDBName($db));
+            $db = $class->getDB() ?: $this->dm->getConfiguration()->getDefaultDB();
+            $class->setDB($this->dm->formatDBName($db));
 
             $class->setParentClasses($visited);
 
-            if ($this->_evm->hasListeners(ODMEvents::loadClassMetadata)) {
+            if ($this->evm->hasListeners(ODMEvents::loadClassMetadata)) {
                 $eventArgs = new \Doctrine\ODM\MongoDB\Event\LoadClassMetadataEventArgs($class);
-                $this->_evm->dispatchEvent(ODMEvents::loadClassMetadata, $eventArgs);
+                $this->evm->dispatchEvent(ODMEvents::loadClassMetadata, $eventArgs);
             }
 
-            $this->_loadedMetadata[$className] = $class;
+            $this->loadedMetadata[$className] = $class;
 
             $parent = $class;
 
@@ -239,7 +240,7 @@ class ClassMetadataFactory
      */
     public function hasMetadataFor($className)
     {
-        return isset($this->_loadedMetadata[$className]);
+        return isset($this->loadedMetadata[$className]);
     }
 
     /**
@@ -252,7 +253,7 @@ class ClassMetadataFactory
      */
     public function setMetadataFor($className, $class)
     {
-        $this->_loadedMetadata[$className] = $class;
+        $this->loadedMetadata[$className] = $class;
     }
 
     /**
@@ -261,7 +262,7 @@ class ClassMetadataFactory
      * @param string $className
      * @return Doctrine\ODM\MongoDB\Mapping\ClassMetadata
      */
-    protected function _newClassMetadataInstance($className)
+    protected function newClassMetadataInstance($className)
     {
         return new ClassMetadata($className);
     }
@@ -272,7 +273,7 @@ class ClassMetadataFactory
      * @param string $name
      * @return array $parentClasses
      */
-    protected function _getParentClasses($name)
+    protected function getParentClasses($name)
     {
         // Collect parent classes, ignoring transient (not-mapped) classes.
         $parentClasses = array();
@@ -288,7 +289,7 @@ class ClassMetadataFactory
      * @param Doctrine\ODM\MongoDB\Mapping\ClassMetadata $subClass
      * @param Doctrine\ODM\MongoDB\Mapping\ClassMetadata $parentClass
      */
-    private function _addInheritedFields(ClassMetadata $subClass, ClassMetadata $parentClass)
+    private function addInheritedFields(ClassMetadata $subClass, ClassMetadata $parentClass)
     {
         foreach ($parentClass->fieldMappings as $fieldName => $mapping) {
             if ( ! isset($mapping['inherited'])) {

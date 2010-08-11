@@ -16,8 +16,6 @@ use Symfony\Components\HttpKernel\Profiler\Profiler;
 /**
  * DataCollectorInterface.
  *
- * @package    Symfony
- * @subpackage Components_HttpKernel
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
  */
 interface DataCollectorInterface
@@ -31,4 +29,6 @@ interface DataCollectorInterface
     function collect();
 
     function setProfiler(Profiler $profiler);
+
+    function getSummary();
 }

@@ -50,8 +50,6 @@ use Symfony\Components\DependencyInjection\ParameterBag\FrozenParameterBag;
  *  * IGNORE_ON_INVALID_REFERENCE:    Ignores the wrapping command asking for the reference
  *                                    (for instance, ignore a setter if the service does not exist)
  *
- * @package    Symfony
- * @subpackage Components_DependencyInjection
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
  */
 class Container implements ContainerInterface, \ArrayAccess
@@ -62,7 +60,7 @@ class Container implements ContainerInterface, \ArrayAccess
     /**
      * Constructor.
      *
-     * @param Symfony\Components\DependencyInjection\ParameterBagInterface $parameterBag A ParameterBagInterface instance
+     * @param ParameterBagInterface $parameterBag A ParameterBagInterface instance
      */
     public function __construct(ParameterBagInterface $parameterBag = null)
     {
@@ -99,7 +97,7 @@ class Container implements ContainerInterface, \ArrayAccess
     /**
      * Gets the service container parameter bag.
      *
-     * @return Symfony\Components\DependencyInjection\ParameterBag\ParameterBagInterface A ParameterBagInterface instance
+     * @return ParameterBagInterface A ParameterBagInterface instance
      */
     public function getParameterBag()
     {

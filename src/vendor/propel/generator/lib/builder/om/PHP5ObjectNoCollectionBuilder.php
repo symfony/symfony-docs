@@ -439,17 +439,21 @@ class PHP5ObjectNoCollectionBuilder extends PHP5ObjectBuilder
 		$table = $this->getTable();
 
 		$varName = $this->getFKVarName($fk);
-		$pCollName = $this->getFKPhpNameAffix($fk, $plural = true);
 		
 		$fkPeerBuilder = $this->getNewPeerBuilder($this->getForeignTable($fk));
 		$fkObjectBuilder = $this->getNewObjectBuilder($this->getForeignTable($fk))->getStubObjectBuilder();
 		$className = $fkObjectBuilder->getClassname(); // get the Classname that has maybe a prefix
 		
 		$and = "";
-		$comma = "";
 		$conditional = "";
+		$localColumns = array(); // foreign key local attributes names
 		$argmap = array(); // foreign -> local mapping
-		$argsize = 0;
+
+		// If the related columns are a primary key on the foreign table
+		// then use retrieveByPk() instead of doSelect() to take advantage
+		// of instance pooling
+		$useRetrieveByPk = $fk->isForeignPrimaryKey();
+
 		foreach ($fk->getLocalColumns() as $columnName) {
 			
 			$lfmap = $fk->getLocalForeignMapping();
@@ -460,6 +464,7 @@ class PHP5ObjectNoCollectionBuilder extends PHP5ObjectBuilder
 			$column = $table->getColumn($columnName);
 			$cptype = $column->getPhpType();
 			$clo = strtolower($column->getName());
+			$localColumns[$foreignColumn->getPosition()] = '$this->'.$clo;
 			
 			if ($cptype == "integer" || $cptype == "float" || $cptype == "double") {
 				$conditional .= $and . "\$this->". $clo ." != 0";
@@ -471,9 +476,11 @@ class PHP5ObjectNoCollectionBuilder extends PHP5ObjectBuilder
 			
 			$argmap[] = array('foreign' => $foreignColumn, 'local' => $localColumn);
 			$and = " && ";
-			$comma = ", ";
-			$argsize = $argsize + 1;
 		}
+
+		ksort($localColumns); // restoring the order of the foreign PK
+		$localColumns = count($localColumns) > 1 ?
+				('array('.implode(', ', $localColumns).')') : reset($localColumns);
 		
 		// If the related column is a primary kay and if it's a simple association,
 		// The use retrieveByPk() instead of doSelect() to take advantage of instance pooling
@@ -494,7 +501,7 @@ class PHP5ObjectNoCollectionBuilder extends PHP5ObjectBuilder
 		if (\$this->$varName === null && ($conditional)) {";
 		if ($useRetrieveByPk) {
 			$script .= "
-			\$this->$varName = ".$fkPeerBuilder->getPeerClassname()."::retrieveByPk(\$this->$clo);";
+			\$this->$varName = ".$fkPeerBuilder->getPeerClassname()."::retrieveByPk($localColumns);";
 		} else {
 			$script .= "
 			\$c = new Criteria(".$fkPeerBuilder->getPeerClassname()."::DATABASE_NAME);";

@@ -8,6 +8,9 @@
  * file that was distributed with this source code.
  */
 
+//@require 'Swift/Mime/SimpleMessage.php';
+//@require 'Swift/MimePart.php';
+//@require 'Swift/DependencyContainer.php';
 
 /**
  * The Message class for building emails.
@@ -74,11 +77,6 @@ class Swift_Message extends Swift_Mime_SimpleMessage
     return $this->attach(Swift_MimePart::newInstance(
       $body, $contentType, $charset
       ));
-  }
-  
-  public function __wakeup()
-  {
-    Swift_DependencyContainer::getInstance()->createDependenciesFor('mime.message');
   }
   
 }

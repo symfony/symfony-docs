@@ -21,8 +21,6 @@ use Symfony\Components\HttpFoundation\HeaderBag;
 /**
  * Store implements all the logic for storing cache metadata (Request and Response headers).
  *
- * @package    Symfony
- * @subpackage Components_HttpKernel
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
  */
 class Store
@@ -65,7 +63,7 @@ class Store
     /**
      * Locks the cache for a given Request.
      *
-     * @param Symfony\Components\HttpFoundation\Request $request A Request instance
+     * @param Request $request A Request instance
      *
      * @return Boolean|string true if the lock is acquired, the path to the current lock otherwise
      */
@@ -85,7 +83,7 @@ class Store
     /**
      * Releases the lock for the given Request.
      *
-     * @param Symfony\Components\HttpFoundation\Request $request A Request instance
+     * @param Request $request A Request instance
      */
     public function unlock(Request $request)
     {
@@ -95,9 +93,9 @@ class Store
     /**
      * Locates a cached Response for the Request provided.
      *
-     * @param Symfony\Components\HttpFoundation\Request $request A Request instance
+     * @param Request $request A Request instance
      *
-     * @return Symfony\Components\HttpFoundation\Response|null A Response instance, or null if no cache entry was found
+     * @return Response|null A Response instance, or null if no cache entry was found
      */
     public function lookup(Request $request)
     {
@@ -139,8 +137,8 @@ class Store
      * Existing entries are read and any that match the response are removed. This
      * method calls write with the new list of cache entries.
      *
-     * @param Symfony\Components\HttpFoundation\Request  $request  A Request instance
-     * @param Symfony\Components\HttpFoundation\Response $response A Response instance
+     * @param Request  $request  A Request instance
+     * @param Response $response A Response instance
      *
      * @return string The key under which the response is stored
      */
@@ -192,7 +190,7 @@ class Store
     /**
      * Invalidates all cache entries that match the request.
      *
-     * @param Symfony\Components\HttpFoundation\Request $request A Request instance
+     * @param Request $request A Request instance
      */
     public function invalidate(Request $request)
     {
@@ -342,7 +340,7 @@ class Store
     /**
      * Returns a cache key for the given Request.
      *
-     * @param Symfony\Components\HttpFoundation\Request $request A Request instance
+     * @param Request $request A Request instance
      *
      * @return string A key for the given Request
      */
@@ -358,7 +356,7 @@ class Store
     /**
      * Persists the Request HTTP headers.
      *
-     * @param Symfony\Components\HttpFoundation\Request $request A Request instance
+     * @param Request $request A Request instance
      *
      * @return array An array of HTTP headers
      */
@@ -370,7 +368,7 @@ class Store
     /**
      * Persists the Response HTTP headers.
      *
-     * @param Symfony\Components\HttpFoundation\Response $response A Response instance
+     * @param Response $response A Response instance
      *
      * @return array An array of HTTP headers
      */

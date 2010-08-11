@@ -42,14 +42,14 @@ abstract class AbstractFileDriver implements Driver
      *
      * @var array
      */
-    protected $_paths = array();
+    protected $paths = array();
 
     /**
      * The file extension of mapping documents.
      *
      * @var string
      */
-    protected $_fileExtension;
+    protected $fileExtension;
 
     /** 
      * Initializes a new FileDriver that looks in the given path(s) for mapping 
@@ -69,7 +69,7 @@ abstract class AbstractFileDriver implements Driver
      */
     public function addPaths(array $paths)
     {
-        $this->_paths = array_unique(array_merge($this->_paths, $paths));
+        $this->paths = array_unique(array_merge($this->paths, $paths));
     }
 
     /**
@@ -79,7 +79,7 @@ abstract class AbstractFileDriver implements Driver
      */
     public function getPaths()
     {
-        return $this->_paths;
+        return $this->paths;
     }
 
     /**
@@ -89,7 +89,7 @@ abstract class AbstractFileDriver implements Driver
      */
     public function getFileExtension()
     {
-        return $this->_fileExtension;
+        return $this->fileExtension;
     }
 
     /**
@@ -100,7 +100,7 @@ abstract class AbstractFileDriver implements Driver
      */
     public function setFileExtension($fileExtension)
     {
-        $this->_fileExtension = $fileExtension;
+        $this->fileExtension = $fileExtension;
     }
 
     /**
@@ -111,8 +111,8 @@ abstract class AbstractFileDriver implements Driver
      */
     public function getElement($className)
     {
-        if ($file = $this->_findMappingFile($className)) {
-            $result = $this->_loadMappingFile($file);
+        if ($file = $this->findMappingFile($className)) {
+            $result = $this->loadMappingFile($file);
             return $result[$className];
         }
         return false;
@@ -126,12 +126,12 @@ abstract class AbstractFileDriver implements Driver
      * @return string The (absolute) file name.
      * @throws MappingException
      */
-    protected function _findMappingFile($className)
+    protected function findMappingFile($className)
     {
-        $fileName = str_replace('\\', '.', $className) . $this->_fileExtension;
+        $fileName = str_replace('\\', '.', $className) . $this->fileExtension;
         
         // Check whether file exists
-        foreach ((array) $this->_paths as $path) {
+        foreach ((array) $this->paths as $path) {
             if (file_exists($path . DIRECTORY_SEPARATOR . $fileName)) {
                 return $path . DIRECTORY_SEPARATOR . $fileName;
             }
@@ -147,5 +147,5 @@ abstract class AbstractFileDriver implements Driver
      * @param string $file The mapping file to load.
      * @return array
      */
-    abstract protected function _loadMappingFile($file);
+    abstract protected function loadMappingFile($file);
 }

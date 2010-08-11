@@ -61,6 +61,29 @@ class ClassMetadata
     const INHERITANCE_TYPE_COLLECTION_PER_CLASS = 3;
 
     /**
+     * DEFERRED_IMPLICIT means that changes of entities are calculated at commit-time
+     * by doing a property-by-property comparison with the original data. This will
+     * be done for all entities that are in MANAGED state at commit-time.
+     *
+     * This is the default change tracking policy.
+     */
+    const CHANGETRACKING_DEFERRED_IMPLICIT = 1;
+
+    /**
+     * DEFERRED_EXPLICIT means that changes of entities are calculated at commit-time
+     * by doing a property-by-property comparison with the original data. This will
+     * be done only for entities that were explicitly saved (through persist() or a cascade).
+     */
+    const CHANGETRACKING_DEFERRED_EXPLICIT = 2;
+
+    /**
+     * NOTIFY means that Doctrine relies on the entities sending out notifications
+     * when their properties change. Such entity classes must implement
+     * the <tt>NotifyPropertyChanged</tt> interface.
+     */
+    const CHANGETRACKING_NOTIFY = 3;
+
+    /**
      * READ-ONLY: The name of the mongo database the document is mapped to.
      */
     public $db;
@@ -149,7 +172,7 @@ class ClassMetadata
      * 
      * @var object
      */
-    private $_prototype;
+    private $prototype;
 
     /**
      * READ-ONLY: The inheritance mapping type used by the class.
@@ -174,6 +197,13 @@ class ClassMetadata
      * @var array
      */
     public $fieldMappings = array();
+
+    /**
+     * READ-ONLY: The registered lifecycle callbacks for documents of this class.
+     *
+     * @var array
+     */
+    public $lifecycleCallbacks = array();
 
     /**
      * READ-ONLY: The discriminator value of this class.
@@ -227,6 +257,13 @@ class ClassMetadata
     public $isEmbeddedDocument = false;
 
     /**
+     * READ-ONLY: The policy used for change-tracking on entities of this class.
+     *
+     * @var integer
+     */
+    public $changeTrackingPolicy = self::CHANGETRACKING_DEFERRED_IMPLICIT;
+
+    /**
      * Initializes a new ClassMetadata instance that will hold the object-document mapping
      * metadata of the class with the given name.
      *
@@ -238,6 +275,7 @@ class ClassMetadata
         $this->rootDocumentName = $documentName;
         $this->reflClass = new \ReflectionClass($documentName);
         $this->namespace = $this->reflClass->getNamespaceName();
+        $this->setCollection($this->reflClass->getShortName());
     }
 
     /**
@@ -392,6 +430,19 @@ class ClassMetadata
     }
 
     /**
+     * Sets the discriminator value for this class.
+     * Used for JOINED/SINGLE_TABLE inheritance and multiple document types in a single
+     * collection.
+     *
+     * @param string $value
+     */
+    public function setDiscriminatorValue($value)
+    {
+        $this->discriminatorMap[$value] = $this->name;
+        $this->discriminatorValue = $value;
+    }
+
+    /**
      * Add a index for this Document.
      *
      * @param array $keys Array of keys for the index.
@@ -425,6 +476,46 @@ class ClassMetadata
     public function getReflectionClass()
     {
         return $this->reflClass;
+    }
+
+    /**
+     * Sets the change tracking policy used by this class.
+     *
+     * @param integer $policy
+     */
+    public function setChangeTrackingPolicy($policy)
+    {
+        $this->changeTrackingPolicy = $policy;
+    }
+
+    /**
+     * Whether the change tracking policy of this class is "deferred explicit".
+     *
+     * @return boolean
+     */
+    public function isChangeTrackingDeferredExplicit()
+    {
+        return $this->changeTrackingPolicy == self::CHANGETRACKING_DEFERRED_EXPLICIT;
+    }
+
+    /**
+     * Whether the change tracking policy of this class is "deferred implicit".
+     *
+     * @return boolean
+     */
+    public function isChangeTrackingDeferredImplicit()
+    {
+        return $this->changeTrackingPolicy == self::CHANGETRACKING_DEFERRED_IMPLICIT;
+    }
+
+    /**
+     * Whether the change tracking policy of this class is "notify".
+     *
+     * @return boolean
+     */
+    public function isChangeTrackingNotify()
+    {
+        return $this->changeTrackingPolicy == self::CHANGETRACKING_NOTIFY;
     }
 
     /**
@@ -554,6 +645,14 @@ class ClassMetadata
             $mapping['targetDocument'] = $this->namespace . '\\' . $mapping['targetDocument'];
         }
 
+        if (isset($mapping['discriminatorMap'])) {
+            foreach ($mapping['discriminatorMap'] as $key => $class) {
+                if (strpos($class, '\\') === false && strlen($this->namespace)) {
+                    $mapping['discriminatorMap'][$key] = $this->namespace . '\\' . $class;
+                }
+            }
+        }
+
         if ($this->reflClass->hasProperty($mapping['fieldName'])) {
             $reflProp = $this->reflClass->getProperty($mapping['fieldName']);
             $reflProp->setAccessible(true);
@@ -576,6 +675,7 @@ class ClassMetadata
                 $mapping['isCascade' . ucfirst($cascade)] = true;
             }
         }
+        unset($mapping['cascade']);
         if (isset($mapping['file']) && $mapping['file'] === true) {
             $this->file = $mapping['fieldName'];
         }
@@ -686,6 +786,32 @@ class ClassMetadata
                 $this->fieldMappings[$fieldName]['type'] === 'many';
     }
 
+    /**
+     * Checks whether the class has a mapped embedded document for the specified field
+     * and if yes, checks whether it is a single-valued association (to-one).
+     *
+     * @param string $fieldName
+     * @return boolean TRUE if the association exists and is single-valued, FALSE otherwise.
+     */
+    public function isSingleValuedEmbed($fieldName)
+    {
+        return isset($this->fieldMappings[$fieldName]['embedded']) &&
+                $this->fieldMappings[$fieldName]['type'] === 'one';
+    }
+
+    /**
+     * Checks whether the class has a mapped embedded document for the specified field
+     * and if yes, checks whether it is a collection-valued association (to-many).
+     *
+     * @param string $fieldName
+     * @return boolean TRUE if the association exists and is collection-valued, FALSE otherwise.
+     */
+    public function isCollectionValuedEmbed($fieldName)
+    {
+        return isset($this->fieldMappings[$fieldName]['embedded']) &&
+                $this->fieldMappings[$fieldName]['type'] === 'many';
+    }
+
     public function getPHPIdentifierValue($id)
     {
         $idType = $this->fieldMappings[$this->identifier]['type'];
@@ -776,6 +902,16 @@ class ClassMetadata
     }
 
     /**
+     * Checks whether the document has a discriminator field and value configured.
+     *
+     * @return boolean
+     */
+    public function hasDiscriminator()
+    {
+        return $this->discriminatorField && $this->discriminatorValue ? true : false;
+    }
+
+    /**
      * @return boolean
      */
     public function isInheritanceTypeNone()
@@ -835,10 +971,10 @@ class ClassMetadata
      */
     public function newInstance()
     {
-        if ($this->_prototype === null) {
-            $this->_prototype = unserialize(sprintf('O:%d:"%s":0:{}', strlen($this->name), $this->name));
+        if ($this->prototype === null) {
+            $this->prototype = unserialize(sprintf('O:%d:"%s":0:{}', strlen($this->name), $this->name));
         }
-        return clone $this->_prototype;
+        return clone $this->prototype;
     }
 
     /**

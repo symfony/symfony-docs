@@ -52,75 +52,75 @@ class DocumentManager
      *
      * @var Doctrine\ODM\MongoDB\Mongo
      */
-    private $_mongo;
+    private $mongo;
 
     /**
      * The used Configuration.
      *
      * @var Doctrine\ODM\MongoDB\Configuration
      */
-    private $_config;
+    private $config;
 
     /**
      * The metadata factory, used to retrieve the ORM metadata of document classes.
      *
      * @var Doctrine\ODM\MongoDB\Mapping\ClassMetadataFactory
      */
-    private $_metadataFactory;
+    private $metadataFactory;
 
     /**
      * The DocumentRepository instances.
      *
      * @var array
      */
-    private $_repositories = array();
+    private $repositories = array();
 
     /**
      * The UnitOfWork used to coordinate object-level transactions.
      *
      * @var Doctrine\ODM\MongoDB\UnitOfWork
      */
-    private $_unitOfWork;
+    private $unitOfWork;
 
     /**
      * The event manager that is the central point of the event system.
      *
      * @var Doctrine\Common\EventManager
      */
-    private $_eventManager;
+    private $eventManager;
 
     /**
      * The Document hydrator instance.
      *
      * @var Doctrine\ODM\MongoDB\Hydrator
      */
-    private $_hydrator;
+    private $hydrator;
 
     /**
      * Array of cached MongoDB instances that are lazily loaded.
      *
      * @var array
      */
-    private $_documentDBs = array();
+    private $documentDBs = array();
 
     /**
      * Array of cached MongoCollection instances that are lazily loaded.
      *
      * @var array
      */
-    private $_documentCollections = array();
+    private $documentCollections = array();
 
     /**
      * The Query\Parser instance for parsing string based queries.
      *
      * @var Query\Parser $parser
      */
-    private $_queryParser;
+    private $queryParser;
 
     /**
      * Whether the DocumentManager is closed or not.
      */
-    private $_closed = false;
+    private $closed = false;
 
     /**
      * Creates a new Document that operates on the given Mongo connection
@@ -135,20 +135,30 @@ class DocumentManager
         if (is_string($mongo) || $mongo instanceof \Mongo) {
             $mongo = new Mongo($mongo);
         }
-        $this->_mongo = $mongo ? $mongo : new Mongo();
-        $this->_config = $config ? $config : new Configuration();
-        $this->_eventManager = $eventManager ? $eventManager : new EventManager();
-        $this->_hydrator = new Hydrator($this);
-        $this->_metadataFactory = new ClassMetadataFactory($this);
-        if ($cacheDriver = $this->_config->getMetadataCacheImpl()) {
-            $this->_metadataFactory->setCacheDriver($cacheDriver);
+        $this->mongo = $mongo ? $mongo : new Mongo();
+        $this->config = $config ? $config : new Configuration();
+        $this->eventManager = $eventManager ? $eventManager : new EventManager();
+        $this->hydrator = new Hydrator($this);
+        $this->metadataFactory = new ClassMetadataFactory($this);
+        if ($cacheDriver = $this->config->getMetadataCacheImpl()) {
+            $this->metadataFactory->setCacheDriver($cacheDriver);
         }
-        $this->_queryParser = new Parser($this);
-        $this->_unitOfWork = new UnitOfWork($this);
-        $this->_proxyFactory = new ProxyFactory($this,
-                $this->_config->getProxyDir(),
-                $this->_config->getProxyNamespace(),
-                $this->_config->getAutoGenerateProxyClasses());
+        $this->queryParser = new Parser($this);
+        $this->unitOfWork = new UnitOfWork($this);
+        $this->proxyFactory = new ProxyFactory($this,
+                $this->config->getProxyDir(),
+                $this->config->getProxyNamespace(),
+                $this->config->getAutoGenerateProxyClasses());
+    }
+
+    /**
+     * Gets the proxy factory used by the DocumentManager to create document proxies.
+     *
+     * @return ProxyFactory
+     */
+    public function getProxyFactory()
+    {
+        return $this->proxyFactory;
     }
 
     /**
@@ -172,9 +182,9 @@ class DocumentManager
      */
     public function contains($document)
     {
-        return $this->_unitOfWork->isScheduledForInsert($document) ||
-               $this->_unitOfWork->isInIdentityMap($document) &&
-               ! $this->_unitOfWork->isScheduledForDelete($document);
+        return $this->unitOfWork->isScheduledForInsert($document) ||
+               $this->unitOfWork->isInIdentityMap($document) &&
+               ! $this->unitOfWork->isScheduledForDelete($document);
     }
 
     /**
@@ -184,17 +194,17 @@ class DocumentManager
      */
     public function getEventManager()
     {
-        return $this->_eventManager;
+        return $this->eventManager;
     }
 
     public function getConfiguration()
     {
-        return $this->_config;
+        return $this->config;
     }
 
     public function getMongo()
     {
-        return $this->_mongo;
+        return $this->mongo;
     }
 
     /**
@@ -204,7 +214,7 @@ class DocumentManager
      */
     public function getMetadataFactory()
     {
-        return $this->_metadataFactory;
+        return $this->metadataFactory;
     }
 
     /**
@@ -214,7 +224,7 @@ class DocumentManager
      */
     public function getUnitOfWork()
     {
-        return $this->_unitOfWork;
+        return $this->unitOfWork;
     }
 
     /**
@@ -225,7 +235,7 @@ class DocumentManager
      */
     public function getHydrator()
     {
-        return $this->_hydrator;
+        return $this->hydrator;
     }
  
     /**
@@ -237,7 +247,7 @@ class DocumentManager
      */
     public function getClassMetadata($className)
     {
-        return $this->_metadataFactory->getMetadataFor($className);
+        return $this->metadataFactory->getMetadataFor($className);
     }
 
     /**
@@ -248,18 +258,18 @@ class DocumentManager
      */
     public function getDocumentDB($className)
     {
-        $db = $this->_metadataFactory->getMetadataFor($className)->getDB();
-        $db = $db ? $db : $this->_config->getDefaultDB();
+        $db = $this->metadataFactory->getMetadataFor($className)->getDB();
+        $db = $db ? $db : $this->config->getDefaultDB();
         $db = $db ? $db : 'doctrine';
-        $db = sprintf('%s%s', $this->_config->getEnvironmentPrefix(), $db);
-        if ($db && ! isset($this->_documentDBs[$db])) {
-            $database = $this->_mongo->selectDB($db);
-            $this->_documentDBs[$db] = new MongoDB($database);
+        $db = sprintf('%s%s', $this->config->getEnvironmentPrefix(), $db);
+        if ($db && ! isset($this->documentDBs[$db])) {
+            $database = $this->mongo->selectDB($db);
+            $this->documentDBs[$db] = new MongoDB($database);
         }
-        if ( ! isset($this->_documentDBs[$db])) {
+        if ( ! isset($this->documentDBs[$db])) {
             throw MongoDBException::documentNotMappedToDB($className);
         }
-        return $this->_documentDBs[$db];
+        return $this->documentDBs[$db];
     }
 
     /**
@@ -270,23 +280,23 @@ class DocumentManager
      */
     public function getDocumentCollection($className)
     {
-        $metadata = $this->_metadataFactory->getMetadataFor($className);
-        $collection = $metadata->getCollection();
+        $metadata = $this->metadataFactory->getMetadataFor($className);
         $db = $metadata->getDB();
-        $key = $db . '.' . $collection;
-        if ($collection && ! isset($this->_documentCollections[$key])) {
+        $collection = $metadata->getCollection();
+        $key = $db . '.' . $collection . '.' . $className;
+        if ($collection && ! isset($this->documentCollections[$key])) {
             if ($metadata->isFile()) {
                 $collection = $this->getDocumentDB($className)->getGridFS($collection);
             } else {
                 $collection = $this->getDocumentDB($className)->selectCollection($collection);
             }
             $mongoCollection = new MongoCollection($collection, $metadata, $this);
-            $this->_documentCollections[$key] = $mongoCollection;
+            $this->documentCollections[$key] = $mongoCollection;
         }
-        if ( ! isset($this->_documentCollections[$key])) {
+        if ( ! isset($this->documentCollections[$key])) {
             throw MongoDBException::documentNotMappedToCollection($className);
         }
-        return $this->_documentCollections[$key];
+        return $this->documentCollections[$key];
     }
 
     public function query($queryString, $parameters = array())
@@ -294,18 +304,18 @@ class DocumentManager
         if ( ! is_array($parameters)) {
             $parameters = array($parameters);
         }
-        return $this->_queryParser->parse($queryString, $parameters);
+        return $this->queryParser->parse($queryString, $parameters);
     }
 
     /**
      * Create a new Query instance for a class.
      *
-     * @param string $className The class name.
+     * @param string $documentName The document class name.
      * @return Document\ODM\MongoDB\Query
      */
-    public function createQuery($className = null)
+    public function createQuery($documentName = null)
     {
-        return new Query($this, $className);
+        return new Query($this, $documentName);
     }
 
     /**
@@ -324,8 +334,8 @@ class DocumentManager
         if ( ! is_object($document)) {
             throw new \InvalidArgumentException(gettype($document));
         }
-        $this->_errorIfClosed();
-        $this->_unitOfWork->persist($document);
+        $this->errorIfClosed();
+        $this->unitOfWork->persist($document);
     }
 
     /**
@@ -341,8 +351,8 @@ class DocumentManager
         if ( ! is_object($document)) {
             throw new \InvalidArgumentException(gettype($document));
         }
-        $this->_errorIfClosed();
-        $this->_unitOfWork->remove($document);
+        $this->errorIfClosed();
+        $this->unitOfWork->remove($document);
     }
 
     /**
@@ -356,8 +366,8 @@ class DocumentManager
         if ( ! is_object($document)) {
             throw new \InvalidArgumentException(gettype($document));
         }
-        $this->_errorIfClosed();
-        $this->_unitOfWork->refresh($document);
+        $this->errorIfClosed();
+        $this->unitOfWork->refresh($document);
     }
 
     /**
@@ -374,7 +384,7 @@ class DocumentManager
         if ( ! is_object($document)) {
             throw new \InvalidArgumentException(gettype($document));
         }
-        $this->_unitOfWork->detach($document);
+        $this->unitOfWork->detach($document);
     }
 
     /**
@@ -390,8 +400,8 @@ class DocumentManager
         if ( ! is_object($document)) {
             throw new \InvalidArgumentException(gettype($document));
         }
-        $this->_errorIfClosed();
-        return $this->_unitOfWork->merge($document);
+        $this->errorIfClosed();
+        return $this->unitOfWork->merge($document);
     }
 
     /**
@@ -402,8 +412,8 @@ class DocumentManager
      */
     public function getRepository($documentName)
     {
-        if (isset($this->_repositories[$documentName])) {
-            return $this->_repositories[$documentName];
+        if (isset($this->repositories[$documentName])) {
+            return $this->repositories[$documentName];
         }
 
         $metadata = $this->getClassMetadata($documentName);
@@ -415,7 +425,7 @@ class DocumentManager
             $repository = new DocumentRepository($this, $metadata);
         }
 
-        $this->_repositories[$documentName] = $repository;
+        $this->repositories[$documentName] = $repository;
 
         return $repository;
     }
@@ -456,8 +466,7 @@ class DocumentManager
     {
         if ($data !== null) {
             $hints = array(Query::HINT_REFRESH => Query::HINT_REFRESH);
-            $document = $this->_unitOfWork->getOrCreateDocument($documentName, $data, $hints);
-            $this->getUnitOfWork()->registerManaged($document, $id, $data);
+            $document = $this->unitOfWork->getOrCreateDocument($documentName, $data, $hints);
             return $document;
         }
         return false;
@@ -470,8 +479,8 @@ class DocumentManager
      */
     public function flush()
     {
-        $this->_errorIfClosed();
-        $this->_unitOfWork->commit();
+        $this->errorIfClosed();
+        $this->unitOfWork->commit();
     }
 
     public function ensureDocumentIndexes($class)
@@ -511,7 +520,7 @@ class DocumentManager
             throw new \RuntimeException($result['errmsg']);
         }
         $cursor = $db->selectCollection($result['result'])->find();
-        $cursor = new MongoCursor($this, $this->_hydrator, $class, $cursor);
+        $cursor = new MongoCursor($this, $this->hydrator, $class, $cursor);
         $cursor->hydrate(false);
         return $cursor;
     }
@@ -528,14 +537,49 @@ class DocumentManager
      */
     public function getReference($documentName, $identifier)
     {
-        $class = $this->_metadataFactory->getMetadataFor($documentName);
+        $class = $this->metadataFactory->getMetadataFor($documentName);
 
         // Check identity map first, if its already in there just return it.
-        if ($document = $this->_unitOfWork->tryGetById($identifier, $class->rootDocumentName)) {
+        if ($document = $this->unitOfWork->tryGetById($identifier, $class->rootDocumentName)) {
             return $document;
         }
-        $document = $this->_proxyFactory->getProxy($class->name, $identifier);
-        $this->_unitOfWork->registerManaged($document, $identifier, array());
+        $document = $this->proxyFactory->getProxy($class->name, $identifier);
+        $this->unitOfWork->registerManaged($document, $identifier, array());
+
+        return $document;
+    }
+
+
+    /**
+     * Gets a partial reference to the document identified by the given type and identifier
+     * without actually loading it, if the document is not yet loaded.
+     *
+     * The returned reference may be a partial object if the document is not yet loaded/managed.
+     * If it is a partial object it will not initialize the rest of the document state on access.
+     * Thus you can only ever safely access the identifier of an document obtained through
+     * this method.
+     *
+     * The use-cases for partial references involve maintaining bidirectional associations
+     * without loading one side of the association or to update an document without loading it.
+     * Note, however, that in the latter case the original (persistent) document data will
+     * never be visible to the application (especially not event listeners) as it will
+     * never be loaded in the first place.
+     *
+     * @param string $documentName The name of the document type.
+     * @param mixed $identifier The document identifier.
+     * @return object The (partial) document reference.
+     */
+    public function getPartialReference($documentName, $identifier)
+    {
+        $class = $this->metadataFactory->getMetadataFor($documentName);
+
+        // Check identity map first, if its already in there just return it.
+        if ($entity = $this->unitOfWork->tryGetById($identifier, $class->rootDocumentName)) {
+            return $entity;
+        }
+        $document = $class->newInstance();
+        $class->setIdentifierValue($document, $identifier);
+        $this->unitOfWork->registerManaged($document, $identifier, array());
 
         return $document;
     }
@@ -551,6 +595,14 @@ class DocumentManager
      */
     public function find($documentName, $query = array(), array $select = array())
     {
+        if (is_array($documentName)) {
+            $classNames = $documentName;
+            $documentName = $classNames[0];
+
+            $discriminatorField = $this->getClassMetadata($documentName)->discriminatorField['name'];
+            $discriminatorValues = $this->getDiscriminatorValues($classNames);
+            $query[$discriminatorField] = array('$in' => $discriminatorValues);
+        }
         return $this->getRepository($documentName)->find($query, $select);
     }
 
@@ -575,7 +627,7 @@ class DocumentManager
      */
     public function clear()
     {
-        $this->_unitOfWork->clear();
+        $this->unitOfWork->clear();
     }
 
     /**
@@ -586,7 +638,7 @@ class DocumentManager
     public function close()
     {
         $this->clear();
-        $this->_closed = true;
+        $this->closed = true;
     }
 
     /**
@@ -594,9 +646,9 @@ class DocumentManager
      *
      * @throws MongoDBException If the DocumentManager is closed.
      */
-    private function _errorIfClosed()
+    private function errorIfClosed()
     {
-        if ($this->_closed) {
+        if ($this->closed) {
             throw MongoDBException::documentManagerClosed();
         }
     }
@@ -604,10 +656,25 @@ class DocumentManager
     public function formatDBName($dbName)
     {
         return sprintf('%s%s%s', 
-            $this->_config->getDBPrefix(), 
+            $this->config->getDBPrefix(), 
             $dbName,
-            $this->_config->getDBSuffix()
+            $this->config->getDBSuffix()
         );
     }
-}
 
+    public function getDiscriminatorValues($classNames)
+    {
+        $discriminatorValues = array();
+        $collections = array();
+        foreach ($classNames as $className) {
+            $class = $this->getClassMetadata($className);
+            $discriminatorValues[] = $class->discriminatorValue;
+            $key = $class->getDB() . '.' . $class->getCollection();
+            $collections[$key] = $key;
+        }
+        if (count($collections) > 1) {
+            throw new \InvalidArgumentException('Documents involved are not all mapped to the same database collection.');
+        }
+        return $discriminatorValues;
+    }
+}
