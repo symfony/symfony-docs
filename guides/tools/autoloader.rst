@@ -21,12 +21,12 @@ need.
 Usage
 -----
 
-Registering the :class:`Symfony\\Foundation\\UniversalClassLoader` autoloader
+Registering the :class:`Symfony\\Framework\\UniversalClassLoader` autoloader
 is straightforward::
 
-    require_once '/path/to/src/Symfony/Foundation/UniversalClassLoader.php';
+    require_once '/path/to/src/Symfony/Framework/UniversalClassLoader.php';
 
-    use Symfony\Foundation\UniversalClassLoader;
+    use Symfony\Framework\UniversalClassLoader;
 
     $loader = new UniversalClassLoader();
     $loader->register();
@@ -38,8 +38,8 @@ The autoloader is useful only if you add some libraries to autoload.
    ``src/autoload.php``).
 
 If the classes to autoload use namespaces, use the
-:method:`Symfony\\Foundation\\UniversalClassLoader::registerNamespace` or
-:method:`Symfony\\Foundation\\UniversalClassLoader::registerNamespaces`
+:method:`Symfony\\Framework\\UniversalClassLoader::registerNamespace` or
+:method:`Symfony\\Framework\\UniversalClassLoader::registerNamespaces`
 methods::
 
     $loader->registerNamespace('Symfony', __DIR__.'/vendor/symfony/src');
@@ -50,8 +50,8 @@ methods::
     ));
 
 For classes that follow the PEAR naming convention, use the
-:method:`Symfony\\Foundation\\UniversalClassLoader::registerPrefix` or
-:method:`Symfony\\Foundation\\UniversalClassLoader::registerPrefixes`
+:method:`Symfony\\Framework\\UniversalClassLoader::registerPrefix` or
+:method:`Symfony\\Framework\\UniversalClassLoader::registerPrefixes`
 methods::
 
     $loader->registerPrefix('Twig_', __DIR__.'/vendor/twig/lib');
