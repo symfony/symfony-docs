@@ -9,6 +9,11 @@ Get started fast with the Symfony2 :doc:`Quick Tour <quick_tour/index>`:
 .. toctree::
     :hidden:
 
+    quick_tour/index_twig
+
+.. toctree::
+    :hidden:
+
     quick_tour/index
 
 * :doc:`quick_tour/the_big_picture` >

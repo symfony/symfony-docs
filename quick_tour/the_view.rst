@@ -1,20 +1,15 @@
-.. index::
-   single: View
-   single: MVC; View
-
 The View
 ========
 
-After reading the first part of this tutorial, you have decided that Symfony
+After reading the first part of this tutorial, you have decided that Symfony2
 was worth another 10 minutes. Good for you. In this second part, you will
-learn more about the Symfony template system. As seen before, Symfony uses PHP
-as its default template engine but adds some nice features on top of if to
+learn more about the Symfony2 template system. As seen before, Symfony2 uses
+PHP as its default template engine but adds some nice features on top of if to
 make it more powerful.
 
-.. tip::
-   Instead of PHP, you can also use :doc:`Twig </guides/Twig>` as the default
-   template engine with Symfony2. If makes your templates more concise and
-   more web designer friendly.
+Instead of PHP, you can also use `Twig`_ (it makes your templates more concise
+and more friendly for web designers). If you prefer to use `Twig`, read the
+alternative :doc:`View with Twig <the_view_with_twig>` chapter.
 
 .. index::
   single: Templating; Layout
@@ -39,7 +34,7 @@ The ``index`` template is decorated by ``layout.php``, thanks to the
 
 The ``HelloBundle::layout`` notation sounds familiar, doesn't it? It is the same
 notation as for referencing a template. The ``::`` part simply means that the
-controller element is empty, so the corresponding file is directly stored in
+controller element is empty, so the corresponding file is directly stored under
 ``views/``.
 
 Now, let's have a look at the ``layout.php`` file:
@@ -65,9 +60,11 @@ template, the ``$view`` variable is always available and refers to a special
 object that provides a bunch of methods and properties that make the template
 engine tick.
 
-Symfony also supports multiple decoration levels: a layout can itself be
-decorated by another one. This technique is really useful for large projects
-and is made even more powerful when used in combination with slots.
+.. tip::
+   Symfony also supports multiple decoration levels: a layout can itself be
+   decorated by another one. This technique is really useful for large
+   projects and is made even more powerful when used in combination with
+   slots.
 
 .. index::
    single: Templating; Slot
@@ -265,3 +262,5 @@ under a very flexible architecture.
 But I get ahead of myself. First, you need to learn more about the controller
 and that's exactly the topic of the next part of this tutorial. Ready for
 another 10 minutes with Symfony?
+
+.. _Twig: http://www.twig-project.org/

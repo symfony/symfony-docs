@@ -4,7 +4,7 @@ The Architecture
 You are my hero! Who would have thought that you would still be here after the
 first three parts? Your efforts will be well rewarded soon. The first three
 parts don't have a deep look at the architecture of the framework. As it makes
-Symfony stand apart from the framework crowd, let's dive into it now.
+Symfony2 stand apart from the framework crowd, let's dive into it now.
 
 .. index::
    single: Directory Structure
@@ -12,8 +12,8 @@ Symfony stand apart from the framework crowd, let's dive into it now.
 The Directory Structure
 -----------------------
 
-The directory structure of a Symfony application is rather flexible but the
-directory structure of a sandbox reflects the typical and recommended
+The directory structure of a Symfony :term:`application` is rather flexible
+but the directory structure of a sandbox reflects the typical and recommended
 structure of a Symfony application:
 
 * ``hello/``: This directory, named after your application, contains the
@@ -52,7 +52,7 @@ The Application Directory
 The ``HelloKernel`` class is the main entry point of the application
 configuration and as such, it is stored in the ``hello/`` directory.
 
-This class must implement five methods:
+This class must implement four methods:
 
 * ``registerRootDir()``: Returns the configuration root directory;
 
@@ -67,19 +67,7 @@ This class must implement five methods:
   (more on this later);
 
 Have a look at the default implementation of these methods to better
-understand the flexibility of the framework. At the beginning of this
-tutorial, you opened the ``hello/config/routing.yml`` file. The path is
-configured in the ``registerRoutes()``::
-
-    public function registerRoutes()
-    {
-        $loader = new RoutingLoader($this->getBundleDirs());
-
-        return $loader->load(__DIR__.'/config/routing.yml');
-    }
-
-This is also where you can switch from using YAML configuration files to XML
-ones or plain PHP code if that fits you better.
+understand the flexibility of the framework.
 
 To make things work together, the kernel requires one file from the ``src/``
 directory::
@@ -94,9 +82,9 @@ The ``src/autoload.php`` file is responsible for autoloading all the files
 stored in the ``src/`` directory::
 
     // src/autoload.php
-    require_once __DIR__.'/vendor/symfony/src/Symfony/Foundation/UniversalClassLoader.php';
+    require_once __DIR__.'/vendor/symfony/src/Symfony/Framework/UniversalClassLoader.php';
 
-    use Symfony\Foundation\UniversalClassLoader;
+    use Symfony\Framework\UniversalClassLoader;
 
     $loader = new UniversalClassLoader();
     $loader->registerNamespaces(array(
@@ -129,7 +117,7 @@ The Bundle System
 -----------------
 
 This section starts to scratch the surface of one of the greatest and more
-powerful features of Symfony, its bundle system.
+powerful features of Symfony, its :term:`bundle` system.
 
 A bundle is kind of like a plugin in other software. But why is it called
 bundle and not plugin then? Because everything is a bundle in Symfony, from
@@ -144,59 +132,137 @@ method of the ``HelloKernel`` class::
 
     // hello/HelloKernel.php
 
-    use Symfony\Foundation\Bundle\KernelBundle;
-    use Symfony\Framework\FoundationBundle\FoundationBundle;
-    use Symfony\Framework\DoctrineBundle\DoctrineBundle;
-    use Symfony\Framework\SwiftmailerBundle\SwiftmailerBundle;
-    use Symfony\Framework\ZendBundle\ZendBundle;
-    use Application\HelloBundle\HelloBundle;
-
     public function registerBundles()
     {
-        return array(
-            new KernelBundle(),
-            new FoundationBundle(),
-            new DoctrineBundle(),
-            new SwiftmailerBundle(),
-            new ZendBundle(),
-            new HelloBundle(),
+        $bundles = array(
+            new Symfony\Framework\KernelBundle(),
+            new Symfony\Bundle\FrameworkBundle\FrameworkBundle(),
+            new Symfony\Bundle\ZendBundle\ZendBundle(),
+            new Symfony\Bundle\SwiftmailerBundle\SwiftmailerBundle(),
+            new Symfony\Bundle\DoctrineBundle\DoctrineBundle(),
+            //new Symfony\Bundle\DoctrineMigrationsBundle\DoctrineMigrationsBundle(),
+            //new Symfony\Bundle\DoctrineMongoDBBundle\DoctrineMongoDBBundle(),
+            //new Symfony\Bundle\PropelBundle\PropelBundle(),
+            //new Symfony\Bundle\TwigBundle\TwigBundle(),
+            new Application\HelloBundle\HelloBundle(),
         );
+
+        if ($this->isDebug()) {
+        }
+
+        return $bundles;
     }
 
 Along side the ``HelloBundle`` we have already talked about, notice that the
-kernel also enables ``KernelBundle``, ``FoundationBundle``, ``DoctrineBundle``,
+kernel also enables ``KernelBundle``, ``FrameworkBundle``, ``DoctrineBundle``,
 ``SwiftmailerBundle``, and ``ZendBundle``. They are all part of the core
 framework.
 
-Each bundle can be customized via configuration files written in YAML or XML.
-Have a look at the default configuration:
+Each bundle can be customized via configuration files written in YAML, XML, or
+PHP. Have a look at the default configuration:
 
-.. code-block:: yaml
+.. configuration-block::
 
-    # hello/config/config.yml
-    kernel.config: ~
-    web.config: ~
-    web.templating: ~
+    .. code-block:: yaml
+
+        # hello/config/config.yml
+        kernel.config:
+            charset:       UTF-8
+            error_handler: null
+
+        web.config:
+            router:     { resource: "%kernel.root_dir%/config/routing.yml" }
+            validation: { enabled: true, annotations: true }
+
+        web.templating:
+            escaping:       htmlspecialchars
+
+    .. code-block:: xml
+
+        <!-- hello/config/config.xml -->
+        <kernel:config
+            charset="UTF-8"
+            error_handler="null"
+        />
+
+        <web:config>
+            <web:router resource="%kernel.root_dir%/config/routing.xml" />
+            <web:validation enabled="true" annotations="true" />
+        </web:config>
+
+        <web:templating
+            escaping="htmlspecialchars"
+        />
+
+    .. code-block:: php
+
+        // hello/config/config.php
+        $container->loadFromExtension('kernel', 'config', array(
+            'charset'       => 'UTF-8',
+            'error_handler' => null,
+        ));
+
+        $container->loadFromExtension('web', 'config', array(
+            'router'     => array('resource' => '%kernel.root_dir%/config/routing.php'),
+            'validation' => array('enabled' => true, 'annotations' => true),
+        ));
+
+        $container->loadFromExtension('web', 'templating', array(
+            'escaping'       => "htmlspecialchars",
+        ));
 
 Each entry like ``kernel.config`` defines the configuration of a bundle. Some
 bundles can have several entries if they provide many features like
-``FoundationBundle``, which has two entries: ``web.config`` and ``web.templating``.
+``FrameworkBundle``, which has two entries: ``web.config`` and
+``web.templating``.
 
-Each environment can override the default configuration by providing a
+Each :term:`environment` can override the default configuration by providing a
 specific configuration file:
 
-.. code-block:: yaml
+.. configuration-block::
 
-    # hello/config/config_dev.yml
-    imports:
-        - { resource: config.yml }
+    .. code-block:: yaml
 
-    web.config:
-        toolbar: true
+        # hello/config/config_dev.yml
+        imports:
+            - { resource: config.yml }
 
-    zend.logger:
-        priority: info
-        path:     %kernel.root_dir%/logs/%kernel.environment%.log
+        web.config:
+            toolbar: true
+
+        zend.logger:
+            priority: debug
+            path:     %kernel.root_dir%/logs/%kernel.environment%.log
+
+    .. code-block:: xml
+
+        <!-- hello/config/config_dev.xml -->
+        <imports>
+            <import resource="config.xml" />
+        </imports>
+
+        <web:config
+            toolbar="true"
+        />
+
+        <zend:logger
+            priority="info"
+            path="%kernel.logs_dir%/%kernel.environment%.log"
+        />
+
+    .. code-block:: php
+
+        // hello/config/config.php
+        $loader->import('config.php');
+
+        $container->loadFromExtension('web', 'config', array(
+            'toolbar' => true,
+        ));
+
+        $container->loadFromExtension('zend', 'logger', array(
+            'priority' => 'info',
+            'path'     => '%kernel.logs_dir%/%kernel.environment%.log',
+        ));
 
 As we have seen in the previous part, an application is made of bundles as
 defined in the ``registerBundles()`` method but how does Symfony know where to
@@ -207,9 +273,9 @@ namespaces to any valid directory (local or global ones)::
     public function registerBundleDirs()
     {
         return array(
-            'Application'        => __DIR__.'/../src/Application',
-            'Bundle'             => __DIR__.'/../src/Bundle',
-            'Symfony\\Framework' => __DIR__.'/../src/vendor/symfony/src/Symfony/Framework',
+            'Application'     => __DIR__.'/../src/Application',
+            'Bundle'          => __DIR__.'/../src/Bundle',
+            'Symfony\\Bundle' => __DIR__.'/../src/vendor/symfony/src/Symfony/Bundle',
         );
     }
 
