@@ -85,7 +85,7 @@ in mind the following:
    A good commit message is composed of a summary (the first line), optionally
    followed by a blank line and a more detailed description. The summary should
    start with the Component you are working on in square brackets
-   (`[DependencyInjection]`, `[FoundationBundle]`, ...). Use a verb (`fixed ...`,
+   (`[DependencyInjection]`, `[FrameworkBundle]`, ...). Use a verb (`fixed ...`,
    `added ...`, ...) to start the summary and don't add a period at the end.
 
 Submitting a Patch
