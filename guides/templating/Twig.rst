@@ -157,10 +157,11 @@ template, simply use the following code:
 .. code-block:: jinja
 
     <!-- src/Application/HelloBundle/Resources/views/Hello/index.php -->
-    {% render "HelloBundle:Hello:fancy" with ['name': name, 'color': 'green'] %}
+    {% render "HelloBundle:Hello:fancy" with ['path': ['name': name, 'color': 'green']] %}
 
-Here, the ``HelloBundle:Hello:fancy`` string refers to the ``fancy`` action of the
-``Hello`` controller::
+Here, the ``HelloBundle:Hello:fancy`` string refers to the ``fancy`` action of
+the ``Hello`` controller, and the ``path`` value is used as simulated request
+path values::
 
     // src/Application/HelloBundle/Controller/HelloController.php
 
