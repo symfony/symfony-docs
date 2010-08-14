@@ -9,11 +9,13 @@ Dive into Symfony2 with the topical guides:
     testing/index
     doctrine/index
     emails
+    templating/index
     forms
     validator
-    Twig
     event/index
     tools/index
     bundles/index
+    internals/index
+    symfony1
 
 .. include:: map.rst.inc
