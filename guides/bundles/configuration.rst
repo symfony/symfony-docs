@@ -190,17 +190,29 @@ The array passed to your method looks like the following::
     )
 
 Within ``configLoad()``, the ``$container`` variable refers to a container
-that only knows about this namespace configuration. You can manipulate if the
+that only knows about this namespace configuration. You can manipulate it the
 way you want to add services and parameters. The first time the method is
-called, the container is empty. For subsequent calls, it contains the
-configuration as defined by previous calls. So, the method needs to merge new
-configuration settings with old ones::
+called, the container only knows about global parameters. For subsequent
+calls, it contains the configuration as defined by previous calls. So, the
+method needs to merge new configuration settings with old ones::
 
     // only load default services and parameters once
     if (!$container->hasDefinition('xxxxx')) {
         $loader = new XmlFileLoader($container, __DIR__.'/../Resources/config');
         $loader->load('hello.xml');
     }
+
+The global parameters are the following:
+
+* ``kernel.name``
+* ``kernel.environment``
+* ``kernel.debug``
+* ``kernel.root_dir``
+* ``kernel.cache_dir``
+* ``kernel.logs_dir``
+* ``kernel.bundle_dirs``
+* ``kernel.bundles``
+* ``kernel.charset``
 
 .. caution::
     All parameter and service names starting with a ``_`` are reserved for the
