@@ -114,12 +114,11 @@ Internal Requests
 -----------------
 
 At any time during the handling of a request (the 'master' one), a sub-request
-can be handled (a forwarded or an embedded one). You can pass the request type
-to the ``handle()`` method (its second argument):
+can be handled. You can pass the request type to the ``handle()`` method (its
+second argument):
 
 * ``HttpKernelInterface::MASTER_REQUEST``;
-* ``HttpKernelInterface::FORWARDED_REQUEST``;
-* ``HttpKernelInterface::EMBEDDED_REQUEST``.
+* ``HttpKernelInterface::SUB_REQUEST``.
 
 The type is passed to all events and listeners can act accordingly (some
 processing must only occurs on the master request).
