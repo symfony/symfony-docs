@@ -14,7 +14,7 @@
  * This formatter consumes less memory than the PropelObjectFormatter, but doesn't use Instance Pool
  *
  * @author     Francois Zaninotto
- * @version    $Revision: 1895 $
+ * @version    $Revision: 1898 $
  * @package    propel.runtime.formatter
  */
 class PropelOnDemandFormatter extends PropelObjectFormatter
@@ -79,11 +79,11 @@ class PropelOnDemandFormatter extends PropelObjectFormatter
 				continue;
 			}
 			if (isset($hydrationChain)) {
-				$hydrationChain[$class] = $endObject;
+				$hydrationChain[$modelWith->getRightPhpName()] = $endObject;
 			} else {
-				$hydrationChain = array($class => $endObject);
+				$hydrationChain = array($modelWith->getRightPhpName() => $endObject);
 			}
-			$startObject = $modelWith->isPrimary() ? $obj : $hydrationChain[$modelWith->getRelatedClass()];
+			$startObject = $modelWith->isPrimary() ? $obj : $hydrationChain[$modelWith->getLeftPhpName()];
 			call_user_func(array($startObject, $modelWith->getRelationMethod()), $endObject);
 		}
 		foreach ($this->getAsColumns() as $alias => $clause) {

@@ -20,7 +20,8 @@
 namespace Doctrine\ODM\MongoDB\Mapping\Driver;
 
 use Doctrine\ODM\MongoDB\Mapping\ClassMetadata,
-    Doctrine\Common\Annotations\AnnotationReader;
+    Doctrine\Common\Annotations\AnnotationReader,
+    Doctrine\ODM\MongoDB\MongoDBException;
 
 require __DIR__ . '/DoctrineAnnotations.php';
 
@@ -48,6 +49,18 @@ class AnnotationDriver implements Driver
      * @var array
      */
     private $paths = array();
+
+    /**
+     * The file extension of mapping documents.
+     *
+     * @var string
+     */
+    private $fileExtension = '.php';
+
+    /**
+     * @param array
+     */
+    private $classNames;
 
     /**
      * Initializes a new AnnotationDriver that uses the given AnnotationReader for reading
@@ -100,6 +113,8 @@ class AnnotationDriver implements Driver
         } elseif (isset($classAnnotations['Doctrine\ODM\MongoDB\Mapping\EmbeddedDocument'])) {
             $documentAnnot = $classAnnotations['Doctrine\ODM\MongoDB\Mapping\EmbeddedDocument'];
             $class->isEmbeddedDocument = true;
+        } else {
+            throw MongoDBException::classIsNotAValidDocument($className);
         }
 
         if (isset($documentAnnot->db)) {
@@ -111,9 +126,24 @@ class AnnotationDriver implements Driver
         if (isset($documentAnnot->repositoryClass)) {
             $class->setCustomRepositoryClass($documentAnnot->repositoryClass);
         }
+        if (isset($classAnnotations['Doctrine\ODM\MongoDB\Mapping\Indexes'])) {
+            $indexes = $classAnnotations['Doctrine\ODM\MongoDB\Mapping\Indexes']->value;
+            $indexes = is_array($indexes) ? $indexes : array($indexes);
+            foreach ($indexes as $index) {
+                $this->addIndex($class, $index);
+            }
+        }
+        if (isset($classAnnotations['Doctrine\ODM\MongoDB\Mapping\Index'])) {
+            $index = $classAnnotations['Doctrine\ODM\MongoDB\Mapping\Index'];
+            $this->addIndex($class, $index);
+        }
+        if (isset($classAnnotations['Doctrine\ODM\MongoDB\Mapping\UniqueIndex'])) {
+            $index = $classAnnotations['Doctrine\ODM\MongoDB\Mapping\UniqueIndex'];
+            $this->addIndex($class, $index);
+        }
         if (isset($documentAnnot->indexes)) {
             foreach($documentAnnot->indexes as $index) {
-                $class->addIndex($index->keys, $index->options);
+                $this->addIndex($class, $index);
             }
         }
         if (isset($classAnnotations['Doctrine\ODM\MongoDB\Mapping\InheritanceType'])) {
@@ -142,6 +172,10 @@ class AnnotationDriver implements Driver
         $methods = $reflClass->getMethods();
 
         foreach ($reflClass->getProperties() as $property) {
+            if ($class->isMappedSuperclass && ! $property->isPrivate()
+                || $class->isInheritedField($property->name)) {
+                continue;
+            }
             $mapping = array();
             $mapping['fieldName'] = $property->getName();
 
@@ -150,6 +184,25 @@ class AnnotationDriver implements Driver
             }
             if ($notSaved = $this->reader->getPropertyAnnotation($property, 'Doctrine\ODM\MongoDB\Mapping\NotSaved')) {
                 $mapping['notSaved'] = true;
+            }
+
+            $indexes = $this->reader->getPropertyAnnotation($property, 'Doctrine\ODM\MongoDB\Mapping\Indexes');
+            $indexes = $indexes ? $indexes : array();
+            if ($index = $this->reader->getPropertyAnnotation($property, 'Doctrine\ODM\MongoDB\Mapping\Index')) {
+                $indexes[] = $index;
+            }
+            if ($index = $this->reader->getPropertyAnnotation($property, 'Doctrine\ODM\MongoDB\Mapping\UniqueIndex')) {
+                $indexes[] = $index;
+            }
+            if ($indexes) {
+                foreach ($indexes as $index) {
+                    $keys = array();
+                    $keys[$mapping['fieldName']] = 'asc';
+                    if (isset($index->order)) {
+                        $keys[$mapping['fieldName']] = $index->order;
+                    }
+                    $this->addIndex($class, $index, $keys);
+                }
             }
 
             foreach ($this->reader->getPropertyAnnotations($property) as $fieldAnnot) {
@@ -169,7 +222,7 @@ class AnnotationDriver implements Driver
                 if ($alsoLoad = $this->reader->getMethodAnnotation($method, 'Doctrine\ODM\MongoDB\Mapping\AlsoLoad')) {
                     $fields = (array) $alsoLoad->value;
                     foreach ($fields as $value) {
-                        $class->fieldMappings[$value]['alsoLoadMethods'][] = $method->getName();
+                        $class->alsoLoadMethods[$value] = $method->getName();
                     }
                 }
             }
@@ -203,6 +256,10 @@ class AnnotationDriver implements Driver
                         $class->addLifecycleCallback($method->getName(), \Doctrine\ODM\MongoDB\ODMEvents::postRemove);
                     }
 
+                    if (isset($annotations['Doctrine\ODM\MongoDB\Mapping\PreLoad'])) {
+                        $class->addLifecycleCallback($method->getName(), \Doctrine\ODM\MongoDB\ODMEvents::preLoad);
+                    }
+
                     if (isset($annotations['Doctrine\ODM\MongoDB\Mapping\PostLoad'])) {
                         $class->addLifecycleCallback($method->getName(), \Doctrine\ODM\MongoDB\ODMEvents::postLoad);
                     }
@@ -211,6 +268,89 @@ class AnnotationDriver implements Driver
         }
     }
 
+    private function addIndex(ClassMetadata $class, $index, array $keys = array())
+    {
+        $keys = array_merge($keys, $index->keys);
+        $options = array();
+        $allowed = array('name', 'dropDups', 'background', 'safe', 'unique');
+        foreach ($allowed as $name) {
+            if (isset($index->$name)) {
+                $options[$name] = $index->$name;
+            }
+        }
+        $options = array_merge($options, $index->options);
+        $class->addIndex($keys, $options);
+    }
+
+    /**
+     * Whether the class with the specified name is transient. Only non-transient
+     * classes, that is entities and mapped superclasses, should have their metadata loaded.
+     * A class is non-transient if it is annotated with either @Entity or
+     * @MappedSuperclass in the class doc block.
+     *
+     * @param string $className
+     * @return boolean
+     */
+    public function isTransient($className)
+    {
+        $classAnnotations = $this->reader->getClassAnnotations(new \ReflectionClass($className));
+
+        return ! isset($classAnnotations['Doctrine\ODM\MongoDB\Mapping\Document']) &&
+               ! isset($classAnnotations['Doctrine\ODM\MongoDB\Mapping\MappedSuperclass']) &&
+               ! isset($classAnnotations['Doctrine\ODM\MongoDB\Mapping\EmbeddedDocument']);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getAllClassNames()
+    {
+        if ($this->classNames !== null) {
+            return $this->classNames;
+        }
+
+        if ( ! $this->paths) {
+            throw MongoDBException::pathRequired();
+        }
+
+        $classes = array();
+        $includedFiles = array();
+
+        foreach ($this->paths as $path) {
+            if ( ! is_dir($path)) {
+                throw MongoDBException::fileMappingDriversRequireConfiguredDirectoryPath();
+            }
+
+            $iterator = new \RecursiveIteratorIterator(
+                new \RecursiveDirectoryIterator($path),
+                \RecursiveIteratorIterator::LEAVES_ONLY
+            );
+
+            foreach ($iterator as $file) {
+                if (($fileName = $file->getBasename($this->fileExtension)) == $file->getBasename()) {
+                    continue;
+                }
+
+                $sourceFile = realpath($file->getPathName());
+                require_once $sourceFile;
+                $includedFiles[] = $sourceFile;
+            }
+        }
+
+        $declared = get_declared_classes();
+
+        foreach ($declared as $className) {
+            $rc = new \ReflectionClass($className);
+            $sourceFile = $rc->getFileName();
+            if (in_array($sourceFile, $includedFiles) && ! $this->isTransient($className)) {
+                $classes[] = $className;
+            }
+        }
+
+        $this->classNames = $classes;
+
+        return $classes;
+    }
 
     /**
      * Factory method for the Annotation Driver

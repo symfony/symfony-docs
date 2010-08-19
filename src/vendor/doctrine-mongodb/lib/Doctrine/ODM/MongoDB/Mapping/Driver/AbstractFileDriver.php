@@ -124,7 +124,7 @@ abstract class AbstractFileDriver implements Driver
      *
      * @param $className
      * @return string The (absolute) file name.
-     * @throws MappingException
+     * @throws MongoDBException
      */
     protected function findMappingFile($className)
     {
@@ -138,6 +138,63 @@ abstract class AbstractFileDriver implements Driver
         }
 
         return false;
+    }
+
+
+    /**
+     * Whether the class with the specified name should have its metadata loaded.
+     * This is only the case if it is either mapped as an Entity or a
+     * MappedSuperclass.
+     *
+     * @param string $className
+     * @return boolean
+     */
+    public function isTransient($className)
+    {
+        $fileName = str_replace('\\', '.', $className) . $this->fileExtension;
+
+        // Check whether file exists
+        foreach ((array) $this->paths as $path) {
+            if (file_exists($path . DIRECTORY_SEPARATOR . $fileName)) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    /**
+     * Gets the names of all mapped classes known to this driver.
+     * 
+     * @return array The names of all mapped classes known to this driver.
+     */
+    public function getAllClassNames()
+    {
+        $classes = array();
+
+        if ($this->paths) {
+            foreach ((array) $this->paths as $path) {
+                if ( ! is_dir($path)) {
+                    throw MongoDBException::fileMappingDriversRequireConfiguredDirectoryPath();
+                }
+            
+                $iterator = new \RecursiveIteratorIterator(
+                    new \RecursiveDirectoryIterator($path),
+                    \RecursiveIteratorIterator::LEAVES_ONLY
+                );
+        
+                foreach ($iterator as $file) {
+                    if (($fileName = $file->getBasename($this->fileExtension)) == $file->getBasename()) {
+                        continue;
+                    }
+                    
+                    // NOTE: All files found here means classes are not transient!
+                    $classes[] = str_replace('.', '\\', $fileName);
+                }
+            }
+        }
+        
+        return $classes;
     }
 
     /**

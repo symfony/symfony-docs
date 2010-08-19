@@ -39,7 +39,7 @@ class OnUpdatePreparedArgs extends LifecycleEventArgs
     {
         $this->dm = $dm;
         $this->document = $document;
-        $this->update = $update;
+        $this->update = &$update;
     }
 
     public function getDocumentManager()

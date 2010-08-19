@@ -6,6 +6,7 @@ use Symfony\Components\Templating\Engine as BaseEngine;
 use Symfony\Components\Templating\Loader\LoaderInterface;
 use Symfony\Components\OutputEscaper\Escaper;
 use Symfony\Components\DependencyInjection\ContainerInterface;
+use Symfony\Components\HttpFoundation\Response;
 
 /*
  * This file is part of the Symfony package.
@@ -63,8 +64,7 @@ class Engine extends BaseEngine
         ++$this->level;
 
         list(, $options) = $this->splitTemplateName($name);
-        if ('php' === $options['renderer'])
-        {
+        if ('php' === $options['renderer']) {
             // escape only once
             if (1 === $this->level && !isset($parameters['_data'])) {
                 $parameters = $this->escapeParameters($parameters);
@@ -76,6 +76,26 @@ class Engine extends BaseEngine
         --$this->level;
 
         return $content;
+    }
+
+    /**
+     * Renders a view and returns a Response.
+     *
+     * @param string   $view       The view name
+     * @param array    $parameters An array of parameters to pass to the view
+     * @param Response $response   A Response instance
+     *
+     * @return Response A Response instance
+     */
+    public function renderResponse($view, array $parameters = array(), Response $response = null)
+    {
+        if (null === $response) {
+            $response = $this->container->get('response');
+        }
+
+        $response->setContent($this->render($view, $parameters));
+
+        return $response;
     }
 
     public function has($name)
@@ -116,7 +136,7 @@ class Engine extends BaseEngine
         return $parameters;
     }
 
-    // Bundle:controller:action(:renderer)
+    // Bundle:controller:action(.format)(:renderer)
     public function splitTemplateName($name, array $defaults = array())
     {
         $parts = explode(':', $name, 4);
@@ -137,13 +157,18 @@ class Engine extends BaseEngine
             )
         );
 
-        if (isset($parts[3]) && $parts[3]) {
-            $options['renderer'] = $parts[3];
+        if (false !== $pos = strpos($parts[2], '.')) {
+            $options['format'] = substr($parts[2], $pos);
+            $parts[2] = substr($parts[2], 0, $pos);
+        } else {
+            $format = $this->container->getRequestService()->getRequestFormat();
+            if (null !== $format && 'html' !== $format) {
+                $options['format'] = '.'.$format;
+            }
         }
 
-        $format = $this->container->getRequestService()->getRequestFormat();
-        if (null !== $format && 'html' !== $format) {
-            $options['format'] = '.'.$format;
+        if (isset($parts[3]) && $parts[3]) {
+            $options['renderer'] = $parts[3];
         }
 
         return array($parts[2], $options);

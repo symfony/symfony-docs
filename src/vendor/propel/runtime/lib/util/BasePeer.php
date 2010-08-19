@@ -24,7 +24,7 @@
  * @author     John D. McNally <jmcnally@collab.net> (Torque)
  * @author     Brett McLaughlin <bmclaugh@algx.net> (Torque)
  * @author     Stephen Haberman <stephenh@chase3000.com> (Torque)
- * @version    $Revision: 1819 $
+ * @version    $Revision: 1909 $
  * @package    propel.runtime.util
  */
 class BasePeer
@@ -131,21 +131,7 @@ class BasePeer
 			$params = array();
 			$stmt = null;
 			try {
-				$sql = 'DELETE ';
-				if ($queryComment = $criteria->getComment()) {
-					$sql .= '/* ' . $queryComment . ' */ ';
-				}
-				if ($realTableName = $criteria->getTableForAlias($tableName)) {
-					if ($db->useQuoteIdentifier()) {
-						$realTableName = $db->quoteIdentifierTable($realTableName);
-					}
-					$sql .= $tableName . ' FROM ' . $realTableName . ' AS ' . $tableName;
-				} else {
-					if ($db->useQuoteIdentifier()) {
-						$tableName = $db->quoteIdentifierTable($tableName);
-					}
-					$sql .= 'FROM ' . $tableName;
-				}
+				$sql = $db->getDeleteFromClause($criteria, $tableName);
 
 				foreach ($columns as $colName) {
 					$sb = "";

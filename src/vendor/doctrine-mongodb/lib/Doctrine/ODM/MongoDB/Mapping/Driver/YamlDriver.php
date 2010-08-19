@@ -143,7 +143,7 @@ class YamlDriver extends AbstractFileDriver
             'type'           => $type,
             'embedded'       => true,
             'targetDocument' => isset($embed['targetDocument']) ? $embed['targetDocument'] : null,
-            'name'           => $fieldName,
+            'fieldName'           => $fieldName,
         );
         return $mapping;
     }
@@ -155,7 +155,7 @@ class YamlDriver extends AbstractFileDriver
             'type'           => $type,
             'reference'      => true,
             'targetDocument' => isset($reference['targetDocument']) ? $reference['targetDocument'] : null,
-            'name'           => $fieldName,
+            'fieldName'           => $fieldName,
         );
         return $mapping;
     }

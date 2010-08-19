@@ -90,48 +90,37 @@ class XmlDriver extends AbstractFileDriver
             }
             $class->setDiscriminatorMap($map);
         }
-        if (isset($xmlRoot->inheritance['type'])) {
-            $class->Yp = $xmlRoot['inheritance'];
-        }
         if (isset($xmlRoot->{'change-tracking-policy'})) {
             $class->setChangeTrackingPolicy(constant('Doctrine\ODM\MongoDB\Mapping\ClassMetadata::CHANGETRACKING_'
                     . strtoupper((string)$xmlRoot->{'change-tracking-policy'})));
         }
         if (isset($xmlRoot->field)) {
             foreach ($xmlRoot->field as $field) {
-                $mapping = array();
-                $attributes = $field->attributes();
-                foreach ($attributes as $key => $value) {
-                    $mapping[$key] = (string) $value;
-                    $booleanAttributes = array('id', 'reference', 'embed');
-                    if (in_array($key, $booleanAttributes)) {
-                        $mapping[$key] = ('true' === $mapping[$key]) ? true : false;
-                    }
-                }
+                $mapping = $this->getFieldMapping($field);
                 $class->mapField($mapping);
             }
         }
         if (isset($xmlRoot->{'embed-one'})) {
             foreach ($xmlRoot->{'embed-one'} as $embed) {
-                $mapping = $this->getMappingFromEmbed($embed, 'one');
+                $mapping = $this->getEmbedMapping($embed, 'one');
                 $class->mapField($mapping);
             }
         }
         if (isset($xmlRoot->{'embed-many'})) {
             foreach ($xmlRoot->{'embed-many'} as $embed) {
-                $mapping = $this->getMappingFromEmbed($embed, 'many');
+                $mapping = $this->getEmbedMapping($embed, 'many');
                 $class->mapField($mapping);
             }
         }
         if (isset($xmlRoot->{'reference-many'})) {
             foreach ($xmlRoot->{'reference-many'} as $reference) {
-                $mapping = $this->getMappingFromReference($reference, 'many');
+                $mapping = $this->getReferenceMapping($reference, 'many');
                 $class->mapField($mapping);
             }
         }
         if (isset($xmlRoot->{'reference-one'})) {
             foreach ($xmlRoot->{'reference-one'} as $reference) {
-                $mapping = $this->getMappingFromReference($reference, 'one');
+                $mapping = $this->getReferenceMapping($reference, 'one');
                 $class->mapField($mapping);
             }
         }
@@ -142,7 +131,21 @@ class XmlDriver extends AbstractFileDriver
         }
     }
 
-    private function getMappingFromEmbed($embed, $type)
+    private function getFieldMapping($field)
+    {
+        $mapping = array();
+        $attributes = $field->attributes();
+        foreach ($attributes as $key => $value) {
+            $mapping[$key] = (string) $value;
+            $booleanAttributes = array('id', 'reference', 'embed');
+            if (in_array($key, $booleanAttributes)) {
+                $mapping[$key] = ('true' === $mapping[$key]) ? true : false;
+            }
+        }
+        return $mapping;
+    }
+
+    private function getEmbedMapping($embed, $type)
     {
         $cascade = array_keys((array) $embed->cascade);
         if (1 === count($cascade)) {
@@ -159,7 +162,7 @@ class XmlDriver extends AbstractFileDriver
         return $mapping;
     }
 
-    private function getMappingFromReference($reference, $type)
+    private function getReferenceMapping($reference, $type)
     {
         $cascade = array_keys((array) $reference->cascade);
         if (1 === count($cascade)) {

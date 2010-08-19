@@ -15,7 +15,7 @@
  *
  * @author     Hans Lellelid <hans@xmpl.org> (Propel)
  * @author     Hakan Tandogan <hakan42@gmx.de> (Torque)
- * @version    $Revision: 1612 $
+ * @version    $Revision: 1909 $
  * @package    propel.runtime.adapter
  */
 class DBPostgres extends DBAdapter
@@ -137,5 +137,28 @@ class DBPostgres extends DBAdapter
 	public function random($seed=NULL)
 	{
 		return 'random()';
+	}
+	
+	/**
+	 * @see        DBAdapter::getDeleteFromClause()
+	 */
+	public function getDeleteFromClause($criteria, $tableName)
+	{
+		$sql = 'DELETE ';
+		if ($queryComment = $criteria->getComment()) {
+			$sql .= '/* ' . $queryComment . ' */ ';
+		}
+		if ($realTableName = $criteria->getTableForAlias($tableName)) {
+			if ($this->useQuoteIdentifier()) {
+				$realTableName = $this->quoteIdentifierTable($realTableName);
+			}
+			$sql .= 'FROM ' . $realTableName . ' AS ' . $tableName;
+		} else {
+			if ($this->useQuoteIdentifier()) {
+				$tableName = $this->quoteIdentifierTable($tableName);
+			}
+			$sql .= 'FROM ' . $tableName;
+		}
+		return $sql;
 	}
 }

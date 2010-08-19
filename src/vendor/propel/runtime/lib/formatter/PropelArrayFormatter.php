@@ -13,7 +13,7 @@
  * format() returns a PropelArrayCollection of associative arrays
  *
  * @author     Francois Zaninotto
- * @version    $Revision: 1796 $
+ * @version    $Revision: 1898 $
  * @package    propel.runtime.formatter
  */
 class PropelArrayFormatter extends PropelFormatter
@@ -139,7 +139,7 @@ class PropelArrayFormatter extends PropelFormatter
 			if ($modelWith->isPrimary()) {
 				$arrayToAugment = &$this->alreadyHydratedObjects[$this->class][$mainKey];
 			} else {
-				$arrayToAugment = &$hydrationChain[$modelWith->getRelatedClass()];
+				$arrayToAugment = &$hydrationChain[$modelWith->getLeftPhpName()];
 			}
 			
 			if ($modelWith->isAdd()) {
@@ -150,7 +150,7 @@ class PropelArrayFormatter extends PropelFormatter
 				$arrayToAugment[$modelWith->getRelationName()] = &$this->alreadyHydratedObjects[$relAlias][$key];
 			}
 				
-			$hydrationChain[$relAlias] = &$this->alreadyHydratedObjects[$relAlias][$key];
+			$hydrationChain[$modelWith->getRightPhpName()] = &$this->alreadyHydratedObjects[$relAlias][$key];
 		}
 		
 		// columns added using withColumn()

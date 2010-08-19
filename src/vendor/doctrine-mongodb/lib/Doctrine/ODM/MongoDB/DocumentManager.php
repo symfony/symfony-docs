@@ -171,7 +171,7 @@ class DocumentManager
      */
     public static function create(Mongo $mongo, Configuration $config = null, EventManager $eventManager = null)
     {
-        return new self($mongo, $config, $eventManager);
+        return new DocumentManager($mongo, $config, $eventManager);
     }
 
     /**
@@ -237,7 +237,7 @@ class DocumentManager
     {
         return $this->hydrator;
     }
- 
+
     /**
      * Returns the metadata for a class.
      *
@@ -323,7 +323,7 @@ class DocumentManager
      *
      * The document will be entered into the database at or before transaction
      * commit or as a result of the flush operation.
-     * 
+     *
      * NOTE: The persist operation always considers documents that are not yet known to
      * this DocumentManager as NEW. Do not pass detached documents to the persist operation.
      *
@@ -476,15 +476,34 @@ class DocumentManager
      * Flushes all changes to objects that have been queued up to now to the database.
      * This effectively synchronizes the in-memory state of managed objects with the
      * database.
+     *
+     * @param array $options Array of options to be used with batchInsert(), update() and remove()
      */
-    public function flush()
+    public function flush(array $options = array())
     {
         $this->errorIfClosed();
-        $this->unitOfWork->commit();
+        $this->unitOfWork->commit($options);
     }
 
-    public function ensureDocumentIndexes($class)
+    /**
+     * Ensure indexes are created for all documents that can be loaded with the
+     * metadata factory.
+     */
+    public function ensureIndexes()
     {
+        foreach ($this->metadataFactory->getAllMetadata() as $class) {
+            $this->ensureDocumentIndexes($class->name);
+        }
+    }
+
+    /**
+     * Ensure the given documents indexes are created.
+     *
+     * @param string $documentName The document name to ensure the indexes for.
+     */
+    public function ensureDocumentIndexes($documentName)
+    {
+        $class = $this->getClassMetadata($documentName);
         if ($indexes = $class->getIndexes()) {
             $collection = $this->getDocumentCollection($class->name);
             foreach ($indexes as $index) {
@@ -493,11 +512,124 @@ class DocumentManager
         }
     }
 
+    /**
+     * Delete indexes for all documents that can be loaded with the
+     * metadata factory.
+     */
+    public function deleteIndexes()
+    {
+        foreach ($this->metadataFactory->getAllMetadata() as $class) {
+            $this->deleteDocumentIndexes($class->name);
+        }
+    }
+
+    /**
+     * Delete the given documents indexes.
+     *
+     * @param string $documentName The document name to delete the indexes for.
+     */
     public function deleteDocumentIndexes($documentName)
     {
         return $this->getDocumentCollection($documentName)->deleteIndexes();
     }
 
+    /**
+     * Create all the mapped document collections in the metadata factory.
+     */
+    public function createCollections()
+    {
+        foreach ($this->metadataFactory->getAllMetadata() as $class) {
+            $this->deleteDocumentIndexes($class->name);
+        }
+    }
+
+    /**
+     * Create the document collection for a mapped class.
+     *
+     * @param string $documentName
+     */
+    public function createDocumentCollection($documentName)
+    {
+        $this->getDocumentDB($documentName)->createCollection(
+            $this->getClassMetadata($documentName)->getCollection(),
+            $this->getClassMetadata($documentName)->getCollectionCapped(),
+            $this->getClassMetadata($documentName)->getCollectionSize(),
+            $this->getClassMetadata($documentName)->getCollectionMax()
+        );
+    }
+
+    /**
+     * Drop all the mapped document collections in the metadata factory.
+     */
+    public function dropCollections()
+    {
+        foreach ($this->metadataFactory->getAllMetadata() as $class) {
+            $this->dropDocumentCollection($class->name);
+        }
+    }
+
+    /**
+     * Drop the document collection for a mapped class.
+     *
+     * @param string $documentName
+     */
+    public function dropDocumentCollection($documentName)
+    {
+        $this->getDocumentDB($documentName)->dropCollection(
+            $this->getClassMetadata($documentName)->getCollection()
+        );
+    }
+
+    /**
+     * Drop all the mapped document databases in the metadata factory.
+     */
+    public function dropDatabases()
+    {
+        foreach ($this->metadataFactory->getAllMetadata() as $class) {
+            $this->dropDocumentDatabase($class->name);
+        }
+    }
+
+    /**
+     * Drop the document database for a mapped class.
+     *
+     * @param string $documentName
+     */
+    public function dropDocumentDatabase($documentName)
+    {
+        $this->getDocumentDB($documentName)->drop();
+    }
+
+    /**
+     * Create all the mapped document databases in the metadata factory.
+     */
+    public function createDatabases()
+    {
+        foreach ($this->metadataFactory->getAllMetadata() as $class) {
+            $this->createDocumentDatabase($class->name);
+        }
+    }
+
+    /**
+     * Create the document database for a mapped class.
+     *
+     * @param string $documentName
+     */
+    public function createDocumentDatabase($documentName)
+    {
+        return $this->getDocumentDB($documentName);
+    }
+
+    /**
+     * Execute a map reduce operation.
+     *
+     * @param string $documentName The document name to run the operation on.
+     * @param string $map The javascript map function.
+     * @param string $reduce The javascript reduce function.
+     * @param array $query The mongo query.
+     * @param array $options Array of options.
+     * @return MongoCursor $cursor
+     */
     public function mapReduce($documentName, $map, $reduce, array $query = array(), array $options = array())
     {
         $class = $this->getClassMetadata($documentName);
@@ -548,7 +680,6 @@ class DocumentManager
 
         return $document;
     }
-
 
     /**
      * Gets a partial reference to the document identified by the given type and identifier
@@ -622,8 +753,6 @@ class DocumentManager
     /**
      * Clears the DocumentManager. All documents that are currently managed
      * by this DocumentManager become detached.
-     *
-     * @param string $documentName
      */
     public function clear()
     {
@@ -641,22 +770,10 @@ class DocumentManager
         $this->closed = true;
     }
 
-    /**
-     * Throws an exception if the DocumentManager is closed or currently not active.
-     *
-     * @throws MongoDBException If the DocumentManager is closed.
-     */
-    private function errorIfClosed()
-    {
-        if ($this->closed) {
-            throw MongoDBException::documentManagerClosed();
-        }
-    }
-
     public function formatDBName($dbName)
     {
-        return sprintf('%s%s%s', 
-            $this->config->getDBPrefix(), 
+        return sprintf('%s%s%s',
+            $this->config->getDBPrefix(),
             $dbName,
             $this->config->getDBSuffix()
         );
@@ -676,5 +793,28 @@ class DocumentManager
             throw new \InvalidArgumentException('Documents involved are not all mapped to the same database collection.');
         }
         return $discriminatorValues;
+    }
+
+    public function getClassNameFromDiscriminatorValue(array $mapping, $value)
+    {
+        $discriminatorField = isset($mapping['discriminatorField']) ? $mapping['discriminatorField'] : '_doctrine_class_name';
+        if (isset($value[$discriminatorField])) {
+            $discriminatorValue = $value[$discriminatorField];
+            return isset($mapping['discriminatorMap'][$discriminatorValue]) ? $mapping['discriminatorMap'][$discriminatorValue] : $discriminatorValue;
+        } else {
+            return $mapping['targetDocument'];
+        }
+    }
+
+    /**
+     * Throws an exception if the DocumentManager is closed or currently not active.
+     *
+     * @throws MongoDBException If the DocumentManager is closed.
+     */
+    private function errorIfClosed()
+    {
+        if ($this->closed) {
+            throw MongoDBException::documentManagerClosed();
+        }
     }
 }

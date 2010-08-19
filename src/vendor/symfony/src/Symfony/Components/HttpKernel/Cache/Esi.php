@@ -173,7 +173,13 @@ class Esi
         $subRequest = Request::create($uri, 'get', array(), $cache->getRequest()->cookies->all(), array(), $cache->getRequest()->server->all());
 
         try {
-            return $cache->handle($subRequest, HttpKernelInterface::EMBEDDED_REQUEST, true);
+            $response = $cache->handle($subRequest, HttpKernelInterface::SUB_REQUEST, true);
+
+            if (200 != $response->getStatusCode()) {
+                throw new \RuntimeException(sprintf('Error when rendering "%s" (Status code is %s).', $request->getUri(), $response->getStatusCode()));
+            }
+
+            return $response->getContent();
         } catch (\Exception $e) {
             if ($alt) {
                 return $this->handle($cache, $alt, '', $ignoreErrors);
@@ -204,7 +210,7 @@ class Esi
             throw new \RuntimeException('Unable to process an ESI tag without a "src" attribute.');
         }
 
-        return sprintf('<?php echo $this->esi->handle($this, \'%s\', \'%s\', %s)->getContent() ?>'."\n",
+        return sprintf('<?php echo $this->esi->handle($this, \'%s\', \'%s\', %s) ?>'."\n",
             $options['src'],
             isset($options['alt']) ? $options['alt'] : null,
             isset($options['onerror']) && 'continue' == $options['onerror'] ? 'true' : 'false'

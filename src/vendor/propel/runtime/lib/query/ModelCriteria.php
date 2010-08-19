@@ -22,7 +22,7 @@
  * @method     ModelCriteria innerJoin($relation) Adds a INNER JOIN clause to the query
  *
  * @author     François Zaninotto
- * @version    $Revision: 1880 $
+ * @version    $Revision: 1899 $
  * @package    propel.runtime.query
  */
 class ModelCriteria extends Criteria
@@ -398,6 +398,41 @@ class ModelCriteria extends Criteria
 	{
 		list($column, $realColumnName) = $this->getColumnFromName($columnName, false);
 		$this->addGroupByColumn($realColumnName);
+		
+		return $this;
+	}
+	
+	/**
+	 * Adds a GROUB BY clause for all columns of a model to the query
+	 * Examples:
+	 *   $c->groupBy('Book');
+	 *    => $c->addGroupByColumn(BookPeer::ID);
+	 *    => $c->addGroupByColumn(BookPeer::TITLE);
+	 *    => $c->addGroupByColumn(BookPeer::AUTHOR_ID);
+	 *    => $c->addGroupByColumn(BookPeer::PUBLISHER_ID);
+	 *
+	 * @param      string $class The class name or alias
+	 *
+	 * @return     ModelCriteria The current object, for fluid interface
+	 */
+	public function groupByClass($class)
+	{
+		if ($class == $this->getModelAliasOrName()) {
+			// column of the Criteria's model
+			$tableMap = $this->getTableMap();
+		} elseif (isset($this->joins[$class])) {
+			// column of a relations's model
+			$tableMap = $this->joins[$class]->getTableMap();
+		} else {
+			throw new PropelException('Unknown model or alias ' . $class);
+		}
+		foreach ($tableMap->getColumns() as $column) {
+			if (isset($this->aliases[$class])) {
+				$this->addGroupByColumn($class . '.' . $column->getName());
+			} else {
+				$this->addGroupByColumn($column->getFullyQualifiedName());
+			}
+		}
 		
 		return $this;
 	}

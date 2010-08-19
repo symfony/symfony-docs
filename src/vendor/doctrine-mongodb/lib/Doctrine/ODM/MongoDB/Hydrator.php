@@ -71,19 +71,18 @@ class Hydrator
     public function hydrate($document, &$data)
     {
         $metadata = $this->dm->getClassMetadata(get_class($document));
-        foreach ($metadata->fieldMappings as $mapping) {
-            if (isset($mapping['alsoLoadMethods'])) {
-                foreach ($mapping['alsoLoadMethods'] as $method) {
-                    if (isset($data[$mapping['fieldName']])) {
-                        $document->$method($data[$mapping['fieldName']]);
-                    }
+        if (isset($metadata->alsoLoadMethods)) {
+            foreach ($metadata->alsoLoadMethods as $fieldName => $method) {
+                if (isset($data[$fieldName])) {
+                    $document->$method($data[$fieldName]);
                 }
             }
-
+        }
+        foreach ($metadata->fieldMappings as $mapping) {
             if (isset($mapping['alsoLoadFields'])) {
                 $rawValue = null;
                 $names = isset($mapping['alsoLoadFields']) ? $mapping['alsoLoadFields'] : array();
-                array_unshift($names, $mapping['fieldName']);
+                array_unshift($names, $mapping['name']);
                 foreach ($names as $name) {
                     if (isset($data[$name])) {
                         $rawValue = $data[$name];
@@ -91,7 +90,7 @@ class Hydrator
                     }
                 }
             } else {
-                $rawValue = isset($data[$mapping['fieldName']]) ? $data[$mapping['fieldName']] : null;
+                $rawValue = isset($data[$mapping['name']]) ? $data[$mapping['name']] : null;
             }
             if ($rawValue === null) {
                 continue;
@@ -103,7 +102,7 @@ class Hydrator
             if (isset($mapping['embedded'])) {
                 if ($mapping['type'] === 'one') {
                     $embeddedDocument = $rawValue;
-                    $className = $this->getClassNameFromDiscriminatorValue($mapping, $embeddedDocument);
+                    $className = $this->dm->getClassNameFromDiscriminatorValue($mapping, $embeddedDocument);
                     $embeddedMetadata = $this->dm->getClassMetadata($className);
                     $value = $embeddedMetadata->newInstance();
                     $this->hydrate($value, $embeddedDocument);
@@ -112,7 +111,7 @@ class Hydrator
                     $embeddedDocuments = $rawValue;
                     $coll = new PersistentCollection(new ArrayCollection());
                     foreach ($embeddedDocuments as $embeddedDocument) {
-                        $className = $this->getClassNameFromDiscriminatorValue($mapping, $embeddedDocument);
+                        $className = $this->dm->getClassNameFromDiscriminatorValue($mapping, $embeddedDocument);
                         $embeddedMetadata = $this->dm->getClassMetadata($className);
                         $embeddedDocumentObject = $embeddedMetadata->newInstance();
                         $this->hydrate($embeddedDocumentObject, $embeddedDocument);
@@ -127,23 +126,19 @@ class Hydrator
             } elseif (isset($mapping['reference'])) {
                 $reference = $rawValue;
                 if ($mapping['type'] === 'one' && isset($reference[$this->cmd . 'id'])) {
-                    $className = $this->getClassNameFromDiscriminatorValue($mapping, $reference);
+                    $className = $this->dm->getClassNameFromDiscriminatorValue($mapping, $reference);
                     $targetMetadata = $this->dm->getClassMetadata($className);
                     $id = $targetMetadata->getPHPIdentifierValue($reference[$this->cmd . 'id']);
                     $value = $this->dm->getReference($className, $id);
                 } elseif ($mapping['type'] === 'many' && (is_array($reference) || $reference instanceof Collection)) {
                     $references = $reference;
-                    $coll = new PersistentCollection(new ArrayCollection(), $this->dm);
-                    $coll->setInitialized(false);
-                    foreach ($references as $reference) {
-                        $className = $this->getClassNameFromDiscriminatorValue($mapping, $reference);
-                        $targetMetadata = $this->dm->getClassMetadata($className);
-                        $id = $targetMetadata->getPHPIdentifierValue($reference[$this->cmd . 'id']);
-                        $reference = $this->dm->getReference($className, $id);
-                        $coll->add($reference);
-                    }
-                    $coll->takeSnapshot();
-                    $value = $coll;
+                    $value = new PersistentCollection(new ArrayCollection(), $this->dm);
+                    $value->setInitialized(false);
+                    $value->setOwner($document, $mapping);
+
+                    // Delay any hydration of reference objects until the collection is
+                    // accessed and initialized for the first ime
+                    $value->setReferences($references);
                 }
 
             // Hydrate regular field
@@ -164,16 +159,5 @@ class Hydrator
             unset($data['_id']);
         }
         return $document;
-    }
-
-    private function getClassNameFromDiscriminatorValue(array $mapping, $value)
-    {
-        $discriminatorField = isset($mapping['discriminatorField']) ? $mapping['discriminatorField'] : '_doctrine_class_name';
-        if (isset($value[$discriminatorField])) {
-            $discriminatorValue = $value[$discriminatorField];
-            return isset($mapping['discriminatorMap'][$discriminatorValue]) ? $mapping['discriminatorMap'][$discriminatorValue] : $discriminatorValue;
-        } else {
-            return $mapping['targetDocument'];
-        }
     }
 }

@@ -25,6 +25,7 @@ use Doctrine\ODM\MongoDB\DocumentManager,
     Doctrine\ODM\MongoDB\Proxy\Proxy,
     Doctrine\ODM\MongoDB\Mapping\Types\Type,
     Doctrine\ODM\MongoDB\Event\LifecycleEventArgs,
+    Doctrine\ODM\MongoDB\Event\PreLoadEventArgs,
     Doctrine\ODM\MongoDB\PersistentCollection,
     Doctrine\Common\Collections\Collection,
     Doctrine\Common\NotifyPropertyChanged,
@@ -182,7 +183,12 @@ class UnitOfWork implements PropertyChangedListener
      */
     private $hydrator;
 
-    protected $documentPersisters = array();
+    /**
+     * The document persister instances used to persist document instances.
+     *
+     * @var array
+     */
+    private $persisters = array();
 
     /**
      * Initializes a new UnitOfWork instance, bound to the given DocumentManager.
@@ -204,11 +210,11 @@ class UnitOfWork implements PropertyChangedListener
      */
     public function getDocumentPersister($documentName)
     {
-        if ( ! isset($this->documentPersisters[$documentName])) {
+        if ( ! isset($this->persisters[$documentName])) {
             $class = $this->dm->getClassMetadata($documentName);
-            $this->documentPersisters[$documentName] = new Persisters\BasicDocumentPersister($this->dm, $class);
+            $this->persisters[$documentName] = new Persisters\BasicDocumentPersister($this->dm, $class);
         }
-        return $this->documentPersisters[$documentName];
+        return $this->persisters[$documentName];
     }
 
     /**
@@ -219,7 +225,7 @@ class UnitOfWork implements PropertyChangedListener
      */
     public function setDocumentPersister($documentName, Persisters\BasicDocumentPersister $persister)
     {
-        $this->documentPersisters[$documentName] = $persister;
+        $this->persisters[$documentName] = $persister;
     }
 
     /**
@@ -231,12 +237,11 @@ class UnitOfWork implements PropertyChangedListener
      * 
      * 1) All document insertions
      * 2) All document updates
-     * 3) All collection deletions
-     * 4) All collection updates
-     * 5) All document deletions
-     * 
+     * 3) All document deletions
+     *
+     * @param array $options Array of options to be used with batchInsert(), update() and remove()
      */
-    public function commit()
+    public function commit(array $options = array())
     {
         // Compute changes done since last commit.
         $this->computeChangeSets();
@@ -257,23 +262,23 @@ class UnitOfWork implements PropertyChangedListener
 
         if ($this->documentInsertions) {
             foreach ($commitOrder as $class) {
-                $this->executeInserts($class);
+                $this->executeInserts($class, $options);
             }
             foreach ($commitOrder as $class) {
-                $this->executeReferenceUpdates($class);
+                $this->executeReferenceUpdates($class, $options);
             }
         }
         
         if ($this->documentUpdates) {
             foreach ($commitOrder as $class) {
-                $this->executeUpdates($class);
+                $this->executeUpdates($class, $options);
             }
         }
 
         // Document deletions come last and need to be in reverse commit order
         if ($this->documentDeletions) {
             for ($count = count($commitOrder), $i = $count - 1; $i >= 0; --$i) {
-                $this->executeDeletions($commitOrder[$i]);
+                $this->executeDeletions($commitOrder[$i], $options);
             }
         }
 
@@ -295,12 +300,13 @@ class UnitOfWork implements PropertyChangedListener
      * Executes reference updates
      *
      * @param Doctrine\ODM\MongoDB\Mapping\ClassMetadata $class
+     * @param array $options Array of options to be used for update()
      */
-    private function executeReferenceUpdates(ClassMetadata $class)
+    private function executeReferenceUpdates(ClassMetadata $class, array $options = array())
     {
         $className = $class->name;
         $persister = $this->getDocumentPersister($className);
-        $persister->executeReferenceUpdates();
+        $persister->executeReferenceUpdates($options);
     }
 
     /**
@@ -317,9 +323,65 @@ class UnitOfWork implements PropertyChangedListener
         return array();
     }
 
-    public function getDocumentChangeSets()
+    /**
+     * Get a documents actual data, flattening all the objects to arrays.
+     *
+     * @param object $document
+     * @return array
+     */
+    public function getDocumentActualData($document)
     {
-        return $this->documentChangeSets;
+        $class = $this->dm->getClassMetadata(get_class($document));
+        $actualData = array();
+        foreach ($class->reflFields as $name => $refProp) {
+            $mapping = $class->fieldMappings[$name];
+            
+            // Skip identifiers if custom ones are not allowed
+            if ($class->isIdentifier($name) && ! $class->getAllowCustomID()) {
+                continue;
+            }
+
+            $origValue = $class->getFieldValue($document, $mapping['fieldName']);
+
+            if (($class->isCollectionValuedReference($name) || $class->isCollectionValuedEmbed($name))
+                    && $origValue !== null && ! ($origValue instanceof PersistentCollection)) {
+                // If $actualData[$name] is not a Collection then use an ArrayCollection.
+                if ( ! $origValue instanceof Collection) {
+                    $value = new ArrayCollection($origValue);
+                } else {
+                    $value = $origValue;
+                }
+
+                // Inject PersistentCollection
+                if ($class->isCollectionValuedReference($name)) {
+                    $coll = new PersistentCollection($value, $this->dm);
+                } else {
+                    $coll = new PersistentCollection($value);
+                }
+                $coll->setOwner($document, $mapping);
+                $coll->setDirty( ! $coll->isEmpty());
+                $class->reflFields[$name]->setValue($document, $coll);
+            }
+
+            // We need to flatten the embedded documents so they are just arrays of
+            // data instead of the actual objects. This is necessary to maintain all the old
+            // values.
+            if ($class->isCollectionValuedEmbed($name) && $origValue) {
+                $embeddedDocuments = $origValue;
+                $actualData[$name] = array();
+                foreach ($embeddedDocuments as $key => $embeddedDocument) {
+                    $actualData[$name][$key] = $this->getDocumentActualData($embeddedDocument);
+                    $actualData[$name][$key]['originalObject'] = $embeddedDocument;
+                }
+            } elseif ($class->isSingleValuedEmbed($name) && is_object($origValue)) {
+                $embeddedDocument = $origValue;
+                $actualData[$name] = $this->getDocumentActualData($embeddedDocument);
+                $actualData[$name]['originalObject'] = $embeddedDocument;
+            } else {
+                $actualData[$name] = $origValue;
+            }
+        }
+        return $actualData;
     }
 
     /**
@@ -354,41 +416,7 @@ class UnitOfWork implements PropertyChangedListener
         }
         
         $oid = spl_object_hash($document);
-        $parentOid = spl_object_hash($parentDocument);
-
-        $actualData = array();
-        foreach ($class->fieldMappings as $name => $mapping) {
-            if ( ! $class->isIdentifier($name) || $class->getAllowCustomID()) {
-                $actualData[$name] = $class->getFieldValue($document, $mapping['fieldName']);
-            }
-            if (($class->isCollectionValuedReference($name) || $class->isCollectionValuedEmbed($name))
-                    && $actualData[$name] !== null && ! ($actualData[$name] instanceof PersistentCollection)) {
-                // If $actualData[$name] is not a Collection then use an ArrayCollection.
-                if ( ! $actualData[$name] instanceof Collection) {
-                    $actualData[$name] = new ArrayCollection($actualData[$name]);
-                }
-
-                // Inject PersistentCollection
-                if ($class->isCollectionValuedReference($name)) {
-                    $coll = new PersistentCollection($actualData[$name], $this->dm);
-                } else {
-                    $coll = new PersistentCollection($actualData[$name]);
-                }
-                $coll->setOwner($document, $mapping);
-                $coll->setDirty( ! $coll->isEmpty());
-                $class->reflFields[$name]->setValue($document, $coll);
-                $actualData[$name] = $coll;
-            }
-            if ($class->isSingleValuedEmbed($name) && is_object($actualData[$name])) {
-                $embeddedDocument = $actualData[$name];
-                $embeddedMetadata = $this->dm->getClassMetadata(get_class($embeddedDocument));
-                $actualData[$name] = array();
-                foreach ($embeddedMetadata->fieldMappings as $mapping) {
-                    $actualData[$name][$mapping['fieldName']] = $embeddedMetadata->getFieldValue($embeddedDocument, $mapping['fieldName']);
-                }
-                $actualData[$name]['className'] = $embeddedMetadata->name;
-            }
-        }
+        $actualData = $this->getDocumentActualData($document);
 
         if ( ! isset($this->originalDocumentData[$oid])) {
             // Document is either NEW or MANAGED but not yet fully persisted (only has an id).
@@ -414,11 +442,18 @@ class UnitOfWork implements PropertyChangedListener
                 if ($actualValue instanceof PersistentCollection) {
                     $actualValue = $actualValue->toArray();
                 }
-                if ((isset($class->fieldMappings[$propName]['embedded']) && $class->fieldMappings[$propName]['type'] === 'one')
-                        || (isset($class->fieldMappings[$propName]['reference']) && $class->fieldMappings[$propName]['type'] === 'one')) {
-                    if ($orgValue !== $actualValue) {
-                        $changeSet[$propName] = array($orgValue, $actualValue);
+                if (isset($class->fieldMappings[$propName]['embedded']) && $class->fieldMappings[$propName]['type'] === 'one' && $orgValue !== $actualValue) {
+                    if (is_object($orgValue)) {
+                        $embeddedOid = spl_object_hash($orgValue);
+                        $orgValue = isset($this->originalDocumentData[$embeddedOid]) ? $this->originalDocumentData[$embeddedOid] : $orgValue;
                     }
+                    $changeSet[$propName] = array($orgValue, $actualValue);
+                } else if (isset($class->fieldMappings[$propName]['reference']) && $class->fieldMappings[$propName]['type'] === 'one' && $orgValue !== $actualValue) {
+                    if (is_object($orgValue)) {
+                        $referenceOid = spl_object_hash($orgValue);
+                        $orgValue = isset($this->originalDocumentData[$referenceOid]) ? $this->originalDocumentData[$referenceOid] : $orgValue;
+                    }
+                    $changeSet[$propName] = array($orgValue, $actualValue);
                 } else if ($isChangeTrackingNotify) {
                     continue;
                 } else if (isset($class->fieldMappings[$propName]['type']) && $class->fieldMappings[$propName]['type'] === 'many') {
@@ -440,15 +475,10 @@ class UnitOfWork implements PropertyChangedListener
 
         // Look for changes in references of the document
         foreach ($class->fieldMappings as $mapping) {
-            if (isset($mapping['reference'])) {
+            if (isset($mapping['reference']) || isset($mapping['embedded'])) {
                 $val = $class->reflFields[$mapping['fieldName']]->getValue($document);
                 if ($val !== null) {
-                    $this->computeReferenceChanges($parentDocument, $mapping, $val);
-                }
-            } elseif (isset($mapping['embedded'])) {
-                $val = $class->reflFields[$mapping['fieldName']]->getValue($document);
-                if ($val !== null) {
-                    $this->computeEmbeddedChanges($parentDocument, $mapping, $val);
+                    $this->computeAssociationChanges($parentDocument, $mapping, $val);
                 }
             }
         }
@@ -497,13 +527,13 @@ class UnitOfWork implements PropertyChangedListener
     }
 
     /**
-     * Computes the changes of a reference.
+     * Computes the changes of an embedded document.
      *
      * @param object $parentDocument The top most parent document of the document we are computing.
      * @param array $mapping
      * @param mixed $value The value of the association.
      */
-    private function computeReferenceChanges($parentDocument, $mapping, $value)
+    private function computeAssociationChanges($parentDocument, $mapping, $value)
     {
         if ($value instanceof PersistentCollection && $value->isDirty()) {
             $this->visitedCollections[] = $value;
@@ -513,8 +543,6 @@ class UnitOfWork implements PropertyChangedListener
             return; // "Persistence by reachability" only if persist cascade specified
         }
 
-        // Look through the documents, and in any of their reference, for transient
-        // enities, recursively. ("Persistence by reachability")
         if ($mapping['type'] === 'one') {
             if ($value instanceof Proxy && ! $value->__isInitialized__) {
                 return; // Ignore uninitialized proxy objects
@@ -526,55 +554,32 @@ class UnitOfWork implements PropertyChangedListener
 
         foreach ($value as $entry) {
             $targetClass = $this->dm->getClassMetadata(get_class($entry));
-            $state = $this->getDocumentState($entry, self::STATE_NEW);
-            $oid = spl_object_hash($entry);
-            if ($state == self::STATE_NEW) {
-                if (isset($targetClass->lifecycleCallbacks[ODMEvents::prePersist])) {
-                    $targetClass->invokeLifecycleCallbacks(ODMEvents::prePersist, $entry);
-                }
-                if ($this->evm->hasListeners(ODMEvents::prePersist)) {
-                    $this->evm->dispatchEvent(ODMEvents::prePersist, new LifecycleEventArgs($entry, $this->dm));
-                }
-
-                $this->documentStates[$oid] = self::STATE_MANAGED;
-
-                $this->documentInsertions[$oid] = $entry;
-
+            if ($targetClass->isEmbeddedDocument) {
                 $this->computeChangeSet($parentDocument, $targetClass, $entry);
-                
-            } elseif ($state == self::STATE_REMOVED) {
-                throw MongoDBException::removedDocumentInCollectionDetected($entry, $mapping);
+            } else {
+                $state = $this->getDocumentState($entry, self::STATE_NEW);
+                $oid = spl_object_hash($entry);
+                if ($state == self::STATE_NEW) {
+                    if ( ! $mapping['isCascadePersist']) {
+                        throw new \InvalidArgumentException("A new document was found through a relationship that was not"
+                                . " configured to cascade persist operations: " . self::objToStr($entry) . "."
+                                . " Explicitly persist the new document or configure cascading persist operations"
+                                . " on the relationship.");
+                    }
+                    $this->persistNew($targetClass, $entry);
+                    $this->computeChangeSet($parentDocument, $targetClass, $entry);
+                } else if ($state == self::STATE_REMOVED) {
+                    return new \InvalidArgumentException("Removed document detected during flush: "
+                            . self::objToStr($removedDocument).". Remove deleted entities from associations.");
+                } else if ($state == self::STATE_DETACHED) {
+                    // Can actually not happen right now as we assume STATE_NEW,
+                    // so the exception will be raised from the DBAL layer (constraint violation).
+                    throw new \InvalidArgumentException("A detached document was found through a "
+                            . "relationship during cascading a persist operation.");
+                }
+                // MANAGED associated entities are already taken into account
+                // during changeset calculation anyway, since they are in the identity map.
             }
-            // MANAGED associated documents are already taken into account
-            // during changeset calculation anyway, since they are in the identity map.
-        }
-    }
-
-    /**
-     * Computes the changes of an embedded document.
-     *
-     * @param object $parentDocument The top most parent document of the document we are computing.
-     * @param array $mapping
-     * @param mixed $value The value of the association.
-     */
-    private function computeEmbeddedChanges($parentDocument, $mapping, $value)
-    {
-        if ($value instanceof PersistentCollection && $value->isDirty()) {
-            $this->visitedCollections[] = $value;
-        }
-
-        if ( ! $mapping['isCascadePersist']) {
-            return; // "Persistence by reachability" only if persist cascade specified
-        }
-
-        if ($mapping['type'] === 'one') {
-            $value = array($value);
-        } elseif ($value instanceof PersistentCollection) {
-            $value = $value->unwrap();
-        }
-        foreach ($value as $entry) {
-            $targetClass = $this->dm->getClassMetadata(get_class($entry));
-            $this->computeChangeSet($parentDocument, $targetClass, $entry);
         }
     }
 
@@ -616,13 +621,25 @@ class UnitOfWork implements PropertyChangedListener
 
         foreach ($actualData as $propName => $actualValue) {
             $orgValue = isset($originalData[$propName]) ? $originalData[$propName] : null;
-            if (is_object($orgValue) && $orgValue !== $actualValue) {
+            if ($orgValue instanceof PersistentCollection) {
+                $orgValue = $orgValue->getSnapshot();
+            }
+            if ($actualValue instanceof PersistentCollection) {
+                $actualValue = $actualValue->toArray();
+            }
+            if ((isset($class->fieldMappings[$propName]['embedded']) && $class->fieldMappings[$propName]['type'] === 'one')
+                    || (isset($class->fieldMappings[$propName]['reference']) && $class->fieldMappings[$propName]['type'] === 'one')) {
+                if ($orgValue !== $actualValue) {
+                    $changeSet[$propName] = array($orgValue, $actualValue);
+                }
+            } else if (isset($class->fieldMappings[$propName]['type']) && $class->fieldMappings[$propName]['type'] === 'many') {
                 $changeSet[$propName] = array($orgValue, $actualValue);
-            } elseif ($orgValue != $actualValue || ($orgValue === null ^ $actualValue === null)) {
+            } else if (is_object($orgValue) && $orgValue !== $actualValue) {
+                $changeSet[$propName] = array($orgValue, $actualValue);
+            } else if ($orgValue != $actualValue || ($orgValue === null ^ $actualValue === null)) {
                 $changeSet[$propName] = array($orgValue, $actualValue);
             }
         }
-
         if ($changeSet) {
             if (isset($this->documentChangeSets[$oid])) {
                 $this->documentChangeSets[$oid] = $changeSet + $this->documentChangeSets[$oid];
@@ -631,12 +648,28 @@ class UnitOfWork implements PropertyChangedListener
         }
     }
 
+    private function persistNew($class, $document)
+    {
+        $oid = spl_object_hash($document);
+        if (isset($class->lifecycleCallbacks[ODMEvents::prePersist])) {
+            $class->invokeLifecycleCallbacks(ODMEvents::prePersist, $document);
+        }
+        if ($this->evm->hasListeners(ODMEvents::prePersist)) {
+            $this->evm->dispatchEvent(ODMEvents::prePersist, new LifecycleEventArgs($document, $this->dm));
+        }
+
+        $this->documentStates[$oid] = self::STATE_MANAGED;
+
+        $this->scheduleForInsert($document);
+    }
+
     /**
      * Executes all document insertions for documents of the specified type.
      *
      * @param Doctrine\ODM\MongoDB\Mapping\ClassMetadata $class
+     * @param array $options Array of options to be used with batchInsert()
      */
-    private function executeInserts($class)
+    private function executeInserts($class, array $options = array())
     {
         $className = $class->name;
         $persister = $this->getDocumentPersister($className);
@@ -659,7 +692,7 @@ class UnitOfWork implements PropertyChangedListener
             }
         }
 
-        $postInsertIds = $persister->executeInserts();
+        $postInsertIds = $persister->executeInserts($options);
 
         if ($postInsertIds) {
             foreach ($postInsertIds as $pair) {
@@ -689,8 +722,9 @@ class UnitOfWork implements PropertyChangedListener
      * Executes all document updates for documents of the specified type.
      *
      * @param Doctrine\ODM\MongoDB\Mapping\ClassMetadata $class
+     * @param array $options Array of options to be used with update()
      */
-    private function executeUpdates($class)
+    private function executeUpdates($class, array $options = array())
     {
         $className = $class->name;
         $persister = $this->getDocumentPersister($className);
@@ -713,7 +747,7 @@ class UnitOfWork implements PropertyChangedListener
                     );
                 }
 
-                $persister->update($document);
+                $persister->update($document, $options);
                 unset($this->documentUpdates[$oid]);
 
                 if ($hasPostUpdateLifecycleCallbacks) {
@@ -729,8 +763,9 @@ class UnitOfWork implements PropertyChangedListener
      * Executes all document deletions for documents of the specified type.
      *
      * @param Doctrine\ODM\MongoDB\Mapping\ClassMetadata $class
+     * @param array $options Array of options to be used with remove()
      */
-    private function executeDeletions($class)
+    private function executeDeletions($class, array $options = array())
     {
         $hasLifecycleCallbacks = isset($class->lifecycleCallbacks[ODMEvents::postRemove]);
         $hasListeners = $this->evm->hasListeners(ODMEvents::postRemove);
@@ -740,7 +775,7 @@ class UnitOfWork implements PropertyChangedListener
         $collection = $this->dm->getDocumentCollection($className);
         foreach ($this->documentDeletions as $oid => $document) {
             if (get_class($document) == $className || $document instanceof Proxy && $document instanceof $className) {
-                $persister->delete($document);
+                $persister->delete($document, $options);
                 unset(
                     $this->documentDeletions[$oid],
                     $this->documentIdentifiers[$oid],
@@ -1221,16 +1256,7 @@ class UnitOfWork implements PropertyChangedListener
                     }
                     break;
                 case self::STATE_NEW:
-                    if (isset($class->lifecycleCallbacks[ODMEvents::prePersist])) {
-                        $class->invokeLifecycleCallbacks(ODMEvents::prePersist, $document);
-                    }
-                    if ($this->evm->hasListeners(ODMEvents::prePersist)) {
-                        $this->evm->dispatchEvent(ODMEvents::prePersist, new LifecycleEventArgs($document, $this->dm));
-                    }
-
-                    $this->documentStates[$oid] = self::STATE_MANAGED;
-                
-                    $this->scheduleForInsert($document);
+                    $this->persistNew($class, $document);
                     break;
                 case self::STATE_DETACHED:
                     throw new \InvalidArgumentException(
@@ -1327,59 +1353,103 @@ class UnitOfWork implements PropertyChangedListener
      * @return object The managed copy of the document.
      * @throws InvalidArgumentException If the document instance is NEW.
      */
-    private function doMerge($document, array &$visited, $prevManagedCopy = null, $mapping = null)
+    private function doMerge($document, array &$visited, $prevManagedCopy = null, $assoc = null)
     {
-        $class = $this->dm->getClassMetadata(get_class($document));
-        $id = $class->getIdentifierValue($document);
-
-        if ( ! $id) {
-            throw new \InvalidArgumentException('New document detected during merge.'
-                    . ' Persist the new document before merging.');
+        $oid = spl_object_hash($document);
+        if (isset($visited[$oid])) {
+            return; // Prevent infinite recursion
         }
-        
-        // MANAGED documents are ignored by the merge operation
+
+        $visited[$oid] = $document; // mark visited
+
+        $class = $this->dm->getClassMetadata(get_class($document));
+
+        // First we assume DETACHED, although it can still be NEW but we can avoid
+        // an extra db-roundtrip this way. If it is not MANAGED but has an identity,
+        // we need to fetch it from the db anyway in order to merge.
+        // MANAGED documents are ignored by the merge operation.
         if ($this->getDocumentState($document, self::STATE_DETACHED) == self::STATE_MANAGED) {
             $managedCopy = $document;
         } else {
-            // Try to look the document up in the identity map.
-            $managedCopy = $this->tryGetById($id, $class->rootDocumentName);
-            if ($managedCopy) {
-                // We have the document in-memory already, just make sure its not removed.
-                if ($this->getDocumentState($managedCopy) == self::STATE_REMOVED) {
-                    throw new \InvalidArgumentException('Removed document detected during merge.'
-                            . ' Can not merge with a removed document.');
-                }
+            // Try to look the entity up in the identity map.
+            $id = $class->getIdentifierValue($document);
+
+            // If there is no ID, it is actually NEW.
+            if ( ! $id) {
+                $managedCopy = $class->newInstance();
+                $this->persistNew($class, $managedCopy);
             } else {
-                // We need to fetch the managed copy in order to merge.
-                $managedCopy = $this->dm->find($class->name, $id);
+                $managedCopy = $this->tryGetById($id, $class->rootDocumentName);
+                if ($managedCopy) {
+                    // We have the entity in-memory already, just make sure its not removed.
+                    if ($this->getDocumentState($managedCopy) == self::STATE_REMOVED) {
+                        throw new InvalidArgumentException('Removed entity detected during merge.'
+                                . ' Can not merge with a removed entity.');
+                    }
+                } else {
+                    // We need to fetch the managed copy in order to merge.
+                    $managedCopy = $this->dm->find($class->name, $id);
+                }
+
+                if ($managedCopy === null) {
+                    // If the identifier is ASSIGNED, it is NEW, otherwise an error
+                    // since the managed entity was not found.
+                    $managedCopy = $class->newInstance();
+                    $class->setIdentifierValues($managedCopy, $id);
+                    $this->persistNew($class, $managedCopy);
+                }
             }
 
-            if ($managedCopy === null) {
-                throw new \InvalidArgumentException('New document detected during merge.'
-                        . ' Persist the new document before merging.');
-            }
-
-            // Merge state of $document into existing (managed) document
+            // Merge state of $document into existing (managed) entity
             foreach ($class->reflFields as $name => $prop) {
-                if ( ! isset($class->fieldMappings[$name]['reference'])) {
+                if ( ! isset($class->fieldMappings[$name]['embedded']) &&  ! isset($class->fieldMappings[$name]['reference'])) {
                     $prop->setValue($managedCopy, $prop->getValue($document));
                 } else {
-                    $mapping2 = $class->fieldMappings[$name];
-                    if ($mapping2['type'] === 'one') {
-                        if ( ! $assoc2['isCascadeMerge']) {
-                            $other = $class->reflFields[$name]->getValue($document); //TODO: Just $prop->getValue($document)?
-                            if ($other !== null) {
-                                $targetClass = $this->dm->getClassMetadata($mapping2['targetDocument']);
+                    $assoc2 = $class->fieldMappings[$name];
+                    if ($assoc2['type'] === 'one') {
+                        $other = $prop->getValue($document);
+                        if ($other === null) {
+                            $prop->setValue($managedCopy, null);
+                        } else if ($other instanceof Proxy && !$other->__isInitialized__) {
+                            // do not merge fields marked lazy that have not been fetched.
+                            continue;
+                        } else if ( ! $assoc2['isCascadeMerge']) {
+                            if ($this->getDocumentState($other, self::STATE_DETACHED) == self::STATE_MANAGED) {
+                                $prop->setValue($managedCopy, $other);
+                            } else {
+                                $targetDocument = isset($assoc2['targetDocument']) ? $assoc2['targetDocument'] : get_class($other);
+                                $targetClass = $this->dm->getClassMetadata($targetDocument);
                                 $id = $targetClass->getIdentifierValue($other);
-                                $reference = $this->dm->getReference($mapping2['targetDocument'], $id);
-                                $prop->setValue($managedCopy, $reference);
+                                $proxy = $this->dm->getProxyFactory()->getProxy($targetDocument, $id);
+                                $prop->setValue($managedCopy, $proxy);
+                                $this->registerManaged($proxy, $id, array());
                             }
                         }
                     } else {
-                        $coll = new PersistentCollection(new ArrayCollection(), $this->dm);
-                        $coll->setOwner($managedCopy, $mapping2);
-                        $coll->setInitialized($mapping2['isCascadeMerge']);
-                        $prop->setValue($managedCopy, $coll);
+                        $mergeCol = $prop->getValue($document);
+                        if ($mergeCol instanceof PersistentCollection && ! $mergeCol->isInitialized()) {
+                            // do not merge fields marked lazy that have not been fetched.
+                            // keep the lazy persistent collection of the managed copy.
+                            continue;
+                        }
+
+                        foreach ($mergeCol as $entry) {
+                            $targetDocument = isset($assoc2['targetDocument']) ? $assoc2['targetDocument'] : get_class($entry);
+                            $targetClass = $this->dm->getClassMetadata($targetDocument);
+                            if ($targetClass->isEmbeddedDocument) {
+                                $this->registerManagedEmbeddedDocument($entry, array());
+                            } else {
+                                $id = $targetClass->getIdentifierValue($entry);
+                                $this->registerManaged($entry, $id, array());
+                            }
+                        }
+
+                        if ( ! $mergeCol instanceof PersistentCollection) {
+                            $mergeCol = new PersistentCollection($mergeCol, $this->dm);
+                            $mergeCol->setOwner($managedCopy, $assoc2);
+                            $mergeCol->setInitialized(true);
+                        }
+                        $prop->setValue($managedCopy, $mergeCol);
                     }
                 }
                 if ($class->isChangeTrackingNotify()) {
@@ -1393,14 +1463,20 @@ class UnitOfWork implements PropertyChangedListener
         }
 
         if ($prevManagedCopy !== null) {
-            $assocField = $mapping['fieldName'];
+            $assocField = $assoc->sourceFieldName;
             $prevClass = $this->dm->getClassMetadata(get_class($prevManagedCopy));
-            if ($mapping['type'] === 'one') {
+            if ($assoc->isOneToOne()) {
                 $prevClass->reflFields[$assocField]->setValue($prevManagedCopy, $managedCopy);
             } else {
                 $prevClass->reflFields[$assocField]->getValue($prevManagedCopy)->unwrap()->add($managedCopy);
+                if ($assoc->isOneToMany()) {
+                    $class->reflFields[$assoc->mappedBy]->setValue($managedCopy, $prevManagedCopy);
+                }
             }
         }
+
+        // Mark the managed copy visited as well
+        $visited[spl_object_hash($managedCopy)] = true;
 
         $this->cascadeMerge($document, $managedCopy, $visited);
 
@@ -1586,23 +1662,10 @@ class UnitOfWork implements PropertyChangedListener
     {
         $class = $this->dm->getClassMetadata(get_class($document));
         foreach ($class->fieldMappings as $mapping) {
-            if ( ! isset($mapping['embedded']) && (!isset($mapping['reference']) || ! $mapping['isCascadeMerge'])) {
+            if ( ! $mapping['isCascadeMerge']) {
                 continue;
             }
-            if (isset($mapping['embedded'])) {
-                $relatedDocuments = $class->reflFields[$mapping['fieldName']]->getValue($document);
-                if (($relatedDocuments instanceof Collection || is_array($relatedDocuments))) {
-                    if ($relatedDocuments instanceof PersistentCollection) {
-                        // Unwrap so that foreach() does not initialize
-                        $relatedDocuments = $relatedDocuments->unwrap();
-                    }
-                    foreach ($relatedDocuments as $relatedDocument) {
-                        $this->cascadeMerge($relatedDocument, $managedCopy, $visited);
-                    }
-                } elseif ($relatedDocuments !== null) {
-                    $this->cascadeMerge($relatedDocuments, $managedCopy, $visited);
-                }
-            } elseif (isset($mapping['reference'])) {
+            if (isset($mapping['embedded']) || isset($mapping['reference'])) {
                 $relatedDocuments = $class->reflFields[$mapping['fieldName']]->getValue($document);
                 if (($relatedDocuments instanceof Collection || is_array($relatedDocuments))) {
                     if ($relatedDocuments instanceof PersistentCollection) {
@@ -1761,6 +1824,19 @@ class UnitOfWork implements PropertyChangedListener
         $id = $class->getPHPIdentifierValue($data['_id']);
         if (isset($this->identityMap[$class->rootDocumentName][$id])) {
             $document = $this->identityMap[$class->rootDocumentName][$id];
+        } else {
+            $document = $class->newInstance();
+        }
+
+        if (isset($class->lifecycleCallbacks[ODMEvents::preLoad])) {
+            $args = array(&$data);
+            $class->invokeLifecycleCallbacks(ODMEvents::preLoad, $document, $args);
+        }
+        if ($this->evm->hasListeners(ODMEvents::preLoad)) {
+            $this->evm->dispatchEvent(ODMEvents::preLoad, new PreLoadEventArgs($document, $this->dm, $data));
+        }
+
+        if (isset($this->identityMap[$class->rootDocumentName][$id])) {
             $oid = spl_object_hash($document);
             if ($document instanceof Proxy && ! $document->__isInitialized__) {
                 $document->__isInitialized__ = true;
@@ -1776,7 +1852,6 @@ class UnitOfWork implements PropertyChangedListener
                 $this->originalDocumentData[$oid] = $data;
             }
         } else {
-            $document = $class->newInstance();
             $this->hydrator->hydrate($document, $data);
             $this->registerManaged($document, $id, $data);
         }
@@ -1976,5 +2051,10 @@ class UnitOfWork implements PropertyChangedListener
     public function getScheduledDocumentDeletions()
     {
         return $this->documentDeletions;
+    }
+
+    private static function objToStr($obj)
+    {
+        return method_exists($obj, '__toString') ? (string)$obj : get_class($obj).'@'.spl_object_hash($obj);
     }
 }

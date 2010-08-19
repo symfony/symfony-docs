@@ -33,13 +33,84 @@ use Doctrine\ODM\MongoDB\Mapping\ClassMetadata;
  */
 class PHPDriver implements Driver
 {
+    private $paths = array();
+
+    public function __construct($paths)
+    {
+        $this->addPaths((array) $paths);
+    }
+
+    public function addPaths(array $paths)
+    {
+        $this->paths = array_unique(array_merge($this->paths, $paths));
+    }
+
     /**
      * {@inheritdoc}
      */
-    public function loadMetadataForClass($className, ClassMetadata $class)
+    public function loadMetadataForClass($className, ClassMetadata $metadata)
     {
-        if (method_exists($className, 'loadMetadata')) {
-            call_user_func_array(array($className, 'loadMetadata'), array($class));
+        call_user_func_array(array($className, 'loadMetadata'), array($metadata));
+    }
+    
+    /**
+     * {@inheritDoc}
+     * @todo Same code exists in AnnotationDriver, should we re-use it somehow or not worry about it?
+     */
+    public function getAllClassNames()
+    {
+        if ($this->classNames !== null) {
+            return $this->classNames;
         }
+
+        if (!$this->paths) {
+            throw MongoDBException::pathRequired();
+        }
+
+        $classes = array();
+        $includedFiles = array();
+
+        foreach ($this->paths as $path) {
+            if ( ! is_dir($path)) {
+                throw MongoDBException::fileMappingDriversRequireConfiguredDirectoryPath();
+            }
+
+            $iterator = new \RecursiveIteratorIterator(
+                new \RecursiveDirectoryIterator($path),
+                \RecursiveIteratorIterator::LEAVES_ONLY
+            );
+
+            foreach ($iterator as $file) {
+                if (($fileName = $file->getBasename($this->fileExtension)) == $file->getBasename()) {
+                    continue;
+                }
+
+                $sourceFile = realpath($file->getPathName());
+                require_once $sourceFile;
+                $includedFiles[] = $sourceFile;
+            }
+        }
+
+        $declared = get_declared_classes();
+
+        foreach ($declared as $className) {
+            $rc = new \ReflectionClass($className);
+            $sourceFile = $rc->getFileName();
+            if (in_array($sourceFile, $includedFiles) && ! $this->isTransient($className)) {
+                $classes[] = $className;
+            }
+        }
+
+        $this->classNames = $classes;
+
+        return $classes;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function isTransient($className)
+    {
+        return method_exists($className, 'loadMetadata') ? false : true;
     }
 }

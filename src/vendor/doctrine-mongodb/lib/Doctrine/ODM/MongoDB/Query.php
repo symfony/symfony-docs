@@ -89,6 +89,9 @@ class Query
     /** Field to select distinct values of */
     private $distinctField;
 
+    /** Data to use with $near operator for geospatial indexes */
+    private $near;
+
     /** The type of query */
     private $type = self::TYPE_FIND;
 
@@ -650,6 +653,49 @@ class Query
     }
 
     /**
+     * Add where near criteria.
+     *
+     * @param string $x
+     * @param string $y
+     * @return Query
+     */
+    public function near($x, $y)
+    {
+        list($xMapping, $yMapping) = array_values($this->dm->getClassMetadata($this->class->fieldMappings[$this->currentField]['targetDocument'])->fieldMappings);
+        $this->near = array($xMapping['name'] => $x, $yMapping['name'] => $y);
+        return $this;
+    }
+
+    /**
+     * Add where $within $box query.
+     *
+     * @param string $x1
+     * @param string $y1
+     * @param string $x2
+     * @param string $y2
+     * @return Query
+     */
+    public function withinBox($x1, $y1, $x2, $y2)
+    {
+        $this->where[$this->currentField][$this->cmd . 'within'][$this->cmd . 'box'] = array(array($x1, $y1), array($x2, $y2));
+        return $this;
+    }
+
+    /**
+     * Add where $within $center query.
+     *
+     * @param string $x
+     * @param string $y
+     * @param string $radius
+     * @return Query
+     */
+    public function withinCenter($x, $y, $radius)
+    {
+        $this->where[$this->currentField][$this->cmd . 'within'][$this->cmd . 'center'] = array(array($x, $y), $radius);
+        return $this;
+    }
+
+    /**
      * Set sort and erase all old sorts.
      *
      * @param string $order
@@ -940,8 +986,36 @@ class Query
                             'query' => $this->where
                         ));
                     return $result['values'];
+                } elseif ($this->near !== null) {
+                    $command = array(
+                        'geoNear' => $this->dm->getDocumentCollection($this->className)->getName(),
+                        'near' => $this->near,
+                        'query' => $this->where
+                    );
+                    if ($this->limit) {
+                        $command['num'] = $this->limit;
+                    }
+                    $result = $this->dm->getDocumentDB($this->className)
+                        ->command($command);
+                    if ( ! isset($result['results'])) {
+                        return array();
+                    }
+                    if ($this->hydrate) {
+                        $hydrator = $this->dm->getHydrator();
+                        $documents = array();
+                        foreach ($result['results'] as $result) {
+                            $document = $result['obj'];
+                            if ($this->class->distance) {
+                                $document[$this->class->distance] = $result['dis'];
+                            }
+                            $documents[] = $this->dm->getUnitOfWork()->getOrCreateDocument($this->class->name, $document);
+                        }
+                        return $documents;
+                    } else {
+                        return $result['results'];
+                    }
                 }
-                return $this->getCursor()->getResults();
+                return $this->getCursor();
                 break;
 
             case self::TYPE_REMOVE;
@@ -985,9 +1059,15 @@ class Query
      *
      * @return object $document  The single document.
      */
-    public function getSingleResult()
+    public function getSingleResult(array $options = array())
     {
-        return $this->getCursor()->getSingleResult();
+        if ($results = $this->execute($options)) {
+            if ($results instanceof MongoCursor) {
+                return $results->getSingleResult();
+            }
+            return array_shift($results);
+        }
+        return null;
     }
 
     /**
@@ -1062,6 +1142,7 @@ class Query
             'hydrate' => $this->hydrate,
             'mapReduce' => $this->mapReduce,
             'distinctField' => $this->distinctField,
+            'near' => $this->near
         );
         if ($name !== null) {
             return $debug[$name];

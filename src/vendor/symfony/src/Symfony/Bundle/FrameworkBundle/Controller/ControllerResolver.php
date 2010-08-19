@@ -2,7 +2,7 @@
 
 namespace Symfony\Bundle\FrameworkBundle\Controller;
 
-use Symfony\Components\HttpKernel\LoggerInterface;
+use Symfony\Components\HttpKernel\Log\LoggerInterface;
 use Symfony\Components\HttpKernel\Controller\ControllerResolver as BaseControllerResolver;
 use Symfony\Components\HttpKernel\HttpKernelInterface;
 use Symfony\Components\HttpFoundation\Request;
@@ -70,6 +70,23 @@ class ControllerResolver extends BaseControllerResolver
     }
 
     /**
+     * Forwards the request to another controller.
+     *
+     * @param  string  $controller The controller name (a string like BlogBundle:Post:index)
+     * @param  array   $path       An array of path parameters
+     * @param  array   $query      An array of query parameters
+     *
+     * @return Response A Response instance
+     */
+    public function forward($controller, array $path = array(), array $query = array())
+    {
+        $path['_controller'] = $controller;
+        $subRequest = $this->container->getRequestService()->duplicate($query, null, $path);
+
+        return $this->container->get('kernel')->handle($subRequest, HttpKernelInterface::SUB_REQUEST);
+    }
+
+    /**
      * Renders a Controller and returns the Response content.
      *
      * Note that this method generates an esi:include tag only when both the standalone
@@ -127,7 +144,13 @@ class ControllerResolver extends BaseControllerResolver
         }
 
         try {
-            return $this->container->getKernelService()->handle($subRequest, HttpKernelInterface::EMBEDDED_REQUEST, true);
+            $response = $this->container->getKernelService()->handle($subRequest, HttpKernelInterface::SUB_REQUEST, true);
+
+            if (200 != $response->getStatusCode()) {
+                throw new \RuntimeException(sprintf('Error when rendering "%s" (Status code is %s).', $request->getUri(), $response->getStatusCode()));
+            }
+
+            return $response->getContent();
         } catch (\Exception $e) {
             if ($options['alt']) {
                 $alt = $options['alt'];

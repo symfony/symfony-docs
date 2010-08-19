@@ -1,11 +1,11 @@
 <?php
 
-namespace Symfony\Bundle\FrameworkBundle\Controller;
+namespace Symfony\Bundle\FrameworkBundle\Debug;
 
 use Symfony\Components\DependencyInjection\ContainerInterface;
 use Symfony\Components\EventDispatcher\EventDispatcher;
 use Symfony\Components\EventDispatcher\Event;
-use Symfony\Components\HttpKernel\LoggerInterface;
+use Symfony\Components\HttpKernel\Log\LoggerInterface;
 use Symfony\Components\HttpKernel\HttpKernelInterface;
 
 /*
@@ -28,12 +28,11 @@ class ExceptionListener
     protected $controller;
     protected $logger;
 
-    public function __construct(ContainerInterface $container, LoggerInterface $logger = null, $controller)
+    public function __construct(ContainerInterface $container, $controller, LoggerInterface $logger = null)
     {
         $this->container = $container;
-        $this->logger = $logger;
-
         $this->controller = $controller;
+        $this->logger = $logger;
     }
 
     /**
@@ -55,23 +54,28 @@ class ExceptionListener
         $exception = $event->getParameter('exception');
 
         if (null !== $this->logger) {
-            $this->logger->err(sprintf('%s (uncaught %s exception)', $exception->getMessage(), get_class($exception)));
+            $this->logger->err(sprintf('%s: %s (uncaught exception)', get_class($exception), $exception->getMessage()));
+        } else {
+            error_log(sprintf('Uncaught PHP Exception %s: "%s" at %s line %s', get_class($exception), $exception->getMessage(), $exception->getFile(), $exception->getLine()));
         }
 
-        $parameters = array(
-            '_controller'     => $this->controller,
-            'exception'       => $exception,
-            'originalRequest' => $event->getParameter('request'),
-            'logs'            => $this->container->has('zend.logger.writer.debug') ? $this->container->get('zend.logger.writer.debug')->getLogs() : array(),
+        $class = $this->container->getParameter('exception_manager.class');
+        $logger = $this->container->has('logger.debug') ? $this->container->get('logger.debug') : null;
+
+        $attributes = array(
+            '_controller' => $this->controller,
+            'manager'     => new $class($exception, $event->getParameter('request'), $logger),
         );
 
-        $request = $event->getParameter('request')->duplicate(null, null, $parameters);
+        $request = $event->getParameter('request')->duplicate(null, null, $attributes);
 
         try {
-            $response = $event->getSubject()->handle($request, HttpKernelInterface::FORWARDED_REQUEST, true);
-
-            error_log(sprintf('%s: %s', get_class($exception), $exception->getMessage()));
+            $response = $event->getSubject()->handle($request, HttpKernelInterface::SUB_REQUEST, true);
         } catch (\Exception $e) {
+            if (null !== $this->logger) {
+                $this->logger->err(sprintf('Exception thrown when handling an exception (%s: %s)', get_class($e), $e->getMessage()));
+            }
+
             return false;
         }
 

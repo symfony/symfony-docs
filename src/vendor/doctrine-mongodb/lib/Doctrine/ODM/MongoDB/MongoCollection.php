@@ -287,6 +287,8 @@ class MongoCollection
             $query[$this->class->discriminatorField['name']] = array('$in' => $discriminatorValues);
         }
 
+        $query = $this->prepareQuery($query);
+
         if ($this->eventManager->hasListeners(CollectionEvents::preFind)) {
             $this->eventManager->dispatchEvent(CollectionEvents::preFind, new CollectionEventArgs($this, $query));
         }
@@ -314,6 +316,8 @@ class MongoCollection
             $discriminatorValues = $this->getClassDiscriminatorValues($this->class);
             $query[$this->class->discriminatorField['name']] = array('$in' => $discriminatorValues);
         }
+
+        $query = $this->prepareQuery($query);
 
         if ($this->eventManager->hasListeners(CollectionEvents::preFindOne)) {
             $this->eventManager->dispatchEvent(CollectionEvents::preFindOne, new CollectionEventArgs($this, $query));
@@ -351,6 +355,19 @@ class MongoCollection
             }
         }
         return $discriminatorValues;
+    }
+
+    private function prepareQuery(array $query)
+    {
+        foreach ($query as $key => $value) {
+            if ($this->class->hasField($key)) {
+                if ($this->class->fieldMappings[$key]['name'] !== $key) {
+                    $query[$this->class->fieldMappings[$key]['name']] = $value;
+                    unset($query[$key]);
+                }
+            }
+        }
+        return $query;
     }
 
     /** @proxy */

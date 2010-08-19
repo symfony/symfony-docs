@@ -20,6 +20,7 @@
 namespace Doctrine\ODM\MongoDB\Mapping\Driver;
 
 use Doctrine\ODM\MongoDB\Mapping\ClassMetadata;
+use Doctrine\ODM\MongoDB\MongoDBException;
 
 /**
  * The DriverChain allows you to add multiple other mapping drivers for
@@ -71,5 +72,42 @@ class DriverChain implements Driver
                 return;
             }
         }
+
+        throw MongoDBException::classIsNotAValidDocument($className);
+    }
+
+
+    /**
+     * Gets the names of all mapped classes known to this driver.
+     *
+     * @return array The names of all mapped classes known to this driver.
+     */
+    public function getAllClassNames()
+    {
+        $classNames = array();
+        foreach ($this->drivers AS $driver) {
+            $classNames = array_merge($classNames, $driver->getAllClassNames());
+        }
+        return $classNames;
+    }
+
+    /**
+     * Whether the class with the specified name should have its metadata loaded.
+     *
+     * This is only the case for non-transient classes either mapped as an Document or MappedSuperclass.
+     *
+     * @param string $className
+     * @return boolean
+     */
+    public function isTransient($className)
+    {
+        foreach ($this->drivers AS $namespace => $driver) {
+            if (strpos($className, $namespace) === 0) {
+                return $driver->isTransient($className);
+            }
+        }
+
+        // class isTransient, i.e. not an document or mapped superclass
+        return true;
     }
 }

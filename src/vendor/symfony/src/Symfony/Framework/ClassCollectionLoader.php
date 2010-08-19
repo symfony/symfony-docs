@@ -18,12 +18,37 @@ namespace Symfony\Framework;
  */
 class ClassCollectionLoader
 {
+    static protected $loaded;
+
     /**
+     * Loads a list of classes and caches them in one big file.
+     *
+     * @param array   $classes    An array of classes to load
+     * @param string  $cacheDir   A cache directory
+     * @param string  $name       The cache name prefix
+     * @param Boolean $autoReload Whether to flush the cache when the cache is stale or not
+     * @param Boolean $adaptive   Whether to remove already declared classes or not
+     *
      * @throws \InvalidArgumentException When class can't be loaded
      */
-    static public function load($classes, $cacheDir, $name, $autoReload)
+    static public function load($classes, $cacheDir, $name, $autoReload, $adaptive = false)
     {
+        // each $name can only be loaded once per PHP process
+        if (isset(self::$loaded[$name])) {
+            return;
+        }
+
         $classes = array_unique($classes);
+
+        if ($adaptive) {
+            // don't include already declared classes
+            $classes = array_diff($classes, get_declared_classes());
+
+            // the cache is different depending on which classes are already declared
+            $name = $name.'-'.substr(md5(implode('|', $classes)), 0, 5);
+        }
+
+        self::$loaded[$name] = true;
 
         $cache = $cacheDir.'/'.$name.'.php';
 
@@ -85,20 +110,12 @@ class ClassCollectionLoader
     static protected function writeCacheFile($file, $content)
     {
         $tmpFile = tempnam(dirname($file), basename($file));
-        if (!$fp = @fopen($tmpFile, 'wb')) {
-            die(sprintf('Failed to write cache file "%s".', $tmpFile));
-        }
-        @fwrite($fp, $content);
-        @fclose($fp);
+        if (false !== @file_put_contents($tmpFile, $content) && @rename($tmpFile, $file)) {
+            chmod($file, 0644);
 
-        if ($content != file_get_contents($tmpFile)) {
-            die(sprintf('Failed to write cache file "%s" (cache corrupted).', $tmpFile));
+            return;
         }
 
-        if (!@rename($tmpFile, $file)) {
-            throw new \RuntimeException(sprintf('Failed to write cache file "%s".', $file));
-        }
-
-        chmod($file, 0644);
+        throw new \RuntimeException(sprintf('Failed to write cache file "%s".', $file));
     }
 }

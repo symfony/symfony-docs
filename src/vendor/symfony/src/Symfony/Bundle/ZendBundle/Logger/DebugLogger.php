@@ -3,6 +3,7 @@
 namespace Symfony\Bundle\ZendBundle\Logger;
 
 use Zend\Log\Writer\AbstractWriter;
+use Symfony\Components\HttpKernel\Log\DebugLoggerInterface;
 
 /*
  * This file is part of the Symfony framework.
@@ -18,10 +19,13 @@ use Zend\Log\Writer\AbstractWriter;
  *
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
  */
-class DebugLogger extends AbstractWriter
+class DebugLogger extends AbstractWriter implements DebugLoggerInterface
 {
     protected $logs = array();
 
+    /**
+     * {@inheritdoc}
+     */
     public function getLogs()
     {
         return $this->logs;

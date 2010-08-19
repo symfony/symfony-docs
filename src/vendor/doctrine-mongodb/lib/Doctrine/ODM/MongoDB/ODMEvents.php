@@ -98,7 +98,18 @@ final class ODMEvents
     const postUpdate = 'postUpdate';
 
     /**
-     * The postLoad event occurs for an document after the document has been loaded
+     * The preLoad event occurs for a document before the document has been loaded
+     * into the current DocumentManager from the database or before the refresh operation
+     * has been applied to it.
+     *
+     * This is a document lifecycle event.
+     *
+     * @var string
+     */
+    const preLoad = 'preLoad';
+
+    /**
+     * The postLoad event occurs for a document after the document has been loaded
      * into the current DocumentManager from the database or after the refresh operation
      * has been applied to it.
      * 
@@ -106,7 +117,7 @@ final class ODMEvents
      * initialized. Therefore it is not safe to access associations in a postLoad callback
      * or event handler.
      * 
-     * This is an document lifecycle event.
+     * This is a document lifecycle event.
      * 
      * @var string
      */

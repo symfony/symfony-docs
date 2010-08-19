@@ -48,10 +48,21 @@ final class DiscriminatorField extends Annotation
 final class DiscriminatorMap extends Annotation {}
 final class DiscriminatorValue extends Annotation {}
 
-final class Index extends Annotation
+final class Indexes extends Annotation {}
+class Index extends Annotation
 {
     public $keys = array();
+    public $name;
+    public $dropDups;
+    public $background;
+    public $safe;
+    public $order;
+    public $unique = false;
     public $options = array();
+}
+final class UniqueIndex extends Index
+{
+    public $unique = true;
 }
 
 class Field extends Annotation
@@ -170,8 +181,11 @@ final class ReferenceMany extends Field
     public $cascade;
     public $strategy = 'pushPull'; // pushPull, set
 }
-final class NotSaved extends Field {}
-final class AlsoLoad extends Field {
+class NotSaved extends Field {}
+final class Distance extends Field {
+    public $distance = true;
+}
+final class AlsoLoad extends Annotation {
     public $name;
 }
 final class ChangeTrackingPolicy extends Annotation {}
@@ -184,4 +198,5 @@ final class PreUpdate extends Annotation {}
 final class PostUpdate extends Annotation {}
 final class PreRemove extends Annotation {}
 final class PostRemove extends Annotation {}
+final class PreLoad extends Annotation {}
 final class PostLoad extends Annotation {}

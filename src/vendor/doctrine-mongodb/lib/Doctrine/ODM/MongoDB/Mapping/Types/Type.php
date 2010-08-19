@@ -35,7 +35,7 @@ abstract class Type
     /**
      * Array of string types mapped to their type class.
      */
-    private static $_typesMap = array(
+    private static $typesMap = array(
         'id' => 'Doctrine\ODM\MongoDB\Mapping\Types\IdType',
         'custom_id' => 'Doctrine\ODM\MongoDB\Mapping\Types\CustomIdType',
         'boolean' => 'Doctrine\ODM\MongoDB\Mapping\Types\BooleanType',
@@ -62,7 +62,7 @@ abstract class Type
     /**
      * Array of instantiated type classes.
      */
-    private static $_types = array();
+    private static $types = array();
 
     /**
      * Register a new type in the type map.
@@ -72,7 +72,7 @@ abstract class Type
      */
     public static function registerType($name, $class)
     {
-        self::$_typesMap[$name] = $class;
+        self::$typesMap[$name] = $class;
     }
 
     /**
@@ -84,14 +84,14 @@ abstract class Type
      */
     public static function getType($type)
     {
-        if ( ! isset(self::$_typesMap[$type])) {
+        if ( ! isset(self::$typesMap[$type])) {
             throw new \InvalidArgumentException(sprintf('Invalid type specified "%s".', $type));
         }
-        if ( ! isset(self::$_types[$type])) {
-            $className = self::$_typesMap[$type];
-            self::$_types[$type] = new $className;
+        if ( ! isset(self::$types[$type])) {
+            $className = self::$typesMap[$type];
+            self::$types[$type] = new $className;
         }
-        return self::$_types[$type];
+        return self::$types[$type];
     }
 
     /**
@@ -104,11 +104,11 @@ abstract class Type
      */
     public static function addType($name, $className)
     {
-        if (isset(self::$_typesMap[$name])) {
+        if (isset(self::$typesMap[$name])) {
             throw MongoDBException::typeExists($name);
         }
 
-        self::$_typesMap[$name] = $className;
+        self::$typesMap[$name] = $className;
     }
 
     /**
@@ -120,7 +120,7 @@ abstract class Type
      */
     public static function hasType($name)
     {
-        return isset(self::$_typesMap[$name]);
+        return isset(self::$typesMap[$name]);
     }
 
     /**
@@ -133,11 +133,11 @@ abstract class Type
      */
     public static function overrideType($name, $className)
     {
-        if ( ! isset(self::$_typesMap[$name])) {
+        if ( ! isset(self::$typesMap[$name])) {
             throw MongoDBException::typeNotFound($name);
         }
 
-        self::$_typesMap[$name] = $className;
+        self::$typesMap[$name] = $className;
     }
 
     /**
@@ -148,6 +148,6 @@ abstract class Type
      */
     public static function getTypesMap()
     {
-        return self::$_typesMap;
+        return self::$typesMap;
     }
 }

@@ -16,7 +16,7 @@ require_once 'ConcreteInheritanceParentBehavior.php';
  * And an additional condition for every read query to only consider rows with no deletion date
  *
  * @author     François Zaninotto
- * @version    $Revision: 1774 $
+ * @version    $Revision: 1906 $
  * @package    propel.generator.behavior.concrete_inheritance
  */
 class ConcreteInheritanceBehavior extends Behavior
@@ -181,7 +181,7 @@ class ConcreteInheritanceBehavior extends Behavior
  */
 public function getParentOrCreate(\$con = null)
 {
-	if (\$this->isNew()) {
+	if (\$this->isNew() && \$this->isPrimaryKeyNull()) {
 		\$parent = new " . $parentClass . "();
 		\$parent->set" . $this->getParentTable()->getColumn($this->getParameter('descendant_column'))->getPhpName() . "('" . $this->builder->getStubObjectBuilder()->getClassname() . "');
 		return \$parent;

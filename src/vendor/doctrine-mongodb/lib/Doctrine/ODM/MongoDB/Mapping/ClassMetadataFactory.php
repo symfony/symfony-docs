@@ -108,6 +108,26 @@ class ClassMetadataFactory
     }
 
     /**
+     * Forces the factory to load the metadata of all classes known to the underlying
+     * mapping driver.
+     * 
+     * @return array The ClassMetadata instances of all mapped classes.
+     */
+    public function getAllMetadata()
+    {
+        if ( ! $this->initialized) {
+            $this->initialize();
+        }
+
+        $metadata = array();
+        foreach ($this->driver->getAllClassNames() as $className) {
+            $metadata[] = $this->getMetadataFor($className);
+        }
+
+        return $metadata;
+    }
+
+    /**
      * Gets the class metadata descriptor for a class.
      *
      * @param string $className The name of the class.
@@ -178,7 +198,7 @@ class ClassMetadataFactory
         foreach ($parentClasses as $className) {
             if (isset($this->loadedMetadata[$className])) {
                 $parent = $this->loadedMetadata[$className];
-                if ( ! $parent->isMappedSuperclass) {
+                if ( ! $parent->isMappedSuperclass && ! $parent->isEmbeddedDocument) {
                     array_unshift($visited, $className);
                 }
                 continue;
@@ -193,21 +213,25 @@ class ClassMetadataFactory
                 $class->setIdentifier($parent->identifier);
                 $class->setDiscriminatorMap($parent->discriminatorMap);
                 $class->setLifecycleCallbacks($parent->lifecycleCallbacks);
+                $class->setFile($parent->getFile());
             }
 
-            $this->driver->loadMetadataForClass($className, $class);
+            // Invoke driver
+            try {
+                $this->driver->loadMetadataForClass($className, $class);
+            } catch(ReflectionException $e) {
+                throw MongoDBException::reflectionFailure($className, $e);
+            }
+
+            if ( ! $class->identifier && ! $class->isMappedSuperclass && ! $class->isEmbeddedDocument) {
+                throw MongoDBException::identifierRequired($className);
+            }
 
             if ($parent && $parent->isInheritanceTypeSingleCollection()) {
                 $class->setDB($parent->getDB());
                 $class->setCollection($parent->getCollection());
             }
 
-            if ( ! $class->identifier) {
-                $class->mapField(array(
-                    'id' => true,
-                    'fieldName' => 'id'
-                ));
-            }
             $db = $class->getDB() ?: $this->dm->getConfiguration()->getDefaultDB();
             $class->setDB($this->dm->formatDBName($db));
 
@@ -222,7 +246,7 @@ class ClassMetadataFactory
 
             $parent = $class;
 
-            if ( ! $class->isMappedSuperclass) {
+            if ( ! $class->isMappedSuperclass && ! $class->isEmbeddedDocument) {
                 array_unshift($visited, $className);
             }
 
@@ -278,7 +302,9 @@ class ClassMetadataFactory
         // Collect parent classes, ignoring transient (not-mapped) classes.
         $parentClasses = array();
         foreach (array_reverse(class_parents($name)) as $parentClass) {
-            $parentClasses[] = $parentClass;
+            if ( ! $this->driver->isTransient($parentClass)) {
+                $parentClasses[] = $parentClass;
+            }
         }
         return $parentClasses;
     }
@@ -292,13 +318,13 @@ class ClassMetadataFactory
     private function addInheritedFields(ClassMetadata $subClass, ClassMetadata $parentClass)
     {
         foreach ($parentClass->fieldMappings as $fieldName => $mapping) {
-            if ( ! isset($mapping['inherited'])) {
+            if ( ! isset($mapping['inherited']) && ! $parentClass->isMappedSuperclass) {
                 $mapping['inherited'] = $parentClass->name;
             }
             if ( ! isset($mapping['declared'])) {
                 $mapping['declared'] = $parentClass->name;
             }
-            $subClass->mapField($mapping);
+            $subClass->addInheritedFieldMapping($mapping);
         }
         foreach ($parentClass->reflFields as $name => $field) {
             $subClass->reflFields[$name] = $field;

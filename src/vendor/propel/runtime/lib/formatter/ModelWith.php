@@ -23,7 +23,8 @@ class ModelWith
 	protected $isAdd = false;
 	protected $relationName = '';
 	protected $relationMethod = '';
-	protected $relatedClass;
+	protected $leftPhpName;
+	protected $rightPhpName;
 	
 	public function __construct(ModelJoin $join = null)
 	{
@@ -53,8 +54,9 @@ class ModelWith
 			$this->relationName = $relation->getName();
 			$this->relationMethod = 'set' . $relation->getName();
 		}
+		$this->rightPhpName = $join->hasRelationAlias() ? $join->getRelationAlias() : $relation->getName();
 		if (!$join->isPrimary()) {
-			$this->relatedClass = $join->hasLeftTableAlias() ? $join->getLeftTableAlias() : $relation->getLeftTable()->getPhpName();
+			$this->leftPhpName = $join->hasLeftTableAlias() ? $join->getLeftTableAlias() : $join->getPreviousJoin()->getRelationMap()->getName();
 		}
 	}
 	
@@ -120,25 +122,35 @@ class ModelWith
 		return $this->relationMethod;
 	}
 		
-	public function setRelatedClass($relatedClass)
+	public function setLeftPhpName($leftPhpName)
 	{
-		$this->relatedClass = $relatedClass;
+		$this->leftPhpName = $leftPhpName;
 	}
 	
-	public function getRelatedClass()
+	public function getLeftPhpName()
 	{
-		return $this->relatedClass;
+		return $this->leftPhpName;
+	}
+
+	public function setRightPhpName($rightPhpName)
+	{
+		$this->rightPhpName = $rightPhpName;
+	}
+	
+	public function getRightPhpName()
+	{
+		return $this->rightPhpName;
 	}
 	
 	// Utility methods
 	
 	public function isPrimary()
 	{
-		return null === $this->relatedClass;
+		return null === $this->leftPhpName;
 	}
 	
 	public function __toString()
 	{
-		return sprintf("modelName: %s, relationName: %s, relationMethod: %s, relatedClass: %s", $this->modelName, $this->relationName, $this->relationMethod, $this->relatedClass);
+		return sprintf("modelName: %s, relationName: %s, relationMethod: %s, leftPhpName: %s, rightPhpName: %s", $this->modelName, $this->relationName, $this->relationMethod, $this->leftPhpName, $this->rightPhpName);
 	}
 }

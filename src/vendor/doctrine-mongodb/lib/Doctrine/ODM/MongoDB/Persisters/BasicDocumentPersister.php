@@ -134,10 +134,11 @@ class BasicDocumentPersister
      *
      * If no inserts are queued, invoking this method is a NOOP.
      *
+     * @param array $options Array of options to be used with batchInsert()
      * @return array An array of any generated post-insert IDs. This will be an empty array
      *               if the document class does not use the IDENTITY generation strategy.
      */
-    public function executeInserts()
+    public function executeInserts(array $options = array())
     {
         if ( ! $this->queuedInserts) {
             return;
@@ -155,7 +156,7 @@ class BasicDocumentPersister
         if (empty($inserts)) {
             return;
         }
-        $this->collection->batchInsert($inserts);
+        $this->collection->batchInsert($inserts, $options);
 
         foreach ($inserts as $oid => $data) {
             $document = $this->queuedInserts[$oid];
@@ -171,16 +172,16 @@ class BasicDocumentPersister
 
     /**
      * Executes reference updates in case document had references to new documents,
-     * without identifier value
+     * without identifier value.
+     *
+     * @param array $options Array of options to be used with update()
      */
-    public function executeReferenceUpdates()
+    public function executeReferenceUpdates(array $options = array())
     {
-        foreach ($this->documentsToUpdate as $oid => $document)
-        {
+        foreach ($this->documentsToUpdate as $oid => $document) {
             $update = array();
-            foreach ($this->fieldsToUpdate[$oid] as $fieldName => $fieldData)
-            {
-                list ($mapping, $value) = $fieldData;
+            foreach ($this->fieldsToUpdate[$oid] as $fieldName => $fieldData) {
+                list($mapping, $value) = $fieldData;
                 $update[$fieldName] = $this->prepareValue($mapping, $value);
             }
             $classMetadata = $this->dm->getClassMetadata(get_class($document));
@@ -190,22 +191,23 @@ class BasicDocumentPersister
                 '_id' => $id
             ), array(
                 $this->cmd . 'set' => $update
-            ));
+            ), $options);
         }
         $this->documentsToUpdate = array();
         $this->fieldsToUpdate = array();
     }
 
     /**
-     * Updates persisted document, using atomic operators
+     * Updates the already persisted document if it has any new changesets.
      *
-     * @param mixed $document
+     * @param object $document
+     * @param array $options Array of options to be used with update()
      */
-    public function update($document)
+    public function update($document, array $options = array())
     {
         $id = $this->uow->getDocumentIdentifier($document);
-
         $update = $this->prepareUpdateData($document);
+
         if ( ! empty($update)) {
             if ($this->dm->getEventManager()->hasListeners(ODMEvents::onUpdatePrepared)) {
                 $this->dm->getEventManager()->dispatchEvent(
@@ -217,7 +219,7 @@ class BasicDocumentPersister
             if ((isset($update[$this->cmd . 'pushAll']) || isset($update[$this->cmd . 'pullAll'])) && isset($update[$this->cmd . 'set'])) {
                 $tempUpdate = array($this->cmd . 'set' => $update[$this->cmd . 'set']);
                 unset($update[$this->cmd . 'set']);
-                $this->collection->update(array('_id' => $id), $tempUpdate);
+                $this->collection->update(array('_id' => $id), $tempUpdate, $options);
             }
 
             /**
@@ -242,10 +244,11 @@ class BasicDocumentPersister
                     $tempUpdate = array(
                         $this->cmd . 'pullAll' => $tempUpdate
                     );
-                    $this->collection->update(array('_id' => $id), $tempUpdate);
+                    $this->collection->update(array('_id' => $id), $tempUpdate, $options);
                 }
             }
-            $this->collection->update(array('_id' => $id), $update);
+
+            $this->collection->update(array('_id' => $id), $update, $options);
         }
     }
 
@@ -253,188 +256,15 @@ class BasicDocumentPersister
      * Removes document from mongo
      *
      * @param mixed $document
+     * @param array $options Array of options to be used with remove()
      */
-    public function delete($document)
+    public function delete($document, array $options = array())
     {
         $id = $this->uow->getDocumentIdentifier($document);
 
         $this->collection->remove(array(
             '_id' => $this->class->getDatabaseIdentifierValue($id)
-        ));
-    }
-
-    /**
-     * Prepares insert data for document
-     *
-     * @param mixed $document
-     * @return array
-     */
-    public function prepareInsertData($document)
-    {
-        $oid = spl_object_hash($document);
-        $changeset = $this->uow->getDocumentChangeSet($document);
-        $insertData = array();
-        foreach ($this->class->fieldMappings as $mapping) {
-            if (isset($mapping['notSaved']) && $mapping['notSaved'] === true) {
-                continue;
-            }
-            $new = isset($changeset[$mapping['fieldName']][1]) ? $changeset[$mapping['fieldName']][1] : null;
-            if ($new === null && $mapping['nullable'] === false) {
-                continue;
-            }
-            if ($this->class->isIdentifier($mapping['fieldName'])) {
-                $insertData['_id'] = $this->prepareValue($mapping, $new);
-                continue;
-            }
-            $insertData[$mapping['fieldName']] = $this->prepareValue($mapping, $new);
-            if (isset($mapping['reference'])) {
-                $scheduleForUpdate = false;
-                if ($mapping['type'] === 'one') {
-                    if (null === $insertData[$mapping['fieldName']][$this->cmd . 'id']) {
-                        $scheduleForUpdate = true;
-                    }
-                } elseif ($mapping['type'] === 'many') {
-                    foreach ($insertData[$mapping['fieldName']] as $ref) {
-                        if (null === $ref[$this->cmd . 'id']) {
-                            $scheduleForUpdate = true;
-                            break;
-                        }
-                    }
-                }
-                if ($scheduleForUpdate) {
-                    unset($insertData[$mapping['fieldName']]);
-                    $id = spl_object_hash($document);
-                    $this->documentsToUpdate[$id] = $document;
-                    $this->fieldsToUpdate[$id][$mapping['fieldName']] = array($mapping, $new);
-                }
-            }
-        }
-        // add discriminator if the class has one
-        if ($this->class->hasDiscriminator()) {
-            $insertData[$this->class->discriminatorField['name']] = $this->class->discriminatorValue;
-        }
-        return $insertData;
-    }
-
-    /**
-     * Prepares update array for document, using atomic operators
-     *
-     * @param mixed $document
-     * @return array
-     */
-    public function prepareUpdateData($document)
-    {
-        $oid = spl_object_hash($document);
-        $class = $this->dm->getClassMetadata(get_class($document));
-        $changeset = $this->uow->getDocumentChangeSet($document);
-        $result = array();
-        foreach ($class->fieldMappings as $mapping) {
-            if (isset($mapping['notSaved']) && $mapping['notSaved'] === true) {
-                continue;
-            }
-            $old = isset($changeset[$mapping['fieldName']][0]) ? $changeset[$mapping['fieldName']][0] : null;
-            $new = isset($changeset[$mapping['fieldName']][1]) ? $changeset[$mapping['fieldName']][1] : null;
-
-            if ($mapping['type'] === 'many' || $mapping['type'] === 'collection') {               
-                if (isset($mapping['embedded']) && $new) {
-                    foreach ($new as $k => $v) {
-                        if ( ! isset($old[$k])) {
-                            continue;
-                        }
-                        $update = $this->prepareUpdateData($v);
-                        foreach ($update as $cmd => $values) {
-                            foreach ($values as $key => $value) {
-                                $result[$cmd][$mapping['fieldName'] . '.' . $k . '.' . $key] = $value;
-                            }
-                        }
-                    }
-                }
-                if ($mapping['strategy'] === 'pushPull') {
-                    if ($old !== $new) {
-                        $old = $old ? $old : array();
-                        $new = $new ? $new : array();
-                        $deleteDiff = array_udiff_assoc($old, $new, function($a, $b) {return $a === $b ? 0 : 1; });
-                        $insertDiff = array_udiff_assoc($new, $old, function($a, $b) {return $a === $b ? 0 : 1;});
-
-                        // insert diff
-                        if ($insertDiff) {
-                            $result[$this->cmd . 'pushAll'][$mapping['fieldName']] = $this->prepareValue($mapping, $insertDiff);
-                        }
-                        // delete diff
-                        if ($deleteDiff) {
-                            $result[$this->cmd . 'pullAll'][$mapping['fieldName']] = $this->prepareValue($mapping, $deleteDiff);
-                        }
-                    }
-                } elseif ($mapping['strategy'] === 'set') {
-                    if ($old !== $new) {
-                        $new = $this->prepareValue($mapping, $new);
-                        $old = $this->prepareValue($mapping, $old);
-                        $result[$this->cmd . 'set'][$mapping['fieldName']] = $new;
-                    }
-                }
-            } else {
-                if ($old !== $new) {
-                    if ($mapping['type'] === 'increment') {
-                        $new = $this->prepareValue($mapping, $new);
-                        $old = $this->prepareValue($mapping, $old);
-                        if ($new >= $old) {
-                            $result[$this->cmd . 'inc'][$mapping['fieldName']] = $new - $old;
-                        } else {
-                            $result[$this->cmd . 'inc'][$mapping['fieldName']] = ($old - $new) * -1;
-                        }
-                    } else {
-                        if (isset($mapping['embedded']) && $mapping['type'] === 'one') {
-                            $embeddedDocument = $class->getFieldValue($document, $mapping['fieldName']);
-                            $update = $this->prepareUpdateData($embeddedDocument);
-                            foreach ($update as $cmd => $values) {
-                                foreach ($values as $key => $value) {
-                                    $result[$cmd][$mapping['fieldName'] . '.' . $key] = $value;
-                                }
-                            }
-                        } else {
-                            $old = $this->prepareValue($mapping, $old);
-                            $new = $this->prepareValue($mapping, $new);
-                            if (isset($new) || $mapping['nullable'] === true) {
-                                $result[$this->cmd . 'set'][$mapping['fieldName']] = $new;
-                            } else {
-                                $result[$this->cmd . 'unset'][$mapping['fieldName']] = true;
-                            }
-                        }
-                    }
-                }
-            }
-        }
-        return $result;
-    }
-
-    /**
-     *
-     * @param array $mapping
-     * @param mixed $value
-     */
-    private function prepareValue(array $mapping, $value)
-    {
-        if ($value === null) {
-            return null;
-        }
-        if ($mapping['type'] === 'many') {
-            $prepared = array();
-
-            $oneMapping = $mapping;
-            $oneMapping['type'] = 'one';
-            foreach ($value as $rawValue) {
-                $prepared[] = $this->prepareValue($oneMapping, $rawValue);
-            }
-        } elseif (isset($mapping['reference']) || isset($mapping['embedded'])) {
-            if (isset($mapping['embedded'])) {
-                $prepared = $this->prepareEmbeddedDocValue($mapping, $value);
-            } elseif (isset($mapping['reference'])) {
-                $prepared = $this->prepareReferencedDocValue($mapping, $value);
-            }
-        } else {
-            $prepared = Type::getType($mapping['type'])->convertToDatabaseValue($value);
-        }
-        return $prepared;
+        ), $options);
     }
 
     /**
@@ -511,6 +341,216 @@ class BasicDocumentPersister
     }
 
     /**
+     * Checks whether the given managed document exists in the database.
+     *
+     * @param object $document
+     * @return boolean TRUE if the document exists in the database, FALSE otherwise.
+     */
+    public function exists($document)
+    {
+        $id = $this->class->getIdentifierObject($document);
+        return (bool) $this->collection->findOne(array(array('_id' => $id)), array('_id'));
+    }
+
+    /**
+     * Prepares insert data for document
+     *
+     * @param mixed $document
+     * @return array
+     */
+    public function prepareInsertData($document)
+    {
+        $oid = spl_object_hash($document);
+        $changeset = $this->uow->getDocumentChangeSet($document);
+        $insertData = array();
+        foreach ($this->class->fieldMappings as $mapping) {
+            if (isset($mapping['notSaved']) && $mapping['notSaved'] === true) {
+                continue;
+            }
+            $new = isset($changeset[$mapping['fieldName']][1]) ? $changeset[$mapping['fieldName']][1] : null;
+            if ($new === null && $mapping['nullable'] === false) {
+                continue;
+            }
+            if ($this->class->isIdentifier($mapping['fieldName'])) {
+                $insertData['_id'] = $this->prepareValue($mapping, $new);
+                continue;
+            }
+            $value = $this->prepareValue($mapping, $new);
+            if ($value === null && $mapping['nullable'] === false) {
+                continue;
+            }
+
+            $insertData[$mapping['name']] = $value;
+            if (isset($mapping['reference'])) {
+                $scheduleForUpdate = false;
+                if ($mapping['type'] === 'one') {
+                    if ( ! isset($insertData[$mapping['name']][$this->cmd . 'id'])) {
+                        $scheduleForUpdate = true;
+                    }
+                } elseif ($mapping['type'] === 'many') {
+                    foreach ($insertData[$mapping['name']] as $ref) {
+                        if ( ! isset($ref[$this->cmd . 'id'])) {
+                            $scheduleForUpdate = true;
+                            break;
+                        }
+                    }
+                }
+                if ($scheduleForUpdate) {
+                    unset($insertData[$mapping['name']]);
+                    $id = spl_object_hash($document);
+                    $this->documentsToUpdate[$id] = $document;
+                    $this->fieldsToUpdate[$id][$mapping['fieldName']] = array($mapping, $new);
+                }
+            }
+        }
+        // add discriminator if the class has one
+        if ($this->class->hasDiscriminator()) {
+            $insertData[$this->class->discriminatorField['name']] = $this->class->discriminatorValue;
+        }
+        return $insertData;
+    }
+
+    /**
+     * Prepares update array for document, using atomic operators
+     *
+     * @param mixed $document
+     * @return array
+     */
+    public function prepareUpdateData($document)
+    {
+        if (is_array($document) && isset($document['originalObject'])) {
+            $document = $document['originalObject'];
+        }
+        $oid = spl_object_hash($document);
+        $class = $this->dm->getClassMetadata(get_class($document));
+        $changeset = $this->uow->getDocumentChangeSet($document);
+        $result = array();
+        foreach ($class->fieldMappings as $mapping) {
+            if (isset($mapping['notSaved']) && $mapping['notSaved'] === true) {
+                continue;
+            }
+            $old = isset($changeset[$mapping['fieldName']][0]) ? $changeset[$mapping['fieldName']][0] : null;
+            $new = isset($changeset[$mapping['fieldName']][1]) ? $changeset[$mapping['fieldName']][1] : null;
+
+            if ($mapping['type'] === 'many' || $mapping['type'] === 'collection') {               
+                if ($mapping['strategy'] === 'pushPull') {
+                    if (isset($mapping['embedded']) && $new) {
+                        foreach ($new as $k => $v) {
+                            if ( ! isset($old[$k])) {
+                                continue;
+                            }
+                            $update = $this->prepareUpdateData($v);
+                            foreach ($update as $cmd => $values) {
+                                foreach ($values as $key => $value) {
+                                    $result[$cmd][$mapping['name'] . '.' . $k . '.' . $key] = $value;
+                                }
+                            }
+                        }
+                    }
+                    if ($old !== $new) {
+                        $old = $old ? $old : array();
+                        $new = $new ? $new : array();
+                        $compare = function($a, $b) {
+                            $a = is_array($a) && isset($a['originalObject']) ? $a['originalObject'] : $a;
+                            $b = is_array($b) && isset($b['originalObject']) ? $b['originalObject'] : $b;
+                            return $a === $b ? 0 : 1;
+                        };
+                        $deleteDiff = array_udiff_assoc($old, $new, $compare);
+                        $insertDiff = array_udiff_assoc($new, $old, $compare);
+
+                        // insert diff
+                        if ($insertDiff) {
+                            $result[$this->cmd . 'pushAll'][$mapping['name']] = $this->prepareValue($mapping, $insertDiff);
+                        }
+                        // delete diff
+                        if ($deleteDiff) {
+                            $result[$this->cmd . 'pullAll'][$mapping['name']] = $this->prepareValue($mapping, $deleteDiff);
+                        }
+                    }
+                } elseif ($mapping['strategy'] === 'set') {
+                    if ($old !== $new) {
+                        $new = $this->prepareValue($mapping, $new);
+                        $result[$this->cmd . 'set'][$mapping['name']] = $new;
+                    }
+                }
+            } else {
+                if ($old !== $new) {
+                    if ($mapping['type'] === 'increment') {
+                        $new = $this->prepareValue($mapping, $new);
+                        $old = $this->prepareValue($mapping, $old);
+                        if ($new >= $old) {
+                            $result[$this->cmd . 'inc'][$mapping['name']] = $new - $old;
+                        } else {
+                            $result[$this->cmd . 'inc'][$mapping['name']] = ($old - $new) * -1;
+                        }
+                    } else {
+                        // Single embedded
+                        if (isset($mapping['embedded']) && $mapping['type'] === 'one') {
+                            // If we didn't have a value before and now we do
+                            if ( ! $old && $new) {
+                                $new = $this->prepareValue($mapping, $new);
+                                if (isset($new) || $mapping['nullable'] === true) {
+                                    $result[$this->cmd . 'set'][$mapping['name']] = $new;
+                                }
+                            // If we had an old value before and it has changed
+                            } elseif ($old && $new) {
+                                $embeddedDocument = $class->getFieldValue($document, $mapping['fieldName']);
+                                $update = $this->prepareUpdateData($embeddedDocument);
+                                foreach ($update as $cmd => $values) {
+                                    foreach ($values as $key => $value) {
+                                        $result[$cmd][$mapping['name'] . '.' . $key] = $value;
+                                    }
+                                }
+                            }
+                        // $set all other fields
+                        } else {
+                            $new = $this->prepareValue($mapping, $new);
+                            if (isset($new) || $mapping['nullable'] === true) {
+                                $result[$this->cmd . 'set'][$mapping['name']] = $new;
+                            } else {
+                                $result[$this->cmd . 'unset'][$mapping['name']] = true;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return $result;
+    }
+
+    /**
+     *
+     * @param array $mapping
+     * @param mixed $value
+     */
+    private function prepareValue(array $mapping, $value)
+    {
+        if ($value === null) {
+            return null;
+        }
+        if ($mapping['type'] === 'many') {
+            $prepared = array();
+            $oneMapping = $mapping;
+            $oneMapping['type'] = 'one';
+            foreach ($value as $rawValue) {
+                $prepared[] = $this->prepareValue($oneMapping, $rawValue);
+            }
+            if (empty($prepared)) {
+                $prepared = null;
+            }
+        } elseif (isset($mapping['reference']) || isset($mapping['embedded'])) {
+            if (isset($mapping['embedded'])) {
+                $prepared = $this->prepareEmbeddedDocValue($mapping, $value);
+            } elseif (isset($mapping['reference'])) {
+                $prepared = $this->prepareReferencedDocValue($mapping, $value);
+            }
+        } else {
+            $prepared = Type::getType($mapping['type'])->convertToDatabaseValue($value);
+        }
+        return $prepared;
+    }
+
+    /**
      * Returns the reference representation to be stored in mongodb or null if not applicable.
      *
      * @param array $referenceMapping
@@ -546,18 +586,21 @@ class BasicDocumentPersister
      */
     private function prepareEmbeddedDocValue(array $embeddedMapping, $embeddedDocument)
     {
-        $className = is_object($embeddedDocument) ? get_class($embeddedDocument) : $embeddedDocument['className'];
+        if (is_array($embeddedDocument) && isset($embeddedDocument['originalObject'])) {
+            $embeddedDocument = $embeddedDocument['originalObject'];
+        }
+        $className = get_class($embeddedDocument);
         $class = $this->dm->getClassMetadata($className);
         $embeddedDocumentValue = array();
         foreach ($class->fieldMappings as $mapping) {
-            if (is_object($embeddedDocument)) {
-                $rawValue = $class->getFieldValue($embeddedDocument, $mapping['fieldName']);
-            } else {
-                $rawValue = isset($embeddedDocument[$mapping['fieldName']]) ? $embeddedDocument[$mapping['fieldName']] : null;
-            }
+            // Skip not saved fields
             if (isset($mapping['notSaved']) && $mapping['notSaved'] === true) {
                 continue;
             }
+
+            $rawValue = $class->getFieldValue($embeddedDocument, $mapping['fieldName']);
+
+            // Don't store null values unless nullable is specified
             if ($rawValue === null && $mapping['nullable'] === false) {
                 continue;
             }
@@ -568,14 +611,20 @@ class BasicDocumentPersister
                         foreach ($rawValue as $embeddedDoc) {
                             $value[] = $this->prepareEmbeddedDocValue($mapping, $embeddedDoc);
                         }
+                        if (empty($value)) {
+                            $value = null;
+                        }
                     } elseif ($mapping['type'] == 'one') {
                         $value = $this->prepareEmbeddedDocValue($mapping, $rawValue);
                     }
                 } elseif (isset($mapping['reference'])) {
                     if ($mapping['type'] == 'many') {
-                         $value = array();
+                        $value = array();
                         foreach ($rawValue as $referencedDoc) {
                             $value[] = $this->prepareReferencedDocValue($mapping, $referencedDoc);
+                        }
+                        if (empty($value)) {
+                            $value = null;
                         }
                     } else {
                         $value = $this->prepareReferencedDocValue($mapping, $rawValue);
@@ -583,6 +632,9 @@ class BasicDocumentPersister
                 }
             } else {
                 $value = Type::getType($mapping['type'])->convertToDatabaseValue($rawValue);
+            }
+            if ($value === null && $mapping['nullable'] === false) {
+                continue;
             }
             $embeddedDocumentValue[$mapping['fieldName']] = $value;
         }
@@ -592,17 +644,5 @@ class BasicDocumentPersister
             $embeddedDocumentValue[$discriminatorField] = $discriminatorValue;
         }
         return $embeddedDocumentValue;
-    }
-
-    /**
-     * Checks whether the given managed document exists in the database.
-     *
-     * @param object $document
-     * @return boolean TRUE if the document exists in the database, FALSE otherwise.
-     */
-    public function exists($document)
-    {
-        $id = $this->class->getIdentifierObject($document);
-        return (bool) $this->collection->findOne(array(array('_id' => $id)), array('_id'));
     }
 }
