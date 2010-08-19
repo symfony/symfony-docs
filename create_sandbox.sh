@@ -10,6 +10,7 @@ cp -r web /tmp/sandbox/
 cp -r README /tmp/sandbox/
 cp -r LICENSE /tmp/sandbox/
 cd /tmp/sandbox
+perl -p -i -e "s#/../vendor#/vendor#" src/autoload.php
 sudo rm -rf hello/cache/* hello/logs/* .git*
 chmod 777 hello/cache hello/logs
 cd ..
