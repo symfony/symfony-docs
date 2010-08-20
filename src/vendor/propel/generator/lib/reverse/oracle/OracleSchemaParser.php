@@ -15,7 +15,7 @@ require_once 'reverse/BaseSchemaParser.php';
  *
  * @author     Hans Lellelid <hans@xmpl.org>
  * @author     Guillermo Gutierrez <ggutierrez@dailycosas.net> (Adaptation)
- * @version    $Revision: 1612 $
+ * @version    $Revision: 1918 $
  * @package    propel.generator.reverse.oracle
  */
 class OracleSchemaParser extends BaseSchemaParser
@@ -42,14 +42,15 @@ class OracleSchemaParser extends BaseSchemaParser
 		'BLOB'		=> PropelTypes::BLOB,
 		'CHAR'		=> PropelTypes::CHAR,
 		'CLOB'		=> PropelTypes::CLOB,
-		'DATE'		=> PropelTypes::DATE,
+		'DATE'		=> PropelTypes::TIMESTAMP,
+		'BIGINT'	=> PropelTypes::BIGINT,
 		'DECIMAL'	=> PropelTypes::DECIMAL,
 		'DOUBLE'	=> PropelTypes::DOUBLE,
 		'FLOAT'		=> PropelTypes::FLOAT,
 		'LONG'		=> PropelTypes::LONGVARCHAR,
 		'NCHAR'		=> PropelTypes::CHAR,
 		'NCLOB'		=> PropelTypes::CLOB,
-		'NUMBER'	=> PropelTypes::BIGINT,
+		'NUMBER'	=> PropelTypes::INTEGER,
 		'NVARCHAR2'	=> PropelTypes::VARCHAR,
 		'TIMESTAMP'	=> PropelTypes::TIMESTAMP,
 		'VARCHAR2'	=> PropelTypes::VARCHAR,
@@ -108,20 +109,23 @@ class OracleSchemaParser extends BaseSchemaParser
 	 */
 	protected function addColumns(Table $table)
 	{
-		$stmt = $this->dbh->query("SELECT COLUMN_NAME, DATA_TYPE, NULLABLE, DATA_LENGTH, DATA_SCALE, DATA_DEFAULT FROM USER_TAB_COLS WHERE TABLE_NAME = '" . $table->getName() . "'");
+		$stmt = $this->dbh->query("SELECT COLUMN_NAME, DATA_TYPE, NULLABLE, DATA_LENGTH, DATA_PRECISION, DATA_SCALE, DATA_DEFAULT FROM USER_TAB_COLS WHERE TABLE_NAME = '" . $table->getName() . "'");
 		/* @var stmt PDOStatement */
 		while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
 			if (strpos($row['COLUMN_NAME'], '$') !== false) {
 				// this is an Oracle internal column - prune
 				continue;
 			}
-			$size = $row["DATA_LENGTH"];
+			$size = $row["DATA_PRECISION"] ? $row["DATA_PRECISION"] : $row["DATA_LENGTH"];
 			$scale = $row["DATA_SCALE"];
 			$default = $row['DATA_DEFAULT'];
 			$type = $row["DATA_TYPE"];
 			$isNullable = ($row['NULLABLE'] == 'Y');
 			if ($type == "NUMBER" && $row["DATA_SCALE"] > 0) {
 				$type = "DECIMAL";
+			}
+			if ($type == "NUMBER" && $size > 9) {
+				$type = "BIGINT";
 			}
 			if ($type == "FLOAT"&& $row["DATA_PRECISION"] == 126) {
 				$type = "DOUBLE";
