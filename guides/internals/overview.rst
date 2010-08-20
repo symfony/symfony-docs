@@ -25,20 +25,20 @@ on top of the previous one.
 ``HttpFoundation`` Component
 ----------------------------
 
-The deepest level is the :namespace:`Symfony\\Components\\HttpFoundation`
+The deepest level is the :namespace:`Symfony\\Component\\HttpFoundation`
 component. HttpFoundation provides the main objects needed to deal with HTTP.
 It is an Object-Oriented abstraction of some native PHP functions and
 variables:
 
-* The :class:`Symfony\\Components\\HttpFoundation\\Request` class abstracts
+* The :class:`Symfony\\Component\\HttpFoundation\\Request` class abstracts
   the main PHP global variables like ``$_GET``, ``$_POST``, ``$_COOKIE``,
   ``$_FILES``, and ``$_SERVER``;
 
-* The :class:`Symfony\\Components\\HttpFoundation\\Response` class abstracts
+* The :class:`Symfony\\Component\\HttpFoundation\\Response` class abstracts
   some PHP functions like ``header()``, ``setcookie()``, and ``echo``;
 
-* The :class:`Symfony\\Components\\HttpFoundation\\Session` and
-  :class:`Symfony\\Components\\HttpFoundation\\Session\\SessionStorageInterface`
+* The :class:`Symfony\\Component\\HttpFoundation\\Session` and
+  :class:`Symfony\\Component\\HttpFoundation\\Session\\SessionStorageInterface`
   class abstracts session management ``session_*()`` functions.
 
 .. seealso:: Read more about the :doc:`HttpFoundation Component
@@ -47,7 +47,7 @@ variables:
 ``HttpKernel`` Component
 ------------------------
 
-On top of HttpFoundation is the :namespace:`Symfony\\Components\\HttpKernel`
+On top of HttpFoundation is the :namespace:`Symfony\\Component\\HttpKernel`
 component. HttpKernel handles the dynamic part of HTTP; it is a thin wrapper
 on top of the Request and Response classes to standardize the way Requests are
 handled. It also provides extension points and tools that makes it the ideal

@@ -4,13 +4,13 @@
 Kernel
 ======
 
-:class:`Symfony\\Components\\HttpKernel\\HttpKernel` is the class responsible
+:class:`Symfony\\Component\\HttpKernel\\HttpKernel` is the class responsible
 for handling client requests. Its main goal is to "convert"
-:class:`Symfony\\Components\\HttpFoundation\\Request` objects to
-:class:`Symfony\\Components\\HttpFoundation\\Response` ones.
+:class:`Symfony\\Component\\HttpFoundation\\Request` objects to
+:class:`Symfony\\Component\\HttpFoundation\\Response` ones.
 
 All Symfony2 Kernels implement
-:class:`Symfony\\Components\\HttpKernel\\HttpKernelInterface`::
+:class:`Symfony\\Component\\HttpKernel\\HttpKernelInterface`::
 
     function handle(Request $request = null, $type = self::MASTER_REQUEST, $raw = false);
 
@@ -25,17 +25,17 @@ Controller can be any valid PHP callable.
 
 The Kernel delegates the selection of the Controller to execute to an
 implementation of
-:class:`Symfony\\Components\\HttpKernel\\Controller\\ControllerResolverInterface`::
+:class:`Symfony\\Component\\HttpKernel\\Controller\\ControllerResolverInterface`::
 
     public function getController(Request $request);
 
     public function getArguments(Request $request, $controller);
 
 The
-:method:`Symfony\\Components\\HttpKernel\\Controller\\ControllerResolverInterface::getController`
+:method:`Symfony\\Component\\HttpKernel\\Controller\\ControllerResolverInterface::getController`
 method returns the Controller (a PHP callable) associated with the given
 Request. The default implementation
-(:class:`Symfony\\Components\\HttpKernel\\Controller\\ControllerResolver`)
+(:class:`Symfony\\Component\\HttpKernel\\Controller\\ControllerResolver`)
 looks for a ``_controller`` request attribute that represents the controller
 name (a "class::method" string, like
 ``Bundle\BlogBundle\PostController:indexAction``).
@@ -46,7 +46,7 @@ name (a "class::method" string, like
    to define the ``_controller`` Request attribute (see below).
 
 The
-:method:`Symfony\\Components\\HttpKernel\\Controller\\ControllerResolverInterface::getArguments`
+:method:`Symfony\\Component\\HttpKernel\\Controller\\ControllerResolverInterface::getArguments`
 method returns an array of arguments to pass to the Controller callable. The
 default implementation automatically resolves the method arguments, based on
 the Request attributes.
@@ -160,7 +160,7 @@ returns a Response object, other listeners won't be called.
 This event is used by ``FrameworkBundle`` to populate the ``_controller``
 Request attribute, via the
 :class:`Symfony\\Bundle\\FrameworkBundle\\RequestListener`. RequestListener
-uses a :class:`Symfony\\Components\\Routing\\RouterInterface` object to match
+uses a :class:`Symfony\\Component\\Routing\\RouterInterface` object to match
 the Request and determine the Controller name (stored in the ``_controller``
 Request attribute).
 
@@ -207,16 +207,16 @@ view sub-system.
 
 ``FrameworkBundle`` registers several listeners:
 
-* :class:`Symfony\\Components\\HttpKernel\\Profiler\\ProfilerListener`:
+* :class:`Symfony\\Component\\HttpKernel\\Profiler\\ProfilerListener`:
   collects data for the current request;
 
-* :class:`Symfony\\Components\\HttpKernel\\Profiler\\WebDebugToolbarListener`:
+* :class:`Symfony\\Component\\HttpKernel\\Profiler\\WebDebugToolbarListener`:
   injects the Web Debug Toolbar;
 
-* :class:`Symfony\\Components\\HttpKernel\\ResponseListener`: fixes the
+* :class:`Symfony\\Component\\HttpKernel\\ResponseListener`: fixes the
   Response ``Content-Type``;
 
-* :class:`Symfony\\Components\\HttpKernel\\Cache\\EsiListener`: adds a
+* :class:`Symfony\\Component\\HttpKernel\\Cache\\EsiListener`: adds a
   ``Surrogate-Control`` HTTP header when the Response needs to be parsed for
   ESI tags.
 

@@ -144,8 +144,8 @@ So, Symfony routes the request by reading the routing configuration file:
     .. code-block:: php
 
         // hello/config/routing.php
-        use Symfony\Components\Routing\RouteCollection;
-        use Symfony\Components\Routing\Route;
+        use Symfony\Component\Routing\RouteCollection;
+        use Symfony\Component\Routing\Route;
 
         $collection = new RouteCollection();
 
@@ -187,8 +187,8 @@ part, which imports another routing configuration file that reads as follows:
     .. code-block:: php
 
         // src/Application/HelloBundle/Resources/config/routing.php
-        use Symfony\Components\Routing\RouteCollection;
-        use Symfony\Components\Routing\Route;
+        use Symfony\Component\Routing\RouteCollection;
+        use Symfony\Component\Routing\Route;
 
         $collection = new RouteCollection();
         $collection->addRoute('hello', new Route('/hello/:name', array(

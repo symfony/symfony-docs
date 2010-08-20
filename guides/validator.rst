@@ -406,8 +406,8 @@ PHP Configuration
 If you prefer to write configurations in plain old PHP, you can add the static
 method ``loadValidatorMetadata()`` to the classes that you want to validate::
 
-    use Symfony\Components\Validator\Constraints;
-    use Symfony\Components\Validator\Mapping\ClassMetadata;
+    use Symfony\Component\Validator\Constraints;
+    use Symfony\Component\Validator\Mapping\ClassMetadata;
 
     class Author
     {

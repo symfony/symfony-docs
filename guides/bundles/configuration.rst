@@ -82,10 +82,10 @@ Creating an Extension
 
 To define a semantic configuration, create a Dependency Injection extension
 that extend
-:class:`Symfony\\Components\\DependencyInjection\\Extension\\Extension`::
+:class:`Symfony\\Component\\DependencyInjection\\Extension\\Extension`::
 
     // HelloBundle/DependencyInjection/HelloExtension.php
-    use Symfony\\Components\\DependencyInjection\\Extension\\Extension;
+    use Symfony\\Component\\DependencyInjection\\Extension\\Extension;
 
     class HelloExtension extends Extension
     {

@@ -67,7 +67,7 @@ notified event:
 
 These data are passed as arguments to the ``Event`` constructor::
 
-    use Symfony\Components\EventDispatcher\Event;
+    use Symfony\Component\EventDispatcher\Event;
 
     $event = new Event($this, 'user.change_culture', array('culture' => $culture));
 
@@ -90,7 +90,7 @@ The Dispatcher
 The dispatcher maintains a register of listeners and calls them whenever an
 event is notified::
 
-    use Symfony\Components\EventDispatcher\EventDispatcher;
+    use Symfony\Component\EventDispatcher\EventDispatcher;
 
     $dispatcher = new EventDispatcher();
 

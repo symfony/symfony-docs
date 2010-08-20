@@ -4,16 +4,16 @@
 The Finder
 ==========
 
-The :namespace:`Symfony\\Components\\Finder` Component helps you find files
+The :namespace:`Symfony\\Component\\Finder` Component helps you find files
 and directories quickly and easily.
 
 Usage
 -----
 
-The :class:`Symfony\\Components\\Finder\\Finder` class finds files and/or
+The :class:`Symfony\\Component\\Finder\\Finder` class finds files and/or
 directories::
 
-    use Symfony\Components\Finder\Finder;
+    use Symfony\Component\Finder\Finder;
 
     $finder = new Finder();
     $finder->files()->in(__DIR__);
@@ -46,12 +46,12 @@ directory to use for the search::
     $finder->in(__DIR__);
 
 Search in several locations by chaining calls to
-:method:`Symfony\\Components\\Finder\\Finder::in`::
+:method:`Symfony\\Component\\Finder\\Finder::in`::
 
     $finder->files()->in(__DIR__)->in('/elsewhere');
 
 Exclude directories from matching with the
-:method:`Symfony\\Components\\Finder\\Finder::exclude` method::
+:method:`Symfony\\Component\\Finder\\Finder::exclude` method::
 
     $finder->in(__DIR__)->exclude('ruby');
 
@@ -62,7 +62,7 @@ As the Finder uses PHP iterators, you can pass any URL with a supported
 
 And it also works with user-defined streams::
 
-    use Symfony\Components\Finder\Finder;
+    use Symfony\Component\Finder\Finder;
 
     $s3 = new \Zend_Service_Amazon_S3($key, $secret);
     $s3->registerStreamWrapper("s3");
@@ -82,8 +82,8 @@ Files or Directories
 ~~~~~~~~~~~~~~~~~~~~~
 
 By default, the Finder returns files and directories; but the
-:method:`Symfony\\Components\\Finder\\Finder::files` and
-:method:`Symfony\\Components\\Finder\\Finder::directories` methods controls
+:method:`Symfony\\Component\\Finder\\Finder::files` and
+:method:`Symfony\\Component\\Finder\\Finder::directories` methods controls
 that::
 
     $finder->files();
@@ -125,7 +125,7 @@ File Name
 ~~~~~~~~~
 
 Restrict files by name with the
-:method:`Symfony\\Components\\Finder\\Finder::name` method::
+:method:`Symfony\\Component\\Finder\\Finder::name` method::
 
     $finder->files()->name('*.php');
 
@@ -141,7 +141,7 @@ File Size
 ~~~~~~~~~
 
 Restrict files by size with the
-:method:`Symfony\\Components\\Finder\\Finder::size` method::
+:method:`Symfony\\Component\\Finder\\Finder::size` method::
 
     $finder->files()->size('< 1.5K');
 
@@ -160,7 +160,7 @@ File Date
 ~~~~~~~~~
 
 Restrict files by last modified dates with the
-:method:`Symfony\\Components\\Finder\\Finder::date` method::
+:method:`Symfony\\Component\\Finder\\Finder::date` method::
 
     $finder->date('since yesterday');
 
@@ -174,7 +174,7 @@ Directory Depth
 ~~~~~~~~~~~~~~~
 
 By default, the Finder recursively traverse directories. Restrict the depth of
-traversing with :method:`Symfony\\Components\\Finder\\Finder::depth`::
+traversing with :method:`Symfony\\Component\\Finder\\Finder::depth`::
 
     $finder->depth('== 0');
     $finder->depth('< 3');
@@ -183,7 +183,7 @@ Custom Filtering
 ~~~~~~~~~~~~~~~~
 
 To restrict the matching file with your own strategy, use
-:method:`Symfony\\Components\\Finder\\Finder::filter`::
+:method:`Symfony\\Component\\Finder\\Finder::filter`::
 
     $filter = function (\SplFileInfo $file)
     {
