@@ -4,8 +4,12 @@ Doctrine Configuration
 DBAL Configuration
 ------------------
 
+<<<<<<< HEAD:guides/doctrine/configuration.rst
 .. code-block:: yaml
 
+=======
+    [yml]
+>>>>>>> origin/PR3:guides/en/Doctrine/Configuration.markdown
     # config/config.yml
     doctrine.dbal:
         driver:   PDOMySql
@@ -64,7 +68,18 @@ but you must pass it an argument with the name of the connection you want to get
 ORM Configuration
 -----------------
 
+<<<<<<< HEAD:guides/doctrine/configuration.rst
 .. code-block:: yaml
+=======
+    doctrine.orm:
+      default_entity_manager:   default
+      cache_driver:             apc           # array, apc, memcache, xcache
+      entity_managers:
+        default:
+          connection:           default
+        customer:
+          connection:           customer
+>>>>>>> origin/PR3:guides/en/Doctrine/Configuration.markdown
 
     doctrine.orm:
       default_entity_manager:   default

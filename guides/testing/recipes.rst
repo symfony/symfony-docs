@@ -96,6 +96,10 @@ to check the number of database calls, the time spent in the framework, ...
 But before writing assertions, always check that the profiler is indeed
 available (it is enabled by default in the ``test`` environment)::
 
+<<<<<<< HEAD:guides/testing/recipes.rst
+=======
+    [php]
+>>>>>>> origin/PR3:guides/en/Testing/Recipes.markdown
     if ($profiler = $client->getProfiler()) {
         // check the number of requests
         $this->assertTrue($profiler['db']->getQueryCount() < 10);
