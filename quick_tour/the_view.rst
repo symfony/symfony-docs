@@ -48,11 +48,11 @@ Now, let's have a look at the ``layout.php`` file:
             <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         </head>
         <body>
-            <?php $view->slots->output('_content') ?>
+            <?php $view['slots']->output('_content') ?>
         </body>
     </html>
 
-The ``$view->slots->output('_content')`` expression is replaced by the content
+The ``$view['slots']->output('_content')`` expression is replaced by the content
 of the child template, ``index.php`` (more on slots in the next section).
 
 As you can see, Symfony provides methods on a mysterious ``$view`` object. In a
@@ -81,7 +81,7 @@ decorating the template. In the index template, define a ``title`` slot:
     <!-- src/Application/HelloBundle/Resources/views/Hello/index.php -->
     <?php $view->extend('HelloBundle::layout') ?>
 
-    <?php $view->slots->set('title', 'Hello World app') ?>
+    <?php $view['slots']->set('title', 'Hello World app') ?>
 
     Hello <?php echo $name ?>!
 
@@ -96,7 +96,7 @@ And change the layout to output the title in the header:
             <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         </head>
         <body>
-            <?php $view->slots->output('_content') ?>
+            <?php $view['slots']->output('_content') ?>
         </body>
     </html>
 
@@ -108,9 +108,9 @@ For large slots, there is also an extended syntax:
 
 .. code-block:: html+php
 
-    <?php $view->slots->start('title') ?>
+    <?php $view['slots']->start('title') ?>
         Some large amount of HTML
-    <?php $view->slots->stop() ?>
+    <?php $view['slots']->stop() ?>
 
 .. index::
    single: Templating; Include
@@ -156,7 +156,7 @@ template, simply use the following code:
 .. code-block:: html+php
 
     <!-- src/Application/HelloBundle/Resources/views/Hello/index.php -->
-    <?php $view->actions->output('HelloBundle:Hello:fancy', array('name' => $name, 'color' => 'green')) ?>
+    <?php $view['actions']->output('HelloBundle:Hello:fancy', array('name' => $name, 'color' => 'green')) ?>
 
 Here, the ``HelloBundle:Hello:fancy`` string refers to the ``fancy`` action of the
 ``Hello`` controller::
@@ -176,8 +176,9 @@ Here, the ``HelloBundle:Hello:fancy`` string refers to the ``fancy`` action of t
         // ...
     }
 
-But where is the ``$view->actions`` property defined? Like ``$view->slots``, it's
-called a template helper, and the next section tells you more about those.
+But where is the ``$view['actions']`` array element defined? Like
+``$view['slots']``, it's called a template helper, and the next section tells
+you more about those.
 
 .. index::
    single: Templating; Helpers
@@ -199,7 +200,7 @@ can be easily updated by changing the configuration:
 
 .. code-block:: html+php
 
-    <a href="<?php echo $view->router->generate('hello', array('name' => 'Thomas')) ?>">
+    <a href="<?php echo $view['router']->generate('hello', array('name' => 'Thomas')) ?>">
         Greet Thomas!
     </a>
 
@@ -223,9 +224,9 @@ Symfony provides three helpers to deal with them easily: ``assets``,
 
 .. code-block:: html+php
 
-    <link href="<?php echo $view->assets->getUrl('css/blog.css') ?>" rel="stylesheet" type="text/css" />
+    <link href="<?php echo $view['assets']->getUrl('css/blog.css') ?>" rel="stylesheet" type="text/css" />
 
-    <img src="<?php echo $view->assets->getUrl('images/logo.png') ?>" />
+    <img src="<?php echo $view['assets']->getUrl('images/logo.png') ?>" />
 
 The ``assets`` helper's main purpose is to make your application more portable.
 Thanks to this helper, you can move the application root directory anywhere under your
@@ -236,16 +237,16 @@ Similarly, you can manage your stylesheets and JavaScripts with the
 
 .. code-block:: html+php
 
-    <?php $view->javascripts->add('js/product.js') ?>
-    <?php $view->stylesheets->add('css/product.css') ?>
+    <?php $view['javascripts->add('js/product.js') ?>
+    <?php $view['stylesheets']->add('css/product.css') ?>
 
 The ``add()`` method defines dependencies. To actually output these assets, you
 need to also add the following code in your main layout:
 
 .. code-block:: html+php
 
-    <?php echo $view->javascripts ?>
-    <?php echo $view->stylesheets ?>
+    <?php echo $view['javascripts'] ?>
+    <?php echo $view['stylesheets'] ?>
 
 Final Thoughts
 --------------
