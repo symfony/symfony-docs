@@ -1,7 +1,8 @@
 #!/bin/sh
 
 # init
-cd src/
+DIR=`php -r "echo realpath(dirname(\\$_SERVER['argv'][0]));"`
+cd $DIR/src/
 rm -rf vendor
 mkdir vendor
 cd vendor

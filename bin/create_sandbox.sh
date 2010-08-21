@@ -1,6 +1,6 @@
 #!/bin/sh
 
-DIR=`pwd`
+DIR=`php -r "echo realpath(dirname(\\$_SERVER['argv'][0]));"`
 VERSION=2_0_PR3
 rm -rf /tmp/sandbox
 mkdir /tmp/sandbox

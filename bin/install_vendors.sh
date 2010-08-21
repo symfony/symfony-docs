@@ -1,13 +1,15 @@
 #!/bin/sh
 
 # initialization
-if [ -d "vendor" ]; then
-  rm -rf vendor/*
+DIR=`php -r "echo realpath(dirname(\\$_SERVER['argv'][0]));"`
+
+if [ -d "$DIR/vendor" ]; then
+  rm -rf $DIR/vendor/*
 else
-  mkdir vendor
+  mkdir $DIR/vendor
 fi
 
-cd vendor
+cd $DIR/vendor
 
 # Symfony
 git clone git://github.com/symfony/symfony.git symfony
