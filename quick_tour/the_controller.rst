@@ -148,7 +148,7 @@ When things are not found, you should play well with the HTTP protocol and
 return a 404 response. This is easily done by throwing a built-in HTTP
 exception::
 
-    use Symfony\Component\RequestHandler\Exception\NotFoundHttpException;
+    use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
     public function indexAction()
     {
