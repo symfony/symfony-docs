@@ -217,44 +217,34 @@ helper:
 
     <?php echo $view->request->getParameter('page') ?>
 
-The User
---------
+The Session
+-----------
 
-Even if the HTTP protocol is stateless, Symfony provides a nice user object
+Even if the HTTP protocol is stateless, Symfony provides a nice session object
 that represents the client (be it a real person using a browser, a bot, or a
 web service). Between two requests, Symfony stores the attributes in a cookie
 by using the native PHP sessions.
 
-This feature is provided by ``FrameworkBundle`` and it can be enabled by adding the
-following line to ``config.yml``:
-
-.. configuration-block::
-
-    .. code-block:: yaml
-
-        # hello/config/config.yml
-        web.user: ~
-
-Storing and retrieving information from the user can be easily achieved from
-any controller::
+Storing and retrieving information from the session can be easily achieved
+from any controller::
 
     // store an attribute for reuse during a later user request
-    $this->getUser()->setAttribute('foo', 'bar');
+    $this['request']->getSession()->setAttribute('foo', 'bar');
 
     // in another controller for another request
-    $foo = $this->getUser()->getAttribute('foo');
+    $foo = $this['request']->getSession()->getAttribute('foo');
 
     // get/set the user culture
-    $this->getUser()->setCulture('fr');
+    $this['request']->getSession()->setCulture('fr');
 
 You can also store small messages that will only be available for the very
 next request::
 
-    // store a message for the very next request
-    $this->getUser()->setFlash('notice', 'Congratulations, your action succeeded!');
+    // store a message for the very next request (in a controller)
+    $this['session']->setFlash('notice', 'Congratulations, your action succeeded!');
 
-    // get the message back in the next request
-    $notice = $this->getUser()->getFlash('notice');
+    // display the message back in the next request (in a template)
+    <?php echo $view['session']->getFlash('notice') ?>
 
 Final Thoughts
 --------------
