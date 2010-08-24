@@ -32,11 +32,11 @@ class BinDataUUIDType extends Type
 {
     public function convertToDatabaseValue($value)
     {
-        return new \MongoBinData($value, \MongoBinData::UUID);
+        return $value !== null ? new \MongoBinData($value, \MongoBinData::UUID) : null;
     }
 
     public function convertToPHPValue($value)
     {
-        return $value->bin;
+        return $value !== null ? $value->bin : null;
     }
 }

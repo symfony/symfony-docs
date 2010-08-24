@@ -457,7 +457,9 @@ class UnitOfWork implements PropertyChangedListener
                 } else if ($isChangeTrackingNotify) {
                     continue;
                 } else if (isset($class->fieldMappings[$propName]['type']) && $class->fieldMappings[$propName]['type'] === 'many') {
-                    $changeSet[$propName] = array($orgValue, $actualValue);
+                    if ($orgValue !== $actualValue) {
+                        $changeSet[$propName] = array($orgValue, $actualValue);
+                    }
                 } else if (is_object($orgValue) && $orgValue !== $actualValue) {
                     $changeSet[$propName] = array($orgValue, $actualValue);
                 } else if ($orgValue != $actualValue || ($orgValue === null ^ $actualValue === null)) {
@@ -609,16 +611,10 @@ class UnitOfWork implements PropertyChangedListener
             $class = $this->dm->getClassMetadata(get_class($document));
         }
 
-        $actualData = array();
-        foreach ($class->reflFields as $name => $refProp) {
-            if ( ! $class->isIdentifier($name)) {
-                $actualData[$name] = $refProp->getValue($document);
-            }
-        }
+        $actualData = $this->getDocumentActualData($document);
 
         $originalData = $this->originalDocumentData[$oid];
         $changeSet = array();
-
         foreach ($actualData as $propName => $actualValue) {
             $orgValue = isset($originalData[$propName]) ? $originalData[$propName] : null;
             if ($orgValue instanceof PersistentCollection) {
@@ -633,7 +629,9 @@ class UnitOfWork implements PropertyChangedListener
                     $changeSet[$propName] = array($orgValue, $actualValue);
                 }
             } else if (isset($class->fieldMappings[$propName]['type']) && $class->fieldMappings[$propName]['type'] === 'many') {
-                $changeSet[$propName] = array($orgValue, $actualValue);
+                if ($orgValue !== $actualValue) {
+                    $changeSet[$propName] = array($orgValue, $actualValue);
+                }
             } else if (is_object($orgValue) && $orgValue !== $actualValue) {
                 $changeSet[$propName] = array($orgValue, $actualValue);
             } else if ($orgValue != $actualValue || ($orgValue === null ^ $actualValue === null)) {

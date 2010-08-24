@@ -56,8 +56,30 @@ abstract class Type
         'increment' => 'Doctrine\ODM\MongoDB\Mapping\Types\IncrementType'
     );
 
-    abstract public function convertToDatabaseValue($value);
-    abstract public function convertToPHPValue($value);
+    
+    /**
+     * Converts a value from its PHP representation to its database representation
+     * of this type.
+     *
+     * @param mixed $value The value to convert.
+     * @return mixed The database representation of the value.
+     */
+    public function convertToDatabaseValue($value)
+    {
+        return $value;
+    }
+
+    /**
+     * Converts a value from its database representation to its PHP representation
+     * of this type.
+     *
+     * @param mixed $value The value to convert.
+     * @return mixed The PHP representation of the value.
+     */
+    public function convertToPHPValue($value)
+    {
+        return $value;
+    }
 
     /**
      * Array of instantiated type classes.

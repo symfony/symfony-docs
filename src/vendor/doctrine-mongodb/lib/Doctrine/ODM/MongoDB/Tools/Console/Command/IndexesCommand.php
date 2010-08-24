@@ -2,9 +2,9 @@
 
 namespace Doctrine\ODM\MongoDB\Tools\Console\Command;
 
-use Symfony\Components\Console\Command\Command;
-use Symfony\Components\Console\Input;
-use Symfony\Components\Console\Output;
+use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Input;
+use Symfony\Component\Console\Output;
 
 /**
  * @author Bulat Shakirzyanov <mallluhuct@gmail.com>
@@ -50,25 +50,33 @@ class IndexesCommand extends Command
             throw new \InvalidArgumentException(sprintf('Option "mode" must be one of %s. "%s" given.', implode(', ', $modes), $mode));
         }
 
-        $dm = $this->getDocumentManager();
+        $sm = $this->getSchemaManager();
 
         if ($mode === self::DROP || $mode === self::REPLACE) {
             if (isset($className)) {
-                $dm->deleteDocumentIndexes($className);
+                $sm->deleteDocumentIndexes($className);
             } else {
-                $dm->deleteIndexes();
+                $sm->deleteIndexes();
             }
         }
 
         if ($mode === self::CREATE || $mode === self::REPLACE) {
             if (isset($className)) {
-                $dm->ensureDocumentIndexes($className);
+                $sm->ensureDocumentIndexes($className);
             } else {
-                $dm->ensureIndexes();
+                $sm->ensureIndexes();
             }
         }
 
         return sprintf('Successfully %sd %s', $mode, (isset($className) ? 'indexes for ' . $className : 'all indexes'));
+    }
+
+    /**
+     * @return Doctrine\ODM\MongoDB\SchemaManager
+     */
+    protected function getSchemaManager()
+    {
+        return $this->getDocumentManager()->getSchemaManager();
     }
 
     /**

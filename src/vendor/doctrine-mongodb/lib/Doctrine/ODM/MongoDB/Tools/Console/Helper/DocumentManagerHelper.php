@@ -2,7 +2,7 @@
 
 namespace Doctrine\ODM\MongoDB\Tools\Console\Helper;
 
-use Symfony\Components\Console\Helper\Helper;
+use Symfony\Component\Console\Helper\Helper;
 use Doctrine\ODM\MongoDB\DocumentManager;
 
 /**

@@ -32,11 +32,17 @@ class KeyType extends Type
 {
     public function convertToDatabaseValue($value)
     {
+        if ($value === null) {
+            return null;
+        }
         return $value ? new \MongoMaxKey : new \MongoMinKey;
     }
 
     public function convertToPHPValue($value)
     {
+        if ($value === null) {
+            return null;
+        }
         return $value instanceof \MongoMaxKey ? 1 : 0;
     }
 }

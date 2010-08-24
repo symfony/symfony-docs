@@ -498,7 +498,7 @@ class ClassMetadata
      * @param array $keys Array of keys for the index.
      * @param array $options Array of options for the index.
      */
-    public function addIndex($keys, $options)
+    public function addIndex($keys, array $options = array())
     {
         $this->indexes[] = array(
             'keys' => array_map(function($value) {

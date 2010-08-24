@@ -97,6 +97,13 @@ class DocumentManager
     private $hydrator;
 
     /**
+     * SchemaManager instance
+     *
+     * @var Doctrine\ODM\MongoDB\SchemaManager
+     */
+    private $schemaManager;
+
+    /**
      * Array of cached MongoDB instances that are lazily loaded.
      *
      * @var array
@@ -145,6 +152,7 @@ class DocumentManager
         }
         $this->queryParser = new Parser($this);
         $this->unitOfWork = new UnitOfWork($this);
+        $this->schemaManager = new SchemaManager($this);
         $this->proxyFactory = new ProxyFactory($this,
                 $this->config->getProxyDir(),
                 $this->config->getProxyNamespace(),
@@ -236,6 +244,16 @@ class DocumentManager
     public function getHydrator()
     {
         return $this->hydrator;
+    }
+
+    /**
+     * Retuns SchemaManager, used to create/drop indexes/collections/databases
+     *
+     * @return Doctrine\ODM\MongoDB\SchemaManager
+     */
+    public function getSchemaManager()
+    {
+        return $this->schemaManager;
     }
 
     /**
@@ -483,141 +501,6 @@ class DocumentManager
     {
         $this->errorIfClosed();
         $this->unitOfWork->commit($options);
-    }
-
-    /**
-     * Ensure indexes are created for all documents that can be loaded with the
-     * metadata factory.
-     */
-    public function ensureIndexes()
-    {
-        foreach ($this->metadataFactory->getAllMetadata() as $class) {
-            $this->ensureDocumentIndexes($class->name);
-        }
-    }
-
-    /**
-     * Ensure the given documents indexes are created.
-     *
-     * @param string $documentName The document name to ensure the indexes for.
-     */
-    public function ensureDocumentIndexes($documentName)
-    {
-        $class = $this->getClassMetadata($documentName);
-        if ($indexes = $class->getIndexes()) {
-            $collection = $this->getDocumentCollection($class->name);
-            foreach ($indexes as $index) {
-                $collection->ensureIndex($index['keys'], $index['options']);
-            }
-        }
-    }
-
-    /**
-     * Delete indexes for all documents that can be loaded with the
-     * metadata factory.
-     */
-    public function deleteIndexes()
-    {
-        foreach ($this->metadataFactory->getAllMetadata() as $class) {
-            $this->deleteDocumentIndexes($class->name);
-        }
-    }
-
-    /**
-     * Delete the given documents indexes.
-     *
-     * @param string $documentName The document name to delete the indexes for.
-     */
-    public function deleteDocumentIndexes($documentName)
-    {
-        return $this->getDocumentCollection($documentName)->deleteIndexes();
-    }
-
-    /**
-     * Create all the mapped document collections in the metadata factory.
-     */
-    public function createCollections()
-    {
-        foreach ($this->metadataFactory->getAllMetadata() as $class) {
-            $this->deleteDocumentIndexes($class->name);
-        }
-    }
-
-    /**
-     * Create the document collection for a mapped class.
-     *
-     * @param string $documentName
-     */
-    public function createDocumentCollection($documentName)
-    {
-        $this->getDocumentDB($documentName)->createCollection(
-            $this->getClassMetadata($documentName)->getCollection(),
-            $this->getClassMetadata($documentName)->getCollectionCapped(),
-            $this->getClassMetadata($documentName)->getCollectionSize(),
-            $this->getClassMetadata($documentName)->getCollectionMax()
-        );
-    }
-
-    /**
-     * Drop all the mapped document collections in the metadata factory.
-     */
-    public function dropCollections()
-    {
-        foreach ($this->metadataFactory->getAllMetadata() as $class) {
-            $this->dropDocumentCollection($class->name);
-        }
-    }
-
-    /**
-     * Drop the document collection for a mapped class.
-     *
-     * @param string $documentName
-     */
-    public function dropDocumentCollection($documentName)
-    {
-        $this->getDocumentDB($documentName)->dropCollection(
-            $this->getClassMetadata($documentName)->getCollection()
-        );
-    }
-
-    /**
-     * Drop all the mapped document databases in the metadata factory.
-     */
-    public function dropDatabases()
-    {
-        foreach ($this->metadataFactory->getAllMetadata() as $class) {
-            $this->dropDocumentDatabase($class->name);
-        }
-    }
-
-    /**
-     * Drop the document database for a mapped class.
-     *
-     * @param string $documentName
-     */
-    public function dropDocumentDatabase($documentName)
-    {
-        $this->getDocumentDB($documentName)->drop();
-    }
-
-    /**
-     * Create all the mapped document databases in the metadata factory.
-     */
-    public function createDatabases()
-    {
-        foreach ($this->metadataFactory->getAllMetadata() as $class) {
-            $this->createDocumentDatabase($class->name);
-        }
-    }
-
-    /**
-     * Create the document database for a mapped class.
-     *
-     * @param string $documentName
-     */
-    public function createDocumentDatabase($documentName)
-    {
-        return $this->getDocumentDB($documentName);
     }
 
     /**

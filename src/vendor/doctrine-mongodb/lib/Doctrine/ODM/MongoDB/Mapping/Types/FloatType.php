@@ -32,11 +32,11 @@ class FloatType extends Type
 {
     public function convertToDatabaseValue($value)
     {
-        return (float) $value;
+        return $value !== null ? (float) $value : null;
     }
 
     public function convertToPHPValue($value)
     {
-        return (float) $value;
+        return $value !== null ? (float) $value : null;
     }
 }

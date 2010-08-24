@@ -194,17 +194,6 @@ class AnnotationDriver implements Driver
             if ($index = $this->reader->getPropertyAnnotation($property, 'Doctrine\ODM\MongoDB\Mapping\UniqueIndex')) {
                 $indexes[] = $index;
             }
-            if ($indexes) {
-                foreach ($indexes as $index) {
-                    $keys = array();
-                    $keys[$mapping['fieldName']] = 'asc';
-                    if (isset($index->order)) {
-                        $keys[$mapping['fieldName']] = $index->order;
-                    }
-                    $this->addIndex($class, $index, $keys);
-                }
-            }
-
             foreach ($this->reader->getPropertyAnnotations($property) as $fieldAnnot) {
                 if ($fieldAnnot instanceof \Doctrine\ODM\MongoDB\Mapping\Field) {
                     if ($fieldAnnot instanceof \Doctrine\ODM\MongoDB\Mapping\Id && $fieldAnnot->custom) {
@@ -213,6 +202,17 @@ class AnnotationDriver implements Driver
                     }
                     $mapping = array_merge($mapping, (array) $fieldAnnot);
                     $class->mapField($mapping);
+                }
+            }
+            if ($indexes) {
+                foreach ($indexes as $index) {
+                    $name = isset($mapping['name']) ? $mapping['name'] : $mapping['fieldName'];
+                    $keys = array();
+                    $keys[$name] = 'asc';
+                    if (isset($index->order)) {
+                        $keys[$name] = $index->order;
+                    }
+                    $this->addIndex($class, $index, $keys);
                 }
             }
         }

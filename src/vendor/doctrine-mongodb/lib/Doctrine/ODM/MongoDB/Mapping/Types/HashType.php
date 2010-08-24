@@ -33,11 +33,11 @@ class HashType extends Type
 {
     public function convertToDatabaseValue($value)
     {
-        return (array) $value;
+        return $value !== null ? (array) $value : null;
     }
 
     public function convertToPHPValue($value)
     {
-        return (array) $value;
+        return $value !== null ? (array) $value : null;
     }
 }

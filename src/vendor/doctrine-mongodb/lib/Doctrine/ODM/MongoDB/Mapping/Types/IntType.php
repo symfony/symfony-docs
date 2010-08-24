@@ -32,11 +32,11 @@ class IntType extends Type
 {
     public function convertToDatabaseValue($value)
     {
-        return (integer) $value;
+        return $value !== null ? (integer) $value : null;
     }
 
     public function convertToPHPValue($value)
     {
-        return (integer) $value;
+        return $value !== null ? (integer) $value : null;
     }
 }
