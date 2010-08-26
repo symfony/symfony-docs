@@ -237,7 +237,7 @@ Similarly, you can manage your stylesheets and JavaScripts with the
 
 .. code-block:: html+php
 
-    <?php $view['javascripts->add('js/product.js') ?>
+    <?php $view['javascripts']->add('js/product.js') ?>
     <?php $view['stylesheets']->add('css/product.css') ?>
 
 The ``add()`` method defines dependencies. To actually output these assets, you
