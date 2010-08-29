@@ -32,11 +32,11 @@ class BinDataMD5Type extends Type
 {
     public function convertToDatabaseValue($value)
     {
-        return $value !== null ? new \MongoBinData($value, \MongoBinData::MD5) : null;
+        return new \MongoBinData($value, \MongoBinData::MD5);
     }
 
     public function convertToPHPValue($value)
     {
-        return $value !== null ? $value->bin : null;
+        return $value->bin;
     }
 }

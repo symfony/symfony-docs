@@ -16,18 +16,30 @@ git clone git://github.com/symfony/symfony.git symfony
 
 # Doctrine ORM
 git clone git://github.com/doctrine/doctrine2.git doctrine
+cd doctrine
+git checkout -b v2.0.0-BETA3 2.0.0-BETA3
+cd ..
 
 # Doctrine DBAL
 git clone git://github.com/doctrine/dbal.git doctrine-dbal
+cd doctrine-dbal
+git checkout -b v2.0.0-BETA3 2.0.0-BETA3
+cd ..
 
 # Doctrine Common
 git clone git://github.com/doctrine/common.git doctrine-common
+cd doctrine-common
+git checkout -b v2.0.0-BETA4 2.0.0-BETA4
+cd ..
 
 # Doctrine migrations
 git clone git://github.com/doctrine/migrations.git doctrine-migrations
 
 # Doctrine MongoDB
 git clone git://github.com/doctrine/mongodb-odm.git doctrine-mongodb
+cd doctrine-mongodb
+git checkout -b v1.0.0BETA1 1.0.0BETA1
+cd ..
 
 # Propel
 svn co http://svn.propelorm.org/branches/1.5/ propel

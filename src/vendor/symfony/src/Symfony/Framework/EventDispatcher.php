@@ -22,14 +22,12 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  */
 class EventDispatcher extends BaseEventDispatcher
 {
-    /**
-     * Constructor.
-     *
-     */
-    public function __construct(ContainerInterface $container)
+    public function setContainer(ContainerInterface $container)
     {
         foreach ($container->findTaggedServiceIds('kernel.listener') as $id => $attributes) {
-            $container->get($id)->register($this);
+            $priority = isset($attributes[0]['priority']) ? $attributes[0]['priority'] : 0;
+
+            $container->get($id)->register($this, $priority);
         }
     }
 }

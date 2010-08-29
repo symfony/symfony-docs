@@ -33,11 +33,11 @@ class CollectionType extends Type
 {
     public function convertToDatabaseValue($value)
     {
-        return $value !== null ? array_values($value) : null;
+        return array_values((array) $value);
     }
 
     public function convertToPHPValue($value)
     {
-        return $value !== null ? array_values($value) : null;
+        return array_values((array) $value);
     }
 }

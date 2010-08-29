@@ -2,8 +2,10 @@
 
 namespace Symfony\Bundle\FrameworkBundle\DataCollector;
 
-use Symfony\Component\HttpKernel\Profiler\DataCollector\DataCollector;
-use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\HttpKernel\DataCollector\DataCollector;
+use Symfony\Framework\Kernel;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 /*
  * This file is part of the Symfony framework.
@@ -21,32 +23,36 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  */
 class TimerDataCollector extends DataCollector
 {
-    protected $container;
+    protected $kernel;
 
-    public function __construct(ContainerInterface $container)
+    public function __construct(Kernel $kernel)
     {
-        $this->container = $container;
+        $this->kernel = $kernel;
     }
 
-    public function collect()
+    /**
+     * {@inheritdoc}
+     */
+    public function collect(Request $request, Response $response, \Exception $exception = null)
     {
         $this->data = array(
-            'time' => microtime(true) - $this->container->getKernelService()->getStartTime(),
+            'time' => microtime(true) - $this->kernel->getStartTime(),
         );
     }
 
+    /**
+     * Gets the request time.
+     *
+     * @return integer The time
+     */
     public function getTime()
     {
         return $this->data['time'];
     }
 
-    public function getSummary()
-    {
-        return sprintf('<img style="margin-left: 10px; vertical-align: middle" alt="" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAABGdBTUEAALGOfPtRkwAAACBjSFJNAAB6JQAAgIMAAPn/AACA6QAAdTAAAOpgAAA6mAAAF2+SX8VGAAABSElEQVR42pyTwZHCMAxFXxxKUAXuIA3gFnJxERxohAt9QAM5EhpwB6rAJdjJXmKThIWdWc1oJvbo/y8p383tdmMfMcYEtKurLCKHfZ33nsMOmAFjraXrunofQmhVdQYmEVkTvwhijPMaOI5jLXLO0XUdIQSjqrOINBuCGGMu4AL03leC+/1eiQBUNZdOzFJjCth7X8GXy6WSee8Zx7F0WHCYGGOy1la1aZpqrs/zPNcaa21ZNAZoi3rf9+ScawL1O6VE3/frLtrNEgFSSm+/9Hq9AnA+n/ktvhKcTqev5GWEHELAOccwDKSUPuYwDDjnCCEAZAAjIgdV3Sh9yhKqSnFmGWEKIRjnHI/HA4Dj8VgBz+ez+mBRnzY7EJFi1WqWvRMXSxf19m2JItKoalZVY62toDXw61sonSwzJlX98zUCNGuH/Sd+BgBGROvHb4RJ6gAAAABJRU5ErkJggg==" />
-            %.0f ms
-        ', $this->data['time'] * 1000);
-    }
-
+    /**
+     * {@inheritdoc}
+     */
     public function getName()
     {
         return 'timer';

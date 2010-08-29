@@ -32,11 +32,11 @@ class StringType  extends Type
 {
     public function convertToDatabaseValue($value)
     {
-        return $value !== null ? (string) $value : null;
+        return (string) $value;
     }
 
     public function convertToPHPValue($value)
     {
-        return $value !== null ? (string) $value : null;
+        return (string) $value;
     }
 }

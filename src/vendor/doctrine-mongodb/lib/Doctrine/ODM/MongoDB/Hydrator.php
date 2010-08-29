@@ -82,7 +82,7 @@ class Hydrator
             if (isset($mapping['alsoLoadFields'])) {
                 $rawValue = null;
                 $names = isset($mapping['alsoLoadFields']) ? $mapping['alsoLoadFields'] : array();
-                array_unshift($names, $mapping['name']);
+                array_unshift($names, $mapping['fieldName']);
                 foreach ($names as $name) {
                     if (isset($data[$name])) {
                         $rawValue = $data[$name];
@@ -90,7 +90,7 @@ class Hydrator
                     }
                 }
             } else {
-                $rawValue = isset($data[$mapping['name']]) ? $data[$mapping['name']] : null;
+                $rawValue = isset($data[$mapping['fieldName']]) ? $data[$mapping['fieldName']] : null;
             }
             if ($rawValue === null) {
                 continue;
@@ -148,7 +148,7 @@ class Hydrator
 
             // Set hydrated field value to document
             if ($value !== null) {
-                $data[$mapping['name']] = $value;
+                $data[$mapping['fieldName']] = $value;
                 $metadata->setFieldValue($document, $mapping['fieldName'], $value);
             }
         }

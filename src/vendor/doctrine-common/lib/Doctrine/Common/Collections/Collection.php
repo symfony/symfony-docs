@@ -83,10 +83,10 @@ interface Collection extends Countable, IteratorAggregate, ArrayAccess
     function remove($key);
 
     /**
-     * Removes the specified element from the collection, if it is found.
+     * Removes an element from the collection.
      *
      * @param mixed $element The element to remove.
-     * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
+     * @return mixed The removed element or NULL, if the collection did not contain the element.
      */
     function removeElement($element);
 

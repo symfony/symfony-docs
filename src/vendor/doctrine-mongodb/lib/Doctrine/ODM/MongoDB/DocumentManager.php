@@ -97,13 +97,6 @@ class DocumentManager
     private $hydrator;
 
     /**
-     * SchemaManager instance
-     *
-     * @var Doctrine\ODM\MongoDB\SchemaManager
-     */
-    private $schemaManager;
-
-    /**
      * Array of cached MongoDB instances that are lazily loaded.
      *
      * @var array
@@ -152,7 +145,6 @@ class DocumentManager
         }
         $this->queryParser = new Parser($this);
         $this->unitOfWork = new UnitOfWork($this);
-        $this->schemaManager = new SchemaManager($this);
         $this->proxyFactory = new ProxyFactory($this,
                 $this->config->getProxyDir(),
                 $this->config->getProxyNamespace(),
@@ -245,17 +237,7 @@ class DocumentManager
     {
         return $this->hydrator;
     }
-
-    /**
-     * Retuns SchemaManager, used to create/drop indexes/collections/databases
-     *
-     * @return Doctrine\ODM\MongoDB\SchemaManager
-     */
-    public function getSchemaManager()
-    {
-        return $this->schemaManager;
-    }
-
+ 
     /**
      * Returns the metadata for a class.
      *
@@ -341,7 +323,7 @@ class DocumentManager
      *
      * The document will be entered into the database at or before transaction
      * commit or as a result of the flush operation.
-     *
+     * 
      * NOTE: The persist operation always considers documents that are not yet known to
      * this DocumentManager as NEW. Do not pass detached documents to the persist operation.
      *
@@ -504,6 +486,54 @@ class DocumentManager
     }
 
     /**
+     * Ensure indexes are created for all documents that can be loaded with the
+     * metadata factory.
+     */
+    public function ensureIndexes()
+    {
+        foreach ($this->metadataFactory->getAllMetadata() as $class) {
+            $this->ensureDocumentIndexes($class->name);
+        }
+    }
+
+    /**
+     * Ensure the given documents indexes are created.
+     *
+     * @param string $documentName The document name to ensure the indexes for.
+     */
+    public function ensureDocumentIndexes($documentName)
+    {
+        $class = $this->getClassMetadata($documentName);
+        if ($indexes = $class->getIndexes()) {
+            $collection = $this->getDocumentCollection($class->name);
+            foreach ($indexes as $index) {
+                $collection->ensureIndex($index['keys'], $index['options']);
+            }
+        }
+    }
+
+    /**
+     * Delete indexes for all documents that can be loaded with the
+     * metadata factory.
+     */
+    public function deleteIndexes()
+    {
+        foreach ($this->metadataFactory->getAllMetadata() as $class) {
+            $this->deleteDocumentIndexes($class->name);
+        }
+    }
+
+    /**
+     * Delete the given documents indexes.
+     *
+     * @param string $documentName The document name to delete the indexes for.
+     */
+    public function deleteDocumentIndexes($documentName)
+    {
+        return $this->getDocumentCollection($documentName)->deleteIndexes();
+    }
+
+    /**
      * Execute a map reduce operation.
      *
      * @param string $documentName The document name to run the operation on.
@@ -655,8 +685,8 @@ class DocumentManager
 
     public function formatDBName($dbName)
     {
-        return sprintf('%s%s%s',
-            $this->config->getDBPrefix(),
+        return sprintf('%s%s%s', 
+            $this->config->getDBPrefix(), 
             $dbName,
             $this->config->getDBSuffix()
         );

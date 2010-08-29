@@ -99,41 +99,41 @@ class PhpExporter extends AbstractExporter
         foreach ($metadata->associationMappings as $associationMapping) {
             $cascade = array('remove', 'persist', 'refresh', 'merge', 'detach');
             foreach ($cascade as $key => $value) {
-                if ( ! $associationMapping['isCascade'.ucfirst($value)]) {
+                if ( ! $associationMapping->{'isCascade'.ucfirst($value)}) {
                     unset($cascade[$key]);
                 }
             }
             $associationMappingArray = array(
-                'fieldName'    => $associationMapping['fieldName'],
-                'targetEntity' => $associationMapping['targetEntity'],
+                'fieldName'    => $associationMapping->sourceFieldName,
+                'targetEntity' => $associationMapping->targetEntityName,
                 'cascade'     => $cascade,
             );
             
-            if ($associationMapping['type'] & ClassMetadataInfo::TO_ONE) {
+            if ($associationMapping instanceof \Doctrine\ORM\Mapping\OneToOneMapping) {
                 $method = 'mapOneToOne';
                 $oneToOneMappingArray = array(
-                    'mappedBy'      => $associationMapping['mappedBy'],
-                    'inversedBy'    => $associationMapping['inversedBy'],
-                    'joinColumns'   => $associationMapping['joinColumns'],
-                    'orphanRemoval' => $associationMapping['orphanRemoval'],
+                    'mappedBy'      => $associationMapping->mappedBy,
+                    'inversedBy'    => $associationMapping->inversedBy,
+                    'joinColumns'   => $associationMapping->joinColumns,
+                    'orphanRemoval' => $associationMapping->orphanRemoval,
                 );
                 
                 $associationMappingArray = array_merge($associationMappingArray, $oneToOneMappingArray);
-            } else if ($associationMapping['type'] == ClassMetadataInfo::ONE_TO_MANY) {
+            } else if ($associationMapping instanceof \Doctrine\ORM\Mapping\OneToManyMapping) {
                 $method = 'mapOneToMany';
                 $oneToManyMappingArray = array(
-                    'mappedBy'      => $associationMapping['mappedBy'],
-                    'orphanRemoval' => $associationMapping['orphanRemoval'],
-                    'orderBy' => $associationMapping['orderBy']
+                    'mappedBy'      => $associationMapping->mappedBy,
+                    'orphanRemoval' => $associationMapping->orphanRemoval,
+                    'orderBy' => $associationMapping->orderBy
                 );
                 
                 $associationMappingArray = array_merge($associationMappingArray, $oneToManyMappingArray);
-            } else if ($associationMapping['type'] == ClassMetadataInfo::MANY_TO_MANY) {
+            } else if ($associationMapping instanceof \Doctrine\ORM\Mapping\ManyToManyMapping) {
                 $method = 'mapManyToMany';
                 $manyToManyMappingArray = array(
-                    'mappedBy'  => $associationMapping['mappedBy'],
-                    'joinTable' => $associationMapping['joinTable'],
-                    'orderBy' => $associationMapping['orderBy']
+                    'mappedBy'  => $associationMapping->mappedBy,
+                    'joinTable' => $associationMapping->joinTable,
+                    'orderBy' => $associationMapping->orderBy
                 );
                 
                 $associationMappingArray = array_merge($associationMappingArray, $manyToManyMappingArray);

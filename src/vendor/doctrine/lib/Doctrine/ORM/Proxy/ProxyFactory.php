@@ -105,11 +105,6 @@ class ProxyFactory
         $proxyDir = $toDir ?: $this->_proxyDir;
         $proxyDir = rtrim($proxyDir, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
         foreach ($classes as $class) {
-            /* @var $class ClassMetadata */
-            if ($class->isMappedSuperclass) {
-                continue;
-            }
-
             $proxyClassName = str_replace('\\', '', $class->name) . 'Proxy';
             $proxyFileName = $proxyDir . $proxyClassName . '.php';
             $this->_generateProxyClass($class, $proxyClassName, $proxyFileName, self::$_proxyClassTemplate);

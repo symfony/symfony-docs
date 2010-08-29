@@ -96,21 +96,6 @@ class ClassMetadata
     public $collection;
 
     /**
-     * READ-ONLY: If the collection should be a fixed size.
-     */
-    public $collectionCapped;
-
-    /**
-     * READ-ONLY: If the collection is fixed size, its size in bytes.
-     */
-    public $collectionSize;
-
-    /**
-     * READ-ONLY: If the collection is fixed size, the maximum number of elements to store in the collection.
-     */
-    public $collectionMax;
-
-    /**
      * READ-ONLY: The field name of the document identifier.
      */
     public $identifier;
@@ -120,12 +105,6 @@ class ClassMetadata
      * document is a file and should be stored on the MongoGridFS.
      */
     public $file;
-
-    /**
-     * READ-ONLY: The field that stores the calculated distance when performing geo spatial
-     * queries.
-     */
-    public $distance;
 
     /**
      * READ-ONLY: The array of indexes for the document collection.
@@ -498,16 +477,11 @@ class ClassMetadata
      * @param array $keys Array of keys for the index.
      * @param array $options Array of options for the index.
      */
-    public function addIndex($keys, array $options = array())
+    public function addIndex($keys, $options)
     {
         $this->indexes[] = array(
             'keys' => array_map(function($value) {
-                $lower = strtolower($value);
-                if ($lower === 'asc' || $lower === 'desc') {
-                    return $lower === 'asc' ? 1 : -1;
-                } else {
-                    return $value;
-                }
+                return strtolower($value) == 'asc' ? 1 : -1;
             }, $keys),
             'options' => $options
         );
@@ -649,79 +623,9 @@ class ClassMetadata
      *
      * @param string $collection The collection name.
      */
-    public function setCollection($name)
+    public function setCollection($collection)
     {
-        if (is_array($name)) {
-            if ( ! isset($name['name'])) {
-                throw new \InvalidArgumentException('A name key is required when passing an array to setCollection()');
-            }
-            $this->collectionCapped = isset($name['capped']) ? $name['capped'] : false;
-            $this->collectionSize = isset($name['size']) ? $name['size'] : 0;
-            $this->collectionMax = isset($name['max']) ? $name['max'] : 0;
-            $this->collection = $name['name'];
-        } else {
-            $this->collection = $name;
-        }
-    }
-
-    /**
-     * Get whether or not the documents collection is capped.
-     *
-     * @return boolean
-     */
-    public function getCollectionCapped()
-    {
-        return $this->collectionCapped;
-    }
-
-    /**
-     * Set whether or not the documents collection is capped.
-     *
-     * @param boolean $bool
-     */
-    public function setCollectionCapped($bool)
-    {
-        $this->collectionCapped = $bool;
-    }
-
-    /**
-     * Get the collection size
-     *
-     * @return integer
-     */
-    public function getCollectionSize()
-    {
-        return $this->collectionSize;
-    }
-
-    /**
-     * Set the collection size.
-     *
-     * @param integer $size
-     */
-    public function setCollectionSize($size)
-    {
-        $this->collectionSize = $size;
-    }
-
-    /**
-     * Get the collection max.
-     *
-     * @return integer
-     */
-    public function getCollectionMax()
-    {
-        return $this->collectionMax;
-    }
-
-    /**
-     * Set the collection max.
-     *
-     * @param integer $max
-     */
-    public function setCollectionMax($max)
-    {
-        $this->collectionMax = $max;
+        $this->collection = $collection;
     }
 
     /**
@@ -765,37 +669,14 @@ class ClassMetadata
     }
 
     /**
-     * Returns the distance field name.
-     *
-     * @return string $distance The distance field name.
-     */
-    public function getDistance()
-    {
-        return $this->distance;
-    }
-
-    /**
-     * Set the field name that stores the distance.
-     *
-     * @param string $distance
-     */
-    public function setDistance($distance)
-    {
-        $this->file = $distance;
-    }
-
-    /**
      * Map a field.
      *
      * @param array $mapping The mapping information.
      */
     public function mapField(array $mapping)
     {
-        if ( ! isset($mapping['fieldName']) && isset($mapping['name'])) {
+        if (isset($mapping['name'])) {
             $mapping['fieldName'] = $mapping['name'];
-        }
-        if ( ! isset($mapping['name'])) {
-            $mapping['name'] = $mapping['fieldName'];
         }
         if ( ! isset($mapping['fieldName'])) {
             throw MongoDBException::missingFieldName($this->name);
@@ -846,9 +727,6 @@ class ClassMetadata
         unset($mapping['cascade']);
         if (isset($mapping['file']) && $mapping['file'] === true) {
             $this->file = $mapping['fieldName'];
-        }
-        if (isset($mapping['distance']) && $mapping['distance'] === true) {
-            $this->distance = $mapping['fieldName'];
         }
         if (isset($mapping['id']) && $mapping['id'] === true) {
             $mapping['type'] = isset($mapping['type']) ? $mapping['type'] : 'id';

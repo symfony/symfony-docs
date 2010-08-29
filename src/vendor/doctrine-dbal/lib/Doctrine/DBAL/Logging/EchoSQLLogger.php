@@ -38,7 +38,7 @@ class EchoSQLLogger implements SQLLogger
     /**
      * {@inheritdoc}
      */
-    public function startQuery($sql, array $params = null, array $types = null)
+    public function logSQL($sql, array $params = null, $executionMS = null)
     {
     	echo $sql . PHP_EOL;
 
@@ -46,16 +46,6 @@ class EchoSQLLogger implements SQLLogger
             var_dump($params);
     	}
 
-        if ($types) {
-            var_dump($types);
-        }
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function stopQuery()
-    {
-
+        echo "Took " . number_format($executionMS, 4) . " seconds" . PHP_EOL;
     }
 }

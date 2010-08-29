@@ -324,67 +324,6 @@ class UnitOfWork implements PropertyChangedListener
     }
 
     /**
-     * Get a documents actual data, flattening all the objects to arrays.
-     *
-     * @param object $document
-     * @return array
-     */
-    public function getDocumentActualData($document)
-    {
-        $class = $this->dm->getClassMetadata(get_class($document));
-        $actualData = array();
-        foreach ($class->reflFields as $name => $refProp) {
-            $mapping = $class->fieldMappings[$name];
-            
-            // Skip identifiers if custom ones are not allowed
-            if ($class->isIdentifier($name) && ! $class->getAllowCustomID()) {
-                continue;
-            }
-
-            $origValue = $class->getFieldValue($document, $mapping['fieldName']);
-
-            if (($class->isCollectionValuedReference($name) || $class->isCollectionValuedEmbed($name))
-                    && $origValue !== null && ! ($origValue instanceof PersistentCollection)) {
-                // If $actualData[$name] is not a Collection then use an ArrayCollection.
-                if ( ! $origValue instanceof Collection) {
-                    $value = new ArrayCollection($origValue);
-                } else {
-                    $value = $origValue;
-                }
-
-                // Inject PersistentCollection
-                if ($class->isCollectionValuedReference($name)) {
-                    $coll = new PersistentCollection($value, $this->dm);
-                } else {
-                    $coll = new PersistentCollection($value);
-                }
-                $coll->setOwner($document, $mapping);
-                $coll->setDirty( ! $coll->isEmpty());
-                $class->reflFields[$name]->setValue($document, $coll);
-            }
-
-            // We need to flatten the embedded documents so they are just arrays of
-            // data instead of the actual objects. This is necessary to maintain all the old
-            // values.
-            if ($class->isCollectionValuedEmbed($name) && $origValue) {
-                $embeddedDocuments = $origValue;
-                $actualData[$name] = array();
-                foreach ($embeddedDocuments as $key => $embeddedDocument) {
-                    $actualData[$name][$key] = $this->getDocumentActualData($embeddedDocument);
-                    $actualData[$name][$key]['originalObject'] = $embeddedDocument;
-                }
-            } elseif ($class->isSingleValuedEmbed($name) && is_object($origValue)) {
-                $embeddedDocument = $origValue;
-                $actualData[$name] = $this->getDocumentActualData($embeddedDocument);
-                $actualData[$name]['originalObject'] = $embeddedDocument;
-            } else {
-                $actualData[$name] = $origValue;
-            }
-        }
-        return $actualData;
-    }
-
-    /**
      * Computes the changes that happened to a single document.
      *
      * Modifies/populates the following properties:
@@ -416,7 +355,41 @@ class UnitOfWork implements PropertyChangedListener
         }
         
         $oid = spl_object_hash($document);
-        $actualData = $this->getDocumentActualData($document);
+        $parentOid = spl_object_hash($parentDocument);
+
+        $actualData = array();
+        foreach ($class->reflFields as $name => $refProp) {
+            $mapping = $class->fieldMappings[$name];
+            if ( ! $class->isIdentifier($name) || $class->getAllowCustomID()) {
+                $actualData[$name] = $class->getFieldValue($document, $mapping['fieldName']);
+            }
+            if (($class->isCollectionValuedReference($name) || $class->isCollectionValuedEmbed($name))
+                    && $actualData[$name] !== null && ! ($actualData[$name] instanceof PersistentCollection)) {
+                // If $actualData[$name] is not a Collection then use an ArrayCollection.
+                if ( ! $actualData[$name] instanceof Collection) {
+                    $actualData[$name] = new ArrayCollection($actualData[$name]);
+                }
+
+                // Inject PersistentCollection
+                if ($class->isCollectionValuedReference($name)) {
+                    $coll = new PersistentCollection($actualData[$name], $this->dm);
+                } else {
+                    $coll = new PersistentCollection($actualData[$name]);
+                }
+                $coll->setOwner($document, $mapping);
+                $coll->setDirty( ! $coll->isEmpty());
+                $class->reflFields[$name]->setValue($document, $coll);
+                $actualData[$name] = $coll;
+            } elseif ($class->isSingleValuedEmbed($name) && is_object($actualData[$name])) {
+                $embeddedDocument = $actualData[$name];
+                $embeddedMetadata = $this->dm->getClassMetadata(get_class($embeddedDocument));
+                $actualData[$name] = array();
+                foreach ($embeddedMetadata->fieldMappings as $mapping) {
+                    $actualData[$name][$mapping['fieldName']] = $embeddedMetadata->getFieldValue($embeddedDocument, $mapping['fieldName']);
+                }
+                $actualData[$name]['originalObject'] = $embeddedDocument;
+            }
+        }
 
         if ( ! isset($this->originalDocumentData[$oid])) {
             // Document is either NEW or MANAGED but not yet fully persisted (only has an id).
@@ -457,9 +430,7 @@ class UnitOfWork implements PropertyChangedListener
                 } else if ($isChangeTrackingNotify) {
                     continue;
                 } else if (isset($class->fieldMappings[$propName]['type']) && $class->fieldMappings[$propName]['type'] === 'many') {
-                    if ($orgValue !== $actualValue) {
-                        $changeSet[$propName] = array($orgValue, $actualValue);
-                    }
+                    $changeSet[$propName] = array($orgValue, $actualValue);
                 } else if (is_object($orgValue) && $orgValue !== $actualValue) {
                     $changeSet[$propName] = array($orgValue, $actualValue);
                 } else if ($orgValue != $actualValue || ($orgValue === null ^ $actualValue === null)) {
@@ -611,10 +582,16 @@ class UnitOfWork implements PropertyChangedListener
             $class = $this->dm->getClassMetadata(get_class($document));
         }
 
-        $actualData = $this->getDocumentActualData($document);
+        $actualData = array();
+        foreach ($class->reflFields as $name => $refProp) {
+            if ( ! $class->isIdentifier($name)) {
+                $actualData[$name] = $refProp->getValue($document);
+            }
+        }
 
         $originalData = $this->originalDocumentData[$oid];
         $changeSet = array();
+
         foreach ($actualData as $propName => $actualValue) {
             $orgValue = isset($originalData[$propName]) ? $originalData[$propName] : null;
             if ($orgValue instanceof PersistentCollection) {
@@ -629,9 +606,7 @@ class UnitOfWork implements PropertyChangedListener
                     $changeSet[$propName] = array($orgValue, $actualValue);
                 }
             } else if (isset($class->fieldMappings[$propName]['type']) && $class->fieldMappings[$propName]['type'] === 'many') {
-                if ($orgValue !== $actualValue) {
-                    $changeSet[$propName] = array($orgValue, $actualValue);
-                }
+                $changeSet[$propName] = array($orgValue, $actualValue);
             } else if (is_object($orgValue) && $orgValue !== $actualValue) {
                 $changeSet[$propName] = array($orgValue, $actualValue);
             } else if ($orgValue != $actualValue || ($orgValue === null ^ $actualValue === null)) {

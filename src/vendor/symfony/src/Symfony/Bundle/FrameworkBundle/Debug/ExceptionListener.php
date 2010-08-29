@@ -7,6 +7,8 @@ use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\EventDispatcher\Event;
 use Symfony\Component\HttpKernel\Log\LoggerInterface;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
+use Symfony\Component\HttpKernel\Exception\FlattenException;
+use Symfony\Component\HttpFoundation\Request;
 
 /*
  * This file is part of the Symfony framework.
@@ -39,10 +41,11 @@ class ExceptionListener
      * Registers a core.exception listener.
      *
      * @param EventDispatcher $dispatcher An EventDispatcher instance
+     * @param integer         $priority   The priority
      */
-    public function register(EventDispatcher $dispatcher)
+    public function register(EventDispatcher $dispatcher, $priority = 0)
     {
-        $dispatcher->connect('core.exception', array($this, 'handle'));
+        $dispatcher->connect('core.exception', array($this, 'handle'), $priority);
     }
 
     public function handle(Event $event)
@@ -52,6 +55,7 @@ class ExceptionListener
         }
 
         $exception = $event->getParameter('exception');
+        $request = $event->getParameter('request');
 
         if (null !== $this->logger) {
             $this->logger->err(sprintf('%s: %s (uncaught exception)', get_class($exception), $exception->getMessage()));
@@ -59,15 +63,17 @@ class ExceptionListener
             error_log(sprintf('Uncaught PHP Exception %s: "%s" at %s line %s', get_class($exception), $exception->getMessage(), $exception->getFile(), $exception->getLine()));
         }
 
-        $class = $this->container->getParameter('exception_manager.class');
-        $logger = $this->container->has('logger.debug') ? $this->container->get('logger.debug') : null;
+        $logger = $this->container->has('logger') ? $this->container->get('logger')->getDebugLogger() : null;
 
         $attributes = array(
             '_controller' => $this->controller,
-            'manager'     => new $class($exception, $event->getParameter('request'), $logger),
+            'exception'   => FlattenException::create($exception),
+            'logger'      => $logger,
+            // when using CLI, we force the format to be TXT
+            'format'      => 0 === strncasecmp(PHP_SAPI, 'cli', 3) ? 'txt' : $request->getRequestFormat(),
         );
 
-        $request = $event->getParameter('request')->duplicate(null, null, $attributes);
+        $request = $request->duplicate(null, null, $attributes);
 
         try {
             $response = $event->getSubject()->handle($request, HttpKernelInterface::SUB_REQUEST, true);

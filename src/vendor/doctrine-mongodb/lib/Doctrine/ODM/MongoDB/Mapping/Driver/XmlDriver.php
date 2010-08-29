@@ -19,8 +19,7 @@
 
 namespace Doctrine\ODM\MongoDB\Mapping\Driver;
 
-use Doctrine\ODM\MongoDB\Mapping\ClassMetadata,
-    SimpleXmlElement;
+use Doctrine\ODM\MongoDB\Mapping\ClassMetadata;
 
 /**
  * XmlDriver is a metadata driver that enables mapping through XML files.
@@ -49,6 +48,7 @@ class XmlDriver extends AbstractFileDriver
         if ( ! $xmlRoot) {
             return;
         }
+
         if ($xmlRoot->getName() == 'document') {
             if (isset($xmlRoot['repository-class'])) {
                 $class->setCustomRepositoryClass((string) $xmlRoot['repository-class']);
@@ -63,6 +63,11 @@ class XmlDriver extends AbstractFileDriver
         }
         if (isset($xmlRoot['collection'])) {
             $class->setCollection((string) $xmlRoot['collection']);
+        }
+        if (isset($xmlRoot['indexes'])) {
+            foreach($xmlRoot['indexes'] as $index) {
+                $class->addIndex((array) $index['keys'], (array) $index['options']);
+            }
         }
         if (isset($xmlRoot['customId']) && ((string) $xmlRoot['customId'] === true)) {
             $class->setAllowCustomId(true);
@@ -85,14 +90,12 @@ class XmlDriver extends AbstractFileDriver
             }
             $class->setDiscriminatorMap($map);
         }
+        if (isset($xmlRoot->inheritance['type'])) {
+            $class->Yp = $xmlRoot['inheritance'];
+        }
         if (isset($xmlRoot->{'change-tracking-policy'})) {
             $class->setChangeTrackingPolicy(constant('Doctrine\ODM\MongoDB\Mapping\ClassMetadata::CHANGETRACKING_'
                     . strtoupper((string)$xmlRoot->{'change-tracking-policy'})));
-        }
-        if (isset($xmlRoot->{'indexes'})) {
-            foreach($xmlRoot->{'indexes'}->{'index'} as $index) {
-                $this->addIndex($class, $index);
-            }
         }
         if (isset($xmlRoot->field)) {
             foreach ($xmlRoot->field as $field) {
@@ -100,32 +103,36 @@ class XmlDriver extends AbstractFileDriver
                 $attributes = $field->attributes();
                 foreach ($attributes as $key => $value) {
                     $mapping[$key] = (string) $value;
-                    $booleanAttributes = array('id', 'reference', 'embed', 'unique');
+                    $booleanAttributes = array('id', 'reference', 'embed');
                     if (in_array($key, $booleanAttributes)) {
                         $mapping[$key] = ('true' === $mapping[$key]) ? true : false;
                     }
                 }
-                $this->addFieldMapping($class, $mapping);
+                $class->mapField($mapping);
             }
         }
         if (isset($xmlRoot->{'embed-one'})) {
             foreach ($xmlRoot->{'embed-one'} as $embed) {
-                $this->addEmbedMapping($class, $embed, 'one');
+                $mapping = $this->getMappingFromEmbed($embed, 'one');
+                $class->mapField($mapping);
             }
         }
         if (isset($xmlRoot->{'embed-many'})) {
             foreach ($xmlRoot->{'embed-many'} as $embed) {
-                $this->addEmbedMapping($class, $embed, 'many');
+                $mapping = $this->getMappingFromEmbed($embed, 'many');
+                $class->mapField($mapping);
             }
         }
         if (isset($xmlRoot->{'reference-many'})) {
             foreach ($xmlRoot->{'reference-many'} as $reference) {
-                $this->addReferenceMapping($class, $reference, 'many');
+                $mapping = $this->getMappingFromReference($reference, 'many');
+                $class->mapField($mapping);
             }
         }
         if (isset($xmlRoot->{'reference-one'})) {
             foreach ($xmlRoot->{'reference-one'} as $reference) {
-                $this->addReferenceMapping($class, $reference, 'one');
+                $mapping = $this->getMappingFromReference($reference, 'one');
+                $class->mapField($mapping);
             }
         }
         if (isset($xmlRoot->{'lifecycle-callbacks'})) {
@@ -135,43 +142,7 @@ class XmlDriver extends AbstractFileDriver
         }
     }
 
-    private function addFieldMapping(ClassMetadata $class, $mapping)
-    {
-        $keys = null;
-        $name = isset($mapping['name']) ? $mapping['name'] : $mapping['fieldName'];
-        if (isset($mapping['index'])) {
-            $keys = array(
-                $name => isset($mapping['order']) ? $mapping['order'] : 'asc'
-            );
-        }
-        if (isset($mapping['unique'])) {
-            $keys = array(
-                $name => isset($mapping['order']) ? $mapping['order'] : 'asc'
-            );
-        }
-        if ($keys !== null) {
-            $options = array();
-            if (isset($mapping['index-name'])) {
-                $options['name'] = (string) $mapping['index-name'];
-            }
-            if (isset($mapping['drop-dups'])) {
-                $options['dropDups'] = (boolean) $mapping['drop-dups'];
-            }
-            if (isset($mapping['background'])) {
-                $options['background'] = (boolean) $mapping['background'];
-            }
-            if (isset($mapping['safe'])) {
-                $options['safe'] = (boolean) $mapping['safe'];
-            }
-            if (isset($mapping['unique'])) {
-                $options['unique'] = (boolean) $mapping['unique'];
-            }
-            $class->addIndex($keys, $options);
-        }
-        $class->mapField($mapping);
-    }
-
-    private function addEmbedMapping(ClassMetadata $class, $embed, $type)
+    private function getMappingFromEmbed($embed, $type)
     {
         $cascade = array_keys((array) $embed->cascade);
         if (1 === count($cascade)) {
@@ -185,10 +156,10 @@ class XmlDriver extends AbstractFileDriver
             'targetDocument' => isset($attributes['target-document']) ? (string) $attributes['target-document'] : null,
             'name'           => (string) $attributes['field'],
         );
-        $this->addFieldMapping($class, $mapping);
+        return $mapping;
     }
 
-    private function addReferenceMapping(ClassMetadata $class, $reference, $type)
+    private function getMappingFromReference($reference, $type)
     {
         $cascade = array_keys((array) $reference->cascade);
         if (1 === count($cascade)) {
@@ -202,44 +173,7 @@ class XmlDriver extends AbstractFileDriver
             'targetDocument' => isset($attributes['target-document']) ? (string) $attributes['target-document'] : null,
             'name'           => (string) $attributes['field'],
         );
-        $this->addFieldMapping($class, $mapping);
-    }
-
-    private function addIndex(ClassMetadata $class, SimpleXmlElement $xmlIndex)
-    {
-        $attributes = $xmlIndex->attributes();
-        $options = array();
-        if (isset($attributes['name'])) {
-            $options['name'] = (string) $attributes['name'];
-        }
-        if (isset($attributes['drop-dups'])) {
-            $options['dropDups'] = (boolean) $attributes['drop-dups'];
-        }
-        if (isset($attributes['background'])) {
-            $options['background'] = (boolean) $attributes['background'];
-        }
-        if (isset($attributes['safe'])) {
-            $options['safe'] = (boolean) $attributes['safe'];
-        }
-        if (isset($attributes['unique'])) {
-            $options['unique'] = (boolean) $attributes['unique'];
-        }
-        $index = array(
-            'keys' => array(),
-            'options' => $options
-        );
-        foreach ($xmlIndex->{'key'} as $key) {
-            $index['keys'][(string) $key['name']] = isset($key['order']) ? (string) $key['order'] : 'asc';
-        }
-        if (isset($xmlIndex->{'option'})) {
-            foreach ($xmlIndex->{'option'} as $option) {
-                $value = (string) $option['value'];
-                $value = $value === 'true' ? true : $value;
-                $value = $value === 'false' ? false : $value;
-                $index['options'][(string) $option['name']] = $value;
-            }
-        }
-        $class->addIndex($index['keys'], $index['options']);
+        return $mapping;
     }
 
     protected function loadMappingFile($file)

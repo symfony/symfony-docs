@@ -89,9 +89,6 @@ class Query
     /** Field to select distinct values of */
     private $distinctField;
 
-    /** Data to use with $near operator for geospatial indexes */
-    private $near;
-
     /** The type of query */
     private $type = self::TYPE_FIND;
 
@@ -103,9 +100,6 @@ class Query
 
     /** The current field adding conditions to */
     private $currentField;
-
-    /** Whether or not the query is a findAndModify query. Stores an array of options if not false. */
-    private $findAndModify = false;
 
     /** Refresh hint */
     const HINT_REFRESH = 1;
@@ -122,7 +116,7 @@ class Query
         $this->hydrator = $dm->getHydrator();
         $this->cmd = $dm->getConfiguration()->getMongoCmd();
         if ($className !== null) {
-            $this->find($className);
+            $this->from($className);
         }
     }
 
@@ -207,68 +201,88 @@ class Query
     }
 
     /**
-     * Change the query type to find and optionally set and change the class being queried.
+     * Set the Document class being queried.
      *
      * @param string $className The Document class being queried.
      * @return Query
      */
-    public function find($className = null)
+    public function from($className)
     {
-        $this->setClassName($className);
+        if (is_array($className)) {
+            $classNames = $className;
+            $className = $classNames[0];
+
+            $discriminatorField = $this->dm->getClassMetadata($className)->discriminatorField['name'];
+            $discriminatorValues = $this->dm->getDiscriminatorValues($classNames);
+            $this->field($discriminatorField)->in($discriminatorValues);
+        }
+
+        if ($className !== null) {
+            $this->className = $className;
+            $this->class = $this->dm->getClassMetadata($className);
+        }
         $this->type = self::TYPE_FIND;
         return $this;
     }
 
     /**
-     * Sets a flag for the query to be executed as a findAndModify query query.
+     * Proxy method to from() to match mongo naming.
      *
-     * @param array $findAndModify Boolean true value or array containing key "upsert" set to true to
-     *                             create object if it doesn't exist and a second key "new"
-     *                             set to true if you want to return the modified object
-     *                             rather than the original. "new" is ignored for remove.
+     * @param string $className
      * @return Query
      */
-    public function findAndModify($findAndModify = true)
+    public function find($className = null)
     {
-        $this->findAndModify = $findAndModify;
-        return $this;
+        return $this->from($className);
     }
 
     /**
-     * Change the query type to update and optionally set and change the class being queried.
+     * Sets the query as an update query for the given class name or changes
+     * the type for the current class.
      *
-     * @param string $className The Document class being queried.
+     * @param string $className
      * @return Query
      */
     public function update($className = null)
     {
-        $this->setClassName($className);
+        if ($className !== null) {
+            $this->className = $className;
+            $this->class = $this->dm->getClassMetadata($className);
+        }
         $this->type = self::TYPE_UPDATE;
         return $this;
     }
 
     /**
-     * Change the query type to insert and optionally set and change the class being queried.
+     * Sets the query as an insert query for the given class name or change
+     * the type for the current class.
      *
-     * @param string $className The Document class being queried.
+     * @param string $className
      * @return Query
      */
     public function insert($className = null)
     {
-        $this->setClassName($className);
+        if ($className !== null) {
+            $this->className = $className;
+            $this->class = $this->dm->getClassMetadata($className);
+        }
         $this->type = self::TYPE_INSERT;
         return $this;
     }
 
     /**
-     * Change the query type to remove and optionally set and change the class being queried.
+     * Sets the query as a remove query for the given class name or changes
+     * the type for the current class.
      *
-     * @param string $className The Document class being queried.
+     * @param string $className
      * @return Query
      */
     public function remove($className = null)
     {
-        $this->setClassName($className);
+        if ($className !== null) {
+            $this->className = $className;
+            $this->class = $this->dm->getClassMetadata($className);
+        }
         $this->type = self::TYPE_REMOVE;
         return $this;
     }
@@ -276,10 +290,10 @@ class Query
     /**
      * Perform an operation similar to SQL's GROUP BY command
      *
-     * @param array $keys
-     * @param array $initial
-     * @param string $reduce
-     * @param array $condition
+     * @param array $keys 
+     * @param array $initial 
+     * @param string $reduce 
+     * @param array $condition 
      * @return Query
      */
     public function group($keys, array $initial)
@@ -407,8 +421,8 @@ class Query
     /**
      * Add element match operator to the query.
      *
-     * @param string $operator
-     * @param string $value
+     * @param string $operator 
+     * @param string $value 
      * @return Query
      */
     public function elemMatchOperator($operator, $value)
@@ -633,49 +647,6 @@ class Query
     public function mod($mod, array $options = array())
     {
         return $this->operator($this->cmd . 'mod', $mod, $options);
-    }
-
-    /**
-     * Add where near criteria.
-     *
-     * @param string $x
-     * @param string $y
-     * @return Query
-     */
-    public function near($x, $y)
-    {
-        list($xMapping, $yMapping) = array_values($this->dm->getClassMetadata($this->class->fieldMappings[$this->currentField]['targetDocument'])->fieldMappings);
-        $this->near = array($xMapping['name'] => $x, $yMapping['name'] => $y);
-        return $this;
-    }
-
-    /**
-     * Add where $within $box query.
-     *
-     * @param string $x1
-     * @param string $y1
-     * @param string $x2
-     * @param string $y2
-     * @return Query
-     */
-    public function withinBox($x1, $y1, $x2, $y2)
-    {
-        $this->where[$this->currentField][$this->cmd . 'within'][$this->cmd . 'box'] = array(array($x1, $y1), array($x2, $y2));
-        return $this;
-    }
-
-    /**
-     * Add where $within $center query.
-     *
-     * @param string $x
-     * @param string $y
-     * @param string $radius
-     * @return Query
-     */
-    public function withinCenter($x, $y, $radius)
-    {
-        $this->where[$this->currentField][$this->cmd . 'within'][$this->cmd . 'center'] = array(array($x, $y), $radius);
-        return $this;
     }
 
     /**
@@ -943,7 +914,7 @@ class Query
     /**
      * Proxy to execute() method
      *
-     * @param array $options
+     * @param array $options 
      * @return Query
      */
     public function getResult(array $options = array())
@@ -962,31 +933,27 @@ class Query
         switch ($this->type) {
             case self::TYPE_FIND;
                 if ($this->distinctField !== null) {
-                    return $this->executeDistinctFieldQuery($options);
-                } elseif ($this->near !== null) {
-                    return $this->executeGeoLocationQuery($options);
-                } else {
-                    return $this->getCursor();
+                    $result = $this->dm->getDocumentDB($this->className)
+                        ->command(array(
+                            'distinct' => $this->dm->getDocumentCollection($this->className)->getName(),
+                            'key' => $this->distinctField,
+                            'query' => $this->where
+                        ));
+                    return $result['values'];
                 }
+                return $this->getCursor()->getResults();
                 break;
+
             case self::TYPE_REMOVE;
-                if ($this->findAndModify !== false) {
-                    return $this->executeFindAndModify($options);
-                } else {
-                    return $this->dm->getDocumentCollection($this->className)
-                        ->remove($this->where, $options);
-                }
+                return $this->dm->getDocumentCollection($this->className)
+                    ->remove($this->where, $options);
                 break;
 
             case self::TYPE_UPDATE;
-                if ($this->findAndModify !== false) {
-                    return $this->executeFindAndModify($options);
-                } else {
-                    return $this->dm->getDocumentCollection($this->className)
-                        ->update($this->where, $this->newObj, $options);
-                }
+                return $this->dm->getDocumentCollection($this->className)
+                    ->update($this->where, $this->newObj, $options);
                 break;
-
+            
             case self::TYPE_INSERT;
                 return $this->dm->getDocumentCollection($this->className)
                     ->insert($this->newObj);
@@ -1018,46 +985,9 @@ class Query
      *
      * @return object $document  The single document.
      */
-    public function getSingleResult(array $options = array())
+    public function getSingleResult()
     {
-        if ($results = $this->execute($options)) {
-            if ($results instanceof MongoCursor) {
-                return $results->getSingleResult();
-            }
-            return array_shift($results);
-        }
-        return null;
-    }
-
-    /**
-     * Iterator over the query using the MongoCursor.
-     *
-     * @return MongoCursor $cursor
-     */
-    public function iterate()
-    {
-        return $this->getCursor();
-    }
-
-    /**
-     * Gets an array of information about this query for debugging.
-     *
-     * @param string $name
-     * @return array $debug
-     */
-    public function debug($name = null)
-    {
-        $debug = get_object_vars($this);
-        unset($debug['dm']);
-        if ($name !== null) {
-            return $debug[$name];
-        }
-        foreach ($debug as $key => $value) {
-            if ( ! $value) {
-                unset($debug[$key]);
-            }
-        }
-        return $debug;
+        return $this->getCursor()->getSingleResult();
     }
 
     /**
@@ -1065,7 +995,7 @@ class Query
      *
      * @return MongoCursor $cursor
      */
-    private function getCursor()
+    public function getCursor()
     {
         if ($this->type !== self::TYPE_FIND) {
             throw new \InvalidArgumentException(
@@ -1098,107 +1028,52 @@ class Query
     }
 
     /**
-     * Execute find and modify query.
+     * Iterator over the query using the MongoCursor.
      *
-     * @return mixed  Returns either a managed document or an array with information if something went wrong.
+     * @return MongoCursor $cursor
      */
-    private function executeFindAndModify()
+    public function iterate()
     {
-        $command = array();
-        $command['findandmodify'] = $this->dm->getDocumentCollection($this->className)->getName();
-        if ($this->where) {
-            $command['query'] = $this->where;
-        }
-        if ($this->sort) {
-            $command['sort'] = $this->sort;
-        }
-        if ($this->select) {
-            $command['fields'] = $this->select;
-        }
-        if ($this->type == self::TYPE_REMOVE) {
-            $command['remove'] = true;
-        } elseif ($this->type === self::TYPE_UPDATE) {
-            $command['update'] = $this->newObj;
-        }
-        if (isset($this->findAndModify['upsert']) && $this->findAndModify['upsert']) {
-            $command['upsert'] = true;
-        }
-        if (isset($this->findAndModify['new']) && $this->findAndModify['new']) {
-            $command['new'] = true;
-        }
-        if ($this->limit) {
-            $command['num'] = $this->limit;
-        }
-        $result = $this->dm->getDocumentDB($this->className)
-            ->command($command);
-        if (isset($result['value'])) {
-            return $this->dm->getUnitOfWork()->getOrCreateDocument(
-                $this->class->name, $result['value']
-            );
-        }
-        return $result;
+        return $this->getCursor();
     }
 
     /**
-     * Execute distinct field query.
+     * Gets an array of information about this query for debugging.
      *
-     * @return array $values Array of distinct values.
+     * @param string $name
+     * @return array $debug
      */
-    private function executeDistinctFieldQuery()
+    public function debug($name = null)
     {
-        $result = $this->dm->getDocumentDB($this->className)
-            ->command(array(
-                'distinct' => $this->dm->getDocumentCollection($this->className)->getName(),
-                'key' => $this->distinctField,
-                'query' => $this->where
-            ));
-        return $result['values'];
-    }
-
-    /**
-     * Execute geo location query.
-     *
-     * @return array $documents Array of documents.
-     */
-    private function executeGeoLocationQuery()
-    {
-        $command = array(
-            'geoNear' => $this->dm->getDocumentCollection($this->className)->getName(),
-            'near' => $this->near,
-            'query' => $this->where
+        $debug = array(
+            'className' => $this->className,
+            'type' => $this->type,
+            'select' => $this->select,
+            'where' => $this->where,
+            'newObj' => $this->newObj,
+            'sort' => $this->sort,
+            'limit' => $this->limit,
+            'skip' => $this->skip,
+            'group' => $this->group,
+            'hints' => $this->hints,
+            'immortal' => $this->immortal,
+            'snapshot' => $this->snapshot,
+            'slaveOkay' => $this->slaveOkay,
+            'hydrate' => $this->hydrate,
+            'mapReduce' => $this->mapReduce,
+            'distinctField' => $this->distinctField,
         );
-        if ($this->limit) {
-            $command['num'] = $this->limit;
+        if ($name !== null) {
+            return $debug[$name];
         }
-        $result = $this->dm->getDocumentDB($this->className)
-            ->command($command);
-        if ( ! isset($result['results'])) {
-            return array();
-        }
-        if ($this->hydrate) {
-            $uow = $this->dm->getUnitOfWork();
-            $documents = array();
-            foreach ($result['results'] as $result) {
-                $document = $result['obj'];
-                if ($this->class->distance) {
-                    $document[$this->class->distance] = $result['dis'];
-                }
-                $documents[] = $uow->getOrCreateDocument($this->class->name, $document);
+        foreach ($debug as $key => $value) {
+            if ( ! $value) {
+                unset($debug[$key]);
             }
-            return $documents;
-        } else {
-            return $result['results'];
         }
+        return $debug;
     }
 
-    /**
-     * Prepare where values converting document object field names to the document collection
-     * field name.
-     *
-     * @param string $fieldName
-     * @param string $value
-     * @return string $value
-     */
     private function prepareWhereValue(&$fieldName, $value)
     {
         if ($fieldName === $this->class->identifier) {
@@ -1214,20 +1089,8 @@ class Query
         return $value;
     }
 
-    private function setClassName($className)
+    public function __call($method, $arguments)
     {
-        if (is_array($className)) {
-            $classNames = $className;
-            $className = $classNames[0];
-
-            $discriminatorField = $this->dm->getClassMetadata($className)->discriminatorField['name'];
-            $discriminatorValues = $this->dm->getDiscriminatorValues($classNames);
-            $this->field($discriminatorField)->in($discriminatorValues);
-        }
-
-        if ($className !== null) {
-            $this->className = $className;
-            $this->class = $this->dm->getClassMetadata($className);
-        }
+        return $this->field($method);
     }
 }

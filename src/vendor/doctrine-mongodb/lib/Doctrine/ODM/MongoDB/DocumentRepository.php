@@ -70,7 +70,7 @@ class DocumentRepository
     public function createQuery()
     {
         return $this->dm->createQuery()
-            ->find($this->documentName);
+            ->from($this->documentName);
     }
 
     /**

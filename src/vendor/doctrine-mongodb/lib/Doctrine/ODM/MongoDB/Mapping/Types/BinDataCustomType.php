@@ -32,11 +32,11 @@ class BinDataCustomType extends Type
 {
     public function convertToDatabaseValue($value)
     {
-        return $value !== null ? new \MongoBinData($value, \MongoBinData::CUSTOM) : null;
+        return new \MongoBinData($value, \MongoBinData::CUSTOM);
     }
 
     public function convertToPHPValue($value)
     {
-        return $value !== null ? $value->bin : null;
+        return $value->bin;
     }
 }

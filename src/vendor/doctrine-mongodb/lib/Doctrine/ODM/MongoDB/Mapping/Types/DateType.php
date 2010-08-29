@@ -32,9 +32,6 @@ class DateType extends Type
 {
     public function convertToDatabaseValue($value)
     {
-        if ($value === null) {
-            return null;
-        }
         if ($value instanceof \DateTime) {
             $value = $value->getTimestamp();
         }
@@ -46,9 +43,6 @@ class DateType extends Type
 
     public function convertToPHPValue($value)
     {
-        if ($value === null) {
-            return null;
-        }
         $date = new \DateTime();
         $date->setTimestamp($value->sec);
         return $date;

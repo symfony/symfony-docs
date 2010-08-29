@@ -67,7 +67,7 @@ class YamlDriver extends AbstractFileDriver
         }
         if (isset($element['indexes'])) {
             foreach($element['indexes'] as $index) {
-                $class->addIndex($index['keys'], isset($index['options']) ? $index['options'] : array());
+                $class->addIndex($index['keys'], $index['options']);
             }
         }
         if (isset($element['inheritanceType'])) {
@@ -100,27 +100,31 @@ class YamlDriver extends AbstractFileDriver
                 if ( ! isset($mapping['fieldName'])) {
                     $mapping['fieldName'] = $fieldName;
                 }
-                $this->addFieldMapping($class, $mapping);
+                $class->mapField($mapping);
             }
         }
         if (isset($element['embedOne'])) {
             foreach ($element['embedOne'] as $fieldName => $embed) {
-                $this->addMappingFromEmbed($class, $fieldName, $embed, 'one');
+                $mapping = $this->getMappingFromEmbed($fieldName, $embed, 'one');
+                $class->mapField($mapping);
             }
         }
         if (isset($element['embedMany'])) {
             foreach ($element['embedMany'] as $fieldName => $embed) {
-                $this->addMappingFromEmbed($class, $fieldName, $embed, 'many');
+                $mapping = $this->getMappingFromEmbed($fieldName, $embed, 'many');
+                $class->mapField($mapping);
             }
         }
         if (isset($element['referenceOne'])) {
             foreach ($element['referenceOne'] as $fieldName => $reference) {
-                $this->addMappingFromReference($class, $fieldName, $reference, 'one');
+                $mapping = $this->getMappingFromReference($fieldName, $reference, 'one');
+                $class->mapField($mapping);
             }
         }
         if (isset($element['referenceMany'])) {
             foreach ($element['referenceMany'] as $fieldName => $reference) {
-                $this->addMappingFromReference($class, $fieldName, $reference, 'many');
+                $mapping = $this->getMappingFromReference($fieldName, $reference, 'many');
+                $class->mapField($mapping);
             }
         }
         if (isset($element['lifecycleCallbacks'])) {
@@ -132,34 +136,7 @@ class YamlDriver extends AbstractFileDriver
         }
     }
 
-    private function addFieldMapping(ClassMetadata $class, $mapping)
-    {
-        $keys = null;
-        $name = isset($mapping['name']) ? $mapping['name'] : $mapping['fieldName'];
-        if (isset($mapping['index'])) {
-            $keys = array(
-                $name => isset($mapping['index']['order']) ? $mapping['index']['order'] : 'asc'
-            );
-        }
-        if (isset($mapping['unique'])) {
-            $keys = array(
-                $name => isset($mapping['unique']['order']) ? $mapping['unique']['order'] : 'asc'
-            );
-        }
-        if ($keys !== null) {
-            $options = array();
-            if (isset($mapping['index'])) {
-                $options = $mapping['index'];
-            } elseif (isset($mapping['unique'])) {
-                $options = $mapping['unique'];
-                $options['unique'] = true;
-            }
-            $class->addIndex($keys, $options);
-        }
-        $class->mapField($mapping);
-    }
-
-    private function addMappingFromEmbed(ClassMetadata $class, $fieldName, $embed, $type)
+    private function getMappingFromEmbed($fieldName, $embed, $type)
     {
         $mapping = array(
             'cascade'        => isset($embed['cascade']) ? $embed['cascade'] : null,
@@ -168,10 +145,10 @@ class YamlDriver extends AbstractFileDriver
             'targetDocument' => isset($embed['targetDocument']) ? $embed['targetDocument'] : null,
             'fieldName'           => $fieldName,
         );
-        $this->addFieldMapping($class, $mapping);
+        return $mapping;
     }
 
-    private function addMappingFromReference(ClassMetadata $class, $fieldName, $reference, $type)
+    private function getMappingFromReference($fieldName, $reference, $type)
     {
         $mapping = array(
             'cascade'        => isset($reference['cascade']) ? $reference['cascade'] : null,
@@ -180,11 +157,11 @@ class YamlDriver extends AbstractFileDriver
             'targetDocument' => isset($reference['targetDocument']) ? $reference['targetDocument'] : null,
             'fieldName'           => $fieldName,
         );
-        $this->addFieldMapping($class, $mapping);
+        return $mapping;
     }
 
     protected function loadMappingFile($file)
     {
-        return \Symfony\Component\Yaml\Yaml::load($file);
+        return \Symfony\Components\Yaml\Yaml::load($file);
     }
 }

@@ -32,11 +32,11 @@ class TimestampType  extends Type
 {
     public function convertToDatabaseValue($value)
     {
-        return $value !== null ? new \MongoTimestamp($value) : null;
+        return new \MongoTimestamp($value);
     }
 
     public function convertToPHPValue($value)
     {
-        return $value !== null ? (string) $value : null;
+        return (string) $value;
     }
 }

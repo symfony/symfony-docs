@@ -11,12 +11,13 @@
         <parameter key="response.class">Symfony\Component\HttpFoundation\Response</parameter>
         <parameter key="error_handler.class">Symfony\Framework\Debug\ErrorHandler</parameter>
         <parameter key="error_handler.level">null</parameter>
-        <parameter key="error_handler.enable">true</parameter>
     </parameters>
 
     <services>
         <service id="event_dispatcher" class="%event_dispatcher.class%">
-            <argument type="service" id="service_container" />
+            <call method="setContainer">
+                <argument type="service" id="service_container" />
+            </call>
         </service>
 
         <service id="error_handler" class="%error_handler.class%">

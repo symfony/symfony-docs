@@ -9,6 +9,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\EventDispatcher\Event;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\ControllerNameConverter;
+use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 
 /*
  * This file is part of the Symfony framework.
@@ -66,7 +67,12 @@ class ControllerResolver extends BaseControllerResolver
             throw new \InvalidArgumentException(sprintf('Class "%s" does not exist.', $class));
         }
 
-        return array(new $class($this->container), $method);
+        $controller = new $class();
+        if ($controller instanceof ContainerAwareInterface) {
+            $controller->setContainer($this->container);
+        }
+
+        return array($controller, $method);
     }
 
     /**
@@ -111,7 +117,7 @@ class ControllerResolver extends BaseControllerResolver
         $options = array_merge(array(
             'path'          => array(),
             'query'         => array(),
-            'ignore_errors' => true,
+            'ignore_errors' => !$this->container->getParameter('kernel.debug'),
             'alt'           => array(),
             'standalone'    => false,
             'comment'       => '',
@@ -137,6 +143,7 @@ class ControllerResolver extends BaseControllerResolver
         // controller or URI?
         if (0 === strpos($controller, '/')) {
             $subRequest = Request::create($controller, 'get', array(), $request->cookies->all(), array(), $request->server->all());
+            $subRequest->setSession($request->getSession());
         } else {
             $options['path']['_controller'] = $controller;
             $options['path']['_format'] = $request->getRequestFormat();

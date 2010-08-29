@@ -1,18 +1,15 @@
 <?php
 namespace Symfony\Framework\Bundle;
-use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\DependencyInjection\ContainerAware;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\Console\Application;
 use Symfony\Component\Finder\Finder;
-abstract class Bundle implements BundleInterface {
-    protected $container;
+abstract class Bundle extends ContainerAware implements BundleInterface {
     protected $name;
     protected $namespacePrefix;
     protected $path;
     protected $reflection;
-    public function setContainer(ContainerInterface $container = null) {
-        $this->container = $container; }
     public function boot() { }
     public function shutdown() { }
     public function getName() {
@@ -58,11 +55,9 @@ abstract class Bundle implements BundleInterface {
         $this->reflection = new \ReflectionObject($this);
         $this->path = dirname($this->reflection->getFilename()); } }
 namespace Symfony\Framework\Bundle;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 interface BundleInterface {
     public function boot();
-    public function shutdown();
-    public function setContainer(ContainerInterface $container); }
+    public function shutdown(); }
 namespace Symfony\Framework;
 use Symfony\Framework\Bundle\Bundle;
 class KernelBundle extends Bundle {
@@ -99,7 +94,8 @@ class KernelExtension extends Extension {
             $loader->load('services.xml');
             if ($container->getParameter('kernel.debug')) {
                 $loader->load('debug.xml');
-                $container->setDefinition('event_dispatcher', $container->findDefinition('debug.event_dispatcher')); } }
+                $container->setDefinition('event_dispatcher', $container->findDefinition('debug.event_dispatcher'));
+                $container->setAlias('debug.event_dispatcher', 'event_dispatcher'); } }
         if (isset($config['charset'])) {
             $container->setParameter('kernel.charset', $config['charset']); }
         if (array_key_exists('error_handler', $config)) {
@@ -187,6 +183,7 @@ use Symfony\Component\EventDispatcher\EventDispatcher as BaseEventDispatcher;
 use Symfony\Component\EventDispatcher\Event;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 class EventDispatcher extends BaseEventDispatcher {
-    public function __construct(ContainerInterface $container) {
+    public function setContainer(ContainerInterface $container) {
         foreach ($container->findTaggedServiceIds('kernel.listener') as $id => $attributes) {
-            $container->get($id)->register($this); } } }
+            $priority = isset($attributes[0]['priority']) ? $attributes[0]['priority'] : 0;
+            $container->get($id)->register($this, $priority); } } }

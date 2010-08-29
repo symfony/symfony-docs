@@ -74,10 +74,6 @@ class WebExtension extends Extension
             ));
         }
 
-        if (isset($config['toolbar']) && $config['toolbar']) {
-            $config['profiler'] = true;
-        }
-
         if (isset($config['profiler'])) {
             if ($config['profiler']) {
                 if (!$container->hasDefinition('profiler')) {
@@ -87,18 +83,6 @@ class WebExtension extends Extension
                 }
             } elseif ($container->hasDefinition('profiler')) {
                 $container->getDefinition('profiling')->clearTags();
-            }
-        }
-
-        // toolbar need to be registered after the profiler
-        if (isset($config['toolbar'])) {
-            if ($config['toolbar']) {
-                if (!$container->hasDefinition('debug.toolbar')) {
-                    $loader = new XmlFileLoader($container, __DIR__.'/../Resources/config');
-                    $loader->load('toolbar.xml');
-                }
-            } elseif ($container->hasDefinition('debug.toolbar')) {
-                $container->getDefinition('debug.toolbar')->clearTags();
             }
         }
 
@@ -122,7 +106,9 @@ class WebExtension extends Extension
 
             'Symfony\\Component\\EventDispatcher\\Event',
 
-            'Symfony\\Bundle\\FrameworkBundle\\Controller',
+            'Symfony\\Bundle\\FrameworkBundle\\Controller\\ControllerInterface',
+            'Symfony\\Bundle\\FrameworkBundle\\Controller\\BaseController',
+            'Symfony\\Bundle\\FrameworkBundle\\Controller\\Controller',
         ));
     }
 

@@ -555,7 +555,7 @@ class Connection implements DriverConnection
 
         $hasLogger = $this->_config->getSQLLogger() !== null;
         if ($hasLogger) {
-            $this->_config->getSQLLogger()->startQuery($query, $params, $types);
+            $queryStart = microtime(true);
         }
 
         if ($params) {
@@ -571,7 +571,7 @@ class Connection implements DriverConnection
         }
 
         if ($hasLogger) {
-            $this->_config->getSQLLogger()->stopQuery();
+            $this->_config->getSQLLogger()->logSQL($query, $params, microtime(true) - $queryStart);
         }
 
         return $stmt;
@@ -634,7 +634,7 @@ class Connection implements DriverConnection
 
         $hasLogger = $this->_config->getSQLLogger() !== null;
         if ($hasLogger) {
-            $this->_config->getSQLLogger()->startQuery($query, $params, $types);
+            $queryStart = microtime(true);
         }
 
         if ($params) {
@@ -651,7 +651,7 @@ class Connection implements DriverConnection
         }
 
         if ($hasLogger) {
-            $this->_config->getSQLLogger()->stopQuery();
+            $this->_config->getSQLLogger()->logSQL($query, $params, microtime(true) - $queryStart);
         }
 
         return $result;

@@ -30,4 +30,13 @@ namespace Doctrine\ODM\MongoDB\Mapping\Types;
  */
 class FileType extends Type
 {
+    public function convertToDatabaseValue($value)
+    {
+        return $value;
+    }
+
+    public function convertToPHPValue($value)
+    {
+        return $value;
+    }
 }

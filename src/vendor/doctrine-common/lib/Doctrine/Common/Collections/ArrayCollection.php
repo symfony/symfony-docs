@@ -131,20 +131,21 @@ class ArrayCollection implements Collection
     /**
      * Removes the specified element from the collection, if it is found.
      *
-     * @param mixed $element The element to remove.
-     * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
+     * @param mixed $element
+     * @return boolean
      */
     public function removeElement($element)
     {
         $key = array_search($element, $this->_elements, true);
         
         if ($key !== false) {
+            $removed = $this->_elements[$key];
             unset($this->_elements[$key]);
             
-            return true;
+            return $removed;
         }
         
-        return false;
+        return null;
     }
 
     /**

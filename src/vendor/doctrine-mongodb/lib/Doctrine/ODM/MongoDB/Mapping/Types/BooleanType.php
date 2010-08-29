@@ -32,11 +32,11 @@ class BooleanType extends Type
 {
     public function convertToDatabaseValue($value)
     {
-        return $value !== null ? (boolean) $value : null;
+        return (boolean) $value;
     }
 
     public function convertToPHPValue($value)
     {
-        return $value !== null ? (boolean) $value : null;
+        return (boolean) $value;
     }
 }
