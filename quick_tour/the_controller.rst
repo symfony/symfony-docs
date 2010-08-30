@@ -183,9 +183,9 @@ the ``router`` helper before. It takes the route name and an array of parameters
 as arguments and returns the associated friendly URL.
 
 You can also easily forward the action to another one with the ``forward()``
-method. As for the ``$view->actions`` helper, it makes an internal sub-request,
-but it returns the ``Response`` object to allow for further modification if the
-need arises::
+method. As for the ``$view['actions']`` helper, it makes an internal
+sub-request, but it returns the ``Response`` object to allow for further
+modification if the need arises::
 
     $response = $this->forward('HelloBundle:Hello:fancy', array('name' => $name, 'color' => 'green'));
 
@@ -215,7 +215,7 @@ helper:
 
 .. code-block:: html+php
 
-    <?php echo $view->request->getParameter('page') ?>
+    <?php echo $view['request']->getParameter('page') ?>
 
 The Session
 -----------

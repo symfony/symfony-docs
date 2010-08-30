@@ -92,7 +92,7 @@ And change the layout to output the title in the header:
     <!-- src/Application/HelloBundle/Resources/views/layout.php -->
     <html>
         <head>
-            <title><?php $view->slots->output('title', 'Default Title') ?></title>
+            <title><?php $view['slots']->output('title', 'Default Title') ?></title>
             <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         </head>
         <body>
