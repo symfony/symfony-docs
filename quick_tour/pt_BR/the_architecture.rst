@@ -113,32 +113,33 @@ do diretorio ``scr/``::
     ));
     $loader->register();
 
-The ``UniversalClassLoader`` from Symfony is used to autoload files that
-respect either the technical interoperability `standards`_ for PHP 5.3
-namespaces or the PEAR naming `convention`_ for classes. As you can see
-here, all dependencies are stored under the ``vendor/`` directory, but this is
-just a convention. You can store them wherever you want, globally on your
-server or locally in your projects.
+O ``UniversalClassLoader`` é usado no Symfony para carregar automaticamente os 
+arquivos que seguem o `padrão` de interoperabilidade técnica _para namespace 
+para o PHP 5.3 ou para nomeações PEAR_ para as classes. Como você pode ver aqui,
+todas as dependencias são armazenadas no diretorio ``vendor/``, mas isto é somente
+uma convenção. Você pode armazenar em qualquer lugar que você quiser, globalmente
+em seu servidor ou localmente em seu projeto.
 
 .. index::
    single: Bundles
 
-The Bundle System
------------------
 
-This section starts to scratch the surface of one of the greatest and more
-powerful features of Symfony, its bundle system.
+O Sistema de empacotamento (Bundle)
+-----------------------------------
 
-A bundle is kind of like a plugin in other software. But why is it called
-bundle and not plugin then? Because everything is a bundle in Symfony, from
-the core framework features to the code you write for your application.
-Bundles are first-class citizens in Symfony. This gives you the flexibility to
-use pre-built features packaged in third-party bundles or to distribute your
-own bundles. It makes it so easy to pick and choose which features to enable
-in your application and optimize them the way you want.
+Esta seção começa a arranhar a superfície de um dos maiores e mais poderosos 
+recursos do Symfony, o sistema de empacotamento.
 
-An application is made up of bundles as defined in the ``registerBundles()``
-method of the ``HelloKernel`` class::
+Um pacote é como um plugin em outros softwares. Mas por que é chamado
+pacote e não plugin, então? Porque tudo é um pacote no Symfony, das features do
+core do framework até seus códigos escritos para a sua aplicação. Pacotes são 
+cidadãos de primeira classe em Symfony. Isso lhe dá a flexibilidade para usar os
+recursos pré-construído e embalados em pacotes de terceiros ou para distribuir 
+seus próprios pacotes. Isso torna muito fácil escolher quais as funcionalidades 
+que permitam a sua aplicação e otimizá-los da maneira que quiser.
+
+Uma aplicação é composta por pacotes definidos no método ``registerBundles()`` 
+da classe:: ``HelloKernel``
 
     // hello/HelloKernel.php
 
@@ -161,7 +162,7 @@ method of the ``HelloKernel`` class::
         );
     }
 
-Along side the ``HelloBundle`` we have already talked about, notice that the
+Ao lado do ``HelloBundle`` que nos já falamos sobre  we have already talked about, notice that the
 kernel also enables ``KernelBundle``, ``FoundationBundle``, ``DoctrineBundle``,
 ``SwiftmailerBundle``, and ``ZendBundle``. They are all part of the core
 framework.
