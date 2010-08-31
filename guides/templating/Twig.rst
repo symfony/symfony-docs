@@ -160,8 +160,8 @@ template, simply use the following code:
     {% render "HelloBundle:Hello:fancy" with ['name': name, 'color': 'green'] %}
 
 Here, the ``HelloBundle:Hello:fancy`` string refers to the ``fancy`` action of
-the ``Hello`` controller, and the ``path`` value is used as simulated request
-path values::
+the ``Hello`` controller, and the argument is used as simulated request path
+values::
 
     // src/Application/HelloBundle/Controller/HelloController.php
 
@@ -210,7 +210,7 @@ specialized tags:
     {% include 'BlogBundle:Post:list' %}
 
     {# embed another controller response #}
-    {% render 'BlogBundle:Post:list' with ['path': ['limit': 2], 'alt': 'BlogBundle:Post:error'] %}
+    {% render 'BlogBundle:Post:list' with ['limit': 2], ['alt': 'BlogBundle:Post:error'] %}
 
 .. _twig_extension_tag:
 
