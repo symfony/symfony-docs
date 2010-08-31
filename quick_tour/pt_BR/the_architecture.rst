@@ -113,11 +113,11 @@ do diretorio ``scr/``::
     ));
     $loader->register();
 
-O ``UniversalClassLoader`` é usado no Symfony para carregar automaticamente os 
-arquivos que seguem o `padrão` de interoperabilidade técnica _para namespace 
-para o PHP 5.3 ou para nomeações PEAR_ para as classes. Como você pode ver aqui,
-todas as dependencias são armazenadas no diretorio ``vendor/``, mas isto é somente
-uma convenção. Você pode armazenar em qualquer lugar que você quiser, globalmente
+O ``UniversalClassLoader`` do Symfony é usado para carregar automaticamente os 
+arquivos que respeita nem a técnica de interoperabilidade `standards`_ para PHP 5.3 namespaces 
+ou o PEAR nomeação de `convention`_ classes. Como você pode ver aqui, todas as dependencias 
+são armazenadas no diretorio ``vendor/``, mas isto é somente uma convenção. 
+Você pode armazenar em qualquer lugar que você quiser, globalmente
 em seu servidor ou localmente em seu projeto.
 
 .. index::
@@ -131,7 +131,7 @@ Esta seção começa a arranhar a superfície de um dos maiores e mais poderosos
 recursos do Symfony, o sistema de empacotamento.
 
 Um pacote é como um plugin em outros softwares. Mas por que é chamado
-pacote e não plugin, então? Porque tudo é um pacote no Symfony, das features do
+pacote e não plugin então? Porque tudo é um pacote no Symfony, das features do
 core do framework até seus códigos escritos para a sua aplicação. Pacotes são 
 cidadãos de primeira classe em Symfony. Isso lhe dá a flexibilidade para usar os
 recursos pré-construído e embalados em pacotes de terceiros ou para distribuir 
@@ -162,13 +162,12 @@ da classe:: ``HelloKernel``
         );
     }
 
-Ao lado do ``HelloBundle`` que nos já falamos sobre  we have already talked about, notice that the
-kernel also enables ``KernelBundle``, ``FoundationBundle``, ``DoctrineBundle``,
-``SwiftmailerBundle``, and ``ZendBundle``. They are all part of the core
-framework.
+Juntamente com o ``HelloBundle`` que nos já comentamos, note que o kernel também
+permite ``KernelBundle``, ``FoundationBundle``, ``DoctrineBundle``,
+``SwiftmailerBundle``, e ``ZendBundle``. Todos fazem parte do núcleo do framework.
 
-Each bundle can be customized via configuration files written in YAML or XML.
-Have a look at the default configuration:
+Cada pacote pode ser customizado via configuração, escrevendo arquivos YAML ou XML.
+Veja as configurações padrão:
 
 .. code-block:: yaml
 
@@ -177,12 +176,12 @@ Have a look at the default configuration:
     web.config: ~
     web.templating: ~
 
-Each entry like ``kernel.config`` defines the configuration of a bundle. Some
-bundles can have several entries if they provide many features like
-``FoundationBundle``, which has two entries: ``web.config`` and ``web.templating``.
+Cada entrada, como por exemplo ``kernel.config`` define a configuração do pacote.
+Alguns pacotes podem ter varias entradas caso ofereçam muitas funcionalidades
+``FoundationBundle``, que tem duas entradas: ``web.config`` e ``web.templating``.
 
-Each environment can override the default configuration by providing a
-specific configuration file:
+Cada ambiente pode sobescrever a configuração padrão fornecendo um arquivo especifico
+de configuração:
 
 .. code-block:: yaml
 
@@ -197,11 +196,11 @@ specific configuration file:
         priority: info
         path:     %kernel.root_dir%/logs/%kernel.environment%.log
 
-As we have seen in the previous part, an application is made of bundles as
-defined in the ``registerBundles()`` method but how does Symfony know where to
-look for bundles? Symfony is quite flexible in this regard. The
-``registerBundleDirs()`` method must return an associative array that maps
-namespaces to any valid directory (local or global ones)::
+Como vimos na parte anterior, uma aplicação é feita de pacotes definidos no método 
+``registerBundles()``, mas como o Symfony sabe onde procurar um pacote? Symfony é
+muito flexível neste aspecto. O método ``registerBundleDirs()`` deve retornar um 
+array associativo que mapeia namespaces para qualquer diretório válido (locais ou 
+globais)::
 
     public function registerBundleDirs()
     {
@@ -212,11 +211,11 @@ namespaces to any valid directory (local or global ones)::
         );
     }
 
-So, when you reference the ``HelloBundle`` in a controller name or in a template
-name, Symfony will look for it under the given directories.
+Então quando você referencia o ``HelloBundle`` em um controller name ou em um
+template name, o Symfony procura dentro destes diretorios.
 
-Do you understand now why Symfony is so flexible? Share your bundles between
-applications, store them locally or globally, your choice.
+Agora você entende porque o Symfony é tão flexivél? Compartilhe seus pacotes 
+entre aplicações, armazene localmente o globalmente, você escolhe.
 
 .. index::
    single: Vendors
@@ -224,66 +223,64 @@ applications, store them locally or globally, your choice.
 Vendors
 -------
 
-Odds are your application will depend on third-party libraries. Those should
-be stored in the ``src/vendor/`` directory. It already contains the Symfony
-libraries, the SwiftMailer library, the Doctrine ORM, the Propel ORM, the Twig
-templating system, and a selection of the Zend Framework classes.
+Provavelmente sua aplicação dependerá de biblioteca de terceiros. Estas devem ser
+armazenadas no diretorio ``src/vendor``. Ele já contém as bibliotecas do symfony,
+SwiftMailer, o ORM Doctrine, o ORM Prople, o sistema de templates Twig, e uma 
+seleção de classes do Zend Framework.
 
 .. index::
    single: Cache
    single: Logs
 
-Cache and Logs
---------------
+Cache e Logs
+------------
 
-Symfony is probably one of the fastest full-stack frameworks around. But how
-can it be so fast if it parses and interprets tens of YAML and XML files for
-each request? This is partly due to its cache system. The application
-configuration is only parsed for the very first request and then compiled down
-to plain PHP code stored in the ``cache/`` application directory. In the
-development environment, Symfony is smart enough to flush the cache when you
-change a file. But in the production one, it is your responsibility to clear
-the cache when you update your code or change its configuration.
+Symfony é provavelmente um dos mais rápidos frameworks full-stack. Mas como pode
+ser tão rapido se analisa dezenas de arquivos YAML e XML a cada solicitação? Isto
+se deve em parte ao sistema de cache. A configuração da aplicação é analisada no
+primeiro pedido, depois é compilada em codigo PHP e armazenada no diretorio
+``cache/``. No ambiente de desenvolvimento, o Symfony é esperto o suficiente para
+limpar o chache quando você altera um arquivo ou muda sua configuração.
 
-When developing a web application, things can go wrong in many ways. The log
-files in the ``logs/`` application directory tell you everything about the
-requests and helps you fix the problem in no time.
+Quando desenvolvemos uma aplicação, as coisas podem dar errado em muitos aspectos.
+Os arquivos log do diretorio ``logs/`` dizem a você tudo sobre os pedidos e te 
+ajudam a corrigir o problema rapidamente.
 
 .. index::
    single: CLI
    single: Command Line
 
-The Command Line Interface
---------------------------
+A interface de Linha de Comando
+-------------------------------
 
-Each application comes with a command line interface tool (``console``) that
-helps you maintain your application. It provides commands that boost your
-productivity by automating tedious and repetitive tasks.
+Cada aplicação vem com uma ferramenta de linha de comando (``console``), ela te 
+ajuda a manter sua aplicação. Ele fornece comandos que aumentar a sua
+produtividade ao automatizar tarefas tediosas e repetitivas.
 
-Run it without any arguments to learn more about its capabilities:
+Chame-a sem argumentos para aprender mais sobre suas capacidades:
 
 .. code-block:: bash
 
     $ php hello/console
 
-The ``--help`` option helps you discover the usage of a command:
+A opção ``--help`` te ajuda a descobrir o uso de um comando:
 
 .. code-block:: bash
 
     $ php hello/console router:debug --help
 
-Final Thoughts
---------------
+Considerações Finais
+--------------------
 
-Call me crazy, but after reading this part, you should be comfortable with
-moving things around and making Symfony work for you. Everything is done in
-Symfony to stand out of your way. So, feel free to rename and move directories
-around as you see fit.
+Me chame de louco, mas após ler esta parte, você deve estar confortável com a 
+coisas que o circulam e fazem o Symfony trabalhar por você. Tudo é feito no 
+Symfony para estar fora do teu caminho. Então, sinta-se livre para renomear e 
+mover os diretorios como achar necessario.
 
-And that's all for the quick tour. From testing to sending emails, you still
-need to learn of lot to become a Symfony master. Ready to dig into these
-topics now? Look no further, go to the official `guides`_ page and pick any
-topic you want.
+E isto é tudo para um tour rápido. Entre os teste de envio de e-mail, você ainda
+necessidade de aprender muito para se tornar um mestre Symfony. Pronto para 
+cavar esses temas agora? Não procure mais, vá para a `guides`_ pagina oficial e 
+ecolha qualquer tópico que quiser.
 
 .. _standards:  http://groups.google.com/group/php-standards/web/psr-0-final-proposal
 .. _convention: http://pear.php.net/
