@@ -6,3 +6,4 @@ Symfony2 Internals
 
    overview
    kernel
+   profiler

@@ -41,5 +41,6 @@
 
   * :doc:`Overview </guides/internals/overview>` | 
   * :doc:`Kernel </guides/internals/kernel>` | 
+  * :doc:`Profiler </guides/internals/profiler>`
 
 * :doc:`Symfony2 for symfony 1 users</guides/symfony1>`
