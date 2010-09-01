@@ -128,6 +128,10 @@ instance as an argument.
    The listeners are called by the event dispatcher in the same order you
    connected them.
 
+.. tip::
+   If you use the Symfony2 MVC framework, listeners are automatically
+   registered based on your :ref:`configuration <kernel_listener_tag>`.
+
 .. index::
    single: Event Dispatcher; Notification
 
