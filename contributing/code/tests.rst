@@ -87,4 +87,3 @@ browser.
 .. tip::
    The code coverage only works if you have XDebug enabled and all dependencies
    installed.
-
