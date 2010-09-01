@@ -17,6 +17,8 @@ class HelloKernel extends Kernel
         $bundles = array(
             new Symfony\Framework\KernelBundle(),
             new Symfony\Bundle\FrameworkBundle\FrameworkBundle(),
+
+            // enable third-party bundles
             new Symfony\Bundle\ZendBundle\ZendBundle(),
             new Symfony\Bundle\SwiftmailerBundle\SwiftmailerBundle(),
             new Symfony\Bundle\DoctrineBundle\DoctrineBundle(),
@@ -24,10 +26,13 @@ class HelloKernel extends Kernel
             //new Symfony\Bundle\DoctrineMongoDBBundle\DoctrineMongoDBBundle(),
             //new Symfony\Bundle\PropelBundle\PropelBundle(),
             //new Symfony\Bundle\TwigBundle\TwigBundle(),
+
+            // register your bundles
             new Application\HelloBundle\HelloBundle(),
         );
 
         if ($this->isDebug()) {
+            $bundles[] = new Symfony\Bundle\WebProfilerBundle\WebProfilerBundle();
         }
 
         return $bundles;
