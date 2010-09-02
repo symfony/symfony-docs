@@ -189,8 +189,111 @@ If you enable the web profiler, you also need to mount the profiler routes:
 
         $collection->addCollection($loader->import("WebProfilerBundle/Resources/config/routing/profiler.xml"), '/_profiler');
 
-.. _data collectors: http://api.symfony-reloaded.org/PR3/index.html?q=DataCollector
+As the profiler adds some overhead, you might want to enable it only under
+certain circumstances in the production environment. The ``only-exceptions``
+settings limits profiling to 500 pages, but what if you want to get
+information when the client IP comes from a specific address, or for a limited
+portion of the website? You can use a request matcher:
 
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # enables the profiler only for request coming for the 192.168.0.0 network
+        web.config:
+            profiler:
+                matcher: { ip: 192.168.0.0/24 }
+
+        # enables the profiler only for the /admin URLs
+        web.config:
+            profiler:
+                matcher: { path: "#^/admin/#i" }
+
+        # combine rules
+        web.config:
+            profiler:
+                matcher: { ip: 192.168.0.0/24, path: "#^/admin/#i" }
+
+        # use a custom matcher instance defined in the "custom_matcher" service
+        web.config:
+            profiler:
+                matcher: { service: custom_matcher }
+
+    .. code-block:: xml
+
+        <!-- enables the profiler only for request coming for the 192.168.0.0 network -->
+        <web:config>
+            <profiler>
+                <matcher ip="192.168.0.0/24" />
+            </profiler>
+        </web:config>
+
+        <!-- enables the profiler only for the /admin URLs -->
+        <web:config>
+            <profiler>
+                <matcher path="#^/admin/#i" />
+            </profiler>
+        </web:config>
+
+        <!-- combine rules -->
+        <web:config>
+            <profiler>
+                <matcher ip="192.168.0.0/24" path="#^/admin/#i" />
+            </profiler>
+        </web:config>
+
+        <!-- use a custom matcher instance defined in the "custom_matcher" service -->
+        <web:config>
+            <profiler>
+                <matcher service="custom_matcher" />
+            </profiler>
+        </web:config>
+
+        <!-- define an anonymous service for the matcher -->
+        <web:config>
+            <profiler>
+                <matcher>
+                    <service class="CustomMatcher" />
+                </matcher>
+            </profiler>
+        </web:config>
+
+    .. code-block:: php
+
+        // enables the profiler only for request coming for the 192.168.0.0 network
+        $container->loadFromExtension('web', 'config', array(
+            'profiler' => array(
+                'matcher' => array('ip' => '192.168.0.0/24'),
+            ),
+        ));
+
+        // enables the profiler only for the /admin URLs
+        $container->loadFromExtension('web', 'config', array(
+            'profiler' => array(
+                'matcher' => array('path' => '#^/admin/#i'),
+            ),
+        ));
+
+        // combine rules
+        $container->loadFromExtension('web', 'config', array(
+            'profiler' => array(
+                'matcher' => array('ip' => '192.168.0.0/24', 'path' => '#^/admin/#i'),
+            ),
+        ));
+
+        # use a custom matcher instance defined in the "custom_matcher" service
+        $container->loadFromExtension('web', 'config', array(
+            'profiler' => array(
+                'matcher' => array('service' => new Reference('custom_matcher')),
+            ),
+        ));
+
+        // define an anonymous service for the matcher
+        $container->loadFromExtension('web', 'config', array(
+            'profiler' => array(
+                'matcher' => array('services' => array($container->register('custom_matcher', 'CustomMatcher'))),
+            ),
+        ));
 
 Creating a custom Data Collector
 --------------------------------
