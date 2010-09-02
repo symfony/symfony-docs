@@ -106,6 +106,11 @@ HTTP header of the Response::
    want to get the token for an Ajax request, use a tool like Firebug to get
    the value of the ``X-Debug-Token`` HTTP header.
 
+You can also set the token from your code, based for instance on the username
+or any other information, to ease the retrieval later on::
+
+    $profiler->setToken('abcd');
+
 You can also use the ``find()`` method to access tokens based on some
 criteria::
 
