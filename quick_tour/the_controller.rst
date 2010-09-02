@@ -183,7 +183,7 @@ the ``router`` helper before. It takes the route name and an array of parameters
 as arguments and returns the associated friendly URL.
 
 You can also easily forward the action to another one with the ``forward()``
-method. As for the ``$view->actions`` helper, it makes an internal sub-request,
+method. As for the ``$view['actions']`` helper, it makes an internal sub-request,
 but it returns the ``Response`` object to allow for further modification if the
 need arises::
 
@@ -215,7 +215,7 @@ helper:
 
 .. code-block:: html+php
 
-    <?php echo $view->request->getParameter('page') ?>
+    <?php echo $view['request']->getParameter('page') ?>
 
 The Session
 -----------
@@ -229,13 +229,13 @@ Storing and retrieving information from the session can be easily achieved
 from any controller::
 
     // store an attribute for reuse during a later user request
-    $this['request']->getSession()->setAttribute('foo', 'bar');
+    $this['request']->getSession()->set('foo', 'bar');
 
     // in another controller for another request
-    $foo = $this['request']->getSession()->getAttribute('foo');
+    $foo = $this['request']->getSession()->get('foo');
 
     // get/set the user culture
-    $this['request']->getSession()->setCulture('fr');
+    $this['request']->getSession()->setLocale('fr');
 
 You can also store small messages that will only be available for the very
 next request::

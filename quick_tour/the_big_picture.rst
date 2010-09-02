@@ -73,7 +73,7 @@ URL to be greeted by Symfony (replace Fabien with your first name):
 
 What's going on here? Let's dissect the URL:
 
-.. index:: Font Controller
+.. index:: Front Controller
 
 * ``index_dev.php``: This is a "front controller". It is the unique entry
   point of the hello application and it responds to all user requests;
