@@ -83,10 +83,10 @@ interface Collection extends Countable, IteratorAggregate, ArrayAccess
     function remove($key);
 
     /**
-     * Removes an element from the collection.
+     * Removes the specified element from the collection, if it is found.
      *
      * @param mixed $element The element to remove.
-     * @return mixed The removed element or NULL, if the collection did not contain the element.
+     * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
      */
     function removeElement($element);
 
@@ -227,4 +227,17 @@ interface Collection extends Countable, IteratorAggregate, ArrayAccess
      * @return mixed The key/index of the element or FALSE if the element was not found.
      */
     function indexOf($element);
+
+    /**
+     * Extract a slice of $length elements starting at position $offset from the Collection.
+     *
+     * If $length is null it returns all elements from $offset to the end of the Collection.
+     * Keys have to be preserved by this method. Calling this method will only return the
+     * selected slice and NOT change the elements contained in the collection slice is called on.
+     *
+     * @param int $offset
+     * @param int $length
+     * @return array
+     */
+    public function slice($offset, $length = null);
 }

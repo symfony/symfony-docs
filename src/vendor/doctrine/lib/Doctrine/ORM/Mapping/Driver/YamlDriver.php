@@ -69,22 +69,25 @@ class YamlDriver extends AbstractFileDriver
 
         if (isset($element['inheritanceType'])) {
             $metadata->setInheritanceType(constant('Doctrine\ORM\Mapping\ClassMetadata::INHERITANCE_TYPE_' . strtoupper($element['inheritanceType'])));
+
+            if ($metadata->inheritanceType != \Doctrine\ORM\Mapping\ClassMetadata::INHERITANCE_TYPE_NONE) {
+                // Evaluate discriminatorColumn
+                if (isset($element['discriminatorColumn'])) {
+                    $discrColumn = $element['discriminatorColumn'];
+                    $metadata->setDiscriminatorColumn(array(
+                        'name' => $discrColumn['name'],
+                        'type' => $discrColumn['type'],
+                        'length' => $discrColumn['length']
+                    ));
+                }
+
+                // Evaluate discriminatorMap
+                if (isset($element['discriminatorMap'])) {
+                    $metadata->setDiscriminatorMap($element['discriminatorMap']);
+                }
+            }
         }
 
-        // Evaluate discriminatorColumn
-        if (isset($element['discriminatorColumn'])) {
-            $discrColumn = $element['discriminatorColumn'];
-            $metadata->setDiscriminatorColumn(array(
-                'name' => $discrColumn['name'],
-                'type' => $discrColumn['type'],
-                'length' => $discrColumn['length']
-            ));
-        }
-
-        // Evaluate discriminatorMap
-        if (isset($element['discriminatorMap'])) {
-            $metadata->setDiscriminatorMap($element['discriminatorMap']);
-        }
 
         // Evaluate changeTrackingPolicy
         if (isset($element['changeTrackingPolicy'])) {
@@ -230,7 +233,7 @@ class YamlDriver extends AbstractFileDriver
                 );
 
                 if (isset($oneToOneElement['fetch'])) {
-                    $mapping['fetch'] = constant('Doctrine\ORM\Mapping\AssociationMapping::FETCH_' . $oneToOneElement['fetch']);
+                    $mapping['fetch'] = constant('Doctrine\ORM\Mapping\ClassMetadata::FETCH_' . $oneToOneElement['fetch']);
                 }
 
                 if (isset($oneToOneElement['mappedBy'])) {
@@ -275,7 +278,7 @@ class YamlDriver extends AbstractFileDriver
                 );
 
                 if (isset($oneToManyElement['fetch'])) {
-                    $mapping['fetch'] = constant('Doctrine\ORM\Mapping\AssociationMapping::FETCH_' . $oneToManyElement['fetch']);
+                    $mapping['fetch'] = constant('Doctrine\ORM\Mapping\ClassMetadata::FETCH_' . $oneToManyElement['fetch']);
                 }
 
                 if (isset($oneToManyElement['cascade'])) {
@@ -299,7 +302,7 @@ class YamlDriver extends AbstractFileDriver
                 );
 
                 if (isset($manyToOneElement['fetch'])) {
-                    $mapping['fetch'] = constant('Doctrine\ORM\Mapping\AssociationMapping::FETCH_' . $manyToOneElement['fetch']);
+                    $mapping['fetch'] = constant('Doctrine\ORM\Mapping\ClassMetadata::FETCH_' . $manyToOneElement['fetch']);
                 }
 
                 if (isset($manyToOneElement['inversedBy'])) {
@@ -339,7 +342,7 @@ class YamlDriver extends AbstractFileDriver
                 );
 
                 if (isset($manyToManyElement['fetch'])) {
-                    $mapping['fetch'] = constant('Doctrine\ORM\Mapping\AssociationMapping::FETCH_' . $manyToManyElement['fetch']);
+                    $mapping['fetch'] = constant('Doctrine\ORM\Mapping\ClassMetadata::FETCH_' . $manyToManyElement['fetch']);
                 }
 
                 if (isset($manyToManyElement['mappedBy'])) {
@@ -445,6 +448,6 @@ class YamlDriver extends AbstractFileDriver
      */
     protected function _loadMappingFile($file)
     {
-        return \Symfony\Components\Yaml\Yaml::load($file);
+        return \Symfony\Component\Yaml\Yaml::load($file);
     }
 }

@@ -754,7 +754,7 @@ abstract class ".$this->getClassname()." extends ".$parentClass." ";
 		if (!$dateTimeClass) {
 			$dateTimeClass = 'DateTime';
 		}
-
+		$this->declareClasses($dateTimeClass);
 		$defaultfmt = null;
 
 		// Default date/time formatter strings are specified in build.properties
@@ -1248,6 +1248,7 @@ abstract class ".$this->getClassname()." extends ".$parentClass." ";
 		if (!$dateTimeClass) {
 			$dateTimeClass = 'DateTime';
 		}
+		$this->declareClasses($dateTimeClass);
 
 		$script .= "
 	/**

@@ -82,7 +82,7 @@ class EntityGenerator
     private static $_classTemplate =
 '<?php
 
-<namespace><use>
+<namespace>
 
 <entityAnnotation>
 <entityClassName>
@@ -189,7 +189,6 @@ public function <methodName>()
     {
         $placeHolders = array(
             '<namespace>',
-            '<use>',
             '<entityAnnotation>',
             '<entityClassName>',
             '<entityBody>'
@@ -197,7 +196,6 @@ public function <methodName>()
 
         $replacements = array(
             $this->_generateEntityNamespace($metadata),
-            $this->_generateEntityUse($metadata),
             $this->_generateEntityDocBlock($metadata),
             $this->_generateEntityClassName($metadata),
             $this->_generateEntityBody($metadata)
@@ -309,13 +307,6 @@ public function <methodName>()
         }
     }
 
-    private function _generateEntityUse(ClassMetadataInfo $metadata)
-    {
-        if ($this->_extendsClass()) {
-            return "\n\nuse " . $this->_getClassToExtendNamespace() . ";\n";
-        }
-    }
-
     private function _generateEntityClassName(ClassMetadataInfo $metadata)
     {
         return 'class ' . $this->_getClassName($metadata) .
@@ -379,14 +370,7 @@ public function <methodName>()
     {
         $refl = new \ReflectionClass($this->_getClassToExtend());
 
-        return $refl->getShortName();
-    }
-
-    private function _getClassToExtendNamespace()
-    {
-        $refl = new \ReflectionClass($this->_getClassToExtend());
-
-        return $refl->getNamespaceName() ? $refl->getNamespaceName():$refl->getShortName();        
+        return $refl->getName();
     }
 
     private function _getClassName(ClassMetadataInfo $metadata)
@@ -505,34 +489,34 @@ public function <methodName>()
         }
 
         foreach ($metadata->associationMappings as $associationMapping) {
-            if ($associationMapping instanceof \Doctrine\ORM\Mapping\OneToOneMapping) {
-                if ($code = $this->_generateEntityStubMethod($metadata, 'set', $associationMapping->sourceFieldName, $associationMapping->targetEntityName)) {
+            if ($associationMapping['type'] & ClassMetadataInfo::TO_ONE) {
+                if ($code = $this->_generateEntityStubMethod($metadata, 'set', $associationMapping['fieldName'], $associationMapping['targetEntity'])) {
                     $methods[] = $code;
                 }
-                if ($code = $this->_generateEntityStubMethod($metadata, 'get', $associationMapping->sourceFieldName, $associationMapping->targetEntityName)) {
+                if ($code = $this->_generateEntityStubMethod($metadata, 'get', $associationMapping['fieldName'], $associationMapping['targetEntity'])) {
                     $methods[] = $code;
                 }
-            } else if ($associationMapping instanceof \Doctrine\ORM\Mapping\OneToManyMapping) {
-                if ($associationMapping->isOwningSide) {
-                    if ($code = $this->_generateEntityStubMethod($metadata, 'set', $associationMapping->sourceFieldName, $associationMapping->targetEntityName)) {
+            } else if ($associationMapping['type'] == ClassMetadataInfo::ONE_TO_MANY) {
+                if ($associationMapping['isOwningSide']) {
+                    if ($code = $this->_generateEntityStubMethod($metadata, 'set', $associationMapping['fieldName'], $associationMapping['targetEntity'])) {
                         $methods[] = $code;
                     }
-                    if ($code = $this->_generateEntityStubMethod($metadata, 'get', $associationMapping->sourceFieldName, $associationMapping->targetEntityName)) {
+                    if ($code = $this->_generateEntityStubMethod($metadata, 'get', $associationMapping['fieldName'], $associationMapping['targetEntity'])) {
                         $methods[] = $code;
                     }
                 } else {
-                    if ($code = $this->_generateEntityStubMethod($metadata, 'add', $associationMapping->sourceFieldName, $associationMapping->targetEntityName)) {
+                    if ($code = $this->_generateEntityStubMethod($metadata, 'add', $associationMapping['fieldName'], $associationMapping['targetEntity'])) {
                         $methods[] = $code;
                     }
-                    if ($code = $this->_generateEntityStubMethod($metadata, 'get', $associationMapping->sourceFieldName, 'Doctrine\Common\Collections\Collection')) {
+                    if ($code = $this->_generateEntityStubMethod($metadata, 'get', $associationMapping['fieldName'], 'Doctrine\Common\Collections\Collection')) {
                         $methods[] = $code;
                     }
                 }
-            } else if ($associationMapping instanceof \Doctrine\ORM\Mapping\ManyToManyMapping) {
-                if ($code = $this->_generateEntityStubMethod($metadata, 'add', $associationMapping->sourceFieldName, $associationMapping->targetEntityName)) {
+            } else if ($associationMapping['type'] == ClassMetadataInfo::MANY_TO_MANY) {
+                if ($code = $this->_generateEntityStubMethod($metadata, 'add', $associationMapping['fieldName'], $associationMapping['targetEntity'])) {
                     $methods[] = $code;
                 }
-                if ($code = $this->_generateEntityStubMethod($metadata, 'get', $associationMapping->sourceFieldName, 'Doctrine\Common\Collections\Collection')) {
+                if ($code = $this->_generateEntityStubMethod($metadata, 'get', $associationMapping['fieldName'], 'Doctrine\Common\Collections\Collection')) {
                     $methods[] = $code;
                 }
             }
@@ -563,13 +547,13 @@ public function <methodName>()
         $lines = array();
 
         foreach ($metadata->associationMappings as $associationMapping) {
-            if ($this->_hasProperty($associationMapping->sourceFieldName, $metadata)) {
+            if ($this->_hasProperty($associationMapping['fieldName'], $metadata)) {
                 continue;
             }
 
             $lines[] = $this->_generateAssociationMappingPropertyDocBlock($associationMapping, $metadata);
-            $lines[] = $this->_spaces . 'private $' . $associationMapping->sourceFieldName
-                     . ($associationMapping->isManyToMany() ? ' = array()' : null) . ";\n";
+            $lines[] = $this->_spaces . 'private $' . $associationMapping['fieldName']
+                     . ($associationMapping['type'] == 'manyToMany' ? ' = array()' : null) . ";\n";
         }
 
         return implode("\n", $lines);
@@ -681,55 +665,68 @@ public function <methodName>()
         return '@JoinColumn(' . implode(', ', $joinColumnAnnot) . ')';
     }
 
-    private function _generateAssociationMappingPropertyDocBlock(AssociationMapping $associationMapping, ClassMetadataInfo $metadata)
+    private function _generateAssociationMappingPropertyDocBlock(array $associationMapping, ClassMetadataInfo $metadata)
     {
         $lines = array();
         $lines[] = $this->_spaces . '/**';
-        $lines[] = $this->_spaces . ' * @var ' . $associationMapping->targetEntityName;
+        $lines[] = $this->_spaces . ' * @var ' . $associationMapping['targetEntity'];
 
         if ($this->_generateAnnotations) {
             $lines[] = $this->_spaces . ' *';
 
-            $e = explode('\\', get_class($associationMapping));
-            $type = str_replace('Mapping', '', end($e));
+            $type = null;
+            switch ($associationMapping['type']) {
+                case ClassMetadataInfo::ONE_TO_ONE:
+                    $type = 'OneToOne';
+                    break;
+                case ClassMetadataInfo::MANY_TO_ONE:
+                    $type = 'ManyToOne';
+                    break;
+                case ClassMetadataInfo::ONE_TO_MANY:
+                    $type = 'OneToMany';
+                    break;
+                case ClassMetadataInfo::MANY_TO_MANY:
+                    $type = 'ManyToMany';
+                    break;
+            }
             $typeOptions = array();
 
-            if (isset($associationMapping->targetEntityName)) {
-                $typeOptions[] = 'targetEntity="' . $associationMapping->targetEntityName . '"';
+            if (isset($associationMapping['targetEntity'])) {
+                $typeOptions[] = 'targetEntity="' . $associationMapping['targetEntity'] . '"';
             }
 
-            if (isset($associationMapping->inversedBy)) {
-                $typeOptions[] = 'inversedBy="' . $associationMapping->inversedBy . '"';
+            if (isset($associationMapping['inversedBy'])) {
+                $typeOptions[] = 'inversedBy="' . $associationMapping['inversedBy'] . '"';
             }
 
-            if (isset($associationMapping->mappedBy)) {
-                $typeOptions[] = 'mappedBy="' . $associationMapping->mappedBy . '"';
+            if (isset($associationMapping['mappedBy'])) {
+                $typeOptions[] = 'mappedBy="' . $associationMapping['mappedBy'] . '"';
             }
 
-            if ($associationMapping->hasCascades()) {
+            if ($associationMapping['cascade']) {
                 $cascades = array();
 
-                if ($associationMapping->isCascadePersist) $cascades[] = '"persist"';
-                if ($associationMapping->isCascadeRemove) $cascades[] = '"remove"';
-                if ($associationMapping->isCascadeDetach) $cascades[] = '"detach"';
-                if ($associationMapping->isCascadeMerge) $cascades[] = '"merge"';
-                if ($associationMapping->isCascadeRefresh) $cascades[] = '"refresh"';
+                if ($associationMapping['isCascadePersist']) $cascades[] = '"persist"';
+                if ($associationMapping['isCascadeRemove']) $cascades[] = '"remove"';
+                if ($associationMapping['isCascadeDetach']) $cascades[] = '"detach"';
+                if ($associationMapping['isCascadeMerge']) $cascades[] = '"merge"';
+                if ($associationMapping['isCascadeRefresh']) $cascades[] = '"refresh"';
 
                 $typeOptions[] = 'cascade={' . implode(',', $cascades) . '}';            
             }
 
-            if (isset($associationMapping->orphanRemoval) && $associationMapping->orphanRemoval) {
-                $typeOptions[] = 'orphanRemoval=' . ($associationMapping->orphanRemoval ? 'true' : 'false');
+            if (isset($associationMapping['orphanRemoval']) && $associationMapping['orphanRemoval']) {
+                $typeOptions[] = 'orphanRemoval=' . ($associationMapping['orphanRemoval'] ? 'true' : 'false');
             }
 
             $lines[] = $this->_spaces . ' * @' . $type . '(' . implode(', ', $typeOptions) . ')';
 
-            if (isset($associationMapping->joinColumns) && $associationMapping->joinColumns) {
+            if (isset($associationMapping['joinColumns']) && $associationMapping['joinColumns']) {
                 $lines[] = $this->_spaces . ' * @JoinColumns({';
 
                 $joinColumnsLines = array();
 
-                foreach ($associationMapping->joinColumns as $joinColumn) {
+                foreach ($associationMapping['joinColumns'] as $joinColumn) {
                     if ($joinColumnAnnot = $this->_generateJoinColumnAnnotation($joinColumn)) {
                         $joinColumnsLines[] = $this->_spaces . ' *   ' . $joinColumnAnnot;
                     }
@@ -739,25 +736,25 @@ public function <methodName>()
                 $lines[] = $this->_spaces . ' * })';
             }
 
-            if (isset($associationMapping->joinTable) && $associationMapping->joinTable) {
+            if (isset($associationMapping['joinTable']) && $associationMapping['joinTable']) {
                 $joinTable = array();
-                $joinTable[] = 'name="' . $associationMapping->joinTable['name'] . '"';
+                $joinTable[] = 'name="' . $associationMapping['joinTable']['name'] . '"';
 
-                if (isset($associationMapping->joinTable['schema'])) {
-                    $joinTable[] = 'schema="' . $associationMapping->joinTable['schema'] . '"';
+                if (isset($associationMapping['joinTable']['schema'])) {
+                    $joinTable[] = 'schema="' . $associationMapping['joinTable']['schema'] . '"';
                 }
 
                 $lines[] = $this->_spaces . ' * @JoinTable(' . implode(', ', $joinTable) . ',';
                 $lines[] = $this->_spaces . ' *   joinColumns={';
 
-                foreach ($associationMapping->joinTable['joinColumns'] as $joinColumn) {
+                foreach ($associationMapping['joinTable']['joinColumns'] as $joinColumn) {
                     $lines[] = $this->_spaces . ' *     ' . $this->_generateJoinColumnAnnotation($joinColumn);
                 }
 
                 $lines[] = $this->_spaces . ' *   },';
                 $lines[] = $this->_spaces . ' *   inverseJoinColumns={';
 
-                foreach ($associationMapping->joinTable['inverseJoinColumns'] as $joinColumn) {
+                foreach ($associationMapping['joinTable']['inverseJoinColumns'] as $joinColumn) {
                     $lines[] = $this->_spaces . ' *     ' . $this->_generateJoinColumnAnnotation($joinColumn);
                 }
 
@@ -765,10 +762,10 @@ public function <methodName>()
                 $lines[] = $this->_spaces . ' * )';
             }
 
-            if (isset($associationMapping->orderBy)) {
+            if (isset($associationMapping['orderBy'])) {
                 $lines[] = $this->_spaces . ' * @OrderBy({';
 
-                foreach ($associationMapping->orderBy as $name => $direction) {
+                foreach ($associationMapping['orderBy'] as $name => $direction) {
                     $lines[] = $this->_spaces . ' *     "' . $name . '"="' . $direction . '",'; 
                 }
 

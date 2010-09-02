@@ -363,6 +363,7 @@ abstract class ".$this->getClassname()." extends " . $parentClass . "
 		$table = $this->getTable();
 		$pks = $table->getPrimaryKey();
 		$class = $class = $this->getStubObjectBuilder()->getClassname();
+		$this->declareClasses('PropelPDO');
 		$script .= "
 	/**
 	 * Find object by primary key";
@@ -424,6 +425,7 @@ abstract class ".$this->getClassname()." extends " . $parentClass . "
 	 */
 	protected function addFindPks(&$script)
 	{
+		$this->declareClasses('PropelPDO');
 		$table = $this->getTable();
 		$pks = $table->getPrimaryKey();
 		$count = count($pks);

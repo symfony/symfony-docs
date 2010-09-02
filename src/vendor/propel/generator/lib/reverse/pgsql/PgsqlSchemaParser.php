@@ -14,7 +14,7 @@ require_once 'reverse/BaseSchemaParser.php';
  * Postgresql database schema parser.
  *
  * @author     Hans Lellelid <hans@xmpl.org>
- * @version    $Revision: 1667 $
+ * @version    $Revision: 1928 $
  * @package    propel.generator.reverse.pgsql
  */
 class PgsqlSchemaParser extends BaseSchemaParser
@@ -31,18 +31,25 @@ class PgsqlSchemaParser extends BaseSchemaParser
 				'tinyint' => PropelTypes::TINYINT,
 				'smallint' => PropelTypes::SMALLINT,
 				'mediumint' => PropelTypes::SMALLINT,
+				'int2' => PropelTypes::SMALLINT,
 				'int' => PropelTypes::INTEGER,
 				'int4' => PropelTypes::INTEGER,
+				'serial4' => PropelTypes::INTEGER,
 				'integer' => PropelTypes::INTEGER,
 				'int8' => PropelTypes::BIGINT,
 				'bigint' => PropelTypes::BIGINT,
+				'bigserial' => PropelTypes::BIGINT,
+				'serial8' => PropelTypes::BIGINT,
 				'int24' => PropelTypes::BIGINT,
 				'real' => PropelTypes::REAL,
 				'float' => PropelTypes::FLOAT,
+				'float4' => PropelTypes::FLOAT,
 				'decimal' => PropelTypes::DECIMAL,
 				'numeric' => PropelTypes::NUMERIC,
 				'double' => PropelTypes::DOUBLE,
+				'float8' => PropelTypes::DOUBLE,
 				'char' => PropelTypes::CHAR,
+				'character' => PropelTypes::CHAR,
 				'varchar' => PropelTypes::VARCHAR,
 				'date' => PropelTypes::DATE,
 				'time' => PropelTypes::TIME,

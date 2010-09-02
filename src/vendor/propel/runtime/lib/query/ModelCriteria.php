@@ -22,7 +22,7 @@
  * @method     ModelCriteria innerJoin($relation) Adds a INNER JOIN clause to the query
  *
  * @author     François Zaninotto
- * @version    $Revision: 1899 $
+ * @version    $Revision: 1927 $
  * @package    propel.runtime.query
  */
 class ModelCriteria extends Criteria
@@ -1397,7 +1397,7 @@ class ModelCriteria extends Criteria
 		}
 		
 		if ($con === null) {
-			$con = Propel::getConnection($this->getDbName(), Propel::CONNECTION_READ);
+			$con = Propel::getConnection($this->getDbName(), Propel::CONNECTION_WRITE);
 		}
 		
 		$criteria = $this->isKeepQuery() ? clone $this : $this;

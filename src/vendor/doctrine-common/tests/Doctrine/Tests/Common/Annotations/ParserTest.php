@@ -277,6 +277,38 @@ DOCBLOCK;
             $this->fail($e->getMessage());
         }
     }
+
+    /**
+     * @group DCOM-14
+     */
+    public function testIgnorePHPDocThrowTag()
+    {
+        $docblock = <<<DOCBLOCK
+/**
+ * @throws \RuntimeException
+ */
+class A {
+}
+DOCBLOCK;
+
+        try {
+            $parser = $this->createTestParser();
+            $result = $parser->parse($docblock);
+        } catch (Exception $e) {
+            $this->fail($e->getMessage());
+        }
+    }
+
+    /**
+     * @group DCOM-6
+     */
+    public function testNonexistantNamespaceAlias()
+    {
+        $parser = new Parser;
+        $result = $parser->parse('@nonalias:Name(foo="bar")');
+
+        $this->assertEquals(0, count($result));
+    }
 }
 
 class Name extends \Doctrine\Common\Annotations\Annotation {
