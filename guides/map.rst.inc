@@ -14,8 +14,8 @@
   * :doc:`MongoDB </guides/doctrine/mongodb-odm/overview>`
 
 * :doc:`/guides/emails`
-* :doc:`/guides/forms`
 * :doc:`/guides/validator`
+* :doc:`/guides/forms`
 * **Templating**:
 
   * :doc:`/guides/templating/helpers` | 
