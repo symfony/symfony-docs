@@ -229,13 +229,13 @@ Storing and retrieving information from the session can be easily achieved
 from any controller::
 
     // store an attribute for reuse during a later user request
-    $this['request']->getSession()->setAttribute('foo', 'bar');
+    $this['request']->getSession()->set('foo', 'bar');
 
     // in another controller for another request
-    $foo = $this['request']->getSession()->getAttribute('foo');
+    $foo = $this['request']->getSession()->get('foo');
 
     // get/set the user culture
-    $this['request']->getSession()->setCulture('fr');
+    $this['request']->getSession()->setLocale('fr');
 
 You can also store small messages that will only be available for the very
 next request::
