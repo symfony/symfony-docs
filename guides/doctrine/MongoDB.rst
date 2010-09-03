@@ -31,10 +31,10 @@ you need to customize more you can specify the complete configuration:
 
     # config/config.yml
     doctrine_odm.mongodb:
-      server: mongodb://localhost:27017
-      options:
-        connect: true
-      metadata_cache_driver: array # array, apc, xcache, memcache
+        server: mongodb://localhost:27017
+        options:
+            connect: true
+        metadata_cache_driver: array # array, apc, xcache, memcache
 
 If you wish to use memcache to cache your metadata and you need to configure the ``Memcache`` instance you can do the following:
 
@@ -42,15 +42,15 @@ If you wish to use memcache to cache your metadata and you need to configure the
 
     # config/config.yml
     doctrine_odm.mongodb:
-      server: mongodb://localhost:27017
-      options:
-        connect: true
-      metadata_cache_driver:
-        type: memcache
-        class: Doctrine\Common\Cache\MemcacheCache
-        host: localhost
-        port: 11211
-        instance_class: Memcache
+        server: mongodb://localhost:27017
+        options:
+            connect: true
+        metadata_cache_driver:
+            type: memcache
+            class: Doctrine\Common\Cache\MemcacheCache
+            host: localhost
+            port: 11211
+            instance_class: Memcache
 
 Multiple Connections
 ~~~~~~~~~~~~~~~~~~~~
@@ -60,24 +60,24 @@ If you need multiple connections and document managers you can use the following
 .. code-block:: yaml
 
     doctrine_odm.mongodb:
-      default_connection: conn2
-      default_document_manager: dm2
-      metadata_cache_driver: apc
-      connections:
-        conn1:
-          server: mongodb://localhost:27017
-          options:
-            connect: true
-        conn2:
-          server: mongodb://localhost:27017
-          options:
-            connect: true
-      document_managers:
-        dm1:
-          connection: conn1
-          metadata_cache_driver: xcache
-        dm2:
-          connection: conn2
+        default_connection: conn2
+        default_document_manager: dm2
+        metadata_cache_driver: apc
+        connections:
+            conn1:
+                server: mongodb://localhost:27017
+                options:
+                    connect: true
+            conn2:
+                server: mongodb://localhost:27017
+                options:
+                    connect: true
+        document_managers:
+            dm1:
+                connection: conn1
+                metadata_cache_driver: xcache
+            dm2:
+                connection: conn2
 
 Now you can retrieve the configured services connection services::
 
@@ -133,13 +133,11 @@ Multiple Connections:
         xsi:schemaLocation="http://www.symfony-project.org/schema/dic/services http://www.symfony-project.org/schema/dic/services/services-1.0.xsd
                             http://www.symfony-project.org/schema/dic/doctrine/odm/mongodb http://www.symfony-project.org/schema/dic/doctrine/odm/mongodb/mongodb-1.0.xsd">
 
-        <doctrine:mongodb
-                metadata_cache_driver="apc"
-                default_document_manager="dm2"
-                default_connection="dm2"
-                proxy_namespace="Proxies"
-                auto_generate_proxy_classes="true"
-            >
+        <doctrine:mongodb metadata_cache_driver="apc"
+                          default_document_manager="dm2"
+                          default_connection="dm2"
+                          proxy_namespace="Proxies"
+                          auto_generate_proxy_classes="true">
             <doctrine:connections>
                 <doctrine:connection id="conn1" server="mongodb://localhost:27017">
                     <options>

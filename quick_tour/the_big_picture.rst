@@ -28,19 +28,19 @@ Download the `sandbox`_, and unpack it in your root web directory. You
 should now have a ``sandbox/`` directory::
 
     www/ <- your web root directory
-      sandbox/ <- the unpacked archive
-        hello/
-          cache/
-          config/
-          logs/
-        src/
-          Application/
-            HelloBundle/
-              Controller/
-              Resources/
-          vendor/
-            symfony/
-        web/
+        sandbox/ <- the unpacked archive
+            hello/
+                cache/
+                config/
+                logs/
+            src/
+                Application/
+                    HelloBundle/
+                        Controller/
+                        Resources/
+                vendor/
+                    symfony/
+            web/
 
 .. index::
    single: Installation; Check

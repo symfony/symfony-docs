@@ -70,11 +70,11 @@ each method returns a new Crawler instance for the matching nodes::
     $crawler
         ->filter('h1')
         ->reduce(function ($node, $i)
-            {
-                if (!$node->getAttribute('class')) {
-                    return false;
-                }
-            })
+        {
+            if (!$node->getAttribute('class')) {
+                return false;
+            }
+        })
         ->first();
 
 .. tip::
@@ -97,9 +97,9 @@ The Crawler can extract information from the nodes::
 
     // Executes a lambda for each node and return an array of results
     $data = $crawler->each(function ($node, $i)
-        {
-            return $node->getAttribute('href');
-        });
+    {
+        return $node->getAttribute('href');
+    });
 
 Links
 -----

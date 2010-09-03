@@ -176,10 +176,9 @@ To restrict the matching file with your own strategy, use ``filter()``::
 
     $filter = function (\SplFileInfo $file)
     {
-      if (strlen($file) > 10)
-      {
-        return false;
-      }
+        if (strlen($file) > 10) {
+            return false;
+        }
     };
 
     $finder->files()->filter($filter);

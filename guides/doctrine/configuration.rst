@@ -37,18 +37,18 @@ the key named ``connections``:
 .. code-block:: yaml
 
     doctrine.dbal:
-      default_connection:       default
-      connections:
-        default:
-          dbname:               Symfony2
-          user:                 root
-          password:             null
-          host:                 localhost
-        customer:
-          dbname:               customer
-          user:                 root
-          password:             null
-          host:                 localhost
+        default_connection:    default
+        connections:
+            default:
+                dbname:        Symfony2
+                user:          root
+                password:      null
+                host:          localhost
+            customer:
+                dbname:        customer
+                user:          root
+                password:      null
+                host:          localhost
 
 If you have defined multiple connections you can use the ``getDatabaseConnection()`` as well
 but you must pass it an argument with the name of the connection you want to get::
@@ -67,13 +67,13 @@ ORM Configuration
 .. code-block:: yaml
 
     doctrine.orm:
-      default_entity_manager:   default
-      cache_driver:             apc           # array, apc, memcache, xcache
-      entity_managers:
-        default:
-          connection:           default
-        customer:
-          connection:           customer
+        default_entity_manager:   default
+        cache_driver:             apc           # array, apc, memcache, xcache
+        entity_managers:
+            default:
+                connection:       default
+            customer:
+                connection:       customer
 
 Just like the DBAL, if you have configured multiple ``EntityManager`` instances and want to
 get a specific one you can use the ``getEntityManager()`` method by just passing it an argument

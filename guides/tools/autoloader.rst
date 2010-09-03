@@ -42,8 +42,8 @@ If the classes to autoload use namespaces, use the ``registerNamespace()`` or
     $loader->registerNamespace('Symfony', __DIR__.'/vendor/symfony/src');
 
     $loader->registerNamespaces(array(
-      'Symfony' => __DIR__.'/vendor/symfony/src',
-      'Zend'    => __DIR__.'/vendor/zend/library',
+        'Symfony' => __DIR__.'/vendor/symfony/src',
+        'Zend'    => __DIR__.'/vendor/zend/library',
     ));
 
 For classes that follow the PEAR naming convention, use the ``registerPrefix``
@@ -52,8 +52,8 @@ or ``registerPrefixes`` methods::
     $loader->registerPrefix('Twig_', __DIR__.'/vendor/twig/lib');
 
     $loader->registerPrefixes(array(
-      'Swift_' => __DIR__.'/vendor/swiftmailer/lib/classes',
-      'Twig_'  => __DIR__.'/vendor/twig/lib',
+        'Swift_' => __DIR__.'/vendor/swiftmailer/lib/classes',
+        'Twig_'  => __DIR__.'/vendor/twig/lib',
     ));
 
 .. note::
@@ -65,10 +65,10 @@ for in a list of locations to ease the vendoring of a sub-set of classes for
 large projects::
 
     $loader->registerNamespaces(array(
-      'Doctrine\Common'          => __DIR__.'/vendor/doctrine/lib/vendor/doctrine-common/lib',
-      'Doctrine\DBAL\Migrations' => __DIR__.'/vendor/doctrine-migrations/lib',
-      'Doctrine\DBAL'            => __DIR__.'/vendor/doctrine/lib/vendor/doctrine-dbal/lib',
-      'Doctrine'                 => __DIR__.'/vendor/doctrine/lib',
+        'Doctrine\Common'          => __DIR__.'/vendor/doctrine/lib/vendor/doctrine-common/lib',
+        'Doctrine\DBAL\Migrations' => __DIR__.'/vendor/doctrine-migrations/lib',
+        'Doctrine\DBAL'            => __DIR__.'/vendor/doctrine/lib/vendor/doctrine-dbal/lib',
+        'Doctrine'                 => __DIR__.'/vendor/doctrine/lib',
     ));
 
 In this example, if you try to use a class in the ``Doctrine\Common`` namespace
