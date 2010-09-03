@@ -21,12 +21,12 @@ Enable the ``TwigBundle`` in your kernel::
 
     public function registerBundles()
     {
-      $bundles = array(
-        // ...
-        new Symfony\Framework\TwigBundle\Bundle(),
-      );
+        $bundles = array(
+            // ...
+            new Symfony\Framework\TwigBundle\Bundle(),
+        );
 
-      // ...
+        // ...
     }
 
 Then, configure it:

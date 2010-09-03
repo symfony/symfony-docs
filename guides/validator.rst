@@ -18,23 +18,23 @@ methods prefixed with "get" or "is". Let's look at a sample configuration::
 
     class Author
     {
-      /**
-       * @Validation({
-       *   @NotBlank,
-       *   @MinLength(4)
-       * })
-       */
-      public $firstName;
+        /**
+         * @Validation({
+         *   @NotBlank,
+         *   @MinLength(4)
+         * })
+         */
+        public $firstName;
       
-      /**
-       * @Validation({
-       *   @Email(message="Ok, seriously now. Your email address please")
-       * })
-       */
-      public function getEmail()
-      {
-        return 'foobar';
-      }
+        /**
+         * @Validation({
+         *   @Email(message="Ok, seriously now. Your email address please")
+         * })
+         */
+        public function getEmail()
+        {
+            return 'foobar';
+        }
     }
     
 This snippet shows a very simple ``Author`` class with a property and a getter. 
@@ -63,9 +63,9 @@ Now let's try to validate an object::
 You should see the following output::
 
     Author.firstName:
-      This value is too short. It should have 4 characters or more
+        This value is too short. It should have 4 characters or more
     Author.email:
-      Ok, seriously now. Your email address please
+        Ok, seriously now. Your email address please
 
 The ``validate()`` method returns a ``ConstraintViolationList`` object that can
 simply be printed or processed in your code. That was easy!
@@ -368,17 +368,17 @@ validated to prevent errors. To use the driver, simply put a file called
         xsi:schemaLocation="http://www.symfony-project.org/schema/dic/constraint-mapping 
             http://www.symfony-project.org/schema/dic/services/constraint-mapping-1.0.xsd">
 
-      <class name="Application\HelloBundle\Model\Author">
-        <property name="firstName">
-          <constraint name="NotBlank" />
-          <constraint name="MinLength">4</constraint>
-        </property>
-        <getter property="email">
-          <constraint name="Email">
-            <option name="message">Ok, seriously now. Your email address please</option>
-          </constraint>
-        </getter>
-      </class>
+        <class name="Application\HelloBundle\Model\Author">
+            <property name="firstName">
+                <constraint name="NotBlank" />
+                <constraint name="MinLength">4</constraint>
+            </property>
+            <getter property="email">
+                <constraint name="Email">
+                    <option name="message">Ok, seriously now. Your email address please</option>
+                </constraint>
+            </getter>
+        </class>
     </constraint-mapping>
 
 YAML Configuration
@@ -391,14 +391,14 @@ bundle:
 .. code-block:: yaml
 
     Application\HelloBundle\Model\Author:
-      properties:
-        firstName:
-          - NotBlank: ~
-          - MinLength: 4
+        properties:
+            firstName:
+                - NotBlank: ~
+                - MinLength: 4
           
-      getters:
-        email:
-          - Email: { message: "Ok, seriously now. Your email address please" }
+        getters:
+            email:
+                - Email: { message: "Ok, seriously now. Your email address please" }
 
 PHP Configuration
 ~~~~~~~~~~~~~~~~~
@@ -411,14 +411,14 @@ method ``loadValidatorMetadata()`` to the classes that you want to validate::
 
     class Author
     {
-      public static function loadValidatorMetadata(ClassMetadata $metadata)
-      {
-        $metadata->addPropertyConstraint('firstName', new Constraints\NotBlank());
-        $metadata->addPropertyConstraint('firstName', new Constraints\MinLength(3));
-        $metadata->addGetterConstraint('email', new Constraints\Email(array(
-          'message' => 'Ok, seriously now. Your email address please',
-        )));
-      }
+        public static function loadValidatorMetadata(ClassMetadata $metadata)
+        {
+            $metadata->addPropertyConstraint('firstName', new Constraints\NotBlank());
+            $metadata->addPropertyConstraint('firstName', new Constraints\MinLength(3));
+            $metadata->addGetterConstraint('email', new Constraints\Email(array(
+                'message' => 'Ok, seriously now. Your email address please',
+            )));
+        }
     }
 
 You can use either of the configuration drivers, or all together. Symfony will

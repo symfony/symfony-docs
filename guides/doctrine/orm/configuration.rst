@@ -8,13 +8,13 @@ Configuration
 .. code-block:: yaml
 
     doctrine.orm:
-      default_entity_manager:   default
-      cache_driver:             apc           # array, apc, memcache, xcache
-      entity_managers:
-        default:
-          connection:           default
-        customer:
-          connection:           customer
+        default_entity_manager:   default
+        cache_driver:             apc           # array, apc, memcache, xcache
+        entity_managers:
+            default:
+                connection:       default
+            customer:
+                connection:       customer
 
 Just like the DBAL, if you have configured multiple ``EntityManager`` instances and want to
 get a specific one you can use the ``getEntityManager()`` method by just passing it an argument
