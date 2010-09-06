@@ -8,14 +8,19 @@
 
 * **Doctrine**:
 
-  * :doc:`Overview </guides/doctrine/overview>` | 
-  * :doc:`Migrations </guides/doctrine/migrations>` | 
-  * :doc:`/guides/doctrine/MongoDB`
+  * :doc:`DBAL </guides/doctrine/dbal/overview>` | 
+  * :doc:`ORM </guides/doctrine/orm/overview>` | 
+  * :doc:`Migrations </guides/doctrine/migrations/overview>` | 
+  * :doc:`MongoDB </guides/doctrine/mongodb-odm/overview>`
 
 * :doc:`/guides/emails`
-* :doc:`/guides/forms`
 * :doc:`/guides/validator`
-* :doc:`Twig </guides/Twig>`
+* :doc:`/guides/forms`
+* **Templating**:
+
+  * :doc:`/guides/templating/helpers` | 
+  * :doc:`Twig </guides/templating/Twig>`
+
 * **Event Dispatcher**:
 
   * :doc:`Overview </guides/event/overview>` | 
@@ -31,3 +36,11 @@
 
   * :doc:`Best Practices </guides/bundles/best_practices>` | 
   * :doc:`Configuration </guides/bundles/configuration>`
+
+* **Internals**:
+
+  * :doc:`Overview </guides/internals/overview>` | 
+  * :doc:`Kernel </guides/internals/kernel>` | 
+  * :doc:`Profiler </guides/internals/profiler>`
+
+* :doc:`Symfony2 for symfony 1 users</guides/symfony1>`

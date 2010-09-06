@@ -9,6 +9,7 @@
 
 * **Documentation**:
 
+  * :doc:`Overview </contributing/documentation/overview>` | 
   * :doc:`Format </contributing/documentation/format>` | 
   * :doc:`Translations </contributing/documentation/translations>` | 
   * :doc:`License </contributing/documentation/license>`

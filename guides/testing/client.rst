@@ -12,7 +12,7 @@ The test Client simulates an HTTP client like a browser.
 Making Requests
 ---------------
 
-The client knows how make requests to a Symfony2 application::
+The client knows how to make requests to a Symfony2 application::
 
     $crawler = $client->request('GET', '/hello/Fabien');
 
@@ -29,7 +29,7 @@ be used to click on links and submit forms::
     $crawler = $client->submit($form, array('name' => 'Fabien'));
 
 The ``click()`` and ``submit()`` methods both return a ``Crawler`` object. These
-methods is the best way to browse an application as it hides a lot of details.
+methods are the best way to browse an application as it hides a lot of details.
 For instance, when you submit a form, it automatically detects the HTTP method
 and the form URL, it gives you a nice API to upload files, and it merges the
 submitted values with the form default ones, and more.
@@ -60,7 +60,7 @@ the ``followRedirect()`` method::
 
     $crawler = $client->followRedirect();
 
-Last but not the least, you can force each request to be executed in its own
+Last but not least, you can force each request to be executed in its own
 PHP process to avoid any side-effects when working with several clients in the
 same script::
 
@@ -82,7 +82,7 @@ Accessing Internal Objects
 --------------------------
 
 If you use the client to test your application, you might want to access the
-client internal objects::
+client's internal objects::
 
     $history = $client->getHistory();
     $cookieJar = $client->getCookieJar();

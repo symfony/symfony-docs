@@ -13,7 +13,7 @@ Creating a Crawler Instance
 A Crawler instance is automatically created for you when you make a request
 with a Client. But you can create your own easily::
 
-    use Symfony\Components\DomCrawler\Crawler;
+    use Symfony\Component\DomCrawler\Crawler;
 
     $crawler = new Crawler($html, $url);
 
@@ -120,7 +120,7 @@ The Client ``click()`` method takes a ``Link`` instance as returned by the
     $client->click($link);
 
 .. tip::
-   The ``links()`` method returns an array of ``Link``s for all nodes.
+   The ``links()`` method returns an array of ``Link`` objects for all nodes.
 
 Forms
 -----

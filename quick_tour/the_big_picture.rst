@@ -1,12 +1,13 @@
 The Big Picture
 ===============
 
-So, you want to try out Symfony but only have 10 minutes or so? This first
+So, you want to try out Symfony2 but only have 10 minutes or so? This first
 part of this tutorial has been written for you. It explains how to get started
-fast with Symfony by showing you the structure of a simple ready-made project.
+fast with Symfony2 by showing you the structure of a simple ready-made
+project.
 
 If you have ever used a web framework before, you should feel right at home
-with Symfony 2.0.
+with Symfony2.
 
 .. index::
    pair: Sandbox; Download
@@ -19,10 +20,10 @@ configured to work with a web server like Apache.
 
 Ready? Let's start by downloading Symfony. To get started even faster, we are
 going to use the "Symfony sandbox". It is a Symfony project where all the
-required libraries and some simple controllers are already included and where
-the basic configuration is already done. The great advantage of the sandbox
-over other types of installation is that you can start experimenting with
-Symfony immediately.
+required libraries and some simple controllers are already included; the basic
+configuration is also already done. The great advantage of the sandbox over
+other types of installation is that you can start experimenting with Symfony
+immediately.
 
 Download the `sandbox`_, and unpack it in your root web directory. You
 should now have a ``sandbox/`` directory::
@@ -64,15 +65,15 @@ Symfony should congratulate you for your hard work so far!
 Your first Application
 ----------------------
 
-The sandbox comes with a simple Hello World "application" and that's the
-application we will use to learn more about Symfony. Go to the following URL
-to be greeted by Symfony (replace Fabien with your first name):
+The sandbox comes with a simple Hello World ":term:`application`" and that's
+the application we will use to learn more about Symfony. Go to the following
+URL to be greeted by Symfony (replace Fabien with your first name):
 
     http://localhost/sandbox/web/index_dev.php/hello/Fabien
 
 What's going on here? Let's dissect the URL:
 
-.. index:: Font Controller
+.. index:: Front Controller
 
 * ``index_dev.php``: This is a "front controller". It is the unique entry
   point of the hello application and it responds to all user requests;
@@ -85,41 +86,116 @@ request (``/hello/Fabien``) to the resource associated with it (``Hello
 Fabien!``).
 
 .. index::
+   single: Configuration
+
+Configuration
+~~~~~~~~~~~~~
+
+But how does Symfony route the request to your code? Simply by reading some
+configuration file.
+
+All Symfony2 configuration files can be written in either PHP, XML, or `YAML`_
+(YAML is a simple format that makes the description of configuration settings
+very easy).
+
+.. tip::
+   The sandbox defaults to YAML, but you can easily switch to XML or PHP by
+   editing the ``config/HelloKernel.php`` file. You can switch now by looking
+   at the bottom of ``config/HelloKernel.php`` for instructions (the tutorials
+   show the configuration for all supported formats).
+
+.. index::
    single: Routing
    pair: Configuration; Routing
 
 Routing
 ~~~~~~~
 
-But how does Symfony route the request to your code? Simply by reading the
-routing configuration file:
+So, Symfony routes the request by reading the routing configuration file:
 
-.. code-block:: yaml
+.. configuration-block::
 
-    # hello/config/routing.yml
-    homepage:
-        pattern:  /
-        defaults: { _controller: FoundationBundle:Default:index }
+    .. code-block:: yaml
 
-    hello:
-        resource: HelloBundle/Resources/config/routing.yml
+        # hello/config/routing.yml
+        homepage:
+            pattern:  /
+            defaults: { _controller: FrameworkBundle:Default:index }
 
-The file is written in `YAML`, a simple format that makes the description of
-configuration settings very easy. All the configuration files in Symfony can
-be written in XML, YAML, or even in plain PHP code. This tutorial uses the
-YAML format as it is more concise and easier to read for beginners. Of course,
-"enterprise people" would probably have used XML everywhere.
+        hello:
+            resource: HelloBundle/Resources/config/routing.yml
 
-The first three lines of the routing configuration file define which code to
+    .. code-block:: xml
+
+        <!-- hello/config/routing.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+
+        <routes xmlns="http://www.symfony-project.org/schema/routing"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://www.symfony-project.org/schema/routing http://www.symfony-project.org/schema/routing/routing-1.0.xsd">
+
+            <route id="homepage" pattern="/">
+                <default key="_controller">FrameworkBundle:Default:index</default>
+            </route>
+
+            <import resource="HelloBundle/Resources/config/routing.xml" />
+        </routes>
+
+    .. code-block:: php
+
+        // hello/config/routing.php
+        use Symfony\Component\Routing\RouteCollection;
+        use Symfony\Component\Routing\Route;
+
+        $collection = new RouteCollection();
+
+        $collection->addRoute('homepage', new Route('/', array(
+            '_controller' => 'FrameworkBundle:Default:index',
+        )));
+
+        $collection->import('HelloBundle/Resources/config/routing.php');
+
+        return $collection;
+
+The first few lines of the routing configuration file define which code to
 call when the user requests the "``/``" resource. More interesting is the last
-line, which imports another routing configuration file that reads as follows:
+part, which imports another routing configuration file that reads as follows:
 
-.. code-block:: yaml
+.. configuration-block::
 
-    # src/Application/HelloBundle/Resources/config/routing.yml
-    hello:
-        pattern:  /hello/:name
-        defaults: { _controller: HelloBundle:Hello:index }
+    .. code-block:: yaml
+
+        # src/Application/HelloBundle/Resources/config/routing.yml
+        hello:
+            pattern:  /hello/:name
+            defaults: { _controller: HelloBundle:Hello:index }
+
+    .. code-block:: xml
+
+        <!-- src/Application/HelloBundle/Resources/config/routing.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+
+        <routes xmlns="http://www.symfony-project.org/schema/routing"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://www.symfony-project.org/schema/routing http://www.symfony-project.org/schema/routing/routing-1.0.xsd">
+
+            <route id="hello" pattern="/hello/:name">
+                <default key="_controller">HelloBundle:Hello:index</default>
+            </route>
+        </routes>
+
+    .. code-block:: php
+
+        // src/Application/HelloBundle/Resources/config/routing.php
+        use Symfony\Component\Routing\RouteCollection;
+        use Symfony\Component\Routing\Route;
+
+        $collection = new RouteCollection();
+        $collection->addRoute('hello', new Route('/hello/:name', array(
+            '_controller' => 'HelloBundle:Hello:index',
+        )));
+
+        return $collection;
 
 Here we go! As you can see, the "``/hello/:name``" resource pattern (a string
 beginning with a colon like ``:name`` is a placeholder) is mapped to a
@@ -142,7 +218,7 @@ The controller is responsible for returning a representation of the resource
 
     namespace Application\HelloBundle\Controller;
 
-    use Symfony\Framework\FoundationBundle\Controller;
+    use Symfony\Bundle\FrameworkBundle\Controller;
 
     class HelloController extends Controller
     {
@@ -172,11 +248,11 @@ The code is pretty straightforward but let's explain this code line by line:
   (``HelloBundle:Hello:index``) with the variables passed as a second
   argument.
 
-But what is a bundle? All the code you write in a Symfony project is organized
-in bundles. In Symfony speak, a bundle is a structured set of files (PHP
-files, stylesheets, JavaScripts, images, ...) that implements a single feature
-(a blog, a forum, ...) and which can be easily shared with other developers.
-In our example, we only have one bundle, ``HelloBundle``.
+But what is a :term:`bundle`? All the code you write in a Symfony project is
+organized in bundles. In Symfony speak, a bundle is a structured set of files
+(PHP files, stylesheets, JavaScripts, images, ...) that implements a single
+feature (a blog, a forum, ...) and which can be easily shared with other
+developers. In our example, we only have one bundle, ``HelloBundle``.
 
 Templates
 ~~~~~~~~~

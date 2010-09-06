@@ -1,5 +1,5 @@
-Quick Tour
-==========
+Quick Tour (with Twig)
+======================
 
 Get started fast with the Symfony2 Quick Tour:
 
@@ -9,6 +9,6 @@ Get started fast with the Symfony2 Quick Tour:
    :numbered:
 
    the_big_picture
-   the_view
+   the_view_with_twig
    the_controller
    the_architecture

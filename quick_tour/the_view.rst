@@ -1,20 +1,15 @@
-.. index::
-   single: View
-   single: MVC; View
-
 The View
 ========
 
-After reading the first part of this tutorial, you have decided that Symfony
+After reading the first part of this tutorial, you have decided that Symfony2
 was worth another 10 minutes. Good for you. In this second part, you will
-learn more about the Symfony template system. As seen before, Symfony uses PHP
-as its default template engine but adds some nice features on top of if to
+learn more about the Symfony2 template system. As seen before, Symfony2 uses
+PHP as its default template engine but adds some nice features on top of if to
 make it more powerful.
 
-.. tip::
-   Instead of PHP, you can also use :doc:`Twig </guides/Twig>` as the default
-   template engine with Symfony2. If makes your templates more concise and
-   more web designer friendly.
+Instead of PHP, you can also use `Twig`_ (it makes your templates more concise
+and more friendly for web designers). If you prefer to use `Twig`, read the
+alternative :doc:`View with Twig <the_view_with_twig>` chapter.
 
 .. index::
   single: Templating; Layout
@@ -32,32 +27,32 @@ The ``index`` template is decorated by ``layout.php``, thanks to the
 
 .. code-block:: html+php
 
-    # src/Application/HelloBundle/Resources/views/Hello/index.php
+    <!-- src/Application/HelloBundle/Resources/views/Hello/index.php -->
     <?php $view->extend('HelloBundle::layout') ?>
 
     Hello <?php echo $name ?>!
 
 The ``HelloBundle::layout`` notation sounds familiar, doesn't it? It is the same
 notation as for referencing a template. The ``::`` part simply means that the
-controller element is empty, so the corresponding file is directly stored in
+controller element is empty, so the corresponding file is directly stored under
 ``views/``.
 
 Now, let's have a look at the ``layout.php`` file:
 
 .. code-block:: html+php
 
-    # src/Application/HelloBundle/Resources/views/layout.php
+    <!-- src/Application/HelloBundle/Resources/views/layout.php -->
     <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
     <html>
         <head>
             <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         </head>
         <body>
-            <?php $view->slots->output('_content') ?>
+            <?php $view['slots']->output('_content') ?>
         </body>
     </html>
 
-The ``$view->slots->output('_content')`` expression is replaced by the content
+The ``$view['slots']->output('_content')`` expression is replaced by the content
 of the child template, ``index.php`` (more on slots in the next section).
 
 As you can see, Symfony provides methods on a mysterious ``$view`` object. In a
@@ -65,9 +60,11 @@ template, the ``$view`` variable is always available and refers to a special
 object that provides a bunch of methods and properties that make the template
 engine tick.
 
-Symfony also supports multiple decoration levels: a layout can itself be
-decorated by another one. This technique is really useful for large projects
-and is made even more powerful when used in combination with slots.
+.. tip::
+   Symfony also supports multiple decoration levels: a layout can itself be
+   decorated by another one. This technique is really useful for large
+   projects and is made even more powerful when used in combination with
+   slots.
 
 .. index::
    single: Templating; Slot
@@ -81,10 +78,10 @@ decorating the template. In the index template, define a ``title`` slot:
 
 .. code-block:: html+php
 
-    # src/Application/HelloBundle/Resources/views/Hello/index.php
+    <!-- src/Application/HelloBundle/Resources/views/Hello/index.php -->
     <?php $view->extend('HelloBundle::layout') ?>
 
-    <?php $view->slots->set('title', 'Hello World app') ?>
+    <?php $view['slots']->set('title', 'Hello World app') ?>
 
     Hello <?php echo $name ?>!
 
@@ -92,14 +89,14 @@ And change the layout to output the title in the header:
 
 .. code-block:: html+php
 
-    # src/Application/HelloBundle/Resources/views/layout.php
+    <!-- src/Application/HelloBundle/Resources/views/layout.php -->
     <html>
         <head>
-            <title><?php $view->slots->output('title', 'Default Title') ?></title>
+            <title><?php $view['slots']->output('title', 'Default Title') ?></title>
             <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         </head>
         <body>
-            <?php $view->slots->output('_content') ?>
+            <?php $view['slots']->output('_content') ?>
         </body>
     </html>
 
@@ -111,9 +108,9 @@ For large slots, there is also an extended syntax:
 
 .. code-block:: html+php
 
-    <?php $view->slots->start('title') ?>
+    <?php $view['slots']->start('title') ?>
         Some large amount of HTML
-    <?php $view->slots->stop() ?>
+    <?php $view['slots']->stop() ?>
 
 .. index::
    single: Templating; Include
@@ -128,14 +125,14 @@ Create a ``hello.php`` template:
 
 .. code-block:: html+php
 
-    # src/Application/HelloBundle/Resources/views/Hello/hello.php
+    <!-- src/Application/HelloBundle/Resources/views/Hello/hello.php -->
     Hello <?php echo $name ?>!
 
 And change the ``index.php`` template to include it:
 
 .. code-block:: html+php
 
-    # src/Application/HelloBundle/Resources/views/Hello/index.php
+    <!-- src/Application/HelloBundle/Resources/views/Hello/index.php -->
     <?php $view->extend('HelloBundle::layout') ?>
 
     <?php echo $view->render('HelloBundle:Hello:hello', array('name' => $name)) ?>
@@ -158,8 +155,8 @@ template, simply use the following code:
 
 .. code-block:: html+php
 
-    # src/Application/HelloBundle/Resources/views/Hello/index.php
-    <?php $view->actions->output('HelloBundle:Hello:fancy', array('name' => $name, 'color' => 'green')) ?>
+    <!-- src/Application/HelloBundle/Resources/views/Hello/index.php -->
+    <?php $view['actions']->output('HelloBundle:Hello:fancy', array('name' => $name, 'color' => 'green')) ?>
 
 Here, the ``HelloBundle:Hello:fancy`` string refers to the ``fancy`` action of the
 ``Hello`` controller::
@@ -179,8 +176,9 @@ Here, the ``HelloBundle:Hello:fancy`` string refers to the ``fancy`` action of t
         // ...
     }
 
-But where is the ``$view->actions`` property defined? Like ``$view->slots``, it's
-called a template helper, and the next section tells you more about those.
+But where is the ``$view['actions']`` array element defined? Like
+``$view['slots']``, it's called a template helper, and the next section tells
+you more about those.
 
 .. index::
    single: Templating; Helpers
@@ -202,7 +200,7 @@ can be easily updated by changing the configuration:
 
 .. code-block:: html+php
 
-    <a href="<?php echo $view->router->generate('hello', array('name' => 'Thomas')) ?>">
+    <a href="<?php echo $view['router']->generate('hello', array('name' => 'Thomas')) ?>">
         Greet Thomas!
     </a>
 
@@ -226,9 +224,9 @@ Symfony provides three helpers to deal with them easily: ``assets``,
 
 .. code-block:: html+php
 
-    <link href="<?php echo $view->assets->getUrl('css/blog.css') ?>" rel="stylesheet" type="text/css" />
+    <link href="<?php echo $view['assets']->getUrl('css/blog.css') ?>" rel="stylesheet" type="text/css" />
 
-    <img src="<?php echo $view->assets->getUrl('images/logo.png') ?>" />
+    <img src="<?php echo $view['assets']->getUrl('images/logo.png') ?>" />
 
 The ``assets`` helper's main purpose is to make your application more portable.
 Thanks to this helper, you can move the application root directory anywhere under your
@@ -239,16 +237,16 @@ Similarly, you can manage your stylesheets and JavaScripts with the
 
 .. code-block:: html+php
 
-    <?php $view->javascripts->add('js/product.js') ?>
-    <?php $view->stylesheets->add('css/product.css') ?>
+    <?php $view['javascripts']->add('js/product.js') ?>
+    <?php $view['stylesheets']->add('css/product.css') ?>
 
 The ``add()`` method defines dependencies. To actually output these assets, you
 need to also add the following code in your main layout:
 
 .. code-block:: html+php
 
-    <?php echo $view->javascripts ?>
-    <?php echo $view->stylesheets ?>
+    <?php echo $view['javascripts'] ?>
+    <?php echo $view['stylesheets'] ?>
 
 Final Thoughts
 --------------
@@ -265,3 +263,5 @@ under a very flexible architecture.
 But I get ahead of myself. First, you need to learn more about the controller
 and that's exactly the topic of the next part of this tutorial. Ready for
 another 10 minutes with Symfony?
+
+.. _Twig: http://www.twig-project.org/
