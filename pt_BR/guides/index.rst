@@ -1,7 +1,7 @@
-Guides
-======
+Manuais
+=======
 
-Dive into Symfony2 with the topical guides:
+Mergulhe no Symfony2 através dos manuais:
 
 .. toctree::
     :hidden:

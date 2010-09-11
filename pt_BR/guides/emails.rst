@@ -4,12 +4,12 @@
 Emails
 ======
 
-Symfony2 leverages the power of `Swiftmailer`_ to send emails.
+O Symfony2 aproveita o poder do `Swiftmailer`_ para enviar emails.
 
-Installation
-------------
+Instalação
+----------
 
-Enable ``SwiftmailerBundle`` in your kernel::
+Ative o ``SwiftmailerBundle`` no seu kernel::
 
     public function registerBundles()
     {
@@ -21,10 +21,10 @@ Enable ``SwiftmailerBundle`` in your kernel::
       // ...
     }
 
-Configuration
--------------
+Configuração
+------------
 
-The only mandatory configuration parameter is ``transport``:
+O único parametro obrigatório de configuração é o ``transport``:
 
 .. configuration-block::
 
@@ -66,7 +66,7 @@ The only mandatory configuration parameter is ``transport``:
             'password'   => "your_password",
         ));
 
-The following configuration attribute are available:
+Os seguintes atributos de configuração estão disponíveis:
 
 * ``transport`` (``smtp``, ``mail``, ``sendmail``, or ``gmail``)
 * ``username``
@@ -77,17 +77,17 @@ The following configuration attribute are available:
 * ``auth_mode`` (``plain``, ``login``, or ``cram-md5``)
 * ``type``
 * ``delivery_strategy`` (``realtime``, ``spool``, ``single_address``, or ``none``)
-* ``delivery_address`` (an email address where to send ALL emails)
+* ``delivery_address`` (um endereço de email para onde mandar todos os emails)
 * ``disable_delivery``
 
-Sending Emails
---------------
+Enviando Emails
+---------------
 
-The mailer is accessible via the ``mailer`` service; from an action::
+O envio de emails é acessivel através do serviço ``mailer``; de uma action::
 
     public function indexAction($name)
     {
-        // get the mailer first (mandatory to initialize Swift Mailer)
+        // pega primeiro o mailer (obrigatório para inicializar o Swift Mailer)
         $mailer = $this->container['mailer'];
 
         $message = \Swift_Message::newInstance()
@@ -102,14 +102,14 @@ The mailer is accessible via the ``mailer`` service; from an action::
     }
 
 .. note::
-   To keep things decoupled, the email body has been stored in a template,
-   rendered with the ``renderView()`` method.
+   Para manter as coisas desacopladas, o corpo do email foi guardado em um template,
+   renderizado com o método ``renderView()``.
 
-Using Gmail
------------
+Usando o Gmail
+--------------
 
 If you want to use your Gmail account to send emails, use the special
-``gmail`` transport:
+Se você quer usar sua conta do Gmail para enviar emails, use o transporte especial ``gmail``:
 
 .. configuration-block::
 
