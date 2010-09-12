@@ -218,7 +218,7 @@ The controller is responsible for returning a representation of the resource
 
     namespace Application\HelloBundle\Controller;
 
-    use Symfony\Bundle\FrameworkBundle\Controller;
+    use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
     class HelloController extends Controller
     {
