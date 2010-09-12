@@ -18,19 +18,19 @@ git clone git://github.com/symfony/symfony.git symfony
 git clone git://github.com/doctrine/doctrine2.git doctrine
 cd doctrine
 git checkout -b v2.0.0-BETA3 2.0.0-BETA3
-cd ..
+cd $DIR/vendor
 
 # Doctrine DBAL
 git clone git://github.com/doctrine/dbal.git doctrine-dbal
 cd doctrine-dbal
 git checkout -b v2.0.0-BETA3 2.0.0-BETA3
-cd ..
+cd $DIR/vendor
 
 # Doctrine Common
 git clone git://github.com/doctrine/common.git doctrine-common
 cd doctrine-common
 git checkout -b v2.0.0-BETA4 2.0.0-BETA4
-cd ..
+cd $DIR/vendor
 
 # Doctrine migrations
 git clone git://github.com/doctrine/migrations.git doctrine-migrations
@@ -39,7 +39,7 @@ git clone git://github.com/doctrine/migrations.git doctrine-migrations
 git clone git://github.com/doctrine/mongodb-odm.git doctrine-mongodb
 cd doctrine-mongodb
 git checkout -b v1.0.0BETA1 1.0.0BETA1
-cd ..
+cd $DIR/vendor
 
 # Propel
 svn co http://svn.propelorm.org/branches/1.5/ propel
@@ -51,7 +51,7 @@ svn co http://svn.phing.info/tags/2.3.3 phing
 git clone git://github.com/swiftmailer/swiftmailer.git swiftmailer
 cd swiftmailer
 git checkout -b 4.1 origin/4.1
-cd ..
+cd $DIR/vendor
 
 # Twig
 git clone git://github.com/fabpot/Twig.git twig
