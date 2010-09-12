@@ -110,7 +110,8 @@ instance, a ``HelloController`` controller is stored in
 ``Bundle/HelloBundle/Controller/HelloController.php`` and the fully qualified
 class name is ``Bundle\HelloBundle\Controller\HelloController``.
 
-All classes and files must follow the Symfony2 coding `standards`_.
+All classes and files must follow the Symfony2 coding :doc:`standards
+</contributing/code/standards>`.
 
 Some classes should be seen as facades and should be as short as possible,
 like Commands, Helpers, Listeners, and Controllers.
@@ -168,8 +169,6 @@ must provide two slots: ``content`` and ``head``).
 Configuration
 -------------
 
-Configuration must be done via the Symfony2 built-in `mechanism`_. A bundle
-should provide all its default configurations in XML.
-
-.. _standards: http://www.symfony-reloaded.org/contributing/Code/Standards
-.. _mechanism: http://www.symfony-reloaded.org/guides/Bundles/Configuration
+Configuration must be done via the Symfony2 built-in :doc:`mechanism
+</guides/bundles/configuration>`. A bundle should provide all its default
+configurations in XML.
