@@ -21,7 +21,7 @@
  * @author     Eric Dobbs <eric@dobbse.net> (Torque)
  * @author     Henning P. Schmiedehausen <hps@intermeta.de> (Torque)
  * @author     Sam Joseph <sam@neurogrid.com> (Torque)
- * @version    $Revision: 1765 $
+ * @version    $Revision: 1941 $
  * @package    propel.runtime.query
  */
 class Criteria implements IteratorAggregate
@@ -200,12 +200,12 @@ class Criteria implements IteratorAggregate
 	/** To start the results at a row other than the first one. */
 	protected $offset = 0;
 
-  /**
-   * Comment to add to the SQL query
+	/**
+	 * Comment to add to the SQL query
 	 * @var        string
-   */
-  protected $queryComment;
-  
+	 */
+	protected $queryComment;
+	
 	// flag to note that the criteria involves a blob.
 	protected $blobFlag = null;
 
@@ -308,7 +308,7 @@ class Criteria implements IteratorAggregate
 		return $this->asColumns;
 	}
 
-		/**
+	/**
 	 * Returns the column name associated with an alias (AS-column).
 	 *
 	 * @param      string $alias
@@ -793,17 +793,16 @@ class Criteria implements IteratorAggregate
 	public function addJoin($left, $right, $operator = null)
 	{
 		$join = new Join();
-    if (!is_array($left)) {
-      // simple join
-      $join->addCondition($left, $right);
-    } else {
-      // join with multiple conditions
-      // deprecated: use addMultipleJoin() instead
-      foreach ($left as $key => $value)
-      {
-        $join->addCondition($value, $right[$key]);
-      }
-    }
+		if (!is_array($left)) {
+			// simple join
+			$join->addCondition($left, $right);
+		} else {
+			// join with multiple conditions
+			// deprecated: use addMultipleJoin() instead
+			foreach ($left as $key => $value) {
+				$join->addCondition($value, $right[$key]);
+			}
+		}
 		$join->setJoinType($operator);
 		
 		return $this->addJoinObject($join);
@@ -828,10 +827,10 @@ class Criteria implements IteratorAggregate
 	 * @return     Criteria A modified Criteria object.
 	 */
 	public function addMultipleJoin($conditions, $joinType = null) 
-  {
+	{
 		$join = new Join();
 		foreach ($conditions as $condition) {
-		  $join->addCondition($condition[0], $condition[1], isset($condition[2]) ? $condition[2] : Criteria::EQUAL);
+			$join->addCondition($condition[0], $condition[1], isset($condition[2]) ? $condition[2] : Criteria::EQUAL);
 		}
 		$join->setJoinType($joinType);
 		

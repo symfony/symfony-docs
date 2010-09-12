@@ -14,7 +14,7 @@
  * And an additional condition for every read query to only consider rows with no deletion date
  *
  * @author     François Zaninotto
- * @version    $Revision: 1612 $
+ * @version    $Revision: 1937 $
  * @package    propel.generator.behavior.concrete_inheritance
  */
 class ConcreteInheritanceParentBehavior extends Behavior
@@ -44,7 +44,7 @@ class ConcreteInheritanceParentBehavior extends Behavior
 	public function objectMethods($builder)
 	{
 		$this->builder = $builder;
-		$script .= '';
+		$script = '';
 		$this->addHasChildObject($script);
 		$this->addGetChildObject($script);
 		

@@ -53,6 +53,7 @@ class Twig_Extension_Core extends Twig_Extension
             'upper'      => new Twig_Filter_Function('strtoupper'),
             'lower'      => new Twig_Filter_Function('strtolower'),
             'striptags'  => new Twig_Filter_Function('strip_tags'),
+            'constant'   => new Twig_Filter_Function('twig_constant_filter'),
 
             // array helpers
             'join'    => new Twig_Filter_Function('twig_join_filter'),
@@ -95,6 +96,7 @@ class Twig_Extension_Core extends Twig_Extension
             'sameas'      => new Twig_Test_Function('twig_test_sameas'),
             'none'        => new Twig_Test_Function('twig_test_none'),
             'divisibleby' => new Twig_Test_Function('twig_test_divisibleby'),
+            'constant'    => new Twig_Test_Function('twig_test_constant'),
         );
     }
 
@@ -197,6 +199,11 @@ function twig_cycle_filter($values, $i)
     return $values[$i % count($values)];
 }
 
+function twig_constant_filter($constant)
+{
+    return constant($constant);
+}
+
 /*
  * Each type specifies a way for applying a transformation to a string
  * The purpose is for the string to be "escaped" so it is suitable for
@@ -211,7 +218,7 @@ function twig_cycle_filter($values, $i)
  */
 function twig_escape_filter(Twig_Environment $env, $string, $type = 'html')
 {
-    if (!is_string($string)) {
+    if (!is_string($string) && !(is_object($string) && method_exists($string, '__toString'))) {
         return $string;
     }
 
@@ -331,4 +338,9 @@ function twig_test_even($value)
 function twig_test_odd($value)
 {
     return $value % 2 == 1;
+}
+
+function twig_test_constant($value, $constant)
+{
+    return constant($constant) === $value;
 }

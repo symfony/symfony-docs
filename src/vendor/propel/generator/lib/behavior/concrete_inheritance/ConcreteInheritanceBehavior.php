@@ -16,7 +16,7 @@ require_once 'ConcreteInheritanceParentBehavior.php';
  * And an additional condition for every read query to only consider rows with no deletion date
  *
  * @author     François Zaninotto
- * @version    $Revision: 1906 $
+ * @version    $Revision: 1937 $
  * @package    propel.generator.behavior.concrete_inheritance
  */
 class ConcreteInheritanceBehavior extends Behavior
@@ -115,7 +115,8 @@ class ConcreteInheritanceBehavior extends Behavior
 	
 	protected function getParentTable()
 	{
-		return $this->getTable()->getDatabase()->getTable($this->getParameter('extends'));
+		$database = $this->getTable()->getDatabase();
+		return $database->getTable($database->getTablePrefix() . $this->getParameter('extends'));
 	}
 	
 	protected function isCopyData()
@@ -162,7 +163,7 @@ class ConcreteInheritanceBehavior extends Behavior
 			return;
 		}
 		$this->builder = $builder;
-		$script .= '';
+		$script = '';
 		$this->addObjectGetParentOrCreate($script);
 		$this->addObjectGetSyncParent($script);
 		

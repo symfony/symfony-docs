@@ -27,7 +27,7 @@
  * @author     Jon S. Stevens <jon@latchkey.com> (Torque)
  * @author     Brett McLaughlin <bmclaugh@algx.net> (Torque)
  * @author     Daniel Rall <dlr@finemaltcoding.com> (Torque)
- * @version    $Revision: 1909 $
+ * @version    $Revision: 1943 $
  * @package    propel.runtime.adapter
  */
 abstract class DBAdapter
@@ -45,9 +45,7 @@ abstract class DBAdapter
 		'mysql'  => 'DBMySQL',
 		'mysqli' => 'DBMySQLi',
 		'mssql'  => 'DBMSSQL',
-		'dblib'  => 'DBMSSQL',
-		'sqlsrv' => 'DBSQLSRV',	
-		'sybase' => 'DBSybase',
+		'sqlsrv' => 'DBSQLSRV',
 		'oracle' => 'DBOracle',
 		'oci'    => 'DBOracle',
 		'pgsql'  => 'DBPostgres',
@@ -284,6 +282,18 @@ abstract class DBAdapter
 	}
 
 	/**
+	 * Allows manipulation of the query string before PDOStatement is instantiated.
+	 *
+	 * @param      string $sql The sql statement
+	 * @param      array $params array('column' => ..., 'table' => ..., 'value' => ...)
+	 * @param      Criteria $values
+	 * @param      DatabaseMap $dbMap
+	 */
+	public function cleanupSQL(&$sql, array &$params, Criteria $values, DatabaseMap $dbMap)
+	{
+	}
+
+	/**
 	 * Modifies the passed-in SQL to add LIMIT and/or OFFSET.
 	 */
 	public abstract function applyLimit(&$sql, $offset, $limit);
@@ -294,7 +304,7 @@ abstract class DBAdapter
 	 * @param      mixed $seed (optional) seed value for databases that support this
 	 */
 	public abstract function random($seed = null);
-	
+
 	/**
 	 * Returns the "DELETE FROM <table> [AS <alias>]" part of DELETE query.
 	 * @return     string

@@ -229,6 +229,7 @@ abstract class OMBuilder extends DataModelBuilder
 	
 	public function getUseStatements($ignoredNamespace = null)
 	{
+		$script = '';
 		$declaredClasses = $this->declaredClasses;
 		unset($declaredClasses[$ignoredNamespace]);
 		ksort($declaredClasses);
