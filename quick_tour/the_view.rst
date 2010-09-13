@@ -42,29 +42,40 @@ Now, let's have a look at the ``layout.php`` file:
 .. code-block:: html+php
 
     <!-- src/Application/HelloBundle/Resources/views/layout.php -->
+    <?php $view->extend('::layout') ?>
+
+    <h1>Hello Application</h1>
+
+    <?php $view['slots']->output('_content') ?>
+
+The layout is itself decorated by another layout (``::layout``). Symfony
+supports multiple decoration levels: a layout can itself be decorated by
+another one. When the bundle part of the template name is empty, views are
+looked for in the ``hello/views/`` directory. This directory store global
+views for your entire project:
+
+.. code-block:: html+php
+
+    <!-- hello/views/layout.php -->
     <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
     <html>
         <head>
             <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+            <title><?php $view['slots']->output('title', 'Hello Application') ?></title>
         </head>
         <body>
             <?php $view['slots']->output('_content') ?>
         </body>
     </html>
 
-The ``$view['slots']->output('_content')`` expression is replaced by the content
-of the child template, ``index.php`` (more on slots in the next section).
+For both layouts, the ``$view['slots']->output('_content')`` expression is
+replaced by the content of the child template, ``index.php`` and
+``layout.php`` respectively (more on slots in the next section).
 
 As you can see, Symfony provides methods on a mysterious ``$view`` object. In a
 template, the ``$view`` variable is always available and refers to a special
 object that provides a bunch of methods and properties that make the template
 engine tick.
-
-.. tip::
-   Symfony also supports multiple decoration levels: a layout can itself be
-   decorated by another one. This technique is really useful for large
-   projects and is made even more powerful when used in combination with
-   slots.
 
 .. index::
    single: Templating; Slot
@@ -85,20 +96,15 @@ decorating the template. In the index template, define a ``title`` slot:
 
     Hello <?php echo $name ?>!
 
-And change the layout to output the title in the header:
+The base layout already have the code to output the title in the header:
 
 .. code-block:: html+php
 
-    <!-- src/Application/HelloBundle/Resources/views/layout.php -->
-    <html>
-        <head>
-            <title><?php $view['slots']->output('title', 'Default Title') ?></title>
-            <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-        </head>
-        <body>
-            <?php $view['slots']->output('_content') ?>
-        </body>
-    </html>
+    <!-- hello/views/layout.php -->
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <title><?php $view['slots']->output('title', 'Hello Application') ?></title>
+    </head>
 
 The ``output()`` method inserts the content of a slot and optionally takes a
 default value if the slot is not defined. And ``_content`` is just a special
