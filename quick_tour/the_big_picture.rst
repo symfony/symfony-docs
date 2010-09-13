@@ -232,7 +232,7 @@ The code is pretty straightforward but let's explain this code line by line:
 
 * *line 3*: Symfony takes advantage of new PHP 5.3 features and as such, all
   controllers are properly namespaced (the namespace is the first part of the
-  ``_controler`` routing value: ``HelloBundle``).
+  ``_controller`` routing value: ``HelloBundle``).
 
 * *line 7*: The controller name is the concatenation of the second part of the
   ``_controller`` routing value (``Hello``) and ``Controller``. It extends the
