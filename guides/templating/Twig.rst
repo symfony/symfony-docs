@@ -227,7 +227,8 @@ configuration, and tag it with ``twig.extension``:
         services:
             twig.extension.your_extension_name:
                 class: Fully\Qualified\Extension\Class\Name
-                tag:   { name: twig.extension }
+                tags:
+                    - { name: twig.extension }
 
     .. code-block:: xml
 

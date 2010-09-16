@@ -18,7 +18,8 @@ name):
         services:
             templating.renderer.your_renderer_name:
                 class: Fully\Qualified\Renderer\Class\Name
-                tag:   { name: templating.renderer, alias: alias_name }
+                tags:
+                    - { name: templating.renderer, alias: alias_name }
 
     .. code-block:: xml
 
@@ -49,7 +50,8 @@ attribute (the helper will be accessible via this name is the templates):
         services:
             templating.helper.your_helper_name:
                 class: Fully\Qualified\Helper\Class\Name
-                tag:   { name: templating.helper, alias: alias_name }
+                tags:
+                    - { name: templating.helper, alias: alias_name }
 
     .. code-block:: xml
 

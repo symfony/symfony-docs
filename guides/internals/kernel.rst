@@ -251,7 +251,8 @@ configuration, and tag it with ``kernel.listener``:
         services:
             kernel.listener.your_listener_name:
                 class: Fully\Qualified\Listener\Class\Name
-                tag:   { name: kernel.listener }
+                tags:
+                    - { name: kernel.listener }
 
     .. code-block:: xml
 
