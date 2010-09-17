@@ -2,19 +2,19 @@
    single: Forms; Validators
    single: Validators
 
-Validator
+Validador
 =========
 
-The Basics
-----------
+O Básico
+--------
 
-The new Validator component is based on the `JSR303 Bean Validation
-specification`_. What? A Java specification in PHP? You heard right, but
-it's not as bad as it sounds. Let's look at how we use it in PHP.
+O novo componente validador é baseado na `Especificação de Validação JSR303 Bean`_. 
+O quê? A especificação do Java no PHP? Você ouviu direito, 
+mas não é tão ruim quanto parece. Vamos ver como usá-la em PHP.
 
-The Validator is designed to validate objects against different constraints.
-These constraints can be put on the class itself, on properties and on 
-methods prefixed with "get" or "is". Let's look at a sample configuration::
+O Validador é projetado para validar objetos comparando à diferentes constraints.
+Estas constraints podem ser colocadas na própria classe, em propriedades e nos 
+métodos prefixados com "get" ou "is". Vejamos um exemplo de configuração::
 
     class Author
     {
@@ -28,7 +28,7 @@ methods prefixed with "get" or "is". Let's look at a sample configuration::
       
       /**
        * @Validation({
-       *   @Email(message="Ok, seriously now. Your email address please")
+       *   @Email(message="Ok, sério agora. Seu endereço de e-mail, por favor")
        * })
        */
       public function getEmail()
@@ -36,14 +36,14 @@ methods prefixed with "get" or "is". Let's look at a sample configuration::
         return 'foobar';
       }
     }
-    
-This snippet shows a very simple ``Author`` class with a property and a getter. 
-Each constraint has a name, most of them also have a couple of options. Here we
-configured the constraints with annotations, but Symfony2 also offers many
-other configuration drivers.
 
-Because the annotation driver depends on the Doctrine library, it is not enabled
-by default. You can enable it in your ``config.yml``:
+Este trecho de código mostra uma classe ``Author`` muito simples com uma propriedade 
+e um getter. Cada constraint tem um nome, e a maioria deles também tem algumas 
+opções. Aqui nós configuramos as constraints com anotações, mas o Symfony2 também 
+oferece muitos outros drivers de configuração.
+
+Devido ao driver de anotação depender da biblioteca Doctrine, ele não é habilitado
+por padrão. Você pode habilitá-lo em seu ``config.yml``:
 
 .. code-block:: yaml
 
@@ -51,7 +51,7 @@ by default. You can enable it in your ``config.yml``:
     web.validation:
       annotations: true
 
-Now let's try to validate an object::
+Agora vamos validar um objeto::
 
     $validator = $this->container->getValidatorService();
     
@@ -60,72 +60,72 @@ Now let's try to validate an object::
     
     print $validator->validate($author);
     
-You should see the following output::
+Você deverá ver o seguinte resultado::
 
     Author.firstName:
       This value is too short. It should have 4 characters or more
     Author.email:
-      Ok, seriously now. Your email address please
+      Ok, sério agora. Seu endereço de email, por favor
 
-The ``validate()`` method returns a ``ConstraintViolationList`` object that can
-simply be printed or processed in your code. That was easy!
+O método ``validate()`` retorna um objeto ``ConstraintViolationList`` que pode 
+simplesmente ser impresso ou processado em seu código. Essa foi fácil!
 
 .. index::
    single: Validators; Constraints
 
-The Constraints
----------------
+As Constraints
+--------------
 
-Symfony bundles many different constraints. The following list will show you
-which ones are available and how you can use and configure them. Some
-constraints have a default option. If you only set this option, you can leave
-away the option name::
+O Symfony possui muitas constraints diferentes. A lista a seguir irá mostrar-lhe
+quais estão disponíveis e como você pode usar e configurá-las. Algumas 
+constraints têm uma opção padrão. Se você apenas definir essa opção, 
+você pode omitir o seu nome::
 
     /** @Validation({ @Min(limit=3) }) */
 
-is identical to::
+é idêntico à::
 
     /** @Validation({ @Min(3) }) */
 
 AssertFalse
 ~~~~~~~~~~~
 
-Validates that a value is ``false``. Very useful for testing return values of
-methods::
+Valida se um valor é ``false``. Muito útil para testar os valores de retorno dos 
+métodos::
 
     /** @Validation({ @AssertFalse }) */
     public function isInjured();
 
-Options:
+Opções:
 
-* message: The error message if validation fails
+* message: A mensagem de erro se a validação falhar
 
 AssertTrue
 ~~~~~~~~~~
 
-Works like ``AssertFalse``.
+Funciona como o ``AssertFalse``.
 
 NotBlank
 ~~~~~~~~
 
-Validates that a value is not empty::
+Valida se um valor não está vazio::
 
     /** @Validation({ @NotBlank }) */
     private $firstName;
 
-Options:
+Opções:
 
-* message: The error message if validation fails
+* message: A mensagem de erro se a validação falhar
 
 Blank
 ~~~~~
 
-Works like ``NotBlank``.
+Funciona como o ``NotBlank``.
 
 NotNull
 ~~~~~~~
 
-Validates that a value is not ``NULL``::
+Valida se um valor não é ``NULL``::
 
     /** @Validation({ @NotNull }) */
     private $firstName;
@@ -133,59 +133,59 @@ Validates that a value is not ``NULL``::
 Null
 ~~~~
 
-Works like ``NotNull``.
+Funciona como o ``NotNull``.
 
 AssertType
 ~~~~~~~~~~
 
-Validates that a value has a specific data type::
+Valida se um valor tem um tipo de dados específico::
 
     /** @Validation({ @AssertType("integer") }) */
     private $age;
 
-Options:
+Opções:
 
-* type (default): The type
+* type (default): O tipo
 
 Choice
 ~~~~~~
 
-Validates that a value is one or more of a list of choices::
+Valida se um valor é um ou mais de uma lista de opções::
 
     /** @Validation({ @Choice({"male", "female"}) }) */
     private $gender;
 
-Options:
+Opções:
 
-* choices (default): The available choices
-* callback: Can be used instead of ``choices``. A static callback method
-  returning the choices. If you set this to a string, the method is expected
-  to be in the validated class.
-* multiple: Whether multiple choices are allowed. Default: ``false``
-* min: The minimum amount of selected choices
-* max: The maximum amount of selected choices
-* message: The error message if validation fails
-* minMessage: The error message if ``min`` validation fails
-* maxMessage: The error message if ``max`` validation fails
+* choices (default): As opções disponíveis
+* callback: Pode ser usado em vez do ``choices``. Um método callback estático
+  retornando as escolhas. Se você definir como uma string, o método deve estar
+  na classe validada.
+* multiple: Se são permitidas escolhas múltiplas. Default: ``false``
+* min: A quantidade mínima de opções selecionadas
+* max: A quantidade máxima de opções selecionadas
+* message: A mensagem de erro se a validação falhar
+* minMessage: A mensagem de erro se a validação ``min`` falhar 
+* maxMessage: A mensagem de erro se a validação ``max`` falhar 
 
 Valid
 ~~~~~
 
-Validates that an object is valid. Can be put on properties or getters to
-validate related objects::
+Valida se um objeto é válido. Pode ser colocado em propriedades ou getters para 
+validar objetos relacionados::
 
     /** @Validation({ @Valid }) */
     private $address;
 
-Options:
+Opções:
 
-* class: The expected class of the object (optional)
-* message: The error message if the class doesn't match
+* class: A classe esperada do objeto (opcional)
+* message: A mensagem de erro se a classe não corresponde
 
 Collection
 ~~~~~~~~~~
 
-Validates array entries against different constraints::
+Valida entradas de array comparando a diferentes constraints::
 
     /**
      * @Validation({ @Collection(
@@ -198,167 +198,163 @@ Validates array entries against different constraints::
      */
     private $options = array();
     
-Options:
+Opções:
 
-* fields (default): An associative array of array keys and one or more
-  constraints
-* allowMissingFields: Whether some of the keys may not be present in the
-  array. Default: ``false``
-* allowExtraFields: Whether the array may contain keys not present in the
-  ``fields`` option. Default: ``false``
-* missingFieldsMessage: The error message if the ``allowMissingFields``
-  validation fails
-* allowExtraFields: The error message if the ``allowExtraFields`` validation
-  fails
+* fields (default): Um array associativo de chaves de array e uma ou mais constraints
+* allowMissingFields: Se alguma das chaves não estão presentes no array. Default: ``false``
+* allowExtraFields: Se o array pode conter chaves não presentes na opção 
+  ``fields``. Default: ``false``
+* missingFieldsMessage: A mensagem de erro se a validação ``allowMissingFields``
+  falhar 
+* allowExtraFields: A mensagem de erro se a validação ``allowExtraFields`` falhar 
 
 Date
 ~~~~
 
-Validates that a value is a valid date string with format ``YYYY-MM-DD``::
+Valida se um valor é uma string de data válida com o formato ``YYYY-MM-DD``::
 
     /** @Validation({ @Date }) */
     private $birthday;
 
-Options:
+Opções:
 
-* message: The error message if the validation fails
+* message: A mensagem de erro se a validação falhar
 
 DateTime
 ~~~~~~~~
 
-Validates that a value is a valid datetime string with format ``YYYY-MM-DD
+Valida se um valor é uma string datetime válida com o formato ``YYYY-MM-DD
 HH:MM:SS``::
 
     /** @Validation({ @DateTime }) */
     private $createdAt;
 
-Options:
+Opções:
 
-* message: The error message if the validation fails
+* message: A mensagem de erro se a validação falhar
 
 Time
 ~~~~
 
-Validates that a value is a valid time string with format ``HH:MM:SS``::
+Valida se um valor é uma string de tempo válida com o formato ``HH:MM:SS``::
 
     /** @Validation({ @Time }) */
     private $start;
 
-Options:
+Opções:
 
-* message: The error message if the validation fails
+* message: A mensagem de erro se a validação falhar
 
 Email
 ~~~~~
 
-Validates that a value is a valid email address::
+Valida se um valor é um endereço de e-mail válido::
 
     /** @Validation({ @Email }) */
     private $email;
 
-Options:
+Opções:
 
-* message: The error message if the validation fails
-* checkMX: Whether MX records should be checked for the domain. Default: ``false``
+* message: A mensagem de erro se a validação falhar
+* checkMX: Se os registros MX devem ser verificados para o domínio. Default: ``false``
 
 File
 ~~~~
 
-Validates that a value is an existing file::
+Valida se um valor é um arquivo existente::
 
     /** @Validation({ @File(maxSize="64k") }) */
     private $filename;
 
-Options:
+Opções:
 
-* maxSize: The maximum allowed file size. Can be provided in bytes, kilobytes
-  (with the suffix "k") or megabytes (with the suffix "M")
-* mimeTypes: One or more allowed mime types
-* notFoundMessage: The error message if the file was not found
-* notReadableMessage: The error message if the file could not be read
-* maxSizeMessage: The error message if ``maxSize`` validation fails
-* mimeTypesMessage: The error message if ``mimeTypes`` validation fails
+* maxSize: O tamanho máximo permitido. Pode ser fornecido em bytes, kilobytes (com o sufixo "k") ou megabytes (com o sufixo "M")
+* mimeTypes: Um ou mais tipos mime permitidos
+* notFoundMessage: A mensagem de erro se o arquivo não foi encontrado
+* notReadableMessage: A mensagem de erro se o arquivo não pôde ser lido
+* maxSizeMessage: A mensagem de erro se a validação ``maxSize`` falhar 
+* mimeTypesMessage: A mensagem de erro se a validação ``mimeTypes`` falhar 
 
 Max
 ~~~
 
-Validates that a value is at most the given limit::
+Valida se um valor está no máximo do limite estabelecido::
 
     /** @Validation({ @Max(99) }) */
     private $age;
 
-Options:
+Opções:
 
-* limit (default): The limit
-* message: The error message if validation fails
+* limit (default): O limite
+* message: A mensagem de erro se a validação falhar
 
 Min
 ~~~
 
-Works like ``Max``.
+Funciona como o ``Max``.
 
 MaxLength
 ~~~~~~~~~
 
-Validates that the string length of a value is at most the given limit::
+Valida se o comprimento da string do valor está no máximo do limite estabelecido::
 
     /** @Validation({ @MaxLength(32) }) */
     private $hash;
 
-Options:
+Opções:
 
-* limit (default): The size limit
-* message: The error message if validation fails
+* limit (default): O tamanho do limite
+* message: A mensagem de erro se a validação falhar
 
 MinLength
 ~~~~~~~~~
 
-Works like ``MaxLength``.
+Funciona como o ``MaxLength``.
 
 Regex
 ~~~~~
 
-Validates that a value matches the given regular expression::
+Valida se um valor corresponde à expressão regular fornecida::
 
     /** @Validation({ @Regex("/\w+/") }) */
     private $title;
 
-Options:
+Opções:
 
-* pattern (default): The regular expression pattern
-* match: Whether the pattern must be matched or must not be matched.
+* pattern (default): O padrão da expressão regular
+* match: Se o padrão deve ou não corresponder.
   Default: ``true``
-* message: The error message if validation fails
+* message: A mensagem de erro se a validação falhar
 
 Url
 ~~~
 
-Validates that a value is a valid URL::
+Valida se um valor é uma URL válida::
 
     /** @Validation({ @Url }) */
     private $website;
 
-Options:
+Opções:
 
-* protocols: A list of allowed protocols. Default: "http", "https", "ftp"
-  and "ftps".
-* message: The error message if validation fails
+* protocols: A lista de protocolos permitidos. Default: "http", "https", "ftp"
+  e "ftps".
+* message: A mensagem de erro se a validação falhar
 
 .. index::
    single: Validators; Configuration
 
-Other Configuration Drivers
----------------------------
+Outros drivers de configuração
+------------------------------
 
-As always in Symfony, there are multiple ways of configuring the constraints
-for your classes. Symfony supports the following four drivers.
+Como sempre no Symfony, existem várias formas de configurar as constraints para 
+as suas classes. O Symfony suporta os quatro seguintes drivers.
 
-XML Configuration
-~~~~~~~~~~~~~~~~~
+Configuração XML
+~~~~~~~~~~~~~~~~
 
-The XML driver is a little verbose, but has the benefit that the XML file can be
-validated to prevent errors. To use the driver, simply put a file called 
-``validation.xml`` in the ``Resources/config/`` directory of your bundle:
+O driver XML é um pouco prolixo, mas tem a vantagem de que o arquivo XML pode
+ser validado para evitar erros. Para usar o driver, basta colocar um arquivo 
+chamado ``validation.xml`` no diretório ``Resources/config/`` do seu pacote (bundle):
 
 .. code-block:: xml
 
@@ -381,12 +377,12 @@ validated to prevent errors. To use the driver, simply put a file called
       </class>
     </constraint-mapping>
 
-YAML Configuration
-~~~~~~~~~~~~~~~~~~
+Configuração YAML
+~~~~~~~~~~~~~~~~~
 
-The YAML driver offers the same functionality as the XML driver. To use it,
-put the file ``validation.yml`` in the ``Resources/config/`` directory of your
-bundle:
+O driver YAML oferece a mesma funcionalidade do driver XML. Para usá-lo, 
+coloque o arquivo ``validation.yml`` no diretório``Resources/config/`` do seu 
+pacote (bundle):
 
 .. code-block:: yaml
 
@@ -398,13 +394,13 @@ bundle:
           
       getters:
         email:
-          - Email: { message: "Ok, seriously now. Your email address please" }
+          - Email: { message: "Ok, sério agora. Seu endereço de e-mail, por favor" }
 
-PHP Configuration
-~~~~~~~~~~~~~~~~~
+Configuração PHP
+~~~~~~~~~~~~~~~~
 
-If you prefer to write configurations in plain old PHP, you can add the static
-method ``loadValidatorMetadata()`` to the classes that you want to validate::
+Se você preferir gravar as configurações em velho plain PHP, você pode adicionar 
+o método estático ``loadValidatorMetadata()`` para as classes que você deseja validar:
 
     use Symfony\Components\Validator\Constraints;
     use Symfony\Components\Validator\Mapping\ClassMetadata;
@@ -421,7 +417,7 @@ method ``loadValidatorMetadata()`` to the classes that you want to validate::
       }
     }
 
-You can use either of the configuration drivers, or all together. Symfony will
-merge all the information it can find.
+Você pode usar qualquer um dos drivers de configuração ou todos juntos. 
+O symfony irá fazer o merge de todas as informações que puder encontrar.
 
-.. _JSR303 Bean Validation specification: http://jcp.org/en/jsr/detail?id=303
+.. _Especificação de Validação JSR303 Bean: http://jcp.org/en/jsr/detail?id=303
