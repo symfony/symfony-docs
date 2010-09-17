@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    targetNamespace="http://doctrine-project.org/schemas/odm/doctrine-mongo-mapping"
+    xmlns:odm="http://doctrine-project.org/schemas/odm/doctrine-mongo-mapping"
+    elementFormDefault="qualified">
+
+  <xs:annotation>
+    <xs:documentation><![CDATA[
+       This is the XML Schema for the object/document
+       mapping file used by the Doctrine ODM.
+     ]]></xs:documentation>
+  </xs:annotation>
+
+  <xs:element name="doctrine-mongo-mapping">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="document" type="odm:document" minOccurs="0" maxOccurs="unbounded" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:complexType name="document">
+    <xs:sequence>
+      <xs:element name="field" type="odm:field" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element name="embed-one" type="odm:embed-one" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element name="embed-many" type="odm:embed-many" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element name="reference-one" type="odm:reference-one" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element name="reference-many" type="odm:reference-many" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+    <xs:attribute name="db" type="xs:NMTOKEN" />
+    <xs:attribute name="collection" type="xs:NMTOKEN" />
+    <xs:attribute name="repository-class" type="xs:NMTOKEN"/>
+    <xs:attribute name="inheritance-type" type="odm:inheritance-type"/>
+  </xs:complexType>
+
+  <xs:complexType name="field">
+    <xs:attribute name="id" type="xs:boolean" default="false" />
+    <xs:attribute name="name" type="xs:NMTOKEN" />
+    <xs:attribute name="type" type="xs:NMTOKEN" default="string" />
+  </xs:complexType>
+
+  <xs:complexType name="embed-one">
+    <xs:attribute name="target-document" type="xs:NMTOKEN" use="required" />
+    <xs:attribute name="field" type="xs:NMTOKEN" use="required" />
+  </xs:complexType>
+
+  <xs:complexType name="embed-many">
+    <xs:attribute name="target-document" type="xs:NMTOKEN" use="required" />
+    <xs:attribute name="field" type="xs:NMTOKEN" use="required" />
+  </xs:complexType>
+
+  <xs:complexType name="reference-one">
+    <xs:sequence>
+      <xs:element name="cascade" type="orm:cascade-type" minOccurs="0" />
+    </xs:sequence>
+    <xs:attribute name="target-document" type="xs:NMTOKEN" use="required" />
+    <xs:attribute name="field" type="xs:NMTOKEN" use="required" />
+  </xs:complexType>
+
+  <xs:complexType name="reference-many">
+    <xs:sequence>
+      <xs:element name="cascade" type="orm:cascade-type" minOccurs="0" />
+    </xs:sequence>
+    <xs:attribute name="target-document" type="xs:NMTOKEN" use="required" />
+    <xs:attribute name="field" type="xs:NMTOKEN" use="required" />
+  </xs:complexType>
+
+  <xs:complexType name="emptyType"/>
+
+  <xs:complexType name="cascade-type">
+    <xs:sequence>
+      <xs:element name="all" type="odm:emptyType" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="persist" type="odm:emptyType" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="merge" type="odm:emptyType" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="remove" type="odm:emptyType" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="refresh" type="odm:emptyType" minOccurs="0" maxOccurs="1"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:simpleType name="inheritance-type">
+    <xs:restriction base="xs:token">
+      <xs:enumeration value="SINGLE_COLLECTION"/>
+      <xs:enumeration value="COLLECTION_PER_CLASS"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+</xs:schema>

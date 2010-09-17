@@ -1,0 +1,121 @@
+<!--
+    Use this file to faciliate easy per-project building using 
+	PEAR-installed Propel-generator.
+
+	This Phing script is invoked via the shell script propel-gen (.bat
+	for Windows).  Normally you should not need to edit this script or
+	be aware of it in any way.
+	
+    Normal use:
+    $> propel-gen insert-sql
+    
+    Specific target: 
+    $> propel-gen /path/to/my/project insert-sql
+
+-->
+<project name="propel-project-builder" default="main">
+
+<!-- set a default target if none provided -->
+<property name="target" value="main"/>
+
+<resolvepath propertyName="propel.project.dir" file="${project.dir}" dir="${application.startdir}"/>
+
+<target name="projdircheckExists">
+  <condition property="projDirExists">
+  	<and>
+		<not>
+			<equals arg1="${propel.project.dir}" arg2="" trim="true"/>
+		</not>
+		<available file="${propel.project.dir}/build.properties"/>
+	</and>
+  </condition>
+</target>
+
+<target name="projdircheck" depends="projdircheckExists" unless="projDirExists">
+	<echo message="====================================================="/>
+	<echo message="Project directory not specified or invalid. You must "/>
+	<echo message="specify the path to your project directory and your "/>
+	<echo message="project directory must contain your build.properties "/>
+	<echo message="and schema.xml files.                                "/>
+	<echo message=" "/>
+	<echo message="Usage: "/>
+	<echo message=" "/>
+	<echo message="$&gt; propel-gen /path/to/projectdir [target]"/>
+	<echo message=" "/>
+	<echo message="====================================================="/>	
+	<fail message="No project directory specified."/>
+</target>
+
+<target name="configure" depends="projdircheck">
+	<if>
+		<isset property="additional.properties"/>
+		<then>
+			<echo>Processing additional properties file: ${additional.properties}</echo>
+			<resolvepath propertyName="additional.properties.resolved" file="${additional.properties}" dir="${application.startdir}"/>
+			<property file="${additional.properties.resolved}"/>
+		</then>
+	</if>
+	<echo msg="Loading project-specific props from ${project.dir}/build.properties"/>
+	<property file="${propel.project.dir}/build.properties"/>
+</target>
+
+<target name="main" depends="configure" 
+  description="The main target. Includes project-specific build.properties and calls the build-propel.xml script">	
+
+ <!--<property file="${project.dir}/build.properties"/>-->
+ <phing phingfile="build-propel.xml" target="${target}"/>
+ 
+</target>
+
+
+<!-- 
+ Convenience mappings to build-propel.xml main targets 
+ 
+ This makes it possible to use this buildfile w/o needing to specify
+ target as a property, e.g.:
+ 
+ $> phing -Dproject=bookstore insert-sql
+ 
+ The main reason for this is just consistency w/ old build-propel.xml file
+ (primarily for documentation & user confusion avoidance reasons).  There are relatively
+ few & infrequently changing main targets of build-propel.xml, so it's a non-
+ issue as far as maintenance is concerned.
+-->
+
+<target name="convert-conf" depends="configure">
+	<phing phingfile="build-propel.xml" target="convert-conf"/>
+</target>
+
+<target name="create-db" depends="configure">
+	<phing phingfile="build-propel.xml" target="create-db"/>
+</target>
+
+<target name="reverse" depends="configure">
+	<phing phingfile="build-propel.xml" target="reverse"/>
+</target>
+
+<target name="datadtd" depends="configure">
+	<phing phingfile="build-propel.xml" target="datadtd"/>
+</target>
+
+<target name="datadump" depends="configure">
+	<phing phingfile="build-propel.xml" target="datadump"/>
+</target>
+
+<target name="datasql" depends="configure">
+	<phing phingfile="build-propel.xml" target="datasql"/>
+</target>
+
+<target name="insert-sql" depends="configure">
+	<phing phingfile="build-propel.xml" target="insert-sql"/>
+</target>
+
+<target name="om" depends="configure">
+	<phing phingfile="build-propel.xml" target="om"/>
+</target>
+
+<target name="sql" depends="configure">
+	<phing phingfile="build-propel.xml" target="sql"/>
+</target>
+
+</project>

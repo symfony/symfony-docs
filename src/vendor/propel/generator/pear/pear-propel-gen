@@ -1,0 +1,24 @@
+#!/bin/sh
+
+# ------------------------------------------------------------------------
+# The phing build script for Unix based systems
+# $Id: pear-propel-gen,v 1.2 2004/10/17 13:24:09 hlellelid Exp $
+# ------------------------------------------------------------------------
+
+# -------------------------------------------------------------------------
+# Do not change anything below this line unless you know what you're doing.
+# -------------------------------------------------------------------------
+
+# (currently this is not reached)
+if (test -z "$PHING_COMMAND") ; then
+	export PHING_COMMAND="phing"
+fi
+
+if [ $# = 1 ] ; then
+  saveddir=`pwd`
+  $PHING_COMMAND -f @DATA-DIR@/propel_generator/pear-build.xml -Dproject.dir=$saveddir $*
+else
+  $PHING_COMMAND -f @DATA-DIR@/propel_generator/pear-build.xml -Dproject.dir=$*
+fi
+
+

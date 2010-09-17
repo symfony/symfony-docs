@@ -1,0 +1,192 @@
+# -------------------------------------------------------------------
+#
+# P R O P E L  C O N F I G U R A T I O N  F I L E
+#
+# -------------------------------------------------------------------
+# This file contains some example properties.  Ideally properties
+# should be specified in the project-specific build.properties file;
+# however, this file can be used to specify non-default properties 
+# that you would like to use accross all of your Propel projects.
+# -------------------------------------------------------------------
+#
+
+propel.home = .
+
+# -------------------------------------------------------------------
+#
+#  P R O J E C T
+#
+# -------------------------------------------------------------------
+# This is the name of your Propel project. The name of your Propel
+# project is used (by default) to determine where the generator will
+# find needed configuration files and will place resuilting build
+# files. E.g. if your project is named 'killerapp', Propel will 
+# look here for schema.xml and runtime-conf.xml files:
+# 
+#   projects/killerapp/
+#
+# -------------------------------------------------------------------
+
+# You can set this here, but it's preferrable to set this in a 
+# project-specific build.properties file.
+#
+# propel.project = bookstore
+
+# -------------------------------------------------------------------
+#
+#  T A R G E T  D A T A B A S E
+#
+# -------------------------------------------------------------------
+# This is the target database, only considered when generating
+# the SQL for your Propel project. Your possible choices are:
+#
+#   mssql, mysql, oracle, pgsql, sqlite
+# -------------------------------------------------------------------
+
+# You can set this here, but it's preferrable to set this in a 
+# project-specific build.properties file.
+#
+# propel.database = mysql
+
+# -------------------------------------------------------------------
+#
+#  O B J E C T  M O D E L  I N F O R M A T I O N
+#
+# -------------------------------------------------------------------
+# These settings will allow you to customize the way your
+# Peer-based object model is created.
+# -------------------------------------------------------------------
+# addGenericAccessors
+#   If true, Propel adds methods to get database fields by name/position.
+#
+# addGenericMutators
+#   If true, Propel adds methods to set database fields by name/position.
+#
+# addSaveMethod
+#   If true, Propel adds tracking code to determine how to save objects.
+#
+# addTimeStamp
+#   If true, Propel true puts time stamps in phpdoc of generated om files.
+#
+# basePrefix
+#   A string to pre-pend to the file names of base data and peer objects.
+#
+# complexObjectModel
+#   If true, Propel generates data objects with collection support and 
+#   methods to easily retreive foreign key relationships.
+#
+# targetPackage
+#   Sets the PHP "package" the om files will generated to, e.g. 
+#   "com.company.project.om".
+#
+# targetPlatform
+#   Sets whether Propel is building classes for php5 (default) 
+#   or php4 (experimental).
+#
+# packageObjectModel
+#   Sets whether Propel is packaging ObjectModel fro several 
+#   [package].schema.xml files. The <database package="packageName">
+#   attribute has to be set then. (warning: this is experimental!)
+#
+# -------------------------------------------------------------------
+
+# classes will be put in (and  included from) this directory
+# e.g. if package is "bookstore" then om will expect include('bookstore/Book.php'); to work.
+# use dot-path notation -- e.g. my.bookstore -> my/bookstore.
+#
+propel.targetPackage = ${propel.project}
+
+propel.addGenericAccessors = false
+propel.addGenericMutators = false
+propel.addSaveMethod = true
+propel.addTimeStamp = true
+propel.basePrefix = Base
+propel.complexObjectModel = true
+propel.targetPlatform = php5
+propel.packageObjectModel = false
+
+# -------------------------------------------------------------------
+#
+#  D B   C O N N E C T I O N   S E T T I N G S
+#
+# -------------------------------------------------------------------
+# PDO connection settings. These connection settings are used by
+# build tagets that perform database operations (e.g. 'insert-sql',
+# 'reverse').
+#
+# You can set them here, but it's preferrable to set these properties
+# in a project-specific build.properties file.
+#
+
+# If you want to use a custom driver, specify it below, otherwise
+# leave it blank or comment it out to use Creole stock driver.
+#
+# propel.database.driver = creole.drivers.sqlite.SQLiteConnection
+
+# Note that if you do not wish to specify the database (e.g. if you
+# are using multiple databses) you can use the @DB@ token which
+# will be replaced with a database at runtime.
+#
+# propel.database.url = mysql:host=$host;dbname=$database
+
+# For MySQL or Oracle, you also need to specify username & password 
+# propel.database.user = [db username]
+# propel.database.password = [db password]
+
+# Use the URL below to specify a DSN to used to create the database.
+# Note that this URL should not contain the database name, as you will
+# get an error if the database does not exist.
+# (This does not apply to SQLite since the databse is automatically created
+# when the connection is made -- if it does not already exist.)
+#
+# propel.database.createUrl = mysql:host=$host;dbname=$database
+
+
+# -------------------------------------------------------------------
+#
+# D A T A B A S E  TO  X M L
+#
+# -------------------------------------------------------------------
+#
+# samePhpName 
+#   If true, the reverse task will set the phpName attribute for the 
+#   tables and columns to be the same as SQL name.
+#
+# addVendorInfo 
+#   If true, the reverse task will add vendor specific information 
+#   to the database schema
+#
+# addValidators 
+#   Bitfield like option to turn on/off addition of Validator and 
+#   Rule tags to the schema. Uses a boolean syntax like in php.ini.
+#   Allowed tokens are: 
+#      none       add no validators)
+#      all        add all validators)
+#      maxlength  add maxlengths for string type columns)
+#      maxvalue   add maxvalue for numeric columns)
+#      type       add notmatch validators for numeric columns)
+#      required   add required validators for required columns)
+#      unique     add unique validators for unique indexes)
+#   Allowed operators are: 
+#      &          bitwise AND 
+#      |          bitwise OR
+#      ~          bitwise NOT
+#
+# -------------------------------------------------------------------
+
+# propel.samePhpName = false
+# propel.addVendorInfo=true
+# propel.addValidators=none
+
+
+# -------------------------------------------------------------------
+#
+#  D A T A B A S E   B U I L D   C O N F I G
+#
+# -------------------------------------------------------------------
+# Some databases provide some configuration options that can be set
+# in this script.  
+#
+# === MySQL
+# propel.mysql.tableType
+#   Use this property to set the table type of generated tables (e.g. InnoDB, MyISAM).

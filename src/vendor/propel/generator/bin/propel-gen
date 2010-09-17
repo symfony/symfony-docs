@@ -1,0 +1,70 @@
+#!/bin/sh
+# Shell wrapper for Propel generator
+# $Id$
+#
+# This script will do the following:
+# - check for PHING_COMMAND env, if found, use it.
+#   - if not found assume php is on the path
+# - check for PROPEL_GEN_HOME env, if found use it
+#   - if not look for it
+
+if [ -z "$PROPEL_GEN_HOME" ] ; then
+
+  # try to find Propel
+  if [ -d /opt/propel/generator ] ; then 
+    PROPEL_GEN_HOME=/opt/propel/generator
+  fi
+
+  if [ -d "${HOME}/opt/propel/generator" ] ; then 
+    PROPEL_GEN_HOME="${HOME}/opt/propel/generator"
+  fi
+
+  if [ -d "/usr/local/propel/generator" ] ; then 
+    PROPEL_GEN_HOME="/usr/local/propel/generator"
+  fi
+
+  if [ -d "${HOME}/usr/propel/generator" ] ; then 
+    PROPEL_GEN_HOME="${HOME}/usr/propel/generator"
+  fi
+  
+  ## resolve links - the script name may be a link to phing's home
+  PRG="$0"
+  progname=`basename "$0"`
+  saveddir=`pwd`
+
+  # need this for relative symlinks
+  dirname_prg=`dirname "$PRG"`
+  cd "$dirname_prg"
+  
+  while [ -h "$PRG" ] ; do
+    ls=`ls -ld "$PRG"`
+    link=`expr "$ls" : '.*-> \(.*\)$'`
+    if expr "$link" : '/.*' > /dev/null; then
+      PRG="$link"
+    else
+      PRG=`dirname "$PRG"`"/$link"
+    fi
+  done
+
+  cd "$saveddir"
+  
+  PROPEL_GEN_HOME=`dirname "$PRG"`/..
+
+  # make it fully qualified
+  PROPEL_GEN_HOME=`cd "$PROPEL_GEN_HOME" && pwd`
+  
+  # make it available in PHP via getenv("PROPEL_GEN_HOME")
+  export PROPEL_GEN_HOME
+  
+fi
+
+if [ -z "$PHING_COMMAND" ] ; then
+  # echo "WARNING: PHING_COMMAND environment not set. (Assuming phing on PATH)"
+  export PHING_COMMAND="phing"
+fi
+
+if [ $# = 1 ] ; then
+  $PHING_COMMAND -f $PROPEL_GEN_HOME/build.xml -Dusing.propel-gen=true -Dproject.dir=$saveddir $*
+else
+  $PHING_COMMAND -f $PROPEL_GEN_HOME/build.xml -Dusing.propel-gen=true -Dproject.dir=$*
+fi
