@@ -24,7 +24,7 @@ that is the name of the ``EntityManager`` you want::
     {
         public function indexAction()
         {
-            $em = $this->container->getService('doctrine.orm.customer_entity_manager');
+            $em = $this['doctrine.orm.customer_entity_manager'];
         }
     }
 

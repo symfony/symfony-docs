@@ -62,14 +62,14 @@ If you need multiple connections and document managers you can use the following
 
 Now you can retrieve the configured services connection services::
 
-    $conn1 = $container->getService('doctrine.odm.mongodb.conn1_connection');
-    $conn2 = $container->getService('doctrine.odm.mongodb.conn2_connection');
+    $conn1 = $container['doctrine.odm.mongodb.conn1_connection'];
+    $conn2 = $container['doctrine.odm.mongodb.conn2_connection'];
 
 And you can also retrieve the configured document manager services which utilize the above
 connection services::
 
-    $dm1 = $container->getService('doctrine.odm.mongodb.dm1_document_manager');
-    $dm2 = $container->getService('doctrine.odm.mongodb.dm1_document_manager');
+    $dm1 = $container['doctrine.odm.mongodb.dm1_document_manager'];
+    $dm2 = $container['doctrine.odm.mongodb.dm1_document_manager'];
 
 XML
 ~~~
@@ -209,7 +209,7 @@ the container::
             $user = new User();
             $user->setName('Jonathan H. Wage');
 
-            $dm = $this->container->getService('doctrine.odm.mongodb.document_manager');
+            $dm = $this['doctrine.odm.mongodb.document_manager'];
             $dm->persist($user);
             $dm->flush();
 
@@ -223,7 +223,7 @@ Later you can retrieve the persisted document by its id::
     {
         public function editAction($id)
         {
-            $dm = $this->container->getService('doctrine.odm.mongodb.document_manager');
+            $dm = $this['doctrine.odm.mongodb.document_manager'];
             $user = $dm->find('HelloBundle:User', $id);
 
             // ...
