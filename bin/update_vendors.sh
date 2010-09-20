@@ -5,9 +5,9 @@ VENDOR=$DIR/vendor
 
 # Symfony
 cd $VENDOR/symfony && git pull
-cp $VENDOR/symfony/src/Symfony/Bundle/FrameworkBundle/Resources/skeleton/application/php/config/config* $DIR/hello/config/
-cp $VENDOR/symfony/src/Symfony/Bundle/FrameworkBundle/Resources/skeleton/application/yml/config/config* $DIR/hello/config/
-cp $VENDOR/symfony/src/Symfony/Bundle/FrameworkBundle/Resources/skeleton/application/xml/config/config* $DIR/hello/config/
+cp $VENDOR/symfony/src/Symfony/Bundle/FrameworkBundle/Resources/skeleton/application/php/config/config* $DIR/app/config/
+cp $VENDOR/symfony/src/Symfony/Bundle/FrameworkBundle/Resources/skeleton/application/yml/config/config* $DIR/app/config/
+cp $VENDOR/symfony/src/Symfony/Bundle/FrameworkBundle/Resources/skeleton/application/xml/config/config* $DIR/app/config/
 
 # Doctrine ORM
 cd $VENDOR/doctrine
