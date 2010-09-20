@@ -51,12 +51,12 @@ Now, let's have a look at the ``layout.php`` file:
 The layout is itself decorated by another layout (``::layout``). Symfony
 supports multiple decoration levels: a layout can itself be decorated by
 another one. When the bundle part of the template name is empty, views are
-looked for in the ``hello/views/`` directory. This directory store global
-views for your entire project:
+looked for in the ``app/views/`` directory. This directory store global views
+for your entire project:
 
 .. code-block:: html+php
 
-    <!-- hello/views/layout.php -->
+    <!-- app/views/layout.php -->
     <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
     <html>
         <head>
@@ -100,7 +100,7 @@ The base layout already have the code to output the title in the header:
 
 .. code-block:: html+php
 
-    <!-- hello/views/layout.php -->
+    <!-- app/views/layout.php -->
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <title><?php $view['slots']->output('title', 'Hello Application') ?></title>

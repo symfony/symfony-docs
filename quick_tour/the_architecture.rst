@@ -16,8 +16,7 @@ The directory structure of a Symfony :term:`application` is rather flexible
 but the directory structure of a sandbox reflects the typical and recommended
 structure of a Symfony application:
 
-* ``hello/``: This directory, named after your application, contains the
-  configuration files;
+* ``app/``: This directory contains the application configuration;
 
 * ``src/``: All the PHP code is stored under this directory;
 
@@ -35,13 +34,13 @@ live:
     <!-- web/index.php -->
     <?php
 
-    require_once __DIR__.'/../hello/HelloKernel.php';
+    require_once __DIR__.'/../app/AppKernel.php';
 
-    $kernel = new HelloKernel('prod', false);
+    $kernel = new AppKernel('prod', false);
     $kernel->handle()->send();
 
-Like any front controller, ``index.php`` uses a Kernel Class, ``HelloKernel``, to
-bootstrap the application.
+Like any front controller, ``index.php`` uses a Kernel Class, ``AppKernel``,
+to bootstrap the application.
 
 .. index::
    single: Kernel
@@ -49,8 +48,8 @@ bootstrap the application.
 The Application Directory
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The ``HelloKernel`` class is the main entry point of the application
-configuration and as such, it is stored in the ``hello/`` directory.
+The ``AppKernel`` class is the main entry point of the application
+configuration and as such, it is stored in the ``app/`` directory.
 
 This class must implement four methods:
 
@@ -72,7 +71,7 @@ understand the flexibility of the framework.
 To make things work together, the kernel requires one file from the ``src/``
 directory::
 
-    // hello/HelloKernel.php
+    // app/AppKernel.php
     require_once __DIR__.'/../src/autoload.php';
 
 The Source Directory
@@ -128,14 +127,13 @@ own bundles. It makes it so easy to pick and choose which features to enable
 in your application and optimize them the way you want.
 
 An application is made up of bundles as defined in the ``registerBundles()``
-method of the ``HelloKernel`` class::
+method of the ``AppKernel`` class::
 
-    // hello/HelloKernel.php
+    // app/AppKernel.php
 
     public function registerBundles()
     {
         $bundles = array(
-            new Symfony\Framework\KernelBundle(),
             new Symfony\Bundle\FrameworkBundle\FrameworkBundle(),
             new Symfony\Bundle\ZendBundle\ZendBundle(),
             new Symfony\Bundle\SwiftmailerBundle\SwiftmailerBundle(),
@@ -165,7 +163,7 @@ PHP. Have a look at the default configuration:
 
     .. code-block:: yaml
 
-        # hello/config/config.yml
+        # app/config/config.yml
         kernel.config:
             charset:       UTF-8
             error_handler: null
@@ -179,7 +177,7 @@ PHP. Have a look at the default configuration:
 
     .. code-block:: xml
 
-        <!-- hello/config/config.xml -->
+        <!-- app/config/config.xml -->
         <kernel:config
             charset="UTF-8"
             error_handler="null"
@@ -196,7 +194,7 @@ PHP. Have a look at the default configuration:
 
     .. code-block:: php
 
-        // hello/config/config.php
+        // app/config/config.php
         $container->loadFromExtension('kernel', 'config', array(
             'charset'       => 'UTF-8',
             'error_handler' => null,
@@ -223,7 +221,7 @@ specific configuration file:
 
     .. code-block:: yaml
 
-        # hello/config/config_dev.yml
+        # app/config/config_dev.yml
         imports:
             - { resource: config.yml }
 
@@ -236,7 +234,7 @@ specific configuration file:
 
     .. code-block:: xml
 
-        <!-- hello/config/config_dev.xml -->
+        <!-- app/config/config_dev.xml -->
         <imports>
             <import resource="config.xml" />
         </imports>
@@ -252,7 +250,7 @@ specific configuration file:
 
     .. code-block:: php
 
-        // hello/config/config.php
+        // app/config/config.php
         $loader->import('config.php');
 
         $container->loadFromExtension('web', 'config', array(
@@ -331,13 +329,13 @@ Run it without any arguments to learn more about its capabilities:
 
 .. code-block:: bash
 
-    $ php hello/console
+    $ php app/console
 
 The ``--help`` option helps you discover the usage of a command:
 
 .. code-block:: bash
 
-    $ php hello/console router:debug --help
+    $ php app/console router:debug --help
 
 Final Thoughts
 --------------
