@@ -12,6 +12,10 @@
   * :doc:`ORM </guides/doctrine/orm/overview>` | 
   * :doc:`Migrations </guides/doctrine/migrations/overview>` | 
   * :doc:`MongoDB </guides/doctrine/mongodb-odm/overview>`
+* **Routing**:
+
+  * :doc:`Overview </guides/routing/overview>` | 
+  * :doc:`Advanced </guides/routing/advanced>`
 
 * :doc:`/guides/emails`
 * :doc:`/guides/validator`
@@ -30,12 +34,17 @@
 
   * :doc:`/guides/tools/autoloader` | 
   * :doc:`Finder </guides/tools/finder>` | 
-  * :doc:`/guides/tools/YAML`
+  * :doc:`/guides/tools/YAML` | 
+  * :doc:`Process </guides/tools/process>`
 
 * **Bundles**:
 
   * :doc:`Best Practices </guides/bundles/best_practices>` | 
   * :doc:`Configuration </guides/bundles/configuration>`
+
+* **Dependency Injection**:
+
+  * :doc:`Extensions </guides/dependency_injection/extensions>`
 
 * **Internals**:
 

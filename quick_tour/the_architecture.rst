@@ -81,24 +81,27 @@ The ``src/autoload.php`` file is responsible for autoloading all the files
 stored in the ``src/`` directory::
 
     // src/autoload.php
-    require_once __DIR__.'/vendor/symfony/src/Symfony/Framework/UniversalClassLoader.php';
+    $vendorDir = __DIR__.'/vendor';
 
-    use Symfony\Framework\UniversalClassLoader;
+    require_once $vendorDir.'/symfony/src/Symfony/Component/HttpFoundation/UniversalClassLoader.php';
+
+    use Symfony\Component\HttpFoundation\UniversalClassLoader;
 
     $loader = new UniversalClassLoader();
     $loader->registerNamespaces(array(
-        'Symfony'                    => __DIR__.'/vendor/symfony/src',
+        'Symfony'                    => $vendorDir.'/symfony/src',
         'Application'                => __DIR__,
         'Bundle'                     => __DIR__,
-        'Doctrine\\Common'           => __DIR__.'/vendor/doctrine/lib/vendor/doctrine-common/lib',
-        'Doctrine\\DBAL\\Migrations' => __DIR__.'/vendor/doctrine-migrations/lib',
-        'Doctrine\\DBAL'             => __DIR__.'/vendor/doctrine/lib/vendor/doctrine-dbal/lib',
-        'Doctrine'                   => __DIR__.'/vendor/doctrine/lib',
-        'Zend'                       => __DIR__.'/vendor/zend/library',
+        'Doctrine\\Common'           => $vendorDir.'/doctrine-common/lib',
+        'Doctrine\\DBAL\\Migrations' => $vendorDir.'/doctrine-migrations/lib',
+        'Doctrine\\ODM\\MongoDB'     => $vendorDir.'/doctrine-mongodb/lib',
+        'Doctrine\\DBAL'             => $vendorDir.'/doctrine-dbal/lib',
+        'Doctrine'                   => $vendorDir.'/doctrine/lib',
+        'Zend'                       => $vendorDir.'/zend/library',
     ));
     $loader->registerPrefixes(array(
-        'Swift_' => __DIR__.'/vendor/swiftmailer/lib/classes',
-        'Twig_'  => __DIR__.'/vendor/twig/lib',
+        'Swift_' => $vendorDir.'/swiftmailer/lib/classes',
+        'Twig_'  => $vendorDir.'/twig/lib',
     ));
     $loader->register();
 
@@ -130,11 +133,12 @@ An application is made up of bundles as defined in the ``registerBundles()``
 method of the ``AppKernel`` class::
 
     // app/AppKernel.php
-
     public function registerBundles()
     {
         $bundles = array(
             new Symfony\Bundle\FrameworkBundle\FrameworkBundle(),
+
+            // enable third-party bundles
             new Symfony\Bundle\ZendBundle\ZendBundle(),
             new Symfony\Bundle\SwiftmailerBundle\SwiftmailerBundle(),
             new Symfony\Bundle\DoctrineBundle\DoctrineBundle(),
@@ -142,17 +146,20 @@ method of the ``AppKernel`` class::
             //new Symfony\Bundle\DoctrineMongoDBBundle\DoctrineMongoDBBundle(),
             //new Symfony\Bundle\PropelBundle\PropelBundle(),
             //new Symfony\Bundle\TwigBundle\TwigBundle(),
-            new Application\HelloBundle\HelloBundle(),
+
+            // register your bundles
+            new Application\AppBundle\AppBundle(),
         );
 
         if ($this->isDebug()) {
+            $bundles[] = new Symfony\Bundle\WebProfilerBundle\WebProfilerBundle();
         }
 
         return $bundles;
     }
 
 Along side the ``HelloBundle`` we have already talked about, notice that the
-kernel also enables ``KernelBundle``, ``FrameworkBundle``, ``DoctrineBundle``,
+kernel also enables ``FrameworkBundle``, ``DoctrineBundle``,
 ``SwiftmailerBundle``, and ``ZendBundle``. They are all part of the core
 framework.
 
@@ -164,55 +171,129 @@ PHP. Have a look at the default configuration:
     .. code-block:: yaml
 
         # app/config/config.yml
-        kernel.config:
+        app.config:
             charset:       UTF-8
             error_handler: null
+            csrf_secret:   xxxxxxxxxx
+            router:        { resource: "%kernel.root_dir%/config/routing.yml" }
+            validation:    { enabled: true, annotations: true }
+            templating:
+                escaping:       htmlspecialchars
+                #assets_version: SomeVersionScheme
+            #user:
+            #    default_locale: fr
+            #    session:
+            #        name:     SYMFONY
+            #        type:     Native
+            #        lifetime: 3600
 
-        web.config:
-            router:     { resource: "%kernel.root_dir%/config/routing.yml" }
-            validation: { enabled: true, annotations: true }
+        ## Twig Configuration
+        #twig.config:
+        #    auto_reload: true
 
-        web.templating:
-            escaping:       htmlspecialchars
+        ## Doctrine Configuration
+        #doctrine.dbal:
+        #    dbname:   xxxxxxxx
+        #    user:     xxxxxxxx
+        #    password: ~
+        #doctrine.orm: ~
+
+        ## Swiftmailer Configuration
+        #swiftmailer.config:
+        #    transport:  smtp
+        #    encryption: ssl
+        #    auth_mode:  login
+        #    host:       smtp.gmail.com
+        #    username:   xxxxxxxx
+        #    password:   xxxxxxxx
 
     .. code-block:: xml
 
         <!-- app/config/config.xml -->
-        <kernel:config
-            charset="UTF-8"
-            error_handler="null"
-        />
+        <app:config csrf-secret="xxxxxxxxxx" charset="UTF-8" error-handler="null">
+            <app:router resource="%kernel.root_dir%/config/routing.xml" />
+            <app:validation enabled="true" annotations="true" />
+            <app:templating escaping="htmlspecialchars" />
+            <!--
+            <app:user default-locale="fr">
+                <app:session name="SYMFONY" type="Native" lifetime="3600" />
+            </app:user>
+            //-->
+        </app:config>
 
-        <web:config>
-            <web:router resource="%kernel.root_dir%/config/routing.xml" />
-            <web:validation enabled="true" annotations="true" />
-        </web:config>
+        <!-- Twig Configuration -->
+        <!--
+        <twig:config auto_reload="true" />
+        -->
 
-        <web:templating
-            escaping="htmlspecialchars"
-        />
+        <!-- Doctrine Configuration -->
+        <!--
+        <doctrine:dbal dbname="xxxxxxxx" user="xxxxxxxx" password="" />
+        <doctrine:orm />
+        -->
+
+        <!-- Swiftmailer Configuration -->
+        <!--
+        <swiftmailer:config
+            transport="smtp"
+            encryption="ssl"
+            auth_mode="login"
+            host="smtp.gmail.com"
+            username="xxxxxxxx"
+            password="xxxxxxxx" />
+        -->
 
     .. code-block:: php
 
         // app/config/config.php
-        $container->loadFromExtension('kernel', 'config', array(
+        $container->loadFromExtension('app', 'config', array(
             'charset'       => 'UTF-8',
             'error_handler' => null,
+            'csrf-secret'   => 'xxxxxxxxxx',
+            'router'        => array('resource' => '%kernel.root_dir%/config/routing.php'),
+            'validation'    => array('enabled' => true, 'annotations' => true),
+            'templating'    => array(
+                'escaping'        => 'htmlspecialchars'
+                #'assets_version' => "SomeVersionScheme",
+            ),
+            #'user' => array(
+            #    'default_locale' => "fr",
+            #    'session' => array(
+            #        'name' => "SYMFONY",
+            #        'type' => "Native",
+            #        'lifetime' => "3600",
+            #    )
+            #),
         ));
 
-        $container->loadFromExtension('web', 'config', array(
-            'router'     => array('resource' => '%kernel.root_dir%/config/routing.php'),
-            'validation' => array('enabled' => true, 'annotations' => true),
-        ));
+        // Twig Configuration
+        /*
+        $container->loadFromExtension('twig', 'config', array('auto_reload' => true));
+        */
 
-        $container->loadFromExtension('web', 'templating', array(
-            'escaping'       => "htmlspecialchars",
+        // Doctrine Configuration
+        /*
+        $container->loadFromExtension('doctrine', 'dbal', array(
+            'dbname'   => 'xxxxxxxx',
+            'user'     => 'xxxxxxxx',
+            'password' => '',
         ));
+        $container->loadFromExtension('doctrine', 'orm');
+        */
 
-Each entry like ``kernel.config`` defines the configuration of a bundle. Some
-bundles can have several entries if they provide many features like
-``FrameworkBundle``, which has two entries: ``web.config`` and
-``web.templating``.
+        // Swiftmailer Configuration
+        /*
+        $container->loadFromExtension('swiftmailer', 'config', array(
+            'transport'  => "smtp",
+            'encryption' => "ssl",
+            'auth_mode'  => "login",
+            'host'       => "smtp.gmail.com",
+            'username'   => "xxxxxxxx",
+            'password'   => "xxxxxxxx",
+        ));
+        */
+
+Each entry like ``app.config`` defines the configuration for a bundle.
 
 Each :term:`environment` can override the default configuration by providing a
 specific configuration file:
@@ -225,12 +306,18 @@ specific configuration file:
         imports:
             - { resource: config.yml }
 
-        web.config:
-            toolbar: true
+        app.config:
+            router:   { resource: "%kernel.root_dir%/config/routing_dev.yml" }
+            profiler: { only_exceptions: false }
 
-        zend.logger:
-            priority: debug
-            path:     %kernel.root_dir%/logs/%kernel.environment%.log
+        webprofiler.config:
+            toolbar: true
+            intercept_redirects: true
+
+        zend.config:
+            logger:
+                priority: debug
+                path:     %kernel.root_dir%/logs/%kernel.environment%.log
 
     .. code-block:: xml
 
@@ -239,27 +326,40 @@ specific configuration file:
             <import resource="config.xml" />
         </imports>
 
-        <web:config
+        <app:config>
+            <app:router resource="%kernel.root_dir%/config/routing_dev.xml" />
+            <app:profiler only-exceptions="false" />
+        </app:config>
+
+        <webprofiler:config
             toolbar="true"
+            intercept-redirects="true"
         />
 
-        <zend:logger
-            priority="info"
-            path="%kernel.logs_dir%/%kernel.environment%.log"
-        />
+        <zend:config>
+            <zend:logger priority="info" path="%kernel.logs_dir%/%kernel.environment%.log" />
+        </zend:config>
 
     .. code-block:: php
 
         // app/config/config.php
         $loader->import('config.php');
 
-        $container->loadFromExtension('web', 'config', array(
-            'toolbar' => true,
+        $container->loadFromExtension('app', 'config', array(
+            'router'   => array('resource' => '%kernel.root_dir%/config/routing_dev.php'),
+            'profiler' => array('only-exceptions' => false),
         ));
 
-        $container->loadFromExtension('zend', 'logger', array(
-            'priority' => 'info',
-            'path'     => '%kernel.logs_dir%/%kernel.environment%.log',
+        $container->loadFromExtension('webprofiler', 'config', array(
+            'toolbar' => true,
+            'intercept-redirects' => true,
+        ));
+
+        $container->loadFromExtension('zend', 'config', array(
+            'logger' => array(
+                'priority' => 'info',
+                'path'     => '%kernel.logs_dir%/%kernel.environment%.log',
+            ),
         ));
 
 As we have seen in the previous part, an application is made of bundles as
