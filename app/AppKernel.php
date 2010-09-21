@@ -27,7 +27,7 @@ class AppKernel extends Kernel
             //new Symfony\Bundle\TwigBundle\TwigBundle(),
 
             // register your bundles
-            new Application\AppBundle\AppBundle(),
+            new Application\HelloBundle\HelloBundle(),
         );
 
         if ($this->isDebug()) {
