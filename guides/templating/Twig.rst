@@ -23,7 +23,7 @@ Enable the ``TwigBundle`` in your kernel::
     {
         $bundles = array(
             // ...
-            new Symfony\Framework\TwigBundle\Bundle(),
+            new Symfony\Bundle\TwigBundle\TwigBundle(),
         );
 
         // ...
