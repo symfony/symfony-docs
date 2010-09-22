@@ -122,8 +122,8 @@ TextField     Uma tag input para a entrada de texto curto
 TextareaField Uma tag textarea para inserir texto longo
 CheckboxField Um checkbox 
 ChoiceField   Um drop-down ou múltiplos radio-buttons/checkboxes para a seleção de valores
-PasswordField Uma input tag para senha
-HiddenField   Uma input tag do tipo oculto
+PasswordField Uma tag input para senha
+HiddenField   Uma tag input do tipo oculto
 ============= ==================
 
 Campos localizados
@@ -135,10 +135,10 @@ forma diferente dependendo da localidade do usuário:
 ============= ==================
 Campo         Nome Descrição
 ============= ==================
-NumberField   Um campo de texto para inserir números
-IntegerField  Um campo texto para a inserção de números inteiros
+NumberField   Um campo texto para inserir números
+IntegerField  Um campo texto para inserir números inteiros
 PercentField  Um campo texto para inserir valores percentuais
-MoneyField    Um campo texto para a inserção de valores monetários
+MoneyField    Um campo texto para inserir valores monetários
 DateField     Um campo texto ou vários drop-downs para inserir datas
 BirthdayField Uma extensão do DateField para selecionar aniversários
 TimeField     Um campo texto ou vários drop-downs para inserir um horário
@@ -291,7 +291,7 @@ Agora podemos facilmente adaptar o formulário no controlador::
     }
 
 O grande benefício desta refatoração é que podemos reutilizar a classe ``Registration``. 
-Estender a aplicação para permitir aos usuários se inscrever via XML não é 
+Estender a aplicação para permitir aos usuários se inscreverem via XML não é 
 nenhum problema!    
 
 .. index::
