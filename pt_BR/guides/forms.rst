@@ -1,22 +1,22 @@
 .. index::
    single: Forms
 
-Forms
-=====
+Formulários
+===========
 
-Symfony2 features a sophisticated Form component that allows you to easily
-create mighty HTML forms.
+O Symfony2 possui um componente de Formulário sofisticado que lhe permite criar 
+facilmente formulários HTML poderosos. 
 
-Your First Form
----------------
+Seu primeiro formulário
+-----------------------
 
-A form in Symfony2 is a transparent layer on top of your domain model. It
-reads properties from an object, displays the values in the form and allows
-the user to change them. When the form is submitted, the values are written
-back into the object.
+Um formulário no Symfony2 é uma camada transparente no topo do seu modelo de domínio. 
+Ele lê as propriedades de um objeto, exibe os valores no formulário e permite ao 
+usuário alterá-los. Quando o formulário é submetido, os valores são escritos 
+de volta no objeto.
 
-Let's see how this works in a practical example. Let's create a simple
-``Customer`` class::
+Vamos ver como isso funciona em um exemplo prático. Vamos criar uma classe
+simples ``Customer``:
 
     class Customer
     {
@@ -32,11 +32,11 @@ Let's see how this works in a practical example. Let's create a simple
           $this->age = $age;
       }
     }
-    
-The class contains two properties ``name`` and "age". The property ``$name`` is
-public, while ``$age`` can only be modified through setters and getters. 
 
-Now let's create a form to let the visitor fill the data of the object::
+A classe contém duas propriedades: ``name`` e "age". A propriedade ``$name`` é pública,
+enquanto a ``$age`` só pode ser modificada através de getters e setters.
+
+Agora vamos criar um formulário para deixar o visitante preencher os dados do objeto::
 
     // src/Application/HelloBundle/Controller/HelloController.php
     public function signupAction()
@@ -49,11 +49,11 @@ Now let's create a form to let the visitor fill the data of the object::
  
       return $this->render('HelloBundle:Hello:signup', array('form' => $form));
     }
-    
-A form consists of various fields. Each field represents a property in your
-class. The property must have the same name as the field and must either be
-public or accessible through public getters and setters. Now let's create a 
-simple template to render the form:
+
+Um formulário é composto de vários campos. Cada campo representa uma propriedade
+na sua classe. A propriedade deve ter o mesmo nome do campo e deve ser pública 
+ou acessível através de getters e setters públicos. Agora vamos criar um 
+template simples para renderizar o formulário:
 
 .. code-block:: html+php
 
@@ -65,9 +65,9 @@ simple template to render the form:
       <?php echo $form->render() ?>
       <input type="submit" value="Send!" />
     </form>
-    
-When the user submits the form, we also need to handle the submitted data.
-All the data is stored in a POST parameter with the name of the form::
+
+Quando o usuário submete o formulário, também precisamos lidar com os dados submetidos.
+Todos os dados são armazenados em um parâmetro POST com o nome do formulário:
 
     # src/Application/HelloBundle/Controller/HelloController.php
     public function signupAction()
@@ -89,68 +89,70 @@ All the data is stored in a POST parameter with the name of the form::
  
       return $this->render('HelloBundle:Hello:signup', array('form' => $form));
     }
-    
-Congratulations! You just created your first fully-functional form with
-Symfony2.
+
+Parabéns! Você acabou de criar seu primeiro formulário totalmente funcional
+com o Symfony2.
 
 .. index::
    single: Forms; Fields
 
-Form Fields
------------
 
-As you have learned, a form consists of one or more form fields. In Symfony2, 
-form fields have two responsibilities:
+Campos do Formulário
+--------------------
 
-* Render HTML
-* Convert data between normalized and humane representations
+Como você aprendeu, um formulário consiste de um ou mais campos. No Symfony2, 
+os campos do formulário têm duas responsabilidades:
 
-Let's look at the ``DateField`` for example. While you probably prefer to store 
-dates as strings or ``DateTime`` objects, users rather like to choose them from a
-list of drop downs. ``DateField`` handles the rendering and type conversion for you.
+* Renderizar HTML
+* Converter dados entre as representações normalizada e humana
 
-Basic Fields
-~~~~~~~~~~~~
+Vamos olhar o ``DateField``, por exemplo. Enquanto você provavelmente preferirá guardar 
+datas como strings ou objetos ``DateTime``, os usuários preferem selecioná-las de  
+listas drop down. O DateField manipula o processamento e conversão de tipo para você.
 
-Symfony2 ships with all fields available in plain HTML:
+Campos Básicos
+~~~~~~~~~~~~~~
+
+O Symfony2 possui todos os campos que estão disponíveis em HTML simples:
 
 ============= ==================
-Field         Name Description
+Campo         Nome Descrição
 ============= ==================
-TextField     An input tag for entering short text
-TextareaField A textarea tag for entering long text
-CheckboxField A checkbox
-ChoiceField   A drop-down or multiple radio-buttons/checkboxes for selecting values
-PasswordField A password input tag
-HiddenField   A hidden input tag
+TextField     Uma tag input para a entrada de texto curto
+TextareaField Uma tag textarea para inserir texto longo
+CheckboxField Um checkbox 
+ChoiceField   Um drop-down ou múltiplos radio-buttons/checkboxes para a seleção de valores
+PasswordField Uma input tag para senha
+HiddenField   Uma input tag do tipo oculto
 ============= ==================
 
-Localized Fields
+Campos localizados
+~~~~~~~~~~~~~~~~~~
+
+O componente de Formulário também dispõe de campos que são processados de 
+forma diferente dependendo da localidade do usuário:
+
+============= ==================
+Campo         Nome Descrição
+============= ==================
+NumberField   Um campo de texto para inserir números
+IntegerField  Um campo texto para a inserção de números inteiros
+PercentField  Um campo texto para inserir valores percentuais
+MoneyField    Um campo texto para a inserção de valores monetários
+DateField     Um campo texto ou vários drop-downs para inserir datas
+BirthdayField Uma extensão do DateField para selecionar aniversários
+TimeField     Um campo texto ou vários drop-downs para inserir um horário
+DateTimeField Uma combinação de DateField e TimeField
+TimezoneField Uma extensão do ChoiceField para selecionar um fuso horário
+============= ==================
+
+Grupos de Campos
 ~~~~~~~~~~~~~~~~
 
-The Form component also features fields that render differently depending on
-the locale of the user:
-
-============= ==================
-Field         Name Description
-============= ==================
-NumberField   A text field for entering numbers
-IntegerField  A text field for entering integers
-PercentField  A text field for entering percent values
-MoneyField    A text field for entering money values
-DateField     A text field or multiple drop-downs for entering dates
-BirthdayField An extension of DateField for selecting birthdays
-TimeField     A text field or multiple drop-downs for entering a time
-DateTimeField A combination of DateField and TimeField
-TimezoneField An extension of ChoiceField for selecting a timezone
-============= ==================
-
-Field Groups
-~~~~~~~~~~~~
-
-Field groups allow you to combine multiple fields together. While normal fields
-only allow you to edit scalar data types, field groups can be used to edit
-whole objects or arrays. Let's add a new class ``Address`` to our model::
+Os grupos de campos permitem que você combine vários campos em conjunto. 
+Enquanto os campos normais só permitem editar tipos de dados escalares, os 
+grupos de campos podem ser usados para editar objetos inteiros ou arrays. 
+Vamos adicionar uma nova classe ``Address`` ao nosso modelo::
 
     class Address
     {
@@ -158,8 +160,8 @@ whole objects or arrays. Let's add a new class ``Address`` to our model::
       public $zipCode;
     }
 
-Now we can add a property ``$address`` to the customer that stores one ``Address``
-object::
+Agora podemos adicionar a propriedade ``$address`` para o customer que armazena um objeto 
+``Address``::
 
     class Customer
     {
@@ -168,8 +170,8 @@ object::
        public $address;
     }
 
-We can use a field group to show fields for the customer and the nested address
-at the same time::
+Podemos usar um grupo de campos para mostrar os campos para o customer e o ``address``
+aninhado ao mesmo tempo::
 
     # src/Application/HelloBundle/Controller/HelloController.php
     public function signupAction()
@@ -186,27 +188,27 @@ at the same time::
       
       // process form ...
     }
+
+Com apenas essas pequenas mudanças, agora você pode editar também o objeto ``Address``! 
+Legal, né?
     
-With only these little changes you can now edit also the ``Address`` object!
-Cool, ey?
+Campos Repetidos
+~~~~~~~~~~~~~~~~
 
-Repeated Fields
-~~~~~~~~~~~~~~~
-
-The ``RepeatedField`` is an extended field group that allows you to output a field
-twice. The repeated field will only validate if the user enters the same value
-in both fields::
+O ``RepeatedField`` é um grupo de campos estendido que permite a saída de um campo duas 
+vezes. O campo repetido somente será validado se o usuário digitar o mesmo valor 
+em ambos os campos::
 
     $form->add(new RepeatedField(new TextField('email')));
 
-This is a very useful field for querying email addresses or passwords!
+Este é um campo muito útil para consultar endereços de e-mail ou senhas!
 
-Collection Fields
+Coleção de Campos
 ~~~~~~~~~~~~~~~~~
 
-The ``CollectionField`` is a special field group for manipulating arrays or
-objects that implement the interface ``Traversable``. To demonstrate this, we 
-will extend the ``Customer`` class to store three email addresses::
+O ``CollectionField`` é um grupo de campos especial para manipular arrays ou 
+objetos que implementam a interface ``Traversable``. Para demonstrar isso, 
+vamos estender a classe ``Customer`` para armazenar três endereços de e-mail::
 
     class Customer
     {
@@ -215,34 +217,34 @@ will extend the ``Customer`` class to store three email addresses::
       public $emails = array('', '', '');
     }
 
-We will now add a ``CollectionField`` to manipulate these addresses::
+Vamos agora adicionar um `CollectionField`` para manipular esses endereços::
 
     $form->add(new CollectionField(new TextField('emails')));
 
-If you set the option "modifiable" to ``true``, you can even add or remove rows
-in the collection via Javascript! The ``CollectionField`` will notice it and
-resize the underlying array accordingly.
+Se você definir a opção "modifiable" como ``true``, você ainda pode adicionar ou 
+remover linhas na coleção via Javascript! O ``CollectionField`` notará e 
+redimensionará o array subjacente de acordo.
 
 .. index::
    single: Forms; Validation
 
-Form Validation
----------------
+Validação de Formulário
+-----------------------
 
-You have already learned in the last part of this tutorial how to set up
-validation constraints for a PHP class. The nice thing is that this is enough 
-to validate a Form! Remember that a form is nothing more than a gateway for
-changing data in an object.
+Você já aprendeu na última parte deste tutorial como configurar as constraints
+de validação para uma classe PHP. A parte boa é que isso é suficiente para 
+validar um formulário! Lembre-se que um formulário nada mais é do que um 
+gateway para alterar os dados em um objeto.
 
-What now if there are further validation constraints for a specific form, that
-are irrelevant for the underlying class? What if the form contains fields that
-should not be written into the object?
+Mas, e se houverem constraints de validação adicionais para um formulário 
+específico, que são irrelevantes para a classe básica? E se o formulário contém 
+campos que não devem ser escritos dentro do objeto?
 
-The answer to that question is most of the time to extend your domain model.
-We'll demonstrate this approach by extending our form with a checkbox for
-accepting terms and conditions.
+A resposta a essa pergunta é, na maioria do vezes, estender o seu modelo de 
+domínio. Vamos demonstrar essa abordagem estendendo o nosso formulário com 
+um checkbox para aceitar os termos e condições.
 
-Let's create a simple ``Registration`` class for this purpose::
+Vamos criar uma classe simples ``Registration`` para essa finalidade::
 
     class Registration
     {
@@ -258,7 +260,7 @@ Let's create a simple ``Registration`` class for this purpose::
       }
     }
 
-Now we can easily adapt the form in the controller::
+Agora podemos facilmente adaptar o formulário no controlador::
 
     # src/Application/HelloBundle/Controller/HelloController.php
     public function signupAction()
@@ -287,25 +289,25 @@ Now we can easily adapt the form in the controller::
  
       return $this->render('HelloBundle:Hello:signup', array('form' => $form));
     }
-    
-The big benefit of this refactoring is that we can reuse the ``Registration``
-class. Extending the application to allow users to sign up via XML is no 
-problem at all!
+
+O grande benefício desta refatoração é que podemos reutilizar a classe ``Registration``. 
+Estender a aplicação para permitir aos usuários se inscrever via XML não é 
+nenhum problema!    
 
 .. index::
    single: Forms; View
 
-Customizing the View
---------------------
+Personalizando a Visão
+----------------------
 
-Unfortunately the output of ``$form->render()`` doesn't look too great. Symfony
-2.0 makes it very easy though to customize the HTML of a form. You can access
-every field and field group in the form by its name. All fields offer the
-method ``render()`` for rendering the widget and ``renderErrors()`` for rendering
-a ``<ul>``-list with the field errors.
+Infelizmente, a saída do ``$form->render()`` não tem uma aparência muito boa. 
+O Symfony 2.0 torna muito fácil a personalização do HTML de um formulário. Você 
+pode acessar cada campo e um grupo de campos no formulário por seus nomes. Todos 
+os campos oferecem o método ``render()`` para processar o widget e ``renderErrors()`` 
+para processar uma lista ``<ul>`` com os erros dos campos.
 
-The following example shows you how to refine the HTML of an individual form
-field::
+O exemplo a seguir mostra como aperfeiçoar o HTML para um campo individual do 
+formulário::
 
     # src/Application/HelloBundle/Resources/views/Hello/signup.php
     <div class="form-row">
@@ -316,15 +318,15 @@ field::
       </div>
     </div>
 
-You can access fields in field groups in the same way:
+Você pode acessar os campos em grupos de campos da mesma forma:
 
 .. code-block:: html+php
 
     <?php echo $form['address']['street']->render() ?>
 
-Forms and field groups can be iterated for conveniently rendering all fields
-in the same way. You only need to take care not to create form rows or labels
-for your hidden fields:
+Pode-se realizar iteração nos Formulários e grupos de campos para processar 
+convenientemente todos os campos da mesma forma. Você só precisa tomar cuidado 
+para não criar linhas de formulário ou labels para os campos ocultos:
 
 .. code-block:: html+php
 
@@ -338,16 +340,16 @@ for your hidden fields:
       <?php endif ?>
     <?php endforeach ?>
 
-By using plain HTML, you have the greatest possible flexibility in designing
-your forms. Especially your designers will be happy that they can manipulate
-the form output without having to deal with (much) PHP!
+Usando HTML simples, você tem maior flexibilidade possível no projeto de seus 
+formulários. Especialmente seus designers ficarão felizes que podem manipular 
+a saída do formulário sem ter que lidar com (muito) PHP!
 
-Final Thoughts
---------------
+Pensamentos Finais
+------------------
 
-This chapter showed you how the Form component of Symfony2 can help you to
-rapidly create forms for your domain objects. The component embraces a strict
-separation between business logic and presentation. Many fields are
-automatically localized to make your visitors feel comfortable on your website.
-And with the new architecture, this is just the beginning of many new, mighty
-user-created fields!
+Este capítulo mostrou como o componente de Formulário do Symfony2 pode ajudá-lo 
+a criar rapidamente formulários para os seus objetos de domínio. O componente 
+adota uma separação estrita entre a lógica de negócios e a apresentação. 
+Muitos campos são automaticamente localizados para fazer com que seus visitantes 
+sintam-se confortáveis em seu site. E com a nova arquitetura, este é apenas o 
+começo de muitos novos e poderosos campos criados pelo usuário!
