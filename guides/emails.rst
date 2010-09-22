@@ -15,7 +15,7 @@ Enable ``SwiftmailerBundle`` in your kernel::
     {
         $bundles = array(
             // ...
-            new Symfony\Framework\SwiftmailerBundle\Bundle(),
+            new Symfony\Bundle\SwiftmailerBundle\SwiftmailerBundle(),
         );
 
         // ...
