@@ -5,7 +5,7 @@ require_once __DIR__.'/../src/autoload.php';
 use Symfony\Component\HttpKernel\Kernel;
 use Symfony\Component\DependencyInjection\Loader\LoaderInterface;
 
-class HelloKernel extends Kernel
+class AppKernel extends Kernel
 {
     public function registerRootDir()
     {

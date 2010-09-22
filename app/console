@@ -1,11 +1,11 @@
 #!/usr/bin/env php
 <?php
 
-require_once __DIR__.'/HelloKernel.php';
+require_once __DIR__.'/AppKernel.php';
 
 use Symfony\Bundle\FrameworkBundle\Console\Application;
 
-$kernel = new HelloKernel('dev', true);
+$kernel = new AppKernel('dev', true);
 
 $application = new Application($kernel);
 $application->run();

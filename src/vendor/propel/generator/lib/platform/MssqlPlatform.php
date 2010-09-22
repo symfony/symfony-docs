@@ -16,7 +16,7 @@ require_once 'model/Domain.php';
  *
  * @author     Hans Lellelid <hans@xmpl.org> (Propel)
  * @author     Martin Poeschl <mpoeschl@marmot.at> (Torque)
- * @version    $Revision: 1612 $
+ * @version    $Revision: 1954 $
  * @package    propel.generator.platform
  */
 class MssqlPlatform extends DefaultPlatform
@@ -31,17 +31,17 @@ class MssqlPlatform extends DefaultPlatform
 		$this->setSchemaDomainMapping(new Domain(PropelTypes::INTEGER, "INT"));
 		$this->setSchemaDomainMapping(new Domain(PropelTypes::BOOLEAN, "INT"));
 		$this->setSchemaDomainMapping(new Domain(PropelTypes::DOUBLE, "FLOAT"));
-		$this->setSchemaDomainMapping(new Domain(PropelTypes::LONGVARCHAR, "TEXT"));
-		$this->setSchemaDomainMapping(new Domain(PropelTypes::CLOB, "TEXT"));
+		$this->setSchemaDomainMapping(new Domain(PropelTypes::LONGVARCHAR, "VARCHAR(MAX)"));
+		$this->setSchemaDomainMapping(new Domain(PropelTypes::CLOB, "VARCHAR(MAX)"));
 		$this->setSchemaDomainMapping(new Domain(PropelTypes::DATE, "DATETIME"));
 		$this->setSchemaDomainMapping(new Domain(PropelTypes::BU_DATE, "DATETIME"));
 		$this->setSchemaDomainMapping(new Domain(PropelTypes::TIME, "DATETIME"));
 		$this->setSchemaDomainMapping(new Domain(PropelTypes::TIMESTAMP, "DATETIME"));
 		$this->setSchemaDomainMapping(new Domain(PropelTypes::BU_TIMESTAMP, "DATETIME"));
 		$this->setSchemaDomainMapping(new Domain(PropelTypes::BINARY, "BINARY(7132)"));
-		$this->setSchemaDomainMapping(new Domain(PropelTypes::VARBINARY, "IMAGE"));
-		$this->setSchemaDomainMapping(new Domain(PropelTypes::LONGVARBINARY, "IMAGE"));
-		$this->setSchemaDomainMapping(new Domain(PropelTypes::BLOB, "IMAGE"));
+		$this->setSchemaDomainMapping(new Domain(PropelTypes::VARBINARY, "VARBINARY(MAX)"));
+		$this->setSchemaDomainMapping(new Domain(PropelTypes::LONGVARBINARY, "VARBINARY(MAX)"));
+		$this->setSchemaDomainMapping(new Domain(PropelTypes::BLOB, "VARBINARY(MAX)"));
 	}
 
 	/**
@@ -77,7 +77,7 @@ class MssqlPlatform extends DefaultPlatform
 	{
 		return false;
 	}
-	
+
 	/**
 	 * @see        Platform::hasSize(String)
 	 */
@@ -94,14 +94,14 @@ class MssqlPlatform extends DefaultPlatform
 		return '[' . $text . ']';
 	}
 
-   /**
-   * Gets the preferred timestamp formatter for setting date/time values.
-   * @return     string
-   */
-  public function getTimestampFormatter()
-  {
-    return 'Y-m-d H:i:s';
-  }
+	 /**
+	 * Gets the preferred timestamp formatter for setting date/time values.
+	 * @return     string
+	 */
+	public function getTimestampFormatter()
+	{
+		return 'Y-m-d H:i:s';
+	}
 
 
 }
