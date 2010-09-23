@@ -241,7 +241,51 @@ configuration, and tag it with ``twig.extension``:
         $container
             ->register('twig.extension.your_extension_name', 'Fully\Qualified\Extension\Class\Name')
             ->addTag('twig.extension')
-        ;
 
+and add the namespace for the extension in the src/autoload.php file.
+
+    $loader->registerNamespaces(array(
+        . . .
+        'Fully\\Qualified\\Extension' => $vendorDir.'/fully/qualified/extesion',
+        . . .
+    ));
+    
+If you are not using a PEAR formatted classname instead of namespace for you extension use this configuration:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        services:
+            twig.extension.your_extension_name:
+                class: Your_Extensions_Extension_Name
+                tags:
+                    - { name: twig.extension }
+
+    .. code-block:: xml
+
+        <service id="twig.extension.your_extension_name" class="Your_Extensions_Extension_Name">
+            <tag name="twig.extension" />
+        </service>
+
+    .. code-block:: php
+
+        $container
+            ->register('twig.extension.your_extension_name', 'Your_Extensions_Extension_Name')
+            ->addTag('twig.extension')
+            
+and add the file prefix to src/autoload.php
+
+    $loader->registerPrefixes(array(
+        . . .
+        'Your_Extensions_' =>  $vendorDir.'/your-extensions/lib',
+        . . .
+    ));
+
+.. tip:
+  In autoload.php, the prefixes must be listed with the paths in assending order
+    
+        ;
+    
 .. _Twig:        http://www.twig-project.org/
 .. _constructor: http://www.twig-project.org/book/03-Twig-for-Developers
