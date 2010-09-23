@@ -242,7 +242,7 @@ configuration, and tag it with ``twig.extension``:
             ->register('twig.extension.your_extension_name', 'Fully\Qualified\Extension\Class\Name')
             ->addTag('twig.extension')
 
-and add the namespace for the extension in the src/autoload.php file.
+and add the namespace for the extension in the src/autoload.php file::
 
     $loader->registerNamespaces(array(
         . . .
@@ -250,7 +250,7 @@ and add the namespace for the extension in the src/autoload.php file.
         . . .
     ));
     
-If you are not using a PEAR formatted classname instead of namespace for you extension use this configuration:
+If you are using a PEAR formatted classname instead of namespace for you extension use this configuration:
 
 .. configuration-block::
 
@@ -274,7 +274,7 @@ If you are not using a PEAR formatted classname instead of namespace for you ext
             ->register('twig.extension.your_extension_name', 'Your_Extensions_Extension_Name')
             ->addTag('twig.extension')
             
-and add the file prefix to src/autoload.php
+and add the file prefix to src/autoload.php::
 
     $loader->registerPrefixes(array(
         . . .
@@ -282,7 +282,7 @@ and add the file prefix to src/autoload.php
         . . .
     ));
 
-.. tip:
+.. tip::
   In autoload.php, the prefixes must be listed with the paths in assending order
     
         ;
