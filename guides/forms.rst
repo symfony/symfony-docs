@@ -79,8 +79,8 @@ All the data is stored in a POST parameter with the name of the form::
 
         // form setup...
 
-        if ($this->getRequest()->getMethod() == 'POST') {
-            $form->bind($this->getRequest()->getParameter('customer'));
+        if ($this['request']->getMethod() == 'POST') {
+            $form->bind($this['request']->getParameter('customer'));
 
             if ($form->isValid()) {
                 // save $customer object and redirect
@@ -275,8 +275,8 @@ Now we can easily adapt the form in the controller::
 
         $form->add($group);
 
-        if ($this->getRequest()->getMethod() == 'POST') {
-            $form->bind($this->getRequest()->getParameter('customer'));
+        if ($this['request']->getMethod() == 'POST') {
+            $form->bind($this['request']->getParameter('customer'));
 
             if ($form->isValid()) {
                 $registration->process();
