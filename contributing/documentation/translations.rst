@@ -17,7 +17,7 @@ Finally, find the *master* repository for the language you want to contribute
 for. Here is the list of the official *master* repositories:
 
 * *English*: http://github.com/symfony/symfony-docs
-* ...
+* *Russian*: http://github.com/avalanche123/symfony-docs-ru
 
 .. note::
    If you want to contribute translations for a new language, read the
