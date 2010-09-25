@@ -148,12 +148,10 @@ So, Symfony routes the request by reading the routing configuration file:
         use Symfony\Component\Routing\Route;
 
         $collection = new RouteCollection();
-
         $collection->addRoute('homepage', new Route('/', array(
             '_controller' => 'FrameworkBundle:Default:index',
         )));
-
-        $collection->import('HelloBundle/Resources/config/routing.php');
+        $collection->addCollection($loader->import("HelloBundle/Resources/config/routing.php"));
 
         return $collection;
 
