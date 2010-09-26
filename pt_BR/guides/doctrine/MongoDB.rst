@@ -5,27 +5,27 @@
 MongoDB
 =======
 
-The `MongoDB`_ Object Document Mapper is much like the Doctrine2 ORM in the
-way it works and architecture. You only deal with plain PHP objects and they are persisted
-transparently without imposing on your domain model.
+O `Object Document Mapper` `MongoDB` é muito parecido com o ORM Doctrine2 na forma como
+ele funciona e na sua arquitetura. Você lida somente com objetos PHP simples e eles
+são persistidos transparente sem impor em seu modelo de domínio.
 
 .. tip::
-   You can read more about the Doctrine MongoDB Object Document Mapper on the
-   projects `documentation`_.
+   Você pode ler mais sobre o Doctrine `Object Document Mapper` MongoDB na 
+   `documentação`_ dos projetos.
 
-Configuration
--------------
+Configuração
+------------
 
-To get started working with Doctrine and the MongoDB Object Document Mapper you just need
-to enable it:
+Para começar a trabalhar com o Doctrine e o `Object Document Mapper` MongoDB basta 
+ativá-los:
 
 .. code-block:: yaml
 
     # config/config.yml
     doctrine_odm.mongodb: ~
 
-The above YAML is the most simple example and uses all of the default values provided, if
-you need to customize more you can specify the complete configuration:
+O YAML acima é o exemplo mais simples e usa todos os valores padrão fornecidos, 
+se você precisar personalizar mais, é possível especificar a configuração completa:
 
 .. code-block:: yaml
 
@@ -36,7 +36,8 @@ you need to customize more you can specify the complete configuration:
         connect: true
       metadata_cache_driver: array # array, apc, xcache, memcache
 
-If you wish to use memcache to cache your metadata and you need to configure the ``Memcache`` instance you can do the following:
+Se você deseja usar o memcache para o cache dos seus metadados e precisa configurar a 
+instância ``Memcache``, pode-se fazer o seguinte:
 
 .. code-block:: yaml
 
@@ -52,10 +53,10 @@ If you wish to use memcache to cache your metadata and you need to configure the
         port: 11211
         instance_class: Memcache
 
-Multiple Connections
-~~~~~~~~~~~~~~~~~~~~
+Múltiplas conexões
+~~~~~~~~~~~~~~~~~~
 
-If you need multiple connections and document managers you can use the following syntax:
+Se você precisar de múltiplas conexões e gestores de documento você pode usar a seguinte sintaxe:
 
 .. code-block:: yaml
 
@@ -79,13 +80,13 @@ If you need multiple connections and document managers you can use the following
         dm2:
           connection: conn2
 
-Now you can retrieve the configured services connection services::
+Agora você pode recuperar as configurações de serviços dos serviços de conexão::
 
     $conn1 = $container->getService('doctrine.odm.mongodb.conn1_connection');
     $conn2 = $container->getService('doctrine.odm.mongodb.conn2_connection');
 
-And you can also retrieve the configured document manager services which utilize the above
-connection services::
+E você também pode recuperar os serviços dos gestores de documentos configurados que utilizam 
+os serviços de conexão acima::
 
     $dm1 = $container->getService('doctrine.odm.mongodb.dm1_connection');
     $dm2 = $container->getService('doctrine.odm.mongodb.dm1_connection');
@@ -93,10 +94,10 @@ connection services::
 XML
 ~~~
 
-You can specify the same configuration via XML if you prefer that. Here are the same
-examples from above in XML.
+Você pode especificar a mesma configuração via XML, se preferir. Aqui estão os mesmos 
+exemplos acima, em XML.
 
-Simple Single Connection:
+Conexão Única Simples:
 
 .. code-block:: xml
 
@@ -121,7 +122,7 @@ Simple Single Connection:
         </doctrine:mongodb>
     </container>
 
-Multiple Connections:
+Múltiplas conexões:
 
 .. code-block:: xml
 
@@ -159,15 +160,15 @@ Multiple Connections:
         </doctrine:mongodb>
     </container>
 
-Writing Document Classes
-------------------------
+Escrevendo Classes de Documento
+-------------------------------
 
-You can start writing document classes just how you normally would write some PHP classes.
-The only difference is that you must map the classes to the MongoDB ODM. You can provide
-the mapping information via xml, yaml or annotations. In this example, for simplicity and
-ease of reading we will use annotations.
+Você pode começar a escrever as classes de documento assim como você escreve normalmente 
+as classes PHP. A única diferença é que você deve mapear as classes para o ODM MongoDB. 
+Você pode fornecer as informações de mapeamento via yaml, xml ou anotações. Neste exemplo, 
+para simplicidade e facilidade de leitura, vamos usar anotações.
 
-First, lets write a simple User class::
+Primeiro, vamos escrever uma classe simples `User`::
 
     // src/Application/HelloBundle/Document/User.php
 
@@ -194,9 +195,9 @@ First, lets write a simple User class::
         }
     }
 
-This class can be used independent from any persistence layer as it is a regular PHP
-class and does not have any dependencies. Now we need to annotate the class so Doctrine
-can read the annotated mapping information from the doc blocks::
+Esta classe pode ser usada independente de qualquer camada de persistência 
+pois é uma classe PHP regular e não possui nenhuma dependência. Agora precisamos 
+anotar a classe para o Doctrine poder ler as informações de mapeamento dos `doc blocks`::
 
     // ...
 
@@ -212,14 +213,13 @@ can read the annotated mapping information from the doc blocks::
         // ...
     }
 
-Using Documents
----------------
+Utilizando Documentos
+---------------------
 
-Now that you have a PHP class that has been mapped properly you can begin working with
-instances of that document persisting to and retrieving from MongoDB.
+Agora que você tem uma classe PHP que foi mapeada corretamente, você pode começar a 
+trabalhar com instâncias do documento persistindo e recuperando do MongoDB.
 
-From your controllers you can access the ``DocumentManager`` instances from
-the container::
+Em seus controladores é possível acessar as instâncias ``DocumentManager`` do `container`::
 
     class UserController extends Controller
     {
@@ -236,7 +236,7 @@ the container::
         }
     }
 
-Later you can retrieve the persisted document by its id::
+Posteriormente, pode-se recuperar o documento persistido através de seu id::
 
     class UserController extends Controller
     {
@@ -250,4 +250,4 @@ Later you can retrieve the persisted document by its id::
     }
 
 .. _MongoDB:       http://www.mongodb.org/
-.. _documentation: http://www.doctrine-project.org/projects/mongodb_odm/1.0/docs/en
+.. _documentação: http://www.doctrine-project.org/projects/mongodb_odm/1.0/docs/en
