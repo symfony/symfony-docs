@@ -22,7 +22,7 @@ More often than not, templates in a project share common elements, like the
 well-know header and footer. In Symfony, we like to think about this problem
 differently: a template can be decorated by another one.
 
-The ``index`` template is decorated by ``layout.php``, thanks to the
+The ``index.php`` template is decorated by ``layout.php``, thanks to the
 ``extend()`` call:
 
 .. code-block:: html+php
@@ -85,7 +85,7 @@ Slots
 -----
 
 A slot is a snippet of code, defined in a template, and reusable in any layout
-decorating the template. In the index template, define a ``title`` slot:
+decorating the template. In the ``index.php`` template, define a ``title`` slot:
 
 .. code-block:: html+php
 
@@ -156,7 +156,7 @@ And what if you want to embed the result of another action in a template?
 That's very useful when working with Ajax, or when the embedded template needs
 some variable not available in the main template.
 
-If you create a ``fancy`` action, and want to include it into the ``index``
+If you create a ``fancy`` action, and want to include it into the ``index.php``
 template, simply use the following code:
 
 .. code-block:: html+php
@@ -219,7 +219,7 @@ and the values are the route pattern placeholder values:
     # src/Application/HelloBundle/Resources/config/routing.yml
     hello: # The route name
         pattern:  /hello/:name
-        defaults: { _bundle: HelloBundle, _controller: Hello, _action: index }
+        defaults: { _controller: HelloBundle:Hello:index }
 
 Using Assets: images, JavaScripts, and stylesheets
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -236,10 +236,10 @@ Symfony provides three helpers to deal with them easily: ``assets``,
 
 The ``assets`` helper's main purpose is to make your application more portable.
 Thanks to this helper, you can move the application root directory anywhere under your
-web root directory without changing anything in your templates' code.
+web root directory without changing anything in your template's code.
 
 Similarly, you can manage your stylesheets and JavaScripts with the
-``stylesheets`` and ``JavaScripts`` helpers:
+``stylesheets`` and ``javascripts`` helpers:
 
 .. code-block:: html+php
 
