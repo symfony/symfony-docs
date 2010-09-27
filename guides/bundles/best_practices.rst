@@ -64,6 +64,7 @@ follows::
                 config/
                 doc/
                     index.rst
+                translations/
                 views/
                 web/
             Tests/
@@ -91,16 +92,17 @@ files are going to be part of the repository.
 
 The following classes and files have specific emplacements:
 
-========================= =====================
+========================= ===========================
 Type                      Directory
-========================= =====================
+========================= ===========================
 Controllers               ``Controller/``
+Translation files         ``Resources/translations/``
 Templates                 ``Resources/views/``
 Unit and Functional Tests ``Tests/``
 Web Resources             ``Resources/web/``
 Configuration             ``Resources/config/``
 Commands                  ``Command/``
-========================= =====================
+========================= ===========================
 
 Classes
 -------
@@ -165,6 +167,14 @@ must provide two slots: ``content`` and ``head``).
 .. note::
    The only other template engine supported is Twig, but only for specific
    cases.
+
+Translation Files
+-----------------
+
+If a bundle provides message translations, they must be defined in the XLIFF
+format; the domain should be named after the bundle name (``bundle.hello``).
+
+A bundle must not override existing messages from another bundle.
 
 Configuration
 -------------

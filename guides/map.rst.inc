@@ -20,6 +20,7 @@
 * :doc:`/guides/emails`
 * :doc:`/guides/validator`
 * :doc:`/guides/forms`
+* :doc:`/guides/translation`
 * **Templating**:
 
   * :doc:`/guides/templating/helpers` | 
