@@ -100,9 +100,9 @@ very easy).
 
 .. tip::
    The sandbox defaults to YAML, but you can easily switch to XML or PHP by
-   editing the ``config/AppKernel.php`` file. You can switch now by looking at
-   the bottom of ``config/AppKernel.php`` for instructions (the tutorials show
-   the configuration for all supported formats).
+   editing the ``app/AppKernel.php`` file. You can switch now by looking at the
+   bottom of ``app/AppKernel.php`` for instructions (the tutorials show the
+   configuration for all supported formats).
 
 .. index::
    single: Routing

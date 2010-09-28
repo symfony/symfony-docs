@@ -183,9 +183,9 @@ the ``router`` helper before. It takes the route name and an array of parameters
 as arguments and returns the associated friendly URL.
 
 You can also easily forward the action to another one with the ``forward()``
-method. As for the ``$view['actions']`` helper, it makes an internal
-sub-request, but it returns the ``Response`` object to allow for further
-modification if the need arises::
+method. As for the ``actions`` helper, it makes an internal sub-request, but it
+returns the ``Response`` object to allow for further modification if the need
+arises::
 
     $response = $this->forward('HelloBundle:Hello:fancy', array('name' => $name, 'color' => 'green'));
 
@@ -210,7 +210,7 @@ to the ``Request`` object::
 
     $request->request->get('page'); // get a $_POST parameter
 
-In a template, you can also access the request object via the ``request``
+In a template, you can also access the ``Request`` object via the ``request``
 helper:
 
 .. code-block:: html+php
@@ -234,7 +234,7 @@ from any controller::
     // in another controller for another request
     $foo = $this['request']->getSession()->get('foo');
 
-    // get/set the user culture
+    // set the user locale
     $this['request']->getSession()->setLocale('fr');
 
 You can also store small messages that will only be available for the very
@@ -251,5 +251,5 @@ Final Thoughts
 
 That's all there is to it, and I'm not even sure we have spent the allocated
 10 minutes. In the previous part, we saw how to extend the templating system
-with helpers. But everything can extended or replaced in Symfony2 with
+with helpers. But everything can be extended or replaced in Symfony2 with
 bundles. That's the topic of the next part of this tutorial.
