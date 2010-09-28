@@ -70,27 +70,22 @@ Then, configure it:
 Usage
 -----
 
-To render a Twig template instead of a PHP one, add the ``:twig`` suffix at the
-end of the template name. The controller below renders the ``index.twig``
+To render a Twig template instead of a PHP one, add the ``.twig`` suffix at
+the end of the template name. The controller below renders the ``index.twig``
 template::
 
     // src/Application/HelloBundle/Controller/HelloController.php
 
     public function indexAction($name)
     {
-        return $this->render('HelloBundle:Hello:index:twig', array('name' => $name));
+        return $this->render('HelloBundle:Hello:index.twig', array('name' => $name));
     }
-
-The ``:twig`` suffix is only needed when there is no context, like in a
-controller. But when you extend or include a template from a Twig template,
-Symfony2 automatically switches the default engine to Twig:
 
 .. code-block:: jinja
 
     {# src/Application/HelloBundle/Resources/views/Hello/index.twig #}
 
-    {# no need to add :twig as this is the default #}
-    {% extends "HelloBundle::layout" %}
+    {% extends "HelloBundle::layout.twig" %}
 
     Hello {{ $name }}!
 
@@ -130,19 +125,18 @@ And change the ``index.twig`` template to include it:
 .. code-block:: jinja
 
     {# src/Application/HelloBundle/Resources/views/Hello/index.php #}
-    {% extends "HelloBundle::layout" %}
+    {% extends "HelloBundle::layout.twig" %}
 
-    {% include "HelloBundle:Hello:hello" %}
+    {% include "HelloBundle:Hello:hello.twig" %}
 
 .. tip:
-   To embed a PHP template in a Twig one, add the ``:php`` suffix to the template
-   name:
+   You can also embed a PHP template in a Twig one:
 
     .. code-block:: jinja
 
         {# index.twig #}
 
-        {% render 'HelloBundle:Hello:sidebar:php' %}
+        {% render 'HelloBundle:Hello:sidebar.php' %}
 
 Embed other Actions
 -------------------
@@ -172,7 +166,7 @@ values::
             // create some object, based on the $color variable
             $object = ...;
 
-            return $this->render('HelloBundle:Hello:fancy:twig', array('name' => $name, 'object' => $object));
+            return $this->render('HelloBundle:Hello:fancy.twig', array('name' => $name, 'object' => $object));
         }
 
         // ...
@@ -207,7 +201,7 @@ specialized tags:
     {% route 'blog_post' with ['id': post.id] %}
 
     {# render a template #}
-    {% include 'BlogBundle:Post:list' %}
+    {% include 'BlogBundle:Post:list.twig' %}
 
     {# embed another controller response #}
     {% render 'BlogBundle:Post:list' with ['limit': 2], ['alt': 'BlogBundle:Post:error'] %}

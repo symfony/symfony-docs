@@ -112,7 +112,7 @@ Now, let's get back to the ``Hello`` controller::
 
     public function indexAction($name)
     {
-        return $this->render('HelloBundle:Hello:index', array('name' => $name));
+        return $this->render('HelloBundle:Hello:index.php', array('name' => $name));
     }
 
 The ``render()`` method renders a template and returns a ``Response`` object. The
@@ -121,7 +121,7 @@ change the default ``Content-Type``::
 
     public function indexAction($name)
     {
-        $response = $this->render('HelloBundle:Hello:index', array('name' => $name));
+        $response = $this->render('HelloBundle:Hello:index.php', array('name' => $name));
         $response->headers->set('Content-Type', 'text/plain');
 
         return $response;

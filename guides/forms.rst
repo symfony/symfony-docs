@@ -60,7 +60,7 @@ simple template to render the form:
 .. code-block:: html+php
 
     # src/Application/HelloBundle/Resources/views/Hello/signup.php
-    <?php $view->extend('HelloBundle::layout') ?>
+    <?php $view->extend('HelloBundle::layout.php') ?>
 
     <?php echo $form->renderFormTag('#') ?>
         <?php echo $form->renderErrors() ?>
