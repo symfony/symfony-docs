@@ -149,10 +149,10 @@ on this algorithm. For each form, the plural is different, and so the
 translation is also different. In such a case, you can provide all
 pluralization forms as strings separated by pipes (``|``)::
 
-    'The is one apple|There are {{ count }} apples'
+    'There is one apple|There are {{ count }} apples'
 
 Based on a given number, the translator chooses the right plural form. If
-``count`` is ``1``, the translator will use the first string (``The is one
+``count`` is ``1``, the translator will use the first string (``There is one
 apple``) as the translation, if not, it will use ``There are {{ count }}
 apples``.
 
