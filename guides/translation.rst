@@ -183,7 +183,7 @@ the original message and in the translated one).
 
 Sometimes, you want a different translation for specific cases (for ``0``, or
 when the count is large enough, when the count is negative, ...). For such
-cases, you can use explicit math ranges::
+cases, you can use explicit math intervals::
 
     '{0} There is no apples|{1} There is one apple|]1,19] There are {{ count }} apples|[20,Inf] There are many apples'
 
@@ -192,7 +192,7 @@ standard rules is defined after removing the explicit rules::
 
     '{0} There is no apples|[20,Inf] There are many apples|There is one apple|a_few: There are {{ count }} apples'
 
-An :class:`Symfony\\Component\\Translator\\Range` can represent a finite set
+An :class:`Symfony\\Component\\Translator\\Interval` can represent a finite set
 of numbers::
 
     {1,2,3,4}
@@ -205,6 +205,9 @@ Or numbers between two other numbers::
 The left delimiter can be ``[`` (inclusive) or ``]`` (exclusive). The right
 delimiter can be ``[`` (exclusive) or ``]`` (inclusive). Beside numbers, you
 can use ``-Inf`` and ``+Inf`` for the infinite.
+
+.. note::
+    Symfony uses the `ISO 31-11`_ for intervals notation.
 
 The translator
 :method:`Symfony\\Component\\Translation\\Translator::transChoice` method
@@ -310,3 +313,4 @@ must use to reference the loader):
             ->addTag('translation.loader', array('alias' => 'alias_name'))
         ;
 
+.. _ISO 31-11: http://en.wikipedia.org/wiki/Interval_%28mathematics%29#The_ISO_notation
