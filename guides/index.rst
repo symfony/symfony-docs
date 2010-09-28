@@ -10,6 +10,7 @@ Dive into Symfony2 with the topical guides:
     doctrine/index
     emails
     templating/index
+    translation
     validator
     forms
     event/index

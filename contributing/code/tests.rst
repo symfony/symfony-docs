@@ -9,14 +9,32 @@ PHPUnit
 
 To run the Symfony2 test suite, install PHPUnit 3.5.0 or later first. As it is
 not stable yet, your best bet is to use the latest version from the
-repository:
+repository, which is for now the 3.5.0RC2:
 
 .. code-block:: bash
 
     $ git clone git://github.com/sebastianbergmann/phpunit.git
     $ cd phpunit
+
+.. note::
+   You can list the tags of PHPUnit's repo with 'git tag', then quickly point
+   out the last one.
+
+At this point you are working on the master branch, so let's switch to the
+last tag for some stability:
+
+.. code-block:: bash
+
+    $ git checkout -b origin/3.5.0RC2 3.5.0RC2
+
+Finally, use PEAR to install the binaries of the last tag (use 'pear install
+-f' to force the installation of betas versions):
+
+.. code-block:: bash
+
+    $ pear channel-discover pear.phpunit.de
     $ pear package
-    $ pear install PHPUnit-3.5.XXX.tgz
+    $ pear install -f PHPUnit-3.5.0RC2.tgz
 
 Dependencies (optional)
 -----------------------

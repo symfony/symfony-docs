@@ -13,12 +13,12 @@ Enable ``SwiftmailerBundle`` in your kernel::
 
     public function registerBundles()
     {
-      $bundles = array(
-        // ...
-        new Symfony\Framework\SwiftmailerBundle\Bundle(),
-      );
+        $bundles = array(
+            // ...
+            new Symfony\Bundle\SwiftmailerBundle\SwiftmailerBundle(),
+        );
 
-      // ...
+        // ...
     }
 
 Configuration

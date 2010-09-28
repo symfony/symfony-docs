@@ -35,10 +35,10 @@ the error type and the line in the original YAML string where the error
 occurred::
 
     try {
-      $value = $yaml->parse(file_get_contents('/path/to/file.yaml'));
+        $value = $yaml->parse(file_get_contents('/path/to/file.yaml'));
     } catch (\InvalidArgumentException $e) {
-      // an error occurred during parsing
-      echo "Unable to parse the YAML string: ".$e->getMessage();
+        // an error occurred during parsing
+        echo "Unable to parse the YAML string: ".$e->getMessage();
     }
 
 .. tip::
@@ -111,8 +111,8 @@ the output switches from the expanded representation to the inline one::
 
     foo: bar
     bar:
-      foo: bar
-      bar: baz
+        foo: bar
+        bar: baz
 
 The YAML Syntax
 ---------------
@@ -276,23 +276,23 @@ YAML uses indentation with one or more spaces to describe nested collections:
 .. code-block:: yaml
 
     "symfony 1.4":
-      PHP:      5.2
-      Doctrine: 1.2
+        PHP:      5.2
+        Doctrine: 1.2
     "Symfony2":
-      PHP:      5.3
-      Doctrine: 2.0
+        PHP:      5.3
+        Doctrine: 2.0
 
 The following YAML is equivalent to the following PHP code::
 
     array(
-      'symfony 1.4' => array(
-        'PHP'      => 5.2,
-        'Doctrine' => 1.2,
-      ),
-      'Symfony2' => array(
-        'PHP'      => 5.3,
-        'Doctrine' => 2.0,
-      ),
+        'symfony 1.4' => array(
+            'PHP'      => 5.2,
+            'Doctrine' => 1.2,
+        ),
+        'Symfony2' => array(
+            'PHP'      => 5.3,
+            'Doctrine' => 2.0,
+        ),
     );
 
 There is one important thing you need to remember when using indentation in a
@@ -304,11 +304,11 @@ You can nest sequences and mappings as you like:
 .. code-block:: yaml
 
     'Chapter 1':
-      - Introduction
-      - Event Types
+        - Introduction
+        - Event Types
     'Chapter 2':
-      - Introduction
-      - Helpers
+        - Introduction
+        - Helpers
 
 YAML can also use flow styles for collections, using explicit indicators
 rather than indentation to denote scope.
@@ -360,9 +360,9 @@ In Symfony, a YAML file can contain PHP code that is evaluated just before the
 parsing occurs::
 
     1.0:
-      version: <?php echo file_get_contents('1.0/VERSION')."\n" ?>
+        version: <?php echo file_get_contents('1.0/VERSION')."\n" ?>
     1.1:
-      version: "<?php echo file_get_contents('1.1/VERSION') ?>"
+        version: "<?php echo file_get_contents('1.1/VERSION') ?>"
 
 Be careful to not mess up with the indentation. Keep in mind the following
 simple tips when adding PHP code to a YAML file:

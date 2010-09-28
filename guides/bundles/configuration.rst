@@ -239,7 +239,7 @@ When creating an extension, follow these simple conventions:
 
 If you follow these simple conventions, you extensions will be registered
 automatically by Symfony. If not, override the Bundle
-:method:`Symfony\\Framework\\Bundle\\Bundle::registerExtensions` method::
+:method:`Symfony\\Component\\HttpKernel\\Bundle\\Bundle::registerExtensions` method::
 
     class HelloBundle extends Bundle
     {
@@ -262,7 +262,7 @@ Default Configuration
 As stated before, the user of the bundle should include the ``hello.config``
 namespace in a configuration file for your extension code to be called. But
 you can automatically register a default configuration by overriding the
-Bundle :method:`Symfony\\Framework\\Bundle\\Bundle::registerExtensions`
+Bundle :method:`Symfony\\Component\\HttpKernel\\Bundle\\Bundle::registerExtensions`
 method::
 
     class HelloBundle extends Bundle

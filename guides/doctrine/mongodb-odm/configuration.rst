@@ -9,11 +9,11 @@ Configuration
 
     # config/config.yml
     doctrine_odm.mongodb:
-      server: mongodb://localhost:27017
-      default_database: hello_%kernel.environment%
-      options:
-        connect: true
-      metadata_cache_driver: array # array, apc, xcache, memcache
+        server: mongodb://localhost:27017
+        default_database: hello_%kernel.environment%
+        options:
+            connect: true
+        metadata_cache_driver: array # array, apc, xcache, memcache
 
 If you wish to use memcache to cache your metadata and you need to configure the ``Memcache`` instance you can do the following:
 
@@ -21,16 +21,16 @@ If you wish to use memcache to cache your metadata and you need to configure the
 
     # config/config.yml
     doctrine_odm.mongodb:
-      server: mongodb://localhost:27017
-      default_database: hello_%kernel.environment%
-      options:
-        connect: true
-      metadata_cache_driver:
-        type: memcache
-        class: Doctrine\Common\Cache\MemcacheCache
-        host: localhost
-        port: 11211
-        instance_class: Memcache
+        server: mongodb://localhost:27017
+        default_database: hello_%kernel.environment%
+        options:
+            connect: true
+        metadata_cache_driver:
+            type: memcache
+            class: Doctrine\Common\Cache\MemcacheCache
+            host: localhost
+            port: 11211
+            instance_class: Memcache
 
 Multiple Connections
 ~~~~~~~~~~~~~~~~~~~~
@@ -40,36 +40,36 @@ If you need multiple connections and document managers you can use the following
 .. code-block:: yaml
 
     doctrine_odm.mongodb:
-      default_database: hello_%kernel.environment%
-      default_connection: conn2
-      default_document_manager: dm2
-      metadata_cache_driver: apc
-      connections:
-        conn1:
-          server: mongodb://localhost:27017
-          options:
-            connect: true
-        conn2:
-          server: mongodb://localhost:27017
-          options:
-            connect: true
-      document_managers:
-        dm1:
-          connection: conn1
-          metadata_cache_driver: xcache
-        dm2:
-          connection: conn2
+        default_database: hello_%kernel.environment%
+        default_connection: conn2
+        default_document_manager: dm2
+        metadata_cache_driver: apc
+        connections:
+            conn1:
+                server: mongodb://localhost:27017
+                options:
+                    connect: true
+            conn2:
+                server: mongodb://localhost:27017
+                options:
+                    connect: true
+        document_managers:
+            dm1:
+                connection: conn1
+                metadata_cache_driver: xcache
+            dm2:
+                connection: conn2
 
 Now you can retrieve the configured services connection services::
 
-    $conn1 = $container->getService('doctrine.odm.mongodb.conn1_connection');
-    $conn2 = $container->getService('doctrine.odm.mongodb.conn2_connection');
+    $conn1 = $container['doctrine.odm.mongodb.conn1_connection'];
+    $conn2 = $container['doctrine.odm.mongodb.conn2_connection'];
 
 And you can also retrieve the configured document manager services which utilize the above
 connection services::
 
-    $dm1 = $container->getService('doctrine.odm.mongodb.dm1_document_manager');
-    $dm2 = $container->getService('doctrine.odm.mongodb.dm1_document_manager');
+    $dm1 = $container['doctrine.odm.mongodb.dm1_document_manager'];
+    $dm2 = $container['doctrine.odm.mongodb.dm1_document_manager'];
 
 XML
 ~~~
@@ -89,10 +89,8 @@ Simple Single Connection:
         xsi:schemaLocation="http://www.symfony-project.org/schema/dic/services http://www.symfony-project.org/schema/dic/services/services-1.0.xsd
                             http://www.symfony-project.org/schema/dic/doctrine/odm/mongodb http://www.symfony-project.org/schema/dic/doctrine/odm/mongodb/mongodb-1.0.xsd">
 
-        <doctrine:mongodb
-                server="mongodb://localhost:27017"
-                default_database="hello_%kernel.environment%"
-            >
+        <doctrine:mongodb server="mongodb://localhost:27017"
+                          default_database="hello_%kernel.environment%">
             <metadata_cache_driver type="memcache">
                 <class>Doctrine\Common\Cache\MemcacheCache</class>
                 <host>localhost</host>
@@ -117,14 +115,12 @@ Multiple Connections:
         xsi:schemaLocation="http://www.symfony-project.org/schema/dic/services http://www.symfony-project.org/schema/dic/services/services-1.0.xsd
                             http://www.symfony-project.org/schema/dic/doctrine/odm/mongodb http://www.symfony-project.org/schema/dic/doctrine/odm/mongodb/mongodb-1.0.xsd">
 
-        <doctrine:mongodb
-                default_database="hello_%kernel.environment%"
-                metadata_cache_driver="apc"
-                default_document_manager="dm2"
-                default_connection="dm2"
-                proxy_namespace="Proxies"
-                auto_generate_proxy_classes="true"
-            >
+        <doctrine:mongodb default_database="hello_%kernel.environment%"
+                          metadata_cache_driver="apc"
+                          default_document_manager="dm2"
+                          default_connection="dm2"
+                          proxy_namespace="Proxies"
+                          auto_generate_proxy_classes="true">
             <doctrine:connections>
                 <doctrine:connection id="conn1" server="mongodb://localhost:27017">
                     <options>
@@ -213,7 +209,7 @@ the container::
             $user = new User();
             $user->setName('Jonathan H. Wage');
 
-            $dm = $this->container->getService('doctrine.odm.mongodb.document_manager');
+            $dm = $this['doctrine.odm.mongodb.document_manager'];
             $dm->persist($user);
             $dm->flush();
 
@@ -227,7 +223,7 @@ Later you can retrieve the persisted document by its id::
     {
         public function editAction($id)
         {
-            $dm = $this->container->getService('doctrine.odm.mongodb.document_manager');
+            $dm = $this['doctrine.odm.mongodb.document_manager'];
             $user = $dm->find('HelloBundle:User', $id);
 
             // ...

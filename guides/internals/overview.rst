@@ -18,7 +18,7 @@ on top of the previous one.
 .. tip::
    Autoloading is not managed by the framework directly; it's done
    independently with the help of the
-   :class:`Symfony\\Framework\\UniversalClassLoader` class and the
+   :class:`Symfony\\Component\\HttpFoundation\\UniversalClassLoader` class and the
    ``src/autoload.php`` file. Read the :doc:`dedicated chapter
    </guides/tools/autoloader>` for more information.
 

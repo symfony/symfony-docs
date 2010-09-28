@@ -200,7 +200,7 @@ The Request Object
 Besides the values of the routing placeholders, the controller also has access
 to the ``Request`` object::
 
-    $request = $this->getRequest();
+    $request = $this['request'];
 
     $request->isXmlHttpRequest(); // is it an Ajax request?
 

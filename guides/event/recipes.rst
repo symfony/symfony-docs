@@ -98,7 +98,7 @@ magic ``__call()`` method in the class you want to be extended like this::
 
             // no listener was able to proces the event? The method does not exist
             if (!$event->isProcessed()) {
-              throw new \Exception(sprintf('Call to undefined method %s::%s.', get_class($this), $method));
+                throw new \Exception(sprintf('Call to undefined method %s::%s.', get_class($this), $method));
             }
 
             // return the listener returned value
@@ -114,8 +114,8 @@ Then, create a class that will host the listener::
         {
             // we only want to respond to the calls to the 'bar' method
             if ('bar' != $event['method']) {
-              // allow another listener to take care of this unknown method
-              return false;
+                // allow another listener to take care of this unknown method
+                return false;
             }
 
             // the subject object (the foo instance)

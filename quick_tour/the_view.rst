@@ -22,7 +22,7 @@ More often than not, templates in a project share common elements, like the
 well-know header and footer. In Symfony, we like to think about this problem
 differently: a template can be decorated by another one.
 
-The ``index`` template is decorated by ``layout.php``, thanks to the
+The ``index.php`` template is decorated by ``layout.php``, thanks to the
 ``extend()`` call:
 
 .. code-block:: html+php
@@ -42,29 +42,40 @@ Now, let's have a look at the ``layout.php`` file:
 .. code-block:: html+php
 
     <!-- src/Application/HelloBundle/Resources/views/layout.php -->
+    <?php $view->extend('::layout') ?>
+
+    <h1>Hello Application</h1>
+
+    <?php $view['slots']->output('_content') ?>
+
+The layout is itself decorated by another layout (``::layout``). Symfony
+supports multiple decoration levels: a layout can itself be decorated by
+another one. When the bundle part of the template name is empty, views are
+looked for in the ``app/views/`` directory. This directory store global views
+for your entire project:
+
+.. code-block:: html+php
+
+    <!-- app/views/layout.php -->
     <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
     <html>
         <head>
             <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+            <title><?php $view['slots']->output('title', 'Hello Application') ?></title>
         </head>
         <body>
             <?php $view['slots']->output('_content') ?>
         </body>
     </html>
 
-The ``$view['slots']->output('_content')`` expression is replaced by the content
-of the child template, ``index.php`` (more on slots in the next section).
+For both layouts, the ``$view['slots']->output('_content')`` expression is
+replaced by the content of the child template, ``index.php`` and
+``layout.php`` respectively (more on slots in the next section).
 
 As you can see, Symfony provides methods on a mysterious ``$view`` object. In a
 template, the ``$view`` variable is always available and refers to a special
 object that provides a bunch of methods and properties that make the template
 engine tick.
-
-.. tip::
-   Symfony also supports multiple decoration levels: a layout can itself be
-   decorated by another one. This technique is really useful for large
-   projects and is made even more powerful when used in combination with
-   slots.
 
 .. index::
    single: Templating; Slot
@@ -74,7 +85,7 @@ Slots
 -----
 
 A slot is a snippet of code, defined in a template, and reusable in any layout
-decorating the template. In the index template, define a ``title`` slot:
+decorating the template. In the ``index.php`` template, define a ``title`` slot:
 
 .. code-block:: html+php
 
@@ -85,20 +96,15 @@ decorating the template. In the index template, define a ``title`` slot:
 
     Hello <?php echo $name ?>!
 
-And change the layout to output the title in the header:
+The base layout already have the code to output the title in the header:
 
 .. code-block:: html+php
 
-    <!-- src/Application/HelloBundle/Resources/views/layout.php -->
-    <html>
-        <head>
-            <title><?php $view['slots']->output('title', 'Default Title') ?></title>
-            <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-        </head>
-        <body>
-            <?php $view['slots']->output('_content') ?>
-        </body>
-    </html>
+    <!-- app/views/layout.php -->
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <title><?php $view['slots']->output('title', 'Hello Application') ?></title>
+    </head>
 
 The ``output()`` method inserts the content of a slot and optionally takes a
 default value if the slot is not defined. And ``_content`` is just a special
@@ -150,7 +156,7 @@ And what if you want to embed the result of another action in a template?
 That's very useful when working with Ajax, or when the embedded template needs
 some variable not available in the main template.
 
-If you create a ``fancy`` action, and want to include it into the ``index``
+If you create a ``fancy`` action, and want to include it into the ``index.php``
 template, simply use the following code:
 
 .. code-block:: html+php
@@ -213,7 +219,7 @@ and the values are the route pattern placeholder values:
     # src/Application/HelloBundle/Resources/config/routing.yml
     hello: # The route name
         pattern:  /hello/:name
-        defaults: { _bundle: HelloBundle, _controller: Hello, _action: index }
+        defaults: { _controller: HelloBundle:Hello:index }
 
 Using Assets: images, JavaScripts, and stylesheets
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -230,10 +236,10 @@ Symfony provides three helpers to deal with them easily: ``assets``,
 
 The ``assets`` helper's main purpose is to make your application more portable.
 Thanks to this helper, you can move the application root directory anywhere under your
-web root directory without changing anything in your templates' code.
+web root directory without changing anything in your template's code.
 
 Similarly, you can manage your stylesheets and JavaScripts with the
-``stylesheets`` and ``JavaScripts`` helpers:
+``stylesheets`` and ``javascripts`` helpers:
 
 .. code-block:: html+php
 

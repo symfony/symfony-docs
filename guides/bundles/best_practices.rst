@@ -64,6 +64,7 @@ follows::
                 config/
                 doc/
                     index.rst
+                translations/
                 views/
                 web/
             Tests/
@@ -91,16 +92,17 @@ files are going to be part of the repository.
 
 The following classes and files have specific emplacements:
 
-========================= =====================
+========================= ===========================
 Type                      Directory
-========================= =====================
+========================= ===========================
 Controllers               ``Controller/``
+Translation files         ``Resources/translations/``
 Templates                 ``Resources/views/``
 Unit and Functional Tests ``Tests/``
 Web Resources             ``Resources/web/``
 Configuration             ``Resources/config/``
 Commands                  ``Command/``
-========================= =====================
+========================= ===========================
 
 Classes
 -------
@@ -110,7 +112,8 @@ instance, a ``HelloController`` controller is stored in
 ``Bundle/HelloBundle/Controller/HelloController.php`` and the fully qualified
 class name is ``Bundle\HelloBundle\Controller\HelloController``.
 
-All classes and files must follow the Symfony2 coding `standards`_.
+All classes and files must follow the Symfony2 coding :doc:`standards
+</contributing/code/standards>`.
 
 Some classes should be seen as facades and should be as short as possible,
 like Commands, Helpers, Listeners, and Controllers.
@@ -165,11 +168,17 @@ must provide two slots: ``content`` and ``head``).
    The only other template engine supported is Twig, but only for specific
    cases.
 
+Translation Files
+-----------------
+
+If a bundle provides message translations, they must be defined in the XLIFF
+format; the domain should be named after the bundle name (``bundle.hello``).
+
+A bundle must not override existing messages from another bundle.
+
 Configuration
 -------------
 
-Configuration must be done via the Symfony2 built-in `mechanism`_. A bundle
-should provide all its default configurations in XML.
-
-.. _standards: http://www.symfony-reloaded.org/contributing/Code/Standards
-.. _mechanism: http://www.symfony-reloaded.org/guides/Bundles/Configuration
+Configuration must be done via the Symfony2 built-in :doc:`mechanism
+</guides/bundles/configuration>`. A bundle should provide all its default
+configurations in XML.

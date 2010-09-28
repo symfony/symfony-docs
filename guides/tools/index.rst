@@ -7,3 +7,4 @@ Tools
    autoloader
    finder
    YAML
+   process

@@ -29,19 +29,19 @@ Download the `sandbox`_, and unpack it in your root web directory. You
 should now have a ``sandbox/`` directory::
 
     www/ <- your web root directory
-      sandbox/ <- the unpacked archive
-        hello/
-          cache/
-          config/
-          logs/
-        src/
-          Application/
-            HelloBundle/
-              Controller/
-              Resources/
-          vendor/
-            symfony/
-        web/
+        sandbox/ <- the unpacked archive
+            app/
+                cache/
+                config/
+                logs/
+            src/
+                Application/
+                    HelloBundle/
+                        Controller/
+                        Resources/
+                vendor/
+                    symfony/
+            web/
 
 .. index::
    single: Installation; Check
@@ -76,7 +76,7 @@ What's going on here? Let's dissect the URL:
 .. index:: Front Controller
 
 * ``index_dev.php``: This is a "front controller". It is the unique entry
-  point of the hello application and it responds to all user requests;
+  point of the application and it responds to all user requests;
 
 * ``/hello/Fabien``: This is the "virtual" path to the resource the user wants
   to access.
@@ -100,9 +100,9 @@ very easy).
 
 .. tip::
    The sandbox defaults to YAML, but you can easily switch to XML or PHP by
-   editing the ``config/HelloKernel.php`` file. You can switch now by looking
-   at the bottom of ``config/HelloKernel.php`` for instructions (the tutorials
-   show the configuration for all supported formats).
+   editing the ``config/AppKernel.php`` file. You can switch now by looking at
+   the bottom of ``config/AppKernel.php`` for instructions (the tutorials show
+   the configuration for all supported formats).
 
 .. index::
    single: Routing
@@ -117,7 +117,7 @@ So, Symfony routes the request by reading the routing configuration file:
 
     .. code-block:: yaml
 
-        # hello/config/routing.yml
+        # app/config/routing.yml
         homepage:
             pattern:  /
             defaults: { _controller: FrameworkBundle:Default:index }
@@ -127,7 +127,7 @@ So, Symfony routes the request by reading the routing configuration file:
 
     .. code-block:: xml
 
-        <!-- hello/config/routing.xml -->
+        <!-- app/config/routing.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
 
         <routes xmlns="http://www.symfony-project.org/schema/routing"
@@ -143,17 +143,15 @@ So, Symfony routes the request by reading the routing configuration file:
 
     .. code-block:: php
 
-        // hello/config/routing.php
+        // app/config/routing.php
         use Symfony\Component\Routing\RouteCollection;
         use Symfony\Component\Routing\Route;
 
         $collection = new RouteCollection();
-
         $collection->addRoute('homepage', new Route('/', array(
             '_controller' => 'FrameworkBundle:Default:index',
         )));
-
-        $collection->import('HelloBundle/Resources/config/routing.php');
+        $collection->addCollection($loader->import("HelloBundle/Resources/config/routing.php"));
 
         return $collection;
 
@@ -218,7 +216,7 @@ The controller is responsible for returning a representation of the resource
 
     namespace Application\HelloBundle\Controller;
 
-    use Symfony\Bundle\FrameworkBundle\Controller;
+    use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
     class HelloController extends Controller
     {
@@ -232,7 +230,7 @@ The code is pretty straightforward but let's explain this code line by line:
 
 * *line 3*: Symfony takes advantage of new PHP 5.3 features and as such, all
   controllers are properly namespaced (the namespace is the first part of the
-  ``_controler`` routing value: ``HelloBundle``).
+  ``_controller`` routing value: ``HelloBundle``).
 
 * *line 7*: The controller name is the concatenation of the second part of the
   ``_controller`` routing value (``Hello``) and ``Controller``. It extends the
@@ -302,7 +300,7 @@ better looking URL:
     http://localhost/hello/Fabien
 
 To make the production environment as fast as possible, Symfony maintains a
-cache under the ``hello/cache/`` directory. When you make changes, you need to
+cache under the ``app/cache/`` directory. When you make changes, you need to
 manually remove the cached files. That's why you should always use the
 development front controller (``index_dev.php``) when working on a project.
 

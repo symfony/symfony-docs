@@ -4,86 +4,141 @@
 ORM
 ===
 
-`Doctrine`_ is an Object relational mapper (ORM) for PHP that sits on top of a powerful
-database abstraction layer (DBAL). One of its key features is the option to write database
-queries in a proprietary object oriented SQL dialect called Doctrine Query Language (DQL),
-inspired by Hibernates HQL. This provides developers with a powerful alternative to SQL that
-maintains flexibility without requiring unnecessary code duplication.
+`Doctrine`_ is an Object relational mapper (ORM) for PHP that sits on top of a
+powerful DataBase Abstraction Layer (DBAL). It provides transparent
+persistence for PHP objects.
 
 .. tip::
-   You can read more about the Doctrine Object Relational Mapper on the projects `documentation`_.
+   You can read more about the Doctrine Object Relational Mapper on the
+   official `documentation`_ website.
 
-To get started you just need to enable the ORM:
+To get started, enable and configure the :doc:`Doctrine DBAL
+</guides/doctrine/dbal/overview>`, then enable the ORM:
 
-.. code-block:: yaml
+.. configuration-block::
 
-    # config/config.yml
+    .. code-block:: yaml
 
-    doctrine.orm: ~
+        # config/config.yml
+        doctrine.orm: ~
 
-Now you can start writing entities and mapping them with annotations, xml, or yaml. In this
-example we will use annotations::
+    .. code-block:: xml
+
+        <!-- xmlns:doctrine="http://www.symfony-project.org/schema/dic/doctrine" -->
+        <!-- xsi:schemaLocation="http://www.symfony-project.org/schema/dic/doctrine http://www.symfony-project.org/schema/dic/doctrine/doctrine-1.0.xsd"> -->
+
+        <doctrine:orm />
+
+    .. code-block:: php
+
+        $container->loadFromExtension('doctrine', 'orm');
+
+As Doctrine provides transparent persistence for PHP objects, it works with
+any PHP class::
 
     // Application/HelloBundle/Entity/User.php
-
     namespace Application\HelloBundle\Entity;
 
-    /**
-     * @Entity
-     */
     class User
     {
-        /**
-         * @Id
-         * @Column(type="integer")
-         * @GeneratedValue(strategy="IDENTITY")
-         */
         protected $id;
-
-        /**
-         * @Column(type="string", length="255")
-         */
         protected $name;
 
-        /**
-         * Get id
-         *
-         * @return integer $id
-         */
         public function getId()
         {
             return $this->id;
         }
 
-        /**
-         * Set name
-         *
-         * @param string $name
-         */
         public function setName($name)
         {
             $this->name = $name;
         }
 
-        /**
-         * Get name
-         *
-         * @return string $name
-         */
         public function getName()
         {
             return $this->name;
         }
     }
 
-Now, create the schema by running the following command:
+.. tip::
+    When defining your entities, you can omit the getter/setter methods and
+    let Doctrine create them for you with the ``doctrine:generate:entities``
+    command. This only works after you create the mapping information (see
+    below.)
+
+To let Doctrine manage your classes (entities in Doctrine2 speak), you need to
+write mapping information with annotations, XML, or YAML:
+
+.. configuration-block::
+
+    .. code-block:: php
+
+        // Application/HelloBundle/Entity/User.php
+        namespace Application\HelloBundle\Entity;
+
+        /**
+         * @Entity
+         */
+        class User
+        {
+            /**
+             * @Id
+             * @Column(type="integer")
+             * @GeneratedValue(strategy="IDENTITY")
+             */
+            protected $id;
+
+            /**
+             * @Column(type="string", length="255")
+             */
+            protected $name;
+        }
+
+    .. code-block:: yaml
+
+        # Application/HelloBundle/Resources/config/doctrine/metadata/orm/entities.yml
+        Application\HelloBundle\Entity\User:
+          type: entity
+          table: user
+          id:
+            id:
+              type: integer
+              generator:
+                strategy: IDENTITY
+          fields:
+            name:
+              type: string
+              length: 50
+
+    .. code-block:: xml
+
+        <!-- Application/HelloBundle/Resources/config/doctrine/metadata/orm/entities.xml -->
+        <doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
+                            http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+
+            <entity name="Application\HelloBundle\Entity\User" table="user">
+                <id name="id" type="integer" column="id">
+                    <generator strategy="IDENTITY"/>
+                </id>
+                <field name="name" column="name" type="string" length="255" />
+            </entity>
+
+        </doctrine-mapping>
+
+.. note::
+    If you use YAML or XML to describe your entities, you can omit the creation
+    of the Entity class, and let the ``doctrine:generate:entities`` command do
+    it for you.
+
+Create the database and the schema related to your metadata information with
+the following commands:
 
 .. code-block:: bash
 
+    $ php hello/console doctrine:database:create
     $ php hello/console doctrine:schema:create
-
-.. note::
-   Don't forget to create the database if it does not exist yet.
 
 Eventually, use your entity and manage its persistent state with Doctrine::
 
@@ -96,7 +151,7 @@ Eventually, use your entity and manage its persistent state with Doctrine::
             $user = new User();
             $user->setName('Jonathan H. Wage');
 
-            $em = $this->container->getService('doctrine.orm.entity_manager');
+            $em = $this['doctrine.orm.entity_manager'];
             $em->persist($user);
             $em->flush();
 
@@ -105,8 +160,8 @@ Eventually, use your entity and manage its persistent state with Doctrine::
 
         public function editAction($id)
         {
-            $em = $this->container->getService('doctrine.orm.entity_manager');
-            $user = $em->createQuery('select u from HelloBundle:User where id = ?', $id);
+            $em = $this['doctrine.orm.entity_manager'];
+            $user = $em->createQuery('SELECT u FROM HelloBundle:User WHERE id = ?', $id);
             $user->setBody('new body');
             $em->flush();
 
@@ -115,8 +170,8 @@ Eventually, use your entity and manage its persistent state with Doctrine::
 
         public function deleteAction($id)
         {
-            $em = $this->container->getService('doctrine.orm.entity_manager');
-            $user = $em->createQuery('select e from HelloBundle:User where id = ?', $id);
+            $em = $this['doctrine.orm.entity_manager'];
+            $user = $em->createQuery('SELECT e FROM HelloBundle:User WHERE id = ?', $id);
             $em->remove($user);
             $em->flush();
 

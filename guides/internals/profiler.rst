@@ -391,7 +391,8 @@ configuration, and tag it with ``data_collector``:
         services:
             data_collector.your_collector_name:
                 class: Fully\Qualified\Collector\Class\Name
-                tag:   { name: data_collector }
+                tags:
+                    - { name: data_collector }
 
     .. code-block:: xml
 

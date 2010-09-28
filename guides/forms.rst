@@ -20,17 +20,19 @@ Let's see how this works in a practical example. Let's create a simple
 
     class Customer
     {
-      public $name;
-      
-      private $age = 20;
-      
-      public function getAge() {
-          return $this->age;
-      }
-      
-      public function setAge($age) {
-          $this->age = $age;
-      }
+        public $name;
+
+        private $age = 20;
+
+        public function getAge()
+        {
+            return $this->age;
+        }
+
+        public function setAge($age)
+        {
+            $this->age = $age;
+        }
     }
     
 The class contains two properties ``name`` and "age". The property ``$name`` is
@@ -41,13 +43,13 @@ Now let's create a form to let the visitor fill the data of the object::
     // src/Application/HelloBundle/Controller/HelloController.php
     public function signupAction()
     {
-      $customer = new Customer();
-      
-      $form = new Form('customer', $customer, $this->container->getValidatorService());
-      $form->add(new TextField('name'));
-      $form->add(new IntegerField('age'));
- 
-      return $this->render('HelloBundle:Hello:signup', array('form' => $form));
+        $customer = new Customer();
+
+        $form = new Form('customer', $customer, $this->container->getValidatorService());
+        $form->add(new TextField('name'));
+        $form->add(new IntegerField('age'));
+
+        return $this->render('HelloBundle:Hello:signup', array('form' => $form));
     }
     
 A form consists of various fields. Each field represents a property in your
@@ -61,9 +63,9 @@ simple template to render the form:
     <?php $view->extend('HelloBundle::layout') ?>
 
     <?php echo $form->renderFormTag('#') ?>
-      <?php echo $form->renderErrors() ?>
-      <?php echo $form->render() ?>
-      <input type="submit" value="Send!" />
+        <?php echo $form->renderErrors() ?>
+        <?php echo $form->render() ?>
+        <input type="submit" value="Send!" />
     </form>
     
 When the user submits the form, we also need to handle the submitted data.
@@ -72,22 +74,20 @@ All the data is stored in a POST parameter with the name of the form::
     # src/Application/HelloBundle/Controller/HelloController.php
     public function signupAction()
     {
-      $customer = new Customer();
-      $form = new Form('customer', $customer, $this->container->getValidatorService());
-      
-      // form setup...
-      
-      if ($this->getRequest()->getMethod() == 'POST')
-      {
-        $form->bind($this->getRequest()->getParameter('customer'));
-        
-        if ($form->isValid())
-        {
-          // save $customer object and redirect
+        $customer = new Customer();
+        $form = new Form('customer', $customer, $this->container->getValidatorService());
+
+        // form setup...
+
+        if ($this['request']->getMethod() == 'POST') {
+            $form->bind($this['request']->getParameter('customer'));
+
+            if ($form->isValid()) {
+                // save $customer object and redirect
+            }
         }
-      }
- 
-      return $this->render('HelloBundle:Hello:signup', array('form' => $form));
+
+        return $this->render('HelloBundle:Hello:signup', array('form' => $form));
     }
     
 Congratulations! You just created your first fully-functional form with
@@ -154,8 +154,8 @@ whole objects or arrays. Let's add a new class ``Address`` to our model::
 
     class Address
     {
-      public $street;
-      public $zipCode;
+        public $street;
+        public $zipCode;
     }
 
 Now we can add a property ``$address`` to the customer that stores one ``Address``
@@ -163,9 +163,9 @@ object::
 
     class Customer
     {
-       // other properties ...
-       
-       public $address;
+         // other properties ...
+
+         public $address;
     }
 
 We can use a field group to show fields for the customer and the nested address
@@ -174,17 +174,17 @@ at the same time::
     # src/Application/HelloBundle/Controller/HelloController.php
     public function signupAction()
     {
-      $customer = new Customer();
-      $customer->address = new Address();
-      
-      // form configuration ...
-      
-      $group = new FieldGroup('address');
-      $group->add(new TextField('street'));
-      $group->add(new TextField('zipCode'));
-      $form->add($group);
-      
-      // process form ...
+        $customer = new Customer();
+        $customer->address = new Address();
+
+        // form configuration ...
+
+        $group = new FieldGroup('address');
+        $group->add(new TextField('street'));
+        $group->add(new TextField('zipCode'));
+        $form->add($group);
+
+        // process form ...
     }
     
 With only these little changes you can now edit also the ``Address`` object!
@@ -210,9 +210,9 @@ will extend the ``Customer`` class to store three email addresses::
 
     class Customer
     {
-      // other properties ...
-      
-      public $emails = array('', '', '');
+        // other properties ...
+
+        public $emails = array('', '', '');
     }
 
 We will now add a ``CollectionField`` to manipulate these addresses::
@@ -246,16 +246,16 @@ Let's create a simple ``Registration`` class for this purpose::
 
     class Registration
     {
-      /** @Validation({ @Valid }) */
-      public $customer;
-      
-      /** @Validation({ @AssertTrue(message="Please accept the terms and conditions") }) */
-      public $termsAccepted = false;
-      
-      public process()
-      {
-        // save user, send emails etc.
-      }
+        /** @Validation({ @Valid }) */
+        public $customer;
+
+        /** @Validation({ @AssertTrue(message="Please accept the terms and conditions") }) */
+        public $termsAccepted = false;
+
+        public process()
+        {
+            // save user, send emails etc.
+        }
     }
 
 Now we can easily adapt the form in the controller::
@@ -263,29 +263,27 @@ Now we can easily adapt the form in the controller::
     # src/Application/HelloBundle/Controller/HelloController.php
     public function signupAction()
     {
-      $registration = new Registration();
-      $registration->customer = new Customer();
-      
-      $form = new Form('registration', $registration, $this->container->getValidatorService());
-      $form->add(new CheckboxField('termsAccepted'));
-      
-      $group = new FieldGroup('customer');
-      
-      // add customer fields to this group ...
-      
-      $form->add($group);
-      
-      if ($this->getRequest()->getMethod() == 'POST')
-      {
-        $form->bind($this->getRequest()->getParameter('customer'));
-        
-        if ($form->isValid())
-        {
-          $registration->process();
+        $registration = new Registration();
+        $registration->customer = new Customer();
+
+        $form = new Form('registration', $registration, $this->container->getValidatorService());
+        $form->add(new CheckboxField('termsAccepted'));
+
+        $group = new FieldGroup('customer');
+
+        // add customer fields to this group ...
+
+        $form->add($group);
+
+        if ($this['request']->getMethod() == 'POST') {
+            $form->bind($this['request']->getParameter('customer'));
+
+            if ($form->isValid()) {
+                $registration->process();
+            }
         }
-      }
- 
-      return $this->render('HelloBundle:Hello:signup', array('form' => $form));
+
+        return $this->render('HelloBundle:Hello:signup', array('form' => $form));
     }
     
 The big benefit of this refactoring is that we can reuse the ``Registration``
@@ -309,11 +307,11 @@ field::
 
     # src/Application/HelloBundle/Resources/views/Hello/signup.php
     <div class="form-row">
-      <label for="<?php echo $form['firstName']->getId() ?>">First name:</label>
-      <div class="form-row-content">
-        <?php echo $form['firstName']->renderErrors() ?>
-        <?php echo $form['firstName']->render() ?>
-      </div>
+        <label for="<?php echo $form['firstName']->getId() ?>">First name:</label>
+        <div class="form-row-content">
+            <?php echo $form['firstName']->renderErrors() ?>
+            <?php echo $form['firstName']->render() ?>
+        </div>
     </div>
 
 You can access fields in field groups in the same way:
@@ -329,13 +327,13 @@ for your hidden fields:
 .. code-block:: html+php
 
     <?php foreach ($form as $field): ?>
-      <?php if ($field->isHidden()): ?>
-        <?php echo $field->render() ?>
-      <?php else: ?>
-        <div class="form-row">
-          ...
-        </div>
-      <?php endif ?>
+        <?php if ($field->isHidden()): ?>
+            <?php echo $field->render() ?>
+        <?php else: ?>
+            <div class="form-row">
+                ...
+            </div>
+        <?php endif ?>
     <?php endforeach ?>
 
 By using plain HTML, you have the greatest possible flexibility in designing
