@@ -11,7 +11,7 @@ Your First Form
 ---------------
 
 A form in Symfony2 is a transparent layer on top of your domain model. It
-reads properties from an object, displays the values in the form and allows
+reads properties from an object, displays the values in the form, and allows
 the user to change them. When the form is submitted, the values are written
 back into the object.
 
@@ -21,7 +21,6 @@ Let's see how this works in a practical example. Let's create a simple
     class Customer
     {
         public $name;
-
         private $age = 20;
 
         public function getAge()
@@ -34,9 +33,9 @@ Let's see how this works in a practical example. Let's create a simple
             $this->age = $age;
         }
     }
-    
-The class contains two properties ``name`` and "age". The property ``$name`` is
-public, while ``$age`` can only be modified through setters and getters. 
+
+The class contains two properties ``name`` and "age". The property ``$name``
+is public, while ``$age`` can only be modified through setters and getters.
 
 Now let's create a form to let the visitor fill the data of the object::
 
@@ -49,12 +48,12 @@ Now let's create a form to let the visitor fill the data of the object::
         $form->add(new TextField('name'));
         $form->add(new IntegerField('age'));
 
-        return $this->render('HelloBundle:Hello:signup', array('form' => $form));
+        return $this->render('HelloBundle:Hello:signup.php', array('form' => $form));
     }
-    
+
 A form consists of various fields. Each field represents a property in your
 class. The property must have the same name as the field and must either be
-public or accessible through public getters and setters. Now let's create a 
+public or accessible through public getters and setters. Now let's create a
 simple template to render the form:
 
 .. code-block:: html+php
@@ -67,9 +66,9 @@ simple template to render the form:
         <?php echo $form->render() ?>
         <input type="submit" value="Send!" />
     </form>
-    
-When the user submits the form, we also need to handle the submitted data.
-All the data is stored in a POST parameter with the name of the form::
+
+When the user submits the form, we also need to handle the submitted data. All
+the data is stored in a POST parameter with the name of the form::
 
     # src/Application/HelloBundle/Controller/HelloController.php
     public function signupAction()
@@ -79,17 +78,17 @@ All the data is stored in a POST parameter with the name of the form::
 
         // form setup...
 
-        if ($this['request']->getMethod() == 'POST') {
-            $form->bind($this['request']->getParameter('customer'));
+        if ('POST' === $this['request']->getMethod()) {
+            $form->bind($this['request']->request->get('customer'));
 
             if ($form->isValid()) {
                 // save $customer object and redirect
             }
         }
 
-        return $this->render('HelloBundle:Hello:signup', array('form' => $form));
+        return $this->render('HelloBundle:Hello:signup.php', array('form' => $form));
     }
-    
+
 Congratulations! You just created your first fully-functional form with
 Symfony2.
 
@@ -99,15 +98,17 @@ Symfony2.
 Form Fields
 -----------
 
-As you have learned, a form consists of one or more form fields. In Symfony2, 
+As you have learned, a form consists of one or more form fields. In Symfony2,
 form fields have two responsibilities:
 
-* Render HTML
-* Convert data between normalized and humane representations
+* Render HTML;
 
-Let's look at the ``DateField`` for example. While you probably prefer to store 
-dates as strings or ``DateTime`` objects, users rather like to choose them from a
-list of drop downs. ``DateField`` handles the rendering and type conversion for you.
+* Convert data between normalized and humane representations.
+
+Let's look at the ``DateField`` for example. While you probably prefer to
+store dates as strings or ``DateTime`` objects, users rather like to choose
+them from a list of drop downs. ``DateField`` handles the rendering and type
+conversion for you.
 
 Basic Fields
 ~~~~~~~~~~~~
@@ -186,16 +187,16 @@ at the same time::
 
         // process form ...
     }
-    
+
 With only these little changes you can now edit also the ``Address`` object!
 Cool, ey?
 
 Repeated Fields
 ~~~~~~~~~~~~~~~
 
-The ``RepeatedField`` is an extended field group that allows you to output a field
-twice. The repeated field will only validate if the user enters the same value
-in both fields::
+The ``RepeatedField`` is an extended field group that allows you to output a
+field twice. The repeated field will only validate if the user enters the same
+value in both fields::
 
     $form->add(new RepeatedField(new TextField('email')));
 
@@ -205,7 +206,7 @@ Collection Fields
 ~~~~~~~~~~~~~~~~~
 
 The ``CollectionField`` is a special field group for manipulating arrays or
-objects that implement the interface ``Traversable``. To demonstrate this, we 
+objects that implement the interface ``Traversable``. To demonstrate this, we
 will extend the ``Customer`` class to store three email addresses::
 
     class Customer
@@ -219,9 +220,9 @@ We will now add a ``CollectionField`` to manipulate these addresses::
 
     $form->add(new CollectionField(new TextField('emails')));
 
-If you set the option "modifiable" to ``true``, you can even add or remove rows
-in the collection via Javascript! The ``CollectionField`` will notice it and
-resize the underlying array accordingly.
+If you set the option "modifiable" to ``true``, you can even add or remove
+rows in the collection via Javascript! The ``CollectionField`` will notice it
+and resize the underlying array accordingly.
 
 .. index::
    single: Forms; Validation
@@ -230,7 +231,7 @@ Form Validation
 ---------------
 
 You have already learned in the last part of this tutorial how to set up
-validation constraints for a PHP class. The nice thing is that this is enough 
+validation constraints for a PHP class. The nice thing is that this is enough
 to validate a Form! Remember that a form is nothing more than a gateway for
 changing data in an object.
 
@@ -275,19 +276,19 @@ Now we can easily adapt the form in the controller::
 
         $form->add($group);
 
-        if ($this['request']->getMethod() == 'POST') {
-            $form->bind($this['request']->getParameter('customer'));
+        if ('POST' === $this['request']->getMethod()) {
+            $form->bind($this['request']->request->get('customer'));
 
             if ($form->isValid()) {
                 $registration->process();
             }
         }
 
-        return $this->render('HelloBundle:Hello:signup', array('form' => $form));
+        return $this->render('HelloBundle:Hello:signup.php', array('form' => $form));
     }
-    
+
 The big benefit of this refactoring is that we can reuse the ``Registration``
-class. Extending the application to allow users to sign up via XML is no 
+class. Extending the application to allow users to sign up via XML is no
 problem at all!
 
 .. index::
@@ -296,11 +297,11 @@ problem at all!
 Customizing the View
 --------------------
 
-Unfortunately the output of ``$form->render()`` doesn't look too great. Symfony
-2.0 makes it very easy though to customize the HTML of a form. You can access
-every field and field group in the form by its name. All fields offer the
-method ``render()`` for rendering the widget and ``renderErrors()`` for rendering
-a ``<ul>``-list with the field errors.
+Unfortunately the output of ``$form->render()`` doesn't look too great.
+Symfony 2.0 makes it very easy though to customize the HTML of a form. You can
+access every field and field group in the form by its name. All fields offer
+the method ``render()`` for rendering the widget and ``renderErrors()`` for
+rendering a ``<ul>``-list with the field errors.
 
 The following example shows you how to refine the HTML of an individual form
 field::
@@ -333,8 +334,8 @@ for your hidden fields:
             <div class="form-row">
                 ...
             </div>
-        <?php endif ?>
-    <?php endforeach ?>
+        <?php endif; ?>
+    <?php endforeach; ?>
 
 By using plain HTML, you have the greatest possible flexibility in designing
 your forms. Especially your designers will be happy that they can manipulate
@@ -346,6 +347,6 @@ Final Thoughts
 This chapter showed you how the Form component of Symfony2 can help you to
 rapidly create forms for your domain objects. The component embraces a strict
 separation between business logic and presentation. Many fields are
-automatically localized to make your visitors feel comfortable on your website.
-And with the new architecture, this is just the beginning of many new, mighty
-user-created fields!
+automatically localized to make your visitors feel comfortable on your
+website. And with the new architecture, this is just the beginning of many
+new, mighty user-created fields!
