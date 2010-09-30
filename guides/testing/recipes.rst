@@ -91,7 +91,7 @@ It's highly recommended that a functional test only tests the Response. But if
 you write functional tests that monitor your production servers, you might
 want to write tests on the profiling data.
 
-The Symfony2 :doc:`profiler </guides/internals/profiler>`_ gathers a lot of
+The Symfony2 :doc:`profiler </guides/internals/profiler>` gathers a lot of
 data for each request. Use these data to check the number of database calls,
 the time spent in the framework, ... But before writing assertions, always
 check that the profiler is indeed available (it is enabled by default in the
