@@ -49,7 +49,7 @@ by default. You can enable it in your ``config.yml``:
 
     # hello/config/config.yml
     web.validation:
-      annotations: true
+        annotations: true
 
 Now let's try to validate an object::
 
@@ -60,7 +60,9 @@ Now let's try to validate an object::
     
     print $validator->validate($author);
     
-You should see the following output::
+You should see the following output:
+
+.. code-block:: yaml
 
     Author.firstName:
         This value is too short. It should have 4 characters or more
