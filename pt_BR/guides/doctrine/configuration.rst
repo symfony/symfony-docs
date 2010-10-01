@@ -1,8 +1,8 @@
-Doctrine Configuration
-======================
+Configuração do Doctrine
+========================
 
-DBAL Configuration
-------------------
+Configuração DBAL
+-----------------
 
 .. code-block:: yaml
 
@@ -13,8 +13,8 @@ DBAL Configuration
         user:     root
         password: null
 
-You can also specify some additional configurations on a connection but they
-are not required:
+Você também pode especificar algumas configurações adicionais em uma conexão, 
+mas elas não são obrigatórias:
 
 .. code-block:: yaml
 
@@ -31,8 +31,9 @@ are not required:
       wrapper_class:        ~
       options:              []
 
-If you want to configure multiple connections you can do so by simply listing them under
-the key named ``connections``:
+
+Se você deseja configurar múltiplas conexões, você pode fazer isso simplesmente 
+listando-as sob a chave chamada ``connections``:
 
 .. code-block:: yaml
 
@@ -50,8 +51,8 @@ the key named ``connections``:
           password:             null
           host:                 localhost
 
-If you have defined multiple connections you can use the ``getDatabaseConnection()`` as well
-but you must pass it an argument with the name of the connection you want to get::
+Se você definiu múltiplas conexões, você pode usar o ``getDatabaseConnection()`` também, 
+mas deve passar um argumento com o nome da conexão que deseja obter::
 
     class UserController extends Controller
     {
@@ -61,8 +62,8 @@ but you must pass it an argument with the name of the connection you want to get
         }
     }
 
-ORM Configuration
------------------
+Configuração ORM 
+----------------
 
 .. code-block:: yaml
 
@@ -75,9 +76,9 @@ ORM Configuration
         customer:
           connection:           customer
 
-Just like the DBAL, if you have configured multiple ``EntityManager`` instances and want to
-get a specific one you can use the ``getEntityManager()`` method by just passing it an argument
-that is the name of the ``EntityManager`` you want::
+Assim como para o DBAL, se você tiver configurado múltiplas instâncias ``EntityManager`` e deseja
+obter uma específica, você pode usar o método ``getEntityManager()`` apenas passando à ele
+um argumento que é o nome do ``EntityManager`` que você deseja::
 
     class UserController extends Controller
     {
@@ -87,10 +88,10 @@ that is the name of the ``EntityManager`` you want::
         }
     }
 
-Now the scenario arrises where you want to change your mapping information and
-update your development database schema without blowing away everything and
-losing your existing data. So first lets just add a new property to our ``User``
-entity::
+Agora surge o cenário onde você deseja alterar as informações de mapeamento 
+e atualizar seu esquema do banco de dados de desenvolvimento, sem bagunçar 
+tudo e perder os dados existentes. Então, primeiro, vamos adicionar uma 
+nova propriedade à nossa entidade ``User``::
 
     namespace Application\HelloBundle\Entities;
 
@@ -103,51 +104,50 @@ entity::
         // ...
     }
 
-Once you've done that, to get your database schema updated with the new column
-you just need to run the following command:
+Após feito isso, para obter o esquema do banco de dados atualizado com a 
+nova coluna, basta executar o seguinte comando:
 
     $ php hello/console doctrine:schema:update
 
-Now your database will be updated and the new column added to the database
-table.
+Agora, seu banco de dados será atualizado e a nova coluna adicionada à tabela.
 
-Console Commands
-----------------
+Comandos de Console
+-------------------
 
-The Doctrine2 ORM integration offers several console commands under the ``doctrine``
-namespace. To view a list of the commands you can run the console without any arguments
-or options:
+A integração do ORM Doctrine2 oferece vários comandos de console no namespace ``doctrine``.
+Para ver uma lista dos comandos que você pode executar no console sem argumentos ou opções:
 
     $ php hello/console
     ...
 
+
     doctrine
-      :ensure-production-settings  Verify that Doctrine is properly configured for a production environment.
-      :schema-tool                 Processes the schema and either apply it directly on EntityManager or generate the SQL output.
+      :ensure-production-settings  Verifica se o Doctrine está devidamente configurado para um ambiente de produção.
+      :schema-tool                 Processa o esquema e também aplica-o diretamente no EntityManager ou gera uma saída SQL.
     doctrine:cache
-      :clear-metadata              Clear all metadata cache for a entity manager.
-      :clear-query                 Clear all query cache for a entity manager.
-      :clear-result                Clear result cache for a entity manager.
+      :clear-metadata              Limpa todo o cache de metadados para um gerenciador de entidades.
+      :clear-query                 Limpa todo o cache de consultas para um gerenciador de entidades. 
+      :clear-result                Limpa o cache de resultado para o gerenciador de entidade.
     doctrine:data
-      :load                        Load data fixtures to your database.
+      :load                        Carrega os dados definidos nas fixtures para seu banco de dados.
     doctrine:database
-      :create                      Create the configured databases.
-      :drop                        Drop the configured databases.
+      :create                      Cria os bancos de dados configurados.
+      :drop                        Remove os bancos de dados configurados.
     doctrine:generate
-      :entities                    Generate entity classes and method stubs from your mapping information.
-      :entity                      Generate a new Doctrine entity inside a bundle.
-      :proxies                     Generates proxy classes for entity classes.
-      :repositories                Generate repository classes from your mapping information.
+      :entities                    Gera classes de entidade e métodos stub a partir das informações de mapeamento. 
+      :entity                      Gera uma nova entidade do Doctrine dentro de um pacote.
+      :proxies                     Gera classes proxy para as classes de entidade.
+      :repositories                Gera classes de repositório a partir da sua informação de mapeamento.
     doctrine:mapping
-      :convert                     Convert mapping information between supported formats.
-      :convert-d1-schema           Convert a Doctrine1 schema to Doctrine2 mapping files.
-      :import                      Import mapping information from an existing database.
+      :convert                     Converte as informações de mapeamento entre os formatos suportados.
+      :convert-d1-schema           Converte um esquema do Doctrine1 para arquivos de mapeamento do Doctrine2.
+      :import                      Importa as informações de mapeamento de um banco de dados existente.
     doctrine:query
-      :dql                         Executes arbitrary DQL directly from the command line.
-      :sql                         Executes arbitrary SQL directly from the command line.
+      :dql                         Executa DQL arbitrária diretamente da linha de comando.
+      :sql                         Executa SQL arbitrário diretamente da linha de comando.
     doctrine:schema
-      :create                      Processes the schema and either create it directly on EntityManager Storage Connection or generate the SQL output.
-      :drop                        Processes the schema and either drop the database schema of EntityManager Storage Connection or generate the SQL output.
-      :update                      Processes the schema and either update the database schema of EntityManager Storage Connection or generate the SQL output.
+      :create                      Processa o esquema e também o cria diretamente no `EntityManager Storage Connection` ou gera a saída SQL.
+      :drop                        Processa o esquema e descarta o esquema do banco de dados do `EntityManager Storage Connection` ou gera a saída SQL. 
+      :update                      Processa o esquema e também atualiza o esquema do banco de dados do `EntityManager Storage Connection` ou gera a saída SQL.
 
     ...
