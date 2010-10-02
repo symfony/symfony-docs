@@ -53,13 +53,11 @@ by default. You can enable it in your ``config.yml``:
 
 Now let's try to validate an object::
 
-    $validator = $this->container->getValidatorService();
-    
     $author = new Author();
     $author->firstName = 'B.';
-    
-    print $validator->validate($author);
-    
+
+    print $this['validator']->validate($author);
+
 You should see the following output:
 
 .. code-block:: yaml

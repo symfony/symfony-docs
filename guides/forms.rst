@@ -44,7 +44,7 @@ Now let's create a form to let the visitor fill the data of the object::
     {
         $customer = new Customer();
 
-        $form = new Form('customer', $customer, $this->container->getValidatorService());
+        $form = new Form('customer', $customer, $this['validator']);
         $form->add(new TextField('name'));
         $form->add(new IntegerField('age'));
 
@@ -74,7 +74,7 @@ the data is stored in a POST parameter with the name of the form::
     public function signupAction()
     {
         $customer = new Customer();
-        $form = new Form('customer', $customer, $this->container->getValidatorService());
+        $form = new Form('customer', $customer, $this['validator']);
 
         // form setup...
 
@@ -267,7 +267,7 @@ Now we can easily adapt the form in the controller::
         $registration = new Registration();
         $registration->customer = new Customer();
 
-        $form = new Form('registration', $registration, $this->container->getValidatorService());
+        $form = new Form('registration', $registration, $this['validator']);
         $form->add(new CheckboxField('termsAccepted'));
 
         $group = new FieldGroup('customer');
