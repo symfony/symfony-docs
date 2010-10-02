@@ -12,9 +12,9 @@ Symfony2 stand apart from the framework crowd, let's dive into it now.
 The Directory Structure
 -----------------------
 
-The directory structure of a Symfony :term:`application` is rather flexible
+The directory structure of a Symfony :term:`project` is rather flexible
 but the directory structure of a sandbox reflects the typical and recommended
-structure of a Symfony application:
+structure of a Symfony project:
 
 * ``app/``: This directory contains the application configuration;
 
@@ -148,7 +148,7 @@ method of the ``AppKernel`` class::
             //new Symfony\Bundle\TwigBundle\TwigBundle(),
 
             // register your bundles
-            new Application\AppBundle\AppBundle(),
+            new Application\HelloBundle\HelloBundle(),
         );
 
         if ($this->isDebug()) {

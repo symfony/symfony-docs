@@ -238,7 +238,7 @@ The code is pretty straightforward but let's explain this code line by line:
   see later in this tutorial).
 
 * *line 9*: Each controller is made of several actions. As per the
-  configuration, the hello page is handled by the ``index`` action (the third
+  configuration, the *hello* page is handled by the ``index`` action (the third
   part of the ``_controller`` routing value). This method receives the
   resource placeholder values as arguments (``$name`` in our case).
 
@@ -279,7 +279,7 @@ Environments
 ------------
 
 Now that you have a better understanding on how Symfony works, have a closer
-look at the bottom of the page; you will notice a small bar with the Symfony
+look at the bottom of the *hello* page; you will notice a small bar with the Symfony
 and PHP logos. It is called the "Web Debug Toolbar" and it is the developer's
 best friend. Of course, such a tool must not be displayed when you deploy your
 application to your production servers. That's why you will find another front
