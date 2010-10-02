@@ -18,3 +18,9 @@ Glossary
         A *Bundle* is a structured set of files (PHP files, stylesheets,
         JavaScripts, images, ...) that *implements* a single feature (a blog,
         a forum, ...) and which can be easily shared with other developers.
+
+    Environment
+        *Environments* are different sets of configuration, that share the same
+        PHP code. So basically, environments and configuration are synonyms. For
+        each application, Symfony provides three default environments:
+        *production* (``prod``), *test* (``test``), and *development* (``dev``).
