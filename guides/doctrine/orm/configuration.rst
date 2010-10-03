@@ -35,10 +35,10 @@ entity::
 
     namespace Application\HelloBundle\Entities;
 
-    /** @Entity */
+    /** @orm:Entity */
     class User
     {
-        /** @Column(type="string") */
+        /** @orm:Column(type="string") */
         protected $new;
 
         // ...
