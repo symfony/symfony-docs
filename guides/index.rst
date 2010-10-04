@@ -11,7 +11,7 @@ Dive into Symfony2 with the topical guides:
     emails
     templating/index
     translation
-    validator
+    validation
     forms
     event/index
     tools/index

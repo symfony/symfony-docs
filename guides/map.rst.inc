@@ -18,7 +18,7 @@
   * :doc:`Advanced </guides/routing/advanced>`
 
 * :doc:`/guides/emails`
-* :doc:`/guides/validator`
+* :doc:`/guides/validation`
 * :doc:`/guides/forms`
 * :doc:`/guides/translation`
 * **Templating**:
