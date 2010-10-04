@@ -1,3 +1,6 @@
+.. index::
+   pair: Forms; Twig
+
 Forms in Twig Templates
 =======================
 
@@ -8,11 +11,48 @@ Forms in Twig Templates
 
 A Symfony2 :doc:`Form </guides/forms>` is made of fields. Fields describe the
 form semantic, not its end-user representation; it means that a form is not
-tied to HTML. Instead, it is the responsibility of the web designer to display
-each form field the way he wants. So, displaying a Symfony2 form in a template
-can easily be done manually. But, Twig eases form integration and
-customization by providing a set of filters that can be applied on the form
-and field instances.
+necessarily tied to HTML. Instead, it is the responsibility of the web
+designer to display each form field the way he wants. So, displaying a
+Symfony2 form in a template can easily be done manually. But, Twig eases form
+integration and customization by providing a set of filters that can be
+applied on the form and field instances.
+
+Displaying a Form "manually"
+----------------------------
+
+Before diving into the Twig filters and how they help you display form easily,
+securely, and fast, you must know that nothing special happens under the hood.
+You can use any HTML you want to display a Symfony2 form:
+
+.. code-block:: html
+
+    <form action="#" method="post">
+        <input type="text" name="name" />
+
+        <input type="submit" />
+    </form>
+
+If there is a validation error, you should display it and fill the fields with
+the submitted values to make it easier to fix the problems fast. Just use the
+form dedicated methods:
+
+.. code-block:: jinja
+
+    <form action="#" method="post">
+        <ul>
+            {% for error in form.name.errors %}
+                <li>{{ error.0 }}</li>
+            {% endfor %}
+        </ul>
+        <input type="text" name="name" value="{{ form.name.data }}" />
+
+        <input type="submit" />
+    </form>
+
+The Twig filters help you keep your template short, makes your form layout
+easily customizable, supports internationalization, CSRF protection, file
+upload, and more out of the box. The following sections tells you everything
+about them.
 
 Displaying a Form
 -----------------
@@ -103,7 +143,7 @@ The ``render_errors`` filter renders the field errors:
     {{ form.title|render_errors }}
 
 .. tip::
-  The ``render_errors`` can be used on a form or on a field.
+  The ``render_errors`` filter can be used on a form or on a field.
 
 You can also get the data associated with the field (the default data or the
 data submitted by the user), via the ``render_data`` filter:
@@ -265,8 +305,6 @@ possible via configuration:
         $container->loadFromExtension('twig', 'config', array('form' => array(
             'resources' => array('BlogBundle::widgets.twig'),
         )));
-
-    ... configuration XML/YAML/PHP
 
 Prototyping
 -----------
