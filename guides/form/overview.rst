@@ -4,8 +4,13 @@
 Forms
 =====
 
+.. caution::
+
+    This chapter describes a feature that is only available in the
+    ``fields_as_templates`` `branch`_.
+
 Symfony2 features a sophisticated Form component that allows you to easily
-create mighty HTML forms.
+create mighty forms.
 
 Your First Form
 ---------------
@@ -48,24 +53,36 @@ Now let's create a form to let the visitor fill the data of the object::
         $form->add(new TextField('name'));
         $form->add(new IntegerField('age'));
 
-        return $this->render('HelloBundle:Hello:signup.php', array('form' => $form));
+        return $this->render('HelloBundle:Hello:signup.php', array(
+            'form' => $this['templating.form']->get($form)
+        ));
     }
 
 A form consists of various fields. Each field represents a property in your
 class. The property must have the same name as the field and must either be
-public or accessible through public getters and setters. Now let's create a
-simple template to render the form:
+public or accessible through public getters and setters.
+
+Instead of passing the form instance directly to the view, we wrap it with an
+object that provides methods that help render the form with more flexibility
+(``$this['templating.form']->get($form)``).
+
+Let's create a simple template to render the form:
 
 .. code-block:: html+php
 
     # src/Application/HelloBundle/Resources/views/Hello/signup.php
     <?php $view->extend('HelloBundle::layout.php') ?>
 
-    <?php echo $form->renderFormTag('#') ?>
-        <?php echo $form->renderErrors() ?>
+    <?php echo $form->form('#') ?>
         <?php echo $form->render() ?>
+
         <input type="submit" value="Send!" />
     </form>
+
+.. note::
+    Form rendering in templates is covered in two dedicated chapters: one for
+    :doc:`PHP templates </guides/forms/view>`, and one for :doc:`Twig
+    templates </guides/forms/twig>`.
 
 When the user submits the form, we also need to handle the submitted data. All
 the data is stored in a POST parameter with the name of the form::
@@ -98,12 +115,8 @@ Symfony2.
 Form Fields
 -----------
 
-As you have learned, a form consists of one or more form fields. In Symfony2,
-form fields have two responsibilities:
-
-* Render HTML;
-
-* Convert data between normalized and humane representations.
+As you have learned, a form consists of one or more form fields. A field knows
+how to convert data between normalized and humane representations.
 
 Let's look at the ``DateField`` for example. While you probably prefer to
 store dates as strings or ``DateTime`` objects, users rather like to choose
@@ -149,9 +162,9 @@ TimezoneField An extension of ChoiceField for selecting a timezone
 Field Groups
 ~~~~~~~~~~~~
 
-Field groups allow you to combine multiple fields together. While normal fields
-only allow you to edit scalar data types, field groups can be used to edit
-whole objects or arrays. Let's add a new class ``Address`` to our model::
+Field groups allow you to combine multiple fields together. While normal
+fields only allow you to edit scalar data types, field groups can be used to
+edit whole objects or arrays. Let's add a new class ``Address`` to our model::
 
     class Address
     {
@@ -159,8 +172,8 @@ whole objects or arrays. Let's add a new class ``Address`` to our model::
         public $zipCode;
     }
 
-Now we can add a property ``$address`` to the customer that stores one ``Address``
-object::
+Now we can add a property ``$address`` to the customer that stores one
+``Address`` object::
 
     class Customer
     {
@@ -169,8 +182,8 @@ object::
          public $address;
     }
 
-We can use a field group to show fields for the customer and the nested address
-at the same time::
+We can use a field group to show fields for the customer and the nested
+address at the same time::
 
     # src/Application/HelloBundle/Controller/HelloController.php
     public function signupAction()
@@ -221,11 +234,11 @@ We will now add a ``CollectionField`` to manipulate these addresses::
     $form->add(new CollectionField(new TextField('emails')));
 
 If you set the option "modifiable" to ``true``, you can even add or remove
-rows in the collection via Javascript! The ``CollectionField`` will notice it
+rows in the collection via JavaScript! The ``CollectionField`` will notice it
 and resize the underlying array accordingly.
 
 .. index::
-   single: Forms; Validation
+   pair: Forms; Validation
 
 Form Validation
 ---------------
@@ -247,10 +260,10 @@ Let's create a simple ``Registration`` class for this purpose::
 
     class Registration
     {
-        /** @Validation({ @Valid }) */
+        /** @validation:Valid */
         public $customer;
 
-        /** @Validation({ @AssertTrue(message="Please accept the terms and conditions") }) */
+        /** @validation:AssertTrue(message="Please accept the terms and conditions") */
         public $termsAccepted = false;
 
         public function process()
@@ -291,56 +304,6 @@ The big benefit of this refactoring is that we can reuse the ``Registration``
 class. Extending the application to allow users to sign up via XML is no
 problem at all!
 
-.. index::
-   single: Forms; View
-
-Customizing the View
---------------------
-
-Unfortunately the output of ``$form->render()`` doesn't look too great.
-Symfony 2.0 makes it very easy though to customize the HTML of a form. You can
-access every field and field group in the form by its name. All fields offer
-the method ``render()`` for rendering the widget and ``renderErrors()`` for
-rendering a ``<ul>``-list with the field errors.
-
-The following example shows you how to refine the HTML of an individual form
-field::
-
-    # src/Application/HelloBundle/Resources/views/Hello/signup.php
-    <div class="form-row">
-        <label for="<?php echo $form['firstName']->getId() ?>">First name:</label>
-        <div class="form-row-content">
-            <?php echo $form['firstName']->renderErrors() ?>
-            <?php echo $form['firstName']->render() ?>
-        </div>
-    </div>
-
-You can access fields in field groups in the same way:
-
-.. code-block:: html+php
-
-    <?php echo $form['address']['street']->render() ?>
-
-Forms and field groups can be iterated for conveniently rendering all fields
-in the same way. You only need to take care not to create form rows or labels
-for your hidden fields:
-
-.. code-block:: html+php
-
-    <?php foreach ($form as $field): ?>
-        <?php if ($field->isHidden()): ?>
-            <?php echo $field->render() ?>
-        <?php else: ?>
-            <div class="form-row">
-                ...
-            </div>
-        <?php endif; ?>
-    <?php endforeach; ?>
-
-By using plain HTML, you have the greatest possible flexibility in designing
-your forms. Especially your designers will be happy that they can manipulate
-the form output without having to deal with (much) PHP!
-
 Final Thoughts
 --------------
 
@@ -348,5 +311,5 @@ This chapter showed you how the Form component of Symfony2 can help you to
 rapidly create forms for your domain objects. The component embraces a strict
 separation between business logic and presentation. Many fields are
 automatically localized to make your visitors feel comfortable on your
-website. And with the new architecture, this is just the beginning of many
-new, mighty user-created fields!
+website. And with a flexible architecture, this is just the beginning of many
+mighty user-created fields!

@@ -29,17 +29,17 @@ example we will use annotations::
     namespace Application\HelloBundle\Document;
 
     /**
-     * @Document(collection="users")
+     * @mongodb:Document(collection="users")
      */
     class User
     {
         /**
-         * @Id
+         * @mongodb:Id
          */
         protected $id;
 
         /**
-         * @String
+         * @mongodb:String
          */
         protected $name;
 

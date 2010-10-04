@@ -28,27 +28,27 @@ The ``index.php`` template is decorated by ``layout.php``, thanks to the
 .. code-block:: html+php
 
     <!-- src/Application/HelloBundle/Resources/views/Hello/index.php -->
-    <?php $view->extend('HelloBundle::layout') ?>
+    <?php $view->extend('HelloBundle::layout.php') ?>
 
     Hello <?php echo $name ?>!
 
-The ``HelloBundle::layout`` notation sounds familiar, doesn't it? It is the same
-notation as for referencing a template. The ``::`` part simply means that the
-controller element is empty, so the corresponding file is directly stored under
-``views/``.
+The ``HelloBundle::layout.php`` notation sounds familiar, doesn't it? It is
+the same notation as for referencing a template. The ``::`` part simply means
+that the controller element is empty, so the corresponding file is directly
+stored under ``views/``.
 
 Now, let's have a look at the ``layout.php`` file:
 
 .. code-block:: html+php
 
     <!-- src/Application/HelloBundle/Resources/views/layout.php -->
-    <?php $view->extend('::layout') ?>
+    <?php $view->extend('::layout.php') ?>
 
     <h1>Hello Application</h1>
 
     <?php $view['slots']->output('_content') ?>
 
-The layout is itself decorated by another layout (``::layout``). Symfony
+The layout is itself decorated by another layout (``::layout.php``). Symfony
 supports multiple decoration levels: a layout can itself be decorated by
 another one. When the bundle part of the template name is empty, views are
 looked for in the ``app/views/`` directory. This directory store global views
@@ -90,7 +90,7 @@ decorating the template. In the ``index.php`` template, define a ``title`` slot:
 .. code-block:: html+php
 
     <!-- src/Application/HelloBundle/Resources/views/Hello/index.php -->
-    <?php $view->extend('HelloBundle::layout') ?>
+    <?php $view->extend('HelloBundle::layout.php') ?>
 
     <?php $view['slots']->set('title', 'Hello World app') ?>
 
@@ -139,9 +139,9 @@ And change the ``index.php`` template to include it:
 .. code-block:: html+php
 
     <!-- src/Application/HelloBundle/Resources/views/Hello/index.php -->
-    <?php $view->extend('HelloBundle::layout') ?>
+    <?php $view->extend('HelloBundle::layout.php') ?>
 
-    <?php echo $view->render('HelloBundle:Hello:hello', array('name' => $name)) ?>
+    <?php echo $view->render('HelloBundle:Hello:hello.php', array('name' => $name)) ?>
 
 The ``render()`` method evaluates and returns the content of another template
 (this is the exact same method as the one used in the controller).
@@ -176,7 +176,7 @@ Here, the ``HelloBundle:Hello:fancy`` string refers to the ``fancy`` action of t
             // create some object, based on the $color variable
             $object = ...;
 
-            return $this->render('HelloBundle:Hello:fancy', array('name' => $name, 'object' => $object));
+            return $this->render('HelloBundle:Hello:fancy.php', array('name' => $name, 'object' => $object));
         }
 
         // ...

@@ -181,13 +181,13 @@ can read the annotated mapping information from the doc blocks::
 
     // ...
 
-    /** @Document(collection="users") */
+    /** @mongodb:Document(collection="users") */
     class User
     {
-        /** @Id */
+        /** @mongodb:Id */
         protected $id;
 
-        /** @String */
+        /** @mongodb:String */
         protected $name;
 
         // ...

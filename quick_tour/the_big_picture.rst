@@ -100,9 +100,9 @@ very easy).
 
 .. tip::
    The sandbox defaults to YAML, but you can easily switch to XML or PHP by
-   editing the ``config/AppKernel.php`` file. You can switch now by looking at
-   the bottom of ``config/AppKernel.php`` for instructions (the tutorials show
-   the configuration for all supported formats).
+   editing the ``app/AppKernel.php`` file. You can switch now by looking at the
+   bottom of ``app/AppKernel.php`` for instructions (the tutorials show the
+   configuration for all supported formats).
 
 .. index::
    single: Routing
@@ -222,7 +222,7 @@ The controller is responsible for returning a representation of the resource
     {
         public function indexAction($name)
         {
-            return $this->render('HelloBundle:Hello:index', array('name' => $name));
+            return $this->render('HelloBundle:Hello:index.php', array('name' => $name));
         }
     }
 
@@ -255,15 +255,15 @@ developers. In our example, we only have one bundle, ``HelloBundle``.
 Templates
 ~~~~~~~~~
 
-So, the controller renders the ``HelloBundle:Hello:index`` template. But what's
-in a template name? ``HelloBundle`` is the bundle name, ``Hello`` is the
-controller, and ``index`` the template file name. The template itself is made
-of HTML and simple PHP expressions:
+So, the controller renders the ``HelloBundle:Hello:index.php`` template. But
+what's in a template name? ``HelloBundle`` is the bundle name, ``Hello`` is
+the controller, and ``index.php`` the template file name. The template itself
+is made of HTML and simple PHP expressions:
 
 .. code-block:: html+php
 
     # src/Application/HelloBundle/Resources/views/Hello/index.php
-    <?php $view->extend('HelloBundle::layout') ?>
+    <?php $view->extend('HelloBundle::layout.php') ?>
 
     Hello <?php echo $name ?>!
 

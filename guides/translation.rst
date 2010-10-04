@@ -192,7 +192,7 @@ standard rules is defined after removing the explicit rules::
 
     '{0} There is no apples|[20,Inf] There are many apples|There is one apple|a_few: There are {{ count }} apples'
 
-An :class:`Symfony\\Component\\Translator\\Interval` can represent a finite set
+An :class:`Symfony\\Component\\Translation\\Interval` can represent a finite set
 of numbers::
 
     {1,2,3,4}

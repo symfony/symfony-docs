@@ -77,19 +77,19 @@ write mapping information with annotations, XML, or YAML:
         namespace Application\HelloBundle\Entity;
 
         /**
-         * @Entity
+         * @orm:Entity
          */
         class User
         {
             /**
-             * @Id
-             * @Column(type="integer")
-             * @GeneratedValue(strategy="IDENTITY")
+             * @orm:Id
+             * @orm:Column(type="integer")
+             * @orm:GeneratedValue(strategy="IDENTITY")
              */
             protected $id;
 
             /**
-             * @Column(type="string", length="255")
+             * @orm:Column(type="string", length="255")
              */
             protected $name;
         }
