@@ -12,7 +12,7 @@ Dive into Symfony2 with the topical guides:
     templating/index
     translation
     validation
-    forms
+    forms/index
     event/index
     tools/index
     bundles/index

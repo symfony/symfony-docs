@@ -4,11 +4,6 @@
 Forms
 =====
 
-.. caution::
-
-    This chapter describes a feature that is only available in the
-    ``fields_as_templates`` `branch`_.
-
 Symfony2 features a sophisticated Form component that allows you to easily
 create mighty forms.
 
