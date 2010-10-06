@@ -19,7 +19,12 @@
 
 * :doc:`/guides/emails`
 * :doc:`/guides/validation`
-* :doc:`/guides/forms`
+* **Forms**:
+
+  * :doc:`/guides/forms/overview` | 
+  * :doc:`Templates </guides/forms/view>` | 
+  * :doc:`Twig </guides/forms/twig>`
+
 * :doc:`/guides/translation`
 * **Templating**:
 

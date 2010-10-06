@@ -4,17 +4,12 @@
 Forms in Templates
 ==================
 
-.. caution::
-
-    This chapter describes a feature that is only available in the
-    ``fields_as_templates`` `branch`_.
-
-A Symfony2 :doc:`Form </guides/forms>` is made of fields. Fields describe the
-form semantic, not its end-user representation; it means that a form is not
-tied to HTML. Instead, it is the responsibility of the web designer to display
-each form field the way he wants. So, displaying a Symfony2 form in a template
-can easily be done manually. But, Symfony2 eases form integration and
-customization by providing a set of wrapper objects.
+A Symfony2 :doc:`Form </guides/forms/overview>` is made of fields. Fields
+describe the form semantic, not its end-user representation; it means that a
+form is not tied to HTML. Instead, it is the responsibility of the web
+designer to display each form field the way he wants. So, displaying a
+Symfony2 form in a template can easily be done manually. But, Symfony2 eases
+form integration and customization by providing a set of wrapper objects.
 
 Displaying a Form "manually"
 ----------------------------
