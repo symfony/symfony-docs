@@ -78,4 +78,4 @@ be chosen from::
     $reporterField->setValueTransformer($userTransformer);
 
     $form->add($engineerField);
-    $form->add($reporterfield);
+    $form->add($reporterField);
