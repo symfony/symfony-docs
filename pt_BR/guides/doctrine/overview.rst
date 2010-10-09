@@ -4,18 +4,18 @@
 Doctrine
 ========
 
-O projeto `Doctrine`_  é o lar de um conjunto selecionado de bibliotecas PHP 
-focadas principalmente em fornecer serviços de persistência e funcionalidades 
-relacionadas. A integração entre o Symfony2 e o Doctrine2 implementa a maioria 
+O projeto `Doctrine`_  Ã© o lar de um conjunto selecionado de bibliotecas PHP 
+focadas principalmente em fornecer serviÃ§os de persistÃªncia e funcionalidades 
+relacionadas. A integraÃ§Ã£o entre o Symfony2 e o Doctrine2 implementa a maioria 
 dos recursos que o projeto tem a oferecer para trabalhar com bancos de dados 
 relacionais, tais como:
 
-* Camada de Abstração do Banco de Dados
+* Camada de AbstraÃ§Ã£o do Banco de Dados
 * Mapeador Objeto Relacional
-* Migrações de Banco de Dados
+* MigraÃ§Ãµes de Banco de Dados
 
 .. tip::
-   Você pode aprender mais sobre a `API DBAL`_ e a `API ORM`_ no site oficial 
+   VocÃª pode aprender mais sobre a `API DBAL`_ e a `API ORM`_ no site oficial 
    do Doctrine2.
 
 .. index::
@@ -24,10 +24,10 @@ relacionais, tais como:
 Doctrine DBAL
 -------------
 
-A Camada de Abstração do Banco de Dados do Doctrine (DBAL) oferece 
-uma API intuitiva e flexível para se comunicar com os bancos de dados 
+A Camada de AbstraÃ§Ã£o do Banco de Dados do Doctrine (DBAL) oferece 
+uma API intuitiva e flexÃ­vel para se comunicar com os bancos de dados 
 relacionais mais populares que existem hoje. Para iniciar o uso do DBAL, 
-vamos configurá-lo:
+vamos configurÃ¡-lo:
 
 .. code-block:: yaml
 
@@ -39,7 +39,7 @@ vamos configurá-lo:
         user:     root
         password: null
 
-Acesse a conexão a partir de seus controladores, através do serviço 
+Acesse a conexÃ£o a partir de seus controladores, atravÃ©s do serviÃ§o 
 ``database_connection``::
 
     class UserController extends Controller
@@ -52,7 +52,7 @@ Acesse a conexão a partir de seus controladores, através do serviço
         }
     }
 
-Você pode então executar uma consulta e buscar os resultados com o método ``fetchAll()``, 
+VocÃª pode entÃ£o executar uma consulta e buscar os resultados com o mÃ©todo ``fetchAll()``, 
 como demonstrado acima.
 
 .. index::
@@ -61,12 +61,12 @@ como demonstrado acima.
 Mapeador Objeto Relacional do Doctrine
 --------------------------------------
 
-O Mapeador Objeto Relacional do Doctrine (ORM) é a biblioteca prêmio, 
-sob o guarda-chuva do Projeto Doctrine. Ele é construído sobre o Doctrine 
-DBAL (Camada de Abstração do Banco de Dados) e oferece uma persistência 
+O Mapeador Objeto Relacional do Doctrine (ORM) Ã© a biblioteca prÃªmio, 
+sob o guarda-chuva do Projeto Doctrine. Ele Ã© construÃ­do sobre o Doctrine 
+DBAL (Camada de AbstraÃ§Ã£o do Banco de Dados) e oferece uma persistÃªncia 
 transparente de objetos PHP5 para um banco de dados relacional.
 
-Antes de usar o ORM, você deve habilitá-lo na configuração:
+Antes de usar o ORM, vocÃª deve habilitÃ¡-lo na configuraÃ§Ã£o:
 
 .. code-block:: yaml
 
@@ -74,7 +74,7 @@ Antes de usar o ORM, você deve habilitá-lo na configuração:
 
     doctrine.orm: ~
 
-Em seguida, escreva suas classes de entidade. Uma entidade típica seria
+Em seguida, escreva suas classes de entidade. Uma entidade tÃ­pica seria
 como a seguinte::
 
     // Application/HelloBundle/Entities/User.php
@@ -136,9 +136,9 @@ Agora, crie o esquema, executando o seguinte comando:
     $ php hello/console doctrine:schema:create
 
 .. note::
-   Não se esqueça de criar o banco de dados se ele ainda não existir.
+   NÃ£o se esqueÃ§a de criar o banco de dados se ele ainda nÃ£o existir.
 
-Eventualmente, use a sua entidade e gerencie seu estado de persistência com o Doctrine::
+Eventualmente, use a sua entidade e gerencie seu estado de persistÃªncia com o Doctrine::
 
     use Application\HelloBundle\Entities\User;
 
