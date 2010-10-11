@@ -21,7 +21,7 @@
 * :doc:`/guides/validation`
 * **Forms**:
 
-  * :doc:`/guides/forms/overview` | 
+  * :doc:`Overview </guides/forms/overview>` | 
   * :doc:`Templates </guides/forms/view>` | 
   * :doc:`Twig </guides/forms/twig>`
 
