@@ -1,32 +1,32 @@
 .. index::
    single: Doctrine; Migrations
 
-Doctrine Migrations
-===================
+Migrações com o Doctrine 
+========================
 
-The database migrations feature is an extension of the database abstraction
-layer and offers you the ability to programmatically deploy new versions of
-your database schema in a safe and standardized way.
+O recurso de migrações de banco de dados é uma extensão da camada de abstração 
+de dados e oferece a capacidade de programar a implantação de novas versões de 
+seu esquema de banco de dados de forma segura e padronizada.
 
 .. tip::
-   You can read more about the Doctrine Database Migrations on the projects
-   `documentation`_.
+   Você pode ler mais sobre Migrações de Banco de Dados com o Doctrine na 
+   `documentação`_ dos projetos.
 
-All of the migrations functionality is contained in a few console commands:
+Todas as funcionalidades de migrações estão contidas em alguns comandos de console:
 
 .. code-block:: bash
 
-    doctrine:migrations
-      :diff     Generate a migration by comparing your current database to your mapping information.
-      :execute  Execute a single migration version up or down manually.
-      :generate Generate a blank migration class.
-      :migrate  Execute a migration to a specified version or the latest available version.
-      :status   View the status of a set of migrations.
-      :version  Manually add and delete migration versions from the version table.
+    doctrine:migrations    
+      :diff     Gera uma migração comparando seu banco de dados atual com a informação de mapeamento.
+      :execute  Executa uma versão individual `up` ou `down` de migração manualmente.
+      :generate Gera uma classe de migração em branco.
+      :migrate  Executa uma migração para uma versão especificada ou a última versão disponível.
+      :status   Visualiza o status de um conjunto de migrações.
+      :version  Adiciona e deleta manualmente versões de migração da tabela de versão.
 
-Every bundle manages its own migrations so when working with the above
-commands you must specify the bundle you want to work with. For example to see
-the status of a bundles migrations you can run the ``status`` command:
+Cada pacote gerencia as suas próprias migrações assim, ao trabalhar com os comandos acima, 
+você deve especificar o pacote que deseja trabalhar. Por exemplo, para ver o status dos
+pacotes de migrações, você pode executar o comando ``status``:
 
 .. code-block:: bash
 
@@ -45,16 +45,15 @@ the status of a bundles migrations you can run the ``status`` command:
         >> Available Migrations:                               0
         >> New Migrations:                                     0
 
-Now, we can start working with migrations by generating a new blank migration
-class:
+Agora, podemos começar a trabalhar com as migrações gerando uma nova classe de migração 
+em branco:
 
 .. code-block:: bash
 
     $ php console doctrine:migrations:generate --bundle="Application\HelloBundle"
     Generated new migration class to "/path/to/symfony-sandbox/src/Bundle/HelloBundle/DoctrineMigrations/Version20100621140655.php"
 
-Have a look at the newly generated migration class and you will see something
-like the following::
+Dê uma olhada na classe de migração recém-gerada e você verá algo como o seguinte:
 
     namespace Application\HelloBundle\DoctrineMigrations;
 
@@ -74,8 +73,8 @@ like the following::
         }
     }
 
-If you were to run the ``status`` command for the ``HelloBundle`` it will show
-that you have one new migration to execute:
+Se você executar o comando ``status`` para o ``HelloBundle`` ele irá mostrar que 
+você tem uma nova migração para executar:
 
 .. code-block:: bash
 
@@ -98,10 +97,10 @@ that you have one new migration to execute:
 
        >> 2010-06-21 14:06:55 (20100621140655)                not migrated
 
-Now you can add some migration code to the ``up()`` and ``down()`` methods and migrate:
+Agora, você pode adicionar algum código de migração aos métodos ``up()`` e ``down()`` e migrar:
 
 .. code-block:: bash
 
     $ php console doctrine:migrations:migrate --bundle="Application\HelloBundle"
 
-.. _documentation: http://www.doctrine-project.org/projects/migrations/2.0/docs/en
+.. _documentação: http://www.doctrine-project.org/projects/migrations/2.0/docs/en
