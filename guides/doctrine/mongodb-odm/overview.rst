@@ -17,7 +17,7 @@ to enable it:
 
 .. code-block:: yaml
 
-    # config/config.yml
+    # app/config/config.yml
 
     doctrine_odm.mongodb: ~
 

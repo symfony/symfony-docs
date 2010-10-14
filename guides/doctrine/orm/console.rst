@@ -9,7 +9,7 @@ The Doctrine2 ORM integration offers several console commands under the ``doctri
 namespace. To view a list of the commands you can run the console without any arguments
 or options:
 
-    $ php hello/console
+    $ php app/console
     ...
 
     doctrine

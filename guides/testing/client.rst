@@ -84,7 +84,7 @@ Accessing Internal Objects
 If you use the client to test your application, you might want to access the
 client's internal objects::
 
-    $history = $client->getHistory();
+    $history   = $client->getHistory();
     $cookieJar = $client->getCookieJar();
 
 You can also get the objects related to the latest request::
@@ -98,4 +98,4 @@ If your requests are not insulated, you can also access the ``Container`` and
 the ``Kernel``::
 
     $container = $client->getContainer();
-    $kernel = $client->getKernel();
+    $kernel    = $client->getKernel();

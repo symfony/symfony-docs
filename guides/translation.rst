@@ -199,7 +199,7 @@ of numbers::
 
 Or numbers between two other numbers::
 
-    [1, +Inf]
+    [1, +Inf[
     ]-1,2[
 
 The left delimiter can be ``[`` (inclusive) or ``]`` (exclusive). The right

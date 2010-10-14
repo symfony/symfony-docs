@@ -51,12 +51,12 @@ Response before the redirection and redirect yourself, calls the
 
     $client->followRedirects(false);
 
-    $crawler = $this->request('GET', '/');
+    $crawler = $client->request('GET', '/');
 
     // do something with the redirect response
 
     // follow the redirection manually
-    $crawler = $this->followRedirect();
+    $crawler = $client->followRedirect();
 
     $client->followRedirects(true);
 

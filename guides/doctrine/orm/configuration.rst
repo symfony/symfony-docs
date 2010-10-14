@@ -47,7 +47,7 @@ entity::
 Once you've done that, to get your database schema updated with the new column
 you just need to run the following command:
 
-    $ php hello/console doctrine:schema:update
+    $ php app/console doctrine:schema:update
 
 Now your database will be updated and the new column added to the database
 table.

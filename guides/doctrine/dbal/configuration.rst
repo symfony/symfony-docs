@@ -7,7 +7,7 @@ Configuration
 
 .. code-block:: yaml
 
-    # config/config.yml
+    # app/config/config.yml
     doctrine.dbal:
         driver:   PDOMySql
         dbname:   Symfony2

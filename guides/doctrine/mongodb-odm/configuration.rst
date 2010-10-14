@@ -7,7 +7,7 @@ Configuration
 
 .. code-block:: yaml
 
-    # config/config.yml
+    # app/config/config.yml
     doctrine_odm.mongodb:
         server: mongodb://localhost:27017
         default_database: hello_%kernel.environment%
@@ -19,7 +19,7 @@ If you wish to use memcache to cache your metadata and you need to configure the
 
 .. code-block:: yaml
 
-    # config/config.yml
+    # app/config/config.yml
     doctrine_odm.mongodb:
         server: mongodb://localhost:27017
         default_database: hello_%kernel.environment%
@@ -69,7 +69,7 @@ And you can also retrieve the configured document manager services which utilize
 connection services::
 
     $dm1 = $container['doctrine.odm.mongodb.dm1_document_manager'];
-    $dm2 = $container['doctrine.odm.mongodb.dm1_document_manager'];
+    $dm2 = $container['doctrine.odm.mongodb.dm2_document_manager'];
 
 XML
 ~~~

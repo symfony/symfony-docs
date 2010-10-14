@@ -19,7 +19,7 @@ To get started, enable and configure the :doc:`Doctrine DBAL
 
     .. code-block:: yaml
 
-        # config/config.yml
+        # app/config/config.yml
         doctrine.orm: ~
 
     .. code-block:: xml
@@ -98,17 +98,17 @@ write mapping information with annotations, XML, or YAML:
 
         # Application/HelloBundle/Resources/config/doctrine/metadata/orm/entities.yml
         Application\HelloBundle\Entity\User:
-          type: entity
-          table: user
-          id:
+            type: entity
+            table: user
             id:
-              type: integer
-              generator:
-                strategy: IDENTITY
-          fields:
-            name:
-              type: string
-              length: 50
+                id:
+                    type: integer
+                    generator:
+                        strategy: IDENTITY
+            fields:
+                name:
+                    type: string
+                    length: 50
 
     .. code-block:: xml
 
@@ -137,8 +137,8 @@ the following commands:
 
 .. code-block:: bash
 
-    $ php hello/console doctrine:database:create
-    $ php hello/console doctrine:schema:create
+    $ php app/console doctrine:database:create
+    $ php app/console doctrine:schema:create
 
 Eventually, use your entity and manage its persistent state with Doctrine::
 

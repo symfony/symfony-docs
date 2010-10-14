@@ -17,7 +17,7 @@ Installation & Configuration
 
 Enable the ``TwigBundle`` in your kernel::
 
-    // hello/config/HelloKernel.php
+    // app/HelloKernel.php
 
     public function registerBundles()
     {
@@ -35,10 +35,10 @@ Then, configure it:
 
     .. code-block:: yaml
 
-        # config/config.yml
+        # app/config/config.yml
         twig.config: ~
 
-        # config/config_dev.yml
+        # app/config/config_dev.yml
         twig.config:
             auto_reload: true
 
@@ -49,18 +49,18 @@ Then, configure it:
         xsi:schemaLocation="http://www.symfony-project.org/schema/dic/twig http://www.symfony-project.org/schema/dic/twig/twig-1.0.xsd
         -->
 
-        <!-- config/config.xml -->
+        <!-- app/config/config.xml -->
         <twig:config />
 
-        <!-- config/config_dev.xml -->
+        <!-- app/config/config_dev.xml -->
         <twig:config auto_reload="true" />
 
     .. code-block:: php
 
-        // config/config.php
+        // app/config/config.php
         $container->loadFromExtension('twig', 'config');
 
-        // config/config_dev.php
+        // app/config/config_dev.php
         $container->loadFromExtension('twig', 'config', array('auto_reload' => true));
 
 .. tip::

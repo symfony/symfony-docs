@@ -44,8 +44,10 @@ enabled by default. You can enable it in your ``config.yml``:
 .. code-block:: yaml
 
     # hello/config/config.yml
-    web.validation:
-        annotations: true
+    app.config:
+        validation:
+            enabled:     true
+            annotations: true
 
 Now let's try to validate an object::
 

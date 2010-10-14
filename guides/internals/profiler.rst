@@ -63,7 +63,7 @@ check various things and enforce some metrics::
             // ...
 
             // Check that the profiler is enabled
-            if ($profiler = $client->getProfiler($client->getResponse())) {
+            if ($profiler = $client->getProfiler()) {
                 $this->assertTrue($profiler->get('db')->getQueryCount() < 30);
                 $this->assertTrue($profiler->get('timer')->getTime() < 50);
             }
@@ -97,9 +97,9 @@ request after the fact? When the profiler stores data about a Request, it also
 associates a token with it; this token is available in the ``X-Debug-Token``
 HTTP header of the Response::
 
-    $profiler = $container->getProfiler()->getFromResponse($response);
+    $profiler = $container->get('profiler')->getFromResponse($response);
 
-    $profiler = $container->getProfiler()->getFromToken($token);
+    $profiler = $container->get('profiler')->getFromToken($token);
 
 .. tip::
    When the profiler is enabled but not the web debug toolbar, or when you
@@ -115,20 +115,20 @@ You can also use the ``find()`` method to access tokens based on some
 criteria::
 
     // get the latest 10 tokens
-    $tokens = $container->getProfiler()->find('', '', 10);
+    $tokens = $container->get('profiler')->find('', '', 10);
 
     // get the latest 10 tokens for all URL containing /admin/
-    $tokens = $container->getProfiler()->find('', '/admin/', 10);
+    $tokens = $container->get('profiler')->find('', '/admin/', 10);
 
     // get the latest 10 tokens for local requests
-    $tokens = $container->getProfiler()->find('127.0.0.1', '', 10);
+    $tokens = $container->get('profiler')->find('127.0.0.1', '', 10);
 
 If you want to manipulate profiling data on a different machine than the one
 where the information were generated, use the ``export()`` and ``import()``
 methods::
 
     // on the production machine
-    $profiler = $container->getProfiler()->getFromToken($token);
+    $profiler = $container->get('profiler')->getFromToken($token);
     $data = $profiler->export();
 
     // on the development machine
@@ -146,7 +146,7 @@ the configuration for the development environment:
     .. code-block:: yaml
 
         # load the profiler
-        web.config:
+        app.config:
             profiler: { only_exceptions: false }
 
         # enable the web profiler
@@ -160,9 +160,9 @@ the configuration for the development environment:
         <!-- xsi:schemaLocation="http://www.symfony-project.org/schema/dic/webprofiler http://www.symfony-project.org/schema/dic/webprofiler/webprofiler-1.0.xsd"> -->
 
         <!-- load the profiler -->
-        <web:config>
-            <profiler only-exceptions="false" />
-        </web:config>
+        <app:config>
+            <app:profiler only-exceptions="false" />
+        </app:config>
 
         <!-- enable the web profiler -->
         <webprofiler:config
@@ -173,7 +173,7 @@ the configuration for the development environment:
     .. code-block:: php
 
         // load the profiler
-        $container->loadFromExtension('web', 'config', array(
+        $container->loadFromExtension('app', 'config', array(
             'profiler' => array('only-exceptions' => false),
         ));
 
@@ -219,54 +219,54 @@ portion of the website? You can use a request matcher:
     .. code-block:: yaml
 
         # enables the profiler only for request coming for the 192.168.0.0 network
-        web.config:
+        app.config:
             profiler:
                 matcher: { ip: 192.168.0.0/24 }
 
         # enables the profiler only for the /admin URLs
-        web.config:
+        app.config:
             profiler:
                 matcher: { path: "#^/admin/#i" }
 
         # combine rules
-        web.config:
+        app.config:
             profiler:
                 matcher: { ip: 192.168.0.0/24, path: "#^/admin/#i" }
 
         # use a custom matcher instance defined in the "custom_matcher" service
-        web.config:
+        app.config:
             profiler:
                 matcher: { service: custom_matcher }
 
     .. code-block:: xml
 
         <!-- enables the profiler only for request coming for the 192.168.0.0 network -->
-        <web:config>
-            <profiler>
-                <matcher ip="192.168.0.0/24" />
-            </profiler>
-        </web:config>
+        <app:config>
+            <app:profiler>
+                <app:matcher ip="192.168.0.0/24" />
+            </app:profiler>
+        </app:config>
 
         <!-- enables the profiler only for the /admin URLs -->
-        <web:config>
-            <profiler>
-                <matcher path="#^/admin/#i" />
-            </profiler>
-        </web:config>
+        <app:config>
+            <app:profiler>
+                <app:matcher path="#^/admin/#i" />
+            </app:profiler>
+        </app:config>
 
         <!-- combine rules -->
-        <web:config>
-            <profiler>
-                <matcher ip="192.168.0.0/24" path="#^/admin/#i" />
-            </profiler>
-        </web:config>
+        <app:config>
+            <app:profiler>
+                <app:matcher ip="192.168.0.0/24" path="#^/admin/#i" />
+            </app:profiler>
+        </app:config>
 
         <!-- use a custom matcher instance defined in the "custom_matcher" service -->
-        <web:config>
-            <profiler>
-                <matcher service="custom_matcher" />
-            </profiler>
-        </web:config>
+        <app:config>
+            <appp:rofiler>
+                <app:matcher service="custom_matcher" />
+            </app:profiler>
+        </app:config>
 
         <!-- define an anonymous service for the matcher -->
         <web:config>
@@ -280,35 +280,35 @@ portion of the website? You can use a request matcher:
     .. code-block:: php
 
         // enables the profiler only for request coming for the 192.168.0.0 network
-        $container->loadFromExtension('web', 'config', array(
+        $container->loadFromExtension('app', 'config', array(
             'profiler' => array(
                 'matcher' => array('ip' => '192.168.0.0/24'),
             ),
         ));
 
         // enables the profiler only for the /admin URLs
-        $container->loadFromExtension('web', 'config', array(
+        $container->loadFromExtension('app', 'config', array(
             'profiler' => array(
                 'matcher' => array('path' => '#^/admin/#i'),
             ),
         ));
 
         // combine rules
-        $container->loadFromExtension('web', 'config', array(
+        $container->loadFromExtension('app', 'config', array(
             'profiler' => array(
                 'matcher' => array('ip' => '192.168.0.0/24', 'path' => '#^/admin/#i'),
             ),
         ));
 
         # use a custom matcher instance defined in the "custom_matcher" service
-        $container->loadFromExtension('web', 'config', array(
+        $container->loadFromExtension('app', 'config', array(
             'profiler' => array(
                 'matcher' => array('service' => new Reference('custom_matcher')),
             ),
         ));
 
         // define an anonymous service for the matcher
-        $container->loadFromExtension('web', 'config', array(
+        $container->loadFromExtension('app', 'config', array(
             'profiler' => array(
                 'matcher' => array('services' => array($container->register('custom_matcher', 'CustomMatcher'))),
             ),

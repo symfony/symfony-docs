@@ -22,20 +22,20 @@ The end user can provide values in any configuration file:
 
     .. code-block:: yaml
 
-        # hello/config/config.yml
+        # app/config/config.yml
         parameters:
             hello.email.from: fabien@example.com
 
     .. code-block:: xml
 
-        <!-- hello/config/config.xml -->
+        <!-- app/config/config.xml -->
         <parameters>
             <parameter key="hello.email.from">fabien@example.com</parameter>
         </parameters>
 
     .. code-block:: php
 
-        // hello/config/config.php
+        // app/config/config.php
         $container->setParameter('hello.email.from', 'fabien@example.com');
 
     .. code-block:: ini
@@ -85,11 +85,11 @@ that extend
 :class:`Symfony\\Component\\DependencyInjection\\Extension\\Extension`::
 
     // HelloBundle/DependencyInjection/HelloExtension.php
-    use Symfony\\Component\\DependencyInjection\\Extension\\Extension;
+    use Symfony\Component\DependencyInjection\Extension\Extension;
 
     class HelloExtension extends Extension
     {
-        public function configLoad($config)
+        public function configLoad($config, ContainerBuilder $container)
         {
             // ...
         }
@@ -117,12 +117,12 @@ configuration file:
 
     .. code-block:: yaml
 
-        # hello/config/config.yml
+        # app/config/config.yml
         hello.config: ~
 
     .. code-block:: xml
 
-        <!-- hello/config/config.xml -->
+        <!-- app/config/config.xml -->
         <?xml version="1.0" ?>
 
         <container xmlns="http://www.symfony-project.org/schema/dic/services"
@@ -130,11 +130,14 @@ configuration file:
             xmlns:hello="http://www.example.com/symfony/schema/"
             xsi:schemaLocation="http://www.example.com/symfony/schema/ http://www.example.com/symfony/schema/hello-1.0.xsd">
 
-        <hello:config />
+           <hello:config />
+           ...
+
+        </container>
 
     .. code-block:: php
 
-        // hello/config/config.php
+        // app/config/config.php
         $container->loadFromExtension('hello', 'config', array());
 
 .. note::
@@ -155,14 +158,14 @@ So, given the following configuration:
 
     .. code-block:: yaml
 
-        # hello/config/config.yml
+        # app/config/config.yml
         hello.config:
             foo: foo
             bar: bar
 
     .. code-block:: xml
 
-        <!-- hello/config/config.xml -->
+        <!-- app/config/config.xml -->
         <?xml version="1.0" ?>
 
         <container xmlns="http://www.symfony-project.org/schema/dic/services"
@@ -170,13 +173,15 @@ So, given the following configuration:
             xmlns:hello="http://www.example.com/symfony/schema/"
             xsi:schemaLocation="http://www.example.com/symfony/schema/ http://www.example.com/symfony/schema/hello-1.0.xsd">
 
-        <hello:config foo="foo">
-            <hello:bar>foo</hello:bar>
-        </hello:config>
+            <hello:config foo="foo">
+                <hello:bar>foo</hello:bar>
+            </hello:config>
+
+        </container>
 
     .. code-block:: php
 
-        // hello/config/config.php
+        // app/config/config.php
         $container->loadFromExtension('hello', 'config', array(
             'foo' => 'foo',
             'bar' => 'bar',
@@ -273,7 +278,7 @@ method::
             parent::registerExtensions($container);
 
             // load some defaults
-            $container->load('hello', 'config', array(/* you default config for the hello.config namespace */));
+            $container->loadFromExtension('hello', 'config', array(/* your default config for the hello.config namespace */));
         }
     }
 

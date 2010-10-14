@@ -96,7 +96,7 @@ magic ``__call()`` method in the class you want to be extended like this::
             // calls all listeners until one is able to implement the $method
             $this->dispatcher->notifyUntil($event);
 
-            // no listener was able to proces the event? The method does not exist
+            // no listener was able to process the event? The method does not exist
             if (!$event->isProcessed()) {
                 throw new \Exception(sprintf('Call to undefined method %s::%s.', get_class($this), $method));
             }

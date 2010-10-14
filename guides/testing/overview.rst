@@ -23,7 +23,7 @@ sub-directories of your bundles:
 
 .. code-block:: xml
 
-    <!-- hello/phpunit.xml.dist -->
+    <!-- app/phpunit.xml.dist -->
 
     <phpunit ... bootstrap="../src/autoload.php">
         <testsuites>
@@ -40,10 +40,10 @@ Running the test suite for a given application is straightforward:
 .. code-block:: bash
 
     # specify the configuration directory on the command line
-    $ phpunit -c hello/
+    $ phpunit -c app/
 
     # or run phpunit from within the application directory
-    $ cd hello/
+    $ cd app/
     $ phpunit
 
 .. tip::
@@ -70,10 +70,10 @@ Running tests for a given file or directory is also very easy:
 .. code-block:: bash
 
     # run all tests for the Model
-    $ phpunit -c hello Application/HelloBundle/Tests/Model/
+    $ phpunit -c app Application/HelloBundle/Tests/Model/
 
     # run tests for the Article class
-    $ phpunit -c hello Application/HelloBundle/Tests/Model/ArticleTest.php
+    $ phpunit -c app Application/HelloBundle/Tests/Model/ArticleTest.php
 
 .. index::
    single: Tests; Functional Tests

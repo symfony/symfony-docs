@@ -59,17 +59,21 @@ The Client used by functional tests creates a Kernel that runs in a special
 
 .. code-block:: yaml
 
-    # config_test.yml
+    # app/config/config_test.yml
     imports:
         - { resource: config_dev.yml }
 
-    web.config:
+    app.config:
+        error_handler: false
+        test: ~
+
+    webprofiler.config:
         toolbar: false
+        intercept_redirects: false
 
-    zend.logger:
-        priority: debug
-
-    kernel.test: ~
+    zend.config:
+        logger:
+            priority: debug
 
 You can also change the default environment (``test``) and override the default
 debug mode (``true``) by passing them as options to the createClient() method::
