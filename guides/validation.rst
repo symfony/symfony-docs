@@ -263,7 +263,7 @@ Options:
 
 * ``message``: The error message if the validation fails
 * ``checkMX``: Whether MX records should be checked for the domain. Default:
-``false``
+  ``false``
 
 File
 ~~~~

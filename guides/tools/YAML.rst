@@ -359,7 +359,7 @@ Dynamic YAML files
 In Symfony, a YAML file can contain PHP code that is evaluated just before the
 parsing occurs:
 
-.. code-block:: yaml+php
+.. code-block:: yaml
 
     1.0:
         version: <?php echo file_get_contents('1.0/VERSION')."\n" ?>
