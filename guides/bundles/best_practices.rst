@@ -161,7 +161,7 @@ Templates
 ---------
 
 If a bundle provides templates, they should be defined in plain PHP. A bundle
-must not provide a main layout, but extends a default ``base`` template (which
+must not provide a main layout, but extend a default ``base`` template (which
 must provide two slots: ``content`` and ``head``).
 
 .. note::

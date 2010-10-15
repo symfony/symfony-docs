@@ -19,7 +19,7 @@ it yet, you can read its excellent `documentation`_.
    Symfony2 works with PHPUnit 3.5 or later.
 
 The default PHPUnit configuration looks for tests under ``Tests/``
-sub-directories of your bundles:
+sub-directory of your bundles:
 
 .. code-block:: xml
 
@@ -55,7 +55,7 @@ Running the test suite for a given application is straightforward:
 Unit Tests
 ----------
 
-Writing Symony2 unit tests is no different than writing standard PHPUnit unit
+Writing Symfony2 unit tests is no different than writing standard PHPUnit unit
 tests. By convention, it's recommended to replicate the bundle directory
 structure under its ``Tests/`` sub-directory. So, write tests for the
 ``Application\HelloBundle\Model\Article`` class in the
@@ -92,7 +92,7 @@ tests as far as PHPUnit is concerned, but they have a very specific workflow:
 * Rinse and repeat.
 
 Requests, clicks, and submissions are done by a client that knows how to talk
-to the application. To access such a client, your tests need to extends the
+to the application. To access such a client, your tests need to extend the
 Symfony2 ``WebTestCase`` class. The sandbox provides a simple functional test
 for ``HelloController`` that reads as follows::
 

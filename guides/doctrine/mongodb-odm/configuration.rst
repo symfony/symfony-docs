@@ -196,11 +196,12 @@ can read the annotated mapping information from the doc blocks::
 Using Documents
 ---------------
 
-Now that you have a PHP class that has been mapped properly you can begin working with
-instances of that document persisting to and retrieving from MongoDB.
+Now that you have a PHP class that has been mapped properly you can begin
+working with instances of that document persisting to and retrieving from
+MongoDB.
 
-From your controllers you can access the ``DocumentManager`` instances from
-the container::
+From your controllers you can access the ``DocumentManager`` instance from the
+container::
 
     class UserController extends Controller
     {

@@ -14,7 +14,7 @@ form integration and customization by providing a set of wrapper objects.
 Displaying a Form "manually"
 ----------------------------
 
-Before diving into the Symfony2 wrappers and how they help you display form
+Before diving into the Symfony2 wrappers and how they help you to display form
 easily, securely, and fast, you must know that nothing special happens under
 the hood. You can use any HTML you want to display a Symfony2 form:
 
@@ -65,7 +65,7 @@ object to the template, instead of the form instance::
     }
 
 Instead of passing the form instance directly to the view, we wrap it with an
-object that provides methods that help render the form with more flexibility
+object that provides methods that help to render the form with more flexibility
 (``$this['templating.form']->get($form)``).
 
 Displaying a Form

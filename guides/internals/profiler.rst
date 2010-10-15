@@ -3,7 +3,7 @@ Profiler
 
 When enabled, the Symfony2 profiler collects useful information about each
 request made to your application and store them for later analysis. Use the
-profiler in the development environment to help you debug your code and
+profiler in the development environment to help you to debug your code and
 enhance performance; use it in the production environment to explore problems
 after the fact.
 
@@ -91,7 +91,7 @@ finish. It's easy to achieve if you embed the token in the error message::
 Accessing the Profiling information
 -----------------------------------
 
-You don't need to use the default visualizers to access the profiling
+You don't need to use the default visualizer to access the profiling
 information. But how can you retrieve profiling information for a specific
 request after the fact? When the profiler stores data about a Request, it also
 associates a token with it; this token is available in the ``X-Debug-Token``

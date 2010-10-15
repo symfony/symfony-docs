@@ -4,7 +4,7 @@
 The Finder
 ==========
 
-The :namespace:`Symfony\\Component\\Finder` Component helps you find files
+The :namespace:`Symfony\\Component\\Finder` component helps you to find files
 and directories quickly and easily.
 
 Usage

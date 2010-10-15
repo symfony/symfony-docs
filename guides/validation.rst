@@ -74,7 +74,7 @@ can simply be printed or processed in your code. That was easy!
 The Constraints
 ---------------
 
-Symfony bundles many different constraints. The following list will show you
+Symfony2 bundles many different constraints. The following list will show you
 which ones are available and how you can use and configure them. Some
 constraints have a default option. If you only set this option, you can leave
 away the option name::
@@ -128,6 +128,10 @@ Validates that a value is not ``NULL``::
     /** @validation:NotNull */
     private $firstName;
 
+Options:
+
+* ``message``: The error message if validation fails
+
 Null
 ~~~~
 
@@ -144,6 +148,7 @@ Validates that a value has a specific data type::
 Options:
 
 * ``type`` (default): The type
+* ``message``: The error message if validation fails
 
 Choice
 ~~~~~~
@@ -206,8 +211,8 @@ Options:
   ``fields`` option. Default: ``false``
 * ``missingFieldsMessage``: The error message if the ``allowMissingFields``
   validation fails
-* ``allowExtraFields``: The error message if the ``allowExtraFields`` validation
-  fails
+* ``extraFieldsMessage``: The error message if the ``allowExtraFields``
+  validation fails
 
 Date
 ~~~~
@@ -257,7 +262,8 @@ Validates that a value is a valid email address::
 Options:
 
 * ``message``: The error message if the validation fails
-* ``checkMX``: Whether MX records should be checked for the domain. Default: ``false``
+* ``checkMX``: Whether MX records should be checked for the domain. Default:
+``false``
 
 File
 ~~~~
@@ -348,8 +354,8 @@ Options:
 Other Configuration Drivers
 ---------------------------
 
-As always in Symfony, there are multiple ways of configuring the constraints
-for your classes. Symfony supports the following four drivers.
+As always in Symfony2, there are multiple ways of configuring the constraints
+for your classes. Symfony2 supports the following four drivers.
 
 XML Configuration
 ~~~~~~~~~~~~~~~~~
@@ -419,7 +425,7 @@ method ``loadValidatorMetadata()`` to the classes that you want to validate::
         }
     }
 
-You can use either of the configuration drivers, or all together. Symfony will
+You can use either of the configuration drivers, or all together. Symfony2 will
 merge all the information it can find.
 
 .. _JSR303 Bean Validation specification: http://jcp.org/en/jsr/detail?id=303

@@ -81,7 +81,7 @@ Creating an Extension
 ~~~~~~~~~~~~~~~~~~~~~
 
 To define a semantic configuration, create a Dependency Injection extension
-that extend
+that extends
 :class:`Symfony\\Component\\DependencyInjection\\Extension\\Extension`::
 
     // HelloBundle/DependencyInjection/HelloExtension.php
@@ -110,7 +110,7 @@ that extend
         }
     }
 
-The previous class define a ``hello:config`` namespace, usable in any
+The previous class defines a ``hello:config`` namespace, usable in any
 configuration file:
 
 .. configuration-block::
@@ -147,7 +147,7 @@ configuration file:
 Parsing a Configuration
 ~~~~~~~~~~~~~~~~~~~~~~~
 
-Whenever a user include the ``hello.config`` namespace in a configuration
+Whenever a user includes the ``hello.config`` namespace in a configuration
 file, the ``configLoad()`` method of your extension is called and the
 configuration is passed as an array (Symfony2 automatically converts XML and
 YAML to an array).
@@ -242,7 +242,7 @@ When creating an extension, follow these simple conventions:
 
 * The extension should provide an XSD schema.
 
-If you follow these simple conventions, you extensions will be registered
+If you follow these simple conventions, your extensions will be registered
 automatically by Symfony. If not, override the Bundle
 :method:`Symfony\\Component\\HttpKernel\\Bundle\\Bundle::registerExtensions` method::
 

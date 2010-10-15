@@ -44,8 +44,8 @@ form dedicated methods:
         <input type="submit" />
     </form>
 
-The Twig filters help you keep your template short, makes your form layout
-easily customizable, supports internationalization, CSRF protection, file
+The Twig filters help you to keep your template short, make your form layout
+easily customizable, support internationalization, CSRF protection, file
 upload, and more out of the box. The following sections tells you everything
 about them.
 

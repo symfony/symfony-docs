@@ -7,7 +7,7 @@ internationalize all the messages in your application.
 A *message* can be any string you want to internationalize. Messages are
 categorized by locale and domain.
 
-A *domain* allows you to better organized your messages in a given locale (it
+A *domain* allows you to better organize your messages in a given locale (it
 can be any string; by default, all messages are stored under the ``messages``
 domain).
 
@@ -173,13 +173,13 @@ translators, you can optionally "tag" each string like this::
 
     'none_or_one: Il y a {{ count }} pomme|some: Il y a {{ count }} pommes'
 
-The tags are really only hints for translators to help them understand the
-context of the translation (note that the tags do not need to be the same in
-the original message and in the translated one).
+The tags are really only hints for translators to help them to understand the
+translation context (note that the tags do not need to be the same in the
+original message and in the translated one).
 
 .. tip:
-    As tags are optional, the translator doesn't use them (the translator will
-    only get a string based on its position in the string).
+   As tags are optional, the translator doesn't use them (the translator will
+   only get a string based on its position in the string).
 
 Sometimes, you want a different translation for specific cases (for ``0``, or
 when the count is large enough, when the count is negative, ...). For such
@@ -214,7 +214,7 @@ The translator
 knows how to deal with plural::
 
     $t = $this['translator']->transChoice(
-        '{0} There is no apples|{1} There is one apple|]1,Inf] There are {{ count }} apples',
+        '{0} There is no apples|{1} There is one apple|]1,Inf[ There are {{ count }} apples',
         10,
         array('{{ count }}' => 10)
     );
@@ -239,7 +239,7 @@ The translator service is accessible in PHP templates through the
     <?php echo $view['translator']->trans('Symfony2 is great!') ?>
 
     <?php echo $view['translator']->transChoice(
-        '{0} There is no apples|{1} There is one apple|]1,Inf] There are {{ count }} apples',
+        '{0} There is no apples|{1} There is one apple|]1,Inf[ There are {{ count }} apples',
         10,
         array('{{ count }}' => 10)
     ) ?>

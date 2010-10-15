@@ -58,7 +58,7 @@ class. The property must have the same name as the field and must either be
 public or accessible through public getters and setters.
 
 Instead of passing the form instance directly to the view, we wrap it with an
-object that provides methods that help render the form with more flexibility
+object that provides methods that help to render the form with more flexibility
 (``$this['templating.form']->get($form)``).
 
 Let's create a simple template to render the form:
@@ -111,7 +111,7 @@ Form Fields
 -----------
 
 As you have learned, a form consists of one or more form fields. A field knows
-how to convert data between normalized and humane representations.
+how to convert data between normalized and human representations.
 
 Let's look at the ``DateField`` for example. While you probably prefer to
 store dates as strings or ``DateTime`` objects, users rather like to choose
@@ -214,7 +214,7 @@ Collection Fields
 ~~~~~~~~~~~~~~~~~
 
 The ``CollectionField`` is a special field group for manipulating arrays or
-objects that implement the interface ``Traversable``. To demonstrate this, we
+objects that implements the interface ``Traversable``. To demonstrate this, we
 will extend the ``Customer`` class to store three email addresses::
 
     class Customer

@@ -57,7 +57,7 @@ the Request attributes.
    attribute with the same name. If it is not defined, the argument default
    value is used if defined::
 
-       // Symfony will look for an 'id' attribute (mandatory)
+       // Symfony2 will look for an 'id' attribute (mandatory)
        // and an 'admin' one (optional)
        public function showAction($id, $admin = true)
        {
@@ -121,7 +121,7 @@ second argument):
 * ``HttpKernelInterface::SUB_REQUEST``.
 
 The type is passed to all events and listeners can act accordingly (some
-processing must only occurs on the master request).
+processing must only occur on the master request).
 
 .. index::
    pair: Kernel; Event
@@ -129,7 +129,7 @@ processing must only occurs on the master request).
 Events
 ------
 
-All events have a ``request_type`` parameter, which allows listeners to know
+All events have a ``request_type`` parameter which allows listeners to know
 the type of the request. For instance, if a listener must only be active for
 master requests, add the following code at the beginning of your listener
 method::
@@ -207,11 +207,11 @@ view sub-system.
 
 ``FrameworkBundle`` registers several listeners:
 
-* :class:`Symfony\\Component\\HttpKernel\\Profiler\\ProfilerListener`:
-  collects data for the current request;
+* :class:`Symfony\\Component\\HttpKernel\\Profiler\\ProfilerListener`: collects
+  data for the current request;
 
-* :class:`Symfony\\Component\\HttpKernel\\Profiler\\WebDebugToolbarListener`:
-  injects the Web Debug Toolbar;
+* :class:`Symfony\\Bundle\\WebProfilerBundle\\WebDebugToolbarListener`: injects
+  the Web Debug Toolbar;
 
 * :class:`Symfony\\Component\\HttpKernel\\ResponseListener`: fixes the
   Response ``Content-Type``;

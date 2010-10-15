@@ -46,13 +46,13 @@ optionally follows simple naming conventions:
 
 Here are some examples of good event names:
 
-* change_culture
+* user.change_culture
 * response.filter_content
 
 .. note::
-   You can of course extends the ``Event`` class to specialize an event further, or
-   enforce some constraints, but most of the time it adds an unnecessary level of
-   complexity.
+   You can of course extend the ``Event`` class to specialize an event further,
+   or enforce some constraints, but most of the time it adds an unnecessary
+   level of complexity.
 
 Besides its name, an ``Event`` instance can store additional data about the
 notified event:
