@@ -15,7 +15,8 @@ Configuration
             connect: true
         metadata_cache_driver: array # array, apc, xcache, memcache
 
-If you wish to use memcache to cache your metadata and you need to configure the ``Memcache`` instance you can do the following:
+If you wish to use memcache to cache your metadata, you need to configure the
+``Memcache`` instance you can do the following:
 
 .. code-block:: yaml
 
@@ -35,7 +36,8 @@ If you wish to use memcache to cache your metadata and you need to configure the
 Multiple Connections
 ~~~~~~~~~~~~~~~~~~~~
 
-If you need multiple connections and document managers you can use the following syntax:
+If you need multiple connections and document managers you can use the
+following syntax:
 
 .. code-block:: yaml
 
@@ -74,8 +76,8 @@ connection services::
 XML
 ~~~
 
-You can specify the same configuration via XML if you prefer that. Here are the same
-examples from above in XML.
+You can specify the same configuration via XML if you prefer that. Here are the
+same examples from above in XML.
 
 Simple Single Connection:
 
@@ -143,10 +145,11 @@ Multiple Connections:
 Writing Document Classes
 ------------------------
 
-You can start writing document classes just how you normally would write some PHP classes.
-The only difference is that you must map the classes to the MongoDB ODM. You can provide
-the mapping information via xml, yaml or annotations. In this example, for simplicity and
-ease of reading we will use annotations.
+You can start writing document classes just how you normally would write some
+PHP classes. The only difference is that you must map the classes to the
+MongoDB ODM. You can provide the mapping information via xml, yaml or
+annotations. In this example, for simplicity and ease of reading we will use
+annotations.
 
 First, lets write a simple User class::
 
@@ -175,9 +178,10 @@ First, lets write a simple User class::
         }
     }
 
-This class can be used independent from any persistence layer as it is a regular PHP
-class and does not have any dependencies. Now we need to annotate the class so Doctrine
-can read the annotated mapping information from the doc blocks::
+This class can be used independent from any persistence layer as it is a
+regular PHP class and does not have any dependencies. Now we need to annotate
+the class so Doctrine can read the annotated mapping information from the doc
+blocks::
 
     // ...
 

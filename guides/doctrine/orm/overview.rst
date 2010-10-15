@@ -128,9 +128,9 @@ write mapping information with annotations, XML, or YAML:
         </doctrine-mapping>
 
 .. note::
-    If you use YAML or XML to describe your entities, you can omit the creation
-    of the Entity class, and let the ``doctrine:generate:entities`` command do
-    it for you.
+   If you use YAML or XML to describe your entities, you can omit the creation
+   of the Entity class, and let the ``doctrine:generate:entities`` command do
+   it for you.
 
 Create the database and the schema related to your metadata information with
 the following commands:

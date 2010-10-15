@@ -7,7 +7,8 @@ The Test Client
 The test Client simulates an HTTP client like a browser.
 
 .. note::
-   The test Client is based on the ``BrowserKit`` and the ``Crawler`` components.
+   The test Client is based on the ``BrowserKit`` and the ``Crawler``
+   components.
 
 Making Requests
 ---------------
@@ -28,15 +29,15 @@ be used to click on links and submit forms::
     $form = $crawler->selectButton('validate')->form();
     $crawler = $client->submit($form, array('name' => 'Fabien'));
 
-The ``click()`` and ``submit()`` methods both return a ``Crawler`` object. These
-methods are the best way to browse an application as it hides a lot of details.
-For instance, when you submit a form, it automatically detects the HTTP method
-and the form URL, it gives you a nice API to upload files, and it merges the
-submitted values with the form default ones, and more.
+The ``click()`` and ``submit()`` methods both return a ``Crawler`` object.
+These methods are the best way to browse an application as it hides a lot of
+details. For instance, when you submit a form, it automatically detects the
+HTTP method and the form URL, it gives you a nice API to upload files, and it
+merges the submitted values with the form default ones, and more.
 
 .. tip::
-   The Crawler is documented in its own :doc:`section <crawler>`. Read it to learn more about
-   the ``Link`` and ``Form`` objects.
+   The Crawler is documented in its own :doc:`section <crawler>`. Read it to
+   learn more about the ``Link`` and ``Form`` objects.
 
 But you can also simulate form submissions and complex requests with the
 additional arguments of the ``request()`` method::
@@ -60,9 +61,9 @@ the ``followRedirect()`` method::
 
     $crawler = $client->followRedirect();
 
-Last but not least, you can force each request to be executed in its own
-PHP process to avoid any side-effects when working with several clients in the
-same script::
+Last but not least, you can force each request to be executed in its own PHP
+process to avoid any side-effects when working with several clients in the same
+script::
 
     $client->insulate();
 

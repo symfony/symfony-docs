@@ -98,7 +98,8 @@ that you have one new migration to execute:
 
        >> 2010-06-21 14:06:55 (20100621140655)                not migrated
 
-Now you can add some migration code to the ``up()`` and ``down()`` methods and migrate:
+Now you can add some migration code to the ``up()`` and ``down()`` methods and
+migrate:
 
 .. code-block:: bash
 

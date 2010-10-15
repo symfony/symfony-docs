@@ -33,10 +33,10 @@ prefixed with "get" or "is". Let's look at a sample configuration::
         }
     }
 
-This snippet shows a very simple ``Author`` class with a property and a
-getter. Each constraint has a name, most of them also have a couple of
-options. Here we configured the constraints with annotations, but Symfony2
-also offers many other configuration drivers.
+This snippet shows a very simple ``Author`` class with a property and a getter.
+Each constraint has a name, most of them also have a couple of options. Here we
+configured the constraints with annotations, but Symfony2 also offers many
+other configuration drivers.
 
 Because the annotation driver depends on the Doctrine library, it is not
 enabled by default. You can enable it in your ``config.yml``:
@@ -65,8 +65,8 @@ You should see the following output:
     Author.email:
         Ok, seriously now. Your email address please
 
-The ``validate()`` method returns a ``ConstraintViolationList`` object that
-can simply be printed or processed in your code. That was easy!
+The ``validate()`` method returns a ``ConstraintViolationList`` object that can
+simply be printed or processed in your code. That was easy!
 
 .. index::
    single: Validators; Constraints
@@ -275,8 +275,8 @@ Validates that a value is an existing file::
 
 Options:
 
-* ``maxSize``: The maximum allowed file size. Can be provided in bytes, kilobytes
-  (with the suffix "k") or megabytes (with the suffix "M")
+* ``maxSize``: The maximum allowed file size. Can be provided in bytes,
+  kilobytes (with the suffix "k") or megabytes (with the suffix "M")
 * ``mimeTypes``: One or more allowed mime types
 * ``notFoundMessage``: The error message if the file was not found
 * ``notReadableMessage``: The error message if the file could not be read
@@ -388,8 +388,8 @@ be validated to prevent errors. To use the driver, simply put a file called
 YAML Configuration
 ~~~~~~~~~~~~~~~~~~
 
-The YAML driver offers the same functionality as the XML driver. To use it,
-put the file ``validation.yml`` in the ``Resources/config/`` directory of your
+The YAML driver offers the same functionality as the XML driver. To use it, put
+the file ``validation.yml`` in the ``Resources/config/`` directory of your
 bundle:
 
 .. code-block:: yaml

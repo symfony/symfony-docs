@@ -63,8 +63,7 @@ parameters:
 
 * Possibility to define more than just parameters (services for instance);
 
-* Better hierarchy in the configuration (you can define nested
-  configurations);
+* Better hierarchy in the configuration (you can define nested configurations);
 
 * Smart merging when several configuration files override an existing
   configuration;
@@ -220,8 +219,8 @@ The global parameters are the following:
 * ``kernel.charset``
 
 .. caution::
-    All parameter and service names starting with a ``_`` are reserved for the
-    framework, and new ones must not be defined by bundles.
+   All parameter and service names starting with a ``_`` are reserved for the
+   framework, and new ones must not be defined by bundles.
 
 .. index::
    pair: Convention; Configuration
@@ -265,9 +264,9 @@ Default Configuration
 ~~~~~~~~~~~~~~~~~~~~~
 
 As stated before, the user of the bundle should include the ``hello.config``
-namespace in a configuration file for your extension code to be called. But
-you can automatically register a default configuration by overriding the
-Bundle :method:`Symfony\\Component\\HttpKernel\\Bundle\\Bundle::registerExtensions`
+namespace in a configuration file for your extension code to be called. But you
+can automatically register a default configuration by overriding the Bundle
+:method:`Symfony\\Component\\HttpKernel\\Bundle\\Bundle::registerExtensions`
 method::
 
     class HelloBundle extends Bundle

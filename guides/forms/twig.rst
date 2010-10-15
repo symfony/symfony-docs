@@ -4,13 +4,13 @@
 Forms in Twig Templates
 =======================
 
-A Symfony2 :doc:`Form </guides/forms/overview>` is made of fields. Fields describe the
-form semantic, not its end-user representation; it means that a form is not
-necessarily tied to HTML. Instead, it is the responsibility of the web
-designer to display each form field the way he wants. So, displaying a
+A Symfony2 :doc:`Form </guides/forms/overview>` is made of fields. Fields
+describe the form semantic, not its end-user representation; it means that a
+form is not necessarily tied to HTML. Instead, it is the responsibility of the
+web designer to display each form field the way he wants. So, displaying a
 Symfony2 form in a template can easily be done manually. But, Twig eases form
-integration and customization by providing a set of filters that can be
-applied on the form and field instances.
+integration and customization by providing a set of filters that can be applied
+on the form and field instances.
 
 Displaying a Form "manually"
 ----------------------------
@@ -80,8 +80,8 @@ filters respectively:
     </form>
 
 .. note::
-    By default, the ``render_errors`` generates a ``<ul>`` list, but this can
-    be easily customized as you will see later in this document.
+   By default, the ``render_errors`` generates a ``<ul>`` list, but this can
+   be easily customized as you will see later in this document.
 
 Last but not the least, a form containing a file input must contain the
 ``enctype`` attribute; use the ``render_enctype`` filter to render it:
@@ -112,8 +112,8 @@ The ``render_widget`` filter renders the HTML representation of a field:
     {{ form.title|render_widget }}
 
 .. note::
-    The field's widget is selected based on the field class name (more
-    information below).
+   The field's widget is selected based on the field class name (more
+   information below).
 
 The ``render_label`` renders the ``<label>`` tag associated with the field:
 
@@ -129,7 +129,7 @@ label:
     {{ form.title|render_label('Give me a title') }}
 
 .. note::
-    Symfony2 automatically internationalizes all labels and error messages.
+   Symfony2 automatically internationalizes all labels and error messages.
 
 The ``render_errors`` filter renders the field errors:
 
@@ -138,7 +138,7 @@ The ``render_errors`` filter renders the field errors:
     {{ form.title|render_errors }}
 
 .. tip::
-  The ``render_errors`` filter can be used on a form or on a field.
+   The ``render_errors`` filter can be used on a form or on a field.
 
 You can also get the data associated with the field (the default data or the
 data submitted by the user), via the ``render_data`` filter:
@@ -154,8 +154,7 @@ Defining the HTML Representation
 
 All filters rely on Twig template blocks to render HTML. By default, Symfony2
 comes bundled with two templates that define all the needed blocks; one for
-form instances (``form.twig``), and one for field instances
-(``widgets.twig``).
+form instances (``form.twig``), and one for field instances (``widgets.twig``).
 
 Each filter is associated with one template block. For instance, the
 ``render_errors`` filter looks for an ``errors`` block. The built-in one reads
@@ -249,16 +248,15 @@ Twig native inheritance feature:
         </div>
     {% endblock date_time_field %}
 
-If you want to customize all fields of a given form, use the ``form_theme``
-tag:
+If you want to customize all fields of a given form, use the ``form_theme`` tag:
 
 .. code-block:: jinja
 
     {% form_theme form 'HelloBundle::widgets.twig' %}
 
-Whenever you call the ``render_widget`` filter on the ``form`` after this
-call, Symfony2 will look for a representation in your template before falling
-back to the default one.
+Whenever you call the ``render_widget`` filter on the ``form`` after this call,
+Symfony2 will look for a representation in your template before falling back to
+the default one.
 
 If the widget blocks are defined in several templates, add them as an ordered
 array:

@@ -10,10 +10,10 @@ create mighty forms.
 Your First Form
 ---------------
 
-A form in Symfony2 is a transparent layer on top of your domain model. It
-reads properties from an object, displays the values in the form, and allows
-the user to change them. When the form is submitted, the values are written
-back into the object.
+A form in Symfony2 is a transparent layer on top of your domain model. It reads
+properties from an object, displays the values in the form, and allows the user
+to change them. When the form is submitted, the values are written back into
+the object.
 
 Let's see how this works in a practical example. Let's create a simple
 ``Customer`` class::
@@ -75,9 +75,9 @@ Let's create a simple template to render the form:
     </form>
 
 .. note::
-    Form rendering in templates is covered in two dedicated chapters: one for
-    :doc:`PHP templates </guides/forms/view>`, and one for :doc:`Twig
-    templates </guides/forms/twig>`.
+   Form rendering in templates is covered in two dedicated chapters: one for
+   :doc:`PHP templates </guides/forms/view>`, and one for :doc:`Twig templates
+   </guides/forms/twig>`.
 
 When the user submits the form, we also need to handle the submitted data. All
 the data is stored in a POST parameter with the name of the form::
@@ -305,6 +305,6 @@ Final Thoughts
 This chapter showed you how the Form component of Symfony2 can help you to
 rapidly create forms for your domain objects. The component embraces a strict
 separation between business logic and presentation. Many fields are
-automatically localized to make your visitors feel comfortable on your
-website. And with a flexible architecture, this is just the beginning of many
-mighty user-created fields!
+automatically localized to make your visitors feel comfortable on your website.
+And with a flexible architecture, this is just the beginning of many mighty
+user-created fields!

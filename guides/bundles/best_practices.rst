@@ -4,10 +4,9 @@
 Bundle Best Practices
 =====================
 
-A bundle is a directory that has a well-defined structure and can host
-anything from classes to controllers and web resources. Even if bundles are
-very flexible, you should follow some best practices if you want to distribute
-them.
+A bundle is a directory that has a well-defined structure and can host anything
+from classes to controllers and web resources. Even if bundles are very
+flexible, you should follow some best practices if you want to distribute them.
 
 .. index::
    pair: Bundles; Naming Conventions
@@ -51,8 +50,7 @@ Namespace                           Bundle Name
 Directory Structure
 -------------------
 
-The basic directory structure of a ``HelloBundle`` bundle must read as
-follows::
+The basic directory structure of a ``HelloBundle`` bundle must read as follows::
 
     XXX/...
         HelloBundle/
@@ -86,8 +84,8 @@ classes and files (2 levels at a maximum). More levels can be defined for
 non-strategic, less-used files.
 
 The bundle directory is read-only. If you need to write temporary files, store
-them under the ``cache/`` or ``log/`` directory of the host application. Tools can
-generate files in the bundle directory structure, but only if the generated
+them under the ``cache/`` or ``log/`` directory of the host application. Tools
+can generate files in the bundle directory structure, but only if the generated
 files are going to be part of the repository.
 
 The following classes and files have specific emplacements:
@@ -115,11 +113,11 @@ class name is ``Bundle\HelloBundle\Controller\HelloController``.
 All classes and files must follow the Symfony2 coding :doc:`standards
 </contributing/code/standards>`.
 
-Some classes should be seen as facades and should be as short as possible,
-like Commands, Helpers, Listeners, and Controllers.
+Some classes should be seen as facades and should be as short as possible, like
+Commands, Helpers, Listeners, and Controllers.
 
-Classes that connects to the Event Dispatcher should have a name that ends
-with ``Listener``.
+Classes that connects to the Event Dispatcher should be suffixed with
+``Listener``.
 
 Exceptions classes should be stored in an ``Exception`` sub-namespace.
 

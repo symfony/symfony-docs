@@ -348,8 +348,8 @@ access to in local properties.
 
 .. caution::
    As the profiler serializes data collector instances, you should not store
-   objects that cannot be serialized (like PDO objects), or you need to
-   provide your own ``serialize()`` method.
+   objects that cannot be serialized (like PDO objects), or you need to provide
+   your own ``serialize()`` method.
 
 Most of the time, it is convenient to extend
 :class:`Symfony\\Component\\HttpKernel\\DataCollector\\DataCollector` and

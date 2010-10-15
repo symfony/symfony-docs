@@ -110,8 +110,8 @@ The mailer is accessible via the ``mailer`` service; from an action::
 Using Gmail
 -----------
 
-If you want to use your Gmail account to send emails, use the special
-``gmail`` transport:
+If you want to use your Gmail account to send emails, use the special ``gmail``
+transport:
 
 .. configuration-block::
 

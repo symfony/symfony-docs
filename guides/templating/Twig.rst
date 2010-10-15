@@ -5,8 +5,8 @@
 Twig & Symfony2
 ===============
 
-`Twig`_ is a flexible, fast, and secure template language for PHP. Symfony2
-has native support for Twig through ``TwigBundle``.
+`Twig`_ is a flexible, fast, and secure template language for PHP. Symfony2 has
+native support for Twig through ``TwigBundle``.
 
 .. index::
    single: Twig; Installation
@@ -70,8 +70,8 @@ Then, configure it:
 Usage
 -----
 
-To render a Twig template instead of a PHP one, add the ``.twig`` suffix at
-the end of the template name. The controller below renders the ``index.twig``
+To render a Twig template instead of a PHP one, add the ``.twig`` suffix at the
+end of the template name. The controller below renders the ``index.twig``
 template::
 
     // src/Application/HelloBundle/Controller/HelloController.php

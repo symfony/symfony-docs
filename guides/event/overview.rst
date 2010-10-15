@@ -62,8 +62,7 @@ notified event:
 
 * The event name;
 
-* An array of parameters to pass to the listeners (an empty array by
-  default).
+* An array of parameters to pass to the listeners (an empty array by default).
 
 These data are passed as arguments to the ``Event`` constructor::
 
@@ -79,8 +78,7 @@ The event object has several methods to get the event data:
 
 * ``getParameters()``: Returns the event parameters.
 
-The event object can also be accessed as an array to get its
-parameters::
+The event object can also be accessed as an array to get its parameters::
 
     echo $event['culture'];
 
@@ -116,13 +114,13 @@ The ``connect()`` method takes two arguments:
    A `PHP callable`_ is a PHP variable that can be used by the
    ``call_user_func()`` function and returns ``true`` when passed to the
    ``is_callable()`` function. It can be a ``\Closure`` instance, a string
-   representing a function, or an array representing an object method or a class
-   method.
+   representing a function, or an array representing an object method or a
+   class method.
 
 Once a listener is registered with the dispatcher, it waits until the event is
-notified. For the above example, the dispatcher calls ``$callable`` whenever the
-``user.change_culture`` event is notified; the listener receives an ``Event``
-instance as an argument.
+notified. For the above example, the dispatcher calls ``$callable`` whenever
+the ``user.change_culture`` event is notified; the listener receives an
+``Event`` instance as an argument.
 
 .. note::
    The listeners are called by the event dispatcher in the same order you
@@ -153,8 +151,8 @@ The ``notify()`` method notifies all listeners in turn::
 
     $dispatcher->notify($event);
 
-By using the ``notify()`` method, you make sure that all the listeners
-registered for the event are executed but their return values is ignored.
+By using the ``notify()`` method, you make sure that all registered listeners
+for the event are executed but their return values is ignored.
 
 ``notifyUntil``
 ~~~~~~~~~~~~~~~

@@ -42,8 +42,8 @@ name (a "class::method" string, like
 
 .. tip::
    The default implementation uses the
-   :class:`Symfony\\Bundle\\FrameworkBundle\\RequestListener`
-   to define the ``_controller`` Request attribute (see below).
+   :class:`Symfony\\Bundle\\FrameworkBundle\\RequestListener` to define the
+   ``_controller`` Request attribute (see below).
 
 The
 :method:`Symfony\\Component\\HttpKernel\\Controller\\ControllerResolverInterface::getArguments`
@@ -85,8 +85,7 @@ Event):
 
 4. The Kernel checks that the Controller is actually a valid PHP callable;
 
-5. The Resolver is called to determine the arguments to pass to the
-   Controller;
+5. The Resolver is called to determine the arguments to pass to the Controller;
 
 6. The Kernel calls the Controller;
 
@@ -103,9 +102,9 @@ notified and listeners are given a change to convert the Exception to a
 Response. If that works, the ``core.response`` event is notified; if not the
 Exception is re-thrown.
 
-If you don't want Exceptions to be caught (for embedded requests for
-instance), disable the ``core.exception`` event by passing ``true`` as the
-third argument to the ``handle()`` method.
+If you don't want Exceptions to be caught (for embedded requests for instance),
+disable the ``core.exception`` event by passing ``true`` as the third argument
+to the ``handle()`` method.
 
 .. index::
   single: Internals; Internal Requests

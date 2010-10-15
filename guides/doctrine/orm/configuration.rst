@@ -16,9 +16,9 @@ Configuration
             customer:
                 connection:       customer
 
-Just like the DBAL, if you have configured multiple ``EntityManager`` instances and want to
-get a specific one you can use the ``getEntityManager()`` method by just passing it an argument
-that is the name of the ``EntityManager`` you want::
+Just like the DBAL, if you have configured multiple ``EntityManager`` instances
+and want to get a specific one you can use the ``getEntityManager()`` method by
+just passing it an argument that is the ``EntityManager`` name you want::
 
     class UserController extends Controller
     {

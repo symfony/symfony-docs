@@ -46,10 +46,10 @@ The ``fallback`` attribute defines the fallback locale when a translation does
 not exist in the user locale.
 
 .. tip::
-    When a translation does not exist for a locale, the translator tries to
-    find the translation for the language (``fr`` when the locale is ``fr_FR``
-    for instance); if it also fails, it looks for a translation for the
-    fallback locale.
+   When a translation does not exist for a locale, the translator tries to find
+   the translation for the language (``fr`` when the locale is ``fr_FR`` for
+   instance); if it also fails, it looks for a translation for the fallback
+   locale.
 
 The locale used in translations is the one stored in the user session.
 
@@ -63,14 +63,13 @@ translate a message::
 
     $t = $this['translator']->trans('Symfony2 is great!');
 
-If you have placeholders in strings, pass their values as the second
-argument::
+If you have placeholders in strings, pass their values as the second argument::
 
     $t = $this['translator']->trans('Symfony2 is {{ what }}!', array('{{ what }}' => 'great'));
 
 .. note::
-    The placeholders can have any form, but using the ``{{ var }}`` notation
-    allows the message to be used in Twig templates.
+   The placeholders can have any form, but using the ``{{ var }}`` notation
+   allows the message to be used in Twig templates.
 
 By default, the translator looks for messages in the default ``messages``
 domain. Override it via the third argument::
@@ -80,8 +79,8 @@ domain. Override it via the third argument::
 Catalogues
 ----------
 
-Translations are stored on the filesystem and discovered by Symfony2, thanks
-to some conventions.
+Translations are stored on the filesystem and discovered by Symfony2, thanks to
+some conventions.
 
 Store translations for messages found in a bundle under the
 ``Resources/translations/`` directory; and override them under the
@@ -130,10 +129,10 @@ unique identifier:
         );
 
 .. note::
-    You can also store translations in a database, or any other storage by
-    providing a custom
-    :class:`Symfony\\Component\\Translation\\Loader\\LoaderInterface` class.
-    See below to learn how to register custom loaders.
+   You can also store translations in a database, or any other storage by
+   providing a custom class implementing the
+   :class:`Symfony\\Component\\Translation\\Loader\\LoaderInterface` interface.
+   See below to learn how to register custom loaders.
 
 Pluralization
 -------------
@@ -144,10 +143,10 @@ rules::
 
     (($number % 10 == 1) && ($number % 100 != 11)) ? 0 : ((($number % 10 >= 2) && ($number % 10 <= 4) && (($number % 100 < 10) || ($number % 100 >= 20))) ? 1 : 2);
 
-As you can see, in Russian, you can have three different plural forms, based
-on this algorithm. For each form, the plural is different, and so the
-translation is also different. In such a case, you can provide all
-pluralization forms as strings separated by pipes (``|``)::
+As you can see, you can have three different plural forms, based on this
+algorithm. For each form, the plural is different, and so the translation is
+also different. In such a case, you can provide all pluralization forms as
+strings separated by pipes (``|``)::
 
     'There is one apple|There are {{ count }} apples'
 
@@ -207,7 +206,7 @@ delimiter can be ``[`` (exclusive) or ``]`` (inclusive). Beside numbers, you
 can use ``-Inf`` and ``+Inf`` for the infinite.
 
 .. note::
-    Symfony uses the `ISO 31-11`_ for intervals notation.
+   Symfony2 uses the `ISO 31-11`_ for intervals notation.
 
 The translator
 :method:`Symfony\\Component\\Translation\\Translator::transChoice` method
@@ -247,8 +246,8 @@ The translator service is accessible in PHP templates through the
 Twig Templates
 ~~~~~~~~~~~~~~
 
-Symfony2 provides specialized Twig tags (``trans`` and ``transChoice``) to
-help with message translation:
+Symfony2 provides specialized Twig tags (``trans`` and ``transChoice``) to help
+with message translation:
 
 .. code-block:: jinja
 
@@ -263,8 +262,8 @@ help with message translation:
     {% endtranschoice %}
 
 The ``transChoice`` tag automatically get the variables from the current
-context and pass them to the translator. This mechanism only works when you
-use placeholder using the ``{{ var }}`` pattern.
+context and pass them to the translator. This mechanism only works when you use
+placeholder using the ``{{ var }}`` pattern.
 
 You can also specify the message domain:
 

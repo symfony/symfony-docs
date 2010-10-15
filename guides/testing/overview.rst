@@ -116,8 +116,8 @@ The ``createClient()`` method returns a client tied to the current application::
 
     $crawler = $client->request('GET', 'hello/Fabien');
 
-The ``request()`` method returns a ``Crawler`` object which can be used to select
-elements in the Response, to click on links, and to submit forms.
+The ``request()`` method returns a ``Crawler`` object which can be used to
+select elements in the Response, to click on links, and to submit forms.
 
 .. tip::
    The Crawler can only be used if the Response content is an XML or an HTML
@@ -165,9 +165,9 @@ to the ``submit()`` method::
         'photo'        => '/path/to/lucas.jpg',
     ));
 
-Now that you can easily navigate through an application, use assertions to
-test that it actually does what you expect it to. Use the Crawler to make
-assertions on the DOM::
+Now that you can easily navigate through an application, use assertions to test
+that it actually does what you expect it to. Use the Crawler to make assertions
+on the DOM::
 
     // Assert that the response matches a given CSS selector.
     $this->assertTrue(count($crawler->filter('h1')) > 0);

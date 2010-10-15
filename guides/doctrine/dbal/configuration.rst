@@ -32,8 +32,8 @@ are not required:
         wrapper_class:        ~
         options:              []
 
-If you want to configure multiple connections you can do so by simply listing them under
-the key named ``connections``:
+If you want to configure multiple connections you can do so by simply listing
+them under the key named ``connections``:
 
 .. code-block:: yaml
 
@@ -41,18 +41,19 @@ the key named ``connections``:
         default_connection:       default
         connections:
             default:
-                dbname:               Symfony2
-                user:                 root
-                password:             null
-                host:                 localhost
+                dbname:           Symfony2
+                user:             root
+                password:         null
+                host:             localhost
             customer:
-                dbname:               customer
-                user:                 root
-                password:             null
-                host:                 localhost
+                dbname:           customer
+                user:             root
+                password:         null
+                host:             localhost
 
-If you have defined multiple connections you can use the ``getDatabaseConnection()`` as well
-but you must pass it an argument with the name of the connection you want to get::
+If you have defined multiple connections you can use the
+``getDatabaseConnection()`` as well but you must pass it an argument with the
+connection name that you want get::
 
     class UserController extends Controller
     {

@@ -5,9 +5,9 @@
 Console Commands
 ================
 
-The Doctrine2 ORM integration offers several console commands under the ``doctrine``
-namespace. To view a list of the commands you can run the console without any arguments
-or options:
+The Doctrine2 ORM integration offers several console commands under the
+``doctrine`` namespace. To view the command list you can run the console
+without any arguments or options:
 
     $ php app/console
     ...

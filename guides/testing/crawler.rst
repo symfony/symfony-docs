@@ -133,8 +133,8 @@ Notice that we select form buttons and not forms as a form can have several
 buttons; if you use the traversing API, keep in mind that you must look for a
 button.
 
-The ``selectButton()`` method can select ``button`` tags and submit ``input`` tags;
-it has several heuristics to find them:
+The ``selectButton()`` method can select ``button`` tags and submit ``input``
+tags; it has several heuristics to find them:
 
 * The ``value`` attribute value;
 
