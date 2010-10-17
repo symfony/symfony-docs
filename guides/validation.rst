@@ -410,7 +410,7 @@ and an `alias` attribute:
             ->addTag('validator.constraint_validator', array('alias' => 'alias_name'))
         ;
 
-You constraint class may now use this alias to reference the appropriate
+Your constraint class may now use this alias to reference the appropriate
 validator:
 
     public function validatedBy()
