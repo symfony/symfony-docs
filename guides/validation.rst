@@ -384,21 +384,38 @@ Constraint Validators with Dependencies
 If your constraint validator has dependencies, such as a database connection,
 it will need to be configured as a service in the dependency injection
 container. This service must include the `validator.constraint_validator` tag
-and an `alias` attribute.
+and an `alias` attribute:
 
-.. code-block:: xml
+.. configuration-block::
 
-    <service id="validator.unique" class="%validator.unique.class%">
-        <argument type="service" id="doctrine.orm.default_entity_manager" />
-        <tag name="validator.constraint_validator" alias="unique" />
-    </service>
+    .. code-block:: yaml
+
+        services:
+            validator.unique.your_validator_name:
+                class: Fully\Qualified\Validator\Class\Name
+                tags:
+                    - { name: validator.constraint_validator, alias: alias_name }
+
+    .. code-block:: xml
+
+        <service id="validator.unique.your_validator_name" class="Fully\Qualified\Validator\Class\Name">
+            <argument type="service" id="doctrine.orm.default_entity_manager" />
+            <tag name="validator.constraint_validator" alias="alias_name" />
+        </service>
+
+    .. code-block:: php
+
+        $container
+            ->register('validator.unique.your_validator_name', 'Fully\Qualified\Validator\Class\Name')
+            ->addTag('validator.constraint_validator', array('alias' => 'alias_name'))
+        ;
 
 You constraint class may now use this alias to reference the appropriate
 validator:
 
     public function validatedBy()
     {
-        return 'unique';
+        return 'alias_name';
     }
 
 Other Configuration Drivers
