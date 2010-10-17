@@ -351,6 +351,56 @@ Options:
 .. index::
    single: Validators; Configuration
 
+Custom Constraints
+------------------
+
+You can create a custom constraint by extending the base constraint class,
+``Symfony\Component\Validator\Constraint``. Options for your constraint are
+represented by public properties on the constraint class. For example, the
+``Url`` constraint includes ``message`` and ``protocols`` properties:
+
+    namespace Symfony\Component\Validator\Constraints;
+
+    class Url extends \Symfony\Component\Validator\Constraint
+    {
+        public $message = 'This value is not a valid URL';
+        public $protocols = array('http', 'https', 'ftp', 'ftps');
+    }
+
+As you can see, a constraint class is fairly minimal. The actual validation is
+performed by a another "constraint validator" class. Which constraint
+validator is specified by the constraint's ``validatedBy()`` method, which
+includes some simple default logic:
+
+    // in the base Symfony\Component\Validator\Constraint class
+    public function validatedBy()
+    {
+        return get_class($this).'Validator';
+    }
+
+Constraint Validators with Dependencies
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+If your constraint validator has dependencies, such as a database connection,
+it will need to be configured as a service in the dependency injection
+container. This service must include the `validator.constraint_validator` tag
+and an `alias` attribute.
+
+.. code-block:: xml
+
+    <service id="validator.unique" class="%validator.unique.class%">
+        <argument type="service" id="doctrine.orm.default_entity_manager" />
+        <tag name="validator.constraint_validator" alias="unique" />
+    </service>
+
+You constraint class may now use this alias to reference the appropriate
+validator:
+
+    public function validatedBy()
+    {
+        return 'unique';
+    }
+
 Other Configuration Drivers
 ---------------------------
 
