@@ -1,7 +1,7 @@
 Reporting a Security Issue
 ==========================
 
-Found a security issue in Symfony? Don't use the mailing-list or the bug
+Found a security issue in Symfony2? Don't use the mailing-list or the bug
 tracker. All security issues must be sent to **security [at]
 symfony-project.com** instead. Emails sent to this address are forwarded to
 the Symfony core-team private mailing-list.

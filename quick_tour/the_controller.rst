@@ -20,8 +20,8 @@ Formats
 Nowadays, a web application should be able to deliver more than just HTML
 pages. From XML for RSS feeds or Web Services, to JSON for Ajax requests,
 there are plenty of different formats to choose from. Supporting those formats
-in Symfony is straightforward. Edit ``routing.yml`` and add a ``_format`` with a
-value of ``xml``:
+in Symfony2 is straightforward. Edit ``routing.yml`` and add a ``_format`` with
+a value of ``xml``:
 
 .. configuration-block::
 
@@ -58,8 +58,8 @@ Then, add an ``index.xml.php`` template along side ``index.php``:
     </hello>
 
 That's all there is to it. No need to change the controller. For standard
-formats, Symfony will also automatically choose the best ``Content-Type`` header
-for the response. If you want to support different formats for a single
+formats, Symfony2 will also automatically choose the best ``Content-Type``
+header for the response. If you want to support different formats for a single
 action, use the ``:_format`` placeholder in the pattern instead:
 
 .. configuration-block::
@@ -178,9 +178,9 @@ If you want to redirect the user to another page, use the ``redirect()`` method:
 
     $this->redirect($this->generateUrl('hello', array('name' => 'Lucas')));
 
-The ``generateUrl()`` is the same method as the ``generate()`` method we used on
-the ``router`` helper before. It takes the route name and an array of parameters
-as arguments and returns the associated friendly URL.
+The ``generateUrl()`` is the same method as the ``generate()`` method we used
+on the ``router`` helper before. It takes the route name and an array of
+parameters as arguments and returns the associated friendly URL.
 
 You can also easily forward the action to another one with the ``forward()``
 method. As for the ``actions`` helper, it makes an internal sub-request, but it
@@ -220,9 +220,9 @@ helper:
 The Session
 -----------
 
-Even if the HTTP protocol is stateless, Symfony provides a nice session object
+Even if the HTTP protocol is stateless, Symfony2 provides a nice session object
 that represents the client (be it a real person using a browser, a bot, or a
-web service). Between two requests, Symfony stores the attributes in a cookie
+web service). Between two requests, Symfony2 stores the attributes in a cookie
 by using the native PHP sessions.
 
 Storing and retrieving information from the session can be easily achieved

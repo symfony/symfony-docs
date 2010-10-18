@@ -242,7 +242,7 @@ When creating an extension, follow these simple conventions:
 * The extension should provide an XSD schema.
 
 If you follow these simple conventions, your extensions will be registered
-automatically by Symfony. If not, override the Bundle
+automatically by Symfony2. If not, override the Bundle
 :method:`Symfony\\Component\\HttpKernel\\Bundle\\Bundle::registerExtensions` method::
 
     class HelloBundle extends Bundle
