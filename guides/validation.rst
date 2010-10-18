@@ -357,7 +357,7 @@ Custom Constraints
 You can create a custom constraint by extending the base constraint class,
 ``Symfony\Component\Validator\Constraint``. Options for your constraint are
 represented by public properties on the constraint class. For example, the
-``Url`` constraint includes ``message`` and ``protocols`` properties:
+``Url`` constraint includes ``message`` and ``protocols`` properties::
 
     namespace Symfony\Component\Validator\Constraints;
 
@@ -370,7 +370,7 @@ represented by public properties on the constraint class. For example, the
 As you can see, a constraint class is fairly minimal. The actual validation is
 performed by a another "constraint validator" class. Which constraint
 validator is specified by the constraint's ``validatedBy()`` method, which
-includes some simple default logic:
+includes some simple default logic::
 
     // in the base Symfony\Component\Validator\Constraint class
     public function validatedBy()
@@ -411,7 +411,7 @@ and an `alias` attribute:
         ;
 
 You constraint class may now use this alias to reference the appropriate
-validator:
+validator::
 
     public function validatedBy()
     {
