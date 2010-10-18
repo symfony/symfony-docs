@@ -114,7 +114,7 @@ unique identifier:
                         <target>J'aime Symfony2</target>
                     </trans-unit>
                     <trans-unit id="2">
-                        <source>symfony.great</source>
+                        <source>symfony2.great</source>
                         <target>J'aime Symfony2</target>
                     </trans-unit>
                 </body>
@@ -125,7 +125,7 @@ unique identifier:
 
         return array(
             'Symfony2 is great' => 'J\'aime Symfony2',
-            'symfony.great'     => 'J\'aime Symfony2',
+            'symfony2.great'     => 'J\'aime Symfony2',
         );
 
 .. note::

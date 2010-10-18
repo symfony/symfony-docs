@@ -356,7 +356,7 @@ Comments can be added in YAML by prefixing them with a hash mark (``#``):
 Dynamic YAML files
 ~~~~~~~~~~~~~~~~~~
 
-In Symfony, a YAML file can contain PHP code that is evaluated just before the
+In Symfony2, a YAML file can contain PHP code that is evaluated just before the
 parsing occurs:
 
 .. code-block:: yaml
