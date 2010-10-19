@@ -15,8 +15,8 @@ The Symfony2 :namespace:`Symfony\\Component\\Yaml` Component knows how to
 parse YAML and dump a PHP array to YAML.
 
 .. note::
-   Even if the YAML format can describe complex nested data structure, this guide
-   only describes the minimum set of features needed to use YAML as a
+   Even if the YAML format can describe complex nested data structure, this
+   guide only describes the minimum set of features needed to use YAML as a
    configuration file format.
 
 Reading YAML Files
@@ -66,8 +66,8 @@ bonuses:
 Writing YAML Files
 ------------------
 
-The :method:`Symfony\\Component\\Yaml\\Dumper::dump` method dumps any PHP
-array to its YAML representation::
+The :method:`Symfony\\Component\\Yaml\\Dumper::dump` method dumps any PHP array
+to its YAML representation::
 
     use Symfony\Component\Yaml\Dumper;
 
@@ -139,8 +139,8 @@ Strings
 
     "A double-quoted string in YAML\n"
 
-Quoted styles are useful when a string starts or ends with one or more
-relevant spaces.
+Quoted styles are useful when a string starts or ends with one or more relevant
+spaces.
 
 .. tip::
    The double-quoted style provides a way to express arbitrary strings, by
@@ -169,8 +169,8 @@ where each line break is replaced by a space:
       without carriage returns.
 
 .. note::
-   Notice the two spaces before each line in the previous examples. They
-   won't appear in the resulting PHP strings.
+   Notice the two spaces before each line in the previous examples. They won't
+   appear in the resulting PHP strings.
 
 Numbers
 ~~~~~~~
@@ -357,7 +357,9 @@ Dynamic YAML files
 ~~~~~~~~~~~~~~~~~~
 
 In Symfony, a YAML file can contain PHP code that is evaluated just before the
-parsing occurs::
+parsing occurs:
+
+.. code-block:: yaml
 
     1.0:
         version: <?php echo file_get_contents('1.0/VERSION')."\n" ?>

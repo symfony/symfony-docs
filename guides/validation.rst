@@ -33,10 +33,10 @@ prefixed with "get" or "is". Let's look at a sample configuration::
         }
     }
 
-This snippet shows a very simple ``Author`` class with a property and a
-getter. Each constraint has a name, most of them also have a couple of
-options. Here we configured the constraints with annotations, but Symfony2
-also offers many other configuration drivers.
+This snippet shows a very simple ``Author`` class with a property and a getter.
+Each constraint has a name, most of them also have a couple of options. Here we
+configured the constraints with annotations, but Symfony2 also offers many
+other configuration drivers.
 
 Because the annotation driver depends on the Doctrine library, it is not
 enabled by default. You can enable it in your ``config.yml``:
@@ -44,8 +44,10 @@ enabled by default. You can enable it in your ``config.yml``:
 .. code-block:: yaml
 
     # hello/config/config.yml
-    web.validation:
-        annotations: true
+    app.config:
+        validation:
+            enabled:     true
+            annotations: true
 
 Now let's try to validate an object::
 
@@ -63,8 +65,8 @@ You should see the following output:
     Author.email:
         Ok, seriously now. Your email address please
 
-The ``validate()`` method returns a ``ConstraintViolationList`` object that
-can simply be printed or processed in your code. That was easy!
+The ``validate()`` method returns a ``ConstraintViolationList`` object that can
+simply be printed or processed in your code. That was easy!
 
 .. index::
    single: Validators; Constraints
@@ -72,7 +74,7 @@ can simply be printed or processed in your code. That was easy!
 The Constraints
 ---------------
 
-Symfony bundles many different constraints. The following list will show you
+Symfony2 bundles many different constraints. The following list will show you
 which ones are available and how you can use and configure them. Some
 constraints have a default option. If you only set this option, you can leave
 away the option name::
@@ -126,6 +128,10 @@ Validates that a value is not ``NULL``::
     /** @validation:NotNull */
     private $firstName;
 
+Options:
+
+* ``message``: The error message if validation fails
+
 Null
 ~~~~
 
@@ -142,6 +148,7 @@ Validates that a value has a specific data type::
 Options:
 
 * ``type`` (default): The type
+* ``message``: The error message if validation fails
 
 Choice
 ~~~~~~
@@ -204,8 +211,8 @@ Options:
   ``fields`` option. Default: ``false``
 * ``missingFieldsMessage``: The error message if the ``allowMissingFields``
   validation fails
-* ``allowExtraFields``: The error message if the ``allowExtraFields`` validation
-  fails
+* ``extraFieldsMessage``: The error message if the ``allowExtraFields``
+  validation fails
 
 Date
 ~~~~
@@ -255,7 +262,8 @@ Validates that a value is a valid email address::
 Options:
 
 * ``message``: The error message if the validation fails
-* ``checkMX``: Whether MX records should be checked for the domain. Default: ``false``
+* ``checkMX``: Whether MX records should be checked for the domain. Default:
+  ``false``
 
 File
 ~~~~
@@ -267,8 +275,8 @@ Validates that a value is an existing file::
 
 Options:
 
-* ``maxSize``: The maximum allowed file size. Can be provided in bytes, kilobytes
-  (with the suffix "k") or megabytes (with the suffix "M")
+* ``maxSize``: The maximum allowed file size. Can be provided in bytes,
+  kilobytes (with the suffix "k") or megabytes (with the suffix "M")
 * ``mimeTypes``: One or more allowed mime types
 * ``notFoundMessage``: The error message if the file was not found
 * ``notReadableMessage``: The error message if the file could not be read
@@ -343,11 +351,78 @@ Options:
 .. index::
    single: Validators; Configuration
 
+Custom Constraints
+------------------
+
+You can create a custom constraint by extending the base constraint class,
+``Symfony\Component\Validator\Constraint``. Options for your constraint are
+represented by public properties on the constraint class. For example, the
+``Url`` constraint includes ``message`` and ``protocols`` properties::
+
+    namespace Symfony\Component\Validator\Constraints;
+
+    class Url extends \Symfony\Component\Validator\Constraint
+    {
+        public $message = 'This value is not a valid URL';
+        public $protocols = array('http', 'https', 'ftp', 'ftps');
+    }
+
+As you can see, a constraint class is fairly minimal. The actual validation is
+performed by a another "constraint validator" class. Which constraint
+validator is specified by the constraint's ``validatedBy()`` method, which
+includes some simple default logic::
+
+    // in the base Symfony\Component\Validator\Constraint class
+    public function validatedBy()
+    {
+        return get_class($this).'Validator';
+    }
+
+Constraint Validators with Dependencies
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+If your constraint validator has dependencies, such as a database connection,
+it will need to be configured as a service in the dependency injection
+container. This service must include the `validator.constraint_validator` tag
+and an `alias` attribute:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        services:
+            validator.unique.your_validator_name:
+                class: Fully\Qualified\Validator\Class\Name
+                tags:
+                    - { name: validator.constraint_validator, alias: alias_name }
+
+    .. code-block:: xml
+
+        <service id="validator.unique.your_validator_name" class="Fully\Qualified\Validator\Class\Name">
+            <argument type="service" id="doctrine.orm.default_entity_manager" />
+            <tag name="validator.constraint_validator" alias="alias_name" />
+        </service>
+
+    .. code-block:: php
+
+        $container
+            ->register('validator.unique.your_validator_name', 'Fully\Qualified\Validator\Class\Name')
+            ->addTag('validator.constraint_validator', array('alias' => 'alias_name'))
+        ;
+
+Your constraint class may now use this alias to reference the appropriate
+validator::
+
+    public function validatedBy()
+    {
+        return 'alias_name';
+    }
+
 Other Configuration Drivers
 ---------------------------
 
-As always in Symfony, there are multiple ways of configuring the constraints
-for your classes. Symfony supports the following four drivers.
+As always in Symfony2, there are multiple ways of configuring the constraints
+for your classes. Symfony2 supports the following four drivers.
 
 XML Configuration
 ~~~~~~~~~~~~~~~~~
@@ -380,8 +455,8 @@ be validated to prevent errors. To use the driver, simply put a file called
 YAML Configuration
 ~~~~~~~~~~~~~~~~~~
 
-The YAML driver offers the same functionality as the XML driver. To use it,
-put the file ``validation.yml`` in the ``Resources/config/`` directory of your
+The YAML driver offers the same functionality as the XML driver. To use it, put
+the file ``validation.yml`` in the ``Resources/config/`` directory of your
 bundle:
 
 .. code-block:: yaml
@@ -417,7 +492,7 @@ method ``loadValidatorMetadata()`` to the classes that you want to validate::
         }
     }
 
-You can use either of the configuration drivers, or all together. Symfony will
+You can use either of the configuration drivers, or all together. Symfony2 will
 merge all the information it can find.
 
 .. _JSR303 Bean Validation specification: http://jcp.org/en/jsr/detail?id=303

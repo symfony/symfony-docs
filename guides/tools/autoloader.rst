@@ -6,8 +6,8 @@ Autoloader
 
 Whenever you use an undefined class, PHP uses the autoloading mechanism to
 delegate the loading of a file defining the class. Symfony2 provides a
-"universal" autoloader, which is able to load classes from files that
-implement one of the following conventions:
+"universal" autoloader, which is able to load classes from files that implement
+one of the following conventions:
 
 * The technical interoperability `standards`_ for PHP 5.3 namespaces and class
   names;
@@ -21,8 +21,9 @@ need.
 Usage
 -----
 
-Registering the :class:`Symfony\\Component\\HttpFoundation\\UniversalClassLoader` autoloader
-is straightforward::
+Registering the
+:class:`Symfony\\Component\\HttpFoundation\\UniversalClassLoader` autoloader is
+straightforward::
 
     require_once '/path/to/src/Symfony/Component/HttpFoundation/UniversalClassLoader.php';
 
@@ -62,12 +63,12 @@ methods::
     ));
 
 .. note::
-   Some libraries also need that their root path be registered in the PHP include
-   path (``set_include_path()``).
+   Some libraries also need that their root path be registered in the PHP
+   include path (``set_include_path()``).
 
 Classes from a sub-namespace or a sub-hierarchy of PEAR classes can be looked
-for in a list of locations to ease the vendoring of a sub-set of classes for
-large projects::
+for in a location list to ease the vendoring of a sub-set of classes for large
+projects::
 
     $loader->registerNamespaces(array(
         'Doctrine\\Common'           => __DIR__.'/vendor/doctrine-common/lib',

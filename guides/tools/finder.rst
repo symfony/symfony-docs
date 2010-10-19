@@ -4,7 +4,7 @@
 The Finder
 ==========
 
-The :namespace:`Symfony\\Component\\Finder` Component helps you find files
+The :namespace:`Symfony\\Component\\Finder` component helps you to find files
 and directories quickly and easily.
 
 Usage
@@ -83,8 +83,7 @@ Files or Directories
 
 By default, the Finder returns files and directories; but the
 :method:`Symfony\\Component\\Finder\\Finder::files` and
-:method:`Symfony\\Component\\Finder\\Finder::directories` methods controls
-that::
+:method:`Symfony\\Component\\Finder\\Finder::directories` methods control that::
 
     $finder->files();
 
@@ -109,10 +108,10 @@ Sort the result by name or by type (directories first, then files)::
     $finder->sortByType();
 
 .. note::
-   Notice that the ``sort*`` methods need to get all matching elements to do their
-   jobs. For large iterators, it is slow.
+   Notice that the ``sort*`` methods need to get all matching elements to do
+   their jobs. For large iterators, it is slow.
 
-You can also define your own sorting algorithm with ``sort()``::
+You can also define your own sorting algorithm with ``sort()`` method::
 
     $sort = function (\SplFileInfo $a, \SplFileInfo $b)
     {
@@ -152,9 +151,9 @@ Restrict by a size range by chaining calls::
 The comparison operator can be any of the following: ``>``, ``>=``, ``<``, '<=',
 '=='.
 
-The target value may use magnitudes of kilobytes (``k``, ``ki``), megabytes (``m``,
-``mi``), or gigabytes (``g``, ``gi``). Those suffixed with an ``i`` use the
-appropriate ``2**n`` version in accordance with the `IEC standard`_.
+The target value may use magnitudes of kilobytes (``k``, ``ki``), megabytes
+(``m``, ``mi``), or gigabytes (``g``, ``gi``). Those suffixed with an ``i`` use
+the appropriate ``2**n`` version in accordance with the `IEC standard`_.
 
 File Date
 ~~~~~~~~~
@@ -165,8 +164,8 @@ Restrict files by last modified dates with the
     $finder->date('since yesterday');
 
 The comparison operator can be any of the following: ``>``, ``>=``, ``<``, '<=',
-'=='. You can also use ``since`` or ``after`` as an alias for ``>``, and ``until`` or
-``before`` as an alias for ``<``.
+'=='. You can also use ``since`` or ``after`` as an alias for ``>``, and
+``until`` or ``before`` as an alias for ``<``.
 
 The target value can be any date supported by the `strtotime`_ function.
 
@@ -194,9 +193,9 @@ To restrict the matching file with your own strategy, use
 
     $finder->files()->filter($filter);
 
-The ``filter()`` methods takes a Closure as an argument. For each matching
-file, it is called with the file as a :phpclass:`SplFileInfo` instance. The
-file is excluded from the result set if the Closure returns ``false``.
+The ``filter()`` method takes a Closure as an argument. For each matching file,
+it is called with the file as a :phpclass:`SplFileInfo` instance. The file is
+excluded from the result set if the Closure returns ``false``.
 
 .. _strtotime:   http://www.php.net/manual/en/datetime.formats.php
 .. _Iterator:     http://www.php.net/manual/en/spl.iterators.php

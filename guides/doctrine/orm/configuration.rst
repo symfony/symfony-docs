@@ -16,9 +16,9 @@ Configuration
             customer:
                 connection:       customer
 
-Just like the DBAL, if you have configured multiple ``EntityManager`` instances and want to
-get a specific one you can use the ``getEntityManager()`` method by just passing it an argument
-that is the name of the ``EntityManager`` you want::
+Just like the DBAL, if you have configured multiple ``EntityManager`` instances
+and want to get a specific one you can use the ``getEntityManager()`` method by
+just passing it an argument that is the ``EntityManager`` name you want::
 
     class UserController extends Controller
     {
@@ -47,7 +47,7 @@ entity::
 Once you've done that, to get your database schema updated with the new column
 you just need to run the following command:
 
-    $ php hello/console doctrine:schema:update
+    $ php app/console doctrine:schema:update
 
 Now your database will be updated and the new column added to the database
 table.

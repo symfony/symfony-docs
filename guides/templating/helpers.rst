@@ -7,9 +7,8 @@ Enabling Custom Template Renderers
 ----------------------------------
 
 To enable a custom template renderer, add it as a regular service in one of
-your configuration, tag it with ``templating.renderer`` and define an
-``alias`` attribute (the renderer will be known by this alias in template
-name):
+your configuration, tag it with ``templating.renderer`` and define an ``alias``
+attribute (the renderer will be known by this alias in template name):
 
 .. configuration-block::
 

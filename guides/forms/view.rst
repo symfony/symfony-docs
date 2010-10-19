@@ -6,15 +6,15 @@ Forms in Templates
 
 A Symfony2 :doc:`Form </guides/forms/overview>` is made of fields. Fields
 describe the form semantic, not its end-user representation; it means that a
-form is not tied to HTML. Instead, it is the responsibility of the web
-designer to display each form field the way he wants. So, displaying a
-Symfony2 form in a template can easily be done manually. But, Symfony2 eases
-form integration and customization by providing a set of wrapper objects.
+form is not tied to HTML. Instead, it is the responsibility of the web designer
+to display each form field the way he wants. So, displaying a Symfony2 form in
+a template can easily be done manually. But, Symfony2 eases form integration
+and customization by providing a set of wrapper objects.
 
 Displaying a Form "manually"
 ----------------------------
 
-Before diving into the Symfony2 wrappers and how they help you display form
+Before diving into the Symfony2 wrappers and how they help you to display form
 easily, securely, and fast, you must know that nothing special happens under
 the hood. You can use any HTML you want to display a Symfony2 form:
 
@@ -43,16 +43,16 @@ form dedicated methods:
         <input type="submit" />
     </form>
 
-The Symfony2 wrappers help you keep your template short, makes your form
-layout easily customizable, supports internationalization, CSRF protection,
+The Symfony2 wrappers help you to keep your template short, make your form
+layout easily customizable, support internationalization, CSRF protection,
 file upload, and more out of the box. The following sections tells you
 everything about them.
 
 Wrapping the Form for Templates
 -------------------------------
 
-To take advantage of the Symfony2 form wrappers, you must pass a special
-object to the template, instead of the form instance::
+To take advantage of the Symfony2 form wrappers, you must pass a special object
+to the template, instead of the form instance::
 
     // src/Application/HelloBundle/Controller/HelloController.php
     public function signupAction()
@@ -65,7 +65,7 @@ object to the template, instead of the form instance::
     }
 
 Instead of passing the form instance directly to the view, we wrap it with an
-object that provides methods that help render the form with more flexibility
+object that provides methods that help to render the form with more flexibility
 (``$this['templating.form']->get($form)``).
 
 Displaying a Form
@@ -100,8 +100,8 @@ respectively:
     </form>
 
 .. note::
-    By default, the ``errors()`` method generates a ``<ul>`` list, but this
-    can be easily customized as you will see later in this document.
+   By default, the ``errors()`` method generates a ``<ul>`` list, but this
+   can be easily customized as you will see later in this document.
 
 Last but not the least, a form containing a file input must contain the
 ``enctype`` attribute; use the ``form()`` method to take care of it:
@@ -132,8 +132,8 @@ The ``widget()`` method renders the HTML representation of a field:
     <?php echo $form['title']->widget() ?>
 
 .. note::
-    The field's widget is selected based on the field class name (more
-    information below).
+   The field's widget is selected based on the field class name (more
+   information below).
 
 The ``label()`` method renders the ``<label>`` tag associated with the field:
 
@@ -149,7 +149,7 @@ label:
     <?php echo $form['title']->label('Give me a title') ?>
 
 .. note::
-    Symfony2 automatically internationalizes all labels and error messages.
+   Symfony2 automatically internationalizes all labels and error messages.
 
 The ``errors()`` method renders the field errors:
 
@@ -294,7 +294,5 @@ argument to override the default representation:
     <?php echo $form->render('HelloBundle:Form:group/div/field_group.php') ?>
 
 .. caution::
-    The ``render()`` method is not very flexible and should only be used to
-    build prototypes.
-
-.. _branch: http://github.com/fabpot/symfony/tree/fields_as_templates
+   The ``render()`` method is not very flexible and should only be used to
+   build prototypes.

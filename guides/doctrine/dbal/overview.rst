@@ -16,7 +16,7 @@ To get started you just need to enable and configure the DBAL:
 
 .. code-block:: yaml
 
-    # config/config.yml
+    # app/config/config.yml
 
     doctrine.dbal:
         driver:   PDOMySql

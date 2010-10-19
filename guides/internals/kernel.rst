@@ -42,8 +42,8 @@ name (a "class::method" string, like
 
 .. tip::
    The default implementation uses the
-   :class:`Symfony\\Bundle\\FrameworkBundle\\RequestListener`
-   to define the ``_controller`` Request attribute (see below).
+   :class:`Symfony\\Bundle\\FrameworkBundle\\RequestListener` to define the
+   ``_controller`` Request attribute (see below).
 
 The
 :method:`Symfony\\Component\\HttpKernel\\Controller\\ControllerResolverInterface::getArguments`
@@ -57,7 +57,7 @@ the Request attributes.
    attribute with the same name. If it is not defined, the argument default
    value is used if defined::
 
-       // Symfony will look for an 'id' attribute (mandatory)
+       // Symfony2 will look for an 'id' attribute (mandatory)
        // and an 'admin' one (optional)
        public function showAction($id, $admin = true)
        {
@@ -85,8 +85,7 @@ Event):
 
 4. The Kernel checks that the Controller is actually a valid PHP callable;
 
-5. The Resolver is called to determine the arguments to pass to the
-   Controller;
+5. The Resolver is called to determine the arguments to pass to the Controller;
 
 6. The Kernel calls the Controller;
 
@@ -103,9 +102,9 @@ notified and listeners are given a change to convert the Exception to a
 Response. If that works, the ``core.response`` event is notified; if not the
 Exception is re-thrown.
 
-If you don't want Exceptions to be caught (for embedded requests for
-instance), disable the ``core.exception`` event by passing ``true`` as the
-third argument to the ``handle()`` method.
+If you don't want Exceptions to be caught (for embedded requests for instance),
+disable the ``core.exception`` event by passing ``true`` as the third argument
+to the ``handle()`` method.
 
 .. index::
   single: Internals; Internal Requests
@@ -121,7 +120,7 @@ second argument):
 * ``HttpKernelInterface::SUB_REQUEST``.
 
 The type is passed to all events and listeners can act accordingly (some
-processing must only occurs on the master request).
+processing must only occur on the master request).
 
 .. index::
    pair: Kernel; Event
@@ -129,7 +128,7 @@ processing must only occurs on the master request).
 Events
 ------
 
-All events have a ``request_type`` parameter, which allows listeners to know
+All events have a ``request_type`` parameter which allows listeners to know
 the type of the request. For instance, if a listener must only be active for
 master requests, add the following code at the beginning of your listener
 method::
@@ -207,11 +206,11 @@ view sub-system.
 
 ``FrameworkBundle`` registers several listeners:
 
-* :class:`Symfony\\Component\\HttpKernel\\Profiler\\ProfilerListener`:
-  collects data for the current request;
+* :class:`Symfony\\Component\\HttpKernel\\Profiler\\ProfilerListener`: collects
+  data for the current request;
 
-* :class:`Symfony\\Component\\HttpKernel\\Profiler\\WebDebugToolbarListener`:
-  injects the Web Debug Toolbar;
+* :class:`Symfony\\Bundle\\WebProfilerBundle\\WebDebugToolbarListener`: injects
+  the Web Debug Toolbar;
 
 * :class:`Symfony\\Component\\HttpKernel\\ResponseListener`: fixes the
   Response ``Content-Type``;

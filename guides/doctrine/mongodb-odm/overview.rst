@@ -4,25 +4,25 @@
 MongoDB ODM
 ===========
 
-The `MongoDB`_ Object Document Mapper is much like the Doctrine2 ORM in the
-way it works and architecture. You only deal with plain PHP objects and they are persisted
-transparently without imposing on your domain model.
+The `MongoDB`_ Object Document Mapper is much like the Doctrine2 ORM in the way
+it works and architecture. You only deal with plain PHP objects and they are
+persisted transparently without imposing on your domain model.
 
 .. tip::
    You can read more about the Doctrine MongoDB Object Document Mapper on the
    projects `documentation`_.
 
-To get started working with Doctrine and the MongoDB Object Document Mapper you just need
-to enable it:
+To get started working with Doctrine and the MongoDB Object Document Mapper you
+just need to enable it:
 
 .. code-block:: yaml
 
-    # config/config.yml
+    # app/config/config.yml
 
     doctrine_odm.mongodb: ~
 
-Now you can start writing documents and mapping them with annotations, xml, or yaml. In this
-example we will use annotations::
+Now you can start writing documents and mapping them with annotations, xml, or
+yaml. In this example we will use annotations::
 
     // Application/HelloBundle/Document/User.php
 
