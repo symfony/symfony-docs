@@ -31,6 +31,13 @@
   * :doc:`/guides/templating/helpers` | 
   * :doc:`Twig </guides/templating/Twig>`
 
+* **Security**:
+
+  * :doc:`Overview </guides/security/overview>` | 
+  * :doc:`/guides/security/users` | 
+  * :doc:`/guides/security/authentication` | 
+  * :doc:`/guides/security/authorization`
+
 * **Event Dispatcher**:
 
   * :doc:`Overview </guides/event/overview>` | 
