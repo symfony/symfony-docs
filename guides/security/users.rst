@@ -88,7 +88,7 @@ For most use case, use
     $password = $encoder->encodePassword('MyPass', $user->getSalt());
     $user->setPassword($password);
 
-When encoding your passwords, it's best to also define a unique salt per user
+When encoding your passwords, it's better to also define a unique salt per user
 (the ``getSalt()`` method can return the primary key if users are persisted in
 a database for instance.)
 
@@ -109,7 +109,8 @@ will make the associated checks automatically::
         function isEnabled();
     }
 
-* ``isAccountNonExpired()``: Returns ``true`` when the user's account has expired;
+* ``isAccountNonExpired()``: Returns ``true`` when the user's account has
+  expired;
 * ``isAccountNonLocked()``: Returns ``true`` when the user is locked;
 * ``isCredentialsNonExpired()``: Returns ``true`` when the user's credentials
   (password) has expired;
@@ -133,8 +134,8 @@ class for any DAO provider you might want to create.
 In-memory Provider
 ~~~~~~~~~~~~~~~~~~
 
-The in-memory provider is a great provider to secure a personal website
-backend or a prototype. It is also the best provider when writing unit tests:
+The in-memory provider is a great provider to secure a personal website backend
+or a prototype. It is also the best provider when writing unit tests:
 
 .. configuration-block::
 
@@ -331,7 +332,7 @@ rules by creating a role hierarchy:
         $container->loadFromExtension('security', 'config', array(
             'role_hierarchy' => array(
                 'ROLE_ADMIN'       => 'ROLE_USER',
-                'ROLE_SUPER_ADMIN' => array('ROLE_USER,ROLE_ADMIN', 'ROLE_ALLOWED_TO_SWITCH'),
+                'ROLE_SUPER_ADMIN' => array('ROLE_USER', 'ROLE_ADMIN', 'ROLE_ALLOWED_TO_SWITCH'),
             ),
         ));
 

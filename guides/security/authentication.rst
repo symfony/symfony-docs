@@ -292,8 +292,8 @@ And the corresponding template:
 
         <form action="<?php echo $view['router']->generate('_security_check') ?>" method="post">
             <label for="username">Username:</label>
-
             <input type="text" id="username" name="_username" value="<?php echo $last_username ?>" />
+
             <label for="password">Password:</label>
             <input type="password" id="password" name="_password" />
 
@@ -308,8 +308,8 @@ And the corresponding template:
 
         <form action="{% route "_security_check" %}" method="post">
             <label for="username">Username:</label>
-
             <input type="text" id="username" name="_username" value="{{ last_username }}" />
+
             <label for="password">Password:</label>
             <input type="password" id="password" name="_password" />
 
@@ -321,7 +321,7 @@ submission URL must be the value of the ``check_path`` setting
 (``/login_check`` by default).
 
 Finally, add routes for the ``/login`` (``login_path`` value) and
-``/_login_check`` (``login_check`` value) URLs:
+``/login_check`` (``login_check`` value) URLs:
 
 .. code-block:: xml
 
@@ -339,8 +339,8 @@ setting.
 After a successful authentication, the user is redirected based on the
 following algorithm:
 
-* if ``always_use_default_target_path`` is ``true`` (``false`` is the
-  default), redirect to the ``default_target_path`` (``/`` by default);
+* if ``always_use_default_target_path`` is ``true`` (``false`` by default),
+  redirect the user to the ``default_target_path`` (``/`` by default);
 
 * if the request contains a parameter named ``_target_path`` (configurable via
   ``target_path_parameter``), redirect the user to this parameter value;
@@ -349,7 +349,7 @@ following algorithm:
   when a user is redirected to the login page), redirect the user to that URL;
 
 * if ``use_referer`` is set to ``true`` (``false`` is the default), redirect
-  the use to the Referrer URL;
+  the user to the Referrer URL;
 
 * Redirect the user to the ``default_target_path`` URL (``/`` by default).
 
@@ -813,10 +813,10 @@ firewall, or just for an authentication mechanism:
             ),
         ));
 
-In the above example, ``/admin/.*`` URLs accepts users from the
-``certificate`` user provider when using X.509 authenticating, and the
-``default`` provider when the user signs in with a form. The ``/api/.*`` URLs
-uses the ``default`` provider for all authentication mechanisms.
+In the above example, ``/admin/.*`` URLs accept users from the ``certificate``
+user provider when using X.509 authenticating, and the ``default`` provider
+when the user signs in with a form. The ``/api/.*`` URLs use the ``default``
+provider for all authentication mechanisms.
 
 .. note::
 
