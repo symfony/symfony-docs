@@ -329,7 +329,7 @@ Finally, add routes for the ``/login`` (``login_path`` value) and
         <default key="_controller">SecurityBundle:Security:login</default>
     </route>
 
-    <route id="_security_check" pattern="/_login_check" />
+    <route id="_security_check" pattern="/login_check" />
 
 After an authentication failure, the user is redirected to the login page. You
 can use forward instead by setting the ``failure_forward`` to ``true``. You
