@@ -280,34 +280,56 @@ yourself::
         }
     }
 
-And the corresponding template::
+And the corresponding template:
 
-    <?php if ($error): ?>
-        <div><?php echo $error ?></div>
-    <?php endif; ?>
+.. configuration-block::
 
-    <form action="/_login_check" method="post">
-        <label for="username">Username:</label>
+    .. code-block:: html+php
 
-        <input type="text" id="username" name="_username" value="<?php echo $last_username ?>" />
-        <label for="password">Password:</label>
-        <input type="password" id="password" name="_password" />
+        <?php if ($error): ?>
+            <div><?php echo $error ?></div>
+        <?php endif; ?>
 
-        <input type="submit" name="login" />
-    </form>
+        <form action="<?php echo $view['router']->generate('_security_check') ?>" method="post">
+            <label for="username">Username:</label>
+
+            <input type="text" id="username" name="_username" value="<?php echo $last_username ?>" />
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="_password" />
+
+            <input type="submit" name="login" />
+        </form>
+
+    .. code-block:: jinja
+
+        {% if error %}
+            <div>{{ error }}</div>
+        {% endif %}
+
+        <form action="{% route "_security_check" %}" method="post">
+            <label for="username">Username:</label>
+
+            <input type="text" id="username" name="_username" value="{{ last_username }}" />
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="_password" />
+
+            <input type="submit" name="login" />
+        </form>
 
 The template must have a ``_username`` and ``_password`` fields, and the form
 submission URL must be the value of the ``check_path`` setting
 (``/login_check`` by default).
 
-Finally, you will need to route the controller to the ``/login`` URL
-(``login_path`` value):
+Finally, add routes for the ``/login`` (``login_path`` value) and
+``/_login_check`` (``login_check`` value) URLs:
 
 .. code-block:: xml
 
     <route id="_security_login" pattern="/login">
         <default key="_controller">SecurityBundle:Security:login</default>
     </route>
+
+    <route id="_security_check" pattern="/_login_check" />
 
 After an authentication failure, the user is redirected to the login page. You
 can use forward instead by setting the ``failure_forward`` to ``true``. You
