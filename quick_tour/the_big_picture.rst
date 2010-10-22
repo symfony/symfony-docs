@@ -18,11 +18,11 @@ Download and Install
 First, check that you have at least PHP 5.3.2 installed and correctly
 configured to work with a web server like Apache.
 
-Ready? Let's start by downloading Symfony. To get started even faster, we are
-going to use the "Symfony sandbox". It is a Symfony project where all the
+Ready? Let's start by downloading Symfony2. To get started even faster, we are
+going to use the "Symfony2 sandbox". It is a Symfony2 project where all the
 required libraries and some simple controllers are already included; the basic
 configuration is also already done. The great advantage of the sandbox over
-other types of installation is that you can start experimenting with Symfony
+other types of installation is that you can start experimenting with Symfony2
 immediately.
 
 Download the `sandbox`_, and unpack it in your root web directory. You
@@ -50,24 +50,24 @@ Check the Configuration
 -----------------------
 
 To avoid some headaches further down the line, check that your configuration
-can run a Symfony project smoothly by requesting the following URL:
+can run a Symfony2 project smoothly by requesting the following URL:
 
     http://localhost/sandbox/web/check.php
 
 Read the script output carefully and fix any problem that it finds.
 
-Now, request your first "real" Symfony webpage:
+Now, request your first "real" Symfony2 webpage:
 
     http://localhost/sandbox/web/index_dev.php/
 
-Symfony should congratulate you for your hard work so far!
+Symfony2 should congratulate you for your hard work so far!
 
 Your first Application
 ----------------------
 
 The sandbox comes with a simple Hello World ":term:`application`" and that's
-the application we will use to learn more about Symfony. Go to the following
-URL to be greeted by Symfony (replace Fabien with your first name):
+the application we will use to learn more about Symfony2. Go to the following
+URL to be greeted by Symfony2 (replace Fabien with your first name):
 
     http://localhost/sandbox/web/index_dev.php/hello/Fabien
 
@@ -91,7 +91,7 @@ Fabien!``).
 Configuration
 ~~~~~~~~~~~~~
 
-But how does Symfony route the request to your code? Simply by reading some
+But how does Symfony2 route the request to your code? Simply by reading some
 configuration file.
 
 All Symfony2 configuration files can be written in either PHP, XML, or `YAML`_
@@ -111,7 +111,7 @@ very easy).
 Routing
 ~~~~~~~
 
-So, Symfony routes the request by reading the routing configuration file:
+So, Symfony2 routes the request by reading the routing configuration file:
 
 .. configuration-block::
 
@@ -228,7 +228,7 @@ The controller is responsible for returning a representation of the resource
 
 The code is pretty straightforward but let's explain this code line by line:
 
-* *line 3*: Symfony takes advantage of new PHP 5.3 features and as such, all
+* *line 3*: Symfony2 takes advantage of new PHP 5.3 features and as such, all
   controllers are properly namespaced (the namespace is the first part of the
   ``_controller`` routing value: ``HelloBundle``).
 
@@ -246,8 +246,8 @@ The code is pretty straightforward but let's explain this code line by line:
   (``HelloBundle:Hello:index``) with the variables passed as a second
   argument.
 
-But what is a :term:`bundle`? All the code you write in a Symfony project is
-organized in bundles. In Symfony speak, a bundle is a structured set of files
+But what is a :term:`bundle`? All the code you write in a Symfony2 project is
+organized in bundles. In Symfony2 speak, a bundle is a structured set of files
 (PHP files, stylesheets, JavaScripts, images, ...) that implements a single
 feature (a blog, a forum, ...) and which can be easily shared with other
 developers. In our example, we only have one bundle, ``HelloBundle``.
@@ -267,8 +267,8 @@ is made of HTML and simple PHP expressions:
 
     Hello <?php echo $name ?>!
 
-Congratulations! You have looked at your first Symfony piece of code. That was
-not so hard, was it? Symfony makes it really easy to implement web sites
+Congratulations! You have looked at your first Symfony2 piece of code. That was
+not so hard, was it? Symfony2 makes it really easy to implement web sites
 better and faster.
 
 .. index::
@@ -278,13 +278,13 @@ better and faster.
 Environments
 ------------
 
-Now that you have a better understanding on how Symfony works, have a closer
-look at the bottom of the page; you will notice a small bar with the Symfony
+Now that you have a better understanding on how Symfony2 works, have a closer
+look at the bottom of the page; you will notice a small bar with the Symfony2
 and PHP logos. It is called the "Web Debug Toolbar" and it is the developer's
 best friend. Of course, such a tool must not be displayed when you deploy your
 application to your production servers. That's why you will find another front
-controller in the ``web/`` directory (``index.php``), optimized for the production
-environment:
+controller in the ``web/`` directory (``index.php``), optimized for the
+production environment:
 
     http://localhost/sandbox/web/index.php/hello/Fabien
 
@@ -299,7 +299,7 @@ better looking URL:
 
     http://localhost/hello/Fabien
 
-To make the production environment as fast as possible, Symfony maintains a
+To make the production environment as fast as possible, Symfony2 maintains a
 cache under the ``app/cache/`` directory. When you make changes, you need to
 manually remove the cached files. That's why you should always use the
 development front controller (``index_dev.php``) when working on a project.
@@ -310,7 +310,7 @@ Final Thoughts
 The 10 minutes are over. By now, you should be able to create your own simple
 routes, controllers, and templates. As an exercise, try to build something
 more useful than the Hello application! But if you are eager to learn more
-about Symfony, you can read the next part of this tutorial right away, where
+about Symfony2, you can read the next part of this tutorial right away, where
 we dive more into the templating system.
 
 .. _sandbox: http://symfony-reloaded.org/code#sandbox

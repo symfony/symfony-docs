@@ -12,9 +12,9 @@ Symfony2 stand apart from the framework crowd, let's dive into it now.
 The Directory Structure
 -----------------------
 
-The directory structure of a Symfony :term:`application` is rather flexible
+The directory structure of a Symfony2 :term:`application` is rather flexible
 but the directory structure of a sandbox reflects the typical and recommended
-structure of a Symfony application:
+structure of a Symfony2 application:
 
 * ``app/``: This directory contains the application configuration;
 
@@ -105,7 +105,7 @@ stored in the ``src/`` directory::
     ));
     $loader->register();
 
-The ``UniversalClassLoader`` from Symfony is used to autoload files that
+The ``UniversalClassLoader`` from Symfony2 is used to autoload files that
 respect either the technical interoperability `standards`_ for PHP 5.3
 namespaces or the PEAR naming `convention`_ for classes. As you can see
 here, all dependencies are stored under the ``vendor/`` directory, but this is
@@ -119,12 +119,12 @@ The Bundle System
 -----------------
 
 This section starts to scratch the surface of one of the greatest and more
-powerful features of Symfony, its :term:`bundle` system.
+powerful features of Symfony2, its :term:`bundle` system.
 
 A bundle is kind of like a plugin in other software. But why is it called
-bundle and not plugin then? Because everything is a bundle in Symfony, from
+bundle and not plugin then? Because everything is a bundle in Symfony2, from
 the core framework features to the code you write for your application.
-Bundles are first-class citizens in Symfony. This gives you the flexibility to
+Bundles are first-class citizens in Symfony2. This gives you the flexibility to
 use pre-built features packaged in third-party bundles or to distribute your
 own bundles. It makes it so easy to pick and choose which features to enable
 in your application and optimize them the way you want.
@@ -363,8 +363,8 @@ specific configuration file:
         ));
 
 As we have seen in the previous part, an application is made of bundles as
-defined in the ``registerBundles()`` method but how does Symfony know where to
-look for bundles? Symfony is quite flexible in this regard. The
+defined in the ``registerBundles()`` method but how does Symfony2 know where to
+look for bundles? Symfony2 is quite flexible in this regard. The
 ``registerBundleDirs()`` method must return an associative array that maps
 namespaces to any valid directory (local or global ones)::
 
@@ -378,9 +378,9 @@ namespaces to any valid directory (local or global ones)::
     }
 
 So, when you reference the ``HelloBundle`` in a controller name or in a template
-name, Symfony will look for it under the given directories.
+name, Symfony2 will look for it under the given directories.
 
-Do you understand now why Symfony is so flexible? Share your bundles between
+Do you understand now why Symfony2 is so flexible? Share your bundles between
 applications, store them locally or globally, your choice.
 
 .. index::
@@ -390,7 +390,7 @@ Vendors
 -------
 
 Odds are your application will depend on third-party libraries. Those should
-be stored in the ``src/vendor/`` directory. It already contains the Symfony
+be stored in the ``src/vendor/`` directory. It already contains the Symfony2
 libraries, the SwiftMailer library, the Doctrine ORM, the Propel ORM, the Twig
 templating system, and a selection of the Zend Framework classes.
 
@@ -401,12 +401,12 @@ templating system, and a selection of the Zend Framework classes.
 Cache and Logs
 --------------
 
-Symfony is probably one of the fastest full-stack frameworks around. But how
+Symfony2 is probably one of the fastest full-stack frameworks around. But how
 can it be so fast if it parses and interprets tens of YAML and XML files for
 each request? This is partly due to its cache system. The application
 configuration is only parsed for the very first request and then compiled down
 to plain PHP code stored in the ``cache/`` application directory. In the
-development environment, Symfony is smart enough to flush the cache when you
+development environment, Symfony2 is smart enough to flush the cache when you
 change a file. But in the production one, it is your responsibility to clear
 the cache when you update your code or change its configuration.
 
@@ -441,14 +441,14 @@ Final Thoughts
 --------------
 
 Call me crazy, but after reading this part, you should be comfortable with
-moving things around and making Symfony work for you. Everything is done in
-Symfony to stand out of your way. So, feel free to rename and move directories
+moving things around and making Symfony2 works for you. Everything is done in
+Symfony2 to stand out of your way. So, feel free to rename and move directories
 around as you see fit.
 
 And that's all for the quick tour. From testing to sending emails, you still
-need to learn of lot to become a Symfony master. Ready to dig into these
-topics now? Look no further, go to the official `guides`_ page and pick any
-topic you want.
+need to learn a lot to become a Symfony2 master. Ready to dig into these topics
+now? Look no further, go to the official `guides`_ page and pick any topic you
+want.
 
 .. _standards:  http://groups.google.com/group/php-standards/web/psr-0-final-proposal
 .. _convention: http://pear.php.net/
