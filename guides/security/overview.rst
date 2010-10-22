@@ -251,8 +251,7 @@ configuration:
 
 The above configuration defines a 'foo' user with a 'foo' password. After
 authentication, you can access the authenticated user via the security context
-(the user is an instance of
-:class:`Symfony\\Component\\Security\\User\\User`)::
+(the user is an instance of :class:`Symfony\\Component\\Security\\User\\User`)::
 
     $user = $container->get('security.context')->getUser();
 
