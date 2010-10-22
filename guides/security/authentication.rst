@@ -25,7 +25,7 @@ basic authentication:
 
     .. code-block:: yaml
 
-        # app/config/config.yml
+        # app/config/security.yml
         security.config:
             firewalls:
                 backend:
@@ -42,7 +42,7 @@ basic authentication:
 
     .. code-block:: xml
 
-        <!-- app/config/config.xml -->
+        <!-- app/config/security.xml -->
         <config>
             <firewall pattern="/admin/.*">
                 <form-login />
@@ -56,7 +56,7 @@ basic authentication:
 
     .. code-block:: php
 
-        // app/config/config.php
+        // app/config/security.php
         $container->loadFromExtension('security', 'config', array(
             'firewalls' => array(
                 'backend' => array('pattern' => '/admin/.*', 'http_basic' => true, 'logout' => true),
@@ -99,7 +99,7 @@ You can configure a firewall to use more than one authentication mechanisms:
 
     .. code-block:: yaml
 
-        # app/config/config.yml
+        # app/config/security.yml
         security.config:
             firewalls:
                 backend:
@@ -111,7 +111,7 @@ You can configure a firewall to use more than one authentication mechanisms:
 
     .. code-block:: xml
 
-        <!-- app/config/config.xml -->
+        <!-- app/config/security.xml -->
         <config>
             <firewall pattern="/admin/.*">
                 <x509 />
@@ -123,7 +123,7 @@ You can configure a firewall to use more than one authentication mechanisms:
 
     .. code-block:: php
 
-        // app/config/config.php
+        // app/config/security.php
         $container->loadFromExtension('security', 'config', array(
             'firewalls' => array(
                 'backend' => array(
@@ -156,7 +156,7 @@ Configuring HTTP basic authentication is as simple as it can get:
 
     .. code-block:: yaml
 
-        # app/config/config.yml
+        # app/config/security.yml
         security.config:
             firewalls:
                 main:
@@ -164,7 +164,7 @@ Configuring HTTP basic authentication is as simple as it can get:
 
     .. code-block:: xml
 
-        <!-- app/config/config.xml -->
+        <!-- app/config/security.xml -->
         <config>
             <firewall>
                 <http-basic />
@@ -173,7 +173,7 @@ Configuring HTTP basic authentication is as simple as it can get:
 
     .. code-block:: php
 
-        // app/config/config.php
+        // app/config/security.php
         $container->loadFromExtension('security', 'config', array(
             'firewalls' => array(
                 'main' => array('http_basic' => true),
@@ -189,7 +189,7 @@ Configuring HTTP digest authentication is as simple as it can get:
 
     .. code-block:: yaml
 
-        # app/config/config.yml
+        # app/config/security.yml
         security.config:
             firewalls:
                 main:
@@ -197,7 +197,7 @@ Configuring HTTP digest authentication is as simple as it can get:
 
     .. code-block:: xml
 
-        <!-- app/config/config.xml -->
+        <!-- app/config/security.xml -->
         <config>
             <firewall>
                 <http-digest />
@@ -206,7 +206,7 @@ Configuring HTTP digest authentication is as simple as it can get:
 
     .. code-block:: php
 
-        // app/config/config.php
+        // app/config/security.php
         $container->loadFromExtension('security', 'config', array(
             'firewalls' => array(
                 'main' => array('http_digest' => true),
@@ -227,7 +227,7 @@ nowadays:
 
     .. code-block:: yaml
 
-        # app/config/config.yml
+        # app/config/security.yml
         security.config:
             firewalls:
                 main:
@@ -235,7 +235,7 @@ nowadays:
 
     .. code-block:: xml
 
-        <!-- app/config/config.xml -->
+        <!-- app/config/security.xml -->
         <config>
             <firewall>
                 <form-login />
@@ -244,7 +244,7 @@ nowadays:
 
     .. code-block:: php
 
-        // app/config/config.php
+        // app/config/security.php
         $container->loadFromExtension('security', 'config', array(
             'firewalls' => array(
                 'main' => array('form_login' => true),
@@ -364,7 +364,7 @@ configuration example that shows how to override them all:
 
     .. code-block:: yaml
 
-        # app/config/config.yml
+        # app/config/security.yml
         security.config:
             firewalls:
                 main:
@@ -379,7 +379,7 @@ configuration example that shows how to override them all:
 
     .. code-block:: xml
 
-        <!-- app/config/config.xml -->
+        <!-- app/config/security.xml -->
         <config>
             <firewall>
                 <form-login
@@ -396,7 +396,7 @@ configuration example that shows how to override them all:
 
     .. code-block:: php
 
-        // app/config/config.php
+        // app/config/security.php
         $container->loadFromExtension('security', 'config', array(
             'firewalls' => array(
                 'main' => array('form_login' => array(
@@ -420,7 +420,7 @@ X.509 certificates are a great way to authenticate users if you know them all:
 
     .. code-block:: yaml
 
-        # app/config/config.yml
+        # app/config/security.yml
         security.config:
             firewalls:
                 main:
@@ -428,7 +428,7 @@ X.509 certificates are a great way to authenticate users if you know them all:
 
     .. code-block:: xml
 
-        <!-- app/config/config.xml -->
+        <!-- app/config/security.xml -->
         <config>
             <firewall>
                 <x509 />
@@ -437,7 +437,7 @@ X.509 certificates are a great way to authenticate users if you know them all:
 
     .. code-block:: php
 
-        // app/config/config.php
+        // app/config/security.php
         $container->loadFromExtension('security', 'config', array(
             'firewalls' => array(
                 'main' => array('x509' => true),
@@ -491,7 +491,7 @@ access a resource restricted by an access control rule:
 
     .. code-block:: yaml
 
-        # app/config/config.yml
+        # app/config/security.yml
         security.config:
             firewalls:
                 main:
@@ -499,7 +499,7 @@ access a resource restricted by an access control rule:
 
     .. code-block:: xml
 
-        <!-- app/config/config.xml -->
+        <!-- app/config/security.xml -->
         <config>
             <firewall>
                 <anonymous />
@@ -508,7 +508,7 @@ access a resource restricted by an access control rule:
 
     .. code-block:: php
 
-        // app/config/config.php
+        // app/config/security.php
         $container->loadFromExtension('security', 'config', array(
             'firewalls' => array(
                 'main' => array('anonymous' => true),
@@ -539,7 +539,7 @@ cookie will be ever created by Symfony2):
 
     .. code-block:: yaml
 
-        # app/config/config.yml
+        # app/config/security.yml
         security.config:
             firewalls:
                 main:
@@ -548,7 +548,7 @@ cookie will be ever created by Symfony2):
 
     .. code-block:: xml
 
-        <!-- app/config/config.xml -->
+        <!-- app/config/security.xml -->
         <config>
             <firewall stateless="true">
                 <http-basic />
@@ -557,7 +557,7 @@ cookie will be ever created by Symfony2):
 
     .. code-block:: php
 
-        // app/config/config.php
+        // app/config/security.php
         $container->loadFromExtension('security', 'config', array(
             'firewalls' => array(
                 'main' => array('http_basic' => true, 'stateless' => true),
@@ -581,7 +581,7 @@ done by activating the ``switch-user`` listener:
 
     .. code-block:: yaml
 
-        # app/config/config.yml
+        # app/config/security.yml
         security.config:
             firewalls:
                 main:
@@ -590,7 +590,7 @@ done by activating the ``switch-user`` listener:
 
     .. code-block:: xml
 
-        <!-- app/config/config.xml -->
+        <!-- app/config/security.xml -->
         <config>
             <firewall>
                 <http-basic />
@@ -600,7 +600,7 @@ done by activating the ``switch-user`` listener:
 
     .. code-block:: php
 
-        // app/config/config.php
+        // app/config/security.php
         $container->loadFromExtension('security', 'config', array(
             'firewalls' => array(
                 'main'=> array('http_basic' => true, 'switch_user' => true),
@@ -625,7 +625,7 @@ security, also change the parameter name via the ``parameter`` setting:
 
     .. code-block:: yaml
 
-        # app/config/config.yml
+        # app/config/security.yml
         security.config:
             firewalls:
                 main:
@@ -634,7 +634,7 @@ security, also change the parameter name via the ``parameter`` setting:
 
     .. code-block:: xml
 
-        <!-- app/config/config.xml -->
+        <!-- app/config/security.xml -->
         <config>
             <firewall>
                 <http-basic />
@@ -644,7 +644,7 @@ security, also change the parameter name via the ``parameter`` setting:
 
     .. code-block:: php
 
-        // app/config/config.php
+        // app/config/security.php
         $container->loadFromExtension('security', 'config', array(
             'firewalls' => array(
                 'main'=> array(
@@ -664,7 +664,7 @@ listener:
 
     .. code-block:: yaml
 
-        # app/config/config.yml
+        # app/config/security.yml
         security.config:
             firewalls:
                 main:
@@ -673,7 +673,7 @@ listener:
 
     .. code-block:: xml
 
-        <!-- app/config/config.xml -->
+        <!-- app/config/security.xml -->
         <config>
             <firewall>
                 <http-basic />
@@ -683,7 +683,7 @@ listener:
 
     .. code-block:: php
 
-        // app/config/config.php
+        // app/config/security.php
         $container->loadFromExtension('security', 'config', array(
             'firewalls' => array(
                 'main'=> array('http_basic' => true, 'logout' => true),
@@ -698,16 +698,16 @@ are redirected to ``/``. This can be easily changed via the ``path`` and
 
     .. code-block:: yaml
 
-        # app/config/config.yml
+        # app/config/security.yml
         security.config:
             firewalls:
                 main:
                     http_basic: true
-                    logout:     { path: /signout, target: signin }
+                    logout:     { path: /signout, target: /signin }
 
     .. code-block:: xml
 
-        <!-- app/config/config.xml -->
+        <!-- app/config/security.xml -->
         <config>
             <firewall>
                 <http-basic />
@@ -717,7 +717,7 @@ are redirected to ``/``. This can be easily changed via the ``path`` and
 
     .. code-block:: php
 
-        // app/config/config.php
+        // app/config/security.php
         $container->loadFromExtension('security', 'config', array(
             'firewalls' => array(
                 'main'=> array(
@@ -738,7 +738,7 @@ firewall, or just for an authentication mechanism:
 
     .. code-block:: yaml
 
-        # app/config/config.yml
+        # app/config/security.yml
         security.config:
             providers:
                 default:
@@ -762,7 +762,7 @@ firewall, or just for an authentication mechanism:
 
     .. code-block:: xml
 
-        <!-- app/config/config.xml -->
+        <!-- app/config/security.xml -->
         <config>
             <provider name="default">
                 <password-encoder>sha1</password-encoder>
@@ -785,7 +785,7 @@ firewall, or just for an authentication mechanism:
 
     .. code-block:: php
 
-        // app/config/config.php
+        // app/config/security.php
         $container->loadFromExtension('security', 'config', array(
             'providers' => array(
                 'default' => array(

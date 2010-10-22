@@ -140,7 +140,7 @@ backend or a prototype. It is also the best provider when writing unit tests:
 
     .. code-block:: yaml
 
-        # app/config/config.yml
+        # app/config/security.yml
         security.config:
             providers:
                 main:
@@ -154,7 +154,7 @@ backend or a prototype. It is also the best provider when writing unit tests:
 
     .. code-block:: xml
 
-        <!-- app/config/config.xml -->
+        <!-- app/config/security.xml -->
         <config>
             <provider name="main">
                 <user name="foo" password="foo" roles="ROLE_USER" />
@@ -169,7 +169,7 @@ backend or a prototype. It is also the best provider when writing unit tests:
 
     .. code-block:: php
 
-        // app/config/config.php
+        // app/config/security.php
         $container->loadFromExtension('security', 'config', array(
             'providers' => array(
                 'main' => array('users' => array(
@@ -205,7 +205,7 @@ yourself:
 
     .. code-block:: yaml
 
-        # app/config/config.yml
+        # app/config/security.yml
         security.config:
             providers:
                 main:
@@ -214,7 +214,7 @@ yourself:
 
     .. code-block:: xml
 
-        <!-- app/config/config.xml -->
+        <!-- app/config/security.xml -->
         <config>
             <provider name="main">
                 <password-encoder>sha1</password-encoder>
@@ -224,7 +224,7 @@ yourself:
 
     .. code-block:: php
 
-        // app/config/config.php
+        // app/config/security.php
         $container->loadFromExtension('security', 'config', array(
             'providers' => array(
                 'main' => array(
@@ -309,7 +309,7 @@ rules by creating a role hierarchy:
 
     .. code-block:: yaml
 
-        # app/config/config.yml
+        # app/config/security.yml
         security.config:
             role_hierarchy:
                 ROLE_ADMIN:       ROLE_USER
@@ -317,7 +317,7 @@ rules by creating a role hierarchy:
 
     .. code-block:: xml
 
-        <!-- app/config/config.xml -->
+        <!-- app/config/security.xml -->
         <config>
             <role-hierarchy>
                 <role id="ROLE_ADMIN">ROLE_USER</role>
@@ -327,7 +327,7 @@ rules by creating a role hierarchy:
 
     .. code-block:: php
 
-        // app/config/config.php
+        // app/config/security.php
         $container->loadFromExtension('security', 'config', array(
             'role_hierarchy' => array(
                 'ROLE_ADMIN'       => 'ROLE_USER',
