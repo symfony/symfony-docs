@@ -140,7 +140,7 @@ Here is how you can secure your application with HTTP basic authentication:
 
     .. code-block:: yaml
 
-        # app/config/config.yml
+        # app/config/security.yml
         security.config:
             firewalls:
                 main:
@@ -148,7 +148,7 @@ Here is how you can secure your application with HTTP basic authentication:
 
     .. code-block:: xml
 
-        <!-- app/config/config.xml -->
+        <!-- app/config/security.xml -->
         <config>
             <firewall>
                 <http-basic />
@@ -157,7 +157,7 @@ Here is how you can secure your application with HTTP basic authentication:
 
     .. code-block:: php
 
-        // app/config/config.php
+        // app/config/security.php
         $container->loadFromExtension('security', 'config', array(
             'firewalls' => array(
                 'main' => array('http-basic' => true),
@@ -171,7 +171,7 @@ mechanisms for different parts of the application:
 
     .. code-block:: yaml
 
-        # app/config/config.yml
+        # app/config/security.yml
         security.config:
             firewalls:
                 backend:
@@ -183,7 +183,7 @@ mechanisms for different parts of the application:
 
     .. code-block:: xml
 
-        <!-- app/config/config.xml -->
+        <!-- app/config/security.xml -->
         <config>
             <firewall pattern="/admin/.*">
                 <http-basic />
@@ -194,7 +194,7 @@ mechanisms for different parts of the application:
 
     .. code-block:: php
 
-        // app/config/config.php
+        // app/config/security.php
         $container->loadFromExtension('security', 'config', array(
             'firewalls' => array(
                 'backend' => array('pattern' => '/admin/.*', 'http-basic' => true),
@@ -222,7 +222,7 @@ configuration:
 
     .. code-block:: yaml
 
-        # app/config/config.yml
+        # app/config/security.yml
         security.config:
             providers:
                 main:
@@ -231,7 +231,7 @@ configuration:
 
     .. code-block:: xml
 
-        <!-- app/config/config.xml -->
+        <!-- app/config/security.xml -->
         <config>
             <provider>
                 <user name="foo" password="foo" />
@@ -240,7 +240,7 @@ configuration:
 
     .. code-block:: php
 
-        // app/config/config.php
+        // app/config/security.php
         $container->loadFromExtension('security', 'config', array(
             'provider' => array(
                 'main' => array('users' => array(
@@ -274,7 +274,7 @@ your application resources based user roles:
 
     .. code-block:: yaml
 
-        # app/config/config.yml
+        # app/config/security.yml
         security.config:
             providers:
                 main:
@@ -285,7 +285,7 @@ your application resources based user roles:
 
     .. code-block:: xml
 
-        <!-- app/config/config.xml -->
+        <!-- app/config/security.xml -->
         <config>
             <provider>
                 <user name="foo" password="foo" roles="ROLE_USER,ROLE_ADMIN" />
@@ -298,7 +298,7 @@ your application resources based user roles:
 
     .. code-block:: php
 
-        // app/config/config.php
+        // app/config/security.php
         $container->loadFromExtension('security', 'config', array(
             'provider' => array(
                 'main' => array('users' => array(
