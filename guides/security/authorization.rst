@@ -17,7 +17,7 @@ defined in your configuration:
 
     .. code-block:: yaml
 
-        # app/config/config.yml
+        # app/config/security.yml
         security.config:
             access_control:
                 - { path: /admin/.*, role: ROLE_ADMIN }
@@ -25,7 +25,7 @@ defined in your configuration:
 
     .. code-block:: xml
 
-        <!-- app/config/config.xml -->
+        <!-- app/config/security.xml -->
         <config>
             <access-control>
                 <rule path="/admin/.*" role="ROLE_ADMIN" />
@@ -35,7 +35,7 @@ defined in your configuration:
 
     .. code-block:: php
 
-        // app/config/config.php
+        // app/config/security.php
         $container->loadFromExtension('security', 'config', array(
             'access_control' => array(
                 array('path' => '/admin/.*', 'role' => 'ROLE_ADMIN'),
@@ -67,7 +67,7 @@ Access control rules can match a request in many different ways:
 
     .. code-block:: yaml
 
-        # app/config/config.yml
+        # app/config/security.yml
         security.config:
             access_control:
                 # match the path info
@@ -84,7 +84,7 @@ Access control rules can match a request in many different ways:
 
     .. code-block:: xml
 
-        <!-- app/config/config.xml -->
+        <!-- app/config/security.xml -->
         <config>
             <access-control>
                 <!-- match the path info -->
@@ -102,7 +102,7 @@ Access control rules can match a request in many different ways:
 
     .. code-block:: php
 
-        // app/config/config.php
+        // app/config/security.php
         $container->loadFromExtension('security', 'config', array(
             'access_control' => array(
                 // match the path info
@@ -131,7 +131,7 @@ HTTPS:
 
     .. code-block:: yaml
 
-        # app/config/config.yml
+        # app/config/security.yml
         security.config:
             access_control:
                 - { path: /admin/.*, role: ROLE_ADMIN, requires_channel: https }
@@ -139,7 +139,7 @@ HTTPS:
 
     .. code-block:: xml
 
-        <!-- app/config/config.xml -->
+        <!-- app/config/security.xml -->
         <config>
             <access-control>
                 <rule path="/admin/.*" role="ROLE_ADMIN" requires-channel="https" />
@@ -149,7 +149,7 @@ HTTPS:
 
     .. code-block:: php
 
-        // app/config/config.php
+        // app/config/security.php
         $container->loadFromExtension('security', 'config', array(
             'access_control' => array(
                 array('path' => '/admin/.*', 'role' => 'ROLE_ADMIN', 'requires_channel' => 'https'),
