@@ -801,7 +801,7 @@ firewall, or just for an authentication mechanism:
                 'backend' => array(
                     'pattern' => '/admin/.*',
                     'x509' => array('provider' => 'certificate'),
-                    'form-login' => array(provider' => 'default')
+                    'form-login' => array('provider' => 'default')
                     'logout' => true,
                 ),
                 'api' => array(
