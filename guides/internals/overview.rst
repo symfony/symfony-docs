@@ -55,17 +55,6 @@ starting point to create a Web framework without too much overhead.
 
 .. seealso:: Read more about the :doc:`HttpKernel <kernel>` component.
 
-``Framework``
--------------
-
-The :namespace:`Symfony\\Framework` adds configurability and extensibility to
-the HttpKernel component, thanks to the Dependency Injection component and a
-powerful plugin system (bundles).
-
-.. seealso:: Read more about :doc:`Dependency Injection
-   </guides/dependency_injection/index>` and :doc:`Bundles
-   </guides/bundles/index>`.
-
 ``FrameworkBundle`` Bundle
 --------------------------
 
