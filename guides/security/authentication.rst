@@ -147,6 +147,11 @@ X.509 certificate, an Authorization HTTP header, or use a form to login.
     Authorization HTTP header with wrong credentials, Symfony2 will use the
     HTTP basic entry point.)
 
+.. note::
+
+    HTTP Basic authentication is interoperable, but not secure. HTTP Digest is
+    more secure, but not really interoperable in practice.
+
 HTTP Basic
 ~~~~~~~~~~
 
