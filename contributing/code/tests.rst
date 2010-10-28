@@ -28,8 +28,6 @@ The test suite need the following third-party libraries:
 
 * Doctrine
 * Doctrine Migrations
-* Phing
-* Propel
 * Swiftmailer
 * Twig
 * Zend Framework

@@ -128,8 +128,9 @@ Defining a Provider
 
 As we have seen in the previous section, a provider implements
 :class:`Symfony\\Component\\Security\\User\\UserProviderInterface`. Symfony2
-comes with provider for in-memory users, Doctrine Entity, and defines a base
-class for any DAO provider you might want to create.
+comes with provider for in-memory users, Doctrine Entities, Doctrine
+Documents, and defines a base class for any DAO provider you might want to
+create.
 
 In-memory Provider
 ~~~~~~~~~~~~~~~~~~
@@ -251,6 +252,92 @@ implement :class:`Symfony\\Component\\Security\\User\\UserProviderInterface`::
     }
 
     class UserRepository extends EntityRepository implements UserProviderInterface
+    {
+        public function loadUserByUsername($username)
+        {
+            // do whatever you need to retrieve the user from the database
+            // code below is the implementation used when using the property setting
+
+            return $this->findOneBy(array('username' => $username));
+        }
+    }
+
+.. tip::
+
+    If you use the
+    :class:`Symfony\\Component\\Security\\User\\AdvancedAccountInterface`
+    interface, don't check the various flags (locked, expired, enabled, ...)
+    when retrieving the user from the database as this will be managed by the
+    authentication system automatically (and proper exceptions will be thrown
+    if needed). If you have special flags, override the default
+    :class:`Symfony\\Component\\Security\\User\\AccountCheckerInterface`
+    implementation.
+
+Doctrine Document Provider
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+Most of the time, users are described by a Doctrine Document::
+
+    /**
+     * @Document
+     */
+    class User implements AccountInterface
+    {
+        // ...
+    }
+
+In such a case, you can use the default Doctrine provider without creating one
+yourself:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # app/config/security.yml
+        security.config:
+            providers:
+                main:
+                    password_encoder: sha1
+                    document: { class: SecurityBundle:User, property: username }
+
+    .. code-block:: xml
+
+        <!-- app/config/security.xml -->
+        <config>
+            <provider name="main">
+                <password-encoder>sha1</password-encoder>
+                <document class="SecurityBundle:User" property="username" />
+            </provider>
+        </config>
+
+    .. code-block:: php
+
+        // app/config/security.php
+        $container->loadFromExtension('security', 'config', array(
+            'providers' => array(
+                'main' => array(
+                    'password_encoder' => 'sha1',
+                    'document' => array('class' => 'SecurityBundle:User', 'property' => 'username'),
+                ),
+            ),
+        ));
+
+The ``document`` entry configures the Document class to use for the user, and
+``property`` the PHP column name where the username is stored.
+
+If retrieving the user is more complex than a simple ``findOneBy()`` call,
+remove the ``property`` setting and make your Document Repository class
+implement :class:`Symfony\\Component\\Security\\User\\UserProviderInterface`::
+
+    /**
+     * @Document(repositoryClass="SecurityBundle:UserRepository")
+     */
+    class User implements AccountInterface
+    {
+        // ...
+    }
+
+    class UserRepository extends DocumentRepository implements UserProviderInterface
     {
         public function loadUserByUsername($username)
         {

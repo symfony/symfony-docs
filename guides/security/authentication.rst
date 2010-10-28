@@ -147,6 +147,11 @@ X.509 certificate, an Authorization HTTP header, or use a form to login.
     Authorization HTTP header with wrong credentials, Symfony2 will use the
     HTTP basic entry point.)
 
+.. note::
+
+    HTTP Basic authentication is interoperable, but not secure. HTTP Digest is
+    more secure, but not really interoperable in practice.
+
 HTTP Basic
 ~~~~~~~~~~
 
@@ -801,7 +806,7 @@ firewall, or just for an authentication mechanism:
                 'backend' => array(
                     'pattern' => '/admin/.*',
                     'x509' => array('provider' => 'certificate'),
-                    'form-login' => array(provider' => 'default')
+                    'form-login' => array('provider' => 'default')
                     'logout' => true,
                 ),
                 'api' => array(
