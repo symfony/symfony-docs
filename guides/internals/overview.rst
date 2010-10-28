@@ -53,12 +53,19 @@ on top of the Request and Response classes to standardize the way requests are
 handled. It also provides extension points and tools that makes it the ideal
 starting point to create a Web framework without too much overhead.
 
-.. seealso:: Read more about the :doc:`HttpKernel <kernel>` component.
+It also optionally adds configurability and extensibility, thanks to the
+Dependency Injection component and a powerful plugin system (bundles).
+
+.. seealso::
+
+    Read more about the :doc:`HttpKernel <kernel>` component. Read more about
+    :doc:`Dependency Injection </guides/dependency_injection/index>` and
+    :doc:`Bundles </guides/bundles/index>`.
 
 ``FrameworkBundle`` Bundle
 --------------------------
 
-The :namespace:`Symfony\\Bundle\\FrameworkBundle` bundle is THE bundle that
+The :namespace:`Symfony\\Bundle\\FrameworkBundle` bundle is the bundle that
 ties the main components and libraries together to make a lightweight and fast
 MVC framework. It comes with a sensible default configuration and conventions
 to ease the learning curve.
