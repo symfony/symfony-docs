@@ -274,7 +274,7 @@ implement :class:`Symfony\\Component\\Security\\User\\UserProviderInterface`::
     implementation.
 
 Doctrine Document Provider
-~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Most of the time, users are described by a Doctrine Document::
 

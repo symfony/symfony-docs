@@ -385,8 +385,8 @@ applications, store them locally or globally, your choice.
 .. index::
    single: Vendors
 
-Vendors
--------
+Using Vendors
+-------------
 
 Odds are your application will depend on third-party libraries. Those should
 be stored in the ``src/vendor/`` directory. It already contains the Symfony2
@@ -394,7 +394,7 @@ libraries, the SwiftMailer library, the Doctrine ORM, the Propel ORM, the Twig
 templating system, and a selection of the Zend Framework classes.
 
 .. index::
-   single: Cache
+   single: Configuration Cache
    single: Logs
 
 Cache and Logs

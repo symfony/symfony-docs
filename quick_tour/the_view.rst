@@ -19,7 +19,7 @@ Decorating Templates
 --------------------
 
 More often than not, templates in a project share common elements, like the
-well-know header and footer. In Symfony2, we like to think about this problem
+well-known header and footer. In Symfony2, we like to think about this problem
 differently: a template can be decorated by another one.
 
 The ``index.php`` template is decorated by ``layout.php``, thanks to the
@@ -74,15 +74,14 @@ replaced by the content of the child template, ``index.php`` and
 
 As you can see, Symfony2 provides methods on a mysterious ``$view`` object. In
 a template, the ``$view`` variable is always available and refers to a special
-object that provides a bunch of methods and properties that make the template
-engine tick.
+object that provides a bunch of methods that makes the template engine tick.
 
 .. index::
    single: Templating; Slot
    single: Slot
 
-Slots
------
+Working with Slots
+------------------
 
 A slot is a snippet of code, defined in a template, and reusable in any layout
 decorating the template. In the ``index.php`` template, define a ``title`` slot:
@@ -92,7 +91,7 @@ decorating the template. In the ``index.php`` template, define a ``title`` slot:
     <!-- src/Application/HelloBundle/Resources/views/Hello/index.php -->
     <?php $view->extend('HelloBundle::layout.php') ?>
 
-    <?php $view['slots']->set('title', 'Hello World app') ?>
+    <?php $view['slots']->set('title', 'Hello World Application') ?>
 
     Hello <?php echo $name ?>!
 
@@ -121,11 +120,11 @@ For large slots, there is also an extended syntax:
 .. index::
    single: Templating; Include
 
-Include other Templates
------------------------
+Including other Templates
+-------------------------
 
-The best way to share a snippet of code between several distinct templates is
-to define a template that can then be included into another one.
+The best way to share a snippet of template code is to define a template that
+can then be included into other templates.
 
 Create a ``hello.php`` template:
 
@@ -149,10 +148,10 @@ The ``render()`` method evaluates and returns the content of another template
 .. index::
    single: Templating; Embedding Pages
 
-Embed other Actions
--------------------
+Embedding other Controllers
+---------------------------
 
-And what if you want to embed the result of another action in a template?
+And what if you want to embed the result of another controller in a template?
 That's very useful when working with Ajax, or when the embedded template needs
 some variable not available in the main template.
 
@@ -162,7 +161,7 @@ template, simply use the following code:
 .. code-block:: html+php
 
     <!-- src/Application/HelloBundle/Resources/views/Hello/index.php -->
-    <?php $view['actions']->output('HelloBundle:Hello:fancy', array('name' => $name, 'color' => 'green')) ?>
+    <?php echo $view['actions']->render('HelloBundle:Hello:fancy', array('name' => $name, 'color' => 'green')) ?>
 
 Here, the ``HelloBundle:Hello:fancy`` string refers to the ``fancy`` action of the
 ``Hello`` controller::
@@ -189,20 +188,20 @@ you more about those.
 .. index::
    single: Templating; Helpers
 
-Template Helpers
-----------------
+Using Template Helpers
+----------------------
 
 The Symfony2 templating system can be easily extended via helpers. Helpers are
 PHP objects that provide features useful in a template context. ``actions`` and
 ``slots`` are two of the built-in Symfony2 helpers.
 
-Links between Pages
-~~~~~~~~~~~~~~~~~~~
+Creating Links between Pages
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Speaking of web applications, creating links between different pages is a must.
-Instead of hardcoding URLs in templates, the ``router`` helper knows how to
-generate URLs based on the routing configuration. That way, all your URLs can
-be easily updated by changing the configuration:
+Speaking of web applications, creating links between pages is a must. Instead
+of hardcoding URLs in templates, the ``router`` helper knows how to generate
+URLs based on the routing configuration. That way, all your URLs can be easily
+updated by changing the configuration:
 
 .. code-block:: html+php
 
@@ -210,9 +209,10 @@ be easily updated by changing the configuration:
         Greet Thomas!
     </a>
 
-The ``generate()`` method takes the route name and an array of values as
+The ``generate()`` method takes the route name and an array of paremeters as
 arguments. The route name is the main key under which routes are referenced
-and the values are the route pattern placeholder values:
+and the parameters are the values of the placeholders defined in the route
+pattern:
 
 .. code-block:: yaml
 
