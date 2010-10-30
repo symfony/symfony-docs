@@ -1,3 +1,6 @@
+.. index::
+   single: Security
+
 Security
 ========
 
@@ -12,6 +15,9 @@ This document is a quick overview of these main concepts, but the real power
 is distilled in three other documents: :doc:`Users </guides/security/users>`,
 :doc:`Authentication </guides/security/authentication>`, and
 :doc:`Authorization </guides/security/authorization>`.
+
+.. index::
+   pair: Security; Configuration
 
 Configuration
 -------------
