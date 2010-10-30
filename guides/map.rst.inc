@@ -38,6 +38,10 @@
   * :doc:`/guides/security/authentication` | 
   * :doc:`/guides/security/authorization`
 
+* **Cache**:
+
+  * :doc:`/guides/cache/http`
+
 * **Event Dispatcher**:
 
   * :doc:`Overview </guides/event/overview>` | 
