@@ -14,8 +14,8 @@ addict! Without further ado, let's discover what controllers can do for you.
    single: Routing; Formats
    single: View; Formats
 
-Formats
--------
+Using Formats
+-------------
 
 Nowadays, a web application should be able to deliver more than just HTML
 pages. From XML for RSS feeds or Web Services, to JSON for Ajax requests,
@@ -141,8 +141,8 @@ an Ajax request.
 .. index::
    single: Exceptions
 
-Error Management
-----------------
+Managing Errors
+---------------
 
 When things are not found, you should play well with the HTTP protocol and
 return a 404 response. This is easily done by throwing a built-in HTTP

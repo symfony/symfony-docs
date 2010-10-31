@@ -5,8 +5,8 @@
 Twig & Symfony2
 ===============
 
-`Twig`_ is a flexible, fast, and secure template language for PHP. Symfony2 has
-native support for Twig through ``TwigBundle``.
+`Twig`_ is a flexible, fast, and secure template language for PHP. Symfony2
+has native support for Twig through ``TwigBundle``.
 
 .. index::
    single: Twig; Installation
@@ -67,8 +67,8 @@ Then, configure it:
    The configuration options are the same as the ones you pass to the
    ``Twig_Environment`` `constructor`_.
 
-Usage
------
+Rendering Twig Templates
+------------------------
 
 To render a Twig template instead of a PHP one, add the ``.twig`` suffix at the
 end of the template name. The controller below renders the ``index.twig``
@@ -107,8 +107,8 @@ And here is a typical layout:
         </body>
     </html>
 
-Include other Templates
------------------------
+Including other Templates
+-------------------------
 
 The best way to share a snippet of code between several distinct templates is
 to define a template that can then be included into another one.
@@ -138,10 +138,10 @@ And change the ``index.twig`` template to include it:
 
         {% render 'HelloBundle:Hello:sidebar.php' %}
 
-Embed other Actions
--------------------
+Embedding other Controllers
+---------------------------
 
-And what if you want to embed the result of another action in a template?
+And what if you want to embed the result of another controller in a template?
 That's very useful when working with Ajax, or when the embedded template needs
 some variable not available in the main template.
 
@@ -175,8 +175,8 @@ values::
 .. index::
    single: Twig; Helpers
 
-Template Helpers
-----------------
+Using Template Helpers
+----------------------
 
 The default Symfony2 helpers are available within a Twig template via
 specialized tags:

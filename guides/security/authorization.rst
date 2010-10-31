@@ -1,3 +1,6 @@
+.. index::
+   single: Security; Authorization
+
 Authorization
 =============
 
@@ -6,6 +9,9 @@ resources via access control rules. Authorization in Symfony2 covers this need
 but it also provides a standard and powerful way to decide if a user can
 access any resource (a URL, a model object, a method call, ...) thanks to a
 flexible access decision manager.
+
+.. index::
+   single: Security; Access Control
 
 Defining Access Control Rules for HTTP resources
 ------------------------------------------------
@@ -120,6 +126,9 @@ Access control rules can match a request in many different ways:
                 ),
             ),
         ));
+
+.. index::
+   single: Security; HTTPS
 
 Enforcing HTTP or HTTPS
 -----------------------

@@ -1,3 +1,6 @@
+.. index::
+   single: Security; Authentication
+
 Authentication
 ==============
 
@@ -10,6 +13,10 @@ not available, not sufficient, or just wrong.
     The Firewall is implemented via a ``core.security`` event, notified just
     after the ``core.request`` one. All features described in this document
     are implemented as listeners to this event.
+
+.. index::
+   single: Security; Firewall
+  pair: Security; Configuration
 
 The Firewall Map
 ----------------
@@ -75,6 +82,9 @@ $request->getPathInfo())``.)
     The definition order of firewall configurations is significant as Symfony2
     will use the first configuration for which the pattern matches the request
     (so you need to define more specific configurations first).
+
+.. index::
+   pair: Security; Configuration
 
 Authentication Mechanisms
 -------------------------
@@ -152,6 +162,9 @@ X.509 certificate, an Authorization HTTP header, or use a form to login.
     HTTP Basic authentication is interoperable, but not secure. HTTP Digest is
     more secure, but not really interoperable in practice.
 
+.. index::
+   single: Security; HTTP Basic
+
 HTTP Basic
 ~~~~~~~~~~
 
@@ -184,6 +197,9 @@ Configuring HTTP basic authentication is as simple as it can get:
                 'main' => array('http_basic' => true),
             ),
         ));
+
+.. index::
+   single: Security; HTTP Digest
 
 HTTP Digest
 ~~~~~~~~~~~
@@ -221,6 +237,9 @@ Configuring HTTP digest authentication is as simple as it can get:
 .. caution::
 
     To use HTTP Digest, you must store the user passwords in clear.
+
+.. index::
+   single: Security; Form based
 
 Form based authentication
 ~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -416,6 +435,9 @@ configuration example that shows how to override them all:
             ),
         ));
 
+.. index::
+   single: Security; X.509 certificates
+
 X.509 Certificates
 ~~~~~~~~~~~~~~~~~~
 
@@ -484,6 +506,9 @@ of the ``SSL_CLIENT_S_DN_Email`` environment variable.)
     Certificate authentication only works when the user access the application
     via HTTPS.
 
+.. index::
+   single: Security; Anonymous Users
+
 Anonymous Users
 ~~~~~~~~~~~~~~~
 
@@ -530,6 +555,9 @@ of the security context:
     All anonymous users automatically have the 'IS_AUTHENTICATED_ANONYMOUSLY'
     role.
 
+.. index::
+   single: Security; Stateless Authentication
+
 Stateless Authentication
 ------------------------
 
@@ -573,6 +601,9 @@ cookie will be ever created by Symfony2):
 
     If you use a form login, Symfony2 will create a cookie even if you set
     ``stateless`` to ``true``.
+
+.. index::
+   single: Security; Impersonating
 
 Impersonating a User
 --------------------
@@ -658,6 +689,9 @@ security, also change the parameter name via the ``parameter`` setting:
                 ),
             ),
         ));
+
+.. index::
+   single: Security; Logout
 
 Logout Users
 ------------

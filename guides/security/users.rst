@@ -1,3 +1,6 @@
+.. index::
+   single: Security; Users
+
 Users
 =====
 
@@ -13,6 +16,9 @@ credentials (most of the time a username and a password). As Symfony2 makes no
 assumption about the client/user PHP representation, it's up to the
 application to define a user class and hook it up with Symfony2 via a user
 provider class.
+
+.. index::
+   single: Security; UserProviderInterface
 
 UserProviderInterface
 ~~~~~~~~~~~~~~~~~~~~~
@@ -36,6 +42,9 @@ exception.
     Symfony2 comes with the most common ones. See the next section for more
     information.
 
+.. index::
+   single: Security; AccountInterface
+
 AccountInterface
 ~~~~~~~~~~~~~~~~
 
@@ -58,6 +67,9 @@ The user provider must return objects that implement
 * ``getSalt()``: Returns the salt;
 * ``getUsername()``: Returns the username used to authenticate the user;
 * ``eraseCredentials()``: Removes sensitive data from the user.
+
+.. index::
+   single: Security; Password encoding
 
 Encoding Passwords
 ~~~~~~~~~~~~~~~~~~
@@ -92,6 +104,9 @@ When encoding your passwords, it's better to also define a unique salt per user
 (the ``getSalt()`` method can return the primary key if users are persisted in
 a database for instance.)
 
+.. index::
+   single: Security; AdvancedAccountInterface
+
 AdvancedAccountInterface
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -123,6 +138,9 @@ will make the associated checks automatically::
     :class:`Symfony\\Component\\Security\\User\\AccountCheckerInterface`
     object to do the pre-authentication and post-authentication checks.
 
+.. index::
+   single: Security; User Providers
+
 Defining a Provider
 -------------------
 
@@ -131,6 +149,9 @@ As we have seen in the previous section, a provider implements
 comes with provider for in-memory users, Doctrine Entities, Doctrine
 Documents, and defines a base class for any DAO provider you might want to
 create.
+
+.. index::
+   single: Security; In-memory user provider
 
 In-memory Provider
 ~~~~~~~~~~~~~~~~~~
@@ -186,6 +207,10 @@ or a prototype. It is also the best provider when writing unit tests:
 
 The above configuration defines two in-memory providers. As you can see, the
 second one uses 'sha1' to encode the user passwords.
+
+.. index::
+   single: Security; Doctrine Entity Provider
+   single: Doctrine; Doctrine Entity Provider
 
 Doctrine Entity Provider
 ~~~~~~~~~~~~~~~~~~~~~~~~
@@ -273,8 +298,12 @@ implement :class:`Symfony\\Component\\Security\\User\\UserProviderInterface`::
     :class:`Symfony\\Component\\Security\\User\\AccountCheckerInterface`
     implementation.
 
+.. index::
+   single: Security; Doctrine Document Provider
+   single: Doctrine; Doctrine Document Provider
+
 Doctrine Document Provider
-~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Most of the time, users are described by a Doctrine Document::
 
@@ -369,6 +398,9 @@ After authentication, the user is accessed via the security context::
 You can also check if the user is authenticated with the ``isAuthenticated()``
 method.
 
+.. index::
+   single: Security; Roles
+
 Roles
 -----
 
@@ -386,6 +418,9 @@ more about access control, roles, and voters.
 
     If you define your own roles with a dedicated Role class, don't use the
     ``ROLE_`` prefix.
+
+.. index::
+   single: Security; Roles (Hierarchical)
 
 Hierarchical Roles
 ~~~~~~~~~~~~~~~~~~
