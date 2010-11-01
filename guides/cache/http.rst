@@ -17,7 +17,7 @@ Symfony2 cache system.
 .. index::
    single: Cache; Types of
    single: Cache; Proxy
-   single: Cache; Reverse proxy
+   single: Cache; Reverse Proxy
    single: Cache; Gateway
 
 Kinds of Caches
@@ -45,7 +45,7 @@ caches:
 
 HTTP 1.1 allows caching anything by default unless there is an explicit
 ``Cache-Control`` header. In practice, most caches do nothing when requests
-have a cookie, an authentication header, or come with a non-safe method, and
+have a cookie, an authorization header, or come with a non-safe method, and
 when responses have a redirect status code.
 
 When a request has a cookie, PHP automatically adds the ``private`` directive
@@ -121,7 +121,7 @@ headers easily::
 Understanding HTTP Cache
 ------------------------
 
-The HTTP specification (aka `RFC2616`_) defines two caching models:
+The HTTP specification (aka `RFC 2616`_) defines two caching models:
 
 * *Expiration*: You specify how long a response should be considered "fresh"
   by including a ``Cache-Control`` and/or an ``Expires`` header. Caches that
@@ -137,7 +137,7 @@ The goal of both models is to never generate the same Response twice.
 
 .. tip::
 
-    There is an on-going effort (`HTTP Bis`_) to rewrite the RFC2616. It does
+    There is an on-going effort (`HTTP Bis`_) to rewrite the RFC 2616. It does
     not describe a new version of HTTP, but mostly clarifies the original HTTP
     specification. The organization is also much better as the specification
     is split into several parts; everything related to HTTP caching can be
@@ -169,7 +169,7 @@ scaling).
 Expiration with the ``Expires`` Header
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-According to RFC2616, "the ``Expires`` header field gives the date/time after
+According to RFC 2616, "the ``Expires`` header field gives the date/time after
 which the response is considered stale." The ``Expires`` header can be set
 with the ``setExpires()`` Response method. It takes a ``DateTime`` instance as
 an argument::
@@ -398,6 +398,58 @@ environment, use it to debug and validate your cache strategy::
 
     error_log($kernel->getLog());
 
+The ``AppCache`` object has a sensible default configuration, but it can be
+finely tuned via a set of options you can set by overriding the
+``getOptions()`` method::
+
+    // app/AppCache.php
+    class BlogCache extends Cache
+    {
+        protected function getOptions()
+        {
+            return array(
+                'debug'                  => false,
+                'default_ttl'            => 0,
+                'private_headers'        => array('Authorization', 'Cookie'),
+                'allow_reload'           => false,
+                'allow_revalidate'       => false,
+                'stale_while_revalidate' => 2,
+                'stale_if_error'         => 60,
+            );
+        }
+    }
+
+Here is a list of the main options:
+
+* ``default_ttl``: The number of seconds that a cache entry should be
+  considered fresh when no explicit freshness information is provided in a
+  response. Explicit ``Cache-Control`` or ``Expires`` headers override this
+  value (default: ``0``);
+
+* ``private_headers``: Set of request headers that trigger "private"
+  ``Cache-Control`` behavior on responses that don't explicitly state whether
+  the response is ``public`` or ``private`` via a ``Cache-Control`` directive.
+  (default: ``Authorization`` and ``Cookie``);
+
+* ``allow_reload``: Specifies whether the client can force a cache reload by
+  including a ``Cache-Control`` "no-cache" directive in the request. Set it to
+  ``true`` for compliance with RFC 2616 (default: ``false``);
+
+* ``allow_revalidate``: Specifies whether the client can force a cache
+  revalidate by including a ``Cache-Control`` "max-age=0" directive in the
+  request. Set it to ``true`` for compliance with RFC 2616 (default: false);
+
+* ``stale_while_revalidate``: Specifies the default number of seconds (the
+  granularity is the second as the Response TTL precision is a second) during
+  which the cache can immediately return a stale response while it revalidates
+  it in the background (default: ``2``); this setting is overridden by the
+  ``stale-while-revalidate`` HTTP ``Cache-Control`` extension (see RFC 5861);
+
+* ``stale_if_error``: Specifies the default number of seconds (the granularity
+  is the second) during which the cache can serve a stale response when an
+  error is encountered (default: ``60``). This setting is overridden by the
+  ``stale-if-error`` HTTP ``Cache-Control`` extension (see RFC 5861).
+
 The Symfony2 reverse proxy is a great tool to use when developing your website
 on your local network or when you deploy your website on a shared host where
 you cannot install anything beyond PHP code. But being written in PHP, it
@@ -609,8 +661,30 @@ cache for a given URL by requesting it with the special ``PURGE`` HTTP method.
 .. index::
     single: Cache; Invalidation with Varnish
 
-The Symfony2 reverse proxy supports the ``PURGE`` HTTP method natively, and if
-you use Varnish, it's a matter of configuring it properly:
+Here is how you can configure the Symfony2 reverse proxy to support the
+``PURGE`` HTTP method::
+
+    // app/AppCache.php
+    class AppCache extends Cache
+    {
+        protected function lookup(Request $request)
+        {
+            if ('PURGE' !== $request->getMethod()) {
+                return parent::lookup($request);
+            }
+
+            $response = new Response();
+            if (!$this->store->purge($request->getUri())) {
+                $response->setStatusCode(404, 'Not purged');
+            } else {
+                $response->setStatusCode(200, 'Purged');
+            }
+
+            return $response;
+        }
+    }
+
+And the same can be done with Varnish too:
 
 .. code-block:: text
 
@@ -632,9 +706,9 @@ you use Varnish, it's a matter of configuring it properly:
     You must protect the ``PURGE`` HTTP method somehow to avoid random people
     purging your cached data.
 
-.. _`RFC2616`: http://www.ietf.org/rfc/rfc2616.txt
+.. _`RFC 2616`: http://www.ietf.org/rfc/rfc2616.txt
 .. _`HTTP Bis`: http://tools.ietf.org/wg/httpbis/
-.. _`P4 - Conditional Requests`: 
-.. _`P6 - Caching: Browser and intermediary caches`: 
+.. _`P4 - Conditional Requests`: http://tools.ietf.org/id/draft-ietf-httpbis-p4-conditional-12.txt
+.. _`P6 - Caching: Browser and intermediary caches`: http://tools.ietf.org/id/draft-ietf-httpbis-p6-cache-12.txt
 .. _`ESI`: http://www.w3.org/TR/esi-lang
 .. _`Edge Architecture`: http://www.w3.org/TR/edge-arch
