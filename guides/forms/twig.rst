@@ -364,5 +364,3 @@ override the default representation:
 .. caution::
     The ``render`` filter is not very flexible and should only be used to
     build prototypes.
-
-.. _branch: http://github.com/fabpot/symfony/tree/fields_as_templates
