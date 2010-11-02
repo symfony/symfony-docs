@@ -160,14 +160,15 @@ Controllers
 
 Controllers in a bundle must not extend
 :class:`Symfony\\Bundle\\FrameworkBundle\\Controller\\Controller`. They can
-implements
+implement
 :class:`Symfony\\Foundation\\DependencyInjection\\ContainerAwareInterface` or
 extend :class:`Symfony\\Foundation\\DependencyInjection\\ContainerAware`
 instead.
 
 .. note::
-    If you have a look at :class:`` methods, you will see that they are only
-    nice shortcuts to ease the learning curve.
+    If you have a look at :class:`Symfony\\Bundle\\FrameworkBundle\\Controller\\Controller`
+    methods, you will see that they are only nice shortcuts to ease the learning
+    curve.
 
 Templates
 ---------
