@@ -569,6 +569,46 @@ standalone is ``false``.
     specification that is supported out of the box by the Symfony2 reverse
     proxy (a working configuration for Varnish is also provided below.)
 
+For the ESI include tag to work properly, you must define the ``_internal``
+route::
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # app/config/routing.yml
+        _internal:
+            resource: FrameworkBundle/Resources/config/routing/internal.xml
+            prefix:   /_internal
+
+    .. code-block:: xml
+
+        <!-- app/config/routing.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+
+        <routes xmlns="http://www.symfony-project.org/schema/routing"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://www.symfony-project.org/schema/routing http://www.symfony-project.org/schema/routing/routing-1.0.xsd">
+
+            <import resource="FrameworkBundle/Resources/config/routing/internal.xml" prefix="/_internal" />
+        </routes>
+
+    .. code-block:: php
+
+        // app/config/routing.php
+        use Symfony\Component\Routing\RouteCollection;
+        use Symfony\Component\Routing\Route;
+
+        $collection->addCollection($loader->import('FrameworkBundle/Resources/config/routing/internal.xml', '/_internal'));
+
+        return $collection;
+
+.. tip::
+
+    You might want to protect this route by either choosing a non easily
+    guessable prefix, or by protecting them using the Symfony2 firewall
+    feature (by allowing access to your reverse proxies IP range).
+
 One great advantage of this caching strategy is that you can make your
 application as dynamic as needed and at the same time, hit the application as
 less as possible.
