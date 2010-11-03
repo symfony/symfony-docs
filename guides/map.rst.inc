@@ -1,3 +1,15 @@
+* **Templating**:
+
+  * :doc:`/guides/templating/helpers` | 
+  * :doc:`Twig </guides/templating/Twig>`
+
+* **Doctrine**:
+
+  * :doc:`DBAL </guides/doctrine/dbal/overview>` | 
+  * :doc:`ORM </guides/doctrine/orm/overview>` | 
+  * :doc:`Migrations </guides/doctrine/migrations/overview>` | 
+  * :doc:`MongoDB </guides/doctrine/mongodb-odm/overview>`
+
 * **Testing**:
 
   * :doc:`Overview </guides/testing/overview>` | 
@@ -6,30 +18,12 @@
   * :doc:`Client </guides/testing/client>` | 
   * :doc:`Recipes </guides/testing/recipes>`
 
-* **Doctrine**:
-
-  * :doc:`DBAL </guides/doctrine/dbal/overview>` | 
-  * :doc:`ORM </guides/doctrine/orm/overview>` | 
-  * :doc:`Migrations </guides/doctrine/migrations/overview>` | 
-  * :doc:`MongoDB </guides/doctrine/mongodb-odm/overview>`
-* **Routing**:
-
-  * :doc:`Overview </guides/routing/overview>` | 
-  * :doc:`Advanced </guides/routing/advanced>`
-
-* :doc:`/guides/emails`
 * :doc:`/guides/validation`
 * **Forms**:
 
   * :doc:`Overview </guides/forms/overview>` | 
   * :doc:`Templates </guides/forms/view>` | 
   * :doc:`Twig </guides/forms/twig>`
-
-* :doc:`/guides/translation`
-* **Templating**:
-
-  * :doc:`/guides/templating/helpers` | 
-  * :doc:`Twig </guides/templating/Twig>`
 
 * **Security**:
 
@@ -38,6 +32,12 @@
   * :doc:`/guides/security/authentication` | 
   * :doc:`/guides/security/authorization`
 
+* **Cache**:
+
+  * :doc:`/guides/cache/http`
+
+* :doc:`/guides/emails`
+* :doc:`/guides/translation`
 * **Event Dispatcher**:
 
   * :doc:`Overview </guides/event/overview>` | 
