@@ -482,7 +482,7 @@ working configuration for Apache:
         ServerName intranet.example.com:443
 
         DocumentRoot "/some/path"
-        DirectoryIndex index.php
+        DirectoryIndex app.php
         <Directory "/some/path">
             Allow from all
             Order allow,deny

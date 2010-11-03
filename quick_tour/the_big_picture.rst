@@ -58,7 +58,7 @@ Read the script output carefully and fix any problem that it finds.
 
 Now, request your first "real" Symfony2 webpage:
 
-    http://localhost/sandbox/web/index_dev.php/
+    http://localhost/sandbox/web/app_dev.php/
 
 Symfony2 should congratulate you for your hard work so far!
 
@@ -69,14 +69,14 @@ The sandbox comes with a simple Hello World ":term:`application`" and that's
 the application we will use to learn more about Symfony2. Go to the following
 URL to be greeted by Symfony2 (replace Fabien with your first name):
 
-    http://localhost/sandbox/web/index_dev.php/hello/Fabien
+    http://localhost/sandbox/web/app_dev.php/hello/Fabien
 
 What's going on here? Let's dissect the URL:
 
 .. index:: Front Controller
 
-* ``index_dev.php``: This is a "front controller". It is the unique entry
-  point of the application and it responds to all user requests;
+* ``app_dev.php``: This is a "front controller". It is the unique entry point
+  of the application and it responds to all user requests;
 
 * ``/hello/Fabien``: This is the "virtual" path to the resource the user wants
   to access.
@@ -288,13 +288,13 @@ look at the bottom of the page; you will notice a small bar with the Symfony2
 and PHP logos. It is called the "Web Debug Toolbar" and it is the developer's
 best friend. Of course, such a tool must not be displayed when you deploy your
 application to your production servers. That's why you will find another front
-controller in the ``web/`` directory (``index.php``), optimized for the
+controller in the ``web/`` directory (``app.php``), optimized for the
 production environment:
 
-    http://localhost/sandbox/web/index.php/hello/Fabien
+    http://localhost/sandbox/web/app.php/hello/Fabien
 
 And if you use Apache with ``mod_rewrite`` enabled, you can even omit the
-``index.php`` part of the URL:
+``app.php`` part of the URL:
 
     http://localhost/sandbox/web/hello/Fabien
 
@@ -307,7 +307,7 @@ better looking URL:
 To make the production environment as fast as possible, Symfony2 maintains a
 cache under the ``app/cache/`` directory. When you make changes to the code or
 configuration, you need to manually remove the cached files. That's why you
-should always use the development front controller (``index_dev.php``) when
+should always use the development front controller (``app_dev.php``) when
 working on a project.
 
 Final Thoughts

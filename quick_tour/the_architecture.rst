@@ -31,7 +31,7 @@ live:
 
 .. code-block:: html+php
 
-    <!-- web/index.php -->
+    <!-- web/app.php -->
     <?php
 
     require_once __DIR__.'/../app/AppKernel.php';
@@ -39,8 +39,8 @@ live:
     $kernel = new AppKernel('prod', false);
     $kernel->handle()->send();
 
-Like any front controller, ``index.php`` uses a Kernel Class, ``AppKernel``,
-to bootstrap the application.
+Like any front controller, ``app.php`` uses a Kernel Class, ``AppKernel``, to
+bootstrap the application.
 
 .. index::
    single: Kernel

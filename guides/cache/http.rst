@@ -384,7 +384,7 @@ caching Kernel (``AppCache``) that wraps the default one (``AppKernel``).
 Modify the code of a front controller so that it reads as follows to enable
 caching::
 
-    // web/index.php
+    // web/app.php
 
     require_once __DIR__.'/../app/AppCache.php';
 
