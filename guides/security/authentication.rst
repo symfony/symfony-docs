@@ -330,7 +330,7 @@ And the corresponding template:
             <div>{{ error }}</div>
         {% endif %}
 
-        <form action="{% route "_security_check" %}" method="post">
+        <form action="{% path "_security_check" %}" method="post">
             <label for="username">Username:</label>
             <input type="text" id="username" name="_username" value="{{ last_username }}" />
 

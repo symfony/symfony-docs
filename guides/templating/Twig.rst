@@ -197,8 +197,11 @@ specialized tags:
     {% asset 'css/blog.css' %}
     {% asset 'images/logo.png' %}
 
-    {# generate a route #}
-    {% route 'blog_post' with ['id': post.id] %}
+    {# generate a path (/blog/1) #}
+    {% path 'blog_post' with ['id': post.id] %}
+
+    {# generate a URL (http://example.com/blog/1) #}
+    {% url 'blog_post' with ['id': post.id] %}
 
     {# render a template #}
     {% include 'BlogBundle:Post:list.twig' %}
