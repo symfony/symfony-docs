@@ -20,5 +20,6 @@ Dive into Symfony2 with the topical guides:
     bundles/index
     internals/index
     symfony1
+    stable_api
 
 .. include:: map.rst.inc
