@@ -56,13 +56,14 @@ user has not the needed roles or an
 :class:`Symfony\\Component\Security\\Exception\\AuthenticationCredentialsNotFoundException`
 if he is not authenticated yet.
 
-.. tip::
-
-    ``IS_AUTHENTICATED_ANONYMOUSLY`` is a special role that all anonymous
-    users have.
-
 In the example above, we match requests based on their path info, but there
 are many other ways as you will learn in the next section.
+
+..tip::
+
+    Symfony2 automatically adds a special role based on the anonymous flag:
+    ``IS_AUTHENTICATED_ANONYMOUSLY`` for anonymous users and
+    ``IS_AUTHENTICATED_FULLY`` for all others.
 
 Matching a Request
 ------------------

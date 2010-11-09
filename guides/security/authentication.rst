@@ -513,9 +513,10 @@ Anonymous Users
 ~~~~~~~~~~~~~~~
 
 When you disable security, no user is attached to the request anymore. If you
-still want one, you can activate anonymous users. An anonymous user is not
-authenticated and "real" authentication occurs whenever the user wants to
-access a resource restricted by an access control rule:
+still want one, you can activate anonymous users. An anonymous user is
+authenticated but only has the ``IS_AUTHENTICATED_ANONYMOUSLY`` role. The
+"real" authentication only occurs whenever the user accesses a resource
+restricted by a more restrictive access control rule:
 
 .. configuration-block::
 
@@ -545,15 +546,10 @@ access a resource restricted by an access control rule:
             ),
         ));
 
-You can check if a user is fully-authenticated with the ``isAuthenticated()``
-of the security context:
-
-    $container->get('security.context')->isAuthenticated();
-
-.. tip::
-
-    All anonymous users automatically have the 'IS_AUTHENTICATED_ANONYMOUSLY'
-    role.
+As anonymous users are authenticated, the ``isAuthenticated()`` method returns
+``true``. To check is the user is anonymous, check for the
+``IS_AUTHENTICATED_ANONYMOUSLY`` role instead (note that all non-anonymous
+users have the ``IS_AUTHENTICATED_FULLY`` role.)
 
 .. index::
    single: Security; Stateless Authentication

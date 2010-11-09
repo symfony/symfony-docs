@@ -396,7 +396,16 @@ After authentication, the user is accessed via the security context::
     $user = $container->get('security.context')->getUser();
 
 You can also check if the user is authenticated with the ``isAuthenticated()``
-method.
+method::
+
+    $container->get('security.context')->isAuthenticated();
+
+.. tip::
+
+    Be aware that anonymous users are considered authenticated. If you want to
+    check if a user is "fully authenticated" (non-anonymous), you need to
+    check if the user has the special ``IS_AUTHENTICATED_FULLY`` role (or
+    check that the user has not the ``IS_AUTHENTICATED_ANONYMOUSLY`` role).
 
 .. index::
    single: Security; Roles
