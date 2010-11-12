@@ -11,26 +11,31 @@ Supported Constraints
 
 The following constraints are natively available in Symfony2:
 
-* `AssertFalse <constraints/AssertFalse>`_
-* `AssertTrue <constraints/AssertTrue>`_
-* `AssertType <constraints/AssertType>`_
-* `Choice <constraints/Choice>`_
-* `Collection <constraints/Collection>`_
-* `Date <constraints/Date>`_
-* `DateTime <constraints/DateTime>`_
-* `Email <constraints/Email>`_
-* `File <constraints/File>`_
-* `Max <constraints/Max>`_
-* `MaxLength <constraints/MaxLength>`_
-* `Min <constraints/Min>`_
-* `MinLength <constraints/MinLength>`_
-* `NotBlank <constraints/NotBlank>`_
-* `NotNull <constraints/NotNull>`_
-* `Regex <constraints/Regex>`_
-* `Time <constraints/Time>`_
-* `Url <constraints/Url>`_
-* `Valid <constraints/Valid>`_
-  
+.. toctree::
+    :hidden:
+
+    constraints/index
+
+* :doc:`AssertFalse <constraints/AssertFalse>`
+* :doc:`AssertTrue <constraints/AssertTrue>`
+* :doc:`AssertType <constraints/AssertType>`
+* :doc:`Choice <constraints/Choice>`
+* :doc:`Collection <constraints/Collection>`
+* :doc:`Date <constraints/Date>`
+* :doc:`DateTime <constraints/DateTime>`
+* :doc:`Email <constraints/Email>`
+* :doc:`File <constraints/File>`
+* :doc:`Max <constraints/Max>`
+* :doc:`MaxLength <constraints/MaxLength>`
+* :doc:`Min <constraints/Min>`
+* :doc:`MinLength <constraints/MinLength>`
+* :doc:`NotBlank <constraints/NotBlank>`
+* :doc:`NotNull <constraints/NotNull>`
+* :doc:`Regex <constraints/Regex>`
+* :doc:`Time <constraints/Time>`
+* :doc:`Url <constraints/Url>`
+* :doc:`Valid <constraints/Valid>`
+
 Constraint Targets
 ------------------
 
@@ -42,9 +47,9 @@ Properties
 ~~~~~~~~~~
 
 Validating class properties is the most basic validation technique. Symfony2
-allows you to validate private, protected or public properties. The next listing
-shows how to configure the properties ``$firstName`` and ``$lastName`` of a class 
-``Author`` to have at least 3 characters.
+allows you to validate private, protected or public properties. The next
+listing shows how to configure the properties ``$firstName`` and ``$lastName``
+of a class ``Author`` to have at least 3 characters.
 
 .. configuration-block::
 
@@ -59,9 +64,9 @@ shows how to configure the properties ``$firstName`` and ``$lastName`` of a clas
                 lastName:
                     - NotBlank: ~
                     - MinLength: 3
-                    
+
     .. code-block:: xml
-    
+
         <!-- Application/HelloBundle/Resources/config/validation.xml -->
         <class name="Application\HelloBundle\Author">
             <property name="firstName">
@@ -73,9 +78,9 @@ shows how to configure the properties ``$firstName`` and ``$lastName`` of a clas
                 <constraint name="MinLength">3</constraint>
             </property>
         </class>
-                    
+
     .. code-block:: php
-    
+
         // Application/HelloBundle/Author.php
         class Author
         {
@@ -84,14 +89,14 @@ shows how to configure the properties ``$firstName`` and ``$lastName`` of a clas
              * @validation:MinLength(3)
              */
             private $firstName;
-            
+
             /**
              * @validation:NotBlank()
              * @validation:MinLength(3)
              */
             private $firstName;
         }
-          
+
 Getters
 ~~~~~~~
 
@@ -103,8 +108,9 @@ The benefit of this technique is that it allows you to validate your object
 dynamically. Depending on the state of your object, the method may return
 different values which are then validated.
 
-The next listing shows you how to use the `AssertTrue <constraints/AssertTrue>`_
-constraint to validate whether a dynamically generated token is correct.
+The next listing shows you how to use the :doc:`AssertTrue
+<constraints/AssertTrue>` constraint to validate whether a dynamically
+generated token is correct:
 
 .. configuration-block::
 
@@ -115,9 +121,9 @@ constraint to validate whether a dynamically generated token is correct.
             getters:
                 tokenValid:
                     - AssertTrue: { message: "The token is invalid" }
-                    
+
     .. code-block:: xml
-    
+
         <!-- Application/HelloBundle/Resources/config/validation.xml -->
         <class name="Application\HelloBundle\Author">
             <getter property="tokenValid">
@@ -126,9 +132,9 @@ constraint to validate whether a dynamically generated token is correct.
                 </constraint>
             </getter>
         </class>
-        
+
     .. code-block:: php
-    
+
         // Application/HelloBundle/Author.php
         class Author
         {
@@ -140,7 +146,7 @@ constraint to validate whether a dynamically generated token is correct.
                 // return true or false
             }
         }
-          
+
 .. note::
 
     The keen-eyed among you will have noticed that the prefix of the getter 
@@ -152,9 +158,10 @@ Custom Constraints
 ------------------
 
 You can create a custom constraint by extending the base constraint class,
-:class::`Symfony\Component\Validator\Constraint`::. Options for your constraint are
-represented by public properties on the constraint class. For example, the
-``Url`` constraint includes ``message`` and ``protocols`` properties::
+:class::`Symfony\\Component\\Validator\\Constraint`. Options for your
+constraint are represented by public properties on the constraint class. For
+example, the ``Url`` constraint includes ``message`` and ``protocols``
+properties::
 
     namespace Symfony\Component\Validator\Constraints;
 
@@ -180,8 +187,8 @@ Constraint Validators with Dependencies
 
 If your constraint validator has dependencies, such as a database connection,
 it will need to be configured as a service in the dependency injection
-container. This service must include the ``validator.constraint_validator`` tag
-and an ``alias`` attribute:
+container. This service must include the ``validator.constraint_validator``
+tag and an ``alias`` attribute:
 
 .. configuration-block::
 
@@ -208,9 +215,7 @@ and an ``alias`` attribute:
         ;
 
 Your constraint class may now use this alias to reference the appropriate
-validator:
-
-.. code-block:: php
+validator::
 
     public function validatedBy()
     {

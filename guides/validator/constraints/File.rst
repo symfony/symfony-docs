@@ -19,7 +19,7 @@ Options
 * ``notReadableMessage``: The error message if the file could not be read
 * ``maxSizeMessage``: The error message if ``maxSize`` validation fails
 * ``mimeTypesMessage``: The error message if ``mimeTypes`` validation fails
-  
+
 Example: Validating the file size and mime type
 -----------------------------------------------
 
@@ -29,13 +29,13 @@ not exceed a maximum size of 128 kilobytes and is a PDF document.
 .. configuration-block::
 
     .. code-block:: yaml
-    
+
         properties:
             filename:
                 - File: { maxSize: 128k, mimeTypes: [application/pdf, application/x-pdf] }
-                
+
     .. code-block:: xml
-    
+
         <!-- Application/HelloBundle/Resources/config/validation.xml -->
         <class name="Application\HelloBundle\Author">
             <property name="filename">
@@ -48,9 +48,9 @@ not exceed a maximum size of 128 kilobytes and is a PDF document.
                 </constraint>
             </property>
         </class>
-        
+
     .. code-block:: php
-    
+
         // Application/HelloBundle/Author.php
         class Author
         {
@@ -62,12 +62,11 @@ not exceed a maximum size of 128 kilobytes and is a PDF document.
              */
             private $filename;
         }
-        
-When you validate the object with a file that doesn't satisfy one of these
-constraints, a proper error message is returned by the validator.
 
-::
+When you validate the object with a file that doesn't satisfy one of these
+constraints, a proper error message is returned by the validator:
+
+.. code-block:: text
 
     Application\HelloBundle\Author.filename:
         The file is too large (150 kB). Allowed maximum size is 128 kB
-        

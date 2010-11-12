@@ -8,7 +8,7 @@ Validates that a value is not smaller than the given limit.
     properties:
         age:
             - Min: 1
-    
+
 Options
 -------
 

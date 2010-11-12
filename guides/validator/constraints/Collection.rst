@@ -11,7 +11,7 @@ Validates array entries against different constraints.
                 - NotNull: ~
             key2:
                 - MinLength: 10
-  
+
 Options
 -------
 
@@ -50,9 +50,9 @@ may not exist in the array.
                                 - NotBlank: ~
                                 - MinLength: 4
                         allowMissingFields: true
-                        
+
     .. code-block:: xml
-    
+
         <!-- Application/HelloBundle/Resources/config/validation.xml -->
         <class name="Application\HelloBundle\Author">
             <property name="options">
@@ -70,9 +70,9 @@ may not exist in the array.
                 </constraint>
             </property>
         </class>
-        
+
     .. code-block:: php
-    
+
         // Application/HelloBundle/Author.php
         class Author
         {
@@ -87,7 +87,7 @@ may not exist in the array.
              */
             private $options = array();
         }
-            
+
 The following object would fail the validation.
 
 .. code-block:: php
@@ -95,15 +95,14 @@ The following object would fail the validation.
     $author = new Author();
     $author->options['firstName'] = null;
     $author->options['lastName'] = 'foo';
-    
+
     print $validator->validate($author);
-    
+
 You should see the following error messages:
 
-::
+.. code-block:: text
 
     Application\HelloBundle\Author.options[firstName]:
         This value should not be null
     Application\HelloBundle\Author.options[lastName]:
         This value is too short. It should have 4 characters or more
-  

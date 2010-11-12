@@ -8,7 +8,7 @@ Validates that a value is a valid URL string.
     properties:
         website:
             - Url: ~
-    
+
 Options
 -------
 

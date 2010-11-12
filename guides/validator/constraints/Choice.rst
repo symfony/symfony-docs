@@ -8,7 +8,7 @@ Validates that a value is one or more of a list of choices.
     properties:
         gender:
             - Choice: [male, female]
-   
+
 Options
 -------
 
@@ -22,7 +22,7 @@ Options
 * ``message``: The error message if validation fails
 * ``minMessage``: The error message if ``min`` validation fails
 * ``maxMessage``: The error message if ``max`` validation fails
-  
+
 Example 1: Choices as static array
 ----------------------------------
 
@@ -38,9 +38,9 @@ constraint definition as array.
             properties:
                 gender:
                     - Choice: [male, female]
-                    
+
     .. code-block:: xml
-    
+
         <!-- Application/HelloBundle/Resources/config/validation.xml -->
         <class name="Application\HelloBundle\Author">
             <property name="gender">
@@ -50,9 +50,9 @@ constraint definition as array.
                 </constraint>
             </property>
         </class>
-        
+
     .. code-block:: php
-    
+
         // Application/HelloBundle/Author.php
         class Author
         {
@@ -61,7 +61,7 @@ constraint definition as array.
              */
             protected $gender;
         }
-          
+
 Example 2: Choices from a callback
 ----------------------------------
 
@@ -79,22 +79,22 @@ callback method.
             return array('male', 'female');
         }
     }
-    
+
 You can pass the name of this method to the ``callback`` option of the ``Choice``
 constraint.
 
 .. configuration-block::
 
     .. code-block:: yaml
-    
+
         # Application/HelloBundle/Resources/config/validation.yml
         Application\HelloBundle\Author:
             properties:
                 gender:
                     - Choice: { callback: getGenders }
-                    
+
     .. code-block:: xml
-    
+
         <!-- Application/HelloBundle/Resources/config/validation.xml -->
         <class name="Application\HelloBundle\Author">
             <property name="gender">
@@ -103,9 +103,9 @@ constraint.
                 </constraint>
             </property>
         </class>
-        
+
     .. code-block:: php
-    
+
         // Application/HelloBundle/Author.php
         class Author
         {
@@ -114,7 +114,7 @@ constraint.
              */
             protected $gender;
         }
-          
+
 If the static callback is stored in a different class, for example ``Util``,
 you can pass the class name and the method as array.
 
@@ -127,9 +127,9 @@ you can pass the class name and the method as array.
             properties:
                 gender:
                     - Choice: { callback: [Util, getGenders] }
-                    
+
     .. code-block:: xml
-    
+
         <!-- Application/HelloBundle/Resources/config/validation.xml -->
         <class name="Application\HelloBundle\Author">
             <property name="gender">
@@ -141,9 +141,9 @@ you can pass the class name and the method as array.
                 </constraint>
             </property>
         </class>
-        
+
     .. code-block:: php
-    
+
         // Application/HelloBundle/Author.php
         class Author
         {

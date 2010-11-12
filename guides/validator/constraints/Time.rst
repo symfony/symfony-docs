@@ -8,7 +8,7 @@ Validates that a value is a valid time string with format "HH:MM:SS".
     properties:
         createdAt:
             - DateTime: ~
-    
+
 Options
 -------
 

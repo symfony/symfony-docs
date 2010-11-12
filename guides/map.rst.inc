@@ -18,7 +18,12 @@
   * :doc:`Client </guides/testing/client>` | 
   * :doc:`Recipes </guides/testing/recipes>`
 
-* :doc:`/guides/validation`
+* **Validation**:
+
+  * :doc:`Overview </guides/validator/overview>` | 
+  * :doc:`Validation </guides/validator/validation>` | 
+  * :doc:`/guides/validator/constraints`
+
 * **Forms**:
 
   * :doc:`Overview </guides/forms/overview>` | 

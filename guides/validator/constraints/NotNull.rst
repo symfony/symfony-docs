@@ -8,8 +8,8 @@ Validates that a value is not ``null``.
     properties:
         firstName:
             - NotNull: ~
-        
+
 Options
 -------
 
-  * ``message``: The error message if validation fails
+* ``message``: The error message if validation fails

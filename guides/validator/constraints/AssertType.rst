@@ -8,13 +8,13 @@ Validates that a value has a specific data type
     properties:
         age:
             - AssertType: integer
-    
+
 Options
 -------
 
-* ``type`` (**default**, required): A fully qualified class name or one of the 
+* ``type`` (**default**, required): A fully qualified class name or one of the
   PHP datatypes as determined by PHP's ``is_`` functions.
-    
+
   * `array <http://php.net/is_array>`_
   * `bool <http://php.net/is_bool>`_
   * `callable <http://php.net/is_callable>`_
@@ -30,5 +30,4 @@ Options
   * `resource <http://php.net/is_resource>`_
   * `scalar <http://php.net/is_scalar>`_
   * `string <http://php.net/is_string>`_
-      
 * ``message``: The error message in case the validation fails

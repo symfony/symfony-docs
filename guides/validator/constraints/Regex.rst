@@ -8,7 +8,7 @@ Validates that a value matches a regular expression.
     properties:
         title:
             - Regex: /\w+/
-    
+
 Options
 -------
 

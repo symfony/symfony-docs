@@ -8,7 +8,7 @@ Validates that a value is a valid date string with format "YYYY-MM-DD".
     properties:
         birthday:
             - Date: ~
-        
+
 Options
 -------
 
