@@ -158,7 +158,7 @@ Custom Constraints
 ------------------
 
 You can create a custom constraint by extending the base constraint class,
-:class::`Symfony\\Component\\Validator\\Constraint`. Options for your
+:class:`Symfony\\Component\\Validator\\Constraint`. Options for your
 constraint are represented by public properties on the constraint class. For
 example, the ``Url`` constraint includes ``message`` and ``protocols``
 properties::
