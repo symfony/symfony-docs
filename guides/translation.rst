@@ -133,6 +133,61 @@ unique identifier:
         Symfony2 is great: J'aime Symfony2
         symfony2.great:    J'aime Symfony2
 
+Additionally, ``php`` and ``yaml`` file formats support nested ids to avoid
+repeating yourself if you use keywords instead of real text for your ids:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        symfony2:
+            is:
+                great: Symfony2 is great
+                amazing: Symfony2 is amazing
+            has:
+                bundles: Symfony2 has bundles
+        user:
+            login: Login
+
+    .. code-block:: php
+
+        return array(
+            'symfony2' => array(
+                'is' => array(
+                    'great' => 'Symfony2 is great',
+                    'amazing' => 'Symfony2 is amazing',
+                ),
+                'has' => array(
+                    'bundles' => 'Symfony2 has bundles',
+                ),
+            ),
+            'user' => array(
+                'login' => 'Login',
+            ),
+        );
+
+The multiple levels are flattened into single id/translation pairs by adding a
+dot (.) between every level, therefore the above examples are equivalent to
+the following:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        symfony2.is.great: Symfony2 is great
+        symfony2.is.amazing: Symfony2 is amazing
+        symfony2.has.bundles: Symfony2 has bundles
+        user.login: Login
+
+    .. code-block:: php
+
+        return array(
+            'symfony2.is.great' => 'Symfony2 is great',
+            'symfony2.is.amazing' => 'Symfony2 is amazing',
+            'symfony2.has.bundles' => 'Symfony2 has bundles',
+            'user.login' => 'Login',
+        );
+
 .. note::
    You can also store translations in a database, or any other storage by
    providing a custom class implementing the
