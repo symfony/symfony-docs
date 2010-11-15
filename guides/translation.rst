@@ -125,8 +125,13 @@ unique identifier:
 
         return array(
             'Symfony2 is great' => 'J\'aime Symfony2',
-            'symfony2.great'     => 'J\'aime Symfony2',
+            'symfony2.great'    => 'J\'aime Symfony2',
         );
+
+    .. code-block:: yaml
+
+        Symfony2 is great: J'aime Symfony2
+        symfony2.great:    J'aime Symfony2
 
 .. note::
    You can also store translations in a database, or any other storage by
