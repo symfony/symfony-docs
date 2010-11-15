@@ -214,7 +214,7 @@ container::
             $user = new User();
             $user->setName('Jonathan H. Wage');
 
-            $dm = $this['doctrine.odm.mongodb.document_manager'];
+            $dm = $this->get('doctrine.odm.mongodb.document_manager');
             $dm->persist($user);
             $dm->flush();
 
@@ -228,7 +228,7 @@ Later you can retrieve the persisted document by its id::
     {
         public function editAction($id)
         {
-            $dm = $this['doctrine.odm.mongodb.document_manager'];
+            $dm = $this->get('doctrine.odm.mongodb.document_manager');
             $user = $dm->find('HelloBundle:User', $id);
 
             // ...

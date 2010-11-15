@@ -61,11 +61,11 @@ Translations are available through the ``translator`` service
 :method:`Symfony\\Component\\Translation\\Translator::trans` method to
 translate a message::
 
-    $t = $this['translator']->trans('Symfony2 is great!');
+    $t = $this->get('translator')->trans('Symfony2 is great!');
 
 If you have placeholders in strings, pass their values as the second argument::
 
-    $t = $this['translator']->trans('Symfony2 is {{ what }}!', array('{{ what }}' => 'great'));
+    $t = $this->get('translator')->trans('Symfony2 is {{ what }}!', array('{{ what }}' => 'great'));
 
 .. note::
    The placeholders can have any form, but using the ``{{ var }}`` notation
@@ -74,7 +74,7 @@ If you have placeholders in strings, pass their values as the second argument::
 By default, the translator looks for messages in the default ``messages``
 domain. Override it via the third argument::
 
-    $t = $this['translator']->trans('Symfony2 is great!', array(), 'applications');
+    $t = $this->get('translator')->trans('Symfony2 is great!', array(), 'applications');
 
 Catalogues
 ----------
@@ -217,7 +217,7 @@ The translator
 :method:`Symfony\\Component\\Translation\\Translator::transChoice` method
 knows how to deal with plural::
 
-    $t = $this['translator']->transChoice(
+    $t = $this->get('translator')->transChoice(
         '{0} There is no apples|{1} There is one apple|]1,Inf[ There are {{ count }} apples',
         10,
         array('{{ count }}' => 10)

@@ -90,7 +90,7 @@ The mailer is accessible via the ``mailer`` service; from an action::
     public function indexAction($name)
     {
         // get the mailer first (mandatory to initialize Swift Mailer)
-        $mailer = $this['mailer'];
+        $mailer = $this->get('mailer');
 
         $message = \Swift_Message::newInstance()
             ->setSubject('Hello Email')
