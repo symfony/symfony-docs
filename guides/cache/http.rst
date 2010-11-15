@@ -392,11 +392,13 @@ caching::
     $kernel = new AppCache(new AppKernel('prod', false));
     $kernel->handle()->send();
 
-The cache kernel has a special ``getLog()`` method that returns a string
-representation of what happened in the cache layer. In the development
-environment, use it to debug and validate your cache strategy::
+.. tip::
 
-    error_log($kernel->getLog());
+    The cache kernel has a special ``getLog()`` method that returns a string
+    representation of what happened in the cache layer. In the development
+    environment, use it to debug and validate your cache strategy::
+
+        error_log($kernel->getLog());
 
 The ``AppCache`` object has a sensible default configuration, but it can be
 finely tuned via a set of options you can set by overriding the
@@ -449,6 +451,10 @@ Here is a list of the main options:
   is the second) during which the cache can serve a stale response when an
   error is encountered (default: ``60``). This setting is overridden by the
   ``stale-if-error`` HTTP ``Cache-Control`` extension (see RFC 5861).
+
+If ``debug`` is ``true``, Symfony2 automatically adds a ``X-Symfony-Cache``
+header to the Response containing useful information about cache hits and
+misses.
 
 The Symfony2 reverse proxy is a great tool to use when developing your website
 on your local network or when you deploy your website on a shared host where

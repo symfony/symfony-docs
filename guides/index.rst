@@ -9,7 +9,7 @@ Dive into Symfony2 with the topical guides:
     templating/index
     doctrine/index
     testing/index
-    validation
+    validator/index
     forms/index
     security/index
     cache/index
@@ -20,5 +20,6 @@ Dive into Symfony2 with the topical guides:
     bundles/index
     internals/index
     symfony1
+    stable_api
 
 .. include:: map.rst.inc

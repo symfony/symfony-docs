@@ -18,7 +18,12 @@
   * :doc:`Client </guides/testing/client>` | 
   * :doc:`Recipes </guides/testing/recipes>`
 
-* :doc:`/guides/validation`
+* **Validation**:
+
+  * :doc:`Overview </guides/validator/overview>` | 
+  * :doc:`Validation </guides/validator/validation>` | 
+  * :doc:`/guides/validator/constraints`
+
 * **Forms**:
 
   * :doc:`Overview </guides/forms/overview>` | 
@@ -66,3 +71,4 @@
   * :doc:`Profiler </guides/internals/profiler>`
 
 * :doc:`Symfony2 for symfony 1 users</guides/symfony1>`
+* :doc:`Symfony2 stable API</guides/stable_api>`
