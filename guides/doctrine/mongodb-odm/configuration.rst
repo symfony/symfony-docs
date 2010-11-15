@@ -64,14 +64,14 @@ following syntax:
 
 Now you can retrieve the configured services connection services::
 
-    $conn1 = $container['doctrine.odm.mongodb.conn1_connection'];
-    $conn2 = $container['doctrine.odm.mongodb.conn2_connection'];
+    $conn1 = $container->get('doctrine.odm.mongodb.conn1_connection');
+    $conn2 = $container->get('doctrine.odm.mongodb.conn2_connection');
 
 And you can also retrieve the configured document manager services which utilize the above
 connection services::
 
-    $dm1 = $container['doctrine.odm.mongodb.dm1_document_manager'];
-    $dm2 = $container['doctrine.odm.mongodb.dm2_document_manager'];
+    $dm1 = $container->get('doctrine.odm.mongodb.dm1_document_manager');
+    $dm2 = $container->get('doctrine.odm.mongodb.dm2_document_manager');
 
 XML
 ~~~
