@@ -71,7 +71,7 @@ may not exist in the array.
             </property>
         </class>
 
-    .. code-block:: php
+    .. code-block:: php-annotations
 
         // Application/HelloBundle/Author.php
         class Author
@@ -79,13 +79,37 @@ may not exist in the array.
             /**
              * @validation:Collection(
              *   fields = {
-             *     "firstName" = @validation:NotNull,
-             *     "lastName" = { @validation:NotBlank, @validation:MinLength(4) }
+             *     "firstName" = @validation:NotNull(),
+             *     "lastName" = { @validation:NotBlank(), @validation:MinLength(4) }
              *   },
              *   allowMissingFields = true
              * )
              */
             private $options = array();
+        }
+
+    .. code-block:: php
+
+        // Application/HelloBundle/Author.php
+        use Symfony\Components\Validator\Constraints\Collection;
+        use Symfony\Components\Validator\Constraints\NotNull;
+        use Symfony\Components\Validator\Constraints\NotBlank;
+        use Symfony\Components\Validator\Constraints\MinLength;
+        
+        class Author
+        {
+            private $options = array();
+            
+            public static function loadMetadata(ClassMetadata $metadata)
+            {
+                $metadata->addPropertyConstraint('options', new Collection(array(
+                    'fields' => array(
+                        'firstName' => new NotNull(),
+                        'lastName' => array(new NotBlank(), new MinLength(4)),
+                    ),
+                    'allowMissingFields' => true,
+                )));
+            }
         }
 
 The following object would fail the validation.

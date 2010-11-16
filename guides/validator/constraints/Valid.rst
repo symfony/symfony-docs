@@ -86,7 +86,7 @@ their properties. Furthermore, ``Author`` stores an ``Address`` instance in the
             </property>
         </class>
 
-    .. code-block:: php
+    .. code-block:: php-annotations
 
         // Application/HelloBundle/Address.php
         class Author
@@ -118,6 +118,44 @@ their properties. Furthermore, ``Author`` stores an ``Address`` instance in the
             protected $lastName;
         }
 
+    .. code-block:: php
+
+        // Application/HelloBundle/Address.php
+        use Symfony\Components\Validator\Constraints\NotBlank;
+        use Symfony\Components\Validator\Constraints\MaxLength;
+        
+        class Author
+        {
+            protected $street;
+
+            protected $zipCode;
+            
+            public static function loadMetadata(ClassMetadata $metadata)
+            {
+                $metadata->addPropertyConstraint('street', new NotBlank());
+                $metadata->addPropertyConstraint('zipCode', new NotBlank());
+                $metadata->addPropertyConstraint('zipCode', new MaxLength(5));
+            }
+        }
+
+        // Application/HelloBundle/Author.php
+        use Symfony\Components\Validator\Constraints\NotBlank;
+        use Symfony\Components\Validator\Constraints\MinLength;
+        
+        class Author
+        {
+            protected $firstName;
+
+            protected $lastName;
+            
+            public static function loadMetadata(ClassMetadata $metadata)
+            {
+                $metadata->addPropertyConstraint('firstName', new NotBlank());
+                $metadata->addPropertyConstraint('firstName', new MinLength(4));
+                $metadata->addPropertyConstraint('lastName', new NotBlank());
+            }
+        }
+
 With this mapping it is possible to successfully validate an author with an
 invalid address. To prevent that, we add the ``Valid`` constraint to the
 ``$address`` property.
@@ -141,7 +179,7 @@ invalid address. To prevent that, we add the ``Valid`` constraint to the
             </property>
         </class>
 
-    .. code-block:: php
+    .. code-block:: php-annotations
 
         // Application/HelloBundle/Author.php
         class Author
@@ -150,6 +188,21 @@ invalid address. To prevent that, we add the ``Valid`` constraint to the
              * @validation:Valid()
              */
             protected $address;
+        }
+
+    .. code-block:: php
+
+        // Application/HelloBundle/Author.php
+        use Symfony\Components\Validator\Constraints\Valid;
+        
+        class Author
+        {
+            protected $address;
+            
+            public static function loadMetadata(ClassMetadata $metadata)
+            {
+                $metadata->addPropertyConstraint('address', new Valid());
+            }
         }
 
 We can even go one step further and validate the class of the related object
@@ -174,7 +227,7 @@ to be ``Address`` or one of its subclasses.
             </property>
         </class>
 
-    .. code-block:: php
+    .. code-block:: php-annotations
 
         // Application/HelloBundle/Author.php
         class Author
@@ -183,4 +236,21 @@ to be ``Address`` or one of its subclasses.
              * @validation:Valid(class = "Application\HelloBundle\Address")
              */
             protected $address;
+        }
+
+    .. code-block:: php
+
+        // Application/HelloBundle/Author.php
+        use Symfony\Components\Validator\Constraints\Valid;
+        
+        class Author
+        {
+            protected $address;
+            
+            public static function loadMetadata(ClassMetadata $metadata)
+            {
+                $metadata->addPropertyConstraint('address', new Valid(array(
+                    'class' => 'Application\HelloBundle\Address',
+                )));
+            }
         }
