@@ -6,4 +6,3 @@ Symfony2 Forms
 
    overview
    view
-   twig
