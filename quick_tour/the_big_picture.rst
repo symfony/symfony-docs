@@ -230,7 +230,6 @@ The controller is responsible for returning a representation of the resource
         }
     }
 
-
 The code is pretty straightforward but let's explain this code line by line:
 
 * *line 3*: Symfony2 takes advantage of new PHP 5.3 features and as such, all
