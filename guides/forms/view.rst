@@ -60,13 +60,13 @@ to the template, instead of the form instance::
         $form = ...;
 
         return $this->render('HelloBundle:Hello:signup.php', array(
-            'form' => $this['templating.form']->get($form)
+            'form' => $this->get('templating.form')->get($form)
         ));
     }
 
 Instead of passing the form instance directly to the view, we wrap it with an
 object that provides methods that help to render the form with more flexibility
-(``$this['templating.form']->get($form)``).
+(``$this->get('templating.form')->get($form)``).
 
 Displaying a Form
 -----------------

@@ -151,7 +151,7 @@ Eventually, use your entity and manage its persistent state with Doctrine::
             $user = new User();
             $user->setName('Jonathan H. Wage');
 
-            $em = $this['doctrine.orm.entity_manager'];
+            $em = $this->get('doctrine.orm.entity_manager');
             $em->persist($user);
             $em->flush();
 
@@ -160,7 +160,7 @@ Eventually, use your entity and manage its persistent state with Doctrine::
 
         public function editAction($id)
         {
-            $em = $this['doctrine.orm.entity_manager'];
+            $em = $this->get('doctrine.orm.entity_manager');
             $user = $em->createQuery('SELECT u FROM HelloBundle:User WHERE id = ?', $id);
             $user->setBody('new body');
             $em->flush();
@@ -170,7 +170,7 @@ Eventually, use your entity and manage its persistent state with Doctrine::
 
         public function deleteAction($id)
         {
-            $em = $this['doctrine.orm.entity_manager'];
+            $em = $this->get('doctrine.orm.entity_manager');
             $user = $em->createQuery('SELECT e FROM HelloBundle:User WHERE id = ?', $id);
             $em->remove($user);
             $em->flush();

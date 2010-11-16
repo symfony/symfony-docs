@@ -85,7 +85,7 @@ Now, use your document and manage its persistent state with Doctrine::
             $user = new User();
             $user->setName('Jonathan H. Wage');
 
-            $dm = $this['doctrine.odm.mongodb.document_manager'];
+            $dm = $this->get('doctrine.odm.mongodb.document_manager');
             $dm->persist($user);
             $dm->flush();
 
@@ -94,7 +94,7 @@ Now, use your document and manage its persistent state with Doctrine::
 
         public function editAction($id)
         {
-            $dm = $this['doctrine.odm.mongodb.document_manager'];
+            $dm = $this->get('doctrine.odm.mongodb.document_manager');
             $user = $dm->createQuery('find all from HelloBundle:User where id = ?', $id);
             $user->setBody('new body');
             $dm->flush();
@@ -104,7 +104,7 @@ Now, use your document and manage its persistent state with Doctrine::
 
         public function deleteAction($id)
         {
-            $dm = $this['doctrine.orm.entity_manager'];
+            $dm = $this->get('doctrine.orm.entity_manager');
             $user = $dm->createQuery('find all from HelloBundle:User where id = ?', $id);
             $dm->remove($user);
             $dm->flush();

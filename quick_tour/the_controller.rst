@@ -200,7 +200,7 @@ The Request Object
 Besides the values of the routing placeholders, the controller also has access
 to the ``Request`` object::
 
-    $request = $this['request'];
+    $request = $this->get('request');
 
     $request->isXmlHttpRequest(); // is it an Ajax request?
 
@@ -228,20 +228,22 @@ by using the native PHP sessions.
 Storing and retrieving information from the session can be easily achieved
 from any controller::
 
+    $session = $this->get('request')->getSession();
+
     // store an attribute for reuse during a later user request
-    $this['request']->getSession()->set('foo', 'bar');
+    $session->set('foo', 'bar');
 
     // in another controller for another request
-    $foo = $this['request']->getSession()->get('foo');
+    $foo = $session->get('foo');
 
     // set the user locale
-    $this['request']->getSession()->setLocale('fr');
+    $session->setLocale('fr');
 
 You can also store small messages that will only be available for the very
 next request::
 
     // store a message for the very next request (in a controller)
-    $this['session']->setFlash('notice', 'Congratulations, your action succeeded!');
+    $session->setFlash('notice', 'Congratulations, your action succeeded!');
 
     // display the message back in the next request (in a template)
     <?php echo $view['session']->getFlash('notice') ?>

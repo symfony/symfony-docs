@@ -24,7 +24,7 @@ just passing it an argument that is the ``EntityManager`` name you want::
     {
         public function indexAction()
         {
-            $em = $this['doctrine.orm.customer_entity_manager'];
+            $em = $this->get('doctrine.orm.customer_entity_manager');
         }
     }
 
