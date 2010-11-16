@@ -1,58 +1,58 @@
 .. index::
    single: Bundles; Best Practices
 
-Bundle Best Practices
-=====================
+Melhores Práticas para Pacotes (Bundles)
+========================================
 
-A bundle is a directory that has a well-defined structure and can host
-anything from classes to controllers and web resources. Even if bundles are
-very flexible, you should follow some best practices if you want to distribute
-them.
+Um pacote é um diretório que possui uma estrutura bem definida e pode hospedar 
+qualquer coisa, de classes à controladores e web resources. Mesmo os 
+pacotes sendo muito flexíveis, você deve seguir algumas boas práticas recomendadas 
+se pretende distribuí-los.
 
 .. index::
    pair: Bundles; Naming Conventions
 
-Bundle Name
------------
+Nome do Pacote
+--------------
 
-A bundle is also a PHP namespace, composed of several segments:
+Um pacote é também um namespace PHP, composto por vários segmentos:
 
-* The **main namespace**: either ``Bundle``, for reusable bundles, or
-  ``Application`` for application specific bundles;
-* The **vendor namespace** (optional for ``Application`` bundles): something
-  unique to you or your company (like ``Sensio``);
-* *(optional)* The **category namespace(s)** to better organize a large set of
-  bundles;
-* The **bundle name**.
+* O **namespace principal**: ou ``Bundle``, para pacotes reutilizáveis, ou
+  ``Application`` para pacotes específicos de aplicações;
+* O **namespace fornecedor (vendor)** (opcional para pacotes ``Application``): algo
+  exclusivo para você ou sua empresa (por exemplo, Sensio);
+* *(opcional)* Os **namespace(s) categoria**  para melhor organizar um conjunto
+  grande de pacotes;
+* O **nome do pacote**.
 
 .. caution::
-   The vendor namespace and the category namespaces are only possible as of
-   Symfony2 PR3.
+   O namespace fornecedor e os namespaces de categorias somente estão disponíveis a 
+   partir do Symfony2 PR3.
 
-The bundle name must follow the following rules:
+O nome do pacote deve seguir as seguintes regras:
 
-* Use only alphanumeric characters and underscores;
-* Use a CamelCased name;
-* Use a descriptive and short name (no more than 2 words);
-* Prefix the name with the concatenation of the vendor and category
-  namespaces;
-* Suffix the name with ``Bundle``.
+* Usar apenas caracteres alfanuméricos e sublinhados;
+* Usar o nome em CamelCase;
+* Usar um nome descritivo e curto (não mais do que 2 palavras);
+* Prefixar o nome com a concatenação dos namespaces do fornecedor e 
+  categoria;
+* Sufixo do nome com ``Bundle``.
 
-Some good bundle names:
+Alguns bons nomes para pacotes:
 
 =================================== ==========================
-Namespace                           Bundle Name
+Namespace                           Nome do Pacote
 =================================== ==========================
 ``Bundle\Sensio\BlogBundle``        ``SensioBlogBundle``
 ``Bundle\Sensio\Social\BlogBundle`` ``SensioSocialBlogBundle``
 ``Application\BlogBundle``          ``BlogBundle``
 =================================== ==========================
 
-Directory Structure
--------------------
+Estrutura de Diretório
+----------------------
 
-The basic directory structure of a ``HelloBundle`` bundle must read as
-follows::
+A estrutura básica de diretório de um pacote ``HelloBundle`` deve ser como 
+a seguinte:
 
     XXX/...
         HelloBundle/
@@ -68,31 +68,31 @@ follows::
                 web/
             Tests/
 
-The ``XXX`` directory(ies) reflects the namespace structure of the bundle.
+Os diretórios ``XXX`` refletem a estrutura do namespace do pacote.
 
-The following files are mandatory:
+Os seguintes arquivos são obrigatórios:
 
 * ``HelloBundle.php``;
-* ``Resources/meta/LICENSE``: The full license for the code;
-* ``Resources/doc/index.rst``: The root file for the Bundle documentation.
+* ``Resources/meta/LICENSE``: A licença completa para o código;
+* ``Resources/doc/index.rst``: O arquivo raiz para a documentação do pacote.
 
 .. note::
-   These conventions ensure that automated tools can rely on this default
-   structure to work.
+   Estas convenções garantem que as ferramentas automatizadas possam contar
+   com essa estrutura padrão para funcionar.
 
-The depth of sub-directories should be kept to the minimal for most used
-classes and files (2 levels at a maximum). More levels can be defined for
-non-strategic, less-used files.
+A profundidade dos sub-diretórios deve ser mantida mínima para a maioria 
+das classes e arquivos utilizados (2 níveis, no máximo). Mais níveis podem 
+ser definidos para arquivos não-estratégicos e menos utilizados.
 
-The bundle directory is read-only. If you need to write temporary files, store
-them under the ``cache/`` or ``log/`` directory of the host application. Tools can
-generate files in the bundle directory structure, but only if the generated
-files are going to be part of the repository.
+O diretório do pacote é somente leitura. Se você precisa gravar arquivos temporários, 
+armazene-os sob o diretório ``cache/`` ou ``log/`` da aplicação host. As ferramentas 
+podem gerar arquivos na estrutura de diretórios do pacote, mas, apenas se os 
+arquivos gerados serão parte do repositório.
 
-The following classes and files have specific emplacements:
+As seguintes classes e arquivos têm local específico:
 
 ========================= =====================
-Type                      Directory
+Tipo                      Diretório
 ========================= =====================
 Controllers               ``Controller/``
 Templates                 ``Resources/views/``
@@ -105,71 +105,71 @@ Commands                  ``Command/``
 Classes
 -------
 
-The bundle directory structure is used as the namespace hierarchy. For
-instance, a ``HelloController`` controller is stored in
-``Bundle/HelloBundle/Controller/HelloController.php`` and the fully qualified
-class name is ``Bundle\HelloBundle\Controller\HelloController``.
+A estrutura de diretórios do pacote é usada como a hierarquia do namespace. 
+Por exemplo, um controlador ``HelloController`` é armazenado no 
+``Bundle/HelloBundle/Controller/HelloController.php`` e o nome completo qualificado 
+da classe é ``Bundle\HelloBundle\Controller\HelloController``.
 
-All classes and files must follow the Symfony2 coding `standards`_.
+Todas as classes e arquivos devem seguir os `padrões`_ de codificação do Symfony2.
 
-Some classes should be seen as facades and should be as short as possible,
-like Commands, Helpers, Listeners, and Controllers.
+Algumas classes devem ser vistas como fachadas (``Facade``) e devem ser tão curtas 
+quanto possível, como Commands, Helpers, Listeners e Controllers.
 
-Classes that connects to the Event Dispatcher should have a name that ends
-with ``Listener``.
+As classes que se conectam ao ``Event Dispatcher`` devem ter um nome que termina 
+com ``Listener``.
 
-Exceptions classes should be stored in an ``Exception`` sub-namespace.
+Classes de exceções (``Exceptions``) devem ser armazenadas em um sub-namespace ``Exception``.
 
-Vendors
--------
+Fornecedores (``Vendors``)
+----------------------
 
-A bundle must not embed third-party PHP libraries. It should rely on the
-standard Symfony2 autoloading instead.
+Um pacote não deve incorporar bibliotecas PHP de terceiros. Em vez, deve 
+contar com o padrão de autoloading do Symfony2.
 
-A bundle should not embed third-party libraries written in JavaScript, CSS, or
-any other language.
+Um pacote não deve incorporar bibliotecas de terceiros escritas em JavaScript, 
+CSS ou qualquer outra linguagem.
 
-Tests
------
+Testes
+------
 
-A bundle should come with a test suite written with PHPUnit and stored under
-the ``Tests/`` directory. Tests should follow the following principles:
+Um pacote deverá vir com um conjunto de testes escritos com o PHPUnit e 
+armazenados sob o diretório ``Tests/``. Os testes devem seguir os seguintes princípios:
 
-* The test suite must be executable with a simple ``phpunit`` command run from
-  a sample application;
-* The functional tests should only be used to test the response output and
-  some profiling information if you have some;
-* The code coverage should at least covers 95% of the code base.
+* O conjunto de testes deve ser executável com um simples comando ``phpunit`` 
+  a partir da aplicação sample;
+* Os testes funcionais devem ser utilizados apenas para testar a saída de resposta 
+  e algumas informações de perfil, se você tiver alguma;
+* A cobertura de código deve ser de, pelo menos, 95% da base de código.
 
 .. note::
-   A test suite must not contain ``AllTests.php`` scripts, but must rely on the
-   existence of a ``phpunit.xml.dist`` file.
+   Um conjunto de testes não deve conter scripts ``AllTests.php``, mas deve contar
+   com a existência de um arquivo ``phpunit.xml.dist``.
 
-Documentation
--------------
+Documentação
+------------
 
-All classes and functions must come with full PHPDoc.
+Todas as classes e funções devem vir com PHPDoc completo.
 
-Extensive documentation should also be provided in the :doc:`reStructuredText
-</contributing/documentation/format>` format, under the ``Resources/doc/``
-directory; the ``Resources/doc/index.rst`` file is the only mandatory file.
+A documentação extensiva também deve ser fornecida no formato 
+:doc:`reStructuredText </contributing/documentation/format>`, no diretório
+``Resources/doc/``; o arquivo ``Resources/doc/index.rst`` é o único arquivo obrigatório.
 
 Templates
 ---------
 
-If a bundle provides templates, they should be defined in plain PHP. A bundle
-must not provide a main layout, but extends a default ``base`` template (which
-must provide two slots: ``content`` and ``head``).
+Se um pacote fornece templates, eles devem ser definidos em PHP simples. 
+Um pacote não deve fornecer um layout principal, mas estender o template 
+``base`` padrão (que deve fornecer dois slots: ``content`` e ``head``).
 
 .. note::
-   The only other template engine supported is Twig, but only for specific
-   cases.
+   A única outra engine de template suportada é o Twig, mas somente para 
+   casos específicos.
 
-Configuration
--------------
+Configuração
+------------
 
-Configuration must be done via the Symfony2 built-in `mechanism`_. A bundle
-should provide all its default configurations in XML.
+A configuração deve ser feita através do `mecanismo`_ embutido do Symfony2. Um 
+pacote deve fornecer todas as suas configurações padrão em XML.
 
-.. _standards: http://www.symfony-reloaded.org/contributing/Code/Standards
-.. _mechanism: http://www.symfony-reloaded.org/guides/Bundles/Configuration
+.. _padrões: http://www.symfony-reloaded.org/contributing/Code/Standards
+.. _mecanismo: http://www.symfony-reloaded.org/guides/Bundles/Configuration
