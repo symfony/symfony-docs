@@ -127,7 +127,10 @@ And change the ``index.twig`` template to include it:
     {# src/Application/HelloBundle/Resources/views/Hello/index.twig #}
     {% extends "HelloBundle::layout.twig" %}
 
-    {% include "HelloBundle:Hello:hello.twig" %}
+    {# override the body block from index.twig #}
+    {% block body %}
+        {% include "HelloBundle:Hello:hello.twig" %}
+    {% endblock %}
 
 .. tip:
    You can also embed a PHP template in a Twig one:
