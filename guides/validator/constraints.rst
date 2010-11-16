@@ -79,7 +79,7 @@ of a class ``Author`` to have at least 3 characters.
             </property>
         </class>
 
-    .. code-block:: php
+    .. code-block:: php-annotations
 
         // Application/HelloBundle/Author.php
         class Author
@@ -94,7 +94,28 @@ of a class ``Author`` to have at least 3 characters.
              * @validation:NotBlank()
              * @validation:MinLength(3)
              */
+            private $lastName;
+        }
+
+    .. code-block:: php
+
+        // Application/HelloBundle/Author.php
+        use Symfony\Components\Validator\Constraints\NotBlank;
+        use Symfony\Components\Validator\Constraints\MinLength;
+        
+        class Author
+        {
             private $firstName;
+
+            private $lastName;
+
+            public static function loadMetadata(ClassMetadata $metadata)
+            {
+                $metadata->addPropertyConstraint('firstName', new NotBlank());
+                $metadata->addPropertyConstraint('firstName', new MinLength(3));
+                $metadata->addPropertyConstraint('lastName', new NotBlank());
+                $metadata->addPropertyConstraint('lastName', new MinLength(3));
+            }
         }
 
 Getters
@@ -133,7 +154,7 @@ generated token is correct:
             </getter>
         </class>
 
-    .. code-block:: php
+    .. code-block:: php-annotations
 
         // Application/HelloBundle/Author.php
         class Author
@@ -141,6 +162,27 @@ generated token is correct:
             /**
              * @validation:AssertTrue(message = "The token is invalid")
              */
+            public function isTokenValid()
+            {
+                // return true or false
+            }
+        }
+
+    .. code-block:: php
+
+        // Application/HelloBundle/Author.php
+        use Symfony\Components\Validator\Constraints\AssertTrue;
+        
+        class Author
+        {
+
+            public static function loadMetadata(ClassMetadata $metadata)
+            {
+                $metadata->addGetterConstraint('tokenValid', new AssertTrue(array(
+                    'message' => 'The token is invalid',
+                )));
+            }
+            
             public function isTokenValid()
             {
                 // return true or false
@@ -161,7 +203,9 @@ You can create a custom constraint by extending the base constraint class,
 :class:`Symfony\\Component\\Validator\\Constraint`. Options for your
 constraint are represented by public properties on the constraint class. For
 example, the ``Url`` constraint includes ``message`` and ``protocols``
-properties::
+properties:
+
+.. code-block:: php
 
     namespace Symfony\Component\Validator\Constraints;
 
@@ -174,7 +218,9 @@ properties::
 As you can see, a constraint class is fairly minimal. The actual validation is
 performed by a another "constraint validator" class. Which constraint
 validator is specified by the constraint's ``validatedBy()`` method, which
-includes some simple default logic::
+includes some simple default logic:
+
+.. code-block:: php
 
     // in the base Symfony\Component\Validator\Constraint class
     public function validatedBy()
@@ -216,6 +262,8 @@ tag and an ``alias`` attribute:
 
 Your constraint class may now use this alias to reference the appropriate
 validator::
+
+.. code-block:: php
 
     public function validatedBy()
     {

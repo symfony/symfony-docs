@@ -51,7 +51,7 @@ constraint definition as array.
             </property>
         </class>
 
-    .. code-block:: php
+    .. code-block:: php-annotations
 
         // Application/HelloBundle/Author.php
         class Author
@@ -60,6 +60,21 @@ constraint definition as array.
              * @validation:Choice({"male", "female"})
              */
             protected $gender;
+        }
+
+    .. code-block:: php
+
+        // Application/HelloBundle/Author.php
+        use Symfony\Components\Validator\Constraints\Choice;
+        
+        class Author
+        {
+            protected $gender;
+            
+            public static function loadMetadata(ClassMetadata $metadata)
+            {
+                $metadata->addPropertyConstraint('gender', new Choice(array('male', 'female')));
+            }
         }
 
 Example 2: Choices from a callback
@@ -104,7 +119,7 @@ constraint.
             </property>
         </class>
 
-    .. code-block:: php
+    .. code-block:: php-annotations
 
         // Application/HelloBundle/Author.php
         class Author
@@ -142,7 +157,7 @@ you can pass the class name and the method as array.
             </property>
         </class>
 
-    .. code-block:: php
+    .. code-block:: php-annotations
 
         // Application/HelloBundle/Author.php
         class Author
