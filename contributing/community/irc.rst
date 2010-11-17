@@ -21,6 +21,8 @@ Tickets will be created for any tasks or issues identified during the meeting an
 
 Some simple guidelines and pointers for participation:
 
+ * Its possible to change votes until the beginning of the meeting by clicking on "Edit an entry"
+ * At doodle will be closed for voting at the beginning of the meeting
  * Agenda is defined by which topics got the most votes in the doodle, or whichever was proposed first in case of a tie
  * At the beginning of the meeting one person will identify him/herself as the moderator
  * The moderator is essentially responsible for ensurign the 15min timebox and ensuring that tasks are clearly identified
