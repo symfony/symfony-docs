@@ -6,7 +6,8 @@ The purpose of this meeting is to discuss topics in real time with many of the S
 Anyone may propose topics on the symfony-dev mailinglist until 24 hours before the meeting, ideally including well
 prepared relevant information via some URL. 24 hours before the meeting a link to a `doodle`_ will be posted including
 a list of all proposed topics. Anyone can vote on the topics until the beginning of the meeting to define the order in
-the agenda. Each topic will be timeboxed to 15mins.
+the agenda. Each topic will be timeboxed to 15mins and the meeting lasts one hour, leaving enough time for at least 4
+topics.
 
 .. caution::
     Note that its not the expected goal of them meeting to find final solutions, but more to ensure that there is a
