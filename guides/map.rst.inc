@@ -27,8 +27,7 @@
 * **Forms**:
 
   * :doc:`Overview </guides/forms/overview>` | 
-  * :doc:`Templates </guides/forms/view>` | 
-  * :doc:`Twig </guides/forms/twig>`
+  * :doc:`Templates </guides/forms/view>`
 
 * **Security**:
 

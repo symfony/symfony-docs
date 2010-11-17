@@ -96,7 +96,7 @@ And here is a typical layout:
 
 .. code-block:: jinja
 
-   {# src/Application/HelloBundle/Resources/views/layout.twig #}
+    {# src/Application/HelloBundle/Resources/views/layout.twig #}
     <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
     <html>
         <head>
@@ -124,10 +124,13 @@ And change the ``index.twig`` template to include it:
 
 .. code-block:: jinja
 
-    {# src/Application/HelloBundle/Resources/views/Hello/index.php #}
+    {# src/Application/HelloBundle/Resources/views/Hello/index.twig #}
     {% extends "HelloBundle::layout.twig" %}
 
-    {% include "HelloBundle:Hello:hello.twig" %}
+    {# override the body block from index.twig #}
+    {% block body %}
+        {% include "HelloBundle:Hello:hello.twig" %}
+    {% endblock %}
 
 .. tip:
    You can also embed a PHP template in a Twig one:
