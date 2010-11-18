@@ -48,7 +48,7 @@ HTTP 1.1 allows caching anything by default unless there is an explicit
 have a cookie, an authorization header, or come with a non-safe method, and
 when responses have a redirect status code.
 
-Symfony2 automatically set a sensible and conservative ``Cache-Control``
+Symfony2 automatically sets a sensible and conservative ``Cache-Control``
 header when none is set by the developer by following these rules:
 
 * If no cache header is defined (``Cache-Control``, ``ETag``,
@@ -622,7 +622,7 @@ standalone is ``false``.
     proxy (a working configuration for Varnish is also provided below.)
 
 For the ESI include tag to work properly, you must define the ``_internal``
-route::
+route:
 
 .. configuration-block::
 
