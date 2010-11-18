@@ -48,10 +48,19 @@ HTTP 1.1 allows caching anything by default unless there is an explicit
 have a cookie, an authorization header, or come with a non-safe method, and
 when responses have a redirect status code.
 
-When a request has a cookie, PHP automatically adds the ``private`` directive
-to the ``Cache-Control`` header, meaning that browsers can still cache the
-resource, but not shared caches (for which the ``public`` directive must be
-used instead).
+Symfony2 automatically set a sensible and conservative ``Cache-Control``
+header when none is set by the developer by following these rules:
+
+* If no cache header is defined (``Cache-Control``, ``ETag``,
+  ``Last-Modified``, and ``Expires``), ``Cache-Control`` is set to
+  ``no-cache``;
+
+* If ``Cache-Control`` is empty, its value is set to ``private, max-age=0,
+  must-revalidate``;
+
+* But if at least one ``Cache-Control`` directive is set, and no 'public' or
+  ``private`` directives have been explicitly added, Symfony2 adds the
+  ``private`` directive automatically (except when ``s-maxage`` is set.)
 
 .. tip::
 
@@ -363,6 +372,17 @@ the most useful ones::
     // Marks the Response stale
     $response->expire();
 
+Last but not the least, most cache-related HTTP headers can be set via the
+single ``setCache()`` method::
+
+    // Set cache settings in one call
+    $response->setCache(array(
+        'etag'          => $etag,
+        'last_modified' => $date,
+        'max_age'       => 10,
+        'public'        => true,
+    ));
+
 Configuring the Cache
 ---------------------
 
@@ -373,6 +393,32 @@ proprietary cache layer. Instead, you can use any reverse proxy you want like
 Apache mod_cache, Squid, or Varnish. If you don't want to install yet another
 software, you can also use the Symfony2 reverse proxy, which is written in PHP
 and does the same job as any other reverse proxy.
+
+Public vs Private Responses
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+As explained at the beginning of this document, Symfony2 is very conservative
+and makes all Responses private by default (the exact rules are described
+there.)
+
+If you want to use a shared cache, you must remember to explicitly add the
+``public`` directive to ``Cache-Control``::
+
+    // The Response is private by default
+    $response->setEtag($etag);
+    $response->setLastModified($date);
+    $response->setMaxAge(10);
+
+    // Change the Response to be public
+    $response->setPublic();
+
+    // Set cache settings in one call
+    $response->setCache(array(
+        'etag'          => $etag,
+        'last_modified' => $date,
+        'max_age'       => 10,
+        'public'        => true,
+    ));
 
 Symfony2 Reverse Proxy
 ~~~~~~~~~~~~~~~~~~~~~~
