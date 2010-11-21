@@ -29,10 +29,11 @@ recursively. The Finder class uses a fluent interface, so all methods return
 the Finder instance.
 
 .. tip::
-   A Finder instance is a PHP `Iterator`_. So, instead of iterating over the
-   Finder with ``foreach``, you can also convert it to an array with the
-   :phpfunction:`iterator_to_array` method, or get the number of items with
-   :phpfunction:`iterator_count`.
+
+    A Finder instance is a PHP `Iterator`_. So, instead of iterating over the
+    Finder with ``foreach``, you can also convert it to an array with the
+    :phpfunction:`iterator_to_array` method, or get the number of items with
+    :phpfunction:`iterator_count`.
 
 Criteria
 --------
@@ -76,7 +77,8 @@ And it also works with user-defined streams::
     }
 
 .. note::
-   Read the `Streams`_ documentation to learn how to create your own streams.
+
+    Read the `Streams`_ documentation to learn how to create your own streams.
 
 Files or Directories
 ~~~~~~~~~~~~~~~~~~~~~
@@ -108,8 +110,9 @@ Sort the result by name or by type (directories first, then files)::
     $finder->sortByType();
 
 .. note::
-   Notice that the ``sort*`` methods need to get all matching elements to do
-   their jobs. For large iterators, it is slow.
+
+    Notice that the ``sort*`` methods need to get all matching elements to do
+    their jobs. For large iterators, it is slow.
 
 You can also define your own sorting algorithm with ``sort()`` method::
 

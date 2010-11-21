@@ -25,8 +25,9 @@ If you want to submit a patch, clone the official documentation repository:
     $ git clone git://github.com/symfony/symfony-docs.git
 
 .. note::
-  The Symfony2 documentation is licensed under a Creative Commons
-  Attribution-Share Alike 3.0 Unported :doc:`License <license>`.
+
+    The Symfony2 documentation is licensed under a Creative Commons
+    Attribution-Share Alike 3.0 Unported :doc:`License <license>`.
 
 Reporting an Issue
 ------------------

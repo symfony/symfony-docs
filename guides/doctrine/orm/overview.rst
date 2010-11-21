@@ -9,8 +9,9 @@ powerful DataBase Abstraction Layer (DBAL). It provides transparent
 persistence for PHP objects.
 
 .. tip::
-   You can read more about the Doctrine Object Relational Mapper on the
-   official `documentation`_ website.
+
+    You can read more about the Doctrine Object Relational Mapper on the
+    official `documentation`_ website.
 
 To get started, enable and configure the :doc:`Doctrine DBAL
 </guides/doctrine/dbal/overview>`, then enable the ORM:
@@ -61,10 +62,11 @@ any PHP class::
     }
 
 .. tip::
-    When defining your entities, you can omit the getter/setter methods and
-    let Doctrine create them for you with the ``doctrine:generate:entities``
-    command. This only works after you create the mapping information (see
-    below.)
+
+     When defining your entities, you can omit the getter/setter methods and
+     let Doctrine create them for you with the ``doctrine:generate:entities``
+     command. This only works after you create the mapping information (see
+     below).
 
 To let Doctrine manage your classes (entities in Doctrine2 speak), you need to
 write mapping information with annotations, XML, or YAML:
@@ -128,9 +130,10 @@ write mapping information with annotations, XML, or YAML:
         </doctrine-mapping>
 
 .. note::
-   If you use YAML or XML to describe your entities, you can omit the creation
-   of the Entity class, and let the ``doctrine:generate:entities`` command do
-   it for you.
+
+    If you use YAML or XML to describe your entities, you can omit the creation
+    of the Entity class, and let the ``doctrine:generate:entities`` command do
+    it for you.
 
 Create the database and the schema related to your metadata information with
 the following commands:

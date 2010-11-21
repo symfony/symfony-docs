@@ -35,7 +35,8 @@ template::
     Hello {{ $name }}!
 
 .. note::
-   The Twig templates must use the ``twig`` extension.
+
+    The Twig templates must use the ``twig`` extension.
 
 And here is a typical layout:
 
