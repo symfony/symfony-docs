@@ -13,12 +13,12 @@ Enable ``SwiftmailerBundle`` in your kernel::
 
     public function registerBundles()
     {
-      $bundles = array(
-        // ...
-        new Symfony\Framework\SwiftmailerBundle\Bundle(),
-      );
+        $bundles = array(
+            // ...
+            new Symfony\Bundle\SwiftmailerBundle\SwiftmailerBundle(),
+        );
 
-      // ...
+        // ...
     }
 
 Configuration
@@ -30,8 +30,8 @@ The only mandatory configuration parameter is ``transport``:
 
     .. code-block:: yaml
 
-        # hello/config/config.yml
-        swift.mailer:
+        # app/config/config.yml
+        swiftmailer.config:
             transport:  smtp
             encryption: ssl
             auth_mode:  login
@@ -41,12 +41,14 @@ The only mandatory configuration parameter is ``transport``:
 
     .. code-block:: xml
 
+        <!-- app/config/config.xml -->
+
         <!--
-        xmlns:swift="http://www.symfony-project.org/schema/dic/swiftmailer"
+        xmlns:swiftmailer="http://www.symfony-project.org/schema/dic/swiftmailer"
         http://www.symfony-project.org/schema/dic/swiftmailer http://www.symfony-project.org/schema/dic/swiftmailer/swiftmailer-1.0.xsd
         -->
 
-        <swift:mailer
+        <swiftmailer:config
             transport="smtp"
             encryption="ssl"
             auth_mode="login"
@@ -56,7 +58,7 @@ The only mandatory configuration parameter is ``transport``:
 
     .. code-block:: php
 
-        // hello/config/config.php
+        // app/config/config.php
         $container->loadFromExtension('swift', 'mailer', array(
             'transport'  => "smtp",
             'encryption' => "ssl",
@@ -88,7 +90,7 @@ The mailer is accessible via the ``mailer`` service; from an action::
     public function indexAction($name)
     {
         // get the mailer first (mandatory to initialize Swift Mailer)
-        $mailer = $this->container['mailer'];
+        $mailer = $this->get('mailer');
 
         $message = \Swift_Message::newInstance()
             ->setSubject('Hello Email')
@@ -108,37 +110,37 @@ The mailer is accessible via the ``mailer`` service; from an action::
 Using Gmail
 -----------
 
-If you want to use your Gmail account to send emails, use the special
-``gmail`` transport:
+If you want to use your Gmail account to send emails, use the special ``gmail``
+transport:
 
 .. configuration-block::
 
     .. code-block:: yaml
 
-        # hello/config/config.yml
-        swift.mailer:
+        # app/config/config.yml
+        swiftmailer.config:
             transport: gmail
             username:  your_gmail_username
             password:  your_gmail_password
 
     .. code-block:: xml
 
+        <!-- app/config/config.xml -->
+
         <!--
         xmlns:swift="http://www.symfony-project.org/schema/dic/swiftmailer"
         http://www.symfony-project.org/schema/dic/swiftmailer http://www.symfony-project.org/schema/dic/swiftmailer/swiftmailer-1.0.xsd
         -->
 
-        <!-- hello/config/config.yml -->
-
-        <swift:mailer
+        <swiftmailer:config
             transport="gmail"
             username="your_gmail_username"
             password="your_gmail_password" />
 
     .. code-block:: php
 
-        // hello/config/config.php
-        $container->loadFromExtension('swift', 'mailer', array(
+        // app/config/config.php
+        $container->loadFromExtension('swiftmailer', 'config', array(
             'transport' => "gmail",
             'username'  => "your_gmail_username",
             'password'  => "your_gmail_password",

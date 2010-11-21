@@ -7,16 +7,14 @@ Symfony2 test suite to check that you have not broken anything.
 PHPUnit
 -------
 
-To run the Symfony2 test suite, install PHPUnit 3.5.0 or later first. As it is
-not stable yet, your best bet is to use the latest version from the
-repository:
+To run the Symfony2 test suite, `install`_ PHPUnit 3.5.0 or later first:
 
 .. code-block:: bash
 
-    $ git clone git://github.com/sebastianbergmann/phpunit.git
-    $ cd phpunit
-    $ pear package
-    $ pear install PHPUnit-3.5.XXX.tgz
+    $ pear channel-discover pear.phpunit.de
+    $ pear channel-discover components.ez.no
+    $ pear channel-discover pear.symfony-project.com
+    $ pear install phpunit/PHPUnit
 
 Dependencies (optional)
 -----------------------
@@ -30,8 +28,6 @@ The test suite need the following third-party libraries:
 
 * Doctrine
 * Doctrine Migrations
-* Phing
-* Propel
 * Swiftmailer
 * Twig
 * Zend Framework
@@ -88,3 +84,4 @@ browser.
    The code coverage only works if you have XDebug enabled and all dependencies
    installed.
 
+.. _install: http://www.phpunit.de/manual/current/en/installation.html

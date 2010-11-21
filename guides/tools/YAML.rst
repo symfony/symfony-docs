@@ -11,21 +11,21 @@ it has a syntax for simple types like strings, booleans, floats, or integers.
 But unlike PHP, it makes a difference between arrays (sequences) and hashes
 (mappings).
 
-The Symfony2 YAML Component knows how to parse YAML and dump a PHP array to
-YAML.
+The Symfony2 :namespace:`Symfony\\Component\\Yaml` Component knows how to
+parse YAML and dump a PHP array to YAML.
 
 .. note::
-   Even if the YAML format can describe complex nested data structure, this guide
-   only describes the minimum set of features needed to use YAML as a
+   Even if the YAML format can describe complex nested data structure, this
+   guide only describes the minimum set of features needed to use YAML as a
    configuration file format.
 
 Reading YAML Files
 ------------------
 
-The ``Parser::parse()`` method parses a YAML string and converts it to a PHP
-array::
+The :method:`Symfony\\Component\\Yaml\\Parser::parse` method parses a YAML
+string and converts it to a PHP array::
 
-    use Symfony\Components\Yaml\Parser;
+    use Symfony\Component\Yaml\Parser;
 
     $yaml = new Parser();
     $value = $yaml->parse(file_get_contents('/path/to/file.yaml'));
@@ -35,20 +35,20 @@ the error type and the line in the original YAML string where the error
 occurred::
 
     try {
-      $value = $yaml->parse(file_get_contents('/path/to/file.yaml'));
+        $value = $yaml->parse(file_get_contents('/path/to/file.yaml'));
     } catch (\InvalidArgumentException $e) {
-      // an error occurred during parsing
-      echo "Unable to parse the YAML string: ".$e->getMessage();
+        // an error occurred during parsing
+        echo "Unable to parse the YAML string: ".$e->getMessage();
     }
 
 .. tip::
    As the parser is reentrant, you can use the same parser object to load
    different YAML strings.
 
-When loading a YAML file, it is sometimes better to use the ``Yaml::load()``
-wrapper method::
+When loading a YAML file, it is sometimes better to use the
+:method:`Symfony\\Component\\Yaml\\Yaml::load` wrapper method::
 
-    use Symfony\Components\Yaml\Yaml;
+    use Symfony\Component\Yaml\Yaml;
 
     $loader = Yaml::load('/path/to/file.yml');
 
@@ -66,9 +66,10 @@ bonuses:
 Writing YAML Files
 ------------------
 
-The ``Dumper::dump()`` method dumps any PHP array to its YAML representation::
+The :method:`Symfony\\Component\\Yaml\\Dumper::dump` method dumps any PHP array
+to its YAML representation::
 
-    use Symfony\Components\Yaml\Dumper;
+    use Symfony\Component\Yaml\Dumper;
 
     $array = array('foo' => 'bar', 'bar' => array('foo' => 'bar', 'bar' => 'baz'));
 
@@ -80,8 +81,8 @@ The ``Dumper::dump()`` method dumps any PHP array to its YAML representation::
    There are some limitations: the dumper is not able to dump resources and
    dumping PHP objects is considered an alpha feature.
 
-If you only need to dump one array, you can use the ``Yaml::dump()`` static
-method shortcut::
+If you only need to dump one array, you can use the
+:method:`Symfony\\Component\\Yaml\\Yaml::dump` static method shortcut::
 
     $yaml = Yaml::dump($array, $inline);
 
@@ -110,8 +111,8 @@ the output switches from the expanded representation to the inline one::
 
     foo: bar
     bar:
-      foo: bar
-      bar: baz
+        foo: bar
+        bar: baz
 
 The YAML Syntax
 ---------------
@@ -138,8 +139,8 @@ Strings
 
     "A double-quoted string in YAML\n"
 
-Quoted styles are useful when a string starts or ends with one or more
-relevant spaces.
+Quoted styles are useful when a string starts or ends with one or more relevant
+spaces.
 
 .. tip::
    The double-quoted style provides a way to express arbitrary strings, by
@@ -168,8 +169,8 @@ where each line break is replaced by a space:
       without carriage returns.
 
 .. note::
-   Notice the two spaces before each line in the previous examples. They
-   won't appear in the resulting PHP strings.
+   Notice the two spaces before each line in the previous examples. They won't
+   appear in the resulting PHP strings.
 
 Numbers
 ~~~~~~~
@@ -275,23 +276,23 @@ YAML uses indentation with one or more spaces to describe nested collections:
 .. code-block:: yaml
 
     "symfony 1.4":
-      PHP:      5.2
-      Doctrine: 1.2
+        PHP:      5.2
+        Doctrine: 1.2
     "Symfony2":
-      PHP:      5.3
-      Doctrine: 2.0
+        PHP:      5.3
+        Doctrine: 2.0
 
 The following YAML is equivalent to the following PHP code::
 
     array(
-      'symfony 1.4' => array(
-        'PHP'      => 5.2,
-        'Doctrine' => 1.2,
-      ),
-      'Symfony2' => array(
-        'PHP'      => 5.3,
-        'Doctrine' => 2.0,
-      ),
+        'symfony 1.4' => array(
+            'PHP'      => 5.2,
+            'Doctrine' => 1.2,
+        ),
+        'Symfony2' => array(
+            'PHP'      => 5.3,
+            'Doctrine' => 2.0,
+        ),
     );
 
 There is one important thing you need to remember when using indentation in a
@@ -303,11 +304,11 @@ You can nest sequences and mappings as you like:
 .. code-block:: yaml
 
     'Chapter 1':
-      - Introduction
-      - Event Types
+        - Introduction
+        - Event Types
     'Chapter 2':
-      - Introduction
-      - Helpers
+        - Introduction
+        - Helpers
 
 YAML can also use flow styles for collections, using explicit indicators
 rather than indentation to denote scope.
@@ -355,13 +356,15 @@ Comments can be added in YAML by prefixing them with a hash mark (``#``):
 Dynamic YAML files
 ~~~~~~~~~~~~~~~~~~
 
-In Symfony, a YAML file can contain PHP code that is evaluated just before the
-parsing occurs::
+In Symfony2, a YAML file can contain PHP code that is evaluated just before the
+parsing occurs:
+
+.. code-block:: yaml
 
     1.0:
-      version: <?php echo file_get_contents('1.0/VERSION')."\n" ?>
+        version: <?php echo file_get_contents('1.0/VERSION')."\n" ?>
     1.1:
-      version: "<?php echo file_get_contents('1.1/VERSION') ?>"
+        version: "<?php echo file_get_contents('1.1/VERSION') ?>"
 
 Be careful to not mess up with the indentation. Keep in mind the following
 simple tips when adding PHP code to a YAML file:

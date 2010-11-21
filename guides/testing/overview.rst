@@ -19,11 +19,11 @@ it yet, you can read its excellent `documentation`_.
    Symfony2 works with PHPUnit 3.5 or later.
 
 The default PHPUnit configuration looks for tests under ``Tests/``
-sub-directories of your bundles:
+sub-directory of your bundles:
 
 .. code-block:: xml
 
-    <!-- hello/phpunit.xml.dist -->
+    <!-- app/phpunit.xml.dist -->
 
     <phpunit ... bootstrap="../src/autoload.php">
         <testsuites>
@@ -40,10 +40,10 @@ Running the test suite for a given application is straightforward:
 .. code-block:: bash
 
     # specify the configuration directory on the command line
-    $ phpunit -c hello/
+    $ phpunit -c app/
 
     # or run phpunit from within the application directory
-    $ cd hello/
+    $ cd app/
     $ phpunit
 
 .. tip::
@@ -55,7 +55,7 @@ Running the test suite for a given application is straightforward:
 Unit Tests
 ----------
 
-Writing Symony2 unit tests is no different than writing standard PHPUnit unit
+Writing Symfony2 unit tests is no different than writing standard PHPUnit unit
 tests. By convention, it's recommended to replicate the bundle directory
 structure under its ``Tests/`` sub-directory. So, write tests for the
 ``Application\HelloBundle\Model\Article`` class in the
@@ -70,10 +70,10 @@ Running tests for a given file or directory is also very easy:
 .. code-block:: bash
 
     # run all tests for the Model
-    $ phpunit -c hello Application/HelloBundle/Tests/Model/
+    $ phpunit -c app Application/HelloBundle/Tests/Model/
 
     # run tests for the Article class
-    $ phpunit -c hello Application/HelloBundle/Tests/Model/ArticleTest.php
+    $ phpunit -c app Application/HelloBundle/Tests/Model/ArticleTest.php
 
 .. index::
    single: Tests; Functional Tests
@@ -92,14 +92,14 @@ tests as far as PHPUnit is concerned, but they have a very specific workflow:
 * Rinse and repeat.
 
 Requests, clicks, and submissions are done by a client that knows how to talk
-to the application. To access such a client, your tests need to extends the
+to the application. To access such a client, your tests need to extend the
 Symfony2 ``WebTestCase`` class. The sandbox provides a simple functional test
 for ``HelloController`` that reads as follows::
 
     // src/Application/HelloBundle/Tests/Controller/HelloControllerTest.php
     namespace Application\HelloBundle\Tests\Controller;
 
-    use Symfony\Framework\FoundationBundle\Test\WebTestCase;
+    use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
     class HelloControllerTest extends WebTestCase
     {
@@ -108,7 +108,7 @@ for ``HelloController`` that reads as follows::
             $client = $this->createClient();
             $crawler = $client->request('GET', '/hello/Fabien');
 
-            $this->assertEquals(1, $crawler->filter('html:contains("Hello Fabien")'));
+            $this->assertEquals(1, count($crawler->filter('html:contains("Hello Fabien")')));
         }
     }
 
@@ -116,8 +116,8 @@ The ``createClient()`` method returns a client tied to the current application::
 
     $crawler = $client->request('GET', 'hello/Fabien');
 
-The ``request()`` method returns a ``Crawler`` object which can be used to select
-elements in the Response, to click on links, and to submit forms.
+The ``request()`` method returns a ``Crawler`` object which can be used to
+select elements in the Response, to click on links, and to submit forms.
 
 .. tip::
    The Crawler can only be used if the Response content is an XML or an HTML
@@ -165,9 +165,9 @@ to the ``submit()`` method::
         'photo'        => '/path/to/lucas.jpg',
     ));
 
-Now that you can easily navigate through an application, use assertions to
-test that it actually does what you expect it to. Use the Crawler to make
-assertions on the DOM::
+Now that you can easily navigate through an application, use assertions to test
+that it actually does what you expect it to. Use the Crawler to make assertions
+on the DOM::
 
     // Assert that the response matches a given CSS selector.
     $this->assertTrue(count($crawler->filter('h1')) > 0);

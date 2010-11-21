@@ -12,4 +12,3 @@ Get started fast with the Symfony2 Quick Tour:
    the_view
    the_controller
    the_architecture
-

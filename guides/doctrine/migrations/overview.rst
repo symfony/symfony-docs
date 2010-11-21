@@ -1,8 +1,8 @@
 .. index::
-   single: Doctrine; Migrations
+   pair: Doctrine; Migrations
 
-Doctrine Migrations
-===================
+Migrations
+==========
 
 The database migrations feature is an extension of the database abstraction
 layer and offers you the ability to programmatically deploy new versions of
@@ -24,13 +24,13 @@ All of the migrations functionality is contained in a few console commands:
       :status   View the status of a set of migrations.
       :version  Manually add and delete migration versions from the version table.
 
-Every bundle manages its own migrations so when working with the above
-commands you must specify the bundle you want to work with. For example to see
-the status of a bundles migrations you can run the ``status`` command:
+Every bundle manages its own migrations so when working with the above commands
+you must specify the bundle you want to work with. For example to see the
+status of a bundle migrations you can run the ``status`` command:
 
 .. code-block:: bash
 
-    $ php console doctrine:migrations:status --bundle="Application\HelloBundle"
+    $ php app/console doctrine:migrations:status --bundle="Application\HelloBundle"
 
      == Configuration
 
@@ -50,7 +50,7 @@ class:
 
 .. code-block:: bash
 
-    $ php console doctrine:migrations:generate --bundle="Application\HelloBundle"
+    $ php app/console doctrine:migrations:generate --bundle="Application\HelloBundle"
     Generated new migration class to "/path/to/symfony-sandbox/src/Bundle/HelloBundle/DoctrineMigrations/Version20100621140655.php"
 
 Have a look at the newly generated migration class and you will see something
@@ -79,7 +79,7 @@ that you have one new migration to execute:
 
 .. code-block:: bash
 
-    $ php console doctrine:migrations:status --bundle="Application\HelloBundle"
+    $ php app/console doctrine:migrations:status --bundle="Application\HelloBundle"
 
      == Configuration
 
@@ -98,10 +98,11 @@ that you have one new migration to execute:
 
        >> 2010-06-21 14:06:55 (20100621140655)                not migrated
 
-Now you can add some migration code to the ``up()`` and ``down()`` methods and migrate:
+Now you can add some migration code to the ``up()`` and ``down()`` methods and
+migrate:
 
 .. code-block:: bash
 
-    $ php console doctrine:migrations:migrate --bundle="Application\HelloBundle"
+    $ php app/console doctrine:migrations:migrate --bundle="Application\HelloBundle"
 
 .. _documentation: http://www.doctrine-project.org/projects/migrations/2.0/docs/en

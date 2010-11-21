@@ -72,7 +72,7 @@ directive to show the configuration in all supported configuration formats
 
         .. code-block:: php
 
-            // Configuration in XML
+            // Configuration in PHP
 
 The previous reST snippet renders as follow:
 
@@ -88,7 +88,25 @@ The previous reST snippet renders as follow:
 
     .. code-block:: php
 
-        // Configuration in XML
+        // Configuration in PHP
+
+The current list of supported formats are the following:
+
+=============== ===========
+Markup format   Displayed
+=============== ===========
+html            HTML
+xml             XML
+php             PHP
+yaml            YAML
+jinja           Twig
+html+jinja      Twig
+jinja+html      Twig
+php+html        PHP
+html+php        PHP
+ini             INI
+php-annotations Annotations
+=============== ===========
 
 .. _reStructuredText:        http://docutils.sf.net/rst.html
 .. _Sphinx:                  http://sphinx.pocoo.org/

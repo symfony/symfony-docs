@@ -13,7 +13,7 @@ Creating a Crawler Instance
 A Crawler instance is automatically created for you when you make a request
 with a Client. But you can create your own easily::
 
-    use Symfony\Components\DomCrawler\Crawler;
+    use Symfony\Component\DomCrawler\Crawler;
 
     $crawler = new Crawler($html, $url);
 
@@ -70,11 +70,11 @@ each method returns a new Crawler instance for the matching nodes::
     $crawler
         ->filter('h1')
         ->reduce(function ($node, $i)
-            {
-                if (!$node->getAttribute('class')) {
-                    return false;
-                }
-            })
+        {
+            if (!$node->getAttribute('class')) {
+                return false;
+            }
+        })
         ->first();
 
 .. tip::
@@ -97,9 +97,9 @@ The Crawler can extract information from the nodes::
 
     // Executes a lambda for each node and return an array of results
     $data = $crawler->each(function ($node, $i)
-        {
-            return $node->getAttribute('href');
-        });
+    {
+        return $node->getAttribute('href');
+    });
 
 Links
 -----
@@ -120,7 +120,7 @@ The Client ``click()`` method takes a ``Link`` instance as returned by the
     $client->click($link);
 
 .. tip::
-   The ``links()`` method returns an array of ``Link``s for all nodes.
+   The ``links()`` method returns an array of ``Link`` objects for all nodes.
 
 Forms
 -----
@@ -133,8 +133,8 @@ Notice that we select form buttons and not forms as a form can have several
 buttons; if you use the traversing API, keep in mind that you must look for a
 button.
 
-The ``selectButton()`` method can select ``button`` tags and submit ``input`` tags;
-it has several heuristics to find them:
+The ``selectButton()`` method can select ``button`` tags and submit ``input``
+tags; it has several heuristics to find them:
 
 * The ``value`` attribute value;
 
