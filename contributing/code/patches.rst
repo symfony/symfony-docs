@@ -67,7 +67,7 @@ topic branch:
     ticket number is a good convention for bug fixes).
 
 The above command automatically switches the code to the newly created branch
-(check the branch you are working on with `git branch`.)
+(check the branch you are working on with `git branch`).
 
 Work on the code as much as you want and commit as much as you want; but keep
 in mind the following:
