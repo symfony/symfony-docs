@@ -31,7 +31,7 @@ live:
 
 .. code-block:: html+php
 
-    <!-- web/index.php -->
+    <!-- web/app.php -->
     <?php
 
     require_once __DIR__.'/../app/AppKernel.php';
@@ -39,8 +39,8 @@ live:
     $kernel = new AppKernel('prod', false);
     $kernel->handle()->send();
 
-Like any front controller, ``index.php`` uses a Kernel Class, ``AppKernel``,
-to bootstrap the application.
+Like any front controller, ``app.php`` uses a Kernel Class, ``AppKernel``, to
+bootstrap the application.
 
 .. index::
    single: Kernel
@@ -144,7 +144,6 @@ method of the ``AppKernel`` class::
             new Symfony\Bundle\DoctrineBundle\DoctrineBundle(),
             //new Symfony\Bundle\DoctrineMigrationsBundle\DoctrineMigrationsBundle(),
             //new Symfony\Bundle\DoctrineMongoDBBundle\DoctrineMongoDBBundle(),
-            //new Symfony\Bundle\PropelBundle\PropelBundle(),
             //new Symfony\Bundle\TwigBundle\TwigBundle(),
 
             // register your bundles
@@ -386,8 +385,8 @@ applications, store them locally or globally, your choice.
 .. index::
    single: Vendors
 
-Vendors
--------
+Using Vendors
+-------------
 
 Odds are your application will depend on third-party libraries. Those should
 be stored in the ``src/vendor/`` directory. It already contains the Symfony2
@@ -395,7 +394,7 @@ libraries, the SwiftMailer library, the Doctrine ORM, the Propel ORM, the Twig
 templating system, and a selection of the Zend Framework classes.
 
 .. index::
-   single: Cache
+   single: Configuration Cache
    single: Logs
 
 Cache and Logs

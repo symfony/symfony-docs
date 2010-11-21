@@ -14,8 +14,8 @@ addict! Without further ado, let's discover what controllers can do for you.
    single: Routing; Formats
    single: View; Formats
 
-Formats
--------
+Using Formats
+-------------
 
 Nowadays, a web application should be able to deliver more than just HTML
 pages. From XML for RSS feeds or Web Services, to JSON for Ajax requests,
@@ -141,8 +141,8 @@ an Ajax request.
 .. index::
    single: Exceptions
 
-Error Management
-----------------
+Managing Errors
+---------------
 
 When things are not found, you should play well with the HTTP protocol and
 return a 404 response. This is easily done by throwing a built-in HTTP
@@ -200,7 +200,7 @@ The Request Object
 Besides the values of the routing placeholders, the controller also has access
 to the ``Request`` object::
 
-    $request = $this['request'];
+    $request = $this->get('request');
 
     $request->isXmlHttpRequest(); // is it an Ajax request?
 
@@ -228,20 +228,22 @@ by using the native PHP sessions.
 Storing and retrieving information from the session can be easily achieved
 from any controller::
 
+    $session = $this->get('request')->getSession();
+
     // store an attribute for reuse during a later user request
-    $this['request']->getSession()->set('foo', 'bar');
+    $session->set('foo', 'bar');
 
     // in another controller for another request
-    $foo = $this['request']->getSession()->get('foo');
+    $foo = $session->get('foo');
 
     // set the user locale
-    $this['request']->getSession()->setLocale('fr');
+    $session->setLocale('fr');
 
 You can also store small messages that will only be available for the very
 next request::
 
     // store a message for the very next request (in a controller)
-    $this['session']->setFlash('notice', 'Congratulations, your action succeeded!');
+    $session->setFlash('notice', 'Congratulations, your action succeeded!');
 
     // display the message back in the next request (in a template)
     <?php echo $view['session']->getFlash('notice') ?>

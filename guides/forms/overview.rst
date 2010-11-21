@@ -44,12 +44,12 @@ Now let's create a form to let the visitor fill the data of the object::
     {
         $customer = new Customer();
 
-        $form = new Form('customer', $customer, $this['validator']);
+        $form = new Form('customer', $customer, $this->get('validator'));
         $form->add(new TextField('name'));
         $form->add(new IntegerField('age'));
 
         return $this->render('HelloBundle:Hello:signup.php', array(
-            'form' => $this['templating.form']->get($form)
+            'form' => $this->get('templating.form')->get($form)
         ));
     }
 
@@ -59,7 +59,7 @@ public or accessible through public getters and setters.
 
 Instead of passing the form instance directly to the view, we wrap it with an
 object that provides methods that help to render the form with more flexibility
-(``$this['templating.form']->get($form)``).
+(``$this->get('templating.form')->get($form)``).
 
 Let's create a simple template to render the form:
 
@@ -86,12 +86,12 @@ the data is stored in a POST parameter with the name of the form::
     public function signupAction()
     {
         $customer = new Customer();
-        $form = new Form('customer', $customer, $this['validator']);
+        $form = new Form('customer', $customer, $this->get('validator'));
 
         // form setup...
 
-        if ('POST' === $this['request']->getMethod()) {
-            $form->bind($this['request']->request->get('customer'));
+        if ('POST' === $this->get('request')->getMethod()) {
+            $form->bind($this->get('request')->request->get('customer'));
 
             if ($form->isValid()) {
                 // save $customer object and redirect
@@ -275,7 +275,7 @@ Now we can easily adapt the form in the controller::
         $registration = new Registration();
         $registration->customer = new Customer();
 
-        $form = new Form('registration', $registration, $this['validator']);
+        $form = new Form('registration', $registration, $this->get('validator'));
         $form->add(new CheckboxField('termsAccepted'));
 
         $group = new FieldGroup('customer');
@@ -284,8 +284,8 @@ Now we can easily adapt the form in the controller::
 
         $form->add($group);
 
-        if ('POST' === $this['request']->getMethod()) {
-            $form->bind($this['request']->request->get('registration'));
+        if ('POST' === $this->get('request')->getMethod()) {
+            $form->bind($this->get('request')->request->get('registration'));
 
             if ($form->isValid()) {
                 $registration->process();

@@ -90,6 +90,24 @@ The previous reST snippet renders as follow:
 
         // Configuration in PHP
 
+The current list of supported formats are the following:
+
+=============== ===========
+Markup format   Displayed
+=============== ===========
+html            HTML
+xml             XML
+php             PHP
+yaml            YAML
+jinja           Twig
+html+jinja      Twig
+jinja+html      Twig
+php+html        PHP
+html+php        PHP
+ini             INI
+php-annotations Annotations
+=============== ===========
+
 .. _reStructuredText:        http://docutils.sf.net/rst.html
 .. _Sphinx:                  http://sphinx.pocoo.org/
 .. _documents:               http://github.com/symfony/symfony-docs

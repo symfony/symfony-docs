@@ -28,7 +28,7 @@ A bundle is also a PHP namespace, composed of several segments:
    The vendor namespace and the category namespaces are only possible as of
    Symfony2 PR3.
 
-The bundle name must follow the following rules:
+The bundle name must follow these simple rules:
 
 * Use only alphanumeric characters and underscores;
 * Use a CamelCased name;
@@ -154,6 +154,21 @@ All classes and functions must come with full PHPDoc.
 Extensive documentation should also be provided in the :doc:`reStructuredText
 </contributing/documentation/format>` format, under the ``Resources/doc/``
 directory; the ``Resources/doc/index.rst`` file is the only mandatory file.
+
+Controllers
+-----------
+
+Controllers in a bundle must not extend
+:class:`Symfony\\Bundle\\FrameworkBundle\\Controller\\Controller`. They can
+implement
+:class:`Symfony\\Foundation\\DependencyInjection\\ContainerAwareInterface` or
+extend :class:`Symfony\\Foundation\\DependencyInjection\\ContainerAware`
+instead.
+
+.. note::
+    If you have a look at :class:`Symfony\\Bundle\\FrameworkBundle\\Controller\\Controller`
+    methods, you will see that they are only nice shortcuts to ease the learning
+    curve.
 
 Templates
 ---------

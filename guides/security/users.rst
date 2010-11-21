@@ -1,3 +1,6 @@
+.. index::
+   single: Security; Users
+
 Users
 =====
 
@@ -13,6 +16,9 @@ credentials (most of the time a username and a password). As Symfony2 makes no
 assumption about the client/user PHP representation, it's up to the
 application to define a user class and hook it up with Symfony2 via a user
 provider class.
+
+.. index::
+   single: Security; UserProviderInterface
 
 UserProviderInterface
 ~~~~~~~~~~~~~~~~~~~~~
@@ -36,6 +42,9 @@ exception.
     Symfony2 comes with the most common ones. See the next section for more
     information.
 
+.. index::
+   single: Security; AccountInterface
+
 AccountInterface
 ~~~~~~~~~~~~~~~~
 
@@ -58,6 +67,9 @@ The user provider must return objects that implement
 * ``getSalt()``: Returns the salt;
 * ``getUsername()``: Returns the username used to authenticate the user;
 * ``eraseCredentials()``: Removes sensitive data from the user.
+
+.. index::
+   single: Security; Password encoding
 
 Encoding Passwords
 ~~~~~~~~~~~~~~~~~~
@@ -92,6 +104,9 @@ When encoding your passwords, it's better to also define a unique salt per user
 (the ``getSalt()`` method can return the primary key if users are persisted in
 a database for instance.)
 
+.. index::
+   single: Security; AdvancedAccountInterface
+
 AdvancedAccountInterface
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -123,13 +138,20 @@ will make the associated checks automatically::
     :class:`Symfony\\Component\\Security\\User\\AccountCheckerInterface`
     object to do the pre-authentication and post-authentication checks.
 
+.. index::
+   single: Security; User Providers
+
 Defining a Provider
 -------------------
 
 As we have seen in the previous section, a provider implements
 :class:`Symfony\\Component\\Security\\User\\UserProviderInterface`. Symfony2
-comes with provider for in-memory users, Doctrine Entity, and defines a base
-class for any DAO provider you might want to create.
+comes with provider for in-memory users, Doctrine Entities, Doctrine
+Documents, and defines a base class for any DAO provider you might want to
+create.
+
+.. index::
+   single: Security; In-memory user provider
 
 In-memory Provider
 ~~~~~~~~~~~~~~~~~~
@@ -185,6 +207,10 @@ or a prototype. It is also the best provider when writing unit tests:
 
 The above configuration defines two in-memory providers. As you can see, the
 second one uses 'sha1' to encode the user passwords.
+
+.. index::
+   single: Security; Doctrine Entity Provider
+   single: Doctrine; Doctrine Entity Provider
 
 Doctrine Entity Provider
 ~~~~~~~~~~~~~~~~~~~~~~~~
@@ -272,6 +298,96 @@ implement :class:`Symfony\\Component\\Security\\User\\UserProviderInterface`::
     :class:`Symfony\\Component\\Security\\User\\AccountCheckerInterface`
     implementation.
 
+.. index::
+   single: Security; Doctrine Document Provider
+   single: Doctrine; Doctrine Document Provider
+
+Doctrine Document Provider
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Most of the time, users are described by a Doctrine Document::
+
+    /**
+     * @Document
+     */
+    class User implements AccountInterface
+    {
+        // ...
+    }
+
+In such a case, you can use the default Doctrine provider without creating one
+yourself:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # app/config/security.yml
+        security.config:
+            providers:
+                main:
+                    password_encoder: sha1
+                    document: { class: SecurityBundle:User, property: username }
+
+    .. code-block:: xml
+
+        <!-- app/config/security.xml -->
+        <config>
+            <provider name="main">
+                <password-encoder>sha1</password-encoder>
+                <document class="SecurityBundle:User" property="username" />
+            </provider>
+        </config>
+
+    .. code-block:: php
+
+        // app/config/security.php
+        $container->loadFromExtension('security', 'config', array(
+            'providers' => array(
+                'main' => array(
+                    'password_encoder' => 'sha1',
+                    'document' => array('class' => 'SecurityBundle:User', 'property' => 'username'),
+                ),
+            ),
+        ));
+
+The ``document`` entry configures the Document class to use for the user, and
+``property`` the PHP column name where the username is stored.
+
+If retrieving the user is more complex than a simple ``findOneBy()`` call,
+remove the ``property`` setting and make your Document Repository class
+implement :class:`Symfony\\Component\\Security\\User\\UserProviderInterface`::
+
+    /**
+     * @Document(repositoryClass="SecurityBundle:UserRepository")
+     */
+    class User implements AccountInterface
+    {
+        // ...
+    }
+
+    class UserRepository extends DocumentRepository implements UserProviderInterface
+    {
+        public function loadUserByUsername($username)
+        {
+            // do whatever you need to retrieve the user from the database
+            // code below is the implementation used when using the property setting
+
+            return $this->findOneBy(array('username' => $username));
+        }
+    }
+
+.. tip::
+
+    If you use the
+    :class:`Symfony\\Component\\Security\\User\\AdvancedAccountInterface`
+    interface, don't check the various flags (locked, expired, enabled, ...)
+    when retrieving the user from the database as this will be managed by the
+    authentication system automatically (and proper exceptions will be thrown
+    if needed). If you have special flags, override the default
+    :class:`Symfony\\Component\\Security\\User\\AccountCheckerInterface`
+    implementation.
+
 Retrieving the User
 -------------------
 
@@ -280,7 +396,19 @@ After authentication, the user is accessed via the security context::
     $user = $container->get('security.context')->getUser();
 
 You can also check if the user is authenticated with the ``isAuthenticated()``
-method.
+method::
+
+    $container->get('security.context')->isAuthenticated();
+
+.. tip::
+
+    Be aware that anonymous users are considered authenticated. If you want to
+    check if a user is "fully authenticated" (non-anonymous), you need to
+    check if the user has the special ``IS_AUTHENTICATED_FULLY`` role (or
+    check that the user has not the ``IS_AUTHENTICATED_ANONYMOUSLY`` role).
+
+.. index::
+   single: Security; Roles
 
 Roles
 -----
@@ -299,6 +427,9 @@ more about access control, roles, and voters.
 
     If you define your own roles with a dedicated Role class, don't use the
     ``ROLE_`` prefix.
+
+.. index::
+   single: Security; Roles (Hierarchical)
 
 Hierarchical Roles
 ~~~~~~~~~~~~~~~~~~

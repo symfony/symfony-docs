@@ -5,70 +5,15 @@
 Twig & Symfony2
 ===============
 
-`Twig`_ is a flexible, fast, and secure template language for PHP. Symfony2 has
-native support for Twig through ``TwigBundle``.
+`Twig`_ is a flexible, fast, and secure template language for PHP. Symfony2
+has native support for Twig through ``TwigBundle``.
 
 .. index::
    single: Twig; Installation
    single: Twig; Configuration
 
-Installation & Configuration
-----------------------------
-
-Enable the ``TwigBundle`` in your kernel::
-
-    // app/HelloKernel.php
-
-    public function registerBundles()
-    {
-        $bundles = array(
-            // ...
-            new Symfony\Bundle\TwigBundle\TwigBundle(),
-        );
-
-        // ...
-    }
-
-Then, configure it:
-
-.. configuration-block::
-
-    .. code-block:: yaml
-
-        # app/config/config.yml
-        twig.config: ~
-
-        # app/config/config_dev.yml
-        twig.config:
-            auto_reload: true
-
-    .. code-block:: xml
-
-        <!--
-        xmlns:twig="http://www.symfony-project.org/schema/dic/twig"
-        xsi:schemaLocation="http://www.symfony-project.org/schema/dic/twig http://www.symfony-project.org/schema/dic/twig/twig-1.0.xsd
-        -->
-
-        <!-- app/config/config.xml -->
-        <twig:config />
-
-        <!-- app/config/config_dev.xml -->
-        <twig:config auto_reload="true" />
-
-    .. code-block:: php
-
-        // app/config/config.php
-        $container->loadFromExtension('twig', 'config');
-
-        // app/config/config_dev.php
-        $container->loadFromExtension('twig', 'config', array('auto_reload' => true));
-
-.. tip::
-   The configuration options are the same as the ones you pass to the
-   ``Twig_Environment`` `constructor`_.
-
-Usage
------
+Rendering Twig Templates
+------------------------
 
 To render a Twig template instead of a PHP one, add the ``.twig`` suffix at the
 end of the template name. The controller below renders the ``index.twig``
@@ -96,7 +41,7 @@ And here is a typical layout:
 
 .. code-block:: jinja
 
-   {# src/Application/HelloBundle/Resources/views/layout.twig #}
+    {# src/Application/HelloBundle/Resources/views/layout.twig #}
     <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
     <html>
         <head>
@@ -107,8 +52,8 @@ And here is a typical layout:
         </body>
     </html>
 
-Include other Templates
------------------------
+Including other Templates
+-------------------------
 
 The best way to share a snippet of code between several distinct templates is
 to define a template that can then be included into another one.
@@ -124,10 +69,13 @@ And change the ``index.twig`` template to include it:
 
 .. code-block:: jinja
 
-    {# src/Application/HelloBundle/Resources/views/Hello/index.php #}
+    {# src/Application/HelloBundle/Resources/views/Hello/index.twig #}
     {% extends "HelloBundle::layout.twig" %}
 
-    {% include "HelloBundle:Hello:hello.twig" %}
+    {# override the body block from index.twig #}
+    {% block body %}
+        {% include "HelloBundle:Hello:hello.twig" %}
+    {% endblock %}
 
 .. tip:
    You can also embed a PHP template in a Twig one:
@@ -138,10 +86,10 @@ And change the ``index.twig`` template to include it:
 
         {% render 'HelloBundle:Hello:sidebar.php' %}
 
-Embed other Actions
--------------------
+Embedding other Controllers
+---------------------------
 
-And what if you want to embed the result of another action in a template?
+And what if you want to embed the result of another controller in a template?
 That's very useful when working with Ajax, or when the embedded template needs
 some variable not available in the main template.
 
@@ -175,8 +123,8 @@ values::
 .. index::
    single: Twig; Helpers
 
-Template Helpers
-----------------
+Using Template Helpers
+----------------------
 
 The default Symfony2 helpers are available within a Twig template via
 specialized tags:
@@ -197,8 +145,11 @@ specialized tags:
     {% asset 'css/blog.css' %}
     {% asset 'images/logo.png' %}
 
-    {# generate a route #}
-    {% route 'blog_post' with ['id': post.id] %}
+    {# generate a path (/blog/1) #}
+    {% path 'blog_post' with ['id': post.id] %}
+
+    {# generate a URL (http://example.com/blog/1) #}
+    {% url 'blog_post' with ['id': post.id] %}
 
     {# render a template #}
     {% include 'BlogBundle:Post:list.twig' %}

@@ -61,11 +61,11 @@ Translations are available through the ``translator`` service
 :method:`Symfony\\Component\\Translation\\Translator::trans` method to
 translate a message::
 
-    $t = $this['translator']->trans('Symfony2 is great!');
+    $t = $this->get('translator')->trans('Symfony2 is great!');
 
 If you have placeholders in strings, pass their values as the second argument::
 
-    $t = $this['translator']->trans('Symfony2 is {{ what }}!', array('{{ what }}' => 'great'));
+    $t = $this->get('translator')->trans('Symfony2 is {{ what }}!', array('{{ what }}' => 'great'));
 
 .. note::
    The placeholders can have any form, but using the ``{{ var }}`` notation
@@ -74,7 +74,7 @@ If you have placeholders in strings, pass their values as the second argument::
 By default, the translator looks for messages in the default ``messages``
 domain. Override it via the third argument::
 
-    $t = $this['translator']->trans('Symfony2 is great!', array(), 'applications');
+    $t = $this->get('translator')->trans('Symfony2 is great!', array(), 'applications');
 
 Catalogues
 ----------
@@ -125,8 +125,71 @@ unique identifier:
 
         return array(
             'Symfony2 is great' => 'J\'aime Symfony2',
-            'symfony2.great'     => 'J\'aime Symfony2',
+            'symfony2.great'    => 'J\'aime Symfony2',
         );
+
+    .. code-block:: yaml
+
+        Symfony2 is great: J'aime Symfony2
+        symfony2.great:    J'aime Symfony2
+
+.. sidebar:: Better organize your Translations
+
+    Additionally, the ``php`` and ``yaml`` file formats support nested ids to
+    avoid repeating yourself if you use keywords instead of real text for your
+    ids:
+
+    .. configuration-block::
+
+        .. code-block:: yaml
+
+            symfony2:
+                is:
+                    great: Symfony2 is great
+                    amazing: Symfony2 is amazing
+                has:
+                    bundles: Symfony2 has bundles
+            user:
+                login: Login
+
+        .. code-block:: php
+
+            return array(
+                'symfony2' => array(
+                    'is' => array(
+                        'great' => 'Symfony2 is great',
+                        'amazing' => 'Symfony2 is amazing',
+                    ),
+                    'has' => array(
+                        'bundles' => 'Symfony2 has bundles',
+                    ),
+                ),
+                'user' => array(
+                    'login' => 'Login',
+                ),
+            );
+
+    The multiple levels are flattened into single id/translation pairs by
+    adding a dot (.) between every level, therefore the above examples are
+    equivalent to the following:
+
+    .. configuration-block::
+
+        .. code-block:: yaml
+
+            symfony2.is.great: Symfony2 is great
+            symfony2.is.amazing: Symfony2 is amazing
+            symfony2.has.bundles: Symfony2 has bundles
+            user.login: Login
+
+        .. code-block:: php
+
+            return array(
+                'symfony2.is.great' => 'Symfony2 is great',
+                'symfony2.is.amazing' => 'Symfony2 is amazing',
+                'symfony2.has.bundles' => 'Symfony2 has bundles',
+                'user.login' => 'Login',
+            );
 
 .. note::
    You can also store translations in a database, or any other storage by
@@ -212,7 +275,7 @@ The translator
 :method:`Symfony\\Component\\Translation\\Translator::transChoice` method
 knows how to deal with plural::
 
-    $t = $this['translator']->transChoice(
+    $t = $this->get('translator')->transChoice(
         '{0} There is no apples|{1} There is one apple|]1,Inf[ There are {{ count }} apples',
         10,
         array('{{ count }}' => 10)

@@ -108,7 +108,7 @@ for ``HelloController`` that reads as follows::
             $client = $this->createClient();
             $crawler = $client->request('GET', '/hello/Fabien');
 
-            $this->assertEquals(1, $crawler->filter('html:contains("Hello Fabien")'));
+            $this->assertEquals(1, count($crawler->filter('html:contains("Hello Fabien")')));
         }
     }
 

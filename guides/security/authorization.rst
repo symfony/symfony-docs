@@ -1,3 +1,6 @@
+.. index::
+   single: Security; Authorization
+
 Authorization
 =============
 
@@ -6,6 +9,9 @@ resources via access control rules. Authorization in Symfony2 covers this need
 but it also provides a standard and powerful way to decide if a user can
 access any resource (a URL, a model object, a method call, ...) thanks to a
 flexible access decision manager.
+
+.. index::
+   single: Security; Access Control
 
 Defining Access Control Rules for HTTP resources
 ------------------------------------------------
@@ -50,13 +56,14 @@ user has not the needed roles or an
 :class:`Symfony\\Component\Security\\Exception\\AuthenticationCredentialsNotFoundException`
 if he is not authenticated yet.
 
-.. tip::
-
-    ``IS_AUTHENTICATED_ANONYMOUSLY`` is a special role that all anonymous
-    users have.
-
 In the example above, we match requests based on their path info, but there
 are many other ways as you will learn in the next section.
+
+..tip::
+
+    Symfony2 automatically adds a special role based on the anonymous flag:
+    ``IS_AUTHENTICATED_ANONYMOUSLY`` for anonymous users and
+    ``IS_AUTHENTICATED_FULLY`` for all others.
 
 Matching a Request
 ------------------
@@ -120,6 +127,9 @@ Access control rules can match a request in many different ways:
                 ),
             ),
         ));
+
+.. index::
+   single: Security; HTTPS
 
 Enforcing HTTP or HTTPS
 -----------------------
