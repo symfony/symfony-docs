@@ -46,9 +46,10 @@ time. But when you have a long list of dependencies, using setter injection
 can be the way to go, especially for optional dependencies.
 
 .. tip::
-   If you use dependency injection like we did in the two examples above, you
-   can then easily use the Symfony2 Dependency Injection component to elegantly
-   manage these objects.
+
+    If you use dependency injection like we did in the two examples above, you
+    can then easily use the Symfony2 Dependency Injection component to
+    elegantly manage these objects.
 
 Doing something before or after a Method Call
 ---------------------------------------------

@@ -403,9 +403,9 @@ method::
 .. tip::
 
     Be aware that anonymous users are considered authenticated. If you want to
-    check if a user is "fully authenticated" (non-anonymous), you need to
-    check if the user has the special ``IS_AUTHENTICATED_FULLY`` role (or
-    check that the user has not the ``IS_AUTHENTICATED_ANONYMOUSLY`` role).
+    check if a user is "fully authenticated" (non-anonymous), you need to check
+    if the user has the special ``IS_AUTHENTICATED_FULLY`` role (or check that
+    the user has not the ``IS_AUTHENTICATED_ANONYMOUSLY`` role).
 
 .. index::
    single: Security; Roles

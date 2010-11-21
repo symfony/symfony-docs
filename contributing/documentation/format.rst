@@ -49,7 +49,8 @@ the highlighted pseudo-language:
         <?php echo $this->foobar(); ?>
 
 .. note::
-   A list of supported languages is available on the `Pygments website`_.
+
+    A list of supported languages is available on the `Pygments website`_.
 
 Configuration Blocks
 ~~~~~~~~~~~~~~~~~~~~

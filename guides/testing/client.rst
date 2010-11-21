@@ -7,8 +7,9 @@ The Test Client
 The test Client simulates an HTTP client like a browser.
 
 .. note::
-   The test Client is based on the ``BrowserKit`` and the ``Crawler``
-   components.
+
+    The test Client is based on the ``BrowserKit`` and the ``Crawler``
+    components.
 
 Making Requests
 ---------------
@@ -36,8 +37,9 @@ HTTP method and the form URL, it gives you a nice API to upload files, and it
 merges the submitted values with the form default ones, and more.
 
 .. tip::
-   The Crawler is documented in its own :doc:`section <crawler>`. Read it to
-   learn more about the ``Link`` and ``Form`` objects.
+
+    The Crawler is documented in its own :doc:`section <crawler>`. Read it to
+    learn more about the ``Link`` and ``Form`` objects.
 
 But you can also simulate form submissions and complex requests with the
 additional arguments of the ``request()`` method::

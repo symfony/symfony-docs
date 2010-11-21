@@ -35,8 +35,9 @@ straightforward::
 The autoloader is useful only if you add some libraries to autoload.
 
 .. note::
-   The autoloader is automatically registered in a Symfony2 application (see
-   ``src/autoload.php``).
+
+    The autoloader is automatically registered in a Symfony2 application (see
+    ``src/autoload.php``).
 
 If the classes to autoload use namespaces, use the
 :method:`Symfony\\Component\\HttpFoundation\\UniversalClassLoader::registerNamespace` or
@@ -63,8 +64,9 @@ methods::
     ));
 
 .. note::
-   Some libraries also need that their root path be registered in the PHP
-   include path (``set_include_path()``).
+
+    Some libraries also need that their root path be registered in the PHP
+    include path (``set_include_path()``).
 
 Classes from a sub-namespace or a sub-hierarchy of PEAR classes can be looked
 for in a location list to ease the vendoring of a sub-set of classes for large

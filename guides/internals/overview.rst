@@ -9,18 +9,20 @@ That makes me very happy! This section is an in-depth explanation of the
 Symfony2 internals.
 
 .. note::
-   You need to read this section only if you want to understand how Symfony2
-   works behind the scene, or if you want to extend Symfony2.
+
+    You need to read this section only if you want to understand how Symfony2
+    works behind the scene, or if you want to extend Symfony2.
 
 The Symfony2 code is made of several independent layers. Each layer is built
 on top of the previous one.
 
 .. tip::
-   Autoloading is not managed by the framework directly; it's done
-   independently with the help of the
-   :class:`Symfony\\Component\\HttpFoundation\\UniversalClassLoader` class and
-   the ``src/autoload.php`` file. Read the :doc:`dedicated chapter
-   </guides/tools/autoloader>` for more information.
+
+    Autoloading is not managed by the framework directly; it's done
+    independently with the help of the
+    :class:`Symfony\\Component\\HttpFoundation\\UniversalClassLoader` class
+    and the ``src/autoload.php`` file. Read the :doc:`dedicated chapter
+    </guides/tools/autoloader>` for more information.
 
 ``HttpFoundation`` Component
 ----------------------------
@@ -41,8 +43,9 @@ variables:
   :class:`Symfony\\Component\\HttpFoundation\\SessionStorage\\SessionStorageInterface`
   interface abstract session management ``session_*()`` functions.
 
-.. seealso:: Read more about the :doc:`HttpFoundation <http_foundation>`
-   component.
+.. seealso::
+
+    Read more about the :doc:`HttpFoundation <http_foundation>` component.
 
 ``HttpKernel`` Component
 ------------------------

@@ -75,9 +75,10 @@ Let's create a simple template to render the form:
     </form>
 
 .. note::
-   Form rendering in templates is covered in two dedicated chapters: one for
-   :doc:`PHP templates </guides/forms/view>`, and one for :doc:`Twig templates
-   </guides/forms/twig>`.
+
+    Form rendering in templates is covered in two dedicated chapters: one for
+    :doc:`PHP templates </guides/forms/view>`, and one for :doc:`Twig templates
+    </guides/forms/twig>`.
 
 When the user submits the form, we also need to handle the submitted data. All
 the data is stored in a POST parameter with the name of the form::

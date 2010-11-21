@@ -112,13 +112,15 @@ parameter.
         </form>
         
 .. note::
-   As you can see, Twig filters are prefixed with "render_". Other than the 
-   methods of the "form" helper, these filters are global and prone to
-   naming collisions.
+
+    As you can see, Twig filters are prefixed with "render_". Other than the
+    methods of the "form" helper, these filters are global and prone to
+    naming collisions.
 
 .. tip::
-   By default, the ``errors`` helper generates a ``<ul>`` list, but this
-   can be easily customized as you will see later in this document.
+
+    By default, the ``errors`` helper generates a ``<ul>`` list, but this
+    can be easily customized as you will see later in this document.
 
 Last but not the least, a form containing a file input must contain the
 ``enctype`` attribute; use the ``enctype`` helper to take render it:
@@ -170,8 +172,9 @@ The ``render`` helper renders the HTML representation of a field:
         <?php echo $view['form']->render($form['title']) ?>
 
 .. note::
-   The field's template is selected based on the field's class name, as you will
-   learn later.
+
+    The field's template is selected based on the field's class name, as you will
+    learn later.
 
 The ``label`` helper renders the ``<label>`` tag associated with the field:
 
@@ -199,7 +202,8 @@ label:
         <?php echo $view['form']->label($form['title'], 'Give me a title') ?>
 
 .. note::
-   Symfony2 automatically internationalizes all labels and error messages.
+
+    Symfony2 automatically internationalizes all labels and error messages.
 
 The ``errors`` helper renders the field errors:
 
@@ -488,5 +492,6 @@ parent class - ``FieldGroup`` - is used instead:
         <?php echo $view['form']->hidden($field) ?>
 
 .. caution::
-   The ``render`` method is not very flexible and should only be used to
-   build prototypes.
+
+    The ``render`` method is not very flexible and should only be used to
+    build prototypes.

@@ -16,7 +16,8 @@ conventions. This part does not document PHPUnit itself, but if you don't know
 it yet, you can read its excellent `documentation`_.
 
 .. note::
-   Symfony2 works with PHPUnit 3.5 or later.
+
+    Symfony2 works with PHPUnit 3.5 or later.
 
 The default PHPUnit configuration looks for tests under ``Tests/``
 sub-directory of your bundles:
@@ -47,7 +48,8 @@ Running the test suite for a given application is straightforward:
     $ phpunit
 
 .. tip::
-   Code coverage can be generated with the ``--coverage-html`` option.
+
+    Code coverage can be generated with the ``--coverage-html`` option.
 
 .. index::
    single: Tests; Unit Tests
@@ -120,8 +122,9 @@ The ``request()`` method returns a ``Crawler`` object which can be used to
 select elements in the Response, to click on links, and to submit forms.
 
 .. tip::
-   The Crawler can only be used if the Response content is an XML or an HTML
-   document.
+
+    The Crawler can only be used if the Response content is an XML or an HTML
+    document.
 
 Click on a link by first selecting it with the Crawler using either a XPath
 expression or a CSS selector, then use the Client to click on it::

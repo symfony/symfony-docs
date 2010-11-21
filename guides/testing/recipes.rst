@@ -39,8 +39,9 @@ Insulated clients transparently execute their requests in a dedicated and
 clean PHP process, thus avoiding any side-effects.
 
 .. tip::
-   As an insulated client is slower, you can keep one client in the main
-   process, and insulate the other ones.
+
+    As an insulated client is slower, you can keep one client in the main
+    process, and insulate the other ones.
 
 Testing Redirection
 -------------------
@@ -106,8 +107,9 @@ check that the profiler is indeed available (it is enabled by default in the
     }
 
 .. note::
-   The profiler information are available even if you insulate the client or if
-   you use an HTTP layer for your tests.
+
+    The profiler information are available even if you insulate the client or
+    if you use an HTTP layer for your tests.
 
 Container
 ---------
@@ -123,8 +125,9 @@ Be warned that this does not work if you insulate the client or if you use an
 HTTP layer.
 
 .. tip::
-   If the information you need to check are available from the profiler, use
-   them instead.
+
+    If the information you need to check are available from the profiler, use
+    them instead.
 
 .. index::
    single: Tests; Assertions
