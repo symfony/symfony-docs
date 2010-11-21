@@ -96,7 +96,7 @@ write mapping information with annotations, XML, or YAML:
 
     .. code-block:: yaml
 
-        # Application/HelloBundle/Resources/config/doctrine/metadata/orm/entities.yml
+        # Application/HelloBundle/Resources/config/doctrine/metadata/orm/Application.HelloBundle.Entity.User.dcm.yml
         Application\HelloBundle\Entity\User:
             type: entity
             table: user
@@ -112,7 +112,7 @@ write mapping information with annotations, XML, or YAML:
 
     .. code-block:: xml
 
-        <!-- Application/HelloBundle/Resources/config/doctrine/metadata/orm/entities.xml -->
+        <!-- Application/HelloBundle/Resources/config/doctrine/metadata/orm/Application.HelloBundle.Entity.User.dcm.xml -->
         <doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
               xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
