@@ -414,3 +414,67 @@ configuration, and tag it with ``data_collector``:
         ;
 
 .. _data collectors: http://api.symfony-reloaded.org/PR3/index.html?q=DataCollector
+
+Adding Web Profiler Templates
+-----------------------------
+
+When you want to display the data collected by your Data Collector in the
+web debug toolbar and the web profiler you have to create templates for it.
+
+If you want to display the data in the web debug toolbar create the template
+``YourBundle/Resources/views/Profiler/mydata_bar.php``:
+
+    <?php echo $data->getSummary() ?>
+
+For more detailed data you will want to create the two web profiler templates:
+
+* The menu template ``YourBundle/Resources/views/Profiler/mydata_menu.php``:
+
+    <div class="count"><?php echo $data->getCount() ?></div>
+    <img style="margin: 0 5px 0 0; vertical-align: middle; width: 32px" alt="" src="<?php echo $view->get('assets')->getUrl('bundles/webprofiler/images/db.png') ?>" />
+    My Data
+
+* The panel template ``YourBundle/Resources/views/Profiler/mydata_panel.php``:
+
+    <h2>My Data Details</h2>
+    
+    <ul class="alt">
+        <?php foreach($data->getDetails() as $i => $detail): ?>
+            <li class="<?php echo $i % 2 ? 'odd' : 'even' ?>">
+                <?php echo $detail ?>
+            </li>
+        <?php endforeach; ?>
+    </ul>
+
+.. note::
+   ``$data is an instance of your Data Collector class.
+
+The next step is to let the web profiler know about your templates:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        webprofiler.config:
+            toolbar: true
+            intercept_redirects: true
+            templates:
+                mydata: YourBundle:Profiler:mydata.php
+
+    .. code-block:: xml
+
+        <webprofiler:config toolbar="true" intercept-redirects="true">
+            <webprofiler:templates
+                mydata="YourBundle:Profiler:mydata.php"
+            />
+        </webprofiler:config>
+
+    .. code-block:: php
+
+        $container->loadFromExtension('webprofiler', 'config', array(
+            'toolbar' => true,
+            'intercept-redirects' => true,
+            'templates' => array(
+                'mydata' => 'YourBundle:Profiler:mydata.php',
+            ),
+        ));
