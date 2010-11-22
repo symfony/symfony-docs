@@ -18,6 +18,8 @@ the object.
 Let's see how this works in a practical example. Let's create a simple
 ``Customer`` class::
 
+    namespace Application\HelloBundle\Entity;
+
     class Customer
     {
         public $name;
@@ -40,6 +42,12 @@ is public, while ``$age`` can only be modified through setters and getters.
 Now let's create a form to let the visitor fill the data of the object::
 
     // src/Application/HelloBundle/Controller/HelloController.php
+
+    use Application\HelloBundle\Entity\Customer;
+    use Symfony\Component\Form\Form;
+    use Symfony\Component\Form\TextField;
+    use Symfony\Component\Form\IntegerField;
+
     public function signupAction()
     {
         $customer = new Customer();
