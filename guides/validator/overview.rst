@@ -42,7 +42,7 @@ with constraints; this process is called the "mapping":
             </property>
         </class>
 
-    .. code-block:: php
+    .. code-block:: php-annotations
 
         // Application/HelloBundle/Author.php
         class Author
@@ -51,6 +51,21 @@ with constraints; this process is called the "mapping":
              * @validation:NotBlank()
              */
             private $name;
+        }
+
+    .. code-block:: php
+
+        // Application/HelloBundle/Author.php
+        use Symfony\Components\Validator\Constraints\NotBlank;
+        
+        class Author
+        {
+            private $name;
+            
+            public static function loadMetadata(ClassMetadata $metadata)
+            {
+                $metadata->addPropertyConstraint('name', new NotBlank());
+            }
         }
 
 Finally, we can use the :class:`Symfony\\Component\\Validator\\Validator`

@@ -56,11 +56,9 @@ Then you can constrain this method with ``AssertTrue``.
             </getter>
         </class>
 
-    .. code-block:: php
+    .. code-block:: php-annotations
 
         // Application/HelloBundle/Author.php
-        namespace Application\HelloBundle;
-
         class Author
         {
             protected $token;
@@ -68,6 +66,28 @@ Then you can constrain this method with ``AssertTrue``.
             /**
              * @validation:AssertTrue(message = "The token is invalid")
              */
+            public function isTokenValid()
+            {
+                return $this->token == $this->generateToken();
+            }
+        }
+
+    .. code-block:: php
+
+        // Application/HelloBundle/Author.php
+        use Symfony\Components\Validator\Constraints\AssertTrue;
+
+        class Author
+        {
+            protected $token;
+            
+            public static function loadMetadata(ClassMetadata $metadata)
+            {
+                $metadata->addGetterConstraint('tokenValid', new AssertTrue(array(
+                    'message' => 'The token is invalid',
+                )));
+            }
+
             public function isTokenValid()
             {
                 return $this->token == $this->generateToken();

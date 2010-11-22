@@ -1,19 +1,13 @@
 Valid
 =====
 
-Validates an associated object.
+Marks an associated object to be validated itself.
 
 .. code-block:: yaml
 
     properties:
         address:
             - Valid: ~
-
-Options
--------
-
-  * ``class``: The expected class of the object
-  * ``message``: The error message if the class doesn't match
 
 Example: Validate object graphs
 -------------------------------
@@ -86,10 +80,10 @@ their properties. Furthermore, ``Author`` stores an ``Address`` instance in the
             </property>
         </class>
 
-    .. code-block:: php
+    .. code-block:: php-annotations
 
         // Application/HelloBundle/Address.php
-        class Author
+        class Address
         {
             /**
              * @validation:NotBlank()
@@ -97,7 +91,7 @@ their properties. Furthermore, ``Author`` stores an ``Address`` instance in the
             protected $street;
 
             /**
-             * @validation:NotBlank()
+             * @validation:NotBlank
              * @validation:MaxLength(5)
              */
             protected $zipCode;
@@ -107,15 +101,57 @@ their properties. Furthermore, ``Author`` stores an ``Address`` instance in the
         class Author
         {
             /**
-             * @validation:NotBlank()
+             * @validation:NotBlank
              * @validation:MinLength(4)
              */
             protected $firstName;
 
             /**
-             * @validation:NotBlank()
+             * @validation:NotBlank
              */
             protected $lastName;
+            
+            protected $address;
+        }
+
+    .. code-block:: php
+
+        // Application/HelloBundle/Address.php
+        use Symfony\Components\Validator\Constraints\NotBlank;
+        use Symfony\Components\Validator\Constraints\MaxLength;
+        
+        class Address
+        {
+            protected $street;
+
+            protected $zipCode;
+            
+            public static function loadMetadata(ClassMetadata $metadata)
+            {
+                $metadata->addPropertyConstraint('street', new NotBlank());
+                $metadata->addPropertyConstraint('zipCode', new NotBlank());
+                $metadata->addPropertyConstraint('zipCode', new MaxLength(5));
+            }
+        }
+
+        // Application/HelloBundle/Author.php
+        use Symfony\Components\Validator\Constraints\NotBlank;
+        use Symfony\Components\Validator\Constraints\MinLength;
+        
+        class Author
+        {
+            protected $firstName;
+
+            protected $lastName;
+            
+            protected $address;
+            
+            public static function loadMetadata(ClassMetadata $metadata)
+            {
+                $metadata->addPropertyConstraint('firstName', new NotBlank());
+                $metadata->addPropertyConstraint('firstName', new MinLength(4));
+                $metadata->addPropertyConstraint('lastName', new NotBlank());
+            }
         }
 
 With this mapping it is possible to successfully validate an author with an
@@ -141,46 +177,36 @@ invalid address. To prevent that, we add the ``Valid`` constraint to the
             </property>
         </class>
 
-    .. code-block:: php
+    .. code-block:: php-annotations
 
         // Application/HelloBundle/Author.php
         class Author
         {
+            /* ... */
+            
             /**
-             * @validation:Valid()
+             * @validation:Valid
              */
             protected $address;
         }
-
-We can even go one step further and validate the class of the related object
-to be ``Address`` or one of its subclasses.
-
-.. configuration-block::
-
-    .. code-block:: yaml
-
-        # Application/HelloBundle/Resources/config/validation.yml
-        Application\HelloBundle\Author:
-            properties:
-                address:
-                    - Valid: { class: Application\ḨelloBundle\Address }
-
-    .. code-block:: xml
-
-        <!-- Application/HelloBundle/Resources/config/validation.xml -->
-        <class name="Application\HelloBundle\Author">
-            <property name="address">
-                <constraint name="Valid">Application\HelloBundle\Address</constraint>
-            </property>
-        </class>
 
     .. code-block:: php
 
         // Application/HelloBundle/Author.php
+        use Symfony\Components\Validator\Constraints\Valid;
+        
         class Author
         {
-            /**
-             * @validation:Valid(class = "Application\HelloBundle\Address")
-             */
             protected $address;
+            
+            public static function loadMetadata(ClassMetadata $metadata)
+            {
+                $metadata->addPropertyConstraint('address', new Valid());
+            }
         }
+
+If you validate an author with an invalid address now, you can see that the
+validation of the ``Address`` fields failed.
+
+    Application\HelloBundle\Author.address.zipCode:
+        This value is too long. It should have 5 characters or less

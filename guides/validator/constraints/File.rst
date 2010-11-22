@@ -49,7 +49,7 @@ not exceed a maximum size of 128 kilobytes and is a PDF document.
             </property>
         </class>
 
-    .. code-block:: php
+    .. code-block:: php-annotations
 
         // Application/HelloBundle/Author.php
         class Author
@@ -61,6 +61,27 @@ not exceed a maximum size of 128 kilobytes and is a PDF document.
              * })
              */
             private $filename;
+        }
+
+    .. code-block:: php
+
+        // Application/HelloBundle/Author.php
+        use Symfony\Components\Validator\Constraints\File;
+        
+        class Author
+        {
+            private $filename;
+            
+            public static function loadMetadata(ClassMetadata $metadata)
+            {
+                $metadata->addPropertyConstraint('filename', new File(array(
+                    'maxSize' => '128k',
+                    'mimeTypes' => array(
+                        'application/pdf',
+                        'application/x-pdf',
+                    ),
+                )));
+            }
         }
 
 When you validate the object with a file that doesn't satisfy one of these
