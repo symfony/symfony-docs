@@ -19,7 +19,7 @@ objects:
 
 .. code-block:: php
 
-    $validator = $container->getService('validator');
+    $validator = $container->get('validator');
     $author = new Author();
 
     print $validator->validate($author);
