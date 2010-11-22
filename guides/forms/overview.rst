@@ -18,6 +18,8 @@ the object.
 Let's see how this works in a practical example. Let's create a simple
 ``Customer`` class::
 
+    namespace Application\HelloBundle\Entity;
+
     class Customer
     {
         public $name;
@@ -40,6 +42,12 @@ is public, while ``$age`` can only be modified through setters and getters.
 Now let's create a form to let the visitor fill the data of the object::
 
     // src/Application/HelloBundle/Controller/HelloController.php
+
+    use Application\HelloBundle\Entity\Customer;
+    use Symfony\Component\Form\Form;
+    use Symfony\Component\Form\TextField;
+    use Symfony\Component\Form\IntegerField;
+
     public function signupAction()
     {
         $customer = new Customer();
@@ -49,7 +57,7 @@ Now let's create a form to let the visitor fill the data of the object::
         $form->add(new IntegerField('age'));
 
         return $this->render('HelloBundle:Hello:signup.php', array(
-            'form' => $this->get('templating.form')->get($form)
+            'form' => $form
         ));
     }
 
@@ -68,17 +76,15 @@ Let's create a simple template to render the form:
     # src/Application/HelloBundle/Resources/views/Hello/signup.php
     <?php $view->extend('HelloBundle::layout.php') ?>
 
-    <?php echo $form->form('#') ?>
-        <?php echo $form->render() ?>
+    <form action="#" method="post">
+        <?php echo $view['form']->render($form) ?>
 
         <input type="submit" value="Send!" />
     </form>
 
 .. note::
 
-    Form rendering in templates is covered in two dedicated chapters: one for
-    :doc:`PHP templates </guides/forms/view>`, and one for :doc:`Twig templates
-    </guides/forms/twig>`.
+    Form rendering in templates is covered in chapter :doc:`PHP templates </guides/forms/view>`.
 
 When the user submits the form, we also need to handle the submitted data. All
 the data is stored in a POST parameter with the name of the form::
@@ -182,6 +188,9 @@ We can use a field group to show fields for the customer and the nested
 address at the same time::
 
     # src/Application/HelloBundle/Controller/HelloController.php
+
+    use Symfony\Component\Form\FieldGroup;
+
     public function signupAction()
     {
         $customer = new Customer();
@@ -207,6 +216,8 @@ The ``RepeatedField`` is an extended field group that allows you to output a
 field twice. The repeated field will only validate if the user enters the same
 value in both fields::
 
+    use Symfony\Component\Form\RepeatedField;
+
     $form->add(new RepeatedField(new TextField('email')));
 
 This is a very useful field for querying email addresses or passwords!
@@ -226,6 +237,8 @@ will extend the ``Customer`` class to store three email addresses::
     }
 
 We will now add a ``CollectionField`` to manipulate these addresses::
+
+    use Symfony\Component\Form\CollectionField;
 
     $form->add(new CollectionField(new TextField('emails')));
 
@@ -254,6 +267,8 @@ accepting terms and conditions.
 
 Let's create a simple ``Registration`` class for this purpose::
 
+    namespace Application\HelloBundle\Entity;
+
     class Registration
     {
         /** @validation:Valid */
@@ -271,6 +286,10 @@ Let's create a simple ``Registration`` class for this purpose::
 Now we can easily adapt the form in the controller::
 
     # src/Application/HelloBundle/Controller/HelloController.php
+
+    use Application\HelloBundle\Entity\Registration;
+    use Symfony\Component\Form\CheckboxField;
+
     public function signupAction()
     {
         $registration = new Registration();
