@@ -59,7 +59,7 @@ The only mandatory configuration parameter is ``transport``:
     .. code-block:: php
 
         // app/config/config.php
-        $container->loadFromExtension('swift', 'mailer', array(
+        $container->loadFromExtension('swiftmailer', 'config', array(
             'transport'  => "smtp",
             'encryption' => "ssl",
             'auth_mode'  => "login",
