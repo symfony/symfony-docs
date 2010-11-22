@@ -414,3 +414,66 @@ configuration, and tag it with ``data_collector``:
         ;
 
 .. _data collectors: http://api.symfony-reloaded.org/PR3/index.html?q=DataCollector
+
+Adding Web Profiler Templates
+-----------------------------
+
+When you want to display the data collected by your Data Collector in the web
+debug toolbar or the web profiler, create a Twig template following this
+skeleton:
+
+.. code-block:: jinja
+
+    {% extends 'WebProfilerBundle:Profiler:layout.twig' %}
+
+    {% block toolbar %}
+        {# the web debug toolbar content #}
+    {% endblock %}
+
+    {% block head %}
+        {# if the web profiler panel needs some specific JS or CSS files #}
+    {% endblock %}
+
+    {% block menu %}
+        {# the menu content #}
+    {% endblock %}
+
+    {% block panel %}
+        {# the panel content #}
+    {% endblock %}
+
+Each block is optional. The ``toolbar`` block is used for the web debug
+toolbar and ``menu`` and ``panel`` are used to add a panel to the web
+profiler.
+
+All blocks have access to the ``collector`` object.
+
+To enable the template, register it in your configuration:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        webprofiler.config:
+            toolbar: true
+            intercept_redirects: true
+            templates:
+                mydata: YourBundle:Profiler:mydata
+
+    .. code-block:: xml
+
+        <webprofiler:config toolbar="true" intercept-redirects="true">
+            <webprofiler:templates
+                mydata="YourBundle:Profiler:mydata"
+            />
+        </webprofiler:config>
+
+    .. code-block:: php
+
+        $container->loadFromExtension('webprofiler', 'config', array(
+            'toolbar' => true,
+            'intercept-redirects' => true,
+            'templates' => array(
+                'mydata' => 'YourBundle:Profiler:mydata',
+            ),
+        ));

@@ -90,7 +90,7 @@ Store translations for messages found in a bundle under the
 
 Each message file must be named according to the following pattern:
 ``domain.locale.loader`` (the domain name, followed by a dot (``.``), followed
-by the locale name, followed by a dot (``.``), followed by the loader name.)
+by the locale name, followed by a dot (``.``), followed by the loader name).
 
 The loader can be the name of any registered loader. By default, Symfony2
 provides the following loaders:
