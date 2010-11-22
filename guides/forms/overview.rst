@@ -76,7 +76,7 @@ Let's create a simple template to render the form:
     # src/Application/HelloBundle/Resources/views/Hello/signup.php
     <?php $view->extend('HelloBundle::layout.php') ?>
 
-    <form action="#" <?php echo $view['form']->enctype($form) ?> method="post">
+    <form action="#" method="post">
         <?php echo $view['form']->render($form) ?>
 
         <input type="submit" value="Send!" />
