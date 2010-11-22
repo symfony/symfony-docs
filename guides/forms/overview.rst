@@ -188,6 +188,9 @@ We can use a field group to show fields for the customer and the nested
 address at the same time::
 
     # src/Application/HelloBundle/Controller/HelloController.php
+
+    use Symfony\Component\Form\FieldGroup;
+
     public function signupAction()
     {
         $customer = new Customer();
@@ -213,6 +216,8 @@ The ``RepeatedField`` is an extended field group that allows you to output a
 field twice. The repeated field will only validate if the user enters the same
 value in both fields::
 
+    use Symfony\Component\Form\RepeatedField;
+
     $form->add(new RepeatedField(new TextField('email')));
 
 This is a very useful field for querying email addresses or passwords!
@@ -232,6 +237,8 @@ will extend the ``Customer`` class to store three email addresses::
     }
 
 We will now add a ``CollectionField`` to manipulate these addresses::
+
+    use Symfony\Component\Form\CollectionField;
 
     $form->add(new CollectionField(new TextField('emails')));
 
