@@ -418,38 +418,37 @@ configuration, and tag it with ``data_collector``:
 Adding Web Profiler Templates
 -----------------------------
 
-When you want to display the data collected by your Data Collector in the
-web debug toolbar and the web profiler you have to create templates for it.
+When you want to display the data collected by your Data Collector in the web
+debug toolbar or the web profiler, create a Twig template following this
+skeleton:
 
-If you want to display the data in the web debug toolbar create the template
-``YourBundle/Resources/views/Profiler/mydata_bar.php``:
+.. code-block:: jinja
 
-    <?php echo $data->getSummary() ?>
+    {% extends 'WebProfilerBundle:Profiler:layout.twig' %}
 
-For more detailed data you will want to create the two web profiler templates:
+    {% block toolbar %}
+        {# the web debug toolbar content #}
+    {% endblock %}
 
-* The menu template ``YourBundle/Resources/views/Profiler/mydata_menu.php``:
+    {% block head %}
+        {# if the web profiler panel needs some specific JS or CSS files #}
+    {% endblock %}
 
-    <div class="count"><?php echo $data->getCount() ?></div>
-    <img style="margin: 0 5px 0 0; vertical-align: middle; width: 32px" alt="" src="<?php echo $view->get('assets')->getUrl('bundles/webprofiler/images/db.png') ?>" />
-    My Data
+    {% block menu %}
+        {# the menu content #}
+    {% endblock %}
 
-* The panel template ``YourBundle/Resources/views/Profiler/mydata_panel.php``:
+    {% block panel %}
+        {# the panel content #}
+    {% endblock %}
 
-    <h2>My Data Details</h2>
-    
-    <ul class="alt">
-        <?php foreach($data->getDetails() as $i => $detail): ?>
-            <li class="<?php echo $i % 2 ? 'odd' : 'even' ?>">
-                <?php echo $detail ?>
-            </li>
-        <?php endforeach; ?>
-    </ul>
+Each block is optional. The ``toolbar`` block is used for the web debug
+toolbar and ``menu`` and ``panel`` are used to add a panel to the web
+profiler.
 
-.. note::
-   ``$data is an instance of your Data Collector class.
+All blocks have access to the ``collector`` object.
 
-The next step is to let the web profiler know about your templates:
+To enable the template, register it in your configuration:
 
 .. configuration-block::
 
@@ -459,13 +458,13 @@ The next step is to let the web profiler know about your templates:
             toolbar: true
             intercept_redirects: true
             templates:
-                mydata: YourBundle:Profiler:mydata.php
+                mydata: YourBundle:Profiler:mydata
 
     .. code-block:: xml
 
         <webprofiler:config toolbar="true" intercept-redirects="true">
             <webprofiler:templates
-                mydata="YourBundle:Profiler:mydata.php"
+                mydata="YourBundle:Profiler:mydata"
             />
         </webprofiler:config>
 
@@ -475,6 +474,6 @@ The next step is to let the web profiler know about your templates:
             'toolbar' => true,
             'intercept-redirects' => true,
             'templates' => array(
-                'mydata' => 'YourBundle:Profiler:mydata.php',
+                'mydata' => 'YourBundle:Profiler:mydata',
             ),
         ));
