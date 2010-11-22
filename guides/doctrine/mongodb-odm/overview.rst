@@ -9,8 +9,9 @@ it works and architecture. You only deal with plain PHP objects and they are
 persisted transparently without imposing on your domain model.
 
 .. tip::
-   You can read more about the Doctrine MongoDB Object Document Mapper on the
-   projects `documentation`_.
+
+    You can read more about the Doctrine MongoDB Object Document Mapper on the
+    projects `documentation`_.
 
 To get started working with Doctrine and the MongoDB Object Document Mapper you
 just need to enable it:

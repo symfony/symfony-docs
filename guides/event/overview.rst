@@ -50,9 +50,10 @@ Here are some examples of good event names:
 * response.filter_content
 
 .. note::
-   You can of course extend the ``Event`` class to specialize an event further,
-   or enforce some constraints, but most of the time it adds an unnecessary
-   level of complexity.
+
+    You can of course extend the ``Event`` class to specialize an event
+    further, or enforce some constraints, but most of the time it adds an
+    unnecessary level of complexity.
 
 Besides its name, an ``Event`` instance can store additional data about the
 notified event:
@@ -111,11 +112,12 @@ The ``connect()`` method takes two arguments:
 * A PHP callable to call when the event is notified.
 
 .. note::
-   A `PHP callable`_ is a PHP variable that can be used by the
-   ``call_user_func()`` function and returns ``true`` when passed to the
-   ``is_callable()`` function. It can be a ``\Closure`` instance, a string
-   representing a function, or an array representing an object method or a
-   class method.
+
+    A `PHP callable`_ is a PHP variable that can be used by the
+    ``call_user_func()`` function and returns ``true`` when passed to the
+    ``is_callable()`` function. It can be a ``\Closure`` instance, a string
+    representing a function, or an array representing an object method or a
+    class method.
 
 Once a listener is registered with the dispatcher, it waits until the event is
 notified. For the above example, the dispatcher calls ``$callable`` whenever
@@ -123,12 +125,14 @@ the ``user.change_culture`` event is notified; the listener receives an
 ``Event`` instance as an argument.
 
 .. note::
-   The listeners are called by the event dispatcher in the same order you
-   connected them.
+
+    The listeners are called by the event dispatcher in the same order you
+    connected them.
 
 .. tip::
-   If you use the Symfony2 MVC framework, listeners are automatically
-   registered based on your :ref:`configuration <kernel_listener_tag>`.
+
+    If you use the Symfony2 MVC framework, listeners are automatically
+    registered based on your :ref:`configuration <kernel_listener_tag>`.
 
 .. index::
    single: Event Dispatcher; Notification

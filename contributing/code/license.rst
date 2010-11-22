@@ -5,11 +5,11 @@ Symfony2 is released under the MIT license.
 
 According to `Wikipedia`_:
 
-  "It is a permissive license, meaning that it permits reuse within
-  proprietary software on the condition that the license is distributed with
-  that software. The license is also GPL-compatible, meaning that the GPL
-  permits combination and redistribution with software that uses the MIT
-  License."
+    "It is a permissive license, meaning that it permits reuse within
+    proprietary software on the condition that the license is distributed with
+    that software. The license is also GPL-compatible, meaning that the GPL
+    permits combination and redistribution with software that uses the MIT
+    License."
 
 The License
 -----------

@@ -12,61 +12,6 @@ has native support for Twig through ``TwigBundle``.
    single: Twig; Installation
    single: Twig; Configuration
 
-Installation & Configuration
-----------------------------
-
-Enable the ``TwigBundle`` in your kernel::
-
-    // app/HelloKernel.php
-
-    public function registerBundles()
-    {
-        $bundles = array(
-            // ...
-            new Symfony\Bundle\TwigBundle\TwigBundle(),
-        );
-
-        // ...
-    }
-
-Then, configure it:
-
-.. configuration-block::
-
-    .. code-block:: yaml
-
-        # app/config/config.yml
-        twig.config: ~
-
-        # app/config/config_dev.yml
-        twig.config:
-            auto_reload: true
-
-    .. code-block:: xml
-
-        <!--
-        xmlns:twig="http://www.symfony-project.org/schema/dic/twig"
-        xsi:schemaLocation="http://www.symfony-project.org/schema/dic/twig http://www.symfony-project.org/schema/dic/twig/twig-1.0.xsd
-        -->
-
-        <!-- app/config/config.xml -->
-        <twig:config />
-
-        <!-- app/config/config_dev.xml -->
-        <twig:config auto_reload="true" />
-
-    .. code-block:: php
-
-        // app/config/config.php
-        $container->loadFromExtension('twig', 'config');
-
-        // app/config/config_dev.php
-        $container->loadFromExtension('twig', 'config', array('auto_reload' => true));
-
-.. tip::
-   The configuration options are the same as the ones you pass to the
-   ``Twig_Environment`` `constructor`_.
-
 Rendering Twig Templates
 ------------------------
 
@@ -90,7 +35,8 @@ template::
     Hello {{ $name }}!
 
 .. note::
-   The Twig templates must use the ``twig`` extension.
+
+    The Twig templates must use the ``twig`` extension.
 
 And here is a typical layout:
 

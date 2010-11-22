@@ -39,7 +39,8 @@ To install them all, run the `install_vendors.sh` script:
     $ sh install_vendors.sh
 
 .. note::
-   Note that the script takes some time to finish.
+
+    Note that the script takes some time to finish.
 
 After installation, you can update the vendors anytime with the
 `update_vendors.sh` script:
@@ -64,8 +65,9 @@ The output should display `OK`. If not, you need to figure out what's going on
 and if the tests are broken because of your modifications.
 
 .. tip::
-   Run the test suite before applying your modifications to check that they run
-   fine on your configuration.
+
+    Run the test suite before applying your modifications to check that they
+    run fine on your configuration.
 
 Code Coverage
 -------------
@@ -81,7 +83,8 @@ Check the code coverage by opening the generated `cov/index.html` page in a
 browser.
 
 .. tip::
-   The code coverage only works if you have XDebug enabled and all dependencies
-   installed.
+
+    The code coverage only works if you have XDebug enabled and all
+    dependencies installed.
 
 .. _install: http://www.phpunit.de/manual/current/en/installation.html

@@ -9,8 +9,9 @@ layer and offers you the ability to programmatically deploy new versions of
 your database schema in a safe and standardized way.
 
 .. tip::
-   You can read more about the Doctrine Database Migrations on the projects
-   `documentation`_.
+
+    You can read more about the Doctrine Database Migrations on the projects
+    `documentation`_.
 
 All of the migrations functionality is contained in a few console commands:
 

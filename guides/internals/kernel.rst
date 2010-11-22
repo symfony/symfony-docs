@@ -41,9 +41,10 @@ name (a "class::method" string, like
 ``Bundle\BlogBundle\PostController:indexAction``).
 
 .. tip::
-   The default implementation uses the
-   :class:`Symfony\\Bundle\\FrameworkBundle\\RequestListener` to define the
-   ``_controller`` Request attribute (see below).
+
+    The default implementation uses the
+    :class:`Symfony\\Bundle\\FrameworkBundle\\RequestListener` to define the
+    ``_controller`` Request attribute (see below).
 
 The
 :method:`Symfony\\Component\\HttpKernel\\Controller\\ControllerResolverInterface::getArguments`
@@ -53,16 +54,16 @@ the Request attributes.
 
 .. sidebar:: Matching Controller method arguments from Request attributes
 
-   For each method argument, Symfony2 tries to get the value of a Request
-   attribute with the same name. If it is not defined, the argument default
-   value is used if defined::
+    For each method argument, Symfony2 tries to get the value of a Request
+    attribute with the same name. If it is not defined, the argument default
+    value is used if defined::
 
-       // Symfony2 will look for an 'id' attribute (mandatory)
-       // and an 'admin' one (optional)
-       public function showAction($id, $admin = true)
-       {
-           // ...
-       }
+        // Symfony2 will look for an 'id' attribute (mandatory)
+        // and an 'admin' one (optional)
+        public function showAction($id, $admin = true)
+        {
+            // ...
+        }
 
 .. index::
   single: Internals; Request Handling
@@ -140,8 +141,9 @@ method::
     }
 
 .. tip::
-   If you are not yet familiar with the Symfony2 Event Dispatcher, read the
-   :doc:`dedicated chapter </guides/event/overview>` first.
+
+    If you are not yet familiar with the Symfony2 Event Dispatcher, read the
+    :doc:`dedicated chapter </guides/event/overview>` first.
 
 .. index::
    single: Event; core.request
