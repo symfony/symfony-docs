@@ -76,17 +76,15 @@ Let's create a simple template to render the form:
     # src/Application/HelloBundle/Resources/views/Hello/signup.php
     <?php $view->extend('HelloBundle::layout.php') ?>
 
-    <?php echo $form->form('#') ?>
-        <?php echo $form->render() ?>
+    <form action="#" <?php echo $view['form']->enctype($form) ?> method="post">
+        <?php echo $view['form']->render($form) ?>
 
         <input type="submit" value="Send!" />
     </form>
 
 .. note::
 
-    Form rendering in templates is covered in two dedicated chapters: one for
-    :doc:`PHP templates </guides/forms/view>`, and one for :doc:`Twig templates
-    </guides/forms/twig>`.
+    Form rendering in templates is covered in chapter :doc:`PHP templates </guides/forms/view>`.
 
 When the user submits the form, we also need to handle the submitted data. All
 the data is stored in a POST parameter with the name of the form::
