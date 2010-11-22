@@ -49,7 +49,7 @@ Now let's create a form to let the visitor fill the data of the object::
         $form->add(new IntegerField('age'));
 
         return $this->render('HelloBundle:Hello:signup.php', array(
-            'form' => $this->get('templating.form')->get($form)
+            'form' => $form
         ));
     }
 
