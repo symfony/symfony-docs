@@ -267,6 +267,8 @@ accepting terms and conditions.
 
 Let's create a simple ``Registration`` class for this purpose::
 
+    namespace Application\HelloBundle\Entity;
+
     class Registration
     {
         /** @validation:Valid */
@@ -284,6 +286,10 @@ Let's create a simple ``Registration`` class for this purpose::
 Now we can easily adapt the form in the controller::
 
     # src/Application/HelloBundle/Controller/HelloController.php
+
+    use Application\HelloBundle\Entity\Registration;
+    use Symfony\Component\Form\CheckboxField;
+
     public function signupAction()
     {
         $registration = new Registration();
