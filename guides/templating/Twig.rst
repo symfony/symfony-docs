@@ -158,6 +158,12 @@ specialized tags:
     {# embed another controller response #}
     {% render 'BlogBundle:Post:list' with ['limit': 2], ['alt': 'BlogBundle:Post:error'] %}
 
+Output Escaping
+---------------
+
+Twig is configured to automatically escapes all output by default. Read Twig
+documentation to learn more about output escaping and the Escaper extension.
+
 .. _twig_extension_tag:
 
 Enabling Custom Twig Extensions

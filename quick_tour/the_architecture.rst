@@ -176,7 +176,6 @@ PHP. Have a look at the default configuration:
             router:        { resource: "%kernel.root_dir%/config/routing.yml" }
             validation:    { enabled: true, annotations: true }
             templating:
-                escaping:       htmlspecialchars
                 #assets_version: SomeVersionScheme
             session:
                 default_locale: en
@@ -208,7 +207,6 @@ PHP. Have a look at the default configuration:
         <app:config csrf-secret="xxxxxxxxxx" charset="UTF-8" error-handler="null">
             <app:router resource="%kernel.root_dir%/config/routing.xml" />
             <app:validation enabled="true" annotations="true" />
-            <app:templating escaping="htmlspecialchars" />
             <app:session default-locale="en" lifetime="3600" />
         </app:config>
 
@@ -244,7 +242,6 @@ PHP. Have a look at the default configuration:
             'router'        => array('resource' => '%kernel.root_dir%/config/routing.php'),
             'validation'    => array('enabled' => true, 'annotations' => true),
             'templating'    => array(
-                'escaping'        => 'htmlspecialchars'
                 #'assets_version' => "SomeVersionScheme",
             ),
             'session' => array(

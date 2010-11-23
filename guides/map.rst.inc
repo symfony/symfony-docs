@@ -1,7 +1,7 @@
 * **Templating**:
 
-  * :doc:`/guides/templating/helpers` | 
-  * :doc:`Twig </guides/templating/Twig>`
+  * :doc:`Twig </guides/templating/Twig>` | 
+  * :doc:`/guides/templating/helpers`
 
 * **Doctrine**:
 
