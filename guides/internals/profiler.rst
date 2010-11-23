@@ -448,32 +448,28 @@ profiler.
 
 All blocks have access to the ``collector`` object.
 
-To enable the template, register it in your configuration:
+To enable the template, you have to add the ``template`` attribute
+to the ``data_collector`` tag in your configuration:
 
 .. configuration-block::
 
     .. code-block:: yaml
 
-        webprofiler.config:
-            toolbar: true
-            intercept_redirects: true
-            templates:
-                mydata: YourBundle:Profiler:mydata
+        services:
+            data_collector.your_collector_name:
+                class: Fully\Qualified\Collector\Class\Name
+                tags:
+                    - { name: data_collector, template: "YourBundle:Collector:templatename" }
 
     .. code-block:: xml
 
-        <webprofiler:config toolbar="true" intercept-redirects="true">
-            <webprofiler:templates
-                mydata="YourBundle:Profiler:mydata"
-            />
-        </webprofiler:config>
+        <service id="data_collector.your_collector_name" class="Fully\Qualified\Collector\Class\Name">
+            <tag name="data_collector" template="YourBundle:Collector:templatename" />
+        </service>
 
     .. code-block:: php
 
-        $container->loadFromExtension('webprofiler', 'config', array(
-            'toolbar' => true,
-            'intercept-redirects' => true,
-            'templates' => array(
-                'mydata' => 'YourBundle:Profiler:mydata',
-            ),
-        ));
+        $container
+            ->register('data_collector.your_collector_name', 'Fully\Qualified\Collector\Class\Name')
+            ->addTag('data_collector', array('template' => 'YourBundle:Collector:templatename'))
+        ;
