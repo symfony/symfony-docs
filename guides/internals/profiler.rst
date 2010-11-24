@@ -448,32 +448,35 @@ profiler.
 
 All blocks have access to the ``collector`` object.
 
-To enable the template, register it in your configuration:
+.. tip::
+
+    Built-in templates use a base64 encoded image for the toolbar (``<img
+    src="src="data:image/png;base64,..."``). You can easily calculate the
+    base64 value for an image with this little script: ``echo
+    base64_encode(file_get_contents($_SERVER['argv'][1]));``.
+
+To enable the template, add a ``template`` attribute to the ``data_collector``
+tag in your configuration:
 
 .. configuration-block::
 
     .. code-block:: yaml
 
-        webprofiler.config:
-            toolbar: true
-            intercept_redirects: true
-            templates:
-                mydata: YourBundle:Profiler:mydata
+        services:
+            data_collector.your_collector_name:
+                class: Fully\Qualified\Collector\Class\Name
+                tags:
+                    - { name: data_collector, template: "YourBundle:Collector:templatename" }
 
     .. code-block:: xml
 
-        <webprofiler:config toolbar="true" intercept-redirects="true">
-            <webprofiler:templates
-                mydata="YourBundle:Profiler:mydata"
-            />
-        </webprofiler:config>
+        <service id="data_collector.your_collector_name" class="Fully\Qualified\Collector\Class\Name">
+            <tag name="data_collector" template="YourBundle:Collector:templatename" />
+        </service>
 
     .. code-block:: php
 
-        $container->loadFromExtension('webprofiler', 'config', array(
-            'toolbar' => true,
-            'intercept-redirects' => true,
-            'templates' => array(
-                'mydata' => 'YourBundle:Profiler:mydata',
-            ),
-        ));
+        $container
+            ->register('data_collector.your_collector_name', 'Fully\Qualified\Collector\Class\Name')
+            ->addTag('data_collector', array('template' => 'YourBundle:Collector:templatename'))
+        ;

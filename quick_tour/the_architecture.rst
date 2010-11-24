@@ -136,6 +136,7 @@ method of the ``AppKernel`` class::
     {
         $bundles = array(
             new Symfony\Bundle\FrameworkBundle\FrameworkBundle(),
+            new Symfony\Bundle\TwigBundle\TwigBundle(),
 
             // enable third-party bundles
             new Symfony\Bundle\ZendBundle\ZendBundle(),
@@ -143,7 +144,6 @@ method of the ``AppKernel`` class::
             new Symfony\Bundle\DoctrineBundle\DoctrineBundle(),
             //new Symfony\Bundle\DoctrineMigrationsBundle\DoctrineMigrationsBundle(),
             //new Symfony\Bundle\DoctrineMongoDBBundle\DoctrineMongoDBBundle(),
-            //new Symfony\Bundle\TwigBundle\TwigBundle(),
 
             // register your bundles
             new Application\HelloBundle\HelloBundle(),
@@ -176,7 +176,6 @@ PHP. Have a look at the default configuration:
             router:        { resource: "%kernel.root_dir%/config/routing.yml" }
             validation:    { enabled: true, annotations: true }
             templating:
-                escaping:       htmlspecialchars
                 #assets_version: SomeVersionScheme
             session:
                 default_locale: en
@@ -208,7 +207,6 @@ PHP. Have a look at the default configuration:
         <app:config csrf-secret="xxxxxxxxxx" charset="UTF-8" error-handler="null">
             <app:router resource="%kernel.root_dir%/config/routing.xml" />
             <app:validation enabled="true" annotations="true" />
-            <app:templating escaping="htmlspecialchars" />
             <app:session default-locale="en" lifetime="3600" />
         </app:config>
 
@@ -244,7 +242,6 @@ PHP. Have a look at the default configuration:
             'router'        => array('resource' => '%kernel.root_dir%/config/routing.php'),
             'validation'    => array('enabled' => true, 'annotations' => true),
             'templating'    => array(
-                'escaping'        => 'htmlspecialchars'
                 #'assets_version' => "SomeVersionScheme",
             ),
             'session' => array(
@@ -329,7 +326,7 @@ specific configuration file:
 
     .. code-block:: php
 
-        // app/config/config.php
+        // app/config/config_dev.php
         $loader->import('config.php');
 
         $container->loadFromExtension('app', 'config', array(

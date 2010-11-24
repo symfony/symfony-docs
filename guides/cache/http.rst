@@ -307,8 +307,8 @@ does exactly that by exposing a simple and efficient pattern::
 
     // create a Response with a ETag and/or a Last-Modified header
     $response = new Response();
-    $response->setETag($post->computeETag());
-    $response->setLastModified($post->getPublishedAt());
+    $response->setETag($article->computeETag());
+    $response->setLastModified($article->getPublishedAt());
 
     // Check that the Response is not modified for the given Request
     if ($response->isNotModified($request)) {
@@ -364,10 +364,10 @@ The Response class provides many more methods related to the cache. Here are
 the most useful ones::
 
     // Mark the Response as private
-    $response->setPrivate(true);
+    $response->setPrivate();
 
     // Mark the Response as public
-    $response->setPublic(true);
+    $response->setPublic();
 
     // Marks the Response stale
     $response->expire();
@@ -434,9 +434,11 @@ caching::
 
     require_once __DIR__.'/../app/AppCache.php';
 
+    use Symfony\Component\HttpFoundation\Request;
+
     // wrap the default AppKernel with the AppCache one
     $kernel = new AppCache(new AppKernel('prod', false));
-    $kernel->handle()->send();
+    $kernel->handle(new Request())->send();
 
 .. tip::
 
@@ -451,7 +453,7 @@ finely tuned via a set of options you can set by overriding the
 ``getOptions()`` method::
 
     // app/AppCache.php
-    class BlogCache extends Cache
+    class AppCache extends Cache
     {
         protected function getOptions()
         {
