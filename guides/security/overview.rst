@@ -1,29 +1,29 @@
 .. index::
    single: Security
 
-Segurança
-=========
+Security
+========
 
-O Symfony2 vem com uma camada de segurança embutida. Ela protege a sua aplicação, 
-fornecendo autenticação e autorização.
+Symfony2 comes with a built-in security layer. It secures your application by
+providing authentication and authorization.
 
-A *autenticação* garante que o usuário é quem ele diz ser. A *autorização* se 
-refere ao processo de decidir se um usuário tem permissão para executar uma ação 
-ou não (a autorização vem após a autenticação).
+*Authentication* ensures that the user is who he claims to be. *Authorization*
+refers to the process of deciding whether a user is allowed to perform an
+action or not (authorization comes after authentication.)
 
-Este documento é uma visão geral rápida desses conceitos principais, mas o poder real é 
-explicado em três outros documentos: :doc:`Usuários </guides/security/users>`,
-:doc:`Authenticação </guides/security/authentication>`, e
-:doc:`Autorização </guides/security/authorization>`.
+This document is a quick overview of these main concepts, but the real power
+is distilled in three other documents: :doc:`Users </guides/security/users>`,
+:doc:`Authentication </guides/security/authentication>`, and
+:doc:`Authorization </guides/security/authorization>`.
 
 .. index::
    pair: Security; Configuration
 
-Configuração
-------------
+Configuration
+-------------
 
-Para os casos de uso mais comuns, a segurança no Symfony2 pode ser facilmente configurada 
-a partir do arquivo de configuração principal, aqui está uma configuração típica:
+For most common use cases, the Symfony2 security can be easily configured from
+your main configuration file; here is a typical configuration:
 
 .. configuration-block::
 
@@ -82,9 +82,9 @@ a partir do arquivo de configuração principal, aqui está uma configuração t
             ),
         ));
 
-Na maioria das vezes, é mais conveniente utilizar todas as configurações relacionadas 
-à segurança em um arquivo externo. Se você usar XML, o arquivo externo pode usar o namespace 
-security como padrão para torná-lo mais legível:
+Most of the time, it is more convenient to outsource all security related
+configuration into an external file. If you use XML, the external file can use
+the security namespace as the default one to make it more readable:
 
 .. code-block:: xml
 
@@ -112,35 +112,35 @@ security como padrão para torná-lo mais legível:
 
 .. note::
 
-    Todos os exemplos na documentação assumem que você está usando um arquivo 
-    externo com o namespace security padrão, como indicado acima.
+    All examples in the documentation assume that you are using an external
+    file with the default security namespace as above.
 
-Como você pode ver, a configuração tem três seções:
+As you can see, the configuration has three sections:
 
-* *provider*: Um provedor sabe como criar usuários;
+* *provider*: A provider knows how to create users;
 
-* *firewall*: Um firewall define os mecanismos de autenticação para toda a aplicação ou 
-  apenas para uma parte dela;
+* *firewall*: A firewall defines the authentication mechanisms for the whole
+  application or for just a part of it;
 
-* *access-control*: As regras de controle de acesso protegem partes da sua aplicação 
-  com roles.
+* *access-control*: Access control rules secure parts of your application with
+  roles.
 
-Para resumir o workflow, o firewall autentica o cliente com base nas credenciais 
-submetidas e no usuário criado pelo provedor, e o controle de acesso autoriza 
-o acesso ao recurso.
+To sum up the workflow, the firewall authenticates the client based on the
+submitted credentials and the user created by the provider, and the access
+control authorizes access to the resource.
 
-Autenticação
-------------
+Authentication
+--------------
 
-O Symfony2 suporta muitos mecanismos de autenticação diferentes, e mais, eles podem
-ser facilmente adicionados, se necessário; os principais são:
+Symfony2 supports many different authentication mechanisms out of the box, and
+more can be easily added if needed; main ones are:
 
-* HTTP Básico;
+* HTTP Basic;
 * HTTP Digest;
-* Autenticação baseada em formulário;
-* Certificados X.509.
+* Form based authentication;
+* X.509 certificates.
 
-Segue um exemplo de como você pode proteger a sua aplicação com autenticação básica HTTP:
+Here is how you can secure your application with HTTP basic authentication:
 
 .. configuration-block::
 
@@ -170,8 +170,8 @@ Segue um exemplo de como você pode proteger a sua aplicação com autenticaçã
             ),
         ));
 
-Vários firewalls também podem ser definidos se você precisa de mecanismos de autenticação
-diferentes para diferentes partes da aplicação:
+Several firewalls can also be defined if you need different authentication
+mechanisms for different parts of the application:
 
 .. configuration-block::
 
@@ -210,19 +210,19 @@ diferentes para diferentes partes da aplicação:
 
 .. tip::
 
-    A utilização da autenticação HTTP básica é a mais fácil, mas leia o 
-    documento de :doc:`Autenticação </guides/security/authentication>`
-    para aprender como configurar outros mecanismos de autenticação, como 
-    configurar uma autenticação stateless, como você pode passar por outro 
-    usuário, como impor https, e muito mais.
+    Using HTTP basic is the easiest, but read the :doc:`Authentication
+    </guides/security/authentication>` document to learn how to configure
+    other authentication mechanisms, how to configure a stateless
+    authentication, how you can impersonate another user, how you can enforce
+    https, and much more.
 
-Usuários
---------
+Users
+-----
 
-Durante a autenticação, o Symfony2 pede ao provedor de usuário para criar o objeto
-do usuário correspondente a solicitação do cliente (através de credenciais como 
-um nome de usuário e uma senha). Para começar rápido, você pode definir um provedor 
-in-memory diretamente na sua configuração:
+During authentication, Symfony2 asks a user provider to create the user object
+matching the client request (via credentials like a username and a password).
+To get started fast, you can define an in-memory provider directly in your
+configuration:
 
 .. configuration-block::
 
@@ -255,25 +255,25 @@ in-memory diretamente na sua configuração:
             ),
         ));
 
-A configuração acima define um usuário 'foo' com a senha 'foo'. Após a autenticação, 
-você pode acessar o usuário autenticado através do contexto de segurança (o usuário 
-é uma instância de :class:`Symfony\\Component\\Security\\User\\User`)::
+The above configuration defines a 'foo' user with a 'foo' password. After
+authentication, you can access the authenticated user via the security context
+(the user is an instance of :class:`Symfony\\Component\\Security\\User\\User`)::
 
     $user = $container->get('security.context')->getUser();
 
 .. tip::
 
-    Usar o provedor in-memory é uma ótima forma de proteger facilmente o backend
-    de seu site pessoal, criar um protótipo, ou fornecer fixtures para 
-    os testes. Leia o documento :doc:`Users </guides/security/users>` para 
-    saber como evitar que a senha esteja de forma clara, como usar uma Entidade do Doctrine 
-    como um provedor de usuário, como definir diversos provedores, e muito mais.
+    Using the in-memory provider is a great way to easily secure your personal
+    website backend, to create a prototype, or to provide fixtures for your
+    tests. Read the :doc:`Users </guides/security/users>` document to learn
+    how to avoid the password to be in clear, how to use a Doctrine Entity as
+    a user provider, how to define several providers, and much more.
 
-Autorização
------------
+Authorization
+-------------
 
-A autorização é opcional, mas lhe fornece uma poderosa forma de restringir o acesso aos 
-recursos de sua aplicação com base em roles de usuário:
+Authorization is optional but gives you a powerful way to restrict access to
+your application resources based user roles:
 
 .. configuration-block::
 
@@ -316,12 +316,13 @@ recursos de sua aplicação com base em roles de usuário:
             ),
         ));
 
-A configuração acima define um usuário 'foo' com os roles 'ROLE_USER' e 'ROLE_ADMIN' 
-e restringe o acesso a toda aplicação para os usuários com o role 'ROLE_USER'.
+The above configuration defines a 'foo' user with the 'ROLE_USER' and
+'ROLE_ADMIN' roles and it restricts access to the whole application to users
+having the 'ROLE_USER' role.
 
 .. tip::
 
-    Leia o documento :doc:`Authorization </guides/security/authorization>` 
-    para aprender como definir uma hierarquia de roles, como personalizar seu 
-    template com base em roles, como definir regras de controle de acesso com 
-    base em atributos do pedido (request), e muito mais.
+    Read the :doc:`Authorization </guides/security/authorization>` document to
+    learn how to define a role hierarchy, how to customize your template based
+    on roles, how to define access control rules based on request attributes,
+    and much more.
