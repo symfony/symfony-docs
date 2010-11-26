@@ -60,7 +60,7 @@ header when none is set by the developer by following these rules:
 
 * But if at least one ``Cache-Control`` directive is set, and no 'public' or
   ``private`` directives have been explicitly added, Symfony2 adds the
-  ``private`` directive automatically (except when ``s-maxage`` is set.)
+  ``private`` directive automatically (except when ``s-maxage`` is set).
 
 .. tip::
 
@@ -232,7 +232,7 @@ issue. Under this model, you mainly save bandwidth as the representation is
 not sent twice to the same client (a 304 response is sent instead). But if you
 design your application carefully, you might be able to get the bare minimum
 data needed to send a 304 response and save CPU also; and if needed, perform
-the more heavy tasks (see below for an implementation example.)
+the more heavy tasks (see below for an implementation example).
 
 .. index::
    single: Cache; Etag header
@@ -307,8 +307,8 @@ does exactly that by exposing a simple and efficient pattern::
 
     // create a Response with a ETag and/or a Last-Modified header
     $response = new Response();
-    $response->setETag($post->computeETag());
-    $response->setLastModified($post->getPublishedAt());
+    $response->setETag($article->computeETag());
+    $response->setLastModified($article->getPublishedAt());
 
     // Check that the Response is not modified for the given Request
     if ($response->isNotModified($request)) {
@@ -364,10 +364,10 @@ The Response class provides many more methods related to the cache. Here are
 the most useful ones::
 
     // Mark the Response as private
-    $response->setPrivate(true);
+    $response->setPrivate();
 
     // Mark the Response as public
-    $response->setPublic(true);
+    $response->setPublic();
 
     // Marks the Response stale
     $response->expire();
@@ -399,7 +399,7 @@ Public vs Private Responses
 
 As explained at the beginning of this document, Symfony2 is very conservative
 and makes all Responses private by default (the exact rules are described
-there.)
+there).
 
 If you want to use a shared cache, you must remember to explicitly add the
 ``public`` directive to ``Cache-Control``::
@@ -434,9 +434,11 @@ caching::
 
     require_once __DIR__.'/../app/AppCache.php';
 
+    use Symfony\Component\HttpFoundation\Request;
+
     // wrap the default AppKernel with the AppCache one
     $kernel = new AppCache(new AppKernel('prod', false));
-    $kernel->handle()->send();
+    $kernel->handle(new Request())->send();
 
 .. tip::
 
@@ -451,7 +453,7 @@ finely tuned via a set of options you can set by overriding the
 ``getOptions()`` method::
 
     // app/AppCache.php
-    class BlogCache extends Cache
+    class AppCache extends Cache
     {
         protected function getOptions()
         {
@@ -619,7 +621,7 @@ standalone is ``false``.
 
     Symfony2 detects if a gateway cache supports ESI via another Akamaï
     specification that is supported out of the box by the Symfony2 reverse
-    proxy (a working configuration for Varnish is also provided below.)
+    proxy (a working configuration for Varnish is also provided below).
 
 For the ESI include tag to work properly, you must define the ``_internal``
 route:

@@ -75,7 +75,7 @@ basic authentication:
 Each firewall configuration is activated when the incoming request matches the
 regular expression defined by the ``pattern`` setting. This pattern must match
 the request path info (``preg_match('#^'.PATTERN_VALUE.'$#',
-$request->getPathInfo())``.)
+$request->getPathInfo())``).
 
 .. tip::
 
@@ -155,7 +155,7 @@ X.509 certificate, an Authorization HTTP header, or use a form to login.
     authentication mechanisms, Symfony2 automatically defines a default entry
     point (in the example above, the login form; but if the user send an
     Authorization HTTP header with wrong credentials, Symfony2 will use the
-    HTTP basic entry point.)
+    HTTP basic entry point).
 
 .. note::
 
@@ -499,7 +499,7 @@ working configuration for Apache:
     </VirtualHost>
 
 By default, the username is the email declared in the certificate (the value
-of the ``SSL_CLIENT_S_DN_Email`` environment variable.)
+of the ``SSL_CLIENT_S_DN_Email`` environment variable).
 
 .. tip::
 
@@ -549,7 +549,7 @@ restricted by a more restrictive access control rule:
 As anonymous users are authenticated, the ``isAuthenticated()`` method returns
 ``true``. To check is the user is anonymous, check for the
 ``IS_AUTHENTICATED_ANONYMOUSLY`` role instead (note that all non-anonymous
-users have the ``IS_AUTHENTICATED_FULLY`` role.)
+users have the ``IS_AUTHENTICATED_FULLY`` role).
 
 .. index::
    single: Security; Stateless Authentication
@@ -606,7 +606,7 @@ Impersonating a User
 
 Sometimes, it's useful to be able to switch from one user to another without
 having to logout and login again (for instance when you are debugging or try
-to understand a bug a user see and you cannot reproduce.) This can be easily
+to understand a bug a user see and you cannot reproduce). This can be easily
 done by activating the ``switch-user`` listener:
 
 .. configuration-block::

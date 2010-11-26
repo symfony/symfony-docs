@@ -27,17 +27,15 @@ The Web Directory
 
 The web root directory is the home of all public and static files like images,
 stylesheets, and JavaScript files. It is also where the front controllers
-live:
+live::
 
-.. code-block:: html+php
-
-    <!-- web/app.php -->
-    <?php
-
+    // web/app.php
     require_once __DIR__.'/../app/AppKernel.php';
 
+    use Symfony\Component\HttpFoundation\Request;
+
     $kernel = new AppKernel('prod', false);
-    $kernel->handle()->send();
+    $kernel->handle(new Request())->send();
 
 Like any front controller, ``app.php`` uses a Kernel Class, ``AppKernel``, to
 bootstrap the application.
@@ -89,15 +87,16 @@ stored in the ``src/`` directory::
 
     $loader = new UniversalClassLoader();
     $loader->registerNamespaces(array(
-        'Symfony'                    => $vendorDir.'/symfony/src',
-        'Application'                => __DIR__,
-        'Bundle'                     => __DIR__,
-        'Doctrine\\Common'           => $vendorDir.'/doctrine-common/lib',
-        'Doctrine\\DBAL\\Migrations' => $vendorDir.'/doctrine-migrations/lib',
-        'Doctrine\\ODM\\MongoDB'     => $vendorDir.'/doctrine-mongodb/lib',
-        'Doctrine\\DBAL'             => $vendorDir.'/doctrine-dbal/lib',
-        'Doctrine'                   => $vendorDir.'/doctrine/lib',
-        'Zend'                       => $vendorDir.'/zend/library',
+        'Symfony'                        => $vendorDir.'/symfony/src',
+        'Application'                    => __DIR__,
+        'Bundle'                         => __DIR__,
+        'Doctrine\\Common\\DataFixtures' => $vendorDir.'/doctrine-data-fixtures/lib',
+        'Doctrine\\Common'               => $vendorDir.'/doctrine-common/lib',
+        'Doctrine\\DBAL\\Migrations'     => $vendorDir.'/doctrine-migrations/lib',
+        'Doctrine\\ODM\\MongoDB'         => $vendorDir.'/doctrine-mongodb/lib',
+        'Doctrine\\DBAL'                 => $vendorDir.'/doctrine-dbal/lib',
+        'Doctrine'                       => $vendorDir.'/doctrine/lib',
+        'Zend'                           => $vendorDir.'/zend/library',
     ));
     $loader->registerPrefixes(array(
         'Swift_' => $vendorDir.'/swiftmailer/lib/classes',
@@ -137,6 +136,7 @@ method of the ``AppKernel`` class::
     {
         $bundles = array(
             new Symfony\Bundle\FrameworkBundle\FrameworkBundle(),
+            new Symfony\Bundle\TwigBundle\TwigBundle(),
 
             // enable third-party bundles
             new Symfony\Bundle\ZendBundle\ZendBundle(),
@@ -144,10 +144,9 @@ method of the ``AppKernel`` class::
             new Symfony\Bundle\DoctrineBundle\DoctrineBundle(),
             //new Symfony\Bundle\DoctrineMigrationsBundle\DoctrineMigrationsBundle(),
             //new Symfony\Bundle\DoctrineMongoDBBundle\DoctrineMongoDBBundle(),
-            //new Symfony\Bundle\TwigBundle\TwigBundle(),
 
             // register your bundles
-            new Application\AppBundle\AppBundle(),
+            new Application\HelloBundle\HelloBundle(),
         );
 
         if ($this->isDebug()) {
@@ -177,14 +176,10 @@ PHP. Have a look at the default configuration:
             router:        { resource: "%kernel.root_dir%/config/routing.yml" }
             validation:    { enabled: true, annotations: true }
             templating:
-                escaping:       htmlspecialchars
                 #assets_version: SomeVersionScheme
-            #user:
-            #    default_locale: fr
-            #    session:
-            #        name:     SYMFONY
-            #        type:     Native
-            #        lifetime: 3600
+            session:
+                default_locale: en
+                lifetime: 3600
 
         ## Twig Configuration
         #twig.config:
@@ -212,12 +207,7 @@ PHP. Have a look at the default configuration:
         <app:config csrf-secret="xxxxxxxxxx" charset="UTF-8" error-handler="null">
             <app:router resource="%kernel.root_dir%/config/routing.xml" />
             <app:validation enabled="true" annotations="true" />
-            <app:templating escaping="htmlspecialchars" />
-            <!--
-            <app:user default-locale="fr">
-                <app:session name="SYMFONY" type="Native" lifetime="3600" />
-            </app:user>
-            //-->
+            <app:session default-locale="en" lifetime="3600" />
         </app:config>
 
         <!-- Twig Configuration -->
@@ -252,17 +242,12 @@ PHP. Have a look at the default configuration:
             'router'        => array('resource' => '%kernel.root_dir%/config/routing.php'),
             'validation'    => array('enabled' => true, 'annotations' => true),
             'templating'    => array(
-                'escaping'        => 'htmlspecialchars'
                 #'assets_version' => "SomeVersionScheme",
             ),
-            #'user' => array(
-            #    'default_locale' => "fr",
-            #    'session' => array(
-            #        'name' => "SYMFONY",
-            #        'type' => "Native",
-            #        'lifetime' => "3600",
-            #    )
-            #),
+            'session' => array(
+                'default_locale' => "en",
+                'lifetime' => "3600",
+            ),
         ));
 
         // Twig Configuration
@@ -316,7 +301,7 @@ specific configuration file:
         zend.config:
             logger:
                 priority: debug
-                path:     %kernel.root_dir%/logs/%kernel.environment%.log
+                path:     %kernel.logs_dir%/%kernel.environment%.log
 
     .. code-block:: xml
 
@@ -341,7 +326,7 @@ specific configuration file:
 
     .. code-block:: php
 
-        // app/config/config.php
+        // app/config/config_dev.php
         $loader->import('config.php');
 
         $container->loadFromExtension('app', 'config', array(
@@ -390,8 +375,8 @@ Using Vendors
 
 Odds are your application will depend on third-party libraries. Those should
 be stored in the ``src/vendor/`` directory. It already contains the Symfony2
-libraries, the SwiftMailer library, the Doctrine ORM, the Propel ORM, the Twig
-templating system, and a selection of the Zend Framework classes.
+libraries, the SwiftMailer library, the Doctrine ORM, the Twig templating
+system, and a selection of the Zend Framework classes.
 
 .. index::
    single: Configuration Cache

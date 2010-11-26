@@ -9,7 +9,7 @@ providing authentication and authorization.
 
 *Authentication* ensures that the user is who he claims to be. *Authorization*
 refers to the process of deciding whether a user is allowed to perform an
-action or not (authorization comes after authentication.)
+action or not (authorization comes after authentication).
 
 This document is a quick overview of these main concepts, but the real power
 is distilled in three other documents: :doc:`Users </guides/security/users>`,

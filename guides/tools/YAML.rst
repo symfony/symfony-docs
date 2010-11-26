@@ -15,9 +15,10 @@ The Symfony2 :namespace:`Symfony\\Component\\Yaml` Component knows how to
 parse YAML and dump a PHP array to YAML.
 
 .. note::
-   Even if the YAML format can describe complex nested data structure, this
-   guide only describes the minimum set of features needed to use YAML as a
-   configuration file format.
+
+    Even if the YAML format can describe complex nested data structure, this
+    guide only describes the minimum set of features needed to use YAML as a
+    configuration file format.
 
 Reading YAML Files
 ------------------
@@ -42,8 +43,9 @@ occurred::
     }
 
 .. tip::
-   As the parser is reentrant, you can use the same parser object to load
-   different YAML strings.
+
+    As the parser is reentrant, you can use the same parser object to load
+    different YAML strings.
 
 When loading a YAML file, it is sometimes better to use the
 :method:`Symfony\\Component\\Yaml\\Yaml::load` wrapper method::
@@ -78,8 +80,9 @@ to its YAML representation::
     file_put_contents('/path/to/file.yaml', $yaml);
 
 .. note::
-   There are some limitations: the dumper is not able to dump resources and
-   dumping PHP objects is considered an alpha feature.
+
+    There are some limitations: the dumper is not able to dump resources and
+    dumping PHP objects is considered an alpha feature.
 
 If you only need to dump one array, you can use the
 :method:`Symfony\\Component\\Yaml\\Yaml::dump` static method shortcut::
@@ -143,8 +146,9 @@ Quoted styles are useful when a string starts or ends with one or more relevant
 spaces.
 
 .. tip::
-   The double-quoted style provides a way to express arbitrary strings, by
-   using ``\`` escape sequences. It is very useful when you need to embed a
+
+    The double-quoted style provides a way to express arbitrary strings, by
+     using ``\`` escape sequences. It is very useful when you need to embed a
    ``\n`` or a unicode character in a string.
 
 When a string contains line breaks, you can use the literal style, indicated
@@ -169,8 +173,9 @@ where each line break is replaced by a space:
       without carriage returns.
 
 .. note::
-   Notice the two spaces before each line in the previous examples. They won't
-   appear in the resulting PHP strings.
+
+    Notice the two spaces before each line in the previous examples. They won't
+    appear in the resulting PHP strings.
 
 Numbers
 ~~~~~~~
@@ -261,7 +266,8 @@ which is equivalent to this PHP code::
     array('PHP' => 5.2, 'MySQL' => 5.1, 'Apache' => '2.2.20');
 
 .. note::
-   In a mapping, a key can be any valid scalar.
+
+    In a mapping, a key can be any valid scalar.
 
 The number of spaces between the colon and the value does not matter:
 
@@ -350,8 +356,9 @@ Comments can be added in YAML by prefixing them with a hash mark (``#``):
     "Symfony2": { PHP: 5.3, Doctrine: 2.0 } # Comment at the end of a line
 
 .. note::
-   Comments are simply ignored by the YAML parser and do not need to be
-   indented according to the current level of nesting in a collection.
+
+    Comments are simply ignored by the YAML parser and do not need to be
+    indented according to the current level of nesting in a collection.
 
 Dynamic YAML files
 ~~~~~~~~~~~~~~~~~~

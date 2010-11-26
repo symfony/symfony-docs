@@ -35,14 +35,15 @@ template::
     Hello {{ $name }}!
 
 .. note::
-   The Twig templates must use the ``twig`` extension.
+
+    The Twig templates must use the ``twig`` extension.
 
 And here is a typical layout:
 
 .. code-block:: jinja
 
     {# src/Application/HelloBundle/Resources/views/layout.twig #}
-    <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+    <!DOCTYPE html>
     <html>
         <head>
             <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -156,6 +157,12 @@ specialized tags:
 
     {# embed another controller response #}
     {% render 'BlogBundle:Post:list' with ['limit': 2], ['alt': 'BlogBundle:Post:error'] %}
+
+Output Escaping
+---------------
+
+Twig is configured to automatically escapes all output by default. Read Twig
+documentation to learn more about output escaping and the Escaper extension.
 
 .. _twig_extension_tag:
 

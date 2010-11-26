@@ -9,8 +9,9 @@ sits on top of `PDO`_ and offers an intuitive and flexible API for
 communicating with the most popular relational databases that exist today!
 
 .. tip::
-   You can read more about the Doctrine DBAL on the official `documentation`_
-   website.
+
+    You can read more about the Doctrine DBAL on the official `documentation`_
+    website.
 
 To get started you just need to enable and configure the DBAL:
 

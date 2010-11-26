@@ -15,9 +15,11 @@ configuration:
             enabled: true
 
 Then you can get the validator from the container and start validating your
-objects::
+objects:
 
-    $validator = $container->getService('validator');
+.. code-block:: php
+
+    $validator = $container->get('validator');
     $author = new Author();
 
     print $validator->validate($author);

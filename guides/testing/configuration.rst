@@ -15,8 +15,9 @@ Each application has its own PHPUnit configuration, stored in the
 create a ``phpunit.xml`` file to tweak the configuration for your local machine.
 
 .. tip::
-   Store the ``phpunit.xml.dist`` file in your code repository, and ignore the
-   ``phpunit.xml`` file.
+
+    Store the ``phpunit.xml.dist`` file in your code repository, and ignore the
+    ``phpunit.xml`` file.
 
 By default, only the tests stored in the ``Application`` namespace are run by
 the ``phpunit`` command. But you can easily add more namespaces. For instance,
@@ -99,5 +100,6 @@ You can also override HTTP headers on a per request basis::
     ));
 
 .. tip::
-   To provide your own Client, override the ``test.client.class`` parameter, or
-   define a ``test.client`` service.
+
+    To provide your own Client, override the ``test.client.class`` parameter,
+    or define a ``test.client`` service.

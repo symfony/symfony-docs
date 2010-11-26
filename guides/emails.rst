@@ -59,7 +59,7 @@ The only mandatory configuration parameter is ``transport``:
     .. code-block:: php
 
         // app/config/config.php
-        $container->loadFromExtension('swift', 'mailer', array(
+        $container->loadFromExtension('swiftmailer', 'config', array(
             'transport'  => "smtp",
             'encryption' => "ssl",
             'auth_mode'  => "login",
@@ -104,8 +104,9 @@ The mailer is accessible via the ``mailer`` service; from an action::
     }
 
 .. note::
-   To keep things decoupled, the email body has been stored in a template,
-   rendered with the ``renderView()`` method.
+
+    To keep things decoupled, the email body has been stored in a template,
+    rendered with the ``renderView()`` method.
 
 Using Gmail
 -----------

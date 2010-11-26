@@ -14,11 +14,12 @@ profiler, the web debug toolbar, and the web profiler are all already
 configured with sensible settings.
 
 .. note::
-   The profiler collects information for all requests (simple requests,
-   redirects, exceptions, Ajax requests, ESI requests; and for all HTTP
-   methods and all formats). It means that for a single URL, you can have
-   several associated profiling data (one per external request/response
-   pair).
+
+    The profiler collects information for all requests (simple requests,
+    redirects, exceptions, Ajax requests, ESI requests; and for all HTTP
+    methods and all formats). It means that for a single URL, you can have
+    several associated profiling data (one per external request/response
+    pair).
 
 Visualizing Profiling Data
 --------------------------
@@ -35,8 +36,9 @@ If the summary provided by the Web Debug Toolbar is not enough, click on the
 token link (a string made of 13 random characters) to access the Web Profiler.
 
 .. note::
-   If the token is not clickable, it means that the profiler routes are not
-   registered (see below for configuration information).
+
+    If the token is not clickable, it means that the profiler routes are not
+    registered (see below for configuration information).
 
 Analyzing Profiling data with the Web Profiler
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -71,8 +73,9 @@ check various things and enforce some metrics::
     }
 
 .. tip::
-   Read the API for built-in `data collectors`_ to learn more about their
-   interfaces.
+
+    Read the API for built-in `data collectors`_ to learn more about their
+    interfaces.
 
 If a test fails because of profiling data (too many DB queries for instance),
 you might want to use the Web Profiler to analyze the request after the tests
@@ -84,9 +87,10 @@ finish. It's easy to achieve if you embed the token in the error message::
     );
 
 .. caution::
-    The profiler store can be different depending on the environment
-    (especially if you use the SQLite store, which is the default configured
-    one).
+
+     The profiler store can be different depending on the environment
+     (especially if you use the SQLite store, which is the default configured
+     one).
 
 Accessing the Profiling information
 -----------------------------------
@@ -102,9 +106,10 @@ HTTP header of the Response::
     $profiler = $container->get('profiler')->getFromToken($token);
 
 .. tip::
-   When the profiler is enabled but not the web debug toolbar, or when you
-   want to get the token for an Ajax request, use a tool like Firebug to get
-   the value of the ``X-Debug-Token`` HTTP header.
+
+    When the profiler is enabled but not the web debug toolbar, or when you
+    want to get the token for an Ajax request, use a tool like Firebug to get
+    the value of the ``X-Debug-Token`` HTTP header.
 
 You can also set the token from your code, based for instance on the username
 or any other information, to ease the retrieval later on::
@@ -347,9 +352,10 @@ The ``collect()`` method is responsible for storing the data it wants to give
 access to in local properties.
 
 .. caution::
-   As the profiler serializes data collector instances, you should not store
-   objects that cannot be serialized (like PDO objects), or you need to provide
-   your own ``serialize()`` method.
+
+    As the profiler serializes data collector instances, you should not
+    store objects that cannot be serialized (like PDO objects), or you need
+    to provide your own ``serialize()`` method.
 
 Most of the time, it is convenient to extend
 :class:`Symfony\\Component\\HttpKernel\\DataCollector\\DataCollector` and
@@ -408,3 +414,69 @@ configuration, and tag it with ``data_collector``:
         ;
 
 .. _data collectors: http://api.symfony-reloaded.org/PR3/index.html?q=DataCollector
+
+Adding Web Profiler Templates
+-----------------------------
+
+When you want to display the data collected by your Data Collector in the web
+debug toolbar or the web profiler, create a Twig template following this
+skeleton:
+
+.. code-block:: jinja
+
+    {% extends 'WebProfilerBundle:Profiler:layout.twig' %}
+
+    {% block toolbar %}
+        {# the web debug toolbar content #}
+    {% endblock %}
+
+    {% block head %}
+        {# if the web profiler panel needs some specific JS or CSS files #}
+    {% endblock %}
+
+    {% block menu %}
+        {# the menu content #}
+    {% endblock %}
+
+    {% block panel %}
+        {# the panel content #}
+    {% endblock %}
+
+Each block is optional. The ``toolbar`` block is used for the web debug
+toolbar and ``menu`` and ``panel`` are used to add a panel to the web
+profiler.
+
+All blocks have access to the ``collector`` object.
+
+.. tip::
+
+    Built-in templates use a base64 encoded image for the toolbar (``<img
+    src="src="data:image/png;base64,..."``). You can easily calculate the
+    base64 value for an image with this little script: ``echo
+    base64_encode(file_get_contents($_SERVER['argv'][1]));``.
+
+To enable the template, add a ``template`` attribute to the ``data_collector``
+tag in your configuration:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        services:
+            data_collector.your_collector_name:
+                class: Fully\Qualified\Collector\Class\Name
+                tags:
+                    - { name: data_collector, template: "YourBundle:Collector:templatename" }
+
+    .. code-block:: xml
+
+        <service id="data_collector.your_collector_name" class="Fully\Qualified\Collector\Class\Name">
+            <tag name="data_collector" template="YourBundle:Collector:templatename" />
+        </service>
+
+    .. code-block:: php
+
+        $container
+            ->register('data_collector.your_collector_name', 'Fully\Qualified\Collector\Class\Name')
+            ->addTag('data_collector', array('template' => 'YourBundle:Collector:templatename'))
+        ;

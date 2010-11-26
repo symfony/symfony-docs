@@ -100,10 +100,10 @@ very easy).
 
 .. tip::
 
-   The sandbox defaults to YAML, but you can easily switch to XML or PHP by
-   editing the ``app/AppKernel.php`` file. You can switch now by looking at
-   the bottom of this file for instructions (the tutorials show the
-   configuration for all supported formats).
+    The sandbox defaults to YAML, but you can easily switch to XML or PHP by
+    editing the ``app/AppKernel.php`` file. You can switch now by looking at
+    the bottom of this file for instructions (the tutorials show the
+    configuration for all supported formats).
 
 .. index::
    single: Routing
@@ -229,7 +229,6 @@ The controller is responsible for returning a representation of the resource
             // return $this->render('HelloBundle:Hello:index.twig', array('name' => $name));
         }
     }
-
 
 The code is pretty straightforward but let's explain this code line by line:
 

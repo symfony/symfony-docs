@@ -102,7 +102,7 @@ For most use case, use
 
 When encoding your passwords, it's better to also define a unique salt per user
 (the ``getSalt()`` method can return the primary key if users are persisted in
-a database for instance.)
+a database for instance).
 
 .. index::
    single: Security; AdvancedAccountInterface
@@ -403,9 +403,9 @@ method::
 .. tip::
 
     Be aware that anonymous users are considered authenticated. If you want to
-    check if a user is "fully authenticated" (non-anonymous), you need to
-    check if the user has the special ``IS_AUTHENTICATED_FULLY`` role (or
-    check that the user has not the ``IS_AUTHENTICATED_ANONYMOUSLY`` role).
+    check if a user is "fully authenticated" (non-anonymous), you need to check
+    if the user has the special ``IS_AUTHENTICATED_FULLY`` role (or check that
+    the user has not the ``IS_AUTHENTICATED_ANONYMOUSLY`` role).
 
 .. index::
    single: Security; Roles
@@ -416,7 +416,7 @@ Roles
 A User can have as many roles as needed. Roles are usually defined as strings,
 but they can be any object implementing
 :class:`Symfony\\Component\\Security\\Role\\RoleInterface` (roles are always
-objects internally.) Roles defined as strings should begin with the ``ROLE_``
+objects internally). Roles defined as strings should begin with the ``ROLE_``
 prefix to be automatically managed by Symfony2.
 
 The roles are used by the access decision manager to secure resources. Read

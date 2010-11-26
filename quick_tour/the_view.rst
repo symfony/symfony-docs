@@ -57,7 +57,7 @@ for your entire project:
 .. code-block:: html+php
 
     <!-- app/views/layout.php -->
-    <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+    <!DOCTYPE html>
     <html>
         <head>
             <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -253,6 +253,20 @@ need to also add the following code in your main layout:
 
     <?php echo $view['javascripts'] ?>
     <?php echo $view['stylesheets'] ?>
+
+Output Escaping
+---------------
+
+When using PHP templates, escape variables whenever they are displayed to the
+user::
+
+    <?php echo $view->escape($var) ?>
+
+By default, the ``escape()`` method assumes that the variable is outputted
+within an HTML context. The second argument lets you change the context. For
+instance, to output something in a JavaScript script, use the ``js`` context::
+
+    <?php echo $view->escape($var, 'js') ?>
 
 Final Thoughts
 --------------

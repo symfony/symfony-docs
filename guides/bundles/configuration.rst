@@ -140,8 +140,9 @@ configuration file:
         $container->loadFromExtension('hello', 'config', array());
 
 .. note::
-   You can create as many ``xxxLoad()`` methods as you want to define more
-   configuration blocks for your extension.
+
+    You can create as many ``xxxLoad()`` methods as you want to define more
+    configuration blocks for your extension.
 
 Parsing a Configuration
 ~~~~~~~~~~~~~~~~~~~~~~~
@@ -219,8 +220,9 @@ The global parameters are the following:
 * ``kernel.charset``
 
 .. caution::
-   All parameter and service names starting with a ``_`` are reserved for the
-   framework, and new ones must not be defined by bundles.
+
+    All parameter and service names starting with a ``_`` are reserved for the
+    framework, and new ones must not be defined by bundles.
 
 .. index::
    pair: Convention; Configuration
@@ -282,5 +284,6 @@ method::
     }
 
 .. caution::
-   Symfony2 tries to be as explicit as possible. So, registering a default
-   configuration automatically is probably not a good idea.
+
+    Symfony2 tries to be as explicit as possible. So, registering a default
+    configuration automatically is probably not a good idea.

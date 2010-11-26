@@ -46,10 +46,11 @@ The ``fallback`` attribute defines the fallback locale when a translation does
 not exist in the user locale.
 
 .. tip::
-   When a translation does not exist for a locale, the translator tries to find
-   the translation for the language (``fr`` when the locale is ``fr_FR`` for
-   instance); if it also fails, it looks for a translation for the fallback
-   locale.
+
+    When a translation does not exist for a locale, the translator tries to
+    find the translation for the language (``fr`` when the locale is ``fr_FR``
+    for instance); if it also fails, it looks for a translation for the
+    fallback locale.
 
 The locale used in translations is the one stored in the user session.
 
@@ -68,8 +69,9 @@ If you have placeholders in strings, pass their values as the second argument::
     $t = $this->get('translator')->trans('Symfony2 is {{ what }}!', array('{{ what }}' => 'great'));
 
 .. note::
-   The placeholders can have any form, but using the ``{{ var }}`` notation
-   allows the message to be used in Twig templates.
+
+    The placeholders can have any form, but using the ``{{ var }}`` notation
+    allows the message to be used in Twig templates.
 
 By default, the translator looks for messages in the default ``messages``
 domain. Override it via the third argument::
@@ -88,7 +90,7 @@ Store translations for messages found in a bundle under the
 
 Each message file must be named according to the following pattern:
 ``domain.locale.loader`` (the domain name, followed by a dot (``.``), followed
-by the locale name, followed by a dot (``.``), followed by the loader name.)
+by the locale name, followed by a dot (``.``), followed by the loader name).
 
 The loader can be the name of any registered loader. By default, Symfony2
 provides the following loaders:
@@ -192,10 +194,11 @@ unique identifier:
             );
 
 .. note::
-   You can also store translations in a database, or any other storage by
-   providing a custom class implementing the
-   :class:`Symfony\\Component\\Translation\\Loader\\LoaderInterface` interface.
-   See below to learn how to register custom loaders.
+
+    You can also store translations in a database, or any other storage by
+    providing a custom class implementing the
+    :class:`Symfony\\Component\\Translation\\Loader\\LoaderInterface` interface.
+    See below to learn how to register custom loaders.
 
 Pluralization
 -------------
@@ -240,8 +243,9 @@ translation context (note that the tags do not need to be the same in the
 original message and in the translated one).
 
 .. tip:
-   As tags are optional, the translator doesn't use them (the translator will
-   only get a string based on its position in the string).
+
+    As tags are optional, the translator doesn't use them (the translator will
+    only get a string based on its position in the string).
 
 Sometimes, you want a different translation for specific cases (for ``0``, or
 when the count is large enough, when the count is negative, ...). For such
@@ -269,7 +273,8 @@ delimiter can be ``[`` (exclusive) or ``]`` (inclusive). Beside numbers, you
 can use ``-Inf`` and ``+Inf`` for the infinite.
 
 .. note::
-   Symfony2 uses the `ISO 31-11`_ for intervals notation.
+
+    Symfony2 uses the `ISO 31-11`_ for intervals notation.
 
 The translator
 :method:`Symfony\\Component\\Translation\\Translator::transChoice` method

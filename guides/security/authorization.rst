@@ -59,7 +59,7 @@ if he is not authenticated yet.
 In the example above, we match requests based on their path info, but there
 are many other ways as you will learn in the next section.
 
-..tip::
+.. tip::
 
     Symfony2 automatically adds a special role based on the anonymous flag:
     ``IS_AUTHENTICATED_ANONYMOUSLY`` for anonymous users and

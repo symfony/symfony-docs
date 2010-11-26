@@ -17,4 +17,5 @@ confirmed, the core-team works on a solution following these steps:
 5. Publish the post on the official Symfony blog.
 
 .. note::
-   While we are working on a patch, please do not reveal the issue publicly.
+
+    While we are working on a patch, please do not reveal the issue publicly.

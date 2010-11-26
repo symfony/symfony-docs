@@ -24,8 +24,9 @@ Set up your user information with your real name and a working email address:
     $ git config --global user.email you@example.com
 
 .. tip::
-   If you are new to Git, we highly recommend you to read the excellent and free
-   `ProGit`_ book.
+
+    If you are new to Git, we highly recommend you to read the excellent and
+    free `ProGit`_ book.
 
 Get the Symfony2 code source:
 
@@ -61,11 +62,12 @@ topic branch:
     $ git checkout -b BRANCH_NAME
 
 .. tip::
-   Use a descriptive name for your branch (`ticket_XXX` where `XXX` is the ticket
-   number is a good convention for bug fixes).
+
+    Use a descriptive name for your branch (`ticket_XXX` where `XXX` is the
+    ticket number is a good convention for bug fixes).
 
 The above command automatically switches the code to the newly created branch
-(check the branch you are working on with `git branch`.)
+(check the branch you are working on with `git branch`).
 
 Work on the code as much as you want and commit as much as you want; but keep
 in mind the following:
@@ -82,11 +84,13 @@ in mind the following:
 * Write good commit messages.
 
 .. tip::
-   A good commit message is composed of a summary (the first line), optionally
-   followed by a blank line and a more detailed description. The summary should
-   start with the Component you are working on in square brackets
-   (`[DependencyInjection]`, `[FrameworkBundle]`, ...). Use a verb (`fixed ...`,
-   `added ...`, ...) to start the summary and don't add a period at the end.
+
+    A good commit message is composed of a summary (the first line), optionally
+    followed by a blank line and a more detailed description. The summary
+    should start with the Component you are working on in square brackets
+    (`[DependencyInjection]`, `[FrameworkBundle]`, ...). Use a verb
+    (`fixed ...`, `added ...`, ...) to start the summary and don't add a period
+    at the end.
 
 Submitting a Patch
 ------------------
