@@ -7,6 +7,7 @@ Contributing Code
     bugs
     patches
     security
-    standards
     tests
+    standards
+    conventions
     license
