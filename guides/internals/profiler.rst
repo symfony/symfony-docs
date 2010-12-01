@@ -413,7 +413,7 @@ configuration, and tag it with ``data_collector``:
             ->addTag('data_collector')
         ;
 
-.. _data collectors: http://api.symfony-reloaded.org/PR3/index.html?q=DataCollector
+.. _data collectors: http://api.symfony-reloaded.org/PR4/index.html?q=DataCollector
 
 Adding Web Profiler Templates
 -----------------------------
