@@ -4,24 +4,24 @@
 Autoloader
 ==========
 
-Whenever you use an undefined class, PHP uses the autoloading mechanism to
-delegate the loading of a file defining the class. Symfony2 provides a
-"universal" autoloader, which is able to load classes from files that
-implement one of the following conventions:
+Sempre que você usa uma classe indefinida, o PHP usa o mecanismo de autoloading para
+delegar o carregamento de um arquivo que defina a classe. O Symfony2 fornece um 
+autoloader "universal", que é capaz de carregar as classes de arquivos que implementem
+uma das seguintes convenções:
 
-* The technical interoperability `standards`_ for PHP 5.3 namespaces and class
+* As `normas`_ técnicas de interoperabilidade para os namespaces e classes do PHP 5.3
   names;
 
-* The `PEAR`_ naming convention for classes.
+* A nomeação conforme a convenção do `PEAR`_ para classes.
 
-If your classes and the third-party libraries you use for your project follow
-these standards, the Symfony2 autoloader is the only autoloader you will ever
-need.
+Se suas classes e as bibliotecas de terceiros que você usa no seu projeto seguem 
+essas normas, o autoloader do Symfony2 será o único autoloader que você irá 
+precisar
 
-Usage
------
+Uso
+---
 
-Registering the autoloader is straightforward::
+Registrar o autoloader é simples::
 
     require_once '/path/to/src/Symfony/Foundation/UniversalClassLoader.php';
 
@@ -30,14 +30,15 @@ Registering the autoloader is straightforward::
     $loader = new UniversalClassLoader();
     $loader->register();
 
-The autoloader is useful only if you add some libraries to autoload.
+O autoloader é útil apenas se você que adicionar algumas bibliotecas para carregarem
+automaticamente.
 
 .. note::
-   The autoloader is automatically registered in a Symfony2 application (see
+   O autoloader é automaticamente registrado em uma aplicação do Symfony2 (veja
    ``src/autoload.php``).
 
-If the classes to autoload use namespaces, use the ``registerNamespace()`` or
-``registerNamespaces()`` methods::
+Se as classes a serem carregadas automaticamente usam namespaces, use o método
+``registerNamespace()`` ou ``registerNamespaces()`` ::
 
     $loader->registerNamespace('Symfony', __DIR__.'/vendor/symfony/src');
 
@@ -46,8 +47,8 @@ If the classes to autoload use namespaces, use the ``registerNamespace()`` or
       'Zend'    => __DIR__.'/vendor/zend/library',
     ));
 
-For classes that follow the PEAR naming convention, use the ``registerPrefix``
-or ``registerPrefixes`` methods::
+Para classes que seguem a nomeclatura padrão do PEAR, use o método ``registerPrefix``
+ou ``registerPrefixes`` ::
 
     $loader->registerPrefix('Twig_', __DIR__.'/vendor/twig/lib');
 
@@ -57,12 +58,12 @@ or ``registerPrefixes`` methods::
     ));
 
 .. note::
-   Some libraries also need that their root path be registered in the PHP include
-   path (``set_include_path()``).
+   Algumas bibliotecas também precisam que o caminho da raiz seja registrado no include path do
+   PHP (``set_include_path()``).
 
-Classes from a sub-namespace or a sub-hierarchy of PEAR classes can be looked
-for in a list of locations to ease the vendoring of a sub-set of classes for
-large projects::
+Classes de um sub-namespace ou de uma sub-hierarquia de classes PEAR poden ser procuradas
+em uma lista de locais para facilitar o agrupamento de um sub-conjunto de classes para 
+grandes projetos::
 
     $loader->registerNamespaces(array(
       'Doctrine\Common'          => __DIR__.'/vendor/doctrine/lib/vendor/doctrine-common/lib',
@@ -71,11 +72,11 @@ large projects::
       'Doctrine'                 => __DIR__.'/vendor/doctrine/lib',
     ));
 
-In this example, if you try to use a class in the ``Doctrine\Common`` namespace
-or one of its children, the autoloader will first look for the class under the
-``doctrine-common`` directory, and it will then fallback to the default
-``Doctrine`` directory (the last one configured) if not found, before giving up.
-The order of the registrations is significant in this case.
+Neste exemplo, se você tentar usar a classe no namespace ``Doctrine\Common``
+ou em um dos seus filhos, o autoloader vai procurar primeiro pela classe no
+diretório ``doctrine-common``, e vai procurar no diretório padrão
+``Doctrine`` (o último configurado) se não encontrar, antes de desistir.
+A ordem dos registros é importante neste caso. 
 
-.. _standards: http://groups.google.com/group/php-standards/web/psr-0-final-proposal
+.. _normas: http://groups.google.com/group/php-standards/web/psr-0-final-proposal
 .. _PEAR:      http://pear.php.net/manual/en/standards.php
