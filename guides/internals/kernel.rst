@@ -12,7 +12,7 @@ for handling client requests. Its main goal is to "convert"
 All Symfony2 Kernels implement
 :class:`Symfony\\Component\\HttpKernel\\HttpKernelInterface`::
 
-    function handle(Request $request = null, $type = self::MASTER_REQUEST, $raw = false);
+    function handle(Request $request, $type = self::MASTER_REQUEST, $catch = true)
 
 .. index::
    single: Internals; Controller Resolver
@@ -134,7 +134,7 @@ the type of the request. For instance, if a listener must only be active for
 master requests, add the following code at the beginning of your listener
 method::
 
-    if (HttpKernelInterface::MASTER_REQUEST !== $event->getParameter('request_type')) {
+    if (HttpKernelInterface::MASTER_REQUEST !== $event->get('request_type')) {
         // return immediately
         // if the event is a filter, return the filtered value instead
         return;
@@ -208,11 +208,11 @@ view sub-system.
 
 ``FrameworkBundle`` registers several listeners:
 
-* :class:`Symfony\\Component\\HttpKernel\\Profiler\\ProfilerListener`: collects
-  data for the current request;
+* :class:`Symfony\\Component\\HttpKernel\\Profiler\\ProfilerListener`:
+  collects data for the current request;
 
-* :class:`Symfony\\Bundle\\WebProfilerBundle\\WebDebugToolbarListener`: injects
-  the Web Debug Toolbar;
+* :class:`Symfony\\Bundle\\WebProfilerBundle\\WebDebugToolbarListener`:
+  injects the Web Debug Toolbar;
 
 * :class:`Symfony\\Component\\HttpKernel\\ResponseListener`: fixes the
   Response ``Content-Type``;

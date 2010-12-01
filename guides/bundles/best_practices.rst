@@ -24,11 +24,6 @@ A bundle is also a PHP namespace, composed of several segments:
   bundles;
 * The **bundle name**.
 
-.. caution::
-
-    The vendor namespace and the category namespaces are only possible as of
-    Symfony2 PR3.
-
 The bundle name must follow these simple rules:
 
 * Use only alphanumeric characters and underscores;
@@ -169,9 +164,9 @@ instead.
 
 .. note::
 
-    If you have a look at :class:`Symfony\\Bundle\\FrameworkBundle\\Controller\\Controller`
-    methods, you will see that they are only nice shortcuts to ease the
-    learning curve.
+    If you have a look at
+    :class:`Symfony\\Bundle\\FrameworkBundle\\Controller\\Controller` methods,
+    you will see that they are only nice shortcuts to ease the learning curve.
 
 Templates
 ---------
