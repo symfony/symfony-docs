@@ -77,11 +77,9 @@ The event object has several methods to get the event data:
 
 * ``getSubject()``: Gets the subject object attached to the event;
 
-* ``getParameters()``: Returns the event parameters.
+* ``get()``: Gets the value of a parameter;
 
-The event object can also be accessed as an array to get its parameters::
-
-    echo $event['culture'];
+* ``all()``: Returns the event parameters.
 
 The Dispatcher
 --------------

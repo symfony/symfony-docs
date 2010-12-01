@@ -114,7 +114,7 @@ Then, create a class that will host the listener::
         public function addBarMethodToFoo(Event $event)
         {
             // we only want to respond to the calls to the 'bar' method
-            if ('bar' != $event['method']) {
+            if ('bar' != $event->get('method']) {
                 // allow another listener to take care of this unknown method
                 return false;
             }
@@ -123,7 +123,7 @@ Then, create a class that will host the listener::
             $foo = $event->getSubject();
 
             // the bar method arguments
-            $arguments = $event['parameters'];
+            $arguments = $event->get('parameters');
 
             // do something
             // ...
