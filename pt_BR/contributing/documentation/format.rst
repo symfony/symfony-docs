@@ -1,37 +1,37 @@
-Documentation Format
-====================
+Formato da Documentação
+=======================
 
-The Symfony2 documentation uses `reStructuredText`_ as its markup language and
-`Sphinx`_ for building the output (HTML, PDF, ...).
+A documentação do Symfony2 usa a `reStructuredText`_ como sua linguagem de marcação
+e o `Sphinx`_ para gerar a saida (HTML, PDF, ...).
 
 reStructuredText
 ----------------
 
-reStructuredText "is an easy-to-read, what-you-see-is-what-you-get plaintext
-markup syntax and parser system."
+reStructuredText "é uma sitaxe de marcação e um sistema analisador fácil de ler e
+o texto é o-que-você-vê-é-o-que-você-tem."
 
-You can learn more about its syntax by reading existing Symfony2 `documents`_
-or by reading the `reStructuredText Primer`_ on the Sphinx website.
+Você pode aprender mais sobre a sua sintaxe lendo a `documentação`_ existente do Symfony2
+ou lendo o `reStructuredText Primer`_ no site do Sphinx.
 
-If you are familiar with Markdown, be careful as things as sometimes very
-similar but different:
+Se você conhece Markdown, tenha cuidado, pois as vezes as coisas similares são muito 
+diferentes:
 
-* Lists starts at the beginning of a line (no indentation is allowed);
+* Listas começam no inicio de uma linha (não é permitido identação);
 
-* Inline code blocks use double-ticks (````like this````).
+* Blocos de código na linha usam crases duplas (````assim````).
 
 Sphinx
 ------
 
-Sphinx is a build system that adds some nice tools to create documentation
-from reStructuredText documents. As such, it adds new directives and
-interpreted text roles to standard reST `markup`_.
+Sphinx é um sistema que adiciona ferramentas muito legas para criar documentação
+para documentos em reStructuredText. Assim, ele adiciona novas diretrizes e 
+interpreta textos para a `marcação`_ reST.
 
-Syntax Highlighting
+Destaque de Sintaxe
 ~~~~~~~~~~~~~~~~~~~
 
-All code examples uses PHP as the default highlighted language. You can change
-it with the ``code-block`` directive:
+Todos os exemplos de código usam o PHP como a linguagem padrão de destaque. Você
+pode trocar isso com a diretriz de ``code-block``:
 
 .. code-block:: rst
 
@@ -39,8 +39,8 @@ it with the ``code-block`` directive:
 
         { foo: bar, bar: { foo: bar, bar: baz } }
 
-If your PHP code begins with ``<?php``, then you need to use ``html+php`` as
-the highlighted pseudo-language:
+Se o seu código PGP iniciar com ``<?php``, então você precisará usar ``html+php`` 
+como a pseudo-linguagem de destaque:
 
 .. code-block:: rst
 
@@ -49,13 +49,13 @@ the highlighted pseudo-language:
         <?php echo $this->foobar(); ?>
 
 .. note::
-   A list of supported languages is available on the `Pygments website`_.
+   Uma lista de linguagens suportadas encontra-se disponível no `Pygments website`_.
 
-Configuration Blocks
-~~~~~~~~~~~~~~~~~~~~
+Configuração de Blocos
+~~~~~~~~~~~~~~~~~~~~~~
 
-Whenever you show a configuration, you must use the ``configuration-block``
-directive to show the configuration in all supported configuration formats
+Sempre que você mostrar uma configuração, você precisa usar a diretiva ``configuration-block``
+para mostrar essa configuração em todos os formatos de configuração disponíveis
 (``PHP``, ``YAML``, and ``XML``):
 
 .. code-block:: rst
@@ -74,25 +74,25 @@ directive to show the configuration in all supported configuration formats
 
             // Configuration in XML
 
-The previous reST snippet renders as follow:
+O pedaço anterior de reST renderiza o seguinte:
 
 .. configuration-block::
 
     .. code-block:: yaml
 
-        # Configuration in YAML
+        # Configuração em YAML
 
     .. code-block:: xml
 
-        <!-- Configuration in XML //-->
+        <!-- Configuração em XML //-->
 
     .. code-block:: php
 
-        // Configuration in XML
+        // Configuração em XML
 
 .. _reStructuredText:        http://docutils.sf.net/rst.html
 .. _Sphinx:                  http://sphinx.pocoo.org/
-.. _documents:               http://github.com/symfony/symfony-docs
+.. _documentação:            http://github.com/symfony/symfony-docs
 .. _reStructuredText Primer: http://sphinx.pocoo.org/rest.html
-.. _markup:                  http://sphinx.pocoo.org/markup/
+.. _marcação:                http://sphinx.pocoo.org/markup/
 .. _Pygments website:        http://pygments.org/languages/

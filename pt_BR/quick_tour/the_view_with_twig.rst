@@ -1,20 +1,20 @@
-The View with Twig
-==================
+A View com o Twig
+=================
 
-So, you want to learn Symfony2 with Twig templates. Good choice! Twig makes
-your templates more concise and more friendly for web designers.
+Então você quer aprender Symfony2 com os templates do Twig. Excelente escolha!
+O Twig deixa seus templates mais consisos e mais amigáveis para os web designers.
 
 .. include:: /guides/Templating/Twig.rst
    :start-line: 7
 
-Final Thoughts
---------------
+Considerações Finais
+--------------------
 
-You have only been working with Symfony2 for about 20 minutes, and you can
-already do pretty amazing stuff with it. That's the power of Symfony2. Learning
-the basics is easy, and you will soon learn that this simplicity is hidden
-under a very flexible architecture.
+Você só está trabalhando com o Symfony2 por aproximadamente 20 minutos, e você
+já pode fazer coissas extraordinárias com ele. Esse é o poder do Symfony2. 
+Aprender o básico é fácil, e você logo vai aprender que essa simplicidade está 
+escondida sob uma arquitetura muito flexível.
 
-But I get ahead of myself. First, you need to learn more about the controller
-and that's exactly the topic of the next part of this tutorial. Ready for
-another 10 minutes with Symfony2?
+Mas eu me precipitei. Primeiro, você precisa aprender mais sobre o controller e 
+esse é exatamente o tópico da próxima parte deste tutorial. Pronto para mais 
+10 minutos com o Symfony2?
