@@ -1,49 +1,50 @@
-Symfony2 Documentation License
-==============================
+Licensa da Documentação do Symfony2
+===================================
 
-The Symfony2 documentation is licensed under a Creative Commons
-Attribution-Share Alike 3.0 Unported `License`_.
+A documentação do Symfony2 é licensiada sob a `Licença`_ Creative Commons
+Attribution-Share Alike 3.0 Unported.
 
-**You are free:**
+**Você é livre:**
 
-* to *Share* — to copy, distribute and transmit the work;
+* para *Compartilhar* — copiar, distribuir e transmitir o trabalho;
 
-* to *Remix* — to adapt the work.
+* para *Remixar* — adaptar o trabalho.
 
-**Under the following conditions:**
+**Sob as seguintes condições:**
 
-* *Attribution* — You must attribute the work in the manner specified by
-  the author or licensor (but not in any way that suggests that they
-  endorse you or your use of the work);
+* *Atribuição* — Você deve atribuir seu trabalho da forma especificada pelo
+  autor ou licenciador (mas de nenhuma maneira isso sugere que eles aprovem
+  você ou o uso do trabalho);
 
-* *Share Alike* — If you alter, transform, or build upon this work, you
-  may distribute the resulting work only under the same or similar license
-  to this one.
+* *Partes Iguais* — Se você alterar, transformar, ou construir algo sobre este
+  trabalho, você pode distribuir o resultado sob uma licença igual o similar
+  a esta.
 
-**With the understanding that:**
+**Com o entendimento que:**
 
-* *Waiver* — Any of the above conditions can be waived if you get
-  permission from the copyright holder;
+* *Renúncia* — Qualquer uma das condições acima podem ser renunciadas se você
+  conseguir a permissão do detentor do copyright;
 
-* *Public Domain* — Where the work or any of its elements is in the public
-  domain under applicable law, that status is in no way affected by the
-  license;
+* *Dominio Público* — Quando o trabalho ou qualquer um dos elementos está em
+  dominio público nos termos da legislação aplicável, o status não afetado
+  pela licença;
 
-* *Other Rights* — In no way are any of the following rights affected by the license:
+* *Outros Direitos* — De nenhuma maneira, qualquer um dos seguintes direitos são
+  afetados pela licença:
 
-    * Your fair dealing or fair use rights, or other applicable copyright
-      exceptions and limitations;
+    * Seu tratamento igual ou seus direitos de uso, ou outra exceção e limitação
+      aplicavel pelo copyright;
 
-    * The author's moral rights;
+    * Os direitos morais do autor;
 
-    * Rights other persons may have either in the work itself or in how
-      the work is used, such as publicity or privacy rights.
+    * Os direitos que outras pessoas podem ter, tanto no trabalho ou em como o 
+      trabalho é usado, como publicidade ou direitos de privacidade.
 
-* *Notice* — For any reuse or distribution, you must make clear to others
-  the license terms of this work. The best way to do this is with a link
-  to this web page.
+* *Anúncio* — Para qualquer reuso ou distribuição, você deve deixar claro para 
+  os outros os termos da licença do trabalho. A melhor maneira de fazer isso é
+  com um link para essa página.
 
-This is a human-readable summary of the `Legal Code (the full license)`_.
+Esse é um sumário simplificado do `Código Legal (a licença completa)`_.
 
-.. _License: http://creativecommons.org/licenses/by-sa/3.0/
-.. _Legal Code (the full license): http://creativecommons.org/licenses/by-sa/3.0/legalcode
+.. _Licença: http://creativecommons.org/licenses/by-sa/3.0/
+.. _Código Legal (a licença completa): http://creativecommons.org/licenses/by-sa/3.0/legalcode
