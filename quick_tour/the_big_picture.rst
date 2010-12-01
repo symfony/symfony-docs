@@ -223,10 +223,10 @@ The controller is responsible for returning a representation of the resource
     {
         public function indexAction($name)
         {
-            return $this->render('HelloBundle:Hello:index.php', array('name' => $name));
+            return $this->render('HelloBundle:Hello:index.twig', array('name' => $name));
 
-            // render a Twig template instead
-            // return $this->render('HelloBundle:Hello:index.twig', array('name' => $name));
+            // render a PHP template instead
+            // return $this->render('HelloBundle:Hello:index.php', array('name' => $name));
         }
     }
 
@@ -247,7 +247,7 @@ The code is pretty straightforward but let's explain this code line by line:
   resource placeholder values as arguments (``$name`` in our case).
 
 * *line 11*: The ``render()`` method loads and renders a template
-  (``HelloBundle:Hello:index``) with the variables passed as a second
+  (``HelloBundle:Hello:index.twig``) with the variables passed as a second
   argument.
 
 But what is a :term:`bundle`? All the code you write in a Symfony2 project is
@@ -259,17 +259,19 @@ developers. In our example, we only have one bundle, ``HelloBundle``.
 Templates
 ~~~~~~~~~
 
-So, the controller renders the ``HelloBundle:Hello:index.php`` template. But
+So, the controller renders the ``HelloBundle:Hello:index.twig`` template. But
 what's in a template name? ``HelloBundle`` is the bundle name, ``Hello`` is
-the controller, and ``index.php`` the template file name. The template itself
-is made of HTML and simple PHP expressions:
+the controller, and ``index.twig`` the template name. By default, the sandbox
+uses Twig as its template engine:
 
-.. code-block:: html+php
+.. code-block:: jinja
 
-    <!-- src/Application/HelloBundle/Resources/views/Hello/index.php -->
-    <?php $view->extend('HelloBundle::layout.php') ?>
+    {# src/Application/HelloBundle/Resources/views/Hello/index.twig #}
+    {% extends "HelloBundle::layout.twig" %}
 
-    Hello <?php echo $name ?>!
+    {% block content %}
+        Hello {{ name }}!
+    {% endblock %}
 
 Congratulations! You have looked at your first Symfony2 piece of code. That was
 not so hard, was it? Symfony2 makes it really easy to implement web sites
