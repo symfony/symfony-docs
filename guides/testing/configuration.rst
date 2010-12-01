@@ -76,8 +76,9 @@ The Client used by functional tests creates a Kernel that runs in a special
         logger:
             priority: debug
 
-You can also change the default environment (``test``) and override the default
-debug mode (``true``) by passing them as options to the createClient() method::
+You can also change the default environment (``test``) and override the
+default debug mode (``true``) by passing them as options to the
+``createClient()`` method::
 
     $client = $this->createClient(array(
         'environment' => 'my_test_env',
