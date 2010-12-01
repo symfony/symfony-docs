@@ -149,7 +149,7 @@ So, Symfony2 routes the request by reading the routing configuration file:
         use Symfony\Component\Routing\Route;
 
         $collection = new RouteCollection();
-        $collection->addRoute('homepage', new Route('/', array(
+        $collection->add('homepage', new Route('/', array(
             '_controller' => 'FrameworkBundle:Default:index',
         )));
         $collection->addCollection($loader->import("HelloBundle/Resources/config/routing.php"));
@@ -190,7 +190,7 @@ part, which imports another routing configuration file that reads as follows:
         use Symfony\Component\Routing\Route;
 
         $collection = new RouteCollection();
-        $collection->addRoute('hello', new Route('/hello/:name', array(
+        $collection->add('hello', new Route('/hello/:name', array(
             '_controller' => 'HelloBundle:Hello:index',
         )));
 

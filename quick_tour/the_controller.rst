@@ -43,7 +43,7 @@ a value of ``xml``:
     .. code-block:: php
 
         // src/Application/HelloBundle/Resources/config/routing.php
-        $collection->addRoute('hello', new Route('/hello/:name', array(
+        $collection->add('hello', new Route('/hello/:name', array(
             '_controller' => 'HelloBundle:Hello:index',
             '_format'     => 'xml',
         )));
@@ -84,7 +84,7 @@ action, use the ``:_format`` placeholder in the pattern instead:
     .. code-block:: php
 
         // src/Application/HelloBundle/Resources/config/routing.php
-        $collection->addRoute('hello', new Route('/hello/:name.:_format', array(
+        $collection->add('hello', new Route('/hello/:name.:_format', array(
             '_controller' => 'HelloBundle:Hello:index',
             '_format'     => 'html',
         ), array(
