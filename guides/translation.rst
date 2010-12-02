@@ -337,13 +337,13 @@ You can also specify the message domain:
 
 .. code-block:: jinja
 
-    {% trans "Foo {{ name }}" from app %}
+    {% trans "Foo {{ name }}" from "app" %}
 
-    {% trans from app %}
+    {% trans from "app" %}
         Foo {{ name }}
     {% endtrans %}
 
-    {% transchoice count from app %}
+    {% transchoice count from "app" %}
         {0} There is no apples|{1} There is one apple|]1,Inf] There are {{ count }} apples
     {% endtranschoice %}
 

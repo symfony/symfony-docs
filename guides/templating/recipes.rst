@@ -1,5 +1,36 @@
-Helpers
-=======
+Template Recipes
+================
+
+.. _twig_extension_tag:
+
+Enabling Custom Twig Extensions
+-------------------------------
+
+To enable a Twig extension, add it as a regular service in one of your
+configuration, and tag it with ``twig.extension``:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        services:
+            twig.extension.your_extension_name:
+                class: Fully\Qualified\Extension\Class\Name
+                tags:
+                    - { name: twig.extension }
+
+    .. code-block:: xml
+
+        <service id="twig.extension.your_extension_name" class="Fully\Qualified\Extension\Class\Name">
+            <tag name="twig.extension" />
+        </service>
+
+    .. code-block:: php
+
+        $container
+            ->register('twig.extension.your_extension_name', 'Fully\Qualified\Extension\Class\Name')
+            ->addTag('twig.extension')
+        ;
 
 .. _templating_renderer_tag:
 
@@ -35,8 +66,8 @@ attribute (the renderer will be known by this alias in template name):
 
 .. _templating_helper_tag:
 
-Enabling Custom Template Helpers
---------------------------------
+Enabling Custom PHP Template Helpers
+------------------------------------
 
 To enable a custom template helper, add it as a regular service in one of your
 configuration, tag it with ``templating.helper`` and define an ``alias``

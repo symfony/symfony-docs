@@ -1,7 +1,8 @@
 * **Templating**:
 
-  * :doc:`Twig </guides/templating/Twig>` | 
-  * :doc:`/guides/templating/helpers`
+  * `Twig`_ | 
+  * :doc:`PHP </guides/templating/PHP>` | 
+  * :doc:`Recipes </guides/templating/recipes>`
 
 * **Doctrine**:
 
@@ -71,3 +72,5 @@
 
 * :doc:`Symfony2 for symfony 1 users</guides/symfony1>`
 * :doc:`Symfony2 stable API</guides/stable_api>`
+
+.. _Twig: http://www.twig-project.org/documentation
