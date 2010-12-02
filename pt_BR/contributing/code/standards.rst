@@ -1,76 +1,75 @@
-Coding Standards
-================
+Padrões de Codificação
+======================
 
-When contributing code to Symfony, you must follow its coding standards. To
-make a long story short, here is the golden rule: *Imitate the existing
-Symfony code*.
+Quando você contribuir com código para o Symfony, você deve seguir seus
+padrões de codificação. Para encurtar a história, aqui está a regra de ouro:
+*Imite a código existente do Symfony*.
 
-Structure
+Estrutura
 ---------
 
-* Never use short tags (`<?`);
+* Nunca use short tags (`<?`);
 
-* Don't end class files with the usual `?>` closing tag;
+* Não termine o arquivo com uma classe com a usual tag de fechamento (`?>`);
 
-* Indentation is done by steps of four spaces (tabs are never allowed);
+* A identação é feita usando quatro espaços (tabs são proibidas);
 
-* Use the linefeed character (`0x0A`) to end lines;
+* Use o caracter de nova linha (`0x0A`) ao fim de cada linha;
 
-* Add a single space after each comma delimiter;
+* Adicione um espaço simples após cada virgula delimitadora;
 
-* Don't put spaces after an opening parenthesis and before a closing one;
+* Não coloque espaços depois da abertura de um parênteses e antes de fechar um;
 
-* Add a single space around operators (`==`, `&&`, ...);
+* Adicione um espaço simples em volta dos operadores (`==`, `&&`, ...);
 
-* Add a single space before the opening parenthesis of a control keyword
-  (`if`, `else`, `for`, `while`, ...);
+* Adicione um espaço simples antes da abertura de um parênteses de uma função 
+  de controle (`if`, `else`, `for`, `while`, ...);
 
-* Add a blank line before `return` statements;
+* Adicione uma linha em branco antes das declarações de `return`;
 
-* Don't add trailing spaces at the end of lines;
+* Não adicione espaços a direita no fim da linha;
 
-* Use braces to indicate control structure body regardless of the number of
-  statements it contains;
+* Use chaves para indicar o corpo de uma estrutura de controle não importando
+  o número de declarações que ele contem;
 
-* Put braces on their own line for classes, methods, and functions
-  declaration;
+* Coloque as chaves em suas próprias linhas para declarações de classes, métodos 
+  e funções;
 
-* Separate the conditional statement and the opening brace with a single
-  space and no blank line;
+* Separe a declaração condicional e a chave de abertura com um espaço simples
+  e sem linhas em branco;
 
-* Declare visibility explicitly for class, methods, and properties (usage of
-  `var` is prohibited);
+* Declare explicitamente a visibilidade para classes, métodos e propriedades 
+  (uso de `var` é proibido);
 
-* Use lowercase PHP native typed constants: `false`, `true`, and `null`. The
-  same goes for `array()`;
+* Use constantes tipadas do PHP em minúsculo: `false`, `true`, e `null`. O mesmo
+  se aplica para `array()`;
 
-* Use uppercase strings for constants with words separated with underscores;
+* Use maiúsculo para constantes com palavras separadas por underscore;
 
-* Define one class per file;
+* Defina uma classe por arquivo;
 
-* Declare class properties before methods;
+* Declare as propriedades da classe antes dos métodos;
 
-* Declare public methods first, then protected ones and finally private ones.
+* Declare métodos públicos primeiro, depois protegidos e por fim os privados;
 
-Naming Conventions
-------------------
+Convenção de Nomeação
+---------------------
 
-* Use camelCase, not underscores, for variable, function and method
-  names;
+* Use camelCase ao invés de underscores, para nomes de variáveis, funções e métodos;
 
-* Use underscores for option, argument, parameter names;
+* Use underscores para nomes de opções, argumentos e parametros;
 
-* Use namespaces for all classes;
+* Use namespaces para todas as classes;
 
-* Use `Symfony` as the first namespace level;
+* Use `Symfony` como o primeiro nível de namespace;
 
-* Suffix interfaces with `Interface`;
+* Use `Interface` como sufixos para interfaces;
 
-* Use alphanumeric characters and underscores for file names;
+* Use caracteres alfanuméricos e undercores para nomes de arquivo;
 
-Documentation
--------------
+Documentação
+------------
 
-* Add PHPDoc blocks for all classes, methods, and functions;
+* Adicione blocos de PHPDoc para todas as classes, métodos e funções;
 
-* The `@package` and `@subpackage` annotations are not used.
+* As anotações `@package` e `@subpackage` não são usadas.

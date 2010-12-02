@@ -1,20 +1,23 @@
-Reporting a Security Issue
-==========================
+Relatando um Problema de Segurança
+==================================
 
-Found a security issue in Symfony? Don't use the mailing-list or the bug
-tracker. All security issues must be sent to **security [at]
-symfony-project.com** instead. Emails sent to this address are forwarded to
-the Symfony core-team private mailing-list.
+Encontrou um problema de segurança no Symfony? Não use a lista de discussão
+ou o bug tracker. Todas os problemas de segurança devem ser enviados para 
+**security [at] symfony-project.com**. E-mails enviados para esse endereço
+são encaminhados para a lista de discussão privada do time de desenvolvimento
+do core do Symfony.
 
-For each report, we first try to confirm the vulnerability. When it is
-confirmed, the core-team works on a solution following these steps:
+Para cada relato, nós tentamos primeiro confirma a vulnerabilidade. Quando
+ela é confirmada, o time de desenvolvimento do core trabalha em uma solução
+seguindo os seguintes passos:
 
-1. Send an acknowledgement to the reporter;
-2. Work on a patch;
-3. Write a post describing the vulnerability, the possible exploits, and how
-   to patch/upgrade affected applications;
-4. Apply the patch to all maintained versions of Symfony;
-5. Publish the post on the official Symfony blog.
+1. Enviar uma confirmação para o relator;
+2. Trabalhar em uma correção;
+3. Escrever um artigo descrevendo a vulnerabilidade, as possiveis maneiras 
+   dela ocorrer, e como corrigir/atualizar as aplicações afetadas;
+4. Aplicar a correção em todas as versões mantidas do Symfony;
+5. Publicar o artio no blog oficial do Symfony.
 
 .. note::
-   While we are working on a patch, please do not reveal the issue publicly.
+   Enquanto nós estamos trabalhando na correções, não revele o problema 
+   publicamente.
