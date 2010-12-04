@@ -2,7 +2,7 @@ Padrões de Codificação
 ======================
 
 Quando você contribuir com código para o Symfony, você deve seguir seus
-padrões de codificação. Para encurtar a história, aqui está a regra de ouro:
+padrões de codificação. Para encurtar a história, aqui está esta o pulo do gato:
 *Imite a código existente do Symfony*.
 
 Estrutura

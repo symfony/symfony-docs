@@ -2,12 +2,12 @@ Executando os Testes do Symfony2
 ================================
 
 Antes de enviar um :doc:`patch <patches>` para inclusão, você deve executar
-a suite de testes do Symfony2 para se assegurar que você não quebrou nada.
+a suíte de testes do Symfony2 para se assegurar que você não quebrou nada.
 
 PHPUnit
 -------
 
-Para executar a suite de testes do Symfony2, instale primeiro o PHPUnit 3.5.0 ou anterior. 
+Para executar a suíte de testes do Symfony2, primeiro instale o PHPUnit 3.5.0 ou anterior. 
 Como ele não está estável ainda, sua melhor chance é usar a última versão do repositório:
 
 .. code-block:: bash
@@ -17,14 +17,14 @@ Como ele não está estável ainda, sua melhor chance é usar a última versão 
     $ pear package
     $ pear install PHPUnit-3.5.XXX.tgz
 
-Dependencias (opcional)
+Dependências (opcional)
 -----------------------
 
-Para executar toda a suite de testes, incluindo testes que dependem de dependências
+Para executar toda a suíte de testes, incluindo testes que dependem de dependências
 externas, o Symfony2 precisa ser capaz de carrregá-las. Por padrão, elas são carregadas
 automaticamente do `vendor/`, sob o diretório principal (veja `autoload.php.dist`).
 
-A suite de testes precisa das seguintes bibliotecas de terceiros:
+A suíte de testes precisa das seguintes bibliotecas de terceiros:
 
 * Doctrine
 * Doctrine Migrations
@@ -34,7 +34,7 @@ A suite de testes precisa das seguintes bibliotecas de terceiros:
 * Twig
 * Zend Framework
 
-Para instalar elas todas, execute o script `install_vendors.sh`:
+Para instalar todas elas, execute o script `install_vendors.sh`:
 
 .. code-block:: bash
 
@@ -55,7 +55,7 @@ Executando
 
 Primeiro, atualize as bibliotecas de terceiros (veja acima).
 
-Então, execute a suite de testes do Symfony2 no diretório raiz com o seguinte
+Então, execute a suíte de testes do Symfony2 no diretório raiz com o seguinte
 comando:
 
 .. code-block:: bash
@@ -66,7 +66,7 @@ A saida deve mostrar `OK`. Se não mostrar, você deve descobrir o que está err
 e se os testes estão quebrados pelas suas modificações.
 
 .. tip::
-   Execute a suite de testes antes de aplicar suas modificações para se certificar
+   Execute a suíte de testes antes de aplicar suas modificações para se certificar
    que eles ocorrem sem problemas na sua configuração.
 
 Cobertura do Código

@@ -7,7 +7,7 @@ ou o bug tracker. Todas os problemas de segurança devem ser enviados para
 são encaminhados para a lista de discussão privada do time de desenvolvimento
 do core do Symfony.
 
-Para cada relato, nós tentamos primeiro confirma a vulnerabilidade. Quando
+Para cada relato, nós tentamos confirmar primeiro a vulnerabilidade. Quando
 ela é confirmada, o time de desenvolvimento do core trabalha em uma solução
 seguindo os seguintes passos:
 
