@@ -1,35 +1,36 @@
-Submitting a Patch
-==================
+Enviando um patch
+=================
 
-Patches are the best way to provide a bug fix or to propose enhancements to
-Symfony.
+Patches são a melhor maneira de ajudar a corrigir um bug ou propor uma melhoria
+no Symfony.
 
-Initial Setup
--------------
+Configuração Inicial
+--------------------
 
-Before working on Symfony2, setup a friendly environment with the following
-software:
+Antes de trabalhar no Symfony2, configure um ambiente amigável com os seguintes
+programas:
 
 * Git;
 
-* PHP version 5.3.2 or above;
+* PHP versão 5.3.2 ou superior;
 
-* PHPUnit 3.5.0 or above.
+* PHPUnit 3.5.0 ou superior.
 
-Set up your user information with your real name and a working email address:
+Configure suas informações de usuário com seu nome real e e-mail:
 
 .. code-block:: bash
 
-    $ git config --global user.name "Your Name"
-    $ git config --global user.email you@example.com
+    $ git config --global user.name "Seu nome"
+    $ git config --global user.email voce@example.com
 
 .. tip::
-   If you are new to Git, we highly recommend you to read the excellent and free
-   `ProGit`_ book.
+   Se você é novato usando o Git, nós recomendados que você leia o excente livro
+   gratuito `ProGit`.
+   
 
-Get the Symfony2 code source:
+Baixe o código fonte do Symfony2:
 
-* Create a `Github`_ account and sign in;
+* Crie uma conta no `Github`_ e logue-se;
 
 * Fork the `Symfony2 repository`_ (click on the "Fork" button);
 
