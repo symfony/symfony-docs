@@ -90,11 +90,11 @@ do seguinte:
    (`fixed ...`, `added ...`, ...) para iniciar o resumo e não adicione ponto
    no final.
 
-Submitting a Patch
+Enviando um Patch
 ------------------
 
-Before submitting your patch, update your branch (needed if it takes you a
-while to finish your changes):
+Antes de enviar seu patch, atualize seu branch(necessario caso voce
+demorou um tempo para finalizar suas alterações):
 
 .. code-block:: bash
 
@@ -113,7 +113,7 @@ rebase:
     $ git add ... # add resolved files
     $ git rebase --continue
 
-Check that all tests still pass and push your branch remotely:
+Verifique se todos os testes continuam passando e `push` seu branch remotamente:
 
 .. code-block:: bash
 
@@ -122,18 +122,17 @@ Check that all tests still pass and push your branch remotely:
 You can now advertise your patch on the `dev mailing-list`_. The email must
 follow the following conventions:
 
-* Subject must start with `[PATCH]`, followed by a short summary of the
-  patch (with a reference to the ticket if it's a bug fix - `#XXX`);
+* O assunto deve iniciar com `[PATCH]`, seguido de um resumo sobre o patch
+  (com uma referência para o ticket, caso seja uma correção de problema - `#XXX`);
 
-* The body must contain the information about your branch
-  (`git://github.com/USERNAME/symfony.git BRANCH_NAME`);
+* O corpo deve conter o link para seu branch;
 
-* The body must then describe what the patch does (reference a ticket, or
-  copy and paste the commit message).
+* O corpo deve então descrever o que o patch faz (informe um ticket ou cole
+  a mensagem de commit).
 
-Based on the feedback, you might need to rework your patch. Before
-re-submitting the patch, rebase with master, don't merge; and force the push
-to the origin:
+De acordo com os comentários, talvez seja necessário refazer seu patch. Antes de
+reenviar o patch, rebase seu master, não faça merge, então force o `push` para o
+`origin`:
 
 .. code-block:: bash
 
@@ -141,5 +140,5 @@ to the origin:
 
 .. _ProGit: http://progit.org/
 .. _Github: https://github.com/signup/free
-.. _Symfony2 repository: http://www.github.com/fabpot/symfony
+.. _Symfony2 repositório: http://www.github.com/fabpot/symfony
 .. _dev mailing-list: http://groups.google.com/group/symfony-devs
