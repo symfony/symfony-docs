@@ -32,62 +32,63 @@ Baixe o código fonte do Symfony2:
 
 * Crie uma conta no `Github`_ e logue-se;
 
-* Fork the `Symfony2 repository`_ (click on the "Fork" button);
+* Fork o `repositório Symfony2`_ (clique no botão "Fork");
 
-* After the "hardcore forking action" has completed, clone your fork locally
-  (this will create a `symfony` directory):
+* Após a "ação hardcore forking" completar, clone seu fork localmente
+  (isso irá criar um diretório `symfony`):
 
 .. code-block:: bash
 
       $ git clone git@github.com:USERNAME/symfony.git
 
-* Add the upstream repository as remote:
+* Adicione o repositório  upstream como um remote:
 
 .. code-block:: bash
 
       $ cd symfony
       $ git remote add upstream git://github.com/fabpot/symfony.git
 
-Now that Symfony2 is installed, check that all unit tests pass for your
-environment as explained in the dedicated :doc:`document <tests>`.
+Agora que o Symfony2 esta instalado, verifique se os testes unitários passam
+para o seu ambiente, como explicado no documento dedicado aos :doc:`testes <tests>`.
 
-Working on a Patch
-------------------
+Trabalhando em um Patch
+-----------------------
 
-Each time you want to work on a patch for a bug or on an enhancement, create a
-topic branch:
+Cada vez que você quiser trabalhar em um patch para um problema ou uma melhoria, 
+cria um branch dedicado:
 
 .. code-block:: bash
 
     $ git checkout -b BRANCH_NAME
 
 .. tip::
-   Use a descriptive name for your branch (`ticket_XXX` where `XXX` is the ticket
-   number is a good convention for bug fixes).
+   Use um nome descritivo para seu branch (`ticket_XXX` onde ``XXX` é o numero do 
+   ticket é uma boa convenção para correcação de problemas).
 
-The above command automatically switches the code to the newly created branch
-(check the branch you are working on with `git branch`.)
+O comando acima automaticamente troca o código para o branch reçem criado
+(verifique o branch que você esta trabalhando com `git branch`.)
 
-Work on the code as much as you want and commit as much as you want; but keep
-in mind the following:
+Trabalhe o quanto quiser no código e commit quanto você quiser, mas lembre-se
+do seguinte:
 
-* Follow the coding :doc:`standards <standards>` (use `git diff --check` to
-  check for trailing spaces);
+* Siga os :doc:`padrões de codígo <standards>`(use `git diff --check` para 
+  verificar os espaços finais); 
 
-* Add unit tests to prove that the bug is fixed or that the new feature
-  actually works;
+* Adicione testes unitários para provar que o problema esta corrigido ou que
+  a nova funcionalidade realmente funciona;
 
-* Do atomic and logically separate commits (use the power of `git rebase` to
-  have a clean and logical history);
+* Faça commits atomicos e separados logicamente ( use o poder do `git rebase`
+  para ter um histórico limpo e lógico);
 
-* Write good commit messages.
+* Escreve boas mensagens de commit.
 
 .. tip::
-   A good commit message is composed of a summary (the first line), optionally
-   followed by a blank line and a more detailed description. The summary should
-   start with the Component you are working on in square brackets
-   (`[DependencyInjection]`, `[FoundationBundle]`, ...). Use a verb (`fixed ...`,
-   `added ...`, ...) to start the summary and don't add a period at the end.
+   Uma boa mensagem de commit é composta de um resumo(primeira linha), seguida
+   opcionalmente de uma linha em branco e umma descrição mais detalhada.
+   O resumo deve iniciar com o componente que você esta trabalhando dentro de 
+   colchetes (`[DependencyInjection]`, `[FoundationBundle]`, ...). Use um verbo
+   (`fixed ...`, `added ...`, ...) para iniciar o resumo e não adicione ponto
+   no final.
 
 Submitting a Patch
 ------------------
