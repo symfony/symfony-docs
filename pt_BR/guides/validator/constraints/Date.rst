@@ -1,7 +1,7 @@
 Date
 ====
 
-Validates that a value is a valid date string with format "YYYY-MM-DD".
+Valida se o valor é uma data válida no formato "YYYY-MM-DD".
 
 .. code-block:: yaml
 
@@ -9,7 +9,7 @@ Validates that a value is a valid date string with format "YYYY-MM-DD".
         birthday:
             - Date: ~
 
-Options
--------
+Opções
+------
 
-* ``message``: The error message if the validation fails
+* ``message``: A mensagem de erro se a validação falhar

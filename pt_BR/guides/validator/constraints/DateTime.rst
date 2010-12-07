@@ -1,7 +1,7 @@
 DateTime
 ========
 
-Validates that a value is a valid datetime string with format "YYYY-MM-DD HH:MM:SS".
+Valida se o valor é uma data-hora no formato "YYYY-MM-DD HH:MM:SS".
 
 .. code-block:: yaml
 
@@ -9,7 +9,7 @@ Validates that a value is a valid datetime string with format "YYYY-MM-DD HH:MM:
         createdAt:
             - DateTime: ~
 
-Options
--------
+Opções
+------
 
-* ``message``: The error message if the validation fails
+* ``message``: A mensagem de erro se a validação falhar

@@ -1,7 +1,7 @@
 Time
 ====
 
-Validates that a value is a valid time string with format "HH:MM:SS".
+Valida se o valor é uma hora no formato de uma string "HH:MM:SS".
 
 .. code-block:: yaml
 
@@ -9,7 +9,7 @@ Validates that a value is a valid time string with format "HH:MM:SS".
         createdAt:
             - DateTime: ~
 
-Options
--------
+Opções
+------
 
-* ``message``: The error message if the validation fails
+* ``message``: A mensagem de erro se a validação falhar

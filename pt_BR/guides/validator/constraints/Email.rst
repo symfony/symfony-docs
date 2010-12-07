@@ -1,7 +1,7 @@
 Email
 =====
 
-Validates that a value is a valid email address.
+Valida se o valor é um endereço válido de e-mail.
 
 .. code-block:: yaml
 
@@ -12,5 +12,5 @@ Validates that a value is a valid email address.
 Options
 -------
 
-* ``checkMX``: Whether MX records should be checked for the domain. Default: ``false``
-* ``message``: The error message if the validation fails
+* ``checkMX``: Se os registros MX devem ser verificados para o dominio. Padrão: ``false``
+* ``message``: A mensagem de erro se a validação falhar

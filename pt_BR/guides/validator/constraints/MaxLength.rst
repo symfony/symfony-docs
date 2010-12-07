@@ -1,7 +1,7 @@
 MaxLength
 =========
 
-Validates that the string length of a value is not greater than the given limit.
+Valida se o tamanho de uma string não é maior do que o limite atribuido.
 
 .. code-block:: yaml
 
@@ -12,5 +12,5 @@ Validates that the string length of a value is not greater than the given limit.
 Options
 -------
 
-* ``limit`` (**default**, required): The limit
-* ``message``: The error message if validation fails
+* ``limit`` (**padrão**, requirido): O limite
+* ``message``: A mensagem de erro se a validação falhar

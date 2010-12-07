@@ -1,7 +1,7 @@
 Max
 ===
 
-Validates that a value is not greater than the given limit.
+Valida se o valor não é maior que o limite atribuido.
 
 .. code-block:: yaml
 
@@ -9,8 +9,8 @@ Validates that a value is not greater than the given limit.
         age:
             - Max: 99
 
-Options
--------
+Opções
+------
 
-* ``limit`` (**default**, required): The limit
-* ``message``: The error message if validation fails
+* ``limit`` (**padrão**, requirido): O limite
+* ``message``: A mensagem de erro se a validação falhar
