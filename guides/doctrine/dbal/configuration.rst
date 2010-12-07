@@ -52,13 +52,14 @@ them under the key named ``connections``:
                 host:             localhost
 
 If you have defined multiple connections you can use the
-``getDatabaseConnection()`` as well but you must pass it an argument with the
+``$this->get('doctrine.dbal.[connectionname]_connection)``
+as well but you must pass it an argument with the
 connection name that you want get::
 
     class UserController extends Controller
     {
         public function indexAction()
         {
-            $conn = $this->container->getDatabaseConnection('customer');
+            $conn = $this->get('doctrine.dbal.customer_connection');
         }
     }
