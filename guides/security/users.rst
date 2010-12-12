@@ -14,7 +14,7 @@ Defining the Users
 During authentication, Symfony2 tries to retrieve a user matching the client
 credentials (most of the time a username and a password). As Symfony2 makes no
 assumption about the client/user PHP representation, it's up to the
-application to define a user class and hook it up with Symfony2 via a user
+application to define a user class and hook it up with Symfony2 via an user
 provider class.
 
 .. index::
