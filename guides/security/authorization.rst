@@ -181,7 +181,7 @@ syntax:
 
     .. code-block:: php
 
-        <?php if ($view['user']->hasRole('ROLE_ADMIN')): ?>
+        <?php if ($view['security']->vote('ROLE_ADMIN')): ?>
             <a href="...">Delete</a>
         <?php endif ?>
 

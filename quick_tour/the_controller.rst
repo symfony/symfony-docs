@@ -161,11 +161,7 @@ exception::
     }
 
 The ``NotFoundHttpException`` will return a 404 HTTP response back to the
-browser. Similarly, ``ForbiddenHttpException`` returns a 403 error and
-``UnauthorizedHttpException`` a 401 one. For any other HTTP error code, you can
-use the base ``HttpException`` and pass the HTTP error as the exception code::
-
-    throw new HttpException('Unauthorized access.', 401);
+browser.
 
 .. index::
    single: Controller; Redirect

@@ -409,7 +409,7 @@ possible via configuration:
         # app/config/config.yml
         twig.config:
             form:
-                resources: [BlogBundle::form.twig]
+                resources: [BlogBundle::form.twig, TwigBundle::form.twig]
 
     .. code-block:: xml
 
@@ -417,6 +417,7 @@ possible via configuration:
         <twig:config>
             <twig:form>
                 <twig:resource>BlogBundle::form.twig</twig:resource>
+                <twig:resource>TwigBundle::form.twig</twig:resource>
             </twig:form>
         </twig:config>
 
@@ -424,7 +425,7 @@ possible via configuration:
 
         // app/config/config.php
         $container->loadFromExtension('twig', 'config', array('form' => array(
-            'resources' => array('BlogBundle::form.twig'),
+            'resources' => array('BlogBundle::form.twig', 'TwigBundle::form.twig),
         )));
 
 Prototyping
