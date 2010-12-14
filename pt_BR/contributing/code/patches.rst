@@ -1,98 +1,100 @@
-Submitting a Patch
-==================
+Enviando um patch
+=================
 
-Patches are the best way to provide a bug fix or to propose enhancements to
-Symfony.
+Patches são a melhor maneira de ajudar a corrigir um bug ou propor uma melhoria
+no Symfony.
 
-Initial Setup
--------------
+Configuração Inicial
+--------------------
 
-Before working on Symfony2, setup a friendly environment with the following
-software:
+Antes de trabalhar no Symfony2, configure um ambiente amigável com os seguintes
+programas:
 
 * Git;
 
-* PHP version 5.3.2 or above;
+* PHP versão 5.3.2 ou superior;
 
-* PHPUnit 3.5.0 or above.
+* PHPUnit 3.5.0 ou superior.
 
-Set up your user information with your real name and a working email address:
+Configure suas informações de usuário com seu nome real e e-mail:
 
 .. code-block:: bash
 
-    $ git config --global user.name "Your Name"
-    $ git config --global user.email you@example.com
+    $ git config --global user.name "Seu nome"
+    $ git config --global user.email voce@example.com
 
 .. tip::
-   If you are new to Git, we highly recommend you to read the excellent and free
-   `ProGit`_ book.
+   Se você é novato usando o Git, nós recomendados que você leia o excente livro
+   gratuito `ProGit`.
+   
 
-Get the Symfony2 code source:
+Baixe o código fonte do Symfony2:
 
-* Create a `Github`_ account and sign in;
+* Crie uma conta no `Github`_ e logue-se;
 
-* Fork the `Symfony2 repository`_ (click on the "Fork" button);
+* Fork o `repositório Symfony2`_ (clique no botão "Fork");
 
-* After the "hardcore forking action" has completed, clone your fork locally
-  (this will create a `symfony` directory):
+* Após a "ação hardcore forking" completar, clone seu fork localmente
+  (isso irá criar um diretório `symfony`):
 
 .. code-block:: bash
 
       $ git clone git@github.com:USERNAME/symfony.git
 
-* Add the upstream repository as remote:
+* Adicione o repositório  upstream como um remote:
 
 .. code-block:: bash
 
       $ cd symfony
       $ git remote add upstream git://github.com/fabpot/symfony.git
 
-Now that Symfony2 is installed, check that all unit tests pass for your
-environment as explained in the dedicated :doc:`document <tests>`.
+Agora que o Symfony2 esta instalado, verifique se os testes unitários passam
+para o seu ambiente, como explicado no documento dedicado aos :doc:`testes <tests>`.
 
-Working on a Patch
-------------------
+Trabalhando em um Patch
+-----------------------
 
-Each time you want to work on a patch for a bug or on an enhancement, create a
-topic branch:
+Cada vez que você quiser trabalhar em um patch para um problema ou uma melhoria, 
+cria um branch dedicado:
 
 .. code-block:: bash
 
     $ git checkout -b BRANCH_NAME
 
 .. tip::
-   Use a descriptive name for your branch (`ticket_XXX` where `XXX` is the ticket
-   number is a good convention for bug fixes).
+   Use um nome descritivo para seu branch (`ticket_XXX` onde ``XXX` é o numero do 
+   ticket é uma boa convenção para correcação de problemas).
 
-The above command automatically switches the code to the newly created branch
-(check the branch you are working on with `git branch`.)
+O comando acima automaticamente troca o código para o branch reçem criado
+(verifique o branch que você esta trabalhando com `git branch`.)
 
-Work on the code as much as you want and commit as much as you want; but keep
-in mind the following:
+Trabalhe o quanto quiser no código e commit quanto você quiser, mas lembre-se
+do seguinte:
 
-* Follow the coding :doc:`standards <standards>` (use `git diff --check` to
-  check for trailing spaces);
+* Siga os :doc:`padrões de codígo <standards>`(use `git diff --check` para 
+  verificar os espaços finais); 
 
-* Add unit tests to prove that the bug is fixed or that the new feature
-  actually works;
+* Adicione testes unitários para provar que o problema esta corrigido ou que
+  a nova funcionalidade realmente funciona;
 
-* Do atomic and logically separate commits (use the power of `git rebase` to
-  have a clean and logical history);
+* Faça commits atomicos e separados logicamente ( use o poder do `git rebase`
+  para ter um histórico limpo e lógico);
 
-* Write good commit messages.
+* Escreve boas mensagens de commit.
 
 .. tip::
-   A good commit message is composed of a summary (the first line), optionally
-   followed by a blank line and a more detailed description. The summary should
-   start with the Component you are working on in square brackets
-   (`[DependencyInjection]`, `[FoundationBundle]`, ...). Use a verb (`fixed ...`,
-   `added ...`, ...) to start the summary and don't add a period at the end.
+   Uma boa mensagem de commit é composta de um resumo(primeira linha), seguida
+   opcionalmente de uma linha em branco e umma descrição mais detalhada.
+   O resumo deve iniciar com o componente que você esta trabalhando dentro de 
+   colchetes (`[DependencyInjection]`, `[FoundationBundle]`, ...). Use um verbo
+   (`fixed ...`, `added ...`, ...) para iniciar o resumo e não adicione ponto
+   no final.
 
-Submitting a Patch
+Enviando um Patch
 ------------------
 
-Before submitting your patch, update your branch (needed if it takes you a
-while to finish your changes):
+Antes de enviar seu patch, atualize seu branch(necessario caso voce
+demorou um tempo para finalizar suas alterações):
 
 .. code-block:: bash
 
@@ -111,7 +113,7 @@ rebase:
     $ git add ... # add resolved files
     $ git rebase --continue
 
-Check that all tests still pass and push your branch remotely:
+Verifique se todos os testes continuam passando e `push` seu branch remotamente:
 
 .. code-block:: bash
 
@@ -120,18 +122,17 @@ Check that all tests still pass and push your branch remotely:
 You can now advertise your patch on the `dev mailing-list`_. The email must
 follow the following conventions:
 
-* Subject must start with `[PATCH]`, followed by a short summary of the
-  patch (with a reference to the ticket if it's a bug fix - `#XXX`);
+* O assunto deve iniciar com `[PATCH]`, seguido de um resumo sobre o patch
+  (com uma referência para o ticket, caso seja uma correção de problema - `#XXX`);
 
-* The body must contain the information about your branch
-  (`git://github.com/USERNAME/symfony.git BRANCH_NAME`);
+* O corpo deve conter o link para seu branch;
 
-* The body must then describe what the patch does (reference a ticket, or
-  copy and paste the commit message).
+* O corpo deve então descrever o que o patch faz (informe um ticket ou cole
+  a mensagem de commit).
 
-Based on the feedback, you might need to rework your patch. Before
-re-submitting the patch, rebase with master, don't merge; and force the push
-to the origin:
+De acordo com os comentários, talvez seja necessário refazer seu patch. Antes de
+reenviar o patch, rebase seu master, não faça merge, então force o `push` para o
+`origin`:
 
 .. code-block:: bash
 
@@ -139,5 +140,5 @@ to the origin:
 
 .. _ProGit: http://progit.org/
 .. _Github: https://github.com/signup/free
-.. _Symfony2 repository: http://www.github.com/fabpot/symfony
+.. _Symfony2 repositório: http://www.github.com/fabpot/symfony
 .. _dev mailing-list: http://groups.google.com/group/symfony-devs

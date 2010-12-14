@@ -1,5 +1,5 @@
 .. index::
-   single: Testes
+   single: Tests
 
 Testes
 =======
@@ -51,7 +51,7 @@ Executar um conjunto de teste para uma determinada aplicação é simples:
    A cobertura de código pode ser gerada com a opção ``--coverage-html``.
 
 .. index::
-   single: Testes; Testes Unitários
+   single: Tests; Unit Tests
 
 Testes Unitários
 ----------
@@ -76,7 +76,7 @@ A execução de testes de um determinado arquivo ou diretório também é muito 
     $ phpunit -c app Application/HelloBundle/Tests/Model/ArticleTest.php
 
 .. index::
-   single: Testes; Testes Funcionais
+   single: Tests; Functional Tests
 
 Testes Funcionais
 ----------------

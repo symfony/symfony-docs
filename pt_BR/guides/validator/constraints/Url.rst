@@ -1,7 +1,7 @@
 Url
 ===
 
-Validates that a value is a valid URL string.
+Valida se o valor é uma URL válida.
 
 .. code-block:: yaml
 
@@ -9,9 +9,9 @@ Validates that a value is a valid URL string.
         website:
             - Url: ~
 
-Options
--------
+Opções
+------
 
-* ``protocols``: A list of allowed protocols. Default: "http", "https", "ftp"
-  and "ftps".
-* ``message``: The error message if validation fails
+* ``protocols``: Uma lista de protocolos permitidos. Padrão: "http", "https", "ftp"
+  e "ftps".
+* ``message``: A mensagem de erro se a validação falhar

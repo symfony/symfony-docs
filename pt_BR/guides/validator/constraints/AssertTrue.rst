@@ -1,7 +1,7 @@
 AssertTrue
 ==========
 
-Validates that a value is ``true``.
+Valida se o valor é ``true``.
 
 .. code-block:: yaml
 
@@ -9,16 +9,16 @@ Validates that a value is ``true``.
         termsAccepted:
             - AssertTrue: ~
 
-Options
+Opções
+------
+
+* ``message``: A mensagem de erro se a validação falhar
+
+Exemplo
 -------
 
-* ``message``: The error message if validation fails
-
-Example
--------
-
-This constraint is very useful to execute custom validation logic. You can
-put the logic in a method which returns either ``true`` or ``false``.
+Essa restriçção é muito útil para executar uma validação lógica personalizada.
+Você pode colocar a lógica em um método que retorna ``true`` ou ``false``.
 
 .. code-block:: php
 
@@ -33,7 +33,7 @@ put the logic in a method which returns either ``true`` or ``false``.
         }
     }
 
-Then you can constrain this method with ``AssertTrue``.
+Você pode restringir esse método com ``AssertTrue``.
 
 .. configuration-block::
 
@@ -74,8 +74,8 @@ Then you can constrain this method with ``AssertTrue``.
             }
         }
 
-If the validation of this method fails, you will see a message similar to
-this:
+Se a validação desse método falhar, você vai ver uma mensagem semelhante a 
+essa:
 
 .. code-block:: text
 

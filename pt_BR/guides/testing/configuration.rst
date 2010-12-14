@@ -1,27 +1,27 @@
 .. index::
    pair: Tests; Configuration
 
-Testing Configuration
-=====================
+Configurando os Testes
+======================
 
 .. index::
    pair: PHPUnit; Configuration
 
-PHPUnit Configuration
----------------------
+Configuração do PHPUnit
+-----------------------
 
-Each application has its own PHPUnit configuration, stored in the
-``phpunit.xml.dist`` file. You can edit this file to change the defaults or
-create a ``phpunit.xml`` file to tweak the configuration for your local machine.
+Cada aplicação tem sua própria configuração do PHPUnit, gravada no arquivo
+``phpunit.xml.dist``. Você pode alterar esse arquivo para mudar as configurações
+padrão ou criar um arquivo ``phpunit.xml`` para configurá-lo para sua máquina
+local.
 
 .. tip::
-   Store the ``phpunit.xml.dist`` file in your code repository, and ignore the
-   ``phpunit.xml`` file.
+   Grave o arquivo ``phpunit.xml.dist`` no seu repositório de código, e ignore o 
+   arquivo ``phpunit.xml``.
 
-By default, only the tests stored in the ``Application`` namespace are run by
-the ``phpunit`` command. But you can easily add more namespaces. For instance,
-the following configuration adds the tests from the installed third-party
-bundles:
+Por padrão, apenas os testes armazenados no namespace ``Application`` são executados
+pelo comando ``phpunit``. Mas você pode facilmente adicionar mais namespaces. Por
+exemplo, a seguinte configuração adiciona os testes de um pacote instalado de terceiros:
 
 .. code-block:: xml
 
@@ -33,8 +33,7 @@ bundles:
         </testsuite>
     </testsuites>
 
-To include other namespaces in the code coverage, also edit the ``<filter>``
-section:
+Para adicionar outros namespaces no code coverage, altera também a seção ``<filter>``:
 
 .. code-block:: xml
 
@@ -51,11 +50,11 @@ section:
         </whitelist>
     </filter>
 
-Client Configuration
---------------------
+Configuração do Cliente
+-----------------------
 
-The Client used by functional tests creates a Kernel that runs in a special
-``test`` environment, so you can tweak it as much as you want:
+O Cliente usado pelos testes funcionais cria um Kernel que é executado em um
+ambiente especial de testes (``test``), para que você possa alterá-lo como quiser:
 
 .. code-block:: yaml
 
@@ -71,23 +70,23 @@ The Client used by functional tests creates a Kernel that runs in a special
 
     kernel.test: ~
 
-You can also change the default environment (``test``) and override the default
-debug mode (``true``) by passing them as options to the createClient() method::
+Você também pode alterar o ambiente padrão (``test``) e sobrescrever o modo de depuração
+ (``true``) passando eles como opções do método createClient()::
 
     $client = $this->createClient(array(
         'environment' => 'my_test_env',
         'debug'       => false,
     ));
 
-If your application behaves according to some HTTP headers, pass them as the
-second argument of ``createClient()``::
+Se a sua aplicação se comporta de acordo com algum cabeçalho HTTP, passe eles como o segundo
+argumento de ``createClient()``::
 
     $client = $this->createClient(array(), array(
         'HTTP_HOST'       => 'en.example.com',
         'HTTP_USER_AGENT' => 'MySuperBrowser/1.0',
     ));
 
-You can also override HTTP headers on a per request basis::
+Você também pode sobrescrever os cabeçalhos HTTP baseado em uma requisição::
 
     $client->request('GET', '/', array(), array(
         'HTTP_HOST'       => 'en.example.com',
@@ -95,5 +94,5 @@ You can also override HTTP headers on a per request basis::
     ));
 
 .. tip::
-   To provide your own Client, override the ``test.client.class`` parameter, or
-   define a ``test.client`` service.
+   Para fornecer seu próprio Cliente, sobrescreva o parametro ``test.client.class`` ou 
+   defina um serviço ``test.client``.

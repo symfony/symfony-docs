@@ -1,23 +1,23 @@
 .. index::
    single: Security; Authorization
 
-Authorization
-=============
+Autorização
+===========
 
-When the user is authenticated, you can restrict access to your application
-resources via access control rules. Authorization in Symfony2 covers this need
-but it also provides a standard and powerful way to decide if a user can
-access any resource (a URL, a model object, a method call, ...) thanks to a
-flexible access decision manager.
+Quando o usuários estiver autenticado, você pode restringir o acesso aos recursos
+da sua aplicação usando regras de controle de acesso. A Autorização no Symfony2 
+cobre essa necessidade mas também provê uma maneira padrão e poderosa de decidir
+se o usuário pode acessar algum recurso (uma URL, um model, uma chamada de método, ...)
+graças a um flexível gerenciador de decisão de acesso.
 
 .. index::
    single: Security; Access Control
 
-Defining Access Control Rules for HTTP resources
-------------------------------------------------
+Definindo Regras de Controle de Acesso para Recursos HTTP
+---------------------------------------------------------
 
-Authorization is enforced for each request, based on access control rules
-defined in your configuration:
+A Autorização é executada para cara requisição, baseada nas regras de controle
+de acesso definidas na sua configuração:
 
 .. configuration-block::
 
@@ -49,21 +49,21 @@ defined in your configuration:
             ),
         ));
 
-For each incoming request, Symfony2 tries to find a matching access control
-rule (the first one wins) and throws an
-:class:`Symfony\\Component\Security\\Exception\\AccessDeniedException` if the
-user has not the needed roles or an
+Para cara requisição que chega, o Symfony2 tenta encontrar uma regra de controle de acesso
+que case (a primeira a casar é escolhida) e dispara uma 
+:class:`Symfony\\Component\Security\\Exception\\AccessDeniedException` se o usuário não tiver 
+as permissões necessárias ou uma 
 :class:`Symfony\\Component\Security\\Exception\\AuthenticationCredentialsNotFoundException`
-if he is not authenticated yet.
+se o usuário não estiver autenticado ainda.
 
-In the example above, we match requests based on their path info, but there
-are many other ways as you will learn in the next section.
+No exemplo acima, nós comparamos as requisições basiadas nas informações do path, mas
+tem várias outras maneiras que você vai aprender nessa seção.
 
 ..tip::
 
-    Symfony2 automatically adds a special role based on the anonymous flag:
-    ``IS_AUTHENTICATED_ANONYMOUSLY`` for anonymous users and
-    ``IS_AUTHENTICATED_FULLY`` for all others.
+    O Symfony2 automaticamente adiciona uma role especial baseada na flag anônima:
+    ``IS_AUTHENTICATED_ANONYMOUSLY`` para usuários anônimos e
+    ``IS_AUTHENTICATED_FULLY`` para todos os outros.
 
 Matching a Request
 ------------------
@@ -131,8 +131,8 @@ Access control rules can match a request in many different ways:
 .. index::
    single: Security; HTTPS
 
-Enforcing HTTP or HTTPS
------------------------
+Executando HTTP ou HTTPS
+------------------------
 
 Besides roles, you can also force parts of your website to use either HTTP or
 HTTPS:

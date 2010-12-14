@@ -1,7 +1,7 @@
 AssertFalse
 ===========
 
-Validates that a value is ``false``.
+Valida se o valor é ``false``.
 
 .. code-block:: yaml
 
@@ -9,9 +9,9 @@ Validates that a value is ``false``.
         deleted:
             - AssertFalse: ~
 
-Options
--------
+Opções
+------
 
-* ``message``: The error message if validation fails
+* ``message``: A mensagem de erro se a validação falhar
 
 See :doc:`AssertTrue <AssertTrue>`.

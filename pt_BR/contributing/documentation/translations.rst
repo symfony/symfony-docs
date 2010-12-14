@@ -1,81 +1,82 @@
-Translations
-============
+Traduções
+=========
 
-The Symfony2 documentation is written in English and many people are involved
-in the translation process.
+A documentação do Symfony2 é escrita em inglês e muitas pessoas estão envolvidas
+no proceso de tradução.
 
-Contributing
+Contribuindo
 ------------
 
-First, become familiar with the :doc:`markup language <format>` used by the
-documentation.
+Primeiro, se familiarize com a :doc:`linguagem de marcação <format>` usada na 
+documentação.
 
-Then, subscribe to the `Symfony docs mailing-list`_, as collaboration happens
-there.
+Então, inscreva-se na `lista de discussão do Symfony docs`_, por a colaboração
+acontecer lá.
 
-Finally, find the *master* repository for the language you want to contribute
-for. Here is the list of the official *master* repositories:
+Finalmente encontre o repositório *master* para a linguagem que você quer contribuir.
+Aqui está uma lista com os repositórios *master* oficiais:
 
-* *English*: http://github.com/symfony/symfony-docs
+* *Inglês*: http://github.com/symfony/symfony-docs
 * ...
 
 .. note::
-   If you want to contribute translations for a new language, read the
-   :ref:`dedicated section <translations-adding-a-new-language>`.
+   Se você quer contribuir com traduções de uma nova linguagem, leia a
+   :ref: `sessão dedicada <translations-adding-a-new-language>`.
 
-Joining the Translation Team
-----------------------------
+Juntando-se ao Time de Tradução
+-------------------------------
 
-If you want to help translating some documents for your language or fix some
-bugs, consider joining us; it's a very easy process:
+Se você quer ajudar a traduzir alguns documentos para a sua linguagem ou corrigir
+algum erro, considere se juntar a nós; é um processo muito simples:
 
-* Introduce yourself on the `Symfony docs mailing-list`_;
-* *(optional)* Ask which documents you can work on;
-* Fork the *master* repository for your language (click the "Fork" button on
-  the Github page);
-* Translate some documents;
-* Ask for a pull request (click on the "Pull Request" from your page on
-  Github);
-* The team manager accepts your modifications and merges them into the master
-  repository;
-* The documentation website is updated every other night from the master
-  repository.
+
+* Apresente-se na `lista de discussão do Symfony docs`_;
+* *(opcional)* Pergunte em quais documentos você pode trabalhar;
+* Faça o Fork do repositório *master* da sua linguagem (clique no botão "Fork" na 
+  página do Github);
+* Traduza alguns documentos;
+* Peça um pull request (clique em "Pull Request" na sua página do Github);
+* O coordenador do time aceita as suas modificações e mescla elas no repositório
+  master;
+* O site da documentação é atualizado toda noite posterior a atualização do repositório
+  master.
 
 .. _translations-adding-a-new-language:
 
-Adding a new Language
----------------------
+Adicionando uma nova linguagem
+------------------------------
 
-This section gives some guidelines for starting the translation of the
-Symfony2 documentation for a new language.
+Essa seção apresenta algumas orientações para iniciar a tradução do Symfony2
+para uma nova linguagem.
 
-As starting a translation is a lot of work, talk about your plan on the
-`Symfony docs mailing-list`_ and try to find motivated people willing to help.
+Como iniciar uma tradução é muito trabalhoso, converse sobre seus planos na
+`lista de discussão do Symfony docs`_ e tente encontrar algumas pessoas 
+motivadas dispostas a ajudar.
 
-When the team is ready, nominate a team manager; he will be responsible for
-the *master* repository.
+Quando o time estiver pronto, nomeie um coordenador. ele vai ser o responsável
+pelo repositório *master*
 
-Create the repository and copy the *English* documents.
+Crie o repositório e copie os documentos em  *Inglês*.
 
-The team can now start the translation process.
+O time pode então iniciar o processo de tradução.
 
-When the team is confident that the repository is in a consistent and stable
-state (everything is translated, or non-translated documents have been removed
-from the toctrees -- files named ``index.rst`` and ``map.rst.inc``), the team
-manager can ask that the repository is added to the list of official *master*
-repositories by sending an email to Fabien (fabien.potencier at
-symfony-project.org).
+Quando o time estiver confiante que o repositório está consistente e estável 
+(tudo está traduzido, ou os documentos não traduzidos foram removidos dos
+toctress -- arquivos chamados ``index.rst`` e ``map.rst.inc``), o coordenador
+do time pode solicitar que o repositório seja adicionado a listar de repositórios
+*master* oficiais, enviando um e-mail para Fabien 
+(fabien.potencier at symfony-project.org).
 
-Maintenance
------------
+Manutenção
+----------
 
-Translation does not end when everything is translated. The documentation is a
-moving target (new documents are added, bugs are fixed, paragraphs are
-reorganized, ...). The translation team need to closely follow the English
-repository and apply changes to the translated documents as soon as possible.
+A tradução não termina quando tudo está traduzido. A documentação é um alvo em
+movimento (novos documentos são adicionados, erros são corrigido, paragrafos são
+reorganizados, ...). O time de tradução precisa seguir de perto o repositório em 
+Inglês e aplicar as mudanças nos documentos traduzidos assim que possível.
 
 .. caution::
-   Non maintained languages are removed from the official list of
-   repositories as obsolete documentation is dangerous.
+   Lingagens sem manutenção são removidas da lista oficial de repositórios pois
+   documentação obsoleta é perigosa.
 
-.. _Symfony docs mailing-list: http://groups.google.com/group/symfony-docs
+.. _lista de discussão do Symfony docs: http://groups.google.com/group/symfony-docs

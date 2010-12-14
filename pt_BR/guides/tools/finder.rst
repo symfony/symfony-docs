@@ -1,15 +1,15 @@
 .. index::
    single: Finder
 
-The Finder
+O Finder
 ==========
 
-The Finder Component helps you find files and directories quickly and easily.
+O Componente Finder ajuda você a encontrar de maneira rápida e fácil diretórrios e arquivos;
 
-Usage
------
+Uso
+---
 
-The ``Finder`` class finds files and/or directories::
+A classe ``Finder`` encontra arquivos e/ou diretórios::
 
     use Symfony\Components\Finder\Finder;
 
@@ -20,43 +20,42 @@ The ``Finder`` class finds files and/or directories::
         print $file->getRealpath()."\n";
     }
 
-The ``$file`` is an instance of [``SplFileInfo``][1].
+O ``$file`` é uma instancia de [``SplFileInfo``][1].
 
-The above code prints the names of all the files in the current directory
-recursively. The Finder class uses a fluent interface, so all methods return
-the Finder instance.
+O código acima mostra o nome de todos os arquivos no diretório atual recursivamente.
+A classe Finder usa um interface fluente, então todos os métodos retorna uma instancia
+do Finder.
 
 .. tip::
-   A Finder instance is a PHP [``Iterator``][2]. So, instead of iterating over the
-   Finder with ``foreach``, you can also convert it to an array with the
-   ``iterator_to_array()`` method, or get the number of items with
-   ``iterator_count()``.
+   Uma instancia do Finder é um [``Iterator``][2] do PHP. Então, ao invés de iterar sobre o
+   Finder com um ``foreach``, você também pode converte-lo para um array com o método
+   ``iterator_to_array()``, ou pegar o número de itens com ``iterator_count()``.
 
-Criteria
---------
+Critérios
+---------
 
-Location
-~~~~~~~~
+Localização
+~~~~~~~~~~~
 
-The location is the only mandatory criteria. It tells the finder which
-directory to use for the search::
+A localização é o único critério obrigatório. Ela indica para o finder o
+diretório a ser usado na busca::
 
     $finder->in(__DIR__);
 
-Search in several locations by chaining calls to ``in()``::
+Procure em vários lugares encadeando chamadas para ``in()``::
 
     $finder->files()->in(__DIR__)->in('/elsewhere');
 
-Exclude directories from matching with the ``exclude()`` method::
+Exclua diretório dos resultados com o método ``exclude()``::
 
     $finder->in(__DIR__)->exclude('ruby');
 
-As the Finder uses PHP iterators, you can pass any URL with a supported
-`protocol`_::
+Como o Finder usar os iterators do PHP, você pode passar qualquer URL com um 
+`protocolo`_ suportado::
 
     $finder->in('ftp://example.com/pub/');
 
-And it also works with user-defined streams::
+E isso também funciona com streams definidos pelo usuário::
 
     use Symfony\Components\Finder\Finder;
 
@@ -72,40 +71,40 @@ And it also works with user-defined streams::
     }
 
 .. note::
-   Read the `Streams`_ documentation to learn how to create your own streams.
+   Leia a documentação sobre `Streams`_ para aprenser a criar seus próprios streams.
 
-Files or Directories
+Arquivos e Diretório
 
-By default, the Finder returns files and directories; but the ``files()`` and
-``directories()`` methods controls that::
+Por padrão, o Finder retorna arquivos e diretórios; mas os métodos ``files()`` e ``directories()`` 
+controlam isso::
 
     $finder->files();
 
     $finder->directories();
 
-If you want to follow links, use the ``followLinks()`` method::
+Se você quiser seguir os links, use o método ``followLinks()``::
 
     $finder->files()->followLinks();
 
-By default, the iterator ignores popular VCS files. This can be changed with
-the ``ignoreVCS()`` method::
+Por padrão, o iterator ignora arquivos VCS populares. Isso pode ser alterado com o método
+``ignoreVCS()``::
 
     $finder->ignoreVCS(false);
 
-Sorting
-~~~~~~~
+Ordenação
+~~~~~~~~~
 
-Sort the result by name or by type (directories first, then files)::
+Ordenar o resultado por nome ou por tipo (diretórios primeiro, depois arquivos)::
 
     $finder->sortByName();
 
     $finder->sortByType();
 
 .. note::
-   Notice that the ``sort*`` methods need to get all matching elements to do their
-   jobs. For large iterators, it is slow.
+   Note que os métodos ``sort*`` precisam ter todos os elementos para fazer o seu trabalho.
+   Em grandes iterators, isso é lento.
 
-You can also define your own sorting algorithm with ``sort()``::
+Você também pode definir seu próprio algoritimo de ordenação com ``sort()``::
 
     $sort = function (\SplFileInfo $a, \SplFileInfo $b)
     {
@@ -114,65 +113,65 @@ You can also define your own sorting algorithm with ``sort()``::
 
     $finder->sort($sort);
 
-File Name
-~~~~~~~~~
+Nome de Arquivo
+~~~~~~~~~~~~~~~
 
-Restrict files by name with the ``name()`` method::
+Restrinja arquivos pelo nome com o método ``name()``::
 
     $finder->files()->name('*.php');
 
-The ``name()`` method accepts globs, strings, or regexes::
+O método ``name()`` aceita globs, strings, ou regexes::
 
     $finder->files()->name('/\.php$/');
 
-The ``notNames()`` method excludes files matching a pattern::
+O método ``notNames()`` exclui arquivos que casem com o padrão::
 
     $finder->files()->notName('*.rb');
 
-File Size
-~~~~~~~~~
+Tamanho de Arquivo
+~~~~~~~~~~~~~~~~~~
 
-Restrict files by size with the ``size()`` method::
+Restrinja arquivos pelo tamanho usando o método ``size()``::
 
     $finder->files()->size('< 1.5K');
 
-Restrict by a size range by chaining calls::
+Restrinja por um intervalo de tamanhos encadeando chamadas::
 
     $finder->files()->size('>= 1K')->size('<= 2K');
 
-The comparison operator can be any of the following: ``>``, ``>=``, ``<``, '<=',
+O operador de comparação pode ser qualquer um dos seguintes: ``>``, ``>=``, ``<``, '<=',
 '=='.
 
-The target value may use magnitudes of kilobytes (``k``, ``ki``), megabytes (``m``,
-``mi``), or gigabytes (``g``, ``gi``). Those suffixed with an ``i`` use the
-appropriate ``2**n`` version in accordance with the `IEC standard`_.
+O valor alvo pode usar medidas em kilobytes (``k``, ``ki``), megabytes (``m``,
+``mi``), ou gigabytes (``g``, ``gi``). Esses com um sufixo ``i`` utilizam a versão
+ ``2**n`` de acordo com o `padrão IEC`_.
 
-File Date
-~~~~~~~~~
+Data do Arquivo
+~~~~~~~~~~~~~~~
 
-Restrict files by last modified dates with the ``date()`` method::
+Restrinja os arquivos pela data da última alteração com o método ``date()``::
 
     $finder->date('since yesterday');
 
-The comparison operator can be any of the following: ``>``, ``>=``, ``<``, '<=',
-'=='. You can also use ``since`` or ``after`` as an alias for ``>``, and ``until`` or
-``before`` as an alias for ``<``.
+O operador de comparação pode ser qualquer um dos seguintes: ``>``, ``>=``, ``<``, '<=',
+'=='. Você também pode usar ``since`` ou ``after`` como um apelido para ``>``, e ``until`` ou
+``before`` como apelido para ``<``.
 
-The target value can be any date supported by the [``strtotime()``][6] function.
+O valor alvo pode ser qualquer data suportada pela função [``strtotime()``][6].
 
-Directory Depth
-~~~~~~~~~~~~~~~
+Profundidade do Diretório
+~~~~~~~~~~~~~~~~~~~~~~~~~
 
-By default, the Finder recursively traverse directories. Restrict the depth of
-traversing with ``depth()``::
+Por padrão, o Finder vasculha diretórios recursivamente. Restrinja a profundidade em que 
+ele procura com ``depth()``::
 
     $finder->depth('== 0');
     $finder->depth('< 3');
 
-Custom Filtering
-~~~~~~~~~~~~~~~~
+Filtros Personalizados
+~~~~~~~~~~~~~~~~~~~~~~
 
-To restrict the matching file with your own strategy, use ``filter()``::
+Para restringir os arquivos encontrados com sua própria estratégia, use ``filter()``::
 
     $filter = function (\SplFileInfo $file)
     {
@@ -184,14 +183,14 @@ To restrict the matching file with your own strategy, use ``filter()``::
 
     $finder->files()->filter($filter);
 
-The ``filter()`` methods takes a Closure as an argument. For each matching file,
-it is called with the file as a [``SplFileInfo``][1] instance. The file is
-excluded from the result set if the Closure returns ``false``.
+O método ``filter()`` usa uma Closure como um argumento. Para cara arquivo encontrado,
+é ela é chamada com o arquivo sendo uma instancia de [``SplFileInfo``][1]. O arquivo é 
+excluído dos resultados se a Closure retornar ``false``.
 
 [1]: http://www.php.net/manual/en/class.splfileinfo.php
 [2]: http://www.php.net/manual/en/spl.iterators.php
 [6]: http://www.php.net/manual/en/datetime.formats.php
 
-.. _protocol:     http://www.php.net/manual/en/wrappers.php
+.. _protocolo:    http://www.php.net/manual/en/wrappers.php
 .. _Streams:      http://www.php.net/streams
-.. _IEC standard: http://physics.nist.gov/cuu/Units/binary.html
+.. _padrão IEC:   http://physics.nist.gov/cuu/Units/binary.html

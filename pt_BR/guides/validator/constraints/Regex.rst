@@ -1,7 +1,7 @@
 Regex
 =====
 
-Validates that a value matches a regular expression.
+Valida se o valor casa com a expressão regular.
 
 .. code-block:: yaml
 
@@ -9,10 +9,9 @@ Validates that a value matches a regular expression.
         title:
             - Regex: /\w+/
 
-Options
--------
+Opções
+------
 
-* ``pattern`` (**default**, required): The regular expression pattern
-* ``match``: Whether the pattern must be matched or must not be matched.
-  Default: ``true``
-* ``message``: The error message if validation fails
+* ``pattern`` (**padrão**, requirido): A expressão regular
+* ``match``: Se o padrão deve casar ou não. Padrão: ``true``
+* ``message``: A mensagem de erro se a validação falhar

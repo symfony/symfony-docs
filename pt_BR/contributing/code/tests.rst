@@ -1,15 +1,14 @@
-Running Symfony2 Tests
-======================
+Executando os Testes do Symfony2
+================================
 
-Before submitting a :doc:`patch <patches>` for inclusion, you need to run the
-Symfony2 test suite to check that you have not broken anything.
+Antes de enviar um :doc:`patch <patches>` para inclusão, você deve executar
+a suíte de testes do Symfony2 para se assegurar que você não quebrou nada.
 
 PHPUnit
 -------
 
-To run the Symfony2 test suite, install PHPUnit 3.5.0 or later first. As it is
-not stable yet, your best bet is to use the latest version from the
-repository:
+Para executar a suíte de testes do Symfony2, primeiro instale o PHPUnit 3.5.0 ou anterior. 
+Como ele não está estável ainda, sua melhor chance é usar a última versão do repositório:
 
 .. code-block:: bash
 
@@ -18,15 +17,14 @@ repository:
     $ pear package
     $ pear install PHPUnit-3.5.XXX.tgz
 
-Dependencies (optional)
+Dependências (opcional)
 -----------------------
 
-To run the entire test suite, including tests that depend on external
-dependencies, Symfony2 needs to be able to autoload them. By default, they are
-autoloaded from `vendor/` under the main root directory (see
-`autoload.php.dist`).
+Para executar toda a suíte de testes, incluindo testes que dependem de dependências
+externas, o Symfony2 precisa ser capaz de carrregá-las. Por padrão, elas são carregadas
+automaticamente do `vendor/`, sob o diretório principal (veja `autoload.php.dist`).
 
-The test suite need the following third-party libraries:
+A suíte de testes precisa das seguintes bibliotecas de terceiros:
 
 * Doctrine
 * Doctrine Migrations
@@ -36,55 +34,54 @@ The test suite need the following third-party libraries:
 * Twig
 * Zend Framework
 
-To install them all, run the `install_vendors.sh` script:
+Para instalar todas elas, execute o script `install_vendors.sh`:
 
 .. code-block:: bash
 
     $ sh install_vendors.sh
 
 .. note::
-   Note that the script takes some time to finish.
+   Note que o script leva um tempo para finalizar a execução.
 
-After installation, you can update the vendors anytime with the
-`update_vendors.sh` script:
+Após a instalação, você pode atualizar os vendor a qualquer momento 
+usando o script `update_vendors.sh`:
 
 .. code-block:: bash
 
     $ sh update_vendors.sh
 
-Running
--------
+Executando
+----------
 
-First, update the vendors (see above).
+Primeiro, atualize as bibliotecas de terceiros (veja acima).
 
-Then, run the test suite from the Symfony2 root directory with the following
-command:
+Então, execute a suíte de testes do Symfony2 no diretório raiz com o seguinte
+comando:
 
 .. code-block:: bash
 
     $ phpunit
 
-The output should display `OK`. If not, you need to figure out what's going on
-and if the tests are broken because of your modifications.
+A saida deve mostrar `OK`. Se não mostrar, você deve descobrir o que está errado
+e se os testes estão quebrados pelas suas modificações.
 
 .. tip::
-   Run the test suite before applying your modifications to check that they run
-   fine on your configuration.
+   Execute a suíte de testes antes de aplicar suas modificações para se certificar
+   que eles ocorrem sem problemas na sua configuração.
 
-Code Coverage
--------------
+Cobertura do Código
+-------------------
 
-If you add a new feature, you also need to check the code coverage by using
-the `coverage-html` option:
+Se você adicionar um novo recurso, você também precisa se certificar da cobertura
+do código, usando a opção `coverage-html`:
 
 .. code-block:: bash
 
     $ phpunit --coverage-html=cov/
 
-Check the code coverage by opening the generated `cov/index.html` page in a
-browser.
+Verifique a cobertura do código abrindo a página gerada `cov/index.html` em um 
+navegador.
 
 .. tip::
-   The code coverage only works if you have XDebug enabled and all dependencies
-   installed.
-
+   A cobertura do código só funciona se você tiver o XDebug habilitado e todas 
+   as dependências instaladas.

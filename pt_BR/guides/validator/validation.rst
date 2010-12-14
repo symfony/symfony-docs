@@ -1,11 +1,10 @@
-Constraint Validation
-=====================
+Validação de Restrições
+=======================
 
-Objects with constraints are validated by the
-:class:`Symfony\\Component\\Validator\\Validator` class. If you use Symfony2,
-this class is already registered as a service in the Dependency Injection
-Container. To enable the service, add the following lines to your
-configuration:
+Objetos com restrições são validados pela classe 
+:class:`Symfony\\Component\\Validator\\Validator`. Se você usa o Symfony2, essa
+classe já esta registrada como um serviço do Container Dependency Injection. 
+Para habilitar o serviço, adicione as seguintes linhas na sua configuração:
 
 .. code-block:: yaml
 
@@ -14,22 +13,22 @@ configuration:
         validation:
             enabled: true
 
-Then you can get the validator from the container and start validating your
-objects::
+Então você pode pegar o validador do container e começar a validar seus 
+objetos::
 
     $validator = $container->getService('validator');
     $author = new Author();
 
     print $validator->validate($author);
 
-The ``validate()`` method returns a
-:class:`Symfony\\Component\\Validator\\ConstraintViolationList` object. This
-object behaves exactly like an array. You can iterate over it and you can even
-print it in a nicely formatted manner. Every element of the list corresponds
-to one validation error. If the list is empty, it's time to dance, because
-then validation succeeded.
+O método ``validate()`` retorna um objeto
+:class:`Symfony\\Component\\Validator\\ConstraintViolationList`. Esse objeto
+se comporta exatamente como um array. Você pode percorre-lo e até mesmo 
+imprimi-lo formatado de uma maneira bem agradável. Todo elemento da lista 
+corresponde a um erro de validação. Se a lista estiver vazia, é hora de dançar,
+porque a validação foi bem sucedida.
 
-The above call will output something similar to this:
+A chamada assima vai mostrar algo similar a isso:
 
 .. code-block:: text
 
@@ -40,4 +39,4 @@ The above call will output something similar to this:
     Application\HelloBundle\Author.fullName:
         This value is too short. It should have 10 characters or more
 
-If you fill the object with correct values the validation errors disappear.
+Se o preencher o objeto com os valores corretoes, os erros de validação desaparecem.

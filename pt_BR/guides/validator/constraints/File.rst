@@ -1,7 +1,7 @@
 File
 ====
 
-Validates that a value is the path to an existing file.
+Valida se o valor é um caminho para um arquivo existente.
 
 .. code-block:: yaml
 
@@ -9,22 +9,22 @@ Validates that a value is the path to an existing file.
         filename:
             - File: ~
 
-Options
--------
+Opções
+------
 
-* ``maxSize``: The maximum allowed file size. Can be provided in bytes, kilobytes
-  (with the suffix "k") or megabytes (with the suffix "M")
-* ``mimeTypes``: One or more allowed mime types
-* ``notFoundMessage``: The error message if the file was not found
-* ``notReadableMessage``: The error message if the file could not be read
-* ``maxSizeMessage``: The error message if ``maxSize`` validation fails
-* ``mimeTypesMessage``: The error message if ``mimeTypes`` validation fails
+* ``maxSize``: O tamanho máximo permitido para o arquivo. Pode ser em bytes, kilobytes
+  (com o sufixo "k") ou megabytes (com o sufixo "M")
+* ``mimeTypes``: Um ou mais mime types permitidos
+* ``notFoundMessage``: A mensagem de erro caso o arquivo não seja encontrado
+* ``notReadableMessage``: A mensagem de erro se o arquivo não puder ser lido
+* ``maxSizeMessage``: A mensagem de erro caso a validação do ``maxSize`` falhar
+* ``mimeTypesMessage``: A mensagem de erro caso a validação do ``mimeTypes`` falhar
 
-Example: Validating the file size and mime type
------------------------------------------------
+Exemplo: Validando o taamanho do arquivo e o mime type
+------------------------------------------------------
 
-In this example we use the ``File`` constraint to verify that the file does
-not exceed a maximum size of 128 kilobytes and is a PDF document.
+Nesse exemplo nos usamos a restrição ``File`` para se certificar de que o arquivo não
+excedeu o tamanho máximo de 128 kilobytes e que ele é um documento PDF.
 
 .. configuration-block::
 
@@ -63,8 +63,8 @@ not exceed a maximum size of 128 kilobytes and is a PDF document.
             private $filename;
         }
 
-When you validate the object with a file that doesn't satisfy one of these
-constraints, a proper error message is returned by the validator:
+Quando você valida o objeto com um arquivo que não satisfaz uma das 
+restrições, a mensagem apropriada é retornada pelo validator:
 
 .. code-block:: text
 

@@ -1,26 +1,26 @@
 .. index::
    single: Tests; Client
 
-The Test Client
-===============
+O Cliente de Testes
+===================
 
-The test Client simulates an HTTP client like a browser.
+O Cliente de testes simula um cliente HTTP como um navegador.
 
 .. note::
-   The test Client is based on the ``BrowserKit`` and the ``Crawler`` components.
+   O Cliente de teste é baseado nos componentes ``BrowserKit`` e ``Crawler``.
 
-Making Requests
----------------
+Fazendo Requisições
+-------------------
 
-The client knows how make requests to a Symfony2 application::
+O cliente sabe como fazer requisições para uma aplicação Symfony2::
 
     $crawler = $client->request('GET', '/hello/Fabien');
 
-The ``request()`` method takes the HTTP method and a URL as arguments and
-returns a ``Crawler`` instance.
+O método ``request()`` usa o método HTTP e a URL como argumantos e retorna uma
+instancia de ``Crawler``.
 
-Use the Crawler to find DOM elements in the Response. These elements can then
-be used to click on links and submit forms::
+Use o Crawler para encontrar elementos DOM na Resposta. Esses elementos podem
+ser usados para clicas em links e submeter formulários::
 
     $link = $crawler->selectLink('Go elsewhere...')->link();
     $crawler = $client->click($link);
@@ -28,18 +28,18 @@ be used to click on links and submit forms::
     $form = $crawler->selectButton('validate')->form();
     $crawler = $client->submit($form, array('name' => 'Fabien'));
 
-The ``click()`` and ``submit()`` methods both return a ``Crawler`` object. These
-methods is the best way to browse an application as it hides a lot of details.
-For instance, when you submit a form, it automatically detects the HTTP method
-and the form URL, it gives you a nice API to upload files, and it merges the
-submitted values with the form default ones, and more.
+Os métodos ``click()`` e ``submit()`` retornam ambos um objeto ``Crawler``. Esse 
+método é a melhor maneira de navegar por uma aplicação, por ela esconder muitos
+detalhes. Por exemplo, quando você submete um formulário, ele detecta automaticamente
+o método HTTP e a URL do formulário, isso te dá uma ótima API para enviar arquivos,
+e ele mescla os valores enviados com os valores padrões desse formulário, e ainda mais.
 
 .. tip::
-   The Crawler is documented in its own :doc:`section <crawler>`. Read it to learn more about
-   the ``Link`` and ``Form`` objects.
+   O Crawler tem sua própria :doc:`documentação <crawler>`. Leia isso para aprender mais
+   sobre os objetos ``Link`` e ``Form``.
 
-But you can also simulate form submissions and complex requests with the
-additional arguments of the ``request()`` method::
+Mas você também pode simular submissões de formulários e requisições complexas  com o 
+a inclusão de argumentos no método ``request()``::
 
     // Form submission
     $client->request('POST', '/submit', array('name' => 'Fabien'));
@@ -50,26 +50,26 @@ additional arguments of the ``request()`` method::
     // Specify HTTP headers
     $client->request('DELETE', '/post/12', array(), array(), array('PHP_AUTH_USER' => 'username', 'PHP_AUTH_PW' => 'pa$$word'));
 
-When a request returns a redirect response, the client automatically follows
-it. This behavior can be changed with the ``followRedirects()`` method::
+Quando uma requisição retorna um redirecionamento na resposta, o cliente automaticamente
+segue ele. Esse comportamento pode ser alterado com o método ``followRedirects()``::
 
     $client->followRedirects(false);
 
-When the client does not follow redirects, you can force the redirection with
-the ``followRedirect()`` method::
+Quando o cliente não segue os redirecionamentos, você pode forçar o redirecionamento
+com o método ``followRedirect()``::
 
     $crawler = $client->followRedirect();
 
-Last but not the least, you can force each request to be executed in its own
-PHP process to avoid any side-effects when working with several clients in the
-same script::
+E por último, mas não menos importante, você pode forçar que cada requisição seja executada
+como um processo PHP, para evitar qualquer efeito colateral quando estiver trabalhando com
+vários clientes no mesmo scriptt::
 
     $client->insulate();
 
-Browsing
---------
+Navegando
+---------
 
-The Client supports many operations that can be done in a real browser::
+O Cliente suporta muitas operações que podem ser feitas no navegador real::
 
     $client->back();
     $client->forward();
@@ -78,24 +78,24 @@ The Client supports many operations that can be done in a real browser::
     // Clears all cookies and the history
     $client->restart();
 
-Accessing Internal Objects
+Acessando Objetos Internos
 --------------------------
 
-If you use the client to test your application, you might want to access the
-client internal objects::
+Se você usar o cliente para testar sua aplicação, você pode querer acessar os
+objetos internos do cliente::
 
     $history = $client->getHistory();
     $cookieJar = $client->getCookieJar();
 
-You can also get the objects related to the latest request::
+Você também pode acessar os objetos relacionados a última requisição::
 
     $request = $client->getRequest();
     $response = $client->getResponse();
     $crawler = $client->getCrawler();
     $profiler = $client->getProfiler();
 
-If your requests are not insulated, you can also access the ``Container`` and
-the ``Kernel``::
+Se as requisições não forem isoladas, você também pode acessar o ``Container`` e
+o ``Kernel``::
 
     $container = $client->getContainer();
     $kernel = $client->getKernel();

@@ -1,8 +1,8 @@
 NotBlank
 ========
 
-Validates that a value is not empty (as determined by the `empty
-<http://php.net/empty>`_ construct).
+Valida se o valor não é vazio (como determinado no construtor `empty
+<http://php.net/empty>`_).
 
 .. code-block:: yaml
 
@@ -10,7 +10,7 @@ Validates that a value is not empty (as determined by the `empty
         firstName:
             - NotBlank: ~
 
-Options
--------
+Opções
+------
 
-* ``message``: The error message if validation fails
+* ``message``: A mensagem de erro se a validação falhar

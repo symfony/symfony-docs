@@ -1,7 +1,7 @@
 AssertType
 ==========
 
-Validates that a value has a specific data type
+Valida se o valor tem um tipo especifico
 
 .. code-block:: yaml
 
@@ -9,11 +9,11 @@ Validates that a value has a specific data type
         age:
             - AssertType: integer
 
-Options
--------
+Opções
+------
 
-* ``type`` (**default**, required): A fully qualified class name or one of the
-  PHP datatypes as determined by PHP's ``is_`` functions.
+* ``type`` (**padrão**, requirido): O nome completo de uma classe ou um tipo datatype
+ do PHP determinado pelas funções ``is_`` do PHP.
 
   * `array <http://php.net/is_array>`_
   * `bool <http://php.net/is_bool>`_
@@ -30,4 +30,4 @@ Options
   * `resource <http://php.net/is_resource>`_
   * `scalar <http://php.net/is_scalar>`_
   * `string <http://php.net/is_string>`_
-* ``message``: The error message in case the validation fails
+* ``message``: A mensagem de erro se a validação falhar

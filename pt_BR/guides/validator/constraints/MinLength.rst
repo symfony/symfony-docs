@@ -1,7 +1,7 @@
 MinLength
 =========
 
-Validates that the string length of a value is not smaller than the given limit.
+Valida se o tamanho de uma string não é menor do que o limite atribuido.
 
 .. code-block:: yaml
 
@@ -9,8 +9,8 @@ Validates that the string length of a value is not smaller than the given limit.
         firstName:
             - MinLength: 3
 
-Options
--------
+Opções
+------
 
-* ``limit`` (**default**, required): The limit
-* ``message``: The error message if validation fails
+* ``limit`` (**padrão**, requirido): O limite
+* ``message``: A mensagem de erro se a validação falhar

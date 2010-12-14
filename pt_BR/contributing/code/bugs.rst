@@ -1,32 +1,32 @@
-Reporting a Bug
-===============
+Relatando um Problema
+=================
 
-Whenever you find a bug in Symfony, we kindly ask you to report it. It helps
-us make a better Symfony.
+Sempre que você encontrar um problema no Symfony, nós pedimos amigavelmente que 
+você relate ele. Isso ajuda a melhorar o Symfony.
 
 .. caution::
-   If you think you've found a security issue, please use the special
-   doc:`procedure <security>` instead.
+   Se você acha que encontrou uma falha de segurança, por favor, use o
+   doc:`procedimento <security>` especial.
 
-Before submitting a bug:
+Antes de enviar um problema:
 
- * Double-check the official documentation to see if you're not misusing the
-   framework;
+ * Cheque duas vezes a documentação oficial para ver se não é um uso incorreto
+   do framework;
 
- * Ask assistance on the users mailing-list or on the #symfony IRC channel if
-   you're not sure if your issue is really a bug.
+ * Peça ajuda na lista de discussão ou no canal #symfony do IRC se você não tiver
+   certeza se é realmente um problema.
 
-If your problem definitely looks like a bug, report it using the official bug
-`tracker`_ and follow some basic rules:
+Se o seu problema realmente parecer um problema, relate ele usando o `tracker`_ oficial
+de problemas e siga algumas regras básicas:
 
- * Use the title field to clearly describe the issue;
+ * Use o campo title para definiar claramente o problema;
 
- * Describe the steps needed to reproduce the bug with short code examples
-   (providing a unit test that illustrates the bug is better);
+ * Descreva os passos necessários para reproduzir o problema com pequenos códigos de 
+   exemplo (providenciar um teste unitário que ilustre o problema é melhor);
 
- * Give as much details as possible about your environment (OS, PHP version,
-   Symfony version, extension enabled, ...);
+ * Dê o máximo possivel de detalhes sobre o seu ambiente (SO, versão do PHP, 
+   versão do Symfony, extensões ativas, ...);
 
- * *(optional)* Attach a :doc:`patch <patches>`.
+ * *(opcional)* Adicione um :doc:`patch <patches>`.
 
 .. _tracker: http://trac.symfony-project.org/

@@ -1,7 +1,7 @@
 NotNull
 =======
 
-Validates that a value is not ``null``.
+Valida se o valor não é ``null``.
 
 .. code-block:: yaml
 
@@ -9,7 +9,7 @@ Validates that a value is not ``null``.
         firstName:
             - NotNull: ~
 
-Options
--------
+Opções
+------
 
-* ``message``: The error message if validation fails
+* ``message``: A mensagem de erro se a validação falhar

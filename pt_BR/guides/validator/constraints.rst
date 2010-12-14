@@ -1,15 +1,15 @@
-Constraints
-===========
+Restrições
+==========
 
-The Validator is designed to validate objects against *constraints*.
-In real life, a constraint could be: "The cake must not be burned". In
-Symfony2, constraints are similar: They are assertions that a condition is 
-true.
+O Validator é projetado para validar objetos com as *restrições*.
+Na vida real, uma restrição pode ser: "O bolo não deve estar queimado". No 
+Symfony2, restrições são similares: Elas são afirmações de que a condição
+é verdadeira.
 
-Supported Constraints
+Restrições Suportadas
 ---------------------
 
-The following constraints are natively available in Symfony2:
+As seguintes restrições são nativamente suportadas pelo Symfony2:
 
 .. toctree::
     :hidden:
@@ -36,20 +36,21 @@ The following constraints are natively available in Symfony2:
 * :doc:`Url <constraints/Url>`
 * :doc:`Valid <constraints/Valid>`
 
-Constraint Targets
-------------------
+Alvos das Restrições
+--------------------
 
-Constraints can be put on properties of a class, on public getters and on the
-class itself. The benefit of class constraints is that they can validate
-the whole state of an object at once, with all of its properties and methods.
+Restrições podem ser colocadas em propriedades de uma classe, em getter publicos
+e na própria classe. Os beneficios de restrições em classes é que elas podem
+valida o estado inteiro de um objeto de uma só vez, com todas as suas propriedades
+ e métodos.
 
-Properties
-~~~~~~~~~~
+Propriedades
+~~~~~~~~~~~~
 
-Validating class properties is the most basic validation technique. Symfony2
-allows you to validate private, protected or public properties. The next
-listing shows how to configure the properties ``$firstName`` and ``$lastName``
-of a class ``Author`` to have at least 3 characters.
+A validação de propriedades de uma classe é a mais básica das técnicas de validação.
+O Symfony2 permite que você valide propriedades privadas, protegidas ou públicas. A
+lista a seguir mostra como configurar as propriedades ``$firstName`` e ``$lastName``
+da classe ``Author`` para ter no mínimo 3 caracteres.
 
 .. configuration-block::
 
@@ -100,17 +101,17 @@ of a class ``Author`` to have at least 3 characters.
 Getters
 ~~~~~~~
 
-The next validation technique is to constrain the return value of a method.
-Symfony2 allows you to constrain any public method whose name starts with
-"get" or "is". In this guide, this is commonly referred to as "getter".
+A próxima técnica de validação é restringir o valor do retorno de um método.
+O Symfony2 permite que você restrinja qualquer método público em que o nome
+comece com "get" ou "is". Nesse guia, ele é referenciado como "getter".
 
-The benefit of this technique is that it allows you to validate your object
-dynamically. Depending on the state of your object, the method may return
-different values which are then validated.
+O beneficio dessa técnica é que ela permite você validar seu objeto dinamicamente.
+Dependendo do estato do seu objeto, o método pode retornar diferentes valores que
+então são validados.
 
-The next listing shows you how to use the :doc:`AssertTrue
-<constraints/AssertTrue>` constraint to validate whether a dynamically
-generated token is correct:
+A lista a seguir mostra como usar a restrição :doc:`AssertTrue
+<constraints/AssertTrue>` para validar se um token gerado dinamicamente está 
+correto:
 
 .. configuration-block::
 
@@ -149,19 +150,18 @@ generated token is correct:
 
 .. note::
 
-    The keen-eyed among you will have noticed that the prefix of the getter 
-    ("get" or "is") is omitted in the mapping. This allows you to move the
-    constraint to a property with the same name later (or vice versa) without
-    changing your validation logic.
+    Se você tem uma visão aguçada, deve ter percebido que o prefixo do getter
+    ("get" ou "is") foi omitido do mapeamento. Isso permite que você mova a 
+    restrição para uma propriedade com o mesmo nome depois (ou vice-versa)
+    sem mudar a lógica de validação.
 
-Custom Constraints
-------------------
+Restrições Customizadas
+-----------------------
 
-You can create a custom constraint by extending the base constraint class,
-:class:`Symfony\\Component\\Validator\\Constraint`. Options for your
-constraint are represented by public properties on the constraint class. For
-example, the ``Url`` constraint includes ``message`` and ``protocols``
-properties::
+Você pode criar restrições customizadas estendendo a classe base de restrições
+:class:`Symfony\\Component\\Validator\\Constraint`. As opções das suas restrições
+são representadas como propriedades públicas na classe de restrição. Por exemplo,
+a restrição ``Url`` inclui as propriedades ``message`` e ``protocols``::
 
     namespace Symfony\Component\Validator\Constraints;
 
@@ -171,10 +171,10 @@ properties::
         public $protocols = array('http', 'https', 'ftp', 'ftps');
     }
 
-As you can see, a constraint class is fairly minimal. The actual validation is
-performed by a another "constraint validator" class. Which constraint
-validator is specified by the constraint's ``validatedBy()`` method, which
-includes some simple default logic::
+Como você pode ver, uma classe de restrição é bem minima. A validação mesmo é
+feita por outra classe "validadora de restrições". Que validador de restrição
+é especificado pelo método ``validatedBy()``, que inclui alguma lógica simples 
+por padrão::
 
     // in the base Symfony\Component\Validator\Constraint class
     public function validatedBy()
@@ -182,13 +182,13 @@ includes some simple default logic::
         return get_class($this).'Validator';
     }
 
-Constraint Validators with Dependencies
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Validadores de Restrição com Dependencias
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-If your constraint validator has dependencies, such as a database connection,
-it will need to be configured as a service in the dependency injection
-container. This service must include the ``validator.constraint_validator``
-tag and an ``alias`` attribute:
+Se o se validador de restrição tiver dependencias, como conexão com o banco,
+ele precisará ser configurado como um serviço no container de dependency injection.
+Esse serviço deve incluir a tag ``validator.constraint_validator`` e um atributo
+``alias``:
 
 .. configuration-block::
 
@@ -214,8 +214,7 @@ tag and an ``alias`` attribute:
             ->addTag('validator.constraint_validator', array('alias' => 'alias_name'))
         ;
 
-Your constraint class may now use this alias to reference the appropriate
-validator::
+Suas classes de restrição podem agora usar alias para referenciar o validador apropriado::
 
     public function validatedBy()
     {
