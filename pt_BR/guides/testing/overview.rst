@@ -5,7 +5,7 @@ Testes
 =======
 
 Sempre que você escreve uma nova linha de código, você pode estar adicionando
-novas falhas. Utilizar testes automatizados é uma forma de previnir isto e 
+novas falhas. Utilizar testes automatizados é uma forma de cobrir isto e 
 este tópico lhe mostrará como escrever testes unitários e também testes
 funcionais para sua aplicação Symfony2.
 
@@ -17,8 +17,8 @@ Os testes do Symfony2 confiam no PHPUnit, suas melhores práticas e algumas
 convenções. Aqui não documentaremos o PHPUnit em si, mas, se você ainda não
 conhece, você poderá ler sua excelente `documentação`_.
 
-.. note::
-   Symfony2 é compatível com PHPUnit 3.5 ou superior.
+.. Nota::
+   Symfony2 trabalha com PHPUnit 3.5 ou superior.
 
 A configuração PHPUnit padrão procura por testes em subdiretórios ``Tests/``:
 
@@ -81,11 +81,6 @@ A execução de testes de um determinado arquivo ou diretório também é muito 
 Testes Funcionais
 ----------------
 
-Functional tests check the integration of the different layers of an
-application (from the routing to the views). They are no different from unit
-tests as far as PHPUnit is concerned, but they have a very specific workflow:
-
-
 Testes funcionais verificam a integração das diferentes camadas de uma aplicação
 (a partir do roteamento até a camada view). Eles não são diferentes dos testes unitários,
 até onde o PHPUnit se preocupa, mas eles têm um trabalho muito específico:
@@ -103,12 +98,10 @@ Symfony2 ``WebTestCase`` class. The sandbox provides a simple functional test
 for ``HelloController`` that reads as follows::
 
 
-As requisições, cliques e observações são feitas por um cliente que sabe como
-falar com a aplicação. Para acessar como um cliente, os testes precisam estender
+As requisições, cliques e submissões são feitas por um cliente que sabe como
+se comunicar com a aplicação. Para acessar como um cliente, os testes precisam estender
 a classe Symfony2 ``WebTestCase`. A sandbox possui um teste funcional simples para
-``HelloController`` que diz o seguinte: 
-
-
+``HelloController`` que diz o seguinte::
 
     // src/Application/HelloBundle/Tests/Controller/HelloControllerTest.php
     namespace Application\HelloBundle\Tests\Controller;
@@ -122,75 +115,72 @@ a classe Symfony2 ``WebTestCase`. A sandbox possui um teste funcional simples pa
             $client = $this->createClient();
             $crawler = $client->request('GET', '/hello/Fabien');
 
-            $this->assertEquals(1, count($crawler->filter('html:contains("Hello Fabien")')));
+            $this->assertEquals(1, count($crawler->filter('html:contains("Olá Fabien")')));
         }
     }
 
-The ``createClient()`` method returns a client tied to the current application::
+O método ``createClient()`` retorna um cliente vinculado ao aplicativo atual:
 
     $crawler = $client->request('GET', 'hello/Fabien');
 
-The ``request()`` method returns a ``Crawler`` object which can be used to
-select elements in the Response, to click on links, and to submit forms.
+O método ``request()`` retorna um objeto ``Crawler`` que pode ser usado para
+selecionar elementos da Resposta, clicar em links e submeter formulários.
 
-.. tip::
+.. Dica::
 
-    The Crawler can only be used if the Response content is an XML or an HTML
-    document.
+    O Crawler somente pode ser usado  e o conteúdo da resposta é um documento XML ou um documento HTML.
 
-Click on a link by first selecting it with the Crawler using either a XPath
-expression or a CSS selector, then use the Client to click on it::
+Primeiro encontre o link com o Crawler, utilizando uma expressão XPath ou um seletor CSS,
+e em seguida use o Cliente para clicar nele::
 
-    $link = $crawler->filter('a:contains("Greet")')->eq(1)->link();
+    $link = $crawler->filter('a:contains("Saudacao")')->eq(1)->link();
 
     $crawler = $client->click($link);
 
-Submitting a form is very similar; select a form button, optionally override
-some form values, and submit the corresponding form::
+Submeter um formulário é bem parecido; Selecione o botão de submit e, opcionalmente, altere valores
+do formulário, e então envie-o::
 
     $form = $crawler->selectButton('submit');
 
-    // set some values
+    // defina alguns valores
     $form['name'] = 'Lucas';
 
-    // submit the form
+    // envie o formulário
     $crawler = $client->submit($form);
 
-Each ``Form`` field has specialized methods depending on its type::
+Cada campo do ``Formulário`` tem métodos especializados, dependendo de seu tipo::
 
-    // fill an input field
+    //  preenchendo um campo texto
     $form['name'] = 'Lucas';
 
-    // select an option or a radio
-    $form['country']->select('France');
+    // selecionar uma opção ou um radio
+    $form['country']->select('França');
 
-    // tick a checkbox
+    // marcando um checkbox
     $form['like_symfony']->tick();
 
-    // upload a file
-    $form['photo']->upload('/path/to/lucas.jpg');
+    // enviando  um arquivo
+    $form['photo']->upload('/caminho/para/lucas.jpg');
 
-Instead of changing one field at a time, you can also pass an array of values
-to the ``submit()`` method::
+Ao invés de alterar um campo de cada vez, você também pode passar uma matriz
+de valores para o método ``submit()``::
 
     $crawler = $client->submit($form, array(
         'name'         => 'Lucas',
-        'country'      => 'France',
+        'country'      => 'França',
         'like_symfony' => true,
-        'photo'        => '/path/to/lucas.jpg',
+        'photo'        => '/caminho/para/lucas.jpg',
     ));
 
-Now that you can easily navigate through an application, use assertions to test
-that it actually does what you expect it to. Use the Crawler to make assertions
-on the DOM::
+Agora que você pode navegar facilmente através de uma aplicação, usar declarações para testar
+se ela realmente faz o que você esperava. Use o Crawler  para fazer declarações sobre o DOM::
 
-    // Assert that the response matches a given CSS selector.
+    // Declara que a resposta deve corresponder com um seletor CSS especificado.
     $this->assertTrue(count($crawler->filter('h1')) > 0);
 
-Or, test against the Response content directly if you just want to assert that
-the content contains some text, or if the Response is not an XML/HTML
-document::
+Ou, compare o conteúdo da resposta se você quiser apenas confirmar que o conteúdo contém
+algum texto, ou se a resposta não é um documento XML/HTML::
 
-    $this->assertRegExp('/Hello Fabien/', $client->getResponse()->getContent());
+    $this->assertRegExp('/Olá Fabien/', $client->getResponse()->getContent());
 
-.. _documentation: http://www.phpunit.de/manual/3.5/en/
+.. _documentação: http://www.phpunit.de/manual/3.5/en/
