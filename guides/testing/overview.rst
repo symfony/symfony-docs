@@ -110,16 +110,16 @@ for ``HelloController`` that reads as follows::
             $client = $this->createClient();
             $crawler = $client->request('GET', '/hello/Fabien');
 
-            $this->assertEquals(1, count($crawler->filter('html:contains("Olá Fabien")')));
+            $this->assertEquals(1, count($crawler->filter('html:contains("Hello Fabien")')));
         }
     }
 
-O método``createClient()``retorna um cliente vinculado à aplicação atual:
+The ``createClient()`` method returns a client tied to the current application::
 
     $crawler = $client->request('GET', 'hello/Fabien');
 
-O método ``request()`` retorna um objeto ``Crawler`` que pode ser usado para selecionar
-elementos na resposta, para clicar em links, e enviar formulários.
+The ``request()`` method returns a ``Crawler`` object which can be used to
+select elements in the Response, to click on links, and to submit forms.
 
 .. tip::
 
