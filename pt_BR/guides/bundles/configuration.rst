@@ -1,22 +1,23 @@
 .. index::
    single: Bundles; Configuration
 
-Bundle Configuration
-====================
+Configuração de Bundle
+======================
 
-To provide more flexibility, a bundle can provide configurable settings by
-using the Symfony2 built-in mechanisms.
+Para prover mais flexíbilidade, um bundle pode disponibilizar definições de
+configurações usando os mecanismos embutidos no Symfony2.
 
-Simple Configuration
+Configuração Simples
 --------------------
 
-For simple configuration settings, rely on the default ``parameters`` entry of
-the Symfony2 configuration. Symfony2 parameters are simple key/value pairs; a
-value being any valid PHP value. Each parameter name must start with a
-lower-cased version of the bundle name (``hello`` for ``HelloBundle``, or
-``sensio.social.blog`` for ``Sensio\Social\BlogBundle`` for instance).
+Para definir uma configuração simples, depende dos ``parametros`` de configuração 
+do Symfony2. Os parametros do Symfony2 são simples pares chave/valor. Um valor
+sendo qualquer valor PHP válido. Cada nome de parametro deve iniciar uma versão
+em minúsicula do nome do bundle (``hello`` para ``HelloBundle``, ou 
+``sensio.social.blog`` para ``Sensio\Social\BlogBundle`` por exemplo).
 
-The end user can provide values in any XML/YAML/INI configuration file:
+O usuário final pode disponibilizar valores em qualquer arquivo de configuração
+XML/YAML/INI:
 
 .. code-block:: xml
 
@@ -35,34 +36,34 @@ The end user can provide values in any XML/YAML/INI configuration file:
     [parameters]
     hello.email.from=fabien@example.com
 
-Retrieve the configuration parameters in your code from the container::
-
+Recupere os parametros de configuração no seu código pelo container::
+    
     $container->getParameter('hello.email.from');
 
-Even if this mechanism is simple enough, you are highly encouraged to use the
-semantic configuration described below.
+Mesmo sendo esse mecanismo simples o bastante, você é encorajado a usar
+a configuração semântica descrita abaixo.
 
 .. index::
    single: Configuration; Semantic
    single: Bundle; Extension Configuration
 
-Semantic Configuration
+Configuração Semantica
 ----------------------
 
-Semantic configuration provides an even more flexible way to provide
-configuration for a bundle with the following advantages over simple
-parameters:
+Configuração Semantica prove uma maneira ainda mais flexível de prover
+configurações para um bundle com as seguintes vantagens sobre parametros
+simples:
 
-* Possibility to define more than just configuration (services for
-  instance);
-* Better hierarchy in the configuration (you can define nested
-  configuration);
-* Smart merging when several configuration files override an existing
-  configuration;
-* Configuration validation (if you define an XSD file and use XML);
-* Completion when you use XSD and XML.
+* Possiblidade de definir mais do que uma configuração (serviços por 
+  exemplo);
+* Melhor hierarquia na configuração (você pode definir configurações 
+  aninhadas);
+* Mesclagem inteligente quando vários arquivos de configuração 
+  sobrescrevem uma configuração existente;
+* Validação de Configuração (Se você definir um arquivo XSD e usar XML);
+* Acabamento quando você usar XSD e XML.
 
-To define a semantic configuration, create a Dependency Injection extension::
+Para definiar uma configuração semantica, crie uma extensão da Dependency Injection::
 
     // HelloBundle/DependencyInjection/HelloExtension.php
     class DocExtension extends LoaderExtension
@@ -88,16 +89,16 @@ To define a semantic configuration, create a Dependency Injection extension::
         }
     }
 
-Follow these rules:
+Siga essas regras:
 
-* The extension must be stored in the ``DependencyInjection`` sub-namespace;
-* The extension must be named after the bundle name and suffixed with
-  ``Extension`` (``HelloExtension`` for ``HelloBundle``);
-* The alias must be unique and named after the bundle name (``hello`` for
-  ``HelloBundle`` or ``sensio.social.blog`` for ``Sensio\Social\BlogBundle``);
-* The extension should provide an XSD schema.
+* A extensão deve ser salva no sub-namespace ``DependencyInjection``;
+* A extensão deve ser nomeada depois do nome do bundle a ter um sufixo
+  ``Extension`` (``HelloExtension`` para ``HelloBundle``);
+* O alias deve ser único e nomeado depois do nome do bundle (``hello`` para
+  ``HelloBundle`` ou ``sensio.social.blog`` para ``Sensio\Social\BlogBundle``);
+* A extensão deve disponibilizar um schema XSD.
 
-Eventually, register the extension::
+Eventualmente, registre a extensão::
 
     class HelloBundle extends BaseBundle
     {
@@ -107,8 +108,8 @@ Eventually, register the extension::
         }
     }
 
-Naming Conventions
+Convenção de Nomes
 ------------------
 
-All parameter and service names starting with a ``_`` are reserved for the
-framework, and new ones must not be defined by bundles.
+Todos os nomes de parametros e serviços começando com ``_`` são reservados para
+o framework, os novos arquivos não podem ser definidos pelos bundles.
