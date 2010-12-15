@@ -305,7 +305,7 @@ an argument to the ``render`` helper:
 
     .. code-block:: jinja
     
-        {{ form.title|render(['class': 'important']) }}
+        {{ form.title|render({ 'class': 'important' }) }}
     
     .. code-block:: html+php
     
@@ -320,7 +320,7 @@ representation. You can pass them in the next argument.
 
     .. code-block:: jinja
     
-        {{ form.country|render([], ['separator': ' -- Other countries -- ']) }}
+        {{ form.country|render({}, { 'separator': ' -- Other countries -- ' }) }}
     
     .. code-block:: html+php
     
@@ -335,7 +335,7 @@ completely change the HTML output of the helper:
 
     .. code-block:: jinja
     
-        {{ form.title|render([], [], 'HelloBundle::form.twig') }}
+        {{ form.title|render({}, {}, 'HelloBundle::form.twig') }}
     
     .. code-block:: html+php
     
