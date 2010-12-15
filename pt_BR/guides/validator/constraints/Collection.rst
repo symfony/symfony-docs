@@ -1,7 +1,7 @@
 Collection
 ==========
 
-Validates array entries against different constraints.
+Valida registros de um array contra diferentes restrições.
 
 .. code-block:: yaml
 
@@ -15,24 +15,24 @@ Validates array entries against different constraints.
 Options
 -------
 
-* ``fields`` (required): An associative array of array keys and one or more
-  constraints
-* ``allowMissingFields``: Whether some of the keys may not be present in the
-  array. Default: ``false``
-* ``allowExtraFields``: Whether the array may contain keys not present in the
-  ``fields`` option. Default: ``false``
-* ``missingFieldsMessage``: The error message if the ``allowMissingFields``
-  validation fails
-* ``allowExtraFields``: The error message if the ``allowExtraFields`` validation
-  fails
+* ``fields`` (requirido): Um array associativo com chaves de array e uma ou mais
+  restrições
+* ``allowMissingFields``: Se alguma das chaves podem não estar presentes no array.
+  Padrão: ``false``
+* ``allowExtraFields``: Se o array pode conter chaves que não esteja na opção
+  ``fields``. Padrão: ``false``
+* ``missingFieldsMessage``: A mensagem de erro se a validação ``allowMissingFields``
+  falhar
+* ``allowExtraFields``: A mensagem de erro se a validação ``allowExtraFields`` 
+  falhar
 
-Example:
+Exemplo:
 --------
 
-Let's validate an array with two indexes ``firstName`` and ``lastName``. The 
-value of ``firstName`` must not be blank, while the value of ``lastName`` must 
-not be blank with a minimum length of four characters. Furthermore, both keys
-may not exist in the array.
+Vamos validar um array com dois índices ``firstName`` e ``lastName``. O valor de
+``firstName`` não pode ser em branco e o valor de ``lastName`` também não pode ser 
+branco e deve ter um tamanho mínimo de quatro caracteres. Além disso, ambas as chaves
+não podem existir no array.
 
 .. configuration-block::
 
@@ -88,7 +88,7 @@ may not exist in the array.
             private $options = array();
         }
 
-The following object would fail the validation.
+O seguinte objeto falharia na validação.
 
 .. code-block:: php
 
@@ -98,7 +98,7 @@ The following object would fail the validation.
 
     print $validator->validate($author);
 
-You should see the following error messages:
+Você deve ver a seguinte mensagem de erro:
 
 .. code-block:: text
 

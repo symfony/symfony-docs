@@ -62,25 +62,25 @@ cria um branch dedicado:
     $ git checkout -b BRANCH_NAME
 
 .. tip::
-   Use um nome descritivo para seu branch (`ticket_XXX` onde ``XXX` é o numero do 
-   ticket é uma boa convenção para correcação de problemas).
+   Use um nome descritivo para seu branch (`ticket_XXX` onde `XXX` é o numero do 
+   ticket é uma boa convenção para correção de problemas).
 
-O comando acima automaticamente troca o código para o branch reçem criado
-(verifique o branch que você esta trabalhando com `git branch`.)
+O comando acima automaticamente troca o código para o branch recém criado
+(verifique o branch em que você esta trabalhando com `git branch`.)
 
 Trabalhe o quanto quiser no código e commit quanto você quiser, mas lembre-se
 do seguinte:
 
-* Siga os :doc:`padrões de codígo <standards>`(use `git diff --check` para 
+* Siga os :doc:`padrões de codigo <standards>`(use `git diff --check` para 
   verificar os espaços finais); 
 
-* Adicione testes unitários para provar que o problema esta corrigido ou que
+* Adicione testes unitários para provar que o problema está corrigido ou que
   a nova funcionalidade realmente funciona;
 
-* Faça commits atomicos e separados logicamente ( use o poder do `git rebase`
+* Faça commits atomicos e separados logicamente (use o poder do `git rebase`
   para ter um histórico limpo e lógico);
 
-* Escreve boas mensagens de commit.
+* Escreva boas mensagens de commit.
 
 .. tip::
    Uma boa mensagem de commit é composta de um resumo(primeira linha), seguida
@@ -93,8 +93,8 @@ do seguinte:
 Enviando um Patch
 ------------------
 
-Antes de enviar seu patch, atualize seu branch(necessario caso voce
-demorou um tempo para finalizar suas alterações):
+Antes de enviar seu patch, atualize seu branch (necessário caso voce tenha
+demorado algum tempo para finalizar suas alterações):
 
 .. code-block:: bash
 
@@ -104,9 +104,9 @@ demorou um tempo para finalizar suas alterações):
     $ git checkout BRANCH_NAME
     $ git rebase master
 
-When doing the `rebase` command, you might have to fix merge conflicts. `git
-st` gives you the *unmerged* files. Resolve all conflicts, then continue the
-rebase:
+Quando você executar o comando `rebase`, você pode ter que corrigir os conflitos
+de merge. O comando `git st` mostrará os arquivos *unmerged*. Resolva os conflitos,
+então continue o rebase:
 
 .. code-block:: bash
 
@@ -119,8 +119,8 @@ Verifique se todos os testes continuam passando e `push` seu branch remotamente:
 
     $ git push origin BRANCH_NAME
 
-You can now advertise your patch on the `dev mailing-list`_. The email must
-follow the following conventions:
+Você pode agora anunciar o seu pathc ana `lista de discussão de dev`_. O e-mail
+deve seguir as seguintes convenções:
 
 * O assunto deve iniciar com `[PATCH]`, seguido de um resumo sobre o patch
   (com uma referência para o ticket, caso seja uma correção de problema - `#XXX`);
@@ -141,4 +141,4 @@ reenviar o patch, rebase seu master, não faça merge, então force o `push` par
 .. _ProGit: http://progit.org/
 .. _Github: https://github.com/signup/free
 .. _Symfony2 repositório: http://www.github.com/fabpot/symfony
-.. _dev mailing-list: http://groups.google.com/group/symfony-devs
+.. _lista de discussão de dev: http://groups.google.com/group/symfony-devs
