@@ -1,32 +1,32 @@
 .. index::
    single: Security; Authentication
 
-Authentication
-==============
+Autenticação
+============
 
-Authentication in Symfony2 is managed by the Firewall system. It is made of
-listeners that enforce security and redirect the user if his credentials are
-not available, not sufficient, or just wrong.
+A autenticação no Symfony2 é gerenciada por um sistema de Firewall. Ele é composto 
+de listeners que reforçam a segurança e redirecionam o usuário se as suas credenciais 
+não estiverem disponíveis, não forem suficientes, ou estiverem simplesmente erradas.
 
 .. note::
 
-    The Firewall is implemented via a ``core.security`` event, notified just
-    after the ``core.request`` one. All features described in this document
-    are implemented as listeners to this event.
+    O Firewall é implementado através do evento ``core.security``, notificado logo 
+    após o ``core.request``. Todas as características descritas neste documento são 
+    implementadas como listeners para este evento.
 
 .. index::
    single: Security; Firewall
   pair: Security; Configuration
 
-The Firewall Map
-----------------
+O Mapa do Firewall
+------------------
 
-The Firewall can be configured to secure your application as a whole, or to
-use different authentication strategies for different parts of the application.
+O Firewall pode ser configurado para proteger a sua aplicação como um todo, ou 
+para utilizar diferentes estratégias de autenticação para diferentes partes da aplicação.
 
-Typically, a website can open the public part to all, secure the backend via a
-form based authentication, and secure the public API/Web Service via an HTTP
-basic authentication:
+Normalmente, um site pode abrir a parte pública para todos, proteger o backend através 
+de um formulário para autenticação, e proteger a API/Web Service pública através de uma 
+autenticação básica HTTP:
 
 .. configuration-block::
 
@@ -72,38 +72,39 @@ basic authentication:
             ),
         ));
 
-Each firewall configuration is activated when the incoming request matches the
-regular expression defined by the ``pattern`` setting. This pattern must match
-the request path info (``preg_match('#^'.PATTERN_VALUE.'$#',
+Cada configuração do firewall é ativada quando o pedido de entrada corresponde
+à expressão regular definida pela configuração ``pattern``. Esse padrão deve 
+corresponder à informação do caminho do pedido (``preg_match('#^'.PATTERN_VALUE.'$#',
 $request->getPathInfo())``.)
 
 .. tip::
 
-    The definition order of firewall configurations is significant as Symfony2
-    will use the first configuration for which the pattern matches the request
-    (so you need to define more specific configurations first).
+    A ordem de definição das configurações do firewall é importante pois o Symfony2 
+    usará a primeira configuração para que o padrão coincida com o pedido (por isso 
+    é necessário definir, em primeiro lugar, as configurações mais específicas).
 
 .. index::
    pair: Security; Configuration
 
-Authentication Mechanisms
--------------------------
+Mecanismos de Autenticação
+--------------------------
 
-Out of the box, Symfony2 supports the following authentication mechanisms:
+Out of the box, o Symfony2 suporta os seguintes mecanismos de autenticação:
 
-* HTTP Basic;
+* HTTP Básico;
 * HTTP Digest;
-* Form based authentication;
-* X.509 certificates;
-* Anonymous authentication.
+* Autenticação baseada em formulário;
+* Certificados X.509;
+* Autenticação Anônima.
 
-Each authentication mechanism consists of two classes that makes it work: a
-listener and an entry point. The *listener* tries to authenticate incoming
-requests. When the user is not authenticated or when the listener detects
-wrong credentials, the *entry point* creates a response to send feedback to
-the user and to provide a way for him to enter his credentials.
+Cada mecanismo de autenticação consiste de duas classes que fazem o trabalho: 
+uma listener e uma de ponto de entrada. A *listener* tenta autenticar os 
+pedidos de entrada. Quando o usuário não estiver autenticado, ou 
+quando o listener detectar as credenciais erradas, o *ponto de entrada* cria 
+uma resposta para enviar um feedback ao usuário e fornecer uma maneira para 
+ele entrar com suas credenciais.
 
-You can configure a firewall to use more than one authentication mechanisms:
+Você pode configurar um firewall para usar mais de um mecanismo de autenticação:
 
 .. configuration-block::
 
@@ -149,26 +150,32 @@ You can configure a firewall to use more than one authentication mechanisms:
 A user accessing a resource under ``/admin/`` will be able to provide a valid
 X.509 certificate, an Authorization HTTP header, or use a form to login.
 
+Um usuário acessando um recurso em ``/admin/`` será capaz de fornecer um certificado 
+X.509 válido, um header HTTP de Autorização, ou usar um formulário para login.
+
 .. note::
 
-    When the user is not authenticated and if there is more than one
-    authentication mechanisms, Symfony2 automatically defines a default entry
-    point (in the example above, the login form; but if the user send an
-    Authorization HTTP header with wrong credentials, Symfony2 will use the
-    HTTP basic entry point.)
+    Quando o usuário não estiver autenticado e, se houver mais de um mecanismo 
+    de autenticação, o Symfony2 define automaticamente um ponto de entrada padrão 
+    (no exemplo acima, o formulário de login, mas se o usuário enviar um header 
+    HTTP de Autorização com credenciais erradas, o Symfony2 usará o ponto de entrada
+    HTTP básico.)
 
 .. note::
 
     HTTP Basic authentication is interoperable, but not secure. HTTP Digest is
     more secure, but not really interoperable in practice.
 
+    Autenticação HTTP básica é interoperável, mas não segura. HTTP Digest é mais 
+    segura, mas não é realmente interoperável em prática.
+
 .. index::
    single: Security; HTTP Basic
 
-HTTP Basic
-~~~~~~~~~~
+HTTP Básica
+~~~~~~~~~~~
 
-Configuring HTTP basic authentication is as simple as it can get:
+Configurar a autenticação HTTP básica é bem simples:
 
 .. configuration-block::
 
@@ -204,7 +211,7 @@ Configuring HTTP basic authentication is as simple as it can get:
 HTTP Digest
 ~~~~~~~~~~~
 
-Configuring HTTP digest authentication is as simple as it can get:
+Configurar a autenticação HTTP Digest é bem simples:
 
 .. configuration-block::
 
@@ -236,16 +243,16 @@ Configuring HTTP digest authentication is as simple as it can get:
 
 .. caution::
 
-    To use HTTP Digest, you must store the user passwords in clear.
+    Para usar o HTTP Digest, você deve armazenar as senhas do usuário de forma clara.
 
 .. index::
    single: Security; Form based
 
-Form based authentication
-~~~~~~~~~~~~~~~~~~~~~~~~~
+Autenticação baseada em formulário
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Form based authentication is the most used authentication mechanism on the Web
-nowadays:
+A autenticação baseada em formulário é o mecanismo de autenticação mais utilizado 
+na web hoje em dia:
 
 .. configuration-block::
 
@@ -275,12 +282,12 @@ nowadays:
             ),
         ));
 
-When the user is not authenticated, he is redirected to the ``login_path`` URL
-(``/login`` by default).
+Quando o usuário não estiver autenticado, ele é redirecionado para a URL ``login_path``
+(``/login`` por padrão).
 
-This listener relies on a form to interact with the user. It handles the form
-submission automatically but not its display; so you must implement that part
-yourself::
+Esse listener depende de um formulário para interagir com o usuário. Ele lida com a
+submissão do formulário automaticamente, mas não com a sua exibição, assim, você mesmo 
+deve implementar esta parte::
 
     use Symfony\Bundle\FrameworkBundle\Controller\Controller;
     use Symfony\Component\Security\SecurityContext;
@@ -304,7 +311,7 @@ yourself::
         }
     }
 
-And the corresponding template:
+E o template correspondente:
 
 .. configuration-block::
 
@@ -340,12 +347,11 @@ And the corresponding template:
             <input type="submit" name="login" />
         </form>
 
-The template must have a ``_username`` and ``_password`` fields, and the form
-submission URL must be the value of the ``check_path`` setting
-(``/login_check`` by default).
+O template deve ter os campos ``_username`` e ``_password`, e a URL de submissão do 
+formulário deve ser o valor da configuração ``check_path`` (``/login_check`` por padrão).
 
-Finally, add routes for the ``/login`` (``login_path`` value) and
-``/login_check`` (``login_check`` value) URLs:
+Finalmente, adicione as rotas para as URLs ``/login`` (valor do ``login_path``)
+e ``/login_check`` (valor do ``login_check``):
 
 .. code-block:: xml
 
@@ -355,34 +361,35 @@ Finally, add routes for the ``/login`` (``login_path`` value) and
 
     <route id="_security_check" pattern="/login_check" />
 
-After an authentication failure, the user is redirected to the login page. You
-can use forward instead by setting the ``failure_forward`` to ``true``. You
-can also redirect or forward to another page if you set the ``failure_path``
-setting.
 
-After a successful authentication, the user is redirected based on the
-following algorithm:
+Após uma falha de autenticação, o usuário é redirecionado para a página de login. 
+Você pode usar forward em vez de definir o ``failure_forward`` como ``true``. Você
+também pode redirecionar ou avançar (forward) para outra página, se você definir a 
+configuração ``failure_path``.
 
-* if ``always_use_default_target_path`` is ``true`` (``false`` by default),
-  redirect the user to the ``default_target_path`` (``/`` by default);
+Após uma autenticação bem-sucedida, o usuário é redirecionado com base no 
+seguinte algoritmo:
 
-* if the request contains a parameter named ``_target_path`` (configurable via
-  ``target_path_parameter``), redirect the user to this parameter value;
+* se ``always_use_default_target_path`` for ``true`` (``false`` por padrão),
+  redireciona o usuário para o ``default_target_path`` (``/`` por padrão);
 
-* if there is a target URL stored in the session (which is done automatically
-  when a user is redirected to the login page), redirect the user to that URL;
+* se o pedido contém um parâmetro denominado ``_target_path`` (configurável através 
+  do ``target_path_parameter``), redireciona o usuário para o valor deste parâmetro;
 
-* if ``use_referer`` is set to ``true`` (``false`` is the default), redirect
-  the user to the Referrer URL;
+* se houver uma URL de destino armazenado na sessão (o que é feito automaticamente quando 
+  um usuário é redirecionado para a página de login), redireciona o usuário para esta URL;
 
-* Redirect the user to the ``default_target_path`` URL (``/`` by default).
+* se ``use_referer`` está definida como ``true`` (``false`` é o padrão), redireciona 
+  o usuário para a URL Referrer;
+
+* Redireciona o usuário para a URL ``default_target_path`` (``/`` por padrão).
 
 .. note::
 
-    All URLs must be path info values or absolute URLs.
+    Todas as URLs devem ser valores do path info ou URLs absolutas.
 
-The default values for all settings are the most sensible ones, but here is a
-configuration example that shows how to override them all:
+Os valores padrão para todas as configurações são os mais sensatos, mas aqui está 
+um exemplo de configuração que mostra como substituir todos eles:
 
 .. configuration-block::
 
@@ -438,10 +445,10 @@ configuration example that shows how to override them all:
 .. index::
    single: Security; X.509 certificates
 
-X.509 Certificates
+Certificados X.509 
 ~~~~~~~~~~~~~~~~~~
 
-X.509 certificates are a great way to authenticate users if you know them all:
+Os certificados X.509 são uma ótima maneira de autenticar os usuários se você conhece todos eles:
 
 .. configuration-block::
 
@@ -471,10 +478,10 @@ X.509 certificates are a great way to authenticate users if you know them all:
             ),
         ));
 
-As Symfony2 does not validate the certificate itself, and because obviously it
-cannot enforce the password, you must first configure your web server
-correctly before enabling this authenticating mechanism. Here is a simple but
-working configuration for Apache:
+Como o Symfony2 não valida o certificado em si, e, porque, obviamente não é possível
+padronizar a senha, primeiro você deve configurar o servidor web corretamente 
+antes de ativar esse mecanismo de autenticação. Aqui está uma configuração simples, 
+mas que funciona para o Apache:
 
 .. code-block:: xml
 
@@ -498,25 +505,25 @@ working configuration for Apache:
         SSLVerifyDepth 1
     </VirtualHost>
 
-By default, the username is the email declared in the certificate (the value
-of the ``SSL_CLIENT_S_DN_Email`` environment variable.)
+Por padrão, o usuário é o e-mail declarado no certificado (o valor da variável 
+de ambiente ``SSL_CLIENT_S_DN_Email``).
 
 .. tip::
 
-    Certificate authentication only works when the user access the application
+    A autenticação de certificado só funciona quando o usuário acessar a aplicação 
     via HTTPS.
 
 .. index::
    single: Security; Anonymous Users
 
-Anonymous Users
-~~~~~~~~~~~~~~~
+Usuários Anônimos
+~~~~~~~~~~~~~~~~~
 
-When you disable security, no user is attached to the request anymore. If you
-still want one, you can activate anonymous users. An anonymous user is
-authenticated but only has the ``IS_AUTHENTICATED_ANONYMOUSLY`` role. The
-"real" authentication only occurs whenever the user accesses a resource
-restricted by a more restrictive access control rule:
+Quando você desativar a segurança, nenhum usuário será anexado mais ao pedido. 
+Se você ainda quiser um, você pode ativar usuários anônimos. Um usuário anônimo 
+é autenticado, mas possui somente o role IS_AUTHENTICATED_ANONYMOUSLY. A autenticação 
+"real" só ocorre quando o usuário acessa um recurso limitado por uma norma mais 
+restritiva de controle de acesso:
 
 .. configuration-block::
 
@@ -546,23 +553,22 @@ restricted by a more restrictive access control rule:
             ),
         ));
 
-As anonymous users are authenticated, the ``isAuthenticated()`` method returns
-``true``. To check is the user is anonymous, check for the
-``IS_AUTHENTICATED_ANONYMOUSLY`` role instead (note that all non-anonymous
-users have the ``IS_AUTHENTICATED_FULLY`` role.)
+Como os usuários anônimos são autenticados, o método ``isAuthenticated()`` retorna ``true``. 
+Para verificar se o usuário é anônimo, verifique o role ``IS_AUTHENTICATED_ANONYMOUSLY`` 
+(note que todos os usuários não-anônimos têm o role ``IS_AUTHENTICATED_FULLY``).
 
 .. index::
    single: Security; Stateless Authentication
 
-Stateless Authentication
-------------------------
+Autenticação Stateless
+----------------------
 
-By default, Symfony2 relies on a cookie (the Session) to persist the security
-context of the user. But if you use certificates or HTTP authentication for
-instance, persistence is not needed as credentials are available for each
-request. In that case, and if you don't need to store anything else between
-requests, you can activate the stateless authentication (which means that no
-cookie will be ever created by Symfony2):
+Por padrão, o Symfony2 baseia-se em um cookie (a sessão) para manter o contexto 
+de segurança do usuário. Mas, se você usar certificados ou autenticação HTTP,
+por exemplo, a persistência não é necessária pois as credenciais estão disponíveis
+em cada pedido (request). Neste caso, e, se você não precisa armazenar nada entre 
+os pedidos, você pode ativar a autenticação stateless (o que significa que nenhum 
+cookie será criado pelo Symfony2):
 
 .. configuration-block::
 
@@ -595,19 +601,20 @@ cookie will be ever created by Symfony2):
 
 .. note::
 
-    If you use a form login, Symfony2 will create a cookie even if you set
-    ``stateless`` to ``true``.
+    Se você usar um formulário de login, o Symfony2 criará um cookie mesmo 
+    que você defina ``stateless`` para ``true``.
+
 
 .. index::
    single: Security; Impersonating
 
-Impersonating a User
---------------------
+Representar um usuário
+----------------------
 
-Sometimes, it's useful to be able to switch from one user to another without
-having to logout and login again (for instance when you are debugging or try
-to understand a bug a user see and you cannot reproduce.) This can be easily
-done by activating the ``switch-user`` listener:
+Às vezes, é útil poder alternar de um usuário para outro sem ter que sair e 
+logar novamente (por exemplo, quando você está depurando ou tentando entender 
+um bug que um usuário vê e você não consegue reproduzí-lo.) Isso pode ser feito 
+facilmente, ativando o listener ``switch-user``:
 
 .. configuration-block::
 
@@ -639,19 +646,21 @@ done by activating the ``switch-user`` listener:
             ),
         ));
 
-To switch to another user, just add a query string with the ``_switch_user``
-parameter and the username as the value to the current URL:
+
+Para alternar para outro usuário, basta adicionar uma query string com o 
+parâmetro ``_switch_user`` tendo como valor o nome do usuário à URL atual:
 
     http://example.com/somewhere?_switch_user=thomas
 
-To switch back to the original user, use the special ``_exit`` username:
+Para voltar ao usuário original, use o nome de usuário especial ``_exit``:
 
     http://example.com/somewhere?_switch_user=_exit
 
-Of course, this feature needs to be made available to a small group of users.
-By default, access is restricted to users having the 'ROLE_ALLOWED_TO_SWITCH'
-role. Change the default role with the ``role`` setting and for extra
-security, also change the parameter name via the ``parameter`` setting:
+Naturalmente, esse recurso deve ser disponibilizado a um grupo pequeno de 
+usuários. Por padrão, o acesso é restrito aos usuários com o role 
+'ROLE_ALLOWED_TO_SWITCH'. Mude o role padrão com a configuração ``role`` e, 
+para segurança extra, também altere o nome do parâmetro através da configuração
+``parameter``:
 
 .. configuration-block::
 
@@ -689,11 +698,11 @@ security, also change the parameter name via the ``parameter`` setting:
 .. index::
    single: Security; Logout
 
-Logout Users
-------------
+Logout de Usuários
+------------------
 
-If you want to provide a way for your users to logout, activate the logout
-listener:
+Se você quiser fornecer uma maneira dos seus usuários efetuarem logout, 
+ative o listener logout:
 
 .. configuration-block::
 
@@ -725,9 +734,9 @@ listener:
             ),
         ));
 
-By default, users are logged out when they access ``/logout`` path and they
-are redirected to ``/``. This can be easily changed via the ``path`` and
-``target`` settings:
+Por padrão, é realizado o logout dos usuários quando eles acessam o caminho 
+``/logout`` e eles são redirecionados para ``/``. Isso pode ser facilmente 
+alterado através das configurações ``path`` e ``target``:
 
 .. configuration-block::
 
@@ -761,13 +770,13 @@ are redirected to ``/``. This can be easily changed via the ``path`` and
             ),
         ));
 
-Authentication and User Providers
----------------------------------
+Autenticação e Providers de Usuário
+-----------------------------------
 
-By default, a firewall uses the first declared user provider for
-authentication. But if you want to use different user providers for different
-parts of your website, you can explicitly change the user provider for a
-firewall, or just for an authentication mechanism:
+Por padrão, um firewall usa o primeiro provider de usuário declarado para 
+autenticação. Mas, se você quiser usar providers de usuário diferentes para
+partes diferentes do seu site, você pode explicitamente alterar o provider 
+de usuário para um firewall, ou apenas para um mecanismo de autenticação:
 
 .. configuration-block::
 
@@ -848,14 +857,14 @@ firewall, or just for an authentication mechanism:
             ),
         ));
 
-In the above example, ``/admin/.*`` URLs accept users from the ``certificate``
-user provider when using X.509 authenticating, and the ``default`` provider
-when the user signs in with a form. The ``/api/.*`` URLs use the ``default``
-provider for all authentication mechanisms.
+No exemplo acima, as URLs ``/admin/.*`` aceitam usuários do provider de usuário 
+``certificate`` quando utilizar a autenticação X.509, e o provider ``default``
+quando o usuário inscreve-se (sign in) com um formulário. As URLs ``/api/.*`` 
+usam o provider ``default`` para todos os mecanismos de autenticação.
 
 .. note::
 
-    The listeners do not use the user providers directly, but authenticating
-    providers. They do the actual authentication, like checking the password,
-    and they can use a user provider for that (this is not the case for the
-    anonymous authentication provider for instance).
+    Os listeners não usam os providers de usuário diretamente, mas providers de
+    autenticação. Eles fazem a autenticação real, como checar a senha, e eles 
+    podem usar um provider de usuário para isto (este não é o caso do provider 
+    de autenticação anônima, por exemplo).
