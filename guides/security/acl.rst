@@ -109,7 +109,6 @@ Coming back to our small example from the beginning, let's implement ACL for it.
 .. code-block:: php
 
     // BlogController.php
-    ...
     public function addCommentAction(Post $post)
     {
         $comment = new Comment();
@@ -133,27 +132,27 @@ Coming back to our small example from the beginning, let's implement ACL for it.
             $securityIdentity = new UserSecurityIdentity($user);
             
             // grant owner access
-            $acl->insertObjectAce(0, MaskBuilder::MASK_OWNER, $securityIdentity, true);
+            $acl->insertObjectAce($securityIdentity, MaskBuilder::MASK_OWNER);
             $aclProvider->updateAcl($acl);
         }
     }
-    
-There are a couple of important implementation decisions in this code snippet.
+
+There are a couple of important implementation decisions in this code snippet. For now,
+I only want to highlight two:
 
 First, you may have noticed that ``->createAcl()`` does not accept domain objects
 directly, but only implementations of the ``ObjectIdentityInterface``. This
 additional step of indirection allows you to work with ACLs even when you have
-no actual domain object instance at hand.
+no actual domain object instance at hand. This will be extremely helpful if you
+want to check permissions for a large number of objects without actually hydrating
+these objects.
 
-The other interesting part is the ``->insertObjectAce()`` call. The first 
-argument indicates the position at which the ACE is inserted (0-based). If
-there is already an ACE at this position it will be shifted, not replaced. The
-second argument is a bitmask representing the permissions that you want to
-grant. You do not have to worry about the bitmasking, we have a builder which
-abstracts most of that away for you. But in short, this allows us to save many
-different permissions in one database row. The third argument represents
-the entity that you grant access two, and finally the forth argument tells the
-system whether the entry is granting, or denying access.
+The other interesting part is the ``->insertObjectAce()`` call. In our example,
+we are granting the user who is currently logged in owner access to the comment.
+The ``MaskBuilder::MASK_OWNER`` is a pre-defined integer bitmask; don't worry
+the mask builder will abstract away most of the technical details, but using
+this technique we can store many different permissions in one database row
+which gives us a considerable boost in performance.
 
 
 2. Checking Access
