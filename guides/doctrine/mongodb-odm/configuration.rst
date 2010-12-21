@@ -92,13 +92,13 @@ Simple Single Connection:
                             http://www.symfony-project.org/schema/dic/doctrine/odm/mongodb http://www.symfony-project.org/schema/dic/doctrine/odm/mongodb/mongodb-1.0.xsd">
 
         <doctrine:mongodb server="mongodb://localhost:27017"
-                          default_database="hello_%kernel.environment%">
-            <metadata_cache_driver type="memcache">
+                          default-database="hello_%kernel.environment%">
+            <metadata-cache-driver type="memcache">
                 <class>Doctrine\Common\Cache\MemcacheCache</class>
                 <host>localhost</host>
                 <port>11211</port>
-                <instance_class>Memcache</instance_class>
-            </metadata_cache_driver>
+                <instance-class>Memcache</instance_class>
+            </metadata-cache-driver>
             <options>
                 <connect>true</connect>
             </options>
@@ -117,12 +117,12 @@ Multiple Connections:
         xsi:schemaLocation="http://www.symfony-project.org/schema/dic/services http://www.symfony-project.org/schema/dic/services/services-1.0.xsd
                             http://www.symfony-project.org/schema/dic/doctrine/odm/mongodb http://www.symfony-project.org/schema/dic/doctrine/odm/mongodb/mongodb-1.0.xsd">
 
-        <doctrine:mongodb default_database="hello_%kernel.environment%"
-                          metadata_cache_driver="apc"
-                          default_document_manager="dm2"
-                          default_connection="dm2"
-                          proxy_namespace="Proxies"
-                          auto_generate_proxy_classes="true">
+        <doctrine:mongodb default-database="hello_%kernel.environment%"
+                          metadata-cache-driver="apc"
+                          default-document-manager="dm2"
+                          default-connection="dm2"
+                          proxy-namespace="Proxies"
+                          auto-generate-proxy-classes="true">
             <doctrine:connections>
                 <doctrine:connection id="conn1" server="mongodb://localhost:27017">
                     <options>
@@ -135,10 +135,10 @@ Multiple Connections:
                     </options>
                 </doctrine:connection>
             </doctrine:connections>
-            <doctrine:document_managers>
-                <doctrine:document_manager id="dm1" server="mongodb://localhost:27017" metadata_cache_driver="xcache" connection="conn1" />
-                <doctrine:document_manager id="dm2" server="mongodb://localhost:27017" connection="conn2" />
-            </doctrine:document_managers>
+            <doctrine:document-managers>
+                <doctrine:document-manager id="dm1" server="mongodb://localhost:27017" metadata-cache-driver="xcache" connection="conn1" />
+                <doctrine:document-manager id="dm2" server="mongodb://localhost:27017" connection="conn2" />
+            </doctrine:document-managers>
         </doctrine:mongodb>
     </container>
 

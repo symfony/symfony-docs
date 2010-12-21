@@ -51,7 +51,7 @@ The only mandatory configuration parameter is ``transport``:
         <swiftmailer:config
             transport="smtp"
             encryption="ssl"
-            auth_mode="login"
+            auth-mode="login"
             host="smtp.gmail.com"
             username="your_username"
             password="your_password" />

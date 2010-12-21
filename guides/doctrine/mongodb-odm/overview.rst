@@ -105,7 +105,7 @@ Now, use your document and manage its persistent state with Doctrine::
 
         public function deleteAction($id)
         {
-            $dm = $this->get('doctrine.orm.entity_manager');
+            $dm = $this->get('doctrine.odm.entity_manager');
             $user = $dm->createQuery('find all from HelloBundle:User where id = ?', $id);
             $dm->remove($user);
             $dm->flush();
