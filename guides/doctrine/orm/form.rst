@@ -24,17 +24,18 @@ compatible field that handles arrays of values::
     use Symfony\Component\Form\ChoiceField;
     use Symfony\Bundle\DoctrineBundle\Form\ValueTransformer\CollectionToChoiceTransformer;
 
+    $productTransformer = new CollectionToChoiceTransformer(array(
+        'em' => $em,
+        'className' => 'Product',
+    ));
+    
     $field = new ChoiceField('products', array(
         'choices' => $productChoices,
         'multiple' => true,
         'expanded' => true,
+        'value_transformer' => $productTransformer,
     ));
-    $field->setValueTransformer(new CollectionToChoiceTransformer(array(
-        'em' => $em,
-        'className' => 'Product',
-    )));
 
-    // Important: Make sure to attach the value transformer before calling addField().
     $form->addField($field);
 
 The 'em' property expects the EntityManager, the 'className' property expects
@@ -70,12 +71,12 @@ be chosen from::
     ));
     $engineerField = new ChoiceField('engineer', array(
         'choices' => $userChoices,
+        'value_transformer' => $userTransformer,
     ));
-    $engineerField->setValueTransformer($userTransformer);
     $reporterField = new ChoiceField('reporter', array(
         'choices' => $userChoices,
+        'value_transformer' => $userTransformer,
     ));
-    $reporterField->setValueTransformer($userTransformer);
 
     $form->add($engineerField);
     $form->add($reporterField);
