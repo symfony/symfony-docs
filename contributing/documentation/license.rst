@@ -29,7 +29,8 @@ Attribution-Share Alike 3.0 Unported `License`_.
   domain under applicable law, that status is in no way affected by the
   license;
 
-* *Other Rights* — In no way are any of the following rights affected by the license:
+* *Other Rights* — In no way are any of the following rights affected by the
+  license:
 
     * Your fair dealing or fair use rights, or other applicable copyright
       exceptions and limitations;

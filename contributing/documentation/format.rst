@@ -8,7 +8,7 @@ reStructuredText
 ----------------
 
 reStructuredText "is an easy-to-read, what-you-see-is-what-you-get plaintext
-markup syntax and parser system."
+markup syntax and parser system".
 
 You can learn more about its syntax by reading existing Symfony2 `documents`_
 or by reading the `reStructuredText Primer`_ on the Sphinx website.

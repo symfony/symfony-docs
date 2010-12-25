@@ -164,8 +164,9 @@ Eventually, use your entity and manage its persistent state with Doctrine::
         public function editAction($id)
         {
             $em = $this->get('doctrine.orm.entity_manager');
-            $user = $em->createQuery('SELECT u FROM HelloBundle:User WHERE id = ?', $id);
+            $user = $em->find('HelloBundle:User', $id);
             $user->setBody('new body');
+            $em->persist($user);
             $em->flush();
 
             // ...
@@ -174,7 +175,7 @@ Eventually, use your entity and manage its persistent state with Doctrine::
         public function deleteAction($id)
         {
             $em = $this->get('doctrine.orm.entity_manager');
-            $user = $em->createQuery('SELECT e FROM HelloBundle:User WHERE id = ?', $id);
+            $user = $em->find('HelloBundle:User', $id);
             $em->remove($user);
             $em->flush();
 

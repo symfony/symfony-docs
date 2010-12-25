@@ -761,10 +761,10 @@ Here is how you can configure the Symfony2 reverse proxy to support the
     // app/AppCache.php
     class AppCache extends Cache
     {
-        protected function lookup(Request $request)
+        protected function invalidate(Request $request)
         {
             if ('PURGE' !== $request->getMethod()) {
-                return parent::lookup($request);
+                return parent::invalidate($request);
             }
 
             $response = new Response();

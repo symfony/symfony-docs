@@ -2,8 +2,8 @@ The Architecture
 ================
 
 You are my hero! Who would have thought that you would still be here after the
-first three parts? Your efforts will be well rewarded soon. The first three
-parts don't have a deep look at the architecture of the framework. As it makes
+first three parts? Your efforts will be well-rewarded soon. The first three
+parts didn't look too deeply at the architecture of the framework. As it makes
 Symfony2 stand apart from the framework crowd, let's dive into it now.
 
 .. index::
@@ -13,7 +13,7 @@ The Directory Structure
 -----------------------
 
 The directory structure of a Symfony2 :term:`application` is rather flexible
-but the directory structure of a sandbox reflects the typical and recommended
+but the directory structure of the sandbox reflects the typical and recommended
 structure of a Symfony2 application:
 
 * ``app/``: This directory contains the application configuration;
@@ -26,8 +26,8 @@ The Web Directory
 ~~~~~~~~~~~~~~~~~
 
 The web root directory is the home of all public and static files like images,
-stylesheets, and JavaScript files. It is also where the front controllers
-live::
+stylesheets, and JavaScript files. It is also where each :term:`front controller`
+lives::
 
     // web/app.php
     require_once __DIR__.'/../app/AppKernel.php';
@@ -117,15 +117,15 @@ server or locally in your projects.
 The Bundle System
 -----------------
 
-This section starts to scratch the surface of one of the greatest and more
-powerful features of Symfony2, its :term:`bundle` system.
+This section starts to scratch the surface of one of the greatest and most
+powerful features of Symfony2, the :term:`bundle` system.
 
-A bundle is kind of like a plugin in other software. But why is it called
-bundle and not plugin then? Because everything is a bundle in Symfony2, from
+A bundle is kind of like a plugin in other software. So why is it called
+bundle and not plugin? Because *everything* is a bundle in Symfony2, from
 the core framework features to the code you write for your application.
 Bundles are first-class citizens in Symfony2. This gives you the flexibility to
 use pre-built features packaged in third-party bundles or to distribute your
-own bundles. It makes it so easy to pick and choose which features to enable
+own bundles. It makes it easy to pick and choose which features to enable
 in your application and optimize them the way you want.
 
 An application is made up of bundles as defined in the ``registerBundles()``
@@ -156,8 +156,8 @@ method of the ``AppKernel`` class::
         return $bundles;
     }
 
-Along side the ``HelloBundle`` we have already talked about, notice that the
-kernel also enables ``FrameworkBundle``, ``DoctrineBundle``,
+In addition to the ``HelloBundle`` that we have already talked about, notice
+that the kernel also enables ``FrameworkBundle``, ``DoctrineBundle``,
 ``SwiftmailerBundle``, and ``ZendBundle``. They are all part of the core
 framework.
 
@@ -346,9 +346,9 @@ specific configuration file:
             ),
         ));
 
-As we have seen in the previous part, an application is made of bundles as
-defined in the ``registerBundles()`` method but how does Symfony2 know where to
-look for bundles? Symfony2 is quite flexible in this regard. The
+As we have seen in the previous part, an application is made up of bundles
+defined in the ``registerBundles()`` method. But how does Symfony2 know where
+to look for bundles? Symfony2 is quite flexible in this regard. The
 ``registerBundleDirs()`` method must return an associative array that maps
 namespaces to any valid directory (local or global ones)::
 
@@ -373,10 +373,10 @@ applications, store them locally or globally, your choice.
 Using Vendors
 -------------
 
-Odds are your application will depend on third-party libraries. Those should
-be stored in the ``src/vendor/`` directory. It already contains the Symfony2
-libraries, the SwiftMailer library, the Doctrine ORM, the Twig templating
-system, and a selection of the Zend Framework classes.
+Odds are that your application will depend on third-party libraries. Those
+should be stored in the ``src/vendor/`` directory. This directory already
+contains the Symfony2 libraries, the SwiftMailer library, the Doctrine ORM,
+the Twig templating system, and a selection of the Zend Framework classes.
 
 .. index::
    single: Configuration Cache
@@ -391,12 +391,12 @@ each request? This is partly due to its cache system. The application
 configuration is only parsed for the very first request and then compiled down
 to plain PHP code stored in the ``cache/`` application directory. In the
 development environment, Symfony2 is smart enough to flush the cache when you
-change a file. But in the production one, it is your responsibility to clear
-the cache when you update your code or change its configuration.
+change a file. But in the production environment, it is your responsibility
+to clear the cache when you update your code or change its configuration.
 
 When developing a web application, things can go wrong in many ways. The log
 files in the ``logs/`` application directory tell you everything about the
-requests and helps you fix the problem in no time.
+requests and help you fix the problem quickly.
 
 .. index::
    single: CLI
@@ -425,13 +425,13 @@ Final Thoughts
 --------------
 
 Call me crazy, but after reading this part, you should be comfortable with
-moving things around and making Symfony2 works for you. Everything is done in
-Symfony2 to stand out of your way. So, feel free to rename and move directories
+moving things around and making Symfony2 work for you. Everything is done in
+Symfony2 to get out of your way. So, feel free to rename and move directories
 around as you see fit.
 
 And that's all for the quick tour. From testing to sending emails, you still
 need to learn a lot to become a Symfony2 master. Ready to dig into these topics
-now? Look no further, go to the official `guides`_ page and pick any topic you
+now? Look no further - go to the official `guides`_ page and pick any topic you
 want.
 
 .. _standards:  http://groups.google.com/group/php-standards/web/psr-0-final-proposal

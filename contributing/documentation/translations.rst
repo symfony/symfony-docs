@@ -10,7 +10,7 @@ Contributing
 First, become familiar with the :doc:`markup language <format>` used by the
 documentation.
 
-Then, subscribe to the `Symfony docs mailing-list`_, as collaboration happens
+Then, subscribe to the `Symfony2 docs mailing-list`_, as collaboration happens
 there.
 
 Finally, find the *master* repository for the language you want to contribute
@@ -81,4 +81,4 @@ repository and apply changes to the translated documents as soon as possible.
     Non maintained languages are removed from the official list of
     repositories as obsolete documentation is dangerous.
 
-.. _Symfony docs mailing-list: http://groups.google.com/group/symfony-docs
+.. _Symfony2 docs mailing-list: http://groups.google.com/group/symfony-docs

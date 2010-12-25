@@ -196,7 +196,7 @@ template, use the ``render`` tag:
 .. code-block:: jinja
 
     {# src/Application/HelloBundle/Resources/views/Hello/index.twig #}
-    {% render "HelloBundle:Hello:fancy" with ['name': name, 'color': 'green'] %}
+    {% render "HelloBundle:Hello:fancy" with { 'name': name, 'color': 'green' } %}
 
 Here, the ``HelloBundle:Hello:fancy`` string refers to the ``fancy`` action of
 the ``Hello`` controller, and the argument is used as simulated request path
@@ -227,7 +227,7 @@ updated by changing the configuration:
 
 .. code-block:: jinja
 
-    <a href="{% path 'hello' with ['name': 'Thomas'] %}">Greet Thomas!</a>
+    <a href="{% path 'hello' with { 'name': 'Thomas' } %}">Greet Thomas!</a>
 
 The ``path`` tag takes the route name and an array of parameters as arguments.
 The route name is the main key under which routes are referenced and the
@@ -243,7 +243,7 @@ parameters are the values of the placeholders defined in the route pattern:
 .. tip::
 
     You can also generate absolute URLs with the ``url`` tag: ``{% url 'hello'
-    with ['name': 'Thomas'] %}``.
+    with { 'name': 'Thomas' } %}``.
 
 Using Assets: images, JavaScripts, and stylesheets
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
