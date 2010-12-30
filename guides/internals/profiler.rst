@@ -3,7 +3,7 @@ Profiler
 
 When enabled, the Symfony2 profiler collects useful information about each
 request made to your application and store them for later analysis. Use the
-profiler in the development environment to help you debug your code and
+profiler in the development environment to help you to debug your code and
 enhance performance; use it in the production environment to explore problems
 after the fact.
 
@@ -14,11 +14,12 @@ profiler, the web debug toolbar, and the web profiler are all already
 configured with sensible settings.
 
 .. note::
-   The profiler collects information for all requests (simple requests,
-   redirects, exceptions, Ajax requests, ESI requests; and for all HTTP
-   methods and all formats). It means that for a single URL, you can have
-   several associated profiling data (one per external request/response
-   pair).
+
+    The profiler collects information for all requests (simple requests,
+    redirects, exceptions, Ajax requests, ESI requests; and for all HTTP
+    methods and all formats). It means that for a single URL, you can have
+    several associated profiling data (one per external request/response
+    pair).
 
 Visualizing Profiling Data
 --------------------------
@@ -35,8 +36,9 @@ If the summary provided by the Web Debug Toolbar is not enough, click on the
 token link (a string made of 13 random characters) to access the Web Profiler.
 
 .. note::
-   If the token is not clickable, it means that the profiler routes are not
-   registered (see below for configuration information).
+
+    If the token is not clickable, it means that the profiler routes are not
+    registered (see below for configuration information).
 
 Analyzing Profiling data with the Web Profiler
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -63,7 +65,7 @@ check various things and enforce some metrics::
             // ...
 
             // Check that the profiler is enabled
-            if ($profiler = $client->getProfiler($client->getResponse())) {
+            if ($profiler = $client->getProfiler()) {
                 $this->assertTrue($profiler->get('db')->getQueryCount() < 30);
                 $this->assertTrue($profiler->get('timer')->getTime() < 50);
             }
@@ -71,8 +73,9 @@ check various things and enforce some metrics::
     }
 
 .. tip::
-   Read the API for built-in `data collectors`_ to learn more about their
-   interfaces.
+
+    Read the API for built-in `data collectors`_ to learn more about their
+    interfaces.
 
 If a test fails because of profiling data (too many DB queries for instance),
 you might want to use the Web Profiler to analyze the request after the tests
@@ -84,27 +87,29 @@ finish. It's easy to achieve if you embed the token in the error message::
     );
 
 .. caution::
-    The profiler store can be different depending on the environment
-    (especially if you use the SQLite store, which is the default configured
-    one).
+
+     The profiler store can be different depending on the environment
+     (especially if you use the SQLite store, which is the default configured
+     one).
 
 Accessing the Profiling information
 -----------------------------------
 
-You don't need to use the default visualizers to access the profiling
+You don't need to use the default visualizer to access the profiling
 information. But how can you retrieve profiling information for a specific
 request after the fact? When the profiler stores data about a Request, it also
 associates a token with it; this token is available in the ``X-Debug-Token``
 HTTP header of the Response::
 
-    $profiler = $container->getProfiler()->getFromResponse($response);
+    $profiler = $container->get('profiler')->getFromResponse($response);
 
-    $profiler = $container->getProfiler()->getFromToken($token);
+    $profiler = $container->get('profiler')->getFromToken($token);
 
 .. tip::
-   When the profiler is enabled but not the web debug toolbar, or when you
-   want to get the token for an Ajax request, use a tool like Firebug to get
-   the value of the ``X-Debug-Token`` HTTP header.
+
+    When the profiler is enabled but not the web debug toolbar, or when you
+    want to get the token for an Ajax request, use a tool like Firebug to get
+    the value of the ``X-Debug-Token`` HTTP header.
 
 You can also set the token from your code, based for instance on the username
 or any other information, to ease the retrieval later on::
@@ -115,20 +120,20 @@ You can also use the ``find()`` method to access tokens based on some
 criteria::
 
     // get the latest 10 tokens
-    $tokens = $container->getProfiler()->find('', '', 10);
+    $tokens = $container->get('profiler')->find('', '', 10);
 
     // get the latest 10 tokens for all URL containing /admin/
-    $tokens = $container->getProfiler()->find('', '/admin/', 10);
+    $tokens = $container->get('profiler')->find('', '/admin/', 10);
 
     // get the latest 10 tokens for local requests
-    $tokens = $container->getProfiler()->find('127.0.0.1', '', 10);
+    $tokens = $container->get('profiler')->find('127.0.0.1', '', 10);
 
 If you want to manipulate profiling data on a different machine than the one
 where the information were generated, use the ``export()`` and ``import()``
 methods::
 
     // on the production machine
-    $profiler = $container->getProfiler()->getFromToken($token);
+    $profiler = $container->get('profiler')->getFromToken($token);
     $data = $profiler->export();
 
     // on the development machine
@@ -146,7 +151,7 @@ the configuration for the development environment:
     .. code-block:: yaml
 
         # load the profiler
-        web.config:
+        app.config:
             profiler: { only_exceptions: false }
 
         # enable the web profiler
@@ -160,9 +165,9 @@ the configuration for the development environment:
         <!-- xsi:schemaLocation="http://www.symfony-project.org/schema/dic/webprofiler http://www.symfony-project.org/schema/dic/webprofiler/webprofiler-1.0.xsd"> -->
 
         <!-- load the profiler -->
-        <web:config>
-            <profiler only-exceptions="false" />
-        </web:config>
+        <app:config>
+            <app:profiler only-exceptions="false" />
+        </app:config>
 
         <!-- enable the web profiler -->
         <webprofiler:config
@@ -173,7 +178,7 @@ the configuration for the development environment:
     .. code-block:: php
 
         // load the profiler
-        $container->loadFromExtension('web', 'config', array(
+        $container->loadFromExtension('app', 'config', array(
             'profiler' => array('only-exceptions' => false),
         ));
 
@@ -219,54 +224,54 @@ portion of the website? You can use a request matcher:
     .. code-block:: yaml
 
         # enables the profiler only for request coming for the 192.168.0.0 network
-        web.config:
+        app.config:
             profiler:
                 matcher: { ip: 192.168.0.0/24 }
 
         # enables the profiler only for the /admin URLs
-        web.config:
+        app.config:
             profiler:
                 matcher: { path: "#^/admin/#i" }
 
         # combine rules
-        web.config:
+        app.config:
             profiler:
                 matcher: { ip: 192.168.0.0/24, path: "#^/admin/#i" }
 
         # use a custom matcher instance defined in the "custom_matcher" service
-        web.config:
+        app.config:
             profiler:
                 matcher: { service: custom_matcher }
 
     .. code-block:: xml
 
         <!-- enables the profiler only for request coming for the 192.168.0.0 network -->
-        <web:config>
-            <profiler>
-                <matcher ip="192.168.0.0/24" />
-            </profiler>
-        </web:config>
+        <app:config>
+            <app:profiler>
+                <app:matcher ip="192.168.0.0/24" />
+            </app:profiler>
+        </app:config>
 
         <!-- enables the profiler only for the /admin URLs -->
-        <web:config>
-            <profiler>
-                <matcher path="#^/admin/#i" />
-            </profiler>
-        </web:config>
+        <app:config>
+            <app:profiler>
+                <app:matcher path="#^/admin/#i" />
+            </app:profiler>
+        </app:config>
 
         <!-- combine rules -->
-        <web:config>
-            <profiler>
-                <matcher ip="192.168.0.0/24" path="#^/admin/#i" />
-            </profiler>
-        </web:config>
+        <app:config>
+            <app:profiler>
+                <app:matcher ip="192.168.0.0/24" path="#^/admin/#i" />
+            </app:profiler>
+        </app:config>
 
         <!-- use a custom matcher instance defined in the "custom_matcher" service -->
-        <web:config>
-            <profiler>
-                <matcher service="custom_matcher" />
-            </profiler>
-        </web:config>
+        <app:config>
+            <appp:rofiler>
+                <app:matcher service="custom_matcher" />
+            </app:profiler>
+        </app:config>
 
         <!-- define an anonymous service for the matcher -->
         <web:config>
@@ -280,35 +285,35 @@ portion of the website? You can use a request matcher:
     .. code-block:: php
 
         // enables the profiler only for request coming for the 192.168.0.0 network
-        $container->loadFromExtension('web', 'config', array(
+        $container->loadFromExtension('app', 'config', array(
             'profiler' => array(
                 'matcher' => array('ip' => '192.168.0.0/24'),
             ),
         ));
 
         // enables the profiler only for the /admin URLs
-        $container->loadFromExtension('web', 'config', array(
+        $container->loadFromExtension('app', 'config', array(
             'profiler' => array(
                 'matcher' => array('path' => '#^/admin/#i'),
             ),
         ));
 
         // combine rules
-        $container->loadFromExtension('web', 'config', array(
+        $container->loadFromExtension('app', 'config', array(
             'profiler' => array(
                 'matcher' => array('ip' => '192.168.0.0/24', 'path' => '#^/admin/#i'),
             ),
         ));
 
         # use a custom matcher instance defined in the "custom_matcher" service
-        $container->loadFromExtension('web', 'config', array(
+        $container->loadFromExtension('app', 'config', array(
             'profiler' => array(
                 'matcher' => array('service' => new Reference('custom_matcher')),
             ),
         ));
 
         // define an anonymous service for the matcher
-        $container->loadFromExtension('web', 'config', array(
+        $container->loadFromExtension('app', 'config', array(
             'profiler' => array(
                 'matcher' => array('services' => array($container->register('custom_matcher', 'CustomMatcher'))),
             ),
@@ -347,9 +352,10 @@ The ``collect()`` method is responsible for storing the data it wants to give
 access to in local properties.
 
 .. caution::
-   As the profiler serializes data collector instances, you should not store
-   objects that cannot be serialized (like PDO objects), or you need to
-   provide your own ``serialize()`` method.
+
+    As the profiler serializes data collector instances, you should not
+    store objects that cannot be serialized (like PDO objects), or you need
+    to provide your own ``serialize()`` method.
 
 Most of the time, it is convenient to extend
 :class:`Symfony\\Component\\HttpKernel\\DataCollector\\DataCollector` and
@@ -407,4 +413,70 @@ configuration, and tag it with ``data_collector``:
             ->addTag('data_collector')
         ;
 
-.. _data collectors: http://api.symfony-reloaded.org/PR3/index.html?q=DataCollector
+.. _data collectors: http://api.symfony-reloaded.org/PR4/index.html?q=DataCollector
+
+Adding Web Profiler Templates
+-----------------------------
+
+When you want to display the data collected by your Data Collector in the web
+debug toolbar or the web profiler, create a Twig template following this
+skeleton:
+
+.. code-block:: jinja
+
+    {% extends 'WebProfilerBundle:Profiler:layout.twig' %}
+
+    {% block toolbar %}
+        {# the web debug toolbar content #}
+    {% endblock %}
+
+    {% block head %}
+        {# if the web profiler panel needs some specific JS or CSS files #}
+    {% endblock %}
+
+    {% block menu %}
+        {# the menu content #}
+    {% endblock %}
+
+    {% block panel %}
+        {# the panel content #}
+    {% endblock %}
+
+Each block is optional. The ``toolbar`` block is used for the web debug
+toolbar and ``menu`` and ``panel`` are used to add a panel to the web
+profiler.
+
+All blocks have access to the ``collector`` object.
+
+.. tip::
+
+    Built-in templates use a base64 encoded image for the toolbar (``<img
+    src="src="data:image/png;base64,..."``). You can easily calculate the
+    base64 value for an image with this little script: ``echo
+    base64_encode(file_get_contents($_SERVER['argv'][1]));``.
+
+To enable the template, add a ``template`` attribute to the ``data_collector``
+tag in your configuration:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        services:
+            data_collector.your_collector_name:
+                class: Fully\Qualified\Collector\Class\Name
+                tags:
+                    - { name: data_collector, template: "YourBundle:Collector:templatename" }
+
+    .. code-block:: xml
+
+        <service id="data_collector.your_collector_name" class="Fully\Qualified\Collector\Class\Name">
+            <tag name="data_collector" template="YourBundle:Collector:templatename" />
+        </service>
+
+    .. code-block:: php
+
+        $container
+            ->register('data_collector.your_collector_name', 'Fully\Qualified\Collector\Class\Name')
+            ->addTag('data_collector', array('template' => 'YourBundle:Collector:templatename'))
+        ;

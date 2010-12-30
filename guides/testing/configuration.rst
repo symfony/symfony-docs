@@ -15,8 +15,9 @@ Each application has its own PHPUnit configuration, stored in the
 create a ``phpunit.xml`` file to tweak the configuration for your local machine.
 
 .. tip::
-   Store the ``phpunit.xml.dist`` file in your code repository, and ignore the
-   ``phpunit.xml`` file.
+
+    Store the ``phpunit.xml.dist`` file in your code repository, and ignore the
+    ``phpunit.xml`` file.
 
 By default, only the tests stored in the ``Application`` namespace are run by
 the ``phpunit`` command. But you can easily add more namespaces. For instance,
@@ -59,20 +60,25 @@ The Client used by functional tests creates a Kernel that runs in a special
 
 .. code-block:: yaml
 
-    # config_test.yml
+    # app/config/config_test.yml
     imports:
         - { resource: config_dev.yml }
 
-    web.config:
+    app.config:
+        error_handler: false
+        test: ~
+
+    webprofiler.config:
         toolbar: false
+        intercept_redirects: false
 
-    zend.logger:
-        priority: debug
+    zend.config:
+        logger:
+            priority: debug
 
-    kernel.test: ~
-
-You can also change the default environment (``test``) and override the default
-debug mode (``true``) by passing them as options to the createClient() method::
+You can also change the default environment (``test``) and override the
+default debug mode (``true``) by passing them as options to the
+``createClient()`` method::
 
     $client = $this->createClient(array(
         'environment' => 'my_test_env',
@@ -95,5 +101,6 @@ You can also override HTTP headers on a per request basis::
     ));
 
 .. tip::
-   To provide your own Client, override the ``test.client.class`` parameter, or
-   define a ``test.client`` service.
+
+    To provide your own Client, override the ``test.client.class`` parameter,
+    or define a ``test.client`` service.

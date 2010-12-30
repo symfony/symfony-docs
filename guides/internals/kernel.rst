@@ -12,7 +12,7 @@ for handling client requests. Its main goal is to "convert"
 All Symfony2 Kernels implement
 :class:`Symfony\\Component\\HttpKernel\\HttpKernelInterface`::
 
-    function handle(Request $request = null, $type = self::MASTER_REQUEST, $raw = false);
+    function handle(Request $request, $type = self::MASTER_REQUEST, $catch = true)
 
 .. index::
    single: Internals; Controller Resolver
@@ -41,9 +41,10 @@ name (a "class::method" string, like
 ``Bundle\BlogBundle\PostController:indexAction``).
 
 .. tip::
-   The default implementation uses the
-   :class:`Symfony\\Bundle\\FrameworkBundle\\RequestListener`
-   to define the ``_controller`` Request attribute (see below).
+
+    The default implementation uses the
+    :class:`Symfony\\Bundle\\FrameworkBundle\\RequestListener` to define the
+    ``_controller`` Request attribute (see below).
 
 The
 :method:`Symfony\\Component\\HttpKernel\\Controller\\ControllerResolverInterface::getArguments`
@@ -53,16 +54,16 @@ the Request attributes.
 
 .. sidebar:: Matching Controller method arguments from Request attributes
 
-   For each method argument, Symfony2 tries to get the value of a Request
-   attribute with the same name. If it is not defined, the argument default
-   value is used if defined::
+    For each method argument, Symfony2 tries to get the value of a Request
+    attribute with the same name. If it is not defined, the argument default
+    value is used if defined::
 
-       // Symfony will look for an 'id' attribute (mandatory)
-       // and an 'admin' one (optional)
-       public function showAction($id, $admin = true)
-       {
-           // ...
-       }
+        // Symfony2 will look for an 'id' attribute (mandatory)
+        // and an 'admin' one (optional)
+        public function showAction($id, $admin = true)
+        {
+            // ...
+        }
 
 .. index::
   single: Internals; Request Handling
@@ -85,8 +86,7 @@ Event):
 
 4. The Kernel checks that the Controller is actually a valid PHP callable;
 
-5. The Resolver is called to determine the arguments to pass to the
-   Controller;
+5. The Resolver is called to determine the arguments to pass to the Controller;
 
 6. The Kernel calls the Controller;
 
@@ -103,9 +103,9 @@ notified and listeners are given a change to convert the Exception to a
 Response. If that works, the ``core.response`` event is notified; if not the
 Exception is re-thrown.
 
-If you don't want Exceptions to be caught (for embedded requests for
-instance), disable the ``core.exception`` event by passing ``true`` as the
-third argument to the ``handle()`` method.
+If you don't want Exceptions to be caught (for embedded requests for instance),
+disable the ``core.exception`` event by passing ``true`` as the third argument
+to the ``handle()`` method.
 
 .. index::
   single: Internals; Internal Requests
@@ -121,7 +121,7 @@ second argument):
 * ``HttpKernelInterface::SUB_REQUEST``.
 
 The type is passed to all events and listeners can act accordingly (some
-processing must only occurs on the master request).
+processing must only occur on the master request).
 
 .. index::
    pair: Kernel; Event
@@ -129,20 +129,21 @@ processing must only occurs on the master request).
 Events
 ------
 
-All events have a ``request_type`` parameter, which allows listeners to know
+All events have a ``request_type`` parameter which allows listeners to know
 the type of the request. For instance, if a listener must only be active for
 master requests, add the following code at the beginning of your listener
 method::
 
-    if (HttpKernelInterface::MASTER_REQUEST !== $event->getParameter('request_type')) {
+    if (HttpKernelInterface::MASTER_REQUEST !== $event->get('request_type')) {
         // return immediately
         // if the event is a filter, return the filtered value instead
         return;
     }
 
 .. tip::
-   If you are not yet familiar with the Symfony2 Event Dispatcher, read the
-   :doc:`dedicated chapter </guides/event/overview>` first.
+
+    If you are not yet familiar with the Symfony2 Event Dispatcher, read the
+    :doc:`dedicated chapter </guides/event/overview>` first.
 
 .. index::
    single: Event; core.request
@@ -210,7 +211,7 @@ view sub-system.
 * :class:`Symfony\\Component\\HttpKernel\\Profiler\\ProfilerListener`:
   collects data for the current request;
 
-* :class:`Symfony\\Component\\HttpKernel\\Profiler\\WebDebugToolbarListener`:
+* :class:`Symfony\\Bundle\\WebProfilerBundle\\WebDebugToolbarListener`:
   injects the Web Debug Toolbar;
 
 * :class:`Symfony\\Component\\HttpKernel\\ResponseListener`: fixes the

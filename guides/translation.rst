@@ -7,7 +7,7 @@ internationalize all the messages in your application.
 A *message* can be any string you want to internationalize. Messages are
 categorized by locale and domain.
 
-A *domain* allows you to better organized your messages in a given locale (it
+A *domain* allows you to better organize your messages in a given locale (it
 can be any string; by default, all messages are stored under the ``messages``
 domain).
 
@@ -46,6 +46,7 @@ The ``fallback`` attribute defines the fallback locale when a translation does
 not exist in the user locale.
 
 .. tip::
+
     When a translation does not exist for a locale, the translator tries to
     find the translation for the language (``fr`` when the locale is ``fr_FR``
     for instance); if it also fails, it looks for a translation for the
@@ -61,27 +62,27 @@ Translations are available through the ``translator`` service
 :method:`Symfony\\Component\\Translation\\Translator::trans` method to
 translate a message::
 
-    $t = $this['translator']->trans('Symfony2 is great!');
+    $t = $this->get('translator')->trans('Symfony2 is great!');
 
-If you have placeholders in strings, pass their values as the second
-argument::
+If you have placeholders in strings, pass their values as the second argument::
 
-    $t = $this['translator']->trans('Symfony2 is {{ what }}!', array('{{ what }}' => 'great'));
+    $t = $this->get('translator')->trans('Symfony2 is {{ what }}!', array('{{ what }}' => 'great'));
 
 .. note::
+
     The placeholders can have any form, but using the ``{{ var }}`` notation
     allows the message to be used in Twig templates.
 
 By default, the translator looks for messages in the default ``messages``
 domain. Override it via the third argument::
 
-    $t = $this['translator']->trans('Symfony2 is great!', array(), 'applications');
+    $t = $this->get('translator')->trans('Symfony2 is great!', array(), 'applications');
 
 Catalogues
 ----------
 
-Translations are stored on the filesystem and discovered by Symfony2, thanks
-to some conventions.
+Translations are stored on the filesystem and discovered by Symfony2, thanks to
+some conventions.
 
 Store translations for messages found in a bundle under the
 ``Resources/translations/`` directory; and override them under the
@@ -89,7 +90,7 @@ Store translations for messages found in a bundle under the
 
 Each message file must be named according to the following pattern:
 ``domain.locale.loader`` (the domain name, followed by a dot (``.``), followed
-by the locale name, followed by a dot (``.``), followed by the loader name.)
+by the locale name, followed by a dot (``.``), followed by the loader name).
 
 The loader can be the name of any registered loader. By default, Symfony2
 provides the following loaders:
@@ -115,7 +116,7 @@ unique identifier:
                         <target>J'aime Symfony2</target>
                     </trans-unit>
                     <trans-unit id="2">
-                        <source>symfony.great</source>
+                        <source>symfony2.great</source>
                         <target>J'aime Symfony2</target>
                     </trans-unit>
                 </body>
@@ -126,13 +127,77 @@ unique identifier:
 
         return array(
             'Symfony2 is great' => 'J\'aime Symfony2',
-            'symfony.great'     => 'J\'aime Symfony2',
+            'symfony2.great'    => 'J\'aime Symfony2',
         );
 
+    .. code-block:: yaml
+
+        Symfony2 is great: J'aime Symfony2
+        symfony2.great:    J'aime Symfony2
+
+.. sidebar:: Better organize your Translations
+
+    Additionally, the ``php`` and ``yaml`` file formats support nested ids to
+    avoid repeating yourself if you use keywords instead of real text for your
+    ids:
+
+    .. configuration-block::
+
+        .. code-block:: yaml
+
+            symfony2:
+                is:
+                    great: Symfony2 is great
+                    amazing: Symfony2 is amazing
+                has:
+                    bundles: Symfony2 has bundles
+            user:
+                login: Login
+
+        .. code-block:: php
+
+            return array(
+                'symfony2' => array(
+                    'is' => array(
+                        'great' => 'Symfony2 is great',
+                        'amazing' => 'Symfony2 is amazing',
+                    ),
+                    'has' => array(
+                        'bundles' => 'Symfony2 has bundles',
+                    ),
+                ),
+                'user' => array(
+                    'login' => 'Login',
+                ),
+            );
+
+    The multiple levels are flattened into single id/translation pairs by
+    adding a dot (.) between every level, therefore the above examples are
+    equivalent to the following:
+
+    .. configuration-block::
+
+        .. code-block:: yaml
+
+            symfony2.is.great: Symfony2 is great
+            symfony2.is.amazing: Symfony2 is amazing
+            symfony2.has.bundles: Symfony2 has bundles
+            user.login: Login
+
+        .. code-block:: php
+
+            return array(
+                'symfony2.is.great' => 'Symfony2 is great',
+                'symfony2.is.amazing' => 'Symfony2 is amazing',
+                'symfony2.has.bundles' => 'Symfony2 has bundles',
+                'user.login' => 'Login',
+            );
+
 .. note::
+
     You can also store translations in a database, or any other storage by
-    providing a custom
-    :class:`Symfony\\Component\\Translation\\Loader\\LoaderInterface` class.
+    providing a custom class implementing the
+    :class:`Symfony\\Component\\Translation\\Loader\\LoaderInterface` interface.
     See below to learn how to register custom loaders.
 
 Pluralization
@@ -144,10 +209,10 @@ rules::
 
     (($number % 10 == 1) && ($number % 100 != 11)) ? 0 : ((($number % 10 >= 2) && ($number % 10 <= 4) && (($number % 100 < 10) || ($number % 100 >= 20))) ? 1 : 2);
 
-As you can see, in Russian, you can have three different plural forms, based
-on this algorithm. For each form, the plural is different, and so the
-translation is also different. In such a case, you can provide all
-pluralization forms as strings separated by pipes (``|``)::
+As you can see, you can have three different plural forms, based on this
+algorithm. For each form, the plural is different, and so the translation is
+also different. In such a case, you can provide all pluralization forms as
+strings separated by pipes (``|``)::
 
     'There is one apple|There are {{ count }} apples'
 
@@ -173,11 +238,12 @@ translators, you can optionally "tag" each string like this::
 
     'none_or_one: Il y a {{ count }} pomme|some: Il y a {{ count }} pommes'
 
-The tags are really only hints for translators to help them understand the
-context of the translation (note that the tags do not need to be the same in
-the original message and in the translated one).
+The tags are really only hints for translators to help them to understand the
+translation context (note that the tags do not need to be the same in the
+original message and in the translated one).
 
 .. tip:
+
     As tags are optional, the translator doesn't use them (the translator will
     only get a string based on its position in the string).
 
@@ -199,7 +265,7 @@ of numbers::
 
 Or numbers between two other numbers::
 
-    [1, +Inf]
+    [1, +Inf[
     ]-1,2[
 
 The left delimiter can be ``[`` (inclusive) or ``]`` (exclusive). The right
@@ -207,14 +273,15 @@ delimiter can be ``[`` (exclusive) or ``]`` (inclusive). Beside numbers, you
 can use ``-Inf`` and ``+Inf`` for the infinite.
 
 .. note::
-    Symfony uses the `ISO 31-11`_ for intervals notation.
+
+    Symfony2 uses the `ISO 31-11`_ for intervals notation.
 
 The translator
 :method:`Symfony\\Component\\Translation\\Translator::transChoice` method
 knows how to deal with plural::
 
-    $t = $this['translator']->transChoice(
-        '{0} There is no apples|{1} There is one apple|]1,Inf] There are {{ count }} apples',
+    $t = $this->get('translator')->transChoice(
+        '{0} There is no apples|{1} There is one apple|]1,Inf[ There are {{ count }} apples',
         10,
         array('{{ count }}' => 10)
     );
@@ -239,7 +306,7 @@ The translator service is accessible in PHP templates through the
     <?php echo $view['translator']->trans('Symfony2 is great!') ?>
 
     <?php echo $view['translator']->transChoice(
-        '{0} There is no apples|{1} There is one apple|]1,Inf] There are {{ count }} apples',
+        '{0} There is no apples|{1} There is one apple|]1,Inf[ There are {{ count }} apples',
         10,
         array('{{ count }}' => 10)
     ) ?>
@@ -247,8 +314,8 @@ The translator service is accessible in PHP templates through the
 Twig Templates
 ~~~~~~~~~~~~~~
 
-Symfony2 provides specialized Twig tags (``trans`` and ``transChoice``) to
-help with message translation:
+Symfony2 provides specialized Twig tags (``trans`` and ``transChoice``) to help
+with message translation:
 
 .. code-block:: jinja
 
@@ -263,20 +330,20 @@ help with message translation:
     {% endtranschoice %}
 
 The ``transChoice`` tag automatically get the variables from the current
-context and pass them to the translator. This mechanism only works when you
-use placeholder using the ``{{ var }}`` pattern.
+context and pass them to the translator. This mechanism only works when you use
+placeholder using the ``{{ var }}`` pattern.
 
 You can also specify the message domain:
 
 .. code-block:: jinja
 
-    {% trans "Foo {{ name }}" from app %}
+    {% trans "Foo {{ name }}" from "app" %}
 
-    {% trans from app %}
+    {% trans from "app" %}
         Foo {{ name }}
     {% endtrans %}
 
-    {% transchoice count from app %}
+    {% transchoice count from "app" %}
         {0} There is no apples|{1} There is one apple|]1,Inf] There are {{ count }} apples
     {% endtranschoice %}
 

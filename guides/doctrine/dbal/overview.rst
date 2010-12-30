@@ -9,14 +9,15 @@ sits on top of `PDO`_ and offers an intuitive and flexible API for
 communicating with the most popular relational databases that exist today!
 
 .. tip::
-   You can read more about the Doctrine DBAL on the official `documentation`_
-   website.
+
+    You can read more about the Doctrine DBAL on the official `documentation`_
+    website.
 
 To get started you just need to enable and configure the DBAL:
 
 .. code-block:: yaml
 
-    # config/config.yml
+    # app/config/config.yml
 
     doctrine.dbal:
         driver:   PDOMySql
@@ -31,7 +32,7 @@ You can then access the Doctrine DBAL connection by accessing the
     {
         public function indexAction()
         {
-            $conn = $this['database_connection'];
+            $conn = $this->get('database_connection');
 
             $users = $conn->fetchAll('SELECT * FROM users');
         }

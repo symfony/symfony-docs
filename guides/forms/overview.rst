@@ -10,13 +10,15 @@ create mighty forms.
 Your First Form
 ---------------
 
-A form in Symfony2 is a transparent layer on top of your domain model. It
-reads properties from an object, displays the values in the form, and allows
-the user to change them. When the form is submitted, the values are written
-back into the object.
+A form in Symfony2 is a transparent layer on top of your domain model. It reads
+properties from an object, displays the values in the form, and allows the user
+to change them. When the form is submitted, the values are written back into
+the object.
 
 Let's see how this works in a practical example. Let's create a simple
 ``Customer`` class::
+
+    namespace Application\HelloBundle\Entity;
 
     class Customer
     {
@@ -40,16 +42,22 @@ is public, while ``$age`` can only be modified through setters and getters.
 Now let's create a form to let the visitor fill the data of the object::
 
     // src/Application/HelloBundle/Controller/HelloController.php
+
+    use Application\HelloBundle\Entity\Customer;
+    use Symfony\Component\Form\Form;
+    use Symfony\Component\Form\TextField;
+    use Symfony\Component\Form\IntegerField;
+
     public function signupAction()
     {
         $customer = new Customer();
 
-        $form = new Form('customer', $customer, $this['validator']);
+        $form = new Form('customer', $customer, $this->get('validator'));
         $form->add(new TextField('name'));
         $form->add(new IntegerField('age'));
 
         return $this->render('HelloBundle:Hello:signup.php', array(
-            'form' => $this['templating.form']->get($form)
+            'form' => $form
         ));
     }
 
@@ -58,8 +66,8 @@ class. The property must have the same name as the field and must either be
 public or accessible through public getters and setters.
 
 Instead of passing the form instance directly to the view, we wrap it with an
-object that provides methods that help render the form with more flexibility
-(``$this['templating.form']->get($form)``).
+object that provides methods that help to render the form with more flexibility
+(``$this->get('templating.form')->get($form)``).
 
 Let's create a simple template to render the form:
 
@@ -68,16 +76,15 @@ Let's create a simple template to render the form:
     # src/Application/HelloBundle/Resources/views/Hello/signup.php
     <?php $view->extend('HelloBundle::layout.php') ?>
 
-    <?php echo $form->form('#') ?>
-        <?php echo $form->render() ?>
+    <form action="#" method="post">
+        <?php echo $view['form']->render($form) ?>
 
         <input type="submit" value="Send!" />
     </form>
 
 .. note::
-    Form rendering in templates is covered in two dedicated chapters: one for
-    :doc:`PHP templates </guides/forms/view>`, and one for :doc:`Twig
-    templates </guides/forms/twig>`.
+
+    Form rendering in templates is covered in chapter :doc:`PHP templates </guides/forms/view>`.
 
 When the user submits the form, we also need to handle the submitted data. All
 the data is stored in a POST parameter with the name of the form::
@@ -86,12 +93,12 @@ the data is stored in a POST parameter with the name of the form::
     public function signupAction()
     {
         $customer = new Customer();
-        $form = new Form('customer', $customer, $this['validator']);
+        $form = new Form('customer', $customer, $this->get('validator'));
 
         // form setup...
 
-        if ('POST' === $this['request']->getMethod()) {
-            $form->bind($this['request']->request->get('customer'));
+        if ('POST' === $this->get('request')->getMethod()) {
+            $form->bind($this->get('request')->request->get('customer'));
 
             if ($form->isValid()) {
                 // save $customer object and redirect
@@ -111,7 +118,7 @@ Form Fields
 -----------
 
 As you have learned, a form consists of one or more form fields. A field knows
-how to convert data between normalized and humane representations.
+how to convert data between normalized and human representations.
 
 Let's look at the ``DateField`` for example. While you probably prefer to
 store dates as strings or ``DateTime`` objects, users rather like to choose
@@ -181,6 +188,9 @@ We can use a field group to show fields for the customer and the nested
 address at the same time::
 
     # src/Application/HelloBundle/Controller/HelloController.php
+
+    use Symfony\Component\Form\FieldGroup;
+
     public function signupAction()
     {
         $customer = new Customer();
@@ -206,6 +216,8 @@ The ``RepeatedField`` is an extended field group that allows you to output a
 field twice. The repeated field will only validate if the user enters the same
 value in both fields::
 
+    use Symfony\Component\Form\RepeatedField;
+
     $form->add(new RepeatedField(new TextField('email')));
 
 This is a very useful field for querying email addresses or passwords!
@@ -214,7 +226,7 @@ Collection Fields
 ~~~~~~~~~~~~~~~~~
 
 The ``CollectionField`` is a special field group for manipulating arrays or
-objects that implement the interface ``Traversable``. To demonstrate this, we
+objects that implements the interface ``Traversable``. To demonstrate this, we
 will extend the ``Customer`` class to store three email addresses::
 
     class Customer
@@ -225,6 +237,8 @@ will extend the ``Customer`` class to store three email addresses::
     }
 
 We will now add a ``CollectionField`` to manipulate these addresses::
+
+    use Symfony\Component\Form\CollectionField;
 
     $form->add(new CollectionField(new TextField('emails')));
 
@@ -253,6 +267,8 @@ accepting terms and conditions.
 
 Let's create a simple ``Registration`` class for this purpose::
 
+    namespace Application\HelloBundle\Entity;
+
     class Registration
     {
         /** @validation:Valid */
@@ -270,12 +286,16 @@ Let's create a simple ``Registration`` class for this purpose::
 Now we can easily adapt the form in the controller::
 
     # src/Application/HelloBundle/Controller/HelloController.php
+
+    use Application\HelloBundle\Entity\Registration;
+    use Symfony\Component\Form\CheckboxField;
+
     public function signupAction()
     {
         $registration = new Registration();
         $registration->customer = new Customer();
 
-        $form = new Form('registration', $registration, $this['validator']);
+        $form = new Form('registration', $registration, $this->get('validator'));
         $form->add(new CheckboxField('termsAccepted'));
 
         $group = new FieldGroup('customer');
@@ -284,8 +304,8 @@ Now we can easily adapt the form in the controller::
 
         $form->add($group);
 
-        if ('POST' === $this['request']->getMethod()) {
-            $form->bind($this['request']->request->get('registration'));
+        if ('POST' === $this->get('request')->getMethod()) {
+            $form->bind($this->get('request')->request->get('registration'));
 
             if ($form->isValid()) {
                 $registration->process();
@@ -305,6 +325,6 @@ Final Thoughts
 This chapter showed you how the Form component of Symfony2 can help you to
 rapidly create forms for your domain objects. The component embraces a strict
 separation between business logic and presentation. Many fields are
-automatically localized to make your visitors feel comfortable on your
-website. And with a flexible architecture, this is just the beginning of many
-mighty user-created fields!
+automatically localized to make your visitors feel comfortable on your website.
+And with a flexible architecture, this is just the beginning of many mighty
+user-created fields!

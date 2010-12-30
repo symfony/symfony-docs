@@ -7,7 +7,7 @@ Configuration
 
 .. code-block:: yaml
 
-    # config/config.yml
+    # app/config/config.yml
     doctrine_odm.mongodb:
         server: mongodb://localhost:27017
         default_database: hello_%kernel.environment%
@@ -15,11 +15,12 @@ Configuration
             connect: true
         metadata_cache_driver: array # array, apc, xcache, memcache
 
-If you wish to use memcache to cache your metadata and you need to configure the ``Memcache`` instance you can do the following:
+If you wish to use memcache to cache your metadata, you need to configure the
+``Memcache`` instance you can do the following:
 
 .. code-block:: yaml
 
-    # config/config.yml
+    # app/config/config.yml
     doctrine_odm.mongodb:
         server: mongodb://localhost:27017
         default_database: hello_%kernel.environment%
@@ -35,7 +36,8 @@ If you wish to use memcache to cache your metadata and you need to configure the
 Multiple Connections
 ~~~~~~~~~~~~~~~~~~~~
 
-If you need multiple connections and document managers you can use the following syntax:
+If you need multiple connections and document managers you can use the
+following syntax:
 
 .. code-block:: yaml
 
@@ -62,20 +64,20 @@ If you need multiple connections and document managers you can use the following
 
 Now you can retrieve the configured services connection services::
 
-    $conn1 = $container['doctrine.odm.mongodb.conn1_connection'];
-    $conn2 = $container['doctrine.odm.mongodb.conn2_connection'];
+    $conn1 = $container->get('doctrine.odm.mongodb.conn1_connection');
+    $conn2 = $container->get('doctrine.odm.mongodb.conn2_connection');
 
 And you can also retrieve the configured document manager services which utilize the above
 connection services::
 
-    $dm1 = $container['doctrine.odm.mongodb.dm1_document_manager'];
-    $dm2 = $container['doctrine.odm.mongodb.dm1_document_manager'];
+    $dm1 = $container->get('doctrine.odm.mongodb.dm1_document_manager');
+    $dm2 = $container->get('doctrine.odm.mongodb.dm2_document_manager');
 
 XML
 ~~~
 
-You can specify the same configuration via XML if you prefer that. Here are the same
-examples from above in XML.
+You can specify the same configuration via XML if you prefer that. Here are the
+same examples from above in XML.
 
 Simple Single Connection:
 
@@ -90,13 +92,13 @@ Simple Single Connection:
                             http://www.symfony-project.org/schema/dic/doctrine/odm/mongodb http://www.symfony-project.org/schema/dic/doctrine/odm/mongodb/mongodb-1.0.xsd">
 
         <doctrine:mongodb server="mongodb://localhost:27017"
-                          default_database="hello_%kernel.environment%">
-            <metadata_cache_driver type="memcache">
+                          default-database="hello_%kernel.environment%">
+            <metadata-cache-driver type="memcache">
                 <class>Doctrine\Common\Cache\MemcacheCache</class>
                 <host>localhost</host>
                 <port>11211</port>
-                <instance_class>Memcache</instance_class>
-            </metadata_cache_driver>
+                <instance-class>Memcache</instance_class>
+            </metadata-cache-driver>
             <options>
                 <connect>true</connect>
             </options>
@@ -115,12 +117,12 @@ Multiple Connections:
         xsi:schemaLocation="http://www.symfony-project.org/schema/dic/services http://www.symfony-project.org/schema/dic/services/services-1.0.xsd
                             http://www.symfony-project.org/schema/dic/doctrine/odm/mongodb http://www.symfony-project.org/schema/dic/doctrine/odm/mongodb/mongodb-1.0.xsd">
 
-        <doctrine:mongodb default_database="hello_%kernel.environment%"
-                          metadata_cache_driver="apc"
-                          default_document_manager="dm2"
-                          default_connection="dm2"
-                          proxy_namespace="Proxies"
-                          auto_generate_proxy_classes="true">
+        <doctrine:mongodb default-database="hello_%kernel.environment%"
+                          metadata-cache-driver="apc"
+                          default-document-manager="dm2"
+                          default-connection="dm2"
+                          proxy-namespace="Proxies"
+                          auto-generate-proxy-classes="true">
             <doctrine:connections>
                 <doctrine:connection id="conn1" server="mongodb://localhost:27017">
                     <options>
@@ -133,20 +135,21 @@ Multiple Connections:
                     </options>
                 </doctrine:connection>
             </doctrine:connections>
-            <doctrine:document_managers>
-                <doctrine:document_manager id="dm1" server="mongodb://localhost:27017" metadata_cache_driver="xcache" connection="conn1" />
-                <doctrine:document_manager id="dm2" server="mongodb://localhost:27017" connection="conn2" />
-            </doctrine:document_managers>
+            <doctrine:document-managers>
+                <doctrine:document-manager id="dm1" server="mongodb://localhost:27017" metadata-cache-driver="xcache" connection="conn1" />
+                <doctrine:document-manager id="dm2" server="mongodb://localhost:27017" connection="conn2" />
+            </doctrine:document-managers>
         </doctrine:mongodb>
     </container>
 
 Writing Document Classes
 ------------------------
 
-You can start writing document classes just how you normally would write some PHP classes.
-The only difference is that you must map the classes to the MongoDB ODM. You can provide
-the mapping information via xml, yaml or annotations. In this example, for simplicity and
-ease of reading we will use annotations.
+You can start writing document classes just how you normally would write some
+PHP classes. The only difference is that you must map the classes to the
+MongoDB ODM. You can provide the mapping information via xml, yaml or
+annotations. In this example, for simplicity and ease of reading we will use
+annotations.
 
 First, lets write a simple User class::
 
@@ -175,9 +178,10 @@ First, lets write a simple User class::
         }
     }
 
-This class can be used independent from any persistence layer as it is a regular PHP
-class and does not have any dependencies. Now we need to annotate the class so Doctrine
-can read the annotated mapping information from the doc blocks::
+This class can be used independent from any persistence layer as it is a
+regular PHP class and does not have any dependencies. Now we need to annotate
+the class so Doctrine can read the annotated mapping information from the doc
+blocks::
 
     // ...
 
@@ -196,11 +200,12 @@ can read the annotated mapping information from the doc blocks::
 Using Documents
 ---------------
 
-Now that you have a PHP class that has been mapped properly you can begin working with
-instances of that document persisting to and retrieving from MongoDB.
+Now that you have a PHP class that has been mapped properly you can begin
+working with instances of that document persisting to and retrieving from
+MongoDB.
 
-From your controllers you can access the ``DocumentManager`` instances from
-the container::
+From your controllers you can access the ``DocumentManager`` instance from the
+container::
 
     class UserController extends Controller
     {
@@ -209,7 +214,7 @@ the container::
             $user = new User();
             $user->setName('Jonathan H. Wage');
 
-            $dm = $this['doctrine.odm.mongodb.document_manager'];
+            $dm = $this->get('doctrine.odm.mongodb.document_manager');
             $dm->persist($user);
             $dm->flush();
 
@@ -223,7 +228,7 @@ Later you can retrieve the persisted document by its id::
     {
         public function editAction($id)
         {
-            $dm = $this['doctrine.odm.mongodb.document_manager'];
+            $dm = $this->get('doctrine.odm.mongodb.document_manager');
             $user = $dm->find('HelloBundle:User', $id);
 
             // ...

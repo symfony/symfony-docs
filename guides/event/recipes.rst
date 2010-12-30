@@ -46,9 +46,10 @@ time. But when you have a long list of dependencies, using setter injection
 can be the way to go, especially for optional dependencies.
 
 .. tip::
-   If you use dependency injection like we did in the two examples above, you can
-   then easily use the Symfony Dependency Injection Component to elegantly manage
-   these objects.
+
+    If you use dependency injection like we did in the two examples above, you
+    can then easily use the Symfony2 Dependency Injection component to
+    elegantly manage these objects.
 
 Doing something before or after a Method Call
 ---------------------------------------------
@@ -96,7 +97,7 @@ magic ``__call()`` method in the class you want to be extended like this::
             // calls all listeners until one is able to implement the $method
             $this->dispatcher->notifyUntil($event);
 
-            // no listener was able to proces the event? The method does not exist
+            // no listener was able to process the event? The method does not exist
             if (!$event->isProcessed()) {
                 throw new \Exception(sprintf('Call to undefined method %s::%s.', get_class($this), $method));
             }
@@ -113,7 +114,7 @@ Then, create a class that will host the listener::
         public function addBarMethodToFoo(Event $event)
         {
             // we only want to respond to the calls to the 'bar' method
-            if ('bar' != $event['method']) {
+            if ('bar' != $event->get('method']) {
                 // allow another listener to take care of this unknown method
                 return false;
             }
@@ -122,7 +123,7 @@ Then, create a class that will host the listener::
             $foo = $event->getSubject();
 
             // the bar method arguments
-            $arguments = $event['parameters'];
+            $arguments = $event->get('parameters');
 
             // do something
             // ...
@@ -142,9 +143,9 @@ Eventually, add the new ``bar`` method to the ``Foo`` class::
 Modifying Arguments
 -------------------
 
-If you want to allow third party classes to modify arguments passed to a
-method just before that method is executed, add a ``filter`` event at the
-beginning of the method::
+If you want to allow third party classes to modify arguments passed to a method
+just before that method is executed, add a ``filter`` event at the beginning of
+the method::
 
     class Foo
     {

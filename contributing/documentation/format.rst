@@ -8,7 +8,7 @@ reStructuredText
 ----------------
 
 reStructuredText "is an easy-to-read, what-you-see-is-what-you-get plaintext
-markup syntax and parser system."
+markup syntax and parser system".
 
 You can learn more about its syntax by reading existing Symfony2 `documents`_
 or by reading the `reStructuredText Primer`_ on the Sphinx website.
@@ -49,7 +49,8 @@ the highlighted pseudo-language:
         <?php echo $this->foobar(); ?>
 
 .. note::
-   A list of supported languages is available on the `Pygments website`_.
+
+    A list of supported languages is available on the `Pygments website`_.
 
 Configuration Blocks
 ~~~~~~~~~~~~~~~~~~~~
@@ -72,7 +73,7 @@ directive to show the configuration in all supported configuration formats
 
         .. code-block:: php
 
-            // Configuration in XML
+            // Configuration in PHP
 
 The previous reST snippet renders as follow:
 
@@ -88,7 +89,25 @@ The previous reST snippet renders as follow:
 
     .. code-block:: php
 
-        // Configuration in XML
+        // Configuration in PHP
+
+The current list of supported formats are the following:
+
+=============== ===========
+Markup format   Displayed
+=============== ===========
+html            HTML
+xml             XML
+php             PHP
+yaml            YAML
+jinja           Twig
+html+jinja      Twig
+jinja+html      Twig
+php+html        PHP
+html+php        PHP
+ini             INI
+php-annotations Annotations
+=============== ===========
 
 .. _reStructuredText:        http://docutils.sf.net/rst.html
 .. _Sphinx:                  http://sphinx.pocoo.org/

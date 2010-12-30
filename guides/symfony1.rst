@@ -17,5 +17,6 @@ bundles, create sub-namespaces for controllers, sub-directories for templates,
 different semantic configurations, separate routing configurations, and so on.
 
 .. tip::
-   Read the definition of a :term:`Project`, an :term:`Application`, and a
-   :term:`Bundle` in the glossary.
+
+    Read the definition of a :term:`Project`, an :term:`Application`, and a
+    :term:`Bundle` in the glossary.

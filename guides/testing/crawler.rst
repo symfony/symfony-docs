@@ -78,8 +78,9 @@ each method returns a new Crawler instance for the matching nodes::
         ->first();
 
 .. tip::
-   Use the ``count()`` function to get the number of nodes stored in a Crawler:
-   ``count($crawler)``
+
+    Use the ``count()`` function to get the number of nodes stored in a Crawler:
+    ``count($crawler)``
 
 Extracting Information
 ----------------------
@@ -120,7 +121,8 @@ The Client ``click()`` method takes a ``Link`` instance as returned by the
     $client->click($link);
 
 .. tip::
-   The ``links()`` method returns an array of ``Link`` objects for all nodes.
+
+    The ``links()`` method returns an array of ``Link`` objects for all nodes.
 
 Forms
 -----
@@ -133,8 +135,8 @@ Notice that we select form buttons and not forms as a form can have several
 buttons; if you use the traversing API, keep in mind that you must look for a
 button.
 
-The ``selectButton()`` method can select ``button`` tags and submit ``input`` tags;
-it has several heuristics to find them:
+The ``selectButton()`` method can select ``button`` tags and submit ``input``
+tags; it has several heuristics to find them:
 
 * The ``value`` attribute value;
 
@@ -191,8 +193,9 @@ their type::
     $form['photo']->upload('/path/to/lucas.jpg');
 
 .. tip::
-   You can get the values that will be submitted by calling the ``getValues()``
-   method. The uploaded files are available in a separate array returned by
-   ``getFiles()``. The ``getPhpValues()`` and ``getPhpFiles()`` also return the
-   submitted values, but in the PHP format (it converts the keys with square
-   brackets notation to PHP arrays).
+
+    You can get the values that will be submitted by calling the ``getValues()``
+    method. The uploaded files are available in a separate array returned by
+    ``getFiles()``. The ``getPhpValues()`` and ``getPhpFiles()`` also return
+    the submitted values, but in the PHP format (it converts the keys with
+    square brackets notation to PHP arrays).
