@@ -36,35 +36,41 @@ If you wish to use memcache to cache your metadata, you need to configure the
 Mapping Configuration
 ~~~~~~~~~~~~~~~~~~~~~
 
-Explicit definition of all the mapped documents is the only necessary configuration for the ODM and there
-are several configuration options that you can control. The following configuration options exist
-for a mapping:
+Explicit definition of all the mapped documents is the only necessary
+configuration for the ODM and there are several configuration options that you
+can control. The following configuration options exist for a mapping:
 
-- ``type`` One of "annotations", "xml", "yml", "php" or "static-php". This specifies which type
-  of metadata type your mapping uses.
-- ``dir`` Path to the mapping or entity files (depending on the driver). If this path is relative
-  it is assumed to be relative to the bundle root. This only works if the name of your mapping
-  is a bundle name. If you want to use this option to specifiy absolute paths you should prefix
-  the path with the kernel parameters that exist in the DIC (for example %kernel.dir%).
-- ``prefix`` A common namespace prefix that all documents of this mapping share. This prefix
-  should never conflict with prefixes of other defined mappings otherwise some of your documents cannot be found
-  by Doctrine. This option defaults to the bundle namespace + `Documents`, for example for an
-  application bundle called "Hello" prefix would be "Application\Hello\Documents".
-- ``alias`` Doctrine offers a way to alias document namespaces to simpler, shorter names to be used
-  inqueries or for Repository access.
-- ``is_bundle`` This option is a derived value from ``dir`` and by default is set to true if dir is relative
-  proved by a ``file_exists()`` check that returns false. It is false if the existance check returns true.
-  In this case an absolute path was specified and the metadata files are most likely in a directory outside of
-  a bundle.
+- ``type`` One of "annotations", "xml", "yml", "php" or "static-php". This
+  specifies which type of metadata type your mapping uses.
+- ``dir`` Path to the mapping or entity files (depending on the driver). If
+  this path is relative it is assumed to be relative to the bundle root. This
+  only works if the name of your mapping is a bundle name. If you want to use
+  this option to specifiy absolute paths you should prefix the path with the
+  kernel parameters that exist in the DIC (for example %kernel.dir%).
+- ``prefix`` A common namespace prefix that all documents of this mapping
+  share. This prefix should never conflict with prefixes of other defined
+  mappings otherwise some of your documents cannot be found by Doctrine. This
+  option defaults to the bundle namespace + `Documents`, for example for an
+  application bundle called "Hello" prefix would be
+  "Application\Hello\Documents".
+- ``alias`` Doctrine offers a way to alias document namespaces to simpler,
+  shorter names to be used inqueries or for Repository access.
+- ``is_bundle`` This option is a derived value from ``dir`` and by default is
+  set to true if dir is relative proved by a ``file_exists()`` check that
+  returns false. It is false if the existance check returns true. In this case
+  an absolute path was specified and the metadata files are most likely in a
+  directory outside of a bundle.
 
-To avoid having to configure lots of information for your mappings you should follow these conventions:
+To avoid having to configure lots of information for your mappings you should
+follow these conventions:
 
-1. Put all your entities in a directory Documents/ inside your bundle. For example "Application/Hello/Documents/".
-2. If you are using xml, yml or php mapping put all your configuration files into the
-   "Resources/config/doctrine/metadata/doctrine/mongodb/" directory sufficed with dcm.xml, dcm.yml or dcm.php
-   respectively.
-3. Annotations is assumed if an "Documents/" but no "Resources/config/doctrine/metadata/doctrine/mongodb/"
-   directory is found.
+1. Put all your entities in a directory Documents/ inside your bundle. For
+example "Application/Hello/Documents/".
+2. If you are using xml, yml or php mapping put all your configuration files
+into the "Resources/config/doctrine/metadata/doctrine/mongodb/" directory
+sufficed with dcm.xml, dcm.yml or dcm.php respectively.
+3. Annotations is assumed if an "Documents/" but no
+"Resources/config/doctrine/metadata/doctrine/mongodb/" directory is found.
 
 The following configuration shows a bunch of mapping examples:
 
@@ -129,8 +135,8 @@ connection services::
 XML
 ~~~
 
-You can specify the same configuration via XML if you prefer that. Here are the
-same examples from above in XML.
+You can specify the same configuration via XML if you prefer that. Here are
+the same examples from above in XML.
 
 Simple Single Connection:
 
