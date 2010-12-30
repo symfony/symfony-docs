@@ -207,7 +207,7 @@ to the ``Request`` object::
     $request->request->get('page'); // get a $_POST parameter
 
 In a template, you can also access the ``Request`` object via the ``request``
-helper:
+helper::
 
 .. code-block:: html+php
 
