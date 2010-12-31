@@ -35,7 +35,9 @@
   * :doc:`Overview </guides/security/overview>` | 
   * :doc:`/guides/security/users` | 
   * :doc:`/guides/security/authentication` | 
-  * :doc:`/guides/security/authorization`
+  * :doc:`/guides/security/authorization` | 
+  * :doc:`ACLs </guides/security/acl>` | 
+  * :doc:`Advanced ACLs </guides/security/acl_advanced>`
 
 * **Cache**:
 
