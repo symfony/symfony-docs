@@ -9,3 +9,4 @@ Security
    authentication
    authorization
    acl
+   acl_advanced

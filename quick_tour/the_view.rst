@@ -227,7 +227,7 @@ updated by changing the configuration:
 
 .. code-block:: jinja
 
-    <a href="{% path 'hello' with { 'name': 'Thomas' } %}">Greet Thomas!</a>
+    <a href="{{ path('hello', { 'name': 'Thomas' }) }}">Greet Thomas!</a>
 
 The ``path`` tag takes the route name and an array of parameters as arguments.
 The route name is the main key under which routes are referenced and the
