@@ -66,9 +66,9 @@ can control. The following configuration options exist for a mapping:
 - ``prefix`` A common namespace prefix that all entities of this mapping
   share. This prefix should never conflict with prefixes of other defined
   mappings otherwise some of your entities cannot be found by Doctrine. This
-  option defaults to the bundle namespace + `Entities`, for example for an
+  option defaults to the bundle namespace + ``Entity``, for example for an
   application bundle called "Hello" prefix would be
-  "Application\Hello\Entities".
+  ``Application\Hello\Entity``.
 - ``alias`` Doctrine offers a way to alias entity namespaces to simpler,
   shorter names to be used in DQL queries or for Repository access.
 - ``is_bundle`` This option is a derived value from ``dir`` and by default is
@@ -80,13 +80,13 @@ can control. The following configuration options exist for a mapping:
 To avoid having to configure lots of information for your mappings you should
 follow these conventions:
 
-1. Put all your entities in a directory Entities/ inside your bundle. For
-example "Application/Hello/Entities/".
+1. Put all your entities in a directory ``Entity/`` inside your bundle. For
+   example ``Application/Hello/Entity/``.
 2. If you are using xml, yml or php mapping put all your configuration files
-into the "Resources/config/doctrine/metadata/doctrine/orm/" directory sufficed
-with dcm.xml, dcm.yml or dcm.php respectively.
-3. Annotations is assumed if an "Entities/" but no
-"Resources/config/doctrine/metadata/doctrine/orm/" directory is found.
+   into the "Resources/config/doctrine/metadata/doctrine/orm/" directory sufficed
+   with dcm.xml, dcm.yml or dcm.php respectively.
+3. Annotations is assumed if an ``Entity/`` but no
+   "Resources/config/doctrine/metadata/doctrine/orm/" directory is found.
 
 The following configuration shows a bunch of mapping examples:
 
@@ -96,7 +96,7 @@ The following configuration shows a bunch of mapping examples:
         mappings:
             MyBundle1: ~
             MyBundle2: yml
-            MyBundle3: { type: annotation, dir: Entities/ }
+            MyBundle3: { type: annotation, dir: Entity/ }
             MyBundle4: { type: xml, dir: Resources/config/doctrine/mapping }
             MyBundle5:
                 type: yml
@@ -104,9 +104,47 @@ The following configuration shows a bunch of mapping examples:
                 alias: BundleAlias
             doctrine_extensions:
                 type: xml
-                dir: %kernel.dir%/../src/vendor/DoctrineExtensions/lib/DoctrineExtensions/Entities
-                prefix: DoctrineExtensions\Entities\
+                dir: %kernel.dir%/../src/vendor/DoctrineExtensions/lib/DoctrineExtensions/Entity
+                prefix: DoctrineExtensions\Entity\
                 alias: DExt
+
+Registering Event Listeners and Subscribers
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Doctrine uses the lightweight ``Doctrine\Common\EventManager`` class to trigger
+a number of different events which you can hook into. You can register Event
+Listeners or Subscribers by tagging the respective services with
+``doctrine.dbal.<connection>_event_listener`` or
+``doctrine.dbal.<connection>_event_subscriber`` using the Dependency Injenction
+container.
+
+You have to use the name of the DBAL connection to clearly identify which
+connection the listeners should be registered with. If you are using multiple
+connections you can hook different events into each connection.
+
+.. code-block:: xml
+
+    <container xmlns="http://www.symfony-project.org/schema/dic/services"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.symfony-project.org/schema/dic/services http://www.symfony-project.org/schema/dic/services/services-1.0.xsd">
+
+        <services>
+
+            <service id="doctrine.extensions.versionable_listener" class="DoctrineExtensions\Versionable\VersionbleListener">
+                <tag name="doctrine.dbal.default_event_subscriber" />
+            </service>
+
+            <service id="mybundle.doctrine.mylistener" class="MyBundle\Doctrine\MyListener">
+                <tag name="doctrine.dbal.default_event_listener" event="prePersist" />
+            </service>
+
+        </services>
+
+    </container>
+
+Although the Event Listener and Subscriber tags are prefixed with ``doctrine.dbal``
+these tags also work for the ORM events. Internally Doctrine re-uses the EventManager
+that is registered with the connection for the ORM.
 
 Multiple Entity Managers
 ~~~~~~~~~~~~~~~~~~~~~~~~

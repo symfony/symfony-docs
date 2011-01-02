@@ -92,6 +92,20 @@ The following configuration shows a bunch of mapping examples:
                 prefix: DoctrineExtensions\Documents\
                 alias: DExt
 
+Registering Event Listeners and Subscribers
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Doctrine uses the lightweight ``Doctrine\Common\EventManager`` class to trigger
+a number of different events which you can hook into. You can register Event
+Listeners or Subscribers by tagging the respective services with
+``doctrine.odm.mongodb.<connection>_event_listener`` or
+``doctrine.odm.mongodb.<connection>_event_subscriber`` using the Dependency Injenction
+container.
+
+You have to use the name of the MongoDB connection to clearly identify which
+connection the listeners should be registered with. If you are using multiple
+connections you can hook different events into each connection.
+
 Multiple Connections
 ~~~~~~~~~~~~~~~~~~~~
 
