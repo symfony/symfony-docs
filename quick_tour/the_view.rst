@@ -249,8 +249,7 @@ Using Assets: images, JavaScripts, and stylesheets
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 What would the Internet be without images, JavaScripts, and stylesheets?
-Symfony2 provides three helpers to deal with them easily: ``assets``,
-``javascripts``, and ``stylesheets``:
+Symfony2 provides the ``assets`` tag to deal with them easily:
 
 .. code-block:: jinja
 
