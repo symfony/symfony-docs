@@ -253,9 +253,9 @@ Symfony2 provides the ``assets`` tag to deal with them easily:
 
 .. code-block:: jinja
 
-    <link href="{% asset 'css/blog.css' %}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('css/blog.css') }}" rel="stylesheet" type="text/css" />
 
-    <img src="{% asset 'images/logo.png' %}" />
+    <img src="{{ asset('images/logo.png') }}" />
 
 The ``asset`` tag main purpose is to make your application more portable.
 Thanks to this tag, you can move the application root directory anywhere under
