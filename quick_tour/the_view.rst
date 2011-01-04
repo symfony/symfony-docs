@@ -249,7 +249,7 @@ Using Assets: images, JavaScripts, and stylesheets
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 What would the Internet be without images, JavaScripts, and stylesheets?
-Symfony2 provides the ``assets`` tag to deal with them easily:
+Symfony2 provides the ``asset`` function to deal with them easily:
 
 .. code-block:: jinja
 
@@ -257,9 +257,10 @@ Symfony2 provides the ``assets`` tag to deal with them easily:
 
     <img src="{{ asset('images/logo.png') }}" />
 
-The ``asset`` tag main purpose is to make your application more portable.
-Thanks to this tag, you can move the application root directory anywhere under
-your web root directory without changing anything in your template's code.
+The ``asset`` function main purpose is to make your application more portable.
+Thanks to this function, you can move the application root directory anywhere
+under your web root directory without changing anything in your template's
+code.
 
 Output Escaping
 ---------------
