@@ -234,8 +234,7 @@ Using Assets: images, JavaScripts, and stylesheets
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 What would the Internet be without images, JavaScripts, and stylesheets?
-Symfony2 provides three helpers to deal with them easily: ``assets``,
-``javascripts``, and ``stylesheets``:
+Symfony2 provides the ``assets`` tag to deal with them easily:
 
 .. code-block:: html+php
 
@@ -243,25 +242,10 @@ Symfony2 provides three helpers to deal with them easily: ``assets``,
 
     <img src="<?php echo $view['assets']->getUrl('images/logo.png') ?>" />
 
-The ``assets`` helper's main purpose is to make your application more portable.
-Thanks to this helper, you can move the application root directory anywhere under your
-web root directory without changing anything in your template's code.
-
-Similarly, you can manage your stylesheets and JavaScripts with the
-``stylesheets`` and ``javascripts`` helpers:
-
-.. code-block:: html+php
-
-    <?php $view['javascripts']->add('js/product.js') ?>
-    <?php $view['stylesheets']->add('css/product.css') ?>
-
-The ``add()`` method defines dependencies. To actually output these assets, you
-need to also add the following code in your main layout:
-
-.. code-block:: html+php
-
-    <?php echo $view['javascripts'] ?>
-    <?php echo $view['stylesheets'] ?>
+The ``assets`` helper's main purpose is to make your application more
+portable. Thanks to this helper, you can move the application root directory
+anywhere under your web root directory without changing anything in your
+template's code.
 
 Output Escaping
 ---------------
