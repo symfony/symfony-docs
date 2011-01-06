@@ -30,7 +30,6 @@ bundles:
     <testsuites>
         <testsuite name="Project Test Suite">
             <directory>../src/Application/*/Test</directory>
-            <directory>../src/Bundle/*/Test</directory>
         </testsuite>
     </testsuites>
 
@@ -46,8 +45,6 @@ section:
             <exclude>
                 <directory>../src/Application/*/Resources</directory>
                 <directory>../src/Application/*/Test</directory>
-                <directory>../src/Bundle/*/Resources</directory>
-                <directory>../src/Bundle/*/Test</directory>
             </exclude>
         </whitelist>
     </filter>
