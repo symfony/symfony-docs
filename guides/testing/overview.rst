@@ -19,7 +19,7 @@ it yet, you can read its excellent `documentation`_.
 
     Symfony2 works with PHPUnit 3.5 or later.
 
-The default PHPUnit configuration looks for tests under ``Tests/``
+The default PHPUnit configuration looks for tests under ``Test/``
 sub-directory of your bundles:
 
 .. code-block:: xml
@@ -29,7 +29,7 @@ sub-directory of your bundles:
     <phpunit ... bootstrap="../src/autoload.php">
         <testsuites>
             <testsuite name="Project Test Suite">
-                <directory>../src/Application/*/Tests</directory>
+                <directory>../src/Application/*/Test</directory>
             </testsuite>
         </testsuites>
 
@@ -59,9 +59,9 @@ Unit Tests
 
 Writing Symfony2 unit tests is no different than writing standard PHPUnit unit
 tests. By convention, it's recommended to replicate the bundle directory
-structure under its ``Tests/`` sub-directory. So, write tests for the
+structure under its ``Test/`` sub-directory. So, write tests for the
 ``Application\HelloBundle\Model\Article`` class in the
-``Application/HelloBundle/Tests/Model/ArticleTest.php`` file.
+``Application/HelloBundle/Test/Model/ArticleTest.php`` file.
 
 In a unit test, autoloading is automatically enabled via the
 ``src/autoload.php`` file (as configured by default in the ``phpunit.xml.dist``
@@ -72,10 +72,10 @@ Running tests for a given file or directory is also very easy:
 .. code-block:: bash
 
     # run all tests for the Model
-    $ phpunit -c app Application/HelloBundle/Tests/Model/
+    $ phpunit -c app Application/HelloBundle/Test/Model/
 
     # run tests for the Article class
-    $ phpunit -c app Application/HelloBundle/Tests/Model/ArticleTest.php
+    $ phpunit -c app Application/HelloBundle/Test/Model/ArticleTest.php
 
 .. index::
    single: Tests; Functional Tests
@@ -98,8 +98,8 @@ to the application. To access such a client, your tests need to extend the
 Symfony2 ``WebTestCase`` class. The sandbox provides a simple functional test
 for ``HelloController`` that reads as follows::
 
-    // src/Application/HelloBundle/Tests/Controller/HelloControllerTest.php
-    namespace Application\HelloBundle\Tests\Controller;
+    // src/Application/HelloBundle/Test/Controller/HelloControllerTest.php
+    namespace Application\HelloBundle\Test\Controller;
 
     use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 

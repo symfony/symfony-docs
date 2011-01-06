@@ -29,8 +29,8 @@ bundles:
     <!-- hello/phpunit.xml.dist -->
     <testsuites>
         <testsuite name="Project Test Suite">
-            <directory>../src/Application/*/Tests</directory>
-            <directory>../src/Bundle/*/Tests</directory>
+            <directory>../src/Application/*/Test</directory>
+            <directory>../src/Bundle/*/Test</directory>
         </testsuite>
     </testsuites>
 
@@ -45,9 +45,9 @@ section:
             <directory>../src/Bundle</directory>
             <exclude>
                 <directory>../src/Application/*/Resources</directory>
-                <directory>../src/Application/*/Tests</directory>
+                <directory>../src/Application/*/Test</directory>
                 <directory>../src/Bundle/*/Resources</directory>
-                <directory>../src/Bundle/*/Tests</directory>
+                <directory>../src/Bundle/*/Test</directory>
             </exclude>
         </whitelist>
     </filter>

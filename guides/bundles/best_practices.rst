@@ -61,7 +61,7 @@ The basic directory structure of a ``HelloBundle`` bundle must read as follows::
                 translations/
                 views/
                 public/
-            Tests/
+            Test/
 
 The ``XXX`` directory(ies) reflects the namespace structure of the bundle.
 
@@ -93,7 +93,7 @@ Type                      Directory
 Controllers               ``Controller/``
 Translation files         ``Resources/translations/``
 Templates                 ``Resources/views/``
-Unit and Functional Tests ``Tests/``
+Unit and Functional Tests ``Test/``
 Web Resources             ``Resources/public/``
 Configuration             ``Resources/config/``
 Commands                  ``Command/``
@@ -131,7 +131,7 @@ Tests
 -----
 
 A bundle should come with a test suite written with PHPUnit and stored under
-the ``Tests/`` directory. Tests should follow the following principles:
+the ``Test/`` directory. Tests should follow the following principles:
 
 * The test suite must be executable with a simple ``phpunit`` command run from
   a sample application;
