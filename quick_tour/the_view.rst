@@ -242,8 +242,8 @@ parameters are the values of the placeholders defined in the route pattern:
 
 .. tip::
 
-    You can also generate absolute URLs with the ``url`` tag: ``{% url 'hello'
-    with { 'name': 'Thomas' } %}``.
+    You can also generate absolute URLs with the ``url`` tag: ``{{ url('hello',
+    { 'name': 'Thomas' }) }}``.
 
 Using Assets: images, JavaScripts, and stylesheets
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
