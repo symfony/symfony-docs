@@ -50,9 +50,9 @@ can control. The following configuration options exist for a mapping:
 - ``prefix`` A common namespace prefix that all documents of this mapping
   share. This prefix should never conflict with prefixes of other defined
   mappings otherwise some of your documents cannot be found by Doctrine. This
-  option defaults to the bundle namespace + `Documents`, for example for an
+  option defaults to the bundle namespace + ``Document``, for example for an
   application bundle called "Hello" prefix would be
-  "Application\Hello\Documents".
+  ``Application\Hello\Document``.
 - ``alias`` Doctrine offers a way to alias document namespaces to simpler,
   shorter names to be used inqueries or for Repository access.
 - ``is_bundle`` This option is a derived value from ``dir`` and by default is
@@ -64,13 +64,13 @@ can control. The following configuration options exist for a mapping:
 To avoid having to configure lots of information for your mappings you should
 follow these conventions:
 
-1. Put all your entities in a directory Documents/ inside your bundle. For
-example "Application/Hello/Documents/".
+1. Put all your entities in a directory ``Document/`` inside your bundle. For
+   example ``Application/Hello/Document/``.
 2. If you are using xml, yml or php mapping put all your configuration files
-into the "Resources/config/doctrine/metadata/doctrine/mongodb/" directory
-sufficed with dcm.xml, dcm.yml or dcm.php respectively.
-3. Annotations is assumed if an "Documents/" but no
-"Resources/config/doctrine/metadata/doctrine/mongodb/" directory is found.
+   into the ``Resources/config/doctrine/metadata/doctrine/mongodb/`` directory
+   sufficed with dcm.xml, dcm.yml or dcm.php respectively.
+3. Annotations is assumed if an ``Document/`` but no
+   ``Resources/config/doctrine/metadata/doctrine/mongodb/`` directory is found.
 
 The following configuration shows a bunch of mapping examples:
 
@@ -91,6 +91,20 @@ The following configuration shows a bunch of mapping examples:
                 dir: %kernel.dir%/../src/vendor/DoctrineExtensions/lib/DoctrineExtensions/Documents
                 prefix: DoctrineExtensions\Documents\
                 alias: DExt
+
+Registering Event Listeners and Subscribers
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Doctrine uses the lightweight ``Doctrine\Common\EventManager`` class to trigger
+a number of different events which you can hook into. You can register Event
+Listeners or Subscribers by tagging the respective services with
+``doctrine.odm.mongodb.<connection>_event_listener`` or
+``doctrine.odm.mongodb.<connection>_event_subscriber`` using the Dependency Injenction
+container.
+
+You have to use the name of the MongoDB connection to clearly identify which
+connection the listeners should be registered with. If you are using multiple
+connections you can hook different events into each connection.
 
 Multiple Connections
 ~~~~~~~~~~~~~~~~~~~~

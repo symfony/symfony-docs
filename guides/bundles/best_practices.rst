@@ -60,7 +60,7 @@ The basic directory structure of a ``HelloBundle`` bundle must read as follows::
                     index.rst
                 translations/
                 views/
-                web/
+                public/
             Tests/
 
 The ``XXX`` directory(ies) reflects the namespace structure of the bundle.
@@ -94,7 +94,7 @@ Controllers               ``Controller/``
 Translation files         ``Resources/translations/``
 Templates                 ``Resources/views/``
 Unit and Functional Tests ``Tests/``
-Web Resources             ``Resources/web/``
+Web Resources             ``Resources/public/``
 Configuration             ``Resources/config/``
 Commands                  ``Command/``
 ========================= ===========================

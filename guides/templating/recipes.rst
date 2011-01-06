@@ -71,7 +71,7 @@ Enabling Custom PHP Template Helpers
 
 To enable a custom template helper, add it as a regular service in one of your
 configuration, tag it with ``templating.helper`` and define an ``alias``
-attribute (the helper will be accessible via this name is the templates):
+attribute (the helper will be accessible via this alias in the templates):
 
 .. configuration-block::
 

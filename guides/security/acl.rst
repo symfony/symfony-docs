@@ -97,7 +97,7 @@ Creating an ACL, and adding an ACE
             // retrieving the security identity of the currently logged-in user
             $securityContext = $this->container->get('security.context');
             $user = $securityContext->getToken()->getUser();
-            $securityIdentity = new UserSecurityIdentity($user);
+            $securityIdentity = UserSecurityIdentity::fromAccount($user);
 
             // grant owner access
             $acl->insertObjectAce($securityIdentity, MaskBuilder::MASK_OWNER);
@@ -143,7 +143,8 @@ Checking Access
             throw new AccessDeniedException();
         }
 
-        // do your editing here
+        // retrieve actual comment object, and do your editing here
+        // ...
     }
 
 In this example, we check whether the user has the ``EDIT`` permission.
