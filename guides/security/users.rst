@@ -75,7 +75,7 @@ Encoding Passwords
 ~~~~~~~~~~~~~~~~~~
 
 Instead of storing passwords in clear, you can encode them. When doing so, you
-should use a
+should retrieve a
 :class:`Symfony\\Component\\Security\\Encoder\\PasswordEncoderInterface`
 object::
 
@@ -91,18 +91,93 @@ object::
     to check the user password; read the next section to learn how to make
     your authentication provider aware of the encoder to use.
 
-For most use case, use
-:class:`Symfony\\Component\\Security\\Encoder\\MessageDigestPasswordEncoder`::
+If you need to encode passwords in your application code, for example when the
+user is signing up, or changing his password, you can retrieve the encoder from
+the :class:`Symfony\\Component\\Security\\Encoder\\EncoderFactoryInterface`::
 
+    $factory = $this->container->get('security.encoder_factory');
     $user = new User();
 
-    $encoder = new MessageDigestPasswordEncoder('sha1');
+    $encoder = $factory->getEncoder($user);
     $password = $encoder->encodePassword('MyPass', $user->getSalt());
     $user->setPassword($password);
 
 When encoding your passwords, it's better to also define a unique salt per user
 (the ``getSalt()`` method can return the primary key if users are persisted in
 a database for instance).
+
+.. index::
+   single: Security; Configuring Encoders
+
+Configuring Encoders
+~~~~~~~~~~~~~~~~~~~~
+
+In this section, we will look at how you can set-up different encoders for your
+users. An encoder can either be one of the built-in encoders (
+:class:`Symfony\\Component\\Security\\Encoder\\PlaintextPasswordEncoder`, or
+:class:`Symfony\\Component\\Security\\Encoder\\MessageDigestPasswordEncoder`),
+or even a custom service. The following lists all available configuration
+options, you only need to select the one which suits your needs best:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # app/config/security.yml
+        security.config:
+            encoders:
+                MyBundle/Entity/MyUser: sha512
+                MyBundle/Entity/MyUser: plaintext
+                MyBundle/Entity/MyUser:
+                    algorithm: sha512
+                    encode-as-base64: true
+                    iterations: 5
+                MyBundle/Entity/MyUser:
+                    service: my.custom.encoder.service.id
+
+    .. code-block:: xml
+
+        <!-- app/config/security.xml -->
+        <config>
+            <encoders>
+                <encoder class="MyBundle\Entity\MyUser" algorithm="sha512" />
+                <encoder class="MyBundle\Entity\MyUser" algorithm="plaintext" />
+                <encoder class="MyBundle\Entity\MyUser"
+                         algorithm="sha512"
+                         encode-as-base64="true"
+                         iterations="5"
+                         />
+                <encoder class="MyBundle\Entity\MyUser"
+                         service="my.custom.encoder.service.id"
+                         />
+            </encoders>
+        </config>
+
+    .. code-block:: php
+
+        // app/config/security.php
+        $container->loadFromExtension('security', 'config', array(
+            'encoders' => array(
+                'MyBundle\Entity\MyUser' => 'sha512',
+                'MyBundle\Entity\MyUser' => 'plaintext',
+                'MyBundle\Entity\MyUser' => array(
+                    'algorithm' => 'sha512',
+                    'encode-as-base64' => true,
+                    'iterations' => 5,
+                ),
+                'MyBundle\Entity\MyUser' => array(
+                    'service' => 'my.custom.encoder.service.id',
+                ),
+            ),
+        ));
+
+.. note::
+
+    You must define an encoder for each of your user classes, but the
+    configuration *must not* overlap. If you want to use the same encoder for
+    all classes you can simply specify
+    :class:`Symfony\\Component\\Security\\User\\AccountInterface` as class
+    since all your user classes will implemented it.
 
 .. index::
    single: Security; AdvancedAccountInterface
@@ -170,10 +245,6 @@ or a prototype. It is also the best provider when writing unit tests:
                     users:
                         foo: { password: foo, roles: ROLE_USER }
                         bar: { password: bar, roles: [ROLE_USER, ROLE_ADMIN] }
-                encoded:
-                    password_encoder: sha1
-                    users:
-                        foo: { password: 0beec7b5ea3f0fdbc95d0dd47f3c5bc275da8a33, roles: ROLE_USER }
 
     .. code-block:: xml
 
@@ -182,11 +253,6 @@ or a prototype. It is also the best provider when writing unit tests:
             <provider name="main">
                 <user name="foo" password="foo" roles="ROLE_USER" />
                 <user name="bar" password="bar" roles="ROLE_USER,ROLE_ADMIN" />
-            </provider>
-
-            <provider name="encoded">
-                <password-encoder>sha1</password-encoder>
-                <user name="foo" password="0beec7b5ea3f0fdbc95d0dd47f3c5bc275da8a33" roles="ROLE_USER" />
             </provider>
         </config>
 
@@ -199,14 +265,8 @@ or a prototype. It is also the best provider when writing unit tests:
                     'foo' => array('password' => 'foo', 'roles' => 'ROLE_USER'),
                     'bar' => array('password' => 'bar', 'roles' => array('ROLE_USER', 'ROLE_ADMIN')),
                 )),
-                'encoded' => array('password_encoder' => 'sha1', 'users' => array(
-                    'foo' => array('password' => '0beec7b5ea3f0fdbc95d0dd47f3c5bc275da8a33', 'roles' => 'ROLE_USER'),
-                )),
             ),
         ));
-
-The above configuration defines two in-memory providers. As you can see, the
-second one uses 'sha1' to encode the user passwords.
 
 .. index::
    single: Security; Doctrine Entity Provider
@@ -236,7 +296,6 @@ yourself:
         security.config:
             providers:
                 main:
-                    password_encoder: sha1
                     entity: { class: SecurityBundle:User, property: username }
 
     .. code-block:: xml
@@ -244,7 +303,6 @@ yourself:
         <!-- app/config/security.xml -->
         <config>
             <provider name="main">
-                <password-encoder>sha1</password-encoder>
                 <entity class="SecurityBundle:User" property="username" />
             </provider>
         </config>
@@ -255,7 +313,6 @@ yourself:
         $container->loadFromExtension('security', 'config', array(
             'providers' => array(
                 'main' => array(
-                    'password_encoder' => 'sha1',
                     'entity' => array('class' => 'SecurityBundle:User', 'property' => 'username'),
                 ),
             ),
@@ -326,7 +383,6 @@ yourself:
         security.config:
             providers:
                 main:
-                    password_encoder: sha1
                     document: { class: SecurityBundle:User, property: username }
 
     .. code-block:: xml
@@ -334,7 +390,6 @@ yourself:
         <!-- app/config/security.xml -->
         <config>
             <provider name="main">
-                <password-encoder>sha1</password-encoder>
                 <document class="SecurityBundle:User" property="username" />
             </provider>
         </config>
@@ -345,7 +400,6 @@ yourself:
         $container->loadFromExtension('security', 'config', array(
             'providers' => array(
                 'main' => array(
-                    'password_encoder' => 'sha1',
                     'document' => array('class' => 'SecurityBundle:User', 'property' => 'username'),
                 ),
             ),
