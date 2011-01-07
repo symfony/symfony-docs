@@ -221,17 +221,18 @@ Creating Links between Pages
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Speaking of web applications, creating links between pages is a must. Instead
-of hardcoding URLs in templates, the ``path`` tag knows how to generate URLs
-based on the routing configuration. That way, all your URLs can be easily
+of hardcoding URLs in templates, the ``path`` function knows how to generate
+URLs based on the routing configuration. That way, all your URLs can be easily
 updated by changing the configuration:
 
 .. code-block:: jinja
 
     <a href="{{ path('hello', { 'name': 'Thomas' }) }}">Greet Thomas!</a>
 
-The ``path`` tag takes the route name and an array of parameters as arguments.
-The route name is the main key under which routes are referenced and the
-parameters are the values of the placeholders defined in the route pattern:
+The ``path`` function takes the route name and an array of parameters as
+arguments. The route name is the main key under which routes are referenced
+and the parameters are the values of the placeholders defined in the route
+pattern:
 
 .. code-block:: yaml
 
@@ -242,8 +243,8 @@ parameters are the values of the placeholders defined in the route pattern:
 
 .. tip::
 
-    You can also generate absolute URLs with the ``url`` tag: ``{% url 'hello'
-    with { 'name': 'Thomas' } %}``.
+    You can also generate absolute URLs with the ``url`` function: ``{{
+    url('hello', { 'name': 'Thomas' }) }}``.
 
 Using Assets: images, JavaScripts, and stylesheets
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
