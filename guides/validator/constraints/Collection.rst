@@ -91,16 +91,17 @@ may not exist in the array.
     .. code-block:: php
 
         // Application/HelloBundle/Author.php
-        use Symfony\Components\Validator\Constraints\Collection;
-        use Symfony\Components\Validator\Constraints\NotNull;
-        use Symfony\Components\Validator\Constraints\NotBlank;
-        use Symfony\Components\Validator\Constraints\MinLength;
+        use Symfony\Component\Validator\Mapping\ClassMetadata;
+        use Symfony\Component\Validator\Constraints\Collection;
+        use Symfony\Component\Validator\Constraints\NotNull;
+        use Symfony\Component\Validator\Constraints\NotBlank;
+        use Symfony\Component\Validator\Constraints\MinLength;
         
         class Author
         {
             private $options = array();
             
-            public static function loadMetadata(ClassMetadata $metadata)
+            public static function loadValidatorMetadata(ClassMetadata $metadata)
             {
                 $metadata->addPropertyConstraint('options', new Collection(array(
                     'fields' => array(

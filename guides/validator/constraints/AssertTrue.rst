@@ -75,13 +75,14 @@ Then you can constrain this method with ``AssertTrue``.
     .. code-block:: php
 
         // Application/HelloBundle/Author.php
-        use Symfony\Components\Validator\Constraints\AssertTrue;
-
+        use Symfony\Component\Validator\Mapping\ClassMetadata;
+        use Symfony\Component\Validator\Constraints\AssertTrue;
+        
         class Author
         {
             protected $token;
             
-            public static function loadMetadata(ClassMetadata $metadata)
+            public static function loadValidatorMetadata(ClassMetadata $metadata)
             {
                 $metadata->addGetterConstraint('tokenValid', new AssertTrue(array(
                     'message' => 'The token is invalid',

@@ -117,8 +117,9 @@ their properties. Furthermore, ``Author`` stores an ``Address`` instance in the
     .. code-block:: php
 
         // Application/HelloBundle/Address.php
-        use Symfony\Components\Validator\Constraints\NotBlank;
-        use Symfony\Components\Validator\Constraints\MaxLength;
+        use Symfony\Component\Validator\Mapping\ClassMetadata;
+        use Symfony\Component\Validator\Constraints\NotBlank;
+        use Symfony\Component\Validator\Constraints\MaxLength;
         
         class Address
         {
@@ -126,7 +127,7 @@ their properties. Furthermore, ``Author`` stores an ``Address`` instance in the
 
             protected $zipCode;
             
-            public static function loadMetadata(ClassMetadata $metadata)
+            public static function loadValidatorMetadata(ClassMetadata $metadata)
             {
                 $metadata->addPropertyConstraint('street', new NotBlank());
                 $metadata->addPropertyConstraint('zipCode', new NotBlank());
@@ -135,8 +136,9 @@ their properties. Furthermore, ``Author`` stores an ``Address`` instance in the
         }
 
         // Application/HelloBundle/Author.php
-        use Symfony\Components\Validator\Constraints\NotBlank;
-        use Symfony\Components\Validator\Constraints\MinLength;
+        use Symfony\Component\Validator\Mapping\ClassMetadata;
+        use Symfony\Component\Validator\Constraints\NotBlank;
+        use Symfony\Component\Validator\Constraints\MinLength;
         
         class Author
         {
@@ -146,7 +148,7 @@ their properties. Furthermore, ``Author`` stores an ``Address`` instance in the
             
             protected $address;
             
-            public static function loadMetadata(ClassMetadata $metadata)
+            public static function loadValidatorMetadata(ClassMetadata $metadata)
             {
                 $metadata->addPropertyConstraint('firstName', new NotBlank());
                 $metadata->addPropertyConstraint('firstName', new MinLength(4));
@@ -193,13 +195,14 @@ invalid address. To prevent that, we add the ``Valid`` constraint to the
     .. code-block:: php
 
         // Application/HelloBundle/Author.php
-        use Symfony\Components\Validator\Constraints\Valid;
+        use Symfony\Component\Validator\Mapping\ClassMetadata;
+        use Symfony\Component\Validator\Constraints\Valid;
         
         class Author
         {
             protected $address;
             
-            public static function loadMetadata(ClassMetadata $metadata)
+            public static function loadValidatorMetadata(ClassMetadata $metadata)
             {
                 $metadata->addPropertyConstraint('address', new Valid());
             }
