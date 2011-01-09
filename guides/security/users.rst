@@ -177,7 +177,7 @@ options, you only need to select the one which suits your needs best:
     configuration *must not* overlap. If you want to use the same encoder for
     all classes you can simply specify
     :class:`Symfony\\Component\\Security\\User\\AccountInterface` as class
-    since all your user classes will implemented it.
+    since all your user classes will implement it.
 
 .. index::
    single: Security; AdvancedAccountInterface
