@@ -65,13 +65,14 @@ constraint definition as array.
     .. code-block:: php
 
         // Application/HelloBundle/Author.php
-        use Symfony\Components\Validator\Constraints\Choice;
+        use Symfony\Component\Validator\Mapping\ClassMetadata;
+        use Symfony\Component\Validator\Constraints\Choice;
         
         class Author
         {
             protected $gender;
             
-            public static function loadMetadata(ClassMetadata $metadata)
+            public static function loadValidatorMetadata(ClassMetadata $metadata)
             {
                 $metadata->addPropertyConstraint('gender', new Choice(array('male', 'female')));
             }

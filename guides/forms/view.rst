@@ -81,7 +81,7 @@ A simple form template reads as follows:
 
 Besides the global form structure, you need a way to display global errors and
 hidden fields. Symfony2 provides helpers to fulfill this job. In Twig templates,
-these helpers are implemented as global filters that can be applied on forms
+these helpers are implemented as global functions that can be applied on forms
 and form fields. In PHP templates, the "form" helper offers the same
 functionality through public methods that accept the form or form field as
 parameter.
@@ -113,8 +113,8 @@ parameter.
 
 .. note::
 
-    As you can see, Twig filters are prefixed with "render_". Other than the
-    methods of the "form" helper, these filters are global and prone to
+    As you can see, Twig functions are prefixed with "form_". Other than the
+    methods of the "form" helper, these functions are global and prone to
     naming collisions.
 
 .. tip::
@@ -224,7 +224,7 @@ The helpers rely on templates to render HTML. By default, Symfony2 comes bundled
 with templates for all built-in fields.
 
 In Twig templates, each helper is associated with one template block. The
-``render_errors`` filter, for example, looks for an ``errors`` block. The 
+``form_errors`` function, for example, looks for an ``errors`` block. The 
 built-in one reads as follows:
 
 .. code-block:: jinja
@@ -382,7 +382,7 @@ If you want to customize all fields of a given form, use the ``form_theme`` tag:
 
     {% form_theme form 'HelloBundle::form.twig' %}
 
-Whenever you call the ``render`` filter on the ``form`` after this call,
+Whenever you call the ``form_field`` function on the ``form`` after this call,
 Symfony2 will look for a representation in your template before falling back to
 the default one.
 
@@ -467,7 +467,7 @@ parent class - ``FieldGroup`` - is used instead:
                     <div>
                         {{ form_label(child) }}
                         {{ form_errors(child) }}
-                        {{ render_field(child) }}
+                        {{ form_field(child) }}
                     </div>
                 {% endif %}
             {% endfor %}

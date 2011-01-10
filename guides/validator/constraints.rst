@@ -100,8 +100,9 @@ of a class ``Author`` to have at least 3 characters.
     .. code-block:: php
 
         // Application/HelloBundle/Author.php
-        use Symfony\Components\Validator\Constraints\NotBlank;
-        use Symfony\Components\Validator\Constraints\MinLength;
+        use Symfony\Component\Validator\Mapping\ClassMetadata;
+        use Symfony\Component\Validator\Constraints\NotBlank;
+        use Symfony\Component\Validator\Constraints\MinLength;
         
         class Author
         {
@@ -109,7 +110,7 @@ of a class ``Author`` to have at least 3 characters.
 
             private $lastName;
 
-            public static function loadMetadata(ClassMetadata $metadata)
+            public static function loadValidatorMetadata(ClassMetadata $metadata)
             {
                 $metadata->addPropertyConstraint('firstName', new NotBlank());
                 $metadata->addPropertyConstraint('firstName', new MinLength(3));
@@ -171,12 +172,13 @@ generated token is correct:
     .. code-block:: php
 
         // Application/HelloBundle/Author.php
-        use Symfony\Components\Validator\Constraints\AssertTrue;
+        use Symfony\Component\Validator\Mapping\ClassMetadata;
+        use Symfony\Component\Validator\Constraints\AssertTrue;
         
         class Author
         {
 
-            public static function loadMetadata(ClassMetadata $metadata)
+            public static function loadValidatorMetadata(ClassMetadata $metadata)
             {
                 $metadata->addGetterConstraint('tokenValid', new AssertTrue(array(
                     'message' => 'The token is invalid',

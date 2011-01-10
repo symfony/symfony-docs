@@ -6,10 +6,10 @@
 
 * **Doctrine**:
 
-  * :doc:`DBAL </guides/doctrine/dbal/overview>` | 
-  * :doc:`ORM </guides/doctrine/orm/overview>` | 
-  * :doc:`Migrations </guides/doctrine/migrations/overview>` | 
-  * :doc:`MongoDB </guides/doctrine/mongodb-odm/overview>`
+  * :doc:`DBAL </guides/doctrine/dbal/index>` |
+  * :doc:`ORM </guides/doctrine/orm/index>` |
+  * :doc:`Migrations </guides/doctrine/migrations/index>` |
+  * :doc:`MongoDB </guides/doctrine/mongodb-odm/index>`
 
 * **Testing**:
 

@@ -66,13 +66,14 @@ not exceed a maximum size of 128 kilobytes and is a PDF document.
     .. code-block:: php
 
         // Application/HelloBundle/Author.php
-        use Symfony\Components\Validator\Constraints\File;
+        use Symfony\Component\Validator\Mapping\ClassMetadata;
+        use Symfony\Component\Validator\Constraints\File;
         
         class Author
         {
             private $filename;
             
-            public static function loadMetadata(ClassMetadata $metadata)
+            public static function loadValidatorMetadata(ClassMetadata $metadata)
             {
                 $metadata->addPropertyConstraint('filename', new File(array(
                     'maxSize' => '128k',

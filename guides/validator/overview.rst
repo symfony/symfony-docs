@@ -56,13 +56,14 @@ with constraints; this process is called the "mapping":
     .. code-block:: php
 
         // Application/HelloBundle/Author.php
+        use Symfony\Component\Validator\Mapping\ClassMetadata;        
         use Symfony\Components\Validator\Constraints\NotBlank;
         
         class Author
         {
             private $name;
             
-            public static function loadMetadata(ClassMetadata $metadata)
+            public static function loadValidatorMetadata(ClassMetadata $metadata)
             {
                 $metadata->addPropertyConstraint('name', new NotBlank());
             }
