@@ -227,7 +227,7 @@ pattern:
 
     # src/Application/HelloBundle/Resources/config/routing.yml
     hello: # The route name
-        pattern:  /hello/:name
+        pattern:  /hello/{name}
         defaults: { _controller: HelloBundle:Hello:index }
 
 Using Assets: images, JavaScripts, and stylesheets
