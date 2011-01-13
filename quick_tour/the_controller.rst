@@ -60,7 +60,7 @@ Then, add an ``index.xml.php`` template along side ``index.php``:
 That's all there is to it. No need to change the controller. For standard
 formats, Symfony2 will also automatically choose the best ``Content-Type``
 header for the response. If you want to support different formats for a single
-action, use the ``:_format`` placeholder in the pattern instead:
+action, use the ``{_format}`` placeholder in the pattern instead:
 
 .. configuration-block::
 
