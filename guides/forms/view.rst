@@ -113,7 +113,7 @@ parameter.
 
 .. note::
 
-    As you can see, Twig functions are prefixed with "form_". Other than the
+    As you can see, Twig functions are prefixed with "form\_". Other than the
     methods of the "form" helper, these functions are global and prone to
     naming collisions.
 
