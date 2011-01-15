@@ -147,3 +147,65 @@ retrieve it from the Symfony Dependency Injection Container::
 
 The service "doctrine.orm.entity_manager" is an alias for the default entity
 manager defined in the "default_entity_manager" configuration option.
+
+.. _doctrine-event-config:
+
+Registering Event Listeners and Subscribers
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Doctrine ships with an event system that allows to hook into many different
+events happening during the lifecycle of entities or at other occasions.
+
+To register services to act as event listeners or subscribers (listeners from here)
+you have to tag them with the appropriate names. Depending on your use-case you can hook
+a listener into every DBAL Connection and ORM Entity Manager or just into one
+specific DBAL connection and all the EntityManagers that use this connection.
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        doctrine.dbal:
+            default_connection: default
+            connections:
+                default:
+                    driver: pdo_sqlite
+                    memory: true
+
+        services:
+            my.listener:
+                class: MyEventListener
+                tags:
+                - { name: doctrine.common.event_listener }
+            my.listener2:
+                class: MyEventListener2
+                tags:
+                - { name: doctrine.dbal.default_event_listener }
+            my.subscriber:
+                class: MyEventSubscriber
+                tags:
+                - { name: doctrine.dbal.default_event_subscriber }
+
+    .. code-block:: xml
+
+        <?xml version="1.0" ?>
+        <container xmlns="http://symfony-project.org/2.0/container"
+            xmlns:doctrine="http://www.symfony-project.org/schema/dic/doctrine">
+            <doctrine:dbal default-connection="default">
+                <doctrine:connections>
+                    <doctrine:connection driver="pdo_sqlite" memory="true" />
+                </doctrine:connections>
+            </doctrine:dbal>
+
+            <services>
+                <service id="my.listener" class="MyEventListener">
+                    <tag name="doctrine.common.event_listener" />
+                </service>
+                <service id="my.listener2" class="MyEventListener2">
+                    <tag name="doctrine.dbal.default_event_listener" />
+                </service>
+                <service id="my.subscriber" class="MyEventSubscriber">
+                    <tag name="doctrine.dbal.default_event_subscriber" />
+                </service>
+            </services>
+        </container>
