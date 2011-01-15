@@ -20,8 +20,8 @@ Using Formats
 Nowadays, a web application should be able to deliver more than just HTML
 pages. From XML for RSS feeds or Web Services, to JSON for Ajax requests,
 there are plenty of different formats to choose from. Supporting those formats
-in Symfony2 is straightforward. Edit ``routing.yml`` and add a ``_format`` with
-a value of ``xml``:
+in Symfony2 is straightforward. Edit ``routing.yml`` and add a ``_format``
+with a value of ``xml``:
 
 .. configuration-block::
 
@@ -48,19 +48,34 @@ a value of ``xml``:
             '_format'     => 'xml',
         )));
 
-Then, add an ``index.xml.php`` template along side ``index.php``:
+Then, add an ``index.twig.xml`` template along side ``index.twig.html``:
 
 .. code-block:: xml+php
 
-    # src/Application/HelloBundle/Resources/views/Hello/index.xml.php
+    # src/Application/HelloBundle/Resources/views/Hello/index.twig.xml
     <hello>
-        <name><?php echo $name ?></name>
+        <name>{{ name }}</name>
     </hello>
 
-That's all there is to it. No need to change the controller. For standard
-formats, Symfony2 will also automatically choose the best ``Content-Type``
-header for the response. If you want to support different formats for a single
-action, use the ``{_format}`` placeholder in the pattern instead:
+Finally, as the template needs to be selected according to the format, make
+the following changes to the controller:
+
+.. code-block:: php
+   :linenos:
+
+    // src/Application/HelloBundle/Controller/HelloController.php
+    public function indexAction($name, $_format)
+    {
+        return $this->render(
+            'HelloBundle:Hello:index.twig.'.$_format,
+            array('name' => $name)
+        );
+    }
+
+That's all there is to it. For standard formats, Symfony2 will automatically
+choose the best ``Content-Type`` header for the response. If you want to
+support different formats for a single action, use the ``{_format}``
+placeholder in the pattern instead:
 
 .. configuration-block::
 
@@ -92,13 +107,12 @@ action, use the ``{_format}`` placeholder in the pattern instead:
         )));
 
 The controller will now be called for URLs like ``/hello/Fabien.xml`` or
-``/hello/Fabien.json``. As the default value for ``_format`` is ``html``, the
-``/hello/Fabien`` and ``/hello/Fabien.html`` will both match for the ``html``
-format.
+``/hello/Fabien.json``.
 
 The ``requirements`` entry defines regular expressions that placeholders must
-match. In this example, if you try to request the ``/hello/Fabien.js`` resource,
-you will get a 404 HTTP error, as it does not match the ``_format`` requirement.
+match. In this example, if you try to request the ``/hello/Fabien.js``
+resource, you will get a 404 HTTP error, as it does not match the ``_format``
+requirement.
 
 .. index::
    single: Response
@@ -112,7 +126,7 @@ Now, let's get back to the ``Hello`` controller::
 
     public function indexAction($name)
     {
-        return $this->render('HelloBundle:Hello:index.php', array('name' => $name));
+        return $this->render('HelloBundle:Hello:index.twig.html', array('name' => $name));
     }
 
 The ``render()`` method renders a template and returns a ``Response`` object. The
@@ -121,7 +135,7 @@ change the default ``Content-Type``::
 
     public function indexAction($name)
     {
-        $response = $this->render('HelloBundle:Hello:index.php', array('name' => $name));
+        $response = $this->render('HelloBundle:Hello:index.twig.html', array('name' => $name));
         $response->headers->set('Content-Type', 'text/plain');
 
         return $response;

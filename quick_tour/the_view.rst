@@ -97,28 +97,28 @@ the same as PHP classes: template inheritance allows you to build a base
 "layout" template that contains all the common elements of your site and
 defines "blocks" that child templates can override.
 
-The ``index.twig`` template inherits from ``layout.twig``, thanks to the
-``extends`` tag:
+The ``index.twig.html`` template inherits from ``layout.twig.html``, thanks to
+the ``extends`` tag:
 
 .. code-block:: jinja
 
-    {# src/Application/HelloBundle/Resources/views/Hello/index.twig #}
-    {% extends "HelloBundle::layout.twig" %}
+    {# src/Application/HelloBundle/Resources/views/Hello/index.twig.html #}
+    {% extends "HelloBundle::layout.twig.html" %}
 
     {% block content %}
         Hello {{ name }}!
     {% endblock %}
 
-The ``HelloBundle::layout.twig`` notation sounds familiar, doesn't it? It is
-the same notation as for referencing a template. The ``::`` part simply means
-that the controller element is empty, so the corresponding file is directly
-stored under ``views/``.
+The ``HelloBundle::layout.twig.html`` notation sounds familiar, doesn't it? It
+is the same notation as for referencing a template. The ``::`` part simply
+means that the controller element is empty, so the corresponding file is
+directly stored under ``views/``.
 
-Now, let's have a look at the ``layout.twig`` file:
+Now, let's have a look at the ``layout.twig.html`` file:
 
 .. code-block:: jinja
 
-    {% extends "::layout.twig" %}
+    {% extends "::layout.twig.html" %}
 
     {% block body %}
         <h1>Hello Application</h1>
@@ -129,17 +129,17 @@ Now, let's have a look at the ``layout.twig`` file:
 The ``{% block %}`` tags define two blocks (``body`` and ``content``) that
 child templates can fill in. All the block tag does is to tell the template
 engine that a child template may override those portions of the template. The
-``index.twig`` template overrides the ``content`` block. The other one is
+``index.twig.html`` template overrides the ``content`` block. The other one is
 defined in a base layout as our layout is itself decorated by another one.
 
 Twig supports multiple decoration levels: a layout can itself be decorated by
 another one. When the bundle part of the template name is empty
-(``::layout.twig``), views are looked for in the ``app/views/`` directory.
-This directory store global views for your entire project:
+(``::layout.twig.html``), views are looked for in the ``app/views/``
+directory. This directory store global views for your entire project:
 
 .. code-block:: jinja
 
-    {# app/views/layout.twig #}
+    {# app/views/layout.twig.html #}
     <!DOCTYPE html>
     <html>
         <head>
@@ -164,23 +164,23 @@ Including other Templates
 The best way to share a snippet of code between several distinct templates is
 to define a template that can then be included into another one.
 
-Create a ``hello.twig`` template:
+Create a ``hello.twig.html`` template:
 
 .. code-block:: jinja
 
-    {# src/Application/HelloBundle/Resources/views/Hello/hello.twig #}
+    {# src/Application/HelloBundle/Resources/views/Hello/hello.twig.html #}
     Hello {{ name }}
 
-And change the ``index.twig`` template to include it:
+And change the ``index.twig.html`` template to include it:
 
 .. code-block:: jinja
 
-    {# src/Application/HelloBundle/Resources/views/Hello/index.twig #}
-    {% extends "HelloBundle::layout.twig" %}
+    {# src/Application/HelloBundle/Resources/views/Hello/index.twig.html #}
+    {% extends "HelloBundle::layout.twig.html" %}
 
-    {# override the body block from index.twig #}
+    {# override the body block from index.twig.html #}
     {% block body %}
-        {% include "HelloBundle:Hello:hello.twig" %}
+        {% include "HelloBundle:Hello:hello.twig.html" %}
     {% endblock %}
 
 Embedding other Controllers
@@ -195,7 +195,7 @@ template, use the ``render`` tag:
 
 .. code-block:: jinja
 
-    {# src/Application/HelloBundle/Resources/views/Hello/index.twig #}
+    {# src/Application/HelloBundle/Resources/views/Hello/index.twig.html #}
     {% render "HelloBundle:Hello:fancy" with { 'name': name, 'color': 'green' } %}
 
 Here, the ``HelloBundle:Hello:fancy`` string refers to the ``fancy`` action of
@@ -211,7 +211,7 @@ values::
             // create some object, based on the $color variable
             $object = ...;
 
-            return $this->render('HelloBundle:Hello:fancy.twig', array('name' => $name, 'object' => $object));
+            return $this->render('HelloBundle:Hello:fancy.twig.html', array('name' => $name, 'object' => $object));
         }
 
         // ...

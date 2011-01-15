@@ -56,7 +56,7 @@ Now let's create a form to let the visitor fill the data of the object::
         $form->add(new TextField('name'));
         $form->add(new IntegerField('age'));
 
-        return $this->render('HelloBundle:Hello:signup.php', array(
+        return $this->render('HelloBundle:Hello:signup.twig.html', array(
             'form' => $form
         ));
     }
@@ -71,20 +71,21 @@ object that provides methods that help to render the form with more flexibility
 
 Let's create a simple template to render the form:
 
-.. code-block:: html+php
+.. code-block:: html+jinja
 
-    # src/Application/HelloBundle/Resources/views/Hello/signup.php
-    <?php $view->extend('HelloBundle::layout.php') ?>
+    # src/Application/HelloBundle/Resources/views/Hello/signup.twig.html
+    {% extends 'HelloBundle::layout.twig.html' %}
 
     <form action="#" method="post">
-        <?php echo $view['form']->render($form) ?>
+        {{ render_form(form) }}
 
         <input type="submit" value="Send!" />
     </form>
 
 .. note::
 
-    Form rendering in templates is covered in chapter :doc:`PHP templates </guides/forms/view>`.
+    Form rendering in templates is covered in chapter :doc:`Forms in Templates
+    </guides/forms/view>`.
 
 When the user submits the form, we also need to handle the submitted data. All
 the data is stored in a POST parameter with the name of the form::
@@ -105,7 +106,7 @@ the data is stored in a POST parameter with the name of the form::
             }
         }
 
-        return $this->render('HelloBundle:Hello:signup.php', array('form' => $form));
+        return $this->render('HelloBundle:Hello:signup.twig.html', array('form' => $form));
     }
 
 Congratulations! You just created your first fully-functional form with
