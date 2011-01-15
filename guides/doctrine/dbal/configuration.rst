@@ -9,7 +9,7 @@ Configuration
 
     # app/config/config.yml
     doctrine.dbal:
-        driver:   PDOMySql
+        driver:   pdo_mysql
         dbname:   Symfony2
         user:     root
         password: null
