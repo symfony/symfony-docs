@@ -32,36 +32,35 @@ configuration, and tag it with ``twig.extension``:
             ->addTag('twig.extension')
         ;
 
-.. _templating_renderer_tag:
+.. _templating_engine_tag:
 
-Enabling Custom Template Renderers
-----------------------------------
+Enabling Custom Template Engines
+--------------------------------
 
-To enable a custom template renderer, add it as a regular service in one of
-your configuration, tag it with ``templating.renderer`` and define an ``alias``
-attribute (the renderer will be known by this alias in template name):
+To enable a custom template engine, add it as a regular service in one of your
+configuration, tag it with ``templating.engine``:
 
 .. configuration-block::
 
     .. code-block:: yaml
 
         services:
-            templating.renderer.your_renderer_name:
-                class: Fully\Qualified\Renderer\Class\Name
+            templating.engine.your_engine_name:
+                class: Fully\Qualified\Engine\Class\Name
                 tags:
-                    - { name: templating.renderer, alias: alias_name }
+                    - { name: templating.engine }
 
     .. code-block:: xml
 
-        <service id="templating.renderer.your_renderer_name" class="Fully\Qualified\Renderer\Class\Name">
-            <tag name="templating.renderer" alias="alias_name" />
+        <service id="templating.engine.your_engine_name" class="Fully\Qualified\Engine\Class\Name">
+            <tag name="templating.engine" />
         </service>
 
     .. code-block:: php
 
         $container
-            ->register('templating.renderer.your_renderer_name', 'Fully\Qualified\Renderer\Class\Name')
-            ->addTag('templating.renderer', array('alias' => 'alias_name'))
+            ->register('templating.engine.your_engine_name', 'Fully\Qualified\Engine\Class\Name')
+            ->addTag('templating.engine')
         ;
 
 .. _templating_helper_tag:

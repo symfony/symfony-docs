@@ -101,8 +101,8 @@ classes used by the application::
     ));
     $loader->registerPrefixes(array(
         'Swift_'           => $vendorDir.'/swiftmailer/lib/classes',
-        'Twig_'            => $vendorDir.'/twig/lib',
         'Twig_Extensions_' => $vendorDir.'/twig-extensions/lib',
+        'Twig_'            => $vendorDir.'/twig/lib',
     ));
     $loader->register();
 

@@ -42,7 +42,7 @@ the ``extend()`` call:
     Hello <?php echo $name ?>!
 
 The ``HelloBundle::layout.php.html`` notation sounds familiar, doesn't it? It
-is the same notation as for referencing a template. The ``::`` part simply
+is the same notation used to reference a template. The ``::`` part simply
 means that the controller element is empty, so the corresponding file is
 directly stored under ``views/``.
 
@@ -219,7 +219,7 @@ updated by changing the configuration:
         Greet Thomas!
     </a>
 
-The ``generate()`` method takes the route name and an array of paremeters as
+The ``generate()`` method takes the route name and an array of parameters as
 arguments. The route name is the main key under which routes are referenced
 and the parameters are the values of the placeholders defined in the route
 pattern:

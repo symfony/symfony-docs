@@ -19,14 +19,14 @@ it yet, you can read its excellent `documentation`_.
 
     Symfony2 works with PHPUnit 3.5 or later.
 
-The default PHPUnit configuration looks for tests under ``Tests/``
+The default PHPUnit configuration looks for tests under the ``Tests/``
 sub-directory of your bundles:
 
 .. code-block:: xml
 
     <!-- app/phpunit.xml.dist -->
 
-    <phpunit ... bootstrap="../src/autoload.php">
+    <phpunit bootstrap="../src/autoload.php">
         <testsuites>
             <testsuite name="Project Test Suite">
                 <directory>../src/Application/*/Tests</directory>
@@ -108,9 +108,10 @@ for ``HelloController`` that reads as follows::
         public function testIndex()
         {
             $client = $this->createClient();
+
             $crawler = $client->request('GET', '/hello/Fabien');
 
-            $this->assertEquals(1, count($crawler->filter('html:contains("Hello Fabien")')));
+            $this->assertTrue($crawler->filter('html:contains("Hello Fabien")')->count() > 0);
         }
     }
 
@@ -124,7 +125,8 @@ select elements in the Response, to click on links, and to submit forms.
 .. tip::
 
     The Crawler can only be used if the Response content is an XML or an HTML
-    document.
+    document. For other content types, get the content of the Response with
+    ``$client->getResponse()->getContent()``.
 
 Click on a link by first selecting it with the Crawler using either a XPath
 expression or a CSS selector, then use the Client to click on it::
