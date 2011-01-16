@@ -52,7 +52,7 @@ Then, add an ``index.twig.xml`` template along side ``index.twig.html``:
 
 .. code-block:: xml+php
 
-    # src/Application/HelloBundle/Resources/views/Hello/index.twig.xml
+    <!-- src/Application/HelloBundle/Resources/views/Hello/index.twig.xml -->
     <hello>
         <name>{{ name }}</name>
     </hello>
@@ -61,7 +61,6 @@ Finally, as the template needs to be selected according to the format, make
 the following changes to the controller:
 
 .. code-block:: php
-   :linenos:
 
     // src/Application/HelloBundle/Controller/HelloController.php
     public function indexAction($name, $_format)
@@ -129,9 +128,9 @@ Now, let's get back to the ``Hello`` controller::
         return $this->render('HelloBundle:Hello:index.twig.html', array('name' => $name));
     }
 
-The ``render()`` method renders a template and returns a ``Response`` object. The
-response can be tweaked before it is sent to the browser, for instance to
-change the default ``Content-Type``::
+The ``render()`` method renders a template and returns a ``Response`` object.
+The response can be tweaked before it is sent to the browser, for instance
+let's change the ``Content-Type``::
 
     public function indexAction($name)
     {
@@ -146,7 +145,7 @@ some milliseconds::
 
     public function indexAction($name)
     {
-        return $this->createResponse('Hello '.$name);
+        return new Response('Hello '.$name);
     }
 
 This is really useful when a controller needs to send back a JSON response for
@@ -186,7 +185,7 @@ Redirecting and Forwarding
 
 If you want to redirect the user to another page, use the ``redirect()`` method::
 
-    $this->redirect($this->generateUrl('hello', array('name' => 'Lucas')));
+    return $this->redirect($this->generateUrl('hello', array('name' => 'Lucas')));
 
 The ``generateUrl()`` is the same method as the ``generate()`` method we used
 on the ``router`` helper before. It takes the route name and an array of
@@ -194,8 +193,7 @@ parameters as arguments and returns the associated friendly URL.
 
 You can also easily forward the action to another one with the ``forward()``
 method. As for the ``actions`` helper, it makes an internal sub-request, but it
-returns the ``Response`` object to allow for further modification if the need
-arises::
+returns the ``Response`` object to allow for further modification::
 
     $response = $this->forward('HelloBundle:Hello:fancy', array('name' => $name, 'color' => 'green'));
 
@@ -220,12 +218,14 @@ to the ``Request`` object::
 
     $request->request->get('page'); // get a $_POST parameter
 
-In a template, you can also access the ``Request`` object via the ``request``
-helper:
+In a template, you can also access the ``Request`` object via the
+``app.request`` variable:
 
 .. code-block:: html+php
 
-    <?php echo $view['request']->getParameter('page') ?>
+    {{ app.request.query.get('page') }}
+
+    {{ app.request.parameter('page') }}
 
 The Session
 -----------
@@ -256,12 +256,13 @@ next request::
     $session->setFlash('notice', 'Congratulations, your action succeeded!');
 
     // display the message back in the next request (in a template)
-    <?php echo $view['session']->getFlash('notice') ?>
+    {{ app.session.flash('notice') }}
 
 Final Thoughts
 --------------
 
 That's all there is to it, and I'm not even sure we have spent the allocated
-10 minutes. In the previous part, we saw how to extend the templating system
-with helpers. But everything can be extended or replaced in Symfony2 with
-bundles. That's the topic of the next part of this tutorial.
+10 minutes. We briefly introduced bundles in the first part; and all the
+features we've learned about until now are part of the core framework bundle.
+But thanks to bundles, everything can be extended or replaced in Symfony2.
+That's the topic of the next part of this tutorial.

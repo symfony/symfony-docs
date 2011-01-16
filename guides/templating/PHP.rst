@@ -51,21 +51,21 @@ Now, let's have a look at the ``layout.php.html`` file:
 .. code-block:: html+php
 
     <!-- src/Application/HelloBundle/Resources/views/layout.php.html -->
-    <?php $view->extend('::layout.php.html') ?>
+    <?php $view->extend('::base.php.html') ?>
 
     <h1>Hello Application</h1>
 
     <?php $view['slots']->output('_content') ?>
 
-The layout is itself decorated by another layout (``::layout.php.html``).
-Symfony2 supports multiple decoration levels: a layout can itself be decorated
-by another one. When the bundle part of the template name is empty, views are
+The layout is itself decorated by another one (``::base.php.html``). Symfony2
+supports multiple decoration levels: a layout can itself be decorated by
+another one. When the bundle part of the template name is empty, views are
 looked for in the ``app/views/`` directory. This directory store global views
 for your entire project:
 
 .. code-block:: html+php
 
-    <!-- app/views/layout.php.html -->
+    <!-- app/views/base.php.html -->
     <!DOCTYPE html>
     <html>
         <head>

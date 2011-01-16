@@ -60,8 +60,8 @@ This class must implement four methods:
 * ``registerBundleDirs()``: Returns an array associating namespaces and their
   home directories;
 
-* ``registerContainerConfiguration()``: Returns the main configuration object
-  (more on this later);
+* ``registerContainerConfiguration()``: Loads the configuration (more on this
+  later);
 
 Have a look at the default implementation of these methods to better
 understand the flexibility of the framework.
@@ -75,8 +75,8 @@ directory::
 The Source Directory
 ~~~~~~~~~~~~~~~~~~~~
 
-The ``src/autoload.php`` file is responsible for autoloading all the files
-stored in the ``src/`` directory::
+The ``src/autoload.php`` file is responsible for autoloading all the PHP
+classes used by the application::
 
     // src/autoload.php
     $vendorDir = __DIR__.'/vendor';
@@ -93,14 +93,16 @@ stored in the ``src/`` directory::
         'Doctrine\\Common\\DataFixtures' => $vendorDir.'/doctrine-data-fixtures/lib',
         'Doctrine\\Common'               => $vendorDir.'/doctrine-common/lib',
         'Doctrine\\DBAL\\Migrations'     => $vendorDir.'/doctrine-migrations/lib',
-        'Doctrine\\ODM\\MongoDB'         => $vendorDir.'/doctrine-mongodb/lib',
+        'Doctrine\\MongoDB'              => $vendorDir.'/doctrine-mongodb/lib',
+        'Doctrine\\ODM\\MongoDB'         => $vendorDir.'/doctrine-mongodb-odm/lib',
         'Doctrine\\DBAL'                 => $vendorDir.'/doctrine-dbal/lib',
         'Doctrine'                       => $vendorDir.'/doctrine/lib',
         'Zend'                           => $vendorDir.'/zend/library',
     ));
     $loader->registerPrefixes(array(
-        'Swift_' => $vendorDir.'/swiftmailer/lib/classes',
-        'Twig_'  => $vendorDir.'/twig/lib',
+        'Swift_'           => $vendorDir.'/swiftmailer/lib/classes',
+        'Twig_'            => $vendorDir.'/twig/lib',
+        'Twig_Extensions_' => $vendorDir.'/twig-extensions/lib',
     ));
     $loader->register();
 
@@ -117,15 +119,15 @@ server or locally in your projects.
 The Bundle System
 -----------------
 
-This section starts to scratch the surface of one of the greatest and most
-powerful features of Symfony2, the :term:`bundle` system.
+This section introduces one of the greatest and most powerful features of
+Symfony2, the :term:`bundle` system.
 
 A bundle is kind of like a plugin in other software. So why is it called
-bundle and not plugin? Because *everything* is a bundle in Symfony2, from
+*bundle* and not *plugin*? Because *everything* is a bundle in Symfony2, from
 the core framework features to the code you write for your application.
-Bundles are first-class citizens in Symfony2. This gives you the flexibility to
-use pre-built features packaged in third-party bundles or to distribute your
-own bundles. It makes it easy to pick and choose which features to enable
+Bundles are first-class citizens in Symfony2. This gives you the flexibility
+to use pre-built features packaged in third-party bundles or to distribute
+your own bundles. It makes it easy to pick and choose which features to enable
 in your application and optimize them the way you want.
 
 An application is made up of bundles as defined in the ``registerBundles()``

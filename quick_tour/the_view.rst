@@ -22,22 +22,21 @@ Twig, a Quick Overview
 
 .. tip::
 
-    If you want to learn Twig, we highly recommend to read the official
-    `documentation`_. This section is just a quick overview of the main concepts
-    to get you started.
+    If you want to learn Twig, we highly recommend you to read its official
+    `documentation`_. This section is just a quick overview of the main
+    concepts.
 
-A Twig template is simply a text file that can generate any text-based format
-(HTML, XML, CSV, LaTeX, ...). Twig defines two kinds of delimiters:
+A Twig template is a text file that can generate any text-based format (HTML,
+XML, CSV, LaTeX, ...). Twig defines two kinds of delimiters:
 
-* ``{{ ... }}``: Prints a variable or the result of an expression to the
-  template;
+* ``{{ ... }}``: Outputs a variable or the result of an expression;
 
 * ``{% ... %}``: A tag that controls the logic of the template; it is used to
-  execute statements such as for-loops for instance.
+  execute ``for`` loops or ``if`` statements for instance.
 
 Below is a minimal template that illustrates a few basics:
 
-.. code-block:: jinja
+.. code-block:: html+jinja
 
     <!DOCTYPE html>
     <html>
@@ -55,9 +54,9 @@ Below is a minimal template that illustrates a few basics:
         </body>
     </html>
 
-Variables passed to the templates can be strings, arrays, or even objects.
-Twig abstracts the difference between them and let's you access "attributes"
-of a variable with the dot (``.``) notation:
+Variables passed to a template can be strings, arrays, or even objects. Twig
+abstracts the difference between them and let's you access "attributes" of a
+variable with the dot (``.``) notation:
 
 .. code-block:: jinja
 
@@ -110,15 +109,15 @@ the ``extends`` tag:
     {% endblock %}
 
 The ``HelloBundle::layout.twig.html`` notation sounds familiar, doesn't it? It
-is the same notation as for referencing a template. The ``::`` part simply
-means that the controller element is empty, so the corresponding file is
-directly stored under ``views/``.
+is the same notation used to reference a regular template. The ``::`` part
+simply means that the controller element is empty, so the corresponding file
+is directly stored under ``views/``.
 
 Now, let's have a look at the ``layout.twig.html`` file:
 
 .. code-block:: jinja
 
-    {% extends "::layout.twig.html" %}
+    {% extends "::base.twig.html" %}
 
     {% block body %}
         <h1>Hello Application</h1>
@@ -130,16 +129,14 @@ The ``{% block %}`` tags define two blocks (``body`` and ``content``) that
 child templates can fill in. All the block tag does is to tell the template
 engine that a child template may override those portions of the template. The
 ``index.twig.html`` template overrides the ``content`` block. The other one is
-defined in a base layout as our layout is itself decorated by another one.
-
-Twig supports multiple decoration levels: a layout can itself be decorated by
-another one. When the bundle part of the template name is empty
-(``::layout.twig.html``), views are looked for in the ``app/views/``
-directory. This directory store global views for your entire project:
+defined in a base layout as the layout is itself decorated by another one.
+When the bundle part of the template name is empty (``::base.twig.html``),
+views are looked for in the ``app/views/`` directory. This directory store
+global views for your entire project:
 
 .. code-block:: jinja
 
-    {# app/views/layout.twig.html #}
+    {# app/views/base.twig.html #}
     <!DOCTYPE html>
     <html>
         <head>
@@ -151,12 +148,12 @@ directory. This directory store global views for your entire project:
         </body>
     </html>
 
-Specific Tags and Filters
--------------------------
+Tags, Filters, and Functions
+----------------------------
 
-One of the best feature of Twig is its extensibility via new tags and filters;
-Symfony2 comes bundled with many specialized tags and filters that ease the
-web designer work.
+One of the best feature of Twig is its extensibility via tags, filters, and
+functions; Symfony2 comes bundled with many built-in ones to ease the web
+designer work.
 
 Including other Templates
 ~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -223,7 +220,7 @@ Creating Links between Pages
 Speaking of web applications, creating links between pages is a must. Instead
 of hardcoding URLs in templates, the ``path`` function knows how to generate
 URLs based on the routing configuration. That way, all your URLs can be easily
-updated by changing the configuration:
+updated by just changing the configuration:
 
 .. code-block:: jinja
 
@@ -243,11 +240,11 @@ pattern:
 
 .. tip::
 
-    You can also generate absolute URLs with the ``url`` function: ``{{
-    url('hello', { 'name': 'Thomas' }) }}``.
+    The ``url`` function generates *absolute* URLs: ``{{ url('hello', {
+    'name': 'Thomas' }) }}``.
 
-Using Assets: images, JavaScripts, and stylesheets
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Including Assets: images, JavaScripts, and stylesheets
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 What would the Internet be without images, JavaScripts, and stylesheets?
 Symfony2 provides the ``asset`` function to deal with them easily:

@@ -96,7 +96,7 @@ configuration file.
 
 All Symfony2 configuration files can be written in either PHP, XML, or `YAML`_
 (YAML is a simple format that makes the description of configuration settings
-very easy).
+straightforward).
 
 .. tip::
 
@@ -156,8 +156,8 @@ So, Symfony2 routes the request by reading the routing configuration file:
 
         return $collection;
 
-The first few lines of the routing configuration file define which code to
-call when the user requests the "``/``" resource. More interesting is the last
+The first few lines of the routing configuration file define the code called
+when the user requests the "``/``" resource. More interesting is the last
 part, which imports another routing configuration file that reads as follows:
 
 .. configuration-block::
@@ -230,7 +230,7 @@ The controller is responsible for returning a representation of the resource
         }
     }
 
-The code is pretty straightforward but let's explain this code line by line:
+The code is pretty straightforward but let's explain it line by line:
 
 * *line 3*: Symfony2 takes advantage of new PHP 5.3 features and as such, all
   controllers are properly namespaced (the namespace is the first part of the
