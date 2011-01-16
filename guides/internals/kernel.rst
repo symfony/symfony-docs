@@ -275,8 +275,9 @@ The Listener must have a ``register()`` method that takes an
      * Registers a core.* listener.
      *
      * @param EventDispatcher $dispatcher An EventDispatcher instance
+     * @param integer         $priority   The priority
      */
-    public function register(EventDispatcher $dispatcher)
+    public function register(EventDispatcher $dispatcher, $priority = 0)
     {
-        $dispatcher->connect('core.*', array($this, 'xxxxxxx'));
+        $dispatcher->connect('core.*', array($this, 'xxxxxxx'), $priority);
     }
