@@ -30,6 +30,7 @@ bundles:
     <testsuites>
         <testsuite name="Project Test Suite">
             <directory>../src/Application/*/Tests</directory>
+            <directory>../src/Bundle/*/Tests</directory>
         </testsuite>
     </testsuites>
 
@@ -45,6 +46,8 @@ section:
             <exclude>
                 <directory>../src/Application/*/Resources</directory>
                 <directory>../src/Application/*/Tests</directory>
+                <directory>../src/Bundle/*/Resources</directory>
+                <directory>../src/Bundle/*/Tests</directory>
             </exclude>
         </whitelist>
     </filter>
@@ -55,23 +58,66 @@ Client Configuration
 The Client used by functional tests creates a Kernel that runs in a special
 ``test`` environment, so you can tweak it as much as you want:
 
-.. code-block:: yaml
+.. configuration-block::
 
-    # app/config/config_test.yml
-    imports:
-        - { resource: config_dev.yml }
+    .. code-block:: yaml
 
-    app.config:
-        error_handler: false
-        test: ~
+        # app/config/config_test.yml
+        imports:
+            - { resource: config_dev.yml }
 
-    webprofiler.config:
-        toolbar: false
-        intercept_redirects: false
+        app.config:
+            error_handler: false
+            test: ~
 
-    zend.config:
-        logger:
-            priority: debug
+        webprofiler.config:
+            toolbar: false
+            intercept_redirects: false
+
+        zend.config:
+            logger:
+                priority: debug
+
+    .. code-block:: xml
+
+        <!-- app/config/config_test.xml -->
+        <container>
+            <imports>
+                <import resource="config_dev.xml" />
+            </imports>
+
+            <webprofiler:config
+                toolbar="false"
+                intercept-redirects="false"
+            />
+
+            <app:config error_handler="false">
+                <app:test />
+            </app:config>
+
+            <zend:config>
+                <zend:logger priority="debug" />
+            </zend:config>
+        </container>
+
+    .. code-block:: php
+
+        // app/config/config_test.php
+        $loader->import('config_dev.php');
+
+        $container->loadFromExtension('app', 'config', array(
+            'error_handler' => false,
+            'test'          => true,
+        ));
+
+        $container->loadFromExtension('webprofiler', 'config', array(
+            'toolbar' => false,
+            'intercept-redirects' => false,
+        ));
+
+        $container->loadFromExtension('zend', 'config', array(
+            'logger' => array('priority' => 'debug'),
+        ));
 
 You can also change the default environment (``test``) and override the
 default debug mode (``true``) by passing them as options to the

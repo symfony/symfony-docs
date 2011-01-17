@@ -96,7 +96,7 @@ configuration file.
 
 All Symfony2 configuration files can be written in either PHP, XML, or `YAML`_
 (YAML is a simple format that makes the description of configuration settings
-very easy).
+straightforward).
 
 .. tip::
 
@@ -156,8 +156,8 @@ So, Symfony2 routes the request by reading the routing configuration file:
 
         return $collection;
 
-The first few lines of the routing configuration file define which code to
-call when the user requests the "``/``" resource. More interesting is the last
+The first few lines of the routing configuration file define the code called
+when the user requests the "``/``" resource. More interesting is the last
 part, which imports another routing configuration file that reads as follows:
 
 .. configuration-block::
@@ -223,14 +223,14 @@ The controller is responsible for returning a representation of the resource
     {
         public function indexAction($name)
         {
-            return $this->render('HelloBundle:Hello:index.twig', array('name' => $name));
+            return $this->render('HelloBundle:Hello:index.twig.html', array('name' => $name));
 
             // render a PHP template instead
-            // return $this->render('HelloBundle:Hello:index.php', array('name' => $name));
+            // return $this->render('HelloBundle:Hello:index.php.html', array('name' => $name));
         }
     }
 
-The code is pretty straightforward but let's explain this code line by line:
+The code is pretty straightforward but let's explain it line by line:
 
 * *line 3*: Symfony2 takes advantage of new PHP 5.3 features and as such, all
   controllers are properly namespaced (the namespace is the first part of the
@@ -247,8 +247,8 @@ The code is pretty straightforward but let's explain this code line by line:
   resource placeholder values as arguments (``$name`` in our case).
 
 * *line 11*: The ``render()`` method loads and renders a template
-  (``HelloBundle:Hello:index.twig``) with the variables passed as a second
-  argument.
+  (``HelloBundle:Hello:index.twig.html``) with the variables passed as a
+  second argument.
 
 But what is a :term:`bundle`? All the code you write in a Symfony2 project is
 organized in bundles. In Symfony2 speak, a bundle is a structured set of files
@@ -259,15 +259,15 @@ developers. In our example, we only have one bundle, ``HelloBundle``.
 Templates
 ~~~~~~~~~
 
-So, the controller renders the ``HelloBundle:Hello:index.twig`` template. But
-what's in a template name? ``HelloBundle`` is the bundle name, ``Hello`` is
-the controller, and ``index.twig`` the template name. By default, the sandbox
-uses Twig as its template engine:
+So, the controller renders the ``HelloBundle:Hello:index.twig.html`` template.
+But what's in a template name? ``HelloBundle`` is the bundle name, ``Hello``
+is the controller, and ``index.twig.html`` the template name. By default, the
+sandbox uses Twig as its template engine:
 
 .. code-block:: jinja
 
-    {# src/Application/HelloBundle/Resources/views/Hello/index.twig #}
-    {% extends "HelloBundle::layout.twig" %}
+    {# src/Application/HelloBundle/Resources/views/Hello/index.twig.html #}
+    {% extends "HelloBundle::layout.twig.html" %}
 
     {% block content %}
         Hello {{ name }}!

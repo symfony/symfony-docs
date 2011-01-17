@@ -121,27 +121,23 @@ Check that all tests still pass and push your branch remotely:
 
     $ git push origin BRANCH_NAME
 
-You can now advertise your patch on the `dev mailing-list`_. The email must
-follow the following conventions:
+You can now discuss your patch on the `dev mailing-list`_ or make a pull
+request (they must be done on the ``fabpot/symfony`` repository).
 
-* Subject must start with `[PATCH]`, followed by a short summary of the
-  patch (with a reference to the ticket if it's a bug fix - `#XXX`);
+If you are going to send and email to the mailing-list, don't forget to
+reference you branch URL (``http://github.com/USERNAME/symfony.git
+BRANCH_NAME``).
 
-* The body must contain the information about your branch
-  (`git://github.com/USERNAME/symfony.git BRANCH_NAME`);
-
-* The body must then describe what the patch does (reference a ticket, or
-  copy and paste the commit message).
-
-Based on the feedback, you might need to rework your patch. Before
-re-submitting the patch, rebase with master, don't merge; and force the push
-to the origin:
+Based on the feedback from the mailing-list or via the pull request on Github,
+you might need to rework your patch. Before re-submitting the patch, rebase
+with master, don't merge; and force the push to the origin:
 
 .. code-block:: bash
 
+    $ git rebase -f upstream/master
     $ git push -f origin BRANCH_NAME
 
-.. _ProGit: http://progit.org/
-.. _Github: https://github.com/signup/free
+.. _ProGit:              http://progit.org/
+.. _Github:              https://github.com/signup/free
 .. _Symfony2 repository: http://www.github.com/fabpot/symfony
-.. _dev mailing-list: http://groups.google.com/group/symfony-devs
+.. _dev mailing-list:    http://groups.google.com/group/symfony-devs

@@ -308,5 +308,13 @@ Later you can retrieve the persisted document by its id::
         }
     }
 
+Registering Event Listeners and Subscribers
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Registering events works like described in the :ref:`ORM Bundle documentation <doctrine-event-config>`.
+The MongoDB event tags are called "doctrine.odm.mongodb.default_event_listener" and
+"doctrine.odm.mongodb.default_event_subscriber" respectively where "default" is the name of the
+MongoDB document manager.
+
 .. _MongoDB:       http://www.mongodb.org/
 .. _documentation: http://www.doctrine-project.org/projects/mongodb_odm/1.0/docs/en

@@ -113,7 +113,7 @@ parameter.
 
 .. note::
 
-    As you can see, Twig functions are prefixed with "form_". Other than the
+    As you can see, Twig functions are prefixed with "form\_". Other than the
     methods of the "form" helper, these functions are global and prone to
     naming collisions.
 
@@ -229,7 +229,7 @@ built-in one reads as follows:
 
 .. code-block:: jinja
 
-    {# TwigBundle::form.twig #}
+    {# TwigBundle::form.twig.html #}
 
     {% block errors %}
         {% if errors %}
@@ -277,7 +277,7 @@ rendering a ``TextareaField`` instance:
 
     .. code-block:: jinja
 
-        {# TwigBundle::form.twig #}
+        {# TwigBundle::form.twig.html #}
 
         {% block textarea_field %}
             <textarea {% display field_attributes %}>{{ field.displayedData }}</textarea>
@@ -335,7 +335,7 @@ completely change the HTML output of the helper:
 
     .. code-block:: jinja
 
-        {{ form_field(form.title, {}, {}, 'HelloBundle::form.twig') }}
+        {{ form_field(form.title, {}, {}, 'HelloBundle::form.twig.html') }}
 
     .. code-block:: html+php
 
@@ -346,13 +346,13 @@ completely change the HTML output of the helper:
 Form Theming (Twig only)
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
-In the last example, the ``HelloBundle::form.twig`` is a regular Twig template 
+In the last example, the ``HelloBundle::form.twig.html`` is a regular Twig template 
 containing blocks defining the HTML representation for fields you want to 
 override:
 
 .. code-block:: jinja
 
-    {# HelloBundle/Resources/views/form.twig #}
+    {# HelloBundle/Resources/views/form.twig.html #}
 
     {% block textarea_field %}
         <div class="textarea_field">
@@ -366,9 +366,9 @@ Twig native inheritance feature:
 
 .. code-block:: jinja
 
-    {# HelloBundle/Resources/views/form.twig #}
+    {# HelloBundle/Resources/views/form.twig.html #}
 
-    {% extends 'TwigBundle::form.twig' %}
+    {% extends 'TwigBundle::form.twig.html' %}
 
     {% block date_field %}
         <div class="important_date_field">
@@ -380,7 +380,7 @@ If you want to customize all fields of a given form, use the ``form_theme`` tag:
 
 .. code-block:: jinja
 
-    {% form_theme form 'HelloBundle::form.twig' %}
+    {% form_theme form 'HelloBundle::form.twig.html' %}
 
 Whenever you call the ``form_field`` function on the ``form`` after this call,
 Symfony2 will look for a representation in your template before falling back to
@@ -391,13 +391,13 @@ array:
 
 .. code-block:: jinja
 
-    {% form_theme form ['HelloBundle::form.twig', 'HelloBundle::form.twig', 'HelloBundle::hello_form.twig'] %}
+    {% form_theme form ['HelloBundle::form.twig.html', 'HelloBundle::form.twig.html', 'HelloBundle::hello_form.twig.html'] %}
 
 A theme can be attached to a whole form (as above) or just for a field group:
 
 .. code-block:: jinja
 
-    {% form_theme form.user 'HelloBundle::form.twig' %}
+    {% form_theme form.user 'HelloBundle::form.twig.html' %}
 
 Finally, customizing the representation of all forms of an application is
 possible via configuration:
@@ -409,15 +409,15 @@ possible via configuration:
         # app/config/config.yml
         twig.config:
             form:
-                resources: [BlogBundle::form.twig, TwigBundle::form.twig]
+                resources: [BlogBundle::form.twig.html, TwigBundle::form.twig.html]
 
     .. code-block:: xml
 
         <!-- app/config/config.xml -->
         <twig:config>
             <twig:form>
-                <twig:resource>BlogBundle::form.twig</twig:resource>
-                <twig:resource>TwigBundle::form.twig</twig:resource>
+                <twig:resource>BlogBundle::form.twig.html</twig:resource>
+                <twig:resource>TwigBundle::form.twig.html</twig:resource>
             </twig:form>
         </twig:config>
 
@@ -425,7 +425,7 @@ possible via configuration:
 
         // app/config/config.php
         $container->loadFromExtension('twig', 'config', array('form' => array(
-            'resources' => array('BlogBundle::form.twig', 'TwigBundle::form.twig),
+            'resources' => array('BlogBundle::form.twig.html', 'TwigBundle::form.twig.html),
         )));
 
 Prototyping
@@ -458,7 +458,7 @@ parent class - ``FieldGroup`` - is used instead:
 
     .. code-block:: jinja
 
-        {# TwigBundle::form.twig #}
+        {# TwigBundle::form.twig.html #}
 
         {% block field_group %}
             {{ form_errors(field) }}

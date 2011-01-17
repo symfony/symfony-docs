@@ -20,7 +20,7 @@ To get started you just need to enable and configure the DBAL:
     # app/config/config.yml
 
     doctrine.dbal:
-        driver:   PDOMySql
+        driver:   pdo_mysql
         dbname:   Symfony2
         user:     root
         password: null
