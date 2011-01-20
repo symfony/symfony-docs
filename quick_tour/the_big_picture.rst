@@ -124,7 +124,7 @@ So, Symfony2 routes the request by reading the routing configuration file:
             defaults: { _controller: FrameworkBundle:Default:index }
 
         hello:
-            resource: HelloBundle/Resources/config/routing.yml
+            resource: @HelloBundle/Resources/config/routing.yml
 
     .. code-block:: xml
 
@@ -139,7 +139,7 @@ So, Symfony2 routes the request by reading the routing configuration file:
                 <default key="_controller">FrameworkBundle:Default:index</default>
             </route>
 
-            <import resource="HelloBundle/Resources/config/routing.xml" />
+            <import resource="@HelloBundle/Resources/config/routing.xml" />
         </routes>
 
     .. code-block:: php
@@ -152,7 +152,7 @@ So, Symfony2 routes the request by reading the routing configuration file:
         $collection->add('homepage', new Route('/', array(
             '_controller' => 'FrameworkBundle:Default:index',
         )));
-        $collection->addCollection($loader->import("HelloBundle/Resources/config/routing.php"));
+        $collection->addCollection($loader->import("@HelloBundle/Resources/config/routing.php"));
 
         return $collection;
 
