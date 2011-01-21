@@ -77,7 +77,7 @@ Let's create a simple template to render the form:
     {% extends 'HelloBundle::layout.twig.html' %}
 
     <form action="#" method="post">
-        {{ render_form(form) }}
+        {{ form_field(form) }}
 
         <input type="submit" value="Send!" />
     </form>
