@@ -14,39 +14,42 @@ flexible, you should follow some best practices if you want to distribute them.
 Bundle Name
 -----------
 
-A bundle is also a PHP namespace, composed of several segments:
+A bundle is also a PHP namespace. The namespace must follow the technical
+interoperability `standards`_ for PHP 5.3 namespaces and class names: it
+starts with a vendor segment, followed by zero or more category segments, and
+it ends with the namespace short name, which must end with a ``Bundle``
+suffix.
 
-* The **main namespace**: either ``Bundle``, for reusable bundles, or
-  ``Application`` for application specific bundles;
-* The **vendor namespace** (optional for ``Application`` bundles): something
-  unique to you or your company (like ``Sensio``);
-* *(optional)* The **category namespace(s)** to better organize a large set of
-  bundles;
-* The **bundle name**.
-
-The bundle name must follow these simple rules:
+A namespace becomes a bundle as soon as you add a bundle class to it. The
+bundle class name must follow these simple rules:
 
 * Use only alphanumeric characters and underscores;
 * Use a CamelCased name;
 * Use a descriptive and short name (no more than 2 words);
-* Prefix the name with the concatenation of the vendor and category
-  namespaces;
+* Prefix the name with the concatenation of the vendor (and optionally the
+  category namespaces);
 * Suffix the name with ``Bundle``.
 
-Some good bundle names:
+Here are some valid bundle namespaces and class names:
 
-=================================== ==========================
-Namespace                           Bundle Name
-=================================== ==========================
-``Bundle\Sensio\BlogBundle``        ``SensioBlogBundle``
-``Bundle\Sensio\Social\BlogBundle`` ``SensioSocialBlogBundle``
-``Application\BlogBundle``          ``BlogBundle``
-=================================== ==========================
+=================================== ==============================
+Namespace                           Bundle Class Name
+=================================== ==============================
+``Sensio\Bundle\BlogBundle``        ``SensioBlogBundle``
+``Sensio\Bundle\Social\BlogBundle`` ``SensioSocialBlogBundle``
+``Sensio\BlogBundle``               ``SensioBlogBundle``
+=================================== ==============================
+
+By convention, the ``getName()`` method of the bundle class should return the
+class name.
 
 Directory Structure
 -------------------
 
-The basic directory structure of a ``HelloBundle`` bundle must read as follows::
+The basic directory structure of a ``HelloBundle`` bundle must read as
+follows:
+
+.. code-block:: text
 
     XXX/...
         HelloBundle/
@@ -171,14 +174,8 @@ instead.
 Templates
 ---------
 
-If a bundle provides templates, they should be defined in plain PHP. A bundle
-must not provide a main layout, but extend a default ``base`` template (which
-must provide two slots: ``content`` and ``head``).
-
-.. note::
-
-    The only other template engine supported is Twig, but only for specific
-    cases.
+If a bundle provides templates, they must use Twig. A bundle must not provide
+a main layout, except if it provides a full working application.
 
 Translation Files
 -----------------
@@ -194,3 +191,5 @@ Configuration
 Configuration must be done via the Symfony2 built-in :doc:`mechanism
 </guides/bundles/configuration>`. A bundle should provide all its default
 configurations in XML.
+
+.. _standards: http://groups.google.com/group/php-standards/web/psr-0-final-proposal

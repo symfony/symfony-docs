@@ -57,9 +57,6 @@ This class must implement four methods:
   application (notice the reference to
   ``Application\HelloBundle\HelloBundle``);
 
-* ``registerBundleDirs()``: Returns an array associating namespaces and their
-  home directories;
-
 * ``registerContainerConfiguration()``: Loads the configuration (more on this
   later);
 
@@ -347,24 +344,6 @@ specific configuration file:
                 'path'     => '%kernel.logs_dir%/%kernel.environment%.log',
             ),
         ));
-
-As we have seen in the previous part, an application is made up of bundles
-defined in the ``registerBundles()`` method. But how does Symfony2 know where
-to look for bundles? Symfony2 is quite flexible in this regard. The
-``registerBundleDirs()`` method must return an associative array that maps
-namespaces to any valid directory (local or global ones)::
-
-    public function registerBundleDirs()
-    {
-        return array(
-            'Application'     => __DIR__.'/../src/Application',
-            'Bundle'          => __DIR__.'/../src/Bundle',
-            'Symfony\\Bundle' => __DIR__.'/../src/vendor/symfony/src/Symfony/Bundle',
-        );
-    }
-
-So, when you reference the ``HelloBundle`` in a controller name or in a template
-name, Symfony2 will look for it under the given directories.
 
 Do you understand now why Symfony2 is so flexible? Share your bundles between
 applications, store them locally or globally, your choice.
