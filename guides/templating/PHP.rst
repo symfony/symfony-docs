@@ -9,7 +9,7 @@ templates with PHP more powerful.
 Rendering PHP Templates
 -----------------------
 
-To render a PHP template instead of a Twig one, use ``.php`` in the the
+To render a PHP template instead of a Twig one, use ``.php`` in the
 template name instead of ``.twig``. The controller below renders the
 ``index.php.html`` template::
 
