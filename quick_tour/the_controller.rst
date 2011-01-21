@@ -48,11 +48,11 @@ with a value of ``xml``:
             '_format'     => 'xml',
         )));
 
-Then, add an ``index.twig.xml`` template along side ``index.twig.html``:
+Then, add an ``index.xml.twig`` template along side ``index.html.twig``:
 
 .. code-block:: xml+php
 
-    <!-- src/Application/HelloBundle/Resources/views/Hello/index.twig.xml -->
+    <!-- src/Application/HelloBundle/Resources/views/Hello/index.xml.twig -->
     <hello>
         <name>{{ name }}</name>
     </hello>
@@ -66,7 +66,7 @@ the following changes to the controller:
     public function indexAction($name, $_format)
     {
         return $this->render(
-            'HelloBundle:Hello:index.twig.'.$_format,
+            'HelloBundle:Hello:index.'.$_format.'.twig',
             array('name' => $name)
         );
     }
@@ -125,7 +125,7 @@ Now, let's get back to the ``Hello`` controller::
 
     public function indexAction($name)
     {
-        return $this->render('HelloBundle:Hello:index.twig.html', array('name' => $name));
+        return $this->render('HelloBundle:Hello:index.html.twig', array('name' => $name));
     }
 
 The ``render()`` method renders a template and returns a ``Response`` object.
@@ -134,7 +134,7 @@ let's change the ``Content-Type``::
 
     public function indexAction($name)
     {
-        $response = $this->render('HelloBundle:Hello:index.twig.html', array('name' => $name));
+        $response = $this->render('HelloBundle:Hello:index.html.twig', array('name' => $name));
         $response->headers->set('Content-Type', 'text/plain');
 
         return $response;
