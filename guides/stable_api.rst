@@ -36,4 +36,4 @@ in the stable API is in order to fix a security issue.
 HttpKernel Component
 --------------------
 
-* HttpKernelInterface:::method:`Symfony\\Components\\HttpKernel\\HttpKernelInterface::handle`
+* HttpKernelInterface:::method:`Symfony\\Component\\HttpKernel\\HttpKernelInterface::handle`

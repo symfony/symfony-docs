@@ -14,13 +14,15 @@ persisted transparently without imposing on your domain model.
     projects `documentation`_.
 
 To get started working with Doctrine and the MongoDB Object Document Mapper you
-just need to enable it:
+just need to enable it and specify the bundle that contains your mapped documents:
 
 .. code-block:: yaml
 
     # app/config/config.yml
 
-    doctrine_odm.mongodb: ~
+    doctrine_odm.mongodb:
+        mappings:
+            HelloBundle: ~
 
 Now you can start writing documents and mapping them with annotations, xml, or
 yaml. In this example we will use annotations::

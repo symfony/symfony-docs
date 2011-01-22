@@ -32,9 +32,9 @@ the submitted values to make it easier to fix the problems fast. Just use the
 form dedicated methods:
 
 .. configuration-block::
-        
+
     .. code-block:: jinja
-    
+
         <form action="#" method="post">
             <ul>
                 {% for error in form.name.errors %}
@@ -42,12 +42,12 @@ form dedicated methods:
                 {% endfor %}
             </ul>
             <input type="text" name="name" value="{{ form.name.data }}" />
-    
+
             <input type="submit" />
         </form>
 
     .. code-block:: html+php
-    
+
         <form action="#" method="post">
             <ul>
                 <?php foreach ($form['name']->getErrors() as $error): ?>
@@ -55,7 +55,7 @@ form dedicated methods:
                 <?php endforeach; ?>
             </ul>
             <input type="text" name="name" value="<?php $form['name']->getData() ?>" />
-    
+
             <input type="submit" />
         </form>
 
@@ -81,40 +81,40 @@ A simple form template reads as follows:
 
 Besides the global form structure, you need a way to display global errors and
 hidden fields. Symfony2 provides helpers to fulfill this job. In Twig templates,
-these helpers are implemented as global filters that can be applied on forms
+these helpers are implemented as global functions that can be applied on forms
 and form fields. In PHP templates, the "form" helper offers the same
 functionality through public methods that accept the form or form field as
 parameter.
 
 .. configuration-block::
-    
+
     .. code-block:: jinja
-    
+
         <form action="#" method="post">
-            {{ form|render_errors }}
-    
+            {{ form_errors(form) }}
+
             <!-- Display the form fields -->
-    
-            {{ form|render_hidden }}
+
+            {{ form_hidden(form) }}
             <input type="submit" />
         </form>
 
     .. code-block:: html+php
-    
+
         <form action="#" method="post">
             <?php echo $view['form']->errors($form) ?>
-    
+
             <!-- Display the form fields -->
-    
+
             <?php echo $view['form']->hidden($form) ?>
-    
+
             <input type="submit" />
         </form>
-        
+
 .. note::
 
-    As you can see, Twig filters are prefixed with "render_". Other than the
-    methods of the "form" helper, these filters are global and prone to
+    As you can see, Twig functions are prefixed with "form\_". Other than the
+    methods of the "form" helper, these functions are global and prone to
     naming collisions.
 
 .. tip::
@@ -128,13 +128,13 @@ Last but not the least, a form containing a file input must contain the
 .. configuration-block::
 
     .. code-block:: jinja
-    
-        <form action="#" {{ form|render_enctype }} method="post">
-    
+
+        <form action="#" {{ form_enctype(form) }} method="post">
+
     .. code-block:: html+php
-    
+
         <form action="#" <?php echo $view['form']->enctype($form) ?> method="post">
-        
+
 Displaying Fields
 -----------------
 
@@ -143,16 +143,16 @@ Accessing form fields is easy as a Symfony2 form acts as an array:
 .. configuration-block::
 
     .. code-block:: jinja
-    
+
         {{ form.title }}
-    
+
         {# access a field (first_name) nested in a group (user) #}
         {{ form.user.first_name }}
-    
+
     .. code-block:: html+php
-    
+
         <?php $form['title'] ?>
-    
+
         <!-- access a field (first_name) nested in a group (user) -->
         <?php $form['user']['first_name'] ?>
 
@@ -164,11 +164,11 @@ The ``render`` helper renders the HTML representation of a field:
 .. configuration-block::
 
     .. code-block:: jinja
-    
-        {{ form.title|render }}
-        
+
+        {{ form_field(form.title) }}
+
     .. code-block:: html+php
-    
+
         <?php echo $view['form']->render($form['title']) ?>
 
 .. note::
@@ -181,11 +181,11 @@ The ``label`` helper renders the ``<label>`` tag associated with the field:
 .. configuration-block::
 
     .. code-block:: jinja
-    
-        {{ form.title|render_label }}
-    
+
+        {{ form_label(form.title) }}
+
     .. code-block:: html+php
-    
+
         <?php echo $view['form']->label($form['title']) ?>
 
 By default, Symfony2 "humanizes" the field name, but you can give your own
@@ -194,11 +194,11 @@ label:
 .. configuration-block::
 
     .. code-block:: jinja
-    
-        {{ form.title|render_label('Give me a title') }}
-    
+
+        {{ form_label(form.title, 'Give me a title') }}
+
     .. code-block:: html+php
-    
+
         <?php echo $view['form']->label($form['title'], 'Give me a title') ?>
 
 .. note::
@@ -210,11 +210,11 @@ The ``errors`` helper renders the field errors:
 .. configuration-block::
 
     .. code-block:: jinja
-    
-        {{ form.title|render_errors }}
-    
+
+        {{ form_errors(form.title) }}
+
     .. code-block:: html+php
-    
+
         <?php echo $view['form']->errors($form['title']) ?>
 
 Defining the HTML Representation
@@ -224,12 +224,12 @@ The helpers rely on templates to render HTML. By default, Symfony2 comes bundled
 with templates for all built-in fields.
 
 In Twig templates, each helper is associated with one template block. The
-``render_errors`` filter, for example, looks for an ``errors`` block. The 
+``form_errors`` function, for example, looks for an ``errors`` block. The 
 built-in one reads as follows:
 
 .. code-block:: jinja
 
-    {# TwigBundle::form.twig #}
+    {# TwigBundle::form.html.twig #}
 
     {% block errors %}
         {% if errors %}
@@ -240,7 +240,7 @@ built-in one reads as follows:
         </ul>
         {% endif %}
     {% endblock errors %}
-    
+
 In PHP templates, on the other hand, each helper is associated with one PHP
 template. The ``errors()`` helper looks for an ``errors.php`` template, which
 reads as follows:
@@ -277,14 +277,14 @@ rendering a ``TextareaField`` instance:
 
     .. code-block:: jinja
 
-        {# TwigBundle::form.twig #}
-        
+        {# TwigBundle::form.html.twig #}
+
         {% block textarea_field %}
             <textarea {% display field_attributes %}>{{ field.displayedData }}</textarea>
         {% endblock textarea_field %}
-    
+
     .. code-block:: html+php
-    
+
         <!-- FrameworkBundle:Form:textarea_field.php -->
         <textarea id="<?php echo $field->getId() ?>" name="<?php echo $field->getName() ?>" <?php if ($field->isDisabled()): ?>disabled="disabled"<?php endif ?>>
             <?php echo $view->escape($field->getDisplayedData()) ?>
@@ -304,26 +304,26 @@ an argument to the ``render`` helper:
 .. configuration-block::
 
     .. code-block:: jinja
-    
-        {{ form.title|render({ 'class': 'important' }) }}
-    
+
+        {{ form_field(form.title, { 'class': 'important' }) }}
+
     .. code-block:: html+php
-    
+
         <?php echo $view['form']->render($form['title'], array(
             'class' => 'important'
         )) ?>
-        
+
 Some fields, like ``ChoiceField``, accept parameters to customize the field's
 representation. You can pass them in the next argument.
 
 .. configuration-block::
 
     .. code-block:: jinja
-    
-        {{ form.country|render({}, { 'separator': ' -- Other countries -- ' }) }}
-    
+
+        {{ form_field(form.country, {}, { 'separator': ' -- Other countries -- ' }) }}
+
     .. code-block:: html+php
-    
+
         <?php echo $view['form']->render($form['country'], array(), array(
             'separator' => ' -- Other countries -- '
         )) ?>
@@ -334,25 +334,25 @@ completely change the HTML output of the helper:
 .. configuration-block::
 
     .. code-block:: jinja
-    
-        {{ form.title|render({}, {}, 'HelloBundle::form.twig') }}
-    
+
+        {{ form_field(form.title, {}, {}, 'HelloBundle::form.html.twig') }}
+
     .. code-block:: html+php
-    
+
         <?php echo $view['form']->render($form['title'], array(), array(), 
             'HelloBundle:Form:text_field.php'
         ) ?>
-        
+
 Form Theming (Twig only)
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
-In the last example, the ``HelloBundle::form.twig`` is a regular Twig template 
+In the last example, the ``HelloBundle::form.html.twig`` is a regular Twig template 
 containing blocks defining the HTML representation for fields you want to 
 override:
 
 .. code-block:: jinja
 
-    {# HelloBundle/Resources/views/form.twig #}
+    {# HelloBundle/Resources/views/form.html.twig #}
 
     {% block textarea_field %}
         <div class="textarea_field">
@@ -366,13 +366,13 @@ Twig native inheritance feature:
 
 .. code-block:: jinja
 
-    {# HelloBundle/Resources/views/form.twig #}
+    {# HelloBundle/Resources/views/form.html.twig #}
 
-    {% extends 'TwigBundle::form.twig' %}
+    {% extends 'TwigBundle::form.html.twig' %}
 
     {% block date_field %}
         <div class="important_date_field">
-            {% parent %}
+            {{ parent() }}
         </div>
     {% endblock date_field %}
 
@@ -380,9 +380,9 @@ If you want to customize all fields of a given form, use the ``form_theme`` tag:
 
 .. code-block:: jinja
 
-    {% form_theme form 'HelloBundle::form.twig' %}
+    {% form_theme form 'HelloBundle::form.html.twig' %}
 
-Whenever you call the ``render`` filter on the ``form`` after this call,
+Whenever you call the ``form_field`` function on the ``form`` after this call,
 Symfony2 will look for a representation in your template before falling back to
 the default one.
 
@@ -391,13 +391,13 @@ array:
 
 .. code-block:: jinja
 
-    {% form_theme form ['HelloBundle::form.twig', 'HelloBundle::form.twig', 'HelloBundle::hello_form.twig'] %}
+    {% form_theme form ['HelloBundle::form.html.twig', 'HelloBundle::form.html.twig', 'HelloBundle::hello_form.html.twig'] %}
 
 A theme can be attached to a whole form (as above) or just for a field group:
 
 .. code-block:: jinja
 
-    {% form_theme form.user 'HelloBundle::form.twig' %}
+    {% form_theme form.user 'HelloBundle::form.html.twig' %}
 
 Finally, customizing the representation of all forms of an application is
 possible via configuration:
@@ -409,15 +409,15 @@ possible via configuration:
         # app/config/config.yml
         twig.config:
             form:
-                resources: [BlogBundle::form.twig, TwigBundle::form.twig]
+                resources: [BlogBundle::form.html.twig, TwigBundle::form.html.twig]
 
     .. code-block:: xml
 
         <!-- app/config/config.xml -->
         <twig:config>
             <twig:form>
-                <twig:resource>BlogBundle::form.twig</twig:resource>
-                <twig:resource>TwigBundle::form.twig</twig:resource>
+                <twig:resource>BlogBundle::form.html.twig</twig:resource>
+                <twig:resource>TwigBundle::form.html.twig</twig:resource>
             </twig:form>
         </twig:config>
 
@@ -425,7 +425,7 @@ possible via configuration:
 
         // app/config/config.php
         $container->loadFromExtension('twig', 'config', array('form' => array(
-            'resources' => array('BlogBundle::form.twig', 'TwigBundle::form.twig),
+            'resources' => array('BlogBundle::form.html.twig', 'TwigBundle::form.html.twig),
         )));
 
 Prototyping
@@ -437,17 +437,17 @@ of manually rendering all fields:
 .. configuration-block::
 
     .. code-block:: jinja
-    
-        <form action="#" {{ form|render_enctype }} method="post">
-            {{ form|render }}
+
+        <form action="#" {{ form_enctype(form) }} method="post">
+            {{ form_field(form) }}
             <input type="submit" />
         </form>
-    
+
     .. code-block:: html+php
-    
+
         <form action="#" <?php echo $view['form']->enctype($form) ?> method="post">
             <?php echo $view['form']->render($form) ?>
-    
+
             <input type="submit" />
         </form>
 
@@ -457,29 +457,29 @@ parent class - ``FieldGroup`` - is used instead:
 .. configuration-block::
 
     .. code-block:: jinja
-    
-        {# TwigBundle::form.twig #}
-    
+
+        {# TwigBundle::form.html.twig #}
+
         {% block field_group %}
-            {{ field|render_errors }}
+            {{ form_errors(field) }}
             {% for child in field %}
                 {% if not child.ishidden %}
                     <div>
-                        {{ child|render_label }}
-                        {{ child|render_errors }}
-                        {{ child|render }}
+                        {{ form_label(child) }}
+                        {{ form_errors(child) }}
+                        {{ form_field(child) }}
                     </div>
                 {% endif %}
             {% endfor %}
-            {{ field|render_hidden }}
+            {{ form_hidden(field) }}
         {% endblock field_group %}
-    
+
     .. code-block:: html+php
-    
+
         <!-- FrameworkBundle:Form:group/table/field_group.php -->
-    
+
         <?php echo $view['form']->errors($field) ?>
-        
+
         <div>
             <?php foreach ($field->getVisibleFields() as $child): ?>
                 <div>
@@ -489,7 +489,7 @@ parent class - ``FieldGroup`` - is used instead:
                 </div>
             <?php endforeach; ?>
         </div>
-        
+
         <?php echo $view['form']->hidden($field) ?>
 
 .. caution::

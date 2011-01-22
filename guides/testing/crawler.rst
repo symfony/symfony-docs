@@ -45,7 +45,7 @@ Method                Description
 Traversing
 ----------
 
-Like JQuery, the Crawler has methods to traverse the DOM of an HTML/XML
+Like jQuery, the Crawler has methods to traverse the DOM of an HTML/XML
 document:
 
 ===================== =========================================

@@ -148,8 +148,8 @@ spaces.
 .. tip::
 
     The double-quoted style provides a way to express arbitrary strings, by
-     using ``\`` escape sequences. It is very useful when you need to embed a
-   ``\n`` or a unicode character in a string.
+    using ``\`` escape sequences. It is very useful when you need to embed a
+    ``\n`` or a unicode character in a string.
 
 When a string contains line breaks, you can use the literal style, indicated
 by the pipe (``|``), to indicate that the string will span several lines. In

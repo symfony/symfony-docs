@@ -57,11 +57,8 @@ This class must implement four methods:
   application (notice the reference to
   ``Application\HelloBundle\HelloBundle``);
 
-* ``registerBundleDirs()``: Returns an array associating namespaces and their
-  home directories;
-
-* ``registerContainerConfiguration()``: Returns the main configuration object
-  (more on this later);
+* ``registerContainerConfiguration()``: Loads the configuration (more on this
+  later);
 
 Have a look at the default implementation of these methods to better
 understand the flexibility of the framework.
@@ -75,8 +72,8 @@ directory::
 The Source Directory
 ~~~~~~~~~~~~~~~~~~~~
 
-The ``src/autoload.php`` file is responsible for autoloading all the files
-stored in the ``src/`` directory::
+The ``src/autoload.php`` file is responsible for autoloading all the PHP
+classes used by the application::
 
     // src/autoload.php
     $vendorDir = __DIR__.'/vendor';
@@ -93,14 +90,16 @@ stored in the ``src/`` directory::
         'Doctrine\\Common\\DataFixtures' => $vendorDir.'/doctrine-data-fixtures/lib',
         'Doctrine\\Common'               => $vendorDir.'/doctrine-common/lib',
         'Doctrine\\DBAL\\Migrations'     => $vendorDir.'/doctrine-migrations/lib',
-        'Doctrine\\ODM\\MongoDB'         => $vendorDir.'/doctrine-mongodb/lib',
+        'Doctrine\\MongoDB'              => $vendorDir.'/doctrine-mongodb/lib',
+        'Doctrine\\ODM\\MongoDB'         => $vendorDir.'/doctrine-mongodb-odm/lib',
         'Doctrine\\DBAL'                 => $vendorDir.'/doctrine-dbal/lib',
         'Doctrine'                       => $vendorDir.'/doctrine/lib',
         'Zend'                           => $vendorDir.'/zend/library',
     ));
     $loader->registerPrefixes(array(
-        'Swift_' => $vendorDir.'/swiftmailer/lib/classes',
-        'Twig_'  => $vendorDir.'/twig/lib',
+        'Swift_'           => $vendorDir.'/swiftmailer/lib/classes',
+        'Twig_Extensions_' => $vendorDir.'/twig-extensions/lib',
+        'Twig_'            => $vendorDir.'/twig/lib',
     ));
     $loader->register();
 
@@ -117,15 +116,15 @@ server or locally in your projects.
 The Bundle System
 -----------------
 
-This section starts to scratch the surface of one of the greatest and most
-powerful features of Symfony2, the :term:`bundle` system.
+This section introduces one of the greatest and most powerful features of
+Symfony2, the :term:`bundle` system.
 
 A bundle is kind of like a plugin in other software. So why is it called
-bundle and not plugin? Because *everything* is a bundle in Symfony2, from
+*bundle* and not *plugin*? Because *everything* is a bundle in Symfony2, from
 the core framework features to the code you write for your application.
-Bundles are first-class citizens in Symfony2. This gives you the flexibility to
-use pre-built features packaged in third-party bundles or to distribute your
-own bundles. It makes it easy to pick and choose which features to enable
+Bundles are first-class citizens in Symfony2. This gives you the flexibility
+to use pre-built features packaged in third-party bundles or to distribute
+your own bundles. It makes it easy to pick and choose which features to enable
 in your application and optimize them the way you want.
 
 An application is made up of bundles as defined in the ``registerBundles()``
@@ -345,24 +344,6 @@ specific configuration file:
                 'path'     => '%kernel.logs_dir%/%kernel.environment%.log',
             ),
         ));
-
-As we have seen in the previous part, an application is made up of bundles
-defined in the ``registerBundles()`` method. But how does Symfony2 know where
-to look for bundles? Symfony2 is quite flexible in this regard. The
-``registerBundleDirs()`` method must return an associative array that maps
-namespaces to any valid directory (local or global ones)::
-
-    public function registerBundleDirs()
-    {
-        return array(
-            'Application'     => __DIR__.'/../src/Application',
-            'Bundle'          => __DIR__.'/../src/Bundle',
-            'Symfony\\Bundle' => __DIR__.'/../src/vendor/symfony/src/Symfony/Bundle',
-        );
-    }
-
-So, when you reference the ``HelloBundle`` in a controller name or in a template
-name, Symfony2 will look for it under the given directories.
 
 Do you understand now why Symfony2 is so flexible? Share your bundles between
 applications, store them locally or globally, your choice.

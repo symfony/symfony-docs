@@ -14,25 +14,34 @@ persistence for PHP objects.
     official `documentation`_ website.
 
 To get started, enable and configure the :doc:`Doctrine DBAL
-</guides/doctrine/dbal/overview>`, then enable the ORM:
+</guides/doctrine/dbal/overview>`, then enable the ORM. The minimal
+necessary configuration is to specify the bundle name which contains your entities.
 
 .. configuration-block::
 
     .. code-block:: yaml
 
         # app/config/config.yml
-        doctrine.orm: ~
+        doctrine.orm:
+          mappings:
+            HelloBundle: ~
 
     .. code-block:: xml
 
         <!-- xmlns:doctrine="http://www.symfony-project.org/schema/dic/doctrine" -->
         <!-- xsi:schemaLocation="http://www.symfony-project.org/schema/dic/doctrine http://www.symfony-project.org/schema/dic/doctrine/doctrine-1.0.xsd"> -->
 
-        <doctrine:orm />
+        <doctrine:orm>
+            <mappings>
+                <mapping name="HelloBundle" />
+            </mappings>
+        </doctrine>
 
     .. code-block:: php
 
-        $container->loadFromExtension('doctrine', 'orm');
+        $container->loadFromExtension('doctrine', 'orm', array(
+            "mappings" => array("HelloBundle" => array()),
+        ));
 
 As Doctrine provides transparent persistence for PHP objects, it works with
 any PHP class::
@@ -145,6 +154,9 @@ the following commands:
 
 Eventually, use your entity and manage its persistent state with Doctrine::
 
+    // Application/HelloBundle/Controller/UserController.php
+    namespace Application\HelloBundle\Controller;
+
     use Application\HelloBundle\Entity\User;
 
     class UserController extends Controller
@@ -182,6 +194,31 @@ Eventually, use your entity and manage its persistent state with Doctrine::
             // ...
         }
     }
+
+Now the scenario arrises where you want to change your mapping information and
+update your development database schema without blowing away everything and
+losing your existing data. So first lets just add a new property to our ``User``
+entity::
+
+    namespace Application\HelloBundle\Entities;
+
+    /** @orm:Entity */
+    class User
+    {
+        /** @orm:Column(type="string") */
+        protected $new;
+
+        // ...
+    }
+
+Once you've done that, to get your database schema updated with the new column
+you just need to run the following command:
+
+    $ php app/console doctrine:schema:update
+
+Now your database will be updated and the new column added to the database
+table.
+
 
 .. _documentation: http://www.doctrine-project.org/projects/orm/2.0/docs/en
 .. _Doctrine:      http://www.doctrine-project.org

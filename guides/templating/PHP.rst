@@ -9,15 +9,15 @@ templates with PHP more powerful.
 Rendering PHP Templates
 -----------------------
 
-To render a PHP template instead of a Twig one, use the ``.php`` suffix at the
-end of the template name instead of ``.twig``. The controller below renders
-the ``index.php`` template::
+To render a PHP template instead of a Twig one, use ``.php`` in the
+template name instead of ``.twig``. The controller below renders the
+``index.html.php`` template::
 
     // src/Application/HelloBundle/Controller/HelloController.php
 
     public function indexAction($name)
     {
-        return $this->render('HelloBundle:Hello:index.php', array('name' => $name));
+        return $this->render('HelloBundle:Hello:index.html.php', array('name' => $name));
     }
 
 .. index::
@@ -31,33 +31,33 @@ More often than not, templates in a project share common elements, like the
 well-known header and footer. In Symfony2, we like to think about this problem
 differently: a template can be decorated by another one.
 
-The ``index.php`` template is decorated by ``layout.php``, thanks to the
-``extend()`` call:
+The ``index.html.php`` template is decorated by ``layout.html.php``, thanks to
+the ``extend()`` call:
 
 .. code-block:: html+php
 
-    <!-- src/Application/HelloBundle/Resources/views/Hello/index.php -->
-    <?php $view->extend('HelloBundle::layout.php') ?>
+    <!-- src/Application/HelloBundle/Resources/views/Hello/index.html.php -->
+    <?php $view->extend('HelloBundle::layout.html.php') ?>
 
     Hello <?php echo $name ?>!
 
-The ``HelloBundle::layout.php`` notation sounds familiar, doesn't it? It is
-the same notation as for referencing a template. The ``::`` part simply means
-that the controller element is empty, so the corresponding file is directly
-stored under ``views/``.
+The ``HelloBundle::layout.html.php`` notation sounds familiar, doesn't it? It
+is the same notation used to reference a template. The ``::`` part simply
+means that the controller element is empty, so the corresponding file is
+directly stored under ``views/``.
 
-Now, let's have a look at the ``layout.php`` file:
+Now, let's have a look at the ``layout.html.php`` file:
 
 .. code-block:: html+php
 
-    <!-- src/Application/HelloBundle/Resources/views/layout.php -->
-    <?php $view->extend('::layout.php') ?>
+    <!-- src/Application/HelloBundle/Resources/views/layout.html.php -->
+    <?php $view->extend('::base.html.php') ?>
 
     <h1>Hello Application</h1>
 
     <?php $view['slots']->output('_content') ?>
 
-The layout is itself decorated by another layout (``::layout.php``). Symfony2
+The layout is itself decorated by another one (``::base.html.php``). Symfony2
 supports multiple decoration levels: a layout can itself be decorated by
 another one. When the bundle part of the template name is empty, views are
 looked for in the ``app/views/`` directory. This directory store global views
@@ -65,7 +65,7 @@ for your entire project:
 
 .. code-block:: html+php
 
-    <!-- app/views/layout.php -->
+    <!-- app/views/base.html.php -->
     <!DOCTYPE html>
     <html>
         <head>
@@ -78,8 +78,8 @@ for your entire project:
     </html>
 
 For both layouts, the ``$view['slots']->output('_content')`` expression is
-replaced by the content of the child template, ``index.php`` and
-``layout.php`` respectively (more on slots in the next section).
+replaced by the content of the child template, ``index.html.php`` and
+``layout.html.php`` respectively (more on slots in the next section).
 
 As you can see, Symfony2 provides methods on a mysterious ``$view`` object. In
 a template, the ``$view`` variable is always available and refers to a special
@@ -93,12 +93,13 @@ Working with Slots
 ------------------
 
 A slot is a snippet of code, defined in a template, and reusable in any layout
-decorating the template. In the ``index.php`` template, define a ``title`` slot:
+decorating the template. In the ``index.html.php`` template, define a
+``title`` slot:
 
 .. code-block:: html+php
 
-    <!-- src/Application/HelloBundle/Resources/views/Hello/index.php -->
-    <?php $view->extend('HelloBundle::layout.php') ?>
+    <!-- src/Application/HelloBundle/Resources/views/Hello/index.html.php -->
+    <?php $view->extend('HelloBundle::layout.html.php') ?>
 
     <?php $view['slots']->set('title', 'Hello World Application') ?>
 
@@ -108,7 +109,7 @@ The base layout already have the code to output the title in the header:
 
 .. code-block:: html+php
 
-    <!-- app/views/layout.php -->
+    <!-- app/views/layout.html.php -->
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <title><?php $view['slots']->output('title', 'Hello Application') ?></title>
@@ -135,21 +136,21 @@ Including other Templates
 The best way to share a snippet of template code is to define a template that
 can then be included into other templates.
 
-Create a ``hello.php`` template:
+Create a ``hello.html.php`` template:
 
 .. code-block:: html+php
 
-    <!-- src/Application/HelloBundle/Resources/views/Hello/hello.php -->
+    <!-- src/Application/HelloBundle/Resources/views/Hello/hello.html.php -->
     Hello <?php echo $name ?>!
 
-And change the ``index.php`` template to include it:
+And change the ``index.html.php`` template to include it:
 
 .. code-block:: html+php
 
-    <!-- src/Application/HelloBundle/Resources/views/Hello/index.php -->
-    <?php $view->extend('HelloBundle::layout.php') ?>
+    <!-- src/Application/HelloBundle/Resources/views/Hello/index.html.php -->
+    <?php $view->extend('HelloBundle::layout.html.php') ?>
 
-    <?php echo $view->render('HelloBundle:Hello:hello.php', array('name' => $name)) ?>
+    <?php echo $view->render('HelloBundle:Hello:hello.html.php', array('name' => $name)) ?>
 
 The ``render()`` method evaluates and returns the content of another template
 (this is the exact same method as the one used in the controller).
@@ -164,12 +165,12 @@ And what if you want to embed the result of another controller in a template?
 That's very useful when working with Ajax, or when the embedded template needs
 some variable not available in the main template.
 
-If you create a ``fancy`` action, and want to include it into the ``index.php``
-template, simply use the following code:
+If you create a ``fancy`` action, and want to include it into the
+``index.html.php`` template, simply use the following code:
 
 .. code-block:: html+php
 
-    <!-- src/Application/HelloBundle/Resources/views/Hello/index.php -->
+    <!-- src/Application/HelloBundle/Resources/views/Hello/index.html.php -->
     <?php echo $view['actions']->render('HelloBundle:Hello:fancy', array('name' => $name, 'color' => 'green')) ?>
 
 Here, the ``HelloBundle:Hello:fancy`` string refers to the ``fancy`` action of the
@@ -184,7 +185,7 @@ Here, the ``HelloBundle:Hello:fancy`` string refers to the ``fancy`` action of t
             // create some object, based on the $color variable
             $object = ...;
 
-            return $this->render('HelloBundle:Hello:fancy.php', array('name' => $name, 'object' => $object));
+            return $this->render('HelloBundle:Hello:fancy.html.php', array('name' => $name, 'object' => $object));
         }
 
         // ...
@@ -218,7 +219,7 @@ updated by changing the configuration:
         Greet Thomas!
     </a>
 
-The ``generate()`` method takes the route name and an array of paremeters as
+The ``generate()`` method takes the route name and an array of parameters as
 arguments. The route name is the main key under which routes are referenced
 and the parameters are the values of the placeholders defined in the route
 pattern:
@@ -227,15 +228,14 @@ pattern:
 
     # src/Application/HelloBundle/Resources/config/routing.yml
     hello: # The route name
-        pattern:  /hello/:name
+        pattern:  /hello/{name}
         defaults: { _controller: HelloBundle:Hello:index }
 
 Using Assets: images, JavaScripts, and stylesheets
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 What would the Internet be without images, JavaScripts, and stylesheets?
-Symfony2 provides three helpers to deal with them easily: ``assets``,
-``javascripts``, and ``stylesheets``:
+Symfony2 provides the ``assets`` tag to deal with them easily:
 
 .. code-block:: html+php
 
@@ -243,25 +243,10 @@ Symfony2 provides three helpers to deal with them easily: ``assets``,
 
     <img src="<?php echo $view['assets']->getUrl('images/logo.png') ?>" />
 
-The ``assets`` helper's main purpose is to make your application more portable.
-Thanks to this helper, you can move the application root directory anywhere under your
-web root directory without changing anything in your template's code.
-
-Similarly, you can manage your stylesheets and JavaScripts with the
-``stylesheets`` and ``javascripts`` helpers:
-
-.. code-block:: html+php
-
-    <?php $view['javascripts']->add('js/product.js') ?>
-    <?php $view['stylesheets']->add('css/product.css') ?>
-
-The ``add()`` method defines dependencies. To actually output these assets, you
-need to also add the following code in your main layout:
-
-.. code-block:: html+php
-
-    <?php echo $view['javascripts'] ?>
-    <?php echo $view['stylesheets'] ?>
+The ``assets`` helper's main purpose is to make your application more
+portable. Thanks to this helper, you can move the application root directory
+anywhere under your web root directory without changing anything in your
+template's code.
 
 Output Escaping
 ---------------

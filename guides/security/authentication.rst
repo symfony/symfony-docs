@@ -296,7 +296,7 @@ yourself::
                 $error = $this->get('request')->getSession()->get(SecurityContext::AUTHENTICATION_ERROR);
             }
 
-            return $this->render('SecurityBundle:Security:login.php', array(
+            return $this->render('SecurityBundle:Security:login.html.twig', array(
                 // last username entered by the user
                 'last_username' => $this->get('request')->getSession()->get(SecurityContext::LAST_USERNAME),
                 'error'         => $error,
@@ -330,7 +330,7 @@ And the corresponding template:
             <div>{{ error }}</div>
         {% endif %}
 
-        <form action="{% path "_security_check" %}" method="post">
+        <form action="{{ path('_security_check') }}" method="post">
             <label for="username">Username:</label>
             <input type="text" id="username" name="_username" value="{{ last_username }}" />
 

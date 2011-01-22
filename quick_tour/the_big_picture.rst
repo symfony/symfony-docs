@@ -96,7 +96,7 @@ configuration file.
 
 All Symfony2 configuration files can be written in either PHP, XML, or `YAML`_
 (YAML is a simple format that makes the description of configuration settings
-very easy).
+straightforward).
 
 .. tip::
 
@@ -124,7 +124,7 @@ So, Symfony2 routes the request by reading the routing configuration file:
             defaults: { _controller: FrameworkBundle:Default:index }
 
         hello:
-            resource: HelloBundle/Resources/config/routing.yml
+            resource: @HelloBundle/Resources/config/routing.yml
 
     .. code-block:: xml
 
@@ -139,7 +139,7 @@ So, Symfony2 routes the request by reading the routing configuration file:
                 <default key="_controller">FrameworkBundle:Default:index</default>
             </route>
 
-            <import resource="HelloBundle/Resources/config/routing.xml" />
+            <import resource="@HelloBundle/Resources/config/routing.xml" />
         </routes>
 
     .. code-block:: php
@@ -152,12 +152,12 @@ So, Symfony2 routes the request by reading the routing configuration file:
         $collection->add('homepage', new Route('/', array(
             '_controller' => 'FrameworkBundle:Default:index',
         )));
-        $collection->addCollection($loader->import("HelloBundle/Resources/config/routing.php"));
+        $collection->addCollection($loader->import("@HelloBundle/Resources/config/routing.php"));
 
         return $collection;
 
-The first few lines of the routing configuration file define which code to
-call when the user requests the "``/``" resource. More interesting is the last
+The first few lines of the routing configuration file define the code called
+when the user requests the "``/``" resource. More interesting is the last
 part, which imports another routing configuration file that reads as follows:
 
 .. configuration-block::
@@ -166,7 +166,7 @@ part, which imports another routing configuration file that reads as follows:
 
         # src/Application/HelloBundle/Resources/config/routing.yml
         hello:
-            pattern:  /hello/:name
+            pattern:  /hello/{name}
             defaults: { _controller: HelloBundle:Hello:index }
 
     .. code-block:: xml
@@ -178,7 +178,7 @@ part, which imports another routing configuration file that reads as follows:
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://www.symfony-project.org/schema/routing http://www.symfony-project.org/schema/routing/routing-1.0.xsd">
 
-            <route id="hello" pattern="/hello/:name">
+            <route id="hello" pattern="/hello/{name}">
                 <default key="_controller">HelloBundle:Hello:index</default>
             </route>
         </routes>
@@ -190,14 +190,14 @@ part, which imports another routing configuration file that reads as follows:
         use Symfony\Component\Routing\Route;
 
         $collection = new RouteCollection();
-        $collection->add('hello', new Route('/hello/:name', array(
+        $collection->add('hello', new Route('/hello/{name}', array(
             '_controller' => 'HelloBundle:Hello:index',
         )));
 
         return $collection;
 
-Here we go! As you can see, the "``/hello/:name``" resource pattern (a string
-beginning with a colon like ``:name`` is a placeholder) is mapped to a
+Here we go! As you can see, the "``/hello/{name}``" resource pattern (a string
+enclosed in curly brackets like ``{name}`` is a placeholder) is mapped to a
 controller, referenced by the ``_controller`` value.
 
 .. index::
@@ -223,14 +223,14 @@ The controller is responsible for returning a representation of the resource
     {
         public function indexAction($name)
         {
-            return $this->render('HelloBundle:Hello:index.twig', array('name' => $name));
+            return $this->render('HelloBundle:Hello:index.html.twig', array('name' => $name));
 
             // render a PHP template instead
-            // return $this->render('HelloBundle:Hello:index.php', array('name' => $name));
+            // return $this->render('HelloBundle:Hello:index.html.php', array('name' => $name));
         }
     }
 
-The code is pretty straightforward but let's explain this code line by line:
+The code is pretty straightforward but let's explain it line by line:
 
 * *line 3*: Symfony2 takes advantage of new PHP 5.3 features and as such, all
   controllers are properly namespaced (the namespace is the first part of the
@@ -247,8 +247,8 @@ The code is pretty straightforward but let's explain this code line by line:
   resource placeholder values as arguments (``$name`` in our case).
 
 * *line 11*: The ``render()`` method loads and renders a template
-  (``HelloBundle:Hello:index.twig``) with the variables passed as a second
-  argument.
+  (``HelloBundle:Hello:index.html.twig``) with the variables passed as a
+  second argument.
 
 But what is a :term:`bundle`? All the code you write in a Symfony2 project is
 organized in bundles. In Symfony2 speak, a bundle is a structured set of files
@@ -259,15 +259,15 @@ developers. In our example, we only have one bundle, ``HelloBundle``.
 Templates
 ~~~~~~~~~
 
-So, the controller renders the ``HelloBundle:Hello:index.twig`` template. But
-what's in a template name? ``HelloBundle`` is the bundle name, ``Hello`` is
-the controller, and ``index.twig`` the template name. By default, the sandbox
-uses Twig as its template engine:
+So, the controller renders the ``HelloBundle:Hello:index.html.twig`` template.
+But what's in a template name? ``HelloBundle`` is the bundle name, ``Hello``
+is the controller, and ``index.html.twig`` the template name. By default, the
+sandbox uses Twig as its template engine:
 
 .. code-block:: jinja
 
-    {# src/Application/HelloBundle/Resources/views/Hello/index.twig #}
-    {% extends "HelloBundle::layout.twig" %}
+    {# src/Application/HelloBundle/Resources/views/Hello/index.html.twig #}
+    {% extends "HelloBundle::layout.html.twig" %}
 
     {% block content %}
         Hello {{ name }}!
