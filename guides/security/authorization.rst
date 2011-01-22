@@ -187,9 +187,9 @@ syntax:
 
     .. code-block:: jinja
 
-        {% ifrole "ROLE_ADMIN" %}
+        {% if has_role("ROLE_ADMIN") %}
             <a href="...">Delete</a>
-        {% endifrole %}
+        {% endif %}
 
 .. note::
 
