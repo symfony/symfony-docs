@@ -171,7 +171,9 @@ PHP. Have a look at the default configuration:
         app.config:
             charset:       UTF-8
             error_handler: null
-            csrf_secret:   xxxxxxxxxx
+            csrf_protection:
+                enabled: true
+                secret: xxxxxxxxxx
             router:        { resource: "%kernel.root_dir%/config/routing.yml" }
             validation:    { enabled: true, annotations: true }
             templating:
@@ -203,10 +205,11 @@ PHP. Have a look at the default configuration:
     .. code-block:: xml
 
         <!-- app/config/config.xml -->
-        <app:config csrf-secret="xxxxxxxxxx" charset="UTF-8" error-handler="null">
+        <app:config charset="UTF-8" error-handler="null">
             <app:router resource="%kernel.root_dir%/config/routing.xml" />
             <app:validation enabled="true" annotations="true" />
             <app:session default-locale="en" lifetime="3600" />
+            <app:csrf-protection enabled="true" secret="xxxxxxxxxx" />
         </app:config>
 
         <!-- Twig Configuration -->
@@ -235,12 +238,12 @@ PHP. Have a look at the default configuration:
 
         // app/config/config.php
         $container->loadFromExtension('app', 'config', array(
-            'charset'       => 'UTF-8',
-            'error_handler' => null,
-            'csrf-secret'   => 'xxxxxxxxxx',
-            'router'        => array('resource' => '%kernel.root_dir%/config/routing.php'),
-            'validation'    => array('enabled' => true, 'annotations' => true),
-            'templating'    => array(
+            'charset'         => 'UTF-8',
+            'error_handler'   => null,
+            'csrf-protection' => array('enabled' => true, 'secret' => 'xxxxxxxxxx'),
+            'router'          => array('resource' => '%kernel.root_dir%/config/routing.php'),
+            'validation'      => array('enabled' => true, 'annotations' => true),
+            'templating'      => array(
                 #'assets_version' => "SomeVersionScheme",
             ),
             'session' => array(
