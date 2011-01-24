@@ -104,7 +104,7 @@ Response. If that works, the ``core.response`` event is notified; if not the
 Exception is re-thrown.
 
 If you don't want Exceptions to be caught (for embedded requests for instance),
-disable the ``core.exception`` event by passing ``true`` as the third argument
+disable the ``core.exception`` event by passing ``false`` as the third argument
 to the ``handle()`` method.
 
 .. index::

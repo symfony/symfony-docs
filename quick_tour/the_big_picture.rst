@@ -223,10 +223,10 @@ The controller is responsible for returning a representation of the resource
     {
         public function indexAction($name)
         {
-            return $this->render('HelloBundle:Hello:index.twig.html', array('name' => $name));
+            return $this->render('HelloBundle:Hello:index.html.twig', array('name' => $name));
 
             // render a PHP template instead
-            // return $this->render('HelloBundle:Hello:index.php.html', array('name' => $name));
+            // return $this->render('HelloBundle:Hello:index.html.php', array('name' => $name));
         }
     }
 
@@ -247,7 +247,7 @@ The code is pretty straightforward but let's explain it line by line:
   resource placeholder values as arguments (``$name`` in our case).
 
 * *line 11*: The ``render()`` method loads and renders a template
-  (``HelloBundle:Hello:index.twig.html``) with the variables passed as a
+  (``HelloBundle:Hello:index.html.twig``) with the variables passed as a
   second argument.
 
 But what is a :term:`bundle`? All the code you write in a Symfony2 project is
@@ -259,15 +259,15 @@ developers. In our example, we only have one bundle, ``HelloBundle``.
 Templates
 ~~~~~~~~~
 
-So, the controller renders the ``HelloBundle:Hello:index.twig.html`` template.
+So, the controller renders the ``HelloBundle:Hello:index.html.twig`` template.
 But what's in a template name? ``HelloBundle`` is the bundle name, ``Hello``
-is the controller, and ``index.twig.html`` the template name. By default, the
+is the controller, and ``index.html.twig`` the template name. By default, the
 sandbox uses Twig as its template engine:
 
 .. code-block:: jinja
 
-    {# src/Application/HelloBundle/Resources/views/Hello/index.twig.html #}
-    {% extends "HelloBundle::layout.twig.html" %}
+    {# src/Application/HelloBundle/Resources/views/Hello/index.html.twig #}
+    {% extends "HelloBundle::layout.html.twig" %}
 
     {% block content %}
         Hello {{ name }}!

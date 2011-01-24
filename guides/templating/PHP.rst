@@ -9,15 +9,15 @@ templates with PHP more powerful.
 Rendering PHP Templates
 -----------------------
 
-To render a PHP template instead of a Twig one, use ``.php`` in the the
+To render a PHP template instead of a Twig one, use ``.php`` in the
 template name instead of ``.twig``. The controller below renders the
-``index.php.html`` template::
+``index.html.php`` template::
 
     // src/Application/HelloBundle/Controller/HelloController.php
 
     public function indexAction($name)
     {
-        return $this->render('HelloBundle:Hello:index.php.html', array('name' => $name));
+        return $this->render('HelloBundle:Hello:index.html.php', array('name' => $name));
     }
 
 .. index::
@@ -31,33 +31,33 @@ More often than not, templates in a project share common elements, like the
 well-known header and footer. In Symfony2, we like to think about this problem
 differently: a template can be decorated by another one.
 
-The ``index.php.html`` template is decorated by ``layout.php.html``, thanks to
+The ``index.html.php`` template is decorated by ``layout.html.php``, thanks to
 the ``extend()`` call:
 
 .. code-block:: html+php
 
-    <!-- src/Application/HelloBundle/Resources/views/Hello/index.php.html -->
-    <?php $view->extend('HelloBundle::layout.php.html') ?>
+    <!-- src/Application/HelloBundle/Resources/views/Hello/index.html.php -->
+    <?php $view->extend('HelloBundle::layout.html.php') ?>
 
     Hello <?php echo $name ?>!
 
-The ``HelloBundle::layout.php.html`` notation sounds familiar, doesn't it? It
+The ``HelloBundle::layout.html.php`` notation sounds familiar, doesn't it? It
 is the same notation used to reference a template. The ``::`` part simply
 means that the controller element is empty, so the corresponding file is
 directly stored under ``views/``.
 
-Now, let's have a look at the ``layout.php.html`` file:
+Now, let's have a look at the ``layout.html.php`` file:
 
 .. code-block:: html+php
 
-    <!-- src/Application/HelloBundle/Resources/views/layout.php.html -->
-    <?php $view->extend('::base.php.html') ?>
+    <!-- src/Application/HelloBundle/Resources/views/layout.html.php -->
+    <?php $view->extend('::base.html.php') ?>
 
     <h1>Hello Application</h1>
 
     <?php $view['slots']->output('_content') ?>
 
-The layout is itself decorated by another one (``::base.php.html``). Symfony2
+The layout is itself decorated by another one (``::base.html.php``). Symfony2
 supports multiple decoration levels: a layout can itself be decorated by
 another one. When the bundle part of the template name is empty, views are
 looked for in the ``app/views/`` directory. This directory store global views
@@ -65,7 +65,7 @@ for your entire project:
 
 .. code-block:: html+php
 
-    <!-- app/views/base.php.html -->
+    <!-- app/views/base.html.php -->
     <!DOCTYPE html>
     <html>
         <head>
@@ -78,8 +78,8 @@ for your entire project:
     </html>
 
 For both layouts, the ``$view['slots']->output('_content')`` expression is
-replaced by the content of the child template, ``index.php.html`` and
-``layout.php.html`` respectively (more on slots in the next section).
+replaced by the content of the child template, ``index.html.php`` and
+``layout.html.php`` respectively (more on slots in the next section).
 
 As you can see, Symfony2 provides methods on a mysterious ``$view`` object. In
 a template, the ``$view`` variable is always available and refers to a special
@@ -93,13 +93,13 @@ Working with Slots
 ------------------
 
 A slot is a snippet of code, defined in a template, and reusable in any layout
-decorating the template. In the ``index.php.html`` template, define a
+decorating the template. In the ``index.html.php`` template, define a
 ``title`` slot:
 
 .. code-block:: html+php
 
-    <!-- src/Application/HelloBundle/Resources/views/Hello/index.php.html -->
-    <?php $view->extend('HelloBundle::layout.php.html') ?>
+    <!-- src/Application/HelloBundle/Resources/views/Hello/index.html.php -->
+    <?php $view->extend('HelloBundle::layout.html.php') ?>
 
     <?php $view['slots']->set('title', 'Hello World Application') ?>
 
@@ -109,7 +109,7 @@ The base layout already have the code to output the title in the header:
 
 .. code-block:: html+php
 
-    <!-- app/views/layout.php.html -->
+    <!-- app/views/layout.html.php -->
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <title><?php $view['slots']->output('title', 'Hello Application') ?></title>
@@ -136,21 +136,21 @@ Including other Templates
 The best way to share a snippet of template code is to define a template that
 can then be included into other templates.
 
-Create a ``hello.php.html`` template:
+Create a ``hello.html.php`` template:
 
 .. code-block:: html+php
 
-    <!-- src/Application/HelloBundle/Resources/views/Hello/hello.php.html -->
+    <!-- src/Application/HelloBundle/Resources/views/Hello/hello.html.php -->
     Hello <?php echo $name ?>!
 
-And change the ``index.php.html`` template to include it:
+And change the ``index.html.php`` template to include it:
 
 .. code-block:: html+php
 
-    <!-- src/Application/HelloBundle/Resources/views/Hello/index.php.html -->
-    <?php $view->extend('HelloBundle::layout.php.html') ?>
+    <!-- src/Application/HelloBundle/Resources/views/Hello/index.html.php -->
+    <?php $view->extend('HelloBundle::layout.html.php') ?>
 
-    <?php echo $view->render('HelloBundle:Hello:hello.php.html', array('name' => $name)) ?>
+    <?php echo $view->render('HelloBundle:Hello:hello.html.php', array('name' => $name)) ?>
 
 The ``render()`` method evaluates and returns the content of another template
 (this is the exact same method as the one used in the controller).
@@ -166,11 +166,11 @@ That's very useful when working with Ajax, or when the embedded template needs
 some variable not available in the main template.
 
 If you create a ``fancy`` action, and want to include it into the
-``index.php.html`` template, simply use the following code:
+``index.html.php`` template, simply use the following code:
 
 .. code-block:: html+php
 
-    <!-- src/Application/HelloBundle/Resources/views/Hello/index.php.html -->
+    <!-- src/Application/HelloBundle/Resources/views/Hello/index.html.php -->
     <?php echo $view['actions']->render('HelloBundle:Hello:fancy', array('name' => $name, 'color' => 'green')) ?>
 
 Here, the ``HelloBundle:Hello:fancy`` string refers to the ``fancy`` action of the
@@ -185,7 +185,7 @@ Here, the ``HelloBundle:Hello:fancy`` string refers to the ``fancy`` action of t
             // create some object, based on the $color variable
             $object = ...;
 
-            return $this->render('HelloBundle:Hello:fancy.php.html', array('name' => $name, 'object' => $object));
+            return $this->render('HelloBundle:Hello:fancy.html.php', array('name' => $name, 'object' => $object));
         }
 
         // ...

@@ -56,7 +56,7 @@ Now let's create a form to let the visitor fill the data of the object::
         $form->add(new TextField('name'));
         $form->add(new IntegerField('age'));
 
-        return $this->render('HelloBundle:Hello:signup.twig.html', array(
+        return $this->render('HelloBundle:Hello:signup.html.twig', array(
             'form' => $form
         ));
     }
@@ -73,11 +73,11 @@ Let's create a simple template to render the form:
 
 .. code-block:: html+jinja
 
-    # src/Application/HelloBundle/Resources/views/Hello/signup.twig.html
-    {% extends 'HelloBundle::layout.twig.html' %}
+    # src/Application/HelloBundle/Resources/views/Hello/signup.html.twig
+    {% extends 'HelloBundle::layout.html.twig' %}
 
     <form action="#" method="post">
-        {{ render_form(form) }}
+        {{ form_field(form) }}
 
         <input type="submit" value="Send!" />
     </form>
@@ -106,7 +106,7 @@ the data is stored in a POST parameter with the name of the form::
             }
         }
 
-        return $this->render('HelloBundle:Hello:signup.twig.html', array('form' => $form));
+        return $this->render('HelloBundle:Hello:signup.html.twig', array('form' => $form));
     }
 
 Congratulations! You just created your first fully-functional form with

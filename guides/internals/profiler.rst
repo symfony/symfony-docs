@@ -424,7 +424,7 @@ skeleton:
 
 .. code-block:: jinja
 
-    {% extends 'WebProfilerBundle:Profiler:layout.twig' %}
+    {% extends 'WebProfilerBundle:Profiler:layout.html.twig' %}
 
     {% block toolbar %}
         {# the web debug toolbar content #}
