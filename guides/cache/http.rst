@@ -601,7 +601,7 @@ matter), Symfony2 uses the standard ``render`` helper to configure ESI tags:
 
     .. code-block:: jinja
 
-        {% render '...:list' with [], ['standalone': true] %}
+        {% render '...:list' with {}, {'standalone': true} %}
 
 By setting ``standalone`` to ``true``, you tell Symfony2 that the action
 should be rendered as an ESI tag. You might be wondering why you would want to
