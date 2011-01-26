@@ -1,7 +1,7 @@
 * **Templating**:
 
-  * `Twig`_ | 
-  * :doc:`PHP </guides/templating/PHP>` | 
+  * `Twig`_ |
+  * :doc:`PHP </guides/templating/PHP>` |
   * :doc:`Recipes </guides/templating/recipes>`
 
 * **Doctrine**:
@@ -13,31 +13,32 @@
 
 * **Testing**:
 
-  * :doc:`Overview </guides/testing/overview>` | 
-  * :doc:`Configuration </guides/testing/configuration>` | 
-  * :doc:`Crawler </guides/testing/crawler>` | 
-  * :doc:`Client </guides/testing/client>` | 
+  * :doc:`Overview </guides/testing/overview>` |
+  * :doc:`Configuration </guides/testing/configuration>` |
+  * :doc:`Crawler </guides/testing/crawler>` |
+  * :doc:`Client </guides/testing/client>` |
   * :doc:`Recipes </guides/testing/recipes>`
 
 * **Validation**:
 
-  * :doc:`Overview </guides/validator/overview>` | 
-  * :doc:`Validation </guides/validator/validation>` | 
+  * :doc:`Overview </guides/validator/overview>` |
+  * :doc:`Validation </guides/validator/validation>` |
   * :doc:`/guides/validator/constraints`
 
 * **Forms**:
 
-  * :doc:`Overview </guides/forms/overview>` | 
+  * :doc:`Overview </guides/forms/overview>` |
   * :doc:`Templates </guides/forms/view>`
 
 * **Security**:
 
-  * :doc:`Overview </guides/security/overview>` | 
-  * :doc:`/guides/security/users` | 
-  * :doc:`/guides/security/authentication` | 
-  * :doc:`/guides/security/authorization` | 
-  * :doc:`ACLs </guides/security/acl>` | 
-  * :doc:`Advanced ACLs </guides/security/acl_advanced>`
+  * :doc:`Overview </guides/security/overview>` |
+  * :doc:`/guides/security/users` |
+  * :doc:`/guides/security/authentication` |
+  * :doc:`/guides/security/authorization` |
+  * :doc:`ACLs </guides/security/acl>` |
+  * :doc:`Advanced ACLs </guides/security/acl_advanced>` |
+  * :doc:`Configuration Reference </guides/security/config_reference>`
 
 * **Cache**:
 
@@ -47,19 +48,19 @@
 * :doc:`/guides/translation`
 * **Event Dispatcher**:
 
-  * :doc:`Overview </guides/event/overview>` | 
+  * :doc:`Overview </guides/event/overview>` |
   * :doc:`Recipes </guides/event/recipes>`
 
 * **Tools**:
 
-  * :doc:`/guides/tools/autoloader` | 
-  * :doc:`Finder </guides/tools/finder>` | 
-  * :doc:`/guides/tools/YAML` | 
+  * :doc:`/guides/tools/autoloader` |
+  * :doc:`Finder </guides/tools/finder>` |
+  * :doc:`/guides/tools/YAML` |
   * :doc:`Process </guides/tools/process>`
 
 * **Bundles**:
 
-  * :doc:`Best Practices </guides/bundles/best_practices>` | 
+  * :doc:`Best Practices </guides/bundles/best_practices>` |
   * :doc:`Configuration </guides/bundles/configuration>`
 
 * **Dependency Injection**:
@@ -68,8 +69,8 @@
 
 * **Internals**:
 
-  * :doc:`Overview </guides/internals/overview>` | 
-  * :doc:`Kernel </guides/internals/kernel>` | 
+  * :doc:`Overview </guides/internals/overview>` |
+  * :doc:`Kernel </guides/internals/kernel>` |
   * :doc:`Profiler </guides/internals/profiler>`
 
 * :doc:`Symfony2 for symfony 1 users</guides/symfony1>`
