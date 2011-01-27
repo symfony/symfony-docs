@@ -41,6 +41,7 @@ Configuration Reference
                     access_denied_handler: some.service.id
                     entry_point: some.service.id
                     provider: name
+                    context: name
                     x509:
                         provider: name
                     http_basic:
@@ -87,5 +88,10 @@ Configuration Reference
                     attributes:
                         _controller: SomeController
                     roles: [ROLE_A, ROLE_B]
+                    requires_channel: https
+                    
+            role_hierarchy:
+                ROLE_SUPERADMIN: [ROLE_ADMIN, ROLE_USER]
+                ROLE_FOO:        [ROLE_USER]
                     
 
