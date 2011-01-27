@@ -35,7 +35,7 @@ lives::
     use Symfony\Component\HttpFoundation\Request;
 
     $kernel = new AppKernel('prod', false);
-    $kernel->handle(new Request())->send();
+    $kernel->handle(Request::createFromGlobals())->send();
 
 Like any front controller, ``app.php`` uses a Kernel Class, ``AppKernel``, to
 bootstrap the application.
