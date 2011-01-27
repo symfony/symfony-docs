@@ -10,3 +10,4 @@ Security
    authorization
    acl
    acl_advanced
+   config_reference

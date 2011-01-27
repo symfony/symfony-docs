@@ -61,7 +61,7 @@ be chosen from::
 
     $userChoices = array();
     $users = $em->getRepository('User')->findAll();
-    foreach ($users AS $user) {
+    foreach ($users as $user) {
         $userChoices[$user->id] = $user->name;
     }
 
