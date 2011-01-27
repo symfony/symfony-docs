@@ -124,7 +124,7 @@ So, Symfony2 routes the request by reading the routing configuration file:
             defaults: { _controller: FrameworkBundle:Default:index }
 
         hello:
-            resource: @HelloBundle/Resources/config/routing.yml
+            resource: "@HelloBundle/Resources/config/routing.yml"
 
     .. code-block:: xml
 
