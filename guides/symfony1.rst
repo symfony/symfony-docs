@@ -5,7 +5,7 @@ Symfony2 for symfony 1 users
 Create a new project
 --------------------
 
-In a symfony 1 environment, to create a new project, you used the global "symfony" executable, or the one contained in the data/bin folder of the symfony1 source:
+In a symfony 1 environment, to create a new project, you use the global "symfony" executable, or the one contained in the data/bin folder of the symfony1 source:
 
 .. code-block::
 
@@ -14,16 +14,24 @@ In a symfony 1 environment, to create a new project, you used the global "symfon
     cd mynewproject
     php ../symfony1/data/bin/symfony generate:project mynewproject
 
-In Symfony2, to create a new project you need to use the symfony bootstrapper:
+In Symfony2, to create a new project you need to install the symfony bootstrapper first:
 
 .. code-block::
 
 	git clone git://github.com/symfony/symfony-bootstrapper.git
+	cd symfony-bootstraper/src
+	sh ../bin/install_vendors.sh
+	cd ../../
+
+And then use it to create your project. Note that the default format for configuration files is now ```xml```, so if you want to keep the ```yml``` format to which you are used to in symfony 1, you need to specifiy it:
+
+.. code-block::
+
     mkdir mynewproject
     cd mynewproject
-	php ../symfony-bootstrapper/symfony.phar init --name=mynewproject
+	php ../symfony-bootstrapper/symfony.phar init --format=yml --name=mynewproject
 
-and you will have to link all external libraries yourself:
+Finally you now have multiple external libraries to include in your project. To avoid downloading them for every new project, you can use a symbolic link:
 
 .. code-block::
 
@@ -34,7 +42,7 @@ and you will have to link all external libraries yourself:
 Use the console
 ---------------
 
-In symfony 1, the console was directly in the base directory and was called ```symfony```:
+In symfony 1, the console is directly in the base directory and is called ```symfony```:
 
 .. code-block::
 
@@ -66,3 +74,20 @@ different semantic configurations, separate routing configurations, and so on.
 
     Read the definition of a :term:`Project`, an :term:`Application`, and a
     :term:`Bundle` in the glossary.
+
+
+
+Bundles
+-------
+
+In a symfony 1 project, you usually have multiple modules inside your application. A module is a coherent set of controllers and templates.
+
+In a Symfony2 project, you replace the concept of modules with Bundles.
+
+
+Plugins
+-------
+
+In a symfony 1 project, you usually download a lot of useful plugins to reuse the many functionalities developed by the community.
+
+In a Symfony2 project, you download Bundles. There are not many differences between the "module" Bundles and the "plugin" Bundles, except that a "plugin" Bundle usually contains multiple "module" Bundles using the "category namespace".
