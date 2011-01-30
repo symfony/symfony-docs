@@ -632,7 +632,7 @@ route:
 
         # app/config/routing.yml
         _internal:
-            resource: FrameworkBundle/Resources/config/routing/internal.xml
+            resource: @FrameworkBundle/Resources/config/routing/internal.xml
             prefix:   /_internal
 
     .. code-block:: xml
