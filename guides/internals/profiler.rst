@@ -202,7 +202,7 @@ If you enable the web profiler, you also need to mount the profiler routes:
     .. code-block:: yaml
 
         _profiler:
-            resource: WebProfilerBundle/Resources/config/routing/profiler.xml
+            resource: @WebProfilerBundle/Resources/config/routing/profiler.xml
             prefix:   /_profiler
 
     .. code-block:: xml
