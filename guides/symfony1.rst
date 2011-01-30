@@ -9,7 +9,7 @@ In a symfony 1 environment, to create a new project, you use the global "symfony
 
 .. code-block::
 
-	svn checkout http://svn.symfony-project.com/branches/1.4/ symfony1
+    svn checkout http://svn.symfony-project.com/branches/1.4/ symfony1
     mkdir mynewproject
     cd mynewproject
     php ../symfony1/data/bin/symfony generate:project mynewproject
@@ -18,10 +18,10 @@ In Symfony2, to create a new project you need to install the symfony bootstrappe
 
 .. code-block::
 
-	git clone git://github.com/symfony/symfony-bootstrapper.git
-	cd symfony-bootstraper/src
-	sh ../bin/install_vendors.sh
-	cd ../../
+    git clone git://github.com/symfony/symfony-bootstrapper.git
+    cd symfony-bootstraper/src
+    sh ../bin/install_vendors.sh
+    cd ../../
 
 And then use it to create your project. Note that the default format for configuration files is now ```xml```, so if you want to keep the ```yml``` format to which you are used to in symfony 1, you need to specifiy it:
 
@@ -29,7 +29,7 @@ And then use it to create your project. Note that the default format for configu
 
     mkdir mynewproject
     cd mynewproject
-	php ../symfony-bootstrapper/symfony.phar init --format=yml --name=mynewproject
+    php ../symfony-bootstrapper/symfony.phar init --format=yml --name=mynewproject
 
 Finally you now have multiple external libraries to include in your project. To avoid downloading them for every new project, you can use a symbolic link:
 
@@ -46,15 +46,15 @@ In symfony 1, the console is directly in the base directory and is called ```sym
 
 .. code-block::
 
-	php symfony
-	
+    php symfony
+
 In Symfony2, the console is now in the app sub-directory and is called ```console```:
 
 .. code-block::
 
-	php app/console
-	
-	
+    php app/console
+
+
 Applications
 ------------
 
