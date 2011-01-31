@@ -19,18 +19,18 @@ create a ``phpunit.xml`` file to tweak the configuration for your local machine.
     Store the ``phpunit.xml.dist`` file in your code repository, and ignore the
     ``phpunit.xml`` file.
 
-By default, only the tests stored in the ``Application`` namespace are run by
-the ``phpunit`` command. But you can easily add more namespaces. For instance,
-the following configuration adds the tests from the installed third-party
-bundles:
+By default, only the tests stored in "standard" bundles are run by the
+``phpunit`` command (standard being tests under Vendor\\*Bundle\\Tests
+namespaces). But you can easily add more namespaces. For instance, the
+following configuration adds the tests from the installed third-party bundles:
 
 .. code-block:: xml
 
     <!-- hello/phpunit.xml.dist -->
     <testsuites>
         <testsuite name="Project Test Suite">
-            <directory>../src/Application/*/Tests</directory>
-            <directory>../src/Bundle/*/Tests</directory>
+            <directory>../src/*/*Bundle/Tests</directory>
+            <directory>../src/Sensio/Bundle/*Bundle/Tests</directory>
         </testsuite>
     </testsuites>
 
@@ -41,13 +41,12 @@ section:
 
     <filter>
         <whitelist>
-            <directory>../src/Application</directory>
-            <directory>../src/Bundle</directory>
+            <directory>../src</directory>
             <exclude>
-                <directory>../src/Application/*/Resources</directory>
-                <directory>../src/Application/*/Tests</directory>
-                <directory>../src/Bundle/*/Resources</directory>
-                <directory>../src/Bundle/*/Tests</directory>
+                <directory>../src/*/*Bundle/Resources</directory>
+                <directory>../src/*/*Bundle/Tests</directory>
+                <directory>../src/Sensio/Bundle/*Bundle/Resources</directory>
+                <directory>../src/Sensio/Bundle/*Bundle/Tests</directory>
             </exclude>
         </whitelist>
     </filter>

@@ -54,8 +54,7 @@ This class must implement four methods:
 * ``registerRootDir()``: Returns the configuration root directory;
 
 * ``registerBundles()``: Returns an array of all bundles needed to run the
-  application (notice the reference to
-  ``Application\HelloBundle\HelloBundle``);
+  application (notice the reference to ``Sensio\HelloBundle\HelloBundle``);
 
 * ``registerContainerConfiguration()``: Loads the configuration (more on this
   later);
@@ -85,7 +84,7 @@ classes used by the application::
     $loader = new UniversalClassLoader();
     $loader->registerNamespaces(array(
         'Symfony'                        => $vendorDir.'/symfony/src',
-        'Application'                    => __DIR__,
+        'Sensio'                         => __DIR__,
         'Bundle'                         => __DIR__,
         'Doctrine\\Common\\DataFixtures' => $vendorDir.'/doctrine-data-fixtures/lib',
         'Doctrine\\Common'               => $vendorDir.'/doctrine-common/lib',
@@ -145,7 +144,7 @@ method of the ``AppKernel`` class::
             //new Symfony\Bundle\DoctrineMongoDBBundle\DoctrineMongoDBBundle(),
 
             // register your bundles
-            new Application\HelloBundle\HelloBundle(),
+            new Sensio\HelloBundle\HelloBundle(),
         );
 
         if ($this->isDebug()) {

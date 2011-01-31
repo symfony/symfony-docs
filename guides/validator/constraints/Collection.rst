@@ -38,8 +38,8 @@ may not exist in the array.
 
     .. code-block:: yaml
 
-        # Application/HelloBundle/Resources/config/validation.yml
-        Application\HelloBundle\Author:
+        # Sensio/HelloBundle/Resources/config/validation.yml
+        Sensio\HelloBundle\Author:
             properties:
                 options:
                     - Collection:
@@ -53,8 +53,8 @@ may not exist in the array.
 
     .. code-block:: xml
 
-        <!-- Application/HelloBundle/Resources/config/validation.xml -->
-        <class name="Application\HelloBundle\Author">
+        <!-- Sensio/HelloBundle/Resources/config/validation.xml -->
+        <class name="Sensio\HelloBundle\Author">
             <property name="options">
                 <constraint name="Collection">
                     <option name="fields">
@@ -73,7 +73,7 @@ may not exist in the array.
 
     .. code-block:: php-annotations
 
-        // Application/HelloBundle/Author.php
+        // Sensio/HelloBundle/Author.php
         class Author
         {
             /**
@@ -90,7 +90,7 @@ may not exist in the array.
 
     .. code-block:: php
 
-        // Application/HelloBundle/Author.php
+        // Sensio/HelloBundle/Author.php
         use Symfony\Component\Validator\Mapping\ClassMetadata;
         use Symfony\Component\Validator\Constraints\Collection;
         use Symfony\Component\Validator\Constraints\NotNull;
@@ -127,7 +127,7 @@ You should see the following error messages:
 
 .. code-block:: text
 
-    Application\HelloBundle\Author.options[firstName]:
+    Sensio\HelloBundle\Author.options[firstName]:
         This value should not be null
-    Application\HelloBundle\Author.options[lastName]:
+    Sensio\HelloBundle\Author.options[lastName]:
         This value is too short. It should have 4 characters or more

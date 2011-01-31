@@ -101,7 +101,7 @@ the ``extends`` tag:
 
 .. code-block:: jinja
 
-    {# src/Application/HelloBundle/Resources/views/Hello/index.html.twig #}
+    {# src/Sensio/HelloBundle/Resources/views/Hello/index.html.twig #}
     {% extends "HelloBundle::layout.html.twig" %}
 
     {% block content %}
@@ -165,14 +165,14 @@ Create a ``hello.html.twig`` template:
 
 .. code-block:: jinja
 
-    {# src/Application/HelloBundle/Resources/views/Hello/hello.html.twig #}
+    {# src/Sensio/HelloBundle/Resources/views/Hello/hello.html.twig #}
     Hello {{ name }}
 
 And change the ``index.html.twig`` template to include it:
 
 .. code-block:: jinja
 
-    {# src/Application/HelloBundle/Resources/views/Hello/index.html.twig #}
+    {# src/Sensio/HelloBundle/Resources/views/Hello/index.html.twig #}
     {% extends "HelloBundle::layout.html.twig" %}
 
     {# override the body block from index.html.twig #}
@@ -192,14 +192,14 @@ template, use the ``render`` tag:
 
 .. code-block:: jinja
 
-    {# src/Application/HelloBundle/Resources/views/Hello/index.html.twig #}
+    {# src/Sensio/HelloBundle/Resources/views/Hello/index.html.twig #}
     {% render "HelloBundle:Hello:fancy" with { 'name': name, 'color': 'green' } %}
 
 Here, the ``HelloBundle:Hello:fancy`` string refers to the ``fancy`` action of
 the ``Hello`` controller, and the argument is used as simulated request path
 values::
 
-    // src/Application/HelloBundle/Controller/HelloController.php
+    // src/Sensio/HelloBundle/Controller/HelloController.php
 
     class HelloController extends Controller
     {
@@ -233,7 +233,7 @@ pattern:
 
 .. code-block:: yaml
 
-    # src/Application/HelloBundle/Resources/config/routing.yml
+    # src/Sensio/HelloBundle/Resources/config/routing.yml
     hello: # The route name
         pattern:  /hello/{name}
         defaults: { _controller: HelloBundle:Hello:index }

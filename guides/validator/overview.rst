@@ -14,7 +14,7 @@ The validator validates objects against :doc:`constraints <constraints>`.
 Let's start with the simple constraint that the ``$name`` property of a class
 ``Author`` must not be empty::
 
-    // Application/HelloBundle/Author.php
+    // Sensio/HelloBundle/Author.php
     class Author
     {
         private $name;
@@ -27,16 +27,16 @@ with constraints; this process is called the "mapping":
 
     .. code-block:: yaml
 
-        # Application/HelloBundle/Resources/config/validation.yml
-        Application\HelloBundle\Author:
+        # Sensio/HelloBundle/Resources/config/validation.yml
+        Sensio\HelloBundle\Author:
             properties:
                 name:
                     - NotBlank: ~
 
     .. code-block:: xml
 
-        <!-- Application/HelloBundle/Resources/config/validation.xml -->
-        <class name="Application\HelloBundle\Author">
+        <!-- Sensio/HelloBundle/Resources/config/validation.xml -->
+        <class name="Sensio\HelloBundle\Author">
             <property name="name">
                 <constraint name="NotBlank" />
             </property>
@@ -44,7 +44,7 @@ with constraints; this process is called the "mapping":
 
     .. code-block:: php-annotations
 
-        // Application/HelloBundle/Author.php
+        // Sensio/HelloBundle/Author.php
         class Author
         {
             /**
@@ -55,7 +55,7 @@ with constraints; this process is called the "mapping":
 
     .. code-block:: php
 
-        // Application/HelloBundle/Author.php
+        // Sensio/HelloBundle/Author.php
         use Symfony\Component\Validator\Mapping\ClassMetadata;        
         use Symfony\Components\Validator\Constraints\NotBlank;
         
@@ -95,7 +95,7 @@ message:
 
 .. code-block:: text
 
-    Application\HelloBundle\Author.name:
+    Sensio\HelloBundle\Author.name:
         This value should not be blank
 
 Insert a value into the property and the error message will disappear.
