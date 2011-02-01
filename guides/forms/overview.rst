@@ -87,7 +87,7 @@ The standard pattern for using a form in a controller looks like this:
     public function contactAction()
     {
         $contactRequest = new ContactRequest();
-        $form = new ContactForm();
+        $form = new ContactForm::create($this->get('form.context'));
         
         // If a POST request, write submitted data into $contactRequest
         // and validate it
@@ -109,6 +109,23 @@ There are two code paths there:
 1. If the form has not been submitted or is invalid, it is simply passed to
    the template.
 2. If the form has been submitted and is valid, the contact request is sent.
+
+We created the form with the static ``create()`` method. This method expects
+a form context that contains all default services (for example a ``Validator``)
+and settings that a form needs to work.
+
+.. note:
+
+    If you don't use Symfony2 or its service container, don't worry. You can
+    easily create a ``FormContext`` and a ``Request`` manually:
+    
+    .. code-block:: php
+    
+        use Symfony\Component\Form\FormContext
+        use Symfony\Component\HttpFoundation\Request
+        
+        $context = FormContext::buildDefault();
+        $request = Request::createFromGlobals();
 
 Forms and domain objects
 ------------------------
@@ -179,8 +196,97 @@ Validating submitted data
 
 The form uses the ``Validator`` component to validate submitted form values.
 All constraints on the domain object, on the form and on its fields will be 
-validated when ``bind()`` is called. You can learn more about constraints 
-in :doc:`Validation constraints </guides/validator/constraints>`.
+validated when ``bind()`` is called. We will add a few constraints to
+``ContactRequest`` to make sure that nobody can submit the form with invalid
+data.
+
+.. code-block:: php
+
+    // src/Sensio/HelloBundle/Contact/ContactRequest.php
+    class ContactRequest
+    {
+        /**
+         * @validation:MaxLength(100)
+         * @validation:NotBlank
+         */
+        protected $subject = 'Subject...';
+        
+        /**
+         * @validation:NotBlank
+         */
+        protected $message;
+        
+        /**
+         * @validation:Email
+         * @validation:NotBlank
+         */
+        protected $sender;
+        
+        /**
+         * @validation:AssertType("boolean")
+         */
+        protected $ccmyself = false;
+        
+        // Other code...
+    }
+
+If any constraint fails, the error is displayed next to the corresponding
+form field. You can learn more about constraints in :doc:`Validation 
+constraints </guides/validator/constraints>`.
+
+Creating form fields automatically
+----------------------------------
+
+If you use Doctrine 2 or Symfony's ``Validator``, Symfony already knows quite
+a lot about your domain classes. It knows which data type is used to persist
+a property in the database, what validation constraints the property has etc.
+The Form component can use this information to "guess" which field type should
+be created with which settings.
+
+To use this feature, a form needs to know the class of the related domain
+object. You can set this class within the ``configure()`` method of the form.
+Calling ``add()`` with only the name of the property will then automatically
+create the best-matching field. 
+
+.. code-block:: php
+
+    // src/Sensio/HelloBundle/Contact/ContactForm.php
+    class ContactForm extends Form
+    {
+        protected function configure()
+        {
+            $this->add('subject');  // TextField with max_length=100 because
+                                    // of the @MaxLength constraint
+            $this->add('message');  // TextField
+            $this->add('sender');   // EmailField because of the @Email constraint
+            $this->add('ccmyself'); // CheckboxField because of @AssertType("boolean")
+        }
+    }
+
+These field guesses are obviously not always right. For the property ``message``
+Symfony created a ``TextField``, it couldn't know from the validation constraints
+that you wanted a ``TextareaField`` instead. So you have to create this field
+manually. You can also tweak the options of the generated fields by passing
+them in the second parameter. We will add a ``max_length`` option to the
+``sender`` field to limit its length.
+
+.. code-block:: php
+
+    // src/Sensio/HelloBundle/Contact/ContactForm.php
+    class ContactForm extends Form
+    {
+        protected function configure()
+        {
+            $this->add('subject'); 
+            $this->add(new TextareaField('message'));
+            $this->add('sender', array('max_length' => 50));
+            $this->add('ccmyself');
+        }
+    }
+    
+Generating form fields automatically helps you to improve your development
+speed and reduces code duplication. You can store information about class 
+properties once and let Symfony2 do the work for you.
 
 Rendering forms as HTML
 -----------------------
