@@ -55,8 +55,8 @@ of a class ``Author`` to have at least 3 characters.
 
     .. code-block:: yaml
 
-        # Application/HelloBundle/Resources/config/validation.yml
-        Application\HelloBundle\Author:
+        # Sensio/HelloBundle/Resources/config/validation.yml
+        Sensio\HelloBundle\Author:
             properties:
                 firstName:
                     - NotBlank: ~
@@ -67,8 +67,8 @@ of a class ``Author`` to have at least 3 characters.
 
     .. code-block:: xml
 
-        <!-- Application/HelloBundle/Resources/config/validation.xml -->
-        <class name="Application\HelloBundle\Author">
+        <!-- Sensio/HelloBundle/Resources/config/validation.xml -->
+        <class name="Sensio\HelloBundle\Author">
             <property name="firstName">
                 <constraint name="NotBlank" />
                 <constraint name="MinLength">3</constraint>
@@ -81,7 +81,7 @@ of a class ``Author`` to have at least 3 characters.
 
     .. code-block:: php-annotations
 
-        // Application/HelloBundle/Author.php
+        // Sensio/HelloBundle/Author.php
         class Author
         {
             /**
@@ -99,7 +99,7 @@ of a class ``Author`` to have at least 3 characters.
 
     .. code-block:: php
 
-        // Application/HelloBundle/Author.php
+        // Sensio/HelloBundle/Author.php
         use Symfony\Component\Validator\Mapping\ClassMetadata;
         use Symfony\Component\Validator\Constraints\NotBlank;
         use Symfony\Component\Validator\Constraints\MinLength;
@@ -138,16 +138,16 @@ generated token is correct:
 
     .. code-block:: yaml
 
-        # Application/HelloBundle/Resources/config/validation.yml
-        Application\HelloBundle\Author:
+        # Sensio/HelloBundle/Resources/config/validation.yml
+        Sensio\HelloBundle\Author:
             getters:
                 tokenValid:
                     - AssertTrue: { message: "The token is invalid" }
 
     .. code-block:: xml
 
-        <!-- Application/HelloBundle/Resources/config/validation.xml -->
-        <class name="Application\HelloBundle\Author">
+        <!-- Sensio/HelloBundle/Resources/config/validation.xml -->
+        <class name="Sensio\HelloBundle\Author">
             <getter property="tokenValid">
                 <constraint name="AssertTrue">
                     <option name="message">The token is invalid</option>
@@ -157,7 +157,7 @@ generated token is correct:
 
     .. code-block:: php-annotations
 
-        // Application/HelloBundle/Author.php
+        // Sensio/HelloBundle/Author.php
         class Author
         {
             /**
@@ -171,7 +171,7 @@ generated token is correct:
 
     .. code-block:: php
 
-        // Application/HelloBundle/Author.php
+        // Sensio/HelloBundle/Author.php
         use Symfony\Component\Validator\Mapping\ClassMetadata;
         use Symfony\Component\Validator\Constraints\AssertTrue;
         

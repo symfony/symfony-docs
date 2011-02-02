@@ -37,7 +37,7 @@ The autoloader is useful only if you add some libraries to autoload.
 .. note::
 
     The autoloader is automatically registered in a Symfony2 application (see
-    ``src/autoload.php``).
+    ``app/autoload.php``).
 
 If the classes to autoload use namespaces, use the
 :method:`Symfony\\Component\\HttpFoundation\\UniversalClassLoader::registerNamespace` or

@@ -16,11 +16,10 @@ The directory structure of a Symfony2 :term:`application` is rather flexible
 but the directory structure of the sandbox reflects the typical and recommended
 structure of a Symfony2 application:
 
-* ``app/``: This directory contains the application configuration;
-
-* ``src/``: All the PHP code is stored under this directory;
-
-* ``web/``: This should be the web root directory.
+* ``app/``: The application configuration;
+* ``src/``: The project's PHP code;
+* ``vendor/``: The third-party dependencies;
+* ``web/``: The web root directory.
 
 The Web Directory
 ~~~~~~~~~~~~~~~~~
@@ -30,12 +29,16 @@ stylesheets, and JavaScript files. It is also where each :term:`front controller
 lives::
 
     // web/app.php
+    require_once __DIR__.'/../app/bootstrap.php';
     require_once __DIR__.'/../app/AppKernel.php';
 
     use Symfony\Component\HttpFoundation\Request;
 
     $kernel = new AppKernel('prod', false);
-    $kernel->handle(new Request())->send();
+    $kernel->handle(Request::createFromGlobals())->send();
+
+The kernel requires first requires the ``bootstrap.php`` file, which
+bootstraps the framework and registers the autoloader (see below).
 
 Like any front controller, ``app.php`` uses a Kernel Class, ``AppKernel``, to
 bootstrap the application.
@@ -54,8 +57,7 @@ This class must implement four methods:
 * ``registerRootDir()``: Returns the configuration root directory;
 
 * ``registerBundles()``: Returns an array of all bundles needed to run the
-  application (notice the reference to
-  ``Application\HelloBundle\HelloBundle``);
+  application (notice the reference to ``Sensio\HelloBundle\HelloBundle``);
 
 * ``registerContainerConfiguration()``: Loads the configuration (more on this
   later);
@@ -63,43 +65,28 @@ This class must implement four methods:
 Have a look at the default implementation of these methods to better
 understand the flexibility of the framework.
 
-To make things work together, the kernel requires one file from the ``src/``
-directory::
-
-    // app/AppKernel.php
-    require_once __DIR__.'/../src/autoload.php';
-
-The Source Directory
-~~~~~~~~~~~~~~~~~~~~
-
-The ``src/autoload.php`` file is responsible for autoloading all the PHP
-classes used by the application::
+PHP autoloading can be configured via ``autoload.php``::
 
     // src/autoload.php
-    $vendorDir = __DIR__.'/vendor';
-
-    require_once $vendorDir.'/symfony/src/Symfony/Component/HttpFoundation/UniversalClassLoader.php';
-
-    use Symfony\Component\HttpFoundation\UniversalClassLoader;
+    use Symfony\Component\ClassLoader\UniversalClassLoader;
 
     $loader = new UniversalClassLoader();
     $loader->registerNamespaces(array(
-        'Symfony'                        => $vendorDir.'/symfony/src',
-        'Application'                    => __DIR__,
-        'Bundle'                         => __DIR__,
-        'Doctrine\\Common\\DataFixtures' => $vendorDir.'/doctrine-data-fixtures/lib',
-        'Doctrine\\Common'               => $vendorDir.'/doctrine-common/lib',
-        'Doctrine\\DBAL\\Migrations'     => $vendorDir.'/doctrine-migrations/lib',
-        'Doctrine\\MongoDB'              => $vendorDir.'/doctrine-mongodb/lib',
-        'Doctrine\\ODM\\MongoDB'         => $vendorDir.'/doctrine-mongodb-odm/lib',
-        'Doctrine\\DBAL'                 => $vendorDir.'/doctrine-dbal/lib',
-        'Doctrine'                       => $vendorDir.'/doctrine/lib',
-        'Zend'                           => $vendorDir.'/zend/library',
+        'Symfony'                        => __DIR__.'/../vendor/symfony/src',
+        'Sensio'                         => __DIR__.'/../src',
+        'Doctrine\\Common\\DataFixtures' => __DIR__.'/../vendor/doctrine-data-fixtures/lib',
+        'Doctrine\\Common'               => __DIR__.'/../vendor/doctrine-common/lib',
+        'Doctrine\\DBAL\\Migrations'     => __DIR__.'/../vendor/doctrine-migrations/lib',
+        'Doctrine\\MongoDB'              => __DIR__.'/../vendor/doctrine-mongodb/lib',
+        'Doctrine\\ODM\\MongoDB'         => __DIR__.'/../vendor/doctrine-mongodb-odm/lib',
+        'Doctrine\\DBAL'                 => __DIR__.'/../vendor/doctrine-dbal/lib',
+        'Doctrine'                       => __DIR__.'/../vendor/doctrine/lib',
+        'Zend'                           => __DIR__.'/../vendor/zend/library',
     ));
     $loader->registerPrefixes(array(
-        'Swift_'           => $vendorDir.'/swiftmailer/lib/classes',
-        'Twig_Extensions_' => $vendorDir.'/twig-extensions/lib',
-        'Twig_'            => $vendorDir.'/twig/lib',
+        'Twig_Extensions_' => __DIR__.'/../vendor/twig-extensions/lib',
+        'Twig_'            => __DIR__.'/../vendor/twig/lib',
+        'Swift_'           => __DIR__.'/../vendor/swiftmailer/lib/classes',
     ));
     $loader->register();
 
@@ -145,7 +132,7 @@ method of the ``AppKernel`` class::
             //new Symfony\Bundle\DoctrineMongoDBBundle\DoctrineMongoDBBundle(),
 
             // register your bundles
-            new Application\HelloBundle\HelloBundle(),
+            new Sensio\HelloBundle\HelloBundle(),
         );
 
         if ($this->isDebug()) {

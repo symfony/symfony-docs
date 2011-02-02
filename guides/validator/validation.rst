@@ -35,11 +35,11 @@ The above call will output something similar to this:
 
 .. code-block:: text
 
-    Application\HelloBundle\Author.firstName:
+    Sensio\HelloBundle\Author.firstName:
         This value should not be blank
-    Application\HelloBundle\Author.lastName:
+    Sensio\HelloBundle\Author.lastName:
         This value should not be blank
-    Application\HelloBundle\Author.fullName:
+    Sensio\HelloBundle\Author.fullName:
         This value is too short. It should have 10 characters or more
 
 If you fill the object with correct values the validation errors disappear.

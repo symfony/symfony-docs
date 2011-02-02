@@ -18,7 +18,7 @@ the object.
 Let's see how this works in a practical example. Let's create a simple
 ``Customer`` class::
 
-    namespace Application\HelloBundle\Entity;
+    namespace Sensio\HelloBundle\Entity;
 
     class Customer
     {
@@ -41,9 +41,9 @@ is public, while ``$age`` can only be modified through setters and getters.
 
 Now let's create a form to let the visitor fill the data of the object::
 
-    // src/Application/HelloBundle/Controller/HelloController.php
+    // src/Sensio/HelloBundle/Controller/HelloController.php
 
-    use Application\HelloBundle\Entity\Customer;
+    use Sensio\HelloBundle\Entity\Customer;
     use Symfony\Component\Form\Form;
     use Symfony\Component\Form\TextField;
     use Symfony\Component\Form\IntegerField;
@@ -73,7 +73,7 @@ Let's create a simple template to render the form:
 
 .. code-block:: html+jinja
 
-    # src/Application/HelloBundle/Resources/views/Hello/signup.html.twig
+    # src/Sensio/HelloBundle/Resources/views/Hello/signup.html.twig
     {% extends 'HelloBundle::layout.html.twig' %}
 
     <form action="#" method="post">
@@ -90,7 +90,7 @@ Let's create a simple template to render the form:
 When the user submits the form, we also need to handle the submitted data. All
 the data is stored in a POST parameter with the name of the form::
 
-    # src/Application/HelloBundle/Controller/HelloController.php
+    # src/Sensio/HelloBundle/Controller/HelloController.php
     public function signupAction()
     {
         $customer = new Customer();
@@ -188,7 +188,7 @@ Now we can add a property ``$address`` to the customer that stores one
 We can use a field group to show fields for the customer and the nested
 address at the same time::
 
-    # src/Application/HelloBundle/Controller/HelloController.php
+    # src/Sensio/HelloBundle/Controller/HelloController.php
 
     use Symfony\Component\Form\FieldGroup;
 
@@ -268,7 +268,7 @@ accepting terms and conditions.
 
 Let's create a simple ``Registration`` class for this purpose::
 
-    namespace Application\HelloBundle\Entity;
+    namespace Sensio\HelloBundle\Entity;
 
     class Registration
     {
@@ -286,9 +286,9 @@ Let's create a simple ``Registration`` class for this purpose::
 
 Now we can easily adapt the form in the controller::
 
-    # src/Application/HelloBundle/Controller/HelloController.php
+    # src/Sensio/HelloBundle/Controller/HelloController.php
 
-    use Application\HelloBundle\Entity\Registration;
+    use Sensio\HelloBundle\Entity\Registration;
     use Symfony\Component\Form\CheckboxField;
 
     public function signupAction()

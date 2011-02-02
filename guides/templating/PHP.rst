@@ -13,7 +13,7 @@ To render a PHP template instead of a Twig one, use ``.php`` in the
 template name instead of ``.twig``. The controller below renders the
 ``index.html.php`` template::
 
-    // src/Application/HelloBundle/Controller/HelloController.php
+    // src/Sensio/HelloBundle/Controller/HelloController.php
 
     public function indexAction($name)
     {
@@ -36,7 +36,7 @@ the ``extend()`` call:
 
 .. code-block:: html+php
 
-    <!-- src/Application/HelloBundle/Resources/views/Hello/index.html.php -->
+    <!-- src/Sensio/HelloBundle/Resources/views/Hello/index.html.php -->
     <?php $view->extend('HelloBundle::layout.html.php') ?>
 
     Hello <?php echo $name ?>!
@@ -50,7 +50,7 @@ Now, let's have a look at the ``layout.html.php`` file:
 
 .. code-block:: html+php
 
-    <!-- src/Application/HelloBundle/Resources/views/layout.html.php -->
+    <!-- src/Sensio/HelloBundle/Resources/views/layout.html.php -->
     <?php $view->extend('::base.html.php') ?>
 
     <h1>Hello Application</h1>
@@ -98,7 +98,7 @@ decorating the template. In the ``index.html.php`` template, define a
 
 .. code-block:: html+php
 
-    <!-- src/Application/HelloBundle/Resources/views/Hello/index.html.php -->
+    <!-- src/Sensio/HelloBundle/Resources/views/Hello/index.html.php -->
     <?php $view->extend('HelloBundle::layout.html.php') ?>
 
     <?php $view['slots']->set('title', 'Hello World Application') ?>
@@ -140,14 +140,14 @@ Create a ``hello.html.php`` template:
 
 .. code-block:: html+php
 
-    <!-- src/Application/HelloBundle/Resources/views/Hello/hello.html.php -->
+    <!-- src/Sensio/HelloBundle/Resources/views/Hello/hello.html.php -->
     Hello <?php echo $name ?>!
 
 And change the ``index.html.php`` template to include it:
 
 .. code-block:: html+php
 
-    <!-- src/Application/HelloBundle/Resources/views/Hello/index.html.php -->
+    <!-- src/Sensio/HelloBundle/Resources/views/Hello/index.html.php -->
     <?php $view->extend('HelloBundle::layout.html.php') ?>
 
     <?php echo $view->render('HelloBundle:Hello:hello.html.php', array('name' => $name)) ?>
@@ -170,13 +170,13 @@ If you create a ``fancy`` action, and want to include it into the
 
 .. code-block:: html+php
 
-    <!-- src/Application/HelloBundle/Resources/views/Hello/index.html.php -->
+    <!-- src/Sensio/HelloBundle/Resources/views/Hello/index.html.php -->
     <?php echo $view['actions']->render('HelloBundle:Hello:fancy', array('name' => $name, 'color' => 'green')) ?>
 
 Here, the ``HelloBundle:Hello:fancy`` string refers to the ``fancy`` action of the
 ``Hello`` controller::
 
-    // src/Application/HelloBundle/Controller/HelloController.php
+    // src/Sensio/HelloBundle/Controller/HelloController.php
 
     class HelloController extends Controller
     {
@@ -226,7 +226,7 @@ pattern:
 
 .. code-block:: yaml
 
-    # src/Application/HelloBundle/Resources/config/routing.yml
+    # src/Sensio/HelloBundle/Resources/config/routing.yml
     hello: # The route name
         pattern:  /hello/{name}
         defaults: { _controller: HelloBundle:Hello:index }

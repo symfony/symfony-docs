@@ -438,7 +438,7 @@ caching::
 
     // wrap the default AppKernel with the AppCache one
     $kernel = new AppCache(new AppKernel('prod', false));
-    $kernel->handle(new Request())->send();
+    $kernel->handle(Request::createFromGlobals())->send();
 
 .. tip::
 
@@ -453,7 +453,7 @@ finely tuned via a set of options you can set by overriding the
 ``getOptions()`` method::
 
     // app/AppCache.php
-    class AppCache extends Cache
+    class AppCache extends HttpCache
     {
         protected function getOptions()
         {
@@ -632,7 +632,7 @@ route:
 
         # app/config/routing.yml
         _internal:
-            resource: FrameworkBundle/Resources/config/routing/internal.xml
+            resource: @FrameworkBundle/Resources/config/routing/internal.xml
             prefix:   /_internal
 
     .. code-block:: xml
@@ -759,7 +759,7 @@ Here is how you can configure the Symfony2 reverse proxy to support the
 ``PURGE`` HTTP method::
 
     // app/AppCache.php
-    class AppCache extends Cache
+    class AppCache extends HttpCache
     {
         protected function invalidate(Request $request)
         {

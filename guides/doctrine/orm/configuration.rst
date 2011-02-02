@@ -68,7 +68,7 @@ can control. The following configuration options exist for a mapping:
   mappings otherwise some of your entities cannot be found by Doctrine. This
   option defaults to the bundle namespace + ``Entity``, for example for an
   application bundle called "Hello" prefix would be
-  ``Application\Hello\Entity``.
+  ``Sensio\Hello\Entity``.
 - ``alias`` Doctrine offers a way to alias entity namespaces to simpler,
   shorter names to be used in DQL queries or for Repository access.
 - ``is_bundle`` This option is a derived value from ``dir`` and by default is
@@ -81,7 +81,7 @@ To avoid having to configure lots of information for your mappings you should
 follow these conventions:
 
 1. Put all your entities in a directory ``Entity/`` inside your bundle. For
-   example ``Application/Hello/Entity/``.
+   example ``Sensio/Hello/Entity/``.
 2. If you are using xml, yml or php mapping put all your configuration files
    into the "Resources/config/doctrine/metadata/doctrine/orm/" directory sufficed
    with dcm.xml, dcm.yml or dcm.php respectively.

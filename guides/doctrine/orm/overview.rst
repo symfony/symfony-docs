@@ -46,8 +46,8 @@ necessary configuration is to specify the bundle name which contains your entiti
 As Doctrine provides transparent persistence for PHP objects, it works with
 any PHP class::
 
-    // Application/HelloBundle/Entity/User.php
-    namespace Application\HelloBundle\Entity;
+    // Sensio/HelloBundle/Entity/User.php
+    namespace Sensio\HelloBundle\Entity;
 
     class User
     {
@@ -84,8 +84,8 @@ write mapping information with annotations, XML, or YAML:
 
     .. code-block:: php
 
-        // Application/HelloBundle/Entity/User.php
-        namespace Application\HelloBundle\Entity;
+        // Sensio/HelloBundle/Entity/User.php
+        namespace Sensio\HelloBundle\Entity;
 
         /**
          * @orm:Entity
@@ -107,8 +107,8 @@ write mapping information with annotations, XML, or YAML:
 
     .. code-block:: yaml
 
-        # Application/HelloBundle/Resources/config/doctrine/metadata/orm/Application.HelloBundle.Entity.User.dcm.yml
-        Application\HelloBundle\Entity\User:
+        # Sensio/HelloBundle/Resources/config/doctrine/metadata/orm/Sensio.HelloBundle.Entity.User.dcm.yml
+        Sensio\HelloBundle\Entity\User:
             type: entity
             table: user
             id:
@@ -123,13 +123,13 @@ write mapping information with annotations, XML, or YAML:
 
     .. code-block:: xml
 
-        <!-- Application/HelloBundle/Resources/config/doctrine/metadata/orm/Application.HelloBundle.Entity.User.dcm.xml -->
+        <!-- Sensio/HelloBundle/Resources/config/doctrine/metadata/orm/Sensio.HelloBundle.Entity.User.dcm.xml -->
         <doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
               xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
                             http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
 
-            <entity name="Application\HelloBundle\Entity\User" table="user">
+            <entity name="Sensio\HelloBundle\Entity\User" table="user">
                 <id name="id" type="integer" column="id">
                     <generator strategy="IDENTITY"/>
                 </id>
@@ -154,10 +154,10 @@ the following commands:
 
 Eventually, use your entity and manage its persistent state with Doctrine::
 
-    // Application/HelloBundle/Controller/UserController.php
-    namespace Application\HelloBundle\Controller;
+    // Sensio/HelloBundle/Controller/UserController.php
+    namespace Sensio\HelloBundle\Controller;
 
-    use Application\HelloBundle\Entity\User;
+    use Sensio\HelloBundle\Entity\User;
 
     class UserController extends Controller
     {
@@ -200,7 +200,7 @@ update your development database schema without blowing away everything and
 losing your existing data. So first lets just add a new property to our ``User``
 entity::
 
-    namespace Application\HelloBundle\Entities;
+    namespace Sensio\HelloBundle\Entities;
 
     /** @orm:Entity */
     class User
