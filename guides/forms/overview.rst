@@ -7,14 +7,15 @@ Working with Forms
 Symfony2 comes with a built-in form component. It deals with displaying,
 rendering and submitting HTML forms.
 
-While it is possible to process form submissions with Symfony2's ``Request``
-class alone, the form component takes care of a number of common
-form-related tasks, such as:
+While it is possible to process form submissions with Symfony2's 
+:class:`Symfony\\Component\\HttpFoundation\\Request` class alone, the form 
+component takes care of a number of common form-related tasks, such as:
 
 1. Displaying an HTML form with automatically generated form fields
 2. Converting the submitted data to PHP data types
 3. Reading from and writing data into POPOs (plain old PHP objects)
 4. Validating submitted form data with Symfony2's ``Validator``
+5. Protecting form submissions against CSRF attacks
 
 Overview
 --------
@@ -284,9 +285,9 @@ them in the second parameter. We will add a ``max_length`` option to the
         }
     }
     
-Generating form fields automatically helps you to improve your development
+Generating form fields automatically helps you to increase your development
 speed and reduces code duplication. You can store information about class 
-properties once and let Symfony2 do the work for you.
+properties once and let Symfony2 do the other work for you.
 
 Rendering Forms as HTML
 -----------------------
