@@ -1,7 +1,7 @@
 .. index::
    single: Forms
 
-Working with forms
+Working with Forms
 ==================
 
 Symfony2 comes with a built-in form component. It deals with displaying,
@@ -38,7 +38,7 @@ The form component only relies on the HttpFoundation and Validator
 components to work. If you want to use the internationalization features,
 PHP's intl extension is required as well.
 
-Form objects
+Form Objects
 ------------
 
 A Form object encapsulates a collection of fields that convert submitted
@@ -76,7 +76,7 @@ A form consists of ``Field`` objects. In this case, our form has the fields
 available form fields; a full list can be found in :doc:`Form fields
 <fields>`.
 
-Using a form in a controller
+Using a Form in a Controller
 ----------------------------
 
 The standard pattern for using a form in a controller looks like this:
@@ -87,7 +87,7 @@ The standard pattern for using a form in a controller looks like this:
     public function contactAction()
     {
         $contactRequest = new ContactRequest();
-        $form = new ContactForm::create($this->get('form.context'));
+        $form = ContactForm::create($this->get('form.context'));
         
         // If a POST request, write submitted data into $contactRequest
         // and validate it
@@ -127,7 +127,7 @@ and settings that a form needs to work.
         $context = FormContext::buildDefault();
         $request = Request::createFromGlobals();
 
-Forms and domain objects
+Forms and Domain Objects
 ------------------------
 
 In the last example a ``ContactRequest`` was bound to the form. The property
@@ -191,7 +191,7 @@ For each field in your form, the class of the domain object needs to have
 2. A public setter and getter with the prefix "set"/"get", followed by the
    field's name with a first capital letter.
    
-Validating submitted data
+Validating Submitted Data
 -------------------------
 
 The form uses the ``Validator`` component to validate submitted form values.
@@ -232,9 +232,9 @@ data.
 
 If any constraint fails, the error is displayed next to the corresponding
 form field. You can learn more about constraints in :doc:`Validation 
-constraints </guides/validator/constraints>`.
+Constraints </guides/validator/constraints>`.
 
-Creating form fields automatically
+Creating Form Fields Automatically
 ----------------------------------
 
 If you use Doctrine 2 or Symfony's ``Validator``, Symfony already knows quite
@@ -288,7 +288,7 @@ Generating form fields automatically helps you to improve your development
 speed and reduces code duplication. You can store information about class 
 properties once and let Symfony2 do the work for you.
 
-Rendering forms as HTML
+Rendering Forms as HTML
 -----------------------
 
 In the controller we passed the form to the template in the ``form`` variable.
@@ -305,9 +305,51 @@ of the form.
         
         <input type="submit" value="Send!" />
     </form>
+    
+Customizing the HTML Output
+---------------------------
 
-Form rendering in templates is covered in chapter :doc:`Forms in templates
-<view>`.
+In most applications you will want to customize the HTML of the form. You
+can do so by using the other built-in form rendering helpers.
+
+.. code-block:: html+jinja
+
+    # src/Sensio/HelloBundle/Resources/views/Hello/contact.html.twig
+    {% extends 'HelloBundle::layout.html.twig' %}
+
+    <form action="#" method="post" {{ form_enctype(form) }}>
+        {{ form_errors(form) }}
+        
+        {% for field in form %}
+            <div>
+                {{ form_errors(field) }}
+                {{ form_label(field) }}
+                {{ form_field(field) }}
+            </div>
+        {% endfor %}
+
+        {{ form_hidden(form) }}
+        <input type="submit" />
+    </form>
+    
+Symfony2 comes with the following helpers:
+
+*``form_enctype``*
+  Outputs the ``enctype`` attribute of the form tag. Required for file uploads.
+
+*``form_errors``*
+  Outputs the a ``<ul>`` tag with errors of a field or a form.
+
+*``form_label``*
+  Outputs the ``<label>`` tag of a field.
+
+*``form_field``*
+  Outputs HTML of a field or a form.
+
+*``form_hidden``*
+  Outputs all hidden fields of a form.
+
+Form rendering is covered in detail in :doc:`Forms in Templates <view>`.
 
 Congratulations! You just created your first fully-functional form with
 Symfony2.
