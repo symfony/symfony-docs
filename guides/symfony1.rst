@@ -1,93 +1,247 @@
-Symfony2 for symfony 1 users
-============================
+Symfony2 for symfony1 Users
+===========================
 
+The Symfony2 framework embodies a signficant evolution when compared with
+the first version of the framework. Fortunately, with the MVC architecture
+at its core, the skills used to master a symfony1 project continue to be
+very relevant when developing in Symfony2. Sure, ``app.yml`` is gone, but
+routing, controllers and templates all remain.
 
-Create a new project
---------------------
+In this guide, we'll walk through the differences between symfony1 and Symfony2.
+As you'll see, many tasks are tackled in a slightly different way. You'll
+come to appreciate these minor differences as they promote stable, predictable,
+testable and decoupled code in your Symfony2 applications.
 
-In a symfony 1 environment, to create a new project, you use the global "symfony" executable, or the one contained in the data/bin folder of the symfony1 source:
+So, sit back and relax as we take you from "then" to "now".
 
-.. code-block::
+Directory Structure
+-------------------
 
-    svn checkout http://svn.symfony-project.com/branches/1.4/ symfony1
-    mkdir mynewproject
-    cd mynewproject
-    php ../symfony1/data/bin/symfony generate:project mynewproject
+When looking at a Symfony2 project - for example, the `Symfony2 Sandbox`_ -
+you'll notice a very different directory structure than in symfony1. The
+differences, however, are somewhat superficial.
 
-In Symfony2, to create a new project you need to install the symfony bootstrapper first:
+The ``app/`` Directory
+~~~~~~~~~~~~~~~~~~~~~~
 
-.. code-block::
+In symfony1, your project has one or more applications, and each lives inside
+the ``apps/`` directory (e.g. ``apps/frontend``). By default in Symfony2,
+you have just one application represented by the ``app/`` directory. Like
+in symfony1, the ``app/`` directory contains configuration specific to that
+application. It also contains application-specific cache, log and template
+directories as well as a ``Kernel`` class (``AppKernel``), which is the base
+object that represents the application.
 
-    git clone git://github.com/symfony/symfony-bootstrapper.git
-    cd symfony-bootstraper/src
-    sh ../bin/install_vendors.sh
-    cd ../../
+Unlike symfony1, almost no PHP code lives in the ``app/`` directory. This
+directory is not meant to house modules or library files as it did in symfony1.
+Instead, it's simply the home of configuration and other resources (templates,
+translation files).
 
-And then use it to create your project. Note that the default format for configuration files is now ```xml```, so if you want to keep the ```yml``` format to which you are used to in symfony 1, you need to specifiy it:
+The ``src/`` Directory
+~~~~~~~~~~~~~~~~~~~~~~
 
-.. code-block::
+Put simply, your actual code goes here. In Symfony2, all actual application-code
+lives inside a bundle (roughly equivalent to a symfony1 plugin) and, by default,
+each bundle lives inside the ``src`` directory. In that way, the ``src``
+directory is a bit like the ``plugins`` directory in symfony1, but much more
+flexible. Additionally, while *your* bundles will live in the ``src/`` directory,
+third-party bundles may live in the ``vendor/`` directory.
 
-    mkdir mynewproject
-    cd mynewproject
-    php ../symfony-bootstrapper/symfony.phar init --format=yml --name=mynewproject
+To get a better picture of the ``src/`` directory, let's first think of a
+symfony1 application. First, part of your code likely lives inside one or
+more applications. Most commonly these include modules, but could also include
+any other PHP classes you put in your application. You may have also created
+a ``schema.yml`` file in the ``config`` directory of your project and built
+several model files. Finally, to help with some common functionality, you're
+using several third-party plugins that live in the ``plugins/`` directory.
+In other words, the code that drives your application lives in many different
+places.
 
-Finally you now have multiple external libraries to include in your project. To avoid downloading them for every new project, you can use a symbolic link:
+In Symfony2, life is much simpler because *all* Symfony2 code must live in
+a bundle. In our pretend symfony1 project, all the code *could* be moved
+into one or more plugins (which is a very good practice, in fact). Assuming
+that all modules, PHP classes, schema, routing configuration, etc were moved
+into a plugin, the symfony1 ``plugins/`` directory would be very similar
+to the Symfony2 ``src/`` directory.
 
-.. code-block::
+Put simply again, the ``src/`` directory is where your code, assets,
+templates and most anything else specific to your project will live.
 
-    ln -s ../../symfony-bootstrapper/src/vendor src/vendor
+The ``vendor/`` Directory
+~~~~~~~~~~~~~~~~~~~~~~~~~
 
+The ``vendor/`` directory is basically equivalent to the ``lib/vendor/``
+directory in symfony1, which was the conventional directory for all vendor
+libraries. By default, you'll find the Symfony2 library files in this directory,
+along with several other dependent libraries such as Doctrine2, Twig and
+Swiftmailer.
 
+The ``web/`` Directory
+~~~~~~~~~~~~~~~~~~~~~~
 
-Use the console
----------------
+Not much has changed in the ``web/`` directory. The most noticeable difference
+is the absence of the ``css/``, ``js/`` and ``images/`` directories. This
+is intentional. Like with your PHP code, all assets should also live inside
+a bundle. With the help of a console command, the ``Resources/public/``
+directory of each bundle is copied or symbolically-linked to the ``web/bundles/``
+directory. This allows you to keep assets organized inside your bundle, but
+still make them available to the public. To make sure that all bundles are
+available, run the following command::
 
-In symfony 1, the console is directly in the base directory and is called ```symfony```:
+    ./app/console_dev assets:install web --symlink
+
+.. note::
+
+   This command is the Symfony2 equivalent to the symfony1 ``plugin:publish-assets``
+   command.
+
+Autoloading
+-----------
+
+One of the advantageous of modern frameworks is never needing to worry about
+requiring files. By making use of an autoloader, you can refer to any class
+in your project and trust that it's available. This is made possible via an
+autoloader. Autoloading has changed in Symfony2 to be more universal, faster,
+and independent of needing to clear your cache.
+
+In symfony1, autoloading was done by searching the entire project for the
+presence of PHP class files and caching this information in a giant array.
+That array told symfony1 exactly which file contained each class. In the
+production environment, this caused you to need to clear the cache when classes
+were added or moved.
+
+In Symfony2, a new class - ``UniversalClassLoader`` - handles this process.
+The idea behind the autoloader is simple: the name of your class (including
+the namespace) must match up with the path to the file containing that class.
+Take the ``HelloController`` from the Symfony2 sandbox as an example::
+
+    namespace Sensio\HelloBundle\Controller;
+
+    use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+
+    class HelloController extends Controller
+    {
+        // ...
+
+The file itself lives at ``src/Sensio/HelloBundle/Controller/HelloController.php``.
+As you can see, the location of the file follows the namespace of the class.
+Specifically, the namespace, ``Sensio\HelloBundle\Controller``, spells out
+the directory that the file should live in (``src\Sensio\HelloBundle\Controller``).
+
+If the file did *not* live at this exact location, you'd receive a
+``Class "Sensio\HelloBundle\Controller\HelloController" does not exist.``
+error. In Symfony2, a "class does not exist" means that the suspect class
+namespace and physical location do not match. Basically, Symfony2 is looking
+in one exact location for that class, but that location doesn't exist (or
+contains a different class). In order for a class to be autoloaded, you
+**never need to clear your cache** in Symfony2.
+
+For the autoloader to work, however, it needs to know that the ``Sensio``
+namespace lives in the ``src`` directory and that, for example, the ``Doctrine``
+namespace lives in the ``vendor/doctrine/lib/`` directory. This mapping is
+entirely controlled by you via the ``app/autoload.php`` file.
+
+Using the Console
+-----------------
+
+In symfony1, the console is in the root directory of your project and is
+called ``symfony``:
 
 .. code-block::
 
     php symfony
 
-In Symfony2, the console is now in the app sub-directory and is called ```console```:
+In Symfony2, the console is now in the app sub-directory and is called ``console``:
 
 .. code-block::
 
     php app/console
 
+The console represents exactly *one* environment (e.g. dev, prod). This is
+different than symfony1 where some tasks allowed you to specify the environment
+via a ``env=`` option. A common practice is to have one console command file
+per environment. Usually, this means a ``console`` file for the ``prod``
+environment and a ``console_dev`` for the ``dev`` environment.
 
 Applications
 ------------
 
-In a symfony 1 project, it is common to have several applications: one for the
+In a symfony1 project, it is common to have several applications: one for the
 frontend and one for the backend for instance.
 
 In a Symfony2 project, you only need to create one application (a blog
 application, an intranet application, ...). Most of the time, if you want to
-create a second application, you'd better create another project and share
-some bundles between them.
+create a second application, you might instead create another project and
+share some bundles between them.
 
 And if you need to separate the frontend and the backend features of some
-bundles, create sub-namespaces for controllers, sub-directories for templates,
-different semantic configurations, separate routing configurations, and so on.
+bundles, you can create sub-namespaces for controllers, sub-directories for
+templates, different semantic configurations, separate routing configurations,
+and so on.
+
+Of course, there's nothing wrong with having multiple applications in your
+project, that's entirely up to you. A second application would mean a new
+directory, e.g. ``my_app/``, with the same basic setup as the ``app/`` directory.
 
 .. tip::
 
     Read the definition of a :term:`Project`, an :term:`Application`, and a
     :term:`Bundle` in the glossary.
 
+Bundles and Plugins
+-------------------
 
+In a symfony1 project, a plugin could contain configuration, modules, PHP
+libraries, assets and anything else related to your project. In Symfony2,
+the idea of a plugin is replaced by the "bundle". A bundle is even more powerful
+than a plugin because the core Symfony2 framework is brought in via a series
+of bundles. In Symfony2, bundles are first-class citizens that are so flexible
+that even core code itself is a bundle.
 
-Bundles
--------
+In symfony1, a plugin must be enabled inside the ``ProjectConfiguration``
+class::
 
-In a symfony 1 project, you usually have multiple modules inside your application. A module is a coherent set of controllers and templates.
+    // config/ProjectConfiguration.class.php
+    public function setup()
+    {
+        $this->enableAllPluginsExcept(array(/* some plugins here */));
+    }
 
-In a Symfony2 project, you replace the concept of modules with Bundles.
+In Symfony2, the bundles are activated inside the application kernel::
 
+    // app/AppKernel.php
+    public function registerBundles()
+    {
+        $bundles = array(
+            new Symfony\Bundle\FrameworkBundle\FrameworkBundle(),
+            new Symfony\Bundle\TwigBundle\TwigBundle(),
+            // ...
+            new Sensio\HelloBundle\HelloBundle(),
+        );
+        
+        return $bundles;
+    }
 
-Plugins
--------
+You also need to be sure that the ``Sensio`` namespace is set to be autoloaded::
 
-In a symfony 1 project, you usually download a lot of useful plugins to reuse the many functionalities developed by the community.
+    // app/autoload.php
+    $loader = new UniversalClassLoader();
+    $loader->registerNamespaces(array(
+        'Symfony'                        => __DIR__.'/../vendor/symfony/src',
+        'Sensio'                         => __DIR__.'/../src',
+        // ...
+    ));
 
-In a Symfony2 project, you download Bundles. There are not many differences between the "module" Bundles and the "plugin" Bundles, except that a "plugin" Bundle usually contains multiple "module" Bundles using the "category namespace".
+In symfony1, the ``routing.yml`` and ``app.yml`` configuration files were
+automatically loaded inside any plugin. In Symfony2, routing and application
+configuration inside a bundle must be included manually. For example, to
+include a routing resource from a bundle, you might do the following::
+
+    # app/config/routing.yml
+    hello:
+        resource: @HelloBundle/Resources/config/routing.yml
+
+To bring in configuration from the bundle, you'll need to import that configuration
+from your application configuration.
+
+.. _`Symfony2 Sandbox`: https://github.com/symfony/symfony-sandbox
