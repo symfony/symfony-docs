@@ -238,7 +238,7 @@ Constraints </guides/validator/constraints>`.
 Creating Form Fields Automatically
 ----------------------------------
 
-If you use Doctrine 2 or Symfony's ``Validator``, Symfony already knows quite
+If you use Doctrine2 or Symfony's ``Validator``, Symfony already knows quite
 a lot about your domain classes. It knows which data type is used to persist
 a property in the database, what validation constraints the property has etc.
 The Form component can use this information to "guess" which field type should
