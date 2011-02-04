@@ -33,7 +33,7 @@ form dedicated methods:
 
 .. configuration-block::
 
-    .. code-block:: jinja
+    .. code-block:: html+jinja
 
         <form action="#" method="post">
             <ul>
@@ -88,7 +88,7 @@ parameter.
 
 .. configuration-block::
 
-    .. code-block:: jinja
+    .. code-block:: html+jinja
 
         <form action="#" method="post">
             {{ form_errors(form) }}
@@ -127,7 +127,7 @@ Last but not the least, a form containing a file input must contain the
 
 .. configuration-block::
 
-    .. code-block:: jinja
+    .. code-block:: html+jinja
 
         <form action="#" {{ form_enctype(form) }} method="post">
 
@@ -142,7 +142,7 @@ Accessing form fields is easy as a Symfony2 form acts as an array:
 
 .. configuration-block::
 
-    .. code-block:: jinja
+    .. code-block:: html+jinja
 
         {{ form.title }}
 
@@ -227,7 +227,7 @@ In Twig templates, each helper is associated with one template block. The
 ``form_errors`` function, for example, looks for an ``errors`` block. The 
 built-in one reads as follows:
 
-.. code-block:: jinja
+.. code-block:: html+jinja
 
     {# TwigBundle::form.html.twig #}
 
@@ -275,7 +275,7 @@ rendering a ``TextareaField`` instance:
 
 .. configuration-block::
 
-    .. code-block:: jinja
+    .. code-block:: html+jinja
 
         {# TwigBundle::form.html.twig #}
 
@@ -350,7 +350,7 @@ In the last example, the ``HelloBundle::form.html.twig`` is a regular Twig templ
 containing blocks defining the HTML representation for fields you want to 
 override:
 
-.. code-block:: jinja
+.. code-block:: html+jinja
 
     {# HelloBundle/Resources/views/form.html.twig #}
 
@@ -364,7 +364,7 @@ In this example, the ``textarea_field`` block is redefined. Instead of changing
 the default representation, you can also extend the default one by using the
 Twig native inheritance feature:
 
-.. code-block:: jinja
+.. code-block:: html+jinja
 
     {# HelloBundle/Resources/views/form.html.twig #}
 
@@ -452,7 +452,7 @@ of manually rendering all fields:
 
 .. configuration-block::
 
-    .. code-block:: jinja
+    .. code-block:: html+jinja
 
         <form action="#" {{ form_enctype(form) }} method="post">
             {{ form_field(form) }}
@@ -472,7 +472,7 @@ parent class - ``FieldGroup`` - is used instead:
 
 .. configuration-block::
 
-    .. code-block:: jinja
+    .. code-block:: html+jinja
 
         {# TwigBundle::form.html.twig #}
 
