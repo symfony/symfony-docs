@@ -87,14 +87,14 @@ The standard pattern for using a form in a controller looks like this:
     // src/Sensio/HelloBundle/Controller/HelloController.php
     public function contactAction()
     {
-        $contactRequest = new ContactRequest();
-        $form = ContactForm::create($this->get('form.context'));
+        $contactRequest = new ContactRequest($this->get('mailer'));
+        $form = ContactForm::create($this->get('form.context'), 'contact');
         
         // If a POST request, write submitted data into $contactRequest
-        // and validate it
+        // and validate them
         $form->bind($this->get('request'), $contactRequest);
         
-        // If the form has been submitted and validates...
+        // If the form has been submitted and validated...
         if ($form->isValid()) {
             $contactRequest->send();
         }
@@ -301,11 +301,13 @@ of the form.
     # src/Sensio/HelloBundle/Resources/views/Hello/contact.html.twig
     {% extends 'HelloBundle::layout.html.twig' %}
 
+    {% block content %}
     <form action="#" method="post">
         {{ form_field(form) }}
         
         <input type="submit" value="Send!" />
     </form>
+    {% endblock %}
     
 Customizing the HTML Output
 ---------------------------
@@ -318,20 +320,24 @@ can do so by using the other built-in form rendering helpers.
     # src/Sensio/HelloBundle/Resources/views/Hello/contact.html.twig
     {% extends 'HelloBundle::layout.html.twig' %}
 
+    {% block content %}
     <form action="#" method="post" {{ form_enctype(form) }}>
         {{ form_errors(form) }}
         
         {% for field in form %}
+            {% if not field.ishidden %}
             <div>
                 {{ form_errors(field) }}
                 {{ form_label(field) }}
                 {{ form_field(field) }}
             </div>
+            {% endif %}
         {% endfor %}
 
         {{ form_hidden(form) }}
         <input type="submit" />
     </form>
+    {% endblock %}
     
 Symfony2 comes with the following helpers:
 
