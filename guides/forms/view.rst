@@ -428,6 +428,22 @@ possible via configuration:
             'resources' => array('BlogBundle::form.html.twig', 'TwigBundle::form.html.twig),
         )));
 
+.. tip::
+
+    Whenever a form function or tag takes a template name as an argument, you
+    can use ``_self`` instead and define the customization directly in the
+    current template:
+
+    .. code-block:: jinja
+
+        {% form_theme form _self %}
+
+        {% block textarea_field %}
+            ...
+        {% endblock %}
+
+        {{ form_field(form.description, {}, {}, _self) }}
+
 Prototyping
 -----------
 
