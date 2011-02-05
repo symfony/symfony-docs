@@ -1,11 +1,11 @@
 The Big Picture
 ===============
 
-Start using Symfony 2 in 10 minutes! This tutorial contains some of the 
-important concepts behind Symfony2. It explains how to get started fast with
-Symfony2 by showing you the structure of a simple ready-made project.
+Start using Symfony2 in 10 minutes! This tutorial contains some important
+concepts behind Symfony2. It explains how to get started quickly by showing you
+the structure of a sample project.
 
-If you have ever used a web framework before, you should feel right at home
+If you have used a web framework before, you should feel right at home
 with Symfony2.
 
 .. index::
@@ -14,8 +14,8 @@ with Symfony2.
 Downloading and Installing Symfony2
 -----------------------------------
 
-First, check that you have at least PHP 5.3.2 installed and correctly
-configured to work with a web server like Apache.
+First, check that you have installed and configured a webserver (such as
+Apache) with PHP 5.3.2 or higher.
 
 Ready? Let's start by downloading Symfony2. To get started even faster, we are
 going to use the "Symfony2 sandbox". It is a Symfony2 project where all the
