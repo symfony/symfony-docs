@@ -18,11 +18,10 @@ First, check that you have installed and configured a webserver (such as
 Apache) with PHP 5.3.2 or higher.
 
 Ready? Let's start by downloading Symfony2. To get started even faster, we are
-going to use the "Symfony2 sandbox". It is a Symfony2 project where all the
-required libraries and some simple controllers are already included; the basic
-configuration is also already done. The great advantage of the sandbox over
-other types of installation is that you can start experimenting with Symfony2
-immediately.
+going to use the "Symfony2 sandbox". This is a preconfigured Symfony2 project
+that includes some simple controllers and their required libraries. The great
+advantage of the sandbox over other methods of installation is you can start
+experimenting with Symfony2 immediately.
 
 Download the `sandbox`_, and unpack it in your root web directory. You
 should now have a ``sandbox/`` directory::
