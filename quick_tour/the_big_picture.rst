@@ -75,9 +75,9 @@ Symfony2 should congratulate you for your hard work so far!
 Creating your first Application
 -------------------------------
 
-The sandbox comes with a simple Hello World ":term:`application`" and that's
-the application we will use to learn more about Symfony2. Go to the following
-URL to be greeted by Symfony2 (replace Fabien with your first name):
+The sandbox comes with a simple Hello World ":term:`application`" we will use
+to learn more about Symfony2. Go to the following URL to be greeted by Symfony2
+(replace Fabien with your first name):
 
     http://localhost/sandbox/web/app_dev.php/hello/Fabien
 
@@ -88,7 +88,7 @@ What's going on here? Let's dissect the URL:
 * ``app_dev.php``: This is a "front controller". It is the unique entry point
   of the application and it responds to all user requests;
 
-* ``/hello/Fabien``: This is the "virtual" path to the resource the user wants
+* ``/hello/Fabien``: This is the virtual path to the resource the user wants
   to access.
 
 Your responsibility as a developer is to write the code that maps the user
