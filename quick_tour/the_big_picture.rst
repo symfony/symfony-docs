@@ -51,14 +51,15 @@ should now have a ``sandbox/`` directory::
 Checking the Configuration
 --------------------------
 
-To avoid some headaches further down the line, check that your configuration
-can run a Symfony2 project smoothly by requesting the following URL:
+Symfony2 comes with a visual server configuration tester to help avoid some 
+headaches that come from web server or php misconfiguration. Please use 
+the following url to see the diagnostics for your server:
 
     http://localhost/sandbox/web/check.php
 
-Read the script output carefully and fix any problem that it finds.
+Read the script output carefully and correct any oustanding issues. 
 
-Now, request your first "real" Symfony2 webpage:
+Now you can request your first "real" Symfony2 webpage:
 
     http://localhost/sandbox/web/app_dev.php/
 
