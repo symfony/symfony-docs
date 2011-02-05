@@ -93,19 +93,16 @@ Fabien!``).
 Configuration
 ~~~~~~~~~~~~~
 
-But how does Symfony2 route the request to your code? Simply by reading some
-configuration file.
+Symfony2 routes the request to your code by using a configuration file.
 
-All Symfony2 configuration files can be written in either PHP, XML, or `YAML`_
-(YAML is a simple format that makes the description of configuration settings
+All Symfony2 configuration files can be written in PHP, XML or `YAML`_(YAML is 
+a simple format that makes the description of configuration settings 
 straightforward).
 
 .. tip::
 
     The sandbox defaults to YAML, but you can easily switch to XML or PHP by
-    editing the ``app/AppKernel.php`` file. You can switch now by looking at
-    the bottom of this file for instructions (the tutorials show the
-    configuration for all supported formats).
+    editing the ``app/AppKernel.php`` file.
 
 .. index::
    single: Routing
