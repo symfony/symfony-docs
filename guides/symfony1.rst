@@ -147,13 +147,14 @@ Using the Console
 In symfony1, the console is in the root directory of your project and is
 called ``symfony``:
 
-.. code-block::
+.. code-block:: text
 
     php symfony
 
-In Symfony2, the console is now in the app sub-directory and is called ``console``:
+In Symfony2, the console is now in the app sub-directory and is called
+``console``:
 
-.. code-block::
+.. code-block:: text
 
     php app/console
 
