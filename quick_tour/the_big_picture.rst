@@ -1,10 +1,9 @@
 The Big Picture
 ===============
 
-So, you want to try out Symfony2 but only have 10 minutes or so? This first
-part of this tutorial has been written for you. It explains how to get started
-fast with Symfony2 by showing you the structure of a simple ready-made
-project.
+Start using Symfony 2 in 10 minutes! This tutorial contains some of the 
+important concepts behind Symfony2. It explains how to get started fast with
+Symfony2 by showing you the structure of a simple ready-made project.
 
 If you have ever used a web framework before, you should feel right at home
 with Symfony2.
@@ -63,6 +62,15 @@ Now, request your first "real" Symfony2 webpage:
     http://localhost/sandbox/web/app_dev.php/
 
 Symfony2 should congratulate you for your hard work so far!
+
+.. tip::
+
+    On production servers, you should point your web root directory to the
+    ``web/`` directory to secure your installation and have an even better
+    looking URL:
+
+    http://localhost/hello/Fabien
+    
 
 Creating your first Application
 -------------------------------
@@ -300,12 +308,6 @@ And if you use Apache with ``mod_rewrite`` enabled, you can even omit the
 ``app.php`` part of the URL:
 
     http://localhost/sandbox/web/hello/Fabien
-
-Last but not least, on the production servers, you should point your web root
-directory to the ``web/`` directory to secure your installation and have an even
-better looking URL:
-
-    http://localhost/hello/Fabien
 
 To make the production environment as fast as possible, Symfony2 maintains a
 cache under the ``app/cache/`` directory. When you make changes to the code or
