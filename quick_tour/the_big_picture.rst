@@ -277,10 +277,9 @@ developers. In our example, we only have one bundle, ``HelloBundle``.
 Templates
 ~~~~~~~~~
 
-So, the controller renders the ``HelloBundle:Hello:index.html.twig`` template.
-But what's in a template name? ``HelloBundle`` is the bundle name, ``Hello``
-is the controller, and ``index.html.twig`` the template name. By default, the
-sandbox uses Twig as its template engine:
+The controller renders the ``HelloBundle:Hello:index.html.twig`` template. By 
+default, the sandbox uses Twig as its template engine but you can also use
+traditional PHP templates if you choose.
 
 .. code-block:: jinja
 
@@ -290,10 +289,6 @@ sandbox uses Twig as its template engine:
     {% block content %}
         Hello {{ name }}!
     {% endblock %}
-
-Congratulations! You have looked at your first Symfony2 piece of code. That was
-not so hard, was it? Symfony2 makes it really easy to implement web sites
-better and faster.
 
 .. index::
    single: Environment
@@ -326,11 +321,10 @@ working on a project.
 Final Thoughts
 --------------
 
-The 10 minutes are over. By now, you should be able to create your own simple
-routes, controllers, and templates. As an exercise, try to build something
-more useful than the Hello application! But if you are eager to learn more
-about Symfony2, you can read the next part of this tutorial right away, where
-we dive more into the templating system.
+Thanks for trying out Symfony2! By now, you should be able to create your own 
+simple routes, controllers and templates. As an exercise, try to build 
+something more useful than the Hello application! If you are eager to 
+learn more about Symfony2, dive into the next section: the view system.
 
 .. _sandbox: http://symfony-reloaded.org/code#sandbox
 .. _YAML:    http://www.yaml.org/
