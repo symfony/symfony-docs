@@ -88,6 +88,7 @@ write mapping information with annotations, XML, or YAML:
         namespace Sensio\HelloBundle\Entity;
 
         /**
+         * @orm:Table()
          * @orm:Entity
          */
         class User
@@ -95,7 +96,7 @@ write mapping information with annotations, XML, or YAML:
             /**
              * @orm:Id
              * @orm:Column(type="integer")
-             * @orm:GeneratedValue(strategy="IDENTITY")
+             * @orm:GeneratedValue(strategy="AUTO")
              */
             protected $id;
 
@@ -115,7 +116,7 @@ write mapping information with annotations, XML, or YAML:
                 id:
                     type: integer
                     generator:
-                        strategy: IDENTITY
+                        strategy: AUTO
             fields:
                 name:
                     type: string
@@ -131,7 +132,7 @@ write mapping information with annotations, XML, or YAML:
 
             <entity name="Sensio\HelloBundle\Entity\User" table="user">
                 <id name="id" type="integer" column="id">
-                    <generator strategy="IDENTITY"/>
+                    <generator strategy="AUTO"/>
                 </id>
                 <field name="name" column="name" type="string" length="255" />
             </entity>
