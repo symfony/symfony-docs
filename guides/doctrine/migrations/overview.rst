@@ -31,7 +31,7 @@ status of a bundle migrations you can run the ``status`` command:
 
 .. code-block:: bash
 
-    $ php app/console doctrine:migrations:status --bundle="Sensio\HelloBundle"
+    $ php app/console doctrine:migrations:status --bundle="HelloBundle"
 
      == Configuration
 
@@ -51,8 +51,12 @@ class:
 
 .. code-block:: bash
 
-    $ php app/console doctrine:migrations:generate --bundle="Sensio\HelloBundle"
+    $ php app/console doctrine:migrations:generate --bundle="HelloBundle"
     Generated new migration class to "/path/to/symfony-sandbox/src/Bundle/HelloBundle/DoctrineMigrations/Version20100621140655.php"
+
+.. tip::
+
+    You may need to create the folder "/path/to/symfony-sandbox/src/Bundle/HelloBundle/DoctrineMigrations" before running the doctrine:migrations:generate command.
 
 Have a look at the newly generated migration class and you will see something
 like the following::
@@ -80,7 +84,7 @@ that you have one new migration to execute:
 
 .. code-block:: bash
 
-    $ php app/console doctrine:migrations:status --bundle="Sensio\HelloBundle"
+    $ php app/console doctrine:migrations:status --bundle="HelloBundle"
 
      == Configuration
 
@@ -104,6 +108,6 @@ migrate:
 
 .. code-block:: bash
 
-    $ php app/console doctrine:migrations:migrate --bundle="Sensio\HelloBundle"
+    $ php app/console doctrine:migrations:migrate --bundle="HelloBundle"
 
 .. _documentation: http://www.doctrine-project.org/projects/migrations/2.0/docs/en
