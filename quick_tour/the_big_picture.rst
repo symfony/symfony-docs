@@ -297,13 +297,12 @@ traditional PHP templates if you choose.
 Working with Environments
 -------------------------
 
-Now that you have a better understanding on how Symfony2 works, have a closer
+Now that you have a better understanding of how Symfony2 works, have a closer
 look at the bottom of the page; you will notice a small bar with the Symfony2
-and PHP logos. It is called the "Web Debug Toolbar" and it is the developer's
+and PHP logos. This is called the "Web Debug Toolbar" and it is the developer's
 best friend. Of course, such a tool must not be displayed when you deploy your
-application to your production servers. That's why you will find another front
-controller in the ``web/`` directory (``app.php``), optimized for the
-production environment:
+application to production. That's why you will find another front controller in
+the ``web/`` directory (``app.php``), optimized for the production environment:
 
     http://localhost/sandbox/web/app.php/hello/Fabien
 
@@ -314,9 +313,9 @@ And if you use Apache with ``mod_rewrite`` enabled, you can even omit the
 
 To make the production environment as fast as possible, Symfony2 maintains a
 cache under the ``app/cache/`` directory. When you make changes to the code or
-configuration, you need to manually remove the cached files. That's why you
-should always use the development front controller (``app_dev.php``) when
-working on a project.
+configuration, you need to manually remove the cached files. The development
+front controller (``app_dev.php``) does not use this cache and your changes
+appear immediately, thus is recommended when working on a project.
 
 Final Thoughts
 --------------
