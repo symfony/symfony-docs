@@ -101,11 +101,9 @@ Fabien!``).
 Configuration
 ~~~~~~~~~~~~~
 
-Symfony2 routes the request to your code by using a configuration file.
-
-All Symfony2 configuration files can be written in PHP, XML or `YAML`_(YAML is 
-a simple format that makes the description of configuration settings 
-straightforward).
+Symfony2 configuration files can be written in PHP, XML or `YAML`_. The 
+different types are compatible and may be used interchangeably within an 
+application.
 
 .. tip::
 
@@ -119,7 +117,8 @@ straightforward).
 Routing
 ~~~~~~~
 
-So, Symfony2 routes the request by reading the routing configuration file:
+Symfony2 routes the request to your code by using a configuration file. Here 
+are a few examples of the routing configuration file for our application:
 
 .. configuration-block::
 
@@ -163,9 +162,14 @@ So, Symfony2 routes the request by reading the routing configuration file:
 
         return $collection;
 
-The first few lines of the routing configuration file define the code called
-when the user requests the "``/``" resource. More interesting is the last
-part, which imports another routing configuration file that reads as follows:
+The first few lines of the routing configuration file define the code that is 
+executed when the user requests the "``/``" resource. 
+
+.. tip::
+
+   If you're comfortable with routing, have a look at the last directive of 
+   the configuration file. Symfony2 can include routing information from 
+   other bundles. 
 
 .. configuration-block::
 
@@ -203,7 +207,7 @@ part, which imports another routing configuration file that reads as follows:
 
         return $collection;
 
-Here we go! As you can see, the "``/hello/{name}``" resource pattern (a string
+As you can see, the "``/hello/{name}``" resource pattern (a string
 enclosed in curly brackets like ``{name}`` is a placeholder) is mapped to a
 controller, referenced by the ``_controller`` value.
 
