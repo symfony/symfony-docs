@@ -245,7 +245,7 @@ The Form component can use this information to "guess" which field type should
 be created with which settings.
 
 To use this feature, a form needs to know the class of the related domain
-object. You can set this class within the ``configure()`` method of the form.
+object. You can set this class within the ``configure()`` method of the form by using ``setDataClass()`` and passing the fully qualified class name as a string. 
 Calling ``add()`` with only the name of the property will then automatically
 create the best-matching field. 
 
@@ -256,6 +256,7 @@ create the best-matching field.
     {
         protected function configure()
         {
+            $this->setDataClass('Sensio\\HelloBundle\\Contact\\ContactRequest');
             $this->add('subject');  // TextField with max_length=100 because
                                     // of the @MaxLength constraint
             $this->add('message');  // TextField
