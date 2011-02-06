@@ -206,8 +206,8 @@ controller, referenced by the ``_controller`` value.
 Controllers
 ~~~~~~~~~~~
 
-The controller is responsible for returning a representation of the resource
-(most of the time an HTML one) and it is defined as a PHP class:
+The controller defines actions to handle users requests and prepares responses
+(often in HTML).
 
 .. code-block:: php
    :linenos:
@@ -231,21 +231,22 @@ The controller is responsible for returning a representation of the resource
 
 The code is pretty straightforward but let's explain it line by line:
 
-* *line 3*: Symfony2 takes advantage of new PHP 5.3 features and as such, all
-  controllers are properly namespaced (the namespace is the first part of the
-  ``_controller`` routing value: ``HelloBundle``).
+* *line 3*: Symfony2 takes advantage of new PHP 5.3 namespacing features, and
+  all controllers should be properly namespaced. Per the routing file above,
+  the namespace is the first part of the ``_controller`` routing value:
+  ``HelloBundle``).
 
-* *line 7*: The controller name is the concatenation of the second part of the
-  ``_controller`` routing value (``Hello``) and ``Controller``. It extends the
-  built-in ``Controller`` class, which provides useful shortcuts (as we will
-  see later in this tutorial).
+* *line 7*: The controller name is the combination of the second part of the
+  ``_controller`` routing value  (``Hello``) and the word ``Controller``. It
+  extends the built-in ``Controller`` class, which provides useful shortcuts
+  (as we will see later in this tutorial).
 
-* *line 9*: Each controller is made of several actions. As per the
+* *line 9*: Each controller is made of several actions. As per the routing
   configuration, the hello page is handled by the ``index`` action (the third
   part of the ``_controller`` routing value). This method receives the
-  resource placeholder values as arguments (``$name`` in our case).
+  placeholder values as arguments (``$name`` in our case).
 
-* *line 11*: The ``render()`` method loads and renders a template
+* *line 11*: The ``render()`` method loads and renders a template file
   (``HelloBundle:Hello:index.html.twig``) with the variables passed as a
   second argument.
 
@@ -254,6 +255,12 @@ organized in bundles. In Symfony2 speak, a bundle is a structured set of files
 (PHP files, stylesheets, JavaScripts, images, ...) that implements a single
 feature (a blog, a forum, ...) and which can be easily shared with other
 developers. In our example, we only have one bundle, ``HelloBundle``.
+
+.. tip::
+
+    In general, controller actions should be as short as possible. If one is
+    getting too long, consider refactoring some of the more complicated code to
+    the service layer (which will be discussed later).
 
 Templates
 ~~~~~~~~~
