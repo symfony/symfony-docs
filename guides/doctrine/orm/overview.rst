@@ -88,7 +88,6 @@ write mapping information with annotations, XML, or YAML:
         namespace Sensio\HelloBundle\Entity;
 
         /**
-         * @orm:Table()
          * @orm:Entity
          */
         class User
