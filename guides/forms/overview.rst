@@ -1,331 +1,356 @@
 .. index::
    single: Forms
 
-Forms
-=====
+Working with Forms
+==================
 
-Symfony2 features a sophisticated Form component that allows you to easily
-create mighty forms.
+Symfony2 comes with a built-in form component. It deals with displaying,
+rendering and submitting HTML forms.
 
-Your First Form
----------------
+While it is possible to process form submissions with Symfony2's 
+:class:`Symfony\\Component\\HttpFoundation\\Request` class alone, the form 
+component takes care of a number of common form-related tasks, such as:
 
-A form in Symfony2 is a transparent layer on top of your domain model. It reads
-properties from an object, displays the values in the form, and allows the user
-to change them. When the form is submitted, the values are written back into
-the object.
+1. Displaying an HTML form with automatically generated form fields
+2. Converting the submitted data to PHP data types
+3. Reading from and writing data into POPOs (plain old PHP objects)
+4. Validating submitted form data with Symfony2's ``Validator``
+5. Protecting form submissions against CSRF attacks
 
-Let's see how this works in a practical example. Let's create a simple
-``Customer`` class::
+Overview
+--------
 
-    namespace Sensio\HelloBundle\Entity;
+The component deals with these concepts:
 
-    class Customer
+*Field*
+  A class that converts submitted data to normalized values.
+
+*Form*
+  A collection of fields that knows how to validate itself.
+
+*Template*
+  A file that renders a form or a field in HTML.
+
+*Domain objects*
+  An object a form uses to populate default values and where submitted
+  data is written.
+
+The form component only relies on the HttpFoundation and Validator
+components to work. If you want to use the internationalization features,
+PHP's intl extension is required as well.
+
+Form Objects
+------------
+
+A Form object encapsulates a collection of fields that convert submitted
+data to the format used in your application. Form classes are created as
+subclasses of :class:`Symfony\\Component\\Form\\Form`. You should implement the
+method ``configure()`` to initialize the form with a set of fields.
+
+.. code-block:: php
+
+    // src/Sensio/HelloBundle/Contact/ContactForm.php
+    use Symfony\Component\Form
+    use Symfony\Component\Form\TextField
+    use Symfony\Component\Form\TextareaField
+    use Symfony\Component\Form\EmailField
+    use Symfony\Component\Form\CheckboxField
+    
+    class ContactForm extends Form
     {
-        public $name;
-        private $age = 20;
-
-        public function getAge()
+        protected function configure()
         {
-            return $this->age;
-        }
-
-        public function setAge($age)
-        {
-            $this->age = $age;
+            $this->add(new TextField('subject', array(
+                'max_length' => 100,
+            )));
+            $this->add(new TextareaField('message'));
+            $this->add(new EmailField('sender'));
+            $this->add(new CheckboxField('ccmyself', array(
+                'required' => false,
+            )));
         }
     }
 
-The class contains two properties ``name`` and "age". The property ``$name``
-is public, while ``$age`` can only be modified through setters and getters.
+A form consists of ``Field`` objects. In this case, our form has the fields
+``subject``, ``message``, ``sender`` and ``ccmyself``. ``TextField``,
+``TextareaField``, ``EmailField`` and ``CheckboxField`` are only four of the
+available form fields; a full list can be found in :doc:`Form fields
+<fields>`.
 
-Now let's create a form to let the visitor fill the data of the object::
+Using a Form in a Controller
+----------------------------
+
+The standard pattern for using a form in a controller looks like this:
+
+.. code-block:: php
 
     // src/Sensio/HelloBundle/Controller/HelloController.php
-
-    use Sensio\HelloBundle\Entity\Customer;
-    use Symfony\Component\Form\Form;
-    use Symfony\Component\Form\TextField;
-    use Symfony\Component\Form\IntegerField;
-
-    public function signupAction()
+    public function contactAction()
     {
-        $customer = new Customer();
+        $contactRequest = new ContactRequest();
+        $form = ContactForm::create($this->get('form.context'));
+        
+        // If a POST request, write submitted data into $contactRequest
+        // and validate it
+        $form->bind($this->get('request'), $contactRequest);
+        
+        // If the form has been submitted and validates...
+        if ($form->isValid()) {
+            $contactRequest->send();
+        }
 
-        $form = new Form('customer', $customer, $this->get('validator'));
-        $form->add(new TextField('name'));
-        $form->add(new IntegerField('age'));
-
-        return $this->render('HelloBundle:Hello:signup.html.twig', array(
+        // Display the form with the values in $contactRequest
+        return $this->render('HelloBundle:Hello:contact.html.twig', array(
             'form' => $form
         ));
     }
+   
+There are two code paths there:
 
-A form consists of various fields. Each field represents a property in your
-class. The property must have the same name as the field and must either be
-public or accessible through public getters and setters.
+1. If the form has not been submitted or is invalid, it is simply passed to
+   the template.
+2. If the form has been submitted and is valid, the contact request is sent.
 
-Instead of passing the form instance directly to the view, we wrap it with an
-object that provides methods that help to render the form with more flexibility
-(``$this->get('templating.form')->get($form)``).
+We created the form with the static ``create()`` method. This method expects
+a form context that contains all default services (for example a ``Validator``)
+and settings that a form needs to work.
 
-Let's create a simple template to render the form:
+.. note:
+
+    If you don't use Symfony2 or its service container, don't worry. You can
+    easily create a ``FormContext`` and a ``Request`` manually:
+    
+    .. code-block:: php
+    
+        use Symfony\Component\Form\FormContext
+        use Symfony\Component\HttpFoundation\Request
+        
+        $context = FormContext::buildDefault();
+        $request = Request::createFromGlobals();
+
+Forms and Domain Objects
+------------------------
+
+In the last example a ``ContactRequest`` was bound to the form. The property
+values of this object are used to populate the form fields. After binding,
+the submitted values are written into the object again. The ``ContactRequest``
+class could look like this:
+
+.. code-block:: php
+
+    // src/Sensio/HelloBundle/Contact/ContactRequest.php
+    class ContactRequest
+    {
+        protected $subject = 'Subject...';
+        
+        protected $message;
+        
+        protected $sender;
+        
+        protected $ccmyself = false;
+        
+        protected $mailer;
+        
+        public function __construct(\Swift_Mailer $mailer)
+        {
+            $this->mailer = $mailer;
+        }
+        
+        public function setSubject($subject)
+        {
+            $this->subject = $subject;
+        }
+        
+        public function getSubject()
+        {
+            return $this->subject;
+        }
+        
+        // Setters and getters for the other properties
+        // ...
+        
+        public function send()
+        {
+            // Send the contact mail
+            $message = \Swift_Message::newInstance()
+                ->setSubject($this->subject)
+                ->setFrom($this->sender)
+                ->setTo('me@example.com')
+                ->setBody($this->message);
+                
+            $this->mailer->send($message);
+        }
+    }
+    
+.. note::
+
+    See :doc:`Emails </guides/emails>` for more information on sending mails.
+
+For each field in your form, the class of the domain object needs to have
+
+1. A public property with the field's name, or
+2. A public setter and getter with the prefix "set"/"get", followed by the
+   field's name with a first capital letter.
+   
+Validating Submitted Data
+-------------------------
+
+The form uses the ``Validator`` component to validate submitted form values.
+All constraints on the domain object, on the form and on its fields will be 
+validated when ``bind()`` is called. We will add a few constraints to
+``ContactRequest`` to make sure that nobody can submit the form with invalid
+data.
+
+.. code-block:: php
+
+    // src/Sensio/HelloBundle/Contact/ContactRequest.php
+    class ContactRequest
+    {
+        /**
+         * @validation:MaxLength(100)
+         * @validation:NotBlank
+         */
+        protected $subject = 'Subject...';
+        
+        /**
+         * @validation:NotBlank
+         */
+        protected $message;
+        
+        /**
+         * @validation:Email
+         * @validation:NotBlank
+         */
+        protected $sender;
+        
+        /**
+         * @validation:AssertType("boolean")
+         */
+        protected $ccmyself = false;
+        
+        // Other code...
+    }
+
+If any constraint fails, the error is displayed next to the corresponding
+form field. You can learn more about constraints in :doc:`Validation 
+Constraints </guides/validator/constraints>`.
+
+Creating Form Fields Automatically
+----------------------------------
+
+If you use Doctrine2 or Symfony's ``Validator``, Symfony already knows quite
+a lot about your domain classes. It knows which data type is used to persist
+a property in the database, what validation constraints the property has etc.
+The Form component can use this information to "guess" which field type should
+be created with which settings.
+
+To use this feature, a form needs to know the class of the related domain
+object. You can set this class within the ``configure()`` method of the form.
+Calling ``add()`` with only the name of the property will then automatically
+create the best-matching field. 
+
+.. code-block:: php
+
+    // src/Sensio/HelloBundle/Contact/ContactForm.php
+    class ContactForm extends Form
+    {
+        protected function configure()
+        {
+            $this->add('subject');  // TextField with max_length=100 because
+                                    // of the @MaxLength constraint
+            $this->add('message');  // TextField
+            $this->add('sender');   // EmailField because of the @Email constraint
+            $this->add('ccmyself'); // CheckboxField because of @AssertType("boolean")
+        }
+    }
+
+These field guesses are obviously not always right. For the property ``message``
+Symfony created a ``TextField``, it couldn't know from the validation constraints
+that you wanted a ``TextareaField`` instead. So you have to create this field
+manually. You can also tweak the options of the generated fields by passing
+them in the second parameter. We will add a ``max_length`` option to the
+``sender`` field to limit its length.
+
+.. code-block:: php
+
+    // src/Sensio/HelloBundle/Contact/ContactForm.php
+    class ContactForm extends Form
+    {
+        protected function configure()
+        {
+            $this->add('subject'); 
+            $this->add(new TextareaField('message'));
+            $this->add('sender', array('max_length' => 50));
+            $this->add('ccmyself');
+        }
+    }
+    
+Generating form fields automatically helps you to increase your development
+speed and reduces code duplication. You can store information about class 
+properties once and let Symfony2 do the other work for you.
+
+Rendering Forms as HTML
+-----------------------
+
+In the controller we passed the form to the template in the ``form`` variable.
+In the template we can use the ``form_field`` helper to output a raw prototype
+of the form.
 
 .. code-block:: html+jinja
 
-    # src/Sensio/HelloBundle/Resources/views/Hello/signup.html.twig
+    # src/Sensio/HelloBundle/Resources/views/Hello/contact.html.twig
     {% extends 'HelloBundle::layout.html.twig' %}
 
     <form action="#" method="post">
         {{ form_field(form) }}
-
+        
         <input type="submit" value="Send!" />
     </form>
+    
+Customizing the HTML Output
+---------------------------
 
-.. note::
+In most applications you will want to customize the HTML of the form. You
+can do so by using the other built-in form rendering helpers.
 
-    Form rendering in templates is covered in chapter :doc:`Forms in Templates
-    </guides/forms/view>`.
+.. code-block:: html+jinja
 
-When the user submits the form, we also need to handle the submitted data. All
-the data is stored in a POST parameter with the name of the form::
+    # src/Sensio/HelloBundle/Resources/views/Hello/contact.html.twig
+    {% extends 'HelloBundle::layout.html.twig' %}
 
-    # src/Sensio/HelloBundle/Controller/HelloController.php
-    public function signupAction()
-    {
-        $customer = new Customer();
-        $form = new Form('customer', $customer, $this->get('validator'));
+    <form action="#" method="post" {{ form_enctype(form) }}>
+        {{ form_errors(form) }}
+        
+        {% for field in form %}
+            <div>
+                {{ form_errors(field) }}
+                {{ form_label(field) }}
+                {{ form_field(field) }}
+            </div>
+        {% endfor %}
 
-        // form setup...
+        {{ form_hidden(form) }}
+        <input type="submit" />
+    </form>
+    
+Symfony2 comes with the following helpers:
 
-        if ('POST' === $this->get('request')->getMethod()) {
-            $form->bind($this->get('request')->request->get('customer'));
+*``form_enctype``*
+  Outputs the ``enctype`` attribute of the form tag. Required for file uploads.
 
-            if ($form->isValid()) {
-                // save $customer object and redirect
-            }
-        }
+*``form_errors``*
+  Outputs the a ``<ul>`` tag with errors of a field or a form.
 
-        return $this->render('HelloBundle:Hello:signup.html.twig', array('form' => $form));
-    }
+*``form_label``*
+  Outputs the ``<label>`` tag of a field.
+
+*``form_field``*
+  Outputs HTML of a field or a form.
+
+*``form_hidden``*
+  Outputs all hidden fields of a form.
+
+Form rendering is covered in detail in :doc:`Forms in Templates <view>`.
 
 Congratulations! You just created your first fully-functional form with
 Symfony2.
-
-.. index::
-   single: Forms; Fields
-
-Form Fields
------------
-
-As you have learned, a form consists of one or more form fields. A field knows
-how to convert data between normalized and human representations.
-
-Let's look at the ``DateField`` for example. While you probably prefer to
-store dates as strings or ``DateTime`` objects, users rather like to choose
-them from a list of drop downs. ``DateField`` handles the rendering and type
-conversion for you.
-
-Basic Fields
-~~~~~~~~~~~~
-
-Symfony2 ships with all fields available in plain HTML:
-
-============= ==================
-Field         Name Description
-============= ==================
-TextField     An input tag for entering short text
-TextareaField A textarea tag for entering long text
-CheckboxField A checkbox
-ChoiceField   A drop-down or multiple radio-buttons/checkboxes for selecting values
-PasswordField A password input tag
-HiddenField   A hidden input tag
-============= ==================
-
-Localized Fields
-~~~~~~~~~~~~~~~~
-
-The Form component also features fields that render differently depending on
-the locale of the user:
-
-============= ==================
-Field         Name Description
-============= ==================
-NumberField   A text field for entering numbers
-IntegerField  A text field for entering integers
-PercentField  A text field for entering percent values
-MoneyField    A text field for entering money values
-DateField     A text field or multiple drop-downs for entering dates
-BirthdayField An extension of DateField for selecting birthdays
-TimeField     A text field or multiple drop-downs for entering a time
-DateTimeField A combination of DateField and TimeField
-TimezoneField An extension of ChoiceField for selecting a timezone
-============= ==================
-
-Field Groups
-~~~~~~~~~~~~
-
-Field groups allow you to combine multiple fields together. While normal
-fields only allow you to edit scalar data types, field groups can be used to
-edit whole objects or arrays. Let's add a new class ``Address`` to our model::
-
-    class Address
-    {
-        public $street;
-        public $zipCode;
-    }
-
-Now we can add a property ``$address`` to the customer that stores one
-``Address`` object::
-
-    class Customer
-    {
-         // other properties ...
-
-         public $address;
-    }
-
-We can use a field group to show fields for the customer and the nested
-address at the same time::
-
-    # src/Sensio/HelloBundle/Controller/HelloController.php
-
-    use Symfony\Component\Form\FieldGroup;
-
-    public function signupAction()
-    {
-        $customer = new Customer();
-        $customer->address = new Address();
-
-        // form configuration ...
-
-        $group = new FieldGroup('address');
-        $group->add(new TextField('street'));
-        $group->add(new TextField('zipCode'));
-        $form->add($group);
-
-        // process form ...
-    }
-
-With only these little changes you can now edit also the ``Address`` object!
-Cool, ey?
-
-Repeated Fields
-~~~~~~~~~~~~~~~
-
-The ``RepeatedField`` is an extended field group that allows you to output a
-field twice. The repeated field will only validate if the user enters the same
-value in both fields::
-
-    use Symfony\Component\Form\RepeatedField;
-
-    $form->add(new RepeatedField(new TextField('email')));
-
-This is a very useful field for querying email addresses or passwords!
-
-Collection Fields
-~~~~~~~~~~~~~~~~~
-
-The ``CollectionField`` is a special field group for manipulating arrays or
-objects that implements the interface ``Traversable``. To demonstrate this, we
-will extend the ``Customer`` class to store three email addresses::
-
-    class Customer
-    {
-        // other properties ...
-
-        public $emails = array('', '', '');
-    }
-
-We will now add a ``CollectionField`` to manipulate these addresses::
-
-    use Symfony\Component\Form\CollectionField;
-
-    $form->add(new CollectionField(new TextField('emails')));
-
-If you set the option "modifiable" to ``true``, you can even add or remove
-rows in the collection via JavaScript! The ``CollectionField`` will notice it
-and resize the underlying array accordingly.
-
-.. index::
-   pair: Forms; Validation
-
-Form Validation
----------------
-
-You have already learned in the last part of this tutorial how to set up
-validation constraints for a PHP class. The nice thing is that this is enough
-to validate a Form! Remember that a form is nothing more than a gateway for
-changing data in an object.
-
-What now if there are further validation constraints for a specific form, that
-are irrelevant for the underlying class? What if the form contains fields that
-should not be written into the object?
-
-The answer to that question is most of the time to extend your domain model.
-We'll demonstrate this approach by extending our form with a checkbox for
-accepting terms and conditions.
-
-Let's create a simple ``Registration`` class for this purpose::
-
-    namespace Sensio\HelloBundle\Entity;
-
-    class Registration
-    {
-        /** @validation:Valid */
-        public $customer;
-
-        /** @validation:AssertTrue(message="Please accept the terms and conditions") */
-        public $termsAccepted = false;
-
-        public function process()
-        {
-            // save user, send emails etc.
-        }
-    }
-
-Now we can easily adapt the form in the controller::
-
-    # src/Sensio/HelloBundle/Controller/HelloController.php
-
-    use Sensio\HelloBundle\Entity\Registration;
-    use Symfony\Component\Form\CheckboxField;
-
-    public function signupAction()
-    {
-        $registration = new Registration();
-        $registration->customer = new Customer();
-
-        $form = new Form('registration', $registration, $this->get('validator'));
-        $form->add(new CheckboxField('termsAccepted'));
-
-        $group = new FieldGroup('customer');
-
-        // add customer fields to this group ...
-
-        $form->add($group);
-
-        if ('POST' === $this->get('request')->getMethod()) {
-            $form->bind($this->get('request')->request->get('registration'));
-
-            if ($form->isValid()) {
-                $registration->process();
-            }
-        }
-
-        return $this->render('HelloBundle:Hello:signup.php', array('form' => $form));
-    }
-
-The big benefit of this refactoring is that we can reuse the ``Registration``
-class. Extending the application to allow users to sign up via XML is no
-problem at all!
-
-Final Thoughts
---------------
-
-This chapter showed you how the Form component of Symfony2 can help you to
-rapidly create forms for your domain objects. The component embraces a strict
-separation between business logic and presentation. Many fields are
-automatically localized to make your visitors feel comfortable on your website.
-And with a flexible architecture, this is just the beginning of many mighty
-user-created fields!
