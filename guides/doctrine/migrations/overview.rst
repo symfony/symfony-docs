@@ -52,11 +52,12 @@ class:
 .. code-block:: bash
 
     $ php app/console doctrine:migrations:generate --bundle="HelloBundle"
-    Generated new migration class to "/path/to/symfony-sandbox/src/Bundle/HelloBundle/DoctrineMigrations/Version20100621140655.php"
+    Generated new migration class to "/path/to/project/src/Sensio/HelloBundle/DoctrineMigrations/Version20100621140655.php"
 
 .. tip::
 
-    You may need to create the folder "/path/to/symfony-sandbox/src/Bundle/HelloBundle/DoctrineMigrations" before running the doctrine:migrations:generate command.
+    You may need to create the folder ``/path/to/project/src/Sensio/HelloBundle/DoctrineMigrations``
+    before running the ``doctrine:migrations:generate`` command.
 
 Have a look at the newly generated migration class and you will see something
 like the following::
