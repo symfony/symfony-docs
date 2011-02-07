@@ -90,11 +90,11 @@ The standard pattern for using a form in a controller looks like this:
         $contactRequest = new ContactRequest($this->get('mailer'));
         $form = ContactForm::create($this->get('form.context'), 'contact');
         
-        // If a POST request, write submitted data into $contactRequest
-        // and validate them
+        // If a POST request, write the submitted data into $contactRequest
+        // and validate the object
         $form->bind($this->get('request'), $contactRequest);
         
-        // If the form has been submitted and validated...
+        // If the form has been submitted and is valid...
         if ($form->isValid()) {
             $contactRequest->send();
         }
