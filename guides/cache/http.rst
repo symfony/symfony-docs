@@ -684,6 +684,11 @@ less as possible.
 .. index::
     single: Cache; Varnish
 
+Symfony2 Reverse Proxy Configuration
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+You juste have to enable the ESI when usign Symfony2 Cache kernel.
+
 Varnish Configuration
 ~~~~~~~~~~~~~~~~~~~~~
 
