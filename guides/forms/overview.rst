@@ -50,11 +50,12 @@ method ``configure()`` to initialize the form with a set of fields.
 .. code-block:: php
 
     // src/Sensio/HelloBundle/Contact/ContactForm.php
-    use Symfony\Component\Form
-    use Symfony\Component\Form\TextField
-    use Symfony\Component\Form\TextareaField
-    use Symfony\Component\Form\EmailField
-    use Symfony\Component\Form\CheckboxField
+    namespace Sensio\HelloBundle\Contact;
+
+    use Symfony\Component\Form\Form;
+    use Symfony\Component\Form\TextField;
+    use Symfony\Component\Form\TextareaField;
+    use Symfony\Component\Form\CheckboxField;
     
     class ContactForm extends Form
     {
@@ -64,7 +65,7 @@ method ``configure()`` to initialize the form with a set of fields.
                 'max_length' => 100,
             )));
             $this->add(new TextareaField('message'));
-            $this->add(new EmailField('sender'));
+            $this->add(new TextField('sender'));
             $this->add(new CheckboxField('ccmyself', array(
                 'required' => false,
             )));
@@ -73,7 +74,7 @@ method ``configure()`` to initialize the form with a set of fields.
 
 A form consists of ``Field`` objects. In this case, our form has the fields
 ``subject``, ``message``, ``sender`` and ``ccmyself``. ``TextField``,
-``TextareaField``, ``EmailField`` and ``CheckboxField`` are only four of the
+``TextareaField`` and ``CheckboxField`` are only three of the
 available form fields; a full list can be found in :doc:`Form fields
 <fields>`.
 
@@ -87,14 +88,14 @@ The standard pattern for using a form in a controller looks like this:
     // src/Sensio/HelloBundle/Controller/HelloController.php
     public function contactAction()
     {
-        $contactRequest = new ContactRequest();
-        $form = ContactForm::create($this->get('form.context'));
+        $contactRequest = new ContactRequest($this->get('mailer'));
+        $form = ContactForm::create($this->get('form.context'), 'contact');
         
-        // If a POST request, write submitted data into $contactRequest
-        // and validate it
+        // If a POST request, write the submitted data into $contactRequest
+        // and validate the object
         $form->bind($this->get('request'), $contactRequest);
         
-        // If the form has been submitted and validates...
+        // If the form has been submitted and is valid...
         if ($form->isValid()) {
             $contactRequest->send();
         }
@@ -122,8 +123,8 @@ and settings that a form needs to work.
     
     .. code-block:: php
     
-        use Symfony\Component\Form\FormContext
-        use Symfony\Component\HttpFoundation\Request
+        use Symfony\Component\Form\FormContext;
+        use Symfony\Component\HttpFoundation\Request;
         
         $context = FormContext::buildDefault();
         $request = Request::createFromGlobals();
@@ -139,6 +140,8 @@ class could look like this:
 .. code-block:: php
 
     // src/Sensio/HelloBundle/Contact/ContactRequest.php
+    namespace Sensio\HelloBundle\Contact;
+
     class ContactRequest
     {
         protected $subject = 'Subject...';
@@ -204,6 +207,8 @@ data.
 .. code-block:: php
 
     // src/Sensio/HelloBundle/Contact/ContactRequest.php
+    namespace Sensio\HelloBundle\Contact;
+
     class ContactRequest
     {
         /**
@@ -245,9 +250,10 @@ The Form component can use this information to "guess" which field type should
 be created with which settings.
 
 To use this feature, a form needs to know the class of the related domain
-object. You can set this class within the ``configure()`` method of the form.
-Calling ``add()`` with only the name of the property will then automatically
-create the best-matching field. 
+object. You can set this class within the ``configure()`` method of the form
+by using ``setDataClass()`` and passing the fully qualified class name as
+a string. Calling ``add()`` with only the name of the property will then
+automatically create the best-matching field. 
 
 .. code-block:: php
 
@@ -256,6 +262,7 @@ create the best-matching field.
     {
         protected function configure()
         {
+            $this->setDataClass('Sensio\\HelloBundle\\Contact\\ContactRequest');
             $this->add('subject');  // TextField with max_length=100 because
                                     // of the @MaxLength constraint
             $this->add('message');  // TextField
@@ -301,11 +308,13 @@ of the form.
     # src/Sensio/HelloBundle/Resources/views/Hello/contact.html.twig
     {% extends 'HelloBundle::layout.html.twig' %}
 
+    {% block content %}
     <form action="#" method="post">
         {{ form_field(form) }}
         
         <input type="submit" value="Send!" />
     </form>
+    {% endblock %}
     
 Customizing the HTML Output
 ---------------------------
@@ -318,20 +327,24 @@ can do so by using the other built-in form rendering helpers.
     # src/Sensio/HelloBundle/Resources/views/Hello/contact.html.twig
     {% extends 'HelloBundle::layout.html.twig' %}
 
+    {% block content %}
     <form action="#" method="post" {{ form_enctype(form) }}>
         {{ form_errors(form) }}
         
         {% for field in form %}
+            {% if not field.ishidden %}
             <div>
                 {{ form_errors(field) }}
                 {{ form_label(field) }}
                 {{ form_field(field) }}
             </div>
+            {% endif %}
         {% endfor %}
 
         {{ form_hidden(form) }}
         <input type="submit" />
     </form>
+    {% endblock %}
     
 Symfony2 comes with the following helpers:
 

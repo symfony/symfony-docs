@@ -58,7 +58,7 @@ header when none is set by the developer by following these rules:
 * If ``Cache-Control`` is empty, its value is set to ``private, max-age=0,
   must-revalidate``;
 
-* But if at least one ``Cache-Control`` directive is set, and no 'public' or
+* But if at least one ``Cache-Control`` directive is set, and no ``public`` or
   ``private`` directives have been explicitly added, Symfony2 adds the
   ``private`` directive automatically (except when ``s-maxage`` is set).
 
@@ -183,7 +183,7 @@ which the response is considered stale." The ``Expires`` header can be set
 with the ``setExpires()`` Response method. It takes a ``DateTime`` instance as
 an argument::
 
-    $date = new DateTime();
+    $date = new \DateTime();
     $date->modify('+600 seconds');
 
     $response->setExpires($date);
