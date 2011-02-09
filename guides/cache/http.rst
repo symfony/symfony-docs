@@ -684,10 +684,37 @@ less as possible.
 .. index::
     single: Cache; Varnish
 
-Symfony2 Reverse Proxy Configuration
+Symfony2 reverse proxy Configuration
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-You juste have to enable the ESI when usign Symfony2 Cache kernel.
+You have to enable ESI for ``HttpCache`` to parse your response for ESI include tag.
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # app/config/config.yml
+        app.config:
+            esi:
+                enabled: true
+
+    .. code-block:: xml
+
+        <!-- app/config/config.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+
+        <app:config charset="UTF-8">
+            <app:esi enabled="true" />
+        </app:config>
+
+    .. code-block:: php
+
+        // app/config/config.php
+        $container->loadFromExtension('app', 'config', array(
+            'esi' => array(
+                'enabled' => true,
+            ),
+        ));
 
 Varnish Configuration
 ~~~~~~~~~~~~~~~~~~~~~
