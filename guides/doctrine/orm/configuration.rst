@@ -56,7 +56,7 @@ Explicit definition of all the mapped entities is the only necessary
 configuration for the ORM and there are several configuration options that you
 can control. The following configuration options exist for a mapping:
 
-- ``type`` One of "annotations", "xml", "yml", "php" or "static-php". This
+- ``type`` One of "annotation", "xml", "yml", "php" or "static-php". This
   specifies which type of metadata type your mapping uses.
 - ``dir`` Path to the mapping or entity files (depending on the driver). If
   this path is relative it is assumed to be relative to the bundle root. This
@@ -68,7 +68,7 @@ can control. The following configuration options exist for a mapping:
   mappings otherwise some of your entities cannot be found by Doctrine. This
   option defaults to the bundle namespace + ``Entity``, for example for an
   application bundle called "Hello" prefix would be
-  ``Application\Hello\Entity``.
+  ``Sensio\Hello\Entity``.
 - ``alias`` Doctrine offers a way to alias entity namespaces to simpler,
   shorter names to be used in DQL queries or for Repository access.
 - ``is_bundle`` This option is a derived value from ``dir`` and by default is
@@ -81,7 +81,7 @@ To avoid having to configure lots of information for your mappings you should
 follow these conventions:
 
 1. Put all your entities in a directory ``Entity/`` inside your bundle. For
-   example ``Application/Hello/Entity/``.
+   example ``Sensio/Hello/Entity/``.
 2. If you are using xml, yml or php mapping put all your configuration files
    into the "Resources/config/doctrine/metadata/doctrine/orm/" directory sufficed
    with dcm.xml, dcm.yml or dcm.php respectively.

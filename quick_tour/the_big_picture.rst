@@ -35,12 +35,14 @@ should now have a ``sandbox/`` directory::
                 config/
                 logs/
             src/
-                Application/
+                Sensio/
                     HelloBundle/
                         Controller/
                         Resources/
-                vendor/
-                    symfony/
+            vendor/
+                symfony/
+                doctrine/
+                ...
             web/
 
 .. index::
@@ -164,14 +166,14 @@ part, which imports another routing configuration file that reads as follows:
 
     .. code-block:: yaml
 
-        # src/Application/HelloBundle/Resources/config/routing.yml
+        # src/Sensio/HelloBundle/Resources/config/routing.yml
         hello:
             pattern:  /hello/{name}
             defaults: { _controller: HelloBundle:Hello:index }
 
     .. code-block:: xml
 
-        <!-- src/Application/HelloBundle/Resources/config/routing.xml -->
+        <!-- src/Sensio/HelloBundle/Resources/config/routing.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
 
         <routes xmlns="http://www.symfony-project.org/schema/routing"
@@ -185,7 +187,7 @@ part, which imports another routing configuration file that reads as follows:
 
     .. code-block:: php
 
-        // src/Application/HelloBundle/Resources/config/routing.php
+        // src/Sensio/HelloBundle/Resources/config/routing.php
         use Symfony\Component\Routing\RouteCollection;
         use Symfony\Component\Routing\Route;
 
@@ -213,9 +215,9 @@ The controller is responsible for returning a representation of the resource
 .. code-block:: php
    :linenos:
 
-    // src/Application/HelloBundle/Controller/HelloController.php
+    // src/Sensio/HelloBundle/Controller/HelloController.php
 
-    namespace Application\HelloBundle\Controller;
+    namespace Sensio\HelloBundle\Controller;
 
     use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
@@ -266,7 +268,7 @@ sandbox uses Twig as its template engine:
 
 .. code-block:: jinja
 
-    {# src/Application/HelloBundle/Resources/views/Hello/index.html.twig #}
+    {# src/Sensio/HelloBundle/Resources/views/Hello/index.html.twig #}
     {% extends "HelloBundle::layout.html.twig" %}
 
     {% block content %}

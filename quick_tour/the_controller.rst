@@ -27,14 +27,14 @@ with a value of ``xml``:
 
     .. code-block:: yaml
 
-        # src/Application/HelloBundle/Resources/config/routing.yml
+        # src/Sensio/HelloBundle/Resources/config/routing.yml
         hello:
             pattern:  /hello/{name}
             defaults: { _controller: HelloBundle:Hello:index, _format: xml }
 
     .. code-block:: xml
 
-        <!-- src/Application/HelloBundle/Resources/config/routing.xml -->
+        <!-- src/Sensio/HelloBundle/Resources/config/routing.xml -->
         <route id="hello" pattern="/hello/{name}">
             <default key="_controller">HelloBundle:Hello:index</default>
             <default key="_format">xml</default>
@@ -42,7 +42,7 @@ with a value of ``xml``:
 
     .. code-block:: php
 
-        // src/Application/HelloBundle/Resources/config/routing.php
+        // src/Sensio/HelloBundle/Resources/config/routing.php
         $collection->add('hello', new Route('/hello/{name}', array(
             '_controller' => 'HelloBundle:Hello:index',
             '_format'     => 'xml',
@@ -52,7 +52,7 @@ Then, add an ``index.xml.twig`` template along side ``index.html.twig``:
 
 .. code-block:: xml+php
 
-    <!-- src/Application/HelloBundle/Resources/views/Hello/index.xml.twig -->
+    <!-- src/Sensio/HelloBundle/Resources/views/Hello/index.xml.twig -->
     <hello>
         <name>{{ name }}</name>
     </hello>
@@ -62,7 +62,7 @@ the following changes to the controller:
 
 .. code-block:: php
 
-    // src/Application/HelloBundle/Controller/HelloController.php
+    // src/Sensio/HelloBundle/Controller/HelloController.php
     public function indexAction($name, $_format)
     {
         return $this->render(
@@ -80,7 +80,7 @@ placeholder in the pattern instead:
 
     .. code-block:: yaml
 
-        # src/Application/HelloBundle/Resources/config/routing.yml
+        # src/Sensio/HelloBundle/Resources/config/routing.yml
         hello:
             pattern:      /hello/{name}.{_format}
             defaults:     { _controller: HelloBundle:Hello:index, _format: html }
@@ -88,7 +88,7 @@ placeholder in the pattern instead:
 
     .. code-block:: xml
 
-        <!-- src/Application/HelloBundle/Resources/config/routing.xml -->
+        <!-- src/Sensio/HelloBundle/Resources/config/routing.xml -->
         <route id="hello" pattern="/hello/{name}.{_format}">
             <default key="_controller">HelloBundle:Hello:index</default>
             <default key="_format">html</default>
@@ -97,7 +97,7 @@ placeholder in the pattern instead:
 
     .. code-block:: php
 
-        // src/Application/HelloBundle/Resources/config/routing.php
+        // src/Sensio/HelloBundle/Resources/config/routing.php
         $collection->add('hello', new Route('/hello/{name}.{_format}', array(
             '_controller' => 'HelloBundle:Hello:index',
             '_format'     => 'html',
@@ -121,7 +121,7 @@ The Response Object
 
 Now, let's get back to the ``Hello`` controller::
 
-    // src/Application/HelloBundle/Controller/HelloController.php
+    // src/Sensio/HelloBundle/Controller/HelloController.php
 
     public function indexAction($name)
     {

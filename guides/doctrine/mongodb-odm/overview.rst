@@ -27,9 +27,9 @@ just need to enable it and specify the bundle that contains your mapped document
 Now you can start writing documents and mapping them with annotations, xml, or
 yaml. In this example we will use annotations::
 
-    // Application/HelloBundle/Document/User.php
+    // Sensio/HelloBundle/Document/User.php
 
-    namespace Application\HelloBundle\Document;
+    namespace Sensio\HelloBundle\Document;
 
     /**
      * @mongodb:Document(collection="users")
@@ -79,7 +79,7 @@ yaml. In this example we will use annotations::
 
 Now, use your document and manage its persistent state with Doctrine::
 
-    use Application\HelloBundle\Document\User;
+    use Sensio\HelloBundle\Document\User;
 
     class UserController extends Controller
     {

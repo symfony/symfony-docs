@@ -5,4 +5,5 @@ Symfony2 Forms
    :maxdepth: 2
 
    overview
+   fields
    view

@@ -22,7 +22,7 @@ put the logic in a method which returns either ``true`` or ``false``.
 
 .. code-block:: php
 
-    // Application/HelloBundle/Author.php
+    // Sensio/HelloBundle/Author.php
     class Author
     {
         protected $token;
@@ -39,16 +39,16 @@ Then you can constrain this method with ``AssertTrue``.
 
     .. code-block:: yaml
 
-        # Application/HelloBundle/Resources/config/validation.yml
-        Application\HelloBundle\Author:
+        # Sensio/HelloBundle/Resources/config/validation.yml
+        Sensio\HelloBundle\Author:
             getters:
                 tokenValid:
                     - AssertTrue: { message: "The token is invalid" }
 
     .. code-block:: xml
 
-        <!-- Application/HelloBundle/Resources/config/validation.xml -->
-        <class name="Application\HelloBundle\Author">
+        <!-- Sensio/HelloBundle/Resources/config/validation.xml -->
+        <class name="Sensio\HelloBundle\Author">
             <getter name="tokenValid">
                 <constraint name="True">
                     <option name="message">The token is invalid</option>
@@ -58,7 +58,7 @@ Then you can constrain this method with ``AssertTrue``.
 
     .. code-block:: php-annotations
 
-        // Application/HelloBundle/Author.php
+        // Sensio/HelloBundle/Author.php
         class Author
         {
             protected $token;
@@ -74,7 +74,7 @@ Then you can constrain this method with ``AssertTrue``.
 
     .. code-block:: php
 
-        // Application/HelloBundle/Author.php
+        // Sensio/HelloBundle/Author.php
         use Symfony\Component\Validator\Mapping\ClassMetadata;
         use Symfony\Component\Validator\Constraints\AssertTrue;
         
@@ -100,5 +100,5 @@ this:
 
 .. code-block:: text
 
-    Application\HelloBundle\Author.tokenValid:
+    Sensio\HelloBundle\Author.tokenValid:
         This value should not be null
