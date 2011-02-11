@@ -684,10 +684,10 @@ less as possible.
 .. index::
     single: Cache; Varnish
 
-Symfony2 reverse proxy Configuration
+Symfony2 Reverse Proxy Configuration
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-You have to enable ESI for ``HttpCache`` to parse your response for ESI include tag.
+To use ESI, be sure to enable it in your application configuration:
 
 .. configuration-block::
 
@@ -695,6 +695,7 @@ You have to enable ESI for ``HttpCache`` to parse your response for ESI include 
 
         # app/config/config.yml
         app.config:
+            # ...
             esi:
                 enabled: true
 
@@ -704,6 +705,7 @@ You have to enable ESI for ``HttpCache`` to parse your response for ESI include 
         <?xml version="1.0" encoding="UTF-8" ?>
 
         <app:config charset="UTF-8">
+            <!-- ... -->
             <app:esi enabled="true" />
         </app:config>
 
@@ -711,6 +713,7 @@ You have to enable ESI for ``HttpCache`` to parse your response for ESI include 
 
         // app/config/config.php
         $container->loadFromExtension('app', 'config', array(
+            // ...
             'esi' => array(
                 'enabled' => true,
             ),
