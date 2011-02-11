@@ -138,7 +138,7 @@ expression or a CSS selector, then use the Client to click on it::
 Submitting a form is very similar; select a form button, optionally override
 some form values, and submit the corresponding form::
 
-    $form = $crawler->selectButton('submit');
+    $form = $crawler->selectButton('submit')->form();
 
     // set some values
     $form['name'] = 'Lucas';
