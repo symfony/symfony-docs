@@ -1,12 +1,12 @@
 The Big Picture
 ===============
 
-Start using Symfony2 in 10 minutes! This tutorial contains some important
-concepts behind Symfony2. It explains how to get started quickly by showing you
-the structure of a sample project.
+Start using Symfony2 in 10 minutes! This tutorial walks you through some
+of the most important concepts behind Symfony2. It explains how to get started
+quickly by showing you the structure of a sample project.
 
-If you have used a web framework before, you should feel right at home
-with Symfony2.
+If you've used a web framework before, you should feel right at home with
+Symfony2. If not, welcome to a whole new way of developing web applications!
 
 .. index::
    pair: Sandbox; Download
@@ -50,8 +50,8 @@ Checking the Configuration
 --------------------------
 
 Symfony2 comes with a visual server configuration tester to help avoid some 
-headaches that come from web server or php misconfiguration. Please use 
-the following url to see the diagnostics for your server:
+headaches that come from web server or PHP misconfiguration. Use the following
+url to see the diagnostics for your server:
 
     http://localhost/sandbox/web/check.php
 
@@ -75,9 +75,9 @@ Symfony2 should congratulate you for your hard work so far!
 Creating your first Application
 -------------------------------
 
-The sandbox comes with a simple Hello World ":term:`application`" we will use
-to learn more about Symfony2. Go to the following URL to be greeted by Symfony2
-(replace Fabien with your first name):
+The sandbox comes with a simple Hello World ":term:`application`" that we'll
+use to learn more about Symfony2. Go to the following URL to be greeted by
+Symfony2 (replace Fabien with your first name):
 
     http://localhost/sandbox/web/app_dev.php/hello/Fabien
 
@@ -108,7 +108,8 @@ application.
 .. tip::
 
     The sandbox defaults to YAML, but you can easily switch to XML or PHP by
-    editing the ``app/AppKernel.php`` file.
+    opening the ``app/AppKernel.php`` file and modifying the
+    ``registerContainerConfiguration`` method.
 
 .. index::
    single: Routing
@@ -117,7 +118,7 @@ application.
 Routing
 ~~~~~~~
 
-Symfony2 routes the request to your code by using a configuration file. Here 
+Symfony2 routes the request to your code by using a configuration file. Here
 are a few examples of the routing configuration file for our application:
 
 .. configuration-block::
@@ -163,13 +164,14 @@ are a few examples of the routing configuration file for our application:
         return $collection;
 
 The first few lines of the routing configuration file define the code that is 
-executed when the user requests the "``/``" resource. 
+executed when the user requests the "``/``" resource (i.e. the homepage). 
 
-.. tip::
-
-   If you're comfortable with routing, have a look at the last directive of 
-   the configuration file. Symfony2 can include routing information from 
-   other bundles. 
+If you're comfortable with routing, take a look at the last directive of 
+the configuration file. Symfony2 can include routing information from 
+other routing configuration files by using the ``import`` directive. In this
+case, we want to import the routing configuration from ``HelloBundle``. A
+bundle is like a plugin that has added power and we'll talk more about them
+later. For now, let's look at the routing configuration that we've imported:
 
 .. configuration-block::
 
@@ -207,9 +209,9 @@ executed when the user requests the "``/``" resource.
 
         return $collection;
 
-As you can see, the "``/hello/{name}``" resource pattern (a string
-enclosed in curly brackets like ``{name}`` is a placeholder) is mapped to a
-controller, referenced by the ``_controller`` value.
+As you can see, the "``/hello/{name}``" resource pattern (a string enclosed
+in curly brackets like ``{name}`` is a placeholder) is mapped to a controller,
+referenced by the ``_controller`` value.
 
 .. index::
    single: Controller
@@ -313,9 +315,10 @@ And if you use Apache with ``mod_rewrite`` enabled, you can even omit the
 
 To make the production environment as fast as possible, Symfony2 maintains a
 cache under the ``app/cache/`` directory. When you make changes to the code or
-configuration, you need to manually remove the cached files. The development
-front controller (``app_dev.php``) does not use this cache and your changes
-appear immediately, thus is recommended when working on a project.
+configuration, you need to manually remove the cached files. When developing
+your application, you should use the development front controller (``app_dev.php``),
+which does not use the cache. When using the development front controller,
+your changes will appear immediately.
 
 Final Thoughts
 --------------
@@ -323,7 +326,7 @@ Final Thoughts
 Thanks for trying out Symfony2! By now, you should be able to create your own 
 simple routes, controllers and templates. As an exercise, try to build 
 something more useful than the Hello application! If you are eager to 
-learn more about Symfony2, dive into the next section: the view system.
+learn more about Symfony2, dive into the next section: "The View".
 
 .. _sandbox: http://symfony-reloaded.org/code#sandbox
 .. _YAML:    http://www.yaml.org/
