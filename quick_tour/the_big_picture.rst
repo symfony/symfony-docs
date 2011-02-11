@@ -236,10 +236,10 @@ The controller defines actions to handle users requests and prepares responses
 
 The code is pretty straightforward but let's explain it line by line:
 
-* *line 3*: Symfony2 takes advantage of new PHP 5.3 namespacing features, and
-  all controllers should be properly namespaced. Per the routing file above,
-  the namespace is the first part of the ``_controller`` routing value:
-  ``HelloBundle``).
+* *line 3*: Symfony2 takes advantage of new PHP 5.3 namespacing features,
+  and all controllers should be properly namespaced (though this is not
+  required). In this example, the controller lives in the bundle named ``HelloBundle``,
+  which forms the first part of the ``_controller`` routing value.
 
 * *line 7*: The controller name is the combination of the second part of the
   ``_controller`` routing value  (``Hello``) and the word ``Controller``. It
