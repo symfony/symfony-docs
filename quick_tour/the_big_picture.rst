@@ -63,15 +63,6 @@ Now you can request your first "real" Symfony2 webpage:
 
 Symfony2 should congratulate you for your hard work so far!
 
-.. tip::
-
-    On production servers, you should point your web root directory to the
-    ``web/`` directory to secure your installation and have an even better
-    looking URL:
-
-    http://localhost/hello/Fabien
-    
-
 Creating your first Application
 -------------------------------
 
@@ -270,12 +261,6 @@ organized in bundles. In Symfony2 speak, a bundle is a structured set of files
 feature (a blog, a forum, ...) and which can be easily shared with other
 developers. In our example, we only have one bundle, ``HelloBundle``.
 
-.. tip::
-
-    In general, controller actions should be as short as possible. If one is
-    getting too long, consider refactoring some of the more complicated code to
-    the service layer (which will be discussed later).
-
 Templates
 ~~~~~~~~~
 
@@ -291,6 +276,11 @@ traditional PHP templates if you choose.
     {% block content %}
         Hello {{ name }}!
     {% endblock %}
+
+Congratulations! You've had your first taste of Symfony2 code and created
+your first page. That wasn't so hard, was it? There's a lot more to explore,
+but you should already see how Symfony2 makes it really easy to implement
+web sites better and faster.
 
 .. index::
    single: Environment
@@ -312,6 +302,12 @@ And if you use Apache with ``mod_rewrite`` enabled, you can even omit the
 ``app.php`` part of the URL:
 
     http://localhost/sandbox/web/hello/Fabien
+
+Last but not least, on the production servers, you should point your web root
+directory to the ``web/`` directory to secure your installation and have an even
+better looking URL:
+
+    http://localhost/hello/Fabien
 
 To make the production environment as fast as possible, Symfony2 maintains a
 cache under the ``app/cache/`` directory. When you make changes to the code or
