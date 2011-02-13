@@ -214,26 +214,5 @@ Symfony2 ships with the following fields:
 
     fields/index
 
-* :doc:`BirthdayField <fields/BirthdayField>`
-* :doc:`CheckboxField <fields/CheckboxField>`
-* :doc:`ChoiceField <fields/ChoiceField>`
-* :doc:`CollectionField <fields/CollectionField>`
-* :doc:`CountryField <fields/CountryField>`
-* :doc:`DateField <fields/DateField>`
-* :doc:`DateTimeField <fields/DateTimeField>`
-* :doc:`EntityChoiceField <fields/EntityChoiceField>`
-* :doc:`FileField <fields/FileField>`
-* :doc:`HiddenField <fields/HiddenField>`
-* :doc:`IntegerField <fields/IntegerField>`
-* :doc:`LanguageField <fields/LanguageField>`
-* :doc:`LocaleField <fields/LocaleField>`
-* :doc:`MoneyField <fields/MoneyField>`
-* :doc:`NumberField <fields/NumberField>`
-* :doc:`PasswordField <fields/PasswordField>`
-* :doc:`PercentField <fields/PercentField>`
-* :doc:`RepeatedField <fields/RepeatedField>`
-* :doc:`TextareaField <fields/TextareaField>`
-* :doc:`TextField <fields/TextField>`
-* :doc:`TimeField <fields/TimeField>`
-* :doc:`TimezoneField <fields/TimezoneField>`
-* :doc:`UrlField <fields/UrlField>`
+.. include:: fields/map.rst.inc
+
