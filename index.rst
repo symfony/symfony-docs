@@ -28,6 +28,18 @@ Dive into Symfony2 with the topical guides:
 
 .. include:: guides/map.rst.inc
 
+Reference Documents
+-------------------
+
+Get answers quickly with reference documents:
+
+.. toctree::
+    :hidden:
+
+    reference/index
+
+.. include:: reference/map.rst.inc
+
 Contributing
 ------------
 
