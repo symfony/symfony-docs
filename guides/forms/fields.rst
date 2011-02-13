@@ -37,7 +37,7 @@ this initial value, you can set it in the ``data`` option.
 
     When you set the ``data`` option, the field will also not write the the
     domain object, because the ``property_path`` option will implicitely be
-    ``null``. Read ```property_path```_ for more information.
+    ``null``. Read :ref:`form-field-property_path` for more information.
 
 ``required``
 ~~~~~~~~~~~~
@@ -91,6 +91,8 @@ set the ``trim`` option to ``false``.
     $field->submit('   Data   ');
     
     assert('   Data   ' === $field->getData());
+
+.. _form-field-property_path:
 
 ``property_path``
 ~~~~~~~~~~~~~~~~~
