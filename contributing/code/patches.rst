@@ -124,7 +124,7 @@ Check that all tests still pass and push your branch remotely:
 You can now discuss your patch on the `dev mailing-list`_ or make a pull
 request (they must be done on the ``fabpot/symfony`` repository).
 
-If you are going to send and email to the mailing-list, don't forget to
+If you are going to send an email to the mailing-list, don't forget to
 reference you branch URL (``http://github.com/USERNAME/symfony.git
 BRANCH_NAME``).
 

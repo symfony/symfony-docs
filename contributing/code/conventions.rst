@@ -29,7 +29,7 @@ When an object has a "main" many relation with related "things"
 The usage of these methods are only allowed when it is clear that there
 is a main relation:
 
-* a ``CookieJar`` has many ``Cookie``s;
+* a ``CookieJar`` has many ``Cookie`` objects;
 
 * a Service ``Container`` has many services and many parameters (as services
   is the main relation, we use the naming convention for this relation);

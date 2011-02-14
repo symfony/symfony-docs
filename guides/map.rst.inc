@@ -28,7 +28,8 @@
 * **Forms**:
 
   * :doc:`Overview </guides/forms/overview>` |
-  * :doc:`Templates </guides/forms/view>`
+  * :doc:`Templates </guides/forms/view>` |
+  * :doc:`Form Fields </guides/forms/fields>`
 
 * **Security**:
 

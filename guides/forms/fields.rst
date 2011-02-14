@@ -37,7 +37,7 @@ this initial value, you can set it in the ``data`` option.
 
     When you set the ``data`` option, the field will also not write the the
     domain object, because the ``property_path`` option will implicitely be
-    ``null``. Read ```property_path```_ for more information.
+    ``null``. Read :ref:`form-field-property_path` for more information.
 
 ``required``
 ~~~~~~~~~~~~
@@ -91,6 +91,8 @@ set the ``trim`` option to ``false``.
     $field->submit('   Data   ');
     
     assert('   Data   ' === $field->getData());
+
+.. _form-field-property_path:
 
 ``property_path``
 ~~~~~~~~~~~~~~~~~
@@ -212,26 +214,5 @@ Symfony2 ships with the following fields:
 
     fields/index
 
-* :doc:`BirthdayField <fields/BirthdayField>`
-* :doc:`CheckboxField <fields/CheckboxField>`
-* :doc:`ChoiceField <fields/ChoiceField>`
-* :doc:`CollectionField <fields/CollectionField>`
-* :doc:`CountryField <fields/CountryField>`
-* :doc:`DateField <fields/DateField>`
-* :doc:`DateTimeField <fields/DateTimeField>`
-* :doc:`EntityChoiceField <fields/EntityChoiceField>`
-* :doc:`FileField <fields/FileField>`
-* :doc:`HiddenField <fields/HiddenField>`
-* :doc:`IntegerField <fields/IntegerField>`
-* :doc:`LanguageField <fields/LanguageField>`
-* :doc:`LocaleField <fields/LocaleField>`
-* :doc:`MoneyField <fields/MoneyField>`
-* :doc:`NumberField <fields/NumberField>`
-* :doc:`PasswordField <fields/PasswordField>`
-* :doc:`PercentField <fields/PercentField>`
-* :doc:`RepeatedField <fields/RepeatedField>`
-* :doc:`TextareaField <fields/TextareaField>`
-* :doc:`TextField <fields/TextField>`
-* :doc:`TimeField <fields/TimeField>`
-* :doc:`TimezoneField <fields/TimezoneField>`
-* :doc:`UrlField <fields/UrlField>`
+.. include:: fields/map.rst.inc
+

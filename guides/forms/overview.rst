@@ -285,6 +285,7 @@ them in the second parameter. We will add a ``max_length`` option to the
     {
         protected function configure()
         {
+            $this->setDataClass('Sensio\\HelloBundle\\Contact\\ContactRequest');
             $this->add('subject'); 
             $this->add(new TextareaField('message'));
             $this->add('sender', array('max_length' => 50));

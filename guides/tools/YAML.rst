@@ -241,7 +241,7 @@ A YAML file is rarely used to describe a simple scalar. Most of the time, it
 describes a collection. A collection can be a sequence or a mapping of
 elements. Both sequences and mappings are converted to PHP arrays.
 
-Sequences use a dash followed by a space (``- ``):
+Sequences use a dash followed by a space (``-`` ):
 
 .. code-block:: yaml
 
@@ -253,7 +253,7 @@ The previous YAML file is equivalent to the following PHP code::
 
     array('PHP', 'Perl', 'Python');
 
-Mappings use a colon followed by a space (``: ``) to mark each key/value pair:
+Mappings use a colon followed by a space (``:`` ) to mark each key/value pair:
 
 .. code-block:: yaml
 

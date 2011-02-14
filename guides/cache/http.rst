@@ -684,6 +684,41 @@ less as possible.
 .. index::
     single: Cache; Varnish
 
+Symfony2 Reverse Proxy Configuration
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+To use ESI, be sure to enable it in your application configuration:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # app/config/config.yml
+        app.config:
+            # ...
+            esi:
+                enabled: true
+
+    .. code-block:: xml
+
+        <!-- app/config/config.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+
+        <app:config charset="UTF-8">
+            <!-- ... -->
+            <app:esi enabled="true" />
+        </app:config>
+
+    .. code-block:: php
+
+        // app/config/config.php
+        $container->loadFromExtension('app', 'config', array(
+            // ...
+            'esi' => array(
+                'enabled' => true,
+            ),
+        ));
+
 Varnish Configuration
 ~~~~~~~~~~~~~~~~~~~~~
 
