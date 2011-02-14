@@ -10,17 +10,17 @@ delivery of email messages while another may allow you to persist information
 into a database. In your application, you may create an object that manages
 your product inventory, or another object that processes data from a third-party
 API. The point is that a modern application does many things and is organized
-into many object that handle each task.
+into many objects that handle each task.
 
 In this guide, we'll talk about a special PHP object in Symfony2 that helps
-your instantiate, organize and retrieve the many object of your application.
+your instantiate, organize and retrieve the many objects of your application.
 This object, called a service container, will allow you to standardize and
 centralize the way objects are constructed in your application. The container
-makes your life easier, is super fast, and emphasizes and architecture that
+makes your life easier, is super fast, and emphasizes an architecture that
 promotes reusable and decoupled code. And since all core Symfony2 classes
 use the container, you'll learn how to extend, configure and use any object
 in Symfony2. In large part, the service container is the biggest contributor
-to the speed and extensability of Symfony2.
+to the speed and extensibility of Symfony2.
 
 Finally, configuring and using the service container is easy. By the end
 of this chapter, you'll be comfortable creating your own objects via the
@@ -37,8 +37,8 @@ What is a Service?
 Put simply, a :term:`Service` is any PHP object that does something. It's
 a purposefully-generic name used in computer science to describe an object
 that's created for a specific purpose (e.g. delivering emails). You don't
-have to do anything specialy to make a service: simply write a PHP class
-with some code that accomplishes a specific task. Congrtulations, you've
+have to do anything special to make a service: simply write a PHP class
+with some code that accomplishes a specific task. Congratulations, you've
 just created a service!
 
 So what's the big deal then? The advantage of thinking about "services" is
@@ -49,7 +49,7 @@ need it. Each service can also be more easily tested and configured since
 it's separated from the other functionality in your application. This idea
 is called `service-oriented architecture`_ and is not unique to Symfony2
 or even PHP. Structuring your application around a set of independent service
-classes is well-known and trusted object-oriented best-practice. These skills
+classes is a well-known and trusted object-oriented best-practice. These skills
 are key to being a good developer in almost any language.
 
 .. index::
@@ -64,7 +64,7 @@ For example, suppose we have a simple PHP class that delivers email messages.
 Without a service container, we must manually create the object whenever
 we need it:
 
-.. code-block::
+.. code-block:: php
 
     use Sensio\HelloBundle\Mailer;
 
@@ -123,7 +123,7 @@ be specified in YAML, XML or PHP:
 
     When Symfony2 initializes, it builds the service container using the
     application configuration (``app/config/config.yml`` by default). The
-    exact file that's loaded is dicated by the ``AppKernel::loadConfig()``
+    exact file that's loaded is dictated by the ``AppKernel::loadConfig()``
     method, which loads an environment-specific configuration file (e.g.
     ``config_dev.yml`` for the ``dev`` environment or ``config_prod.yml``
     for ``prod``).
@@ -146,7 +146,7 @@ Symfony2 controller, we can easily access the new ``my_mailer`` service::
 
 .. tip::
 
-    When using a tranditional controller, there's an even shorter way to
+    When using a traditional controller, there's an even shorter way to
     access a service from the container. This is exactly equivalent to the
     above method, but with less keystrokes::
 
@@ -155,7 +155,7 @@ Symfony2 controller, we can easily access the new ``my_mailer`` service::
 When we ask for the ``my_mailer`` service from the container, the container
 constructs the object and returns it. This is another major advantage of
 using the service container. Namely, a service is *never* constructed until
-its needed. If you define a service and never use it on a request, the service
+it's needed. If you define a service and never use it on a request, the service
 is never created. This saves memory and increases the speed of your application.
 This also means that there's very little or no performance hit for defining
 lot's of services. Services that are never used are never constructed.
@@ -190,7 +190,7 @@ straightforward. Parameters make defining services more organized and flexible:
         <!-- app/config/config.xml -->
         <parameters>
             <parameter key="my_mailer.class">Sensio\HelloBundle\Mailer</parameter>
-            <parameter key="my_mailer.transport">sendmailxml</parameter>
+            <parameter key="my_mailer.transport">sendmail</parameter>
         </parameters>
 
         <services>
@@ -205,7 +205,7 @@ straightforward. Parameters make defining services more organized and flexible:
         use Symfony\Component\DependencyInjection\Definition;
 
         $container->setParameter('my_mailer.class', 'Sensio\HelloBundle\Mailer');
-        $container->setParameter('my_mailer.transport', 'sendmailphp');
+        $container->setParameter('my_mailer.transport', 'sendmail');
 
         $container->setDefinition('my_mailer', new Definition(
             '%my_mailer.class%',
@@ -228,7 +228,7 @@ Parameters, however, have several advantages:
 * parameter values can be used in multiple service definitions;
 
 * when creating a service in a bundle (we'll show this shortly), using parameters
-  allows the service to be easily customized in your application;
+  allows the service to be easily customized in your application.
 
 The choice of using or not using parameters is up to you. High-quality
 third-party bundles will *always* use parameters as they make the service
@@ -254,8 +254,8 @@ flexibility over the services in your application.
 
 External service configuration can be imported in two different ways. First,
 we'll talk about the method that you'll use most commonly in your application
-- the ``imports`` directive. In the next section, we'll introduce the second
-method, which is the flexible and preferred method for importing service
+- the ``imports`` directive. In the following section, we'll introduce the
+second method, which is the flexible and preferred method for importing service
 configuration from third-party bundles.
 
 .. index::
@@ -293,7 +293,7 @@ don't exist, create them.
         <!-- src/Sensio/HelloBundle/Resources/config/services.xml -->
         <parameters>
             <parameter key="my_mailer.class">Sensio\HelloBundle\Mailer</parameter>
-            <parameter key="my_mailer.transport">sendmailxml</parameter>
+            <parameter key="my_mailer.transport">sendmail</parameter>
         </parameters>
 
         <services>
@@ -308,7 +308,7 @@ don't exist, create them.
         use Symfony\Component\DependencyInjection\Definition;
 
         $container->setParameter('my_mailer.class', 'Sensio\HelloBundle\Mailer');
-        $container->setParameter('my_mailer.transport', 'sendmailphp');
+        $container->setParameter('my_mailer.transport', 'sendmail');
 
         $container->setDefinition('my_mailer', new Definition(
             '%my_mailer.class%',
@@ -324,18 +324,21 @@ configuration.
 
     .. code-block:: yaml
 
+        # app/config/config.yml
         imports:
             hello_bundle:
                 resource: @HelloBundle/Resources/config/services.yml
 
     .. code-block:: xml
 
+        <!-- app/config/config.xml -->
         <imports>
             <import resource="@HelloBundle/Resources/config/services.xml"/>
         </imports>
 
     .. code-block:: php
 
+        // app/config/config.php
         $this->import('@HelloBundle/Resources/config/services.php');
 
 The ``imports`` directive allows your application to include service container
@@ -348,50 +351,55 @@ worrying later if you move the ``HelloBundle`` to a different directory.
 .. index::
    single: Service Container; Extension configuration
 
-.. _`service-container-extension-configuration`
+.. _service-container-extension-configuration:
 
 Importing Configuration via Container Extensions
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 When developing in Symfony2, you'll most commonly use the ``imports`` directive
-to import container configuration from the bundles in your project. Third
--party bundle container configuration (including the Symfony2 core services),
-are usually loaded using another method that's more flexible, but easy to
-configure in your application.
+to import container configuration from the bundles you've created specifically
+for your application. Third-party bundle container configuration (including
+the Symfony2 core services), are usually loaded using another method that's
+more flexible and easy to configure in your application.
 
-Here's how it works. Internally, each bundle defines defines its services
-very much like we've seen so far in this guide. Namely, the bundle uses one
-or more configuration resource files (usually XML) to specify the parameters
-and services for that bundle. However, instead of importing each of these
-resources from your application configuration, you can simply invoke a *service
-container extension* inside the bundle that does all the work for you.
+Here's how it works. Internally, each bundle defines its services very much
+like we've seen so far in this guide. Namely, a bundle uses one or more
+configuration resource files (usually XML) to specify the parameters and
+services for that bundle. However, instead of importing each of these resources
+directly from your application configuration using the ``imports`` directive,
+you can simply invoke a *service container extension* inside the bundle that
+does all the work for you. A service container extension is a PHP class created
+by the bundle author to take care of all the service container configuration
+on your behalf.
 
 Take the ``FrameworkBundle`` - the core Symfony2 framework bundle - as an
 example. The presence of the following code in your application configuration
-invokes the service container extension inside the ``FrameworkBundle``::
+invokes the service container extension inside the ``FrameworkBundle``:
 
 .. configuration-block::
 
-    code-block:: yaml
+    .. code-block:: yaml
 
+        # app/config/config.yml
         app.config:  ~
 
-    code-block:: xml
+    .. code-block:: xml
 
+        <!-- app/config/config.xml -->
         <app:config />
 
-    code-block:: php
+    .. code-block:: php
 
+        // app/config/config.php
         $container->loadFromExtension('app', 'config');
 
 When the configuration is parsed, the container looks for an extension that
 can handle the ``app.config`` configuration directive. The extension in question,
-which lives in the ``FrameworkBundle`` is invoked and the service configuration
+which lives in the ``FrameworkBundle``, is invoked and the service configuration
 for the ``FrameworkBundle`` is loaded. If you remove the ``app.config`` key
 from your application configuration file, the core Symfony2 services won't
 be loaded. The point is that you're in control: the Symfony2 framework doesn't
-doesn't perform any magic or perform any actions that you don't have control
-over.
+contain any magic or perform any actions that you don't have control over.
 
 Of course you can do much more than simply "activate" the service container
 extension of the ``FrameworkBundle``. Each extension allows you to easily
@@ -403,6 +411,7 @@ more like this:
 
     .. code-block:: yaml
 
+        # app/config/config.yml
         app.config:
             charset:       UTF-8
             error_handler: null
@@ -414,6 +423,7 @@ more like this:
 
     .. code-block:: xml
 
+        <!-- app/config/config.xml -->
         <app:config charset="UTF-8" error-handler="null">
             <app:csrf-protection enabled="true" secret="xxxxxxxxxx" />
             <app:router resource="%kernel.root_dir%/config/routing.xml" cache-warmer="true" />
@@ -422,6 +432,7 @@ more like this:
 
     .. code-block:: php
 
+        // app/config/config.php
         $container->loadFromExtension('app', 'config', array(
             'charset'         => 'UTF-8',
             'error_handler'   => null,
@@ -430,12 +441,14 @@ more like this:
             // ...
         ));
 
-In this case, the extension allows you to customize the ``charset``, ``error_handerl``,
+In this case, the extension allows you to customize the ``charset``, ``error_handler``,
 ``csrf_protection``, ``router`` configuration and much more. Internally,
 the ``FrameworkBundle`` uses the options specified here to define and configure
 the services specific to it. The bundle takes care of creating all the necessary
 ``parameters`` and ``services`` for the service container, while still allowing
-much of the configuration to be easily customized.
+much of the configuration to be easily customized. As an added bonus, most
+service container extensions are also smart enough to perform validation -
+notifying you of missing options or options with the wrong data type.
 
 When installing or configuring a bundle, see the bundle's documentation for
 how the services for the bundle should be installed and configured. The options
@@ -443,7 +456,7 @@ available for the core bundles can be found inside the :doc:`Reference Guide</re
 
 .. note::
 
-   By default, the service container only recognizes the ``parameters``,
+   Natively, the service container only recognizes the ``parameters``,
    ``services``, ``imports`` and ``interfaces`` directives. Any other directives
    are handled by a service container extension.
 
@@ -459,9 +472,9 @@ power of the container is realized when you need to create a service that
 depends on one or more other services in the container.
 
 Let's start with an example. Suppose we have a new service, ``NewsletterManager``,
-that helps to manage the preparating and delivery of an email message to
+that helps to manage the preparation and delivery of an email message to
 a collection of addresses. Of course the ``my_mailer`` service is already
-really good at deliver email messages, so we'll use it inside ``NewsletterManager``
+really good at delivering email messages, so we'll use it inside ``NewsletterManager``
 to handle the actual delivery of the messages. This pretend class might look
 something like this::
 
@@ -569,7 +582,7 @@ session, Symfony2 provides a ``session`` service::
         // ...
     }
 
-In Symfony2, youll constantly use services provided by the Symfony core or
+In Symfony2, you'll constantly use services provided by the Symfony core or
 other third-party bundles to perform tasks such as rendering templates (``templating``),
 sending emails (``mailer``), or accessing information on the request (``request``).
 
@@ -634,7 +647,7 @@ the framework.
 
     Be sure that ``swift_mailer.config`` entry appears in your application
     configuration. As we mentioned in :ref:`service-container-extension-configuration`,
-    the ``swift_mailer.config`` invokes the service configuration from the
+    the ``swift_mailer.config`` invokes the service extension from the
     ``SwiftmailerBundle``, which registers the ``mailer`` service.
 
 .. index::
@@ -687,11 +700,11 @@ as a Twig extension with Twig. In other words, Twig finds all services tagged
 with ``twig.extension`` and automatically registers them as extensions.
 
 Tags, then, are a way to tell Symfony2 or other third-party bundles that
-your service should be registered or used in some specialy way by the bundle.
+your service should be registered or used in some special way by the bundle.
 
 The following is a list of the tags available with the core Symfony2 bundles.
 Each of these has a different affect on your service and many tags require
-additional arguments (beyond just the tag ``name``).
+additional arguments (beyond just the ``name`` attribute).
 
 * assetic.filter
 * assetic.templating.php

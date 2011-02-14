@@ -36,7 +36,7 @@ Glossary
         is a special object that manages the instantiation of services inside
         an application. Instead of creating services directly, the developer
         *trains* the service container (via configuration) on how to create
-        the services. The service container eases takes care of lazily instantiating
+        the services. The service container takes care of lazily instantiating
         and injecting dependent services.
 
 .. _`service-oriented architecture`: http://wikipedia.org/wiki/Service-oriented_architecture
