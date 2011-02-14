@@ -249,7 +249,7 @@ Importing other Container Configuration Resources
 The service container is built using a single configuration resource
 (``app/config/config.yml`` by default). All other service configuration(
 (including the core Symfony2 and third-party bundle configuration) must
-be imported form inside this file in one way or another. This gives you absolute
+be imported from inside this file in one way or another. This gives you absolute
 flexibility over the services in your application.
 
 External service configuration can be imported in two different ways. First,
