@@ -81,12 +81,15 @@ Access control rules can match a request in many different ways:
                 - { path: /admin/.*, role: ROLE_ADMIN }
 
                 # match the controller class name
-                - { controller: .*\\.*Bundle\\Admin\\.*, role: ROLE_ADMIN }
+                - 
+                    attributes:
+                        _controller: '.*Bundle\\\\.*\\\Admin.*'
+                    role: ROLE_ADMIN 
 
                 # match any request attribute
                 -
                     attributes:
-                        - { key: _controller, pattern: .*\\.*Bundle\\Admin\\.* }
+                        - { key: _controller, pattern: '.*Bundle\\\\.*\\\Admin.*' }
                     role: ROLE_ADMIN
 
     .. code-block:: xml
@@ -98,11 +101,13 @@ Access control rules can match a request in many different ways:
                 <rule path="/admin/.*" role="ROLE_ADMIN" />
 
                 <!-- match the controller class name -->
-                <rule controller=".*\\.*Bundle\\Admin\\.*" role="ROLE_ADMIN" />
+                <rule role="ROLE_ADMIN">
+                  <attribute key="_controller" pattern=".*Bundle\\\\.*\\\Admin.*" />
+                </rule>
 
                 <!-- match any request attribute -->
                 <rule role="ROLE_ADMIN">
-                    <attribute key="_controller" pattern=".*\\.*Bundle\\Admin\\.*" />
+                    <attribute key="_controller" pattern=".*Bundle\\\\.*\\\Admin.*" />
                 </rule>
             </access-control>
         </config>
@@ -116,12 +121,15 @@ Access control rules can match a request in many different ways:
                 array('path' => '/admin/.*', 'role' => 'ROLE_ADMIN'),
 
                 // match the controller class name
-                array('controller' => '.*\\.*Bundle\\Admin\\.*', 'role' => 'ROLE_ADMIN'),
+                array(
+                      'attributes' => array('controller' => '.*Bundle\\\\.*\\\Admin.*'),
+                      'role' => 'ROLE_ADMIN'
+                    ),
 
                 // match any request attribute
                 array(
                     'attributes' => array(
-                        array('key' => '_controller', 'pattern' => '.*\\.*Bundle\\Admin\\.*'),
+                        array('key' => '_controller', 'pattern' => '.*Bundle\\\\.*\\\Admin.*'),
                     ),
                     'role' => 'ROLE_ADMIN',
                 ),
