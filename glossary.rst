@@ -27,9 +27,11 @@ Glossary
 
     Service
         A *Service* is a generic term for any PHP object that performs a
-        specific task. In Symfony2, services are often configured and retrieved
-        from the service container. An application that has many decoupled
-        services is said to follow a `service-oriented architecture`_
+        specific task. A service is usually used "globally", such as a database
+        connection object or an object that delivers email messages. In Symfony2,
+        services are often configured and retrieved from the service container.
+        An application that has many decoupled services is said to follow
+        a `service-oriented architecture`_
 
     Service Container
         A *Service Container*, also known as a *Dependency Injection Container*,
