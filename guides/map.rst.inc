@@ -64,10 +64,10 @@
   * :doc:`Best Practices </guides/bundles/best_practices>` |
   * :doc:`Configuration </guides/bundles/configuration>`
 
-* **Service Container**:
+* **Dependency Injection**:
 
-  * :doc:`Service Container </guides/service_container/index>`
-  * :doc:`Extensions </guides/service_container/extensions>`
+  * :doc:`The Service Container </guides/dependency_injection/index>`
+  * :doc:`Extensions </guides/dependency_injection/extensions>`
 
 * **Internals**:
 
