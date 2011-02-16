@@ -9,13 +9,15 @@ Configuration Reference
     .. code-block:: yaml
         
         # app/config/security.yml
-        security.config:
+        security:
             access_denied_url: /foo/error403
         
             # strategy can be: none, migrate, invalidate
             session_fixation_strategy: migrate
         
             encoders:
+                somename:
+                    class: MyBundle/Entity/MyUser
                 MyBundle/Entity/MyUser: sha512
                 MyBundle/Entity/MyUser: plaintext
                 MyBundle/Entity/MyUser:
@@ -23,10 +25,11 @@ Configuration Reference
                     encode_as_base64: true
                     iterations: 5
                 MyBundle/Entity/MyUser:
-                    service: my.custom.encoder.service.id
+                    id: my.custom.encoder.service.id
                     
             providers:
                 memory:
+                    name: memory
                     users:
                         foo: { password: foo, roles: ROLE_USER }
                         bar: { password: bar, roles: [ROLE_USER, ROLE_ADMIN] }
@@ -62,6 +65,9 @@ Configuration Reference
                         success_handler: some.service.id
                         username_parameter: _username
                         password_parameter: _password
+                        csrf_parameter: _csrf_token
+                        csrf_page_id: form_login
+                        csrf_provider: my.csrf_provider.id
                         post_only: true
                         remember_me: false
                     remember_me:
@@ -77,7 +83,11 @@ Configuration Reference
                         remember_me_parameter: _remember_me
                     logout:
                         invalidate_session: false
-                        cookies: [a, b, c]
+                        delete_cookies: 
+                            a: { path: null, domain: null }
+                            b: { path: null, domain: null }
+                        handlers: [some.service.id, another.service.id]
+                        success_handler: some.service.id
                     anonymous: ~
                     
             access_control:
@@ -89,9 +99,11 @@ Configuration Reference
                         _controller: SomeController
                     roles: [ROLE_A, ROLE_B]
                     requires_channel: https
-                    
+
             role_hierarchy:
+                ROLE_SUPERADMIN: ROLE_ADMIN
+                ROLE_SUPERADMIN: 'ROLE_ADMIN, ROLE_USER'
                 ROLE_SUPERADMIN: [ROLE_ADMIN, ROLE_USER]
-                ROLE_FOO:        [ROLE_USER]
-                    
+                anything: { id: ROLE_SUPERADMIN, value: 'ROLE_USER, ROLE_ADMIN' }
+                anything: { id: ROLE_SUPERADMIN, value: [ROLE_USER, ROLE_ADMIN] }
 
