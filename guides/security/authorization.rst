@@ -24,7 +24,7 @@ defined in your configuration:
     .. code-block:: yaml
 
         # app/config/security.yml
-        security.config:
+        security:
             access_control:
                 - { path: /admin/.*, role: ROLE_ADMIN }
                 - { path: /.*, role: IS_AUTHENTICATED_ANONYMOUSLY }
@@ -42,7 +42,7 @@ defined in your configuration:
     .. code-block:: php
 
         // app/config/security.php
-        $container->loadFromExtension('security', 'config', array(
+        $container->loadFromExtension('security', array(
             'access_control' => array(
                 array('path' => '/admin/.*', 'role' => 'ROLE_ADMIN'),
                 array('path' => '/.*', 'role' => 'IS_AUTHENTICATED_ANONYMOUSLY'),
@@ -51,9 +51,9 @@ defined in your configuration:
 
 For each incoming request, Symfony2 tries to find a matching access control
 rule (the first one wins) and throws an
-:class:`Symfony\\Component\Security\\Exception\\AccessDeniedException` if the
+:class:`Symfony\\Component\Security\\Core\\Exception\\AccessDeniedException` if the
 user has not the needed roles or an
-:class:`Symfony\\Component\Security\\Exception\\AuthenticationCredentialsNotFoundException`
+:class:`Symfony\\Component\Security\\Core\\Exception\\AuthenticationCredentialsNotFoundException`
 if he is not authenticated yet.
 
 In the example above, we match requests based on their path info, but there
@@ -61,9 +61,11 @@ are many other ways as you will learn in the next section.
 
 .. tip::
 
-    Symfony2 automatically adds a special role based on the anonymous flag:
-    ``IS_AUTHENTICATED_ANONYMOUSLY`` for anonymous users and
-    ``IS_AUTHENTICATED_FULLY`` for all others.
+    Symfony2 automatically adds some special roles depending on the authentication
+    trust status of the logged in user:
+    ``IS_AUTHENTICATED_ANONYMOUSLY`` for anonymous users,
+    ``IS_AUTHENTICATED_REMEMBERED`` for users authenticated via a remember-me cookie,
+    and ``IS_AUTHENTICATED_FULLY`` for all other users.
 
 Matching a Request
 ------------------
@@ -75,7 +77,7 @@ Access control rules can match a request in many different ways:
     .. code-block:: yaml
 
         # app/config/security.yml
-        security.config:
+        security:
             access_control:
                 # match the path info
                 - { path: /admin/.*, role: ROLE_ADMIN }
@@ -110,7 +112,7 @@ Access control rules can match a request in many different ways:
     .. code-block:: php
 
         // app/config/security.php
-        $container->loadFromExtension('security', 'config', array(
+        $container->loadFromExtension('security', array(
             'access_control' => array(
                 // match the path info
                 array('path' => '/admin/.*', 'role' => 'ROLE_ADMIN'),
@@ -142,7 +144,7 @@ HTTPS:
     .. code-block:: yaml
 
         # app/config/security.yml
-        security.config:
+        security:
             access_control:
                 - { path: /admin/.*, role: ROLE_ADMIN, requires_channel: https }
                 - { path: /.*, requires_channel: http }
@@ -160,7 +162,7 @@ HTTPS:
     .. code-block:: php
 
         // app/config/security.php
-        $container->loadFromExtension('security', 'config', array(
+        $container->loadFromExtension('security', array(
             'access_control' => array(
                 array('path' => '/admin/.*', 'role' => 'ROLE_ADMIN', 'requires_channel' => 'https'),
                 array('path' => '/.*', 'requires_channel' => 'http'),
