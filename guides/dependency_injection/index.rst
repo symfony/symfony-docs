@@ -400,7 +400,7 @@ invokes the service container extension inside the ``FrameworkBundle``:
     .. code-block:: yaml
 
         # app/config/config.yml
-        app.config:
+        framework:
             charset:       UTF-8
             error_handler: null
             csrf_protection:
@@ -412,16 +412,16 @@ invokes the service container extension inside the ``FrameworkBundle``:
     .. code-block:: xml
 
         <!-- app/config/config.xml -->
-        <app:config charset="UTF-8" error-handler="null">
+        <framework charset="UTF-8" error-handler="null">
             <app:csrf-protection enabled="true" secret="xxxxxxxxxx" />
             <app:router resource="%kernel.root_dir%/config/routing.xml" cache-warmer="true" />
             <!-- ... -->
-        </app:config>
+        </framework>
 
     .. code-block:: php
 
         // app/config/config.php
-        $container->loadFromExtension('app', 'config', array(
+        $container->loadFromExtension('framework', array(
             'charset'         => 'UTF-8',
             'error_handler'   => null,
             'csrf-protection' => array('enabled' => true, 'secret' => 'xxxxxxxxxx'),
@@ -430,9 +430,9 @@ invokes the service container extension inside the ``FrameworkBundle``:
         ));
 
 When the configuration is parsed, the container looks for an extension that
-can handle the ``app.config`` configuration directive. The extension in question,
+can handle the ``framework`` configuration directive. The extension in question,
 which lives in the ``FrameworkBundle``, is invoked and the service configuration
-for the ``FrameworkBundle`` is loaded. If you remove the ``app.config`` key
+for the ``FrameworkBundle`` is loaded. If you remove the ``framework`` key
 from your application configuration file entirely, the core Symfony2 services
 won't be loaded. The point is that you're in control: the Symfony2 framework
 doesn't contain any magic or perform any actions that you don't have control
@@ -647,9 +647,9 @@ the framework.
 
 .. tip::
 
-    Be sure that ``swiftmailer.config`` entry appears in your application
+    Be sure that ``swiftmailer`` entry appears in your application
     configuration. As we mentioned in :ref:`service-container-extension-configuration`,
-    the ``swiftmailer.config`` invokes the service extension from the
+    the ``swiftmailer`` invokes the service extension from the
     ``SwiftmailerBundle``, which registers the ``mailer`` service.
 
 .. index::
