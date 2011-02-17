@@ -137,8 +137,8 @@ As you can see, the configuration has four sections:
   roles.
 
 To sum up the workflow, the firewall authenticates the client based on the
-submitted credentials and the user created by the user provider, finally 
-access control is used to protect resources.
+submitted credentials and the user created by the user provider. Finally, 
+access control is used to protect specific resources.
 
 Authentication
 --------------

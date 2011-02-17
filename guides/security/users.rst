@@ -37,9 +37,9 @@ The user provider must implement
                             user object. If the username is not found, it must
                             throw :class:`Symfony\\Component\\Security\\Core\\Exception\\UsernameNotFoundException`
                             exception.
-* ``loadUserByAccount()``: Receives an AccountInterface object, and must reload
+* ``loadUserByAccount()``: Receives an ``AccountInterface`` object, and must reload
                            the corresponding user object, or just merge the user
-                           into the identity map of an EntityManager. If the
+                           into the identity map of an ``EntityManager``. If the
                            given account's class is not supported, it must throw
                            :class:`Symfony\\Component\\Security\\Core\\Exception\\UnsupportedAccountException`
                            exception.

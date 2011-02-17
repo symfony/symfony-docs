@@ -306,7 +306,7 @@ yourself::
     
 .. note::
     
-    $error references an instance of
+    The ``$error`` variable references an instance of
     :class:`Symfony\\Component\\Security\\Core\\Exception\\AuthenticationException`, 
     or one of its sub-classes. This exception might contain sensitive information,
     so you should be very careful how much of the contained information you want
