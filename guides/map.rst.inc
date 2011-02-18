@@ -56,8 +56,7 @@
 
   * :doc:`/guides/tools/autoloader` |
   * :doc:`Finder </guides/tools/finder>` |
-  * :doc:`/guides/tools/YAML` |
-  * :doc:`Process </guides/tools/process>`
+  * :doc:`/guides/tools/YAML`
 
 * **Bundles**:
 
