@@ -110,7 +110,7 @@ You can configure a firewall to use more than one authentication mechanisms:
     .. code-block:: yaml
 
         # app/config/security.yml
-        security.config:
+        security:
             firewalls:
                 backend:
                     pattern:    /admin/.*
@@ -134,7 +134,7 @@ You can configure a firewall to use more than one authentication mechanisms:
     .. code-block:: php
 
         // app/config/security.php
-        $container->loadFromExtension('security', 'config', array(
+        $container->loadFromExtension('security', array(
             'firewalls' => array(
                 'backend' => array(
                     'pattern'    => '/admin/.*',
@@ -175,7 +175,7 @@ Configuring HTTP basic authentication is as simple as it can get:
     .. code-block:: yaml
 
         # app/config/security.yml
-        security.config:
+        security:
             firewalls:
                 main:
                     http_basic: true
@@ -192,7 +192,7 @@ Configuring HTTP basic authentication is as simple as it can get:
     .. code-block:: php
 
         // app/config/security.php
-        $container->loadFromExtension('security', 'config', array(
+        $container->loadFromExtension('security', array(
             'firewalls' => array(
                 'main' => array('http_basic' => true),
             ),
@@ -211,7 +211,7 @@ Configuring HTTP digest authentication is as simple as it can get:
     .. code-block:: yaml
 
         # app/config/security.yml
-        security.config:
+        security:
             firewalls:
                 main:
                     http_digest: true
@@ -228,7 +228,7 @@ Configuring HTTP digest authentication is as simple as it can get:
     .. code-block:: php
 
         // app/config/security.php
-        $container->loadFromExtension('security', 'config', array(
+        $container->loadFromExtension('security', array(
             'firewalls' => array(
                 'main' => array('http_digest' => true),
             ),
@@ -252,7 +252,7 @@ nowadays:
     .. code-block:: yaml
 
         # app/config/security.yml
-        security.config:
+        security:
             firewalls:
                 main:
                     form_login: true
@@ -269,7 +269,7 @@ nowadays:
     .. code-block:: php
 
         // app/config/security.php
-        $container->loadFromExtension('security', 'config', array(
+        $container->loadFromExtension('security', array(
             'firewalls' => array(
                 'main' => array('form_login' => true),
             ),
@@ -283,7 +283,7 @@ submission automatically but not its display; so you must implement that part
 yourself::
 
     use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-    use Symfony\Component\Security\SecurityContext;
+    use Symfony\Component\Security\Core\SecurityContext;
 
     class SecurityController extends Controller
     {
@@ -303,15 +303,23 @@ yourself::
             ));
         }
     }
+    
+.. note::
+    
+    The ``$error`` variable references an instance of
+    :class:`Symfony\\Component\\Security\\Core\\Exception\\AuthenticationException`, 
+    or one of its sub-classes. This exception might contain sensitive information,
+    so you should be very careful how much of the contained information you want
+    to expose on your production system. 
 
-And the corresponding template:
+And the corresponding template might look like this:
 
 .. configuration-block::
 
     .. code-block:: html+php
 
         <?php if ($error): ?>
-            <div><?php echo $error ?></div>
+            <div><?php echo $error->getMessage() ?></div>
         <?php endif; ?>
 
         <form action="<?php echo $view['router']->generate('_security_check') ?>" method="post">
@@ -327,7 +335,7 @@ And the corresponding template:
     .. code-block:: jinja
 
         {% if error %}
-            <div>{{ error }}</div>
+            <div>{{ error.message }}</div>
         {% endif %}
 
         <form action="{{ path('_security_check') }}" method="post">
@@ -389,7 +397,7 @@ configuration example that shows how to override them all:
     .. code-block:: yaml
 
         # app/config/security.yml
-        security.config:
+        security:
             firewalls:
                 main:
                     form_login:
@@ -421,7 +429,7 @@ configuration example that shows how to override them all:
     .. code-block:: php
 
         // app/config/security.php
-        $container->loadFromExtension('security', 'config', array(
+        $container->loadFromExtension('security', array(
             'firewalls' => array(
                 'main' => array('form_login' => array(
                     'check_path'                     => '/login_check',
@@ -448,7 +456,7 @@ X.509 certificates are a great way to authenticate users if you know them all:
     .. code-block:: yaml
 
         # app/config/security.yml
-        security.config:
+        security:
             firewalls:
                 main:
                     x509: true
@@ -465,7 +473,7 @@ X.509 certificates are a great way to authenticate users if you know them all:
     .. code-block:: php
 
         // app/config/security.php
-        $container->loadFromExtension('security', 'config', array(
+        $container->loadFromExtension('security', array(
             'firewalls' => array(
                 'main' => array('x509' => true),
             ),
@@ -523,7 +531,7 @@ restricted by a more restrictive access control rule:
     .. code-block:: yaml
 
         # app/config/security.yml
-        security.config:
+        security:
             firewalls:
                 main:
                     anonymous: true
@@ -540,7 +548,7 @@ restricted by a more restrictive access control rule:
     .. code-block:: php
 
         // app/config/security.php
-        $container->loadFromExtension('security', 'config', array(
+        $container->loadFromExtension('security', array(
             'firewalls' => array(
                 'main' => array('anonymous' => true),
             ),
@@ -569,7 +577,7 @@ cookie will be ever created by Symfony2):
     .. code-block:: yaml
 
         # app/config/security.yml
-        security.config:
+        security:
             firewalls:
                 main:
                     http_basic: true
@@ -587,7 +595,7 @@ cookie will be ever created by Symfony2):
     .. code-block:: php
 
         // app/config/security.php
-        $container->loadFromExtension('security', 'config', array(
+        $container->loadFromExtension('security', array(
             'firewalls' => array(
                 'main' => array('http_basic' => true, 'stateless' => true),
             ),
@@ -614,7 +622,7 @@ done by activating the ``switch-user`` listener:
     .. code-block:: yaml
 
         # app/config/security.yml
-        security.config:
+        security:
             firewalls:
                 main:
                     http_basic:  true
@@ -633,7 +641,7 @@ done by activating the ``switch-user`` listener:
     .. code-block:: php
 
         // app/config/security.php
-        $container->loadFromExtension('security', 'config', array(
+        $container->loadFromExtension('security', array(
             'firewalls' => array(
                 'main'=> array('http_basic' => true, 'switch_user' => true),
             ),
@@ -658,7 +666,7 @@ security, also change the parameter name via the ``parameter`` setting:
     .. code-block:: yaml
 
         # app/config/security.yml
-        security.config:
+        security:
             firewalls:
                 main:
                     http_basic:  true
@@ -677,7 +685,7 @@ security, also change the parameter name via the ``parameter`` setting:
     .. code-block:: php
 
         // app/config/security.php
-        $container->loadFromExtension('security', 'config', array(
+        $container->loadFromExtension('security', array(
             'firewalls' => array(
                 'main'=> array(
                     'http_basic'  => true,
@@ -700,7 +708,7 @@ listener:
     .. code-block:: yaml
 
         # app/config/security.yml
-        security.config:
+        security:
             firewalls:
                 main:
                     http_basic: true
@@ -719,7 +727,7 @@ listener:
     .. code-block:: php
 
         // app/config/security.php
-        $container->loadFromExtension('security', 'config', array(
+        $container->loadFromExtension('security', array(
             'firewalls' => array(
                 'main'=> array('http_basic' => true, 'logout' => true),
             ),
@@ -734,7 +742,7 @@ are redirected to ``/``. This can be easily changed via the ``path`` and
     .. code-block:: yaml
 
         # app/config/security.yml
-        security.config:
+        security:
             firewalls:
                 main:
                     http_basic: true
@@ -753,7 +761,7 @@ are redirected to ``/``. This can be easily changed via the ``path`` and
     .. code-block:: php
 
         // app/config/security.php
-        $container->loadFromExtension('security', 'config', array(
+        $container->loadFromExtension('security', array(
             'firewalls' => array(
                 'main'=> array(
                     'http_basic' => true,
@@ -774,10 +782,12 @@ firewall, or just for an authentication mechanism:
     .. code-block:: yaml
 
         # app/config/security.yml
-        security.config:
+        security:
+            encoders:
+                Symfony\Component\Security\Core\User\User: sha1
+
             providers:
                 default:
-                    password_encoder: sha1
                     entity: { class: SecurityBundle:User, property: username }
                 certificate:
                     users:
@@ -799,8 +809,8 @@ firewall, or just for an authentication mechanism:
 
         <!-- app/config/security.xml -->
         <config>
+            <encoder class="Symfony\Component\Security\Core\User\User" algorithm="sha1" />
             <provider name="default">
-                <password-encoder>sha1</password-encoder>
                 <entity class="SecurityBundle:User" property="username" />
             </provider>
 
@@ -821,10 +831,12 @@ firewall, or just for an authentication mechanism:
     .. code-block:: php
 
         // app/config/security.php
-        $container->loadFromExtension('security', 'config', array(
+        $container->loadFromExtension('security', array(
+            'encoders' => array(
+                'Symfony\Component\Security\Core\User\User' => 'sha1',
+            ),
             'providers' => array(
                 'default' => array(
-                    'password_encoder' => 'sha1',
                     'entity' => array('class' => 'SecurityBundle:User', 'property' => 'username'),
                 ),
                 'certificate' => array('users' => array(

@@ -9,10 +9,12 @@ providing authentication and authorization.
 
 *Authentication* ensures that the user is who he claims to be. *Authorization*
 refers to the process of deciding whether a user is allowed to perform an
-action or not (authorization comes after authentication).
+action or not (authentication is always performed before authorization).
 
-This document is a quick overview of these main concepts, but the real power
-is distilled in three other documents: :doc:`Users </guides/security/users>`,
+This document is a quick overview over these main concepts, but it barely scratches
+the surface. If you want to get to know the real power of Symfony2's security 
+layer, you should also read these more specific documents: 
+:doc:`Users </guides/security/users>`,
 :doc:`Authentication </guides/security/authentication>`, and
 :doc:`Authorization </guides/security/authorization>`.
 
@@ -31,9 +33,11 @@ your main configuration file; here is a typical configuration:
 
         # app/config/config.yml
         security.config:
+            encoders:
+                Symfony\Component\Security\Core\User\User: sha1
+
             providers:
                 main:
-                    password_encoder: sha1
                     users:
                         foo: { password: 0beec7b5ea3f0fdbc95d0dd47f3c5bc275da8a33, roles: ROLE_USER }
 
@@ -50,8 +54,9 @@ your main configuration file; here is a typical configuration:
 
         <!-- app/config/config.xml -->
         <security:config>
+            <security:encoder class="Symfony\Component\Security\Core\User\User" algorithm="sha1" />
+
             <security:provider>
-                <security:password-encoder hash="sha1" />
                 <security:user name="foo" password="0beec7b5ea3f0fdbc95d0dd47f3c5bc275da8a33" roles="ROLE_USER" />
             </security:provider>
 
@@ -69,9 +74,13 @@ your main configuration file; here is a typical configuration:
 
         // app/config/config.php
         $container->loadFromExtension('security', 'config', array(
-            'provider' => array(
-                'main' => array('password_encoder' => 'sha1', 'users' => array(
-                    'foo' => array('password' => '0beec7b5ea3f0fdbc95d0dd47f3c5bc275da8a33', 'roles' => 'ROLE_USER'),
+            'encoders' => array(
+                'Symfony\Component\Security\Core\User\User' => 'sha1',
+            ),
+            'providers' => array(
+                'main' => array(
+                    'users' => array(
+                        'foo' => array('password' => '0beec7b5ea3f0fdbc95d0dd47f3c5bc275da8a33', 'roles' => 'ROLE_USER'),
                 )),
             ),
             'firewalls' => array(
@@ -115,7 +124,9 @@ the security namespace as the default one to make it more readable:
     All examples in the documentation assume that you are using an external
     file with the default security namespace as above.
 
-As you can see, the configuration has three sections:
+As you can see, the configuration has four sections:
+
+* *encoder*: An encoder is used for hashing passwords of users;
 
 * *provider*: A provider knows how to create users;
 
@@ -126,8 +137,8 @@ As you can see, the configuration has three sections:
   roles.
 
 To sum up the workflow, the firewall authenticates the client based on the
-submitted credentials and the user created by the provider, and the access
-control authorizes access to the resource.
+submitted credentials and the user created by the user provider. Finally, 
+access control is used to protect specific resources.
 
 Authentication
 --------------
@@ -147,7 +158,7 @@ Here is how you can secure your application with HTTP basic authentication:
     .. code-block:: yaml
 
         # app/config/security.yml
-        security.config:
+        security:
             firewalls:
                 main:
                     http-basic: true
@@ -164,7 +175,7 @@ Here is how you can secure your application with HTTP basic authentication:
     .. code-block:: php
 
         // app/config/security.php
-        $container->loadFromExtension('security', 'config', array(
+        $container->loadFromExtension('security', array(
             'firewalls' => array(
                 'main' => array('http-basic' => true),
             ),
@@ -178,7 +189,7 @@ mechanisms for different parts of the application:
     .. code-block:: yaml
 
         # app/config/security.yml
-        security.config:
+        security:
             firewalls:
                 backend:
                     pattern: /admin/.*
@@ -201,7 +212,7 @@ mechanisms for different parts of the application:
     .. code-block:: php
 
         // app/config/security.php
-        $container->loadFromExtension('security', 'config', array(
+        $container->loadFromExtension('security', array(
             'firewalls' => array(
                 'backend' => array('pattern' => '/admin/.*', 'http-basic' => true),
                 'public'  => array('pattern' => '/.*', 'security' => false),
@@ -229,7 +240,7 @@ configuration:
     .. code-block:: yaml
 
         # app/config/security.yml
-        security.config:
+        security:
             providers:
                 main:
                     users:
@@ -247,7 +258,7 @@ configuration:
     .. code-block:: php
 
         // app/config/security.php
-        $container->loadFromExtension('security', 'config', array(
+        $container->loadFromExtension('security', array(
             'provider' => array(
                 'main' => array('users' => array(
                     'foo' => array('password' => 'foo'),
@@ -257,9 +268,9 @@ configuration:
 
 The above configuration defines a 'foo' user with a 'foo' password. After
 authentication, you can access the authenticated user via the security context
-(the user is an instance of :class:`Symfony\\Component\\Security\\User\\User`)::
+(the user is an instance of :class:`Symfony\\Component\\Security\\Core\\User\\User`)::
 
-    $user = $container->get('security.context')->getUser();
+    $user = $container->get('security.context')->getToken()->getUser();
 
 .. tip::
 
@@ -280,7 +291,7 @@ your application resources based user roles:
     .. code-block:: yaml
 
         # app/config/security.yml
-        security.config:
+        security:
             providers:
                 main:
                     users:
@@ -304,7 +315,7 @@ your application resources based user roles:
     .. code-block:: php
 
         // app/config/security.php
-        $container->loadFromExtension('security', 'config', array(
+        $container->loadFromExtension('security', array(
             'provider' => array(
                 'main' => array('users' => array(
                     'foo' => array('password' => 'foo', 'roles' => array('ROLE_USER', 'ROLE_ADMIN')),

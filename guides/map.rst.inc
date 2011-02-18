@@ -66,6 +66,7 @@
 
 * **Dependency Injection**:
 
+  * :doc:`The Service Container </guides/dependency_injection/index>`
   * :doc:`Extensions </guides/dependency_injection/extensions>`
 
 * **Internals**:

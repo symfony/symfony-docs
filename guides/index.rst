@@ -18,6 +18,7 @@ Dive into Symfony2 with the topical guides:
     event/index
     tools/index
     bundles/index
+    dependency_injection/index
     internals/index
     symfony1
     stable_api
