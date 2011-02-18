@@ -644,7 +644,7 @@ route:
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://www.symfony-project.org/schema/routing http://www.symfony-project.org/schema/routing/routing-1.0.xsd">
 
-            <import resource="FrameworkBundle/Resources/config/routing/internal.xml" prefix="/_internal" />
+            <import resource="@FrameworkBundle/Resources/config/routing/internal.xml" prefix="/_internal" />
         </routes>
 
     .. code-block:: php
@@ -653,7 +653,7 @@ route:
         use Symfony\Component\Routing\RouteCollection;
         use Symfony\Component\Routing\Route;
 
-        $collection->addCollection($loader->import('FrameworkBundle/Resources/config/routing/internal.xml', '/_internal'));
+        $collection->addCollection($loader->import('@FrameworkBundle/Resources/config/routing/internal.xml', '/_internal'));
 
         return $collection;
 
@@ -694,7 +694,7 @@ To use ESI, be sure to enable it in your application configuration:
     .. code-block:: yaml
 
         # app/config/config.yml
-        app.config:
+        framework:
             # ...
             esi:
                 enabled: true
@@ -704,15 +704,15 @@ To use ESI, be sure to enable it in your application configuration:
         <!-- app/config/config.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
 
-        <app:config charset="UTF-8">
+        <framework:config charset="UTF-8">
             <!-- ... -->
-            <app:esi enabled="true" />
-        </app:config>
+            <framework:esi enabled="true" />
+        </framework:config>
 
     .. code-block:: php
 
         // app/config/config.php
-        $container->loadFromExtension('app', 'config', array(
+        $container->loadFromExtension('framework', array(
             // ...
             'esi' => array(
                 'enabled' => true,

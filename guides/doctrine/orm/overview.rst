@@ -22,25 +22,28 @@ necessary configuration is to specify the bundle name which contains your entiti
     .. code-block:: yaml
 
         # app/config/config.yml
-        doctrine.orm:
-          mappings:
-            HelloBundle: ~
+        doctrine:
+            orm:
+                mappings:
+                    HelloBundle: ~
 
     .. code-block:: xml
 
         <!-- xmlns:doctrine="http://www.symfony-project.org/schema/dic/doctrine" -->
         <!-- xsi:schemaLocation="http://www.symfony-project.org/schema/dic/doctrine http://www.symfony-project.org/schema/dic/doctrine/doctrine-1.0.xsd"> -->
 
-        <doctrine:orm>
-            <mappings>
-                <mapping name="HelloBundle" />
-            </mappings>
-        </doctrine>
+        <doctrine:config>
+            <doctrine:orm>
+                <mappings>
+                    <mapping name="HelloBundle" />
+                </mappings>
+            </doctrine:orm>
+        </doctrine:config>
 
     .. code-block:: php
 
-        $container->loadFromExtension('doctrine', 'orm', array(
-            "mappings" => array("HelloBundle" => array()),
+        $container->loadFromExtension('doctrine', array('orm' => array(
+            "mappings" => array("HelloBundle" => array())),
         ));
 
 As Doctrine provides transparent persistence for PHP objects, it works with

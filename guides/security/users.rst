@@ -309,7 +309,7 @@ yourself:
     .. code-block:: yaml
 
         # app/config/security.yml
-        security.config:
+        security:
             providers:
                 main:
                     entity: { class: SecurityBundle:User, property: username }
@@ -326,7 +326,7 @@ yourself:
     .. code-block:: php
 
         // app/config/security.php
-        $container->loadFromExtension('security', 'config', array(
+        $container->loadFromExtension('security', array(
             'providers' => array(
                 'main' => array(
                     'entity' => array('class' => 'SecurityBundle:User', 'property' => 'username'),
@@ -575,7 +575,7 @@ rules by creating a role hierarchy:
     .. code-block:: yaml
 
         # app/config/security.yml
-        security.config:
+        security:
             role_hierarchy:
                 ROLE_ADMIN:       ROLE_USER
                 ROLE_SUPER_ADMIN: [ROLE_USER, ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH]
@@ -593,7 +593,7 @@ rules by creating a role hierarchy:
     .. code-block:: php
 
         // app/config/security.php
-        $container->loadFromExtension('security', 'config', array(
+        $container->loadFromExtension('security', array(
             'role_hierarchy' => array(
                 'ROLE_ADMIN'       => 'ROLE_USER',
                 'ROLE_SUPER_ADMIN' => array('ROLE_USER', 'ROLE_ADMIN', 'ROLE_ALLOWED_TO_SWITCH'),

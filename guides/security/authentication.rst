@@ -33,7 +33,7 @@ basic authentication:
     .. code-block:: yaml
 
         # app/config/security.yml
-        security.config:
+        security:
             firewalls:
                 backend:
                     pattern:    /admin/.*
@@ -64,7 +64,7 @@ basic authentication:
     .. code-block:: php
 
         // app/config/security.php
-        $container->loadFromExtension('security', 'config', array(
+        $container->loadFromExtension('security', array(
             'firewalls' => array(
                 'backend' => array('pattern' => '/admin/.*', 'http_basic' => true, 'logout' => true),
                 'api'     => array('pattern' => '/api/.*', 'http_basic' => true, 'stateless' => true),

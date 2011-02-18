@@ -14,17 +14,18 @@ the ORM resolves to:
 
 .. code-block:: yaml
 
-    doctrine.orm:
-        mappings:
-            HelloBundle: ~
-        auto_generate_proxy_classes: true
-        proxy_namespace: Proxies
-        proxy_dir: %kernel.cache_dir%/doctrine/orm/Proxies
-        default_entity_manager: default
-        default_connection: default
-        metadata_cache_driver: array
-        query_cache_driver: array
-        result_cache_driver: array
+    doctrine:
+        orm:
+            mappings:
+                HelloBundle: ~
+            auto_generate_proxy_classes: true
+            proxy_namespace: Proxies
+            proxy_dir: %kernel.cache_dir%/doctrine/orm/Proxies
+            default_entity_manager: default
+            default_connection: default
+            metadata_cache_driver: array
+            query_cache_driver: array
+            result_cache_driver: array
 
 There are lots of other configuration options that you can use to overwrite
 certain classes, but those are for very advanced use-cases only. You should
@@ -38,16 +39,17 @@ The following example shows an overview of the caching configurations:
 
 .. code-block:: yaml
 
-    doctrine.orm:
-        mappings:
-            HelloBundle: ~
-        metadata_cache_driver: apc
-        query_cache_driver: xcache
-        result_cache_driver:
-            type: memcache
-            host: localhost
-            port: 11211
-            instance_class: Memcache
+    doctrine:
+        orm:
+            mappings:
+                HelloBundle: ~
+            metadata_cache_driver: apc
+            query_cache_driver: xcache
+            result_cache_driver:
+                type: memcache
+                host: localhost
+                port: 11211
+                instance_class: Memcache
 
 Mapping Configuration
 ~~~~~~~~~~~~~~~~~~~~~
@@ -92,21 +94,22 @@ The following configuration shows a bunch of mapping examples:
 
 .. code-block:: yaml
 
-    doctrine.orm:
-        mappings:
-            MyBundle1: ~
-            MyBundle2: yml
-            MyBundle3: { type: annotation, dir: Entity/ }
-            MyBundle4: { type: xml, dir: Resources/config/doctrine/mapping }
-            MyBundle5:
-                type: yml
-                dir: my-bundle-mappings-dir
-                alias: BundleAlias
-            doctrine_extensions:
-                type: xml
-                dir: %kernel.dir%/../src/vendor/DoctrineExtensions/lib/DoctrineExtensions/Entity
-                prefix: DoctrineExtensions\Entity\
-                alias: DExt
+    doctrine:
+        orm:
+            mappings:
+                MyBundle1: ~
+                MyBundle2: yml
+                MyBundle3: { type: annotation, dir: Entity/ }
+                MyBundle4: { type: xml, dir: Resources/config/doctrine/mapping }
+                MyBundle5:
+                    type: yml
+                    dir: my-bundle-mappings-dir
+                    alias: BundleAlias
+                doctrine_extensions:
+                    type: xml
+                    dir: %kernel.dir%/../src/vendor/DoctrineExtensions/lib/DoctrineExtensions/Entity
+                    prefix: DoctrineExtensions\Entity\
+                    alias: DExt
 
 Registering Event Listeners and Subscribers
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -157,14 +160,15 @@ The following configuration code shows how to define two EntityManagers:
 
 .. code-block:: yaml
 
-    doctrine.orm:
-        default_entity_manager:   default
-        cache_driver:             apc           # array, apc, memcache, xcache
-        entity_managers:
-            default:
-                connection:       default
-            customer:
-                connection:       customer
+    doctrine:
+        orm:
+            default_entity_manager:   default
+            cache_driver:             apc           # array, apc, memcache, xcache
+            entity_managers:
+                default:
+                    connection:       default
+                customer:
+                    connection:       customer
 
 Just like the DBAL, if you have configured multiple ``EntityManager``
 instances and want to get a specific one you can use the full service name to
@@ -203,12 +207,13 @@ specific DBAL connection and all the EntityManagers that use this connection.
 
     .. code-block:: yaml
 
-        doctrine.dbal:
-            default_connection: default
-            connections:
-                default:
-                    driver: pdo_sqlite
-                    memory: true
+        doctrine:
+            dbal:
+                default_connection: default
+                connections:
+                    default:
+                        driver: pdo_sqlite
+                        memory: true
 
         services:
             my.listener:
@@ -229,11 +234,14 @@ specific DBAL connection and all the EntityManagers that use this connection.
         <?xml version="1.0" ?>
         <container xmlns="http://symfony-project.org/2.0/container"
             xmlns:doctrine="http://www.symfony-project.org/schema/dic/doctrine">
-            <doctrine:dbal default-connection="default">
-                <doctrine:connections>
-                    <doctrine:connection driver="pdo_sqlite" memory="true" />
-                </doctrine:connections>
-            </doctrine:dbal>
+
+            <doctrine:config>
+                <doctrine:dbal default-connection="default">
+                    <doctrine:connections>
+                        <doctrine:connection driver="pdo_sqlite" memory="true" />
+                    </doctrine:connections>
+                </doctrine:dbal>
+            </doctrine:config>
 
             <services>
                 <service id="my.listener" class="MyEventListener">

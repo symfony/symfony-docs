@@ -31,7 +31,7 @@ The only mandatory configuration parameter is ``transport``:
     .. code-block:: yaml
 
         # app/config/config.yml
-        swiftmailer.config:
+        swiftmailer:
             transport:  smtp
             encryption: ssl
             auth_mode:  login
@@ -59,7 +59,7 @@ The only mandatory configuration parameter is ``transport``:
     .. code-block:: php
 
         // app/config/config.php
-        $container->loadFromExtension('swiftmailer', 'config', array(
+        $container->loadFromExtension('swiftmailer', array(
             'transport'  => "smtp",
             'encryption' => "ssl",
             'auth_mode'  => "login",
@@ -119,7 +119,7 @@ transport:
     .. code-block:: yaml
 
         # app/config/config.yml
-        swiftmailer.config:
+        swiftmailer:
             transport: gmail
             username:  your_gmail_username
             password:  your_gmail_password
@@ -141,7 +141,7 @@ transport:
     .. code-block:: php
 
         // app/config/config.php
-        $container->loadFromExtension('swiftmailer', 'config', array(
+        $container->loadFromExtension('swiftmailer', array(
             'transport' => "gmail",
             'username'  => "your_gmail_username",
             'password'  => "your_gmail_password",

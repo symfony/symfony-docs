@@ -151,11 +151,11 @@ the configuration for the development environment:
     .. code-block:: yaml
 
         # load the profiler
-        app.config:
+        framework:
             profiler: { only_exceptions: false }
 
         # enable the web profiler
-        webprofiler.config:
+        web_profiler:
             toolbar: true
             intercept_redirects: true
 
@@ -178,12 +178,12 @@ the configuration for the development environment:
     .. code-block:: php
 
         // load the profiler
-        $container->loadFromExtension('app', 'config', array(
+        $container->loadFromExtension('framework', array(
             'profiler' => array('only-exceptions' => false),
         ));
 
         // enable the web profiler
-        $container->loadFromExtension('webprofiler', 'config', array(
+        $container->loadFromExtension('web_profiler', array(
             'toolbar' => true,
             'intercept-redirects' => true,
         ));
@@ -224,22 +224,22 @@ portion of the website? You can use a request matcher:
     .. code-block:: yaml
 
         # enables the profiler only for request coming for the 192.168.0.0 network
-        app.config:
+        framework:
             profiler:
                 matcher: { ip: 192.168.0.0/24 }
 
         # enables the profiler only for the /admin URLs
-        app.config:
+        framework:
             profiler:
                 matcher: { path: "#^/admin/#i" }
 
         # combine rules
-        app.config:
+        framework:
             profiler:
                 matcher: { ip: 192.168.0.0/24, path: "#^/admin/#i" }
 
         # use a custom matcher instance defined in the "custom_matcher" service
-        app.config:
+        framework:
             profiler:
                 matcher: { service: custom_matcher }
 
@@ -285,35 +285,35 @@ portion of the website? You can use a request matcher:
     .. code-block:: php
 
         // enables the profiler only for request coming for the 192.168.0.0 network
-        $container->loadFromExtension('app', 'config', array(
+        $container->loadFromExtension('framework', array(
             'profiler' => array(
                 'matcher' => array('ip' => '192.168.0.0/24'),
             ),
         ));
 
         // enables the profiler only for the /admin URLs
-        $container->loadFromExtension('app', 'config', array(
+        $container->loadFromExtension('framework', array(
             'profiler' => array(
                 'matcher' => array('path' => '#^/admin/#i'),
             ),
         ));
 
         // combine rules
-        $container->loadFromExtension('app', 'config', array(
+        $container->loadFromExtension('framework', array(
             'profiler' => array(
                 'matcher' => array('ip' => '192.168.0.0/24', 'path' => '#^/admin/#i'),
             ),
         ));
 
         # use a custom matcher instance defined in the "custom_matcher" service
-        $container->loadFromExtension('app', 'config', array(
+        $container->loadFromExtension('framework', array(
             'profiler' => array(
                 'matcher' => array('service' => new Reference('custom_matcher')),
             ),
         ));
 
         // define an anonymous service for the matcher
-        $container->loadFromExtension('app', 'config', array(
+        $container->loadFromExtension('framework', array(
             'profiler' => array(
                 'matcher' => array('services' => array($container->register('custom_matcher', 'CustomMatcher'))),
             ),

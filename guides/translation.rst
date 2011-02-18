@@ -25,7 +25,7 @@ Before using the translator features, enable it in your configuration:
     .. code-block:: yaml
 
         # app/config/config.yml
-        app.config:
+        framework:
             translator: { fallback: en }
 
     .. code-block:: xml
@@ -38,7 +38,7 @@ Before using the translator features, enable it in your configuration:
     .. code-block:: php
 
         // app/config/config.php
-        $container->loadFromExtension('app', 'config', array(
+        $container->loadFromExtension('framework', array(
             'translator' => array('fallback' => 'en'),
         ));
 

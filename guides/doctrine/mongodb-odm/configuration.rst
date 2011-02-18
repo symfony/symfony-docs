@@ -8,7 +8,7 @@ Configuration
 .. code-block:: yaml
 
     # app/config/config.yml
-    doctrine_odm.mongodb:
+    doctrine_mongo_db:
         server: mongodb://localhost:27017
         default_database: hello_%kernel.environment%
         options:
@@ -21,7 +21,7 @@ If you wish to use memcache to cache your metadata, you need to configure the
 .. code-block:: yaml
 
     # app/config/config.yml
-    doctrine_odm.mongodb:
+    doctrine_mongo_db:
         server: mongodb://localhost:27017
         default_database: hello_%kernel.environment%
         options:
@@ -76,7 +76,7 @@ The following configuration shows a bunch of mapping examples:
 
 .. code-block:: yaml
 
-    doctrine.mongodb:
+    doctrine_mongo_db:
         mappings:
             MyBundle1: ~
             MyBundle2: yml
@@ -114,7 +114,7 @@ following syntax:
 
 .. code-block:: yaml
 
-    doctrine_odm.mongodb:
+    doctrine_mongo_db:
         default_database: hello_%kernel.environment%
         default_connection: conn2
         default_document_manager: dm2
