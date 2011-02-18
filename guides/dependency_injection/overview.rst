@@ -231,7 +231,7 @@ The purpose of parameters is to feed information into services. Of course
 there was nothing wrong with defining the service without using any parameters.
 Parameters, however, have several advantages:
 
-* separation and organization of all of the service "options" under a single
+* separation and organization of all service "options" under a single
   ``parameters`` key;
 
 * parameter values can be used in multiple service definitions;
@@ -262,8 +262,8 @@ be imported from inside this file in one way or another. This gives you absolute
 flexibility over the services in your application.
 
 External service configuration can be imported in two different ways. First,
-we'll talk about the method that you'll use most commonly in your application
-- the ``imports`` directive. In the following section, we'll introduce the
+we'll talk about the method that you'll use most commonly in your application:
+the ``imports`` directive. In the following section, we'll introduce the
 second method, which is the flexible and preferred method for importing service
 configuration from third-party bundles.
 
@@ -353,7 +353,7 @@ configuration.
 The ``imports`` directive allows your application to include service container
 configuration resources from any other location (most commonly from bundles).
 The ``resource`` location, for files, is the absolute path to the resource
-file. The special ``@HelloBundle`` syntax resolves to the directory path to
+file. The special ``@HelloBundle`` syntax resolves the directory path of
 the ``HelloBundle``. This helps you specify the path to the resource without
 worrying later if you move the ``HelloBundle`` to a different directory.
 
@@ -367,21 +367,21 @@ Importing Configuration via Container Extensions
 
 When developing in Symfony2, you'll most commonly use the ``imports`` directive
 to import container configuration from the bundles you've created specifically
-for your application. Third-party bundle container configuration (including
-the Symfony2 core services), are usually loaded using another method that's
-more flexible and easy to configure in your application.
+for your application. Third-party bundle container configuration, including
+Symfony2 core services, are usually loaded using another method that's more
+flexible and easy to configure in your application.
 
 Here's how it works. Internally, each bundle defines its services very much
-like we've seen so far in this guide. Namely, a bundle uses one or more
-configuration resource files (usually XML) to specify the parameters and
-services for that bundle. However, instead of importing each of these resources
-directly from your application configuration using the ``imports`` directive,
-you can simply invoke a *service container extension* inside the bundle that
-does the work for you. A service container extension is a PHP class created
-by the bundle author to accomplish two things:
+like we've seen so far. Namely, a bundle uses one or more configuration
+resource files (usually XML) to specify the parameters and services for that
+bundle. However, instead of importing each of these resources directly from
+your application configuration using the ``imports`` directive, you can simply
+invoke a *service container extension* inside the bundle that does the work for
+you. A service container extension is a PHP class created by the bundle author
+to accomplish two things:
 
-* import all of the service container resources needed to configure the
-  services for the bundle;
+* import all service container resources needed to configure the services for
+  the bundle;
 
 * provide semantic, straightforward configuration so that the bundle can
   be configured without interacting with the flat parameters of the bundle's
@@ -450,7 +450,7 @@ the services specific to it. The bundle takes care of creating all the necessary
 ``parameters`` and ``services`` for the service container, while still allowing
 much of the configuration to be easily customized. As an added bonus, most
 service container extensions are also smart enough to perform validation -
-notifying you of missing options or options with the wrong data type.
+notifying you of options that are missing or the wrong data type.
 
 When installing or configuring a bundle, see the bundle's documentation for
 how the services for the bundle should be installed and configured. The options
@@ -649,7 +649,7 @@ the framework.
 
     Be sure that ``swiftmailer`` entry appears in your application
     configuration. As we mentioned in :ref:`service-container-extension-configuration`,
-    the ``swiftmailer`` invokes the service extension from the
+    the ``swiftmailer`` key invokes the service extension from the
     ``SwiftmailerBundle``, which registers the ``mailer`` service.
 
 .. index::
@@ -704,9 +704,9 @@ with ``twig.extension`` and automatically registers them as extensions.
 Tags, then, are a way to tell Symfony2 or other third-party bundles that
 your service should be registered or used in some special way by the bundle.
 
-The following is a list of the tags available with the core Symfony2 bundles.
-Each of these has a different affect on your service and many tags require
-additional arguments (beyond just the ``name`` attribute).
+The following is a list of tags available with the core Symfony2 bundles.
+Each of these has a different effect on your service and many tags require
+additional arguments (beyond just the ``name`` parameter).
 
 * assetic.filter
 * assetic.templating.php
