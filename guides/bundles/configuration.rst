@@ -198,16 +198,7 @@ The array passed to your method looks like the following::
 
 Within ``load()``, the ``$container`` variable refers to a container that only
 knows about this namespace configuration. You can manipulate it the way you
-want to add services and parameters. The first time the method is called, the
-container only knows about global parameters. For subsequent calls, it
-contains the configuration as defined by previous calls. So, the method needs
-to merge new configuration settings with old ones::
-
-    // only load default services and parameters once
-    if (!$container->hasDefinition('xxxxx')) {
-        $loader = new XmlFileLoader($container, __DIR__.'/../Resources/config');
-        $loader->load('hello.xml');
-    }
+want to add services and parameters.
 
 The global parameters are the following:
 
@@ -253,7 +244,7 @@ automatically by Symfony2. If not, override the Bundle
         public function build(ContainerBuilder $container)
         {
             // register the extension(s) found in DependencyInjection/ directory
-            parent::registerExtensions($container);
+            parent::build($container);
 
             // register extensions that do not follow the conventions manually
             $container->registerExtension(new ExtensionHello());
