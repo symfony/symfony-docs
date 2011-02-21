@@ -28,9 +28,9 @@ Set up your user information with your real name and a working email address:
     If you are new to Git, we highly recommend you to read the excellent and
     free `ProGit`_ book.
 
-Get the Symfony2 code source:
+Get the Symfony2 source code:
 
-* Create a `Github`_ account and sign in;
+* Create a `GitHub`_ account and sign in;
 
 * Fork the `Symfony2 repository`_ (click on the "Fork" button);
 
@@ -128,7 +128,7 @@ If you are going to send an email to the mailing-list, don't forget to
 reference you branch URL (``https://github.com/USERNAME/symfony.git
 BRANCH_NAME``) or the pull request URL.
 
-Based on the feedback from the mailing-list or via the pull request on Github,
+Based on the feedback from the mailing-list or via the pull request on GitHub,
 you might need to rework your patch. Before re-submitting the patch, rebase
 with master, don't merge; and force the push to the origin:
 
@@ -138,6 +138,6 @@ with master, don't merge; and force the push to the origin:
     $ git push -f origin BRANCH_NAME
 
 .. _ProGit:              http://progit.org/
-.. _Github:              https://github.com/signup/free
+.. _GitHub:              https://github.com/signup/free
 .. _Symfony2 repository: https://github.com/symfony/symfony
 .. _dev mailing-list:    http://groups.google.com/group/symfony-devs
