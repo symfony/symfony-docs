@@ -203,7 +203,7 @@ update your development database schema without blowing away everything and
 losing your existing data. So first lets just add a new property to our ``User``
 entity::
 
-    namespace Sensio\HelloBundle\Entities;
+    namespace Sensio\HelloBundle\Entity;
 
     /** @orm:Entity */
     class User
