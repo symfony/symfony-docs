@@ -19,11 +19,12 @@ To get started you just need to enable and configure the DBAL:
 
     # app/config/config.yml
 
-    doctrine.dbal:
-        driver:   pdo_mysql
-        dbname:   Symfony2
-        user:     root
-        password: null
+    doctrine:
+        dbal:
+            driver:   pdo_mysql
+            dbname:   Symfony2
+            user:     root
+            password: null
 
 You can then access the Doctrine DBAL connection by accessing the
 ``database_connection`` service::

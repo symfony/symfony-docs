@@ -56,9 +56,9 @@ with constraints; this process is called the "mapping":
     .. code-block:: php
 
         // Sensio/HelloBundle/Author.php
-        use Symfony\Component\Validator\Mapping\ClassMetadata;        
+        use Symfony\Component\Validator\Mapping\ClassMetadata;
         use Symfony\Components\Validator\Constraints\NotBlank;
-        
+
         class Author
         {
             private $name;
@@ -76,7 +76,7 @@ validator, adapt your application configuration as follows:
 .. code-block:: yaml
 
     # hello/config/config.yml
-    app.config:
+    framework:
         validation:
             enabled: true
 

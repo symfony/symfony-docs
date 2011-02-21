@@ -88,7 +88,7 @@ that extends
 
     class HelloExtension extends Extension
     {
-        public function configLoad($config, ContainerBuilder $container)
+        public function load(array $configs, ContainerBuilder $container)
         {
             // ...
         }
@@ -109,15 +109,15 @@ that extends
         }
     }
 
-The previous class defines a ``hello:config`` namespace, usable in any
-configuration file:
+The previous class defines a ``hello`` namespace, usable in any configuration
+file:
 
 .. configuration-block::
 
     .. code-block:: yaml
 
         # app/config/config.yml
-        hello.config: ~
+        hello: ~
 
     .. code-block:: xml
 
@@ -137,20 +137,20 @@ configuration file:
     .. code-block:: php
 
         // app/config/config.php
-        $container->loadFromExtension('hello', 'config', array());
+        $container->loadFromExtension('hello', array());
 
-.. note::
+.. tip::
 
-    You can create as many ``xxxLoad()`` methods as you want to define more
-    configuration blocks for your extension.
+    Your extension code is always called, even if the user does not provide
+    any configuration. In that case, the array of configurations will be empty
+    and you can still provide some sensible defaults if you want.
 
 Parsing a Configuration
 ~~~~~~~~~~~~~~~~~~~~~~~
 
-Whenever a user includes the ``hello.config`` namespace in a configuration
-file, the ``configLoad()`` method of your extension is called and the
-configuration is passed as an array (Symfony2 automatically converts XML and
-YAML to an array).
+Whenever a user includes the ``hello`` namespace in a configuration file, it
+is added to an array of configurations and passed to the ``load()`` method of
+your extension (Symfony2 automatically converts XML and YAML to an array).
 
 So, given the following configuration:
 
@@ -159,7 +159,7 @@ So, given the following configuration:
     .. code-block:: yaml
 
         # app/config/config.yml
-        hello.config:
+        hello:
             foo: foo
             bar: bar
 
@@ -182,7 +182,7 @@ So, given the following configuration:
     .. code-block:: php
 
         // app/config/config.php
-        $container->loadFromExtension('hello', 'config', array(
+        $container->loadFromExtension('hello', array(
             'foo' => 'foo',
             'bar' => 'bar',
         ));
@@ -190,22 +190,15 @@ So, given the following configuration:
 The array passed to your method looks like the following::
 
     array(
-        'foo' => 'foo',
-        'bar' => 'bar',
+        array(
+            'foo' => 'foo',
+            'bar' => 'bar',
+        )
     )
 
-Within ``configLoad()``, the ``$container`` variable refers to a container
-that only knows about this namespace configuration. You can manipulate it the
-way you want to add services and parameters. The first time the method is
-called, the container only knows about global parameters. For subsequent
-calls, it contains the configuration as defined by previous calls. So, the
-method needs to merge new configuration settings with old ones::
-
-    // only load default services and parameters once
-    if (!$container->hasDefinition('xxxxx')) {
-        $loader = new XmlFileLoader($container, __DIR__.'/../Resources/config');
-        $loader->load('hello.xml');
-    }
+Within ``load()``, the ``$container`` variable refers to a container that only
+knows about this namespace configuration. You can manipulate it the way you
+want to add services and parameters.
 
 The global parameters are the following:
 
@@ -235,24 +228,23 @@ When creating an extension, follow these simple conventions:
 * The extension must be stored in the ``DependencyInjection`` sub-namespace;
 
 * The extension must be named after the bundle name and suffixed with
-  ``Extension`` (``HelloExtension`` for ``HelloBundle``) -- when you provide
-  several extensions for a single bundle, just end them with ``Extension``;
+  ``Extension`` (``SensioHelloExtension`` for ``SensioHelloBundle``);
 
-* The alias must be unique and named after the bundle name (``hello`` for
-  ``HelloBundle`` or ``sensio.social.blog`` for ``Sensio\Social\BlogBundle``);
+* The alias must be unique and named after the bundle name (``sensio_blog``
+  for ``SensioBlogBundle``);
 
 * The extension should provide an XSD schema.
 
 If you follow these simple conventions, your extensions will be registered
 automatically by Symfony2. If not, override the Bundle
-:method:`Symfony\\Component\\HttpKernel\\Bundle\\Bundle::registerExtensions` method::
+:method:`Symfony\\Component\\HttpKernel\\Bundle\\Bundle::build` method::
 
     class HelloBundle extends Bundle
     {
-        public function registerExtensions(ContainerBuilder $container)
+        public function build(ContainerBuilder $container)
         {
             // register the extension(s) found in DependencyInjection/ directory
-            parent::registerExtensions($container);
+            parent::build($container);
 
             // register extensions that do not follow the conventions manually
             $container->registerExtension(new ExtensionHello());
@@ -261,29 +253,3 @@ automatically by Symfony2. If not, override the Bundle
 
 .. index::
    single: Bundles; Default Configuration
-
-Default Configuration
-~~~~~~~~~~~~~~~~~~~~~
-
-As stated before, the user of the bundle should include the ``hello.config``
-namespace in a configuration file for your extension code to be called. But you
-can automatically register a default configuration by overriding the Bundle
-:method:`Symfony\\Component\\HttpKernel\\Bundle\\Bundle::registerExtensions`
-method::
-
-    class HelloBundle extends Bundle
-    {
-        public function registerExtensions(ContainerBuilder $container)
-        {
-            // will register the HelloBundle extension(s) found in DependencyInjection/ directory
-            parent::registerExtensions($container);
-
-            // load some defaults
-            $container->loadFromExtension('hello', 'config', array(/* your default config for the hello.config namespace */));
-        }
-    }
-
-.. caution::
-
-    Symfony2 tries to be as explicit as possible. So, registering a default
-    configuration automatically is probably not a good idea.

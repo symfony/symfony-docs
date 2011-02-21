@@ -20,7 +20,7 @@ just need to enable it and specify the bundle that contains your mapped document
 
     # app/config/config.yml
 
-    doctrine_odm.mongodb:
+    doctrine_mongo_db:
         mappings:
             HelloBundle: ~
 

@@ -32,7 +32,7 @@ your main configuration file; here is a typical configuration:
     .. code-block:: yaml
 
         # app/config/config.yml
-        security.config:
+        security:
             encoders:
                 Symfony\Component\Security\Core\User\User: sha1
 
@@ -73,7 +73,7 @@ your main configuration file; here is a typical configuration:
     .. code-block:: php
 
         // app/config/config.php
-        $container->loadFromExtension('security', 'config', array(
+        $container->loadFromExtension('security', array(
             'encoders' => array(
                 'Symfony\Component\Security\Core\User\User' => 'sha1',
             ),

@@ -31,7 +31,7 @@ The only mandatory configuration parameter is ``transport``:
     .. code-block:: yaml
 
         # app/config/config.yml
-        swiftmailer.config:
+        swiftmailer:
             transport:  smtp
             encryption: ssl
             auth_mode:  login
@@ -59,7 +59,7 @@ The only mandatory configuration parameter is ``transport``:
     .. code-block:: php
 
         // app/config/config.php
-        $container->loadFromExtension('swiftmailer', 'config', array(
+        $container->loadFromExtension('swiftmailer', array(
             'transport'  => "smtp",
             'encryption' => "ssl",
             'auth_mode'  => "login",
@@ -77,8 +77,10 @@ The following configuration attribute are available:
 * ``port``
 * ``encryption`` (``tls``, or ``ssl``)
 * ``auth_mode`` (``plain``, ``login``, or ``cram-md5``)
-* ``type``
-* ``delivery_strategy`` (``realtime``, ``spool``, ``single_address``, or ``none``)
+* ``spool``
+    
+    * ``type`` (only ``file`` is supported currently)
+    * ``path``
 * ``delivery_address`` (an email address where to send ALL emails)
 * ``disable_delivery``
 
@@ -119,7 +121,7 @@ transport:
     .. code-block:: yaml
 
         # app/config/config.yml
-        swiftmailer.config:
+        swiftmailer:
             transport: gmail
             username:  your_gmail_username
             password:  your_gmail_password
@@ -129,7 +131,7 @@ transport:
         <!-- app/config/config.xml -->
 
         <!--
-        xmlns:swift="http://www.symfony-project.org/schema/dic/swiftmailer"
+        xmlns:swiftmailer="http://www.symfony-project.org/schema/dic/swiftmailer"
         http://www.symfony-project.org/schema/dic/swiftmailer http://www.symfony-project.org/schema/dic/swiftmailer/swiftmailer-1.0.xsd
         -->
 
@@ -141,7 +143,7 @@ transport:
     .. code-block:: php
 
         // app/config/config.php
-        $container->loadFromExtension('swiftmailer', 'config', array(
+        $container->loadFromExtension('swiftmailer', array(
             'transport' => "gmail",
             'username'  => "your_gmail_username",
             'password'  => "your_gmail_password",

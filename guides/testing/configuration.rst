@@ -65,15 +65,15 @@ The Client used by functional tests creates a Kernel that runs in a special
         imports:
             - { resource: config_dev.yml }
 
-        app.config:
+        framework:
             error_handler: false
             test: ~
 
-        webprofiler.config:
+        web_profiler:
             toolbar: false
             intercept_redirects: false
 
-        zend.config:
+        zend:
             logger:
                 priority: debug
 
@@ -104,17 +104,17 @@ The Client used by functional tests creates a Kernel that runs in a special
         // app/config/config_test.php
         $loader->import('config_dev.php');
 
-        $container->loadFromExtension('app', 'config', array(
+        $container->loadFromExtension('framework', array(
             'error_handler' => false,
             'test'          => true,
         ));
 
-        $container->loadFromExtension('webprofiler', 'config', array(
+        $container->loadFromExtension('web_profiler', array(
             'toolbar' => false,
             'intercept-redirects' => false,
         ));
 
-        $container->loadFromExtension('zend', 'config', array(
+        $container->loadFromExtension('zend', array(
             'logger' => array('priority' => 'debug'),
         ));
 

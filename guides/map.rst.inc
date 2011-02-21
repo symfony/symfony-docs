@@ -56,8 +56,7 @@
 
   * :doc:`/guides/tools/autoloader` |
   * :doc:`Finder </guides/tools/finder>` |
-  * :doc:`/guides/tools/YAML` |
-  * :doc:`Process </guides/tools/process>`
+  * :doc:`/guides/tools/YAML`
 
 * **Bundles**:
 
@@ -66,7 +65,7 @@
 
 * **Dependency Injection**:
 
-  * :doc:`The Service Container </guides/dependency_injection/index>`
+  * :doc:`The Service Container </guides/dependency_injection/overview>` |
   * :doc:`Extensions </guides/dependency_injection/extensions>`
 
 * **Internals**:

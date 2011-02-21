@@ -10,7 +10,7 @@ configuration:
 .. code-block:: yaml
 
     # hello/config/config.yml
-    app.config:
+    framework:
         validation:
             enabled: true
 

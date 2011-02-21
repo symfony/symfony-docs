@@ -31,7 +31,7 @@ Glossary
         connection object or an object that delivers email messages. In Symfony2,
         services are often configured and retrieved from the service container.
         An application that has many decoupled services is said to follow
-        a `service-oriented architecture`_
+        a `service-oriented architecture`_.
 
     Service Container
         A *Service Container*, also known as a *Dependency Injection Container*,

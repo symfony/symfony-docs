@@ -155,7 +155,7 @@ PHP. Have a look at the default configuration:
     .. code-block:: yaml
 
         # app/config/config.yml
-        app.config:
+        framework:
             charset:       UTF-8
             error_handler: null
             csrf_protection:
@@ -163,25 +163,31 @@ PHP. Have a look at the default configuration:
                 secret: xxxxxxxxxx
             router:        { resource: "%kernel.root_dir%/config/routing.yml" }
             validation:    { enabled: true, annotations: true }
-            templating:
-                #assets_version: SomeVersionScheme
+            templating:    { engines: ['twig'] } #assets_version: SomeVersionScheme
             session:
                 default_locale: en
-                lifetime: 3600
+                lifetime:       3600
+                auto_start:     true
 
-        ## Twig Configuration
-        #twig.config:
-        #    auto_reload: true
+        # Twig Configuration
+        twig:
+            debug:            %kernel.debug%
+            strict_variables: %kernel.debug%
 
         ## Doctrine Configuration
-        #doctrine.dbal:
-        #    dbname:   xxxxxxxx
-        #    user:     xxxxxxxx
-        #    password: ~
-        #doctrine.orm: ~
+        #doctrine:
+        #   dbal:
+        #       dbname:   xxxxxxxx
+        #       user:     xxxxxxxx
+        #       password: ~
+        #       logging:  %kernel.debug%
+        #   orm:
+        #       auto_generate_proxy_classes: %kernel.debug%
+        #       mappings:
+        #           HelloBundle: ~
 
         ## Swiftmailer Configuration
-        #swiftmailer.config:
+        #swiftmailer:
         #    transport:  smtp
         #    encryption: ssl
         #    auth_mode:  login
@@ -192,22 +198,29 @@ PHP. Have a look at the default configuration:
     .. code-block:: xml
 
         <!-- app/config/config.xml -->
-        <app:config charset="UTF-8" error-handler="null">
-            <app:router resource="%kernel.root_dir%/config/routing.xml" />
-            <app:validation enabled="true" annotations="true" />
-            <app:session default-locale="en" lifetime="3600" />
-            <app:csrf-protection enabled="true" secret="xxxxxxxxxx" />
-        </app:config>
+        <framework:config charset="UTF-8" error-handler="null" cache-warmer="false">
+            <framework:router resource="%kernel.root_dir%/config/routing.xml" cache-warmer="true" />
+            <framework:validation enabled="true" annotations="true" />
+            <framework:session default-locale="en" lifetime="3600" auto-start="true" />
+            <framework:templating assets-version="SomeVersionScheme" cache-warmer="true">
+                <framework:engine id="twig" />
+            </framework:templating>
+            <framework:csrf-protection enabled="true" secret="xxxxxxxxxx" />
+        </framework:config>
 
         <!-- Twig Configuration -->
-        <!--
-        <twig:config auto_reload="true" />
-        -->
+        <twig:config debug="%kernel.debug%" strict-variables="%kernel.debug%" cache-warmer="true" />
 
         <!-- Doctrine Configuration -->
         <!--
-        <doctrine:dbal dbname="xxxxxxxx" user="xxxxxxxx" password="" />
-        <doctrine:orm />
+        <doctrine:config>
+            <doctrine:dbal dbname="xxxxxxxx" user="xxxxxxxx" password="" logging="%kernel.debug%" />
+            <doctrine:orm auto-generate-proxy-classes="%kernel.debug%">
+                <doctrine:mappings>
+                    <doctrine:mapping name="HelloBundle" />
+                </doctrine:mappings>
+            </doctrine:orm>
+        </doctrine:config>
         -->
 
         <!-- Swiftmailer Configuration -->
@@ -215,7 +228,7 @@ PHP. Have a look at the default configuration:
         <swiftmailer:config
             transport="smtp"
             encryption="ssl"
-            auth_mode="login"
+            auth-mode="login"
             host="smtp.gmail.com"
             username="xxxxxxxx"
             password="xxxxxxxx" />
@@ -224,39 +237,48 @@ PHP. Have a look at the default configuration:
     .. code-block:: php
 
         // app/config/config.php
-        $container->loadFromExtension('app', 'config', array(
+        $container->loadFromExtension('framework', array(
             'charset'         => 'UTF-8',
             'error_handler'   => null,
             'csrf-protection' => array('enabled' => true, 'secret' => 'xxxxxxxxxx'),
             'router'          => array('resource' => '%kernel.root_dir%/config/routing.php'),
             'validation'      => array('enabled' => true, 'annotations' => true),
             'templating'      => array(
+                'engines' => array('twig'),
                 #'assets_version' => "SomeVersionScheme",
             ),
             'session' => array(
                 'default_locale' => "en",
-                'lifetime' => "3600",
+                'lifetime'       => "3600",
+                'auto_start'     => true,
             ),
         ));
 
         // Twig Configuration
-        /*
-        $container->loadFromExtension('twig', 'config', array('auto_reload' => true));
-        */
+        $container->loadFromExtension('twig', array(
+            'debug'            => '%kernel.debug%',
+            'strict_variables' => '%kernel.debug%',
+        ));
 
         // Doctrine Configuration
         /*
-        $container->loadFromExtension('doctrine', 'dbal', array(
-            'dbname'   => 'xxxxxxxx',
-            'user'     => 'xxxxxxxx',
-            'password' => '',
+        $container->loadFromExtension('doctrine', array(
+            'dbal' => array(
+                'dbname'   => 'xxxxxxxx',
+                'user'     => 'xxxxxxxx',
+                'password' => '',
+                'logging'  => '%kernel.debug%',
+            ),
+            'orm' => array(
+                'auto_generate_proxy_classes' => '%kernel.debug%',
+                'mappings' => array('HelloBundle' => array()),
+            ),
         ));
-        $container->loadFromExtension('doctrine', 'orm');
         */
 
         // Swiftmailer Configuration
         /*
-        $container->loadFromExtension('swiftmailer', 'config', array(
+        $container->loadFromExtension('swiftmailer', array(
             'transport'  => "smtp",
             'encryption' => "ssl",
             'auth_mode'  => "login",
@@ -266,7 +288,7 @@ PHP. Have a look at the default configuration:
         ));
         */
 
-Each entry like ``app.config`` defines the configuration for a bundle.
+Each entry like ``framework`` defines the configuration for a bundle.
 
 Each :term:`environment` can override the default configuration by providing a
 specific configuration file:
@@ -279,15 +301,15 @@ specific configuration file:
         imports:
             - { resource: config.yml }
 
-        app.config:
+        framework:
             router:   { resource: "%kernel.root_dir%/config/routing_dev.yml" }
             profiler: { only_exceptions: false }
 
-        webprofiler.config:
+        web_profiler:
             toolbar: true
             intercept_redirects: true
 
-        zend.config:
+        zend:
             logger:
                 priority: debug
                 path:     %kernel.logs_dir%/%kernel.environment%.log
@@ -299,10 +321,10 @@ specific configuration file:
             <import resource="config.xml" />
         </imports>
 
-        <app:config>
-            <app:router resource="%kernel.root_dir%/config/routing_dev.xml" />
-            <app:profiler only-exceptions="false" />
-        </app:config>
+        <framework:config>
+            <framework:router resource="%kernel.root_dir%/config/routing_dev.xml" />
+            <framework:profiler only-exceptions="false" />
+        </framework:config>
 
         <webprofiler:config
             toolbar="true"
@@ -318,17 +340,17 @@ specific configuration file:
         // app/config/config_dev.php
         $loader->import('config.php');
 
-        $container->loadFromExtension('app', 'config', array(
+        $container->loadFromExtension('framework', array(
             'router'   => array('resource' => '%kernel.root_dir%/config/routing_dev.php'),
             'profiler' => array('only-exceptions' => false),
         ));
 
-        $container->loadFromExtension('webprofiler', 'config', array(
+        $container->loadFromExtension('web_profiler', array(
             'toolbar' => true,
             'intercept-redirects' => true,
         ));
 
-        $container->loadFromExtension('zend', 'config', array(
+        $container->loadFromExtension('zend', array(
             'logger' => array(
                 'priority' => 'info',
                 'path'     => '%kernel.logs_dir%/%kernel.environment%.log',
