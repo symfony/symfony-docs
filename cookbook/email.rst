@@ -23,6 +23,8 @@ the power of the `Swiftmailer`_ library.
             // ...
         }
 
+.. _swift-mailer-configuration:
+
 Configuration
 -------------
 

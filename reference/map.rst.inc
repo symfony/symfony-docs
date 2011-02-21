@@ -4,7 +4,7 @@
   * :doc:`DoctrineBundle (doctrine) <bundle_configuration/DoctrineBundle>` |
   * :doc:`DoctrineMongoDBBundle (doctrine_mongo_db) <bundle_configuration/DoctrineMongoDBBundle>` |
   * :doc:`SecurityBundle (security) </guides/security/config_reference>` |
-  * :doc:`FrameworkBundle (swiftmailer) <bundle_configuration/SwiftMailerBundle>` |
+  * :ref:`SwiftMailerBundle (swiftmailer) <swift-mailer-configuration>` |
   * :doc:`TwigBundle (twig) <bundle_configuration/TwigBundle>` |
   * :doc:`WebProfilerBundle (web_profiler) <bundle_configuration/WebProfilerBundle>` |
   * :doc:`ZendBundle (zend) <bundle_configuration/ZendBundle>`
