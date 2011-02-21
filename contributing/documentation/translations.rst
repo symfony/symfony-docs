@@ -34,10 +34,10 @@ bugs, consider joining us; it's a very easy process:
 * Introduce yourself on the `Symfony docs mailing-list`_;
 * *(optional)* Ask which documents you can work on;
 * Fork the *master* repository for your language (click the "Fork" button on
-  the Github page);
+  the GitHub page);
 * Translate some documents;
 * Ask for a pull request (click on the "Pull Request" from your page on
-  Github);
+  GitHub);
 * The team manager accepts your modifications and merges them into the master
   repository;
 * The documentation website is updated every other night from the master
