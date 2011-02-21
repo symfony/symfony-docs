@@ -183,10 +183,10 @@ browser.
 Redirecting and Forwarding
 --------------------------
 
-If you want to redirect the user to another page, use the
-``Response::createRedirect()`` method::
+If you want to redirect the user to another page, use the ``RedirectResponse``
+class::
 
-    return Response::createRedirect($this->generateUrl('hello', array('name' => 'Lucas')));
+    return new RedirectResponse($this->generateUrl('hello', array('name' => 'Lucas')));
 
 The ``generateUrl()`` is the same method as the ``generate()`` method we used
 on the ``router`` helper before. It takes the route name and an array of
