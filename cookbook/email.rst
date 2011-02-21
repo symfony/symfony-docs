@@ -51,7 +51,7 @@ mandatory configuration parameter is ``transport``:
         http://www.symfony-project.org/schema/dic/swiftmailer http://www.symfony-project.org/schema/dic/swiftmailer/swiftmailer-1.0.xsd
         -->
 
-        <swiftmailer
+        <swiftmailer:config
             transport="smtp"
             encryption="ssl"
             auth-mode="login"
