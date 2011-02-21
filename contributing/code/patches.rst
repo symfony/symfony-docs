@@ -85,12 +85,12 @@ in mind the following:
 
 .. tip::
 
-    A good commit message is composed of a summary (the first line), optionally
-    followed by a blank line and a more detailed description. The summary
-    should start with the Component you are working on in square brackets
-    (`[DependencyInjection]`, `[FrameworkBundle]`, ...). Use a verb
-    (`fixed ...`, `added ...`, ...) to start the summary and don't add a period
-    at the end.
+    A good commit message is composed of a summary (the first line),
+    optionally followed by a blank line and a more detailed description. The
+    summary should start with the Component you are working on in square
+    brackets (``[DependencyInjection]``, ``[FrameworkBundle]``, ...). Use a
+    verb (``fixed ...``, ``added ...``, ...) to start the summary and don't
+    add a period at the end.
 
 Submitting a Patch
 ------------------
@@ -122,7 +122,14 @@ Check that all tests still pass and push your branch remotely:
     $ git push origin BRANCH_NAME
 
 You can now discuss your patch on the `dev mailing-list`_ or make a pull
-request (they must be done on the ``symfony/symfony`` repository).
+request (they must be done on the ``symfony/symfony`` repository). To ease the
+core team work, always include the modified components in your pull request
+message, like in:
+
+.. code-block:: text
+
+    [Yaml] foo bar
+    [Form] [Validator] [FrameworkBundle] foo bar
 
 If you are going to send an email to the mailing-list, don't forget to
 reference you branch URL (``https://github.com/USERNAME/symfony.git
