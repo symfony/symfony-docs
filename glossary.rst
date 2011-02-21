@@ -16,7 +16,7 @@ Glossary
 
     Bundle
         A *Bundle* is a structured set of files (PHP files, stylesheets,
-        JavaScripts, images, ...) that *implements* a single feature (a blog,
+        JavaScripts, images, ...) that *implement* a single feature (a blog,
         a forum, ...) and which can be easily shared with other developers.
 
     Front Controller
