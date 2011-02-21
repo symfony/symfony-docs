@@ -1,5 +1,5 @@
 .. index::
-   single: Emails
+   single: Emails; Gmail
 
 How to use Gmail to send Emails
 ===============================
@@ -50,3 +50,8 @@ In the development configuration file, change the ``transport`` setting to
         ));
 
 You're done!
+
+.. note::
+
+    The ``gmail`` transport is simply a shortcut that uses the ``smtp`` transport
+    and sets ``encryption``, ``auth_mode`` and ``host`` to work with Gmail.
