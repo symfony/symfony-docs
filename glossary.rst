@@ -42,4 +42,14 @@ Glossary
         the services. The service container takes care of lazily instantiating
         and injecting dependent services.
 
+   HTTP Specification
+        The *Http Specification* is a document that describes the Hypertext
+        Transfor Protocol - a set of rules laying out the classic client-server
+        request-response communication. The specification defines the format
+        used for a request and response as well as the possible HTTP headers
+        that each may have. For more information, read the `Http Wikipedia`_
+        article or the `HTTP 1.1 RFC`_.
+
 .. _`service-oriented architecture`: http://wikipedia.org/wiki/Service-oriented_architecture
+.. _`HTTP Wikipedia`: http://www.w3.org/Protocols/rfc2616/rfc2616.html
+.. _`HTTP 1.1 RFC`: http://www.w3.org/Protocols/rfc2616/rfc2616.html
