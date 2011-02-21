@@ -14,7 +14,7 @@ software:
 
 * PHP version 5.3.2 or above;
 
-* PHPUnit 3.5.0 or above.
+* PHPUnit 3.5.11 or above.
 
 Set up your user information with your real name and a working email address:
 
@@ -46,7 +46,7 @@ Get the Symfony2 code source:
 .. code-block:: bash
 
       $ cd symfony
-      $ git remote add upstream git://github.com/fabpot/symfony.git
+      $ git remote add upstream git://github.com/symfony/symfony.git
 
 Now that Symfony2 is installed, check that all unit tests pass for your
 environment as explained in the dedicated :doc:`document <tests>`.
@@ -122,11 +122,11 @@ Check that all tests still pass and push your branch remotely:
     $ git push origin BRANCH_NAME
 
 You can now discuss your patch on the `dev mailing-list`_ or make a pull
-request (they must be done on the ``fabpot/symfony`` repository).
+request (they must be done on the ``symfony/symfony`` repository).
 
 If you are going to send an email to the mailing-list, don't forget to
-reference you branch URL (``http://github.com/USERNAME/symfony.git
-BRANCH_NAME``).
+reference you branch URL (``https://github.com/USERNAME/symfony.git
+BRANCH_NAME``) or the pull request URL.
 
 Based on the feedback from the mailing-list or via the pull request on Github,
 you might need to rework your patch. Before re-submitting the patch, rebase
@@ -139,5 +139,5 @@ with master, don't merge; and force the push to the origin:
 
 .. _ProGit:              http://progit.org/
 .. _Github:              https://github.com/signup/free
-.. _Symfony2 repository: http://www.github.com/fabpot/symfony
+.. _Symfony2 repository: https://github.com/symfony/symfony
 .. _dev mailing-list:    http://groups.google.com/group/symfony-devs

@@ -1,25 +1,25 @@
 .. index::
    single: Emails
 
-Emails
-======
+How to send an Email
+====================
 
-Symfony2 leverages the power of `Swiftmailer`_ to send emails.
+One solution to send emails is to use the ``SwiftmailerBundle``, which
+leverages the power of the `Swiftmailer`_ library.
 
-Installation
-------------
+.. note::
 
-Enable ``SwiftmailerBundle`` in your kernel::
+    Don't forget to enable the bundle in your kernel before using it::
 
-    public function registerBundles()
-    {
-        $bundles = array(
+        public function registerBundles()
+        {
+            $bundles = array(
+                // ...
+                new Symfony\Bundle\SwiftmailerBundle\SwiftmailerBundle(),
+            );
+
             // ...
-            new Symfony\Bundle\SwiftmailerBundle\SwiftmailerBundle(),
-        );
-
-        // ...
-    }
+        }
 
 Configuration
 -------------
@@ -110,43 +110,9 @@ The mailer is accessible via the ``mailer`` service; from an action::
     To keep things decoupled, the email body has been stored in a template,
     rendered with the ``renderView()`` method.
 
-Using Gmail
------------
+.. tip::
 
-If you want to use your Gmail account to send emails, use the special ``gmail``
-transport:
-
-.. configuration-block::
-
-    .. code-block:: yaml
-
-        # app/config/config.yml
-        swiftmailer:
-            transport: gmail
-            username:  your_gmail_username
-            password:  your_gmail_password
-
-    .. code-block:: xml
-
-        <!-- app/config/config.xml -->
-
-        <!--
-        xmlns:swiftmailer="http://www.symfony-project.org/schema/dic/swiftmailer"
-        http://www.symfony-project.org/schema/dic/swiftmailer http://www.symfony-project.org/schema/dic/swiftmailer/swiftmailer-1.0.xsd
-        -->
-
-        <swiftmailer:config
-            transport="gmail"
-            username="your_gmail_username"
-            password="your_gmail_password" />
-
-    .. code-block:: php
-
-        // app/config/config.php
-        $container->loadFromExtension('swiftmailer', array(
-            'transport' => "gmail",
-            'username'  => "your_gmail_username",
-            'password'  => "your_gmail_password",
-        ));
+    Read the ":doc:`gmail`" recipe if you want to use Gmail as a transport in
+    the development environment.
 
 .. _`Swiftmailer`: http://www.swiftmailer.org/

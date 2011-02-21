@@ -11,3 +11,5 @@
 
 * :doc:`/guides/forms/fields/index`
 * :doc:`/guides/validator/constraints/index`
+
+* :doc:`/reference/YAML`

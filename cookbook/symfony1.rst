@@ -1,5 +1,5 @@
-Symfony2 for symfony1 Users
-===========================
+How Symfony2 differs from symfony1
+==================================
 
 The Symfony2 framework embodies a signficant evolution when compared with
 the first version of the framework. Fortunately, with the MVC architecture

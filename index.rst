@@ -28,6 +28,16 @@ Dive into Symfony2 with the topical guides:
 
 .. include:: guides/map.rst.inc
 
+Cookbook
+--------
+
+.. toctree::
+    :hidden:
+
+    cookbook/index
+
+Read the :doc:`Cookbook </cookbook/index>`.
+
 Reference Documents
 -------------------
 

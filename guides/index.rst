@@ -13,14 +13,11 @@ Dive into Symfony2 with the topical guides:
     forms/index
     security/index
     cache/index
-    emails
     translation
     event/index
-    tools/index
     bundles/index
     dependency_injection/index
     internals/index
-    symfony1
     stable_api
 
 .. include:: map.rst.inc

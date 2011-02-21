@@ -187,7 +187,7 @@ class could look like this:
     
 .. note::
 
-    See :doc:`Emails </guides/emails>` for more information on sending mails.
+    See :doc:`Emails </cookbook/email>` for more information on sending mails.
 
 For each field in your form, the class of the domain object needs to have
 

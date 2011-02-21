@@ -621,7 +621,7 @@ standalone is ``false``.
 
     Symfony2 detects if a gateway cache supports ESI via another Akamaï
     specification that is supported out of the box by the Symfony2 reverse
-    proxy (a working configuration for Varnish is also provided below).
+    proxy.
 
 For the ESI include tag to work properly, you must define the ``_internal``
 route:
@@ -681,9 +681,6 @@ less as possible.
     ``ignore_errors``. They are automatically converted to ``alt`` and
     ``onerror`` attributes when an ESI include tag is generated.
 
-.. index::
-    single: Cache; Varnish
-
 Symfony2 Reverse Proxy Configuration
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -719,53 +716,6 @@ To use ESI, be sure to enable it in your application configuration:
             ),
         ));
 
-Varnish Configuration
-~~~~~~~~~~~~~~~~~~~~~
-
-As seen previously, Symfony2 is smart enough to detect whether it talks to a
-reverse proxy that understands ESI or not. It works out of the box when you
-use the Symfony2 reverse proxy, but you need a special configuration to make
-it work with Varnish. Thankfully, Symfony2 relies on yet another standard
-written by Akamaï (`Edge Architecture`_), so the configuration tips in this
-chapter can be useful even if you don't use Symfony2.
-
-.. note::
-
-    Varnish only supports the ``src`` attribute for ESI tags (``onerror`` and
-    ``alt`` attributes are ignored).
-
-First, configure Varnish so that it advertises its ESI support by adding a
-``Surrogate-Capability`` header to requests forwarded to the backend
-application:
-
-.. code-block:: text
-
-    sub vcl_recv {
-        set req.http.Surrogate-Capability = "abc=ESI/1.0";
-    }
-
-Then, optimize Varnish so that it only parses the Response contents when there
-is at least one ESI tag by checking the ``Surrogate-Control`` header that
-Symfony2 adds automatically:
-
-.. code-block:: text
-
-    sub vcl_fetch {
-        if (beresp.http.Surrogate-Control ~ "ESI/1.0") {
-            unset beresp.http.Surrogate-Control;
-            esi;
-        }
-    }
-
-.. caution::
-
-    Don't use compression with ESI as Varnish won't be able to parse the
-    response content. If you want to use compression, put a web server in
-    front of Varnish to do the job.
-
-.. index::
-    single: Cache; Invalidation
-
 Invalidation
 ------------
 
@@ -788,7 +738,7 @@ should avoid them as much as possible. The most standard way is to purge the
 cache for a given URL by requesting it with the special ``PURGE`` HTTP method.
 
 .. index::
-    single: Cache; Invalidation with Varnish
+    single: Cache; Invalidation
 
 Here is how you can configure the Symfony2 reverse proxy to support the
 ``PURGE`` HTTP method::
@@ -810,23 +760,6 @@ Here is how you can configure the Symfony2 reverse proxy to support the
             }
 
             return $response;
-        }
-    }
-
-And the same can be done with Varnish too:
-
-.. code-block:: text
-
-    sub vcl_hit {
-        if (req.request == "PURGE") {
-            set obj.ttl = 0s;
-            error 200 "Purged";
-        }
-    }
-
-    sub vcl_miss {
-        if (req.request == "PURGE") {
-            error 404 "Not purged";
         }
     }
 
