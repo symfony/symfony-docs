@@ -59,7 +59,7 @@ subject in four steps:
 Since caching with HTTP isn't unique to Symfony, many articles already exist
 on the topic. If you're new to HTTP caching, we *highly* recommend Ryan
 Tomayko's article `Things Caches Do`_. Another in-depth resource is Mark
-Nottingham's `Cache Tutorial`_
+Nottingham's `Cache Tutorial`_.
 
 .. index::
    single: Cache; Proxy
@@ -133,7 +133,7 @@ the HTTP cache directions set in the response.
 Symfony2 Reverse Proxy
 ~~~~~~~~~~~~~~~~~~~~~~
 
-Symfony2 comes with a reverse proxy (alsocalled a gateway cache) written
+Symfony2 comes with a reverse proxy (also called a gateway cache) written
 in PHP. Enable it and cacheable responses from your application will start
 to be cached right away. Installing it is just as easy. Each new Symfony2
 application comes with a pre-configured caching kernel (``AppCache``) that
