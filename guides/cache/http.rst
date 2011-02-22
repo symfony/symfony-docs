@@ -899,7 +899,7 @@ the ``_internal`` route:
 
         # app/config/routing.yml
         _internal:
-            resource: FrameworkBundle/Resources/config/routing/internal.xml
+            resource: @FrameworkBundle/Resources/config/routing/internal.xml
             prefix:   /_internal
 
     .. code-block:: xml
@@ -911,7 +911,7 @@ the ``_internal`` route:
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://www.symfony-project.org/schema/routing http://www.symfony-project.org/schema/routing/routing-1.0.xsd">
 
-            <import resource="FrameworkBundle/Resources/config/routing/internal.xml" prefix="/_internal" />
+            <import resource="@FrameworkBundle/Resources/config/routing/internal.xml" prefix="/_internal" />
         </routes>
 
     .. code-block:: php
@@ -920,7 +920,7 @@ the ``_internal`` route:
         use Symfony\Component\Routing\RouteCollection;
         use Symfony\Component\Routing\Route;
 
-        $collection->addCollection($loader->import('FrameworkBundle/Resources/config/routing/internal.xml', '/_internal'));
+        $collection->addCollection($loader->import('@FrameworkBundle/Resources/config/routing/internal.xml', '/_internal'));
 
         return $collection;
 
