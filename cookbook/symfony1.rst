@@ -1,5 +1,5 @@
-Symfony2 for symfony1 Users
-===========================
+How Symfony2 differs from symfony1
+==================================
 
 The Symfony2 framework embodies a signficant evolution when compared with
 the first version of the framework. Fortunately, with the MVC architecture
@@ -157,12 +157,6 @@ In Symfony2, the console is now in the app sub-directory and is called
 .. code-block:: text
 
     php app/console
-
-The console represents exactly *one* environment (e.g. dev, prod). This is
-different than symfony1 where some tasks allowed you to specify the environment
-via a ``env=`` option. A common practice is to have one console command file
-per environment. Usually, this means a ``console`` file for the ``prod``
-environment and a ``console_dev`` for the ``dev`` environment.
 
 Applications
 ------------

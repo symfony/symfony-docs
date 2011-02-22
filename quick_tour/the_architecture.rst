@@ -67,7 +67,7 @@ understand the flexibility of the framework.
 
 PHP autoloading can be configured via ``autoload.php``::
 
-    // src/autoload.php
+    // app/autoload.php
     use Symfony\Component\ClassLoader\UniversalClassLoader;
 
     $loader = new UniversalClassLoader();

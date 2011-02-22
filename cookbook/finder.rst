@@ -1,8 +1,8 @@
 .. index::
    single: Finder
 
-The Finder
-==========
+How to locate Files
+===================
 
 The :namespace:`Symfony\\Component\\Finder` component helps you to find files
 and directories quickly and easily.

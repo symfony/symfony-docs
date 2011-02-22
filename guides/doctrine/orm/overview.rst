@@ -198,12 +198,12 @@ Eventually, use your entity and manage its persistent state with Doctrine::
         }
     }
 
-Now the scenario arrises where you want to change your mapping information and
+Now the scenario arises where you want to change your mapping information and
 update your development database schema without blowing away everything and
 losing your existing data. So first lets just add a new property to our ``User``
 entity::
 
-    namespace Sensio\HelloBundle\Entities;
+    namespace Sensio\HelloBundle\Entity;
 
     /** @orm:Entity */
     class User

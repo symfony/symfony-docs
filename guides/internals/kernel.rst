@@ -90,8 +90,8 @@ Event):
 
 6. The Kernel calls the Controller;
 
-7. Listeners of the ``core.view`` event can change the Controller return value
-   (to convert it to a Response for instance);
+7. If the Controller does not return a Response, listeners of the
+   ``core.view`` event can convert the Controller return value to a Response;
 
 8. Listeners of the ``core.response`` event can manipulate the Response
    (content and headers);
@@ -185,11 +185,9 @@ This event is not used by ``FrameworkBundle``.
 ``core.view`` Event
 ~~~~~~~~~~~~~~~~~~~
 
-*Type*: ``filter``
+*Type*: ``notifyUntil``
 
-*Arguments*: ``request_type`` and ``request``
-
-*Value to filter*: The Controller returned value
+*Arguments*: ``request_type``, ``request``, and ``controller_value``
 
 This event is not used by ``FrameworkBundle``. It can be used to implement a
 view sub-system.

@@ -1,8 +1,8 @@
 .. index::
    pair: Autoloader; Configuration
 
-Autoloader
-==========
+How to autoload Classes
+=======================
 
 Whenever you use an undefined class, PHP uses the autoloading mechanism to
 delegate the loading of a file defining the class. Symfony2 provides a
@@ -21,13 +21,12 @@ need.
 Usage
 -----
 
-Registering the
-:class:`Symfony\\Component\\HttpFoundation\\UniversalClassLoader` autoloader is
-straightforward::
+Registering the :class:`Symfony\\Component\\ClassLoader\\UniversalClassLoader`
+autoloader is straightforward::
 
-    require_once '/path/to/src/Symfony/Component/HttpFoundation/UniversalClassLoader.php';
+    require_once '/path/to/src/Symfony/Component/ClassLoader/UniversalClassLoader.php';
 
-    use Symfony\Component\HttpFoundation\UniversalClassLoader;
+    use Symfony\Component\ClassLoader\UniversalClassLoader;
 
     $loader = new UniversalClassLoader();
     $loader->register();
@@ -40,8 +39,9 @@ The autoloader is useful only if you add some libraries to autoload.
     ``app/autoload.php``).
 
 If the classes to autoload use namespaces, use the
-:method:`Symfony\\Component\\HttpFoundation\\UniversalClassLoader::registerNamespace` or
-:method:`Symfony\\Component\\HttpFoundation\\UniversalClassLoader::registerNamespaces`
+:method:`Symfony\\Component\\ClassLoader\\UniversalClassLoader::registerNamespace`
+or
+:method:`Symfony\\Component\\ClassLoader\\UniversalClassLoader::registerNamespaces`
 methods::
 
     $loader->registerNamespace('Symfony', __DIR__.'/vendor/symfony/src');
@@ -52,8 +52,9 @@ methods::
     ));
 
 For classes that follow the PEAR naming convention, use the
-:method:`Symfony\\Component\\HttpFoundation\\UniversalClassLoader::registerPrefix` or
-:method:`Symfony\\Component\\HttpFoundation\\UniversalClassLoader::registerPrefixes`
+:method:`Symfony\\Component\\ClassLoader\\UniversalClassLoader::registerPrefix`
+or
+:method:`Symfony\\Component\\ClassLoader\\UniversalClassLoader::registerPrefixes`
 methods::
 
     $loader->registerPrefix('Twig_', __DIR__.'/vendor/twig/lib');

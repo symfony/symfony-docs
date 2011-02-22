@@ -45,18 +45,11 @@
 
   * :doc:`/guides/cache/http`
 
-* :doc:`/guides/emails`
 * :doc:`/guides/translation`
 * **Event Dispatcher**:
 
   * :doc:`Overview </guides/event/overview>` |
   * :doc:`Recipes </guides/event/recipes>`
-
-* **Tools**:
-
-  * :doc:`/guides/tools/autoloader` |
-  * :doc:`Finder </guides/tools/finder>` |
-  * :doc:`/guides/tools/YAML`
 
 * **Bundles**:
 
@@ -74,7 +67,6 @@
   * :doc:`Kernel </guides/internals/kernel>` |
   * :doc:`Profiler </guides/internals/profiler>`
 
-* :doc:`Symfony2 for symfony 1 users</guides/symfony1>`
 * :doc:`Symfony2 stable API</guides/stable_api>`
 
 .. _Twig: http://www.twig-project.org/documentation
