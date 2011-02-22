@@ -445,7 +445,7 @@ Using Message Domains
 
 As we've seen, message files are organized into the different locales that
 they translate. The message files can also be organized further into "domains".
-When creating message files, the domain is the first portion of hte filename.
+When creating message files, the domain is the first portion of the filename.
 The default domain is ``messages``. For example, suppose that, for organization,
 translations were split into three different domains: ``messages``, ``admin``
 and ``navigation``. The French translation would have the following message
@@ -706,7 +706,7 @@ with message translation:
 
     {% transchoice count %}
         {0} There is no apples|{1} There is one apple|]1,Inf] There are {{ count }} apples
-    {% end transchoice %}
+    {% endtranschoice %}
 
 The ``transChoice`` tag automatically gets the ``{{ count }}`` variable from
 the current context and passes it to the translator. This mechanism only
