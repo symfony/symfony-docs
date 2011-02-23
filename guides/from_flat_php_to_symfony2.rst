@@ -527,9 +527,9 @@ same sample application, now built in Symfony2:
 
     <?php
 
-    // src/Sensio/BlogBundle/Controller/BlogController
+    // src/Sensio/BlogBundle/Controller/BlogController.php
 
-    namespace Sensio\HelloBundle\Controller;
+    namespace Sensio\BlogBundle\Controller;
     use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
     class BlogController extends Controller
@@ -561,7 +561,7 @@ now quite a bit simpler:
 
 .. code-block:: html+php
 
-    <!-- src/Sensio/BlogBundle/Resources/views/Blog/list.php --> 
+    <!-- src/Sensio/BlogBundle/Resources/views/Blog/list.html.php --> 
     <?php $view->extend('::layout.html.php') ?>
 
     <?php $view['slots']->set('title', 'List of Posts') ?>
@@ -581,7 +581,7 @@ The layout is nearly identical:
 
 .. code-block:: html+php
 
-    <!-- app/views/layout.php -->
+    <!-- app/views/layout.html.php -->
     <html>
         <head>
             <title><?php echo $view['slots']->output('title', 'Default title') ?></title>
@@ -603,11 +603,11 @@ A routing configuration map provides this information in a readable format::
     # app/config/routing.yml
     blog_list:
         pattern:  /blog
-        defaults: { _controller: BlogBundle:Blog:index }
+        defaults: { _controller: BlogBundle:Blog:list }
 
     blog_show:
         pattern:  /blog/show/{id}
-        defaults: { _controller: BlogBundle:Show:index }
+        defaults: { _controller: BlogBundle:Blog:show }
 
 Now that Symfony2 is handling all the mundane tasks, our front controller
 is dead simple. And since it contains so little, you never have to touch
@@ -618,7 +618,7 @@ even need to create it):
 
     <?php
 
-    // /web/app.php
+    // web/app.php
     require_once __DIR__.'/../app/bootstrap.php';
     require_once __DIR__.'/../app/AppKernel.php';
 
@@ -656,8 +656,8 @@ gained by migrating the original flat PHP application to Symfony2:
   powerful tools such as Varnish.
 
 * Unit and functional testing via PHPUnit is available by default. Symfony2
-  provides several several standalone components that make functional testing
-  very easy and powerful.
+  provides several standalone components that make functional testing very
+  easy and powerful.
 
 Better templates
 ----------------

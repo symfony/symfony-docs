@@ -379,7 +379,7 @@ Symfony2 *Components* versus the Symfony2 *Framework*?
 ------------------------------------------------------
 
 By now, we've seen the most basic components that make up the Symfony2 framework.
-In reality, everything we've talked about so far (the ``Request``, ``Response``
+In reality, everything we've talked about so far (the ``Request``, ``Response``,
 ``Kernel`` and ``Router``) lives in three different standalone components
 used by Symfony. In fact, each feature in Symfony2 belongs to one of over
 twenty independent libraries (called the "Symfony Components")! Even if you
