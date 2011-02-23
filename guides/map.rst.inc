@@ -7,6 +7,7 @@
   * :doc:`Migrations </guides/doctrine/migrations/index>` |
   * :doc:`MongoDB </guides/doctrine/mongodb-odm/index>`
 
+* :doc:`Controllers </guides/controller>`
 * :doc:`Testing </guides/testing>`
 
 * **Validation**:
