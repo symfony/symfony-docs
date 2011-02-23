@@ -48,49 +48,6 @@ in development to debug your code and enhance performance; but it can also be
 used to explore problems that occur in production. It exposes all information
 collected by the profiler in a web interface.
 
-Using the Profiler in Functional Tests
---------------------------------------
-
-Profiling data are available in functional tests. It gives you a great way to
-check various things and enforce some metrics::
-
-    class HelloControllerTest extends WebTestCase
-    {
-        public function testIndex()
-        {
-            $client = $this->createClient();
-            $crawler = $client->request('GET', '/hello/Fabien');
-
-            // Write some assertions about the Response
-            // ...
-
-            // Check that the profiler is enabled
-            if ($profiler = $client->getProfiler()) {
-                $this->assertTrue($profiler->get('db')->getQueryCount() < 30);
-                $this->assertTrue($profiler->get('timer')->getTime() < 50);
-            }
-        }
-    }
-
-.. tip::
-
-    Read the API for built-in `data collectors`_ to learn more about their
-    interfaces.
-
-If a test fails because of profiling data (too many DB queries for instance),
-you might want to use the Web Profiler to analyze the request after the tests
-finish. It's easy to achieve if you embed the token in the error message::
-
-    $this->assertTrue(
-        $profiler->get('db')->getQueryCount() < 30,
-        sprintf('checks that query count is less than 30 (token %s)', $profiler->getToken())
-    );
-
-.. caution::
-
-     The profiler store can be different depending on the environment
-     (especially if you use the SQLite store, which is the default configured
-     one).
 
 Accessing the Profiling information
 -----------------------------------
