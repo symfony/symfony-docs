@@ -21,7 +21,7 @@ To begin, let's create a one-page application that displays blog entries
 that have been persisted to the database. Writing the application in flat
 PHP is quick and easy:
 
-.. code-block:: php+html
+.. code-block:: html+php
 
     <?php
 
@@ -43,7 +43,7 @@ PHP is quick and easy:
             <ul>
                 <?php while ($row = mysql_fetch_array($result, MYSQL_ASSOC)): ?>
                 <li>
-                    <a href="/show.php?id=<?php echo $row['id']">
+                    <a href="/show.php?id=<?php echo $row['id'] ?>">
                         <?php echo $row['title'] ?>
                     </a>
                 </li>
@@ -81,7 +81,7 @@ Isolating the Presentation
 The code can immediately gain from separating the application "logic" from
 the code that prepares the HTML representation of the requested resource:
 
-.. code-block:: php+html
+.. code-block:: html+php
 
     <?php
 
@@ -105,7 +105,7 @@ the code that prepares the HTML representation of the requested resource:
 The HTML code is now stored in a separate file (``templates/list.php``), which
 is primarily an HTML file that uses a template-like PHP syntax:
 
-.. code-block:: php+html
+.. code-block:: html+php
 
     <html>
         <head>
@@ -116,7 +116,7 @@ is primarily an HTML file that uses a template-like PHP syntax:
             <ul>
                 <?php foreach ($posts as $post): ?>
                 <li>
-                    <a href="/read?id=<?php echo $post['id']">
+                    <a href="/read?id=<?php echo $post['id'] ?>">
                         <?php echo $post['title'] ?>
                     </a>
                 </li>
@@ -146,7 +146,7 @@ or even the same array of blog posts? Let's refactor the code so that the
 core behavior and data-access function of our application are isolated in
 a new file called ``model.php``:
 
-.. code-block:: php+html
+.. code-block:: html+php
 
     <?php
 
@@ -191,7 +191,7 @@ a new file called ``model.php``:
 
 The controller (``index.php``) is now very simple:
 
-.. code-block:: php+html
+.. code-block:: html+php
 
     <?php
 
@@ -217,7 +217,7 @@ pieces offering several advantages:
 The only portion of the code that can't be reused is the page layout. Let's
 fix that by creating a new ``layout.php`` file:
 
-.. code-block:: php+html
+.. code-block:: html+php
 
     <!-- templates/layout.php -->
     <html>
@@ -232,7 +232,7 @@ fix that by creating a new ``layout.php`` file:
 The template (``templates/list.php``) can now be simplified to "extend"
 the layout:
 
-.. code-block:: php+html
+.. code-block:: html+php
 
     <?php $title = 'List of Posts' ?>
 
@@ -283,7 +283,9 @@ an individual blog result based on a given id::
     }
 
 Next, create a new file called ``show.php`` - our controller for this new
-page::
+page:
+
+.. code-block: html+php
 
     <?php
 
@@ -294,7 +296,9 @@ page::
     require 'templates/show.php';
 
 Finally, create the new template file - ``templates/show.php`` - to render
-the individual blog::
+the individual blog:
+
+.. code-block: html+php
 
     <?php $title = $post['title'] ?>
 
@@ -353,9 +357,12 @@ We're about to take a **big** step with our application. With one file handling
 all requests, we can centralize things such as security handling, configuration
 loading, and routing. In our application, ``index.php`` must now be smart
 enough to render the blog list page *or* the blog show page based on the
-requested URI::
+requested URI:
+
+.. code-block: html+php
 
     <?php
+
     // index.php
 
     // load and initialize any global libraries
@@ -439,7 +446,7 @@ object-oriented representations of the raw HTTP request being processed and
 the HTTP response being returned. We can use them to improve our simple
 application:
 
-.. code-block:: php+html
+.. code-block:: html+php
 
     <?php
 
@@ -515,7 +522,7 @@ issues.
 Instead, we'll let Symfony2 take care of these issues for us. Here's the
 same sample application, now built in Symfony2:
 
-.. code-block:: php+html
+.. code-block:: html+php
 
     <?php
 
@@ -551,7 +558,7 @@ to retrieve objects from the database and the ``Templating`` component to
 render a template and return a ``Response`` object. The list template is
 now quite a bit simpler:
 
-.. code-block:: php+html
+.. code-block:: html+php
 
     <!-- src/Sensio/BlogBundle/Resources/views/Blog/list.php --> 
     <?php $view->extend('::layout.html.php') ?>
@@ -571,7 +578,7 @@ now quite a bit simpler:
 
 The layout is nearly identical:
 
-.. code-block:: php+html
+.. code-block:: html+php
 
     <!-- app/views/layout.php -->
     <html>
@@ -606,7 +613,7 @@ is dead simple. And since it contains so little, you never have to touch
 it once it's created (and if you use a Symfony2 distribution, you won't
 even need to create it):
 
-.. code-block:: php+html
+.. code-block:: html+php
 
     <?php
 
@@ -657,7 +664,7 @@ Better templates
 If you choose to use it, Symfony2 comes standard with a templating engine
 called `Twig`_ that makes templates faster to write and easier to read.
 It means that our sample application could contain even less code! Take,
-for example, the previous list template written in Twig::
+for example, the previous list template written in Twig:
 
 .. code-block:: html+jinja
 
@@ -679,7 +686,7 @@ for example, the previous list template written in Twig::
         </ul>
     {% endblock %}
 
-The corresponding ``layout.html.twig`` template is also easier to write::
+The corresponding ``layout.html.twig`` template is also easier to write:
 
 .. code-block:: html+jinja
 
