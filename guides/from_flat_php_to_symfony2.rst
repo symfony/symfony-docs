@@ -454,6 +454,7 @@ application:
     require_once 'model.php';
     require_once 'controllers.php';
     use Symfony\Component\HttpFoundation\Request;
+    use Symfony\Component\HttpFoundation\Response;
 
     $request = Request::createFromGlobals();
 
