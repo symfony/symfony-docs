@@ -31,10 +31,7 @@
   * :doc:`Advanced ACLs </guides/security/acl_advanced>` |
   * :doc:`Configuration Reference </guides/security/config_reference>`
 
-* **Cache**:
-
-  * :doc:`/guides/cache/http`
-
+* :doc:`/guides/http_cache`
 * :doc:`/guides/translation`
 
 * **Bundles**:
