@@ -223,7 +223,7 @@ which uses the following naming convention:
 In this case, ``HelloBundle`` is the bundle name, ``Hello`` is the
 controller, and ``index.html.twig`` the template:
 
-.. code-block::jinja
+.. code-block:: jinja
    :linenos:
 
     {# src/Application/HelloBundle/Resources/views/Hello/index.html.twig #}
@@ -246,7 +246,7 @@ The parent template, ``::layout.html.twig``, is missing both the bundle and cont
 portions of its name (hence the double colon (``::``) at the beginning). This
 means that the template lives outside of the bundles and in the ``app`` directory:
 
-.. code-block::jinja
+.. code-block:: jinja
 
     {% app/views/layout.html.twig %}
     <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
