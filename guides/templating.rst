@@ -1048,7 +1048,7 @@ In many cases, you may want to allow a single controller to render multiple
 different formats based on the "request format". For that reason, a common
 pattern is to do the following:
 
-.. code-block::php
+.. code-block:: php
 
     public function indexAction()
     {
@@ -1073,7 +1073,7 @@ And though templates are a common way to generate content in a controller,
 their use is not mandatory. The ``Response`` object returned by a controller
 can be created with our without the use of a template:
 
-.. code-block::php
+.. code-block:: php
 
     // creates a Response object whose content is the rendered template
     $response = $this->render('ArticleBundle:Article:index.html.twig');

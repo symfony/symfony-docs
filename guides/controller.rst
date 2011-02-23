@@ -79,7 +79,7 @@ can be any PHP callable (a function, a method on an object, or a ``Closure``),
 in Symfony2, a controller is usually a single method inside a controller
 object. Controllers are also called *actions*.
 
-.. code-block::php
+.. code-block:: php
 
     // src/Sensio/HelloBundle/Controller/HelloController.php
 
@@ -318,7 +318,7 @@ you can take advantage of several helper methods.
 Add the ``use`` statement atop the ``Controller`` class and then modify the
 ``HelloController`` to extend it. That's all there is to it.
 
-.. code-block::php
+.. code-block:: php
 
     // src/Sensio/HelloBundle/Controller/HelloController.php
 

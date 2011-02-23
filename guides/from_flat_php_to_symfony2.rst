@@ -285,7 +285,7 @@ an individual blog result based on a given id::
 Next, create a new file called ``show.php`` - our controller for this new
 page:
 
-.. code-block: html+php
+.. code-block:: html+php
 
     <?php
 
@@ -298,7 +298,7 @@ page:
 Finally, create the new template file - ``templates/show.php`` - to render
 the individual blog:
 
-.. code-block: html+php
+.. code-block:: html+php
 
     <?php $title = $post['title'] ?>
 
@@ -359,7 +359,7 @@ loading, and routing. In our application, ``index.php`` must now be smart
 enough to render the blog list page *or* the blog show page based on the
 requested URI:
 
-.. code-block: html+php
+.. code-block:: html+php
 
     <?php
 
