@@ -1,8 +1,7 @@
 * **Templating**:
 
   * `Twig`_ |
-  * :doc:`PHP </guides/templating/PHP>` |
-  * :doc:`Recipes </guides/templating/recipes>`
+  * :doc:`PHP </guides/templating/PHP>`
 
 * **Doctrine**:
 

@@ -5,5 +5,3 @@ Templating
    :maxdepth: 2
 
    PHP
-   recipes
-

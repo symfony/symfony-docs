@@ -10,14 +10,148 @@ Tags:
 * ``routing.loader``
 * ``twig.extension``
 
-.. include-ref:: templating_helper_tag
+Enabling Custom PHP Template Helpers
+------------------------------------
 
-.. include-ref:: twig_extension_tag
+To enable a custom template helper, add it as a regular service in one of your
+configuration, tag it with ``templating.helper`` and define an ``alias``
+attribute (the helper will be accessible via this alias in the templates):
 
-.. include-ref:: kernel_listener_tag
+.. configuration-block::
 
-.. include-ref:: data_collector_tag
+    .. code-block:: yaml
 
-.. include-ref:: templating_engine_tag
+        services:
+            templating.helper.your_helper_name:
+                class: Fully\Qualified\Helper\Class\Name
+                tags:
+                    - { name: templating.helper, alias: alias_name }
 
-.. include-ref:: routing_loader_tag
+    .. code-block:: xml
+
+        <service id="templating.helper.your_helper_name" class="Fully\Qualified\Helper\Class\Name">
+            <tag name="templating.helper" alias="alias_name" />
+        </service>
+
+    .. code-block:: php
+
+        $container
+            ->register('templating.helper.your_helper_name', 'Fully\Qualified\Helper\Class\Name')
+            ->addTag('templating.helper', array('alias' => 'alias_name'))
+        ;
+
+Enabling Custom Twig Extensions
+-------------------------------
+
+To enable a Twig extension, add it as a regular service in one of your
+configuration, and tag it with ``twig.extension``:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        services:
+            twig.extension.your_extension_name:
+                class: Fully\Qualified\Extension\Class\Name
+                tags:
+                    - { name: twig.extension }
+
+    .. code-block:: xml
+
+        <service id="twig.extension.your_extension_name" class="Fully\Qualified\Extension\Class\Name">
+            <tag name="twig.extension" />
+        </service>
+
+    .. code-block:: php
+
+        $container
+            ->register('twig.extension.your_extension_name', 'Fully\Qualified\Extension\Class\Name')
+            ->addTag('twig.extension')
+        ;
+
+Enabling Custom Listeners
+-------------------------
+
+To enable a custom listener, add it as a regular service in one of your
+configuration, and tag it with ``kernel.listener``:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        services:
+            kernel.listener.your_listener_name:
+                class: Fully\Qualified\Listener\Class\Name
+                tags:
+                    - { name: kernel.listener }
+
+    .. code-block:: xml
+
+        <service id="kernel.listener.your_listener_name" class="Fully\Qualified\Listener\Class\Name">
+            <tag name="kernel.listener" />
+        </service>
+
+    .. code-block:: php
+
+        $container
+            ->register('kernel.listener.your_listener_name', 'Fully\Qualified\Listener\Class\Name')
+            ->addTag('kernel.listener')
+        ;
+
+Enabling Custom Template Engines
+--------------------------------
+
+To enable a custom template engine, add it as a regular service in one of your
+configuration, tag it with ``templating.engine``:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        services:
+            templating.engine.your_engine_name:
+                class: Fully\Qualified\Engine\Class\Name
+                tags:
+                    - { name: templating.engine }
+
+    .. code-block:: xml
+
+        <service id="templating.engine.your_engine_name" class="Fully\Qualified\Engine\Class\Name">
+            <tag name="templating.engine" />
+        </service>
+
+    .. code-block:: php
+
+        $container
+            ->register('templating.engine.your_engine_name', 'Fully\Qualified\Engine\Class\Name')
+            ->addTag('templating.engine')
+        ;
+
+Enabling Custom Routing Loaders
+-------------------------------
+
+To enable a custom routing loader, add it as a regular service in one of your
+configuration, and tag it with ``routing.loader``:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        services:
+            routing.loader.your_loader_name:
+                class: Fully\Qualified\Loader\Class\Name
+                tags:
+                    - { name: routing.loader }
+
+    .. code-block:: xml
+
+        <service id="routing.loader.your_loader_name" class="Fully\Qualified\Loader\Class\Name">
+            <tag name="routing.loader" />
+        </service>
+
+    .. code-block:: php
+
+        $container
+            ->register('routing.loader.your_loader_name', 'Fully\Qualified\Loader\Class\Name')
+            ->addTag('routing.loader')
+        ;
