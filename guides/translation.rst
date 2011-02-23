@@ -187,12 +187,12 @@ variable with a "placeholder":
 
     public function indexAction($name)
     {
-        $t = $this->get('translator')->trans('Hello {{ name }}', array('{{ name }}' => $name));
+        $t = $this->get('translator')->trans('Hello %name%', array('%name%' => $name));
 
         new Response($t);
     }
 
-Symfony2 will now look for a translation of the raw message (``Hello {{ name }}``)
+Symfony2 will now look for a translation of the raw message (``Hello %name%``)
 and *then* replace the placeholders with their values. Creating a translation
 is done just as before:
 
@@ -206,8 +206,8 @@ is done just as before:
             <file source-language="en" datatype="plaintext" original="file.ext">
                 <body>
                     <trans-unit id="1">
-                        <source>Hello {{ name }}</source>
-                        <target>Bonjour {{ name }}</target>
+                        <source>Hello %name%</source>
+                        <target>Bonjour %name%</target>
                     </trans-unit>
                 </body>
             </file>
@@ -217,19 +217,20 @@ is done just as before:
 
         // messages.fr.php
         return array(
-            'Bonjour {{ name }}' => 'Bonjour {{ name }}',
+            'Hello %name%' => 'Bonjour %name%',
         );
 
     .. code-block:: yaml
 
         # messages.fr.yml
-        'Hello {{ name }}': Bonjour {{ name }}
+        'Hello %name%': Hello %name%
 
 .. note::
 
     The placeholders can take on any form as the full message is reconstructed
-    using the PHP `strtr function`_.. The ``{{ var }}`` notation is simply
-    a convention used by Symfony2.
+    using the PHP `strtr function`_. However, the ``%var%`` notation is
+    required when translating in Twig templates, and is overall a sensible
+    convention to follow.
 
 As we've seen, creating a translation is a two-step process:
 
@@ -590,7 +591,7 @@ so the translation is also different.
 When a translation has different forms due to pluralization, you can provide
 all the forms as a string separated by a pipe (``|``)::
 
-    'There is one apple|There are {{ count }} apples'
+    'There is one apple|There are %count% apples'
 
 To translate pluralized messages, use the
 :method:`Symfony\\Component\\Translation\\Translator::transChoice` method:
@@ -598,29 +599,29 @@ To translate pluralized messages, use the
 .. code-block:: php
 
     $t = $this->get('translator')->transChoice(
-        'There is one apple|There are {{ count }} apples',
+        'There is one apple|There are %count% apples',
         10,
-        array('{{ count }}' => 10)
+        array('%count%' => 10)
     );
 
 The second argument (``10`` in this example), is the *number* of objects being
 described and is used to determine which translation to use and also to populate
-the ``{{ count }}`` placeholder.
+the ``%count%`` placeholder.
 
 Based on the given number, the translator chooses the right plural form.
 In English, most words have a singular form when there is exactly one object
 and a plural form for all other numbers (0, 2, 3...). So, if ``count`` is
 ``1``, the translator will use the first string (``There is one apple``)
-as the translation. Otherwise it will use ``There are {{ count }} apples``.
+as the translation. Otherwise it will use ``There are %count% apples``.
 
 Here is the French translation::
 
-    'Il y a {{ count }} pomme|Il y a {{ count }} pommes'
+    'Il y a %count% pomme|Il y a %count% pommes'
 
 Even if the string looks similar (it is made of two sub-strings separated by a
 pipe), the French rules are different: the first form (no plural) is used when
 ``count`` is ``0`` or ``1``. So, the translator will automatically use the
-first string (``Il y a {{ count }} pomme``) when ``count`` is ``0`` or ``1``.
+first string (``Il y a %count% pomme``) when ``count`` is ``0`` or ``1``.
 
 Each locale has its own set of rules, with some having as many as six different
 plural forms with complex rules behind which numbers map to which plural form.
@@ -628,9 +629,9 @@ The rules are quite simple for English and French, but for Russian, you'd
 may want a hint to know which rule matches which string. To help translators,
 you can optionally "tag" each string::
 
-    'one: There is one apple|some: There are {{ count }} apples'
+    'one: There is one apple|some: There are %count% apples'
 
-    'none_or_one: Il y a {{ count }} pomme|some: Il y a {{ count }} pommes'
+    'none_or_one: Il y a %count% pomme|some: Il y a %count% pommes'
 
 The tags are really only hints for translators and don't affect the logic
 used to determine which plural form to use. The tags can be any descriptive
@@ -651,7 +652,7 @@ need more control or want a different translation for specific cases (for
 ``0``, or when the count is negative, for example). For such cases, you can
 use explicit math intervals::
 
-    '{0} There is no apples|{1} There is one apple|]1,19] There are {{ count }} apples|[20,Inf] There are many apples'
+    '{0} There is no apples|{1} There is one apple|]1,19] There are %count% apples|[20,Inf] There are many apples'
 
 The intervals follow the `ISO 31-11`_ notation. The above string specifies
 four different intervals: exactly ``0``, exactly ``1``, ``2-19``, and ``20``
@@ -661,10 +662,10 @@ You can also mix explicit math rules and standard rules. In this case, if
 the count is not matched by a specific interval, the standard rules take
 effect after removing the explicit rules::
 
-    '{0} There is no apples|[20,Inf] There are many apples|There is one apple|a_few: There are {{ count }} apples'
+    '{0} There is no apples|[20,Inf] There are many apples|There is one apple|a_few: There are %count% apples'
 
 For example, for ``1`` apple, the standard rule ``There is one apple`` will
-be used. For ``2-19`` apples, the second standard rule ``There are {{ count }}
+be used. For ``2-19`` apples, the second standard rule ``There are %count%
 apples`` will be selected.
 
 An :class:`Symfony\\Component\\Translation\\Interval` can represent a finite set
@@ -699,18 +700,20 @@ with message translation:
 .. code-block:: jinja
 
     {{ "Symfony2 is great" | trans }}
+    
+    {% trans "Symfony2 is great" %}
 
     {% trans %}
-        Foo {{ name }}
+        Foo %name%
     {% endtrans %}
 
     {% transchoice count %}
-        {0} There is no apples|{1} There is one apple|]1,Inf] There are {{ count }} apples
+        {0} There is no apples|{1} There is one apple|]1,Inf] There are %count% apples
     {% endtranschoice %}
 
-The ``transChoice`` tag automatically gets the ``{{ count }}`` variable from
+The ``transChoice`` tag automatically gets the ``%count%`` variable from
 the current context and passes it to the translator. This mechanism only
-works when you use a placeholder following the ``{{ var }}`` pattern.
+works when you use a placeholder following the ``%var%`` pattern.
 
 You can also specify the message domain:
 
@@ -718,12 +721,14 @@ You can also specify the message domain:
 
     {{ "Symfony2 is great" | trans([], "app") }}
 
+    {% trans "Symfony2 is great" from "app" %}
+
     {% trans from "app" %}
-        Foo {{ name }}
+        Foo %name%
     {% endtrans %}
 
     {% transchoice count from "app" %}
-        {0} There is no apples|{1} There is one apple|]1,Inf] There are {{ count }} apples
+        {0} There is no apples|{1} There is one apple|]1,Inf] There are %count% apples
     {% endtranschoice %}
 
 PHP Templates
@@ -737,9 +742,9 @@ The translator service is accessible in PHP templates through the
     <?php echo $view['translator']->trans('Symfony2 is great') ?>
 
     <?php echo $view['translator']->transChoice(
-        '{0} There is no apples|{1} There is one apple|]1,Inf[ There are {{ count }} apples',
+        '{0} There is no apples|{1} There is one apple|]1,Inf[ There are %count% apples',
         10,
-        array('{{ count }}' => 10)
+        array('%count%' => 10)
     ) ?>
 
 Forcing Translation Locale
@@ -759,9 +764,9 @@ locale to use for translation:
     );
 
     $this->get('translation')->trans(
-        '{0} There is no apples|{1} There is one apple|]1,Inf[ There are {{ count }} apples',
+        '{0} There is no apples|{1} There is one apple|]1,Inf[ There are %count% apples',
         10,
-        array('{{ count }}' => 10),
+        array('%count%' => 10),
         'messages',
         'fr_FR',
     );
