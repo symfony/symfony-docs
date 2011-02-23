@@ -4,7 +4,7 @@ From flat PHP to Symfony2
 .. tip::
 
    If you're familiar with the MVC philosophy, you can choose to skip this
-   chapter. Still, Symfony2's approach to organized code and application
+   guide. Still, Symfony2's approach to organized code and application
    flow is so fresh and simple that we hope everyone will continuing reading.
 
 The goal of any web application is simple: to process each HTTP request and
@@ -592,7 +592,7 @@ routing map information to determine which controller to call. Just as in
 our sample application, your controller method is responsible for returning
 the final ``Response`` object. There's really not much else to it.
 
-In the upcoming chapters, we'll learn more about how each piece works and
+In the upcoming guides, we'll learn more about how each piece works and
 how the project is organized by default. For now, just realize what we've
 gained by migrating the original flat PHP application to Symfony2:
 
