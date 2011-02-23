@@ -371,7 +371,7 @@ is a very powerful way to render the same content in different formats.
 
     You may have also noticed that a period (.) is used between the ``{title}``
     and ``{_format}`` parameters. This is because, by default, Symfony is configured
-    to allow both a forward slash (/) or a period (.) to be a valid "seperator"
+    to allow both a forward slash (/) or a period (.) to be a valid "separator"
     between the routing parameters.
 
 .. _routing-include-external-resources:

@@ -429,7 +429,7 @@ Tags and Helpers
 You already understand the basics of templates, how they're named and how
 to use template inheritance. The hardest parts are already behind us. In
 this section, we'll talk about a large group of tools available to help
-perform the most common templat tasks such as including other templates,
+perform the most common template tasks such as including other templates,
 linking to pages and including images.
 
 Symfony2 comes bundled with several specialized Twig tags and functions that
@@ -967,7 +967,7 @@ Imagine that the user enters the following code as his/her name::
 
     <script>alert('hello!')</script>
 
-Without any output escapging, the resulting template will cause a JavaScript
+Without any output escaping, the resulting template will cause a JavaScript
 alert box to pop up::
 
     Hello <script>alert('hello!')</script>

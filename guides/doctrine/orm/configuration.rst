@@ -75,7 +75,7 @@ can control. The following configuration options exist for a mapping:
   shorter names to be used in DQL queries or for Repository access.
 - ``is_bundle`` This option is a derived value from ``dir`` and by default is
   set to true if dir is relative proved by a ``file_exists()`` check that
-  returns false. It is false if the existance check returns true. In this case
+  returns false. It is false if the existence check returns true. In this case
   an absolute path was specified and the metadata files are most likely in a
   directory outside of a bundle.
 
@@ -133,7 +133,7 @@ connections you can hook different events into each connection.
 
         <services>
 
-            <service id="doctrine.extensions.versionable_listener" class="DoctrineExtensions\Versionable\VersionbleListener">
+            <service id="doctrine.extensions.versionable_listener" class="DoctrineExtensions\Versionable\VersionableListener">
                 <tag name="doctrine.dbal.default_event_subscriber" />
             </service>
 

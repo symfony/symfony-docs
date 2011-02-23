@@ -43,7 +43,7 @@ this initial value, you can set it in the ``data`` option.
 ~~~~~~~~~~~~
 
 By default, each ``Field`` assumes that its value is required, so no empty
-value should be submited. This setting affects the behaviour and rendering of 
+value should be submitted. This setting affects the behaviour and rendering of
 some fields. The ``ChoiceField``, for example, includes an empty choice if
 it is not required.
 

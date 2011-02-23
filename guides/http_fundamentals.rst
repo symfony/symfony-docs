@@ -39,7 +39,7 @@ HTTP method. The URI (URL if combined with the host header) uniquely identifies
 the location of the resource while The HTTP method defines what you want to
 *do* with the resource. In this example, that unique location of the resource
 is ``/index.html`` and the HTTP method is GET. In other words, the client's
-request is to retrieve the resource indentified by ``/index.html``.
+request is to retrieve the resource identified by ``/index.html``.
 
 The HTTP methods are the *verbs* of the HTTP request and define the few common
 ways that we can act upon the resource:
@@ -62,7 +62,7 @@ delete a specific, say, a specific blog entry:
     but many of them are not widely used or supported. In reality, many modern
     browsers don't support the ``PUT`` and ``DELETE`` methods. One additional
     header that *is* commonly supported is the ``HEAD`` method, which asks
-    for the response of an identifical GET request, but without the response
+    for the response of an identical GET request, but without the response
     body.
 
 In addition to the first line, an HTTP request commonly contains other lines

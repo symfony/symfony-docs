@@ -45,7 +45,7 @@ can control. The following configuration options exist for a mapping:
 - ``dir`` Path to the mapping or entity files (depending on the driver). If
   this path is relative it is assumed to be relative to the bundle root. This
   only works if the name of your mapping is a bundle name. If you want to use
-  this option to specifiy absolute paths you should prefix the path with the
+  this option to specify absolute paths you should prefix the path with the
   kernel parameters that exist in the DIC (for example %kernel.dir%).
 - ``prefix`` A common namespace prefix that all documents of this mapping
   share. This prefix should never conflict with prefixes of other defined
@@ -54,10 +54,10 @@ can control. The following configuration options exist for a mapping:
   application bundle called "Hello" prefix would be
   ``Sensio\Hello\Document``.
 - ``alias`` Doctrine offers a way to alias document namespaces to simpler,
-  shorter names to be used inqueries or for Repository access.
+  shorter names to be used in queries or for Repository access.
 - ``is_bundle`` This option is a derived value from ``dir`` and by default is
   set to true if dir is relative proved by a ``file_exists()`` check that
-  returns false. It is false if the existance check returns true. In this case
+  returns false. It is false if the existence check returns true. In this case
   an absolute path was specified and the metadata files are most likely in a
   directory outside of a bundle.
 
@@ -99,7 +99,7 @@ Doctrine uses the lightweight ``Doctrine\Common\EventManager`` class to trigger
 a number of different events which you can hook into. You can register Event
 Listeners or Subscribers by tagging the respective services with
 ``doctrine.odm.mongodb.<connection>_event_listener`` or
-``doctrine.odm.mongodb.<connection>_event_subscriber`` using the Dependency Injenction
+``doctrine.odm.mongodb.<connection>_event_subscriber`` using the Dependency Injection
 container.
 
 You have to use the name of the MongoDB connection to clearly identify which

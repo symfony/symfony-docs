@@ -171,7 +171,7 @@ lots of services. Services that are never used are never constructed.
 
 As an added bonus, the ``Mailer`` service is only created once and the same
 instance is returned each time you ask for the service. This is almost always
-the behavior you'll need (it's more flexible and performant), but we'll learn
+the behavior you'll need (it's more flexible and powerful), but we'll learn
 later how you can configure a service that has multiple instances.
 
 Service Parameters
