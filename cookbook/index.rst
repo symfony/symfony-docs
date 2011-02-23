@@ -14,6 +14,8 @@ Dive into Symfony2 cookbook:
     testing/http_authorization
     testing/insulating_clients
     testing/profiling
+    event_dispatcher/class_extension
+    event_dispatcher/method_behavior
     profiler/data_collector
     symfony1
 

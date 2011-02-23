@@ -6,4 +6,5 @@ Symfony2 Internals
 
    overview
    kernel
+   event_dispatcher
    profiler

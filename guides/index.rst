@@ -14,7 +14,6 @@ Dive into Symfony2 with the topical guides:
     security/index
     cache/index
     translation
-    event/index
     bundles/index
     dependency_injection/index
     internals/index

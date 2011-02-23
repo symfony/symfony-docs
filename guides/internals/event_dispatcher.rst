@@ -18,8 +18,7 @@ not an easy problem to solve with single inheritance, and multiple inheritance
 
 The Symfony2 Event Dispatcher implements the `Observer`_ pattern in a simple
 and effective way to make all these things possible and make your projects
-truly extensible (see the :doc:`recipes` section for some implementation
-examples).
+truly extensible.
 
 The Event Dispatcher provides *dispatcher* that allows objects to communicate
 together without knowing each others. Objects (*listeners*) can *connect* to
@@ -206,6 +205,59 @@ The notifier can get the filtered value by calling the ``getReturnValue()``
 method::
 
     $ret = $event->getReturnValue();
+
+Passing along the Event Dispatcher Object
+-----------------------------------------
+
+If you have a look at the ``EventDispatcher`` class, you will notice that the
+class does not act as a Singleton (there is no ``getInstance()`` static method).
+That is intentional, as you might want to have several concurrent event
+dispatchers in a single PHP request. But it also means that you need a way to
+pass the dispatcher to the objects that need to connect or notify events.
+
+The best practice is to inject the event dispatcher object into your objects,
+aka dependency injection.
+
+You can use constructor injection::
+
+    class Foo
+    {
+        protected $dispatcher = null;
+
+        public function __construct(EventDispatcher $dispatcher)
+        {
+            $this->dispatcher = $dispatcher;
+        }
+    }
+
+Or setter injection::
+
+    class Foo
+    {
+        protected $dispatcher = null;
+
+        public function setEventDispatcher(EventDispatcher $dispatcher)
+        {
+            $this->dispatcher = $dispatcher;
+        }
+    }
+
+Choosing between the two is really a matter of taste. I tend to prefer the
+constructor injection as the objects are fully initialized at construction
+time. But when you have a long list of dependencies, using setter injection
+can be the way to go, especially for optional dependencies.
+
+.. tip::
+
+    If you use dependency injection like we did in the two examples above, you
+    can then easily use the Symfony2 Dependency Injection component to
+    elegantly manage these objects.
+
+Learn more from the Cookbook
+----------------------------
+
+* :doc:`/cookbook/event_dispatcher/class_extension`
+* :doc:`/cookbook/event_dispatcher/method_behavior`
 
 .. _Observer:     http://en.wikipedia.org/wiki/Observer_pattern
 .. _PHP callable: http://www.php.net/manual/en/function.is-callable.php

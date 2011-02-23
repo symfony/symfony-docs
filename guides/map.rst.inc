@@ -40,10 +40,6 @@
   * :doc:`/guides/cache/http`
 
 * :doc:`/guides/translation`
-* **Event Dispatcher**:
-
-  * :doc:`Overview </guides/event/overview>` |
-  * :doc:`Recipes </guides/event/recipes>`
 
 * **Bundles**:
 
@@ -59,6 +55,7 @@
 
   * :doc:`Overview </guides/internals/overview>` |
   * :doc:`Kernel </guides/internals/kernel>` |
+  * :doc:`Event Dispatcher </guides/internals/event_dispatcher>` |
   * :doc:`Profiler </guides/internals/profiler>`
 
 * :doc:`Symfony2 stable API</guides/stable_api>`
