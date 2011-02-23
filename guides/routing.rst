@@ -83,7 +83,7 @@ the following events take place:
 #. Symfony asks the ``Router`` for to match a route for the url ``/blog/my-blog-post``.
 
 #. The ``Router`` attempts to find a matching route by matching
-   `/blog/my-blog-post`` against each route's pattern until one is found. In our
+   ``/blog/my-blog-post`` against each route's pattern until one is found. In our
    example, the ``blog_show`` route is matched.
 
 #. Symfony parses the ``_controller`` parameter from the route. This follows a
@@ -188,7 +188,7 @@ available blog posts in some imaginary blog application:
 .. code-block:: yaml
 
     blog:
-        pattern:  /blog
+        pattern:   /blog
         defaults:  { _controller: MyBlogBundle:Blog:index }
 
 At this point, this route should be easy for us - it contains no placeholders
@@ -198,11 +198,11 @@ to support pagination:
 .. code-block:: yaml
 
     blog:
-        pattern:  /blog/{page}
+        pattern:   /blog/{page}
         defaults:  { _controller: MyBlogBundle:Blog:index }
 
 Like the ``:slug`` placeholder in the previous example, the value matching
-``:page`` will be available in our controller so that we can determine which
+``{page}`` will be available in our controller so that we can determine which
 set of blog posts to display.
 
 Unfortunately, as we mentioned before, wildcards are required by default.
@@ -214,7 +214,7 @@ and make the ``{page}`` placeholder default to a value of ``1``:
 .. code-block:: yaml
 
     blog:
-        pattern:  /blog/{page}
+        pattern:   /blog/{page}
         defaults:  { _controller: MyBlogBundle:Blog:index, page: 1 }
 
 By adding ``page`` to the ``defaults`` key, the ``:page`` placeholder is no
@@ -234,7 +234,7 @@ we've introduced a major problem:
 .. code-block:: yaml
 
     blog:
-        pattern:  /blog/{page}
+        pattern:   /blog/{page}
         defaults:  { _controller: MyBlogBundle:Blog:index, page: 1 }
 
     blog_show:
@@ -243,25 +243,25 @@ we've introduced a major problem:
 
 Notice that both routes have a pattern that looks like ``/blog/*``. The
 Symfony ``Router`` will always return the *first* route that's matched. In
-other words, the ``blog_show`` route will *never* be matched. Instead, urls
-like ``/blog/my-blog-post`` will match the first route (``blog``) and pass
-a value of ``my-blog-post`` as the ``$page`` argument in the ``indexAction``
+other words, the ``blog_show`` route will *never* be matched. Instead, URLs
+like ``/blog/my-blog-post`` will match the first route (``blog``) and pass a
+value of ``my-blog-post`` as the ``page`` argument in the ``indexAction``
 controller.
 
 The answer to the problem is routing *requirements*. Our routing setup would
-work perfectly if the ``/blog/{page}`` pattern *only* matched urls where the
+work perfectly if the ``/blog/{page}`` pattern *only* matched URLs where the
 ``:page`` portion were an integer. Fortunately, regular expression requirements
 can easily be added for each parameter. For example:
 
 .. code-block:: yaml
 
     blog:
-        pattern:  /blog/{page}
+        pattern:   /blog/{page}
         defaults:  { _controller: MyBlogBundle:Blog:index, page: 1 }
         requirements:
             page:  \d+
 
-The ``blog`` route will still match urls such as ``/blog/2``, but it will
+The ``blog`` route will still match URLs such as ``/blog/2``, but it will
 no longer match routes like ``/blog/my-blog-post``. Instead, that url will
 be allowed to properly match the ``blog_show`` route.
 
@@ -278,13 +278,13 @@ the homepage of your application is available in two different languages,
 based on the url::
 
     homepage:
-        pattern:  /{culture}
+        pattern:   /{culture}
         defaults:  { _controller: MyBundle:Main:homepage, culture: en }
         requirements:
             culture:  en|fr
 
 When matching against this route, the ``:culture`` portion of the url is matched
-against the regular expression ``(en|fr)``. The following urls would match::
+against the regular expression ``(en|fr)``. The following URLs would match::
 
     /       (culture = en)
     /en     (culture = en)
@@ -311,6 +311,7 @@ accomplish this with the following routing configuration:
             defaults: { _controller: MyBundle:Main:contact }
             requirements:
                 _method:  GET
+
         contact_process:
             pattern:  /contact
             defaults: { _controller: MyBundle:Main:contactProcess }
@@ -369,7 +370,7 @@ is a very powerful way to render the same content in different formats.
 .. note::
 
     You may have also noticed that a period (.) is used between the ``{title}``
-    and ``{_format}`` parameters. This is because, by default. Symfony is configured
+    and ``{_format}`` parameters. This is because, by default, Symfony is configured
     to allow both a forward slash (/) or a period (.) to be a valid "seperator"
     between the routing parameters.
 
@@ -392,7 +393,7 @@ configuration from other places, such as from a bundle. This can be easily done:
 
         # app/config/routing.yml
         hello:
-            resource: HelloBundle/Resources/config/routing.yml
+            resource: "@HelloBundle/Resources/config/routing.yml"
 
     .. code-block:: xml
 
@@ -403,7 +404,7 @@ configuration from other places, such as from a bundle. This can be easily done:
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://www.symfony-project.org/schema/routing http://www.symfony-project.org/schema/routing/routing-1.0.xsd">
 
-            <import resource="HelloBundle/Resources/config/routing.xml" />
+            <import resource="@SensioHelloBundle/Resources/config/routing.xml" />
         </routes>
 
     .. code-block:: php
@@ -413,12 +414,12 @@ configuration from other places, such as from a bundle. This can be easily done:
         use Symfony\Component\Routing\Route;
 
         $collection = new RouteCollection();
-        $collection->addCollection($loader->import("HelloBundle/Resources/config/routing.php"));
+        $collection->addCollection($loader->import("@SensioHelloBundle/Resources/config/routing.php"));
 
         return $collection;
 
 
-The ``resource`` key loads the routing resource from the ``HelloBundle``:
+The ``resource`` key loads the routing resource from the ``SensioHelloBundle``:
 
 .. configuration-block::
 
@@ -456,13 +457,6 @@ The ``resource`` key loads the routing resource from the ``HelloBundle``:
 
         return $collection;
 
-.. note::
-
-    When loading a routing resource, Symfony first looks for the given
-    resource file in the same directory as the current routing file. Next, it
-    looks for the file in each bundle directory specified by your
-    ``AppKernel::registerBundleDirs()`` method.
-
 The routes from the external resource are parsed and loaded in the same way
 as the main routing resource. You can also choose to provide a "prefix" option.
 For example, suppose that we want the "hello" route to have a pattern of
@@ -474,7 +468,7 @@ For example, suppose that we want the "hello" route to have a pattern of
 
         # app/config/routing.yml
         hello:
-            resource: HelloBundle/Resources/config/routing.yml
+            resource: "@HelloBundle/Resources/config/routing.yml"
             prefix:   /admin
 
     .. code-block:: xml
@@ -486,7 +480,7 @@ For example, suppose that we want the "hello" route to have a pattern of
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://www.symfony-project.org/schema/routing http://www.symfony-project.org/schema/routing/routing-1.0.xsd">
 
-            <import resource="HelloBundle/Resources/config/routing.xml" prefix="/admin" />
+            <import resource="@HelloBundle/Resources/config/routing.xml" prefix="/admin" />
         </routes>
 
     .. code-block:: php
@@ -496,7 +490,7 @@ For example, suppose that we want the "hello" route to have a pattern of
         use Symfony\Component\Routing\Route;
 
         $collection = new RouteCollection();
-        $collection->addCollection($loader->import("HelloBundle/Resources/config/routing.php"), '/admin');
+        $collection->addCollection($loader->import("@HelloBundle/Resources/config/routing.php"), '/admin');
 
         return $collection;
 
@@ -608,7 +602,7 @@ on the controller. For a more detailed discussion, see :ref:`route-parameters-co
 Generating URLs
 ---------------
 
-The routing system also generates URLS. In fact, routing is really a bi-directional
+The routing system also generates URLs. In fact, routing is really a bi-directional
 system that maps a given path info (i.e. URL) to an array of routing parameters
 and vice-versa. The ``Router::match()`` and ``Router::generate()`` methods
 form this bi-directional system. Take the ``blog_show`` example route from
