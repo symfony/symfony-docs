@@ -1,5 +1,8 @@
-PHP for Templates
-=================
+.. index::
+   single: PHP Templates
+
+How to use PHP instead of Twig for Templates
+============================================
 
 Even if Symfony2 defaults to Twig for its template engine, you can still use
 plain PHP code if you want. Both templating engine are supported equally in

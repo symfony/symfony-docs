@@ -1,7 +1,4 @@
-* **Templating**:
-
-  * `Twig`_ |
-  * :doc:`PHP </guides/templating/PHP>`
+* `Twig Templating`_
 
 * **Doctrine**:
 
@@ -56,4 +53,4 @@
 
 * :doc:`Symfony2 stable API</guides/stable_api>`
 
-.. _Twig: http://www.twig-project.org/documentation
+.. _Twig Templating: http://www.twig-project.org/documentation

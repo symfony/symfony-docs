@@ -1,5 +1,6 @@
 * :doc:`/cookbook/email`
 * :doc:`/cookbook/gmail`
+* :doc:`/cookbook/templating/PHP`
 * :doc:`/cookbook/tools/autoloader`
 * :doc:`/cookbook/tools/finder`
 * :doc:`/cookbook/cache/varnish`

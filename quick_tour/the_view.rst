@@ -9,9 +9,9 @@ readable and concise; it also makes them more friendly for web designers.
 
 .. note::
 
-    Instead of Twig, you can also use :doc:`PHP </guides/templating/PHP>` for
-    your templates. Both template engines are supported by Symfony2 and have
-    the same level of support.
+    Instead of Twig, you can also use :doc:`PHP </cookbook/templating/PHP>`
+    for your templates. Both template engines are supported by Symfony2 and
+    have the same level of support.
 
 .. index::
    single: Twig

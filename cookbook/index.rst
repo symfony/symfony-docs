@@ -8,6 +8,7 @@ Dive into Symfony2 cookbook:
 
     email
     gmail
+    templating/PHP
     tools/autoloader
     tools/finder
     cache/varnish
