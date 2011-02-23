@@ -6,4 +6,5 @@
 * :doc:`/cookbook/testing/http_authorization`
 * :doc:`/cookbook/testing/insulating_clients`
 * :doc:`/cookbook/testing/profiling`
+* :doc:`/cookbook/profiler/data_collector`
 * :doc:`/cookbook/symfony1`

@@ -14,6 +14,7 @@ Dive into Symfony2 cookbook:
     testing/http_authorization
     testing/insulating_clients
     testing/profiling
+    profiler/data_collector
     symfony1
 
 .. include:: map.rst.inc
