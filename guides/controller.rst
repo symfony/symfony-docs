@@ -658,7 +658,7 @@ Let's show an example where we're processing a form submit::
             
             $this->get('session')->setFlash('notice', 'Your changes were saved!');
 
-            return $this->redirect($this->generateUrl(...));
+            return new RedirectResponse($this->generateUrl(...));
         }
         
         return $this->render(...);
