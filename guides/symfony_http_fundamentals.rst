@@ -37,11 +37,11 @@ The first line of an HTTP request is the most important one (and as a matter
 of fact, the only mandatory one). It contains two things: the URI and the
 HTTP method. The URI (URL if combined with the host header) uniquely identifies
 the location of the resource while The HTTP method defines what you want to
-_do_ with the resource. In this example, that unique location of the resource
+*do* with the resource. In this example, that unique location of the resource
 is ``/index.html`` and the HTTP method is GET. In other words, the client's
 request is to retrieve the resource indentified by ``/index.html``.
 
-The HTTP methods are the _verbs_ of the HTTP request and define the few common
+The HTTP methods are the *verbs* of the HTTP request and define the few common
 ways that we can act upon the resource:
 
 * *GET*  Retrieve the resource from the server;
@@ -161,6 +161,7 @@ representation of an HTTP request message. With it, you have all the
 request information at your fingertips::
 
     use Symfony\Component\HttpFoundation\Request;
+
     $request = Request::createFromGlobals();
 
     // the URI being requested ((e.g. /about) minus any query parameters
@@ -176,9 +177,10 @@ request information at your fingertips::
     $request->getMethod();          // GET, POST, PUT, DELETE, HEAD
     $request->getLanguages();       // an array of accepted languages
 
-The `getPathInfo()` method is especially important as it returns the URI
-being requested relative to your application. For example, suppose an application
-is being executed from the ``foo`` subdirectory of a server. In that case::
+The ``getPathInfo()`` method is especially important as it returns the URI
+being requested relative to your application. For example, suppose an
+application is being executed from the ``foo`` subdirectory of a server. In
+that case::
 
     // http://example.com/foo/index.php/bar
     $request->getPathInfo();  // returns "bar"
@@ -211,7 +213,7 @@ in Symfony, this goal will remain fundamental and transparent.
     The ``Request`` and ``Response`` classes are part of a standalone component
     included with Symfony called ``HttpFoundation``. This component can be
     used entirely independent of Symfony and also provides classes for handling
-    sessions, file uploads and autoloading PHP classes.
+    sessions and file uploads.
 
 The Journey from the Request to the Response
 --------------------------------------------
@@ -245,14 +247,12 @@ application does exactly what it should.
 An Application without a Framework
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-But what if the application needs to grow? Imagine this same application
-if it were forced now to handle hundreds or even thousands of different
-pages! In order to keep things maintainable (i.e. not all in one file), we'd
-need to do some reorganization. For starters, we might move the work of
-creating the ``Response`` into a set of different functions. These functions
-are commonly known as controllers and allow us to further organize our code:
-
-.. code-block:: php
+But what if the application needs to grow? Imagine this same application if it
+were forced now to handle hundreds or even thousands of different pages! In
+order to keep things maintainable (i.e. not all in one file), we'd need to do
+some reorganization. For starters, we might move the work of creating the
+``Response`` into a set of different functions. These functions are commonly
+known as *controllers* and allow us to further organize our code::
 
     if (in_array($path, array('', '/') && $method == 'GET') {
         $response = main_controller($request);
@@ -362,7 +362,8 @@ controller.
                         v    |
                         Routing
 
-We'll talk a lot more about controllers and the ``Router`` in later chapters.
+We'll talk a lot more about :doc:`Controllers </guides/controller>` and the
+:doc:`Router </guides/routing>` in later chapters.
 
 .. tip::
 
