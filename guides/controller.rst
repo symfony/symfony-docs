@@ -534,7 +534,7 @@ is displayed so that the cause of the exception can be easily tracked down.
 Of course, you're free to throw any ``Exception`` class in your controller
 - Symfony2 will automatically return a 500 HTTP response code.
 
-.. code-block::php
+.. code-block:: php
 
     throw new \Exception('Something went wrong!');
 
