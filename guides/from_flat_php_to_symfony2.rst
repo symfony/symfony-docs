@@ -19,15 +19,19 @@ Simple Blog Application in flat PHP
 
 To begin, let's create a one-page application that displays blog entries
 that have been persisted to the database. Writing the application in flat
-PHP is quick and easy::
+PHP is quick and easy:
+
+.. code-block:: php+html
 
     <?php
+
     // index.php
 
     $link = mysql_connect('localhost', 'myuser', 'mypassword');
     mysql_select_db('blog_db', $link);
 
     $result = mysql_query('SELECT id, title FROM post', $link);
+
     ?>
 
     <html>
@@ -75,9 +79,12 @@ Isolating the Presentation
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The code can immediately gain from separating the application "logic" from
-the code that prepares the HTML representation of the requested resource::
+the code that prepares the HTML representation of the requested resource:
+
+.. code-block:: php+html
 
     <?php
+
     // index.php
 
     $link = mysql_connect('localhost', 'myuser', 'mypassword');
@@ -86,9 +93,8 @@ the code that prepares the HTML representation of the requested resource::
     $result = mysql_query('SELECT id, title FROM post', $link);
 
     $posts = array();
-    while ($row = mysql_fetch_array($result, MYSQL_ASSOC))
-    {
-      $posts[] = $row;
+    while ($row = mysql_fetch_array($result, MYSQL_ASSOC)) {
+        $posts[] = $row;
     }
 
     mysql_close($link);
@@ -97,7 +103,9 @@ the code that prepares the HTML representation of the requested resource::
     require 'templates/list.php';
 
 The HTML code is now stored in a separate file (``templates/list.php``), which
-is primarily an HTML file that uses a template-like PHP syntax::
+is primarily an HTML file that uses a template-like PHP syntax:
+
+.. code-block:: php+html
 
     <html>
         <head>
@@ -136,9 +144,12 @@ little bit about how the logic and code of our application might be reused.
 For example, what if a different page needs to use the same database connection
 or even the same array of blog posts? Let's refactor the code so that the
 core behavior and data-access function of our application are isolated in
-a new file called ``model.php``::
+a new file called ``model.php``:
+
+.. code-block:: php+html
 
     <?php
+
     // model.php
 
     function open_database_connection()
@@ -160,9 +171,8 @@ a new file called ``model.php``::
 
         $result = mysql_query('SELECT id, title FROM post', $link);
         $posts = array();
-        while ($row = mysql_fetch_array($result, MYSQL_ASSOC))
-        {
-          $posts[] = $row;
+        while ($row = mysql_fetch_array($result, MYSQL_ASSOC)) {
+            $posts[] = $row;
         }
 
         close_database_connection($link);
@@ -179,7 +189,9 @@ a new file called ``model.php``::
    model. And unlike in this example, only a portion (or none) of the model
    is actually concerned with accessing a database.
 
-The controller (``index.php``) is now very simple::
+The controller (``index.php``) is now very simple:
+
+.. code-block:: php+html
 
     <?php
 
@@ -203,7 +215,9 @@ pieces offering several advantages:
   (RSS, JSON, etc) by using a different template (e.g. ``list.rss.php``).
 
 The only portion of the code that can't be reused is the page layout. Let's
-fix that by creating a new ``layout.php`` file::
+fix that by creating a new ``layout.php`` file:
+
+.. code-block:: php+html
 
     <!-- templates/layout.php -->
     <html>
@@ -216,7 +230,9 @@ fix that by creating a new ``layout.php`` file::
     </html>
 
 The template (``templates/list.php``) can now be simplified to "extend"
-the layout::
+the layout:
+
+.. code-block:: php+html
 
     <?php $title = 'List of Posts' ?>
 
@@ -225,7 +241,7 @@ the layout::
         <ul>
             <?php foreach ($posts as $post): ?>
             <li>
-                <a href="/read?id=<?php echo $post['id']">
+                <a href="/read?id=<?php echo $post['id'] ?>">
                     <?php echo $post['title'] ?>
                 </a>
             </li>
@@ -414,14 +430,19 @@ will apply. And instead of setting it all up yourself, Symfony2 takes care
 of it.
 
 Before diving all the way in, let's use just a little bit of Symfony2 to make
-our application more flexible and dependable. Core to Symfony's philosophy
-is the idea the application's job is to process each HTTP request and return
-the appropriate HTTP response. To this end, Symfony2 provides both a ``Request``
-and a ``Response`` class. These classes are object-oriented representations
-of the raw HTTP request being processed and the HTTP response being returned.
-We can use them to improve our simple application::
+our application more flexible and dependable. Core to Symfony's philosophy is
+the idea the application's job is to process each HTTP request and return the
+appropriate HTTP response. To this end, Symfony2 provides both a
+:class:`Symfony\\Component\\HttpFoundation\\Request` and a
+:class:`Symfony\\Component\\HttpFoundation\\Response` class. These classes are
+object-oriented representations of the raw HTTP request being processed and
+the HTTP response being returned. We can use them to improve our simple
+application:
+
+.. code-block:: php+html
 
     <?php
+
     // index.php
     require_once 'model.php';
     require_once 'controllers.php';
@@ -492,9 +513,12 @@ standalone ``Routing`` and ``Templating`` components to fix some of these
 issues.
 
 Instead, we'll let Symfony2 take care of these issues for us. Here's the
-same sample application, now built in Symfony2::
+same sample application, now built in Symfony2:
+
+.. code-block:: php+html
 
     <?php
+
     // src/Sensio/BlogBundle/Controller/BlogController
 
     namespace Sensio\HelloBundle\Controller;
@@ -508,7 +532,7 @@ same sample application, now built in Symfony2::
                 ->createQuery('SELECT b FROM Blog:Blog b')
                 ->execute();
 
-            return $this->render('BlogBundle:Blog:list.php', array('blogs' => $blogs));
+            return $this->render('BlogBundle:Blog:list.html.php', array('blogs' => $blogs));
         }
 
         public function showAction($id)
@@ -518,17 +542,20 @@ same sample application, now built in Symfony2::
                 ->setParameter('id', $id)
                 ->getSingleResult();
 
-            return $this->render('BlogBundle:Blog:show.php', array('blog' => $blog));
+            return $this->render('BlogBundle:Blog:show.html.php', array('blog' => $blog));
         }
     }
 
 Our two controllers are still lightweight. Each uses the ``Doctrine`` ORM library
 to retrieve objects from the database and the ``Templating`` component to
 render a template and return a ``Response`` object. The list template is
-now quite a bit simpler::
+now quite a bit simpler:
+
+.. code-block:: php+html
 
     <!-- src/Sensio/BlogBundle/Resources/views/Blog/list.php --> 
-    <?php $view->extend('::layout.php') ?>
+    <?php $view->extend('::layout.html.php') ?>
+
     <?php $view['slots']->set('title', 'List of Posts') ?>
 
     <h1>List of Posts</h1>
@@ -542,7 +569,9 @@ now quite a bit simpler::
         <?php endforeach; ?>
     </ul>
 
-The layout is nearly identical::
+The layout is nearly identical:
+
+.. code-block:: php+html
 
     <!-- app/views/layout.php -->
     <html>
@@ -567,6 +596,7 @@ A routing configuration map provides this information in a readable format::
     blog_list:
         pattern:  /blog
         defaults: { _controller: BlogBundle:Blog:index }
+
     blog_show:
         pattern:  /blog/show/{id}
         defaults: { _controller: BlogBundle:Show:index }
@@ -574,9 +604,12 @@ A routing configuration map provides this information in a readable format::
 Now that Symfony2 is handling all the mundane tasks, our front controller
 is dead simple. And since it contains so little, you never have to touch
 it once it's created (and if you use a Symfony2 distribution, you won't
-even need to create it)::
+even need to create it):
+
+.. code-block:: php+html
 
     <?php
+
     // /web/app.php
     require_once __DIR__.'/../app/bootstrap.php';
     require_once __DIR__.'/../app/AppKernel.php';
@@ -626,6 +659,8 @@ called `Twig`_ that makes templates faster to write and easier to read.
 It means that our sample application could contain even less code! Take,
 for example, the previous list template written in Twig::
 
+.. code-block:: html+jinja
+
     {# src/Sensio/BlogBundle/Resources/views/Blog/list.html.twig #}
 
     {% extends "::layout.html.twig" %}
@@ -646,7 +681,10 @@ for example, the previous list template written in Twig::
 
 The corresponding ``layout.html.twig`` template is also easier to write::
 
-    {% app/views/layout.html.twig %}
+.. code-block:: html+jinja
+
+    {# app/views/layout.html.twig #}
+
     <html>
         <head>
             <title>{% block title %}Default title{% endblock %}</title>
