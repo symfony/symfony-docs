@@ -536,7 +536,7 @@ the route name after the command:
 
 .. index::
    single: Routing; Controllers
-   single: Controllers; String naming format
+   single: Controller; String naming format
 
 Routes and Controllers
 ----------------------
