@@ -1,7 +1,9 @@
 * :doc:`/cookbook/email`
 * :doc:`/cookbook/gmail`
-* :doc:`/cookbook/autoloader`
-* :doc:`/cookbook/finder`
-* :doc:`/cookbook/varnish`
+* :doc:`/cookbook/tools/autoloader`
+* :doc:`/cookbook/tools/finder`
+* :doc:`/cookbook/cache/varnish`
+* :doc:`/cookbook/testing/http_authorization`
+* :doc:`/cookbook/testing/insulating_clients`
+* :doc:`/cookbook/testing/profiling`
 * :doc:`/cookbook/symfony1`
-

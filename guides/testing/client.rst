@@ -102,3 +102,39 @@ the ``Kernel``::
 
     $container = $client->getContainer();
     $kernel    = $client->getKernel();
+
+Accessing the Container
+-----------------------
+
+It's highly recommended that a functional test only tests the Response. But
+under certain very rare circumstances, you might want to access some internal
+objects to write assertions. In such cases, you can access the dependency
+injection container::
+
+    $container = $client->getContainer();
+
+Be warned that this does not work if you insulate the client or if you use an
+HTTP layer.
+
+.. tip::
+
+    If the information you need to check are available from the profiler, use
+    them instead.
+
+Redirections
+------------
+
+By default, the Client follows HTTP redirects. But if you want to get the
+Response before the redirection and redirect yourself, calls the
+``followRedirects()`` method::
+
+    $client->followRedirects(false);
+
+    $crawler = $client->request('GET', '/');
+
+    // do something with the redirect response
+
+    // follow the redirection manually
+    $crawler = $client->followRedirect();
+
+    $client->followRedirects(true);

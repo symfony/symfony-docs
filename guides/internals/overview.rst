@@ -22,7 +22,7 @@ on top of the previous one.
     independently with the help of the
     :class:`Symfony\\Component\\HttpFoundation\\UniversalClassLoader` class
     and the ``src/autoload.php`` file. Read the :doc:`dedicated chapter
-    </cookbook/autoloader>` for more information.
+    </cookbook/tools/autoloader>` for more information.
 
 ``HttpFoundation`` Component
 ----------------------------

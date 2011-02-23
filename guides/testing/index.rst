@@ -8,4 +8,3 @@ Testing
    configuration
    crawler
    client
-   recipes

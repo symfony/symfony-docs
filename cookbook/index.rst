@@ -8,9 +8,12 @@ Dive into Symfony2 cookbook:
 
     email
     gmail
-    autoloader
-    finder
-    varnish
+    tools/autoloader
+    tools/finder
+    cache/varnish
+    testing/http_authorization
+    testing/insulating_clients
+    testing/profiling
     symfony1
 
 .. include:: map.rst.inc
