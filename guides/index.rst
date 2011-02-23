@@ -15,7 +15,7 @@ Dive into Symfony2 with the topical guides:
     cache/index
     translation
     bundles/index
-    dependency_injection/index
+    service_container
     internals/index
     stable_api
 

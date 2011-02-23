@@ -62,8 +62,8 @@ Dependency Injection component and a powerful plugin system (bundles).
 .. seealso::
 
     Read more about the :doc:`HttpKernel <kernel>` component. Read more about
-    :doc:`Dependency Injection </guides/dependency_injection/index>` and
-    :doc:`Bundles </guides/bundles/index>`.
+    :doc:`Dependency Injection </guides/service_container>` and :doc:`Bundles
+    </guides/bundles/index>`.
 
 ``FrameworkBundle`` Bundle
 --------------------------

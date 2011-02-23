@@ -1,5 +1,5 @@
-Extensions
-==========
+The Dependency Injection Tags
+=============================
 
 Tags:
 
