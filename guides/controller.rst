@@ -212,7 +212,7 @@ The controller has a single argument, ``$name``, which corresponds to the
 ``{name}`` parameter from the matched route (``ryan`` in our example). In
 fact, when executing your controller, Symfony2 matches each argument of
 the controller with a parameter from the matched route. Take the following
-example::
+example:
 
 .. configuration-block::
 
@@ -570,7 +570,9 @@ are Twig template and can be easily overridden.
     templates that live inside a bundle. For more information, see :ref:`overiding-bundle-templates`.
 
 For example, to override the default error template that's shown to the end-user,
-create a new template located at ``app/views/FrameworkBundle/Exception/error.html.twig``::
+create a new template located at ``app/views/FrameworkBundle/Exception/error.html.twig``:
+
+.. code-block:: html+jinja
 
     <!DOCTYPE html>
     <html>
@@ -666,7 +668,7 @@ Let's show an example where we're processing a form submit::
 
 After processing the request, the controller sets a ``notice`` flash message
 and then redirects. In the template of the next action, the following code
-could be used to render the messag::
+could be used to render the message:
 
 .. configuration-block::
 
