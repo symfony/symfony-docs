@@ -275,3 +275,9 @@ portion of the website? You can use a request matcher:
                 'matcher' => array('services' => array($container->register('custom_matcher', 'CustomMatcher'))),
             ),
         ));
+
+Learn more from the Cookbook
+----------------------------
+
+* :doc:`/cookbook/testing/profiling`
+* :doc:`/cookbook/profiler/data_collector`

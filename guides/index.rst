@@ -8,7 +8,7 @@ Dive into Symfony2 with the topical guides:
 
     templating/index
     doctrine/index
-    testing/index
+    testing
     validator/index
     forms/index
     security/index

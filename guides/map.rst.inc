@@ -11,12 +11,7 @@
   * :doc:`Migrations </guides/doctrine/migrations/index>` |
   * :doc:`MongoDB </guides/doctrine/mongodb-odm/index>`
 
-* **Testing**:
-
-  * :doc:`Overview </guides/testing/overview>` |
-  * :doc:`Configuration </guides/testing/configuration>` |
-  * :doc:`Crawler </guides/testing/crawler>` |
-  * :doc:`Client </guides/testing/client>`
+* :doc:`Testing </guides/testing>`
 
 * **Validation**:
 
