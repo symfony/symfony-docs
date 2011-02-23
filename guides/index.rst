@@ -8,6 +8,7 @@ Dive into Symfony2 with the topical guides:
 
     doctrine/index
     controller
+    routing
     testing
     validator/index
     forms/index

@@ -8,6 +8,7 @@
   * :doc:`MongoDB </guides/doctrine/mongodb-odm/index>`
 
 * :doc:`Controllers </guides/controller>`
+* :doc:`Routing </guides/routing>`
 * :doc:`Testing </guides/testing>`
 
 * **Validation**:
