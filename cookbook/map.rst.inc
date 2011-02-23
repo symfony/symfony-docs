@@ -1,6 +1,7 @@
 * :doc:`/cookbook/email`
 * :doc:`/cookbook/gmail`
 * :doc:`/cookbook/templating/PHP`
+* :doc:`/cookbook/controller/error_pages`
 * :doc:`/cookbook/controller/service`
 * :doc:`/cookbook/tools/autoloader`
 * :doc:`/cookbook/tools/finder`
