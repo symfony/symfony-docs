@@ -424,14 +424,14 @@ The ``resource`` key loads the routing resource from the ``HelloBundle``:
 
     .. code-block:: yaml
 
-        # src/Application/HelloBundle/Resources/config/routing.yml
+        # src/Sensio/HelloBundle/Resources/config/routing.yml
         hello:
             pattern:  /hello/{name}
             defaults: { _controller: HelloBundle:Hello:index }
 
     .. code-block:: xml
 
-        <!-- src/Application/HelloBundle/Resources/config/routing.xml -->
+        <!-- src/Sensio/HelloBundle/Resources/config/routing.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
 
         <routes xmlns="http://www.symfony-project.org/schema/routing"
@@ -445,7 +445,7 @@ The ``resource`` key loads the routing resource from the ``HelloBundle``:
 
     .. code-block:: php
 
-        // src/Application/HelloBundle/Resources/config/routing.php
+        // src/Sensio/HelloBundle/Resources/config/routing.php
         use Symfony\Component\Routing\RouteCollection;
         use Symfony\Component\Routing\Route;
 
@@ -563,7 +563,7 @@ string ``MyBlogBundle:Blog:show`` means the following:
   part of the ``_controller`` string (`` Blog``) and ``Controller`` (e.g. ``BlogController``).
 
 * Look for the controller class in the ``Controller`` namespace of any bundle
-  named ``MyBlogBundle`` (e.g. ``Application\MyBlogBundle\Controller\BlogController``
+  named ``MyBlogBundle`` (e.g. ``Sensio\MyBlogBundle\Controller\BlogController``
   or ``Bundle\VendorName\MyBlogBundle\Controller\BlogController``).
 
 * Execute a method called ``showAction`` - a concatenation of the third
@@ -583,7 +583,7 @@ The basic ``class::method`` syntax
 A less common but simple way to specify a controller is via the basic
 ``class::method`` syntax. This method could be used to call the example
 controller via the string
-``Application\MyBlogBundle\Controller\BlogController::showAction``, though
+``Sensio\MyBlogBundle\Controller\BlogController::showAction``, though
 the ``showAction`` must now be a static method. This is not a recommended
 syntax.
 

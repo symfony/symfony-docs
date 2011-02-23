@@ -322,7 +322,7 @@ Add the ``use`` statement atop the ``Controller`` class and then modify the
 
     // src/Sensio/HelloBundle/Controller/HelloController.php
 
-    namespace Application\HelloBundle\Controller;
+    namespace Sensio\HelloBundle\Controller;
     use Symfony\Bundle\FrameworkBundle\Controller\Controller;
     use Symfony\Component\HttpFoundation\Response;
 
