@@ -33,6 +33,7 @@ that extends
 
     // HelloBundle/DependencyInjection/HelloExtension.php
     use Symfony\Component\DependencyInjection\Extension\Extension;
+    use Symfony\Component\DependencyInjection\ContainerBuilder;
 
     class HelloExtension extends Extension
     {
