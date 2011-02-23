@@ -41,7 +41,7 @@ PHP is quick and easy:
         <body>
             <h1>List of Posts</h1>
             <ul>
-                <?php while ($row = mysql_fetch_array($result, MYSQL_ASSOC)): ?>
+                <?php while ($row = mysql_fetch_assoc($result)): ?>
                 <li>
                     <a href="/show.php?id=<?php echo $row['id'] ?>">
                         <?php echo $row['title'] ?>
@@ -93,7 +93,7 @@ the code that prepares the HTML representation of the requested resource:
     $result = mysql_query('SELECT id, title FROM post', $link);
 
     $posts = array();
-    while ($row = mysql_fetch_array($result, MYSQL_ASSOC)) {
+    while ($row = mysql_fetch_assoc($result)) {
         $posts[] = $row;
     }
 
@@ -171,7 +171,7 @@ a new file called ``model.php``:
 
         $result = mysql_query('SELECT id, title FROM post', $link);
         $posts = array();
-        while ($row = mysql_fetch_array($result, MYSQL_ASSOC)) {
+        while ($row = mysql_fetch_assoc($result)) {
             $posts[] = $row;
         }
 
@@ -275,7 +275,7 @@ an individual blog result based on a given id::
         $id = mysql_real_escape_string($id);
         $query = 'SELECT date, title, body FROM post WHERE id = '.$id;
         $result = mysql_query($query);
-        $row = mysql_fetch_array($result, MYSQL_ASSOC)
+        $row = mysql_fetch_assoc($result);
 
         close_database_connection($link);
 
@@ -570,7 +570,7 @@ now quite a bit simpler:
     <ul>
         <?php foreach ($posts as $post): ?>
         <li>
-            <a href="<?php echo $view['router']->generate('blog_show', array('id' => $post->getId()))">
+            <a href="<?php echo $view['router']->generate('blog_show', array('id' => $post->getId())) ?>">
                 <?php echo $post->getTitle() ?>
             </a>
         </li>
