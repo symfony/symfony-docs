@@ -18,6 +18,7 @@ Dive into Symfony2 cookbook:
     event_dispatcher/class_extension
     event_dispatcher/method_behavior
     profiler/data_collector
+    bundles/extension
     symfony1
 
 .. include:: map.rst.inc

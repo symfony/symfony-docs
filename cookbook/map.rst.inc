@@ -10,4 +10,5 @@
 * :doc:`/cookbook/event_dispatcher/class_extension`
 * :doc:`/cookbook/event_dispatcher/method_behavior`
 * :doc:`/cookbook/profiler/data_collector`
+* :doc:`/cookbook/bundles/extension`
 * :doc:`/cookbook/symfony1`
