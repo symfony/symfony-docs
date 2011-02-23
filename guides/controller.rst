@@ -334,19 +334,22 @@ Add the ``use`` statement atop the ``Controller`` class and then modify the
         }
     }
 
-So far, extending the base ``Controller`` class hasn't changed anything.
-In the next section, we'll walk through several helper methods that the base
+So far, extending the base ``Controller`` class hasn't changed anything. In
+the next section, we'll walk through several helper methods that the base
 controller class makes available. These methods are just shortcuts to using
-core Symfony2 functionality that's available to you with or without the use
-of the base ``Controller`` class. A great way to see the core functionality
-in action is to look in the :class:`Symfony\Bundle\FrameworkBundle\Controller\Controller`
-class itself.
+core Symfony2 functionality that's available to you with or without the use of
+the base ``Controller`` class. A great way to see the core functionality in
+action is to look in the
+:class:`Symfony\\Bundle\\FrameworkBundle\\Controller\\Controller` class
+itself.
 
-.. note::
+.. tip::
 
-    Extending the base class is a *choice* in Symfony. A much more robust
-    and recommended approach is to treat your controllers as services. See
-    the `Controllers as Services`_ section for more information.
+    Extending the base class is a *choice* in Symfony; it contains useful
+    shortcuts but nothing mandatory. You can also extend
+    :class:``Symfony\\Component\\DependencyInjection\\ContainerAware``. The
+    service container object will then be accessible via the ``container``
+    property and this is the only object you need to create any controller.
 
 .. index::
    single: Controller; Common Tasks
@@ -698,10 +701,10 @@ exactly as we've done in this example.
 The Response Object
 -------------------
 
-The only requirement for a controller is to return a ``Response`` object.
-The :class:`Symfony\Component\HttpFoundation\Response` class is a PHP abstraction
-around the HTTP response - the text-based message filled with HTTP headers
-and content that's sent back to the client::
+The only requirement for a controller is to return a ``Response`` object. The
+:class:`Symfony\\Component\\HttpFoundation\\Response` class is a PHP
+abstraction around the HTTP response - the text-based message filled with HTTP
+headers and content that's sent back to the client::
 
     // create a simple Response with a 200 status code (the default)
     $response = new Response('Hello '.$name, 200);
@@ -712,10 +715,11 @@ and content that's sent back to the client::
 
 .. tip::
 
-    The ``headers`` property is a :class:`Symfony\Component\HttpFoundation\HeaderBag`
-    object with several useful methods for reading and mutating the ``Response``
-    headers. The header names are normalized so that using ``Content-Type``
-    is equivalent to ``content-type`` or even ``content_type``.
+    The ``headers`` property is a
+    :class:`Symfony\\Component\\HttpFoundation\\HeaderBag` object with several
+    useful methods for reading and mutating the ``Response`` headers. The
+    header names are normalized so that using ``Content-Type`` is equivalent
+    to ``content-type`` or even ``content_type``.
 
 .. index::
    single: Controller; Request
@@ -738,42 +742,6 @@ to the ``Request`` object when extending the base ``Controller`` class::
 
 Like the ``Response`` object, the request headers are stored in a ``HeaderBag``
 object and are easily accessible.
-
-.. index::
-   single: Controller; As Services
-
-Controllers as Services
------------------------
-
-So far, we've shown how easily a controller can be used when it extends
-the base ``Symfony\Bundle\FrameworkBundle\Controller\Controller`` class.
-While this this works fine, controllers can also be specified as services.
-
-To refer to a controller that's defined as a service, use the single colon
-(:) notation. For example, suppose we've defined a service called ``my_controller``
-and we want to forward to a method called ``indexAction()`` inside the service::
-
-    $this->forward('my_controller:indexAction', array('foo' => $bar));
-
-To use a controller in this way, it must be defined in the service container
-configuration. For more information, see the :doc:`Extending Symfony </guides/extending_symfony>`
-guide.
-
-When using a controller defined as a service, it will most likely not extend
-the base ``Controller`` class. Instead of relying on its shortcut methods,
-you'll interact directly with the services that you need. Fortunately, this
-is usually pretty easy and the base ``Controller`` class itself is a great
-source on how to perform many common tasks.
-
-.. note::
-
-    Specifying a controller as a service takes a little bit more work.
-    The primary advantage is that the entire controller or any services
-    passed to the controller can be modified via the service container configuration.
-    This is especially common and important when developing an open-source
-    bundle or any bundle that will be used in many different projects. So,
-    even if you don't specify your controllers as services, you'll likely
-    see this done in many popular open-source Symfony2 bundles.
 
 .. index::
    single: Controller; Overview

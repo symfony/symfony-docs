@@ -544,7 +544,7 @@ The ``_controller`` Parameter
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Every route *must* contain a ``_controller`` parameter, which is a special
-string syntax that Symfony translates into a PHP callable. There are three
+string syntax that Symfony translates into a PHP callable. There are two
 different syntax for the ``_controller`` parameter:
 
 The ``bundle:controller:action`` syntax
@@ -562,14 +562,6 @@ string ``MyBlogBundle:Blog:show`` means the following:
 
 * Execute a method called ``showAction`` - a concatenation of the third
   portion of the ``_controller`` string (``show``) and ``Action``.
-
-The ``service:method`` syntax
-.............................
-
-A controller can be specified as a service (see :doc:`/guides/controller`).
-In this case, only the service name and method need to be specified. If the
-service name were ``blog_controller``, then the ``_controller`` parameter
-would be ``blog_controller:showAction``.
 
 The basic ``class::method`` syntax
 ..................................
