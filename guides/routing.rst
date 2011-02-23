@@ -1,5 +1,5 @@
 .. index::
-   single:: Routing
+   single: Routing
 
 Routing
 =======
@@ -13,7 +13,7 @@ should be decoupled and free from the logic of your application. Symfony's
 ``Router`` makes clean, flexible and decoupled URLs possible and easy.
 
 .. index::
-   single:: Routing; Basics
+   single: Routing; Basics
 
 Routing Basics
 --------------
@@ -93,7 +93,7 @@ the following events take place:
 #. Symfony executes the controller, passing in the correct arguments.
 
 .. index::
-   single:: Routing; Creating
+   single: Routing; Creating
 
 Creating Routes
 ---------------
@@ -156,7 +156,7 @@ by Symfony into an actual PHP callable and executed. That part of the routing
 process will be explained in the `Routes and Controllers`_ section.
 
 .. index::
-   single:: Routing; Placeholders
+   single: Routing; Placeholders
 
 Routing with Placeholders
 ~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -223,7 +223,7 @@ parameter will be ``1``. The url ``/blog/2`` will also match, giving the
 ``page`` parameter a value of ``2``.
 
 .. index::
-   single:: Routing; Requirements
+   single: Routing; Requirements
 
 Adding Requirements
 ~~~~~~~~~~~~~~~~~~~
@@ -291,7 +291,7 @@ against the regular expression ``(en|fr)``. The following urls would match::
     /fr     (culture = fr)
 
 .. index::
-   single:: Routing; Method requirement
+   single: Routing; Method requirement
 
 Method Routing
 ~~~~~~~~~~~~~~
@@ -334,7 +334,7 @@ for the two actions.
     or ``POST`` requests, use ``GET|POST``.
 
 .. index::
-   single:: Routing; Advanced example
+   single: Routing; Advanced example
 
 Advanced Routing Example
 ~~~~~~~~~~~~~~~~~~~~~~~~
@@ -376,7 +376,7 @@ is a very powerful way to render the same content in different formats.
 .. _routing-include-external-resources:
 
 .. index::
-   single:: Routing; Importing routing resources
+   single: Routing; Importing routing resources
 
 Including External Routing Resources
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -504,7 +504,7 @@ The string ``/admin`` will be prepended to the pattern of each route loaded
 from the new routing resource.
 
 .. index::
-   single:: Routing; Debugging
+   single: Routing; Debugging
 
 Visualizing & Debugging Routes
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -535,8 +535,8 @@ the route name after the command:
     ./app/console router:debug article_show
 
 .. index::
-   single:: Routing; Controllers
-   single:: Controllers; String naming format
+   single: Routing; Controllers
+   single: Controllers; String naming format
 
 Routes and Controllers
 ----------------------
@@ -603,7 +603,7 @@ to form a single array. Each key of that array is available as an argument
 on the controller. For a more detailed discussion, see :ref:`route-parameters-controller-arguments`.
 
 .. index::
-   single:: Routing; Generating URLs
+   single: Routing; Generating URLs
 
 Generating URLs
 ---------------
@@ -638,7 +638,7 @@ a traditional controller, this is easy::
     }
 
 .. index::
-   single:: Routing; Absolute URLs
+   single: Routing; Absolute URLs
 
 Absolute URLs
 ~~~~~~~~~~~~~
@@ -656,7 +656,7 @@ absolute URL, pass ``true`` to the third argument of ``Router::generate()``::
     the current ``Request`` object.
 
 .. index::
-   single:: Routing; URLs in a template
+   single: Routing; URLs in a template
 
 Generating URLs from a template
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

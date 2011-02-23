@@ -180,7 +180,7 @@ see :ref:`controller-string-syntax`.
     :ref:`routing-include-external-resources` for more information.
 
 .. index::
-   single: Controllers; Route parameters as controller arguments
+   single: Controller; Route parameters as controller arguments
 
 .. route-parameters-controller-arguments:
 
@@ -447,7 +447,7 @@ value to each variable.
         ));
 
 .. index::
-   single:: Controller; Rendering templates
+   single: Controller; Rendering templates
 
 Rendering Templates
 ~~~~~~~~~~~~~~~~~~~
