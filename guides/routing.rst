@@ -393,7 +393,7 @@ configuration from other places, such as from a bundle. This can be easily done:
 
         # app/config/routing.yml
         hello:
-            resource: "@HelloBundle/Resources/config/routing.yml"
+            resource: "@SensioHelloBundle/Resources/config/routing.yml"
 
     .. code-block:: xml
 
@@ -428,7 +428,7 @@ The ``resource`` key loads the routing resource from the ``SensioHelloBundle``:
         # src/Sensio/HelloBundle/Resources/config/routing.yml
         hello:
             pattern:  /hello/{name}
-            defaults: { _controller: HelloBundle:Hello:index }
+            defaults: { _controller: SensioHelloBundle:Hello:index }
 
     .. code-block:: xml
 
@@ -440,7 +440,7 @@ The ``resource`` key loads the routing resource from the ``SensioHelloBundle``:
             xsi:schemaLocation="http://www.symfony-project.org/schema/routing http://www.symfony-project.org/schema/routing/routing-1.0.xsd">
 
             <route id="hello" pattern="/hello/{name}">
-                <default key="_controller">HelloBundle:Hello:index</default>
+                <default key="_controller">SensioHelloBundle:Hello:index</default>
             </route>
         </routes>
 
@@ -452,7 +452,7 @@ The ``resource`` key loads the routing resource from the ``SensioHelloBundle``:
 
         $collection = new RouteCollection();
         $collection->add('hello', new Route('/hello/{name}', array(
-            '_controller' => 'HelloBundle:Hello:index',
+            '_controller' => 'SensioHelloBundle:Hello:index',
         )));
 
         return $collection;
@@ -468,7 +468,7 @@ For example, suppose that we want the "hello" route to have a pattern of
 
         # app/config/routing.yml
         hello:
-            resource: "@HelloBundle/Resources/config/routing.yml"
+            resource: "@SensioHelloBundle/Resources/config/routing.yml"
             prefix:   /admin
 
     .. code-block:: xml
@@ -480,7 +480,7 @@ For example, suppose that we want the "hello" route to have a pattern of
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://www.symfony-project.org/schema/routing http://www.symfony-project.org/schema/routing/routing-1.0.xsd">
 
-            <import resource="@HelloBundle/Resources/config/routing.xml" prefix="/admin" />
+            <import resource="@SensioHelloBundle/Resources/config/routing.xml" prefix="/admin" />
         </routes>
 
     .. code-block:: php
@@ -490,7 +490,7 @@ For example, suppose that we want the "hello" route to have a pattern of
         use Symfony\Component\Routing\Route;
 
         $collection = new RouteCollection();
-        $collection->addCollection($loader->import("@HelloBundle/Resources/config/routing.php"), '/admin');
+        $collection->addCollection($loader->import("@SensioHelloBundle/Resources/config/routing.php"), '/admin');
 
         return $collection;
 
