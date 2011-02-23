@@ -9,6 +9,7 @@
 
 * :doc:`Controllers </guides/controller>`
 * :doc:`Routing </guides/routing>`
+* :doc:`Templating </guides/templating>`
 * :doc:`Testing </guides/testing>`
 
 * **Validation**:
