@@ -33,12 +33,7 @@
 
 * :doc:`/guides/http_cache`
 * :doc:`/guides/translation`
-
-* **Bundles**:
-
-  * :doc:`Best Practices </guides/bundles/best_practices>` |
-  * :doc:`Configuration </guides/bundles/configuration>`
-
+* :doc:`Bundles </guides/bundles>`
 * :doc:`The Service Container </guides/service_container>`
 
 * **Internals**:

@@ -13,7 +13,7 @@ Dive into Symfony2 with the topical guides:
     security/index
     http_cache
     translation
-    bundles/index
+    bundles
     service_container
     internals/index
     stable_api

@@ -1,8 +1,8 @@
 .. index::
    single: Bundles; Best Practices
 
-Bundle Best Practices
-=====================
+Bundles
+=======
 
 A bundle is a directory that has a well-defined structure and can host anything
 from classes to controllers and web resources. Even if bundles are very
@@ -188,8 +188,47 @@ A bundle must not override existing messages from another bundle.
 Configuration
 -------------
 
-Configuration must be done via the Symfony2 built-in :doc:`mechanism
-</guides/bundles/configuration>`. A bundle should provide all its default
-configurations in XML.
+To provide more flexibility, a bundle can provide configurable settings by
+using the Symfony2 built-in mechanisms.
+
+For simple configuration settings, rely on the default ``parameters`` entry of
+the Symfony2 configuration. Symfony2 parameters are simple key/value pairs; a
+value being any valid PHP value. Each parameter name must start with a
+lower-cased version of the bundle name (``hello`` for ``HelloBundle``, or
+``sensio.social.blog`` for ``Sensio\Social\BlogBundle`` for instance).
+
+The end user can provide values in any configuration file:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # app/config/config.yml
+        parameters:
+            hello.email.from: fabien@example.com
+
+    .. code-block:: xml
+
+        <!-- app/config/config.xml -->
+        <parameters>
+            <parameter key="hello.email.from">fabien@example.com</parameter>
+        </parameters>
+
+    .. code-block:: php
+
+        // app/config/config.php
+        $container->setParameter('hello.email.from', 'fabien@example.com');
+
+    .. code-block:: ini
+
+        [parameters]
+        hello.email.from = fabien@example.com
+
+Retrieve the configuration parameters in your code from the container::
+
+    $container->getParameter('hello.email.from');
+
+Even if this mechanism is simple enough, you are highly encouraged to use the
+semantic configuration described in the cookbook.
 
 .. _standards: http://groups.google.com/group/php-standards/web/psr-0-final-proposal
