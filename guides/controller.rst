@@ -347,7 +347,7 @@ itself.
 
     Extending the base class is a *choice* in Symfony; it contains useful
     shortcuts but nothing mandatory. You can also extend
-    :class:``Symfony\\Component\\DependencyInjection\\ContainerAware``. The
+    :class:`Symfony\\Component\\DependencyInjection\\ContainerAware`. The
     service container object will then be accessible via the ``container``
     property and this is the only object you need to create any controller.
 

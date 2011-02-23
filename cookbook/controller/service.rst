@@ -6,8 +6,8 @@ How to define Controllers as Services
 
 In the book, you've learned how easily a controller can be used when it
 extends the base
-:class:``Symfony\\Bundle\\FrameworkBundle\\Controller\\Controller`` class.
-While this works fine, controllers can also be specified as services.
+:class:`Symfony\\Bundle\\FrameworkBundle\\Controller\\Controller` class. While
+this works fine, controllers can also be specified as services.
 
 To refer to a controller that's defined as a service, use the single colon (:)
 notation. For example, suppose we've defined a service called
