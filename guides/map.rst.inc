@@ -1,4 +1,7 @@
-* :doc:`Introduction to Symfony2 and HTTP </guides/symfony_http_fundamentals>`
+* **Introduction**:
+
+  * :doc:`Introduction to Symfony2 and HTTP </guides/symfony_http_fundamentals>`
+  * :doc:`From flat PHP to Symfony2 </guides/from_flat_php_to_symfony2>`
 
 * `Twig Templating`_
 

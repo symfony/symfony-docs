@@ -7,6 +7,7 @@ Dive into Symfony2 with the topical guides:
     :hidden:
 
     symfony_http_fundamentals
+    from_flat_php_to_symfony2
     doctrine/index
     controller
     routing
