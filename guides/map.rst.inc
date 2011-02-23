@@ -1,3 +1,5 @@
+* :doc:`Introduction to Symfony2 and HTTP </guides/symfony_http_fundamentals>`
+
 * `Twig Templating`_
 
 * **Doctrine**:

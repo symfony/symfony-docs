@@ -6,6 +6,7 @@ Dive into Symfony2 with the topical guides:
 .. toctree::
     :hidden:
 
+    symfony_http_fundamentals
     doctrine/index
     controller
     routing
