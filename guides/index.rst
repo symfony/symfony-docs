@@ -8,6 +8,7 @@ Dive into Symfony2 with the topical guides:
 
     http_fundamentals
     from_flat_php_to_symfony2
+    page_creation
     doctrine/index
     controller
     routing

@@ -1,5 +1,6 @@
 * :doc:`Introduction to Symfony2 and HTTP </guides/http_fundamentals>`
 * :doc:`From flat PHP to Symfony2 </guides/from_flat_php_to_symfony2>`
+* :doc:`The Basics of Page Creation </guides/page_creation>`
 
 * :doc:`Controllers </guides/controller>`
 * :doc:`Routing </guides/routing>`
