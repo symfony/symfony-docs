@@ -1,9 +1,10 @@
-* **Introduction**:
+* :doc:`Introduction to Symfony2 and HTTP </guides/http_fundamentals>`
+* :doc:`From flat PHP to Symfony2 </guides/from_flat_php_to_symfony2>`
 
-  * :doc:`Introduction to Symfony2 and HTTP </guides/http_fundamentals>`
-  * :doc:`From flat PHP to Symfony2 </guides/from_flat_php_to_symfony2>`
-
-* `Twig Templating`_
+* :doc:`Controllers </guides/controller>`
+* :doc:`Routing </guides/routing>`
+* :doc:`Templating </guides/templating>`
+* :doc:`Testing </guides/testing>`
 
 * **Doctrine**:
 
@@ -11,11 +12,6 @@
   * :doc:`ORM </guides/doctrine/orm/index>` |
   * :doc:`Migrations </guides/doctrine/migrations/index>` |
   * :doc:`MongoDB </guides/doctrine/mongodb-odm/index>`
-
-* :doc:`Controllers </guides/controller>`
-* :doc:`Routing </guides/routing>`
-* :doc:`Templating </guides/templating>`
-* :doc:`Testing </guides/testing>`
 
 * **Validation**:
 
