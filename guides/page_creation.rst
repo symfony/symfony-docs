@@ -39,9 +39,9 @@ to the following URL:
     The tutorial assumes that you've already downloaded Symfony2 and configured
     your webserver. The above URL assumes that ``localhost`` points to the
     ``web`` directory of your new Symfony2 project. For detailed information
-    on this process, see the 
+    on this process, see the :doc:`Installing Symfony2</guides/installation>`.
 
-In reality, you'll be able to replace ``Ryan`` with any other name to be
+In reality, you'll be able to replace ``Symfony`` with any other name to be
 greeted. To create the page, we'll go through the three-step process.
 
 Create the Route
@@ -102,14 +102,14 @@ part, which imports another routing configuration:
 
     .. code-block:: yaml
 
-        # src/Application/HelloBundle/Resources/config/routing.yml
+        # src/Sensio/HelloBundle/Resources/config/routing.yml
         hello:
             pattern:  /hello/{name}
             defaults: { _controller: HelloBundle:Hello:index }
 
     .. code-block:: xml
 
-        <!-- src/Application/HelloBundle/Resources/config/routing.xml -->
+        <!-- src/Sensio/HelloBundle/Resources/config/routing.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
 
         <routes xmlns="http://www.symfony-project.org/schema/routing"
@@ -123,7 +123,7 @@ part, which imports another routing configuration:
 
     .. code-block:: php
 
-        // src/Application/HelloBundle/Resources/config/routing.php
+        // src/Sensio/HelloBundle/Resources/config/routing.php
         use Symfony\Component\Routing\RouteCollection;
         use Symfony\Component\Routing\Route;
 
@@ -138,8 +138,8 @@ The routing consists of two basic pieces: the ``pattern`` it should match and
 a ``defaults`` array that specifies the controller that should be executed.
 The placeholder syntax in the pattern (``{name}``) is a wildcard. It means
 that ``/hello/Ryan``, ``/hello/Fabien`` or any other similar URI will match this
-route. Beyond being a flexible, the ``:name`` placeholder parameter will also
-be passed to our controller so that we can personally greet the user.
+route. Beyond being a flexible, the ``{name}`` placeholder parameter will
+also be passed to our controller so that we can personally greet the user.
 
 .. note::
 
@@ -158,23 +158,24 @@ application code uses information from the request to build and prepare the
 resource being requested. The end product of a controller is always the same: 
 a Symfony ``Response`` object::
 
-    // src/Application/HelloBundle/Controller/HelloController.php
+    // src/Sensio/HelloBundle/Controller/HelloController.php
 
-    namespace Application\HelloBundle\Controller;
+    namespace Sensio\HelloBundle\Controller;
 
     use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+    use Symfony\Component\HttpFoundation\Response;
 
     class HelloController extends Controller
     {
         public function indexAction($name)
         {
-            return $this->createResponse('<html><body>Hello '.$name.'!</body></html>');
+            return new Response('<html><body>Hello '.$name.'!</body></html>');
         }
     }
 
-The ``createResponse()`` method is a shortcut to creating a ``Response``
-object and its first argument is the content for that response (a small
-HTML page in this case).
+The controller is simple: we create a new ``Response`` object, whose first
+argument is the content that should for the response (a small HTML page in
+this case).
 
 So, we lied a little. After creating only a route and a controller, we already
 have a fully-functional page. If you've setup everything correctly, your
@@ -226,7 +227,7 @@ controller, and ``index.html.twig`` the template:
 .. code-block:: jinja
    :linenos:
 
-    {# src/Application/HelloBundle/Resources/views/Hello/index.html.twig #}
+    {# src/Sensio/HelloBundle/Resources/views/Hello/index.html.twig #}
     {% extends '::layout.html.twig' %}
 
     {% block body %}
@@ -269,7 +270,7 @@ Templates are a powerful way to render and organize the content for your
 page and can be HTML markup, CSS code, or anything else that your controller
 may need to return. But the templating engine is simply a means to an ends.
 The goal is that your controller returns a ``Response`` object. Templates
-are a powerful tool for creating the content of the ``Response``.
+are a powerful tool for creating the content of a ``Response`` object.
 
 .. index::
    single: Directory Structure
@@ -326,7 +327,7 @@ use a Kernel class, ``AppKernel``, to bootstrap the application.
 
     http://localhost/hello/Ryan
 
-Though front controllers are essential to handling every request, you'll
+Though front controllers are essential in handling every request, you'll
 rarely need to modify or even think about them. We'll mention them again
 briefly in the `Environments`_ section.
 
@@ -347,15 +348,13 @@ defaults.
 * ``registerBundles()``: Returns an array of all bundles needed to run the
   application (see `The Bundle System`_);
 
-* ``registerBundleDirs()``: Maps bundle namespaces to directories;
-
 * ``registerContainerConfiguration()``: Returns the main configuration object
   (See the `Application Configuration`_ section);
 
 In day-to-day development, you'll mostly use the ``app/`` directory to modify
 configuration and routing files in the ``app/config/`` directory (See
 `Application Configuration`_). It also contains the application cache directory
-(``app/cache``), a logging directory (``app/logging``) and a directory for
+(``app/cache``), a logging directory (``app/logs``) and a directory for
 application-level template files (``app/views``). You'll learn more about
 each of these directories in later guides.
 
@@ -369,8 +368,8 @@ each of these directories in later guides.
     or ``require`` statements. Instead, Symfony uses the namespace of a class
     to determine its location and automatically include it. For example::
 
-    *class*: Application\HelloBundle\Controller\HelloController
-    *path*:  src/Application/HelloBundle/Controller/HelloController.php
+    *class*: Sensio\HelloBundle\Controller\HelloController
+    *path*:  src/Sensio/HelloBundle/Controller/HelloController.php
 
     The ``src/autoload.php`` configures the autoloader to look for different
     PHP namespaces in different directories and also supports autoloading
@@ -385,7 +384,7 @@ In fact, when developing, the vast majority of your work will likely be done
 inside this directory. By default, the ``src`` directory is broken down into
 three subdirectories:
 
-* ``src/Application/`` Contains *your* bundles;
+* ``src/Sensio/`` Contains *your* bundles;
 
 * ``src/Bundle/`` Contains third-party bundles;
 
@@ -436,7 +435,7 @@ method of the ``AppKernel`` class::
             //new Symfony\Bundle\DoctrineMongoDBBundle\DoctrineMongoDBBundle(),
 
             // register your bundles
-            new Application\HelloBundle\HelloBundle(),
+            new Sensio\HelloBundle\HelloBundle(),
         );
 
         if ($this->isDebug()) {
@@ -461,7 +460,7 @@ valid directory (local or global ones)::
     public function registerBundleDirs()
     {
         return array(
-            'Application'     => __DIR__.'/../src/Application',
+            'Sensio'     => __DIR__.'/../src/Sensio',
             'Bundle'          => __DIR__.'/../src/Bundle',
             'Symfony\\Bundle' => __DIR__.'/../src/vendor/symfony/src/Symfony/Bundle',
         );
@@ -470,7 +469,7 @@ valid directory (local or global ones)::
 So, when you reference the ``HelloBundle`` in a controller name or in a template
 name, Symfony will look for it under the given directories.
 
-As you develop, you'll create new bundles inside the ``src/Application/``
+As you develop, you'll create new bundles inside the ``src/Sensio/``
 directory and place `third-party bundles`_ in the ``src/Bundle/`` directory.
 
 Creating a Bundle
@@ -479,11 +478,11 @@ Creating a Bundle
 To show you how simple the bundle system is, let's create a new bundle called
 ``MyBundle`` and enable it.
 
-First, create a ``src/Application/MyBundle/`` directory and add a new file
+First, create a ``src/Sensio/MyBundle/`` directory and add a new file
 called ``MyBundle.php``::
 
-    // src/Application/MyBundle/MyBundle.php
-    namespace Application\MyBundle;
+    // src/Sensio/MyBundle/MyBundle.php
+    namespace Sensio\MyBundle;
 
     use Symfony\Component\HttpKernel\Bundle\Bundle;
 
@@ -505,7 +504,7 @@ class::
             // ...
 
             // register your bundles
-            new Application\MyBundle\MyBundle(),
+            new Sensio\MyBundle\MyBundle(),
         );
 
         // ...
@@ -518,7 +517,7 @@ And while it doesn't do anything yet, ``MyBundle`` is now ready to be used.
 And as easy as this is, Symfony also provides a command-line interface for
 generating a basic bundle skeleton::
 
-    ./app/console init:bundle "Application\MyBundle" src
+    ./app/console init:bundle "Sensio\MyBundle" src
 
 The bundle skeleton generates with a basic controller, template and routing
 resource that can be customized. We'll talk more about Symfony's command-line
@@ -571,78 +570,51 @@ format you prefer:
     .. code-block:: yaml
 
         # app/config/config.yml
-        app.config:
+        framework:
             charset:       UTF-8
             error_handler: null
-            csrf_secret:   xxxxxxxxxx
+            csrf_protection:
+                enabled: true
+                secret: xxxxxxxxxx
             router:        { resource: "%kernel.root_dir%/config/routing.yml" }
             validation:    { enabled: true, annotations: true }
-            templating:    {} #assets_version: SomeVersionScheme
+            templating:    { engines: ['twig'] } #assets_version: SomeVersionScheme
             session:
                 default_locale: en
                 lifetime:       3600
                 auto_start:     true
 
         # Twig Configuration
-        twig.config:
+        twig:
             debug:            %kernel.debug%
             strict_variables: %kernel.debug%
-
-        ## Doctrine Configuration
-        #doctrine.dbal:
-        #    dbname:   xxxxxxxx
-        #    user:     xxxxxxxx
-        #    password: ~
-        #doctrine.orm: ~
-
-        ## Swiftmailer Configuration
-        #swiftmailer.config:
-        #    transport:  smtp
-        #    encryption: ssl
-        #    auth_mode:  login
-        #    host:       smtp.gmail.com
-        #    username:   xxxxxxxx
-        #    password:   xxxxxxxx
 
     .. code-block:: xml
 
         <!-- app/config/config.xml -->
-        <app:config csrf-secret="xxxxxxxxxx" charset="UTF-8" error-handler="null">
-            <app:router resource="%kernel.root_dir%/config/routing.xml" />
-            <app:validation enabled="true" annotations="true" />
-            <app:templating assets_version="SomeVersionScheme" />
-            <app:session default-locale="en" lifetime="3600" auto-start="true" />
-        </app:config>
+        <framework:config charset="UTF-8" error-handler="null" cache-warmer="false">
+            <framework:router resource="%kernel.root_dir%/config/routing.xml" cache-warmer="true" />
+            <framework:validation enabled="true" annotations="true" />
+            <framework:session default-locale="en" lifetime="3600" auto-start="true" />
+            <framework:templating assets-version="SomeVersionScheme" cache-warmer="true">
+                <framework:engine id="twig" />
+            </framework:templating>
+            <framework:csrf-protection enabled="true" secret="xxxxxxxxxx" />
+        </framework:config>
 
         <!-- Twig Configuration -->
-        <twig:config debug="%kernel.debug%" strict-variables="%kernel.debug%" />
-
-        <!-- Doctrine Configuration -->
-        <!--
-        <doctrine:dbal dbname="xxxxxxxx" user="xxxxxxxx" password="" />
-        <doctrine:orm />
-        -->
-
-        <!-- Swiftmailer Configuration -->
-        <!--
-        <swiftmailer:config
-            transport="smtp"
-            encryption="ssl"
-            auth_mode="login"
-            host="smtp.gmail.com"
-            username="xxxxxxxx"
-            password="xxxxxxxx" />
-        -->
+        <twig:config debug="%kernel.debug%" strict-variables="%kernel.debug%" cache-warmer="true" />
 
     .. code-block:: php
 
-        $container->loadFromExtension('app', 'config', array(
-            'charset'       => 'UTF-8',
-            'error_handler' => null,
-            'csrf-secret'   => 'xxxxxxxxxx',
-            'router'        => array('resource' => '%kernel.root_dir%/config/routing.php'),
-            'validation'    => array('enabled' => true, 'annotations' => true),
-            'templating'    => array(
+        $container->loadFromExtension('framework', array(
+            'charset'         => 'UTF-8',
+            'error_handler'   => null,
+            'csrf-protection' => array('enabled' => true, 'secret' => 'xxxxxxxxxx'),
+            'router'          => array('resource' => '%kernel.root_dir%/config/routing.php'),
+            'validation'      => array('enabled' => true, 'annotations' => true),
+            'templating'      => array(
+                'engines' => array('twig'),
                 #'assets_version' => "SomeVersionScheme",
             ),
             'session' => array(
@@ -653,32 +625,10 @@ format you prefer:
         ));
 
         // Twig Configuration
-        $container->loadFromExtension('twig', 'config', array(
+        $container->loadFromExtension('twig', array(
             'debug'            => '%kernel.debug%',
             'strict_variables' => '%kernel.debug%',
         ));
-
-        // Doctrine Configuration
-        /*
-        $container->loadFromExtension('doctrine', 'dbal', array(
-            'dbname'   => 'xxxxxxxx',
-            'user'     => 'xxxxxxxx',
-            'password' => '',
-        ));
-        $container->loadFromExtension('doctrine', 'orm');
-        */
-
-        // Swiftmailer Configuration
-        /*
-        $container->loadFromExtension('swiftmailer', 'config', array(
-            'transport'  => "smtp",
-            'encryption' => "ssl",
-            'auth_mode'  => "login",
-            'host'       => "smtp.gmail.com",
-            'username'   => "xxxxxxxx",
-            'password'   => "xxxxxxxx",
-        ));
-        */
 
 .. note::
 
@@ -717,7 +667,7 @@ Environments
 
 An application can run in various environments. The different environments
 share the same PHP code (apart from the front controller), but can have completely
-different configurations. For instance, a ``dev`` environment will log alerts
+different configurations. For instance, a ``dev`` environment will log warnings
 and errors, while a ``prod`` environment will only log errors. Some files
 are rebuilt on each request in the ``dev`` environment, but cached in the
 ``prod`` environment. All environments can live together on the same machine.
