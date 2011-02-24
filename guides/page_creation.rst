@@ -61,7 +61,7 @@ you can also choose to use XML or PHP out of the box to configure routes:
             defaults: { _controller: FrameworkBundle:Default:index }
 
         hello:
-            resource: HelloBundle/Resources/config/routing.yml
+            resource: @HelloBundle/Resources/config/routing.yml
 
     .. code-block:: xml
 
@@ -76,7 +76,7 @@ you can also choose to use XML or PHP out of the box to configure routes:
                 <default key="_controller">FrameworkBundle:Default:index</default>
             </route>
 
-            <import resource="HelloBundle/Resources/config/routing.xml" />
+            <import resource="@HelloBundle/Resources/config/routing.xml" />
         </routes>
 
     .. code-block:: php
@@ -89,7 +89,7 @@ you can also choose to use XML or PHP out of the box to configure routes:
         $collection->add('homepage', new Route('/', array(
             '_controller' => 'FrameworkBundle:Default:index',
         )));
-        $collection->addCollection($loader->import("HelloBundle/Resources/config/routing.php"));
+        $collection->addCollection($loader->import("@HelloBundle/Resources/config/routing.php"));
 
         return $collection;
 
