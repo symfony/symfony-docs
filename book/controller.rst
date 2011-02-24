@@ -182,7 +182,7 @@ see :ref:`controller-string-syntax`.
 .. index::
    single: Controller; Route parameters as controller arguments
 
-.. route-parameters-controller-arguments:
+.. _route-parameters-controller-arguments:
 
 Route Parameters as Controller Arguments
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
