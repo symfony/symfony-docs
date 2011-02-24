@@ -10,7 +10,7 @@ Protocol (HTTP) - the refreshingly simple message format used by all clients
 This is important because, as we'll discover, Symfony2 has been tirelessly
 architected at its core to use HTTP - not reinvent it. The end product
 is a framework that, unlike many others, is an abstraction around the proven
-fundamental rules of the World Wide Web. Whether your realize it or not,
+fundamental rules of the World Wide Web. Whether you realize it or not,
 HTTP is something you use everyday. With Symfony2, you'll learn how to
 leverage and master it.
 
@@ -36,7 +36,7 @@ request with the same basic format. For example:
 The first line of an HTTP request is the most important one (and as a matter
 of fact, the only mandatory one). It contains two things: the URI and the
 HTTP method. The URI (URL if combined with the host header) uniquely identifies
-the location of the resource while The HTTP method defines what you want to
+the location of the resource while the HTTP method defines what you want to
 *do* with the resource. In this example, that unique location of the resource
 is ``/index.html`` and the HTTP method is GET. In other words, the client's
 request is to retrieve the resource identified by ``/index.html``.
@@ -103,7 +103,7 @@ the client (e.g. a redirect). A full list can be found on Wikipedia's
 `List of HTTP status codes`_ article.
 
 Also like the request, an HTTP response message may contain additional pieces
-of information. These are known as HTTP headers and between the first line
+of information. These are known as HTTP headers and sit between the first line
 (the status code) and the response content.
 
 One important HTTP response header is the ``Content-Type``. The body of the
