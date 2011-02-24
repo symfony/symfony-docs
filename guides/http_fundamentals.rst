@@ -127,7 +127,7 @@ set of applications and machines can communicate.
 But why is a book about Symfony going to such lengths to explain requests,
 responses, and the HTTP messaging format? Regardless of the framework you
 choose, the type of application you build (web, mobile, JSON API), or the
-development philosophy you follow, the end goal of the server is _always_
+development philosophy you follow, the end goal of the server is *always*
 to understand each request and create and return the appropriate response.
 Symfony is architected to match this reality.
 
