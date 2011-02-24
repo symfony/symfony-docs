@@ -14,9 +14,9 @@ action or not (authentication is always performed before authorization).
 This document is a quick overview over these main concepts, but it barely scratches
 the surface. If you want to get to know the real power of Symfony2's security 
 layer, you should also read these more specific documents: 
-:doc:`Users </guides/security/users>`,
-:doc:`Authentication </guides/security/authentication>`, and
-:doc:`Authorization </guides/security/authorization>`.
+:doc:`Users </book/security/users>`,
+:doc:`Authentication </book/security/authentication>`, and
+:doc:`Authorization </book/security/authorization>`.
 
 .. index::
    pair: Security; Configuration
@@ -222,7 +222,7 @@ mechanisms for different parts of the application:
 .. tip::
 
     Using HTTP basic is the easiest, but read the :doc:`Authentication
-    </guides/security/authentication>` document to learn how to configure
+    </book/security/authentication>` document to learn how to configure
     other authentication mechanisms, how to configure a stateless
     authentication, how you can impersonate another user, how you can enforce
     https, and much more.
@@ -276,7 +276,7 @@ authentication, you can access the authenticated user via the security context
 
     Using the in-memory provider is a great way to easily secure your personal
     website backend, to create a prototype, or to provide fixtures for your
-    tests. Read the :doc:`Users </guides/security/users>` document to learn
+    tests. Read the :doc:`Users </book/security/users>` document to learn
     how to avoid the password to be in clear, how to use a Doctrine Entity as
     a user provider, how to define several providers, and much more.
 
@@ -333,7 +333,7 @@ having the 'ROLE_USER' role.
 
 .. tip::
 
-    Read the :doc:`Authorization </guides/security/authorization>` document to
+    Read the :doc:`Authorization </book/security/authorization>` document to
     learn how to define a role hierarchy, how to customize your template based
     on roles, how to define access control rules based on request attributes,
     and much more.

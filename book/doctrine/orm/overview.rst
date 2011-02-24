@@ -14,7 +14,7 @@ persistence for PHP objects.
     official `documentation`_ website.
 
 To get started, enable and configure the :doc:`Doctrine DBAL
-</guides/doctrine/dbal/overview>`, then enable the ORM. The minimal
+</book/doctrine/dbal/overview>`, then enable the ORM. The minimal
 necessary configuration is to specify the bundle name which contains your entities.
 
 .. configuration-block::

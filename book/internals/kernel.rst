@@ -143,7 +143,7 @@ method::
 .. tip::
 
     If you are not yet familiar with the Symfony2 Event Dispatcher, read the
-    :doc:`dedicated chapter </guides/internals/event_dispatcher>` first.
+    :doc:`dedicated chapter </book/internals/event_dispatcher>` first.
 
 .. index::
    single: Event; core.request

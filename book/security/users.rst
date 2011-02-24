@@ -553,7 +553,7 @@ objects internally). Roles defined as strings should begin with the ``ROLE_``
 prefix to be automatically managed by Symfony2.
 
 The roles are used by the access decision manager to secure resources. Read
-the :doc:`Authorization </guides/security/authorization>` document to learn
+the :doc:`Authorization </book/security/authorization>` document to learn
 more about access control, roles, and voters.
 
 .. tip::

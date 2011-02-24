@@ -39,7 +39,7 @@ to the following URL:
     The tutorial assumes that you've already downloaded Symfony2 and configured
     your webserver. The above URL assumes that ``localhost`` points to the
     ``web`` directory of your new Symfony2 project. For detailed information
-    on this process, see the :doc:`Installing Symfony2</guides/installation>`.
+    on this process, see the :doc:`Installing Symfony2</book/installation>`.
 
 In reality, you'll be able to replace ``Symfony`` with any other name to be
 greeted. To create the page, we'll go through the simple two-step process.
@@ -147,7 +147,7 @@ to personally greet the user.
 
   The routing system has many more great features for creating flexible
   and powerful URI structures in your application. For more details, see
-  the guide all about :doc:`Routing </guides/routing>`.
+  the guide all about :doc:`Routing </book/routing>`.
 
 Create the Controller
 ~~~~~~~~~~~~~~~~~~~~~
@@ -192,7 +192,7 @@ An optional, but common, third step in the process is to create a template.
 
    Controllers are the main entry point for your code and a key ingredient
    when creating pages. Much more information can be found in the
-   :doc:`Controller Chapter </guides/controller>`.
+   :doc:`Controller Chapter </book/controller>`.
 
 Create the Template
 ~~~~~~~~~~~~~~~~~~~
@@ -388,7 +388,7 @@ configuration and routing files in the ``app/config/`` directory (see
 `Application Configuration`_). It also contains the application cache directory
 (``app/cache``), a logging directory (``app/logs``) and a directory for
 application-level template files (``app/views``). You'll learn more about
-each of these directories in later guides.
+each of these directories in later chapters.
 
 .. sidebar:: Autoloading
 
@@ -446,7 +446,7 @@ in your application and to optimize them the way you want.
 .. note::
 
    While we'll cover the basics here, an entire guide is devoted to the topic
-   of :doc:`/guides/bundles`.
+   of :doc:`/book/bundles`.
 
 A bundle is simply a structured set of files within a directory that
 implement a single feature. You might create a BlogBundle, a ForumBundle
@@ -674,9 +674,9 @@ options of each feature.
 
 .. sidebar:: Configuration Formats
 
-    Throughout the guides, all configuration examples will be shown in all
-    three formats (YAML, XML and PHP). Each has its own advantages and disadvantages.
-    The choice of which to use is up to you:
+    Throughout the chapters, all configuration examples will be shown in all
+    three formats (YAML, XML and PHP). Each has its own advantages and
+    disadvantages. The choice of which to use is up to you:
 
     * *YAML*: Simple, clean and readable;
 
@@ -732,7 +732,7 @@ cached files and allow them to rebuild::
 .. note::
 
     The ``test`` environment is used when running automated tests and cannot
-    be accessed directly through the browser. See the :doc:`testing guide </guides/testing>`
+    be accessed directly through the browser. See the :doc:`testing guide </book/testing>`
     for more details.
 
 .. index::

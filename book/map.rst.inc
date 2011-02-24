@@ -1,53 +1,53 @@
-* :doc:`Introduction to Symfony2 and HTTP </guides/http_fundamentals>`
-* :doc:`From flat PHP to Symfony2 </guides/from_flat_php_to_symfony2>`
-* :doc:`The Basics of Page Creation </guides/page_creation>`
+* :doc:`Introduction to Symfony2 and HTTP </book/http_fundamentals>`
+* :doc:`From flat PHP to Symfony2 </book/from_flat_php_to_symfony2>`
+* :doc:`The Basics of Page Creation </book/page_creation>`
 
-* :doc:`Controllers </guides/controller>`
-* :doc:`Routing </guides/routing>`
-* :doc:`Templating </guides/templating>`
-* :doc:`Testing </guides/testing>`
+* :doc:`Controllers </book/controller>`
+* :doc:`Routing </book/routing>`
+* :doc:`Templating </book/templating>`
+* :doc:`Testing </book/testing>`
 
 * **Doctrine**:
 
-  * :doc:`DBAL </guides/doctrine/dbal/index>` |
-  * :doc:`ORM </guides/doctrine/orm/index>` |
-  * :doc:`Migrations </guides/doctrine/migrations/index>` |
-  * :doc:`MongoDB </guides/doctrine/mongodb-odm/index>`
+  * :doc:`DBAL </book/doctrine/dbal/index>` |
+  * :doc:`ORM </book/doctrine/orm/index>` |
+  * :doc:`Migrations </book/doctrine/migrations/index>` |
+  * :doc:`MongoDB </book/doctrine/mongodb-odm/index>`
 
 * **Validation**:
 
-  * :doc:`Overview </guides/validator/overview>` |
-  * :doc:`Validation </guides/validator/validation>` |
-  * :doc:`/guides/validator/constraints`
+  * :doc:`Overview </book/validator/overview>` |
+  * :doc:`Validation </book/validator/validation>` |
+  * :doc:`/book/validator/constraints`
 
 * **Forms**:
 
-  * :doc:`Overview </guides/forms/overview>` |
-  * :doc:`Templates </guides/forms/view>` |
-  * :doc:`Form Fields </guides/forms/fields>`
+  * :doc:`Overview </book/forms/overview>` |
+  * :doc:`Templates </book/forms/view>` |
+  * :doc:`Form Fields </book/forms/fields>`
 
 * **Security**:
 
-  * :doc:`Overview </guides/security/overview>` |
-  * :doc:`/guides/security/users` |
-  * :doc:`/guides/security/authentication` |
-  * :doc:`/guides/security/authorization` |
-  * :doc:`ACLs </guides/security/acl>` |
-  * :doc:`Advanced ACLs </guides/security/acl_advanced>` |
-  * :doc:`Configuration Reference </guides/security/config_reference>`
+  * :doc:`Overview </book/security/overview>` |
+  * :doc:`/book/security/users` |
+  * :doc:`/book/security/authentication` |
+  * :doc:`/book/security/authorization` |
+  * :doc:`ACLs </book/security/acl>` |
+  * :doc:`Advanced ACLs </book/security/acl_advanced>` |
+  * :doc:`Configuration Reference </book/security/config_reference>`
 
-* :doc:`/guides/http_cache`
-* :doc:`/guides/translation`
-* :doc:`Bundles </guides/bundles>`
-* :doc:`The Service Container </guides/service_container>`
+* :doc:`/book/http_cache`
+* :doc:`/book/translation`
+* :doc:`Bundles </book/bundles>`
+* :doc:`The Service Container </book/service_container>`
 
 * **Internals**:
 
-  * :doc:`Overview </guides/internals/overview>` |
-  * :doc:`Kernel </guides/internals/kernel>` |
-  * :doc:`Event Dispatcher </guides/internals/event_dispatcher>` |
-  * :doc:`Profiler </guides/internals/profiler>`
+  * :doc:`Overview </book/internals/overview>` |
+  * :doc:`Kernel </book/internals/kernel>` |
+  * :doc:`Event Dispatcher </book/internals/event_dispatcher>` |
+  * :doc:`Profiler </book/internals/profiler>`
 
-* :doc:`Symfony2 stable API</guides/stable_api>`
+* :doc:`Symfony2 stable API</book/stable_api>`
 
 .. _Twig Templating: http://www.twig-project.org/documentation

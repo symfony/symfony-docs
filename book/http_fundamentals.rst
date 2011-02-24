@@ -362,8 +362,8 @@ controller.
                         v    |
                         Routing
 
-We'll talk a lot more about :doc:`Controllers </guides/controller>` and the
-:doc:`Router </guides/routing>` in later chapters.
+We'll talk a lot more about :doc:`Controllers </book/controller>` and the
+:doc:`Router </book/routing>` in later chapters.
 
 .. tip::
 

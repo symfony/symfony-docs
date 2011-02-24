@@ -4,7 +4,7 @@
 Creating and using Templates
 ============================
 
-As you know, the :doc:`controller </guides/controller>` is responsible for
+As you know, the :doc:`controller </book/controller>` is responsible for
 handling each request that comes into your Symfony application. In reality,
 the controller delegates the most of the heavy work to other places so that
 code can be tested and reused. When a controller needs to generate HTML,
@@ -1062,7 +1062,7 @@ but can return any other format based on the format requested by the user.
 The request format is most often managed by the routing, where a route can
 be configured so that ``/contact`` sets the request format to ``html`` while
 ``/contact.xml`` sets the format to ``xml``. For more information, see the
-:doc:`Routing</guides/routing>` guide.
+:doc:`Routing</book/routing>` guide.
 
 Final Thoughts
 --------------

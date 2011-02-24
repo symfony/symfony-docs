@@ -4,7 +4,7 @@
 Forms in Templates
 ==================
 
-A Symfony2 :doc:`Form </guides/forms/overview>` is made of fields. Fields
+A Symfony2 :doc:`Form </book/forms/overview>` is made of fields. Fields
 describe the form semantic, not its end-user representation; it means that a
 form is not necessarily tied to HTML. Instead, it is the responsibility of the 
 web designer to display each form field the way he wants. So, displaying a 

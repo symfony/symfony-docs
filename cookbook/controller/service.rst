@@ -27,7 +27,7 @@ value:
 
 To use a controller in this way, it must be defined in the service container
 configuration. For more information, see the :doc:`Service Container
-</guides/service_container>` chapter.
+</book/service_container>` chapter.
 
 When using a controller defined as a service, it will most likely not extend
 the base ``Controller`` class. Instead of relying on its shortcut methods,

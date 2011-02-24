@@ -131,7 +131,7 @@ Mapping a URI to a Controller
 Our new controller returns a simple HTML page. To render this controller
 at a specific URL, we need to create a route to it.
 
-We'll talk about the ``Routing`` component in detail in the :doc:`Routing guide</guides/routing>`,
+We'll talk about the ``Routing`` component in detail in the :doc:`Routing guide</book/routing>`,
 but let's create a simple route to our controller:
 
 .. configuration-block::
@@ -389,7 +389,7 @@ class, which is designed specifically to redirect the user to another URL::
 
 The ``generateUrl()`` method is just a shortcut that calls ``generate()``
 on the ``router`` service. It takes the route name and an array of parameters
-as arguments and returns the associated friendly URL. See the :doc:`Routing </guides/routing>`
+as arguments and returns the associated friendly URL. See the :doc:`Routing </book/routing>`
 guide for more information.
 
 By default, the ``redirect`` method does a 302 (temporary) redirect. To perform
@@ -474,7 +474,7 @@ returns a ``Response`` object with the content from the template::
 
     return $this->render('HelloBundle:Hello:index.html.twig', array('name' => $name));
 
-The Symfony templating engine is explained in great detail in the :doc:`Templating </guides/templating>`
+The Symfony templating engine is explained in great detail in the :doc:`Templating </book/templating>`
 guide.
 
 .. tip::
@@ -505,7 +505,7 @@ via the ``get()`` method. Here are several common services you might need::
     $mailer = $this->get('mailer');
 
 The are countless other services available and you are encouraged to define
-your own. For more information, see the :doc:`Extending Symfony </guides/extending_symfony>`
+your own. For more information, see the :doc:`Extending Symfony </book/extending_symfony>`
 guide.
 
 .. index::

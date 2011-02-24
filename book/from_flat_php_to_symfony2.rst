@@ -633,9 +633,9 @@ routing map information to determine which controller to call. Just as in
 our sample application, your controller method is responsible for returning
 the final ``Response`` object. There's really not much else to it.
 
-In the upcoming guides, we'll learn more about how each piece works and
-how the project is organized by default. For now, just realize what we've
-gained by migrating the original flat PHP application to Symfony2:
+In the upcoming chapters, we'll learn more about how each piece works and how
+the project is organized by default. For now, just realize what we've gained
+by migrating the original flat PHP application to Symfony2:
 
 * Your application code is clearly and consistently organized (though Symfony
   doesn't force you into this) in a way that promotes reusability and allows

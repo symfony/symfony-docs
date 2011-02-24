@@ -9,7 +9,7 @@ you write functional tests that monitor your production servers, you might
 want to write tests on the profiling data as it gives you a great way to check
 various things and enforce some metrics.
 
-The Symfony2 :doc:`Profiler </guides/internals/profiler>` gathers a lot of
+The Symfony2 :doc:`Profiler </book/internals/profiler>` gathers a lot of
 data for each request. Use these data to check the number of database calls,
 the time spent in the framework, ... But before writing assertions, always
 check that the profiler is indeed available (it is enabled by default in the

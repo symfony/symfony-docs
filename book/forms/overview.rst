@@ -238,7 +238,7 @@ data.
 
 If any constraint fails, the error is displayed next to the corresponding
 form field. You can learn more about constraints in :doc:`Validation 
-Constraints </guides/validator/constraints>`.
+Constraints </book/validator/constraints>`.
 
 Creating Form Fields Automatically
 ----------------------------------

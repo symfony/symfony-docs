@@ -1,5 +1,5 @@
-Guides
-======
+Book
+====
 
 Dive into Symfony2 with the topical guides:
 
