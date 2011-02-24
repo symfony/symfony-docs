@@ -11,6 +11,8 @@ flexible, you should follow some best practices if you want to distribute them.
 .. index::
    pair: Bundles; Naming Conventions
 
+.. _bundles-naming-conventions:
+
 Bundle Name
 -----------
 
