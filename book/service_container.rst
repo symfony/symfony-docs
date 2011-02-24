@@ -412,9 +412,9 @@ invokes the service container extension inside the ``FrameworkBundle``:
     .. code-block:: xml
 
         <!-- app/config/config.xml -->
-        <framework charset="UTF-8" error-handler="null">
-            <app:csrf-protection enabled="true" secret="xxxxxxxxxx" />
-            <app:router resource="%kernel.root_dir%/config/routing.xml" cache-warmer="true" />
+        <framework:config charset="UTF-8" error-handler="null">
+            <framework:csrf-protection enabled="true" secret="xxxxxxxxxx" />
+            <framework:router resource="%kernel.root_dir%/config/routing.xml" cache-warmer="true" />
             <!-- ... -->
         </framework>
 

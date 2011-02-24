@@ -107,22 +107,22 @@ is defined in your application's main configuration file:
     .. code-block:: yaml
 
         # app/config/config.yml
-        app.config:
+        framework:
             # ...
             router:        { resource: "%kernel.root_dir%/config/routing.yml" }
 
     .. code-block:: xml
 
         <!-- app/config/config.xml -->
-        <app:config ...>
+        <framework:config ...>
             <!-- ... -->
-            <app:router resource="%kernel.root_dir%/config/routing.xml" />
-        </app:config>
+            <framework:router resource="%kernel.root_dir%/config/routing.xml" />
+        </framework:config>
 
     .. code-block:: php
 
         // app/config/config.php
-        $container->loadFromExtension('app', 'config', array(
+        $container->loadFromExtension('framework', array(
             // ...
             'router'        => array('resource' => '%kernel.root_dir%/config/routing.php'),
         ));

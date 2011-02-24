@@ -122,9 +122,9 @@ the configuration for the development environment:
         <!-- xsi:schemaLocation="http://www.symfony-project.org/schema/dic/webprofiler http://www.symfony-project.org/schema/dic/webprofiler/webprofiler-1.0.xsd"> -->
 
         <!-- load the profiler -->
-        <app:config>
-            <app:profiler only-exceptions="false" />
-        </app:config>
+        <framework:config>
+            <framework:profiler only-exceptions="false" />
+        </framework:config>
 
         <!-- enable the web profiler -->
         <webprofiler:config
@@ -203,32 +203,32 @@ portion of the website? You can use a request matcher:
     .. code-block:: xml
 
         <!-- enables the profiler only for request coming for the 192.168.0.0 network -->
-        <app:config>
-            <app:profiler>
-                <app:matcher ip="192.168.0.0/24" />
-            </app:profiler>
-        </app:config>
+        <framework:config>
+            <framework:profiler>
+                <framework:matcher ip="192.168.0.0/24" />
+            </framework:profiler>
+        </framework:config>
 
         <!-- enables the profiler only for the /admin URLs -->
-        <app:config>
-            <app:profiler>
-                <app:matcher path="#^/admin/#i" />
-            </app:profiler>
-        </app:config>
+        <framework:config>
+            <framework:profiler>
+                <framework:matcher path="#^/admin/#i" />
+            </framework:profiler>
+        </framework:config>
 
         <!-- combine rules -->
-        <app:config>
-            <app:profiler>
-                <app:matcher ip="192.168.0.0/24" path="#^/admin/#i" />
-            </app:profiler>
-        </app:config>
+        <framework:config>
+            <framework:profiler>
+                <framework:matcher ip="192.168.0.0/24" path="#^/admin/#i" />
+            </framework:profiler>
+        </framework:config>
 
         <!-- use a custom matcher instance defined in the "custom_matcher" service -->
-        <app:config>
-            <appp:rofiler>
-                <app:matcher service="custom_matcher" />
-            </app:profiler>
-        </app:config>
+        <framework:config>
+            <framework:profiler>
+                <framework:matcher service="custom_matcher" />
+            </framework:profiler>
+        </framework:config>
 
         <!-- define an anonymous service for the matcher -->
         <web:config>

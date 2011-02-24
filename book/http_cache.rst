@@ -799,22 +799,22 @@ First, to use ESI, be sure to enable it in your application configuration:
     .. code-block:: yaml
 
         # app/config/config.yml
-        app.config:
+        framework:
             # ...
             esi: {}
 
     .. code-block:: xml
 
         <!-- app/config/config.xml -->
-        <app:config ...>
+        <framework:config ...>
             <!-- ... -->
-            <app:esi />
-        </app:config>
+            <framework:esi />
+        </framework:config>
 
     .. code-block:: php
 
         // app/config/config.php
-        $container->loadFromExtension('app', 'config', array(
+        $container->loadFromExtension('framework', array(
             // ...
             'esi'    => array(),
         ));

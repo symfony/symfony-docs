@@ -650,9 +650,9 @@ The Client used by functional tests creates a Kernel that runs in a special
                 intercept-redirects="false"
             />
 
-            <app:config error_handler="false">
-                <app:test />
-            </app:config>
+            <framework:config error_handler="false">
+                <framework:test />
+            </framework:config>
 
             <zend:config>
                 <zend:logger priority="debug" />

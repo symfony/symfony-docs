@@ -58,9 +58,9 @@ enable the ``Translator`` in your configuration:
     .. code-block:: xml
 
         <!-- app/config/config.xml -->
-        <app:config>
-            <app:translator fallback="en" />
-        </app:config>
+        <framework:config>
+            <framework:translator fallback="en" />
+        </framework:config>
 
     .. code-block:: php
 
@@ -506,8 +506,8 @@ by defining a ``default_locale`` for the session service:
 
         <!-- app/config/config.xml -->
         <framework:config>
-            <app:session default-locale="en" />
-        </app:config>
+            <framework:session default-locale="en" />
+        </framework:config>
 
     .. code-block:: php
 
