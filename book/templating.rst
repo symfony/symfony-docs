@@ -5,17 +5,17 @@ Creating and using Templates
 ============================
 
 As you know, the :doc:`controller </book/controller>` is responsible for
-handling each request that comes into your Symfony application. In reality,
+handling each request that comes into a Symfony2 application. In reality,
 the controller delegates the most of the heavy work to other places so that
 code can be tested and reused. When a controller needs to generate HTML,
-CSS or any other content, it hands the work of to the templating engine.
-In this guide, we'll learn how to write powerful templates that can be
+CSS or any other content, it hands the work off to the templating engine.
+In this guide, you'll learn how to write powerful templates that can be
 used to return content to the user, populate email bodies, and more. You'll
 learn shortcuts, clever ways to extend templates and how to reuse template
 code.
 
 .. index::
-   single: Templating; What is a template
+   single: Templating; What is a template?
 
 Templates
 ---------
@@ -48,7 +48,7 @@ template - a text file parsed by PHP that contains a mix of text and PHP code::
 
 But Symfony2 packages an even more powerful templating language called `Twig`_
 Twig allows you to write concise, readable templates that are more friendly
-to web designers:
+to web designers and, in several ways, more powerful than PHP templates:
 
 .. code-block:: html+jinja
 
@@ -79,12 +79,12 @@ Twig contains defines two types of special syntax:
 .. note::
 
    There is a third syntax used for creating comments: ``{# this is a comment #}``.
-   This syntax can even be used across lines like the PHP-equivalent ``/* comment */``
-   syntax.
+   This syntax can be used across multiple lines like the PHP-equivalent
+   ``/* comment */`` syntax.
 
 Twig also contains **filters**, which modify content before being rendered.
-The following would call ``strtoupper()`` on the ``title`` variable before
-rendering it:
+The following makes the ``title`` variable all uppercase before rendering
+it:
 
 .. code-block:: jinja
 
@@ -98,7 +98,7 @@ and new functions can be easily added. For example, the following uses a
 standard ``if`` tag and the ``cycle`` function to print ten div tags, with
 alternating ``odd``, ``even`` classes:
 
-.. code-block:: jinja
+.. code-block:: html+jinja
 
     {% for i in 0..10 %}
       <div class="{{ cycle(['odd', 'even'], i) }}">
@@ -117,14 +117,13 @@ Throughout this guide, template examples will be shown in both Twig and PHP.
     web designers everywhere.
     
     Twig can also do things that PHP can't, such as true template inheritance
-    (Twig templates compiled down to PHP classes that extend from each other),
+    (Twig templates compile down to PHP classes that inherit from each other),
     whitespace control, sandboxing, and the inclusion of custom functions
     and filters that only affect templates. Twig contains little features
     that make writing templates easier and more concise. Take the following
-    example from the Twig documentation, which combines a loop with a logical
-    ``if`` statement:
+    example, which combines a loop with a logical ``if`` statement:
     
-    .. code-block:: jinja
+    .. code-block:: html+jinja
     
         <ul>
             {% for user in users %}
@@ -140,7 +139,7 @@ Throughout this guide, template examples will be shown in both Twig and PHP.
 Twig Template Caching
 ~~~~~~~~~~~~~~~~~~~~~
 
-And Twig is fast. Each Twig template is compiled down to a native PHP class
+Twig is fast. Each Twig template is compiled down to a native PHP class
 that is rendered at runtime. The compiled classes are located in the
 ``app/cache/{environment}/twig`` directory (where ``{environment}`` is the
 environment, such as ``dev`` or ``prod``) and in some cases can be useful
@@ -150,7 +149,7 @@ environments.
 When ``debug`` mode is enabled (common in the ``dev`` environment) a Twig
 template will be automatically recompiled when changes are made to it. This
 means that during development you can happily make changes to a Twig template
-and instantly see its changes without needing to worry about clearing any
+and instantly see the changes without needing to worry about clearing any
 cache.
 
 When ``debug`` mode is disabled (common in the ``prod`` environment), however,
@@ -164,18 +163,19 @@ Template Inheritance and Layouts
 --------------------------------
 
 More often than not, templates in a project share common elements, like the
-header, footer, sidebar or more. In Symfony, we like to think about this
+header, footer, sidebar or more. In Symfony2, we like to think about this
 problem differently: a template can be decorated by another one. This works
 exactly the same as PHP classes: template inheritance allows you to build
 a base "layout" template that contains all the common elements of your site
 defined as **blocks** (think "PHP class with base methods"). A child template
-can extend the base layout and override any of its blocks.
+can extend the base layout and override any of its blocks (think "PHP subclass
+that overrides certain methods of its parent class").
 
-First, let's build a base layout file:
+First, build a base layout file:
 
 .. configuration-block::
 
-    .. code-block:: jinja
+    .. code-block:: html+jinja
 
         {# app/views/layout.html.twig #}
         <!DOCTYPE html>
@@ -229,8 +229,8 @@ First, let's build a base layout file:
 
 .. note::
 
-    Though we'll talk about template inheritance in terms of Twig, the philosophy
-    is the same between Twig and PHP templates.
+    Though the discussion about template inheritance will be in terms of Twig,
+    the philosophy is the same between Twig and PHP templates.
 
 This template defines the base HTML skeleton document of a simple two-column
 page. In this example, three ``{% block %}`` areas are defined (``title``,
@@ -243,7 +243,7 @@ A child template might look like this:
 
 .. configuration-block::
 
-    .. code-block:: jinja
+    .. code-block:: html+jinja
 
         {# src/Sensio/BlogBundle/Resources/views/Blog/index.html.twig #}
         {% extends '::layout.html.twig' %}
@@ -272,9 +272,11 @@ A child template might look like this:
         <?php $view['slots']->stop() ?>
 
 .. note::
-    The parent template is identified by a special string syntax (``::layout.html.twig``)
-    that indicates that the template lives in the ``app/views`` directory.
-    This naming convention will be explained fully in :ref:`template-naming-locations`.
+
+   The parent template is identified by a special string syntax (``::layout.html.twig``)
+   that indicates that the template lives in the ``app/views`` directory
+   of the project. This naming convention is explained fully in
+   :ref:`template-naming-locations`.
 
 The key to template inheritance is the ``{% extends %}`` tag. This tells
 the templating engine to first evaluate the base template, which sets up
@@ -312,8 +314,8 @@ value from the parent template is used instead. Content within a ``{% block %}``
 tag in a parent template is always used by default.
 
 You can use as many levels of inheritance as you want. In the next section,
-we'll go over a common three-level inheritance model and explain how templates
-are organized inside a Symfony project.
+a common three-level inheritance model will be explained along with how templates
+are organized inside a Symfony2 project.
 
 When working with template inheritance, here are some tips to keep in mind:
 
@@ -335,7 +337,7 @@ When working with template inheritance, here are some tips to keep in mind:
   can use the ``{{ parent() }}`` function. This is useful if you want to add
   to the contents of a parent block instead of completely overriding it:
 
-    .. code-block:: jinja
+    .. code-block:: html+jinja
 
         {% block sidebar %}
             <h3>Table of Contents</h3>
@@ -356,28 +358,41 @@ By default, templates can live in two different locations:
 
 * ``app/views/`` The applications ``views`` directory can contain application-wide
   base templates (i.e. your application's layouts) as well as templates that
-  override bundle templates (see `Overriding Bundle Templates`);
+  override bundle templates (see :ref:`overiding-bundle-templates`);
 
 * ``MyBundle/Resources/views/`` Each bundle houses its templates in its
-  ``Resources/views`` directory. The majority of templates will live inside
-  a bundle.
+  ``Resources/views`` directory (and subdirectories). The majority of templates
+  will live inside a bundle.
 
-Symfony uses a **bundle**:**controller**:**template** string syntax for
+Symfony2 uses a **bundle**:**controller**:**template** string syntax for
 templates. This allows for several different types of templates, each which
-live in a specific location:
+lives in a specific location:
 
 * ``BlogBundle:Blog:index.html.twig``: This syntax is used to specify a template
-  for a specific page. The value of the controller portion (``Blog``) indicates
-  that the template will be located in the ``Resources/views/Blog`` directory
-  of the ``BlogBundle``.
+  for a specific page. The three parts of the string, each separated by
+  a colon (``:``), mean the following:
+  
+    * ``BlogBundle``: (*bundle*) the template lives inside the ``BlogBundle`` (e.g.
+      ``src/Sensio/BlogBundle``);
 
-* ``BlogBundle::layout.html.twig``: This syntax refers to a base template that's
-  specific to the ``BlogBundle``. The controller portion is absent, indicating
-  that the template will be located in the ``Resources/views`` directory
+    * ``Blog``: (*controller*) indicates that the template lives inside the
+      ``blog`` subdirectory of ``Resources/views``;
+
+    * ``index.html.twig``: (*template*) the actual name of the file is
+      ``index.html.twig``.
+  
+  Assuming that the ``BlogBundle`` lives in the ``src/Sensio`` directory,
+  the final path to the layout would be ``src/Sensio/BlogBundle/Resources/views/Blog/index.html.twig``.
+
+* ``BlogBundle::layout.html.twig``: This syntax refers to a base template
+  that's specific to the ``BlogBundle``. Since the "controller" portion of
+  the string is missing (e.g. ``Blog``), the template
+  (``layout.html.twig``) lives simply in the ``Resources/views`` directory
   of the ``BlogBundle``.
 
 * ``::layout.html.twig``: This syntax refers to an application-wide base template
-  or layout. The *bundle* and *controller* portions are missing. This means
+  or layout. Notice that the string begins with two colons (``::``), meaning
+  that both the *bundle* and *controller* portions are missing. This means
   that the template is not located in any bundle, but instead in the root
   ``app/views/`` directory.
 
@@ -385,39 +400,37 @@ In the :ref:`overiding-bundle-templates` section, you'll find out how each
 bundle template can be overridden by placing a template in the ``app/views/``
 directory. This gives the power to override templates from any vendor bundle.
 
-Template Suffix
-~~~~~~~~~~~~~~~
-
-The **bundle**:**controller**:**template** format of each template specifies
-*where*  the template file is located. Every template name also has two extensions
-that specify the *format* and *renderer* for that template.
-
-* **BlogBundle:Blog:index.html.twig** - HTML format, Twig renderer
-
-* **BlogBundle:Blog:index.html.php** - HTML format, PHP renderer
-
-* **BlogBundle:Blog:index.css.twig** - CSS format, Twig renderer
-
-By default, Symfony2 templates can be written in either Twig or PHP, and
-the first part of the extension specifies which of these two *renderers*
-should be used. The second part of the extension, (e.g. HTML, CSS, etc)
-is the end format that the template will generate. Unlike the renderer, this
-is simply an organizational tactic in case the same content every needs to
-be rendered as HTML (index.html.twig), XML (index.xml.twig), or any other
-format. For more information, read the :ref:`template-formats` section.
-
 .. tip::
 
     Hopefully the template naming syntax looks familiar - it's the same naming
     convention used to refer to :ref:`controller-string-syntax`.
 
-.. tip::
+Template Suffix
+~~~~~~~~~~~~~~~
 
-    Recall that a particular bundle could live in one of several different
-    places. For example, the ``BlogBundle`` could actually live at
-    ``src/Sensio/BlogBundle``, ``src/Bundle/VendorName/BlogBundle``,
-    or some other location. So, the true location of a template called
-    ``BlogBundle:Blog:index.html.twig`` depends on the location of ``BlogBundle``.
+The **bundle**:**controller**:**template** format of each template specifies
+*where*  the template file is located. Every template name also has two extensions
+that specify the *format* and *engine* for that template.
+
+* **BlogBundle:Blog:index.html.twig** - HTML format, Twig engine
+
+* **BlogBundle:Blog:index.html.php** - HTML format, PHP engine
+
+* **BlogBundle:Blog:index.css.twig** - CSS format, Twig engine
+
+By default, any Symfony2 template can be written in either Twig or PHP, and
+the first part of the extension specifies which of these two *engines*
+should be used. The second part of the extension, (e.g. HTML, CSS, etc)
+is the finished format that the template will generate. Unlike the engine,
+which determines how Symfony2 parses the template, this is simply an organizational
+tactic used in case the same content ever needs to be rendered as HTML
+(``index.html.twig``), XML (``index.xml.twig``), or any other format.
+For more information, read the :ref:`template-formats` section.
+
+.. note::
+
+   The available "engines" are can be configured and even new engines added.
+   See :ref:`Templating Configuration<template-configuration>` for more details.
 
 .. index::
    single: Templating; Tags and Helpers
@@ -427,8 +440,8 @@ Tags and Helpers
 ----------------
 
 You already understand the basics of templates, how they're named and how
-to use template inheritance. The hardest parts are already behind us. In
-this section, we'll talk about a large group of tools available to help
+to use template inheritance. The hardest parts are already behind you. In
+this section, you'll learn about a large group of tools available to help
 perform the most common template tasks such as including other templates,
 linking to pages and including images.
 
@@ -452,17 +465,17 @@ Including other Templates
 You'll often want to include the same template or code fragment on several
 different pages. For example, in an application with "news articles", the
 template code displaying an article might be used on the article detail page,
-on a page displaying the most popular articles, or in the list of the latest
+on a page displaying the most popular articles, or in a list of the latest
 articles.
 
 When you need to reuse a chunk of PHP code, you typically move the code to
 a new PHP class or function. The same is true for templates. By moving the
-reused template code into its own template, we can include it from any other
-template. First, let's create the template that we need to reuse.
+reused template code into its own template, it can be included from any other
+template. First, create the template that you'll need to reuse.
 
 .. configuration-block::
 
-    .. code-block:: jinja
+    .. code-block:: html+jinja
 
         {# src/Sensio/ArticleBundle/Resources/Article/articleDetails.html.twig #}
         <h1>{{ article.title }}</h1>
@@ -486,7 +499,7 @@ Including this template from any other template is simple:
 
 .. configuration-block::
 
-    .. code-block:: jinja
+    .. code-block:: html+jinja
 
         {# src/Sensio/ArticleBundle/Resources/Article/list.html.twig #}
         {% extends 'ArticleBundle::layout.html.twig' %}
@@ -508,14 +521,14 @@ Including this template from any other template is simple:
             <h1>Recent Articles</h1>
 
             <?php foreach ($articles as $article): ?>
-                <?php echo $view->render('ArticleBundle:Article:articleDetails.php', array('article' => $article)) ?>
+                <?php echo $view->render('ArticleBundle:Article:articleDetails.html.php', array('article' => $article)) ?>
             <?php endforeach; ?>
         <?php $view['slots']->stop() ?>
 
 The template is included using the ``{% include %}`` tag. Notice that the
 template name follows the same typical convention. The ``articleDetails.html.twig``
 template uses an ``article`` variable. This is passed in by the ``list.html.twig``
-using the ``with`` command.
+template using the ``with`` command.
 
 .. tip::
 
@@ -532,13 +545,13 @@ Embedding Controllers
 ~~~~~~~~~~~~~~~~~~~~~
 
 In some cases, you need to do more than include a simple template. Suppose
-we have a sidebar in our layout that contains the three most recent articles.
+you have a sidebar in your layout that contains the three most recent articles.
 Retrieving the three articles may include querying the database or performing
 other heavy logic that can't be done from within a template.
 
-An easy solution is to simply embed the result of an entire controller from
-your template. First, let's create a controller that renders a certain number
-of recent articles:
+The solution is to simply embed the result of an entire controller from your
+template. First, create a controller that renders a certain number of recent
+articles:
 
 .. code-block:: php
 
@@ -559,7 +572,7 @@ The ``recentList`` template is perfectly straightforward:
 
 .. configuration-block::
 
-    .. code-block:: jinja
+    .. code-block:: html+jinja
 
         {# src/Sensio/ArticleBundle/Resources/views/Article/recentList.html.twig #}
         {% for article in articles %}
@@ -581,14 +594,14 @@ The ``recentList`` template is perfectly straightforward:
 
     Notice that we've cheated and hardcoded the article URL in this example
     (e.g. ``/article/*slug*``). This is a bad practice. In the next section,
-    we'll show you how to do this right.
+    you'll learn how to do this correctly.
 
-To include the controller, we'll need to refer to it using the standard string
+To include the controller, you'll need to refer to it using the standard string
 syntax for controllers (i.e. **bundle**:**controller**:**action**):
 
 .. configuration-block::
 
-    .. code-block:: jinja
+    .. code-block:: html+jinja
 
         {# app/views/layout.html.twig #}
         ...
@@ -606,9 +619,9 @@ syntax for controllers (i.e. **bundle**:**controller**:**action**):
             <?php echo $view['actions']->render('ArticleBundle:Article:recentArticles', array('max' => 3)) ?>
         </div>
 
-Whenever you find that you need a variable or a piece of information that you
-don't have access to in a template, consider rendering a controller. Controllers
-are fast to execute and promote good code reuse.
+Whenever you find that you need a variable or a piece of information that
+you don't have access to in a template, consider rendering a controller.
+Controllers are fast to execute and promote good code organization and reuse.
 
 .. index::
    single: Templating; Linking to pages
@@ -617,14 +630,14 @@ Linking to Pages
 ~~~~~~~~~~~~~~~~
 
 Creating links to other pages in your application is one of the most common
-jobs for a template. Instead of hardcoding URLs in templates, we'll use the
-``path`` Twig function (or the ``router`` helper in PHP) to generate URLs
-based on the routing configuration. Later, if you want to modify the URL
-of a particular page, all you'll need to do is change the routing configuration;
-the templates will automatically generate the new URL.
+jobs for a template. Instead of hardcoding URLs in templates, use the ``path``
+Twig function (or the ``router`` helper in PHP) to generate URLs based on
+the routing configuration. Later, if you want to modify the URL of a particular
+page, all you'll need to do is change the routing configuration; the templates
+will automatically generate the new URL.
 
-First, let's link to the "homepage", which is accessible via the following
-routing configuration:
+First, link to the "homepage", which is accessible via the following routing
+configuration:
 
 .. configuration-block::
 
@@ -653,7 +666,7 @@ To link to the page, just use the ``path`` Twig function and refer to the route:
 
 .. configuration-block::
 
-    .. code-block:: jinja
+    .. code-block:: html+jinja
 
         <a href="{{ path('homepage') }}">Home</a>
 
@@ -687,14 +700,14 @@ a more complicated route:
 
         return $collection;
 
-In this case, we need to specify both the route name (``article_show``) and
+In this case, you need to specify both the route name (``article_show``) and
 a value for the ``{slug}`` parameter. Using this route, let's revisit the
 ``recentList`` template from the previous section and link to the articles
 correctly:
 
 .. configuration-block::
 
-    .. code-block:: jinja
+    .. code-block:: html+jinja
 
         {# src/Sensio/ArticleBundle/Resources/views/Article/recentList.html.twig #}
         {% for article in articles %}
@@ -716,7 +729,7 @@ correctly:
 
     You can also generate an absolute URL by using the ``url`` Twig function:
 
-    .. code-block:: jinja
+    .. code-block:: html+jinja
 
         <a href="{{ url('homepage') }}">Home</a>
 
@@ -734,13 +747,13 @@ Linking to Assets
 ~~~~~~~~~~~~~~~~~
 
 Templates also commonly refer to images, Javascript, stylesheets and other
-assets. Of course you could hard-coded these the paths to these assets
+assets. Of course you could hard-coded these the path to these assets
 (e.g. ``/images/logo.png``), but Symfony2 provides a more dynamic option
 via the ``assets`` Twig function:
 
 .. configuration-block::
 
-    .. code-block:: jinja
+    .. code-block:: html+jinja
 
         <img src="{{ asset('images/logo.png') }}" alt="Symfony!" />
 
@@ -769,7 +782,7 @@ Configuring and using the ``templating`` Service
 The heart of the template system in Symfony2 is the templating ``Engine``.
 This special object is responsible for rendering templates and returning
 their content. When you render a template in a controller, for example,
-you're actually using the templating engine service:
+you're actually using the templating engine service. For example:
 
 .. code-block:: php
 
@@ -779,11 +792,12 @@ is equivalent to
 
 .. code-block:: php
 
-    // get the templating engine object and then render a template
     $engine = $this->container->get('templating');
     $content = $engine->render('ArticleBundle:Article:index.html.twig');
 
-    return $response = $this->createResponse($content);
+    return $response = new Response($content);
+
+.. _template-configuration:
 
 The templating engine (or "service") is preconfigured to work automatically
 inside Symfony2. It can, of course, be configured further in the application
@@ -816,7 +830,7 @@ configuration file:
         ));
 
 Several configuration options are available and are covered in the
-:ref:`Configuration Appendix<appendix-templating-configuration>`.
+:doc:`Configuration Appendix</reference/bundle_configuration/FrameworkBundle>`.
 
 .. note::
 
@@ -831,9 +845,9 @@ Several configuration options are available and are covered in the
 Overriding Bundle Templates
 ---------------------------
 
-One of the best features of Symfony is a bundle system that encourages the
+One of the best features of Symfony2 is a bundle system that encourages the
 organization of components in a way that makes them easy to reuse in other
-projects or distribute as open source libraries. In fact, the Symfony community
+projects or distribute as open source libraries. In fact, the Symfony2 community
 prides itself on creating and maintaining high quality bundles for a large
 number of different features. To find out more about the open source bundles
 that are available, visit `Symfony2Bundles.org`_
@@ -860,17 +874,17 @@ We learned in the :ref:`template-naming-locations` section that the template
 in question lives at ``Resources/views/Blog/index.html.twig`` inside the
 ``BlogBundle``. To override the bundle template, copy the ``index.html.twig``
 template to ``app/views/BlogBundle/Blog/index.html.twig`` (the ``BlogBundle``
-directory might not exist). Now, when you render the ``BlogBundle:Blog:index.html.twig``
-template, Symfony2 will look first for the template at ``app/views/BlogBundle/Blog/index.html.twig``
-before looking inside ``BlogBundle``. You're now free to customize the template
-for your application.
+directory might not exist). Now, when the ``BlogBundle:Blog:index.html.twig``
+template is rendered, Symfony2 will look first for the template at
+``app/views/BlogBundle/Blog/index.html.twig`` before looking inside ``BlogBundle``.
+You're now free to customize the template for your application.
 
-Suppose also that each template in ``BlogBundle`` inherits from a template
-called ``BlogBundle::layout.html.twig``. By default, this template lives at
-``Resources/views/layout.html.twig``. To override it, copy it to
-``app/views/BlogBundle/layout.html.twig``.
+Suppose also that each template in ``BlogBundle`` inherits from a base template
+specific to the ``BlogBundle`` called ``BlogBundle::layout.html.twig``. By
+default, this template lives at ``Resources/views/layout.html.twig``. To
+override it, copy it to ``app/views/BlogBundle/layout.html.twig``.
 
-If you take a step back, you'll see that Symfony always starts by looking
+If you take a step back, you'll see that Symfony2 always starts by looking
 in the *app/views/***bundle-name**/ directory for a template. If the template
 doesn't exist there, it continues by checking inside the ``Resources/views``
 directory of the bundle itself. This means that all bundle templates can
@@ -909,7 +923,7 @@ covered:
   would have a template called ``BlogBundle::layout.html.twig`` that contains
   only blog section-specific elements;
 
-    .. code-block:: jinja
+    .. code-block:: html+jinja
 
         {# src/Sensio/BlogBundle/Resources/views/layout.html.twig #}
         {% extends '::layout.html.twig' %}
@@ -924,7 +938,7 @@ covered:
   section template. For example, the "index" page would be called something
   close to ``BlogBundle:Blog:index.html.twig`` and list the actual blog posts.
 
-    .. code-block:: jinja
+    .. code-block:: html+jinja
 
         {# src/Sensio/BlogBundle/Resources/views/Blog/index.html.twig #}
         {% extends 'BlogBundle::layout.html.twig' %}
