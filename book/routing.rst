@@ -549,10 +549,10 @@ Routes and Controllers
 Now that you've mastered the creation of routes and learned how matching
 takes place, the only missing piece is connecting each route to a controller.
 
-.. controller-string-syntax:
+.. _controller-string-syntax:
 
-The ``_controller`` Parameter
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Controller Naming Format
+~~~~~~~~~~~~~~~~~~~~~~~~
 
 Every route *must* contain a ``_controller`` parameter, which is a special
 string syntax that Symfony2 translates into a PHP callable. There are two

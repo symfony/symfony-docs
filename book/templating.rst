@@ -332,15 +332,15 @@ When working with template inheritance, here are some tips to keep in mind:
   and ``include`` it (see :ref:`including-templates`).
 
 * If you need to get the content of a block from the parent template, you
-  can use the ``{% parent %}`` tag. This is useful if you want to add to
-  the contents of a parent block instead of completely overriding it:
+  can use the ``{{ parent() }}`` function. This is useful if you want to add
+  to the contents of a parent block instead of completely overriding it:
 
     .. code-block:: jinja
 
         {% block sidebar %}
             <h3>Table of Contents</h3>
             ...
-            {% parent %}
+            {{ parent() }}
         {% endblock %}
 
 .. index::
@@ -409,7 +409,7 @@ format. For more information, read the :ref:`template-formats` section.
 .. tip::
 
     Hopefully the template naming syntax looks familiar - it's the same naming
-    convention used to refer to `controllers </en/controllers>`.
+    convention used to refer to :ref:`controller-string-syntax`.
 
 .. tip::
 
@@ -437,7 +437,7 @@ ease the work of the template designer. In PHP, the templating system provides
 an extensible *helper* system that provides useful features in a template
 context.
 
-We've already seen a few built-in Twig tags (``{{ block }}`` & ``{{ extends }}``)
+We've already seen a few built-in Twig tags (``{% block %}`` & ``{% extends %}``)
 as well as an example of a PHP helper (``$view['slots']``). Let's learn a
 few more.
 
@@ -796,26 +796,32 @@ configuration file:
         # app/config/config.yml
         framework:
             # ...
-            templating: {}
+            templating: { engines: ['twig'] }
 
     .. code-block:: xml
 
         <!-- app/config/config.xml -->
-        <framework:config ...>
-            <!-- ... -->
-            <framework:templating />
-        </framework:config>
+        <framework:templating cache-warmer="true">
+            <framework:engine id="twig" />
+        </framework:templating>
 
     .. code-block:: php
 
         // app/config/config.php
         $container->loadFromExtension('framework', array(
             // ...
-          'templating'    => array(),
+            'templating'      => array(
+                'engines' => array('twig'),
+            ),
         ));
 
 Several configuration options are available and are covered in the
 :ref:`Configuration Appendix<appendix-templating-configuration>`.
+
+.. note::
+
+   The ``twig`` engine is mandatory to use the webprofiler (as well as many
+   third-party bundles).
 
 .. index::
     single; Template; Overriding templates
@@ -856,7 +862,7 @@ in question lives at ``Resources/views/Blog/index.html.twig`` inside the
 template to ``app/views/BlogBundle/Blog/index.html.twig`` (the ``BlogBundle``
 directory might not exist). Now, when you render the ``BlogBundle:Blog:index.html.twig``
 template, Symfony2 will look first for the template at ``app/views/BlogBundle/Blog/index.html.twig``
-before looking inside ``BlogBundle``. You're know free to customize the template
+before looking inside ``BlogBundle``. You're now free to customize the template
 for your application.
 
 Suppose also that each template in ``BlogBundle`` inherits from a template
@@ -942,12 +948,12 @@ a bundle can be easily overriden to properly extend your application's base
 layout.
 
 .. index::
-   single: Templating; Output escapgin
+   single: Templating; Output escaping
 
 Output Escaping
 ---------------
 
-When generating HTML from a template, there is awlays a risk that a template
+When generating HTML from a template, there is always a risk that a template
 variable may output unintended HTML or dangerous client-side code. The result
 is that dynamic content could break the HTML of the resulting page or allow
 a malicious user to perform a `Cross Site Scripting`_ (XSS) attack. Consider
@@ -992,7 +998,8 @@ Output Escaping in Twig
 
 If you're using Twig templates, then output escaping is on by default. This
 means that you're protected out-of-the-box from the unintentional consequences
-of user-submitted code.
+of user-submitted code. By default, the output escaping assumes that content
+is being escaped for HTML output.
 
 In some cases, you'll need to disable output escaping when you're rendering
 a variable that is trusted and contains markup that should not be escaped.
@@ -1000,7 +1007,7 @@ Suppose that administrative users are able to write articles that contain
 HTML code. By default, Twig will escape the article body. To render it normally,
 add the ``raw`` filter: ``{{ article.body | raw }}``.
 
-You can also to disable output escaping inside a ``{{ block }}`` area or
+You can also to disable output escaping inside a ``{% block %}`` area or
 for an entire template. For more information, see `Output Escaping`_ in
 the Twig documentation.
 
