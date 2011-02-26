@@ -167,8 +167,11 @@ The following configuration code shows how to define two EntityManagers:
             entity_managers:
                 default:
                     connection:       default
+                    mappings:         MyBundle1: ~
+                    mappings:         MyBundle2: ~
                 customer:
                     connection:       customer
+                    mappings:         MyBundle3: ~
 
 Just like the DBAL, if you have configured multiple ``EntityManager``
 instances and want to get a specific one you can use the full service name to
