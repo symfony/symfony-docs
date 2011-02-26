@@ -9,9 +9,9 @@ From flat PHP to Symfony2
 
 The goal of any web application is simple: to process each HTTP request and
 return the HTTP response for the requested resource. In reality, it takes real
-work in order to keep an increasingly complex application organized and
-maintainable. The purpose of a framework is to handle common tasks and to
-set out best practices that help make this happen. Nowhere is this more obvious
+work to keep an increasingly complex application organized and
+maintainable. The purpose of a framework is to handle common tasks and
+encourage best practices that help make this happen. Nowhere is this more obvious
 than when converting a flat PHP application into Symfony2.
 
 Simple Blog Application in flat PHP
@@ -58,13 +58,13 @@ PHP is quick and easy:
 That's quick to write, fast to execute, but impossible to maintain. There
 are several problems that we'll aim to solve:
 
-* There is no error-checking. What if the connection to the database fails?
+* **There is no error-checking.** What if the connection to the database fails?
 
-* Poor organization. As the application grows in complexity, the single file
-  will become less and less maintainable. How should we begin to organize
+* **Poor organization.** As the application grows in complexity, this single file
+  would become increasingly unmaintainable. How should we begin to organize
   our code into pieces?
 
-* Reusing code is impossible. Since everything is in one file, there would
+* **Reusing code is impossible.** Since everything is in one file, there would
   be no way to reuse any part of the application for other "pages" of the
   application.
 
@@ -133,15 +133,15 @@ the request and initiates the response.
 
 In this case, our controller prepares data from the database and then includes
 a template to present that data. With the controller isolated, you can now
-imagine how it could be easily used to render the same blogs in other formats
+imagine how it could easily be used to render the same blogs in other formats
 (RSS, JSON, etc) simply by rendering a different template file (e.g. list.rss.php).
 
 Isolating the Application (Domain) Logic
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Though so far our application contains only one page, let's think ahead a
+So far our application contains only one page, but let's think ahead a
 little bit about how the logic and code of our application might be reused.
-For example, what if a different page needs to use the same database connection
+For example, what if a different page needs to use the same database connection,
 or even the same array of blog posts? Let's refactor the code so that the
 core behavior and data-access function of our application are isolated in
 a new file called ``model.php``:
@@ -399,7 +399,7 @@ and ``show.php``) PHP functions and moved them into a separate file,
 As a front controller, ``index.php`` has taken on an entirely new role, one
 that includes loading the core libraries and routing the application so that
 one of the two controllers (the ``list_action()`` and ``show_action()``
-functions) is called. In reality, the front controller is being to look and
+functions) is called. In reality, the front controller is beginning to look and
 act a lot like Symfony2's mechanism for handling and routing requests.
 
 .. tip::
@@ -413,10 +413,10 @@ By now, we've evolved our application from a single PHP file into a structure
 that is organized and allows for code reuse. You should be happier, but far
 from satisfied. For example, our "routing" system is easily fooled, and wouldn't
 recognize that the list page (``/index.php``) should be accessible simply via ``/``
-(if Apache rewrite rules were added). Instead of developing our the application
+(if Apache rewrite rules were added). Instead of developing the application
 we intended to build, we risk spending a significant amount of development
-time solving problems (e.g. routing, calling controllers, security, logging,
-etc etc) that are routine to all web applications.
+time-solving problems (e.g. routing, calling controllers, security, logging,
+etc) that are routine to all web applications.
 
 Add a Touch of Symfony2
 ~~~~~~~~~~~~~~~~~~~~~~~
@@ -554,7 +554,7 @@ same sample application, now built in Symfony2:
         }
     }
 
-Our two controllers are still lightweight. Each uses the ``Doctrine`` ORM library
+Our two controllers are still lightweight. Each uses the Doctrine ORM library
 to retrieve objects from the database and the ``Templating`` component to
 render a template and return a ``Response`` object. The list template is
 now quite a bit simpler:
