@@ -653,9 +653,9 @@ by migrating the original flat PHP application to Symfony2:
 
 * Symfony2's HTTP-centric architecture gives you access to powerful tools
   such as HTTP caching powered by Symfony2's internal HTTP cache or more
-  powerful tools such as Varnish.
+  powerful tools such as `Varnish`_.
 
-* Unit and functional testing via PHPUnit is available by default. Symfony2
+* Unit and functional testing via `PHPUnit`_ is available by default. Symfony2
   provides several standalone components that make functional testing very
   easy and powerful.
 
@@ -707,3 +707,5 @@ be supported in Symfony2, we'll continue to discuss the advantages of Twig.
 
 .. _`Doctrine`: http://www.doctrine-project.org
 .. _`Twig`: http://www.twig-project.org
+.. _`Varnish`: http://www.varnish-cache.org
+.. _`PHPUnit`: http://www.phpunit.de
