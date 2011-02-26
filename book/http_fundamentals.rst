@@ -193,7 +193,7 @@ to the client::
     use Symfony\Component\HttpFoundation\Response;
     $response = new Response();
 
-    $response->setContent('<html><body><h1>Hello world!</h1></body></html');
+    $response->setContent('<html><body><h1>Hello world!</h1></body></html>');
     $response->setStatusCode(200);
     $response->headers->set('Content-Type', 'text/html');
 
@@ -338,7 +338,7 @@ elsewhere and handled by the ``Kernel``::
 
         public function aboutAction()
         {
-            return Response('About us');
+            return new Response('About us');
         }
     }
 
