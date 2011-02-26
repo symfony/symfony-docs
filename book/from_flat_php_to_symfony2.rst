@@ -249,7 +249,7 @@ the layout:
         </ul>
     <?php $content = ob_get_clean() ?>
 
-    <?php include('layout.php') ?>
+    <?php include 'layout.php' ?>
 
 We've now introduced a methodology that that allows for the reuse of the
 layout. Unfortunately, you'll also notice that we've had to use a few ugly
@@ -311,7 +311,7 @@ the individual blog:
         </div>
     <?php $content = ob_get_clean() ?>
 
-    <?php include('layout.php') ?>
+    <?php include 'layout.php' ?>
 
 Creating the second page is now very easy and no code is duplicated. Still,
 this page introduces even more lingering problems that a framework can solve
