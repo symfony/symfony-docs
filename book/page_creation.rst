@@ -400,12 +400,12 @@ each of these directories in later chapters.
     or ``require`` statements. Instead, Symfony2 uses the namespace of a class
     to determine its location and automatically includes the file on your
     behalf the instance you need a class::
-    
+
         $loader->registerNamespaces(array(
             'Sensio'                         => __DIR__.'/../src',
             // ...
         ));
-    
+
     With this configuration, Symfony2 will look inside the ``src`` directory
     for any class in the ``Sensio`` namespace. For autoloading to work,
     the class name and path to the file must follow the same pattern:
@@ -543,7 +543,7 @@ And while it doesn't do anything yet, ``MyBundle`` is now ready to be used.
 And as easy as this is, Symfony also provides a command-line interface for
 generating a basic bundle skeleton::
 
-    ./app/console init:bundle "Sensio\MyBundle" src
+    ./app/console bundle:init "Sensio\MyBundle" src
 
 The bundle skeleton generates with a basic controller, template and routing
 resource that can be customized. We'll talk more about Symfony2's command-line
@@ -716,9 +716,9 @@ call the ``prod`` front controller instead::
 
    If you open the ``web/app.php`` file, you'll that it's configured explicitly
    to use the ``prod`` environment::
-   
+
        $kernel = new AppCache(new AppKernel('prod', false));
-   
+
    You can create a new front controller for a new environment by copying
    this file and changing ``prod`` to some other value.
 
