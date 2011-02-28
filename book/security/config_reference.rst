@@ -36,6 +36,9 @@ Configuration Reference
                 entity:
                     entity: { class: SecurityBundle:User, property: username }
 
+            factories:
+                MyFactory: %kernel.root_dir%/../src/MyVendor/MyBundle/Resources/config/security_factories.xml
+
             firewalls:
                 somename:
                     pattern: .*
