@@ -9,10 +9,10 @@ From flat PHP to Symfony2
 
 The goal of any web application is simple: to process each HTTP request and
 return the HTTP response for the requested resource. In reality, it takes real
-work to keep an increasingly complex application organized and
-maintainable. The purpose of a framework is to handle common tasks and
-encourage best practices that help make this happen. Nowhere is this more obvious
-than when converting a flat PHP application into Symfony2.
+work to keep an increasingly complex application organized and maintainable.
+The purpose of a framework is to handle common tasks and encourage best practices
+that help make this happen. Nowhere is this more obvious than when converting
+a flat PHP application into Symfony2.
 
 Simple Blog Application in flat PHP
 -----------------------------------
@@ -58,13 +58,13 @@ PHP is quick and easy:
 That's quick to write, fast to execute, but impossible to maintain. There
 are several problems that we'll aim to solve:
 
-* **There is no error-checking.** What if the connection to the database fails?
+* **No error-checking** What if the connection to the database fails?
 
-* **Poor organization.** As the application grows in complexity, this single file
+* **Poor organization** As the application grows in complexity, this single file
   would become increasingly unmaintainable. How should we begin to organize
   our code into pieces?
 
-* **Reusing code is impossible.** Since everything is in one file, there would
+* **Difficult to reuse code** Since everything is in one file, there would
   be no way to reuse any part of the application for other "pages" of the
   application.
 
