@@ -376,7 +376,7 @@ lives in a specific location:
       ``src/Sensio/BlogBundle``);
 
     * ``Blog``: (*controller*) indicates that the template lives inside the
-      ``blog`` subdirectory of ``Resources/views``;
+      ``Blog`` subdirectory of ``Resources/views``;
 
     * ``index.html.twig``: (*template*) the actual name of the file is
       ``index.html.twig``.
@@ -429,7 +429,7 @@ For more information, read the :ref:`template-formats` section.
 
 .. note::
 
-   The available "engines" are can be configured and even new engines added.
+   The available "engines" can be configured and even new engines added.
    See :ref:`Templating Configuration<template-configuration>` for more details.
 
 .. index::
