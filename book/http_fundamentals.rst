@@ -145,7 +145,7 @@ Symfony is architected to match this reality.
 Requests and Responses in Symfony
 ---------------------------------
 
-PHP comes packaged with array variables and methods that allow the developer
+PHP comes packaged with an array variables and methods that allow the developer
 to understand each request and send a response. For request information,
 PHP prepares superglobal variables such as ``$_SERVER`` and ``$_GET``.
 Recall that each raw request is simply an HTTP-formatted block of text.
