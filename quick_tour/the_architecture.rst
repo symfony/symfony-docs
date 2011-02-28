@@ -423,10 +423,10 @@ Symfony2 to get out of your way. So, feel free to rename and move directories
 around as you see fit.
 
 And that's all for the quick tour. From testing to sending emails, you still
-need to learn a lot to become a Symfony2 master. Ready to dig into these topics
-now? Look no further - go to the official `guides`_ page and pick any topic you
-want.
+need to learn a lot to become a Symfony2 master. Ready to dig into these
+topics now? Look no further - go to the official `book`_ and pick any topic
+you want.
 
 .. _standards:  http://groups.google.com/group/php-standards/web/psr-0-final-proposal
 .. _convention: http://pear.php.net/
-.. _guides:     http://www.symfony-reloaded.org/learn
+.. _book:       http://www.symfony-reloaded.org/learn

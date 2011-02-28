@@ -16,17 +16,17 @@ Get started fast with the Symfony2 :doc:`Quick Tour <quick_tour/index>`:
 * :doc:`quick_tour/the_controller` >
 * :doc:`quick_tour/the_architecture`
 
-Guides
-------
+Book
+----
 
 Dive into Symfony2 with the topical guides:
 
 .. toctree::
     :hidden:
 
-    guides/index
+    book/index
 
-.. include:: guides/map.rst.inc
+.. include:: book/map.rst.inc
 
 Cookbook
 --------
