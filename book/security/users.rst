@@ -211,10 +211,10 @@ will make the associated checks automatically::
     }
 
 * ``isAccountNonExpired()``: Returns ``true`` when the user's account has
-  expired;
-* ``isAccountNonLocked()``: Returns ``true`` when the user is locked;
+  not expired;
+* ``isAccountNonLocked()``: Returns ``true`` when the user is not locked;
 * ``isCredentialsNonExpired()``: Returns ``true`` when the user's credentials
-  (password) has expired;
+  (password) has not expired;
 * ``isEnabled()``: Returns ``true`` when the user is enabled.
 
 .. note::
