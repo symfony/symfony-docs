@@ -87,8 +87,8 @@ The following configuration attribute are available:
 * ``auth_mode``         (``plain``, ``login``, or ``cram-md5``)
 * ``spool``
 
-    * ``type`` (how to queue the messages, only ``file`` is supported currently)
-    * ``path`` (where to store the messages)
+  * ``type`` (how to queue the messages, only ``file`` is supported currently)
+  * ``path`` (where to store the messages)
 * ``delivery_address``  (an email address where to send ALL emails)
 * ``disable_delivery``  (set to true to disable delivery completely)
 
