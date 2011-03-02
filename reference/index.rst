@@ -1,8 +1,6 @@
 Reference Documents
 ===================
 
-Get answers quickly with reference documents:
-
 .. toctree::
     :hidden:
 
