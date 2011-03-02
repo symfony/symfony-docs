@@ -1,8 +1,6 @@
 Cookbook
 ========
 
-Dive into Symfony2 cookbook:
-
 .. toctree::
     :hidden:
 
