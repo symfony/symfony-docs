@@ -755,7 +755,7 @@ options of each feature.
     * *PHP*: Very powerful but less readable than standard configuration formats.
 
 .. index::
-   single: Environments
+   single: Environments; Introduction
 
 .. _environments-summary:
 
