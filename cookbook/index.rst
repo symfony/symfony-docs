@@ -6,6 +6,7 @@ Cookbook
 
     email
     gmail
+    configuration/environments
     templating/PHP
     controller/error_pages
     controller/service
