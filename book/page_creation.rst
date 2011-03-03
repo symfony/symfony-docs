@@ -201,16 +201,32 @@ Templates allows us to move all of the presentation (e.g. HTML code) into
 a separate file and reuse different portions of the page layout. Instead
 of writing the HTML inside the controller, use a template instead::
 
-    public function indexAction($name)
-    {
-        return $this->render('HelloBundle:Hello:index.html.twig', array('name' => $name));
+    // src/Sensio/HelloBundle/Controller/HelloController.php
 
-        // render a PHP template instead
-        // return $this->render('HelloBundle:Hello:index.html.php', array('name' => $name));
+    namespace Sensio\HelloBundle\Controller;
+    
+    use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+
+    class HelloController extends Controller
+    {
+        public function indexAction($name)
+        {
+            return $this->render('HelloBundle:Hello:index.html.twig', array('name' => $name));
+
+            // render a PHP template instead
+            // return $this->render('HelloBundle:Hello:index.html.php', array('name' => $name));
+        }
+    
     }
 
+.. note::
+
+   In order to use the ``render()`` method, you must extend the
+   :class:`Symfony\Bundle\FrameworkBundle\Controller\Controller` class, which
+   adds shortcuts for tasks that are common inside controllers.
+
 The ``render()`` method creates a ``Response`` object filled with the content
-of the given, rendered template. Like any other controller, you will ultimatel
+of the given, rendered template. Like any other controller, you will ultimately
 return that ``Response`` object.
 
 Notice that there are two different examples for rendering the template.
