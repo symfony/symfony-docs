@@ -183,17 +183,18 @@ browser.
 Redirecting and Forwarding
 --------------------------
 
-If you want to redirect the user to another page, use the ``redirect()`` method::
+If you want to redirect the user to another page, use the ``RedirectResponse``
+class::
 
-    return $this->redirect($this->generateUrl('hello', array('name' => 'Lucas')));
+    return new RedirectResponse($this->generateUrl('hello', array('name' => 'Lucas')));
 
 The ``generateUrl()`` is the same method as the ``generate()`` method we used
 on the ``router`` helper before. It takes the route name and an array of
 parameters as arguments and returns the associated friendly URL.
 
 You can also easily forward the action to another one with the ``forward()``
-method. As for the ``actions`` helper, it makes an internal sub-request, but it
-returns the ``Response`` object to allow for further modification::
+method. As for the ``actions`` helper, it makes an internal sub-request, but
+it returns the ``Response`` object to allow for further modification::
 
     $response = $this->forward('HelloBundle:Hello:fancy', array('name' => $name, 'color' => 'green'));
 
