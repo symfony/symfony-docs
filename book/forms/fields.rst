@@ -216,3 +216,6 @@ Symfony2 ships with the following fields:
 
 .. include:: fields/map.rst.inc
 
+Learn more from the Cookbook
+----------------------------
+

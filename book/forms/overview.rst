@@ -368,3 +368,10 @@ Form rendering is covered in detail in :doc:`Forms in Templates <view>`.
 
 Congratulations! You just created your first fully-functional form with
 Symfony2.
+
+Learn more from the Cookbook
+----------------------------
+
+* :doc:`/cookbook/email`
+* :doc:`/cookbook/gmail`
+* :doc:`/cookbook/templating/PHP`
