@@ -795,9 +795,6 @@ steps:
 
 * Manage the user's locale, which is stored in the session.
 
-Learn more from the Cookbook
-----------------------------
-
 .. _`strtr function`: http://www.php.net/manual/en/function.strtr.php
 .. _`ISO 31-11`: http://en.wikipedia.org/wiki/Interval_%28mathematics%29#The_ISO_notation
 .. _`Translatable Extension`: https://github.com/l3pp4rd/DoctrineExtensions
