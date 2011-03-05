@@ -728,3 +728,6 @@ the rules of the routing system and can include other external routing resources
 The goal of matching a route is ultimately to determine a controller and
 a set of parameter values for a given path info (i.e. URI). The ``Router``
 should also be used each time you need to render a URL.
+
+Learn more from the Cookbook
+----------------------------

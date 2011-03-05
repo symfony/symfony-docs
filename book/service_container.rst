@@ -723,4 +723,9 @@ additional arguments (beyond just the ``name`` parameter).
 * validator.constraint_validator
 * zend.logger.writer
 
+Learn more from the Cookbook
+----------------------------
+
+* :doc:`/cookbook/controller/service`
+
 .. _`service-oriented architecture`: http://wikipedia.org/wiki/Service-oriented_architecture

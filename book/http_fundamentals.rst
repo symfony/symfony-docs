@@ -408,6 +408,9 @@ quickly start development by using a Symfony2 distribution, which provides
 a project skeleton with sensible defaults. For more advanced users, the sky
 is the limit.
 
+Learn more from the Cookbook
+----------------------------
+
 .. _`HTTP 1.1 RFC`: http://www.w3.org/Protocols/rfc2616/rfc2616.html
 .. _`HTTP Bis`: http://datatracker.ietf.org/wg/httpbis/
 .. _`Live HTTP Headers`: https://addons.mozilla.org/en-US/firefox/addon/3829/

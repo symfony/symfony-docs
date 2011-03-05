@@ -857,5 +857,13 @@ and advanced concepts. The more you know about Symfony2, the more you'll
 appreciate the flexibility of its architecture and the power it gives you
 to rapidly develop applications.
 
+Learn more from the Cookbook
+----------------------------
+
+* :doc:`/cookbook/controller/service`
+* :doc:`/cookbook/templating/PHP`
+* :doc:`/cookbook/tools/autoloader`
+* :doc:`/cookbook/symfony1`
+
 .. _`Twig`: http://www.twig-project.org
 .. _`third-party bundles`: http://symfony2bundles.org/

@@ -702,3 +702,9 @@ The controller can do anything and contain any logic, as long as it returns
 a ``Response`` object. If you extend the base ``Controller`` class, you
 instantly have access to all of the Symfony2 core service objects as well
 as shortcut methods to performing the most common tasks.
+
+Learn more from the Cookbook
+----------------------------
+
+* :doc:`/cookbook/controller/service`
+* :doc:`/cookbook/controller/error_pages`

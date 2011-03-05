@@ -1112,6 +1112,12 @@ Overall, the topic of templating should be thought of as a powerful tool
 that's at your disposal. In some cases, you may not need to render a template,
 and in Symfony2, that's absolutely fine.
 
+Learn more from the Cookbook
+----------------------------
+
+* :doc:`/cookbook/controller/PHP`
+* :doc:`/cookbook/controller/error_pages`
+
 .. _`Twig`: http://www.twig-project.org
 .. _`Symfony2Bundles.org`: http://symfony2bundles.org
 .. _`Cross Site Scripting`: http://en.wikipedia.org/wiki/Cross-site_scripting
