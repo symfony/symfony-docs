@@ -43,3 +43,6 @@ The above call will output something similar to this:
         This value is too short. It should have 10 characters or more
 
 If you fill the object with correct values the validation errors disappear.
+
+Learn more from the Cookbook
+----------------------------

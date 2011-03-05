@@ -100,4 +100,8 @@ message:
 
 Insert a value into the property and the error message will disappear.
 
+Learn more from the Cookbook
+----------------------------
+
+
 .. _JSR303 Bean Validation specification: http://jcp.org/en/jsr/detail?id=303

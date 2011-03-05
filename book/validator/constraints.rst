@@ -269,3 +269,6 @@ validator::
     {
         return 'alias_name';
     }
+
+Learn more from the Cookbook
+----------------------------
