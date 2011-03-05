@@ -70,6 +70,31 @@ has the URI ``/blog/my-blog-post``, the following route would be matched:
         blog_show:
             pattern:   /blog/{slug}
             defaults:  { _controller: MyBlogBundle:Blog:show }
+    
+    .. code-block:: xml
+    
+        <?xml version="1.0" encoding="UTF-8" ?>
+
+        <routes xmlns="http://www.symfony-project.org/schema/routing"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://www.symfony-project.org/schema/routing http://www.symfony-project.org/schema/routing/routing-1.0.xsd">
+
+            <route id="blog_show" pattern="/blog/{slug}">
+                <default key="_controller">MyBlogBundle:Blog:show</default>
+            </route>
+        </routes>
+    
+    .. code-block:: php
+    
+        use Symfony\Component\Routing\RouteCollection;
+        use Symfony\Component\Routing\Route;
+
+        $collection = new RouteCollection();
+        $collection->add('blog_show', new Route('/blog/{slug}', array(
+            '_controller' => 'MyBlogBundle:Blog:show',
+        )));
+
+        return $collection;
 
 .. tip::
     A "slug" is just a name for the url-friendly version of a string. For example,
@@ -143,6 +168,32 @@ parts: the ``pattern`` to match and the ``defaults`` collection:
             pattern:   /
             defaults:  { _controller: MyBundle:Main:homepage }
 
+    .. code-block:: xml
+    
+        <?xml version="1.0" encoding="UTF-8" ?>
+
+        <routes xmlns="http://www.symfony-project.org/schema/routing"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://www.symfony-project.org/schema/routing http://www.symfony-project.org/schema/routing/routing-1.0.xsd">
+
+            <route id="homepage" pattern="/">
+                <default key="_controller">MyBundle:Main:homepage</default>
+            </route>
+
+        </routes>
+
+    ..  code-block:: php
+    
+        use Symfony\Component\Routing\RouteCollection;
+        use Symfony\Component\Routing\Route;
+
+        $collection = new RouteCollection();
+        $collection->add('homepage', new Route('/', array(
+            '_controller' => 'FrameworkBundle:Default:index',
+        )));
+
+        return $collection;
+
 This route matches the homepage (``/``) and specifies the ``_controller``
 ``MyBundle:Main:homepage``. The ``_controller`` string is translated by
 Symfony2 into an actual PHP callable and executed. That part of the routing
@@ -165,6 +216,31 @@ routes will contain one or more named "wildcards" placeholders:
             pattern:   /blog/{slug}
             defaults:  { _controller: MyBlogBundle:Blog:show }
 
+    .. code-block:: xml
+
+        <?xml version="1.0" encoding="UTF-8" ?>
+
+        <routes xmlns="http://www.symfony-project.org/schema/routing"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://www.symfony-project.org/schema/routing http://www.symfony-project.org/schema/routing/routing-1.0.xsd">
+
+            <route id="blog_show" pattern="/blog/{slug}">
+                <default key="_controller">MyBlogBundle:Blog:show</default>
+            </route>
+        </routes>
+
+    .. code-block:: php
+
+        use Symfony\Component\Routing\RouteCollection;
+        use Symfony\Component\Routing\Route;
+
+        $collection = new RouteCollection();
+        $collection->add('blog_show', new Route('/blog/{slug}', array(
+            '_controller' => 'MyBlogBundle:Blog:show',
+        )));
+
+        return $collection;
+
 The pattern being matched looks like ``/blog/*``, where the portion coming
 after ``/blog/`` is mapped to a parameter ``slug``. As we'll find out later,
 the ``slug`` parameter will eventually be available in your controller.
@@ -180,21 +256,75 @@ Required and Optional Placeholders
 Let's consider a new route that will simply display a list of all the
 available blog posts in some imaginary blog application:
 
-.. code-block:: yaml
+.. configuration-block::
 
-    blog:
-        pattern:   /blog
-        defaults:  { _controller: MyBlogBundle:Blog:index }
+    .. code-block:: yaml
+
+        blog:
+            pattern:   /blog
+            defaults:  { _controller: MyBlogBundle:Blog:index }
+
+    .. code-block:: xml
+
+        <?xml version="1.0" encoding="UTF-8" ?>
+
+        <routes xmlns="http://www.symfony-project.org/schema/routing"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://www.symfony-project.org/schema/routing http://www.symfony-project.org/schema/routing/routing-1.0.xsd">
+
+            <route id="blog" pattern="/blog">
+                <default key="_controller">MyBlogBundle:Blog:index</default>
+            </route>
+        </routes>
+
+    .. code-block:: php
+
+        use Symfony\Component\Routing\RouteCollection;
+        use Symfony\Component\Routing\Route;
+
+        $collection = new RouteCollection();
+        $collection->add('blog', new Route('/blog', array(
+            '_controller' => 'MyBlogBundle:Blog:index',
+        )));
+
+        return $collection;
 
 At this point, this route should be easy - it contains no placeholders and
 will only match the exact url ``/blog``. However, suppose now that this page
 needs to support pagination:
 
-.. code-block:: yaml
+.. configuration-block::
 
-    blog:
-        pattern:   /blog/{page}
-        defaults:  { _controller: MyBlogBundle:Blog:index }
+    .. code-block:: yaml
+
+        blog:
+            pattern:   /blog/{page}
+            defaults:  { _controller: MyBlogBundle:Blog:index }
+
+    .. code-block:: xml
+
+        <?xml version="1.0" encoding="UTF-8" ?>
+
+        <routes xmlns="http://www.symfony-project.org/schema/routing"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://www.symfony-project.org/schema/routing http://www.symfony-project.org/schema/routing/routing-1.0.xsd">
+
+            <route id="blog" pattern="/blog/{page}">
+                <default key="_controller">MyBlogBundle:Blog:index</default>
+            </route>
+        </routes>
+
+    .. code-block:: php
+
+        use Symfony\Component\Routing\RouteCollection;
+        use Symfony\Component\Routing\Route;
+
+        $collection = new RouteCollection();
+        $collection->add('blog', new Route('/blog/{page}', array(
+            '_controller' => 'MyBlogBundle:Blog:index',
+        )));
+
+        return $collection;
 
 Like the ``{slug}`` placeholder in the previous example, the value matching
 ``{page}`` will be available in the controller so that we can determine which
@@ -213,6 +343,33 @@ including it in the ``defaults`` collection:
         blog:
             pattern:   /blog/{page}
             defaults:  { _controller: MyBlogBundle:Blog:index, page: 1 }
+    
+    .. code-block:: xml
+
+        <?xml version="1.0" encoding="UTF-8" ?>
+
+        <routes xmlns="http://www.symfony-project.org/schema/routing"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://www.symfony-project.org/schema/routing http://www.symfony-project.org/schema/routing/routing-1.0.xsd">
+
+            <route id="blog" pattern="/blog/{page}">
+                <default key="_controller">MyBlogBundle:Blog:index</default>
+                <default key="page">1</default>
+            </route>
+        </routes>
+
+    .. code-block:: php
+
+        use Symfony\Component\Routing\RouteCollection;
+        use Symfony\Component\Routing\Route;
+
+        $collection = new RouteCollection();
+        $collection->add('blog', new Route('/blog/{page}', array(
+            '_controller' => 'MyBlogBundle:Blog:index',
+            'page' => 1,
+        )));
+
+        return $collection;
 
 By adding ``page`` to the ``defaults`` key, the ``{page}`` placeholder is no
 longer required. The URI ``/blog`` will match this route and the value of
@@ -239,6 +396,41 @@ Take a look at the routes that have been created so far:
             pattern:   /blog/{slug}
             defaults:  { _controller: MyBlogBundle:Blog:show }
 
+    .. code-block:: xml
+
+        <?xml version="1.0" encoding="UTF-8" ?>
+
+        <routes xmlns="http://www.symfony-project.org/schema/routing"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://www.symfony-project.org/schema/routing http://www.symfony-project.org/schema/routing/routing-1.0.xsd">
+
+            <route id="blog" pattern="/blog/{page}">
+                <default key="_controller">MyBlogBundle:Blog:index</default>
+                <default key="page">1</default>
+            </route>
+            
+            <route id="blog_show" pattern="/blog/{slug}">
+                <default key="_controller">MyBlogBundle:Blog:show</default>
+            </route>
+        </routes>
+
+    .. code-block:: php
+
+        use Symfony\Component\Routing\RouteCollection;
+        use Symfony\Component\Routing\Route;
+
+        $collection = new RouteCollection();
+        $collection->add('blog', new Route('/blog/{page}', array(
+            '_controller' => 'MyBlogBundle:Blog:index',
+            'page' => 1,
+        )));
+        
+        $collection->add('blog_show', new Route('/blog/{show}', array(
+            '_controller' => 'MyBlogBundle:Blog:show',
+        )));
+
+        return $collection;
+
 But there's a problem. Notice that both routes have a pattern that matches
 URI patterns like ``/blog/*``. The Symfony ``Router`` will always return
 the *first* route that's matched. In other words, the ``blog_show`` route
@@ -260,6 +452,36 @@ requirements can easily be added for each parameter. For example:
             defaults:  { _controller: MyBlogBundle:Blog:index, page: 1 }
             requirements:
                 page:  \d+
+
+    .. code-block:: xml
+
+        <?xml version="1.0" encoding="UTF-8" ?>
+
+        <routes xmlns="http://www.symfony-project.org/schema/routing"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://www.symfony-project.org/schema/routing http://www.symfony-project.org/schema/routing/routing-1.0.xsd">
+
+            <route id="blog" pattern="/blog/{page}">
+                <default key="_controller">MyBlogBundle:Blog:index</default>
+                <default key="page">1</default>
+                <requirement key="page">\d+</requirement>
+            </route>
+        </routes>
+
+    .. code-block:: php
+
+        use Symfony\Component\Routing\RouteCollection;
+        use Symfony\Component\Routing\Route;
+
+        $collection = new RouteCollection();
+        $collection->add('blog', new Route('/blog/{page}', array(
+            '_controller' => 'MyBlogBundle:Blog:index',
+            'page' => 1,
+        ), array(
+            'page' => '\d+',
+        )));
+
+        return $collection;
 
 The ``\d+`` requirement is a regular expression that says that the value of
 the ``{page}`` parameter must be a digit (i.e. a number). The ``blog`` route
@@ -289,6 +511,36 @@ of your application is available in two different languages, based on the url:
             defaults:  { _controller: MyBundle:Main:homepage, culture: en }
             requirements:
                 culture:  en|fr
+
+    .. code-block:: xml
+
+        <?xml version="1.0" encoding="UTF-8" ?>
+
+        <routes xmlns="http://www.symfony-project.org/schema/routing"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://www.symfony-project.org/schema/routing http://www.symfony-project.org/schema/routing/routing-1.0.xsd">
+
+            <route id="homepage" pattern="/{culture}">
+                <default key="_controller">MyBundle:Main:homepage</default>
+                <default key="culture">en</default>
+                <requirement key="culture">en|fr</requirement>
+            </route>
+        </routes>
+
+    .. code-block:: php
+
+        use Symfony\Component\Routing\RouteCollection;
+        use Symfony\Component\Routing\Route;
+
+        $collection = new RouteCollection();
+        $collection->add('homepage', new Route('/{culture}', array(
+            '_controller' => 'MyBundle:Main:homepage',
+            'culture' => 'en',
+        ), array(
+            'culture' => 'en|fr',
+        )));
+
+        return $collection;
 
 When matching against this route, the ``{culture}`` portion of the URI is matched
 against the regular expression ``(en|fr)``. The following URIs would match::
@@ -324,6 +576,45 @@ be accomplished with the following routing configuration:
             defaults: { _controller: MyBundle:Main:contactProcess }
             requirements:
                 _method:  POST
+
+    .. code-block:: xml
+
+        <?xml version="1.0" encoding="UTF-8" ?>
+
+        <routes xmlns="http://www.symfony-project.org/schema/routing"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://www.symfony-project.org/schema/routing http://www.symfony-project.org/schema/routing/routing-1.0.xsd">
+
+            <route id="contact" pattern="/contact">
+                <default key="_controller">MyBundle:Main:contact</default>
+                <requirement key="_method">GET</requirement>
+            </route>
+            
+            <route id="contact_process" pattern="/contact">
+                <default key="_controller">MyBundle:Main:contactProcess</default>
+                <requirement key="_method">POST</requirement>
+            </route>
+        </routes>
+
+    .. code-block:: php
+
+        use Symfony\Component\Routing\RouteCollection;
+        use Symfony\Component\Routing\Route;
+
+        $collection = new RouteCollection();
+        $collection->add('contact', new Route('/contact', array(
+            '_controller' => 'MyBundle:Main:contact',
+        ), array(
+            '_method' => 'GET',
+        )));
+        
+        $collection->add('contact_process', new Route('/contact', array(
+            '_controller' => 'MyBundle:Main:contactProcess',
+        ), array(
+            '_method' => 'POST',
+        )));
+
+        return $collection;
 
 Despite the fact that these two routes have identical patterns (``/contact``),
 the first route will be matched only on GET requests while the second route
@@ -363,6 +654,40 @@ routing system can be:
               culture:  en|fr
               _format:  html|rss
               year:     \d+
+
+    .. code-block:: xml
+
+        <?xml version="1.0" encoding="UTF-8" ?>
+
+        <routes xmlns="http://www.symfony-project.org/schema/routing"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://www.symfony-project.org/schema/routing http://www.symfony-project.org/schema/routing/routing-1.0.xsd">
+
+            <route id="article_show" pattern="/articles/{culture}/{year}/{title}.{_format}">
+                <default key="_controller">MyBundle:Article:show</default>
+                <default key="_format">html</default>
+                <requirement key="culture">en|fr</requirement>
+                <requirement key="_format">html|rss</requirement>
+                <requirement key="year">\d+</requirement>
+            </route>
+        </routes>
+
+    .. code-block:: php
+
+        use Symfony\Component\Routing\RouteCollection;
+        use Symfony\Component\Routing\Route;
+
+        $collection = new RouteCollection();
+        $collection->add('homepage', new Route('/articles/{culture}/{year}/{title}.{_format}', array(
+            '_controller' => 'MyBundle:Article:show',
+            '_format' => 'html',
+        ), array(
+            'culture' => 'en|fr',
+            '_format' => 'html|rss',
+            'year' => '\d+',
+        )));
+
+        return $collection;
 
 As we've seen, this route will only match if the ``{culture}`` portion of
 the URI is either ``en`` or ``fr`` and if the ``{year}`` is a number.
