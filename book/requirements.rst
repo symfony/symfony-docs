@@ -4,7 +4,10 @@
 Requirements for running Symfony2
 =================================
 
-To run Symfony2, your system needs to adhere to a list of requirements. You can easily see if your system passes all requirements by running the web/check.php in your symfony distribution. Below is the list of required and optional requirements.
+To run Symfony2, your system needs to adhere to a list of requirements. You can
+easily see if your system passes all requirements by running the web/check.php
+in your symfony distribution. Below is the list of required and optional
+requirements.
 
 Required
 --------
@@ -34,4 +37,6 @@ Optional
 Doctrine
 --------
 
-If you want to use Doctrine, you will need to have PDO installed. Additionally, you need to have the PDO driver installed for the database server you want to use.
+If you want to use Doctrine, you will need to have PDO installed. Additionally,
+you need to have the PDO driver installed for the database server you want
+to use.
