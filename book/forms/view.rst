@@ -512,3 +512,8 @@ parent class - ``FieldGroup`` - is used instead:
 
     The ``render`` method is not very flexible and should only be used to
     build prototypes.
+
+Learn more from the Cookbook
+----------------------------
+
+* :doc:`/cookbook/templating/PHP`

@@ -215,4 +215,3 @@ Symfony2 ships with the following fields:
     fields/index
 
 .. include:: fields/map.rst.inc
-

@@ -1015,6 +1015,11 @@ of relying only on Symfony2 documentation and code examples, you have access
 to a world of knowledge related to HTTP caching and gateway caches such as
 Varnish.
 
+Learn more from the Cookbook
+----------------------------
+
+* :doc:`/cookbook/varnish/varnish`
+
 .. _`Things Caches Do`: http://tomayko.com/writings/things-caches-do
 .. _`Cache Tutorial`: http://www.mnot.net/cache_docs/
 .. _`Varnish`: http://www.varnish-cache.org/

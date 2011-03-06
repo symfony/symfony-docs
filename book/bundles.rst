@@ -233,4 +233,9 @@ Retrieve the configuration parameters in your code from the container::
 Even if this mechanism is simple enough, you are highly encouraged to use the
 semantic configuration described in the cookbook.
 
+Learn more from the Cookbook
+----------------------------
+
+* :doc:`/cookbook/bundles/extension`
+
 .. _standards: http://groups.google.com/group/php-standards/web/psr-0-final-proposal

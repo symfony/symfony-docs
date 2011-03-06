@@ -705,6 +705,12 @@ The corresponding ``layout.html.twig`` template is also easier to write:
 Twig is well-supported in Symfony2. And while PHP templates will always
 be supported in Symfony2, we'll continue to discuss the advantages of Twig.
 
+Learn more from the Cookbook
+----------------------------
+
+* :doc:`/cookbook/templating/PHP`
+* :doc:`/cookbook/controller/service`
+
 .. _`Doctrine`: http://www.doctrine-project.org
 .. _`Twig`: http://www.twig-project.org
 .. _`Varnish`: http://www.varnish-cache.org
