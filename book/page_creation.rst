@@ -48,7 +48,7 @@ Create the Route
 ~~~~~~~~~~~~~~~~
 
 By default, the routing configuration file in a Symfony2 application is
-located at ``app/config/config.yml``. Like all configuration in Symfony2,
+located at ``app/config/routing.yml``. Like all configuration in Symfony2,
 you can also choose to use XML or PHP out of the box to configure routes:
 
 .. configuration-block::
