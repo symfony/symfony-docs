@@ -60,7 +60,7 @@ maps a URI to that controller.
 .. note::
 
     Though similarly named, a "front controller" is different from the
-    "controllers" we'll talk about in this guide. A front controller
+    "controllers" we'll talk about in this chapter. A front controller
     is a short PHP file that lives in your web directory and through which
     all requests are directed. A typical application will have a production
     front controller (e.g. ``app.php``) and a development front controller
@@ -131,7 +131,7 @@ Mapping a URI to a Controller
 Our new controller returns a simple HTML page. To render this controller
 at a specific URL, we need to create a route to it.
 
-We'll talk about the ``Routing`` component in detail in the :doc:`Routing guide</book/routing>`,
+We'll talk about the ``Routing`` component in detail in the :doc:`Routing chapter</book/routing>`,
 but let's create a simple route to our controller:
 
 .. configuration-block::
@@ -390,7 +390,7 @@ class, which is designed specifically to redirect the user to another URL::
 The ``generateUrl()`` method is just a shortcut that calls ``generate()``
 on the ``router`` service. It takes the route name and an array of parameters
 as arguments and returns the associated friendly URL. See the :doc:`Routing </book/routing>`
-guide for more information.
+chapter for more information.
 
 By default, the ``redirect`` method does a 302 (temporary) redirect. To perform
 a 301 (permanent) redirect, modify the second argument::
@@ -475,7 +475,7 @@ returns a ``Response`` object with the content from the template::
     return $this->render('HelloBundle:Hello:index.html.twig', array('name' => $name));
 
 The Symfony templating engine is explained in great detail in the :doc:`Templating </book/templating>`
-guide.
+chapter.
 
 .. tip::
 
@@ -506,7 +506,7 @@ via the ``get()`` method. Here are several common services you might need::
 
 The are countless other services available and you are encouraged to define
 your own. For more information, see the :doc:`Extending Symfony </book/extending_symfony>`
-guide.
+chapter.
 
 .. index::
    single: Controller; Managing errors

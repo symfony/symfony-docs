@@ -17,7 +17,7 @@ parse YAML and dump a PHP array to YAML.
 .. note::
 
     Even if the YAML format can describe complex nested data structure, this
-    guide only describes the minimum set of features needed to use YAML as a
+    chapter only describes the minimum set of features needed to use YAML as a
     configuration file format.
 
 Reading YAML Files

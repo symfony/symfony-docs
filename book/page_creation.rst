@@ -147,7 +147,7 @@ to personally greet the user.
 
   The routing system has many more great features for creating flexible
   and powerful URI structures in your application. For more details, see
-  the guide all about :doc:`Routing </book/routing>`.
+  the chapter all about :doc:`Routing </book/routing>`.
 
 Create the Controller
 ~~~~~~~~~~~~~~~~~~~~~
@@ -460,7 +460,7 @@ in your application and to optimize them the way you want.
 
 .. note::
 
-   While we'll cover the basics here, an entire guide is devoted to the topic
+   While we'll cover the basics here, an entire chapter is devoted to the topic
    of :doc:`/book/bundles`.
 
 A bundle is simply a structured set of files within a directory that
@@ -747,7 +747,7 @@ cached files and allow them to rebuild::
 .. note::
 
     The ``test`` environment is used when running automated tests and cannot
-    be accessed directly through the browser. See the :doc:`testing guide </book/testing>`
+    be accessed directly through the browser. See the :doc:`testing chapter </book/testing>`
     for more details.
 
 .. index::
@@ -867,7 +867,7 @@ in mind:
 * each **environment** is accessible via a different front controller (e.g.
   ``app.php`` and ``app_dev.php``) and loads a different configuration file.
 
-From here, each guide will introduce you to more and more powerful tools
+From here, each chapter will introduce you to more and more powerful tools
 and advanced concepts. The more you know about Symfony2, the more you'll
 appreciate the flexibility of its architecture and the power it gives you
 to rapidly develop applications.

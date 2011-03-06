@@ -4,7 +4,7 @@ From flat PHP to Symfony2
 .. tip::
 
    If you're familiar with the MVC philosophy, you can choose to skip this
-   guide. Still, Symfony2's approach to organized code and application
+   chapter. Still, Symfony2's approach to organized code and application
    flow is so fresh and simple that we hope everyone will continuing reading.
 
 The goal of any web application is simple: to process each HTTP request and

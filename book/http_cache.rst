@@ -239,7 +239,7 @@ misses.
     your traffic increases.
 
     For more information on using Varnish with Symfony2, see the
-    :doc:`How to use Varnish </cookbook/cache/varnish>` cookbook guide.
+    :doc:`How to use Varnish </cookbook/cache/varnish>` cookbook chapter.
 
 .. note::
 
