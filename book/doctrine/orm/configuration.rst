@@ -69,10 +69,11 @@ can control. The following configuration options exist for a mapping:
   share. This prefix should never conflict with prefixes of other defined
   mappings otherwise some of your entities cannot be found by Doctrine. This
   option defaults to the bundle namespace + ``Entity``, for example for an
-  application bundle called "Hello" prefix would be
-  ``Sensio\Hello\Entity``.
+  application bundle called "HelloBundle" prefix would be
+  ``Sensio\HelloBundle\Entity``.
 - ``alias`` Doctrine offers a way to alias entity namespaces to simpler,
-  shorter names to be used in DQL queries or for Repository access.
+  shorter names to be used in DQL queries or for Repository access. When using a
+  bundle the alias defaults to the bundle name.
 - ``is_bundle`` This option is a derived value from ``dir`` and by default is
   set to true if dir is relative proved by a ``file_exists()`` check that
   returns false. It is false if the existence check returns true. In this case
@@ -83,10 +84,10 @@ To avoid having to configure lots of information for your mappings you should
 follow these conventions:
 
 1. Put all your entities in a directory ``Entity/`` inside your bundle. For
-   example ``Sensio/Hello/Entity/``.
+   example ``Sensio/HelloBundle/Entity/``.
 2. If you are using xml, yml or php mapping put all your configuration files
-   into the "Resources/config/doctrine/metadata/doctrine/orm/" directory sufficed
-   with dcm.xml, dcm.yml or dcm.php respectively.
+   into the "Resources/config/doctrine/metadata/doctrine/orm/" directory
+   suffixed with dcm.xml, dcm.yml or dcm.php respectively.
 3. Annotations is assumed if an ``Entity/`` but no
    "Resources/config/doctrine/metadata/doctrine/orm/" directory is found.
 
@@ -127,9 +128,9 @@ connections you can hook different events into each connection.
 
 .. code-block:: xml
 
-    <container xmlns="http://www.symfony-project.org/schema/dic/services"
+    <container xmlns="http://symfony.com/schema/dic/services"
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:schemaLocation="http://www.symfony-project.org/schema/dic/services http://www.symfony-project.org/schema/dic/services/services-1.0.xsd">
+        xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
         <services>
 
@@ -167,7 +168,7 @@ The following configuration code shows how to define two EntityManagers:
             entity_managers:
                 default:
                     connection:       default
-                    mappings:        
+                    mappings:
                         MyBundle1: ~
                         MyBundle2: ~
                 customer:
@@ -238,13 +239,11 @@ specific DBAL connection and all the EntityManagers that use this connection.
 
         <?xml version="1.0" ?>
         <container xmlns="http://symfony-project.org/2.0/container"
-            xmlns:doctrine="http://www.symfony-project.org/schema/dic/doctrine">
+            xmlns:doctrine="http://symfony.com/schema/dic/doctrine">
 
             <doctrine:config>
                 <doctrine:dbal default-connection="default">
-                    <doctrine:connections>
-                        <doctrine:connection driver="pdo_sqlite" memory="true" />
-                    </doctrine:connections>
+                    <doctrine:connection driver="pdo_sqlite" memory="true" />
                 </doctrine:dbal>
             </doctrine:config>
 

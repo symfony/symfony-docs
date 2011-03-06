@@ -51,8 +51,8 @@ can control. The following configuration options exist for a mapping:
   share. This prefix should never conflict with prefixes of other defined
   mappings otherwise some of your documents cannot be found by Doctrine. This
   option defaults to the bundle namespace + ``Document``, for example for an
-  application bundle called "Hello" prefix would be
-  ``Sensio\Hello\Document``.
+  application bundle called "HelloBundle" prefix would be
+  ``Sensio\HelloBundle\Document``.
 - ``alias`` Doctrine offers a way to alias document namespaces to simpler,
   shorter names to be used in queries or for Repository access.
 - ``is_bundle`` This option is a derived value from ``dir`` and by default is
@@ -65,10 +65,10 @@ To avoid having to configure lots of information for your mappings you should
 follow these conventions:
 
 1. Put all your entities in a directory ``Document/`` inside your bundle. For
-   example ``Sensio/Hello/Document/``.
+   example ``Sensio/HelloBundle/Document/``.
 2. If you are using xml, yml or php mapping put all your configuration files
    into the ``Resources/config/doctrine/metadata/doctrine/mongodb/`` directory
-   sufficed with dcm.xml, dcm.yml or dcm.php respectively.
+   suffixed with dcm.xml, dcm.yml or dcm.php respectively.
 3. Annotations is assumed if an ``Document/`` but no
    ``Resources/config/doctrine/metadata/doctrine/mongodb/`` directory is found.
 
@@ -158,11 +158,11 @@ Simple Single Connection:
 
     <?xml version="1.0" ?>
 
-    <container xmlns="http://www.symfony-project.org/schema/dic/services"
+    <container xmlns="http://symfony.com/schema/dic/services"
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xmlns:doctrine="http://www.symfony-project.org/schema/dic/doctrine/odm/mongodb"
-        xsi:schemaLocation="http://www.symfony-project.org/schema/dic/services http://www.symfony-project.org/schema/dic/services/services-1.0.xsd
-                            http://www.symfony-project.org/schema/dic/doctrine/odm/mongodb http://www.symfony-project.org/schema/dic/doctrine/odm/mongodb/mongodb-1.0.xsd">
+        xmlns:doctrine="http://symfony.com/schema/dic/doctrine/odm/mongodb"
+        xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd
+                            http://symfony.com/schema/dic/doctrine/odm/mongodb http://symfony.com/schema/dic/doctrine/odm/mongodb/mongodb-1.0.xsd">
 
         <doctrine:mongodb server="mongodb://localhost:27017"
                           default-database="hello_%kernel.environment%">
@@ -184,11 +184,11 @@ Multiple Connections:
 
     <?xml version="1.0" ?>
 
-    <container xmlns="http://www.symfony-project.org/schema/dic/services"
+    <container xmlns="http://symfony.com/schema/dic/services"
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xmlns:doctrine="http://www.symfony-project.org/schema/dic/doctrine/odm/mongodb"
-        xsi:schemaLocation="http://www.symfony-project.org/schema/dic/services http://www.symfony-project.org/schema/dic/services/services-1.0.xsd
-                            http://www.symfony-project.org/schema/dic/doctrine/odm/mongodb http://www.symfony-project.org/schema/dic/doctrine/odm/mongodb/mongodb-1.0.xsd">
+        xmlns:doctrine="http://symfony.com/schema/dic/doctrine/odm/mongodb"
+        xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd
+                            http://symfony.com/schema/dic/doctrine/odm/mongodb http://symfony.com/schema/dic/doctrine/odm/mongodb/mongodb-1.0.xsd">
 
         <doctrine:mongodb default-database="hello_%kernel.environment%"
                           metadata-cache-driver="apc"
@@ -224,7 +224,9 @@ MongoDB ODM. You can provide the mapping information via xml, yaml or
 annotations. In this example, for simplicity and ease of reading we will use
 annotations.
 
-First, lets write a simple User class::
+First, let's write a simple User class.
+
+.. code-block:: php
 
     // src/Sensio/HelloBundle/Document/User.php
 
@@ -254,7 +256,9 @@ First, lets write a simple User class::
 This class can be used independent from any persistence layer as it is a
 regular PHP class and does not have any dependencies. Now we need to annotate
 the class so Doctrine can read the annotated mapping information from the doc
-blocks::
+blocks.
+
+.. code-block:: php-annotations
 
     // ...
 
@@ -278,7 +282,9 @@ working with instances of that document persisting to and retrieving from
 MongoDB.
 
 From your controllers you can access the ``DocumentManager`` instance from the
-container::
+container.
+
+.. code-block:: php
 
     class UserController extends Controller
     {
@@ -295,7 +301,9 @@ container::
         }
     }
 
-Later you can retrieve the persisted document by its id::
+Later you can retrieve the persisted document by its id.
+
+.. code-block:: php
 
     class UserController extends Controller
     {
@@ -317,4 +325,4 @@ The MongoDB event tags are called "doctrine.odm.mongodb.default_event_listener" 
 MongoDB document manager.
 
 .. _MongoDB:       http://www.mongodb.org/
-.. _documentation: http://www.doctrine-project.org/projects/mongodb_odm/1.0/docs/en
+.. _documentation: http://www.doctrine-project.org/docs/mongodb_odm/1.0/en
