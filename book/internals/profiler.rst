@@ -1,3 +1,6 @@
+.. index::
+   single: Profiler
+
 Profiler
 ========
 
@@ -20,6 +23,9 @@ configured with sensible settings.
     methods and all formats). It means that for a single URL, you can have
     several associated profiling data (one per external request/response
     pair).
+
+.. index::
+   single: Profiler; Visualizing
 
 Visualizing Profiling Data
 --------------------------
@@ -48,6 +54,8 @@ in development to debug your code and enhance performance; but it can also be
 used to explore problems that occur in production. It exposes all information
 collected by the profiler in a web interface.
 
+.. index::
+   single: Profiler; Using the profiler service
 
 Accessing the Profiling information
 -----------------------------------
@@ -95,6 +103,9 @@ methods::
 
     // on the development machine
     $profiler->import($data);
+
+.. index::
+   single: Profiler; Visualizing
 
 Configuration
 -------------
