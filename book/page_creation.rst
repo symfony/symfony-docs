@@ -405,6 +405,8 @@ configuration and routing files in the ``app/config/`` directory (see
 application-level template files (``app/views``). You'll learn more about
 each of these directories in later chapters.
 
+.. _autoloading-introduction-sidebar:
+
 .. sidebar:: Autoloading
 
     When bootstrapping, a special file - ``app/autoload.php`` - is included.
