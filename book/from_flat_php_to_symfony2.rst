@@ -423,8 +423,8 @@ Add a Touch of Symfony2
 
 Now before you actually start using Symfony2, you need to make sure PHP knows 
 where to find the Symfony2 classes. For this, you need to set up the autoloader.
-Symfony2 provides a generic autoloader that can be used for many of the next-
-generation frameworks, including Zend Framework 2 and PEAR 2. Create an
+Symfony2 provides a generic autoloader that can be used for many of the next-generation
+frameworks, including Zend Framework 2 and PEAR 2. Create an
 ``app/bootstrap.php`` file and configure the autoloader:
 
 .. code-block:: html+php
