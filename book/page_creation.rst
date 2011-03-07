@@ -727,7 +727,7 @@ the application via the development front controller::
 If you'd like to see how your application will behave in the production environment,
 call the ``prod`` front controller instead::
 
-    http;//localhost/app.php/hello/Ryan
+    http://localhost/app.php/hello/Ryan
 
 .. note::
 
