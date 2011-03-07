@@ -254,7 +254,7 @@ some reorganization. For starters, we might move the work of creating the
 ``Response`` into a set of different functions. These functions are commonly
 known as *controllers* and allow us to further organize our code::
 
-    if (in_array($path, array('', '/') && $method == 'GET') {
+    if (in_array($path, array('', '/')) && $method == 'GET') {
         $response = main_controller($request);
     } elseif ($path == '/about' && $method == 'GET') {
         $response = about_controller($request);
