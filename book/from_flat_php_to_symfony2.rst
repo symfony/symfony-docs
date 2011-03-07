@@ -421,10 +421,35 @@ etc) that are routine to all web applications.
 Add a Touch of Symfony2
 ~~~~~~~~~~~~~~~~~~~~~~~
 
-Take another look at our application. Though simple, we've created an application
-that looks and acts almost exactly like a full Symfony2 application. Sure,
-Symfony2 gives you lots of helpful tools, but the process of handling a request
-and returning a response is almost identical:
+Now before we actually start using Symfony2, we need to make sure PHP knows 
+where to find the Symfony2 classes. For this, we need to set up the autoloader.
+Symfony2 provides a generic autoloader that can be used for many of the next-
+generation frameworks, including Zend Framework 2 and PEAR 2. To set this up, 
+create an app/bootstrap.php and set up the autoloader in that file:
+
+.. code-block:: html+php
+
+    <?php
+    
+    // app/bootstrap.php
+    
+    require_once 'vendor/symfony/src/Symfony/Component/ClassLoader/UniversalClassLoader.php';
+    
+    $loader = new UniversalClassLoader();
+    $loader->registerNamespaces(array(
+        'Symfony'                        => array(__DIR__.'/../vendor/symfony/src', __DIR__.'/../vendor/bundles'),
+    ));
+    
+    $loader->register();
+
+This will include the UniversalClassLoader, register the Symfony namespace with
+it and then register the autoloader with the standard PHP autoloader stack.
+Now, you're all set to start using Symfony2 classes.
+
+Now take another look at our application. Though simple, we've created an 
+application that looks and acts almost exactly like a full Symfony2 
+application. Sure, Symfony2 gives you lots of helpful tools, but the process
+of handling a request and returning a response is almost identical:
 
 * A front controller handles all requests.
 * The core classes and configuration are loaded.
@@ -451,6 +476,7 @@ application:
     <?php
 
     // index.php
+    require_once 'app/bootstrap.php';
     require_once 'model.php';
     require_once 'controllers.php';
     use Symfony\Component\HttpFoundation\Request;
