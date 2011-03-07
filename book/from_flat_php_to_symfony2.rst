@@ -424,22 +424,21 @@ Add a Touch of Symfony2
 Now before you actually start using Symfony2, you need to make sure PHP knows 
 where to find the Symfony2 classes. For this, you need to set up the autoloader.
 Symfony2 provides a generic autoloader that can be used for many of the next-
-generation frameworks, including Zend Framework 2 and PEAR 2. To set this up, 
-create an ``app/bootstrap.php`` and set up the autoloader in that file:
+generation frameworks, including Zend Framework 2 and PEAR 2. Create an
+``app/bootstrap.php`` file and configure the autoloader:
 
 .. code-block:: html+php
 
     <?php
-    
     // app/bootstrap.php
-    
+
     require_once 'vendor/symfony/src/Symfony/Component/ClassLoader/UniversalClassLoader.php';
-    
+
     $loader = new UniversalClassLoader();
     $loader->registerNamespaces(array(
-        'Symfony'                        => array(__DIR__.'/../vendor/symfony/src', __DIR__.'/../vendor/bundles'),
+        'Symfony'                        => __DIR__.'/../vendor/symfony/src',
     ));
-    
+
     $loader->register();
 
 .. note::
@@ -447,11 +446,11 @@ create an ``app/bootstrap.php`` and set up the autoloader in that file:
     The above example assumes that the Symfony2 codebase was put into the
     ``vendor/symfony`` directory. If you put the Symfony2 codebase in a 
     different location (which is not a problem for Symfony2), adjust the
-    require path and the registerNamespaces() path accordingly.
+    require path and the ``registerNamespaces()`` path accordingly.
 
-This will include the UniversalClassLoader, register the Symfony namespace with
-it and then register the autoloader with the standard PHP autoloader stack.
-Now, you're all set to start using Symfony2 classes.
+This will include the ``UniversalClassLoader``, register the ``Symfony``
+namespace with it and then register the autoloader with the standard PHP
+autoloader stack. Now, you're all set to start using Symfony2 classes.
 
 Now take another look at our application. Though simple, we've created an 
 application that looks and acts almost exactly like a full Symfony2 
