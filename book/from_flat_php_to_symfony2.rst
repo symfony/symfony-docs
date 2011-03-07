@@ -442,6 +442,13 @@ create an ``app/bootstrap.php`` and set up the autoloader in that file:
     
     $loader->register();
 
+.. note::
+
+    The above example assumes that the Symfony2 codebase was put into the
+    ``vendor/symfony`` directory. If you put the Symfony2 codebase in a 
+    different location (which is not a problem for Symfony2), adjust the
+    require path and the registerNamespaces() path accordingly.
+
 This will include the UniversalClassLoader, register the Symfony namespace with
 it and then register the autoloader with the standard PHP autoloader stack.
 Now, you're all set to start using Symfony2 classes.
