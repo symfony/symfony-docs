@@ -731,7 +731,7 @@ call the ``prod`` front controller instead::
 
 .. note::
 
-   If you open the ``web/app.php`` file, you'll that it's configured explicitly
+   If you open the ``web/app.php`` file, you'll find that it's configured explicitly
    to use the ``prod`` environment::
    
        $kernel = new AppCache(new AppKernel('prod', false));
