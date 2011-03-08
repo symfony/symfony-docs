@@ -430,7 +430,7 @@ method becomes the arguments on the resulting controller. This same interface
 is used when embedding controllers into templates (see :ref:`templating-embedding-controller`).
 The target controller method should look something like the following::
 
-    public function fancyAction($name, $green)
+    public function fancyAction($name, $color)
     {
         // ... create and return a Response object
     }
