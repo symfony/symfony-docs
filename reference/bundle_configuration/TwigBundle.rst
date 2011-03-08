@@ -1,6 +1,5 @@
 .. index::
-   single: Twig; Configuration Reference
-   single: Configuration Reference; Twig
+   pair: Twig; Configuration Reference
 
 Configuration Reference
 =======================
