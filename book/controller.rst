@@ -504,7 +504,7 @@ via the ``get()`` method. Here are several common services you might need::
 
     $mailer = $this->get('mailer');
 
-The are countless other services available and you are encouraged to define
+There are countless other services available and you are encouraged to define
 your own. For more information, see the :doc:`Extending Symfony </book/extending_symfony>`
 chapter.
 
