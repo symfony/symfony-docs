@@ -50,8 +50,8 @@ further:
 
     .. code-block:: xml
 
-        <!-- xmlns:doctrine="http://www.symfony-project.org/schema/dic/doctrine" -->
-        <!-- xsi:schemaLocation="http://www.symfony-project.org/schema/dic/doctrine http://www.symfony-project.org/schema/dic/doctrine/doctrine-1.0.xsd"> -->
+        <!-- xmlns:doctrine="http://symfony.com/schema/dic/doctrine" -->
+        <!-- xsi:schemaLocation="http://symfony.com/schema/dic/doctrine http://symfony.com/schema/dic/doctrine/doctrine-1.0.xsd"> -->
 
         <doctrine:config>
             <doctrine:dbal

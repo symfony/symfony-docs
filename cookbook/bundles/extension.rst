@@ -73,7 +73,7 @@ file:
         <!-- app/config/config.xml -->
         <?xml version="1.0" ?>
 
-        <container xmlns="http://www.symfony-project.org/schema/dic/services"
+        <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xmlns:hello="http://www.example.com/symfony/schema/"
             xsi:schemaLocation="http://www.example.com/symfony/schema/ http://www.example.com/symfony/schema/hello-1.0.xsd">
@@ -117,7 +117,7 @@ So, given the following configuration:
         <!-- app/config/config.xml -->
         <?xml version="1.0" ?>
 
-        <container xmlns="http://www.symfony-project.org/schema/dic/services"
+        <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xmlns:hello="http://www.example.com/symfony/schema/"
             xsi:schemaLocation="http://www.example.com/symfony/schema/ http://www.example.com/symfony/schema/hello-1.0.xsd">

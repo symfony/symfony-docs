@@ -68,9 +68,9 @@ you can also choose to use XML or PHP out of the box to configure routes:
         <!-- app/config/routing.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
 
-        <routes xmlns="http://www.symfony-project.org/schema/routing"
+        <routes xmlns="http://symfony.com/schema/routing"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://www.symfony-project.org/schema/routing http://www.symfony-project.org/schema/routing/routing-1.0.xsd">
+            xsi:schemaLocation="http://symfony.com/schema/routing http://symfony.com/schema/routing/routing-1.0.xsd">
 
             <route id="homepage" pattern="/">
                 <default key="_controller">FrameworkBundle:Default:index</default>
@@ -113,9 +113,9 @@ inside the ``HelloBundle``:
         <!-- src/Sensio/HelloBundle/Resources/config/routing.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
 
-        <routes xmlns="http://www.symfony-project.org/schema/routing"
+        <routes xmlns="http://symfony.com/schema/routing"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://www.symfony-project.org/schema/routing http://www.symfony-project.org/schema/routing/routing-1.0.xsd">
+            xsi:schemaLocation="http://symfony.com/schema/routing http://symfony.com/schema/routing/routing-1.0.xsd">
 
             <route id="hello" pattern="/hello/{name}">
                 <default key="_controller">HelloBundle:Hello:index</default>

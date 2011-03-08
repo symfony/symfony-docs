@@ -97,10 +97,10 @@ the security namespace as the default one to make it more readable:
 
 .. code-block:: xml
 
-        <srv:container xmlns="http://www.symfony-project.org/schema/dic/security"
+        <srv:container xmlns="http://symfony.com/schema/dic/security"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xmlns:srv="http://www.symfony-project.org/schema/dic/services"
-            xsi:schemaLocation="http://www.symfony-project.org/schema/dic/services http://www.symfony-project.org/schema/dic/services/services-1.0.xsd">
+            xmlns:srv="http://symfony.com/schema/dic/services"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <config>
                 <provider>

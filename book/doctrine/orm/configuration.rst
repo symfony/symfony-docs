@@ -127,9 +127,9 @@ connections you can hook different events into each connection.
 
 .. code-block:: xml
 
-    <container xmlns="http://www.symfony-project.org/schema/dic/services"
+    <container xmlns="http://symfony.com/schema/dic/services"
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:schemaLocation="http://www.symfony-project.org/schema/dic/services http://www.symfony-project.org/schema/dic/services/services-1.0.xsd">
+        xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
         <services>
 
@@ -238,7 +238,7 @@ specific DBAL connection and all the EntityManagers that use this connection.
 
         <?xml version="1.0" ?>
         <container xmlns="http://symfony-project.org/2.0/container"
-            xmlns:doctrine="http://www.symfony-project.org/schema/dic/doctrine">
+            xmlns:doctrine="http://symfony.com/schema/dic/doctrine">
 
             <doctrine:config>
                 <doctrine:dbal default-connection="default">
