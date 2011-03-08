@@ -146,7 +146,7 @@ Checking Access
         $securityContext = $this->container->get('security.context');
 
         // check for edit access
-        if (false === $securityContext->vote('EDIT', $comment))
+        if (false === $securityContext->isGranted('EDIT', $comment))
         {
             throw new AccessDeniedException();
         }

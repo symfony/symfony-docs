@@ -1,13 +1,13 @@
 * **Bundle Configuration**:
 
-  * :doc:`FrameworkBundle (framework) <bundle_configuration/FrameworkBundle>`
-  * :doc:`DoctrineBundle (doctrine) <bundle_configuration/DoctrineBundle>`
-  * :doc:`DoctrineMongoDBBundle (doctrine_mongo_db) <bundle_configuration/DoctrineMongoDBBundle>`
+  * :doc:`FrameworkBundle (framework) </reference/bundle_configuration/FrameworkBundle>`
+  * :doc:`DoctrineBundle (doctrine) </reference/bundle_configuration/DoctrineBundle>`
+  * :doc:`DoctrineMongoDBBundle (doctrine_mongo_db) </reference/bundle_configuration/DoctrineMongoDBBundle>`
   * :doc:`SecurityBundle (security) </book/security/config_reference>`
   * :ref:`SwiftMailerBundle (swiftmailer) <swift-mailer-configuration>`
-  * :doc:`TwigBundle (twig) <bundle_configuration/TwigBundle>`
-  * :doc:`WebProfilerBundle (web_profiler) <bundle_configuration/WebProfilerBundle>`
-  * :doc:`ZendBundle (zend) <bundle_configuration/ZendBundle>`
+  * :doc:`TwigBundle (twig) </reference/bundle_configuration/TwigBundle>`
+  * :doc:`WebProfilerBundle (web_profiler) </reference/bundle_configuration/WebProfilerBundle>`
+  * :doc:`ZendBundle (zend) </reference/bundle_configuration/ZendBundle>`
 
 * :doc:`/book/forms/fields/index`
 * :doc:`/book/validator/constraints/index`

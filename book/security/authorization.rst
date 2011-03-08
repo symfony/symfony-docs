@@ -183,7 +183,7 @@ syntax:
 
     .. code-block:: php
 
-        <?php if ($view['security']->vote('ROLE_ADMIN')): ?>
+        <?php if ($view['security']->isGranted('ROLE_ADMIN')): ?>
             <a href="...">Delete</a>
         <?php endif ?>
 
