@@ -124,7 +124,7 @@ Getters
 
 The next validation technique is to constrain the return value of a method.
 Symfony2 allows you to constrain any public method whose name starts with
-"get" or "is". In this guide, this is commonly referred to as "getter".
+"get" or "is". In this chapter, this is commonly referred to as "getter".
 
 The benefit of this technique is that it allows you to validate your object
 dynamically. Depending on the state of your object, the method may return

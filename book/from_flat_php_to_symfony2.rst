@@ -4,15 +4,15 @@ From flat PHP to Symfony2
 .. tip::
 
    If you're familiar with the MVC philosophy, you can choose to skip this
-   guide. Still, Symfony2's approach to organized code and application
+   chapter. Still, Symfony2's approach to organized code and application
    flow is so fresh and simple that we hope everyone will continuing reading.
 
 The goal of any web application is simple: to process each HTTP request and
 return the HTTP response for the requested resource. In reality, it takes real
-work in order to keep an increasingly complex application organized and
-maintainable. The purpose of a framework is to handle common tasks and to
-set out best practices that help make this happen. Nowhere is this more obvious
-than when converting a flat PHP application into Symfony2.
+work to keep an increasingly complex application organized and maintainable.
+The purpose of a framework is to handle common tasks and encourage best practices
+that help make this happen. Nowhere is this more obvious than when converting
+a flat PHP application into Symfony2.
 
 Simple Blog Application in flat PHP
 -----------------------------------
@@ -58,13 +58,13 @@ PHP is quick and easy:
 That's quick to write, fast to execute, but impossible to maintain. There
 are several problems that we'll aim to solve:
 
-* There is no error-checking. What if the connection to the database fails?
+* **No error-checking** What if the connection to the database fails?
 
-* Poor organization. As the application grows in complexity, the single file
-  will become less and less maintainable. How should we begin to organize
+* **Poor organization** As the application grows in complexity, this single file
+  would become increasingly unmaintainable. How should we begin to organize
   our code into pieces?
 
-* Reusing code is impossible. Since everything is in one file, there would
+* **Difficult to reuse code** Since everything is in one file, there would
   be no way to reuse any part of the application for other "pages" of the
   application.
 
@@ -133,15 +133,15 @@ the request and initiates the response.
 
 In this case, our controller prepares data from the database and then includes
 a template to present that data. With the controller isolated, you can now
-imagine how it could be easily used to render the same blogs in other formats
+imagine how it could easily be used to render the same blogs in other formats
 (RSS, JSON, etc) simply by rendering a different template file (e.g. list.rss.php).
 
 Isolating the Application (Domain) Logic
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Though so far our application contains only one page, let's think ahead a
+So far our application contains only one page, but let's think ahead a
 little bit about how the logic and code of our application might be reused.
-For example, what if a different page needs to use the same database connection
+For example, what if a different page needs to use the same database connection,
 or even the same array of blog posts? Let's refactor the code so that the
 core behavior and data-access function of our application are isolated in
 a new file called ``model.php``:
@@ -249,7 +249,7 @@ the layout:
         </ul>
     <?php $content = ob_get_clean() ?>
 
-    <?php include('layout.php') ?>
+    <?php include 'layout.php' ?>
 
 We've now introduced a methodology that that allows for the reuse of the
 layout. Unfortunately, you'll also notice that we've had to use a few ugly
@@ -311,7 +311,7 @@ the individual blog:
         </div>
     <?php $content = ob_get_clean() ?>
 
-    <?php include('layout.php') ?>
+    <?php include 'layout.php' ?>
 
 Creating the second page is now very easy and no code is duplicated. Still,
 this page introduces even more lingering problems that a framework can solve
@@ -399,7 +399,7 @@ and ``show.php``) PHP functions and moved them into a separate file,
 As a front controller, ``index.php`` has taken on an entirely new role, one
 that includes loading the core libraries and routing the application so that
 one of the two controllers (the ``list_action()`` and ``show_action()``
-functions) is called. In reality, the front controller is being to look and
+functions) is called. In reality, the front controller is beginning to look and
 act a lot like Symfony2's mechanism for handling and routing requests.
 
 .. tip::
@@ -413,18 +413,49 @@ By now, we've evolved our application from a single PHP file into a structure
 that is organized and allows for code reuse. You should be happier, but far
 from satisfied. For example, our "routing" system is easily fooled, and wouldn't
 recognize that the list page (``/index.php``) should be accessible simply via ``/``
-(if Apache rewrite rules were added). Instead of developing our the application
+(if Apache rewrite rules were added). Instead of developing the application
 we intended to build, we risk spending a significant amount of development
-time solving problems (e.g. routing, calling controllers, security, logging,
-etc etc) that are routine to all web applications.
+time-solving problems (e.g. routing, calling controllers, security, logging,
+etc) that are routine to all web applications.
 
 Add a Touch of Symfony2
 ~~~~~~~~~~~~~~~~~~~~~~~
 
-Take another look at our application. Though simple, we've created an application
-that looks and acts almost exactly like a full Symfony2 application. Sure,
-Symfony2 gives you lots of helpful tools, but the process of handling a request
-and returning a response is almost identical:
+Now before you actually start using Symfony2, you need to make sure PHP knows 
+where to find the Symfony2 classes. For this, you need to set up the autoloader.
+Symfony2 provides a generic autoloader that can be used for many of the next-generation
+frameworks, including Zend Framework 2 and PEAR 2. Create an
+``app/bootstrap.php`` file and configure the autoloader:
+
+.. code-block:: html+php
+
+    <?php
+    // app/bootstrap.php
+
+    require_once 'vendor/symfony/src/Symfony/Component/ClassLoader/UniversalClassLoader.php';
+
+    $loader = new UniversalClassLoader();
+    $loader->registerNamespaces(array(
+        'Symfony'                        => __DIR__.'/../vendor/symfony/src',
+    ));
+
+    $loader->register();
+
+.. note::
+
+    The above example assumes that the Symfony2 codebase was put into the
+    ``vendor/symfony`` directory. If you put the Symfony2 codebase in a 
+    different location (which is not a problem for Symfony2), adjust the
+    require path and the ``registerNamespaces()`` path accordingly.
+
+This will include the ``UniversalClassLoader``, register the ``Symfony``
+namespace with it and then register the autoloader with the standard PHP
+autoloader stack. Now, you're all set to start using Symfony2 classes.
+
+Now take another look at our application. Though simple, we've created an 
+application that looks and acts almost exactly like a full Symfony2 
+application. Sure, Symfony2 gives you lots of helpful tools, but the process
+of handling a request and returning a response is almost identical:
 
 * A front controller handles all requests.
 * The core classes and configuration are loaded.
@@ -451,6 +482,7 @@ application:
     <?php
 
     // index.php
+    require_once 'app/bootstrap.php';
     require_once 'model.php';
     require_once 'controllers.php';
     use Symfony\Component\HttpFoundation\Request;
@@ -554,7 +586,7 @@ same sample application, now built in Symfony2:
         }
     }
 
-Our two controllers are still lightweight. Each uses the ``Doctrine`` ORM library
+Our two controllers are still lightweight. Each uses the Doctrine ORM library
 to retrieve objects from the database and the ``Templating`` component to
 render a template and return a ``Response`` object. The list template is
 now quite a bit simpler:
@@ -642,8 +674,8 @@ by migrating the original flat PHP application to Symfony2:
   for new developers to be productive in your project more quickly.
 
 * 100% of the code you write is for *your* application. You no longer need
-  to develop or maintain low-level framework tasks such as autoloading,
-  routing, or rendering controllers.
+  to develop or maintain low-level framework tasks such as :ref:`autoloading<autoloading-introduction-sidebar>`,
+  :doc:`routing</book/routing>`, or rendering :doc:`controllers</book/controller>`.
 
 * Symfony2 gives you access to open source tools such as Doctrine and the
   Templating, Security, Form, Validation and Translation components (among others).
@@ -653,9 +685,9 @@ by migrating the original flat PHP application to Symfony2:
 
 * Symfony2's HTTP-centric architecture gives you access to powerful tools
   such as HTTP caching powered by Symfony2's internal HTTP cache or more
-  powerful tools such as Varnish.
+  powerful tools such as `Varnish`_.
 
-* Unit and functional testing via PHPUnit is available by default. Symfony2
+* Unit and functional testing via `PHPUnit`_ is available by default. Symfony2
   provides several standalone components that make functional testing very
   easy and powerful.
 
@@ -705,5 +737,13 @@ The corresponding ``layout.html.twig`` template is also easier to write:
 Twig is well-supported in Symfony2. And while PHP templates will always
 be supported in Symfony2, we'll continue to discuss the advantages of Twig.
 
+Learn more from the Cookbook
+----------------------------
+
+* :doc:`/cookbook/templating/PHP`
+* :doc:`/cookbook/controller/service`
+
 .. _`Doctrine`: http://www.doctrine-project.org
 .. _`Twig`: http://www.twig-project.org
+.. _`Varnish`: http://www.varnish-cache.org
+.. _`PHPUnit`: http://www.phpunit.de

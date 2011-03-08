@@ -153,19 +153,19 @@ tag in your configuration:
             data_collector.your_collector_name:
                 class: Fully\Qualified\Collector\Class\Name
                 tags:
-                    - { name: data_collector, template: "YourBundle:Collector:templatename" }
+                    - { name: data_collector, template: "YourBundle:Collector:templatename", id: "your_collector_name" }
 
     .. code-block:: xml
 
         <service id="data_collector.your_collector_name" class="Fully\Qualified\Collector\Class\Name">
-            <tag name="data_collector" template="YourBundle:Collector:templatename" />
+            <tag name="data_collector" template="YourBundle:Collector:templatename" id="your_collector_name" />
         </service>
 
     .. code-block:: php
 
         $container
             ->register('data_collector.your_collector_name', 'Fully\Qualified\Collector\Class\Name')
-            ->addTag('data_collector', array('template' => 'YourBundle:Collector:templatename'))
+            ->addTag('data_collector', array('template' => 'YourBundle:Collector:templatename', 'id' => 'your_collector_name'))
         ;
 
 .. _data collectors: http://api.symfony-reloaded.org/PR4/index.html?q=DataCollector

@@ -10,7 +10,7 @@ Creating a new page in Symfony2 is a simple two-step process:
   page and specifies a controller (a PHP function) that Symfony2 should
   execute when the URI of an incoming request matches the route pattern;
 
-* *Create a controller* A controller is a PHP function that takes the incoming
+* *Create a controller*: A controller is a PHP function that takes the incoming
   request and transforms it into a Symfony2 ``Response`` object.
 
 We love this simple approach because it matches the way that the Web works.
@@ -48,7 +48,7 @@ Create the Route
 ~~~~~~~~~~~~~~~~
 
 By default, the routing configuration file in a Symfony2 application is
-located at ``app/config/config.yml``. Like all configuration in Symfony2,
+located at ``app/config/routing.yml``. Like all configuration in Symfony2,
 you can also choose to use XML or PHP out of the box to configure routes:
 
 .. configuration-block::
@@ -147,7 +147,7 @@ to personally greet the user.
 
   The routing system has many more great features for creating flexible
   and powerful URI structures in your application. For more details, see
-  the guide all about :doc:`Routing </book/routing>`.
+  the chapter all about :doc:`Routing </book/routing>`.
 
 Create the Controller
 ~~~~~~~~~~~~~~~~~~~~~
@@ -180,7 +180,7 @@ The controller is simple: it creates a new ``Response`` object, whose first
 argument is the content that should be used for the response (a small HTML
 page in this case).
 
-Congratulations, after creating only a route and a controller, you already
+Congratulations! After creating only a route and a controller, you already
 have a fully-functional page! If you've setup everything correctly, your
 application should greet you::
 
@@ -201,20 +201,35 @@ Templates allows us to move all of the presentation (e.g. HTML code) into
 a separate file and reuse different portions of the page layout. Instead
 of writing the HTML inside the controller, use a template instead::
 
-    public function indexAction($name)
-    {
-        return $this->render('HelloBundle:Hello:index.html.twig', array('name' => $name));
+    // src/Sensio/HelloBundle/Controller/HelloController.php
 
-        // render a PHP template instead
-        // return $this->render('HelloBundle:Hello:index.html.php', array('name' => $name));
+    namespace Sensio\HelloBundle\Controller;
+
+    use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+
+    class HelloController extends Controller
+    {
+        public function indexAction($name)
+        {
+            return $this->render('HelloBundle:Hello:index.html.twig', array('name' => $name));
+
+            // render a PHP template instead
+            // return $this->render('HelloBundle:Hello:index.html.php', array('name' => $name));
+        }
     }
 
+.. note::
+
+   In order to use the ``render()`` method, you must extend the
+   :class:`Symfony\Bundle\FrameworkBundle\Controller\Controller` class, which
+   adds shortcuts for tasks that are common inside controllers.
+
 The ``render()`` method creates a ``Response`` object filled with the content
-of the given, rendered template. Like any other controller, you will ultimatel
+of the given, rendered template. Like any other controller, you will ultimately
 return that ``Response`` object.
 
 Notice that there are two different examples for rendering the template.
-By default, Symfony2 support two different templating languages: the classic
+By default, Symfony2 supports two different templating languages: classic
 PHP templates and the succinct but powerful `Twig`_ templates. Don't be alarmed
 - you're free to choose either or even both in the same project.
 
@@ -297,7 +312,7 @@ to "Hello Application".
 
 Templates are a powerful way to render and organize the content for your
 page and can be HTML markup, CSS code, or anything else that the controller
-may need to return. But the templating engine is simply a means to an ends.
+may need to return. But the templating engine is simply a means to an end.
 The goal is that each controller returns a ``Response`` object. Templates
 are a powerful, but optional, tool for creating the content of a ``Response``
 object.
@@ -390,6 +405,8 @@ configuration and routing files in the ``app/config/`` directory (see
 application-level template files (``app/views``). You'll learn more about
 each of these directories in later chapters.
 
+.. _autoloading-introduction-sidebar:
+
 .. sidebar:: Autoloading
 
     When bootstrapping, a special file - ``app/autoload.php`` - is included.
@@ -437,7 +454,7 @@ The Bundle System
 
 A bundle is similar to a plugin in other software, but even better. The key
 difference is that *everything* is a bundle in Symfony2, including both the
-core framework functionality as well as the code written for your application.
+core framework functionality and the code written for your application.
 Bundles are first-class citizens in Symfony2. This gives you the flexibility
 to use pre-built features packaged in `third-party bundles`_ or to distribute
 your own bundles. It makes it easy to pick and choose which features to enable
@@ -445,7 +462,7 @@ in your application and to optimize them the way you want.
 
 .. note::
 
-   While we'll cover the basics here, an entire guide is devoted to the topic
+   While we'll cover the basics here, an entire chapter is devoted to the topic
    of :doc:`/book/bundles`.
 
 A bundle is simply a structured set of files within a directory that
@@ -710,11 +727,11 @@ the application via the development front controller::
 If you'd like to see how your application will behave in the production environment,
 call the ``prod`` front controller instead::
 
-    http;//localhost/app.php/hello/Ryan
+    http://localhost/app.php/hello/Ryan
 
 .. note::
 
-   If you open the ``web/app.php`` file, you'll that it's configured explicitly
+   If you open the ``web/app.php`` file, you'll find that it's configured explicitly
    to use the ``prod`` environment::
    
        $kernel = new AppCache(new AppKernel('prod', false));
@@ -732,7 +749,7 @@ cached files and allow them to rebuild::
 .. note::
 
     The ``test`` environment is used when running automated tests and cannot
-    be accessed directly through the browser. See the :doc:`testing guide </book/testing>`
+    be accessed directly through the browser. See the :doc:`testing chapter </book/testing>`
     for more details.
 
 .. index::
@@ -839,7 +856,7 @@ in mind:
 * creating a page is a three-step process involving a **route**, a **controller**
   and (optionally) a **template**.
 
-* each application contain only four directories: **web/** (web assets and
+* each application should contain only four directories: **web/** (web assets and
   the front controllers), **app/** (configuration), **src/** (your bundles),
   and **vendor/** (third-party code);
 
@@ -852,10 +869,18 @@ in mind:
 * each **environment** is accessible via a different front controller (e.g.
   ``app.php`` and ``app_dev.php``) and loads a different configuration file.
 
-From here, each guide will introduce you to more and more powerful tools
+From here, each chapter will introduce you to more and more powerful tools
 and advanced concepts. The more you know about Symfony2, the more you'll
 appreciate the flexibility of its architecture and the power it gives you
 to rapidly develop applications.
+
+Learn more from the Cookbook
+----------------------------
+
+* :doc:`/cookbook/controller/service`
+* :doc:`/cookbook/templating/PHP`
+* :doc:`/cookbook/tools/autoloader`
+* :doc:`/cookbook/symfony1`
 
 .. _`Twig`: http://www.twig-project.org
 .. _`third-party bundles`: http://symfony2bundles.org/

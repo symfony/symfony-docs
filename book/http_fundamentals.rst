@@ -145,7 +145,7 @@ Symfony is architected to match this reality.
 Requests and Responses in Symfony
 ---------------------------------
 
-PHP comes packaged with an array variables and methods that allow the developer
+PHP comes packaged with an array of variables and methods that allow the developer
 to understand each request and send a response. For request information,
 PHP prepares superglobal variables such as ``$_SERVER`` and ``$_GET``.
 Recall that each raw request is simply an HTTP-formatted block of text.
@@ -193,7 +193,7 @@ to the client::
     use Symfony\Component\HttpFoundation\Response;
     $response = new Response();
 
-    $response->setContent('<html><body><h1>Hello world!</h1></body></html');
+    $response->setContent('<html><body><h1>Hello world!</h1></body></html>');
     $response->setStatusCode(200);
     $response->headers->set('Content-Type', 'text/html');
 
@@ -221,8 +221,8 @@ The Journey from the Request to the Response
 We know now that the end goal of any application is to use the HTTP
 request to create and return the appropriate HTTP response. Symfony provides
 ``Request`` and ``Response`` classes that allow this to be done through
-an object-oriented interface. Though, so far, we're only leveraging a small
-piece of Symfony, we already have the tools to write a simple application!
+an object-oriented interface. So far, we're only leveraging a small
+piece of Symfony. But we already have the tools to write a simple application!
 Let's dive in:
 
 .. code-block:: php
@@ -241,20 +241,20 @@ Let's dive in:
     $response->send();
 
 In this simple example, the application correctly processes the request and
-returns an appropriate response. From a very technical standpoint, then, our
+returns an appropriate response. From a very technical standpoint, our
 application does exactly what it should.
 
 An Application without a Framework
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 But what if the application needs to grow? Imagine this same application if it
-were forced now to handle hundreds or even thousands of different pages! In
+were now forced to handle hundreds or even thousands of different pages! In
 order to keep things maintainable (i.e. not all in one file), we'd need to do
 some reorganization. For starters, we might move the work of creating the
 ``Response`` into a set of different functions. These functions are commonly
 known as *controllers* and allow us to further organize our code::
 
-    if (in_array($path, array('', '/') && $method == 'GET') {
+    if (in_array($path, array('', '/')) && $method == 'GET') {
         $response = main_controller($request);
     } elseif ($path == '/about' && $method == 'GET') {
         $response = about_controller($request);
@@ -280,7 +280,8 @@ known as *controllers* and allow us to further organize our code::
 Next, our growing application still contains a long ``if`` ``elseif`` block
 that routes the creation of the ``Response`` object to a different controller
 (i.e. PHP method). We might consider building a configuration-based routing
-system that maps each request (by URI and HTTP method) to a specific controller.
+system that maps each request to a specific controller based on the URI and
+HTTP method of the request.
 
 Obvious or not, the application is beginning to spin out of control. Recall
 that the goal of any application is to apply the custom application logic and
@@ -309,15 +310,15 @@ for use.
 Introducing the Symfony Kernel
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Symfony is based around a ``Kernel`` object whose only job is to facilitate
+Symfony is based around a ``Kernel`` object whose single responsibility is to facilitate
 the journey from the ``Request`` object to the final ``Response`` object.
 The ``Kernel`` is what handles each request and actually executes your application
 code.
 
-The "application code" that's executed by the ``Kernel`` is called a "controller",
+The "application code" executed by the ``Kernel`` is called a "controller",
 a special term for what's actually a basic PHP callable (most commonly,
 an object method). The controller is where your application code lives -
-it's where you create the final ``Response`` object. The Kernel works by
+it's where you create the final ``Response`` object. The ``Kernel`` works by
 determining and then calling a "Controller" for each request:
 
 .. code-block:: text
@@ -338,7 +339,7 @@ elsewhere and handled by the ``Kernel``::
 
         public function aboutAction()
         {
-            return Response('About us');
+            return new Response('About us');
         }
     }
 
@@ -384,7 +385,7 @@ In reality, everything we've talked about so far (the ``Request``, ``Response``,
 used by Symfony. In fact, each feature in Symfony2 belongs to one of over
 twenty independent libraries (called the "Symfony Components")! Even if you
 decided to build your own PHP framework (an unwise idea), you could use the
-Symfony2 Components as the building blocks for many layers of functionality.
+Symfony Components as the building blocks for many layers of functionality.
 And if you do use Symfony2, but need to replace a component entirely, you have
 the ability to do that. Symfony2 is decoupled and relies on interface-driven
 dependency injection. In other words, the developer has complete control.
@@ -395,7 +396,7 @@ a PHP framework that accomplishes two distinct tasks:
 #. Provides a selection of components (i.e. the Symfony2 Components) and
    third-party libraries.
 
-#. Provides sensible configuration that ties everything together nicely.
+#. Provides sensible configuration that nicely ties everything together.
 
 The goal of the framework is to integrate many independent tools in order
 to provide a consistent experience for the developer. Even the framework

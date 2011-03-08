@@ -1,20 +1,20 @@
 .. index::
    single: Security; Configuration Reference
-   
+
 Configuration Reference
 =======================
 
 .. configuration-block::
 
     .. code-block:: yaml
-        
+
         # app/config/security.yml
         security:
             access_denied_url: /foo/error403
-        
+
             # strategy can be: none, migrate, invalidate
             session_fixation_strategy: migrate
-        
+
             encoders:
                 somename:
                     class: MyBundle/Entity/MyUser
@@ -26,7 +26,7 @@ Configuration Reference
                     iterations: 5
                 MyBundle/Entity/MyUser:
                     id: my.custom.encoder.service.id
-                    
+
             providers:
                 memory:
                     name: memory
@@ -35,7 +35,10 @@ Configuration Reference
                         bar: { password: bar, roles: [ROLE_USER, ROLE_ADMIN] }
                 entity:
                     entity: { class: SecurityBundle:User, property: username }
-                
+
+            factories:
+                MyFactory: %kernel.root_dir%/../src/MyVendor/MyBundle/Resources/config/security_factories.xml
+
             firewalls:
                 somename:
                     pattern: .*
@@ -83,13 +86,13 @@ Configuration Reference
                         remember_me_parameter: _remember_me
                     logout:
                         invalidate_session: false
-                        delete_cookies: 
+                        delete_cookies:
                             a: { path: null, domain: null }
                             b: { path: null, domain: null }
                         handlers: [some.service.id, another.service.id]
                         success_handler: some.service.id
                     anonymous: ~
-                    
+
             access_control:
                 -
                     path: /foo

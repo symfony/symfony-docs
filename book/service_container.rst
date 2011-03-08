@@ -12,7 +12,7 @@ your product inventory, or another object that processes data from a third-party
 API. The point is that a modern application does many things and is organized
 into many objects that handle each task.
 
-In this guide, we'll talk about a special PHP object in Symfony2 that helps
+In this chapter, we'll talk about a special PHP object in Symfony2 that helps
 you instantiate, organize and retrieve the many objects of your application.
 This object, called a service container, will allow you to standardize and
 centralize the way objects are constructed in your application. The container
@@ -722,5 +722,10 @@ additional arguments (beyond just the ``name`` parameter).
 * translation.loader
 * validator.constraint_validator
 * zend.logger.writer
+
+Learn more from the Cookbook
+----------------------------
+
+* :doc:`/cookbook/controller/service`
 
 .. _`service-oriented architecture`: http://wikipedia.org/wiki/Service-oriented_architecture

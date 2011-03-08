@@ -9,7 +9,7 @@ handling each request that comes into a Symfony2 application. In reality,
 the controller delegates the most of the heavy work to other places so that
 code can be tested and reused. When a controller needs to generate HTML,
 CSS or any other content, it hands the work off to the templating engine.
-In this guide, you'll learn how to write powerful templates that can be
+In this chapter, you'll learn how to write powerful templates that can be
 used to return content to the user, populate email bodies, and more. You'll
 learn shortcuts, clever ways to extend templates and how to reuse template
 code.
@@ -106,7 +106,7 @@ alternating ``odd``, ``even`` classes:
       </div>
     {% endfor %}
 
-Throughout this guide, template examples will be shown in both Twig and PHP.
+Throughout this chapter, template examples will be shown in both Twig and PHP.
 
 .. sidebar:: Why Twig?
 
@@ -1083,7 +1083,7 @@ but can return any other format based on the format requested by the user.
 The request format is most often managed by the routing, where a route can
 be configured so that ``/contact`` sets the request format to ``html`` while
 ``/contact.xml`` sets the format to ``xml``. For more information, see the
-:doc:`Routing</book/routing>` guide.
+:doc:`Routing</book/routing>` chapter.
 
 Final Thoughts
 --------------
@@ -1111,6 +1111,12 @@ the most common tasks.
 Overall, the topic of templating should be thought of as a powerful tool
 that's at your disposal. In some cases, you may not need to render a template,
 and in Symfony2, that's absolutely fine.
+
+Learn more from the Cookbook
+----------------------------
+
+* :doc:`/cookbook/controller/PHP`
+* :doc:`/cookbook/controller/error_pages`
 
 .. _`Twig`: http://www.twig-project.org
 .. _`Symfony2Bundles.org`: http://symfony2bundles.org

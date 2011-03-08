@@ -239,7 +239,7 @@ misses.
     your traffic increases.
 
     For more information on using Varnish with Symfony2, see the
-    :doc:`How to use Varnish </cookbook/cache/varnish>` cookbook guide.
+    :doc:`How to use Varnish </cookbook/cache/varnish>` cookbook chapter.
 
 .. note::
 
@@ -1014,6 +1014,11 @@ with the HTTP cache models and using them effectively. This means that, instead
 of relying only on Symfony2 documentation and code examples, you have access
 to a world of knowledge related to HTTP caching and gateway caches such as
 Varnish.
+
+Learn more from the Cookbook
+----------------------------
+
+* :doc:`/cookbook/varnish/varnish`
 
 .. _`Things Caches Do`: http://tomayko.com/writings/things-caches-do
 .. _`Cache Tutorial`: http://www.mnot.net/cache_docs/
