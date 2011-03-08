@@ -517,7 +517,7 @@ Creating a Bundle
 To show you how simple the bundle system is, let's create a new bundle called
 ``SensioMyBundle`` and enable it.
 
-First, create a ``src/Sensio/SensioMyBundle/`` directory and add a new file
+First, create a ``src/Sensio/MyBundle/`` directory and add a new file
 called ``SensioMyBundle.php``::
 
     // src/Sensio/MyBundle/SensioMyBundle.php
