@@ -2,7 +2,7 @@
    single: Tests; HTTP Authentication
 
 How to simulate HTTP Authentication in a Functional Test
-=======================================================
+========================================================
 
 If your application needs HTTP authentication, pass the username and password
 as server variables to ``createClient()``::

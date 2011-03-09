@@ -12,7 +12,7 @@ Cookbook
     tools/autoloader
     tools/finder
     cache/varnish
-    testing/http_authorization
+    testing/http_authentication
     testing/insulating_clients
     testing/profiling
     event_dispatcher/class_extension
