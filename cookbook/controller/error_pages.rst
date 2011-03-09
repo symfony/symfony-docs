@@ -38,11 +38,11 @@ end-user, create a new template located at
 
 .. tip::
 
-    If you're not familiar with Twig, don't worry. Twig is simple, powerful
+    If you're not familiar with Twig, don't worry. Twig is a simple, powerful
     and optional templating engine that integrates with ``Symfony2``.
 
 In addition to the standard HTML error page, Symfony provides a default error
-page for the many of the most common response formats, including JSON
+page for many of the most common response formats, including JSON
 (``error.json.twig``), XML, (``error.xml.twig``), and even Javascript
 (``error.js.twig``), to name a few. To override any of these templates, just
 create a new file with the same name in the
