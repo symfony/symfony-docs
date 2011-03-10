@@ -15,7 +15,7 @@ Configuration
                 options:
                     connect: true
         default_database: hello_%kernel.environment%
-        documents_managers:
+        document_managers:
             default:
                 mappings:
                     AcmeDemoBundle: ~
@@ -36,7 +36,7 @@ If you wish to use memcache to cache your metadata, you need to configure the
                     server: mongodb://localhost:27017
                     options:
                         connect: true
-            documents_managers:
+            document_managers:
                 default:
                     mappings:
                         AcmeDemoBundle: ~
@@ -119,7 +119,7 @@ The following configuration shows a bunch of mapping examples:
 .. code-block:: yaml
 
     doctrine_mongo_db:
-        documents_managers:
+        document_managers:
             default:
                 mappings:
                     MyBundle1: ~
