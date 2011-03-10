@@ -144,8 +144,8 @@ configuration file:
 
 In other words, all the routing configuration of the application lives in
 a single routing file inside the ``app/config`` directory. This file can
-be written in YAML, XML or PHP by default. In the next section, you'll start
-creating and customizing routes inside this file.
+be written in YAML, XML or PHP, but YAML is used by default. In the next
+section, you'll start creating and customizing routes inside this file.
 
 .. tip::
 
