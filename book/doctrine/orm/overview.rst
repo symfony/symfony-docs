@@ -24,8 +24,11 @@ necessary configuration is to specify the bundle name which contains your entiti
         # app/config/config.yml
         doctrine:
             orm:
-                mappings:
-                    HelloBundle: ~
+                default_entity_manager: default
+                entity_managers:
+                    default:
+                        mappings:
+                            HelloBundle: ~
 
     .. code-block:: xml
 
@@ -33,15 +36,22 @@ necessary configuration is to specify the bundle name which contains your entiti
         <!-- xsi:schemaLocation="http://symfony.com/schema/dic/doctrine http://symfony.com/schema/dic/doctrine/doctrine-1.0.xsd"> -->
 
         <doctrine:config>
-            <doctrine:orm>
-                <mapping name="HelloBundle" />
+            <doctrine:orm default-entity-manager="default">
+                <doctrine:entity-manager name="default">
+                    <doctrine:mapping name="HelloBundle" />
+                </doctrine:entity-manager>
             </doctrine:orm>
         </doctrine:config>
 
     .. code-block:: php
 
         $container->loadFromExtension('doctrine', array('orm' => array(
-            "mappings" => array("HelloBundle" => array())),
+            "default_entity_manager" => "default",
+            "entity_managers" => array(
+                "default => array(
+                    "mappings" => array("HelloBundle" => array()),
+                ),
+            ),
         ));
 
 As Doctrine provides transparent persistence for PHP objects, it works with

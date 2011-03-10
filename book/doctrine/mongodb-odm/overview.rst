@@ -21,8 +21,10 @@ just need to enable it and specify the bundle that contains your mapped document
     # app/config/config.yml
 
     doctrine_mongo_db:
-        mappings:
-            HelloBundle: ~
+        documents_managers:
+            default:
+                mappings:
+                    HelloBundle: ~
 
 Now you can start writing documents and mapping them with annotations, xml or
 yaml.
@@ -46,7 +48,7 @@ yaml.
             protected $id;
 
             /**
-             * @mongodb:String
+             * @mongodb:Field(type="string")
              */
             protected $name;
 
@@ -89,7 +91,6 @@ yaml.
             collection: user
             fields:
                 id:
-                    type: integer
                     id: true
                 name:
                     type: string
@@ -104,7 +105,7 @@ yaml.
                             http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
 
             <document name="Sensio\HelloBundle\Document\User" collection="user">
-                <field name="id" type="integer" id="true" />
+                <field name="id" id="true" />
                 <field name="name" type="string" length="255" />
             </document>
 

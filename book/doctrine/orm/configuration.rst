@@ -16,21 +16,29 @@ the ORM resolves to:
 
     doctrine:
         orm:
-            mappings:
-                HelloBundle: ~
             auto_generate_proxy_classes: true
             proxy_namespace: Proxies
             proxy_dir: %kernel.cache_dir%/doctrine/orm/Proxies
             default_entity_manager: default
-            default_connection: default
-            metadata_cache_driver: array
-            query_cache_driver: array
-            result_cache_driver: array
+            entity_managers:
+                default:
+                    mappings:
+                        HelloBundle: ~
+                    metadata_cache_driver: array
+                    query_cache_driver: array
+                    result_cache_driver: array
 
 There are lots of other configuration options that you can use to overwrite
 certain classes, but those are for very advanced use-cases only. You should
-look at the "orm.xml" file in the DoctrineBundle to get an overview of all the
-supported options.
+look at the
+:doc:`configuration reference </reference/bundle_configuration/DoctrineBundle>`
+to get an overview of all the supported options.
+
+.. note::
+
+    The ``default_entity_manager`` parameter is mandatory and you have to define
+    at least one entity manager. Thus the ``mappings`` configuration is
+    mandatory for each entity manager.
 
 For the caching drivers you can specifiy the values "array", "apc", "memcache"
 or "xcache".
@@ -41,15 +49,18 @@ The following example shows an overview of the caching configurations:
 
     doctrine:
         orm:
-            mappings:
-                HelloBundle: ~
-            metadata_cache_driver: apc
-            query_cache_driver: xcache
-            result_cache_driver:
-                type: memcache
-                host: localhost
-                port: 11211
-                instance_class: Memcache
+            default_entity_manager: default
+            entity_managers:
+                default:
+                    mappings:
+                        HelloBundle: ~
+                    metadata_cache_driver: apc
+                    query_cache_driver: xcache
+                    result_cache_driver:
+                        type: memcache
+                        host: localhost
+                        port: 11211
+                        instance_class: Memcache
 
 Mapping Configuration
 ~~~~~~~~~~~~~~~~~~~~~
@@ -97,20 +108,23 @@ The following configuration shows a bunch of mapping examples:
 
     doctrine:
         orm:
-            mappings:
-                MyBundle1: ~
-                MyBundle2: yml
-                MyBundle3: { type: annotation, dir: Entity/ }
-                MyBundle4: { type: xml, dir: Resources/config/doctrine/mapping }
-                MyBundle5:
-                    type: yml
-                    dir: my-bundle-mappings-dir
-                    alias: BundleAlias
-                doctrine_extensions:
-                    type: xml
-                    dir: %kernel.dir%/../src/vendor/DoctrineExtensions/lib/DoctrineExtensions/Entity
-                    prefix: DoctrineExtensions\Entity\
-                    alias: DExt
+            default_entity_manager: default
+            entity_managers:
+                default:
+                    mappings:
+                        MyBundle1: ~
+                        MyBundle2: yml
+                        MyBundle3: { type: annotation, dir: Entity/ }
+                        MyBundle4: { type: xml, dir: Resources/config/doctrine/mapping }
+                        MyBundle5:
+                            type: yml
+                            dir: my-bundle-mappings-dir
+                            alias: BundleAlias
+                        doctrine_extensions:
+                            type: xml
+                            dir: %kernel.dir%/../src/vendor/DoctrineExtensions/lib/DoctrineExtensions/Entity
+                            prefix: DoctrineExtensions\Entity\
+                            alias: DExt
 
 Registering Event Listeners and Subscribers
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
