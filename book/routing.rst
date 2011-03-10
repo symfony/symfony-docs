@@ -144,8 +144,8 @@ configuration file:
 
 In other words, all the routing configuration of the application lives in
 a single routing file inside the ``app/config`` directory. This file can
-be written in YAML, XML or PHP by default. In the next section, you'll start
-creating and customizing routes inside this file.
+be written in YAML, XML or PHP, but YAML is used by default. In the next
+section, you'll start creating and customizing routes inside this file.
 
 .. tip::
 
@@ -639,8 +639,8 @@ for the two actions.
 Advanced Routing Example
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
-At this point, you've have everything you need to create a powerful routing
-structures in Symfony. The following is an example of just how flexible the
+At this point, you have everything you need to create a powerful routing
+structure in Symfony. The following is an example of just how flexible the
 routing system can be:
 
 .. configuration-block::
@@ -840,7 +840,7 @@ Visualizing & Debugging Routes
 
 While adding and customizing routes, it's helpful to be able to visualize
 your routes and see if each is configured correctly. An easy way to see
-every route in your application is via the ``router:debug`` cli command. Initiate
+every route in your application is via the ``router:debug`` console command. Execute
 the command by running the following from the root of your project.
 
 .. code-block:: text
@@ -954,8 +954,8 @@ Generating URLs
 ---------------
 
 The routing system should also be used to generate URLs. In fact, routing
-is really a bi-directional system that maps a path info (i.e. URI) to an
-array of routing parameters and parameters back to a URI. The
+is really a bi-directional system that maps path info (i.e. URI) to an
+array of routing parameters, and parameters back to a URI. The
 :method:`Symfony\\Component\\Routing\\Router::match` and
 :method:`Symfony\\Component\\Routing\\Router::generate` methods form this bi-directional
 system. Take the ``blog_show`` example route from earlier::
