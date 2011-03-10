@@ -16,21 +16,29 @@ the ORM resolves to:
 
     doctrine:
         orm:
-            mappings:
-                HelloBundle: ~
             auto_generate_proxy_classes: true
             proxy_namespace: Proxies
             proxy_dir: %kernel.cache_dir%/doctrine/orm/Proxies
             default_entity_manager: default
-            default_connection: default
-            metadata_cache_driver: array
-            query_cache_driver: array
-            result_cache_driver: array
+            entity_managers:
+                default:
+                    mappings:
+                        HelloBundle: ~
+                    metadata_cache_driver: array
+                    query_cache_driver: array
+                    result_cache_driver: array
 
 There are lots of other configuration options that you can use to overwrite
 certain classes, but those are for very advanced use-cases only. You should
-look at the "orm.xml" file in the DoctrineBundle to get an overview of all the
-supported options.
+look at the
+:doc:`configuration reference </reference/bundle_configuration/DoctrineBundle>`
+to get an overview of all the supported options.
+
+.. note::
+
+    The ``default_entity_manager`` parameter is mandatory and you have to define
+    at least one entity manager. Thus the ``mappings`` configuration is
+    mandatory for each entity manager.
 
 For the caching drivers you can specifiy the values "array", "apc", "memcache"
 or "xcache".
@@ -41,15 +49,18 @@ The following example shows an overview of the caching configurations:
 
     doctrine:
         orm:
-            mappings:
-                HelloBundle: ~
-            metadata_cache_driver: apc
-            query_cache_driver: xcache
-            result_cache_driver:
-                type: memcache
-                host: localhost
-                port: 11211
-                instance_class: Memcache
+            default_entity_manager: default
+            entity_managers:
+                default:
+                    mappings:
+                        HelloBundle: ~
+                    metadata_cache_driver: apc
+                    query_cache_driver: xcache
+                    result_cache_driver:
+                        type: memcache
+                        host: localhost
+                        port: 11211
+                        instance_class: Memcache
 
 Mapping Configuration
 ~~~~~~~~~~~~~~~~~~~~~
@@ -69,10 +80,11 @@ can control. The following configuration options exist for a mapping:
   share. This prefix should never conflict with prefixes of other defined
   mappings otherwise some of your entities cannot be found by Doctrine. This
   option defaults to the bundle namespace + ``Entity``, for example for an
-  application bundle called "Hello" prefix would be
-  ``Sensio\Hello\Entity``.
+  application bundle called "HelloBundle" prefix would be
+  ``Sensio\HelloBundle\Entity``.
 - ``alias`` Doctrine offers a way to alias entity namespaces to simpler,
-  shorter names to be used in DQL queries or for Repository access.
+  shorter names to be used in DQL queries or for Repository access. When using a
+  bundle the alias defaults to the bundle name.
 - ``is_bundle`` This option is a derived value from ``dir`` and by default is
   set to true if dir is relative proved by a ``file_exists()`` check that
   returns false. It is false if the existence check returns true. In this case
@@ -83,10 +95,10 @@ To avoid having to configure lots of information for your mappings you should
 follow these conventions:
 
 1. Put all your entities in a directory ``Entity/`` inside your bundle. For
-   example ``Sensio/Hello/Entity/``.
+   example ``Sensio/HelloBundle/Entity/``.
 2. If you are using xml, yml or php mapping put all your configuration files
-   into the "Resources/config/doctrine/metadata/doctrine/orm/" directory sufficed
-   with dcm.xml, dcm.yml or dcm.php respectively.
+   into the "Resources/config/doctrine/metadata/doctrine/orm/" directory
+   suffixed with dcm.xml, dcm.yml or dcm.php respectively.
 3. Annotations is assumed if an ``Entity/`` but no
    "Resources/config/doctrine/metadata/doctrine/orm/" directory is found.
 
@@ -96,20 +108,23 @@ The following configuration shows a bunch of mapping examples:
 
     doctrine:
         orm:
-            mappings:
-                MyBundle1: ~
-                MyBundle2: yml
-                MyBundle3: { type: annotation, dir: Entity/ }
-                MyBundle4: { type: xml, dir: Resources/config/doctrine/mapping }
-                MyBundle5:
-                    type: yml
-                    dir: my-bundle-mappings-dir
-                    alias: BundleAlias
-                doctrine_extensions:
-                    type: xml
-                    dir: %kernel.dir%/../src/vendor/DoctrineExtensions/lib/DoctrineExtensions/Entity
-                    prefix: DoctrineExtensions\Entity\
-                    alias: DExt
+            default_entity_manager: default
+            entity_managers:
+                default:
+                    mappings:
+                        MyBundle1: ~
+                        MyBundle2: yml
+                        MyBundle3: { type: annotation, dir: Entity/ }
+                        MyBundle4: { type: xml, dir: Resources/config/doctrine/mapping }
+                        MyBundle5:
+                            type: yml
+                            dir: my-bundle-mappings-dir
+                            alias: BundleAlias
+                        doctrine_extensions:
+                            type: xml
+                            dir: %kernel.dir%/../src/vendor/DoctrineExtensions/lib/DoctrineExtensions/Entity
+                            prefix: DoctrineExtensions\Entity\
+                            alias: DExt
 
 Registering Event Listeners and Subscribers
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -167,7 +182,7 @@ The following configuration code shows how to define two EntityManagers:
             entity_managers:
                 default:
                     connection:       default
-                    mappings:        
+                    mappings:
                         MyBundle1: ~
                         MyBundle2: ~
                 customer:
@@ -242,9 +257,7 @@ specific DBAL connection and all the EntityManagers that use this connection.
 
             <doctrine:config>
                 <doctrine:dbal default-connection="default">
-                    <doctrine:connections>
-                        <doctrine:connection driver="pdo_sqlite" memory="true" />
-                    </doctrine:connections>
+                    <doctrine:connection driver="pdo_sqlite" memory="true" />
                 </doctrine:dbal>
             </doctrine:config>
 

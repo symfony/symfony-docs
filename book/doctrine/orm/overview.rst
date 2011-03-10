@@ -24,8 +24,11 @@ necessary configuration is to specify the bundle name which contains your entiti
         # app/config/config.yml
         doctrine:
             orm:
-                mappings:
-                    HelloBundle: ~
+                default_entity_manager: default
+                entity_managers:
+                    default:
+                        mappings:
+                            HelloBundle: ~
 
     .. code-block:: xml
 
@@ -33,21 +36,28 @@ necessary configuration is to specify the bundle name which contains your entiti
         <!-- xsi:schemaLocation="http://symfony.com/schema/dic/doctrine http://symfony.com/schema/dic/doctrine/doctrine-1.0.xsd"> -->
 
         <doctrine:config>
-            <doctrine:orm>
-                <mappings>
-                    <mapping name="HelloBundle" />
-                </mappings>
+            <doctrine:orm default-entity-manager="default">
+                <doctrine:entity-manager name="default">
+                    <doctrine:mapping name="HelloBundle" />
+                </doctrine:entity-manager>
             </doctrine:orm>
         </doctrine:config>
 
     .. code-block:: php
 
         $container->loadFromExtension('doctrine', array('orm' => array(
-            "mappings" => array("HelloBundle" => array())),
+            "default_entity_manager" => "default",
+            "entity_managers" => array(
+                "default => array(
+                    "mappings" => array("HelloBundle" => array()),
+                ),
+            ),
         ));
 
 As Doctrine provides transparent persistence for PHP objects, it works with
-any PHP class::
+any PHP class:
+
+.. code-block:: php
 
     // Sensio/HelloBundle/Entity/User.php
     namespace Sensio\HelloBundle\Entity;
@@ -85,7 +95,7 @@ write mapping information with annotations, XML, or YAML:
 
 .. configuration-block::
 
-    .. code-block:: php
+    .. code-block:: php-annotations
 
         // Sensio/HelloBundle/Entity/User.php
         namespace Sensio\HelloBundle\Entity;
@@ -122,7 +132,7 @@ write mapping information with annotations, XML, or YAML:
             fields:
                 name:
                     type: string
-                    length: 50
+                    length: 255
 
     .. code-block:: xml
 
@@ -143,6 +153,11 @@ write mapping information with annotations, XML, or YAML:
 
 .. note::
 
+    When using annotations in your Symfony2 project you have to namespace all
+    Doctrine ORM annotations with the ``orm:`` prefix.
+
+.. tip::
+
     If you use YAML or XML to describe your entities, you can omit the creation
     of the Entity class, and let the ``doctrine:generate:entities`` command do
     it for you.
@@ -155,7 +170,9 @@ the following commands:
     $ php app/console doctrine:database:create
     $ php app/console doctrine:schema:create
 
-Eventually, use your entity and manage its persistent state with Doctrine::
+Eventually, use your entity and manage its persistent state with Doctrine:
+
+.. code-block:: php
 
     // Sensio/HelloBundle/Controller/UserController.php
     namespace Sensio\HelloBundle\Controller;
@@ -201,7 +218,9 @@ Eventually, use your entity and manage its persistent state with Doctrine::
 Now the scenario arises where you want to change your mapping information and
 update your development database schema without blowing away everything and
 losing your existing data. So first lets just add a new property to our ``User``
-entity::
+entity:
+
+.. code-block:: php
 
     namespace Sensio\HelloBundle\Entity;
 
@@ -223,5 +242,5 @@ Now your database will be updated and the new column added to the database
 table.
 
 
-.. _documentation: http://www.doctrine-project.org/projects/orm/2.0/docs/en
+.. _documentation: http://www.doctrine-project.org/docs/orm/2.0/en
 .. _Doctrine:      http://www.doctrine-project.org

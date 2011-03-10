@@ -84,7 +84,7 @@ that allow you to specify which classes are used (with their default values):
         doctrine.dbal.event_manager_class: Doctrine\Common\EventManager
         doctrine.dbal.events.mysql_session_init.class: Doctrine\DBAL\Event\Listeners\MysqlSessionInit
         doctrine.dbal.events.oracle_session_init.class: Doctrine\DBAL\Event\Listeners\OracleSessionInit
-        doctrine.dbal.logging: false
+        doctrine.dbal.logging: %kernel.debug%
 
 If you want to configure multiple connections you can do so by simply listing
 them under the key named ``connections``. All the parameters shown above
@@ -110,7 +110,9 @@ can also be specified in the connections subkeys.
 If you have defined multiple connections you can use the
 ``$this->get('doctrine.dbal.[connectionname]_connection)``
 as well but you must pass it an argument with the
-connection name that you want get::
+connection name that you want get
+
+.. code-block:: php
 
     class UserController extends Controller
     {
@@ -124,4 +126,4 @@ connection name that you want get::
         }
     }
 
-.. _documentation: http://www.doctrine-project.org/projects/dbal/2.0/docs/en
+.. _documentation: http://www.doctrine-project.org/docs/dbal/2.0/en

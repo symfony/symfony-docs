@@ -27,7 +27,9 @@ To get started you just need to enable and configure the DBAL:
             password: null
 
 You can then access the Doctrine DBAL connection by accessing the
-``database_connection`` service::
+``database_connection`` service:
+
+.. code-block:: php
 
     class UserController extends Controller
     {
@@ -40,5 +42,5 @@ You can then access the Doctrine DBAL connection by accessing the
     }
 
 .. _PDO:           http://www.php.net/pdo
-.. _documentation: http://www.doctrine-project.org/projects/dbal/2.0/docs/en
+.. _documentation: http://www.doctrine-project.org/docs/dbal/2.0/en
 .. _Doctrine:      http://www.doctrine-project.org
