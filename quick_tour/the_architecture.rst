@@ -52,7 +52,7 @@ The Application Directory
 The ``AppKernel`` class is the main entry point of the application
 configuration and as such, it is stored in the ``app/`` directory.
 
-This class must implement four methods:
+This class must implement three methods:
 
 * ``registerRootDir()``: Returns the configuration root directory;
 
