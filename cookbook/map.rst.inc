@@ -4,6 +4,7 @@
 * :doc:`/cookbook/templating/PHP`
 * :doc:`/cookbook/controller/error_pages`
 * :doc:`/cookbook/controller/service`
+* :doc:`/cookbook/validation/custom_constraint`
 * :doc:`/cookbook/tools/autoloader`
 * :doc:`/cookbook/tools/finder`
 * :doc:`/cookbook/cache/varnish`

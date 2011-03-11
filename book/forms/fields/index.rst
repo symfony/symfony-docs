@@ -1,5 +1,5 @@
-Built-in Fields
-===============
+Built-in Form Fields
+====================
 
 Symfony2 ships with the following fields:
 

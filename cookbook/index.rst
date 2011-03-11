@@ -21,5 +21,6 @@ Cookbook
     profiler/data_collector
     bundles/extension
     symfony1
+    validation/custom_constraint
 
 .. include:: map.rst.inc
