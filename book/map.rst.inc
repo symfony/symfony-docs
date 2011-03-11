@@ -16,9 +16,9 @@
 
 * **Validation**:
 
-  * :doc:`Overview </book/validator/overview>` |
-  * :doc:`Validation </book/validator/validation>` |
-  * :doc:`/book/validator/constraints`
+  * :doc:`Validation Basics </book/validation>` |
+  * :ref:`validation-constraints` |
+  * :doc:`/reference/constraints`
 
 * **Forms**:
 

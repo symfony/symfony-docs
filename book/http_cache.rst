@@ -1018,7 +1018,7 @@ Varnish.
 Learn more from the Cookbook
 ----------------------------
 
-* :doc:`/cookbook/varnish/varnish`
+* :doc:`/cookbook/cache/varnish`
 
 .. _`Things Caches Do`: http://tomayko.com/writings/things-caches-do
 .. _`Cache Tutorial`: http://www.mnot.net/cache_docs/

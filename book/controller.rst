@@ -457,6 +457,8 @@ value to each variable.
 .. index::
    single: Controller; Rendering templates
 
+.. _controller-rendering-templates:
+
 Rendering Templates
 ~~~~~~~~~~~~~~~~~~~
 
