@@ -146,7 +146,7 @@ The first few lines of the routing configuration file define which code to
 call when the user requests the "``/``" resource (the homepage) and serves
 as an example of routing configuration you may see in this file. More interesting
 is the last part, which imports another routing configuration file located
-inside the ``HelloBundle``:
+inside the ``AcmeDemoBundle``:
 
 .. configuration-block::
 
@@ -202,7 +202,7 @@ Create the Controller
 ~~~~~~~~~~~~~~~~~~~~~
 
 When a URI such as ``/hello/Ryan`` is handled by the application, the ``hello``
-route is matched and the ``HelloBundle:Hello:index`` controller is executed
+route is matched and the ``AcmeDemoBundle:Hello:index`` controller is executed
 by the framework. The second step of the page-creation process is to create
 this controller.
 
@@ -260,10 +260,10 @@ of writing the HTML inside the controller, use a template instead::
     {
         public function indexAction($name)
         {
-            return $this->render('HelloBundle:Hello:index.html.twig', array('name' => $name));
+            return $this->render('AcmeDemoBundle:Hello:index.html.twig', array('name' => $name));
 
             // render a PHP template instead
-            // return $this->render('HelloBundle:Hello:index.html.php', array('name' => $name));
+            // return $this->render('AcmeDemoBundle:Hello:index.html.php', array('name' => $name));
         }
     }
 
@@ -282,12 +282,12 @@ By default, Symfony2 supports two different templating languages: classic
 PHP templates and the succinct but powerful `Twig`_ templates. Don't be alarmed
 - you're free to choose either or even both in the same project.
 
-The controller renders the ``HelloBundle:Hello:index.html.twig`` template,
+The controller renders the ``AcmeDemoBundle:Hello:index.html.twig`` template,
 which uses the following naming convention:
 
 *BundleName*:*ControllerName*:*TemplateName*
 
-In this case, ``HelloBundle`` is the bundle name, ``Hello`` is the
+In this case, ``AcmeDemoBundle`` is the bundle name, ``Hello`` is the
 controller, and ``index.html.twig`` the template:
 
 .. configuration-block::
@@ -305,7 +305,7 @@ controller, and ``index.html.twig`` the template:
     .. code-block:: php
 
         <!-- src/Acme/DemoBundle/Resources/views/Hello/index.html.php -->
-        <?php $view->extend('AcmeDemoBundle::layout.html.php') ?>
+        <?php $view->extend('::layout.html.php') ?>
 
         Hello <?php echo $view->escape($name) ?>!
 
