@@ -34,12 +34,12 @@ your main configuration file; here is a typical configuration:
         # app/config/config.yml
         security:
             encoders:
-                Symfony\Component\Security\Core\User\User: sha1
+                Symfony\Component\Security\Core\User\User: plaintext
 
             providers:
                 main:
                     users:
-                        foo: { password: 0beec7b5ea3f0fdbc95d0dd47f3c5bc275da8a33, roles: ROLE_USER }
+                        foo: { password: testing, roles: ROLE_USER }
 
             firewalls:
                 main:
@@ -54,10 +54,10 @@ your main configuration file; here is a typical configuration:
 
         <!-- app/config/config.xml -->
         <security:config>
-            <security:encoder class="Symfony\Component\Security\Core\User\User" algorithm="sha1" />
+            <security:encoder class="Symfony\Component\Security\Core\User\User" algorithm="plaintext" />
 
             <security:provider>
-                <security:user name="foo" password="0beec7b5ea3f0fdbc95d0dd47f3c5bc275da8a33" roles="ROLE_USER" />
+                <security:user name="foo" password="testing" roles="ROLE_USER" />
             </security:provider>
 
             <security:firewall pattern="/.*">
@@ -75,12 +75,12 @@ your main configuration file; here is a typical configuration:
         // app/config/config.php
         $container->loadFromExtension('security', array(
             'encoders' => array(
-                'Symfony\Component\Security\Core\User\User' => 'sha1',
+                'Symfony\Component\Security\Core\User\User' => 'plaintext',
             ),
             'providers' => array(
                 'main' => array(
                     'users' => array(
-                        'foo' => array('password' => '0beec7b5ea3f0fdbc95d0dd47f3c5bc275da8a33', 'roles' => 'ROLE_USER'),
+                        'foo' => array('password' => 'testing', 'roles' => 'ROLE_USER'),
                 )),
             ),
             'firewalls' => array(
