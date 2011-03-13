@@ -11,7 +11,7 @@ into a database or passed to a web service.
 Symfony2 ships with a `Validator`_ component that makes this task easy and transparent.
 This component is based on the `JSR303 Bean Validation specification`_. What?
 A Java specification in PHP? You heard right, but it's not as bad as it sounds.
-Let's look at how it can be used it in PHP.
+Let's look at how it can be used in PHP.
 
 .. index:
    single: Validation; The basics
@@ -66,19 +66,19 @@ the ``$name`` property is not empty, add the following:
             /**
              * @validation:NotBlank()
              */
-            private $name;
+            public $name;
         }
 
     .. code-block:: php
 
         // Acme/BlogBundle/Author.php
-        use Symfony\Component\Validator\Mapping\ClassMetadata;        
+        use Symfony\Component\Validator\Mapping\ClassMetadata;
         use Symfony\Component\Validator\Constraints\NotBlank;
-        
+
         class Author
         {
-            private $name;
-            
+            public $name;
+
             public static function loadValidatorMetadata(ClassMetadata $metadata)
             {
                 $metadata->addPropertyConstraint('name', new NotBlank());
@@ -115,7 +115,7 @@ simple example from inside a controller:
 
         $validator = $container->get('validator');
         $errorList = $validator->validate($author);
-        
+
         if (count($errorList) > 0) {
             return new Response(print_r($errorList, true));
         } else {
@@ -139,28 +139,44 @@ a :class:`Symfony\\Component\\Validator\\ConstraintViolation` object, which
 holds a message describing the error. Moreover, the ``validate`` method returns
 a :class:`Symfony\\Component\\Validator\\ConstraintViolationList` object,
 which acts like an array. That's a long way of saying that you can use the
-errors returned by ``validate`` in more advanced ways:
+errors returned by ``validate`` in more advanced ways. Start by rendering
+a template and passing in the ``$errorList`` variable:
 
 .. code-block:: php
 
     if (count($errorList) > 0) {
-        $html = '<h3>The Author object has the following errors</h3>';
-        $html .= '<ul>';
-        foreach ($errorList as $constraintViolation) {
-          $html .= sprintf('<li>%s</li>', $constraintViolation->getMessage());
-        }
-        $html .= '</ul>';
-        
-        return new Response($html);
+        return $this->render('AcmeBlogBundle:Author:validate.html.twig', array(
+            'errorList' => $errorList,
+        ));
     } else {
         // ...
     }
 
-.. note::
+Inside the template, you can output the list of errors exactly as needed:
 
-   The HTML code is generated inside the controller here just to keep the
-   example short. In practice, :ref:`rendering a template<controller-rendering-templates>`
-   and passing the ``$errorList`` variable to it is a much better idea.
+.. configuration-block::
+
+    .. code-block:: html+jinja
+
+        {# src/Acme/BlogBundle/Resources/views/Author/validate.html.twig #}
+
+        <h3>The author has the following errors</h3>
+        <ul>
+        {% for error in errorList %}
+            <li>{{ error.message }}</li>
+        {% endfor %}
+        </ul>
+
+    .. code-block:: html+php
+
+        <!-- src/Acme/BlogBundle/Resources/views/Author/validate.html.php -->
+
+        <h3>The author has the following errors</h3>
+        <ul>
+        <?php foreach ($errorList as $error): ?>
+            <li><?php echo $error->getMessage() ?></li>
+        <?php endforeach; ?>
+        </ul>
 
 .. index::
    single: Validation; Validation with forms
@@ -180,7 +196,7 @@ objects that can then be displayed with your form:
     $author = new Acme\BlogBundle\Author();
     $form = new Acme\BlogBundle\AuthorForm('author', $author, $this->get('validator');
     $form->bind($this->get('request')->request->get('customer'));
-    
+
     if ($form->isValid()) {
         // process the Author object
     } else {
@@ -206,7 +222,7 @@ configuration:
         # hello/config/config.yml
         framework:
             validation: { enabled: true, annotations: true }
-                
+
 
     .. code-block:: xml
 
@@ -308,13 +324,13 @@ another property, ``gender`` that can be set to either "male" or "female":
     .. code-block:: php
 
         // Acme/BlogBundle/Author.php
-        use Symfony\Component\Validator\Mapping\ClassMetadata;        
+        use Symfony\Component\Validator\Mapping\ClassMetadata;
         use Symfony\Component\Validator\Constraints\NotBlank;
-        
+
         class Author
         {
             public $gender;
-            
+
             public static function loadValidatorMetadata(ClassMetadata $metadata)
             {
                 $metadata->addPropertyConstraint('gender', new Choice(array(
@@ -367,11 +383,11 @@ options can be specified in this way.
         // Acme/BlogBundle/Author.php
         use Symfony\Component\Validator\Mapping\ClassMetadata;
         use Symfony\Component\Validator\Constraints\Choice;
-        
+
         class Author
         {
             protected $gender;
-            
+
             public static function loadValidatorMetadata(ClassMetadata $metadata)
             {
                 $metadata->addPropertyConstraint('gender', new Choice(array('male', 'female')));
@@ -457,7 +473,7 @@ of a class ``Author`` to have at least 3 characters.
         use Symfony\Component\Validator\Mapping\ClassMetadata;
         use Symfony\Component\Validator\Constraints\NotBlank;
         use Symfony\Component\Validator\Constraints\MinLength;
-        
+
         class Author
         {
             private $firstName;
@@ -531,7 +547,7 @@ constraint to validate whether a dynamically generated token is correct:
         // Acme/BlogBundle/Author.php
         use Symfony\Component\Validator\Mapping\ClassMetadata;
         use Symfony\Component\Validator\Constraints\AssertTrue;
-        
+
         class Author
         {
 
@@ -541,7 +557,7 @@ constraint to validate whether a dynamically generated token is correct:
                     'message' => 'The token is invalid',
                 )));
             }
-            
+
             public function isTokenValid()
             {
                 // return true or false
@@ -553,7 +569,7 @@ the internal token is valid and then return ``true`` or ``false``.
 
 .. note::
 
-    The keen-eyed among you will have noticed that the prefix of the getter 
+    The keen-eyed among you will have noticed that the prefix of the getter
     ("get" or "is") is omitted in the mapping. This allows you to move the
     constraint to a property with the same name later (or vice versa) without
     changing your validation logic.
