@@ -44,7 +44,7 @@ your main configuration file; here is a typical configuration:
             firewalls:
                 main:
                     pattern:    /.*
-                    http-basic: true
+                    http_basic: true
                     logout:     true
 
             access_control:
@@ -84,7 +84,7 @@ your main configuration file; here is a typical configuration:
                 )),
             ),
             'firewalls' => array(
-                'main' => array('pattern' => '/.*', 'http-basic' => true, 'logout' => true),
+                'main' => array('pattern' => '/.*', 'http_basic' => true, 'logout' => true),
             ),
             'access_control' => array(
                 array('path' => '/.*', 'role' => 'ROLE_USER'),
@@ -161,7 +161,7 @@ Here is how you can secure your application with HTTP basic authentication:
         security:
             firewalls:
                 main:
-                    http-basic: true
+                    http_basic: true
 
     .. code-block:: xml
 
@@ -177,7 +177,7 @@ Here is how you can secure your application with HTTP basic authentication:
         // app/config/security.php
         $container->loadFromExtension('security', array(
             'firewalls' => array(
-                'main' => array('http-basic' => true),
+                'main' => array('http_basic' => true),
             ),
         ));
 
@@ -193,7 +193,7 @@ mechanisms for different parts of the application:
             firewalls:
                 backend:
                     pattern: /admin/.*
-                    http-basic: true
+                    http_basic: true
                 public:
                     pattern:  /.*
                     security: false
