@@ -17,14 +17,14 @@ Configuration Reference
 
             encoders:
                 somename:
-                    class: MyBundle/Entity/MyUser
-                MyBundle/Entity/MyUser: sha512
-                MyBundle/Entity/MyUser: plaintext
-                MyBundle/Entity/MyUser:
+                    class: MyBundle\Entity\MyUser
+                MyBundle\Entity\MyUser: sha512
+                MyBundle\Entity\MyUser: plaintext
+                MyBundle\Entity\MyUser:
                     algorithm: sha512
                     encode_as_base64: true
                     iterations: 5
-                MyBundle/Entity/MyUser:
+                MyBundle\Entity\MyUser:
                     id: my.custom.encoder.service.id
 
             providers:
