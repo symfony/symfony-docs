@@ -636,6 +636,8 @@ for the two actions.
    single: Routing; Advanced example
    single: Routing; _format parameter
 
+.. _advanced-routing-example:
+
 Advanced Routing Example
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
