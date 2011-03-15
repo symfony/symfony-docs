@@ -21,7 +21,7 @@ just need to enable it and specify the bundle that contains your mapped document
     # app/config/config.yml
 
     doctrine_mongo_db:
-        documents_managers:
+        document_managers:
             default:
                 mappings:
                     HelloBundle: ~
