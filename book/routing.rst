@@ -75,9 +75,9 @@ has the URI ``/blog/my-blog-post``, the following route would be matched:
     
         <?xml version="1.0" encoding="UTF-8" ?>
 
-        <routes xmlns="http://www.symfony-project.org/schema/routing"
+        <routes xmlns="http://symfony.com/schema/routing"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://www.symfony-project.org/schema/routing http://www.symfony-project.org/schema/routing/routing-1.0.xsd">
+            xsi:schemaLocation="http://symfony.com/schema/routing http://symfony.com/schema/routing/routing-1.0.xsd">
 
             <route id="blog_show" pattern="/blog/{slug}">
                 <default key="_controller">MyBlogBundle:Blog:show</default>
@@ -144,8 +144,8 @@ configuration file:
 
 In other words, all the routing configuration of the application lives in
 a single routing file inside the ``app/config`` directory. This file can
-be written in YAML, XML or PHP by default. In the next section, you'll start
-creating and customizing routes inside this file.
+be written in YAML, XML or PHP, but YAML is used by default. In the next
+section, you'll start creating and customizing routes inside this file.
 
 .. tip::
 
@@ -172,9 +172,9 @@ parts: the ``pattern`` to match and the ``defaults`` collection:
     
         <?xml version="1.0" encoding="UTF-8" ?>
 
-        <routes xmlns="http://www.symfony-project.org/schema/routing"
+        <routes xmlns="http://symfony.com/schema/routing"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://www.symfony-project.org/schema/routing http://www.symfony-project.org/schema/routing/routing-1.0.xsd">
+            xsi:schemaLocation="http://symfony.com/schema/routing http://symfony.com/schema/routing/routing-1.0.xsd">
 
             <route id="homepage" pattern="/">
                 <default key="_controller">MyBundle:Main:homepage</default>
@@ -220,9 +220,9 @@ routes will contain one or more named "wildcards" placeholders:
 
         <?xml version="1.0" encoding="UTF-8" ?>
 
-        <routes xmlns="http://www.symfony-project.org/schema/routing"
+        <routes xmlns="http://symfony.com/schema/routing"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://www.symfony-project.org/schema/routing http://www.symfony-project.org/schema/routing/routing-1.0.xsd">
+            xsi:schemaLocation="http://symfony.com/schema/routing http://symfony.com/schema/routing/routing-1.0.xsd">
 
             <route id="blog_show" pattern="/blog/{slug}">
                 <default key="_controller">MyBlogBundle:Blog:show</default>
@@ -268,9 +268,9 @@ available blog posts in some imaginary blog application:
 
         <?xml version="1.0" encoding="UTF-8" ?>
 
-        <routes xmlns="http://www.symfony-project.org/schema/routing"
+        <routes xmlns="http://symfony.com/schema/routing"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://www.symfony-project.org/schema/routing http://www.symfony-project.org/schema/routing/routing-1.0.xsd">
+            xsi:schemaLocation="http://symfony.com/schema/routing http://symfony.com/schema/routing/routing-1.0.xsd">
 
             <route id="blog" pattern="/blog">
                 <default key="_controller">MyBlogBundle:Blog:index</default>
@@ -305,9 +305,9 @@ needs to support pagination:
 
         <?xml version="1.0" encoding="UTF-8" ?>
 
-        <routes xmlns="http://www.symfony-project.org/schema/routing"
+        <routes xmlns="http://symfony.com/schema/routing"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://www.symfony-project.org/schema/routing http://www.symfony-project.org/schema/routing/routing-1.0.xsd">
+            xsi:schemaLocation="http://symfony.com/schema/routing http://symfony.com/schema/routing/routing-1.0.xsd">
 
             <route id="blog" pattern="/blog/{page}">
                 <default key="_controller">MyBlogBundle:Blog:index</default>
@@ -348,9 +348,9 @@ including it in the ``defaults`` collection:
 
         <?xml version="1.0" encoding="UTF-8" ?>
 
-        <routes xmlns="http://www.symfony-project.org/schema/routing"
+        <routes xmlns="http://symfony.com/schema/routing"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://www.symfony-project.org/schema/routing http://www.symfony-project.org/schema/routing/routing-1.0.xsd">
+            xsi:schemaLocation="http://symfony.com/schema/routing http://symfony.com/schema/routing/routing-1.0.xsd">
 
             <route id="blog" pattern="/blog/{page}">
                 <default key="_controller">MyBlogBundle:Blog:index</default>
@@ -400,9 +400,9 @@ Take a look at the routes that have been created so far:
 
         <?xml version="1.0" encoding="UTF-8" ?>
 
-        <routes xmlns="http://www.symfony-project.org/schema/routing"
+        <routes xmlns="http://symfony.com/schema/routing"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://www.symfony-project.org/schema/routing http://www.symfony-project.org/schema/routing/routing-1.0.xsd">
+            xsi:schemaLocation="http://symfony.com/schema/routing http://symfony.com/schema/routing/routing-1.0.xsd">
 
             <route id="blog" pattern="/blog/{page}">
                 <default key="_controller">MyBlogBundle:Blog:index</default>
@@ -457,9 +457,9 @@ requirements can easily be added for each parameter. For example:
 
         <?xml version="1.0" encoding="UTF-8" ?>
 
-        <routes xmlns="http://www.symfony-project.org/schema/routing"
+        <routes xmlns="http://symfony.com/schema/routing"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://www.symfony-project.org/schema/routing http://www.symfony-project.org/schema/routing/routing-1.0.xsd">
+            xsi:schemaLocation="http://symfony.com/schema/routing http://symfony.com/schema/routing/routing-1.0.xsd">
 
             <route id="blog" pattern="/blog/{page}">
                 <default key="_controller">MyBlogBundle:Blog:index</default>
@@ -516,9 +516,9 @@ of your application is available in two different languages, based on the url:
 
         <?xml version="1.0" encoding="UTF-8" ?>
 
-        <routes xmlns="http://www.symfony-project.org/schema/routing"
+        <routes xmlns="http://symfony.com/schema/routing"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://www.symfony-project.org/schema/routing http://www.symfony-project.org/schema/routing/routing-1.0.xsd">
+            xsi:schemaLocation="http://symfony.com/schema/routing http://symfony.com/schema/routing/routing-1.0.xsd">
 
             <route id="homepage" pattern="/{culture}">
                 <default key="_controller">MyBundle:Main:homepage</default>
@@ -581,9 +581,9 @@ be accomplished with the following routing configuration:
 
         <?xml version="1.0" encoding="UTF-8" ?>
 
-        <routes xmlns="http://www.symfony-project.org/schema/routing"
+        <routes xmlns="http://symfony.com/schema/routing"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://www.symfony-project.org/schema/routing http://www.symfony-project.org/schema/routing/routing-1.0.xsd">
+            xsi:schemaLocation="http://symfony.com/schema/routing http://symfony.com/schema/routing/routing-1.0.xsd">
 
             <route id="contact" pattern="/contact">
                 <default key="_controller">MyBundle:Main:contact</default>
@@ -639,8 +639,8 @@ for the two actions.
 Advanced Routing Example
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
-At this point, you've have everything you need to create a powerful routing
-structures in Symfony. The following is an example of just how flexible the
+At this point, you have everything you need to create a powerful routing
+structure in Symfony. The following is an example of just how flexible the
 routing system can be:
 
 .. configuration-block::
@@ -659,9 +659,9 @@ routing system can be:
 
         <?xml version="1.0" encoding="UTF-8" ?>
 
-        <routes xmlns="http://www.symfony-project.org/schema/routing"
+        <routes xmlns="http://symfony.com/schema/routing"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://www.symfony-project.org/schema/routing http://www.symfony-project.org/schema/routing/routing-1.0.xsd">
+            xsi:schemaLocation="http://symfony.com/schema/routing http://symfony.com/schema/routing/routing-1.0.xsd">
 
             <route id="article_show" pattern="/articles/{culture}/{year}/{title}.{_format}">
                 <default key="_controller">MyBundle:Article:show</default>
@@ -735,9 +735,9 @@ can be easily accomplished:
         <!-- app/config/routing.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
 
-        <routes xmlns="http://www.symfony-project.org/schema/routing"
+        <routes xmlns="http://symfony.com/schema/routing"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://www.symfony-project.org/schema/routing http://www.symfony-project.org/schema/routing/routing-1.0.xsd">
+            xsi:schemaLocation="http://symfony.com/schema/routing http://symfony.com/schema/routing/routing-1.0.xsd">
 
             <import resource="@SensioHelloBundle/Resources/config/routing.xml" />
         </routes>
@@ -770,9 +770,9 @@ The ``resource`` key loads the routing resource from the ``SensioHelloBundle``:
         <!-- src/Sensio/HelloBundle/Resources/config/routing.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
 
-        <routes xmlns="http://www.symfony-project.org/schema/routing"
+        <routes xmlns="http://symfony.com/schema/routing"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://www.symfony-project.org/schema/routing http://www.symfony-project.org/schema/routing/routing-1.0.xsd">
+            xsi:schemaLocation="http://symfony.com/schema/routing http://symfony.com/schema/routing/routing-1.0.xsd">
 
             <route id="hello" pattern="/hello/{name}">
                 <default key="_controller">SensioHelloBundle:Hello:index</default>
@@ -811,9 +811,9 @@ For example, suppose that we want the "hello" route to have a pattern of
         <!-- app/config/routing.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
 
-        <routes xmlns="http://www.symfony-project.org/schema/routing"
+        <routes xmlns="http://symfony.com/schema/routing"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://www.symfony-project.org/schema/routing http://www.symfony-project.org/schema/routing/routing-1.0.xsd">
+            xsi:schemaLocation="http://symfony.com/schema/routing http://symfony.com/schema/routing/routing-1.0.xsd">
 
             <import resource="@SensioHelloBundle/Resources/config/routing.xml" prefix="/admin" />
         </routes>
@@ -840,7 +840,7 @@ Visualizing & Debugging Routes
 
 While adding and customizing routes, it's helpful to be able to visualize
 your routes and see if each is configured correctly. An easy way to see
-every route in your application is via the ``router:debug`` cli command. Initiate
+every route in your application is via the ``router:debug`` console command. Execute
 the command by running the following from the root of your project.
 
 .. code-block:: text
@@ -954,8 +954,8 @@ Generating URLs
 ---------------
 
 The routing system should also be used to generate URLs. In fact, routing
-is really a bi-directional system that maps a path info (i.e. URI) to an
-array of routing parameters and parameters back to a URI. The
+is really a bi-directional system that maps path info (i.e. URI) to an
+array of routing parameters, and parameters back to a URI. The
 :method:`Symfony\\Component\\Routing\\Router::match` and
 :method:`Symfony\\Component\\Routing\\Router::generate` methods form this bi-directional
 system. Take the ``blog_show`` example route from earlier::

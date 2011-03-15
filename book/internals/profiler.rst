@@ -129,8 +129,8 @@ the configuration for the development environment:
 
     .. code-block:: xml
 
-        <!-- xmlns:webprofiler="http://www.symfony-project.org/schema/dic/webprofiler" -->
-        <!-- xsi:schemaLocation="http://www.symfony-project.org/schema/dic/webprofiler http://www.symfony-project.org/schema/dic/webprofiler/webprofiler-1.0.xsd"> -->
+        <!-- xmlns:webprofiler="http://symfony.com/schema/dic/webprofiler" -->
+        <!-- xsi:schemaLocation="http://symfony.com/schema/dic/webprofiler http://symfony.com/schema/dic/webprofiler/webprofiler-1.0.xsd"> -->
 
         <!-- load the profiler -->
         <framework:config>

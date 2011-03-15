@@ -29,7 +29,7 @@ The user provider must implement
     interface UserProviderInterface
     {
          function loadUserByUsername($username);
-         function loadUserByAccount(AccountInterface $account);
+         function loadUser(UserInterface $user);
          function supportsClass($class);
     }
 
@@ -37,7 +37,7 @@ The user provider must implement
                             user object. If the username is not found, it must
                             throw :class:`Symfony\\Component\\Security\\Core\\Exception\\UsernameNotFoundException`
                             exception.
-* ``loadUserByAccount()``: Receives an ``AccountInterface`` object, and must reload
+* ``loadUser()``: Receives an ``UserInterface`` object, and must reload
                            the corresponding user object, or just merge the user
                            into the identity map of an ``EntityManager``. If the
                            given account's class is not supported, it must throw
@@ -53,22 +53,22 @@ The user provider must implement
     information.
 
 .. index::
-   single: Security; AccountInterface
+   single: Security; UserInterface
 
-AccountInterface
+UserInterface
 ~~~~~~~~~~~~~~~~
 
 The user provider must return objects that implement
-:class:`Symfony\\Component\\Security\\Core\\User\\AccountInterface`::
+:class:`Symfony\\Component\\Security\\Core\\User\\UserInterface`::
 
-    interface AccountInterface
+    interface UserInterface
     {
         function getRoles();
         function getPassword();
         function getSalt();
         function getUsername();
         function eraseCredentials();
-        function equals(AccountInterface $account);
+        function equals(UserInterface $user);
     }
 
 * ``getRoles()``: Returns the roles granted to the user;
@@ -187,22 +187,22 @@ options, you only need to select the one which suits your needs best:
     You must define an encoder for each of your user classes, but the
     configuration *must not* overlap. If you want to use the same encoder for
     all classes you can simply specify
-    :class:`Symfony\\Component\\Security\\Core\\User\\AccountInterface` as class
+    :class:`Symfony\\Component\\Security\\Core\\User\\UserInterface` as class
     since all your user classes will implement it.
 
 .. index::
-   single: Security; AdvancedAccountInterface
+   single: Security; AdvancedUserInterface
 
-AdvancedAccountInterface
+AdvancedUserInterface
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
 Before and after authentication, Symfony2 can check various flags on the user.
 If your user class implements
-:class:`Symfony\\Component\\Security\\Core\\User\\AdvancedAccountInterface` instead
-of :class:`Symfony\\Component\\Security\\Core\\User\\AccountInterface`, Symfony2
+:class:`Symfony\\Component\\Security\\Core\\User\\AdvancedUserInterface` instead
+of :class:`Symfony\\Component\\Security\\Core\\User\\UserInterface`, Symfony2
 will make the associated checks automatically::
 
-    interface AdvancedAccountInterface extends AccountInterface
+    interface AdvancedUserInterface extends UserInterface
     {
         function isAccountNonExpired();
         function isAccountNonLocked();
@@ -211,15 +211,15 @@ will make the associated checks automatically::
     }
 
 * ``isAccountNonExpired()``: Returns ``true`` when the user's account has
-  expired;
-* ``isAccountNonLocked()``: Returns ``true`` when the user is locked;
+  not expired;
+* ``isAccountNonLocked()``: Returns ``true`` when the user is not locked;
 * ``isCredentialsNonExpired()``: Returns ``true`` when the user's credentials
-  (password) has expired;
+  (password) has not expired;
 * ``isEnabled()``: Returns ``true`` when the user is enabled.
 
 .. note::
 
-    The :class:`Symfony\\Component\\Security\\Core\\User\\AdvancedAccountInterface`
+    The :class:`Symfony\\Component\\Security\\Core\\User\\AdvancedUserInterface`
     relies on an
     :class:`Symfony\\Component\\Security\\Core\\User\\AccountCheckerInterface`
     object to do the pre-authentication and post-authentication checks.
@@ -296,7 +296,7 @@ Most of the time, users are described by a Doctrine Entity::
     /**
      * @orm:Entity
      */
-    class User implements AccountInterface
+    class User implements UserInterface
     {
         // ...
     }
@@ -344,7 +344,7 @@ implement :class:`Symfony\\Component\\Security\\Core\\User\\UserProviderInterfac
     /**
      * @Entity(repositoryClass="SecurityBundle:UserRepository")
      */
-    class User implements AccountInterface
+    class User implements UserInterface
     {
         // ...
     }
@@ -363,7 +363,7 @@ implement :class:`Symfony\\Component\\Security\\Core\\User\\UserProviderInterfac
 .. tip::
 
     If you use the
-    :class:`Symfony\\Component\\Security\\Core\\User\\AdvancedAccountInterface`
+    :class:`Symfony\\Component\\Security\\Core\\User\\AdvancedUserInterface`
     interface, don't check the various flags (locked, expired, enabled, ...)
     when retrieving the user from the database as this will be managed by the
     authentication system automatically (and proper exceptions will be thrown
@@ -506,7 +506,7 @@ implement :class:`Symfony\\Component\\Security\\Core\\User\\UserProviderInterfac
     /**
      * @Document(repositoryClass="SecurityBundle:UserRepository")
      */
-    class User implements AccountInterface
+    class User implements UserInterface
     {
         // ...
     }
@@ -525,7 +525,7 @@ implement :class:`Symfony\\Component\\Security\\Core\\User\\UserProviderInterfac
 .. tip::
 
     If you use the
-    :class:`Symfony\\Component\\Security\\Core\\User\\AdvancedAccountInterface`
+    :class:`Symfony\\Component\\Security\\Core\\User\\AdvancedUserInterface`
     interface, don't check the various flags (locked, expired, enabled, ...)
     when retrieving the user from the database as this will be managed by the
     authentication system automatically (and proper exceptions will be thrown

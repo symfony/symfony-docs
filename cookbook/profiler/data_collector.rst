@@ -167,5 +167,3 @@ tag in your configuration:
             ->register('data_collector.your_collector_name', 'Fully\Qualified\Collector\Class\Name')
             ->addTag('data_collector', array('template' => 'YourBundle:Collector:templatename', 'id' => 'your_collector_name'))
         ;
-
-.. _data collectors: http://api.symfony-reloaded.org/PR4/index.html?q=DataCollector

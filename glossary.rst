@@ -16,9 +16,10 @@ Glossary
         given set of Bundles.
 
    Bundle
-        A *Bundle* is a structured set of files (PHP files, stylesheets,
-        JavaScripts, images, ...) that *implement* a single feature (a blog,
-        a forum, ...) and which can be easily shared with other developers.
+        A *Bundle* is a directory containing a set of files (PHP files,
+        stylesheets, JavaScripts, images, ...) that *implement* a single
+        feature (a blog, a forum, etc). In Symfony2, (*almost*) everything
+        lives inside a bundle. (see :ref:`page-creation-bundles`)
 
    Front Controller
         A *Front Controller* is a short PHP that lives in the web directory

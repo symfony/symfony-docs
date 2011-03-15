@@ -34,15 +34,64 @@ to the following URL:
 
     http://localhost/app_dev.php/hello/Symfony
 
+In reality, you'll be able to replace ``Symfony`` with any other name to be
+greeted. To create the page, we'll go through the simple two-step process.
+
 .. note::
 
     The tutorial assumes that you've already downloaded Symfony2 and configured
     your webserver. The above URL assumes that ``localhost`` points to the
     ``web`` directory of your new Symfony2 project. For detailed information
     on this process, see the :doc:`Installing Symfony2</book/installation>`.
+    
+    If you've downloaded the `Symfony Standard Edition`_, delete the
+    ``src/Acme/DemoBundle`` directory, as you'll recreate it in this chapter.
 
-In reality, you'll be able to replace ``Symfony`` with any other name to be
-greeted. To create the page, we'll go through the simple two-step process.
+Create the Bundle
+~~~~~~~~~~~~~~~~~
+
+Before you begin, you'll need to create a *bundle*. In Symfony2, a bundle
+is like a plugin, except that all of the code in your application will live
+inside a bundle.
+
+A bundle is nothing more than a directory (with a PHP namespace) that houses
+everything related to a specific feature (see :ref:`page-creation-bundles`).
+To create a bundle called ``AcmeDemoBundle``, run the following command:
+
+.. code-block:: text
+
+    php app/console init:bundle "Acme\DemoBundle" src
+
+Next, be sure that the ``Acme`` namespace is loaded by adding the following
+to the ``app/autoload.php`` file (see the :ref:`Autoloading sidebar<autoloading-introduction-sidebar>`):
+
+.. code-block:: php
+
+        $loader->registerNamespaces(array(
+            'Acme'                         => __DIR__.'/../src',
+            // ...
+        ));
+
+Finally, initialize the bundle by adding it to the ``registerBundles`` method
+of the ``AppKernel`` class:
+
+.. code-block:: php
+
+    // app/AppKernel.php
+    public function registerBundles()
+    {
+        $bundles = array(
+            // ...
+            new Acme\DemoBundle\AcmeDemoBundle(),
+        );
+        
+        // ...
+
+        return $bundles;
+    }
+
+Now that you have a bundle setup, you can begin building your application
+inside the bundle.
 
 Create the Route
 ~~~~~~~~~~~~~~~~
@@ -61,22 +110,22 @@ you can also choose to use XML or PHP out of the box to configure routes:
             defaults: { _controller: FrameworkBundle:Default:index }
 
         hello:
-            resource: @HelloBundle/Resources/config/routing.yml
+            resource: @AcmeDemoBundle/Resources/config/routing.yml
 
     .. code-block:: xml
 
         <!-- app/config/routing.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
 
-        <routes xmlns="http://www.symfony-project.org/schema/routing"
+        <routes xmlns="http://symfony.com/schema/routing"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://www.symfony-project.org/schema/routing http://www.symfony-project.org/schema/routing/routing-1.0.xsd">
+            xsi:schemaLocation="http://symfony.com/schema/routing http://symfony.com/schema/routing/routing-1.0.xsd">
 
             <route id="homepage" pattern="/">
                 <default key="_controller">FrameworkBundle:Default:index</default>
             </route>
 
-            <import resource="@HelloBundle/Resources/config/routing.xml" />
+            <import resource="@AcmeDemoBundle/Resources/config/routing.xml" />
         </routes>
 
     .. code-block:: php
@@ -89,7 +138,7 @@ you can also choose to use XML or PHP out of the box to configure routes:
         $collection->add('homepage', new Route('/', array(
             '_controller' => 'FrameworkBundle:Default:index',
         )));
-        $collection->addCollection($loader->import("@HelloBundle/Resources/config/routing.php"));
+        $collection->addCollection($loader->import("@AcmeDemoBundle/Resources/config/routing.php"));
 
         return $collection;
 
@@ -97,40 +146,40 @@ The first few lines of the routing configuration file define which code to
 call when the user requests the "``/``" resource (the homepage) and serves
 as an example of routing configuration you may see in this file. More interesting
 is the last part, which imports another routing configuration file located
-inside the ``HelloBundle``:
+inside the ``AcmeDemoBundle``:
 
 .. configuration-block::
 
     .. code-block:: yaml
 
-        # src/Sensio/HelloBundle/Resources/config/routing.yml
+        # src/Acme/DemoBundle/Resources/config/routing.yml
         hello:
             pattern:  /hello/{name}
-            defaults: { _controller: HelloBundle:Hello:index }
+            defaults: { _controller: AcmeDemoBundle:Hello:index }
 
     .. code-block:: xml
 
-        <!-- src/Sensio/HelloBundle/Resources/config/routing.xml -->
+        <!-- src/Acme/DemoBundle/Resources/config/routing.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
 
-        <routes xmlns="http://www.symfony-project.org/schema/routing"
+        <routes xmlns="http://symfony.com/schema/routing"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://www.symfony-project.org/schema/routing http://www.symfony-project.org/schema/routing/routing-1.0.xsd">
+            xsi:schemaLocation="http://symfony.com/schema/routing http://symfony.com/schema/routing/routing-1.0.xsd">
 
             <route id="hello" pattern="/hello/{name}">
-                <default key="_controller">HelloBundle:Hello:index</default>
+                <default key="_controller">AcmeDemoBundle:Hello:index</default>
             </route>
         </routes>
 
     .. code-block:: php
 
-        // src/Sensio/HelloBundle/Resources/config/routing.php
+        // src/Acme/DemoBundle/Resources/config/routing.php
         use Symfony\Component\Routing\RouteCollection;
         use Symfony\Component\Routing\Route;
 
         $collection = new RouteCollection();
         $collection->add('hello', new Route('/hello/{name}', array(
-            '_controller' => 'HelloBundle:Hello:index',
+            '_controller' => 'AcmeDemoBundle:Hello:index',
         )));
 
         return $collection;
@@ -153,7 +202,7 @@ Create the Controller
 ~~~~~~~~~~~~~~~~~~~~~
 
 When a URI such as ``/hello/Ryan`` is handled by the application, the ``hello``
-route is matched and the ``HelloBundle:Hello:index`` controller is executed
+route is matched and the ``AcmeDemoBundle:Hello:index`` controller is executed
 by the framework. The second step of the page-creation process is to create
 this controller.
 
@@ -163,9 +212,9 @@ from the request to build and prepare the resource being requested. Except
 in some advanced cases, the end product of a controller is always the same:
 a Symfony2 ``Response`` object::
 
-    // src/Sensio/HelloBundle/Controller/HelloController.php
+    // src/Acme/DemoBundle/Controller/HelloController.php
 
-    namespace Sensio\HelloBundle\Controller;
+    namespace Acme\DemoBundle\Controller;
     use Symfony\Component\HttpFoundation\Response;
 
     class HelloController
@@ -201,9 +250,9 @@ Templates allows us to move all of the presentation (e.g. HTML code) into
 a separate file and reuse different portions of the page layout. Instead
 of writing the HTML inside the controller, use a template instead::
 
-    // src/Sensio/HelloBundle/Controller/HelloController.php
+    // src/Acme/DemoBundle/Controller/HelloController.php
 
-    namespace Sensio\HelloBundle\Controller;
+    namespace Acme\DemoBundle\Controller;
 
     use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
@@ -211,10 +260,10 @@ of writing the HTML inside the controller, use a template instead::
     {
         public function indexAction($name)
         {
-            return $this->render('HelloBundle:Hello:index.html.twig', array('name' => $name));
+            return $this->render('AcmeDemoBundle:Hello:index.html.twig', array('name' => $name));
 
             // render a PHP template instead
-            // return $this->render('HelloBundle:Hello:index.html.php', array('name' => $name));
+            // return $this->render('AcmeDemoBundle:Hello:index.html.php', array('name' => $name));
         }
     }
 
@@ -233,12 +282,12 @@ By default, Symfony2 supports two different templating languages: classic
 PHP templates and the succinct but powerful `Twig`_ templates. Don't be alarmed
 - you're free to choose either or even both in the same project.
 
-The controller renders the ``HelloBundle:Hello:index.html.twig`` template,
+The controller renders the ``AcmeDemoBundle:Hello:index.html.twig`` template,
 which uses the following naming convention:
 
 *BundleName*:*ControllerName*:*TemplateName*
 
-In this case, ``HelloBundle`` is the bundle name, ``Hello`` is the
+In this case, ``AcmeDemoBundle`` is the bundle name, ``Hello`` is the
 controller, and ``index.html.twig`` the template:
 
 .. configuration-block::
@@ -246,7 +295,7 @@ controller, and ``index.html.twig`` the template:
     .. code-block:: jinja
        :linenos:
 
-        {# src/Sensio/HelloBundle/Resources/views/Hello/index.html.twig #}
+        {# src/Acme/DemoBundle/Resources/views/Hello/index.html.twig #}
         {% extends '::layout.html.twig' %}
 
         {% block body %}
@@ -255,8 +304,8 @@ controller, and ``index.html.twig`` the template:
 
     .. code-block:: php
 
-        <!-- src/Sensio/HelloBundle/Resources/views/Hello/index.html.php -->
-        <?php $view->extend('HelloBundle::layout.html.php') ?>
+        <!-- src/Acme/DemoBundle/Resources/views/Hello/index.html.php -->
+        <?php $view->extend('::layout.html.php') ?>
 
         Hello <?php echo $view->escape($name) ?>!
 
@@ -419,20 +468,21 @@ each of these directories in later chapters.
     behalf the instance you need a class::
     
         $loader->registerNamespaces(array(
-            'Sensio'                         => __DIR__.'/../src',
+            'Acme'                         => __DIR__.'/../src',
             // ...
         ));
     
     With this configuration, Symfony2 will look inside the ``src`` directory
-    for any class in the ``Sensio`` namespace. For autoloading to work,
-    the class name and path to the file must follow the same pattern:
+    for any class in the ``Acme`` namespace (your pretend company's namespace).
+    For autoloading to work, the class name and path to the file must follow
+    the same pattern:
 
     .. code-block:: text
 
         Class Name:
-            Sensio\HelloBundle\Controller\HelloController
+            Acme\DemoBundle\Controller\HelloController
         Path:
-            src/Sensio/HelloBundle/Controller/HelloController.php
+            src/Acme/DemoBundle/Controller/HelloController.php
 
     The ``app/autoload.php`` configures the autoloader to look for different
     PHP namespaces in different directories and can be customized as necessary.
@@ -448,6 +498,8 @@ is empty. When you begin development, you'll being to populate the directory
 with *bundles* that contain your application code.
 
 But what exactly is a :term:`bundle`?
+
+.. _page-creation-bundles:
 
 The Bundle System
 -----------------
@@ -491,7 +543,7 @@ method of the ``AppKernel`` class::
             //new Symfony\Bundle\DoctrineMongoDBBundle\DoctrineMongoDBBundle(),
 
             // register your bundles
-            new Sensio\HelloBundle\HelloBundle(),
+            new Acme\DemoBundle\AcmeDemoBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {
@@ -507,31 +559,31 @@ are used by your application (including the core Symfony bundles).
 .. tip::
 
    A bundle can live *anywhere* as long as it can be autoloaded by Symfony2.
-   For example, if ``SensioHelloBundle`` lives inside the ``src/Sensio``
-   directory, be sure that the ``Sensio`` namespace has been added to the
+   For example, if ``AcmeDemoBundle`` lives inside the ``src/Acme``
+   directory, be sure that the ``Acme`` namespace has been added to the
    ``app/autoload.php`` file and mapped to the ``src`` directory.
 
 Creating a Bundle
 ~~~~~~~~~~~~~~~~~
 
 To show you how simple the bundle system is, let's create a new bundle called
-``SensioMyBundle`` and enable it.
+``AcmeTestBundle`` and enable it.
 
-First, create a ``src/Sensio/SensioMyBundle/`` directory and add a new file
-called ``SensioMyBundle.php``::
+First, create a ``src/Acme/TestBundle/`` directory and add a new file
+called ``AcmeTestBundle.php``::
 
-    // src/Sensio/MyBundle/SensioMyBundle.php
-    namespace Sensio\MyBundle;
+    // src/Acme/TestBundle/AcmeTestBundle.php
+    namespace Acme\TestBundle;
 
     use Symfony\Component\HttpKernel\Bundle\Bundle;
 
-    class SensioMyBundle extends Bundle
+    class AcmeTestBundle extends Bundle
     {
     }
 
 .. tip::
 
-   The name ``SensioMyBundle`` follows the :ref:`Bundle naming conventions<bundles-naming-conventions>`.
+   The name ``AcmeTestBundle`` follows the :ref:`Bundle naming conventions<bundles-naming-conventions>`.
 
 This empty class is the only piece we need to create our new bundle. Though
 commonly empty, this class is powerful and can be used to customize the behavior
@@ -547,7 +599,7 @@ class::
             // ...
 
             // register your bundles
-            new Sensio\MyBundle\SensioMyBundle(),
+            new Acme\TestBundle\AcmeTestBundle(),
         );
 
         // ...
@@ -555,12 +607,13 @@ class::
         return $bundles;
     }
 
-And while it doesn't do anything yet, ``MyBundle`` is now ready to be used.
+And while it doesn't do anything yet, ``AcmeTestBundle`` is now ready to
+be used.
 
 And as easy as this is, Symfony also provides a command-line interface for
 generating a basic bundle skeleton::
 
-    ./app/console init:bundle "Sensio\MyBundle" src
+    php app/console init:bundle "Acme\TestBundle" src
 
 The bundle skeleton generates with a basic controller, template and routing
 resource that can be customized. We'll talk more about Symfony2's command-line
@@ -576,7 +629,7 @@ Bundle Directory Structure
 
 The directory structure of a bundle is simple and flexible. By default, the
 bundle system follows a set of conventions that help to keep code consistent
-between all Symfony2 bundles. Let's take a look at ``HelloBundle``, as it
+between all Symfony2 bundles. Let's take a look at ``AcmeDemoBundle``, as it
 contains some of the most common elements of a bundle:
 
 * *Controller/* contains the controllers of the bundle (e.g. ``HelloController.php``);
@@ -702,7 +755,7 @@ options of each feature.
     * *PHP*: Very powerful but less readable than standard configuration formats.
 
 .. index::
-   single: Environments
+   single: Environments; Introduction
 
 .. _environments-summary:
 
@@ -884,3 +937,4 @@ Learn more from the Cookbook
 
 .. _`Twig`: http://www.twig-project.org
 .. _`third-party bundles`: http://symfony2bundles.org/
+.. _`Symfony Standard Edition`: http://symfony.com/download

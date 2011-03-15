@@ -1,8 +1,8 @@
 .. index::
-   single: Tests; HTTP Authorization
+   single: Tests; HTTP Authentication
 
-How to simulate HTTP Authorization in a Functional Test
-=======================================================
+How to simulate HTTP Authentication in a Functional Test
+========================================================
 
 If your application needs HTTP authentication, pass the username and password
 as server variables to ``createClient()``::

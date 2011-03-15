@@ -37,7 +37,7 @@ basic authentication:
             firewalls:
                 backend:
                     pattern:    /admin/.*
-                    form-login: true
+                    form_login: true
                     logout:     true
                 api:
                     pattern:    /api/.*
@@ -797,7 +797,7 @@ firewall, or just for an authentication mechanism:
                 backend:
                     pattern:    /admin/.*
                     x509:       { provider: certificate }
-                    form-login: { provider: default }
+                    form_login: { provider: default }
                     logout:     true
                 api:
                     provider:   default

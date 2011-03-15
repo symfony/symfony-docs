@@ -34,17 +34,17 @@ your main configuration file; here is a typical configuration:
         # app/config/config.yml
         security:
             encoders:
-                Symfony\Component\Security\Core\User\User: sha1
+                Symfony\Component\Security\Core\User\User: plaintext
 
             providers:
                 main:
                     users:
-                        foo: { password: 0beec7b5ea3f0fdbc95d0dd47f3c5bc275da8a33, roles: ROLE_USER }
+                        foo: { password: testing, roles: ROLE_USER }
 
             firewalls:
                 main:
                     pattern:    /.*
-                    http-basic: true
+                    http_basic: true
                     logout:     true
 
             access_control:
@@ -54,10 +54,10 @@ your main configuration file; here is a typical configuration:
 
         <!-- app/config/config.xml -->
         <security:config>
-            <security:encoder class="Symfony\Component\Security\Core\User\User" algorithm="sha1" />
+            <security:encoder class="Symfony\Component\Security\Core\User\User" algorithm="plaintext" />
 
             <security:provider>
-                <security:user name="foo" password="0beec7b5ea3f0fdbc95d0dd47f3c5bc275da8a33" roles="ROLE_USER" />
+                <security:user name="foo" password="testing" roles="ROLE_USER" />
             </security:provider>
 
             <security:firewall pattern="/.*">
@@ -75,16 +75,16 @@ your main configuration file; here is a typical configuration:
         // app/config/config.php
         $container->loadFromExtension('security', array(
             'encoders' => array(
-                'Symfony\Component\Security\Core\User\User' => 'sha1',
+                'Symfony\Component\Security\Core\User\User' => 'plaintext',
             ),
             'providers' => array(
                 'main' => array(
                     'users' => array(
-                        'foo' => array('password' => '0beec7b5ea3f0fdbc95d0dd47f3c5bc275da8a33', 'roles' => 'ROLE_USER'),
+                        'foo' => array('password' => 'testing', 'roles' => 'ROLE_USER'),
                 )),
             ),
             'firewalls' => array(
-                'main' => array('pattern' => '/.*', 'http-basic' => true, 'logout' => true),
+                'main' => array('pattern' => '/.*', 'http_basic' => true, 'logout' => true),
             ),
             'access_control' => array(
                 array('path' => '/.*', 'role' => 'ROLE_USER'),
@@ -97,10 +97,10 @@ the security namespace as the default one to make it more readable:
 
 .. code-block:: xml
 
-        <srv:container xmlns="http://www.symfony-project.org/schema/dic/security"
+        <srv:container xmlns="http://symfony.com/schema/dic/security"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xmlns:srv="http://www.symfony-project.org/schema/dic/services"
-            xsi:schemaLocation="http://www.symfony-project.org/schema/dic/services http://www.symfony-project.org/schema/dic/services/services-1.0.xsd">
+            xmlns:srv="http://symfony.com/schema/dic/services"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <config>
                 <provider>
@@ -161,7 +161,7 @@ Here is how you can secure your application with HTTP basic authentication:
         security:
             firewalls:
                 main:
-                    http-basic: true
+                    http_basic: true
 
     .. code-block:: xml
 
@@ -177,7 +177,7 @@ Here is how you can secure your application with HTTP basic authentication:
         // app/config/security.php
         $container->loadFromExtension('security', array(
             'firewalls' => array(
-                'main' => array('http-basic' => true),
+                'main' => array('http_basic' => true),
             ),
         ));
 
@@ -193,7 +193,7 @@ mechanisms for different parts of the application:
             firewalls:
                 backend:
                     pattern: /admin/.*
-                    http-basic: true
+                    http_basic: true
                 public:
                     pattern:  /.*
                     security: false

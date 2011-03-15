@@ -710,6 +710,6 @@ You can also override HTTP headers on a per request basis::
 Learn more from the Cookbook
 ----------------------------
 
-* :doc:`/cookbook/testing/http_authorization`
+* :doc:`/cookbook/testing/http_authentication`
 * :doc:`/cookbook/testing/insulating_clients`
 * :doc:`/cookbook/testing/profiling`

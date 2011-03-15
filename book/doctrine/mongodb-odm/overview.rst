@@ -21,63 +21,110 @@ just need to enable it and specify the bundle that contains your mapped document
     # app/config/config.yml
 
     doctrine_mongo_db:
-        mappings:
-            HelloBundle: ~
+        documents_managers:
+            default:
+                mappings:
+                    HelloBundle: ~
 
-Now you can start writing documents and mapping them with annotations, xml, or
-yaml. In this example we will use annotations::
+Now you can start writing documents and mapping them with annotations, xml or
+yaml.
 
-    // Sensio/HelloBundle/Document/User.php
+.. configuration-block::
 
-    namespace Sensio\HelloBundle\Document;
+    .. code-block:: php-annotations
 
-    /**
-     * @mongodb:Document(collection="users")
-     */
-    class User
-    {
-        /**
-         * @mongodb:Id
-         */
-        protected $id;
+        // Sensio/HelloBundle/Document/User.php
+
+        namespace Sensio\HelloBundle\Document;
 
         /**
-         * @mongodb:String
+         * @mongodb:Document(collection="users")
          */
-        protected $name;
-
-        /**
-         * Get id
-         *
-         * @return integer $id
-         */
-        public function getId()
+        class User
         {
-            return $this->id;
+            /**
+             * @mongodb:Id
+             */
+            protected $id;
+
+            /**
+             * @mongodb:Field(type="string")
+             */
+            protected $name;
+
+            /**
+             * Get id
+             *
+             * @return integer $id
+             */
+            public function getId()
+            {
+                return $this->id;
+            }
+
+            /**
+             * Set name
+             *
+             * @param string $name
+             */
+            public function setName($name)
+            {
+                $this->name = $name;
+            }
+
+            /**
+             * Get name
+             *
+             * @return string $name
+             */
+            public function getName()
+            {
+                return $this->name;
+            }
         }
 
-        /**
-         * Set name
-         *
-         * @param string $name
-         */
-        public function setName($name)
-        {
-            $this->name = $name;
-        }
+    .. code-block:: yaml
 
-        /**
-         * Get name
-         *
-         * @return string $name
-         */
-        public function getName()
-        {
-            return $this->name;
-        }
-    }
+        # Sensio/HelloBundle/Resources/config/doctrine/metadata/mongodb/Sensio.HelloBundle.Document.User.dcm.yml
+        Sensio\HelloBundle\Document\User:
+            type: document
+            collection: user
+            fields:
+                id:
+                    id: true
+                name:
+                    type: string
+                    length: 255
 
-Now, use your document and manage its persistent state with Doctrine::
+    .. code-block:: xml
+
+        <!-- Sensio/HelloBundle/Resources/config/doctrine/metadata/mongodb/Sensio.HelloBundle.Document.User.dcm.xml -->
+        <doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
+                            http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+
+            <document name="Sensio\HelloBundle\Document\User" collection="user">
+                <field name="id" id="true" />
+                <field name="name" type="string" length="255" />
+            </document>
+
+        </doctrine-mapping>
+
+.. note::
+
+    When using annotations in your Symfony2 project you have to namespace all
+    Doctrine MongoDB annotations with the ``mongodb:`` prefix.
+
+.. tip::
+
+    If you use YAML or XML to describe your documents, you can omit the creation
+    of the Document class, and let the ``doctrine:generate:documents`` command
+    do it for you.
+
+Now, use your document and manage its persistent state with Doctrine:
+
+.. code-block:: php
 
     use Sensio\HelloBundle\Document\User;
 
@@ -117,4 +164,4 @@ Now, use your document and manage its persistent state with Doctrine::
     }
 
 .. _MongoDB:       http://www.mongodb.org/
-.. _documentation: http://www.doctrine-project.org/projects/mongodb_odm/1.0/docs/en
+.. _documentation: http://www.doctrine-project.org/docs/mongodb_odm/1.0/en

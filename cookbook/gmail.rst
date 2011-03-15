@@ -31,8 +31,8 @@ In the development configuration file, change the ``transport`` setting to
         <!-- app/config/config_dev.xml -->
 
         <!--
-        xmlns:swiftmailer="http://www.symfony-project.org/schema/dic/swiftmailer"
-        http://www.symfony-project.org/schema/dic/swiftmailer http://www.symfony-project.org/schema/dic/swiftmailer/swiftmailer-1.0.xsd
+        xmlns:swiftmailer="http://symfony.com/schema/dic/swiftmailer"
+        http://symfony.com/schema/dic/swiftmailer http://symfony.com/schema/dic/swiftmailer/swiftmailer-1.0.xsd
         -->
 
         <swiftmailer:config

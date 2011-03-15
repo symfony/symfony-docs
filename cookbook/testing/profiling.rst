@@ -58,5 +58,5 @@ finish. It's easy to achieve if you embed the token in the error message::
 
 .. tip::
 
-    Read the API for built-in `data collectors`_ to learn more about their
-    interfaces.
+    Read the API for built-in :doc:`data collectors</cookbook/profiler/data_collector>`
+    to learn more about their interfaces.
