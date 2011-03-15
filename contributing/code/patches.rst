@@ -14,7 +14,7 @@ software:
 
 * PHP version 5.3.2 or above;
 
-* PHPUnit 3.5.0 or above.
+* PHPUnit 3.5.11 or above.
 
 Set up your user information with your real name and a working email address:
 
@@ -28,9 +28,9 @@ Set up your user information with your real name and a working email address:
     If you are new to Git, we highly recommend you to read the excellent and
     free `ProGit`_ book.
 
-Get the Symfony2 code source:
+Get the Symfony2 source code:
 
-* Create a `Github`_ account and sign in;
+* Create a `GitHub`_ account and sign in;
 
 * Fork the `Symfony2 repository`_ (click on the "Fork" button);
 
@@ -46,7 +46,7 @@ Get the Symfony2 code source:
 .. code-block:: bash
 
       $ cd symfony
-      $ git remote add upstream git://github.com/fabpot/symfony.git
+      $ git remote add upstream git://github.com/symfony/symfony.git
 
 Now that Symfony2 is installed, check that all unit tests pass for your
 environment as explained in the dedicated :doc:`document <tests>`.
@@ -85,12 +85,12 @@ in mind the following:
 
 .. tip::
 
-    A good commit message is composed of a summary (the first line), optionally
-    followed by a blank line and a more detailed description. The summary
-    should start with the Component you are working on in square brackets
-    (`[DependencyInjection]`, `[FrameworkBundle]`, ...). Use a verb
-    (`fixed ...`, `added ...`, ...) to start the summary and don't add a period
-    at the end.
+    A good commit message is composed of a summary (the first line),
+    optionally followed by a blank line and a more detailed description. The
+    summary should start with the Component you are working on in square
+    brackets (``[DependencyInjection]``, ``[FrameworkBundle]``, ...). Use a
+    verb (``fixed ...``, ``added ...``, ...) to start the summary and don't
+    add a period at the end.
 
 Submitting a Patch
 ------------------
@@ -121,27 +121,35 @@ Check that all tests still pass and push your branch remotely:
 
     $ git push origin BRANCH_NAME
 
-You can now advertise your patch on the `dev mailing-list`_. The email must
-follow the following conventions:
+You can now discuss your patch on the `dev mailing-list`_ or make a pull
+request (they must be done on the ``symfony/symfony`` repository). To ease the
+core team work, always include the modified components in your pull request
+message, like in:
 
-* Subject must start with `[PATCH]`, followed by a short summary of the
-  patch (with a reference to the ticket if it's a bug fix - `#XXX`);
+.. code-block:: text
 
-* The body must contain the information about your branch
-  (`git://github.com/USERNAME/symfony.git BRANCH_NAME`);
+    [Yaml] foo bar
+    [Form] [Validator] [FrameworkBundle] foo bar
 
-* The body must then describe what the patch does (reference a ticket, or
-  copy and paste the commit message).
+If you are going to send an email to the mailing-list, don't forget to
+reference you branch URL (``https://github.com/USERNAME/symfony.git
+BRANCH_NAME``) or the pull request URL.
 
-Based on the feedback, you might need to rework your patch. Before
-re-submitting the patch, rebase with master, don't merge; and force the push
-to the origin:
+Based on the feedback from the mailing-list or via the pull request on GitHub,
+you might need to rework your patch. Before re-submitting the patch, rebase
+with master, don't merge; and force the push to the origin:
 
 .. code-block:: bash
 
+    $ git rebase -f upstream/master
     $ git push -f origin BRANCH_NAME
 
-.. _ProGit: http://progit.org/
-.. _Github: https://github.com/signup/free
-.. _Symfony2 repository: http://www.github.com/fabpot/symfony
-.. _dev mailing-list: http://groups.google.com/group/symfony-devs
+.. note::
+
+    All patches you are going to submit must be released under the MIT
+    license, unless explicitly specified in the code.
+
+.. _ProGit:              http://progit.org/
+.. _GitHub:              https://github.com/signup/free
+.. _Symfony2 repository: https://github.com/symfony/symfony
+.. _dev mailing-list:    http://groups.google.com/group/symfony-devs

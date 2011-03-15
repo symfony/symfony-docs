@@ -10,7 +10,7 @@ Contributing
 First, become familiar with the :doc:`markup language <format>` used by the
 documentation.
 
-Then, subscribe to the `Symfony2 docs mailing-list`_, as collaboration happens
+Then, subscribe to the `Symfony docs mailing-list`_, as collaboration happens
 there.
 
 Finally, find the *master* repository for the language you want to contribute
@@ -18,7 +18,8 @@ for. Here is the list of the official *master* repositories:
 
 * *English*:  http://github.com/symfony/symfony-docs
 * *Russian*:  http://github.com/avalanche123/symfony-docs-ru
-* *Romanian*: http://github.com/sebastian-ionescu/symfony-docs-ro
+* *Romanian*: http://github.com/sebio/symfony-docs-ro
+* *Japanese*: https://github.com/symfony-japan/symfony-docs-ja
 
 .. note::
 
@@ -34,10 +35,10 @@ bugs, consider joining us; it's a very easy process:
 * Introduce yourself on the `Symfony docs mailing-list`_;
 * *(optional)* Ask which documents you can work on;
 * Fork the *master* repository for your language (click the "Fork" button on
-  the Github page);
+  the GitHub page);
 * Translate some documents;
 * Ask for a pull request (click on the "Pull Request" from your page on
-  Github);
+  GitHub);
 * The team manager accepts your modifications and merges them into the master
   repository;
 * The documentation website is updated every other night from the master
@@ -81,4 +82,4 @@ repository and apply changes to the translated documents as soon as possible.
     Non maintained languages are removed from the official list of
     repositories as obsolete documentation is dangerous.
 
-.. _Symfony2 docs mailing-list: http://groups.google.com/group/symfony-docs
+.. _Symfony docs mailing-list: http://groups.google.com/group/symfony-docs

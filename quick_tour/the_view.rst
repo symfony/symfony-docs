@@ -9,9 +9,9 @@ readable and concise; it also makes them more friendly for web designers.
 
 .. note::
 
-    Instead of Twig, you can also use :doc:`PHP </guides/templating/PHP>` for
-    your templates. Both template engines are supported by Symfony2 and have
-    the same level of support.
+    Instead of Twig, you can also use :doc:`PHP </cookbook/templating/PHP>`
+    for your templates. Both template engines are supported by Symfony2 and
+    have the same level of support.
 
 .. index::
    single: Twig
@@ -22,22 +22,21 @@ Twig, a Quick Overview
 
 .. tip::
 
-    If you want to learn Twig, we highly recommend to read the official
-    `documentation`_. This section is just a quick overview of the main concepts
-    to get you started.
+    If you want to learn Twig, we highly recommend you to read its official
+    `documentation`_. This section is just a quick overview of the main
+    concepts.
 
-A Twig template is simply a text file that can generate any text-based format
-(HTML, XML, CSV, LaTeX, ...). Twig defines two kinds of delimiters:
+A Twig template is a text file that can generate any text-based format (HTML,
+XML, CSV, LaTeX, ...). Twig defines two kinds of delimiters:
 
-* ``{{ ... }}``: Prints a variable or the result of an expression to the
-  template;
+* ``{{ ... }}``: Outputs a variable or the result of an expression;
 
 * ``{% ... %}``: A tag that controls the logic of the template; it is used to
-  execute statements such as for-loops for instance.
+  execute ``for`` loops or ``if`` statements for instance.
 
 Below is a minimal template that illustrates a few basics:
 
-.. code-block:: jinja
+.. code-block:: html+jinja
 
     <!DOCTYPE html>
     <html>
@@ -55,9 +54,9 @@ Below is a minimal template that illustrates a few basics:
         </body>
     </html>
 
-Variables passed to the templates can be strings, arrays, or even objects.
-Twig abstracts the difference between them and let's you access "attributes"
-of a variable with the dot (``.``) notation:
+Variables passed to a template can be strings, arrays, or even objects. Twig
+abstracts the difference between them and let's you access "attributes" of a
+variable with the dot (``.``) notation:
 
 .. code-block:: jinja
 
@@ -97,28 +96,28 @@ the same as PHP classes: template inheritance allows you to build a base
 "layout" template that contains all the common elements of your site and
 defines "blocks" that child templates can override.
 
-The ``index.twig`` template inherits from ``layout.twig``, thanks to the
-``extends`` tag:
+The ``index.html.twig`` template inherits from ``layout.html.twig``, thanks to
+the ``extends`` tag:
 
 .. code-block:: jinja
 
-    {# src/Application/HelloBundle/Resources/views/Hello/index.twig #}
-    {% extends "HelloBundle::layout.twig" %}
+    {# src/Sensio/HelloBundle/Resources/views/Hello/index.html.twig #}
+    {% extends "HelloBundle::layout.html.twig" %}
 
     {% block content %}
         Hello {{ name }}!
     {% endblock %}
 
-The ``HelloBundle::layout.twig`` notation sounds familiar, doesn't it? It is
-the same notation as for referencing a template. The ``::`` part simply means
-that the controller element is empty, so the corresponding file is directly
-stored under ``views/``.
+The ``HelloBundle::layout.html.twig`` notation sounds familiar, doesn't it? It
+is the same notation used to reference a regular template. The ``::`` part
+simply means that the controller element is empty, so the corresponding file
+is directly stored under ``views/``.
 
-Now, let's have a look at the ``layout.twig`` file:
+Now, let's have a look at the ``layout.html.twig`` file:
 
 .. code-block:: jinja
 
-    {% extends "::layout.twig" %}
+    {% extends "::base.html.twig" %}
 
     {% block body %}
         <h1>Hello Application</h1>
@@ -129,17 +128,15 @@ Now, let's have a look at the ``layout.twig`` file:
 The ``{% block %}`` tags define two blocks (``body`` and ``content``) that
 child templates can fill in. All the block tag does is to tell the template
 engine that a child template may override those portions of the template. The
-``index.twig`` template overrides the ``content`` block. The other one is
-defined in a base layout as our layout is itself decorated by another one.
-
-Twig supports multiple decoration levels: a layout can itself be decorated by
-another one. When the bundle part of the template name is empty
-(``::layout.twig``), views are looked for in the ``app/views/`` directory.
-This directory store global views for your entire project:
+``index.html.twig`` template overrides the ``content`` block. The other one is
+defined in a base layout as the layout is itself decorated by another one.
+When the bundle part of the template name is empty (``::base.html.twig``),
+views are looked for in the ``app/views/`` directory. This directory store
+global views for your entire project:
 
 .. code-block:: jinja
 
-    {# app/views/layout.twig #}
+    {# app/views/base.html.twig #}
     <!DOCTYPE html>
     <html>
         <head>
@@ -151,12 +148,12 @@ This directory store global views for your entire project:
         </body>
     </html>
 
-Specific Tags and Filters
--------------------------
+Tags, Filters, and Functions
+----------------------------
 
-One of the best feature of Twig is its extensibility via new tags and filters;
-Symfony2 comes bundled with many specialized tags and filters that ease the
-web designer work.
+One of the best feature of Twig is its extensibility via tags, filters, and
+functions; Symfony2 comes bundled with many built-in ones to ease the web
+designer work.
 
 Including other Templates
 ~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -164,23 +161,23 @@ Including other Templates
 The best way to share a snippet of code between several distinct templates is
 to define a template that can then be included into another one.
 
-Create a ``hello.twig`` template:
+Create a ``hello.html.twig`` template:
 
 .. code-block:: jinja
 
-    {# src/Application/HelloBundle/Resources/views/Hello/hello.twig #}
+    {# src/Sensio/HelloBundle/Resources/views/Hello/hello.html.twig #}
     Hello {{ name }}
 
-And change the ``index.twig`` template to include it:
+And change the ``index.html.twig`` template to include it:
 
 .. code-block:: jinja
 
-    {# src/Application/HelloBundle/Resources/views/Hello/index.twig #}
-    {% extends "HelloBundle::layout.twig" %}
+    {# src/Sensio/HelloBundle/Resources/views/Hello/index.html.twig #}
+    {% extends "HelloBundle::layout.html.twig" %}
 
-    {# override the body block from index.twig #}
+    {# override the body block from index.html.twig #}
     {% block body %}
-        {% include "HelloBundle:Hello:hello.twig" %}
+        {% include "HelloBundle:Hello:hello.html.twig" %}
     {% endblock %}
 
 Embedding other Controllers
@@ -195,14 +192,14 @@ template, use the ``render`` tag:
 
 .. code-block:: jinja
 
-    {# src/Application/HelloBundle/Resources/views/Hello/index.twig #}
+    {# src/Sensio/HelloBundle/Resources/views/Hello/index.html.twig #}
     {% render "HelloBundle:Hello:fancy" with { 'name': name, 'color': 'green' } %}
 
 Here, the ``HelloBundle:Hello:fancy`` string refers to the ``fancy`` action of
 the ``Hello`` controller, and the argument is used as simulated request path
 values::
 
-    // src/Application/HelloBundle/Controller/HelloController.php
+    // src/Sensio/HelloBundle/Controller/HelloController.php
 
     class HelloController extends Controller
     {
@@ -211,7 +208,7 @@ values::
             // create some object, based on the $color variable
             $object = ...;
 
-            return $this->render('HelloBundle:Hello:fancy.twig', array('name' => $name, 'object' => $object));
+            return $this->render('HelloBundle:Hello:fancy.html.twig', array('name' => $name, 'object' => $object));
         }
 
         // ...
@@ -221,46 +218,47 @@ Creating Links between Pages
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Speaking of web applications, creating links between pages is a must. Instead
-of hardcoding URLs in templates, the ``path`` tag knows how to generate URLs
-based on the routing configuration. That way, all your URLs can be easily
-updated by changing the configuration:
+of hardcoding URLs in templates, the ``path`` function knows how to generate
+URLs based on the routing configuration. That way, all your URLs can be easily
+updated by just changing the configuration:
 
 .. code-block:: jinja
 
     <a href="{{ path('hello', { 'name': 'Thomas' }) }}">Greet Thomas!</a>
 
-The ``path`` tag takes the route name and an array of parameters as arguments.
-The route name is the main key under which routes are referenced and the
-parameters are the values of the placeholders defined in the route pattern:
+The ``path`` function takes the route name and an array of parameters as
+arguments. The route name is the main key under which routes are referenced
+and the parameters are the values of the placeholders defined in the route
+pattern:
 
 .. code-block:: yaml
 
-    # src/Application/HelloBundle/Resources/config/routing.yml
+    # src/Sensio/HelloBundle/Resources/config/routing.yml
     hello: # The route name
-        pattern:  /hello/:name
+        pattern:  /hello/{name}
         defaults: { _controller: HelloBundle:Hello:index }
 
 .. tip::
 
-    You can also generate absolute URLs with the ``url`` tag: ``{% url 'hello'
-    with { 'name': 'Thomas' } %}``.
+    The ``url`` function generates *absolute* URLs: ``{{ url('hello', {
+    'name': 'Thomas' }) }}``.
 
-Using Assets: images, JavaScripts, and stylesheets
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Including Assets: images, JavaScripts, and stylesheets
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 What would the Internet be without images, JavaScripts, and stylesheets?
-Symfony2 provides three helpers to deal with them easily: ``assets``,
-``javascripts``, and ``stylesheets``:
+Symfony2 provides the ``asset`` function to deal with them easily:
 
 .. code-block:: jinja
 
-    <link href="{% asset 'css/blog.css' %}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('css/blog.css') }}" rel="stylesheet" type="text/css" />
 
-    <img src="{% asset 'images/logo.png' %}" />
+    <img src="{{ asset('images/logo.png') }}" />
 
-The ``asset`` tag main purpose is to make your application more portable.
-Thanks to this tag, you can move the application root directory anywhere under
-your web root directory without changing anything in your template's code.
+The ``asset`` function main purpose is to make your application more portable.
+Thanks to this function, you can move the application root directory anywhere
+under your web root directory without changing anything in your template's
+code.
 
 Output Escaping
 ---------------
