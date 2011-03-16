@@ -13,6 +13,7 @@
 * :doc:`/cookbook/testing/profiling`
 * :doc:`/cookbook/event_dispatcher/class_extension`
 * :doc:`/cookbook/event_dispatcher/method_behavior`
+* :doc:`/cookbook/event_dispatcher/mime_type`
 * :doc:`/cookbook/profiler/data_collector`
 * :doc:`/cookbook/bundles/extension`
 * :doc:`/cookbook/symfony1`
