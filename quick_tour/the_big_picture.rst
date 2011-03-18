@@ -9,7 +9,7 @@ If you've used a web framework before, you should feel right at home with
 Symfony2. If not, welcome to a whole new way of developing web applications!
 
 .. index::
-   pair: Sandbox; Download
+   pair: Standard Distribution; Download
 
 Downloading and Installing Symfony2
 -----------------------------------
@@ -18,25 +18,29 @@ First, check that you have installed and configured a webserver (such as
 Apache) with PHP 5.3.2 or higher.
 
 Ready? Let's start by downloading Symfony2. To get started even faster, we are
-going to use the "Symfony2 sandbox". This is a preconfigured Symfony2 project
+going to use the "Symfony2 Standard Distribution". This is a preconfigured Symfony2 project
 that includes some simple controllers and their required libraries. The great
-advantage of the sandbox over other methods of installation is you can start
+advantage of the standard distribution over other methods of installation is you can start
 experimenting with Symfony2 immediately.
 
-Download the `sandbox`_, and unpack it in your root web directory. You
-should now have a ``sandbox/`` directory::
+Download the `standard distribution`_sandbox, and unpack it in your root web directory. You
+should now have a ``symfony-standard/`` directory::
 
     www/ <- your web root directory
-        sandbox/ <- the unpacked archive
+        symfony-standard/ <- the unpacked archive
             app/
                 cache/
                 config/
                 logs/
             src/
-                Sensio/
-                    HelloBundle/
+                Acme/
+                    DemoBundle/
                         Controller/
+                        DependencyInjection/
+                        Form/
                         Resources/
+                        Tests/
+                        Twig/
             vendor/
                 symfony/
                 doctrine/
@@ -49,28 +53,28 @@ should now have a ``sandbox/`` directory::
 Checking the Configuration
 --------------------------
 
-Symfony2 comes with a visual server configuration tester to help avoid some
-headaches that come from web server or PHP misconfiguration. Use the following
-url to see the diagnostics for your server:
+Symfony2 comes with a visual configuration wizard to help you to configure your application
+and avoid some headaches that come from web server or PHP misconfiguration. Use the following
+url to start installation:
 
-    http://localhost/sandbox/web/check.php
+    http://localhost/symfony-standard/web/config.php
 
-Read the script output carefully and correct any oustanding issues.
+The wizard will help you to fix the eventual issues : missing PHP extensions, write permissions on cache and logs directories, and so on. So, read carefully the several messages and correct any outstanding issues.
 
-Now you can request your first "real" Symfony2 webpage:
+Once all the issues are fixed, you can just click on `Bypass configuration and go to the Welcome page`, or request your first "real" Symfony2 webpage:
 
-    http://localhost/sandbox/web/app_dev.php/
+    http://localhost/symfony-standard/web/app_dev.php/
 
 Symfony2 should congratulate you for your hard work so far!
 
 Creating your first Application
 -------------------------------
 
-The sandbox comes with a simple Hello World ":term:`application`" that we'll
+The "Standard distribution" comes with a simple Hello World ":term:`application`" that we'll
 use to learn more about Symfony2. Go to the following URL to be greeted by
 Symfony2 (replace Fabien with your first name):
 
-    http://localhost/sandbox/web/app_dev.php/hello/Fabien
+    http://localhost/symfony-standard/web/app_dev.php/demo/hello/Fabien
 
 What's going on here? Let's dissect the URL:
 
@@ -79,7 +83,7 @@ What's going on here? Let's dissect the URL:
 * ``app_dev.php``: This is a "front controller". It is the unique entry point
   of the application and it responds to all user requests;
 
-* ``/hello/Fabien``: This is the virtual path to the resource the user wants
+* ``/demo/hello/Fabien``: This is the virtual path to the resource the user wants
   to access.
 
 Your responsibility as a developer is to write the code that maps the user
@@ -98,8 +102,8 @@ application.
 
 .. tip::
 
-    The sandbox defaults to YAML, but you can easily switch to XML or PHP by
-    opening the ``app/AppKernel.php`` file and modifying the
+    The standard distribution defaults to YAML, but you can easily switch to XML 
+    or PHP by opening the ``app/AppKernel.php`` file and modifying the
     ``registerContainerConfiguration`` method.
 
 .. index::
@@ -117,12 +121,19 @@ are a few examples of the routing configuration file for our application:
     .. code-block:: yaml
 
         # app/config/routing.yml
-        homepage:
+        _welcome:
             pattern:  /
-            defaults: { _controller: FrameworkBundle:Default:index }
+            defaults: { _controller: AcmeDemoBundle:Welcome:index }
 
-        hello:
-            resource: "@HelloBundle/Resources/config/routing.yml"
+        _demo_secured:
+            resource: "@AcmeDemoBundle/Controller/SecuredController.php"
+            type:     annotation
+
+        _demo:
+            resource: "@AcmeDemoBundle/Controller/DemoController.php"
+            type:     annotation
+            prefix:   /demo
+
 
     .. code-block:: xml
 
@@ -133,11 +144,12 @@ are a few examples of the routing configuration file for our application:
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://www.symfony-project.org/schema/routing http://www.symfony-project.org/schema/routing/routing-1.0.xsd">
 
-            <route id="homepage" pattern="/">
-                <default key="_controller">FrameworkBundle:Default:index</default>
+            <route id="_welcome" pattern="/">
+                <default key="_controller">AcmeDemoBundle:Welcome:index</default>
             </route>
 
-            <import resource="@HelloBundle/Resources/config/routing.xml" />
+            <import resource="@AcmeDemoBundle/Controller/SecuredController.php" type="annotation"/>
+            <import resource="@AcmeDemoBundle/Controller/DemoController.php" prefix="/demo" type="annotation"/>
         </routes>
 
     .. code-block:: php
@@ -147,37 +159,58 @@ are a few examples of the routing configuration file for our application:
         use Symfony\Component\Routing\Route;
 
         $collection = new RouteCollection();
-        $collection->add('homepage', new Route('/', array(
-            '_controller' => 'FrameworkBundle:Default:index',
+        $collection->add('_welcome', new Route('/', array(
+            '_controller' => 'AcmeDemoBundle:Welcome:index',
         )));
-        $collection->addCollection($loader->import("@HelloBundle/Resources/config/routing.php"));
+        $collection->addCollection($loader->import("@AcmeDemoBundle/Controller/SecuredController.php"));
+        $collection->addCollection($loader->import("@AcmeDemoBundle/Controller/DemoController.php", "/demo"));
 
         return $collection;
 
 The first few lines of the routing configuration file define the code that
 is executed when the user requests the resource specified by the pattern
 "``/``" (i.e. the homepage). Here, it executes the ``index`` method of
-the ``Default`` controller inside the ``FrameworkBundle``.
+the ``Welcome`` controller inside the ``AcmeDemoBundle``.
 
-Take a look at the last directive of the configuration file: Symfony2 can
+Take a look at the two latest directives of the configuration file: Symfony2 can
 include routing information from other routing configuration files by using
 the ``import`` directive. In this case, we want to import the routing configuration
-from ``HelloBundle``. A bundle is like a plugin that has added power and
+from ``AcmeDemoBundle``. A bundle is like a plugin that has added power and
 we'll talk more about them later. For now, let's look at the routing configuration
 that we've imported:
 
 .. configuration-block::
 
+    .. code-block:: php+annotation
+               
+        // src/Acme/DemoBundle/Resources/Controller/DemoController.php
+        namespace Acme\DemoBundle\Controller;
+
+        use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+        /* ... */
+
+        class DemoController extends Controller
+        {
+            /**
+             * @extra:Route("/hello/{name}", name="_demo_hello")
+             * @extra:Template()
+             */
+            public function helloAction($name)
+            {
+                return array('name' => $name);
+            }
+        }
+
     .. code-block:: yaml
 
-        # src/Sensio/HelloBundle/Resources/config/routing.yml
+        # src/Sensio/AcmeBundle/Resources/config/routing.yml
         hello:
             pattern:  /hello/{name}
-            defaults: { _controller: HelloBundle:Hello:index }
+            defaults: { _controller: AcmeDemoBundle:Hello:index }
 
     .. code-block:: xml
 
-        <!-- src/Sensio/HelloBundle/Resources/config/routing.xml -->
+        <!-- src/Sensio/AcmeBundle/Resources/config/routing.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
 
         <routes xmlns="http://www.symfony-project.org/schema/routing"
@@ -185,25 +218,25 @@ that we've imported:
             xsi:schemaLocation="http://www.symfony-project.org/schema/routing http://www.symfony-project.org/schema/routing/routing-1.0.xsd">
 
             <route id="hello" pattern="/hello/{name}">
-                <default key="_controller">HelloBundle:Hello:index</default>
+                <default key="_controller">AcmeDemoBundle:Hello:index</default>
             </route>
         </routes>
 
     .. code-block:: php
 
-        // src/Sensio/HelloBundle/Resources/config/routing.php
+        // src/Sensio/AcmeBundle/Resources/config/routing.php// src/Sensio/AcmeBundle/Resources/config/routing.php
         use Symfony\Component\Routing\RouteCollection;
         use Symfony\Component\Routing\Route;
 
         $collection = new RouteCollection();
         $collection->add('hello', new Route('/hello/{name}', array(
-            '_controller' => 'HelloBundle:Hello:index',
+            '_controller' => 'AcmeDemoBundle:Hello:index',
         )));
 
         return $collection;
 
 As you can see, the "``/hello/{name}``" resource pattern is mapped to a controller,
-referenced by the ``_controller`` value. The string enclosed in curly brackets
+referenced by the ``@extra:Route`` annotation. The string enclosed in curly brackets
 (``{name}``) is a placeholder and defines an argument that will be available
 in the controller.
 
@@ -220,20 +253,21 @@ The controller defines actions to handle users requests and prepares responses
 .. code-block:: php
    :linenos:
 
-    // src/Sensio/HelloBundle/Controller/HelloController.php
+    // src/Acme/DemoBundle/Resources/Controller/DemoController.php
 
-    namespace Sensio\HelloBundle\Controller;
+    namespace Acme\DemoBundle\Controller;
 
     use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-
-    class HelloController extends Controller
+    
+    class DemoController extends Controller
     {
-        public function indexAction($name)
+        /**
+         * @extra:Route("/hello/{name}", name="_demo_hello")
+         * @extra:Template()
+         */
+        public function helloAction($name)
         {
-            return $this->render('HelloBundle:Hello:index.html.twig', array('name' => $name));
-
-            // render a PHP template instead
-            // return $this->render('HelloBundle:Hello:index.html.php', array('name' => $name));
+            return array('name' => $name);
         }
     }
 
@@ -242,26 +276,32 @@ The code is pretty straightforward but let's explain it line by line:
 * *line 3*: Symfony2 takes advantage of new PHP 5.3 namespacing features,
   and all controllers should be properly namespaced. As you can see, the
   namespace has a correlation to the actual file location. In this example,
-  the controller lives in the bundle named ``HelloBundle``, which forms the
-  first part of the ``_controller`` routing value.
+  the controller lives in the bundle named ``AcmeDemoBundle``, which forms the
+  first part of the imported routing resource.
 
+* *line 7*: The controller name is the latest part of the imported routing 
+  resource. It extends the built-in ``Controller`` class, which provides 
+  useful shortcuts (as we will see later in this tutorial). The ``Controller`` 
+  resides in ``Symfony\Bundle\FrameworkBundle\Controller\Controller`` which 
+  we defined on line 5.
 
-* *line 7*: The controller name is the combination of the second part of the
-  ``_controller`` routing value  (``Hello``) and the word ``Controller``. It
-  extends the built-in ``Controller`` class, which provides useful shortcuts
-  (as we will see later in this tutorial). The ``Controller`` resides in
-  ``Symfony\Bundle\FrameworkBundle\Controller\Controller`` which we defined
-  on line 5.
+* *line 10*: The standard distribution use the ``FrameworkExtraBundle`` that
+  allows to define the routing rules as annotations. In this case, we configure
+  a routing rule named ``_demo_hello`` that map the pattern ``/hello/{name}`` 
+  to this action.
 
-* *line 9*: Each controller consists of several actions. As per the routing
-  configuration, the hello page is handled by the ``index`` action (the third
-  part of the ``_controller`` routing value). This method receives the
-  placeholder values as arguments (``$name`` in our case).
+* *line 11*: Thanks to the ``@extra:Template()`` annotation, the framework
+  will render automatically use the file  
+  ``src\Sensio\HelloBundle\Resources\views\Hello\index.html.twig`` as the
+  template for this action.
 
-* *line 11*: The ``render()`` method loads and renders a template file
-  (``HelloBundle:Hello:index.html.twig``) with the variables passed as a
-  second argument. In our example, this corresponds to the file
-  ``src\Sensio\HelloBundle\Resources\views\Hello\index.html.twig``.
+* *line 12*: Each controller consists of several actions. As per the routing
+  configuration, the hello page is handled by the ``index`` action (thanks to 
+  the @extra:Route annotation). This method receives the placeholder values 
+  as arguments (``$name`` in our case).
+
+* *line 14*: The action return the variables used in the template file
+  ``src\Sensio\AcmdeBundle\Resources\views\Demo\index.html.twig``.
 
 Bundles
 ~~~~~~~
@@ -270,23 +310,26 @@ But what is a :term:`bundle`? All the code you write in a Symfony2 project is
 organized in bundles. In Symfony2 speak, a bundle is a structured set of files
 (PHP files, stylesheets, JavaScripts, images, ...) that implements a single
 feature (a blog, a forum, ...) and which can be easily shared with other
-developers. In our example, we only have one bundle, ``HelloBundle``.
+developers. In our example, we only have one bundle, ``AcmeDemoBundle``.
 
 Templates
 ~~~~~~~~~
 
-The controller renders the ``HelloBundle:Hello:index.html.twig`` template. By
-default, the sandbox uses Twig as its template engine but you can also use
+The controller renders the ``AcmeDemoBundle:Demo:index.html.twig`` template. By
+default, the standard distribution uses Twig as its template engine but you can also use
 traditional PHP templates if you choose.
 
 .. code-block:: jinja
 
-    {# src/Sensio/HelloBundle/Resources/views/Hello/index.html.twig #}
-    {% extends "HelloBundle::layout.html.twig" %}
+    {# src/Sensio/AcmeBundle/Resources/views/Demo/index.html.twig #}
+    {% extends "AcmeDemoBundle::layout.html.twig" %}
+
+    {% block title "Hello " ~ name %}
 
     {% block content %}
-        Hello {{ name }}!
+        <h1>Hello {{ name }}!</h1>
     {% endblock %}
+
 
 Congratulations! You've had your first taste of Symfony2 code and created
 your first page. That wasn't so hard, was it? There's a lot more to explore,
@@ -307,18 +350,18 @@ best friend. Of course, such a tool must not be displayed when you deploy your
 application to production. That's why you will find another front controller in
 the ``web/`` directory (``app.php``), optimized for the production environment:
 
-    http://localhost/sandbox/web/app.php/hello/Fabien
+    http://localhost/symfony-standard/web/app.php/demo/hello/Fabien
 
 And if you use Apache with ``mod_rewrite`` enabled, you can even omit the
 ``app.php`` part of the URL:
 
-    http://localhost/sandbox/web/hello/Fabien
+    http://localhost/symfony-standard/web/demo/hello/Fabien
 
 Last but not least, on the production servers, you should point your web root
 directory to the ``web/`` directory to secure your installation and have an even
 better looking URL:
 
-    http://localhost/hello/Fabien
+    http://localhost/demo/hello/Fabien
 
 To make the production environment as fast as possible, Symfony2 maintains a
 cache under the ``app/cache/`` directory. When you make changes to the code or
@@ -335,5 +378,5 @@ simple routes, controllers and templates. As an exercise, try to build
 something more useful than the Hello application! If you are eager to
 learn more about Symfony2, dive into the next section: "The View".
 
-.. _sandbox: http://symfony-reloaded.org/code#sandbox
+.. _sandbox: http://symfony.com/download
 .. _YAML:    http://www.yaml.org/
