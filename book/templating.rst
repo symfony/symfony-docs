@@ -419,8 +419,8 @@ that specify the *format* and *engine* for that template.
 * **BlogBundle:Blog:index.css.twig** - CSS format, Twig engine
 
 By default, any Symfony2 template can be written in either Twig or PHP, and
-the first part of the extension specifies which of these two *engines*
-should be used. The second part of the extension, (e.g. HTML, CSS, etc)
+the second part of the extension specifies which of these two *engines*
+should be used. The first part of the extension, (e.g. HTML, CSS, etc)
 is the finished format that the template will generate. Unlike the engine,
 which determines how Symfony2 parses the template, this is simply an organizational
 tactic used in case the same content ever needs to be rendered as HTML
