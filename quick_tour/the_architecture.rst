@@ -429,4 +429,4 @@ you want.
 
 .. _standards:  http://groups.google.com/group/php-standards/web/psr-0-final-proposal
 .. _convention: http://pear.php.net/
-.. _book:       http://www.symfony-reloaded.org/learn
+.. _book:       http://symfony.com/doc/2.0/
