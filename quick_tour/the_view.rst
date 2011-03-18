@@ -101,14 +101,14 @@ the ``extends`` tag:
 
 .. code-block:: jinja
 
-    {# src/Sensio/HelloBundle/Resources/views/Hello/index.html.twig #}
-    {% extends "HelloBundle::layout.html.twig" %}
+    {# src/Acme/DemoBundle/Resources/views/Demo/index.html.twig #}
+    {% extends "AcmeDemoBundle::layout.html.twig" %}
 
     {% block content %}
         Hello {{ name }}!
     {% endblock %}
 
-The ``HelloBundle::layout.html.twig`` notation sounds familiar, doesn't it? It
+The ``AcmeDemoBundle::layout.html.twig`` notation sounds familiar, doesn't it? It
 is the same notation used to reference a regular template. The ``::`` part
 simply means that the controller element is empty, so the corresponding file
 is directly stored under ``views/``.
@@ -165,19 +165,19 @@ Create a ``hello.html.twig`` template:
 
 .. code-block:: jinja
 
-    {# src/Sensio/HelloBundle/Resources/views/Hello/hello.html.twig #}
+    {# src/Acme/DemoBundle/Resources/views/demo/hello.html.twig #}
     Hello {{ name }}
 
 And change the ``index.html.twig`` template to include it:
 
 .. code-block:: jinja
 
-    {# src/Sensio/HelloBundle/Resources/views/Hello/index.html.twig #}
-    {% extends "HelloBundle::layout.html.twig" %}
+    {# src/Acme/DemoBundle/Resources/views/Demo/index.html.twig #}
+    {% extends "AcmeDemoBundle::layout.html.twig" %}
 
     {# override the body block from index.html.twig #}
     {% block body %}
-        {% include "HelloBundle:Hello:hello.html.twig" %}
+        {% include "AcmeDemoBundle:Demo:hello.html.twig" %}
     {% endblock %}
 
 Embedding other Controllers
@@ -192,23 +192,23 @@ template, use the ``render`` tag:
 
 .. code-block:: jinja
 
-    {# src/Sensio/HelloBundle/Resources/views/Hello/index.html.twig #}
-    {% render "HelloBundle:Hello:fancy" with { 'name': name, 'color': 'green' } %}
+    {# src/Acme/DemoBundle/Resources/views/Hello/index.html.twig #}
+    {% render "AcmeDemoBundle:Demo:fancy" with { 'name': name, 'color': 'green' } %}
 
-Here, the ``HelloBundle:Hello:fancy`` string refers to the ``fancy`` action of
-the ``Hello`` controller, and the argument is used as simulated request path
+Here, the ``AcmeDemoBundle:Demo:fancy`` string refers to the ``fancy`` action of
+the ``Demo`` controller, and the argument is used as simulated request path
 values::
 
-    // src/Sensio/HelloBundle/Controller/HelloController.php
+    // src/Acme/DemoBundle/Controller/DemoController.php
 
-    class HelloController extends Controller
+    class DemoController extends Controller
     {
         public function fancyAction($name, $color)
         {
             // create some object, based on the $color variable
             $object = ...;
 
-            return $this->render('HelloBundle:Hello:fancy.html.twig', array('name' => $name, 'object' => $object));
+            return $this->render('AcmeDemoBundle:Demo:fancy.html.twig', array('name' => $name, 'object' => $object));
         }
 
         // ...
@@ -224,19 +224,24 @@ updated by just changing the configuration:
 
 .. code-block:: jinja
 
-    <a href="{{ path('hello', { 'name': 'Thomas' }) }}">Greet Thomas!</a>
+    <a href="{{ path('_demo_hello', { 'name': 'Thomas' }) }}">Greet Thomas!</a>
 
 The ``path`` function takes the route name and an array of parameters as
 arguments. The route name is the main key under which routes are referenced
 and the parameters are the values of the placeholders defined in the route
 pattern:
 
-.. code-block:: yaml
+.. code-block:: php
 
-    # src/Sensio/HelloBundle/Resources/config/routing.yml
-    hello: # The route name
-        pattern:  /hello/{name}
-        defaults: { _controller: HelloBundle:Hello:index }
+    # src/Acme/DemoBundle/Controller/DemoController.php
+    /**
+     * @extra:Route("/hello/{name}", name="_demo_hello")
+     * @extra:Template()
+     */
+    public function helloAction($name)
+    {
+        return array('name' => $name);
+    }
 
 .. tip::
 
