@@ -25,26 +25,39 @@ with a value of ``xml``:
 
 .. configuration-block::
 
+    .. code-block:: php
+
+        // src/Acme/DemoBundle/Controller/DemoController.php
+
+        /**
+         * @extra:Route("/hello/{name}", name="_demo_hello", defaults = {"_format" = "xml"})
+         * @extra:Template()
+         */
+        public function helloAction($name)
+        {
+            return array('name' => $name);
+        }
+
     .. code-block:: yaml
 
-        # src/Sensio/HelloBundle/Resources/config/routing.yml
+        # src/Acme/DemoBundle/Resources/config/routing.yml
         hello:
             pattern:  /hello/{name}
-            defaults: { _controller: HelloBundle:Hello:index, _format: xml }
+            defaults: { _controller: AcmeDemoBundle:Demo:index, _format: xml }
 
     .. code-block:: xml
 
-        <!-- src/Sensio/HelloBundle/Resources/config/routing.xml -->
+        <!-- src/Acme/DemoBundle/Resources/config/routing.xml -->
         <route id="hello" pattern="/hello/{name}">
-            <default key="_controller">HelloBundle:Hello:index</default>
+            <default key="_controller">AcmeDemoBundle:Demo:index</default>
             <default key="_format">xml</default>
         </route>
 
     .. code-block:: php
 
-        // src/Sensio/HelloBundle/Resources/config/routing.php
+        // src/Acme/DemoBundle/Resources/config/routing.php
         $collection->add('hello', new Route('/hello/{name}', array(
-            '_controller' => 'HelloBundle:Hello:index',
+            '_controller' => 'AcmeDemoBundle:Demo:index',
             '_format'     => 'xml',
         )));
 
@@ -52,7 +65,7 @@ Then, add an ``index.xml.twig`` template along side ``index.html.twig``:
 
 .. code-block:: xml+php
 
-    <!-- src/Sensio/HelloBundle/Resources/views/Hello/index.xml.twig -->
+    <!-- src/Acme/DemoBundle/Resources/views/Demo/index.xml.twig -->
     <hello>
         <name>{{ name }}</name>
     </hello>
@@ -62,11 +75,11 @@ the following changes to the controller:
 
 .. code-block:: php
 
-    // src/Sensio/HelloBundle/Controller/HelloController.php
+    // src/Acme/DemoBundle/Controller/DemoController.php
     public function indexAction($name, $_format)
     {
         return $this->render(
-            'HelloBundle:Hello:index.'.$_format.'.twig',
+            'AcmeDemoBundle:Demo:index.'.$_format.'.twig',
             array('name' => $name)
         );
     }
@@ -78,38 +91,55 @@ placeholder in the pattern instead:
 
 .. configuration-block::
 
+    .. code-block:: php
+
+        // src/Acme/DemoBundle/Controller/DemoController.php
+
+        /**
+         * @extra:Route("/hello/{name}", 
+         *              name="_demo_hello", 
+         *              defaults = {"_format" = "html"}
+         *              requirements = { "_format" = "(html|xml|json)" }
+         *             )
+         * @extra:Template()
+         */
+        public function helloAction($name)
+        {
+            return array('name' => $name);
+        }
+
     .. code-block:: yaml
 
-        # src/Sensio/HelloBundle/Resources/config/routing.yml
+        # src/Acme/DemoBundle/Resources/config/routing.yml
         hello:
             pattern:      /hello/{name}.{_format}
-            defaults:     { _controller: HelloBundle:Hello:index, _format: html }
+            defaults:     { _controller: AcmeDemoBundle:Demo:index, _format: html }
             requirements: { _format: (html|xml|json) }
 
     .. code-block:: xml
 
-        <!-- src/Sensio/HelloBundle/Resources/config/routing.xml -->
+        <!-- src/Acme/DemoBundle/Resources/config/routing.xml -->
         <route id="hello" pattern="/hello/{name}.{_format}">
-            <default key="_controller">HelloBundle:Hello:index</default>
+            <default key="_controller">AcmeDemoBundle:Demo:index</default>
             <default key="_format">html</default>
             <requirement key="_format">(html|xml|json)</requirement>
         </route>
 
     .. code-block:: php
 
-        // src/Sensio/HelloBundle/Resources/config/routing.php
+        // src/Acme/DemoBundle/Resources/config/routing.php
         $collection->add('hello', new Route('/hello/{name}.{_format}', array(
-            '_controller' => 'HelloBundle:Hello:index',
+            '_controller' => 'AcmeDemoBundle:Demo:index',
             '_format'     => 'html',
         ), array(
             '_format' => '(html|xml|json)',
         )));
 
-The controller will now be called for URLs like ``/hello/Fabien.xml`` or
-``/hello/Fabien.json``.
+The controller will now be called for URLs like ``/demo/hello/Fabien.xml`` or
+``/demo/hello/Fabien.json``.
 
 The ``requirements`` entry defines regular expressions that placeholders must
-match. In this example, if you try to request the ``/hello/Fabien.js``
+match. In this example, if you try to request the ``/demo/hello/Fabien.js``
 resource, you will get a 404 HTTP error, as it does not match the ``_format``
 requirement.
 
@@ -119,22 +149,22 @@ requirement.
 The Response Object
 -------------------
 
-Now, let's get back to the ``Hello`` controller::
+Now, let's get back to the ``Demo`` controller::
 
-    // src/Sensio/HelloBundle/Controller/HelloController.php
+    // src/Acme/DemoBundle/Controller/DemoController.php
 
-    public function indexAction($name)
+    public function helloAction($name)
     {
-        return $this->render('HelloBundle:Hello:index.html.twig', array('name' => $name));
+        return array('name' => $name);
     }
 
 The ``render()`` method renders a template and returns a ``Response`` object.
 The response can be tweaked before it is sent to the browser, for instance
 let's change the ``Content-Type``::
 
-    public function indexAction($name)
+    public function helloAction($name)
     {
-        $response = $this->render('HelloBundle:Hello:index.html.twig', array('name' => $name));
+        $response = $this->render('AcmeDemoBundle:Demo:index.html.twig', array('name' => $name));
         $response->headers->set('Content-Type', 'text/plain');
 
         return $response;
@@ -143,7 +173,7 @@ let's change the ``Content-Type``::
 For simple templates, you can even create a ``Response`` object by hand and save
 some milliseconds::
 
-    public function indexAction($name)
+    public function helloAction($name)
     {
         return new Response('Hello '.$name);
     }
@@ -163,7 +193,7 @@ exception::
 
     use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
-    public function indexAction()
+    public function helloAction()
     {
         $product = // retrieve the object from database
         if (!$product) {
@@ -186,7 +216,7 @@ Redirecting and Forwarding
 If you want to redirect the user to another page, use the ``RedirectResponse``
 class::
 
-    return new RedirectResponse($this->generateUrl('hello', array('name' => 'Lucas')));
+    return new RedirectResponse($this->generateUrl('_demo_hello', array('name' => 'Lucas')));
 
 The ``generateUrl()`` is the same method as the ``generate()`` method we used
 on the ``router`` helper before. It takes the route name and an array of
@@ -196,7 +226,7 @@ You can also easily forward the action to another one with the ``forward()``
 method. As for the ``actions`` helper, it makes an internal sub-request, but
 it returns the ``Response`` object to allow for further modification::
 
-    $response = $this->forward('HelloBundle:Hello:fancy', array('name' => $name, 'color' => 'green'));
+    $response = $this->forward('AcmeDemoBundle:Demo:fancy', array('name' => $name, 'color' => 'green'));
 
     // do something with the response or return it directly
 
