@@ -57,7 +57,7 @@ This class must implement three methods:
 * ``registerRootDir()``: Returns the configuration root directory;
 
 * ``registerBundles()``: Returns an array of all bundles needed to run the
-  application (notice the reference to ``Sensio\HelloBundle\HelloBundle``);
+  application (notice the reference to ``Sensio\AcmeDemoBundle\AcmeDemoBundle``);
 
 * ``registerContainerConfiguration()``: Loads the configuration (more on this
   later);
@@ -72,16 +72,14 @@ PHP autoloading can be configured via ``autoload.php``::
 
     $loader = new UniversalClassLoader();
     $loader->registerNamespaces(array(
-        'Symfony'                        => __DIR__.'/../vendor/symfony/src',
-        'Sensio'                         => __DIR__.'/../src',
-        'Doctrine\\Common\\DataFixtures' => __DIR__.'/../vendor/doctrine-data-fixtures/lib',
-        'Doctrine\\Common'               => __DIR__.'/../vendor/doctrine-common/lib',
-        'Doctrine\\DBAL\\Migrations'     => __DIR__.'/../vendor/doctrine-migrations/lib',
-        'Doctrine\\MongoDB'              => __DIR__.'/../vendor/doctrine-mongodb/lib',
-        'Doctrine\\ODM\\MongoDB'         => __DIR__.'/../vendor/doctrine-mongodb-odm/lib',
-        'Doctrine\\DBAL'                 => __DIR__.'/../vendor/doctrine-dbal/lib',
-        'Doctrine'                       => __DIR__.'/../vendor/doctrine/lib',
-        'Zend'                           => __DIR__.'/../vendor/zend/library',
+        'Symfony'          => array(__DIR__.'/../vendor/symfony/src', __DIR__.'/../vendor/bundles'),
+        'Sensio'           => __DIR__.'/../vendor/bundles',
+        'Doctrine\\Common' => __DIR__.'/../vendor/doctrine-common/lib',
+        'Doctrine\\DBAL'   => __DIR__.'/../vendor/doctrine-dbal/lib',
+        'Doctrine'         => __DIR__.'/../vendor/doctrine/lib',
+        'Zend\\Log'        => __DIR__.'/../vendor/zend-log',
+        'Assetic'          => __DIR__.'/../vendor/assetic/src',
+        'Acme'             => __DIR__.'/../src',
     ));
     $loader->registerPrefixes(array(
         'Twig_Extensions_' => __DIR__.'/../vendor/twig-extensions/lib',
@@ -122,30 +120,30 @@ method of the ``AppKernel`` class::
     {
         $bundles = array(
             new Symfony\Bundle\FrameworkBundle\FrameworkBundle(),
+            new Symfony\Bundle\SecurityBundle\SecurityBundle(),
             new Symfony\Bundle\TwigBundle\TwigBundle(),
-
-            // enable third-party bundles
             new Symfony\Bundle\ZendBundle\ZendBundle(),
             new Symfony\Bundle\SwiftmailerBundle\SwiftmailerBundle(),
             new Symfony\Bundle\DoctrineBundle\DoctrineBundle(),
-            //new Symfony\Bundle\DoctrineMigrationsBundle\DoctrineMigrationsBundle(),
-            //new Symfony\Bundle\DoctrineMongoDBBundle\DoctrineMongoDBBundle(),
-
-            // register your bundles
-            new Sensio\HelloBundle\HelloBundle(),
+            new Symfony\Bundle\AsseticBundle\AsseticBundle(),
+            new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
         );
 
-        if ($this->isDebug()) {
+        if (in_array($this->getEnvironment(), array('dev', 'test'))) {
             $bundles[] = new Symfony\Bundle\WebProfilerBundle\WebProfilerBundle();
+            $bundles[] = new Symfony\Bundle\WebConfiguratorBundle\SymfonyWebConfiguratorBundle();
+            $bundles[] = new Acme\DemoBundle\AcmeDemoBundle();
         }
 
         return $bundles;
     }
 
-In addition to the ``HelloBundle`` that we have already talked about, notice
-that the kernel also enables ``FrameworkBundle``, ``DoctrineBundle``,
-``SwiftmailerBundle``, and ``ZendBundle``. They are all part of the core
-framework.
+In addition to the ``AcmeDemoBundle`` that we have already talked about, notice
+that the kernel also enables ``FrameworkBundle``, ``SecurityBundle``, ``TwigBundle``
+``DoctrineBundle``, ``SwiftmailerBundle``, ``AsseticBundle`` and ``ZendBundle``.
+They are all part of the core framework. ``FrameworkExtraBundle`` is an extension 
+that is not a part of the core framework, but provided by default in the standard distribution.
+
 
 Each bundle can be customized via configuration files written in YAML, XML, or
 PHP. Have a look at the default configuration:
@@ -184,7 +182,7 @@ PHP. Have a look at the default configuration:
         #   orm:
         #       auto_generate_proxy_classes: %kernel.debug%
         #       mappings:
-        #           HelloBundle: ~
+        #           AcmeDemoBundle: ~
 
         ## Swiftmailer Configuration
         #swiftmailer:
@@ -217,7 +215,7 @@ PHP. Have a look at the default configuration:
             <doctrine:dbal dbname="xxxxxxxx" user="xxxxxxxx" password="" logging="%kernel.debug%" />
             <doctrine:orm auto-generate-proxy-classes="%kernel.debug%">
                 <doctrine:mappings>
-                    <doctrine:mapping name="HelloBundle" />
+                    <doctrine:mapping name="AcmeDemoBundle" />
                 </doctrine:mappings>
             </doctrine:orm>
         </doctrine:config>
@@ -271,7 +269,7 @@ PHP. Have a look at the default configuration:
             ),
             'orm' => array(
                 'auto_generate_proxy_classes' => '%kernel.debug%',
-                'mappings' => array('HelloBundle' => array()),
+                'mappings' => array('AcmeDemoBundle' => array()),
             ),
         ));
         */
