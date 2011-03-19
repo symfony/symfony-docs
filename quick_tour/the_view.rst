@@ -134,7 +134,7 @@ When the bundle part of the template name is empty (``::base.html.twig``),
 views are looked for in the ``app/views/`` directory. This directory store
 global views for your entire project:
 
-.. code-block:: jinja
+.. code-block:: html+jinja
 
     {# app/views/base.html.twig #}
     <!DOCTYPE html>
@@ -231,7 +231,7 @@ arguments. The route name is the main key under which routes are referenced
 and the parameters are the values of the placeholders defined in the route
 pattern:
 
-.. code-block:: php
+.. code-block:: php-annotations
 
     # src/Acme/DemoBundle/Controller/DemoController.php
     /**

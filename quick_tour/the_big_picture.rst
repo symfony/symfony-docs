@@ -59,9 +59,12 @@ url to start installation:
 
     http://localhost/symfony-standard/web/config.php
 
-The wizard will help you to fix the eventual issues : missing PHP extensions, write permissions on cache and logs directories, and so on. So, read carefully the several messages and correct any outstanding issues.
+The wizard will help you to fix the eventual issues : missing PHP extensions, write permissions
+on cache and logs directories, and so on. So, read carefully the several messages and correct
+any outstanding issues.
 
-Once all the issues are fixed, you can just click on `Bypass configuration and go to the Welcome page`, or request your first "real" Symfony2 webpage:
+Once all the issues are fixed, you can just click on `Bypass configuration and go to the Welcome
+page`, or request your first "real" Symfony2 webpage:
 
     http://localhost/symfony-standard/web/app_dev.php/
 
@@ -149,7 +152,7 @@ that we've imported:
 
 .. configuration-block::
 
-    .. code-block:: php
+    .. code-block:: php-annotations
                
         // src/Acme/DemoBundle/Resources/Controller/DemoController.php
         namespace Acme\DemoBundle\Controller;
@@ -185,7 +188,7 @@ Controllers
 The controller defines actions to handle users requests and prepares responses
 (often in HTML).
 
-.. code-block:: php
+.. code-block:: php-annotations
    :linenos:
 
     // src/Acme/DemoBundle/Resources/Controller/DemoController.php
@@ -220,13 +223,13 @@ The code is pretty straightforward but let's explain it line by line:
   resides in ``Symfony\Bundle\FrameworkBundle\Controller\Controller`` which 
   we defined on line 5.
 
-* *line 10*: The standard distribution use the ``FrameworkExtraBundle`` that
+* *line 10*: The standard distribution uses the ``FrameworkExtraBundle`` that
   allows to define the routing rules as annotations. In this case, we configure
   a routing rule named ``_demo_hello`` that map the pattern ``/hello/{name}`` 
   to this action.
 
 * *line 11*: Thanks to the ``@extra:Template()`` annotation, the framework
-  will render automatically use the file  
+  will render automatically the file
   ``src\Sensio\HelloBundle\Resources\views\Hello\index.html.twig`` as the
   template for this action.
 
@@ -237,6 +240,12 @@ The code is pretty straightforward but let's explain it line by line:
 
 * *line 14*: The action return the variables used in the template file
   ``src\Sensio\AcmdeBundle\Resources\views\Demo\index.html.twig``.
+
+.. tip::
+
+    The `@extra:Route` and `@extra:Template` annotations are provided by the 
+    `FrameworkExtraBundle` and are not a part of the core framework.
+
 
 Bundles
 ~~~~~~~

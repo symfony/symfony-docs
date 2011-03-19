@@ -25,7 +25,7 @@ with a value of ``xml``:
 
 .. configuration-block::
 
-    .. code-block:: php
+    .. code-block:: php-annotations
 
         // src/Acme/DemoBundle/Controller/DemoController.php
 
@@ -41,7 +41,7 @@ with a value of ``xml``:
 
 Then, add an ``index.xml.twig`` template along side ``index.html.twig``:
 
-.. code-block:: xml+php
+.. code-block:: xml+jinja
 
     <!-- src/Acme/DemoBundle/Resources/views/Demo/index.xml.twig -->
     <hello>
@@ -69,7 +69,7 @@ placeholder in the pattern instead:
 
 .. configuration-block::
 
-    .. code-block:: php
+    .. code-block:: php-annotations
 
         // src/Acme/DemoBundle/Controller/DemoController.php
 
