@@ -578,7 +578,7 @@ Validation with the ``Last-Modified`` Header
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The ``Last-Modified`` header is the second form of validation. According
-to the HTTP sepecification, "The ``Last-Modified`` header field indicates
+to the HTTP specification, "The ``Last-Modified`` header field indicates
 the date and time at which the origin server believes the representation
 was last modified." In other words, the application decides whether or not
 the cached content has been updated based on whether or not it's been updated

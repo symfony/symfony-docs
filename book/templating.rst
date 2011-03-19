@@ -959,7 +959,7 @@ When building your application, you may choose to follow this method or simply
 make each page template extend the base application template directly
 (e.g. ``{% extends '::base.html.twig' %}``). The three-template model is
 a best-practice method used by vendor bundles so that the base template for
-a bundle can be easily overriden to properly extend your application's base
+a bundle can be easily overridden to properly extend your application's base
 layout.
 
 .. index::
