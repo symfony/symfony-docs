@@ -133,7 +133,7 @@ Doctrine uses the lightweight ``Doctrine\Common\EventManager`` class to trigger
 a number of different events which you can hook into. You can register Event
 Listeners or Subscribers by tagging the respective services with
 ``doctrine.dbal.<connection>_event_listener`` or
-``doctrine.dbal.<connection>_event_subscriber`` using the Dependency Injenction
+``doctrine.dbal.<connection>_event_subscriber`` using the Dependency Injection
 container.
 
 You have to use the name of the DBAL connection to clearly identify which

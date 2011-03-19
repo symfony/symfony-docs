@@ -892,7 +892,7 @@ the configuration file for the ``dev`` environment.
 The ``imports`` key is similar to a PHP ``include`` statement and guarantees
 that the main configuration file (``config.yml``) is loaded first. The rest
 of the file tweaks the default configuration for increased logging and other
-settings condusive to a development environment.
+settings conducive to a development environment.
 
 Both the ``prod`` and ``test`` environments follow the same model: each environment
 imports the base configuration file and then modifies its configuration values

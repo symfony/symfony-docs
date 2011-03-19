@@ -50,7 +50,7 @@ Glossary
 
    HTTP Specification
         The *Http Specification* is a document that describes the Hypertext
-        Transfor Protocol - a set of rules laying out the classic client-server
+        Transfer Protocol - a set of rules laying out the classic client-server
         request-response communication. The specification defines the format
         used for a request and response as well as the possible HTTP headers
         that each may have. For more information, read the `Http Wikipedia`_

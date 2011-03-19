@@ -36,7 +36,7 @@ this initial value, you can set it in the ``data`` option.
 .. note::
 
     When you set the ``data`` option, the field will also not write the the
-    domain object, because the ``property_path`` option will implicitely be
+    domain object, because the ``property_path`` option will implicitly be
     ``null``. Read :ref:`form-field-property_path` for more information.
 
 ``required``
