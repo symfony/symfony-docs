@@ -493,8 +493,8 @@ match against the ``blog_show`` route.
 .. note::
 
     Keep in mind that the order of the routes is very important. If the ``blog_show``
-    route were placed above the ``blog`` route, the ``/blog/2`` url would
-    would match ``blog_show`` instead of ``blog`` since the ``{slug}`` parameter
+    route were placed above the ``blog`` route, the ``/blog/2`` url would match
+    ``blog_show`` instead of ``blog`` since the ``{slug}`` parameter
     of ``blog_show`` has no requirements. By using proper ordering and clever
     requirements, you can create a rich routing schema.
 
