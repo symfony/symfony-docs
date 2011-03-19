@@ -192,7 +192,7 @@ template, use the ``render`` tag:
 
 .. code-block:: jinja
 
-    {# src/Acme/DemoBundle/Resources/views/Hello/index.html.twig #}
+    {# src/Acme/DemoBundle/Resources/views/Demo/index.html.twig #}
     {% render "AcmeDemoBundle:Demo:fancy" with { 'name': name, 'color': 'green' } %}
 
 Here, the ``AcmeDemoBundle:Demo:fancy`` string refers to the ``fancy`` action of

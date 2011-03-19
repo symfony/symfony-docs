@@ -38,28 +38,6 @@ with a value of ``xml``:
             return array('name' => $name);
         }
 
-    .. code-block:: yaml
-
-        # src/Acme/DemoBundle/Resources/config/routing.yml
-        hello:
-            pattern:  /hello/{name}
-            defaults: { _controller: AcmeDemoBundle:Demo:index, _format: xml }
-
-    .. code-block:: xml
-
-        <!-- src/Acme/DemoBundle/Resources/config/routing.xml -->
-        <route id="hello" pattern="/hello/{name}">
-            <default key="_controller">AcmeDemoBundle:Demo:index</default>
-            <default key="_format">xml</default>
-        </route>
-
-    .. code-block:: php
-
-        // src/Acme/DemoBundle/Resources/config/routing.php
-        $collection->add('hello', new Route('/hello/{name}', array(
-            '_controller' => 'AcmeDemoBundle:Demo:index',
-            '_format'     => 'xml',
-        )));
 
 Then, add an ``index.xml.twig`` template along side ``index.html.twig``:
 
@@ -105,35 +83,11 @@ placeholder in the pattern instead:
          */
         public function helloAction($name)
         {
-            return array('name' => $name);
+            return $this->render(
+                'AcmeDemoBundle:Demo:index.'.$_format.'.twig',
+                array('name' => $name)
+            );
         }
-
-    .. code-block:: yaml
-
-        # src/Acme/DemoBundle/Resources/config/routing.yml
-        hello:
-            pattern:      /hello/{name}.{_format}
-            defaults:     { _controller: AcmeDemoBundle:Demo:index, _format: html }
-            requirements: { _format: (html|xml|json) }
-
-    .. code-block:: xml
-
-        <!-- src/Acme/DemoBundle/Resources/config/routing.xml -->
-        <route id="hello" pattern="/hello/{name}.{_format}">
-            <default key="_controller">AcmeDemoBundle:Demo:index</default>
-            <default key="_format">html</default>
-            <requirement key="_format">(html|xml|json)</requirement>
-        </route>
-
-    .. code-block:: php
-
-        // src/Acme/DemoBundle/Resources/config/routing.php
-        $collection->add('hello', new Route('/hello/{name}.{_format}', array(
-            '_controller' => 'AcmeDemoBundle:Demo:index',
-            '_format'     => 'html',
-        ), array(
-            '_format' => '(html|xml|json)',
-        )));
 
 The controller will now be called for URLs like ``/demo/hello/Fabien.xml`` or
 ``/demo/hello/Fabien.json``.

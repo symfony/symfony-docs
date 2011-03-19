@@ -135,38 +135,6 @@ are a few examples of the routing configuration file for our application:
             prefix:   /demo
 
 
-    .. code-block:: xml
-
-        <!-- app/config/routing.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-
-        <routes xmlns="http://www.symfony-project.org/schema/routing"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://www.symfony-project.org/schema/routing http://www.symfony-project.org/schema/routing/routing-1.0.xsd">
-
-            <route id="_welcome" pattern="/">
-                <default key="_controller">AcmeDemoBundle:Welcome:index</default>
-            </route>
-
-            <import resource="@AcmeDemoBundle/Controller/SecuredController.php" type="annotation"/>
-            <import resource="@AcmeDemoBundle/Controller/DemoController.php" prefix="/demo" type="annotation"/>
-        </routes>
-
-    .. code-block:: php
-
-        // app/config/routing.php
-        use Symfony\Component\Routing\RouteCollection;
-        use Symfony\Component\Routing\Route;
-
-        $collection = new RouteCollection();
-        $collection->add('_welcome', new Route('/', array(
-            '_controller' => 'AcmeDemoBundle:Welcome:index',
-        )));
-        $collection->addCollection($loader->import("@AcmeDemoBundle/Controller/SecuredController.php"));
-        $collection->addCollection($loader->import("@AcmeDemoBundle/Controller/DemoController.php", "/demo"));
-
-        return $collection;
-
 The first few lines of the routing configuration file define the code that
 is executed when the user requests the resource specified by the pattern
 "``/``" (i.e. the homepage). Here, it executes the ``index`` method of
@@ -181,7 +149,7 @@ that we've imported:
 
 .. configuration-block::
 
-    .. code-block:: php+annotation
+    .. code-block:: php
                
         // src/Acme/DemoBundle/Resources/Controller/DemoController.php
         namespace Acme\DemoBundle\Controller;
@@ -201,39 +169,6 @@ that we've imported:
             }
         }
 
-    .. code-block:: yaml
-
-        # src/Sensio/AcmeBundle/Resources/config/routing.yml
-        hello:
-            pattern:  /hello/{name}
-            defaults: { _controller: AcmeDemoBundle:Hello:index }
-
-    .. code-block:: xml
-
-        <!-- src/Sensio/AcmeBundle/Resources/config/routing.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-
-        <routes xmlns="http://www.symfony-project.org/schema/routing"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://www.symfony-project.org/schema/routing http://www.symfony-project.org/schema/routing/routing-1.0.xsd">
-
-            <route id="hello" pattern="/hello/{name}">
-                <default key="_controller">AcmeDemoBundle:Hello:index</default>
-            </route>
-        </routes>
-
-    .. code-block:: php
-
-        // src/Sensio/AcmeBundle/Resources/config/routing.php// src/Sensio/AcmeBundle/Resources/config/routing.php
-        use Symfony\Component\Routing\RouteCollection;
-        use Symfony\Component\Routing\Route;
-
-        $collection = new RouteCollection();
-        $collection->add('hello', new Route('/hello/{name}', array(
-            '_controller' => 'AcmeDemoBundle:Hello:index',
-        )));
-
-        return $collection;
 
 As you can see, the "``/hello/{name}``" resource pattern is mapped to a controller,
 referenced by the ``@extra:Route`` annotation. The string enclosed in curly brackets
