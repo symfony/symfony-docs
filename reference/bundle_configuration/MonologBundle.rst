@@ -67,5 +67,4 @@ Configuration Reference
 
     When the profiler is enabled, a handler is added to store the logs'
     messages in the profiler. The profiler uses the name "debug" so it
-    will replace the handler defined in the config file if you use the
-    name "debug" (and log the messages twice).
+    is reserved and cannot be used in the configuration.
