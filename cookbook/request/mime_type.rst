@@ -98,6 +98,22 @@ following:
 
         </container>
 
+    .. code-block:: yaml
+
+        # src/Acme/DemoBundle/Resources/config/services.yml
+        acme.demobundle.listener.request:
+            class: Acme\DemoBundle\RequestListener
+            tags:
+                - { name: kernel.listener event: onCoreRequest }
+
+    .. code-block:: php
+    
+        # src/Acme/DemoBundle/Resources/config/services.php
+        
+        $definition = new Definition('Acme\DemoBundle\RequestListener');
+        $definition->addTag('kernel.listener', array('event' => 'onCoreRequest'));
+        $container->setDefinition('acme.demobundle.listener.request', $definition);
+
 At this point, the ``acme.demobundle.listener.request`` service has been
 configured and will be notified when the Symfony kernel throws the ``onCoreRequest``
 event.
