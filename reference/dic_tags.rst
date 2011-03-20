@@ -157,7 +157,7 @@ of your configuration, and tag it with ``routing.loader``:
             ->addTag('routing.loader')
         ;
 
-.. _dic_tags-monolog
+.. _dic_tags-monolog:
 
 Using a custom logging channel with Monolog
 -------------------------------------------
