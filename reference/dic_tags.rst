@@ -69,6 +69,8 @@ configuration, and tag it with ``twig.extension``:
             ->addTag('twig.extension')
         ;
 
+.. _dic-tags-kernel-listener:
+
 Enabling Custom Listeners
 -------------------------
 
