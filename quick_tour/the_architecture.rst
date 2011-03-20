@@ -37,7 +37,7 @@ lives::
     $kernel = new AppKernel('prod', false);
     $kernel->handle(Request::createFromGlobals())->send();
 
-The kernel requires first requires the ``bootstrap.php`` file, which
+The kernel requires first the ``bootstrap.php`` file, which
 bootstraps the framework and registers the autoloader (see below).
 
 Like any front controller, ``app.php`` uses a Kernel Class, ``AppKernel``, to
