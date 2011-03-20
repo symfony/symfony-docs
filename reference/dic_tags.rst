@@ -155,3 +155,41 @@ configuration, and tag it with ``routing.loader``:
             ->register('routing.loader.your_loader_name', 'Fully\Qualified\Loader\Class\Name')
             ->addTag('routing.loader')
         ;
+
+.. dic_tags-monolog
+
+Using a custom logging channel with Monolog
+-------------------------------------------
+
+Monolog allows to share the handlers between several logging channel. The logger
+service uses the channel ``app`` but you can change the channel when injecting
+the logger in a service.
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        services:
+            my_service:
+                class: Fully\Qualified\Loader\Class\Name
+                arguments: [@logger]
+                tags:
+                    - { name: monolog.logger, channel: acme }
+
+    .. code-block:: xml
+
+        <service id="my_service" class="Fully\Qualified\Loader\Class\Name">
+            <argument type="service" id="logger" />
+            <tag name="monolog.logger" channel="acme" />
+        </service>
+
+    .. code-block:: php
+
+        $definition = new Definition('Fully\Qualified\Loader\Class\Name', array(new Reference('logger'));
+        $definition->addTag('monolog.logger', array('channel' => 'acme'));
+        $container->register('my_service', $definition);;
+
+.. note::
+
+    This works only when the logger service is a constructor argument, not when
+    it is injected through a setter.
