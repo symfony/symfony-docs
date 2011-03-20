@@ -114,38 +114,32 @@ Testing Documentation
 
 To test documentation before a commit:
 
- * Install Python
+ * Install `Sphinx`_;
 
- * Install Sphinx
+ * Run the `Sphinx quick setup`_;
 
- * Run the Sphinx quick setup
+ * Install the configuration-block Sphinx extension (see below);
 
- * Install the configuration-block Sphinx extension (see below)
- 
- 
-Installing  the configuration-block Sphinx extension
-++++++++++++++++++++++++++++++++++++++++++++++++++++
+ * Run ``make html`` and view the generated HTML in the ``build`` directory.
+
+Installing the configuration-block Sphinx extension
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
  * Download the extension from the `configuration-block source`_ repository
   
- * Copy the configurationblock.py to the _exts folder under your source folder (where conf.py is located)
+ * Copy the ``configurationblock.py`` to the ``_exts`` folder under your
+   source folder (where ``conf.py`` is located)
    
- * Add the following to the conf.py file (taken from the doctrine orm-docs):
+ * Add the following to the ``conf.py`` file:
 
 .. code-block:: py
     
     # ...
-    
-    # If extensions (or modules to document with autodoc) are in another directory,
-    # add these directories to sys.path here. If the directory is relative to the
-    # documentation root, use os.path.abspath to make it absolute, like shown here.
     sys.path.append(os.path.abspath('_exts'))
     
-    # -- General configuration -----------------------------------------------------
-    
-    # Add any Sphinx extension module names here, as strings. They can be extensions
-    # coming with Sphinx (named 'sphinx.ext.*') or your custom ones.
+    # ...
+    # add configurationblock to the list of extensions
     extensions = ['configurationblock']
-
 
 .. _reStructuredText:        http://docutils.sf.net/rst.html
 .. _Sphinx:                  http://sphinx.pocoo.org/
@@ -154,3 +148,4 @@ Installing  the configuration-block Sphinx extension
 .. _markup:                  http://sphinx.pocoo.org/markup/
 .. _Pygments website:        http://pygments.org/languages/
 .. _configuration-block source: https://github.com/fabpot/sphinx-php
+.. _Sphinx quick setup: http://sphinx.pocoo.org/tutorial.html#setting-up-the-documentation-sources
