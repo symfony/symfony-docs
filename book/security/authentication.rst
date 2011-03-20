@@ -443,6 +443,11 @@ configuration example that shows how to override them all:
             ),
         ));
 
+.. note::
+
+    Unlike the ``login_path`` URL, the ``check_path`` URL must be located under
+    a secured pattern in order to be handled by the firewall.
+
 .. index::
    single: Security; X.509 certificates
 

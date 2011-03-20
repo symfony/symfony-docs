@@ -153,17 +153,17 @@ syntax:
 
 .. configuration-block::
 
+    .. code-block:: jinja
+
+        {% if is_granted("ROLE_ADMIN") %}
+            <a href="...">Delete</a>
+        {% endif %}
+
     .. code-block:: php
 
         <?php if ($view['security']->isGranted('ROLE_ADMIN')): ?>
             <a href="...">Delete</a>
         <?php endif ?>
-
-    .. code-block:: jinja
-
-        {% if has_role("ROLE_ADMIN") %}
-            <a href="...">Delete</a>
-        {% endif %}
 
 .. note::
 
