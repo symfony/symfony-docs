@@ -20,6 +20,7 @@ Cookbook
     event_dispatcher/method_behavior
     profiler/data_collector
     bundles/extension
+    request/mime_type
     symfony1
     validation/custom_constraint
 
