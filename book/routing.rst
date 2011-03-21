@@ -710,10 +710,10 @@ to render the same content in different formats.
     to allow both a forward slash (/) or a period (.) to be a valid "separator"
     between the routing parameters.
 
-.. _routing-include-external-resources:
-
 .. index::
    single: Routing; Importing routing resources
+
+.. _routing-include-external-resources:
 
 Including External Routing Resources
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

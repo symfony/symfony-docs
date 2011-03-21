@@ -129,7 +129,7 @@ the ``user.change_culture`` event is notified; the listener receives an
 .. tip::
 
     If you use the Symfony2 MVC framework, listeners are automatically
-    registered based on your :ref:`configuration <kernel_listener_tag>`.
+    registered based on your :ref:`configuration <dic-tags-kernel-listener>`.
 
 .. index::
    single: Event Dispatcher; Notification

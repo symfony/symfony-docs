@@ -141,11 +141,11 @@ Installing the configuration-block Sphinx extension
     # add configurationblock to the list of extensions
     extensions = ['configurationblock']
 
-.. _reStructuredText:        http://docutils.sf.net/rst.html
-.. _Sphinx:                  http://sphinx.pocoo.org/
-.. _documents:               http://github.com/symfony/symfony-docs
-.. _reStructuredText Primer: http://sphinx.pocoo.org/rest.html
-.. _markup:                  http://sphinx.pocoo.org/markup/
-.. _Pygments website:        http://pygments.org/languages/
+.. _reStructuredText:           http://docutils.sf.net/rst.html
+.. _Sphinx:                     http://sphinx.pocoo.org/
+.. _documents:                  http://github.com/symfony/symfony-docs
+.. _reStructuredText Primer:    http://sphinx.pocoo.org/rest.html
+.. _markup:                     http://sphinx.pocoo.org/markup/
+.. _Pygments website:           http://pygments.org/languages/
 .. _configuration-block source: https://github.com/fabpot/sphinx-php
-.. _Sphinx quick setup: http://sphinx.pocoo.org/tutorial.html#setting-up-the-documentation-sources
+.. _Sphinx quick setup:         http://sphinx.pocoo.org/tutorial.html#setting-up-the-documentation-sources

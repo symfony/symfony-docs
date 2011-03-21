@@ -507,7 +507,7 @@ via the ``get()`` method. Here are several common services you might need::
     $mailer = $this->get('mailer');
 
 There are countless other services available and you are encouraged to define
-your own. For more information, see the :doc:`Extending Symfony </book/extending_symfony>`
+your own. For more information, see the :doc:`/book/service_container`
 chapter.
 
 .. index::
