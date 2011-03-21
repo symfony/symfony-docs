@@ -5,7 +5,9 @@ How to extend a Class without using Inheritance
 ===============================================
 
 To allow multiple classes to add methods to another one, you can define the
-magic ``__call()`` method in the class you want to be extended like this::
+magic ``__call()`` method in the class you want to be extended like this:
+
+.. code-block:: php
 
     class Foo
     {
@@ -13,12 +15,9 @@ magic ``__call()`` method in the class you want to be extended like this::
 
         public function __call($method, $arguments)
         {
-            // create an event named 'foo.method_is_not_found'
-            // and pass the method name and the arguments passed to this method
-            $event = new Event($this, 'foo.method_is_not_found', array('method' => $method, 'arguments' => $arguments));
-
-            // calls all listeners until one is able to implement the $method
-            $this->dispatcher->notifyUntil($event);
+            // create an event named 'onFooMethodIsNotFound'
+            $event = new HandleUndefinedMethodEvent($method, $arguments);
+            $this->dispatcher->dispatch($this, 'onFooMethodIsNotFound', $event);
 
             // no listener was able to process the event? The method does not exist
             if (!$event->isProcessed()) {
@@ -30,35 +29,102 @@ magic ``__call()`` method in the class you want to be extended like this::
         }
     }
 
-Then, create a class that will host the listener::
+This uses a special ``HandleUndefinedMethodEvent`` that should also be created.
+This is a generic class that could be reused each time you need to use this
+pattern of class extension:
+
+.. code-block:: php
+
+    use Symfony\Component\EventDispatcher\Event;
+
+    class HandleUndefinedMethodEvent extends Event
+    {
+        protected $subject;
+        
+        protected $method;
+        
+        protected $arguments;
+        
+        protected $returnValue;
+        
+        protected $isProcessed = false;
+    
+        public function __construct($subject, $method, $arguments)
+        {
+            $this->subject = $subject;
+            $this->method = $method;
+            $this->arguments = $arguments;
+        }
+
+        public function getSubject()
+        {
+            return $this->subject;
+        }
+
+        public function getMethod()
+        {
+            return $this->method;
+        }
+
+        public function getArguments()
+        {
+            return $this->arguments;
+        }
+
+        /**
+         * Sets the value to return and stops other listeners from being notified
+         */
+        public function setReturnValue($val)
+        {
+            $this->returnValue = $val;
+            $this->isProcessed = true;
+            $this->stopPropagation();
+        }
+
+        public function getReturnValue($val)
+        {
+            return $this->returnValue;
+        }
+
+        public function isProcessed()
+        {
+            return $this->isProcessed;
+        }
+    }
+
+Next, create a class that will listen to the ``onFooMethodIsNotFound`` event
+and *add* the method ``bar()``:
+
+.. code-block:: php
 
     class Bar
     {
-        public function addBarMethodToFoo(Event $event)
+        public function onFooMethodIsNotFound(HandleUndefinedMethodEvent $event)
         {
             // we only want to respond to the calls to the 'bar' method
-            if ('bar' != $event->get('method']) {
+            if ('bar' != $event->getMethod()) {
                 // allow another listener to take care of this unknown method
-                return false;
+                return;
             }
 
             // the subject object (the foo instance)
             $foo = $event->getSubject();
 
             // the bar method arguments
-            $arguments = $event->get('parameters');
+            $arguments = $event->getArguments();
 
             // do something
             // ...
 
             // set the return value
             $event->setReturnValue($someValue);
-
-            // tell the world that you have processed the event
-            return true;
         }
     }
 
-Eventually, add the new ``bar`` method to the ``Foo`` class::
+Finally, add the new ``bar`` method to the ``Foo`` class by register an
+instance of ``Bar`` with the ``onFooMethodIsNotFound`` event:
 
-    $dispatcher->connect('foo.method_is_not_found', array($bar, 'addBarMethodToFoo'));
+.. code-block:: php
+
+    $bar = new Bar();
+    $dispatcher->addListener('onFooMethodIsNotFound', $bar);

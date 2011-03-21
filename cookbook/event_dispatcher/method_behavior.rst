@@ -8,7 +8,7 @@ Doing something before or after a Method Call
 ---------------------------------------------
 
 If you want to do something just before, or just after a method is called, you
-can notify respectively an event at the beginning or at the end of the
+can dispatch an event respectively at the beginning or at the end of the
 method::
 
     class Foo
@@ -18,51 +18,39 @@ method::
         public function send($foo, $bar)
         {
             // do something before the method
-            $event = new Event($this, 'foo.do_before_send', array('foo' => $foo, 'bar' => $bar));
-            $this->dispatcher->notify($event);
+            $event = new FilterBeforeSendEvent($foo, $bar);
+            $this->dispatcher->dispatch('onFooPreSend', $event);
 
+            // get $foo and $bar from the event, they may have been modified
+            $foo = $event->getFoo();
+            $bar = $event->getBar();
             // the real method implementation is here
             // $ret = ...;
 
             // do something after the method
-            $event = new Event($this, 'foo.do_after_send', array('ret' => $ret));
-            $this->dispatcher->notify($event);
+            $event = new FilterSendReturnValue($ret);
+            $this->dispatcher->dispatch('onFooPostSend', $event);
 
-            return $ret;
+            return $event->getReturnValue();
         }
     }
 
-Modifying Method Arguments
---------------------------
+In this example, two events are thrown: ``onFooPreSend``, before the method
+is executed, and ``onFooPostSend`` after the method is executed. Each uses
+a custom Event class to communicate information to the listeners of the two
+events. These event classes would need to be created by you and should allow,
+in this example, the variables ``$foo``, ``$bar`` and ``$ret`` to be retrieved
+and set by the listeners.
 
-If you want to allow third party classes to modify arguments passed to a method
-just before that method is executed, add a ``filter`` event at the beginning of
-the method::
+For example, assuming the ``FilterSendReturnValue`` has a ``setReturnValue``
+method, one listener might look like this:
 
-    class Foo
+.. code-block:: php
+
+    public function onFooPostSend(FilterSendReturnValue $event)
     {
-        // ...
+        $ret = $event->getReturnValue();
+        // modify the original ``$ret`` value
 
-        public function render($template, $arguments = array())
-        {
-            // filter the arguments
-            $event = new Event($this, 'foo.filter_arguments');
-            $this->dispatcher->filter($event, $arguments);
-
-            // get the filtered arguments
-            $arguments = $event->getReturnValue();
-            // the method starts here
-        }
-    }
-
-And here is a filter example::
-
-    class Bar
-    {
-        public function filterFooArguments(Event $event, $arguments)
-        {
-            $arguments['processed'] = true;
-
-            return $arguments;
-        }
+        $event->setReturnValue($ret);
     }
