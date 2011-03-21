@@ -195,7 +195,7 @@ Response can be tweaked before it is sent to the browser::
 
     public function indexAction()
     {
-        $response = $this->render('AcmeDemoBundle:Welcome:index.html.twig');
+        $response = $this->render('AcmeDemoBundle:Welcome:index.txt.twig');
         $response->headers->set('Content-Type', 'text/plain');
 
         return $response;
