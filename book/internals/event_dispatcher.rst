@@ -34,8 +34,8 @@ Here's how it work:
   has access to the ``Response`` object;
 
 * The dispatcher notifies (i.e. calls a method on) all listeners of the
-  ``onCoreResponse`` event, allowing each can to make any modification to
-  the ``Response`` object.
+  ``onCoreResponse`` event, allowing each of them to make any modification
+  to the ``Response`` object.
 
 .. index::
    single: Event Dispatcher; Events
@@ -44,9 +44,10 @@ Events
 ------
 
 When an event is dispatched, it's identified by a unique name (e.g. ``onCoreResponse``),
-which any number of listeners might be listening to. An :class:`Symfony\\Component\\EventDispatcher\\Event`
-instance is also created and passed to all of the listeners. As you'll see later,
-the ``Event`` object itself often contains data about the event being dispatched.
+which any number of listeners might be listening to. A
+:class:`Symfony\\Component\\EventDispatcher\\Event` instance is also created
+and passed to all of the listeners. As you'll see later, the ``Event`` object
+itself often contains data about the event being dispatched.
 
 .. index::
    pair: Event Dispatcher; Naming conventions
@@ -160,8 +161,9 @@ name of the event (e.g. ``onFooAction``).
 
 .. tip::
 
-    If you use the Symfony2 MVC framework, listeners are automatically
-    registered based on your :ref:`configuration <dic-tags-kernel-listener>`.
+    If you use the Symfony2 MVC framework, listeners can be registered via
+    your :ref:`configuration <dic-tags-kernel-listener>`. As an added bonus,
+    the listener objects are instantiated only when needed.
 
 In many cases, a special ``Event`` subclass that's specific to the given
 event is passed to the listener. This gives the listener access to special
@@ -246,9 +248,9 @@ Later, when you dispatch this new event, you'll create an ``Event`` instance
 and pass it to the dispatcher. The dispatcher then passes this same instance
 to each of the listeners of the event. If you don't need to pass any information
 to your listeners, you can use the default ``Symfony\Component\EventDispatcher\Event``
-class. Most of the time, however, you'll *will* need to pass information
-about the event to each listener. To accomplish this, you'll create a new
-class that extends ``Symfony\Component\EventDispatcher\Event``.
+class. Most of the time, however, you *will* need to pass information about
+the event to each listener. To accomplish this, you'll create a new class
+that extends ``Symfony\Component\EventDispatcher\Event``.
 
 In this example, each listener will need access to some pretend ``Order``
 object. Create an ``Event`` class that makes this possible:
@@ -282,9 +284,9 @@ Dispatch the Event
 ~~~~~~~~~~~~~~~~~~
 
 The :method:`Symfony\\Component\\EventDispatcher\\EventDispatcher::dispatch`
-notifies all listeners of the given event. It takes two arguments: the name
-of the event to dispatch and the ``Event`` instance to pass to each listener
-of that event:
+method notifies all listeners of the given event. It takes two arguments:
+the name of the event to dispatch and the ``Event`` instance to pass to
+each listener of that event:
 
 .. code-block:: php
 
