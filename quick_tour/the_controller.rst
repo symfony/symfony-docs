@@ -28,7 +28,7 @@ Symfony2 automatically selects the right template, here ``hello.xml.twig``:
 
 .. code-block:: xml+php
 
-    <!-- src/Acme/HelloBundle/Resources/views/Demo/hello.xml.twig -->
+    <!-- src/Acme/DemoBundle/Resources/views/Demo/hello.xml.twig -->
     <hello>
         <name>{{ name }}</name>
     </hello>
