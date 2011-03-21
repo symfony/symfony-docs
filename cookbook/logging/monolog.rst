@@ -5,7 +5,7 @@ How to use Monolog to write Logs
 ================================
 
 Monolog_ is a logging library for PHP 5.3 used by Symfony2. It is
-inspired from the Python LogBook library.
+inspired by the Python LogBook library.
 
 Usage
 -----
@@ -209,7 +209,7 @@ depending of the level where the processor is called.
 .. tip::
 
     If you need some dependencies in your processor you can define a
-    service by implementing the ``__invoke`` method to make it callable.
-    You can then add it in the processor stack.
+    service and implement the ``__invoke`` method on the class to make
+    it callable. You can then add it in the processor stack.
 
 .. _Monolog https://github.com/Seldaek/monolog
