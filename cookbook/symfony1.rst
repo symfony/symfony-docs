@@ -1,7 +1,7 @@
 How Symfony2 differs from symfony1
 ==================================
 
-The Symfony2 framework embodies a signficant evolution when compared with
+The Symfony2 framework embodies a significant evolution when compared with
 the first version of the framework. Fortunately, with the MVC architecture
 at its core, the skills used to master a symfony1 project continue to be
 very relevant when developing in Symfony2. Sure, ``app.yml`` is gone, but

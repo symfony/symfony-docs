@@ -177,7 +177,7 @@ First, build a base layout file:
 
     .. code-block:: html+jinja
 
-        {# app/views/layout.html.twig #}
+        {# app/views/base.html.twig #}
         <!DOCTYPE html>
         <html>
             <head>
@@ -202,7 +202,7 @@ First, build a base layout file:
 
     .. code-block:: php
 
-        <!-- app/views/layout.html.php -->
+        <!-- app/views/base.html.php -->
         <!DOCTYPE html>
         <html>
             <head>
@@ -246,7 +246,7 @@ A child template might look like this:
     .. code-block:: html+jinja
 
         {# src/Sensio/BlogBundle/Resources/views/Blog/index.html.twig #}
-        {% extends '::layout.html.twig' %}
+        {% extends '::base.html.twig' %}
 
         {% block title %}My cool blog posts{% endblock %}
 
@@ -260,7 +260,7 @@ A child template might look like this:
     .. code-block:: php
 
         <!-- src/Sensio/BlogBundle/Resources/views/Blog/index.html.php -->
-        <?php $view->extend('::layout.html.php') ?>
+        <?php $view->extend('::base.html.php') ?>
 
         <?php $view['slots']->set('title', 'My cool blog posts') ?>
 
@@ -273,7 +273,7 @@ A child template might look like this:
 
 .. note::
 
-   The parent template is identified by a special string syntax (``::layout.html.twig``)
+   The parent template is identified by a special string syntax (``::base.html.twig``)
    that indicates that the template lives in the ``app/views`` directory
    of the project. This naming convention is explained fully in
    :ref:`template-naming-locations`.
@@ -390,7 +390,7 @@ lives in a specific location:
   (``layout.html.twig``) lives simply in the ``Resources/views`` directory
   of the ``BlogBundle``.
 
-* ``::layout.html.twig``: This syntax refers to an application-wide base template
+* ``::base.html.twig``: This syntax refers to an application-wide base template
   or layout. Notice that the string begins with two colons (``::``), meaning
   that both the *bundle* and *controller* portions are missing. This means
   that the template is not located in any bundle, but instead in the root
@@ -419,13 +419,14 @@ that specify the *format* and *engine* for that template.
 * **BlogBundle:Blog:index.css.twig** - CSS format, Twig engine
 
 By default, any Symfony2 template can be written in either Twig or PHP, and
-the first part of the extension specifies which of these two *engines*
-should be used. The second part of the extension, (e.g. HTML, CSS, etc)
-is the finished format that the template will generate. Unlike the engine,
-which determines how Symfony2 parses the template, this is simply an organizational
-tactic used in case the same content ever needs to be rendered as HTML
-(``index.html.twig``), XML (``index.xml.twig``), or any other format.
-For more information, read the :ref:`template-formats` section.
+the last part of the extension (e.g. ``.twig`` or ``.php``) specifies which
+of these two *engines* should be used. The first part of the extension,
+(e.g. ``.html``, ``.css``, etc) is the final format that the template will
+generate. Unlike the engine, which determines how Symfony2 parses the template,
+this is simply an organizational tactic used in case the same resource needs
+to be rendered as HTML (``index.html.twig``), XML (``index.xml.twig``),
+or any other format. For more information, read the :ref:`template-formats`
+section.
 
 .. note::
 
@@ -603,7 +604,7 @@ syntax for controllers (i.e. **bundle**:**controller**:**action**):
 
     .. code-block:: html+jinja
 
-        {# app/views/layout.html.twig #}
+        {# app/views/base.html.twig #}
         ...
 
         <div id="sidebar">
@@ -612,7 +613,7 @@ syntax for controllers (i.e. **bundle**:**controller**:**action**):
 
     .. code-block:: php
 
-        <!-- app/views/layout.html.php -->
+        <!-- app/views/base.html.php -->
         ...
 
         <div id="sidebar">
@@ -915,9 +916,9 @@ One common way to use inheritance is to use a three-level approach. This
 method works perfectly with the three different types of templates we've just
 covered:
 
-* Create a ``app/views/layout.html.twig`` file that contains the main layout
+* Create a ``app/views/base.html.twig`` file that contains the main layout
   for your application (like in the previous example). Internally, this template
-  is called ``::layout.html.twig``;
+  is called ``::base.html.twig``;
 
 * Create a template for each "section" of your site. For example, a ``BlogBundle``,
   would have a template called ``BlogBundle::layout.html.twig`` that contains
@@ -926,7 +927,7 @@ covered:
     .. code-block:: html+jinja
 
         {# src/Sensio/BlogBundle/Resources/views/layout.html.twig #}
-        {% extends '::layout.html.twig' %}
+        {% extends '::base.html.twig' %}
 
         {% block body %}
             <h1>Blog Application</h1>
@@ -951,14 +952,14 @@ covered:
         {% endblock %}
 
 Notice that this template extends the section template -(``BlogBundle::layout.html.twig``)
-which in-turn extends the base application layout (``::layout.html.twig``).
+which in-turn extends the base application layout (``::base.html.twig``).
 This is the common three-level inheritance model.
 
 When building your application, you may choose to follow this method or simply
 make each page template extend the base application template directly
-(e.g. ``{% extends '::layout.html.twig' %}``). The three-template model is
+(e.g. ``{% extends '::base.html.twig' %}``). The three-template model is
 a best-practice method used by vendor bundles so that the base template for
-a bundle can be easily overriden to properly extend your application's base
+a bundle can be easily overridden to properly extend your application's base
 layout.
 
 .. index::

@@ -1,8 +1,8 @@
 .. index::
    single: Validation; Custom constraints
 
-How can I create a Custom Validation Constraint?
-------------------------------------------------
+How to create a Custom Validation Constraint
+--------------------------------------------
 
 You can create a custom constraint by extending the base constraint class,
 :class:`Symfony\\Component\\Validator\\Constraint`. Options for your

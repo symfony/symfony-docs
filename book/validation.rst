@@ -314,8 +314,8 @@ another property, ``gender`` that can be set to either "male" or "female":
         {
             /**
              * @validation:Choice(
-             *     "choices" = { "male", "female" },
-             *     "message" = "Choose a valid gender."
+             *     choices = { "male", "female" },
+             *     message = "Choose a valid gender."
              * )
              */
             public $gender;

@@ -66,8 +66,7 @@ When the team is confident that the repository is in a consistent and stable
 state (everything is translated, or non-translated documents have been removed
 from the toctrees -- files named ``index.rst`` and ``map.rst.inc``), the team
 manager can ask that the repository is added to the list of official *master*
-repositories by sending an email to Fabien (fabien.potencier at
-symfony-project.org).
+repositories by sending an email to Fabien (fabien at symfony.com).
 
 Maintenance
 -----------

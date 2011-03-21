@@ -493,8 +493,8 @@ match against the ``blog_show`` route.
 .. note::
 
     Keep in mind that the order of the routes is very important. If the ``blog_show``
-    route were placed above the ``blog`` route, the ``/blog/2`` url would
-    would match ``blog_show`` instead of ``blog`` since the ``{slug}`` parameter
+    route were placed above the ``blog`` route, the ``/blog/2`` url would match
+    ``blog_show`` instead of ``blog`` since the ``{slug}`` parameter
     of ``blog_show`` has no requirements. By using proper ordering and clever
     requirements, you can create a rich routing schema.
 
@@ -636,6 +636,8 @@ for the two actions.
    single: Routing; Advanced example
    single: Routing; _format parameter
 
+.. _advanced-routing-example:
+
 Advanced Routing Example
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -708,10 +710,10 @@ to render the same content in different formats.
     to allow both a forward slash (/) or a period (.) to be a valid "separator"
     between the routing parameters.
 
-.. _routing-include-external-resources:
-
 .. index::
    single: Routing; Importing routing resources
+
+.. _routing-include-external-resources:
 
 Including External Routing Resources
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
