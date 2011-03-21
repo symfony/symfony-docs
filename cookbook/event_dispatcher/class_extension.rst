@@ -16,7 +16,7 @@ magic ``__call()`` method in the class you want to be extended like this:
         public function __call($method, $arguments)
         {
             // create an event named 'onFooMethodIsNotFound'
-            $event = new HandleUndefinedMethodEvent($method, $arguments);
+            $event = new HandleUndefinedMethodEvent($this, $method, $arguments);
             $this->dispatcher->dispatch($this, 'onFooMethodIsNotFound', $event);
 
             // no listener was able to process the event? The method does not exist

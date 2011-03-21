@@ -7,7 +7,7 @@ Kernel
 The :class:`Symfony\\Component\\HttpKernel\\HttpKernel` class is the central
 class of Symfony2 and is responsible for handling client requests. Its main
 goal is to "convert" a :class:`Symfony\\Component\\HttpFoundation\\Request`
-object to :class:`Symfony\\Component\\HttpFoundation\\Response` object.
+object to a :class:`Symfony\\Component\\HttpFoundation\\Response` object.
 
 Every Symfony2 Kernel implements
 :class:`Symfony\\Component\\HttpKernel\\HttpKernelInterface`::
@@ -133,7 +133,8 @@ Each event thrown by the Kernel is a subclass of
 :class:`Symfony\Component\HttpKernel\Event\KernelEvent`. This means that
 each event has access to the same basic information:
 
-* ``getRequestType()`` - returns the *type* of the request (master or sub request);
+* ``getRequestType()`` - returns the *type* of the request
+  (``HttpKernelInterface::MASTER_REQUEST`` or ``HttpKernelInterface::SUB_REQUEST``);
 
 * ``getKernel()`` - returns the Kernel handling the request;
 
@@ -145,6 +146,8 @@ each event has access to the same basic information:
 The ``getRequestType()`` method allows listeners to know the type of the
 request. For instance, if a listener must only be active for master requests,
 add the following code at the beginning of your listener method::
+
+    use Symfony\Component\HttpKernel\HttpKernelInterface;
 
     if (HttpKernelInterface::MASTER_REQUEST !== $event->getRequestType()) {
         // return immediately
@@ -211,9 +214,9 @@ to modify the controller that should be executed:
 *Event Class*: :class:`Symfony\Component\HttpKernel\Event\GetResponseForControllerResultEvent`
 
 This event is not used by ``FrameworkBundle``, but it can be used to implement
-a view sub-system. This event is called *only* called if the Controller does
-*not* return a ``Response`` object. The purpose of the event is to allow some
-other return value to be converted into a ``Response``.
+a view sub-system. This event is called *only*  if the Controller does *not*
+return a ``Response`` object. The purpose of the event is to allow some other
+return value to be converted into a ``Response``.
 
 The value returned by the Controller is accessible via the ``getControllerResult``
 method::
