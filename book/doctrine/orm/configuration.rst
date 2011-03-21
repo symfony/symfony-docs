@@ -252,7 +252,7 @@ specific DBAL connection and all the EntityManagers that use this connection.
     .. code-block:: xml
 
         <?xml version="1.0" ?>
-        <container xmlns="http://symfony-project.org/2.0/container"
+        <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:doctrine="http://symfony.com/schema/dic/doctrine">
 
             <doctrine:config>
