@@ -267,6 +267,8 @@ The ``FrameworkBundle`` registers several listeners:
 .. index::
    single: Event; onCoreException
 
+.. _kernel-onCoreException:
+
 ``onCoreException`` Event
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
