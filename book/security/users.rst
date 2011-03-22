@@ -137,13 +137,13 @@ options, you only need to select the one which suits your needs best:
         # app/config/security.yml
         security:
             encoders:
-                MyBundle/Entity/MyUser: sha512
-                MyBundle/Entity/MyUser: plaintext
-                MyBundle/Entity/MyUser:
+                Acme\MyBundle\Entity\User: sha512
+                Acme\MyBundle\Entity\User: plaintext
+                Acme\MyBundle\Entity\User:
                     algorithm: sha512
                     encode-as-base64: true
                     iterations: 5
-                MyBundle/Entity/MyUser:
+                Acme\MyBundle\Entity\User:
                     id: my.custom.encoder.service.id
 
     .. code-block:: xml
@@ -151,14 +151,14 @@ options, you only need to select the one which suits your needs best:
         <!-- app/config/security.xml -->
         <security:config>
             <encoders>
-                <encoder class="MyBundle\Entity\MyUser" algorithm="sha512" />
-                <encoder class="MyBundle\Entity\MyUser" algorithm="plaintext" />
-                <encoder class="MyBundle\Entity\MyUser"
+                <encoder class="Acme\MyBundle\Entity\User" algorithm="sha512" />
+                <encoder class="Acme\MyBundle\Entity\User" algorithm="plaintext" />
+                <encoder class="Acme\MyBundle\Entity\User"
                          algorithm="sha512"
                          encode-as-base64="true"
                          iterations="5"
                          />
-                <encoder class="MyBundle\Entity\MyUser"
+                <encoder class="Acme\MyBundle\Entity\User"
                          id="my.custom.encoder.service.id"
                          />
             </encoders>
@@ -169,14 +169,14 @@ options, you only need to select the one which suits your needs best:
         // app/config/security.php
         $container->loadFromExtension('security', array(
             'encoders' => array(
-                'MyBundle\Entity\MyUser' => 'sha512',
-                'MyBundle\Entity\MyUser' => 'plaintext',
-                'MyBundle\Entity\MyUser' => array(
+                'Acme\MyBundle\Entity\User' => 'sha512',
+                'Acme\MyBundle\Entity\User' => 'plaintext',
+                'Acme\MyBundle\Entity\User' => array(
                     'algorithm' => 'sha512',
                     'encode-as-base64' => true,
                     'iterations' => 5,
                 ),
-                'MyBundle\Entity\MyUser' => array(
+                'Acme\MyBundle\Entity\User' => array(
                     'id' => 'my.custom.encoder.service.id',
                 ),
             ),
@@ -312,14 +312,14 @@ yourself:
         security:
             providers:
                 main:
-                    entity: { class: SecurityBundle:User, property: username }
+                    entity: { class: Acme\MyBundle\Entity\User, property: username }
 
     .. code-block:: xml
 
         <!-- app/config/security.xml -->
         <config>
             <provider name="main">
-                <entity class="SecurityBundle:User" property="username" />
+                <entity class="Acme\MyBundle\Entity\User" property="username" />
             </provider>
         </config>
 
@@ -329,7 +329,7 @@ yourself:
         $container->loadFromExtension('security', array(
             'providers' => array(
                 'main' => array(
-                    'entity' => array('class' => 'SecurityBundle:User', 'property' => 'username'),
+                    'entity' => array('class' => 'Acme\MyBundle\Entity\User', 'property' => 'username'),
                 ),
             ),
         ));
@@ -342,7 +342,7 @@ remove the ``property`` setting and make your Entity Repository class
 implement :class:`Symfony\\Component\\Security\\Core\\User\\UserProviderInterface`::
 
     /**
-     * @Entity(repositoryClass="SecurityBundle:UserRepository")
+     * @orm:Entity(repositoryClass="Acme\MyBundle\Entity\UserRepository")
      */
     class User implements UserInterface
     {
@@ -394,7 +394,7 @@ between several other user providers.
                     users:
                         foo: { password: test }
                 dao_provider:
-                    entity: { class: MyBundle:User, property: username }
+                    entity: { class: Acme\MyBundle\Entity\User, property: username }
                     
     .. code-block:: xml
     
@@ -405,7 +405,7 @@ between several other user providers.
                 <user name="foo" password="test" />
             </provider>
             <provider name="dao_provider">
-                <entity class="MyBundle:User" property="username" />
+                <entity class="Acme\MyBundle\Entity\User" property="username" />
             </provider>
         </config>
         
@@ -424,7 +424,7 @@ between several other user providers.
                 ),
                 'dao_provider' => array(
                     'entity' => array(
-                        'class' => 'MyBundle:User',
+                        'class' => 'Acme\MyBundle\Entity\User',
                         'property' => 'username',
                     )
                 )
@@ -458,7 +458,7 @@ security configuration.
         services:
             my.mongodb.provider:
                 parent: doctrine.odm.mongodb.security.user.provider
-                arguments: [MyBundle:User, username]
+                arguments: [Acme\MyBundle\Document\User, username]
         
         security:
             providers:
@@ -470,7 +470,7 @@ security configuration.
         <!-- app/config/security.xml -->
         <services>
             <service id="my.mongodb.provider" parent="doctrine.odm.mongodb.security.user.provider">
-                <argument>MyBundle:User</argument>
+                <argument>Acme\MyBundle\Document\User</argument>
                 <argument>username</argument>
             </service>
         </services>
@@ -484,7 +484,7 @@ security configuration.
         // app/config/security.php
         $container
             ->setDefinition('my.mongodb.provider', new DefinitionDecorator('doctrine.odm.mongodb.security.user.provider'))
-            ->addArgument('MyBundle:User')
+            ->addArgument('Acme\MyBundle\Document\User')
             ->addArgument('username')
         ;
         
@@ -504,7 +504,7 @@ remove the second argument and make your Document Repository class
 implement :class:`Symfony\\Component\\Security\\Core\\User\\UserProviderInterface`::
 
     /**
-     * @Document(repositoryClass="SecurityBundle:UserRepository")
+     * @Document(repositoryClass="Acme\MyBundle\Document\UserRepository")
      */
     class User implements UserInterface
     {
