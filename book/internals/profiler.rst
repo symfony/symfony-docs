@@ -241,15 +241,6 @@ portion of the website? You can use a request matcher:
             </framework:profiler>
         </framework:config>
 
-        <!-- define an anonymous service for the matcher -->
-        <web:config>
-            <profiler>
-                <matcher>
-                    <service class="CustomMatcher" />
-                </matcher>
-            </profiler>
-        </web:config>
-
     .. code-block:: php
 
         // enables the profiler only for request coming for the 192.168.0.0 network
@@ -276,14 +267,7 @@ portion of the website? You can use a request matcher:
         # use a custom matcher instance defined in the "custom_matcher" service
         $container->loadFromExtension('framework', array(
             'profiler' => array(
-                'matcher' => array('service' => new Reference('custom_matcher')),
-            ),
-        ));
-
-        // define an anonymous service for the matcher
-        $container->loadFromExtension('framework', array(
-            'profiler' => array(
-                'matcher' => array('services' => array($container->register('custom_matcher', 'CustomMatcher'))),
+                'matcher' => array('service' => 'custom_matcher'),
             ),
         ));
 

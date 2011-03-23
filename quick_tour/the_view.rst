@@ -13,12 +13,8 @@ readable and concise; it also makes them more friendly for web designers.
     for your templates. Both template engines are supported by Symfony2 and
     have the same level of support.
 
-.. index::
-   single: Twig
-   single: View; Twig
-
-Twig, a Quick Overview
-----------------------
+Getting familiar with Twig
+--------------------------
 
 .. tip::
 
@@ -101,26 +97,28 @@ the ``extends`` tag:
 
 .. code-block:: jinja
 
-    {# src/Sensio/HelloBundle/Resources/views/Hello/index.html.twig #}
-    {% extends "HelloBundle::layout.html.twig" %}
+    {# src/Acme/DemoBundle/Resources/views/Demo/hello.html.twig #}
+    {% extends "AcmeDemoBundle::layout.html.twig" %}
+
+    {% block title "Hello " ~ name %}
 
     {% block content %}
-        Hello {{ name }}!
+        <h1>Hello {{ name }}!</h1>
     {% endblock %}
 
-The ``HelloBundle::layout.html.twig`` notation sounds familiar, doesn't it? It
-is the same notation used to reference a regular template. The ``::`` part
+The ``AcmeDemoBundle::layout.html.twig`` notation sounds familiar, doesn't it?
+It is the same notation used to reference a regular template. The ``::`` part
 simply means that the controller element is empty, so the corresponding file
 is directly stored under ``views/``.
 
-Now, let's have a look at the ``layout.html.twig`` file:
+Now, let's have a look at a simplified ``layout.html.twig``:
 
 .. code-block:: jinja
 
     {% extends "::base.html.twig" %}
 
     {% block body %}
-        <h1>Hello Application</h1>
+        <h1>Demo Bundle</h1>
 
         {% block content %}{% endblock %}
     {% endblock %}
@@ -128,7 +126,7 @@ Now, let's have a look at the ``layout.html.twig`` file:
 The ``{% block %}`` tags define two blocks (``body`` and ``content``) that
 child templates can fill in. All the block tag does is to tell the template
 engine that a child template may override those portions of the template. The
-``index.html.twig`` template overrides the ``content`` block. The other one is
+``hello.html.twig`` template overrides the ``content`` block. The other one is
 defined in a base layout as the layout is itself decorated by another one.
 When the bundle part of the template name is empty (``::base.html.twig``),
 views are looked for in the ``app/views/`` directory. This directory store
@@ -141,15 +139,18 @@ global views for your entire project:
     <html>
         <head>
             <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-            <title>{% block title %}Hello Application{% endblock %}</title>
+            <title>{% block title %}Welcome!{% endblock %}</title>
+            {% block stylesheets %}{% endblock %}
+            <link rel="shortcut icon" href="{{ asset('favicon.ico') }}" />
         </head>
         <body>
-            {% block body '' %}
+            {% block body %}{% endblock %}
+            {% block javascripts %}{% endblock %}
         </body>
     </html>
 
-Tags, Filters, and Functions
-----------------------------
+Using Tags, Filters, and Functions
+----------------------------------
 
 One of the best feature of Twig is its extensibility via tags, filters, and
 functions; Symfony2 comes bundled with many built-in ones to ease the web
@@ -161,23 +162,23 @@ Including other Templates
 The best way to share a snippet of code between several distinct templates is
 to define a template that can then be included into another one.
 
-Create a ``hello.html.twig`` template:
+Create an ``embedded.html.twig`` template:
 
 .. code-block:: jinja
 
-    {# src/Sensio/HelloBundle/Resources/views/Hello/hello.html.twig #}
+    {# src/Acme/DemoBundle/Resources/views/Demo/embedded.html.twig #}
     Hello {{ name }}
 
 And change the ``index.html.twig`` template to include it:
 
 .. code-block:: jinja
 
-    {# src/Sensio/HelloBundle/Resources/views/Hello/index.html.twig #}
-    {% extends "HelloBundle::layout.html.twig" %}
+    {# src/Acme/DemoBundle/Resources/views/Demo/hello.html.twig #}
+    {% extends "AcmeDemoBundle::layout.html.twig" %}
 
-    {# override the body block from index.html.twig #}
+    {# override the body block from embedded.html.twig #}
     {% block body %}
-        {% include "HelloBundle:Hello:hello.html.twig" %}
+        {% include "AcmeDemoBundle:Hello:embedded.html.twig" %}
     {% endblock %}
 
 Embedding other Controllers
@@ -192,23 +193,23 @@ template, use the ``render`` tag:
 
 .. code-block:: jinja
 
-    {# src/Sensio/HelloBundle/Resources/views/Hello/index.html.twig #}
-    {% render "HelloBundle:Hello:fancy" with { 'name': name, 'color': 'green' } %}
+    {# src/Acme/DemoBundle/Resources/views/Hello/index.html.twig #}
+    {% render "AcmeDemoBundle:Demo:fancy" with { 'name': name, 'color': 'green' } %}
 
-Here, the ``HelloBundle:Hello:fancy`` string refers to the ``fancy`` action of
-the ``Hello`` controller, and the argument is used as simulated request path
+Here, the ``AcmeDemoBundle:Demo:fancy`` string refers to the ``fancy`` action
+of the ``Demo`` controller, and the argument is used as simulated request path
 values::
 
-    // src/Sensio/HelloBundle/Controller/HelloController.php
+    // src/Acme/DemoBundle/Controller/DemoController.php
 
-    class HelloController extends Controller
+    class DemoController extends Controller
     {
         public function fancyAction($name, $color)
         {
             // create some object, based on the $color variable
             $object = ...;
 
-            return $this->render('HelloBundle:Hello:fancy.html.twig', array('name' => $name, 'object' => $object));
+            return $this->render('AcmeDemoBundle:Demo:fancy.html.twig', array('name' => $name, 'object' => $object));
         }
 
         // ...
@@ -229,14 +230,17 @@ updated by just changing the configuration:
 The ``path`` function takes the route name and an array of parameters as
 arguments. The route name is the main key under which routes are referenced
 and the parameters are the values of the placeholders defined in the route
-pattern:
+pattern::
 
-.. code-block:: yaml
-
-    # src/Sensio/HelloBundle/Resources/config/routing.yml
-    hello: # The route name
-        pattern:  /hello/{name}
-        defaults: { _controller: HelloBundle:Hello:index }
+    // src/Acme/DemoBundle/Controller/DemoController.php
+    /**
+     * @extra:Route("/hello/{name}", defaults={"_format"="xml"}, name="_demo_hello")
+     * @extra:Template()
+     */
+    public function helloAction($name)
+    {
+        return array('name' => $name);
+    }
 
 .. tip::
 
@@ -260,8 +264,8 @@ Thanks to this function, you can move the application root directory anywhere
 under your web root directory without changing anything in your template's
 code.
 
-Output Escaping
----------------
+Escaping Variables
+------------------
 
 Twig is configured to automatically escapes all output by default. Read Twig
 `documentation`_ to learn more about output escaping and the Escaper

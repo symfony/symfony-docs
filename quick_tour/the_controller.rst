@@ -1,18 +1,8 @@
-.. index::
-   single: Controller
-   single: MVC; Controller
-
 The Controller
 ==============
 
 Still with us after the first two parts? You are already becoming a Symfony2
 addict! Without further ado, let's discover what controllers can do for you.
-
-.. index::
-   single: Formats
-   single: Controller; Formats
-   single: Routing; Formats
-   single: View; Formats
 
 Using Formats
 -------------
@@ -20,165 +10,51 @@ Using Formats
 Nowadays, a web application should be able to deliver more than just HTML
 pages. From XML for RSS feeds or Web Services, to JSON for Ajax requests,
 there are plenty of different formats to choose from. Supporting those formats
-in Symfony2 is straightforward. Edit ``routing.yml`` and add a ``_format``
-with a value of ``xml``:
+in Symfony2 is straightforward. Tweak the route by adding a default value of
+``xml`` for the ``_format`` variable::
 
-.. configuration-block::
+    // src/Acme/DemoBundle/Controller/DemoController.php
+    /**
+     * @extra:Route("/hello/{name}", defaults={"_format"="xml"}, name="_demo_hello")
+     * @extra:Template()
+     */
+    public function helloAction($name)
+    {
+        return array('name' => $name);
+    }
 
-    .. code-block:: yaml
-
-        # src/Sensio/HelloBundle/Resources/config/routing.yml
-        hello:
-            pattern:  /hello/{name}
-            defaults: { _controller: HelloBundle:Hello:index, _format: xml }
-
-    .. code-block:: xml
-
-        <!-- src/Sensio/HelloBundle/Resources/config/routing.xml -->
-        <route id="hello" pattern="/hello/{name}">
-            <default key="_controller">HelloBundle:Hello:index</default>
-            <default key="_format">xml</default>
-        </route>
-
-    .. code-block:: php
-
-        // src/Sensio/HelloBundle/Resources/config/routing.php
-        $collection->add('hello', new Route('/hello/{name}', array(
-            '_controller' => 'HelloBundle:Hello:index',
-            '_format'     => 'xml',
-        )));
-
-Then, add an ``index.xml.twig`` template along side ``index.html.twig``:
+According to the request format (as defined by the ``_format`` value),
+Symfony2 automatically selects the right template, here ``hello.xml.twig``:
 
 .. code-block:: xml+php
 
-    <!-- src/Sensio/HelloBundle/Resources/views/Hello/index.xml.twig -->
+    <!-- src/Acme/DemoBundle/Resources/views/Demo/hello.xml.twig -->
     <hello>
         <name>{{ name }}</name>
     </hello>
 
-Finally, as the template needs to be selected according to the format, make
-the following changes to the controller:
+That's all there is to it. For standard formats, Symfony2 will also
+automatically choose the best ``Content-Type`` header for the response. If you
+want to support different formats for a single action, use the ``{_format}``
+placeholder in the route pattern instead::
 
-.. code-block:: php
-
-    // src/Sensio/HelloBundle/Controller/HelloController.php
-    public function indexAction($name, $_format)
+    // src/Acme/DemoBundle/Controller/DemoController.php
+    /**
+     * @extra:Route("/hello/{name}.{_format}", defaults={"_format"="html"}, requirements={"_format"="html|xml|json"}, name="_demo_hello")
+     * @extra:Template()
+     */
+    public function helloAction($name)
     {
-        return $this->render(
-            'HelloBundle:Hello:index.'.$_format.'.twig',
-            array('name' => $name)
-        );
+        return array('name' => $name);
     }
 
-That's all there is to it. For standard formats, Symfony2 will automatically
-choose the best ``Content-Type`` header for the response. If you want to
-support different formats for a single action, use the ``{_format}``
-placeholder in the pattern instead:
-
-.. configuration-block::
-
-    .. code-block:: yaml
-
-        # src/Sensio/HelloBundle/Resources/config/routing.yml
-        hello:
-            pattern:      /hello/{name}.{_format}
-            defaults:     { _controller: HelloBundle:Hello:index, _format: html }
-            requirements: { _format: (html|xml|json) }
-
-    .. code-block:: xml
-
-        <!-- src/Sensio/HelloBundle/Resources/config/routing.xml -->
-        <route id="hello" pattern="/hello/{name}.{_format}">
-            <default key="_controller">HelloBundle:Hello:index</default>
-            <default key="_format">html</default>
-            <requirement key="_format">(html|xml|json)</requirement>
-        </route>
-
-    .. code-block:: php
-
-        // src/Sensio/HelloBundle/Resources/config/routing.php
-        $collection->add('hello', new Route('/hello/{name}.{_format}', array(
-            '_controller' => 'HelloBundle:Hello:index',
-            '_format'     => 'html',
-        ), array(
-            '_format' => '(html|xml|json)',
-        )));
-
-The controller will now be called for URLs like ``/hello/Fabien.xml`` or
-``/hello/Fabien.json``.
+The controller will now be called for URLs like ``/demo/hello/Fabien.xml`` or
+``/demo/hello/Fabien.json``.
 
 The ``requirements`` entry defines regular expressions that placeholders must
-match. In this example, if you try to request the ``/hello/Fabien.js``
+match. In this example, if you try to request the ``/demo/hello/Fabien.js``
 resource, you will get a 404 HTTP error, as it does not match the ``_format``
 requirement.
-
-.. index::
-   single: Response
-
-The Response Object
--------------------
-
-Now, let's get back to the ``Hello`` controller::
-
-    // src/Sensio/HelloBundle/Controller/HelloController.php
-
-    public function indexAction($name)
-    {
-        return $this->render('HelloBundle:Hello:index.html.twig', array('name' => $name));
-    }
-
-The ``render()`` method renders a template and returns a ``Response`` object.
-The response can be tweaked before it is sent to the browser, for instance
-let's change the ``Content-Type``::
-
-    public function indexAction($name)
-    {
-        $response = $this->render('HelloBundle:Hello:index.html.twig', array('name' => $name));
-        $response->headers->set('Content-Type', 'text/plain');
-
-        return $response;
-    }
-
-For simple templates, you can even create a ``Response`` object by hand and save
-some milliseconds::
-
-    public function indexAction($name)
-    {
-        return new Response('Hello '.$name);
-    }
-
-This is really useful when a controller needs to send back a JSON response for
-an Ajax request.
-
-.. index::
-   single: Exceptions
-
-Managing Errors
----------------
-
-When things are not found, you should play well with the HTTP protocol and
-return a 404 response. This is easily done by throwing a built-in HTTP
-exception::
-
-    use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-
-    public function indexAction()
-    {
-        $product = // retrieve the object from database
-        if (!$product) {
-            throw new NotFoundHttpException('The product does not exist.');
-        }
-
-        return $this->render(...);
-    }
-
-The ``NotFoundHttpException`` will return a 404 HTTP response back to the
-browser.
-
-.. index::
-   single: Controller; Redirect
-   single: Controller; Forward
 
 Redirecting and Forwarding
 --------------------------
@@ -186,25 +62,22 @@ Redirecting and Forwarding
 If you want to redirect the user to another page, use the ``RedirectResponse``
 class::
 
-    return new RedirectResponse($this->generateUrl('hello', array('name' => 'Lucas')));
+    return new RedirectResponse($this->generateUrl('_demo_hello', array('name' => 'Lucas')));
 
-The ``generateUrl()`` is the same method as the ``generate()`` method we used
-on the ``router`` helper before. It takes the route name and an array of
-parameters as arguments and returns the associated friendly URL.
+The ``generateUrl()`` is the same method as the ``path()`` function we used in
+templates. It takes the route name and an array of parameters as arguments and
+returns the associated friendly URL.
 
 You can also easily forward the action to another one with the ``forward()``
 method. As for the ``actions`` helper, it makes an internal sub-request, but
 it returns the ``Response`` object to allow for further modification::
 
-    $response = $this->forward('HelloBundle:Hello:fancy', array('name' => $name, 'color' => 'green'));
+    $response = $this->forward('AcmeDemoBundle:Hello:fancy', array('name' => $name, 'color' => 'green'));
 
     // do something with the response or return it directly
 
-.. index::
-   single: Request
-
-The Request Object
-------------------
+Getting information from the Request
+------------------------------------
 
 Besides the values of the routing placeholders, the controller also has access
 to the ``Request`` object::
@@ -228,13 +101,13 @@ In a template, you can also access the ``Request`` object via the
 
     {{ app.request.parameter('page') }}
 
-The Session
------------
+Persisting Data in the Session
+------------------------------
 
 Even if the HTTP protocol is stateless, Symfony2 provides a nice session object
 that represents the client (be it a real person using a browser, a bot, or a
 web service). Between two requests, Symfony2 stores the attributes in a cookie
-by using the native PHP sessions.
+by using native PHP sessions.
 
 Storing and retrieving information from the session can be easily achieved
 from any controller::
@@ -259,6 +132,114 @@ next request::
     // display the message back in the next request (in a template)
     {{ app.session.flash('notice') }}
 
+Securing Resources
+------------------
+
+Symfony Standard Edition comes with a simple security configuration that fits
+most common needs:
+
+.. code-block:: yaml
+
+    # app/config/security.yml
+    security:
+        encoders:
+            Symfony\Component\Security\Core\User\User: plaintext
+
+        role_hierarchy:
+            ROLE_ADMIN:       ROLE_USER
+            ROLE_SUPER_ADMIN: [ROLE_USER, ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH]
+
+        providers:
+            in_memory:
+                users:
+                    user:  { password: userpass, roles: [ 'ROLE_USER' ] }
+                    admin: { password: adminpass, roles: [ 'ROLE_ADMIN' ] }
+
+        firewalls:
+            login:
+                pattern:  /demo/secured/login
+                security: false
+
+            secured_area:
+                pattern:    /demo/secured/.*
+                form_login:
+                    check_path: /demo/secured/login_check
+                    login_path: /demo/secured/login
+                logout:
+                    path:   /demo/secured/logout
+                    target: /demo/
+
+This configuration requires users to log in for any URL starting with
+``/demo/secured/`` and defines two valid users: ``user`` and ``admin``.
+Moreover, the ``admin`` user has a ``ROLE_ADMIN`` role, which includes the
+``ROLE_USER`` role as well (see the ``role_hierarchy`` setting).
+
+.. tip::
+
+    For readability, passwords are stored in clear in this simple
+    configuration, but using any hashing algorithm is a matter of tweaking the
+    ``encoders`` section.
+
+Going to the ``http://localhost/Symfony/web/app_dev.php/demo/secured/hello``
+URL will automatically redirect you to the login form as this resource is
+protected by a firewall via a login form.
+
+You can also force a given role to be required by using the ``@extra:Secure``
+annotation on the controller::
+
+    /**
+     * @extra:Route("/hello/admin/{name}", name="_demo_secured_hello_admin")
+     * @extra:Secure(roles="ROLE_ADMIN")
+     * @extra:Template()
+     */
+    public function helloAdminAction($name)
+    {
+        return array('name' => $name);
+    }
+
+Log in as ``user`` and from the secured hello page, click on the "Hello
+resource secured" link; Symfony2 should return a 403 HTTP status code.
+
+.. note::
+
+    The Symfony2 security layer is very flexible and comes with many different
+    user provides (like one for the Doctrine ORM) and authentication providers
+    (like HTTP basic, HTTP digest, or X509 certificates). Read the
+    "`Security`_" chapter of the book for more information on how to use and
+    configure them.
+
+Caching Resources
+-----------------
+
+As soon as your website starts to generate more traffic, you will want to
+avoid generating the same resource again and again. Symfony2 uses HTTP cache
+headers to manage resources cache. For simple caching strategies, use the
+convenient ``@extra:Cache()`` annotation::
+
+    /**
+     * @extra:Route("/hello/{name}", name="_demo_hello")
+     * @extra:Template()
+     * @extra:Cache(maxage="86400")
+     */
+    public function helloAction($name)
+    {
+        return array('name' => $name);
+    }
+
+In this example, the resource will be cached for a day. But you can also use
+validation instead of expiration or a combination of both if that fits your
+needs better.
+
+Resource caching is managed by the Symfony2 built-in reverse. But as caching
+is only managed by regular HTTP cache headers, you can also replace it with
+Varnish or Squid and easily scale your application.
+
+.. note::
+
+    But what if you cannot cache whole pages? Symfony2 still has the solution
+    via Edge Side Includes (ESI) that are supported natively. Learn more by
+    reading the "`HTTP Cache`_" chapter of the book.
+
 Final Thoughts
 --------------
 
@@ -267,3 +248,6 @@ That's all there is to it, and I'm not even sure we have spent the allocated
 features we've learned about until now are part of the core framework bundle.
 But thanks to bundles, everything can be extended or replaced in Symfony2.
 That's the topic of the next part of this tutorial.
+
+.. _Security:   http://symfony.com/doc/2.0/book/security/index.html
+.. _HTTP Cache: http://symfony.com/doc/2.0/book/http_cache.html
