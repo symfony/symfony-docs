@@ -613,7 +613,7 @@ The layout is nearly identical:
 
 .. code-block:: html+php
 
-    <!-- app/views/layout.html.php -->
+    <!-- app/Resources/views/layout.html.php -->
     <html>
         <head>
             <title><?php echo $view['slots']->output('title', 'Default title') ?></title>
@@ -723,7 +723,7 @@ The corresponding ``layout.html.twig`` template is also easier to write:
 
 .. code-block:: html+jinja
 
-    {# app/views/layout.html.twig #}
+    {# app/Resources/views/layout.html.twig #}
 
     <html>
         <head>
