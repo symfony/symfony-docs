@@ -1,40 +1,36 @@
 .. index::
    single: Model
 
-Model, not the fashion kind
+Introduction to the "Model"
 ===========================
 
-If you wanted to learn more about fashion and super-models, then this
-section won't be helpful to you.
-
-The Model we talk about in this section is the one used in
-Model-View-Controller applications.
+If you wanted to learn more about fashion models and supermodels, then this
+section won't be helpful to you. But if you're looking to learn about the
+model - the layer in your application that manages data - then keep reading.
+The Model description in this section is the one used when talking about
+*Model-View-Controller* applications.
 
 .. note::
 
    Model-View-Controller (MVC) is an application design pattern, that
    was originally introduced by Trygve Reenskaug for the Smalltalk
    platform. The main idea of MVC is separating presentation from the
-   data and separating controller from presentation. This kind of
+   data and separating the controller from presentation. This kind of
    separation let's each part of the application focus on exactly one
-   goal. Controller focuses on changing the data of the Model, Model
-   exposes its data for the View, while View is focused on creating
-   Model representations.
+   goal. The controller focuses on changing the data of the Model, the Model
+   exposes its data for the View, and the View focuses on creating
+   representations of the Model (e.g. an HTML page displaying "Blog Posts").
 
-In a typical MVC application, Controller prepares Model (or Models) for
-the View based on the Request.
+For example, when a user goes to your blog homepage, the user's browser sends
+a request, which is passed to the Controller responsible for rendering
+posts. The Controller calculates which posts should be displayed, retrieves
+``Post`` Models from the database and passes that array to the View. The
+View renders HTML that is interpreted by the browser.
 
-For example, when a user goes to our blog homepage, user's browser sends
-Request, that is passed to the Controller responsible for rendering
-posts. Controller calculates start and limit for the posts we're going
-to display on the page, retrieves ``Post`` Models from the database and
-passes that array to the View. The View renders HTML that is interpreted
-by the browser.
+What is a Model anyway?
+-----------------------
 
-What is a Model anyway
-----------------------
-
-Model is what the "M" in "MVC_" stands for. It is one of the three
+The *Model* is what the "M" in "MVC_" stands for. It is one of the three
 whales of an MVC application. A model is responsible for changing its
 internal state based on requests from the :doc:`controller
 </quick_tour/the_controller>` and giving its current state information
@@ -42,7 +38,7 @@ to the :doc:`view </guides/templating/index>`. It is the main
 application logic container.
 
 For example, if you are building a blog, then you'll have a ``Post``
-model, if you're building a content management system, then you will
+model. If you're building a content management system, then you will
 need a ``Page`` model.
 
 .. code-block:: php
@@ -88,11 +84,11 @@ need a ``Page`` model.
         }
     }
 
-It is obvious that the above class is very simple and testable, yet its
+It is obvious that the above class is very simple and testable, yet it's
 mostly complete and will fulfill all the needs of a simple blogging
 engine.
 
-This is it, now you know what a Model in Symfony2 is - it is any class
+That's it! You now you know what a Model in Symfony2 is: it is any class
 that you want to save into some sort of data storage mechanism and
 retrieve later. The rest of the chapter is dedicated to explaining how
 to interact with the database.
@@ -109,144 +105,113 @@ like Doctrine_ and Propel_, letting you use whichever one you like best.
 
    The acronym "ORM" stands for "Object Relational Mapping" and
    represents a programming technique of converting data between
-   incompatible type systems. Say we have a ``Post``, it is stored like
-   a set of columns in a database, but is represented by an instance of
-   class ``Post`` in our application. The process of transformation of
-   data into an object is called object relation mapping. We will also
-   see that this term is slightly outdated as it is used in dealing with
-   relational database management systems, nowadays there are tons of
-   non-relational data storage mechanism available. One of such
-   mechanisms is document oriented databases, for which we invented a
+   incompatible type systems. Say we have a ``Post``, which is stored as
+   a set of columns in a database, but represented by an instance of
+   class ``Post`` in your application. The process of transforming the
+   from the database table into an object is called *object relation mapping*.
+   We will also see that this term is slightly outdated as it is used in
+   dealing with relational database management systems. Nowadays there are
+   tons of non-relational data storage mechanism available. One such mechanism
+   is the *document oriented database* (e.g. MongoDB), for which we invented a
    new term "ODM" or "Object Document Mapping".
 
-Going forward, we will be focusing on `Doctrine2 ORM`_ and Doctrine2
+Going forward, you'll learn about the `Doctrine2 ORM`_ and Doctrine2
 `MongoDB ODM`_ (which serves as an ODM for MongoDB_ - a popular document
 store) as both have the deepest integration with Symfony2 at the time of
 this writing.
 
-Model is not a table
---------------------
+A Model is not a Table
+----------------------
 
 The perception of a model class as a database table, and each individual
-instance as a row was popularized by the Ruby on Rails framework. It
-might be a good way of thinking about model and it will get you far
+instance as a row was popularized by the Ruby on Rails framework. It's
+a good way of thinking about the model at first and it will get you far
 enough, if you're exposing a simple `CRUD`_ (create, retrieve, update,
-delete) interface in your application that is.
+delete) interface in your application for modifying the data of a model.
 
-This approach actually causes a lot of troubles once you're past the
-CRUD part of your application and are trying to add more business logic.
-Here are the common limitations of the above-described approach:
+This approach can actually cause problems once you're past the CRUD part
+of your application and are trying to add more business logic. Here are
+the common limitations of the above-described approach:
 
-* Designing schema before software that will utilize it is like picking
-  a hole before you've identified the peg you have - it might fit, but
-  most probably won't.
+* Designing schema before software that will utilize it is like digging
+  a hole before you've identified what you need to bury. The item might
+  fit, but most probably it won't.
 
-* Database must be tailored to fit your application's needs, not the
+* Database should be tailored to fit your application's needs, not the
   other way around.
 
-* Some data storage engines don't have notion of tables, rows or even
-  schema, which makes it hard to use them, if your perception of a model
+* Some data storage engines don't have a notion of tables, rows or even
+  schema, which makes it hard to use them if your perception of a model
   is that it represents a table.
 
 * Keeping database schema in your head while designing your application
   domain is problematic, and following the rule of the lowest common
   denominator will give you the worst of both worlds.
 
-`Doctrine2 ORM`_ is designed to remove the need to keep database
+The `Doctrine2 ORM`_ is designed to remove the need to keep database
 structure in mind and let you concentrate on writing the cleanest
-possible models, that will satisfy your domain needs. It lets you design
-your class/objects and interaction between them, allowing you to
-postpone persistence decisions until you're ready.
+possible models that will satisfy your business needs. It lets you design
+your classes and their interactions, allowing you to postpone persistence
+decisions until you're ready.
 
-Paradigm shift
+Paradigm Shift
 --------------
 
 With the introduction of Doctrine2, some of the core paradigms have
 shifted. `Domain Driven Design`_ teaches us that objects are best
-modeled, when modeled after their real-world prototypes. E.g. a ``Car``
+modeled when modeled after their real-world prototypes. For example a ``Car``
 object is best modeled to contain ``Engine``, four instances of
-``Tire``, etc. and should be produced by ``CarFactory``, that knows how
-to assemble all the parts together. Domain driven design deserves a book
-in its own, as the concept it rather broad, however, for the purposes of
-this guide it should be clear, that a car cannot start by itself, there
-must be an external impulse to this. In a similar manner, a model cannot
-save itself without and external impulse, therefore the following piece
-of code violates DDD and will be troublesome to redesign in a clean,
-testable way.
+``Tire``, etc. and should be produced by ``CarFactory`` - something that
+knows how to assemble all the parts together. Domain driven design deserves
+a book in its own, as the concept is rather broad. However, for the purposes
+of this guide it should be clear, that a car cannot start by itself, there
+must be an external impulse to start it. In a similar manner, a model cannot
+save itself without an external impulse, therefore the following piece of
+code violates DDD and will be troublesome to redesign in a clean, testable way.
 
 .. code-block:: php
-
-   <?php
 
    $post->save();
 
-Hence, Doctrine2 is not your typical `Active Record`_ anymore, instead
-its an implementation of a different set of patterns, most importantly -
-`Data Mapper`_ and `Unit Of Work`_, that is why in Doctrine2 we would
-do:
+Hence, Doctrine2 is not your typical `Active Record`_ implementation anymore.
+Instead Doctrine2 uses a different set of patterns, most importantly the
+`Data Mapper`_ and `Unit Of Work`_ patterns. So in Doctrine2 you would do
+the following:
 
 .. code-block:: php
-
-   <?php
 
    $manager = //... get object manager instance
 
    $manager->persist($post);
    $manager->flush();
 
-We will soon find out what an "object manager" is. The described
-paradigm shift lets us get rid of any base classes and static
-dependencies, any object, given it has state, can be saved into a
-database for later retrieval. More than that, once persisted, an object
-is managed by an object manager, until the manager gets explicitly
-cleared, that means, that all object interactions happen in memory
+The "object manager" is a central object provided by Doctrine whose job
+is to persist objects. You'll soon learn much more about this service.
+This paradigm shift lets us get rid of any base classes (e.g. the ``Post``
+doesn't need to extend any base class) and static dependencies. Any object
+can be saved into a database for later retrieval. More than that, once persisted,
+an object is managed by the object manager, until the manager gets explicitly
+cleared. That means, that all object interactions happen in memory
 without ever going to the database until the ``$manager->flush()`` is
 called. Needless to say, that this kind of approach lets you worry about
 database and query optimizations even less, as all queries are as lazy
-as possible by default and their execution is deferred until the latest
-possible moment.
+as possible (i.e. their execution is deferred until the latest possible
+moment).
 
-ActiveRecord deprecated
------------------------
-
-ActiveRecord, while being well-known and widely recognized pattern is
-not the pattern used in Doctrine2. This decision is based on a number of
-reasons:
-
-* Inheritance hell - base class for anything seems like the easiest
-  solution. It fees natural to enhance functionality of an object, by
-  inheriting it from another object. This approach, however, is very
-  limiting as it forces a class into some inheritance tree, forbidding
-  it from inheriting another class. This is especially bad as PHP is a
-  single inheritance language with no horizontal code-reuse mechanism
-  like Mixins or Multiple inheritance.
-
-* Mixing of concerns - Users are not ActiveRecords. Application classes
-  should not even know they are being stored in some sort of a database,
-  as that fact shouldn't affect their behavior.
-
-* Testability - testability and isolation are crucial for modern
-  software projects. When instantiating an object, one doesn't expect a
-  database connection to be opened. Ability of an object to talk to a
-  database from virtually anywhere, is not only illogical, but can also
-  be dangerous when an unaware developer begins to execute ``->save()``
-  calls from a template layer for example.
-
-* Performance - a very important aspect of ActiveRecord is performance,
-  or rather inability to have such thing. Using transactions and
-  in-memory object change tracking, Doctrine2 minimizes the
-  communication with the database, saving not only database execution
-  time, but also expensive network communication.
+A very important aspect of ActiveRecord is performance, or rather the difficulty
+in building a performant system. By using transactions and in-memory object
+change tracking, Doctrine2 minimizes the communication with the database,
+saving not only database execution time, but also expensive network communication.
 
 Conclusion
 ----------
 
-Thanks to Doctrine2, Model is now probably the simplest concept in
-Symfony2, it is in your complete control and not limited by persistence
+Thanks to Doctrine2, The Model is now probably the simplest concept in
+Symfony2: it is in your complete control and not limited by persistence
 specifics.
 
 By teaming up with Doctrine2 to keep your code relieved of persistence
-details, Symfony2 makes building database aware applications even
+details, Symfony2 makes building database-aware applications even
 simpler. Application code stays clean, which will decrease development
 time and improve understandability of the code.
 
