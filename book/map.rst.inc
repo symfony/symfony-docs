@@ -9,6 +9,7 @@
 
 * **Doctrine**:
 
+  * :doc:`Introduction to the Model </book/doctrine/model>` |
   * :doc:`DBAL </book/doctrine/dbal/index>` |
   * :doc:`ORM </book/doctrine/orm/index>` |
   * :doc:`Migrations </book/doctrine/migrations/index>` |

@@ -34,7 +34,7 @@ The *Model* is what the "M" in "MVC_" stands for. It is one of the three
 whales of an MVC application. A model is responsible for changing its
 internal state based on requests from the :doc:`controller
 </quick_tour/the_controller>` and giving its current state information
-to the :doc:`view </guides/templating/index>`. It is the main
+to the :doc:`view </book/templating>`. It is the main
 application logic container.
 
 For example, if you are building a blog, then you'll have a ``Post``
