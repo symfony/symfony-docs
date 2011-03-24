@@ -199,12 +199,12 @@ portion of the website? You can use a request matcher:
         # enables the profiler only for the /admin URLs
         framework:
             profiler:
-                matcher: { path: "#^/admin/#i" }
+                matcher: { path: "^/admin/" }
 
         # combine rules
         framework:
             profiler:
-                matcher: { ip: 192.168.0.0/24, path: "#^/admin/#i" }
+                matcher: { ip: 192.168.0.0/24, path: "^/admin/i" }
 
         # use a custom matcher instance defined in the "custom_matcher" service
         framework:
@@ -223,14 +223,14 @@ portion of the website? You can use a request matcher:
         <!-- enables the profiler only for the /admin URLs -->
         <framework:config>
             <framework:profiler>
-                <framework:matcher path="#^/admin/#i" />
+                <framework:matcher path="^/admin/" />
             </framework:profiler>
         </framework:config>
 
         <!-- combine rules -->
         <framework:config>
             <framework:profiler>
-                <framework:matcher ip="192.168.0.0/24" path="#^/admin/#i" />
+                <framework:matcher ip="192.168.0.0/24" path="^/admin/" />
             </framework:profiler>
         </framework:config>
 
@@ -253,14 +253,14 @@ portion of the website? You can use a request matcher:
         // enables the profiler only for the /admin URLs
         $container->loadFromExtension('framework', array(
             'profiler' => array(
-                'matcher' => array('path' => '#^/admin/#i'),
+                'matcher' => array('path' => '^/admin/'),
             ),
         ));
 
         // combine rules
         $container->loadFromExtension('framework', array(
             'profiler' => array(
-                'matcher' => array('ip' => '192.168.0.0/24', 'path' => '#^/admin/#i'),
+                'matcher' => array('ip' => '192.168.0.0/24', 'path' => '^/admin/'),
             ),
         ));
 
