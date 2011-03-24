@@ -22,7 +22,7 @@ Configuration
                 metadata_cache_driver: array # array, apc, xcache, memcache
 
 If you wish to use memcache to cache your metadata, you need to configure the
-``Memcache`` instance you can do the following:
+``Memcache`` instance; for example, you can do the following:
 
 .. configuration-block::
 
