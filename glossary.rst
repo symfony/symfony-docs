@@ -6,6 +6,11 @@ Glossary
 .. glossary::
    :sorted:
 
+   Distribution
+        A *Distribution* is a package made of the Symfony2 Components, a
+        selection of bundles, a sensible directory structure, a default
+        configuration, and an optional configuration system.
+
    Project
         A *Project* is a directory composed of an Application, a set of
         bundles, vendor libraries, an autoloader, and web front controller
@@ -45,12 +50,12 @@ Glossary
 
    HTTP Specification
         The *Http Specification* is a document that describes the Hypertext
-        Transfor Protocol - a set of rules laying out the classic client-server
+        Transfer Protocol - a set of rules laying out the classic client-server
         request-response communication. The specification defines the format
         used for a request and response as well as the possible HTTP headers
         that each may have. For more information, read the `Http Wikipedia`_
         article or the `HTTP 1.1 RFC`_.
 
 .. _`service-oriented architecture`: http://wikipedia.org/wiki/Service-oriented_architecture
-.. _`HTTP Wikipedia`: http://www.w3.org/Protocols/rfc2616/rfc2616.html
+.. _`HTTP Wikipedia`: http://en.wikipedia.org/wiki/Hypertext_Transfer_Protocol
 .. _`HTTP 1.1 RFC`: http://www.w3.org/Protocols/rfc2616/rfc2616.html

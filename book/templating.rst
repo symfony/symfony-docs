@@ -177,7 +177,7 @@ First, build a base layout file:
 
     .. code-block:: html+jinja
 
-        {# app/views/layout.html.twig #}
+        {# app/Resources/views/base.html.twig #}
         <!DOCTYPE html>
         <html>
             <head>
@@ -202,7 +202,7 @@ First, build a base layout file:
 
     .. code-block:: php
 
-        <!-- app/views/layout.html.php -->
+        <!-- app/Resources/views/base.html.php -->
         <!DOCTYPE html>
         <html>
             <head>
@@ -246,7 +246,7 @@ A child template might look like this:
     .. code-block:: html+jinja
 
         {# src/Sensio/BlogBundle/Resources/views/Blog/index.html.twig #}
-        {% extends '::layout.html.twig' %}
+        {% extends '::base.html.twig' %}
 
         {% block title %}My cool blog posts{% endblock %}
 
@@ -260,7 +260,7 @@ A child template might look like this:
     .. code-block:: php
 
         <!-- src/Sensio/BlogBundle/Resources/views/Blog/index.html.php -->
-        <?php $view->extend('::layout.html.php') ?>
+        <?php $view->extend('::base.html.php') ?>
 
         <?php $view['slots']->set('title', 'My cool blog posts') ?>
 
@@ -273,10 +273,10 @@ A child template might look like this:
 
 .. note::
 
-   The parent template is identified by a special string syntax (``::layout.html.twig``)
-   that indicates that the template lives in the ``app/views`` directory
-   of the project. This naming convention is explained fully in
-   :ref:`template-naming-locations`.
+   The parent template is identified by a special string syntax
+   (``::base.html.twig``) that indicates that the template lives in the
+   ``app/Resources/views`` directory of the project. This naming convention is
+   explained fully in :ref:`template-naming-locations`.
 
 The key to template inheritance is the ``{% extends %}`` tag. This tells
 the templating engine to first evaluate the base template, which sets up
@@ -356,9 +356,10 @@ Template Naming and Locations
 
 By default, templates can live in two different locations:
 
-* ``app/views/`` The applications ``views`` directory can contain application-wide
-  base templates (i.e. your application's layouts) as well as templates that
-  override bundle templates (see :ref:`overiding-bundle-templates`);
+* ``app/Resources/views/`` The applications ``views`` directory can contain
+  application-wide base templates (i.e. your application's layouts) as well as
+  templates that override bundle templates (see
+  :ref:`overiding-bundle-templates`);
 
 * ``MyBundle/Resources/views/`` Each bundle houses its templates in its
   ``Resources/views`` directory (and subdirectories). The majority of templates
@@ -390,15 +391,16 @@ lives in a specific location:
   (``layout.html.twig``) lives simply in the ``Resources/views`` directory
   of the ``BlogBundle``.
 
-* ``::layout.html.twig``: This syntax refers to an application-wide base template
+* ``::base.html.twig``: This syntax refers to an application-wide base template
   or layout. Notice that the string begins with two colons (``::``), meaning
   that both the *bundle* and *controller* portions are missing. This means
   that the template is not located in any bundle, but instead in the root
-  ``app/views/`` directory.
+  ``app/Resources/views/`` directory.
 
 In the :ref:`overiding-bundle-templates` section, you'll find out how each
-bundle template can be overridden by placing a template in the ``app/views/``
-directory. This gives the power to override templates from any vendor bundle.
+bundle template can be overridden by placing a template in the
+``app/Resources/views/`` directory. This gives the power to override templates
+from any vendor bundle.
 
 .. tip::
 
@@ -419,13 +421,14 @@ that specify the *format* and *engine* for that template.
 * **BlogBundle:Blog:index.css.twig** - CSS format, Twig engine
 
 By default, any Symfony2 template can be written in either Twig or PHP, and
-the first part of the extension specifies which of these two *engines*
-should be used. The second part of the extension, (e.g. HTML, CSS, etc)
-is the finished format that the template will generate. Unlike the engine,
-which determines how Symfony2 parses the template, this is simply an organizational
-tactic used in case the same content ever needs to be rendered as HTML
-(``index.html.twig``), XML (``index.xml.twig``), or any other format.
-For more information, read the :ref:`template-formats` section.
+the last part of the extension (e.g. ``.twig`` or ``.php``) specifies which
+of these two *engines* should be used. The first part of the extension,
+(e.g. ``.html``, ``.css``, etc) is the final format that the template will
+generate. Unlike the engine, which determines how Symfony2 parses the template,
+this is simply an organizational tactic used in case the same resource needs
+to be rendered as HTML (``index.html.twig``), XML (``index.xml.twig``),
+or any other format. For more information, read the :ref:`template-formats`
+section.
 
 .. note::
 
@@ -603,7 +606,7 @@ syntax for controllers (i.e. **bundle**:**controller**:**action**):
 
     .. code-block:: html+jinja
 
-        {# app/views/layout.html.twig #}
+        {# app/Resources/views/base.html.twig #}
         ...
 
         <div id="sidebar">
@@ -612,7 +615,7 @@ syntax for controllers (i.e. **bundle**:**controller**:**action**):
 
     .. code-block:: php
 
-        <!-- app/views/layout.html.php -->
+        <!-- app/Resources/views/base.html.php -->
         ...
 
         <div id="sidebar">
@@ -873,22 +876,26 @@ following:
 We learned in the :ref:`template-naming-locations` section that the template
 in question lives at ``Resources/views/Blog/index.html.twig`` inside the
 ``BlogBundle``. To override the bundle template, copy the ``index.html.twig``
-template to ``app/views/BlogBundle/Blog/index.html.twig`` (the ``BlogBundle``
-directory might not exist). Now, when the ``BlogBundle:Blog:index.html.twig``
-template is rendered, Symfony2 will look first for the template at
-``app/views/BlogBundle/Blog/index.html.twig`` before looking inside ``BlogBundle``.
-You're now free to customize the template for your application.
+template to ``app/Resources/BlogBundle/views/Blog/index.html.twig`` (the
+``BlogBundle`` directory might not exist). Now, when the
+``BlogBundle:Blog:index.html.twig`` template is rendered, Symfony2 will look
+first for the template at
+``app/Resources/BlogBundle/views/Blog/index.html.twig`` before looking inside
+``BlogBundle``. You're now free to customize the template for your
+application.
 
-Suppose also that each template in ``BlogBundle`` inherits from a base template
-specific to the ``BlogBundle`` called ``BlogBundle::layout.html.twig``. By
-default, this template lives at ``Resources/views/layout.html.twig``. To
-override it, copy it to ``app/views/BlogBundle/layout.html.twig``.
+Suppose also that each template in ``BlogBundle`` inherits from a base
+template specific to the ``BlogBundle`` called
+``BlogBundle::layout.html.twig``. By default, this template lives at
+``Resources/views/layout.html.twig``. To override it, copy it to
+``app/Resources/BlogBundle/views/layout.html.twig``.
 
-If you take a step back, you'll see that Symfony2 always starts by looking
-in the *app/views/***bundle-name**/ directory for a template. If the template
-doesn't exist there, it continues by checking inside the ``Resources/views``
-directory of the bundle itself. This means that all bundle templates can
-be overridden by placing them in the correct ``app/views`` subdirectory.
+If you take a step back, you'll see that Symfony2 always starts by looking in
+the ``app/Resources/BUNDLE_NAME/views/`` directory for a template. If the
+template doesn't exist there, it continues by checking inside the
+``Resources/views`` directory of the bundle itself. This means that all bundle
+templates can be overridden by placing them in the correct ``app/Resources``
+subdirectory.
 
 .. _templating-overriding-core-templates:
 
@@ -902,8 +909,8 @@ Since the Symfony2 framework itself is just a bundle, core templates can be
 overridden in the same way. For example, the core ``FrameworkBundle`` contains
 a number of different "exception" and "error" templates that can be overridden
 by copying each from the ``Resources/views/Exception`` directory of the
-``FrameworkBundle`` to, you guessed it, the ``app/views/FrameworkBundle/Exception``
-directory.
+``FrameworkBundle`` to, you guessed it, the
+``app/Resources/FrameworkBundle/views/Exception`` directory.
 
 .. index::
    single: Templating; Three-level inheritance pattern
@@ -915,9 +922,9 @@ One common way to use inheritance is to use a three-level approach. This
 method works perfectly with the three different types of templates we've just
 covered:
 
-* Create a ``app/views/layout.html.twig`` file that contains the main layout
-  for your application (like in the previous example). Internally, this template
-  is called ``::layout.html.twig``;
+* Create a ``app/Resources/views/base.html.twig`` file that contains the main
+  layout for your application (like in the previous example). Internally, this
+  template is called ``::base.html.twig``;
 
 * Create a template for each "section" of your site. For example, a ``BlogBundle``,
   would have a template called ``BlogBundle::layout.html.twig`` that contains
@@ -926,7 +933,7 @@ covered:
     .. code-block:: html+jinja
 
         {# src/Sensio/BlogBundle/Resources/views/layout.html.twig #}
-        {% extends '::layout.html.twig' %}
+        {% extends '::base.html.twig' %}
 
         {% block body %}
             <h1>Blog Application</h1>
@@ -951,14 +958,14 @@ covered:
         {% endblock %}
 
 Notice that this template extends the section template -(``BlogBundle::layout.html.twig``)
-which in-turn extends the base application layout (``::layout.html.twig``).
+which in-turn extends the base application layout (``::base.html.twig``).
 This is the common three-level inheritance model.
 
 When building your application, you may choose to follow this method or simply
 make each page template extend the base application template directly
-(e.g. ``{% extends '::layout.html.twig' %}``). The three-template model is
+(e.g. ``{% extends '::base.html.twig' %}``). The three-template model is
 a best-practice method used by vendor bundles so that the base template for
-a bundle can be easily overriden to properly extend your application's base
+a bundle can be easily overridden to properly extend your application's base
 layout.
 
 .. index::

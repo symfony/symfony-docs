@@ -53,7 +53,7 @@ router does:
 This basic pattern means that a "page" in Symfony2 is nothing more than a
 route and a controller (a PHP function). The job of the route is to match
 the URI pattern of an incoming request and tell Symfony2 which controller
-should be executed. 
+should be executed.
 
 Mapping "Path Info" (URI) to a Controller
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -70,9 +70,9 @@ has the URI ``/blog/my-blog-post``, the following route would be matched:
         blog_show:
             pattern:   /blog/{slug}
             defaults:  { _controller: MyBlogBundle:Blog:show }
-    
+
     .. code-block:: xml
-    
+
         <?xml version="1.0" encoding="UTF-8" ?>
 
         <routes xmlns="http://symfony.com/schema/routing"
@@ -83,9 +83,9 @@ has the URI ``/blog/my-blog-post``, the following route would be matched:
                 <default key="_controller">MyBlogBundle:Blog:show</default>
             </route>
         </routes>
-    
+
     .. code-block:: php
-    
+
         use Symfony\Component\Routing\RouteCollection;
         use Symfony\Component\Routing\Route;
 
@@ -169,7 +169,7 @@ parts: the ``pattern`` to match and the ``defaults`` collection:
             defaults:  { _controller: MyBundle:Main:homepage }
 
     .. code-block:: xml
-    
+
         <?xml version="1.0" encoding="UTF-8" ?>
 
         <routes xmlns="http://symfony.com/schema/routing"
@@ -183,7 +183,7 @@ parts: the ``pattern`` to match and the ``defaults`` collection:
         </routes>
 
     ..  code-block:: php
-    
+
         use Symfony\Component\Routing\RouteCollection;
         use Symfony\Component\Routing\Route;
 
@@ -343,7 +343,7 @@ including it in the ``defaults`` collection:
         blog:
             pattern:   /blog/{page}
             defaults:  { _controller: MyBlogBundle:Blog:index, page: 1 }
-    
+
     .. code-block:: xml
 
         <?xml version="1.0" encoding="UTF-8" ?>
@@ -408,7 +408,7 @@ Take a look at the routes that have been created so far:
                 <default key="_controller">MyBlogBundle:Blog:index</default>
                 <default key="page">1</default>
             </route>
-            
+
             <route id="blog_show" pattern="/blog/{slug}">
                 <default key="_controller">MyBlogBundle:Blog:show</default>
             </route>
@@ -424,7 +424,7 @@ Take a look at the routes that have been created so far:
             '_controller' => 'MyBlogBundle:Blog:index',
             'page' => 1,
         )));
-        
+
         $collection->add('blog_show', new Route('/blog/{show}', array(
             '_controller' => 'MyBlogBundle:Blog:show',
         )));
@@ -493,8 +493,8 @@ match against the ``blog_show`` route.
 .. note::
 
     Keep in mind that the order of the routes is very important. If the ``blog_show``
-    route were placed above the ``blog`` route, the ``/blog/2`` url would
-    would match ``blog_show`` instead of ``blog`` since the ``{slug}`` parameter
+    route were placed above the ``blog`` route, the ``/blog/2`` url would match
+    ``blog_show`` instead of ``blog`` since the ``{slug}`` parameter
     of ``blog_show`` has no requirements. By using proper ordering and clever
     requirements, you can create a rich routing schema.
 
@@ -589,7 +589,7 @@ be accomplished with the following routing configuration:
                 <default key="_controller">MyBundle:Main:contact</default>
                 <requirement key="_method">GET</requirement>
             </route>
-            
+
             <route id="contact_process" pattern="/contact">
                 <default key="_controller">MyBundle:Main:contactProcess</default>
                 <requirement key="_method">POST</requirement>
@@ -607,7 +607,7 @@ be accomplished with the following routing configuration:
         ), array(
             '_method' => 'GET',
         )));
-        
+
         $collection->add('contact_process', new Route('/contact', array(
             '_controller' => 'MyBundle:Main:contactProcess',
         ), array(
@@ -635,6 +635,8 @@ for the two actions.
 .. index::
    single: Routing; Advanced example
    single: Routing; _format parameter
+
+.. _advanced-routing-example:
 
 Advanced Routing Example
 ~~~~~~~~~~~~~~~~~~~~~~~~
@@ -697,7 +699,7 @@ When using this parameter, the matched value becomes the "request format"
 of the ``Request`` object. Ultimately, the request format is used for such
 things such as setting the ``Content-Type`` of the response (e.g. a ``json``
 request format translates into a ``Content-Type`` of ``application/json``).
-It can also be used in the controller to render a differente template for
+It can also be used in the controller to render a different template for
 each value of ``_format``. The ``_format`` parameter is a very powerful way
 to render the same content in different formats.
 
@@ -708,10 +710,10 @@ to render the same content in different formats.
     to allow both a forward slash (/) or a period (.) to be a valid "separator"
     between the routing parameters.
 
-.. _routing-include-external-resources:
-
 .. index::
    single: Routing; Importing routing resources
+
+.. _routing-include-external-resources:
 
 Including External Routing Resources
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

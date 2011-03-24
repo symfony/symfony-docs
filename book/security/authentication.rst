@@ -10,9 +10,11 @@ not available, not sufficient, or just wrong.
 
 .. note::
 
-    The Firewall is implemented via a ``core.security`` event, notified just
-    after the ``core.request`` one. All features described in this document
-    are implemented as listeners to this event.
+    The Firewall is implemented by registering
+    :class:`Symfony\\Component\\Security\\Http\\Firewall\\ListenerInterface`
+    objects with the firewall that are notified just after the ``onCoreRequest``
+    event is dispatched. All features described in this document are implemented
+    as listeners with the firewall.
 
 .. index::
    single: Security; Firewall
@@ -442,6 +444,11 @@ configuration example that shows how to override them all:
                 )),
             ),
         ));
+
+.. note::
+
+    Unlike the ``login_path`` URL, the ``check_path`` URL must be located under
+    a secured pattern in order to be handled by the firewall.
 
 .. index::
    single: Security; X.509 certificates

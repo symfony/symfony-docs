@@ -80,7 +80,7 @@ your application and forward them on to the client. The cache is the "middle-man
 of the request-response communication between the client and your application.
 
 Along the way, the cache will store each response that is deemed "cacheable"
-(See :ref:`intro_to_http_cache`). If the same resource is requested again,
+(See :ref:`http-cache-introduction`). If the same resource is requested again,
 the cache sends the cached response to the client, ignoring your application
 entirely.
 
@@ -125,10 +125,10 @@ Each response from your application will likely go through one or both of
 the first two cache types. These caches are outside of your control but follow
 the HTTP cache directions set in the response.
 
-.. _`symfony-gateway-cache`:
-
 .. index::
    single: Cache; Symfony2 Reverse Proxy
+
+.. _`symfony-gateway-cache`:
 
 Symfony2 Reverse Proxy
 ~~~~~~~~~~~~~~~~~~~~~~
@@ -250,7 +250,7 @@ misses.
 .. index::
    single: Cache; HTTP
 
-.. http-cache-introduction:
+.. _http-cache-introduction:
 
 Introduction to HTTP Caching
 ----------------------------
@@ -578,7 +578,7 @@ Validation with the ``Last-Modified`` Header
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The ``Last-Modified`` header is the second form of validation. According
-to the HTTP sepecification, "The ``Last-Modified`` header field indicates
+to the HTTP specification, "The ``Last-Modified`` header field indicates
 the date and time at which the origin server believes the representation
 was last modified." In other words, the application decides whether or not
 the cached content has been updated based on whether or not it's been updated
@@ -618,6 +618,8 @@ code.
 .. index::
    single: Cache; Conditional Get
    single: HTTP; 304
+
+.. _optimizing-cache-validation:
 
 Optimizing your Code with Validation
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

@@ -30,7 +30,7 @@ If your problem definitely looks like a bug, report it using the official bug
 
  * *(optional)* Attach a :doc:`patch <patches>`.
 
-.. _documentation: http://docs.symfony-reloaded.org/
+.. _documentation: http://symfony.com/doc/2.0/
 .. _users mailing-list: http://groups.google.com/group/symfony-users
 .. _forum: http://forum.symfony-project.org/
 .. _IRC channel: irc://irc.freenode.net/symfony

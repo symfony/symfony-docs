@@ -10,6 +10,7 @@ Cookbook
     templating/PHP
     controller/error_pages
     controller/service
+    validation/custom_constraint
     tools/autoloader
     tools/finder
     cache/varnish
@@ -20,7 +21,7 @@ Cookbook
     event_dispatcher/method_behavior
     profiler/data_collector
     bundles/extension
+    request/mime_type
     symfony1
-    validation/custom_constraint
 
 .. include:: map.rst.inc

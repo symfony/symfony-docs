@@ -680,8 +680,7 @@ to be used for a specific purpose. Take the following example:
             foo.twig.extension:
                 class: Sensio\HelloBundle\Extension\FooExtension
                 tags:
-                    twig.extension:
-                      name:    twig.extension
+                    -  { name: twig.extension }
 
     .. code-block:: xml
 

@@ -327,7 +327,7 @@ means that the template lives outside of the bundles and in the ``app`` director
 
     .. code-block:: html+jinja
 
-        {% app/views/layout.html.twig %}
+        {% app/Resources/views/layout.html.twig %}
         <!DOCTYPE html>
         <html>
             <head>
@@ -341,7 +341,7 @@ means that the template lives outside of the bundles and in the ``app`` director
 
     .. code-block:: php
 
-        <!-- app/views/layout.html.php -->
+        <!-- app/Resources/views/layout.html.php -->
         <!DOCTYPE html>
         <html>
             <head>
@@ -449,10 +449,10 @@ defaults.
 
 In day-to-day development, you'll mostly use the ``app/`` directory to modify
 configuration and routing files in the ``app/config/`` directory (see
-`Application Configuration`_). It also contains the application cache directory
-(``app/cache``), a logging directory (``app/logs``) and a directory for
-application-level template files (``app/views``). You'll learn more about
-each of these directories in later chapters.
+`Application Configuration`_). It also contains the application cache
+directory (``app/cache``), a logging directory (``app/logs``) and a directory
+for application-level resource files (``app/Resources``). You'll learn more
+about each of these directories in later chapters.
 
 .. _autoloading-introduction-sidebar:
 
@@ -892,7 +892,7 @@ the configuration file for the ``dev`` environment.
 The ``imports`` key is similar to a PHP ``include`` statement and guarantees
 that the main configuration file (``config.yml``) is loaded first. The rest
 of the file tweaks the default configuration for increased logging and other
-settings condusive to a development environment.
+settings conducive to a development environment.
 
 Both the ``prod`` and ``test`` environments follow the same model: each environment
 imports the base configuration file and then modifies its configuration values

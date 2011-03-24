@@ -10,9 +10,9 @@ display and the status code that should be set for the given exception.
 .. tip::
 
     The customization of exception handling is actually much more powerful
-    than what's written here. An internal event, ``core.exception``, is thrown
+    than what's written here. An internal event, ``onCoreException``, is thrown
     which allows complete control over exception handling. For more information,
-    see ``events-core.exception``.
+    see :ref:`kernel-onCoreException`.
 
 All of the error templates live inside ``FrameworkBundle``. To override the
 templates, we simply rely on the standard method for overriding templates that
@@ -21,7 +21,7 @@ live inside a bundle. For more information, see
 
 For example, to override the default error template that's shown to the
 end-user, create a new template located at
-``app/views/FrameworkBundle/Exception/error.html.twig``:
+``app/Resources/FrameworkBundle/views/Exception/error.html.twig``:
 
 .. code-block:: html+jinja
 
@@ -46,8 +46,8 @@ page for many of the most common response formats, including JSON
 (``error.json.twig``), XML, (``error.xml.twig``), and even Javascript
 (``error.js.twig``), to name a few. To override any of these templates, just
 create a new file with the same name in the
-``app/views/FrameworkBundle/Exception`` directory. This is the standard way of
-overriding any template that lives inside a bundle.
+``app/Resources/FrameworkBundle/views/Exception`` directory. This is the
+standard way of overriding any template that lives inside a bundle.
 
 The debug-friendly exception pages shown to the developer can even be
 customized in the same way by creating templates such as
@@ -61,4 +61,4 @@ customized in the same way by creating templates such as
     standard Symfony2 installation, the ``FrameworkBundle`` can be found at
     ``vendor/symfony/src/Symfony/Bundle/FrameworkBundle``. Often, the easiest
     way to customize an error page is to copy it from the ``FrameworkBundle``
-    into ``app/views/FrameworkBundle/Exception`` and then modify it.
+    into ``app/Resources/FrameworkBundle/views/Exception`` and then modify it.

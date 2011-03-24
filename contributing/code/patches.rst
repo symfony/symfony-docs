@@ -144,6 +144,11 @@ with master, don't merge; and force the push to the origin:
     $ git rebase -f upstream/master
     $ git push -f origin BRANCH_NAME
 
+.. note::
+
+    All patches you are going to submit must be released under the MIT
+    license, unless explicitly specified in the code.
+
 .. _ProGit:              http://progit.org/
 .. _GitHub:              https://github.com/signup/free
 .. _Symfony2 repository: https://github.com/symfony/symfony

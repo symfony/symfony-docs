@@ -112,7 +112,7 @@ follow these conventions:
    into the ``Resources/config/doctrine/metadata/doctrine/mongodb/`` directory
    suffixed with dcm.xml, dcm.yml or dcm.php respectively.
 3. Annotations is assumed if an ``Document/`` but no
-   ``Resources/config/doctrine/metadata/doctrine/mongodb/`` directory is found.
+   ``Resources/config/doctrine/metadata/mongodb/`` directory is found.
 
 The following configuration shows a bunch of mapping examples:
 

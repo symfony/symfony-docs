@@ -100,7 +100,7 @@ follow these conventions:
    into the "Resources/config/doctrine/metadata/doctrine/orm/" directory
    suffixed with dcm.xml, dcm.yml or dcm.php respectively.
 3. Annotations is assumed if an ``Entity/`` but no
-   "Resources/config/doctrine/metadata/doctrine/orm/" directory is found.
+   "Resources/config/doctrine/metadata/orm/" directory is found.
 
 The following configuration shows a bunch of mapping examples:
 
@@ -133,7 +133,7 @@ Doctrine uses the lightweight ``Doctrine\Common\EventManager`` class to trigger
 a number of different events which you can hook into. You can register Event
 Listeners or Subscribers by tagging the respective services with
 ``doctrine.dbal.<connection>_event_listener`` or
-``doctrine.dbal.<connection>_event_subscriber`` using the Dependency Injenction
+``doctrine.dbal.<connection>_event_subscriber`` using the Dependency Injection
 container.
 
 You have to use the name of the DBAL connection to clearly identify which
@@ -252,7 +252,7 @@ specific DBAL connection and all the EntityManagers that use this connection.
     .. code-block:: xml
 
         <?xml version="1.0" ?>
-        <container xmlns="http://symfony-project.org/2.0/container"
+        <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:doctrine="http://symfony.com/schema/dic/doctrine">
 
             <doctrine:config>
