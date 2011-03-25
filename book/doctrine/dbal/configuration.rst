@@ -23,7 +23,7 @@ example:
 The DoctrineBundle supports all parameters that all the default doctrine drivers
 accept, converted to the XML or YAML naming standards that Symfony enforces.
 See the Doctrine DBAL `documentation`_ for more information. Additionally
-there are some Symfony related options that you can configure. The following
+there are some Symfony-related options that you can configure. The following
 block shows all possible configuration keys without explaining their meaning
 further:
 
@@ -114,7 +114,7 @@ can also be specified in the connections subkeys.
                     host:             localhost
 
 If you have defined multiple connections you can use the
-``$this->get('doctrine.dbal.[connectionname]_connection)``
+``$this->get('doctrine.dbal.[connectionname]_connection')``
 as well but you must pass it an argument with the
 connection name that you want get
 

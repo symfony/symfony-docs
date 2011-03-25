@@ -45,6 +45,12 @@ Namespace                           Bundle Class Name
 By convention, the ``getName()`` method of the bundle class should return the
 class name.
 
+.. note::
+
+    If you share your bundle publicly, you must use the bundle class name as
+    the name of the repository (``SensioBlogBundle`` and not ``BlogBundle``
+    for instance).
+
 Directory Structure
 -------------------
 

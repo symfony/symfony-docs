@@ -22,7 +22,7 @@ Configuration
                 metadata_cache_driver: array # array, apc, xcache, memcache
 
 If you wish to use memcache to cache your metadata, you need to configure the
-``Memcache`` instance you can do the following:
+``Memcache`` instance; for example, you can do the following:
 
 .. configuration-block::
 
@@ -112,7 +112,7 @@ follow these conventions:
    into the ``Resources/config/doctrine/metadata/doctrine/mongodb/`` directory
    suffixed with dcm.xml, dcm.yml or dcm.php respectively.
 3. Annotations is assumed if an ``Document/`` but no
-   ``Resources/config/doctrine/metadata/doctrine/mongodb/`` directory is found.
+   ``Resources/config/doctrine/metadata/mongodb/`` directory is found.
 
 The following configuration shows a bunch of mapping examples:
 

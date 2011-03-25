@@ -194,7 +194,7 @@ objects that can then be displayed with your form:
 .. code-block:: php
 
     $author = new Acme\BlogBundle\Author();
-    $form = new Acme\BlogBundle\AuthorForm('author', $author, $this->get('validator');
+    $form = new Acme\BlogBundle\AuthorForm('author', $author, $this->get('validator'));
     $form->bind($this->get('request')->request->get('customer'));
 
     if ($form->isValid()) {

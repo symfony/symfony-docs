@@ -100,7 +100,7 @@ follow these conventions:
    into the "Resources/config/doctrine/metadata/doctrine/orm/" directory
    suffixed with dcm.xml, dcm.yml or dcm.php respectively.
 3. Annotations is assumed if an ``Entity/`` but no
-   "Resources/config/doctrine/metadata/doctrine/orm/" directory is found.
+   "Resources/config/doctrine/metadata/orm/" directory is found.
 
 The following configuration shows a bunch of mapping examples:
 

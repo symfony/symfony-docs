@@ -129,12 +129,12 @@ engine that a child template may override those portions of the template. The
 ``hello.html.twig`` template overrides the ``content`` block. The other one is
 defined in a base layout as the layout is itself decorated by another one.
 When the bundle part of the template name is empty (``::base.html.twig``),
-views are looked for in the ``app/views/`` directory. This directory store
+views are looked for in the ``app/Resources/`` directory. This directory store
 global views for your entire project:
 
 .. code-block:: jinja
 
-    {# app/views/base.html.twig #}
+    {# app/Resources/views/base.html.twig #}
     <!DOCTYPE html>
     <html>
         <head>
