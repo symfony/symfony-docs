@@ -4,11 +4,11 @@
 How to implement your own voter
 ===============================
 
-The Symfony2 :doc:`Security component </book/security/index>` provide several
-layers to authenticate users. One of this layer is called a `voter`. A voter
-is a dedicated class that check if the user has the rights to be connected to
-the application. For instance, Symfony2 provide some layer that check if the
-user is fully authenticated or if it has the expected roles.
+The Symfony2 security component provide several layers to authenticate users.
+One of this layer is called a `voter`. A voter is a dedicated class that check
+if the user has the rights to be connected to the application. For instance,
+Symfony2 provide some layer that check if the user is fully authenticated or if
+it has the expected roles.
 
 It sometimes usefull to create a custom voter to handle a specific case not handled
 by the framework. In this section, we will discover how to create a voter which
@@ -21,6 +21,7 @@ A custom voter must implement
 :class:`Symfony\\Component\\Security\\Core\\Authorization\\Voter\\VoterInterface`::
 which requires to create three methods:
 
+.. code-block:: php
 
     interface VoterInterface
     {
@@ -54,6 +55,8 @@ Creating a custom voter
 To blacklist a user based on its current IP, we will use the ``request`` service,
 and check if the IP address is not in a given set of blacklisted IP.
 
+
+.. code-block:: php
 
     namespace Acme\DemoBundle\Security\Authorization\Voter;
 
@@ -91,15 +94,20 @@ and check if the IP address is not in a given set of blacklisted IP.
         }
     }
 
-That it! The voter is done. We must now inject it into the security layer. This can be
-done easily throught the dependency injection container.
 
+That's it! The voter is done. We must now inject it into the security layer. This can be
+done easily throught the dependency injection container.
 
 Declaring the voter as a service
 --------------------------------
 
 To inject the voter into the security layer, we must declare it as a service, and tag it as
 a "security.voter":
+
+
+.. configuration-block:
+
+    .. code-block:: xml
 
         <!-- src/Acme/AcmeBundle/Resources/config/services.xml -->
 
@@ -113,6 +121,15 @@ a "security.voter":
             <tag name="security.voter" />
         </service>
 
+    .. code-block:: yaml
+
+        # src/Acme/AcmeBundle/Resources/config/services.yml
+
+        security.access.blacklist_voter:
+            class: Acme\DemoBundle\Security\Authorization\Voter
+            arguments: [@request, [123.123.123.123, 171.171.171.171]]
+
+
 .. tip::
 
     You can create your own extension to allow the blacklisting configuration to be done
@@ -124,5 +141,16 @@ grant the user to authorized it to access the application. To do that, we need t
 the strategy by overriding the ``security.access.decision_manager.strategy`` parameter:
 
 
+
+.. configuration-block::
+
+    .. code-block:: xml
+
         <!-- src/Acme/AcmeBundle/Resources/config/services.xml -->
         <parameter key="security.access.decision_manager.strategy">unanimous</parameter>
+
+    .. code-block:: yaml
+
+        # src/Acme/AcmeBundle/Resources/config/services.yml
+        parameters:
+            security.access.decision_manager.strategy: unanimous
