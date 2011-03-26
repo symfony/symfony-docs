@@ -550,6 +550,7 @@ the service container gives us a much more appealing option:
 
         // src/Sensio/HelloBundle/Resources/config/services.php
         use Symfony\Component\DependencyInjection\Definition;
+        use Symfony\Component\DependencyInjection\Reference;
 
         // ...
         $container->setParameter('newsletter_manager.class', 'Sensio\HelloBundle\Newsletter\NewsletterManager');
