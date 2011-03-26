@@ -40,8 +40,8 @@ project::
         }
     }
 
-Registering you Listener
-------------------------
+Registering your Listener
+-------------------------
 
 As for any other listener, you need to add it in one of your configuration
 file and register it as a listener by adding the ``kernel.listener`` tag:

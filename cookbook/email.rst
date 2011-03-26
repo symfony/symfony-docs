@@ -76,7 +76,7 @@ mandatory configuration parameter is ``transport``:
 The majority of the Swiftmailer configuration deals with how the messages
 themselves should be delivered.
 
-The following configuration attribute are available:
+The following configuration attributes are available:
 
 * ``transport``         (``smtp``, ``mail``, ``sendmail``, or ``gmail``)
 * ``username``
