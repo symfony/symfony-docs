@@ -270,6 +270,8 @@ configuration from third-party bundles.
 .. index::
    single: Service Container; imports
 
+.. _service-container-imports-directive:
+
 Importing Configuration with ``imports``
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
