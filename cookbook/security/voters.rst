@@ -1,25 +1,25 @@
 .. index::
    single: Security, Voters
 
-How to implement your own voter
+How to implement your own Voter
 ===============================
 
-The Symfony2 security component provide several layers to authenticate users.
-One of this layer is called a `voter`. A voter is a dedicated class that check
+The Symfony2 security component provides several layers to authenticate users.
+One of the layers is called a `voter`. A voter is a dedicated class that checks
 if the user has the rights to be connected to the application. For instance,
-Symfony2 provide some layer that check if the user is fully authenticated or if
-it has the expected roles.
+Symfony2 provide a layer that checks if the user is fully authenticated or if
+it has some expected roles.
 
-It sometimes usefull to create a custom voter to handle a specific case not handled
-by the framework. In this section, we will discover how to create a voter which
-allow to blacklist users by theirs IP.
+It sometimes useful to create a custom voter to handle a specific case not
+handled by the framework. In this section, you'll learn how to create a
+voter that will allow you to blacklist users by their IP.
 
-The voter interface
+The Voter Interface
 -------------------
 
 A custom voter must implement
-:class:`Symfony\\Component\\Security\\Core\\Authorization\\Voter\\VoterInterface`::
-which requires to create three methods:
+:class:`Symfony\\Component\\Security\\Core\\Authorization\\Voter\\VoterInterface`,
+which requires the following three methods:
 
 .. code-block:: php
 
@@ -31,30 +31,29 @@ which requires to create three methods:
     }
 
 
-The ``supportsAttribute()`` method is used to check if the voter supports the given
-user attribute (i.e: a role, an acl, etc.)
+The ``supportsAttribute()`` method is used to check if the voter supports
+the given user attribute (i.e: a role, an acl, etc.).
 
-The ``supportsClass()`` method is used to check if the voter supports the current user
-token class.
+The ``supportsClass()`` method is used to check if the voter supports the
+current user token class.
 
-The ``vote()`` method must implement the business logic that verify whether the user
-granted or not. This method must return one of the following value:
+The ``vote()`` method must implement the business logic that verifies whether
+or not the user is granted access. This method must return one of the following
+values:
 
 * ``VoterInterface::ACCESS_GRANTED``: The user is allowed to access the application
 * ``VoterInterface::ACCESS_ABSTAIN``: The voter cannot decide if the user is granted or not
 * ``VoterInterface::ACCESS_DENIED``: The user is not allowed to access the application
 
-In our case, we will check if the user's ip is not blacklisted. We will return
-``VoterInterface::ACCESS_ABSTAIN`` or ``VoterInterface::ACCESS_GRANTED`` depending of this
-criteria.
+In this example, we will check if the user's IP address against a list of
+blacklisted addresses. We will return ``VoterInterface::ACCESS_DENIED`` or
+``VoterInterface::ACCESS_GRANTED`` depending on this criteria.
 
-
-Creating a custom voter
+Creating a Custom Voter
 -----------------------
 
-To blacklist a user based on its current IP, we will use the ``request`` service,
-and check if the IP address is not in a given set of blacklisted IP.
-
+To blacklist a user based on its IP, we can use the ``request`` service
+and compare the IP address against a set of blacklisted IP addresses:
 
 .. code-block:: php
 
@@ -94,18 +93,27 @@ and check if the IP address is not in a given set of blacklisted IP.
         }
     }
 
+That's it! The voter is done. The next step is to inject the voter into
+the security layer. This can be done easily through the service container.
 
-That's it! The voter is done. We must now inject it into the security layer. This can be
-done easily throught the dependency injection container.
-
-Declaring the voter as a service
+Declaring the Voter as a Service
 --------------------------------
 
-To inject the voter into the security layer, we must declare it as a service, and tag it as
-a "security.voter":
+To inject the voter into the security layer, we must declare it as a service,
+and tag it as a "security.voter":
 
+.. configuration-block::
 
-.. configuration-block:
+    .. code-block:: yaml
+
+        # src/Acme/AcmeBundle/Resources/config/services.yml
+
+        security.access.blacklist_voter:
+            class:      Acme\DemoBundle\Security\Authorization\Voter
+            arguments:  [@request, [123.123.123.123, 171.171.171.171]]
+            public:     false
+            tags:
+                -       { name: security.voter }
 
     .. code-block:: xml
 
@@ -121,36 +129,54 @@ a "security.voter":
             <tag name="security.voter" />
         </service>
 
-    .. code-block:: yaml
+    .. code-block:: php
 
-        # src/Acme/AcmeBundle/Resources/config/services.yml
+        // src/Acme/AcmeBundle/Resources/config/services.php
 
-        security.access.blacklist_voter:
-            class: Acme\DemoBundle\Security\Authorization\Voter
-            arguments: [@request, [123.123.123.123, 171.171.171.171]]
+        use Symfony\Component\DependencyInjection\Definition;
+        use Symfony\Component\DependencyInjection\Reference;
 
+        $definition = new Definition(
+            'Acme\DemoBundle\Security\Authorization\Voter',
+            array(
+                new Reference('request'),
+                array('123.123.123.123', '171.171.171.171'),
+            ),
+        );
+        $definition->addTag('security.voter');
+        $definition->setPublic(false);
+
+        $container->setDefinition('security.access.blacklist_voter', $definition);
 
 .. tip::
 
-    You can create your own extension to allow the blacklisting configuration to be done
-    in the application config.yml file.
+   Be sure to import this configuration file from your main application
+   configuration file (e.g. ``app/config/config.yml``). For more information
+   see :ref:`service-container-imports-directive`. To read more about defining
+   services in general, see the :doc:`/book/service_container` chapter.
 
-At last, we need to change the authentication strategy: by default, the security component
-call each voter until one of them grants the user. In our case, we want all voters to
-grant the user to authorized it to access the application. To do that, we need to change
-the strategy by overriding the ``security.access.decision_manager.strategy`` parameter:
-
-
+Finally, we need to change the authentication strategy. By default, the
+security component call each voter until one of them grants access to the
+user. In our case, we want to force *all* voters to grant the user access
+before deciding that the user should actually have access to the application.
+To do that, we need to change the strategy by overriding the
+``security.access.decision_manager.strategy`` parameter:
 
 .. configuration-block::
-
-    .. code-block:: xml
-
-        <!-- src/Acme/AcmeBundle/Resources/config/services.xml -->
-        <parameter key="security.access.decision_manager.strategy">unanimous</parameter>
 
     .. code-block:: yaml
 
         # src/Acme/AcmeBundle/Resources/config/services.yml
         parameters:
             security.access.decision_manager.strategy: unanimous
+
+    .. code-block:: xml
+
+        <!-- src/Acme/AcmeBundle/Resources/config/services.xml -->
+        <parameter key="security.access.decision_manager.strategy">unanimous</parameter>
+
+    .. code-block:: php
+
+        // src/Acme/AcmeBundle/Resources/config/services.php
+
+        $container->setParameter('security.access.decision_manager.strategy', 'unanimous');

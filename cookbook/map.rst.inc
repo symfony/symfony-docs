@@ -16,4 +16,5 @@
 * :doc:`/cookbook/profiler/data_collector`
 * :doc:`/cookbook/bundles/extension`
 * :doc:`/cookbook/request/mime_type`
+* :doc:`/cookbook/security/voters`
 * :doc:`/cookbook/symfony1`
