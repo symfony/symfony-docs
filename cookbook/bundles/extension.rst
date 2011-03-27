@@ -174,6 +174,12 @@ The global parameters are the following:
 * ``kernel.bundles``
 * ``kernel.charset``
 
+.. note::
+
+    To assist in normalizing (to support different configuration formats),
+    validation and merging extension configurations you can make use of the
+    classes in the ``Symfony\Component\Config\Definition`` namespace.
+
 .. caution::
 
     All parameter and service names starting with a ``_`` are reserved for the
