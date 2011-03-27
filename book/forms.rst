@@ -483,17 +483,67 @@ customized. See :ref:`book-forms-overriding-template-blocks` for more informatio
 Creating Form Classes
 ---------------------
 
-.. index::
-   single: Forms; Embedded forms
+As you've seen, forms can be created and used directly in a controller. A
+more robust option is to build a form in a standalone PHP class, which can
+then be used inside a controller or anywhere else in your application. Create
+a new class that will house the logic for building the product form:
 
-Embedded Forms
---------------
+.. code-block:: php
+
+    // src/Acme/StoreBundle/Form/ProductType.php
+
+    namespace Acme\StoreBundle\Form;
+
+    use Symfony\Component\Form\Type\AbstractType;
+    use Symfony\Component\Form\FormBuilder;
+
+    class ProductType extends AbstractType
+    {
+        public function buildForm(FormBuilder $builder, array $options)
+        {
+            $builder->add('name', 'text');
+            $builder->add('price', 'money');
+        }
+    }
+
+This new class represents the product form, and can now be used to build a
+form object in the controller:
+
+.. code-block:: php
+
+    // src/Acme/StoreBundle/Controller/DefaultController.php
+
+    // add this new use statement at the top of the class
+    use Acme\StoreBundle\Form\ProductType;
+
+    public function indexAction()
+    {
+        $form = $this->get('form.factory')->create(new ProductType());
+        
+        // ...
+    }
+
+Placing the form logic into its own class means that the class can be easily
+reused and is properly isolated out of the controller. This is the best way
+to create forms, but the choice is ultimately up to you.
 
 .. index::
    single: Forms; Doctrine
 
 Forms and Doctrine
 ------------------
+
+Commonly, you'll create forms for data that ultimately needs to be persisted
+to a database. To make the ``Product`` example more robust, configure it
+to be persisted to a database by the Doctrine ORM:
+
+
+
+.. index::
+   single: Forms; Embedded forms
+
+Embedded Forms
+--------------
 
 .. index::
    single: Forms; Customizing rendering
