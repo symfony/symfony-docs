@@ -20,6 +20,16 @@ parameters:
 
 * Completion when you use XSD and XML.
 
+
+.. note::
+
+    In case a Bundle provides an extension class, users should not rely
+    on overriding Bundle parameters and services directly. In case a
+    setting should be user configurable, it should be explicitly supported
+    by the extension class. In other words the extension class defines
+    all the publicly supported configuration settings for which
+    backward compatibility will be maintained.
+
 .. index::
    single: Bundles; Extension
    single: Dependency Injection, Extension
