@@ -201,7 +201,7 @@ using the Symfony2 built-in mechanisms.
 
 For simple configuration settings, rely on the default ``parameters`` entry of
 the Symfony2 configuration. Symfony2 parameters are simple key/value pairs; a
-value being any valid PHP value. Each parameter name must start with a
+value being any valid PHP value. Each parameter name should start with a
 lower-cased version of the bundle name (``hello`` for ``HelloBundle``, or
 ``sensio.social.blog`` for ``Sensio\Social\BlogBundle`` for instance).
 
