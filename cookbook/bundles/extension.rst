@@ -44,7 +44,7 @@ who's class name should be constructed by replacing the ``Bundle`` postfix of th
 Bundle class with ``Extension`` inside a ``DependencyInjection`` subnamespace.
 
     // HelloBundle/DependencyInjection/HelloExtension.php
-    use Symfony\Component\DependencyInjection\Extension\Extension;
+    use Symfony\Component\HttpKernel\DependencyInjection\Extension;
     use Symfony\Component\DependencyInjection\ContainerBuilder;
 
     class HelloExtension extends Extension
