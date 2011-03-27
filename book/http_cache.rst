@@ -803,14 +803,14 @@ First, to use ESI, be sure to enable it in your application configuration:
         # app/config/config.yml
         framework:
             # ...
-            esi: {}
+            esi: { enabled: true }
 
     .. code-block:: xml
 
         <!-- app/config/config.xml -->
         <framework:config ...>
             <!-- ... -->
-            <framework:esi />
+            <framework:esi enabled="true" />
         </framework:config>
 
     .. code-block:: php
@@ -818,7 +818,7 @@ First, to use ESI, be sure to enable it in your application configuration:
         // app/config/config.php
         $container->loadFromExtension('framework', array(
             // ...
-            'esi'    => array(),
+            'esi'    => array('enabled' => true),
         ));
 
 Now, suppose we have a page that is relatively static, except for a news
