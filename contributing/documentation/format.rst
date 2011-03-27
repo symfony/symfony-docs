@@ -8,7 +8,7 @@ reStructuredText
 ----------------
 
 reStructuredText "is an easy-to-read, what-you-see-is-what-you-get plaintext
-markup syntax and parser system."
+markup syntax and parser system".
 
 You can learn more about its syntax by reading existing Symfony2 `documents`_
 or by reading the `reStructuredText Primer`_ on the Sphinx website.
@@ -57,7 +57,7 @@ Configuration Blocks
 
 Whenever you show a configuration, you must use the ``configuration-block``
 directive to show the configuration in all supported configuration formats
-(``PHP``, ``YAML``, and ``XML``):
+(``PHP``, ``YAML``, and ``XML``)
 
 .. code-block:: rst
 
@@ -109,9 +109,43 @@ ini             INI
 php-annotations Annotations
 =============== ===========
 
-.. _reStructuredText:        http://docutils.sf.net/rst.html
-.. _Sphinx:                  http://sphinx.pocoo.org/
-.. _documents:               http://github.com/symfony/symfony-docs
-.. _reStructuredText Primer: http://sphinx.pocoo.org/rest.html
-.. _markup:                  http://sphinx.pocoo.org/markup/
-.. _Pygments website:        http://pygments.org/languages/
+Testing Documentation
+~~~~~~~~~~~~~~~~~~~~~
+
+To test documentation before a commit:
+
+ * Install `Sphinx`_;
+
+ * Run the `Sphinx quick setup`_;
+
+ * Install the configuration-block Sphinx extension (see below);
+
+ * Run ``make html`` and view the generated HTML in the ``build`` directory.
+
+Installing the configuration-block Sphinx extension
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+ * Download the extension from the `configuration-block source`_ repository
+  
+ * Copy the ``configurationblock.py`` to the ``_exts`` folder under your
+   source folder (where ``conf.py`` is located)
+   
+ * Add the following to the ``conf.py`` file:
+
+.. code-block:: py
+    
+    # ...
+    sys.path.append(os.path.abspath('_exts'))
+    
+    # ...
+    # add configurationblock to the list of extensions
+    extensions = ['configurationblock']
+
+.. _reStructuredText:           http://docutils.sf.net/rst.html
+.. _Sphinx:                     http://sphinx.pocoo.org/
+.. _documents:                  http://github.com/symfony/symfony-docs
+.. _reStructuredText Primer:    http://sphinx.pocoo.org/rest.html
+.. _markup:                     http://sphinx.pocoo.org/markup/
+.. _Pygments website:           http://pygments.org/languages/
+.. _configuration-block source: https://github.com/fabpot/sphinx-php
+.. _Sphinx quick setup:         http://sphinx.pocoo.org/tutorial.html#setting-up-the-documentation-sources
