@@ -51,11 +51,6 @@ that extends
         {
             return 'http://www.example.com/symfony/schema/';
         }
-
-        public function getAlias()
-        {
-            return 'hello';
-        }
     }
 
 The previous class defines a ``hello`` namespace, usable in any configuration
@@ -179,9 +174,6 @@ When creating an extension, follow these simple conventions:
 * The extension must be named after the bundle name and suffixed with
   ``Extension`` (``SensioHelloExtension`` for ``SensioHelloBundle``);
 
-* The alias must be unique and named after the bundle name (``sensio_blog``
-  for ``SensioBlogBundle``);
-
 * The extension should provide an XSD schema.
 
 If you follow these simple conventions, your extensions will be registered
@@ -199,3 +191,7 @@ automatically by Symfony2. If not, override the Bundle
             $container->registerExtension(new ExtensionHello());
         }
     }
+
+In this case the extension class needs to implement a ``getAlias`` method that
+must return a unique alias named after the bundle name (``sensio_blog`` for
+``SensioBlogBundle``);
