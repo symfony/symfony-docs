@@ -10,9 +10,9 @@ if the user has the rights to be connected to the application. For instance,
 Symfony2 provide a layer that checks if the user is fully authenticated or if
 it has some expected roles.
 
-It sometimes useful to create a custom voter to handle a specific case not
-handled by the framework. In this section, you'll learn how to create a
-voter that will allow you to blacklist users by their IP.
+It is sometimes useful to create a custom voter to handle a specific case not
+handled by the framework. In this section, you'll learn how to create a voter
+that will allow you to blacklist users by their IP.
 
 The Voter Interface
 -------------------
@@ -108,12 +108,13 @@ and tag it as a "security.voter":
 
         # src/Acme/AcmeBundle/Resources/config/services.yml
 
-        security.access.blacklist_voter:
-            class:      Acme\DemoBundle\Security\Authorization\Voter
-            arguments:  [@request, [123.123.123.123, 171.171.171.171]]
-            public:     false
-            tags:
-                -       { name: security.voter }
+        services:
+            security.access.blacklist_voter:
+                class:      Acme\DemoBundle\Security\Authorization\Voter
+                arguments:  [@request, [123.123.123.123, 171.171.171.171]]
+                public:     false
+                tags:
+                    -       { name: security.voter }
 
     .. code-block:: xml
 
