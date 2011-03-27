@@ -85,9 +85,10 @@ file:
 
 .. tip::
 
-    Your extension code is always called, even if the user does not provide
-    any configuration. In that case, the array of configurations will be empty
-    and you can still provide some sensible defaults if you want.
+    Your extension code is always called if the Bundle is registered in the Kernel,
+    even if the user does not provide any configuration. In that case, the array
+    of configurations will be empty and you can still provide some sensible defaults
+    if you want.
 
 Parsing a Configuration
 -----------------------
