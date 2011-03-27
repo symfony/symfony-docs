@@ -7,7 +7,7 @@ How to implement your own Voter
 The Symfony2 security component provides several layers to authenticate users.
 One of the layers is called a `voter`. A voter is a dedicated class that checks
 if the user has the rights to be connected to the application. For instance,
-Symfony2 provide a layer that checks if the user is fully authenticated or if
+Symfony2 provides a layer that checks if the user is fully authenticated or if
 it has some expected roles.
 
 It is sometimes useful to create a custom voter to handle a specific case not
@@ -45,7 +45,7 @@ values:
 * ``VoterInterface::ACCESS_ABSTAIN``: The voter cannot decide if the user is granted or not
 * ``VoterInterface::ACCESS_DENIED``: The user is not allowed to access the application
 
-In this example, we will check if the user's IP address against a list of
+In this example, we will check if the user's IP address matches against a list of
 blacklisted addresses. We will return ``VoterInterface::ACCESS_DENIED`` or
 ``VoterInterface::ACCESS_GRANTED`` depending on this criteria.
 
@@ -157,7 +157,7 @@ and tag it as a "security.voter":
    services in general, see the :doc:`/book/service_container` chapter.
 
 Finally, we need to change the authentication strategy. By default, the
-security component call each voter until one of them grants access to the
+security component calls each voter until one of them grants access to the
 user. In our case, we want to force *all* voters to grant the user access
 before deciding that the user should actually have access to the application.
 To do that, we need to change the strategy by overriding the

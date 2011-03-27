@@ -5,7 +5,7 @@ How to use PHP instead of Twig for Templates
 ============================================
 
 Even if Symfony2 defaults to Twig for its template engine, you can still use
-plain PHP code if you want. Both templating engine are supported equally in
+plain PHP code if you want. Both templating engines are supported equally in
 Symfony2. Symfony2 adds some nice features on top of PHP to make writing
 templates with PHP more powerful.
 
@@ -108,7 +108,7 @@ decorating the template. In the ``index.html.php`` template, define a
 
     Hello <?php echo $name ?>!
 
-The base layout already have the code to output the title in the header:
+The base layout already has the code to output the title in the header:
 
 .. code-block:: html+php
 
