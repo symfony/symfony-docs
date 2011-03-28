@@ -129,8 +129,8 @@ format. Symfony2 comes with many build-in types that will be discussed shortly
 
 .. tip::
 
-   Notice that the form system is smart enough to access the ``money`` field
-   via the ``getMoney`` and ``setMoney`` methods. You have the option of
+   Notice that the form system is smart enough to access the ``price`` field
+   via the ``getPrice`` and ``setPrice`` methods. You have the option of
    making any property either public or adding getter and setter methods
    for it.
 
