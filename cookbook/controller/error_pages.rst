@@ -3,9 +3,9 @@ How to customize Error Pages
 
 When any exception is thrown in Symfony2, the exception is caught inside the
 ``Kernel`` class and eventually forwarded to a special controller,
-``FrameworkBundle:Exception:show`` for handling. This controller, which lives
-inside the core ``FrameworkBundle``, determines which error template to
-display and the status code that should be set for the given exception.
+``Framework:Exception:show`` for handling. This controller, which lives inside
+the core ``FrameworkBundle``, determines which error template to display and
+the status code that should be set for the given exception.
 
 .. tip::
 

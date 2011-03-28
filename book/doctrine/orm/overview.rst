@@ -28,7 +28,7 @@ necessary configuration is to specify the bundle name which contains your entiti
                 entity_managers:
                     default:
                         mappings:
-                            HelloBundle: ~
+                            Hello: ~
 
     .. code-block:: xml
 
@@ -38,7 +38,7 @@ necessary configuration is to specify the bundle name which contains your entiti
         <doctrine:config>
             <doctrine:orm default-entity-manager="default">
                 <doctrine:entity-manager name="default">
-                    <doctrine:mapping name="HelloBundle" />
+                    <doctrine:mapping name="Hello" />
                 </doctrine:entity-manager>
             </doctrine:orm>
         </doctrine:config>
@@ -49,7 +49,7 @@ necessary configuration is to specify the bundle name which contains your entiti
             "default_entity_manager" => "default",
             "entity_managers" => array(
                 "default => array(
-                    "mappings" => array("HelloBundle" => array()),
+                    "mappings" => array("Hello" => array()),
                 ),
             ),
         ));
@@ -196,7 +196,7 @@ Eventually, use your entity and manage its persistent state with Doctrine:
         public function editAction($id)
         {
             $em = $this->get('doctrine.orm.entity_manager');
-            $user = $em->find('HelloBundle:User', $id);
+            $user = $em->find('Hello:User', $id);
             $user->setBody('new body');
             $em->persist($user);
             $em->flush();
@@ -207,7 +207,7 @@ Eventually, use your entity and manage its persistent state with Doctrine:
         public function deleteAction($id)
         {
             $em = $this->get('doctrine.orm.entity_manager');
-            $user = $em->find('HelloBundle:User', $id);
+            $user = $em->find('Hello:User', $id);
             $em->remove($user);
             $em->flush();
 

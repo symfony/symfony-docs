@@ -34,7 +34,7 @@ Configuration Reference
                         foo: { password: foo, roles: ROLE_USER }
                         bar: { password: bar, roles: [ROLE_USER, ROLE_ADMIN] }
                 entity:
-                    entity: { class: SecurityBundle:User, property: username }
+                    entity: { class: Security:User, property: username }
 
             factories:
                 MyFactory: %kernel.root_dir%/../src/MyVendor/MyBundle/Resources/config/security_factories.xml

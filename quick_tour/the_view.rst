@@ -98,7 +98,7 @@ the ``extends`` tag:
 .. code-block:: jinja
 
     {# src/Acme/DemoBundle/Resources/views/Demo/hello.html.twig #}
-    {% extends "AcmeDemoBundle::layout.html.twig" %}
+    {% extends "AcmeDemo::layout.html.twig" %}
 
     {% block title "Hello " ~ name %}
 
@@ -106,7 +106,7 @@ the ``extends`` tag:
         <h1>Hello {{ name }}!</h1>
     {% endblock %}
 
-The ``AcmeDemoBundle::layout.html.twig`` notation sounds familiar, doesn't it?
+The ``AcmeDemo::layout.html.twig`` notation sounds familiar, doesn't it?
 It is the same notation used to reference a regular template. The ``::`` part
 simply means that the controller element is empty, so the corresponding file
 is directly stored under ``views/``.
@@ -174,11 +174,11 @@ And change the ``index.html.twig`` template to include it:
 .. code-block:: jinja
 
     {# src/Acme/DemoBundle/Resources/views/Demo/hello.html.twig #}
-    {% extends "AcmeDemoBundle::layout.html.twig" %}
+    {% extends "AcmeDemo::layout.html.twig" %}
 
     {# override the body block from embedded.html.twig #}
     {% block body %}
-        {% include "AcmeDemoBundle:Hello:embedded.html.twig" %}
+        {% include "AcmeDemo:Hello:embedded.html.twig" %}
     {% endblock %}
 
 Embedding other Controllers
@@ -194,9 +194,9 @@ template, use the ``render`` tag:
 .. code-block:: jinja
 
     {# src/Acme/DemoBundle/Resources/views/Hello/index.html.twig #}
-    {% render "AcmeDemoBundle:Demo:fancy" with { 'name': name, 'color': 'green' } %}
+    {% render "AcmeDemo:Demo:fancy" with { 'name': name, 'color': 'green' } %}
 
-Here, the ``AcmeDemoBundle:Demo:fancy`` string refers to the ``fancy`` action
+Here, the ``AcmeDemo:Demo:fancy`` string refers to the ``fancy`` action
 of the ``Demo`` controller, and the argument is used as simulated request path
 values::
 
@@ -209,7 +209,7 @@ values::
             // create some object, based on the $color variable
             $object = ...;
 
-            return $this->render('AcmeDemoBundle:Demo:fancy.html.twig', array('name' => $name, 'object' => $object));
+            return $this->render('AcmeDemo:Demo:fancy.html.twig', array('name' => $name, 'object' => $object));
         }
 
         // ...

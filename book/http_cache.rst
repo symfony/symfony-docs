@@ -145,7 +145,7 @@ kernel::
 
     // web/app.php
 
-    require_once __DIR__.'/../app/bootstrap_cache.php';
+    require_once __DIR__.'/../app/bootstrap_cache.php.cache';
     require_once __DIR__.'/../app/AppCache.php';
 
     use Symfony\Component\HttpFoundation\Request;
@@ -545,7 +545,7 @@ md5 of the content::
 
     public function indexAction()
     {
-        $response = $this->renderView('MyBundle:Main:index.html.twig');
+        $response = $this->renderView('My:Main:index.html.twig');
         $response->setETag(md5($response->getContent()));
         $response->isNotModified($this->get('request'));
 
@@ -803,14 +803,14 @@ First, to use ESI, be sure to enable it in your application configuration:
         # app/config/config.yml
         framework:
             # ...
-            esi: {}
+            esi: { enabled: true }
 
     .. code-block:: xml
 
         <!-- app/config/config.xml -->
         <framework:config ...>
             <!-- ... -->
-            <framework:esi />
+            <framework:esi enabled="true" />
         </framework:config>
 
     .. code-block:: php
@@ -818,7 +818,7 @@ First, to use ESI, be sure to enable it in your application configuration:
         // app/config/config.php
         $container->loadFromExtension('framework', array(
             // ...
-            'esi'    => array(),
+            'esi'    => array('enabled' => true),
         ));
 
 Now, suppose we have a page that is relatively static, except for a news
@@ -829,7 +829,7 @@ independent of the rest of the page.
 
     public function indexAction()
     {
-        $response = $this->renderView('MyBundle:MyController:index.html.twig');
+        $response = $this->renderView('My:MyController:index.html.twig');
         $response->setSharedMaxAge(600);
 
         return $response;

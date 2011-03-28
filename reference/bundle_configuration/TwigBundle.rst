@@ -51,7 +51,7 @@ TwigBundle Configuration Reference
         $container->loadFromExtension('twig', array(
             'form' => array(
                 'resources' => array(
-                    'MyBundle::form.html.twig',
+                    'My::form.html.twig',
                 )
              ),
              'extensions' => array(

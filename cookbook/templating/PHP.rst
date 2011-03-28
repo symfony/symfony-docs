@@ -20,7 +20,7 @@ template name instead of ``.twig``. The controller below renders the
 
     public function indexAction($name)
     {
-        return $this->render('HelloBundle:Hello:index.html.php', array('name' => $name));
+        return $this->render('Hello:Hello:index.html.php', array('name' => $name));
     }
 
 .. index::
@@ -40,11 +40,11 @@ the ``extend()`` call:
 .. code-block:: html+php
 
     <!-- src/Sensio/HelloBundle/Resources/views/Hello/index.html.php -->
-    <?php $view->extend('HelloBundle::layout.html.php') ?>
+    <?php $view->extend('Hello::layout.html.php') ?>
 
     Hello <?php echo $name ?>!
 
-The ``HelloBundle::layout.html.php`` notation sounds familiar, doesn't it? It
+The ``Hello::layout.html.php`` notation sounds familiar, doesn't it? It
 is the same notation used to reference a template. The ``::`` part simply
 means that the controller element is empty, so the corresponding file is
 directly stored under ``views/``.
@@ -102,7 +102,7 @@ decorating the template. In the ``index.html.php`` template, define a
 .. code-block:: html+php
 
     <!-- src/Sensio/HelloBundle/Resources/views/Hello/index.html.php -->
-    <?php $view->extend('HelloBundle::layout.html.php') ?>
+    <?php $view->extend('Hello::layout.html.php') ?>
 
     <?php $view['slots']->set('title', 'Hello World Application') ?>
 
@@ -151,9 +151,9 @@ And change the ``index.html.php`` template to include it:
 .. code-block:: html+php
 
     <!-- src/Sensio/HelloBundle/Resources/views/Hello/index.html.php -->
-    <?php $view->extend('HelloBundle::layout.html.php') ?>
+    <?php $view->extend('Hello::layout.html.php') ?>
 
-    <?php echo $view->render('HelloBundle:Hello:hello.html.php', array('name' => $name)) ?>
+    <?php echo $view->render('Hello:Hello:hello.html.php', array('name' => $name)) ?>
 
 The ``render()`` method evaluates and returns the content of another template
 (this is the exact same method as the one used in the controller).
@@ -174,9 +174,9 @@ If you create a ``fancy`` action, and want to include it into the
 .. code-block:: html+php
 
     <!-- src/Sensio/HelloBundle/Resources/views/Hello/index.html.php -->
-    <?php echo $view['actions']->render('HelloBundle:Hello:fancy', array('name' => $name, 'color' => 'green')) ?>
+    <?php echo $view['actions']->render('Hello:Hello:fancy', array('name' => $name, 'color' => 'green')) ?>
 
-Here, the ``HelloBundle:Hello:fancy`` string refers to the ``fancy`` action of the
+Here, the ``Hello:Hello:fancy`` string refers to the ``fancy`` action of the
 ``Hello`` controller::
 
     // src/Sensio/HelloBundle/Controller/HelloController.php
@@ -188,7 +188,7 @@ Here, the ``HelloBundle:Hello:fancy`` string refers to the ``fancy`` action of t
             // create some object, based on the $color variable
             $object = ...;
 
-            return $this->render('HelloBundle:Hello:fancy.html.php', array('name' => $name, 'object' => $object));
+            return $this->render('Hello:Hello:fancy.html.php', array('name' => $name, 'object' => $object));
         }
 
         // ...
@@ -232,7 +232,7 @@ pattern:
     # src/Sensio/HelloBundle/Resources/config/routing.yml
     hello: # The route name
         pattern:  /hello/{name}
-        defaults: { _controller: HelloBundle:Hello:index }
+        defaults: { _controller: Hello:Hello:index }
 
 Using Assets: images, JavaScripts, and stylesheets
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

@@ -111,7 +111,7 @@ skeleton:
 
 .. code-block:: jinja
 
-    {% extends 'WebProfilerBundle:Profiler:layout.html.twig' %}
+    {% extends 'WebProfiler:Profiler:layout.html.twig' %}
 
     {% block toolbar %}
         {# the web debug toolbar content #}
@@ -165,5 +165,5 @@ tag in your configuration:
 
         $container
             ->register('data_collector.your_collector_name', 'Fully\Qualified\Collector\Class\Name')
-            ->addTag('data_collector', array('template' => 'YourBundle:Collector:templatename', 'id' => 'your_collector_name'))
+            ->addTag('data_collector', array('template' => 'Your:Collector:templatename', 'id' => 'your_collector_name'))
         ;
