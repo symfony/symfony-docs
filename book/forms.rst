@@ -94,7 +94,7 @@ a controller:
             $form = $this->get('form.factory')
                 ->createBuilder('form')
                 ->add('name', 'text')
-                ->add('price', 'money')
+                ->add('price', 'money', array('currency' => 'USD'))
                 ->getForm();
 
             // create a product and give it some dummy data for this example
@@ -331,6 +331,83 @@ the common form fields and data types you'll encounter:
 .. include:: /reference/forms/types/map.rst.inc
 
 .. index::
+   single: Forms; Field type options
+
+Common Field Type Options
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+You may have noticed that the ``price`` field has been passed an array of
+options:
+
+.. code-block:: php
+
+    ->add('price', 'money', array('currency' => 'USD'))
+
+All fields have a number of different options. Many of them are specific
+to the specific type and details can be found in the documentation for those
+types. Some options, however, are shared between most fields:
+
+* ``required`` - The ``required`` option can be used to render an
+  `HTML5 required attribute`_. Note that this is independent from validation:
+  if you specify the required attribute on the field type but omit any required
+  validation, the object will validate with a blank value. A great way to
+  use this field is to apply validation to your class and then let it guess
+  the value for the ``required`` option automatically.
+
+* ``max_length`` - This option is used to add a ``max_length`` attribute,
+  which is used by some browsers to limit the amount of text in a field.
+
+.. index::
+   single: Forms; Field type guessing
+
+Field Type Guessing
+-------------------
+
+Now that you've added validation metadata to the ``Product`` class, Symfony
+already knows a bit about your fields. If you allow it, Symfony can "guess"
+the type of your field and set it up on your behalf. In this example, Symfony
+assumes that both the ``name`` and ``price`` fields are normal ``text``
+fields. Of course it's right about the ``name`` field, meaning that you can
+modify your code to allow the field to be setup automatically:
+
+.. code-block:: php
+
+    public function indexAction()
+    {
+        $form = $this->get('form.factory')
+            ->createBuilder('form', 'product', array(
+                'data_class' => 'Acme\StoreBundle\Entity\Product',
+            ))
+            ->add('name')
+            ->add('price', 'money', array('currency' => 'USD'))
+            ->getForm();
+    }
+
+You'll notice two differences immediately. First, a ``data_class`` option
+is passed when creating the form. This tells Symfony which class to look
+to when guessing the fields. This is required to take advantage of field
+guessing. Next, you can now omit the ``text`` option on the ``name`` field.
+This field is correctly guessed. The ``money`` type was kept, however, for
+the ``price`` field as it's more specific than what the system could guess
+(``text``).
+
+.. note::
+
+    The ``createBuilder()`` method takes up to three arguments (but only
+    the first is required):
+    
+     * the string ``form`` (meaning you're building a form);
+     
+     * a name for the form (e.g. ``product``), which impacts how the names
+       of the fields are rendered (e.g. `<input type="text" name="product[name]" />`);
+     
+     * an array of options for the form.
+
+This example is pretty trivial, but field guessing can be a major time saver.
+As you'll see later, adding Doctrine metadata can further improve the system's
+ability to guess field types.
+
+.. index::
    single: Forms; Rendering in a Template
 
 Rendering a Form in a Template
@@ -506,8 +583,15 @@ a new class that will house the logic for building the product form:
     {
         public function buildForm(FormBuilder $builder, array $options)
         {
-            $builder->add('name', 'text');
-            $builder->add('price', 'money');
+            $builder->add('name');
+            $builder->add('price', 'money', array('currency' => 'USD'));
+        }
+
+        public function getDefaultOptions(array $options)
+        {
+            return array(
+                'data_class' => 'Acme\StoreBundle\Entity\Product',
+            );
         }
     }
 
@@ -565,4 +649,6 @@ CSRF Protection
 Final Thoughts
 --------------
 
+
 .. _`Symfony2 Form Component`: https://github.com/symfony/Form
+.. _`HTML5 required attribute`: http://diveintohtml5.org/forms.html
