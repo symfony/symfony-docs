@@ -239,15 +239,15 @@ specific DBAL connection and all the EntityManagers that use this connection.
             my.listener:
                 class: MyEventListener
                 tags:
-                - { name: doctrine.common.event_listener }
+                    - { name: doctrine.common.event_listener }
             my.listener2:
                 class: MyEventListener2
                 tags:
-                - { name: doctrine.dbal.default_event_listener }
+                    - { name: doctrine.dbal.default_event_listener }
             my.subscriber:
                 class: MyEventSubscriber
                 tags:
-                - { name: doctrine.dbal.default_event_subscriber }
+                    - { name: doctrine.dbal.default_event_subscriber }
 
     .. code-block:: xml
 

@@ -204,7 +204,7 @@ portion of the website? You can use a request matcher:
         # combine rules
         framework:
             profiler:
-                matcher: { ip: 192.168.0.0/24, path: "^/admin/i" }
+                matcher: { ip: 192.168.0.0/24, path: "^/admin/" }
 
         # use a custom matcher instance defined in the "custom_matcher" service
         framework:

@@ -10,7 +10,7 @@ want to write tests on the profiling data as it gives you a great way to check
 various things and enforce some metrics.
 
 The Symfony2 :doc:`Profiler </book/internals/profiler>` gathers a lot of
-data for each request. Use these data to check the number of database calls,
+data for each request. Use this data to check the number of database calls,
 the time spent in the framework, ... But before writing assertions, always
 check that the profiler is indeed available (it is enabled by default in the
 ``test`` environment)::
@@ -53,7 +53,7 @@ finish. It's easy to achieve if you embed the token in the error message::
 
 .. note::
 
-    The profiler information are available even if you insulate the client or
+    The profiler information is available even if you insulate the client or
     if you use an HTTP layer for your tests.
 
 .. tip::

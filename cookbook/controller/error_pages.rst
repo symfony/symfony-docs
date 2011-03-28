@@ -29,6 +29,7 @@ end-user, create a new template located at
     <html>
         <head>
             <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+            <title>An Error Occurred: {{ status_text }}</title>
         </head>
         <body>
             <h1>Oops! An Error Occurred</h1>

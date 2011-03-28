@@ -56,6 +56,14 @@ Glossary
         that each may have. For more information, read the `Http Wikipedia`_
         article or the `HTTP 1.1 RFC`_.
 
+    Environment
+        An environment is a string (e.g. ``prod`` or ``dev``) that corresponds
+        to a specific set of configuration. The same application can be run
+        on the same machine using different configuration by running the application
+        in different environments. This is useful as it allows a single application
+        to have a ``dev`` environment built for debugging and a ``prod`` environment
+        that's optimized for speed.
+
 .. _`service-oriented architecture`: http://wikipedia.org/wiki/Service-oriented_architecture
 .. _`HTTP Wikipedia`: http://en.wikipedia.org/wiki/Hypertext_Transfer_Protocol
 .. _`HTTP 1.1 RFC`: http://www.w3.org/Protocols/rfc2616/rfc2616.html

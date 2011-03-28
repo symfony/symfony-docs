@@ -22,6 +22,7 @@ Cookbook
     profiler/data_collector
     bundles/extension
     request/mime_type
+    security/voters
     symfony1
 
 .. include:: map.rst.inc
