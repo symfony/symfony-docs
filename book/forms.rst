@@ -269,6 +269,11 @@ number:
             <property name="name">
                 <constraint name="NotBlank" />
             </property>
+            <property name="price">
+                <constraint name="Min">
+                    <value>0</value>
+                </constraint>
+            </property>
         </class>
 
     .. code-block:: php-annotations
