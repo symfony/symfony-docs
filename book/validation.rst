@@ -145,7 +145,7 @@ a template and passing in the ``$errorList`` variable:
 .. code-block:: php
 
     if (count($errorList) > 0) {
-        return $this->render('AcmeBlogBundle:Author:validate.html.twig', array(
+        return $this->render('AcmeBlog:Author:validate.html.twig', array(
             'errorList' => $errorList,
         ));
     } else {
@@ -201,7 +201,7 @@ objects that can then be displayed with your form:
         // process the Author object
     } else {
         // render the template with the errors
-        $this->render('BlogBundle:Author:form.html.twig', array('form' => $form));
+        $this->render('AcmeBlog:Author:form.html.twig', array('form' => $form));
     }
 
 For more information, see the :doc:`Forms</book/forms/overview>` chapter.

@@ -141,20 +141,20 @@ but let's create a simple route to our controller:
         # src/Sensio/HelloBundle/Resources/config/routing.yml
         hello:
             pattern:      /hello/{name}
-            defaults:     { _controller: HelloBundle:Hello:index }
+            defaults:     { _controller: Hello:Hello:index }
 
     .. code-block:: xml
 
         <!-- src/Sensio/HelloBundle/Resources/config/routing.xml -->
         <route id="hello" pattern="/hello/{name}">
-            <default key="_controller">HelloBundle:Hello:index</default>
+            <default key="_controller">Hello:Hello:index</default>
         </route>
 
     .. code-block:: php
 
         // src/Sensio/HelloBundle/Resources/config/routing.php
         $collection->add('hello', new Route('/hello/{name}', array(
-            '_controller' => 'HelloBundle:Hello:index',
+            '_controller' => 'Hello:Hello:index',
         )));
 
 Going to ``/hello/ryan`` now executes the ``HelloController::indexAction()``
@@ -162,7 +162,7 @@ controller and passes in ``ryan`` for the ``$name`` variable. Creating a
 "page" means simply creating a controller method and associated route. There's
 no hidden layers or behind-the-scenes magic.
 
-Notice the syntax used to refer to the controller: ``HelloBundle:Hello:index``.
+Notice the syntax used to refer to the controller: ``Hello:Hello:index``.
 Symfony2 uses a flexible string notation to refer to different controllers.
 This is the most common syntax and tells Symfony2 to look for a controller
 class called ``HelloController`` inside a bundle named ``HelloBundle``. The
@@ -187,7 +187,7 @@ see :ref:`controller-string-syntax`.
 Route Parameters as Controller Arguments
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-We already know now that the ``_controller`` parameter ``HelloBundle:Hello:index``
+We already know now that the ``_controller`` parameter ``Hello:Hello:index``
 refers to a ``HelloController::indexAction()`` method that lives inside the
 ``HelloBundle`` bundle. What's more interesting is the arguments that are
 passed to that method:
@@ -221,13 +221,13 @@ example:
         # src/Sensio/HelloBundle/Resources/config/routing.yml
         hello:
             pattern:      /hello/{first_name}/{last_name}
-            defaults:     { _controller: HelloBundle:Hello:index, color: green }
+            defaults:     { _controller: Hello:Hello:index, color: green }
 
     .. code-block:: xml
 
         <!-- src/Sensio/HelloBundle/Resources/config/routing.xml -->
         <route id="hello" pattern="/hello/{first_name}/{last_name}">
-            <default key="_controller">HelloBundle:Hello:index</default>
+            <default key="_controller">Hello:Hello:index</default>
             <default key="color">green</default>
         </route>
 
@@ -235,7 +235,7 @@ example:
 
         // src/Sensio/HelloBundle/Resources/config/routing.php
         $collection->add('hello', new Route('/hello/{first_name}/{last_name}', array(
-            '_controller' => 'HelloBundle:Hello:index',
+            '_controller' => 'Hello:Hello:index',
             'color'       => 'green',
         )));
 
@@ -414,7 +414,7 @@ object is the end-product of the internal sub-request::
 
     public function indexAction($name)
     {
-        $response = $this->forward('HelloBundle:Hello:fancy', array(
+        $response = $this->forward('Hello:Hello:fancy', array(
             'name'  => $name,
             'color' => 'green'
         ));
@@ -449,7 +449,7 @@ value to each variable.
     object::
     
         $httpKernel = $this->container->get('http_kernel');
-        $response = $httpKernel->forward('HelloBundle:Hello:fancy', array(
+        $response = $httpKernel->forward('Hello:Hello:fancy', array(
             'name'  => $name,
             'color' => 'green',
         ));
@@ -467,14 +467,14 @@ that's responsible for generating the HTML (or other format) for the controller.
 The ``renderView()`` method renders a template and returns its content. The
 content from the template can be used to create a ``Response`` object::
 
-    $content = $this->renderView('HelloBundle:Hello:index.html.twig', array('name' => $name));
+    $content = $this->renderView('Hello:Hello:index.html.twig', array('name' => $name));
 
     return new Response($content);
 
 This can even be done in just one step with the ``render()`` method, which
 returns a ``Response`` object with the content from the template::
 
-    return $this->render('HelloBundle:Hello:index.html.twig', array('name' => $name));
+    return $this->render('Hello:Hello:index.html.twig', array('name' => $name));
 
 The Symfony templating engine is explained in great detail in the :doc:`Templating </book/templating>`
 chapter.
@@ -485,7 +485,7 @@ chapter.
     service. The ``templating`` service can also be used directly::
     
         $templating = $this->get('templating');
-        $content = $templating->render('HelloBundle:Hello:index.html.twig', array('name' => $name));
+        $content = $templating->render('Hello:Hello:index.html.twig', array('name' => $name));
 
 .. index::
    single: Controller; Accessing services

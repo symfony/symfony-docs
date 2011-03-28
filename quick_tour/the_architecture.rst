@@ -194,7 +194,7 @@ PHP. Have a look at the default configuration:
             entity_managers:
                 default:
                     mappings:
-                        AcmeDemoBundle: ~
+                        AcmeDemo: ~
 
     # Swiftmailer Configuration
     swiftmailer:
@@ -249,17 +249,17 @@ to the bundle inheritance tree.
 When you want to reference a file from a bundle, use this notation:
 ``@BUNDLE_NAME/PATH_TO_FILE``; Symfony2 will expand ``@BUNDLE_NAME`` to the
 path to the bundle. For instance, it converts
-``@AcmeDemoBundle/Controller/DemoController.php`` to
+``@AcmeDemo/Controller/DemoController.php`` to
 ``src/Acme/DemoBundle/Controller/DemoController.php``.
 
 For controllers, you need to reference method names:
 ``BUNDLE_NAME:CONTROLLER_NAME:ACTION_NAME``. For instance,
-``AcmeDemoBundle:Welcome:index`` means the ``indexAction`` method from the
+``AcmeDemo:Welcome:index`` means the ``indexAction`` method from the
 ``Acme\DemoBundle\Controller\WelcomeController`` class.
 
 For templates, it is even more interesting as templates do not need to be
 stored on the filesystem. You can easily store them in a database table for
-instance. For instance, ``AcmeDemoBundle:Welcome:index.html.twig`` is
+instance. For instance, ``AcmeDemo:Welcome:index.html.twig`` is
 converted to ``src/Acme/DemoBundle/Resources/views/Welcome/index.html.twig``.
 
 Do you understand now why Symfony2 is so flexible? Share your bundles between

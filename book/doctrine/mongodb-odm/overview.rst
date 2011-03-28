@@ -24,7 +24,7 @@ just need to enable it and specify the bundle that contains your mapped document
         document_managers:
             default:
                 mappings:
-                    HelloBundle: ~
+                    Hello: ~
 
 Now you can start writing documents and mapping them with annotations, xml or
 yaml.
@@ -145,7 +145,7 @@ Now, use your document and manage its persistent state with Doctrine:
         public function editAction($id)
         {
             $dm = $this->get('doctrine.odm.mongodb.document_manager');
-            $user = $dm->createQuery('find all from HelloBundle:User where id = ?', $id);
+            $user = $dm->createQuery('find all from Hello:User where id = ?', $id);
             $user->setBody('new body');
             $dm->flush();
 
@@ -155,7 +155,7 @@ Now, use your document and manage its persistent state with Doctrine:
         public function deleteAction($id)
         {
             $dm = $this->get('doctrine.odm.entity_manager');
-            $user = $dm->createQuery('find all from HelloBundle:User where id = ?', $id);
+            $user = $dm->createQuery('find all from Hello:User where id = ?', $id);
             $dm->remove($user);
             $dm->flush();
 

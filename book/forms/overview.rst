@@ -101,7 +101,7 @@ The standard pattern for using a form in a controller looks like this:
         }
 
         // Display the form with the values in $contactRequest
-        return $this->render('HelloBundle:Hello:contact.html.twig', array(
+        return $this->render('Hello:Hello:contact.html.twig', array(
             'form' => $form
         ));
     }
@@ -306,7 +306,7 @@ of the form.
 .. code-block:: html+jinja
 
     # src/Sensio/HelloBundle/Resources/views/Hello/contact.html.twig
-    {% extends 'HelloBundle::layout.html.twig' %}
+    {% extends 'Hello::layout.html.twig' %}
 
     {% block content %}
     <form action="#" method="post">
@@ -325,7 +325,7 @@ can do so by using the other built-in form rendering helpers.
 .. code-block:: html+jinja
 
     # src/Sensio/HelloBundle/Resources/views/Hello/contact.html.twig
-    {% extends 'HelloBundle::layout.html.twig' %}
+    {% extends 'Hello::layout.html.twig' %}
 
     {% block content %}
     <form action="#" method="post" {{ form_enctype(form) }}>

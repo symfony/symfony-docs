@@ -116,16 +116,16 @@ defined in ``app/config/routing.yml`` configuration file:
     # app/config/routing.yml
     _welcome:
         pattern:  /
-        defaults: { _controller: AcmeDemoBundle:Welcome:index }
+        defaults: { _controller: AcmeDemo:Welcome:index }
 
     _demo:
-        resource: "@AcmeDemoBundle/Controller/DemoController.php"
+        resource: "@AcmeDemo/Controller/DemoController.php"
         type:     annotation
         prefix:   /demo
 
 The first three lines of the routing configuration file define the code that
 is executed when the user requests the "``/``" resource (i.e. the welcome
-page). When requested, the ``AcmeDemoBundle:Welcome:index`` controller will be
+page). When requested, the ``AcmeDemo:Welcome:index`` controller will be
 executed.
 
 .. tip::
@@ -161,7 +161,7 @@ controller creates the response by hand, based on the request::
     powerful at the same time.
 
 Symfony2 chooses the controller based on the ``_controller`` value from the
-routing configuration: ``AcmeDemoBundle:Welcome:index``. This string is the
+routing configuration: ``AcmeDemo:Welcome:index``. This string is the
 controller *logical name*, and it references the ``indexAction`` method from
 the ``Acme\DemoBundle\Controller\WelcomeController`` class::
 
@@ -174,7 +174,7 @@ the ``Acme\DemoBundle\Controller\WelcomeController`` class::
     {
         public function indexAction()
         {
-            return $this->render('AcmeDemoBundle:Welcome:index.html.twig');
+            return $this->render('AcmeDemo:Welcome:index.html.twig');
         }
     }
 
@@ -189,13 +189,13 @@ The controller class extends the built-in ``Controller`` class, which provides
 useful shortcut methods, like the
 :method:`Symfony\\Bundle\\FrameworkBundle\\Controller\\Controller::render`
 method that loads and renders a template
-(``AcmeDemoBundle:Welcome:index.html.twig``). The returned value is a Response
+(``AcmeDemo:Welcome:index.html.twig``). The returned value is a Response
 object populated with the rendered content. So, if the needs arise, the
 Response can be tweaked before it is sent to the browser::
 
     public function indexAction()
     {
-        $response = $this->render('AcmeDemoBundle:Welcome:index.txt.twig');
+        $response = $this->render('AcmeDemo:Welcome:index.txt.twig');
         $response->headers->set('Content-Type', 'text/plain');
 
         return $response;
@@ -207,7 +207,7 @@ Response can be tweaked before it is sent to the browser::
     a controller can be a plain PHP function or even a PHP closure. "`The Controller`_"
     chapter of the book tells you everything about Symfony2 controllers.
 
-The template name, ``AcmeDemoBundle:Welcome:index.html.twig``, is the template
+The template name, ``AcmeDemo:Welcome:index.html.twig``, is the template
 *logical name* and it references the
 ``src/Acme/DemoBundle/Resources/views/Welcome/index.html.twig`` file. Again,
 the bundles section below will explain you why this is useful.
@@ -218,13 +218,13 @@ Now, take a look at the end of the routing configuration again:
 
     # app/config/routing.yml
     _demo:
-        resource: "@AcmeDemoBundle/Controller/DemoController.php"
+        resource: "@AcmeDemo/Controller/DemoController.php"
         type:     annotation
         prefix:   /demo
 
 Symfony2 can read the routing information from different resources written in
 YAML, XML, PHP, or even embedded in PHP annotations. Here, the resource
-*logical name* is ``@AcmeDemoBundle/Controller/DemoController.php`` and refers
+*logical name* is ``@AcmeDemo/Controller/DemoController.php`` and refers
 to the ``src/Acme/DemoBundle/Controller/DemoController.php`` file. In this
 file, routes are defined as annotations on action methods::
 
@@ -271,12 +271,12 @@ Templates
 
 The controller renders the
 ``src/Acme/DemoBundle/Resources/views/Demo/hello.html.twig`` template (or
-``AcmeDemoBundle:Demo:hello.html.twig`` if you use the logical name):
+``AcmeDemo:Demo:hello.html.twig`` if you use the logical name):
 
 .. code-block:: jinja
 
     {# src/Acme/DemoBundle/Resources/views/Demo/hello.html.twig #}
-    {% extends "AcmeDemoBundle::layout.html.twig" %}
+    {% extends "AcmeDemo::layout.html.twig" %}
 
     {% block title "Hello " ~ name %}
 

@@ -69,7 +69,7 @@ has the URI ``/blog/my-blog-post``, the following route would be matched:
 
         blog_show:
             pattern:   /blog/{slug}
-            defaults:  { _controller: MyBlogBundle:Blog:show }
+            defaults:  { _controller: MyBlog:Blog:show }
 
     .. code-block:: xml
 
@@ -80,7 +80,7 @@ has the URI ``/blog/my-blog-post``, the following route would be matched:
             xsi:schemaLocation="http://symfony.com/schema/routing http://symfony.com/schema/routing/routing-1.0.xsd">
 
             <route id="blog_show" pattern="/blog/{slug}">
-                <default key="_controller">MyBlogBundle:Blog:show</default>
+                <default key="_controller">MyBlog:Blog:show</default>
             </route>
         </routes>
 
@@ -91,7 +91,7 @@ has the URI ``/blog/my-blog-post``, the following route would be matched:
 
         $collection = new RouteCollection();
         $collection->add('blog_show', new Route('/blog/{slug}', array(
-            '_controller' => 'MyBlogBundle:Blog:show',
+            '_controller' => 'MyBlog:Blog:show',
         )));
 
         return $collection;
@@ -166,7 +166,7 @@ parts: the ``pattern`` to match and the ``defaults`` collection:
 
         homepage:
             pattern:   /
-            defaults:  { _controller: MyBundle:Main:homepage }
+            defaults:  { _controller: My:Main:homepage }
 
     .. code-block:: xml
 
@@ -177,7 +177,7 @@ parts: the ``pattern`` to match and the ``defaults`` collection:
             xsi:schemaLocation="http://symfony.com/schema/routing http://symfony.com/schema/routing/routing-1.0.xsd">
 
             <route id="homepage" pattern="/">
-                <default key="_controller">MyBundle:Main:homepage</default>
+                <default key="_controller">My:Main:homepage</default>
             </route>
 
         </routes>
@@ -189,13 +189,13 @@ parts: the ``pattern`` to match and the ``defaults`` collection:
 
         $collection = new RouteCollection();
         $collection->add('homepage', new Route('/', array(
-            '_controller' => 'FrameworkBundle:Default:index',
+            '_controller' => 'Framework:Default:index',
         )));
 
         return $collection;
 
 This route matches the homepage (``/``) and specifies the ``_controller``
-``MyBundle:Main:homepage``. The ``_controller`` string is translated by
+``My:Main:homepage``. The ``_controller`` string is translated by
 Symfony2 into an actual PHP callable and executed. That part of the routing
 process will be explained in the `Routes and Controllers`_ section.
 
@@ -214,7 +214,7 @@ routes will contain one or more named "wildcards" placeholders:
 
         blog_show:
             pattern:   /blog/{slug}
-            defaults:  { _controller: MyBlogBundle:Blog:show }
+            defaults:  { _controller: MyBlog:Blog:show }
 
     .. code-block:: xml
 
@@ -225,7 +225,7 @@ routes will contain one or more named "wildcards" placeholders:
             xsi:schemaLocation="http://symfony.com/schema/routing http://symfony.com/schema/routing/routing-1.0.xsd">
 
             <route id="blog_show" pattern="/blog/{slug}">
-                <default key="_controller">MyBlogBundle:Blog:show</default>
+                <default key="_controller">MyBlog:Blog:show</default>
             </route>
         </routes>
 
@@ -236,7 +236,7 @@ routes will contain one or more named "wildcards" placeholders:
 
         $collection = new RouteCollection();
         $collection->add('blog_show', new Route('/blog/{slug}', array(
-            '_controller' => 'MyBlogBundle:Blog:show',
+            '_controller' => 'MyBlog:Blog:show',
         )));
 
         return $collection;
@@ -262,7 +262,7 @@ available blog posts in some imaginary blog application:
 
         blog:
             pattern:   /blog
-            defaults:  { _controller: MyBlogBundle:Blog:index }
+            defaults:  { _controller: MyBlog:Blog:index }
 
     .. code-block:: xml
 
@@ -273,7 +273,7 @@ available blog posts in some imaginary blog application:
             xsi:schemaLocation="http://symfony.com/schema/routing http://symfony.com/schema/routing/routing-1.0.xsd">
 
             <route id="blog" pattern="/blog">
-                <default key="_controller">MyBlogBundle:Blog:index</default>
+                <default key="_controller">MyBlog:Blog:index</default>
             </route>
         </routes>
 
@@ -284,7 +284,7 @@ available blog posts in some imaginary blog application:
 
         $collection = new RouteCollection();
         $collection->add('blog', new Route('/blog', array(
-            '_controller' => 'MyBlogBundle:Blog:index',
+            '_controller' => 'MyBlog:Blog:index',
         )));
 
         return $collection;
@@ -299,7 +299,7 @@ needs to support pagination:
 
         blog:
             pattern:   /blog/{page}
-            defaults:  { _controller: MyBlogBundle:Blog:index }
+            defaults:  { _controller: MyBlog:Blog:index }
 
     .. code-block:: xml
 
@@ -310,7 +310,7 @@ needs to support pagination:
             xsi:schemaLocation="http://symfony.com/schema/routing http://symfony.com/schema/routing/routing-1.0.xsd">
 
             <route id="blog" pattern="/blog/{page}">
-                <default key="_controller">MyBlogBundle:Blog:index</default>
+                <default key="_controller">MyBlog:Blog:index</default>
             </route>
         </routes>
 
@@ -321,7 +321,7 @@ needs to support pagination:
 
         $collection = new RouteCollection();
         $collection->add('blog', new Route('/blog/{page}', array(
-            '_controller' => 'MyBlogBundle:Blog:index',
+            '_controller' => 'MyBlog:Blog:index',
         )));
 
         return $collection;
@@ -342,7 +342,7 @@ including it in the ``defaults`` collection:
 
         blog:
             pattern:   /blog/{page}
-            defaults:  { _controller: MyBlogBundle:Blog:index, page: 1 }
+            defaults:  { _controller: MyBlog:Blog:index, page: 1 }
 
     .. code-block:: xml
 
@@ -353,7 +353,7 @@ including it in the ``defaults`` collection:
             xsi:schemaLocation="http://symfony.com/schema/routing http://symfony.com/schema/routing/routing-1.0.xsd">
 
             <route id="blog" pattern="/blog/{page}">
-                <default key="_controller">MyBlogBundle:Blog:index</default>
+                <default key="_controller">MyBlog:Blog:index</default>
                 <default key="page">1</default>
             </route>
         </routes>
@@ -365,7 +365,7 @@ including it in the ``defaults`` collection:
 
         $collection = new RouteCollection();
         $collection->add('blog', new Route('/blog/{page}', array(
-            '_controller' => 'MyBlogBundle:Blog:index',
+            '_controller' => 'MyBlog:Blog:index',
             'page' => 1,
         )));
 
@@ -390,11 +390,11 @@ Take a look at the routes that have been created so far:
 
         blog:
             pattern:   /blog/{page}
-            defaults:  { _controller: MyBlogBundle:Blog:index, page: 1 }
+            defaults:  { _controller: MyBlog:Blog:index, page: 1 }
 
         blog_show:
             pattern:   /blog/{slug}
-            defaults:  { _controller: MyBlogBundle:Blog:show }
+            defaults:  { _controller: MyBlog:Blog:show }
 
     .. code-block:: xml
 
@@ -405,12 +405,12 @@ Take a look at the routes that have been created so far:
             xsi:schemaLocation="http://symfony.com/schema/routing http://symfony.com/schema/routing/routing-1.0.xsd">
 
             <route id="blog" pattern="/blog/{page}">
-                <default key="_controller">MyBlogBundle:Blog:index</default>
+                <default key="_controller">MyBlog:Blog:index</default>
                 <default key="page">1</default>
             </route>
 
             <route id="blog_show" pattern="/blog/{slug}">
-                <default key="_controller">MyBlogBundle:Blog:show</default>
+                <default key="_controller">MyBlog:Blog:show</default>
             </route>
         </routes>
 
@@ -421,12 +421,12 @@ Take a look at the routes that have been created so far:
 
         $collection = new RouteCollection();
         $collection->add('blog', new Route('/blog/{page}', array(
-            '_controller' => 'MyBlogBundle:Blog:index',
+            '_controller' => 'MyBlog:Blog:index',
             'page' => 1,
         )));
 
         $collection->add('blog_show', new Route('/blog/{show}', array(
-            '_controller' => 'MyBlogBundle:Blog:show',
+            '_controller' => 'MyBlog:Blog:show',
         )));
 
         return $collection;
@@ -449,7 +449,7 @@ requirements can easily be added for each parameter. For example:
 
         blog:
             pattern:   /blog/{page}
-            defaults:  { _controller: MyBlogBundle:Blog:index, page: 1 }
+            defaults:  { _controller: MyBlog:Blog:index, page: 1 }
             requirements:
                 page:  \d+
 
@@ -462,7 +462,7 @@ requirements can easily be added for each parameter. For example:
             xsi:schemaLocation="http://symfony.com/schema/routing http://symfony.com/schema/routing/routing-1.0.xsd">
 
             <route id="blog" pattern="/blog/{page}">
-                <default key="_controller">MyBlogBundle:Blog:index</default>
+                <default key="_controller">MyBlog:Blog:index</default>
                 <default key="page">1</default>
                 <requirement key="page">\d+</requirement>
             </route>
@@ -475,7 +475,7 @@ requirements can easily be added for each parameter. For example:
 
         $collection = new RouteCollection();
         $collection->add('blog', new Route('/blog/{page}', array(
-            '_controller' => 'MyBlogBundle:Blog:index',
+            '_controller' => 'MyBlog:Blog:index',
             'page' => 1,
         ), array(
             'page' => '\d+',
@@ -508,7 +508,7 @@ of your application is available in two different languages, based on the url:
 
         homepage:
             pattern:   /{culture}
-            defaults:  { _controller: MyBundle:Main:homepage, culture: en }
+            defaults:  { _controller: My:Main:homepage, culture: en }
             requirements:
                 culture:  en|fr
 
@@ -521,7 +521,7 @@ of your application is available in two different languages, based on the url:
             xsi:schemaLocation="http://symfony.com/schema/routing http://symfony.com/schema/routing/routing-1.0.xsd">
 
             <route id="homepage" pattern="/{culture}">
-                <default key="_controller">MyBundle:Main:homepage</default>
+                <default key="_controller">My:Main:homepage</default>
                 <default key="culture">en</default>
                 <requirement key="culture">en|fr</requirement>
             </route>
@@ -534,7 +534,7 @@ of your application is available in two different languages, based on the url:
 
         $collection = new RouteCollection();
         $collection->add('homepage', new Route('/{culture}', array(
-            '_controller' => 'MyBundle:Main:homepage',
+            '_controller' => 'My:Main:homepage',
             'culture' => 'en',
         ), array(
             'culture' => 'en|fr',
@@ -567,13 +567,13 @@ be accomplished with the following routing configuration:
 
         contact:
             pattern:  /contact
-            defaults: { _controller: MyBundle:Main:contact }
+            defaults: { _controller: My:Main:contact }
             requirements:
                 _method:  GET
 
         contact_process:
             pattern:  /contact
-            defaults: { _controller: MyBundle:Main:contactProcess }
+            defaults: { _controller: My:Main:contactProcess }
             requirements:
                 _method:  POST
 
@@ -586,12 +586,12 @@ be accomplished with the following routing configuration:
             xsi:schemaLocation="http://symfony.com/schema/routing http://symfony.com/schema/routing/routing-1.0.xsd">
 
             <route id="contact" pattern="/contact">
-                <default key="_controller">MyBundle:Main:contact</default>
+                <default key="_controller">My:Main:contact</default>
                 <requirement key="_method">GET</requirement>
             </route>
 
             <route id="contact_process" pattern="/contact">
-                <default key="_controller">MyBundle:Main:contactProcess</default>
+                <default key="_controller">My:Main:contactProcess</default>
                 <requirement key="_method">POST</requirement>
             </route>
         </routes>
@@ -603,13 +603,13 @@ be accomplished with the following routing configuration:
 
         $collection = new RouteCollection();
         $collection->add('contact', new Route('/contact', array(
-            '_controller' => 'MyBundle:Main:contact',
+            '_controller' => 'My:Main:contact',
         ), array(
             '_method' => 'GET',
         )));
 
         $collection->add('contact_process', new Route('/contact', array(
-            '_controller' => 'MyBundle:Main:contactProcess',
+            '_controller' => 'My:Main:contactProcess',
         ), array(
             '_method' => 'POST',
         )));
@@ -651,7 +651,7 @@ routing system can be:
 
         article_show:
           pattern:  /articles/{culture}/{year}/{title}.{_format}
-          defaults  { _controller: MyBundle:Article:show, _format: html }
+          defaults  { _controller: My:Article:show, _format: html }
           requirements:
               culture:  en|fr
               _format:  html|rss
@@ -666,7 +666,7 @@ routing system can be:
             xsi:schemaLocation="http://symfony.com/schema/routing http://symfony.com/schema/routing/routing-1.0.xsd">
 
             <route id="article_show" pattern="/articles/{culture}/{year}/{title}.{_format}">
-                <default key="_controller">MyBundle:Article:show</default>
+                <default key="_controller">My:Article:show</default>
                 <default key="_format">html</default>
                 <requirement key="culture">en|fr</requirement>
                 <requirement key="_format">html|rss</requirement>
@@ -681,7 +681,7 @@ routing system can be:
 
         $collection = new RouteCollection();
         $collection->add('homepage', new Route('/articles/{culture}/{year}/{title}.{_format}', array(
-            '_controller' => 'MyBundle:Article:show',
+            '_controller' => 'My:Article:show',
             '_format' => 'html',
         ), array(
             'culture' => 'en|fr',
@@ -730,7 +730,7 @@ can be easily accomplished:
 
         # app/config/routing.yml
         hello:
-            resource: "@SensioHelloBundle/Resources/config/routing.yml"
+            resource: "@SensioHello/Resources/config/routing.yml"
 
     .. code-block:: xml
 
@@ -741,7 +741,7 @@ can be easily accomplished:
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/routing http://symfony.com/schema/routing/routing-1.0.xsd">
 
-            <import resource="@SensioHelloBundle/Resources/config/routing.xml" />
+            <import resource="@SensioHello/Resources/config/routing.xml" />
         </routes>
 
     .. code-block:: php
@@ -751,12 +751,12 @@ can be easily accomplished:
         use Symfony\Component\Routing\Route;
 
         $collection = new RouteCollection();
-        $collection->addCollection($loader->import("@SensioHelloBundle/Resources/config/routing.php"));
+        $collection->addCollection($loader->import("@SensioHello/Resources/config/routing.php"));
 
         return $collection;
 
 
-The ``resource`` key loads the routing resource from the ``SensioHelloBundle``:
+The ``resource`` key loads the routing resource from the ``SensioHello``:
 
 .. configuration-block::
 
@@ -765,7 +765,7 @@ The ``resource`` key loads the routing resource from the ``SensioHelloBundle``:
         # src/Sensio/HelloBundle/Resources/config/routing.yml
         hello:
             pattern:  /hello/{name}
-            defaults: { _controller: SensioHelloBundle:Hello:index }
+            defaults: { _controller: SensioHello:Hello:index }
 
     .. code-block:: xml
 
@@ -777,7 +777,7 @@ The ``resource`` key loads the routing resource from the ``SensioHelloBundle``:
             xsi:schemaLocation="http://symfony.com/schema/routing http://symfony.com/schema/routing/routing-1.0.xsd">
 
             <route id="hello" pattern="/hello/{name}">
-                <default key="_controller">SensioHelloBundle:Hello:index</default>
+                <default key="_controller">SensioHello:Hello:index</default>
             </route>
         </routes>
 
@@ -789,7 +789,7 @@ The ``resource`` key loads the routing resource from the ``SensioHelloBundle``:
 
         $collection = new RouteCollection();
         $collection->add('hello', new Route('/hello/{name}', array(
-            '_controller' => 'SensioHelloBundle:Hello:index',
+            '_controller' => 'SensioHello:Hello:index',
         )));
 
         return $collection;
@@ -805,7 +805,7 @@ For example, suppose that we want the "hello" route to have a pattern of
 
         # app/config/routing.yml
         hello:
-            resource: "@SensioHelloBundle/Resources/config/routing.yml"
+            resource: "@SensioHello/Resources/config/routing.yml"
             prefix:   /admin
 
     .. code-block:: xml
@@ -817,7 +817,7 @@ For example, suppose that we want the "hello" route to have a pattern of
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/routing http://symfony.com/schema/routing/routing-1.0.xsd">
 
-            <import resource="@SensioHelloBundle/Resources/config/routing.xml" prefix="/admin" />
+            <import resource="@SensioHello/Resources/config/routing.xml" prefix="/admin" />
         </routes>
 
     .. code-block:: php
@@ -827,7 +827,7 @@ For example, suppose that we want the "hello" route to have a pattern of
         use Symfony\Component\Routing\Route;
 
         $collection = new RouteCollection();
-        $collection->addCollection($loader->import("@SensioHelloBundle/Resources/config/routing.php"), '/admin');
+        $collection->addCollection($loader->import("@SensioHello/Resources/config/routing.php"), '/admin');
 
         return $collection;
 
@@ -894,7 +894,7 @@ The ``bundle:controller:action`` syntax
 .......................................
 
 This syntax is the most common syntax, and the one used in the examples
-in this chapter. Specifically, the ``_controller`` string ``SensioBlogBundle:Blog:show``
+in this chapter. Specifically, the ``_controller`` string ``SensioBlog:Blog:show``
 translates to the following:
 
 * The name of the controller class is ``BlogController`` - a concatenation
@@ -911,7 +911,7 @@ translates to the following:
 
 In other words::
 
-    ``SensioBlogBundle:Blog:show``
+    ``SensioBlog:Blog:show``
 
 means that the following PHP method will be executed::
 
@@ -963,7 +963,7 @@ array of routing parameters, and parameters back to a URI. The
 system. Take the ``blog_show`` example route from earlier::
 
     $params = $router->match('/blog/my-blog-post');
-    // array('slug' => 'my-blog-post', '_controller' => 'MyBlogBundle:Blog:show')
+    // array('slug' => 'my-blog-post', '_controller' => 'MyBlog:Blog:show')
 
     $uri = $router->generate('blog_show', array('slug' => 'my-blog-post'));
     // /blog/my-blog-post

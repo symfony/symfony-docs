@@ -23,7 +23,7 @@ the ORM resolves to:
             entity_managers:
                 default:
                     mappings:
-                        HelloBundle: ~
+                        Hello: ~
                     metadata_cache_driver: array
                     query_cache_driver: array
                     result_cache_driver: array
@@ -53,7 +53,7 @@ The following example shows an overview of the caching configurations:
             entity_managers:
                 default:
                     mappings:
-                        HelloBundle: ~
+                        Hello: ~
                     metadata_cache_driver: apc
                     query_cache_driver: xcache
                     result_cache_driver:
