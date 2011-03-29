@@ -37,9 +37,9 @@ Here are some valid bundle namespaces and class names:
 =================================== ==============================
 Namespace                           Bundle Class Name
 =================================== ==============================
-``Acme\Bundle\BlogBundle``        ``AcmeBlogBundle``
-``Acme\Bundle\Social\BlogBundle`` ``AcmeSocialBlogBundle``
-``Acme\BlogBundle``               ``AcmeBlogBundle``
+``Acme\Bundle\BlogBundle``          ``AcmeBlogBundle``
+``Acme\Bundle\Social\BlogBundle``   ``AcmeSocialBlogBundle``
+``Acme\BlogBundle``                 ``AcmeBlogBundle``
 =================================== ==============================
 
 By convention, the ``getName()`` method of the bundle class should return the
