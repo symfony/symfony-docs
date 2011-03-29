@@ -897,19 +897,15 @@ This syntax is the most common syntax, and the one used in the examples
 in this chapter. Specifically, the ``_controller`` string ``SensioBlog:Blog:show``
 translates to the following:
 
-* The name of the controller class is ``BlogController`` - a concatenation
-  of the second portion of the ``_controller`` string (`` Blog``) and the word
-  ``Controller``.
+* ``SensioBlog`` - indicates that the controller lives inside the ``SensioBlogBundle``;
 
-* The namespace of the ``BlogController`` class is ``Sensio\BlogBundle\Controller`` -
-  a combination of the namespace of ``SensioBlogBundle`` and the sub-namespace
-  ``Controller``.
+* ``Blog`` - indicates that the class name of the controller is ``BlogController``;
 
-* The name of the method that will be executed is called ``showAction`` -
-  a concatenation of the third portion of the ``_controller`` string (``show``)
-  and the word ``Action``.
+* ``show`` - means that the name of the method that will be executed is
+  called ``showActions``.
 
-In other words::
+Every controller that follows this syntax will live inside the ``Controller``
+directory of the given bundle. In other words::
 
     ``SensioBlog:Blog:show``
 

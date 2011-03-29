@@ -166,9 +166,10 @@ directory; the ``Resources/doc/index.rst`` file is the only mandatory file.
 Controllers
 -----------
 
-Controllers in a bundle must not extend
-:class:`Symfony\\Bundle\\FrameworkBundle\\Controller\\Controller`. They can
-implement
+As a best practice, controllers in a bundle that's meant to be distributed
+to others must not extend the
+:class:`Symfony\\Bundle\\FrameworkBundle\\Controller\\Controller` base class.
+They can implement
 :class:`Symfony\\Foundation\\DependencyInjection\\ContainerAwareInterface` or
 extend :class:`Symfony\\Foundation\\DependencyInjection\\ContainerAware`
 instead.
