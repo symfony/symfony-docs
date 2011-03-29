@@ -28,7 +28,7 @@ necessary configuration is to specify the bundle name which contains your entiti
                 entity_managers:
                     default:
                         mappings:
-                            Hello: ~
+                            AcmeHello: ~
 
     .. code-block:: xml
 
@@ -38,7 +38,7 @@ necessary configuration is to specify the bundle name which contains your entiti
         <doctrine:config>
             <doctrine:orm default-entity-manager="default">
                 <doctrine:entity-manager name="default">
-                    <doctrine:mapping name="Hello" />
+                    <doctrine:mapping name="AcmeHello" />
                 </doctrine:entity-manager>
             </doctrine:orm>
         </doctrine:config>
@@ -49,7 +49,7 @@ necessary configuration is to specify the bundle name which contains your entiti
             "default_entity_manager" => "default",
             "entity_managers" => array(
                 "default => array(
-                    "mappings" => array("Hello" => array()),
+                    "mappings" => array("AcmeHello" => array()),
                 ),
             ),
         ));
@@ -59,8 +59,8 @@ any PHP class:
 
 .. code-block:: php
 
-    // Sensio/HelloBundle/Entity/User.php
-    namespace Sensio\HelloBundle\Entity;
+    // Acme/HelloBundle/Entity/User.php
+    namespace Acme\HelloBundle\Entity;
 
     class User
     {
@@ -97,8 +97,8 @@ write mapping information with annotations, XML, or YAML:
 
     .. code-block:: php-annotations
 
-        // Sensio/HelloBundle/Entity/User.php
-        namespace Sensio\HelloBundle\Entity;
+        // Acme/HelloBundle/Entity/User.php
+        namespace Acme\HelloBundle\Entity;
 
         /**
          * @orm:Entity
@@ -120,8 +120,8 @@ write mapping information with annotations, XML, or YAML:
 
     .. code-block:: yaml
 
-        # Sensio/HelloBundle/Resources/config/doctrine/metadata/orm/Sensio.HelloBundle.Entity.User.dcm.yml
-        Sensio\HelloBundle\Entity\User:
+        # Acme/HelloBundle/Resources/config/doctrine/metadata/orm/Acme.HelloBundle.Entity.User.dcm.yml
+        Acme\HelloBundle\Entity\User:
             type: entity
             table: user
             id:
@@ -136,13 +136,13 @@ write mapping information with annotations, XML, or YAML:
 
     .. code-block:: xml
 
-        <!-- Sensio/HelloBundle/Resources/config/doctrine/metadata/orm/Sensio.HelloBundle.Entity.User.dcm.xml -->
+        <!-- Acme/HelloBundle/Resources/config/doctrine/metadata/orm/Acme.HelloBundle.Entity.User.dcm.xml -->
         <doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
               xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
                             http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
 
-            <entity name="Sensio\HelloBundle\Entity\User" table="user">
+            <entity name="Acme\HelloBundle\Entity\User" table="user">
                 <id name="id" type="integer" column="id">
                     <generator strategy="AUTO"/>
                 </id>
@@ -174,10 +174,10 @@ Eventually, use your entity and manage its persistent state with Doctrine:
 
 .. code-block:: php
 
-    // Sensio/HelloBundle/Controller/UserController.php
-    namespace Sensio\HelloBundle\Controller;
+    // Acme/HelloBundle/Controller/UserController.php
+    namespace Acme\HelloBundle\Controller;
 
-    use Sensio\HelloBundle\Entity\User;
+    use Acme\HelloBundle\Entity\User;
 
     class UserController extends Controller
     {
@@ -196,7 +196,7 @@ Eventually, use your entity and manage its persistent state with Doctrine:
         public function editAction($id)
         {
             $em = $this->get('doctrine.orm.entity_manager');
-            $user = $em->find('Hello:User', $id);
+            $user = $em->find('AcmeHello:User', $id);
             $user->setBody('new body');
             $em->persist($user);
             $em->flush();
@@ -207,7 +207,7 @@ Eventually, use your entity and manage its persistent state with Doctrine:
         public function deleteAction($id)
         {
             $em = $this->get('doctrine.orm.entity_manager');
-            $user = $em->find('Hello:User', $id);
+            $user = $em->find('AcmeHello:User', $id);
             $em->remove($user);
             $em->flush();
 
@@ -222,7 +222,7 @@ entity:
 
 .. code-block:: php
 
-    namespace Sensio\HelloBundle\Entity;
+    namespace Acme\HelloBundle\Entity;
 
     /** @orm:Entity */
     class User

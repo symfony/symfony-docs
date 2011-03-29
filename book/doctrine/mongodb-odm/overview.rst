@@ -24,7 +24,7 @@ just need to enable it and specify the bundle that contains your mapped document
         document_managers:
             default:
                 mappings:
-                    Hello: ~
+                    AcmeHello: ~
 
 Now you can start writing documents and mapping them with annotations, xml or
 yaml.
@@ -33,9 +33,9 @@ yaml.
 
     .. code-block:: php-annotations
 
-        // Sensio/HelloBundle/Document/User.php
+        // Acme/HelloBundle/Document/User.php
 
-        namespace Sensio\HelloBundle\Document;
+        namespace Acme\HelloBundle\Document;
 
         /**
          * @mongodb:Document(collection="users")
@@ -85,8 +85,8 @@ yaml.
 
     .. code-block:: yaml
 
-        # Sensio/HelloBundle/Resources/config/doctrine/metadata/mongodb/Sensio.HelloBundle.Document.User.dcm.yml
-        Sensio\HelloBundle\Document\User:
+        # Acme/HelloBundle/Resources/config/doctrine/metadata/mongodb/Acme.HelloBundle.Document.User.dcm.yml
+        Acme\HelloBundle\Document\User:
             type: document
             collection: user
             fields:
@@ -98,13 +98,13 @@ yaml.
 
     .. code-block:: xml
 
-        <!-- Sensio/HelloBundle/Resources/config/doctrine/metadata/mongodb/Sensio.HelloBundle.Document.User.dcm.xml -->
+        <!-- Acme/HelloBundle/Resources/config/doctrine/metadata/mongodb/Acme.HelloBundle.Document.User.dcm.xml -->
         <doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
               xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
                             http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
 
-            <document name="Sensio\HelloBundle\Document\User" collection="user">
+            <document name="Acme\HelloBundle\Document\User" collection="user">
                 <field name="id" id="true" />
                 <field name="name" type="string" length="255" />
             </document>
@@ -126,7 +126,7 @@ Now, use your document and manage its persistent state with Doctrine:
 
 .. code-block:: php
 
-    use Sensio\HelloBundle\Document\User;
+    use Acme\HelloBundle\Document\User;
 
     class UserController extends Controller
     {
@@ -145,7 +145,7 @@ Now, use your document and manage its persistent state with Doctrine:
         public function editAction($id)
         {
             $dm = $this->get('doctrine.odm.mongodb.document_manager');
-            $user = $dm->createQuery('find all from Hello:User where id = ?', $id);
+            $user = $dm->createQuery('find all from AcmeHello:User where id = ?', $id);
             $user->setBody('new body');
             $dm->flush();
 
@@ -155,7 +155,7 @@ Now, use your document and manage its persistent state with Doctrine:
         public function deleteAction($id)
         {
             $dm = $this->get('doctrine.odm.entity_manager');
-            $user = $dm->createQuery('find all from Hello:User where id = ?', $id);
+            $user = $dm->createQuery('find all from AcmeHello:User where id = ?', $id);
             $dm->remove($user);
             $dm->flush();
 

@@ -36,8 +36,8 @@ not exceed a maximum size of 128 kilobytes and is a PDF document.
 
     .. code-block:: xml
 
-        <!-- Sensio/HelloBundle/Resources/config/validation.xml -->
-        <class name="Sensio\HelloBundle\Author">
+        <!-- src/Acme/HelloBundle/Resources/config/validation.xml -->
+        <class name="Acme\HelloBundle\Author">
             <property name="filename">
                 <constraint name="File">
                     <option name="maxSize">128k</option>
@@ -51,7 +51,7 @@ not exceed a maximum size of 128 kilobytes and is a PDF document.
 
     .. code-block:: php-annotations
 
-        // Sensio/HelloBundle/Author.php
+        // src/Acme/HelloBundle/Author.php
         class Author
         {
             /**
@@ -65,7 +65,7 @@ not exceed a maximum size of 128 kilobytes and is a PDF document.
 
     .. code-block:: php
 
-        // Sensio/HelloBundle/Author.php
+        // src/Acme/HelloBundle/Author.php
         use Symfony\Component\Validator\Mapping\ClassMetadata;
         use Symfony\Component\Validator\Constraints\File;
         
@@ -90,5 +90,5 @@ constraints, a proper error message is returned by the validator:
 
 .. code-block:: text
 
-    Sensio\HelloBundle\Author.filename:
+    Acme\HelloBundle\Author.filename:
         The file is too large (150 kB). Allowed maximum size is 128 kB

@@ -31,11 +31,11 @@ To define a semantic configuration, create a Dependency Injection extension
 that extends
 :class:`Symfony\\Component\\DependencyInjection\\Extension\\Extension`::
 
-    // HelloBundle/DependencyInjection/HelloExtension.php
+    // Acme/HelloBundle/DependencyInjection/HelloExtension.php
     use Symfony\Component\DependencyInjection\Extension\Extension;
     use Symfony\Component\DependencyInjection\ContainerBuilder;
 
-    class HelloExtension extends Extension
+    class AcmeHelloExtension extends Extension
     {
         public function load(array $configs, ContainerBuilder $container)
         {
@@ -177,10 +177,10 @@ When creating an extension, follow these simple conventions:
 * The extension must be stored in the ``DependencyInjection`` sub-namespace;
 
 * The extension must be named after the bundle name and suffixed with
-  ``Extension`` (``SensioHelloExtension`` for ``SensioHelloBundle``);
+  ``Extension`` (``AcmeHelloExtension`` for ``AcmeHelloBundle``);
 
-* The alias must be unique and named after the bundle name (``sensio_blog``
-  for ``SensioBlogBundle``);
+* The alias must be unique and named after the bundle name (``acme_hello``
+  for ``AcmeHelloBundle``);
 
 * The extension should provide an XSD schema.
 
@@ -188,7 +188,7 @@ If you follow these simple conventions, your extensions will be registered
 automatically by Symfony2. If not, override the Bundle
 :method:`Symfony\\Component\\HttpKernel\\Bundle\\Bundle::build` method::
 
-    class HelloBundle extends Bundle
+    class AcmeHelloBundle extends Bundle
     {
         public function build(ContainerBuilder $container)
         {

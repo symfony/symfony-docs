@@ -99,7 +99,8 @@ Configuration Reference
                     host: mydomain.foo
                     ip: 192.0.0.0/8
                     attributes:
-                        _controller: SomeController
+                        # a key to some controller
+                        _controller: AcmeDemo:Demo:access
                     roles: [ROLE_A, ROLE_B]
                     requires_channel: https
 

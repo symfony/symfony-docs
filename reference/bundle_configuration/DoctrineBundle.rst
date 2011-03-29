@@ -33,7 +33,7 @@ Configuration Reference
                     conn1:
                         # ...
                 types:
-                    custom: Sensio\HelloBundle\MyCustomType
+                    custom: Acme\HelloBundle\MyCustomType
             orm:
                 auto_generate_proxy_classes:    true
                 proxy_namespace:                Proxies
@@ -45,7 +45,7 @@ Configuration Reference
                         # The name of a DBAL connection (the one marked as default is used if not set)
                         connection:                     conn1
                         mappings: # Required
-                            Hello: ~
+                            AcmeHello: ~
                         class_metadata_factory_name:    Doctrine\ORM\Mapping\ClassMetadataFactory
                         # All cache drivers have to be array, apc, xcache or memcache
                         metadata_cache_driver:          array
@@ -87,13 +87,13 @@ Configuration Reference
                         platform-service="MyOwnDatabasePlatformService"
                     />
                     <doctrine:connection name="conn1" />
-                    <doctrine:type name="custom" class="Sensio\HelloBundle\MyCustomType" />
+                    <doctrine:type name="custom" class="Acme\HelloBundle\MyCustomType" />
                 </doctrine:dbal>
 
                 <doctrine:orm default-entity-manager="default" auto-generate-proxy-classes="true" proxy-namespace="Proxies" proxy-dir="%kernel.cache_dir%/doctrine/orm/Proxies">
                     <doctrine:entity-manager name="default" query-cache-driver="array" result-cache-driver="array" connection="conn1" class-metadata-factory-name="Doctrine\ORM\Mapping\ClassMetadataFactory">
                         <doctrine:metadata-cache-driver type="memcache" host="localhost" port="11211" instance-class="Memcache" class="Doctrine\Common\Cache\MemcacheCache" />
-                        <doctrine:mapping name="Hello" />
+                        <doctrine:mapping name="AcmeHello" />
                     </doctrine:entity-manager>
                     <doctrine:entity-manager name="em2" connection="conn2" metadata-cache-driver="apc">
                         <doctrine:mapping

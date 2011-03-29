@@ -93,8 +93,8 @@ can control. The following configuration options exist for a mapping:
   share. This prefix should never conflict with prefixes of other defined
   mappings otherwise some of your documents cannot be found by Doctrine. This
   option defaults to the bundle namespace + ``Document``, for example for an
-  application bundle called "HelloBundle" prefix would be
-  ``Sensio\HelloBundle\Document``.
+  application bundle called ``AcmeHelloBundle``, the prefix would be
+  ``Acme\HelloBundle\Document``.
 - ``alias`` Doctrine offers a way to alias document namespaces to simpler,
   shorter names to be used in queries or for Repository access.
 - ``is_bundle`` This option is a derived value from ``dir`` and by default is
@@ -107,7 +107,7 @@ To avoid having to configure lots of information for your mappings you should
 follow these conventions:
 
 1. Put all your entities in a directory ``Document/`` inside your bundle. For
-   example ``Sensio/HelloBundle/Document/``.
+   example ``Acme/HelloBundle/Document/``.
 2. If you are using xml, yml or php mapping put all your configuration files
    into the ``Resources/config/doctrine/metadata/doctrine/mongodb/`` directory
    suffixed with dcm.xml, dcm.yml or dcm.php respectively.
@@ -244,9 +244,9 @@ First, let's write a simple User class.
 
 .. code-block:: php
 
-    // src/Sensio/HelloBundle/Document/User.php
+    // src/Acme/HelloBundle/Document/User.php
 
-    namespace Sensio\HelloBundle\Document;
+    namespace Acme\HelloBundle\Document;
 
     class User
     {
@@ -330,7 +330,7 @@ Later you can retrieve the persisted document by its id.
         public function editAction($id)
         {
             $dm = $this->get('doctrine.odm.mongodb.document_manager');
-            $user = $dm->find('Hello:User', $id);
+            $user = $dm->find('AcmeHello:User', $id);
 
             // ...
         }

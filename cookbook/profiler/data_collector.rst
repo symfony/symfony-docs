@@ -143,7 +143,8 @@ All blocks have access to the ``collector`` object.
     base64_encode(file_get_contents($_SERVER['argv'][1]));``.
 
 To enable the template, add a ``template`` attribute to the ``data_collector``
-tag in your configuration:
+tag in your configuration. For example, assuming your template is in some
+``AcmeDebugBundle``:
 
 .. configuration-block::
 
@@ -151,19 +152,19 @@ tag in your configuration:
 
         services:
             data_collector.your_collector_name:
-                class: Fully\Qualified\Collector\Class\Name
+                class: Acme\DebugBundle\Collector\Class\Name
                 tags:
-                    - { name: data_collector, template: "YourBundle:Collector:templatename", id: "your_collector_name" }
+                    - { name: data_collector, template: "AcmeDebug:Collector:templatename", id: "your_collector_name" }
 
     .. code-block:: xml
 
-        <service id="data_collector.your_collector_name" class="Fully\Qualified\Collector\Class\Name">
-            <tag name="data_collector" template="YourBundle:Collector:templatename" id="your_collector_name" />
+        <service id="data_collector.your_collector_name" class="Acme\DebugBundle\Collector\Class\Name">
+            <tag name="data_collector" template="AcmeDebug:Collector:templatename" id="your_collector_name" />
         </service>
 
     .. code-block:: php
 
         $container
-            ->register('data_collector.your_collector_name', 'Fully\Qualified\Collector\Class\Name')
-            ->addTag('data_collector', array('template' => 'Your:Collector:templatename', 'id' => 'your_collector_name'))
+            ->register('data_collector.your_collector_name', 'Acme\DebugBundle\Collector\Class\Name')
+            ->addTag('data_collector', array('template' => 'AcmeDebug:Collector:templatename', 'id' => 'your_collector_name'))
         ;

@@ -75,7 +75,7 @@ we need it:
 
 .. code-block:: php
 
-    use Sensio\HelloBundle\Mailer;
+    use Acme\HelloBundle\Mailer;
 
     $mailer = new Mailer('sendmail');
     $mailer->send('ryan@foobar.net', ... );
@@ -106,14 +106,14 @@ be specified in YAML, XML or PHP:
         # app/config/config.yml
         services:
             my_mailer:
-                class:        Sensio\HelloBundle\Mailer
+                class:        Acme\HelloBundle\Mailer
                 arguments:    [sendmail]
 
     .. code-block:: xml
 
         <!-- app/config/config.xml -->
         <services>
-            <service id="my_mailer" class="Sensio\HelloBundle\Mailer">
+            <service id="my_mailer" class="Acme\HelloBundle\Mailer">
                 <argument>sendmail</argument>
             </service>
         </services>
@@ -124,7 +124,7 @@ be specified in YAML, XML or PHP:
         use Symfony\Component\DependencyInjection\Definition;
 
         $container->setDefinition('my_mailer', new Definition(
-            'Sensio\HelloBundle\Mailer',
+            'Acme\HelloBundle\Mailer',
             array('sendmail')
         ));
 
@@ -137,7 +137,7 @@ be specified in YAML, XML or PHP:
     ``config_dev.yml`` for the ``dev`` environment or ``config_prod.yml``
     for ``prod``).
 
-An instance of the ``Sensio\HelloBundle\Mailer`` object is now available via
+An instance of the ``Acme\HelloBundle\Mailer`` object is now available via
 the service container. Since the container is available in any traditional
 Symfony2 controller, we can easily access the new ``my_mailer`` service::
 
@@ -186,7 +186,7 @@ straightforward. Parameters make defining services more organized and flexible:
 
         # app/config/config.yml
         parameters:
-            my_mailer.class:      Sensio\HelloBundle\Mailer
+            my_mailer.class:      Acme\HelloBundle\Mailer
             my_mailer.transport:  sendmail
 
         services:
@@ -198,7 +198,7 @@ straightforward. Parameters make defining services more organized and flexible:
 
         <!-- app/config/config.xml -->
         <parameters>
-            <parameter key="my_mailer.class">Sensio\HelloBundle\Mailer</parameter>
+            <parameter key="my_mailer.class">Acme\HelloBundle\Mailer</parameter>
             <parameter key="my_mailer.transport">sendmail</parameter>
         </parameters>
 
@@ -213,7 +213,7 @@ straightforward. Parameters make defining services more organized and flexible:
         // app/config/config.php
         use Symfony\Component\DependencyInjection\Definition;
 
-        $container->setParameter('my_mailer.class', 'Sensio\HelloBundle\Mailer');
+        $container->setParameter('my_mailer.class', 'Acme\HelloBundle\Mailer');
         $container->setParameter('my_mailer.transport', 'sendmail');
 
         $container->setDefinition('my_mailer', new Definition(
@@ -277,21 +277,21 @@ Importing Configuration with ``imports``
 
 So far, we've placed our ``my_mailer`` service container definition directly
 in the application configuration file (e.g. ``app/config/config.yml``). Of
-course, since the ``Mailer`` class itself lives inside ``HelloBundle``, it
-makes more sense to put the ``my_mailer`` container definition inside the
+course, since the ``Mailer`` class itself lives inside the ``AcmeHelloBundle``,
+it makes more sense to put the ``my_mailer`` container definition inside the
 bundle as well.
 
 First, move the ``my_mailer`` container definition into a new container resource
-file in ``HelloBundle``. If the ``Resources`` or ``Resources/config`` directories
-don't exist, create them.
+file inside ``AcmeHelloBundle``. If the ``Resources`` or ``Resources/config``
+directories don't exist, create them.
 
 .. configuration-block::
 
     .. code-block:: yaml
 
-        # src/Sensio/HelloBundle/Resources/config/services.yml
+        # src/Acme/HelloBundle/Resources/config/services.yml
         parameters:
-            my_mailer.class:      Sensio\HelloBundle\Mailer
+            my_mailer.class:      Acme\HelloBundle\Mailer
             my_mailer.transport:  sendmail
 
         services:
@@ -301,9 +301,9 @@ don't exist, create them.
 
     .. code-block:: xml
 
-        <!-- src/Sensio/HelloBundle/Resources/config/services.xml -->
+        <!-- src/Acme/HelloBundle/Resources/config/services.xml -->
         <parameters>
-            <parameter key="my_mailer.class">Sensio\HelloBundle\Mailer</parameter>
+            <parameter key="my_mailer.class">Acme\HelloBundle\Mailer</parameter>
             <parameter key="my_mailer.transport">sendmail</parameter>
         </parameters>
 
@@ -315,10 +315,10 @@ don't exist, create them.
 
     .. code-block:: php
 
-        // src/Sensio/HelloBundle/Resources/config/services.php
+        // src/Acme/HelloBundle/Resources/config/services.php
         use Symfony\Component\DependencyInjection\Definition;
 
-        $container->setParameter('my_mailer.class', 'Sensio\HelloBundle\Mailer');
+        $container->setParameter('my_mailer.class', 'Acme\HelloBundle\Mailer');
         $container->setParameter('my_mailer.transport', 'sendmail');
 
         $container->setDefinition('my_mailer', new Definition(
@@ -338,26 +338,27 @@ configuration.
         # app/config/config.yml
         imports:
             hello_bundle:
-                resource: @HelloBundle/Resources/config/services.yml
+                resource: @AcmeHello/Resources/config/services.yml
 
     .. code-block:: xml
 
         <!-- app/config/config.xml -->
         <imports>
-            <import resource="@HelloBundle/Resources/config/services.xml"/>
+            <import resource="@AcmeHello/Resources/config/services.xml"/>
         </imports>
 
     .. code-block:: php
 
         // app/config/config.php
-        $this->import('@HelloBundle/Resources/config/services.php');
+        $this->import('@AcmeHello/Resources/config/services.php');
 
 The ``imports`` directive allows your application to include service container
 configuration resources from any other location (most commonly from bundles).
 The ``resource`` location, for files, is the absolute path to the resource
-file. The special ``@HelloBundle`` syntax resolves the directory path of
-the ``HelloBundle``. This helps you specify the path to the resource without
-worrying later if you move the ``HelloBundle`` to a different directory.
+file. The special ``@AcmeHello`` syntax resolves the directory path of
+the ``AcmeHelloBundle`` bundle. This helps you specify the path to the resource
+without worrying later if you move the ``AcmeHelloBundle`` to a different
+directory.
 
 .. index::
    single: Service Container; Extension configuration
@@ -482,8 +483,8 @@ really good at delivering email messages, so we'll use it inside ``NewsletterMan
 to handle the actual delivery of the messages. This pretend class might look
 something like this::
 
-    namespace Sensio\HelloBundle\Newsletter;
-    use Sensio\HelloBundle\Mailer;
+    namespace Acme\HelloBundle\Newsletter;
+    use Acme\HelloBundle\Mailer;
 
     class NewsletterManager
     {
@@ -503,7 +504,7 @@ fairly easily from inside a controller::
     public function sendNewsletterAction()
     {
         $mailer = $this->container->get('my_mailer');
-        $newsletter = new Sensio\HelloBundle\Newsletter\NewsletterManager($mailer);
+        $newsletter = new Acme\HelloBundle\Newsletter\NewsletterManager($mailer);
         // ...
     }
 
@@ -517,10 +518,10 @@ the service container gives us a much more appealing option:
 
     .. code-block:: yaml
 
-        # src/Sensio/HelloBundle/Resources/config/services.yml
+        # src/Acme/HelloBundle/Resources/config/services.yml
         parameters:
             # ...
-            newsletter_manager.class: Sensio\HelloBundle\Newsletter\NewsletterManager
+            newsletter_manager.class: Acme\HelloBundle\Newsletter\NewsletterManager
 
         services:
             my_mailer:
@@ -531,10 +532,10 @@ the service container gives us a much more appealing option:
 
     .. code-block:: xml
 
-        <!-- src/Sensio/HelloBundle/Resources/config/services.xml -->
+        <!-- src/Acme/HelloBundle/Resources/config/services.xml -->
         <parameters>
             <!-- ... -->
-            <parameter key="newsletter_manager.class">Sensio\HelloBundle\Newsletter\NewsletterManager</parameter>
+            <parameter key="newsletter_manager.class">Acme\HelloBundle\Newsletter\NewsletterManager</parameter>
         </parameters>
 
         <services>
@@ -548,12 +549,12 @@ the service container gives us a much more appealing option:
 
     .. code-block:: php
 
-        // src/Sensio/HelloBundle/Resources/config/services.php
+        // src/Acme/HelloBundle/Resources/config/services.php
         use Symfony\Component\DependencyInjection\Definition;
         use Symfony\Component\DependencyInjection\Reference;
 
         // ...
-        $container->setParameter('newsletter_manager.class', 'Sensio\HelloBundle\Newsletter\NewsletterManager');
+        $container->setParameter('newsletter_manager.class', 'Acme\HelloBundle\Newsletter\NewsletterManager');
 
         $container->setDefinition('my_mailer', ... );
         $container->setDefinition('newsletter_manager', new Definition(
@@ -597,7 +598,7 @@ to use the real Symfony2 ``mailer`` service (instead of the pretend ``my_mailer`
 Let's also pass the templating engine service to the ``NewsletterManager``
 so that it can generate the email content via a template::
 
-    namespace Sensio\HelloBundle\Newsletter;
+    namespace Acme\HelloBundle\Newsletter;
     use Symfony\Component\Templating\EngineInterface;
 
     class NewsletterManager
@@ -681,19 +682,19 @@ to be used for a specific purpose. Take the following example:
 
         services:
             foo.twig.extension:
-                class: Sensio\HelloBundle\Extension\FooExtension
+                class: Acme\HelloBundle\Extension\FooExtension
                 tags:
                     -  { name: twig.extension }
 
     .. code-block:: xml
 
-        <service id="foo.twig.extension" class="Sensio\HelloBundle\Extension\RadiusExtension">
+        <service id="foo.twig.extension" class="Acme\HelloBundle\Extension\RadiusExtension">
             <tag name="twig.extension" />
         </service>
 
     .. code-block:: php
 
-        $definition = new Definition('Sensio\HelloBundle\Extension\RadiusExtension');
+        $definition = new Definition('Acme\HelloBundle\Extension\RadiusExtension');
         $definition->addTag('twig.extension');
         $container->setDefinition('foo.twig.extension', $definition);
 

@@ -335,24 +335,24 @@ completely change the HTML output of the helper:
 
     .. code-block:: jinja
 
-        {{ form_field(form.title, {}, {}, 'Hello::form.html.twig') }}
+        {{ form_field(form.title, {}, {}, 'AcmeHello::form.html.twig') }}
 
     .. code-block:: html+php
 
         <?php echo $view['form']->render($form['title'], array(), array(), 
-            'Hello:Form:text_field.php'
+            'AcmeHello:Form:text_field.php'
         ) ?>
 
 Form Theming (Twig only)
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
-In the last example, the ``Hello::form.html.twig`` is a regular Twig template 
+In the last example, the ``AcmeHello::form.html.twig`` is a regular Twig template 
 containing blocks defining the HTML representation for fields you want to 
 override:
 
 .. code-block:: html+jinja
 
-    {# Hello/Resources/views/form.html.twig #}
+    {# src/Acme/HelloBundle/Resources/views/form.html.twig #}
 
     {% block textarea_field %}
         <div class="textarea_field">
@@ -366,7 +366,7 @@ Twig native inheritance feature:
 
 .. code-block:: html+jinja
 
-    {# Hello/Resources/views/form.html.twig #}
+    {# src/Acme/HelloBundle/Resources/views/form.html.twig #}
 
     {% extends 'Twig::form.html.twig' %}
 
@@ -380,7 +380,7 @@ If you want to customize all fields of a given form, use the ``form_theme`` tag:
 
 .. code-block:: jinja
 
-    {% form_theme form 'Hello::form.html.twig' %}
+    {% form_theme form 'AcmeHello::form.html.twig' %}
 
 Whenever you call the ``form_field`` function on the ``form`` after this call,
 Symfony2 will look for a representation in your template before falling back to
@@ -391,13 +391,13 @@ array:
 
 .. code-block:: jinja
 
-    {% form_theme form ['Hello::form.html.twig', 'Hello::form.html.twig', 'Hello::hello_form.html.twig'] %}
+    {% form_theme form ['AcmeHello::form.html.twig', 'AcmeHello::form.html.twig', 'AcmeHello::hello_form.html.twig'] %}
 
 A theme can be attached to a whole form (as above) or just for a field group:
 
 .. code-block:: jinja
 
-    {% form_theme form.user 'Hello::form.html.twig' %}
+    {% form_theme form.user 'AcmeHello::form.html.twig' %}
 
 Finally, customizing the representation of all forms of an application is
 possible via configuration:
