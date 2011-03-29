@@ -369,7 +369,7 @@ Symfony2 uses a **bundle**:**controller**:**template** string syntax for
 templates. This allows for several different types of templates, each which
 lives in a specific location:
 
-* ``AcmeBlog:Blog:index.html.twig``: This syntax is used to specify a template
+* ``AcmeBlogBlog:index.html.twig``: This syntax is used to specify a template
   for a specific page. The three parts of the string, each separated by
   a colon (``:``), mean the following:
   
@@ -413,11 +413,11 @@ The **bundle**:**controller**:**template** format of each template specifies
 *where*  the template file is located. Every template name also has two extensions
 that specify the *format* and *engine* for that template.
 
-* **Blog:Blog:index.html.twig** - HTML format, Twig engine
+* **AcmeBlog:Blog:index.html.twig** - HTML format, Twig engine
 
-* **Blog:Blog:index.html.php** - HTML format, PHP engine
+* **AcmeBlog:Blog:index.html.php** - HTML format, PHP engine
 
-* **Blog:Blog:index.css.twig** - CSS format, Twig engine
+* **AcmeBlog:Blog:index.css.twig** - CSS format, Twig engine
 
 By default, any Symfony2 template can be written in either Twig or PHP, and
 the last part of the extension (e.g. ``.twig`` or ``.php``) specifies which
@@ -504,26 +504,26 @@ Including this template from any other template is simple:
     .. code-block:: html+jinja
 
         {# src/Acme/ArticleBundle/Resources/Article/list.html.twig #}
-        {% extends 'Article::layout.html.twig' %}
+        {% extends 'AcmeArticle::layout.html.twig' %}
 
         {% block body %}
             <h1>Recent Articles<h1>
 
             {% for article in articles %}
-                {% include 'Article:Article:articleDetails.html.twig' with {'article': article} %}
+                {% include 'AcmeArticle:Article:articleDetails.html.twig' with {'article': article} %}
             {% endfor %}
         {% endblock %}
 
     .. code-block:: php
 
         <!-- src/Acme/ArticleBundle/Resources/Article/list.html.php -->
-        <?php $view->extend('Article::layout.html.php') ?>
+        <?php $view->extend('AcmeArticle::layout.html.php') ?>
 
         <?php $view['slots']->start('body') ?>
             <h1>Recent Articles</h1>
 
             <?php foreach ($articles as $article): ?>
-                <?php echo $view->render('Article:Article:articleDetails.html.php', array('article' => $article)) ?>
+                <?php echo $view->render('AcmeArticle:Article:articleDetails.html.php', array('article' => $article)) ?>
             <?php endforeach; ?>
         <?php $view['slots']->stop() ?>
 
@@ -609,7 +609,7 @@ syntax for controllers (i.e. **bundle**:**controller**:**action**):
         ...
 
         <div id="sidebar">
-            {% render "Article:Article:recentArticles" with {'max': 3} %}
+            {% render "AcmeArticle:Article:recentArticles" with {'max': 3} %}
         </div>
 
     .. code-block:: php
@@ -618,7 +618,7 @@ syntax for controllers (i.e. **bundle**:**controller**:**action**):
         ...
 
         <div id="sidebar">
-            <?php echo $view['actions']->render('Article:Article:recentArticles', array('max' => 3)) ?>
+            <?php echo $view['actions']->render('AcmeArticle:Article:recentArticles', array('max' => 3)) ?>
         </div>
 
 Whenever you find that you need a variable or a piece of information that
@@ -685,19 +685,19 @@ a more complicated route:
 
         article_show:
             pattern:  /article/{slug}
-            defaults: { _controller: Article:Article:show }
+            defaults: { _controller: AcmeArticle:Article:show }
 
     .. code-block:: xml
 
         <route id="article_show" pattern="/article/{slug}">
-            <default key="_controller">Article:Article:show</default>
+            <default key="_controller">AcmeArticle:Article:show</default>
         </route>
 
     .. code-block:: php
 
         $collection = new RouteCollection();
         $collection->add('article_show', new Route('/article/{slug}', array(
-            '_controller' => 'Article:Article:show',
+            '_controller' => 'AcmeArticle:Article:show',
         )));
 
         return $collection;
@@ -788,14 +788,14 @@ you're actually using the templating engine service. For example:
 
 .. code-block:: php
 
-    return $this->render('Article:Article:index.html.twig');
+    return $this->render('AcmeArticle:Article:index.html.twig');
 
 is equivalent to
 
 .. code-block:: php
 
     $engine = $this->container->get('templating');
-    $content = $engine->render('Article:Article:index.html.twig');
+    $content = $engine->render('AcmeArticle:Article:index.html.twig');
 
     return $response = new Response($content);
 
@@ -947,7 +947,7 @@ covered:
     .. code-block:: html+jinja
 
         {# src/Acme/BlogBundle/Resources/views/Blog/index.html.twig #}
-        {% extends 'Blog::layout.html.twig' %}
+        {% extends 'AcmeBlog::layout.html.twig' %}
 
         {% block content %}
             {% for entry in blog_entries %}
@@ -1065,7 +1065,7 @@ For example, the same "resource" is often rendered in several different formats.
 To render an article index page in XML, simply include the format in the
 template name:
 
-*XML template name*: ``Article:Article:index.xml.twig``
+*XML template name*: ``AcmeArticle:Article:index.xml.twig``
 *XML template filename*: ``index.xml.twig``
 
 In reality, this is nothing more than a naming convention and the template
@@ -1081,7 +1081,7 @@ pattern is to do the following:
     {
         $format = $this->get('request')->getRequestFormat();
     
-        return $this->render('Blog:Blog:index.'.$format.'.twig');
+        return $this->render('AcmeBlog:Blog:index.'.$format.'.twig');
     }
 
 The ``getRequestFormat`` on the ``Request`` object defaults to ``html``,
@@ -1103,7 +1103,7 @@ can be created with our without the use of a template:
 .. code-block:: php
 
     // creates a Response object whose content is the rendered template
-    $response = $this->render('Article:Article:index.html.twig');
+    $response = $this->render('AcmeArticle:Article:index.html.twig');
 
     // creates a Response object whose content is simple text
     $response = new Response('response content');

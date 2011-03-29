@@ -330,7 +330,7 @@ Later you can retrieve the persisted document by its id.
         public function editAction($id)
         {
             $dm = $this->get('doctrine.odm.mongodb.document_manager');
-            $user = $dm->find('Hello:User', $id);
+            $user = $dm->find('AcmeHello:User', $id);
 
             // ...
         }

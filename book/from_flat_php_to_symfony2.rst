@@ -569,20 +569,20 @@ same sample application, now built in Symfony2:
         public function listAction()
         {
             $blogs = $this->container->get('doctrine.orm.entity_manager')
-                ->createQuery('SELECT b FROM Blog:Blog b')
+                ->createQuery('SELECT b FROM AcmeBlog:Blog b')
                 ->execute();
 
-            return $this->render('Blog:Blog:list.html.php', array('blogs' => $blogs));
+            return $this->render('AcmeBlog:Blog:list.html.php', array('blogs' => $blogs));
         }
 
         public function showAction($id)
         {
             $blog = $this->container->get('doctrine.orm.entity_manager')
-                ->createQuery('SELECT b FROM Blog:Blog b WHERE id = :id')
+                ->createQuery('SELECT b FROM AcmeBlog:Blog b WHERE id = :id')
                 ->setParameter('id', $id)
                 ->getSingleResult();
 
-            return $this->render('Blog:Blog:show.html.php', array('blog' => $blog));
+            return $this->render('AcmeBlog:Blog:show.html.php', array('blog' => $blog));
         }
     }
 
@@ -635,11 +635,11 @@ A routing configuration map provides this information in a readable format::
     # app/config/routing.yml
     blog_list:
         pattern:  /blog
-        defaults: { _controller: Blog:Blog:list }
+        defaults: { _controller: AcmeBlog:Blog:list }
 
     blog_show:
         pattern:  /blog/show/{id}
-        defaults: { _controller: Blog:Blog:show }
+        defaults: { _controller: AcmeBlog:Blog:show }
 
 Now that Symfony2 is handling all the mundane tasks, our front controller
 is dead simple. And since it contains so little, you never have to touch

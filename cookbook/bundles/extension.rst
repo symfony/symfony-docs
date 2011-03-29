@@ -179,8 +179,8 @@ When creating an extension, follow these simple conventions:
 * The extension must be named after the bundle name and suffixed with
   ``Extension`` (``AcmeHelloExtension`` for ``AcmeHelloBundle``);
 
-* The alias must be unique and named after the bundle name (``acme_blog``
-  for ``AcmeBlogBundle``);
+* The alias must be unique and named after the bundle name (``acme_hello``
+  for ``AcmeHelloBundle``);
 
 * The extension should provide an XSD schema.
 
