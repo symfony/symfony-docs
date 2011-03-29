@@ -320,7 +320,7 @@ or a unique identifier (e.g. "symfony2.great" - see the sidebar below):
 
     .. code-block:: xml
 
-        <!-- src/Sensio/MyBundle/Resources/translations/messages.fr.xliff -->
+        <!-- src/Acme/MyBundle/Resources/translations/messages.fr.xliff -->
         <?xml version="1.0"?>
         <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
             <file source-language="en" datatype="plaintext" original="file.ext">
@@ -339,7 +339,7 @@ or a unique identifier (e.g. "symfony2.great" - see the sidebar below):
 
     .. code-block:: php
 
-        // src/Sensio/MyBundle/Resources/translations/messages.fr.php
+        // src/Acme/MyBundle/Resources/translations/messages.fr.php
         return array(
             'Symfony2 is great' => 'J\'aime Symfony2',
             'symfony2.great'    => 'J\'aime Symfony2',
@@ -347,7 +347,7 @@ or a unique identifier (e.g. "symfony2.great" - see the sidebar below):
 
     .. code-block:: yaml
 
-        # src/Sensio/MyBundle/Resources/translations/messages.fr.yml
+        # src/Acme/MyBundle/Resources/translations/messages.fr.yml
         Symfony2 is great: J'aime Symfony2
         symfony2.great:    J'aime Symfony2
 
@@ -560,7 +560,6 @@ by the routing system using the special ``_locale`` parameter:
         ), array(
             '_locale'     => 'en|fr|de'
         )));
-        $collection->addCollection($loader->import("HelloBundle/Resources/config/routing.php"));
 
         return $collection;
 
