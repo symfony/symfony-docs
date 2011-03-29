@@ -67,8 +67,8 @@ Bundle class with ``Extension`` inside a ``DependencyInjection`` subnamespace::
 
 .. note::
 
-    The ``getXsdValidationBasePath`` and ``getNamespace`` methods are only required
-    if XSD's for the configuration files are provided.
+    The ``getXsdValidationBasePath`` method is only required if XSD's for the
+    configuration files are provided.
 
 The previous class defines a ``hello`` namespace, usable in any configuration
 file:
