@@ -730,7 +730,7 @@ can be easily accomplished:
 
         # app/config/routing.yml
         hello:
-            resource: "@SensioHello/Resources/config/routing.yml"
+            resource: "@AcmeHello/Resources/config/routing.yml"
 
     .. code-block:: xml
 
@@ -741,7 +741,7 @@ can be easily accomplished:
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/routing http://symfony.com/schema/routing/routing-1.0.xsd">
 
-            <import resource="@SensioHello/Resources/config/routing.xml" />
+            <import resource="@AcmeHello/Resources/config/routing.xml" />
         </routes>
 
     .. code-block:: php
@@ -751,7 +751,7 @@ can be easily accomplished:
         use Symfony\Component\Routing\Route;
 
         $collection = new RouteCollection();
-        $collection->addCollection($loader->import("@SensioHello/Resources/config/routing.php"));
+        $collection->addCollection($loader->import("@AcmeHello/Resources/config/routing.php"));
 
         return $collection;
 
@@ -762,14 +762,14 @@ The ``resource`` key loads the routing resource from the ``SensioHello``:
 
     .. code-block:: yaml
 
-        # src/Sensio/HelloBundle/Resources/config/routing.yml
+        # src/Acme/HelloBundle/Resources/config/routing.yml
         hello:
             pattern:  /hello/{name}
             defaults: { _controller: SensioHello:Hello:index }
 
     .. code-block:: xml
 
-        <!-- src/Sensio/HelloBundle/Resources/config/routing.xml -->
+        <!-- src/Acme/HelloBundle/Resources/config/routing.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
 
         <routes xmlns="http://symfony.com/schema/routing"
@@ -783,7 +783,7 @@ The ``resource`` key loads the routing resource from the ``SensioHello``:
 
     .. code-block:: php
 
-        // src/Sensio/HelloBundle/Resources/config/routing.php
+        // src/Acme/HelloBundle/Resources/config/routing.php
         use Symfony\Component\Routing\RouteCollection;
         use Symfony\Component\Routing\Route;
 
@@ -805,7 +805,7 @@ For example, suppose that we want the "hello" route to have a pattern of
 
         # app/config/routing.yml
         hello:
-            resource: "@SensioHello/Resources/config/routing.yml"
+            resource: "@AcmeHello/Resources/config/routing.yml"
             prefix:   /admin
 
     .. code-block:: xml
@@ -817,7 +817,7 @@ For example, suppose that we want the "hello" route to have a pattern of
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/routing http://symfony.com/schema/routing/routing-1.0.xsd">
 
-            <import resource="@SensioHello/Resources/config/routing.xml" prefix="/admin" />
+            <import resource="@AcmeHello/Resources/config/routing.xml" prefix="/admin" />
         </routes>
 
     .. code-block:: php
@@ -827,7 +827,7 @@ For example, suppose that we want the "hello" route to have a pattern of
         use Symfony\Component\Routing\Route;
 
         $collection = new RouteCollection();
-        $collection->addCollection($loader->import("@SensioHello/Resources/config/routing.php"), '/admin');
+        $collection->addCollection($loader->import("@AcmeHello/Resources/config/routing.php"), '/admin');
 
         return $collection;
 
@@ -901,7 +901,7 @@ translates to the following:
   of the second portion of the ``_controller`` string (`` Blog``) and the word
   ``Controller``.
 
-* The namespace of the ``BlogController`` class is ``Sensio\BlogBundle\Controller`` -
+* The namespace of the ``BlogController`` class is ``Acme\BlogBundle\Controller`` -
   a combination of the namespace of ``SensioBlogBundle`` and the sub-namespace
   ``Controller``.
 
@@ -915,11 +915,11 @@ In other words::
 
 means that the following PHP method will be executed::
 
-    ``Sensio\BlogBundle\Controller\BlogController::showAction()``
+    ``Acme\BlogBundle\Controller\BlogController::showAction()``
 
 Since the fully-qualified class name of the controller is
-``Sensio\BlogBundle\Controller\BlogController``, the controller class itself
-will live at ``src/Sensio/BlogBundle/Controller/BlogBundle.php`` (assuming
+``Acme\BlogBundle\Controller\BlogController``, the controller class itself
+will live at ``src/Acme/BlogBundle/Controller/BlogBundle.php`` (assuming
 that the ``Sensio`` namespace lives in the ``src/Sensio`` directory.
 
 The basic ``class::method`` syntax
@@ -928,7 +928,7 @@ The basic ``class::method`` syntax
 A less common but simple way to specify a controller is via the basic
 ``class::method`` syntax. This method could be used to call the example
 controller via the string
-``Sensio\MyBlogBundle\Controller\BlogController::showAction``, though
+``Acme\MyBlogBundle\Controller\BlogController::showAction``, though
 the ``showAction`` must now be a static method. This is not a recommended
 syntax.
 

@@ -19,7 +19,7 @@ their properties. Furthermore, ``Author`` stores an ``Address`` instance in the
 
 .. code-block:: php
 
-    // Sensio/HelloBundle/Address.php
+    // Acme/HelloBundle/Address.php
     class Address
     {
         protected $street;
@@ -28,7 +28,7 @@ their properties. Furthermore, ``Author`` stores an ``Address`` instance in the
 
 .. code-block:: php
 
-    // Sensio/HelloBundle/Author.php
+    // Acme/HelloBundle/Author.php
     class Author
     {
         protected $firstName;
@@ -40,8 +40,8 @@ their properties. Furthermore, ``Author`` stores an ``Address`` instance in the
 
     .. code-block:: yaml
 
-        # Sensio/HelloBundle/Resources/config/validation.yml
-        Sensio\HelloBundle\Address:
+        # Acme/HelloBundle/Resources/config/validation.yml
+        Acme\HelloBundle\Address:
             properties:
                 street:
                     - NotBlank: ~
@@ -49,7 +49,7 @@ their properties. Furthermore, ``Author`` stores an ``Address`` instance in the
                     - NotBlank: ~
                     - MaxLength: 5
 
-        Sensio\HelloBundle\Author:
+        Acme\HelloBundle\Author:
             properties:
                 firstName:
                     - NotBlank: ~
@@ -59,8 +59,8 @@ their properties. Furthermore, ``Author`` stores an ``Address`` instance in the
 
     .. code-block:: xml
 
-        <!-- Sensio/HelloBundle/Resources/config/validation.xml -->
-        <class name="Sensio\HelloBundle\Address">
+        <!-- Acme/HelloBundle/Resources/config/validation.xml -->
+        <class name="Acme\HelloBundle\Address">
             <property name="street">
                 <constraint name="NotBlank" />
             </property>
@@ -70,7 +70,7 @@ their properties. Furthermore, ``Author`` stores an ``Address`` instance in the
             </property>
         </class>
 
-        <class name="Sensio\HelloBundle\Author">
+        <class name="Acme\HelloBundle\Author">
             <property name="firstName">
                 <constraint name="NotBlank" />
                 <constraint name="MinLength">4</constraint>
@@ -82,7 +82,7 @@ their properties. Furthermore, ``Author`` stores an ``Address`` instance in the
 
     .. code-block:: php-annotations
 
-        // Sensio/HelloBundle/Address.php
+        // Acme/HelloBundle/Address.php
         class Address
         {
             /**
@@ -97,7 +97,7 @@ their properties. Furthermore, ``Author`` stores an ``Address`` instance in the
             protected $zipCode;
         }
 
-        // Sensio/HelloBundle/Author.php
+        // Acme/HelloBundle/Author.php
         class Author
         {
             /**
@@ -116,7 +116,7 @@ their properties. Furthermore, ``Author`` stores an ``Address`` instance in the
 
     .. code-block:: php
 
-        // Sensio/HelloBundle/Address.php
+        // Acme/HelloBundle/Address.php
         use Symfony\Component\Validator\Mapping\ClassMetadata;
         use Symfony\Component\Validator\Constraints\NotBlank;
         use Symfony\Component\Validator\Constraints\MaxLength;
@@ -135,7 +135,7 @@ their properties. Furthermore, ``Author`` stores an ``Address`` instance in the
             }
         }
 
-        // Sensio/HelloBundle/Author.php
+        // Acme/HelloBundle/Author.php
         use Symfony\Component\Validator\Mapping\ClassMetadata;
         use Symfony\Component\Validator\Constraints\NotBlank;
         use Symfony\Component\Validator\Constraints\MinLength;
@@ -164,16 +164,16 @@ invalid address. To prevent that, we add the ``Valid`` constraint to the
 
     .. code-block:: yaml
 
-        # Sensio/HelloBundle/Resources/config/validation.yml
-        Sensio\HelloBundle\Author:
+        # Acme/HelloBundle/Resources/config/validation.yml
+        Acme\HelloBundle\Author:
             properties:
                 address:
                     - Valid: ~
 
     .. code-block:: xml
 
-        <!-- Sensio/HelloBundle/Resources/config/validation.xml -->
-        <class name="Sensio\HelloBundle\Author">
+        <!-- Acme/HelloBundle/Resources/config/validation.xml -->
+        <class name="Acme\HelloBundle\Author">
             <property name="address">
                 <constraint name="Valid" />
             </property>
@@ -181,7 +181,7 @@ invalid address. To prevent that, we add the ``Valid`` constraint to the
 
     .. code-block:: php-annotations
 
-        // Sensio/HelloBundle/Author.php
+        // Acme/HelloBundle/Author.php
         class Author
         {
             /* ... */
@@ -194,7 +194,7 @@ invalid address. To prevent that, we add the ``Valid`` constraint to the
 
     .. code-block:: php
 
-        // Sensio/HelloBundle/Author.php
+        // Acme/HelloBundle/Author.php
         use Symfony\Component\Validator\Mapping\ClassMetadata;
         use Symfony\Component\Validator\Constraints\Valid;
         
@@ -211,5 +211,5 @@ invalid address. To prevent that, we add the ``Valid`` constraint to the
 If you validate an author with an invalid address now, you can see that the
 validation of the ``Address`` fields failed.
 
-    Sensio\HelloBundle\Author.address.zipCode:
+    Acme\HelloBundle\Author.address.zipCode:
         This value is too long. It should have 5 characters or less

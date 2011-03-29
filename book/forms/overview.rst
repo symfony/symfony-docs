@@ -49,8 +49,8 @@ method ``configure()`` to initialize the form with a set of fields.
 
 .. code-block:: php
 
-    // src/Sensio/HelloBundle/Contact/ContactForm.php
-    namespace Sensio\HelloBundle\Contact;
+    // src/Acme/HelloBundle/Contact/ContactForm.php
+    namespace Acme\HelloBundle\Contact;
 
     use Symfony\Component\Form\Form;
     use Symfony\Component\Form\TextField;
@@ -85,7 +85,7 @@ The standard pattern for using a form in a controller looks like this:
 
 .. code-block:: php
 
-    // src/Sensio/HelloBundle/Controller/HelloController.php
+    // src/Acme/HelloBundle/Controller/HelloController.php
     public function contactAction()
     {
         $contactRequest = new ContactRequest($this->get('mailer'));
@@ -139,8 +139,8 @@ class could look like this:
 
 .. code-block:: php
 
-    // src/Sensio/HelloBundle/Contact/ContactRequest.php
-    namespace Sensio\HelloBundle\Contact;
+    // src/Acme/HelloBundle/Contact/ContactRequest.php
+    namespace Acme\HelloBundle\Contact;
 
     class ContactRequest
     {
@@ -206,8 +206,8 @@ data.
 
 .. code-block:: php
 
-    // src/Sensio/HelloBundle/Contact/ContactRequest.php
-    namespace Sensio\HelloBundle\Contact;
+    // src/Acme/HelloBundle/Contact/ContactRequest.php
+    namespace Acme\HelloBundle\Contact;
 
     class ContactRequest
     {
@@ -256,12 +256,12 @@ automatically create the best-matching field.
 
 .. code-block:: php
 
-    // src/Sensio/HelloBundle/Contact/ContactForm.php
+    // src/Acme/HelloBundle/Contact/ContactForm.php
     class ContactForm extends Form
     {
         protected function configure()
         {
-            $this->setDataClass('Sensio\\HelloBundle\\Contact\\ContactRequest');
+            $this->setDataClass('Acme\\HelloBundle\\Contact\\ContactRequest');
             $this->add('subject');  // TextField with max_length=100 because
                                     // of the @MaxLength constraint
             $this->add('message');  // TextField
@@ -279,12 +279,12 @@ them in the second parameter. We will add a ``max_length`` option to the
 
 .. code-block:: php
 
-    // src/Sensio/HelloBundle/Contact/ContactForm.php
+    // src/Acme/HelloBundle/Contact/ContactForm.php
     class ContactForm extends Form
     {
         protected function configure()
         {
-            $this->setDataClass('Sensio\\HelloBundle\\Contact\\ContactRequest');
+            $this->setDataClass('Acme\\HelloBundle\\Contact\\ContactRequest');
             $this->add('subject'); 
             $this->add(new TextareaField('message'));
             $this->add('sender', array('max_length' => 50));
@@ -305,7 +305,7 @@ of the form.
 
 .. code-block:: html+jinja
 
-    # src/Sensio/HelloBundle/Resources/views/Hello/contact.html.twig
+    # src/Acme/HelloBundle/Resources/views/Hello/contact.html.twig
     {% extends 'Hello::layout.html.twig' %}
 
     {% block content %}
@@ -324,7 +324,7 @@ can do so by using the other built-in form rendering helpers.
 
 .. code-block:: html+jinja
 
-    # src/Sensio/HelloBundle/Resources/views/Hello/contact.html.twig
+    # src/Acme/HelloBundle/Resources/views/Hello/contact.html.twig
     {% extends 'Hello::layout.html.twig' %}
 
     {% block content %}

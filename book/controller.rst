@@ -81,9 +81,9 @@ object. Controllers are also called *actions*.
 
 .. code-block:: php
 
-    // src/Sensio/HelloBundle/Controller/HelloController.php
+    // src/Acme/HelloBundle/Controller/HelloController.php
 
-    namespace Sensio\HelloBundle\Controller;
+    namespace Acme\HelloBundle\Controller;
     use Symfony\Component\HttpFoundation\Response;
 
     class HelloController
@@ -138,21 +138,21 @@ but let's create a simple route to our controller:
 
     .. code-block:: yaml
 
-        # src/Sensio/HelloBundle/Resources/config/routing.yml
+        # src/Acme/HelloBundle/Resources/config/routing.yml
         hello:
             pattern:      /hello/{name}
             defaults:     { _controller: Hello:Hello:index }
 
     .. code-block:: xml
 
-        <!-- src/Sensio/HelloBundle/Resources/config/routing.xml -->
+        <!-- src/Acme/HelloBundle/Resources/config/routing.xml -->
         <route id="hello" pattern="/hello/{name}">
             <default key="_controller">Hello:Hello:index</default>
         </route>
 
     .. code-block:: php
 
-        // src/Sensio/HelloBundle/Resources/config/routing.php
+        // src/Acme/HelloBundle/Resources/config/routing.php
         $collection->add('hello', new Route('/hello/{name}', array(
             '_controller' => 'Hello:Hello:index',
         )));
@@ -195,9 +195,9 @@ passed to that method:
 .. code-block:: php
 
     <?php
-    // src/Sensio/HelloBundle/Controller/HelloController.php
+    // src/Acme/HelloBundle/Controller/HelloController.php
 
-    namespace Sensio\HelloBundle\Controller;
+    namespace Acme\HelloBundle\Controller;
     use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
     class HelloController extends Controller
@@ -218,14 +218,14 @@ example:
 
     .. code-block:: yaml
 
-        # src/Sensio/HelloBundle/Resources/config/routing.yml
+        # src/Acme/HelloBundle/Resources/config/routing.yml
         hello:
             pattern:      /hello/{first_name}/{last_name}
             defaults:     { _controller: Hello:Hello:index, color: green }
 
     .. code-block:: xml
 
-        <!-- src/Sensio/HelloBundle/Resources/config/routing.xml -->
+        <!-- src/Acme/HelloBundle/Resources/config/routing.xml -->
         <route id="hello" pattern="/hello/{first_name}/{last_name}">
             <default key="_controller">Hello:Hello:index</default>
             <default key="color">green</default>
@@ -233,7 +233,7 @@ example:
 
     .. code-block:: php
 
-        // src/Sensio/HelloBundle/Resources/config/routing.php
+        // src/Acme/HelloBundle/Resources/config/routing.php
         $collection->add('hello', new Route('/hello/{first_name}/{last_name}', array(
             '_controller' => 'Hello:Hello:index',
             'color'       => 'green',
@@ -320,9 +320,9 @@ Add the ``use`` statement atop the ``Controller`` class and then modify the
 
 .. code-block:: php
 
-    // src/Sensio/HelloBundle/Controller/HelloController.php
+    // src/Acme/HelloBundle/Controller/HelloController.php
 
-    namespace Sensio\HelloBundle\Controller;
+    namespace Acme\HelloBundle\Controller;
     use Symfony\Bundle\FrameworkBundle\Controller\Controller;
     use Symfony\Component\HttpFoundation\Response;
 

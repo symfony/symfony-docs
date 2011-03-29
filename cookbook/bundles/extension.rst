@@ -177,10 +177,10 @@ When creating an extension, follow these simple conventions:
 * The extension must be stored in the ``DependencyInjection`` sub-namespace;
 
 * The extension must be named after the bundle name and suffixed with
-  ``Extension`` (``SensioHelloExtension`` for ``SensioHelloBundle``);
+  ``Extension`` (``AcmeHelloExtension`` for ``AcmeHelloBundle``);
 
-* The alias must be unique and named after the bundle name (``sensio_blog``
-  for ``SensioBlogBundle``);
+* The alias must be unique and named after the bundle name (``acme_blog``
+  for ``AcmeBlogBundle``);
 
 * The extension should provide an XSD schema.
 

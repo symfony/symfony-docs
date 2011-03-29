@@ -33,7 +33,7 @@ Configuration Reference
                     conn1:
                         # ...
                 types:
-                    custom: Sensio\HelloBundle\MyCustomType
+                    custom: Acme\HelloBundle\MyCustomType
             orm:
                 auto_generate_proxy_classes:    true
                 proxy_namespace:                Proxies
@@ -87,7 +87,7 @@ Configuration Reference
                         platform-service="MyOwnDatabasePlatformService"
                     />
                     <doctrine:connection name="conn1" />
-                    <doctrine:type name="custom" class="Sensio\HelloBundle\MyCustomType" />
+                    <doctrine:type name="custom" class="Acme\HelloBundle\MyCustomType" />
                 </doctrine:dbal>
 
                 <doctrine:orm default-entity-manager="default" auto-generate-proxy-classes="true" proxy-namespace="Proxies" proxy-dir="%kernel.cache_dir%/doctrine/orm/Proxies">

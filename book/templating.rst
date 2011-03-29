@@ -245,7 +245,7 @@ A child template might look like this:
 
     .. code-block:: html+jinja
 
-        {# src/Sensio/BlogBundle/Resources/views/Blog/index.html.twig #}
+        {# src/Acme/BlogBundle/Resources/views/Blog/index.html.twig #}
         {% extends '::base.html.twig' %}
 
         {% block title %}My cool blog posts{% endblock %}
@@ -259,7 +259,7 @@ A child template might look like this:
 
     .. code-block:: php
 
-        <!-- src/Sensio/BlogBundle/Resources/views/Blog/index.html.php -->
+        <!-- src/Acme/BlogBundle/Resources/views/Blog/index.html.php -->
         <?php $view->extend('::base.html.php') ?>
 
         <?php $view['slots']->set('title', 'My cool blog posts') ?>
@@ -374,7 +374,7 @@ lives in a specific location:
   a colon (``:``), mean the following:
   
     * ``BlogBundle``: (*bundle*) the template lives inside the ``BlogBundle`` (e.g.
-      ``src/Sensio/BlogBundle``);
+      ``src/Acme/BlogBundle``);
 
     * ``Blog``: (*controller*) indicates that the template lives inside the
       ``Blog`` subdirectory of ``Resources/views``;
@@ -382,8 +382,8 @@ lives in a specific location:
     * ``index.html.twig``: (*template*) the actual name of the file is
       ``index.html.twig``.
   
-  Assuming that the ``BlogBundle`` lives in the ``src/Sensio`` directory,
-  the final path to the layout would be ``src/Sensio/BlogBundle/Resources/views/Blog/index.html.twig``.
+  Assuming that the ``BlogBundle`` lives in the ``src/Acme`` directory,
+  the final path to the layout would be ``src/Acme/BlogBundle/Resources/views/Blog/index.html.twig``.
 
 * ``Blog::layout.html.twig``: This syntax refers to a base template
   that's specific to the ``BlogBundle``. Since the "controller" portion of
@@ -480,7 +480,7 @@ template. First, create the template that you'll need to reuse.
 
     .. code-block:: html+jinja
 
-        {# src/Sensio/ArticleBundle/Resources/Article/articleDetails.html.twig #}
+        {# src/Acme/ArticleBundle/Resources/Article/articleDetails.html.twig #}
         <h1>{{ article.title }}</h1>
         <h3 class="byline">by {{ article.authorName }}</h3>
 
@@ -490,7 +490,7 @@ template. First, create the template that you'll need to reuse.
 
     .. code-block:: php
 
-        <!-- src/Sensio/ArticleBundle/Resources/Article/articleDetails.html.php -->
+        <!-- src/Acme/ArticleBundle/Resources/Article/articleDetails.html.php -->
         <h2><?php echo $article->getTitle() ?></h2>
         <h3 class="byline">by <?php echo $article->getAuthorName() ?></h3>
 
@@ -504,7 +504,7 @@ Including this template from any other template is simple:
 
     .. code-block:: html+jinja
 
-        {# src/Sensio/ArticleBundle/Resources/Article/list.html.twig #}
+        {# src/Acme/ArticleBundle/Resources/Article/list.html.twig #}
         {% extends 'Article::layout.html.twig' %}
 
         {% block body %}
@@ -517,7 +517,7 @@ Including this template from any other template is simple:
 
     .. code-block:: php
 
-        <!-- src/Sensio/ArticleBundle/Resources/Article/list.html.php -->
+        <!-- src/Acme/ArticleBundle/Resources/Article/list.html.php -->
         <?php $view->extend('Article::layout.html.php') ?>
 
         <?php $view['slots']->start('body') ?>
@@ -558,7 +558,7 @@ articles:
 
 .. code-block:: php
 
-    // src/Sensio/ArticleBundle/Controller/ArticleController.php
+    // src/Acme/ArticleBundle/Controller/ArticleController.php
 
     class ArticleController extends Controller
     {
@@ -577,7 +577,7 @@ The ``recentList`` template is perfectly straightforward:
 
     .. code-block:: html+jinja
 
-        {# src/Sensio/ArticleBundle/Resources/views/Article/recentList.html.twig #}
+        {# src/Acme/ArticleBundle/Resources/views/Article/recentList.html.twig #}
         {% for article in articles %}
           <a href="/article/{{ article.slug }}">
               {{ article.title }}
@@ -586,7 +586,7 @@ The ``recentList`` template is perfectly straightforward:
 
     .. code-block:: php
 
-        <!-- src/Sensio/ArticleBundle/Resources/views/Article/recentList.html.php -->
+        <!-- src/Acme/ArticleBundle/Resources/views/Article/recentList.html.php -->
         <?php foreach ($articles in $article): ?>
             <a href="/article/<?php echo $article->getSlug() ?>">
                 <?php echo $article->getTitle() ?>
@@ -712,7 +712,7 @@ correctly:
 
     .. code-block:: html+jinja
 
-        {# src/Sensio/ArticleBundle/Resources/views/Article/recentList.html.twig #}
+        {# src/Acme/ArticleBundle/Resources/views/Article/recentList.html.twig #}
         {% for article in articles %}
           <a href="{{ path('article_show', { 'slug': article.slug }) }}">
               {{ article.title }}
@@ -721,7 +721,7 @@ correctly:
 
     .. code-block:: php
 
-        <!-- src/Sensio/ArticleBundle/Resources/views/Article/recentList.html.php -->
+        <!-- src/Acme/ArticleBundle/Resources/views/Article/recentList.html.php -->
         <?php foreach ($articles in $article): ?>
             <a href="<?php echo $view['router']->generate('article_show', array('slug' => $article->getSlug()) ?>">
                 <?php echo $article->getTitle() ?>
@@ -932,7 +932,7 @@ covered:
 
     .. code-block:: html+jinja
 
-        {# src/Sensio/BlogBundle/Resources/views/layout.html.twig #}
+        {# src/Acme/BlogBundle/Resources/views/layout.html.twig #}
         {% extends '::base.html.twig' %}
 
         {% block body %}
@@ -947,7 +947,7 @@ covered:
 
     .. code-block:: html+jinja
 
-        {# src/Sensio/BlogBundle/Resources/views/Blog/index.html.twig #}
+        {# src/Acme/BlogBundle/Resources/views/Blog/index.html.twig #}
         {% extends 'Blog::layout.html.twig' %}
 
         {% block content %}

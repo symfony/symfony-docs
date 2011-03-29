@@ -37,9 +37,9 @@ Here are some valid bundle namespaces and class names:
 =================================== ==============================
 Namespace                           Bundle Class Name
 =================================== ==============================
-``Sensio\Bundle\BlogBundle``        ``SensioBlogBundle``
-``Sensio\Bundle\Social\BlogBundle`` ``SensioSocialBlogBundle``
-``Sensio\BlogBundle``               ``SensioBlogBundle``
+``Acme\Bundle\BlogBundle``        ``AcmeBlogBundle``
+``Acme\Bundle\Social\BlogBundle`` ``AcmeSocialBlogBundle``
+``Acme\BlogBundle``               ``AcmeBlogBundle``
 =================================== ==============================
 
 By convention, the ``getName()`` method of the bundle class should return the
@@ -48,7 +48,7 @@ class name.
 .. note::
 
     If you share your bundle publicly, you must use the bundle class name as
-    the name of the repository (``SensioBlogBundle`` and not ``BlogBundle``
+    the name of the repository (``AcmeBlogBundle`` and not ``BlogBundle``
     for instance).
 
 Directory Structure
@@ -203,7 +203,7 @@ For simple configuration settings, rely on the default ``parameters`` entry of
 the Symfony2 configuration. Symfony2 parameters are simple key/value pairs; a
 value being any valid PHP value. Each parameter name must start with a
 lower-cased version of the bundle name (``hello`` for ``HelloBundle``, or
-``sensio.social.blog`` for ``Sensio\Social\BlogBundle`` for instance).
+``acme.social.blog`` for ``Acme\Social\BlogBundle`` for instance).
 
 The end user can provide values in any configuration file:
 

@@ -17,7 +17,7 @@ choices from which an entity can be selected.
 
     $field = new EntityChoiceField('users', array(
         'em' => $em,
-        'class' => 'Sensio\\HelloBundle\\Entity\\User',
+        'class' => 'Acme\\HelloBundle\\Entity\\User',
         'property' => 'username',
         'query_builder' => $qb,
     ));

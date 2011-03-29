@@ -115,7 +115,7 @@ The idea behind the autoloader is simple: the name of your class (including
 the namespace) must match up with the path to the file containing that class.
 Take the ``HelloController`` from the Symfony2 sandbox as an example::
 
-    namespace Sensio\HelloBundle\Controller;
+    namespace Acme\HelloBundle\Controller;
 
     use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
@@ -123,13 +123,13 @@ Take the ``HelloController`` from the Symfony2 sandbox as an example::
     {
         // ...
 
-The file itself lives at ``src/Sensio/HelloBundle/Controller/HelloController.php``.
+The file itself lives at ``src/Acme/HelloBundle/Controller/HelloController.php``.
 As you can see, the location of the file follows the namespace of the class.
-Specifically, the namespace, ``Sensio\HelloBundle\Controller``, spells out
-the directory that the file should live in (``src\Sensio\HelloBundle\Controller``).
+Specifically, the namespace, ``Acme\HelloBundle\Controller``, spells out
+the directory that the file should live in (``src\Acme\HelloBundle\Controller``).
 
 If the file did *not* live at this exact location, you'd receive a
-``Class "Sensio\HelloBundle\Controller\HelloController" does not exist.``
+``Class "Acme\HelloBundle\Controller\HelloController" does not exist.``
 error. In Symfony2, a "class does not exist" means that the suspect class
 namespace and physical location do not match. Basically, Symfony2 is looking
 in one exact location for that class, but that location doesn't exist (or
@@ -211,19 +211,19 @@ In Symfony2, the bundles are activated inside the application kernel::
             new Symfony\Bundle\FrameworkBundle\FrameworkBundle(),
             new Symfony\Bundle\TwigBundle\TwigBundle(),
             // ...
-            new Sensio\HelloBundle\HelloBundle(),
+            new Acme\HelloBundle\HelloBundle(),
         );
         
         return $bundles;
     }
 
-You also need to be sure that the ``Sensio`` namespace is set to be autoloaded::
+You also need to be sure that the ``Acme`` namespace is set to be autoloaded::
 
     // app/autoload.php
     $loader = new UniversalClassLoader();
     $loader->registerNamespaces(array(
         'Symfony'                        => __DIR__.'/../vendor/symfony/src',
-        'Sensio'                         => __DIR__.'/../src',
+        'Acme'                           => __DIR__.'/../src',
         // ...
     ));
 
