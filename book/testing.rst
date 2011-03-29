@@ -72,16 +72,16 @@ Running tests for a given file or directory is also very easy:
 .. code-block:: bash
 
     # run all tests for the Controller
-    $ phpunit -c app src/Sensio/HelloBundle/Tests/Controller/
+    $ phpunit -c app src/Acme/HelloBundle/Tests/Controller/
 
     # run all tests for the Model
-    $ phpunit -c app src/Sensio/HelloBundle/Tests/Model/
+    $ phpunit -c app src/Acme/HelloBundle/Tests/Model/
 
     # run tests for the Article class
-    $ phpunit -c app src/Sensio/HelloBundle/Tests/Model/ArticleTest.php
+    $ phpunit -c app src/Acme/HelloBundle/Tests/Model/ArticleTest.php
 
     # run all tests for the entire Bundle
-    $ phpunit -c app src/Sensio/HelloBundle/
+    $ phpunit -c app src/Acme/HelloBundle/
 
 .. index::
    single: Tests; Functional Tests

@@ -559,9 +559,9 @@ same sample application, now built in Symfony2:
 
     <?php
 
-    // src/Sensio/BlogBundle/Controller/BlogController.php
+    // src/Acme/BlogBundle/Controller/BlogController.php
 
-    namespace Sensio\BlogBundle\Controller;
+    namespace Acme\BlogBundle\Controller;
     use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
     class BlogController extends Controller
@@ -593,7 +593,7 @@ now quite a bit simpler:
 
 .. code-block:: html+php
 
-    <!-- src/Sensio/BlogBundle/Resources/views/Blog/list.html.php --> 
+    <!-- src/Acme/BlogBundle/Resources/views/Blog/list.html.php --> 
     <?php $view->extend('::layout.html.php') ?>
 
     <?php $view['slots']->set('title', 'List of Posts') ?>
@@ -701,7 +701,7 @@ for example, the previous list template written in Twig:
 
 .. code-block:: html+jinja
 
-    {# src/Sensio/BlogBundle/Resources/views/Blog/list.html.twig #}
+    {# src/Acme/BlogBundle/Resources/views/Blog/list.html.twig #}
 
     {% extends "::layout.html.twig" %}
     {% block title %}List of Posts{% endblock %}

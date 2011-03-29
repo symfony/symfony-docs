@@ -33,16 +33,16 @@ constraint definition as array.
 
     .. code-block:: yaml
 
-        # Sensio/HelloBundle/Resources/config/validation.yml
-        Sensio\HelloBundle\Author:
+        # src/Acme/HelloBundle/Resources/config/validation.yml
+        Acme\HelloBundle\Author:
             properties:
                 gender:
                     - Choice: [male, female]
 
     .. code-block:: xml
 
-        <!-- Sensio/HelloBundle/Resources/config/validation.xml -->
-        <class name="Sensio\HelloBundle\Author">
+        <!-- src/Acme/HelloBundle/Resources/config/validation.xml -->
+        <class name="Acme\HelloBundle\Author">
             <property name="gender">
                 <constraint name="Choice">
                     <value>male</value>
@@ -53,7 +53,7 @@ constraint definition as array.
 
     .. code-block:: php-annotations
 
-        // Sensio/HelloBundle/Author.php
+        // src/Acme/HelloBundle/Author.php
         class Author
         {
             /**
@@ -64,7 +64,7 @@ constraint definition as array.
 
     .. code-block:: php
 
-        // Sensio/HelloBundle/Author.php
+        // src/Acme/HelloBundle/Author.php
         use Symfony\Component\Validator\Mapping\ClassMetadata;
         use Symfony\Component\Validator\Constraints\Choice;
         
@@ -87,7 +87,7 @@ callback method.
 
 .. code-block:: php
 
-    // Sensio/HelloBundle/Author.php
+    // src/Acme/HelloBundle/Author.php
     class Author
     {
         public static function getGenders()
@@ -103,16 +103,16 @@ constraint.
 
     .. code-block:: yaml
 
-        # Sensio/HelloBundle/Resources/config/validation.yml
-        Sensio\HelloBundle\Author:
+        # src/Acme/HelloBundle/Resources/config/validation.yml
+        Acme\HelloBundle\Author:
             properties:
                 gender:
                     - Choice: { callback: getGenders }
 
     .. code-block:: xml
 
-        <!-- Sensio/HelloBundle/Resources/config/validation.xml -->
-        <class name="Sensio\HelloBundle\Author">
+        <!-- src/Acme/HelloBundle/Resources/config/validation.xml -->
+        <class name="Acme\HelloBundle\Author">
             <property name="gender">
                 <constraint name="Choice">
                     <option name="callback">getGenders</option>
@@ -122,7 +122,7 @@ constraint.
 
     .. code-block:: php-annotations
 
-        // Sensio/HelloBundle/Author.php
+        // src/Acme/HelloBundle/Author.php
         class Author
         {
             /**
@@ -138,16 +138,16 @@ you can pass the class name and the method as array.
 
     .. code-block:: yaml
 
-        # Sensio/HelloBundle/Resources/config/validation.yml
-        Sensio\HelloBundle\Author:
+        # src/Acme/HelloBundle/Resources/config/validation.yml
+        Acme\HelloBundle\Author:
             properties:
                 gender:
                     - Choice: { callback: [Util, getGenders] }
 
     .. code-block:: xml
 
-        <!-- Sensio/HelloBundle/Resources/config/validation.xml -->
-        <class name="Sensio\HelloBundle\Author">
+        <!-- src/Acme/HelloBundle/Resources/config/validation.xml -->
+        <class name="Acme\HelloBundle\Author">
             <property name="gender">
                 <constraint name="Choice">
                     <option name="callback">
@@ -160,7 +160,7 @@ you can pass the class name and the method as array.
 
     .. code-block:: php-annotations
 
-        // Sensio/HelloBundle/Author.php
+        // src/Acme/HelloBundle/Author.php
         class Author
         {
             /**
