@@ -902,7 +902,7 @@ translates to the following:
 * ``Blog`` - indicates that the class name of the controller is ``BlogController``;
 
 * ``show`` - means that the name of the method that will be executed is
-  called ``showActions``.
+  called ``showAction``.
 
 Every controller that follows this syntax will live inside the ``Controller``
 directory of the given bundle. In other words::

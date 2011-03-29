@@ -398,7 +398,7 @@ lives in a specific location:
 
 In the :ref:`overiding-bundle-templates` section, you'll find out how each
 template living inside the ``AcmeBlogBundle``, for example, can be overridden
-by placing a template of the same name in the ``app/Resources/AcmeBlogBundle/views/``
+by placing a template of the same name in the ``app/Resources/AcmeBlog/views/``
 directory. This gives the power to override templates from any vendor bundle.
 
 .. tip::
