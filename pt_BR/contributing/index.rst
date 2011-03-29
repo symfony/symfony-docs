@@ -1,7 +1,5 @@
-Contribuir
-==========
-
-Contribua para o Symfony2:
+Contribuindo
+============
 
 .. toctree::
     :hidden:
