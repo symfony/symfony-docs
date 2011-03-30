@@ -82,8 +82,8 @@ Explicit definition of all the mapped documents is the only necessary
 configuration for the ODM and there are several configuration options that you
 can control. The following configuration options exist for a mapping:
 
-- ``type`` One of "annotations", "xml", "yml", "php" or "static-php". This
-  specifies which type of metadata type your mapping uses.
+- ``type`` One of ``annotations``, ``xml``, ``yml``, ``php`` or ``staticphp``.
+  This specifies which type of metadata type your mapping uses.
 - ``dir`` Path to the mapping or entity files (depending on the driver). If
   this path is relative it is assumed to be relative to the bundle root. This
   only works if the name of your mapping is a bundle name. If you want to use
