@@ -51,6 +51,12 @@ class name.
     the name of the repository (``AcmeBlogBundle`` and not ``BlogBundle``
     for instance).
 
+.. note::
+
+    Symfony2 core Bundles do not prefix the Bundle class with ``Symfony``
+    and always add a ``Bundle`` subnamespace; for example:
+    :class:``Symfony\Bundle\FrameworkBundle\FrameworkBundle``.
+
 Directory Structure
 -------------------
 
@@ -202,9 +208,9 @@ using the Symfony2 built-in mechanisms.
 
 For simple configuration settings, rely on the default ``parameters`` entry of
 the Symfony2 configuration. Symfony2 parameters are simple key/value pairs; a
-value being any valid PHP value. Each parameter name must start with a
+value being any valid PHP value. Each parameter name should start with a
 lower-cased version of the bundle name (``acme.hello`` for ``AcmeHelloBundle``,
-or ``sensio.social.blog`` for ``Acme\Social\BlogBundle`` for instance).
+or ``acme.social.blog`` for ``Acme\Social\BlogBundle`` for instance).
 
 The end user can provide values in any configuration file:
 

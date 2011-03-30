@@ -20,6 +20,16 @@ parameters:
 
 * Completion when you use XSD and XML.
 
+
+.. note::
+
+    In case a Bundle provides an extension class, users should not rely
+    on overriding Bundle parameters and services directly. In case a
+    setting should be user configurable, it should be explicitly supported
+    by the extension class. In other words the extension class defines
+    all the publicly supported configuration settings for which
+    backward compatibility will be maintained.
+
 .. index::
    single: Bundles; Extension
    single: Dependency Injection, Extension
@@ -29,10 +39,12 @@ Creating an Extension
 
 To define a semantic configuration, create a Dependency Injection extension
 that extends
-:class:`Symfony\\Component\\DependencyInjection\\Extension\\Extension`::
+:class:`Symfony\\Component\\DependencyInjection\\Extension\\Extension`
+who's class name should be constructed by replacing the ``Bundle`` postfix of the
+Bundle class with ``Extension`` inside a ``DependencyInjection`` subnamespace::
 
     // Acme/HelloBundle/DependencyInjection/HelloExtension.php
-    use Symfony\Component\DependencyInjection\Extension\Extension;
+    use Symfony\Component\HttpKernel\DependencyInjection\Extension;
     use Symfony\Component\DependencyInjection\ContainerBuilder;
 
     class AcmeHelloExtension extends Extension
@@ -51,12 +63,12 @@ that extends
         {
             return 'http://www.example.com/symfony/schema/';
         }
-
-        public function getAlias()
-        {
-            return 'hello';
-        }
     }
+
+.. note::
+
+    The ``getXsdValidationBasePath`` method is only required if XSD's for the
+    configuration files are provided.
 
 The previous class defines a ``hello`` namespace, usable in any configuration
 file:
@@ -90,9 +102,10 @@ file:
 
 .. tip::
 
-    Your extension code is always called, even if the user does not provide
-    any configuration. In that case, the array of configurations will be empty
-    and you can still provide some sensible defaults if you want.
+    Your extension code is always called if the Bundle is registered in the Kernel,
+    even if the user does not provide any configuration. In that case, the array
+    of configurations will be empty and you can still provide some sensible defaults
+    if you want.
 
 Parsing a Configuration
 -----------------------
@@ -161,6 +174,12 @@ The global parameters are the following:
 * ``kernel.bundles``
 * ``kernel.charset``
 
+.. note::
+
+    To assist in normalizing (to support different configuration formats),
+    validation and merging extension configurations you can make use of the
+    classes in the ``Symfony\Component\Config\Definition`` namespace.
+
 .. caution::
 
     All parameter and service names starting with a ``_`` are reserved for the
@@ -179,9 +198,6 @@ When creating an extension, follow these simple conventions:
 * The extension must be named after the bundle name and suffixed with
   ``Extension`` (``AcmeHelloExtension`` for ``AcmeHelloBundle``);
 
-* The alias must be unique and named after the bundle name (``acme_hello``
-  for ``AcmeHelloBundle``);
-
 * The extension should provide an XSD schema.
 
 If you follow these simple conventions, your extensions will be registered
@@ -199,3 +215,7 @@ automatically by Symfony2. If not, override the Bundle
             $container->registerExtension(new ExtensionHello());
         }
     }
+
+In this case the extension class needs to implement a ``getAlias`` method that
+must return a unique alias named after the bundle name (``sensio_blog`` for
+``SensioBlogBundle``);
