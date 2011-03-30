@@ -339,7 +339,7 @@ configuration. But that's not the case in the production environment
 (``app.php``) to make it perform even better; that's why you should always use
 the development environment when developing your application.
 
-Different :term:`environment`s of a given application differ only in their
+Different :term:`environments<environment>` of a given application differ only in their
 configuration. In fact, a configuration can inherit from another one:
 
 .. code-block:: yaml
