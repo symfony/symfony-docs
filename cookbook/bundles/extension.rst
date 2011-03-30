@@ -217,5 +217,5 @@ automatically by Symfony2. If not, override the Bundle
     }
 
 In this case the extension class needs to implement a ``getAlias`` method that
-must return a unique alias named after the bundle name (``sensio_blog`` for
-``SensioBlogBundle``);
+must return a unique alias named after the bundle name (``acme_blog`` for
+``AcmeBlogBundle``);
