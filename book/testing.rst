@@ -60,8 +60,8 @@ Unit Tests
 Writing Symfony2 unit tests is no different than writing standard PHPUnit unit
 tests. By convention, it's recommended to replicate the bundle directory
 structure under its ``Tests/`` sub-directory. So, write tests for the
-``Sensio\HelloBundle\Model\Article`` class in the
-``Sensio/HelloBundle/Tests/Model/ArticleTest.php`` file.
+``Acme\HelloBundle\Model\Article`` class in the
+``Acme/HelloBundle/Tests/Model/ArticleTest.php`` file.
 
 In a unit test, autoloading is automatically enabled via the
 ``src/autoload.php`` file (as configured by default in the ``phpunit.xml.dist``
@@ -71,11 +71,17 @@ Running tests for a given file or directory is also very easy:
 
 .. code-block:: bash
 
+    # run all tests for the Controller
+    $ phpunit -c app src/Acme/HelloBundle/Tests/Controller/
+
     # run all tests for the Model
-    $ phpunit -c app Sensio/HelloBundle/Tests/Model/
+    $ phpunit -c app src/Acme/HelloBundle/Tests/Model/
 
     # run tests for the Article class
-    $ phpunit -c app Sensio/HelloBundle/Tests/Model/ArticleTest.php
+    $ phpunit -c app src/Acme/HelloBundle/Tests/Model/ArticleTest.php
+
+    # run all tests for the entire Bundle
+    $ phpunit -c app src/Acme/HelloBundle/
 
 .. index::
    single: Tests; Functional Tests
@@ -98,8 +104,8 @@ to the application. To access such a client, your tests need to extend the
 Symfony2 ``WebTestCase`` class. The sandbox provides a simple functional test
 for ``HelloController`` that reads as follows::
 
-    // src/Sensio/HelloBundle/Tests/Controller/HelloControllerTest.php
-    namespace Sensio\HelloBundle\Tests\Controller;
+    // src/Acme/HelloBundle/Tests/Controller/HelloControllerTest.php
+    namespace Acme\HelloBundle\Tests\Controller;
 
     use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
@@ -590,7 +596,7 @@ following configuration adds the tests from the installed third-party bundles:
     <testsuites>
         <testsuite name="Project Test Suite">
             <directory>../src/*/*Bundle/Tests</directory>
-            <directory>../src/Sensio/Bundle/*Bundle/Tests</directory>
+            <directory>../src/Acme/Bundle/*Bundle/Tests</directory>
         </testsuite>
     </testsuites>
 
@@ -605,8 +611,8 @@ section:
             <exclude>
                 <directory>../src/*/*Bundle/Resources</directory>
                 <directory>../src/*/*Bundle/Tests</directory>
-                <directory>../src/Sensio/Bundle/*Bundle/Resources</directory>
-                <directory>../src/Sensio/Bundle/*Bundle/Tests</directory>
+                <directory>../src/Acme/Bundle/*Bundle/Resources</directory>
+                <directory>../src/Acme/Bundle/*Bundle/Tests</directory>
             </exclude>
         </whitelist>
     </filter>

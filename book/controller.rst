@@ -81,9 +81,9 @@ object. Controllers are also called *actions*.
 
 .. code-block:: php
 
-    // src/Sensio/HelloBundle/Controller/HelloController.php
+    // src/Acme/HelloBundle/Controller/HelloController.php
 
-    namespace Sensio\HelloBundle\Controller;
+    namespace Acme\HelloBundle\Controller;
     use Symfony\Component\HttpFoundation\Response;
 
     class HelloController
@@ -138,23 +138,23 @@ but let's create a simple route to our controller:
 
     .. code-block:: yaml
 
-        # src/Sensio/HelloBundle/Resources/config/routing.yml
+        # src/Acme/HelloBundle/Resources/config/routing.yml
         hello:
             pattern:      /hello/{name}
-            defaults:     { _controller: Hello:Hello:index }
+            defaults:     { _controller: AcmeHello:Hello:index }
 
     .. code-block:: xml
 
-        <!-- src/Sensio/HelloBundle/Resources/config/routing.xml -->
+        <!-- src/Acme/HelloBundle/Resources/config/routing.xml -->
         <route id="hello" pattern="/hello/{name}">
-            <default key="_controller">Hello:Hello:index</default>
+            <default key="_controller">AcmeHello:Hello:index</default>
         </route>
 
     .. code-block:: php
 
-        // src/Sensio/HelloBundle/Resources/config/routing.php
+        // src/Acme/HelloBundle/Resources/config/routing.php
         $collection->add('hello', new Route('/hello/{name}', array(
-            '_controller' => 'Hello:Hello:index',
+            '_controller' => 'AcmeHello:Hello:index',
         )));
 
 Going to ``/hello/ryan`` now executes the ``HelloController::indexAction()``
@@ -162,7 +162,7 @@ controller and passes in ``ryan`` for the ``$name`` variable. Creating a
 "page" means simply creating a controller method and associated route. There's
 no hidden layers or behind-the-scenes magic.
 
-Notice the syntax used to refer to the controller: ``Hello:Hello:index``.
+Notice the syntax used to refer to the controller: ``AcmeHello:Hello:index``.
 Symfony2 uses a flexible string notation to refer to different controllers.
 This is the most common syntax and tells Symfony2 to look for a controller
 class called ``HelloController`` inside a bundle named ``HelloBundle``. The
@@ -187,7 +187,7 @@ see :ref:`controller-string-syntax`.
 Route Parameters as Controller Arguments
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-We already know now that the ``_controller`` parameter ``Hello:Hello:index``
+We already know now that the ``_controller`` parameter ``AcmeHello:Hello:index``
 refers to a ``HelloController::indexAction()`` method that lives inside the
 ``HelloBundle`` bundle. What's more interesting is the arguments that are
 passed to that method:
@@ -195,9 +195,9 @@ passed to that method:
 .. code-block:: php
 
     <?php
-    // src/Sensio/HelloBundle/Controller/HelloController.php
+    // src/Acme/HelloBundle/Controller/HelloController.php
 
-    namespace Sensio\HelloBundle\Controller;
+    namespace Acme\HelloBundle\Controller;
     use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
     class HelloController extends Controller
@@ -218,24 +218,24 @@ example:
 
     .. code-block:: yaml
 
-        # src/Sensio/HelloBundle/Resources/config/routing.yml
+        # src/Acme/HelloBundle/Resources/config/routing.yml
         hello:
             pattern:      /hello/{first_name}/{last_name}
-            defaults:     { _controller: Hello:Hello:index, color: green }
+            defaults:     { _controller: AcmeHello:Hello:index, color: green }
 
     .. code-block:: xml
 
-        <!-- src/Sensio/HelloBundle/Resources/config/routing.xml -->
+        <!-- src/Acme/HelloBundle/Resources/config/routing.xml -->
         <route id="hello" pattern="/hello/{first_name}/{last_name}">
-            <default key="_controller">Hello:Hello:index</default>
+            <default key="_controller">AcmeHello:Hello:index</default>
             <default key="color">green</default>
         </route>
 
     .. code-block:: php
 
-        // src/Sensio/HelloBundle/Resources/config/routing.php
+        // src/Acme/HelloBundle/Resources/config/routing.php
         $collection->add('hello', new Route('/hello/{first_name}/{last_name}', array(
-            '_controller' => 'Hello:Hello:index',
+            '_controller' => 'AcmeHello:Hello:index',
             'color'       => 'green',
         )));
 
@@ -320,9 +320,9 @@ Add the ``use`` statement atop the ``Controller`` class and then modify the
 
 .. code-block:: php
 
-    // src/Sensio/HelloBundle/Controller/HelloController.php
+    // src/Acme/HelloBundle/Controller/HelloController.php
 
-    namespace Sensio\HelloBundle\Controller;
+    namespace Acme\HelloBundle\Controller;
     use Symfony\Bundle\FrameworkBundle\Controller\Controller;
     use Symfony\Component\HttpFoundation\Response;
 
@@ -414,7 +414,7 @@ object is the end-product of the internal sub-request::
 
     public function indexAction($name)
     {
-        $response = $this->forward('Hello:Hello:fancy', array(
+        $response = $this->forward('AcmeHello:Hello:fancy', array(
             'name'  => $name,
             'color' => 'green'
         ));
@@ -425,10 +425,12 @@ object is the end-product of the internal sub-request::
     }
 
 Notice that the `forward()` method uses the same string representation of
-the controller used in the routing configuration. The array passed to the
-method becomes the arguments on the resulting controller. This same interface
-is used when embedding controllers into templates (see :ref:`templating-embedding-controller`).
-The target controller method should look something like the following::
+the controller used in the routing configuration. In this case, the target
+controller class will be ``HelloController`` inside some ``AcmeHelloBundle``.
+The array passed to the method becomes the arguments on the resulting controller.
+This same interface is used when embedding controllers into templates (see
+:ref:`templating-embedding-controller`). The target controller method should
+look something like the following::
 
     public function fancyAction($name, $color)
     {
@@ -449,7 +451,7 @@ value to each variable.
     object::
     
         $httpKernel = $this->container->get('http_kernel');
-        $response = $httpKernel->forward('Hello:Hello:fancy', array(
+        $response = $httpKernel->forward('AcmeHello:Hello:fancy', array(
             'name'  => $name,
             'color' => 'green',
         ));
@@ -467,17 +469,20 @@ that's responsible for generating the HTML (or other format) for the controller.
 The ``renderView()`` method renders a template and returns its content. The
 content from the template can be used to create a ``Response`` object::
 
-    $content = $this->renderView('Hello:Hello:index.html.twig', array('name' => $name));
+    $content = $this->renderView('AcmeHello:Hello:index.html.twig', array('name' => $name));
 
     return new Response($content);
 
 This can even be done in just one step with the ``render()`` method, which
 returns a ``Response`` object with the content from the template::
 
-    return $this->render('Hello:Hello:index.html.twig', array('name' => $name));
+    return $this->render('AcmeHello:Hello:index.html.twig', array('name' => $name));
 
-The Symfony templating engine is explained in great detail in the :doc:`Templating </book/templating>`
-chapter.
+In both cases, the ``Resources/views/Hello/index.html.twig`` template inside
+the ``AcmeHelloBundle`` will be rendered.
+
+The Symfony templating engine is explained in great detail in the
+:doc:`Templating </book/templating>` chapter.
 
 .. tip::
 
@@ -485,7 +490,7 @@ chapter.
     service. The ``templating`` service can also be used directly::
     
         $templating = $this->get('templating');
-        $content = $templating->render('Hello:Hello:index.html.twig', array('name' => $name));
+        $content = $templating->render('AcmeHello:Hello:index.html.twig', array('name' => $name));
 
 .. index::
    single: Controller; Accessing services
