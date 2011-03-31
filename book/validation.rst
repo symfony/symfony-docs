@@ -64,7 +64,7 @@ the ``$name`` property is not empty, add the following:
         class Author
         {
             /**
-             * @validation:NotBlank()
+             * @assert:NotBlank()
              */
             public $name;
         }
@@ -313,7 +313,7 @@ another property, ``gender`` that can be set to either "male" or "female":
         class Author
         {
             /**
-             * @validation:Choice(
+             * @assert:Choice(
              *     choices = { "male", "female" },
              *     message = "Choose a valid gender."
              * )
@@ -373,7 +373,7 @@ options can be specified in this way.
         class Author
         {
             /**
-             * @validation:Choice({"male", "female"})
+             * @assert:Choice({"male", "female"})
              */
             protected $gender;
         }
@@ -455,14 +455,14 @@ of a class ``Author`` to have at least 3 characters.
         class Author
         {
             /**
-             * @validation:NotBlank()
-             * @validation:MinLength(3)
+             * @assert:NotBlank()
+             * @assert:MinLength(3)
              */
             private $firstName;
 
             /**
-             * @validation:NotBlank()
-             * @validation:MinLength(3)
+             * @assert:NotBlank()
+             * @assert:MinLength(3)
              */
             private $lastName;
         }
@@ -504,7 +504,7 @@ The benefit of this technique is that it allows you to validate your object
 dynamically. Depending on the state of your object, the method may return
 different values which are then validated.
 
-The next listing shows you how to use the :doc:`AssertTrue</reference/constraints/AssertTrue>`
+The next listing shows you how to use the :doc:`True</reference/constraints/True>`
 constraint to validate whether a dynamically generated token is correct:
 
 .. configuration-block::
@@ -515,14 +515,14 @@ constraint to validate whether a dynamically generated token is correct:
         Acme\BlogBundle\Author:
             getters:
                 tokenValid:
-                    - AssertTrue: { message: "The token is invalid" }
+                    - True: { message: "The token is invalid" }
 
     .. code-block:: xml
 
         <!-- Acme/BlogBundle/Resources/config/validation.xml -->
         <class name="Acme\BlogBundle\Author">
             <getter property="tokenValid">
-                <constraint name="AssertTrue">
+                <constraint name="True">
                     <option name="message">The token is invalid</option>
                 </constraint>
             </getter>
@@ -534,7 +534,7 @@ constraint to validate whether a dynamically generated token is correct:
         class Author
         {
             /**
-             * @validation:AssertTrue(message = "The token is invalid")
+             * @assert:True(message = "The token is invalid")
              */
             public function isTokenValid()
             {
@@ -546,14 +546,14 @@ constraint to validate whether a dynamically generated token is correct:
 
         // Acme/BlogBundle/Author.php
         use Symfony\Component\Validator\Mapping\ClassMetadata;
-        use Symfony\Component\Validator\Constraints\AssertTrue;
+        use Symfony\Component\Validator\Constraints\True;
 
         class Author
         {
 
             public static function loadValidatorMetadata(ClassMetadata $metadata)
             {
-                $metadata->addGetterConstraint('tokenValid', new AssertTrue(array(
+                $metadata->addGetterConstraint('tokenValid', new True(array(
                     'message' => 'The token is invalid',
                 )));
             }
