@@ -1,4 +1,4 @@
-AssertFalse
+False
 ===========
 
 Validates that a value is ``false``.
@@ -7,11 +7,11 @@ Validates that a value is ``false``.
 
     properties:
         deleted:
-            - AssertFalse: ~
+            - False: ~
 
 Options
 -------
 
 * ``message``: The error message if validation fails
 
-See :doc:`AssertTrue <AssertTrue>`.
+See :doc:`True <True>`.
