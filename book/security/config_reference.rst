@@ -11,20 +11,41 @@ Configuration Reference
         # app/config/security.yml
         security:
             access_denied_url: /foo/error403
+            
+            access_decision_manager:
+                strategy: affirmative
+                allow_if_all_abstain: false
+                allow_if_equal_granted_denied: true
+            
+            acl:
+                connection: default # any name configured in doctrine.dbal section
+                tables:
+                    class: acl_classes
+                    entry: acl_entries
+                    object_identity: acl_object_identities
+                    object_identity_ancestors: acl_object_identity_ancestors
+                    security_identity: acl_security_identities
+                cache:
+                    id: service_id
+                    prefix: sf2_acl_
+                voter:
+                    allow_if_object_identity_unavailable: true
+
+            always_authenticate_before_granting: false
 
             # strategy can be: none, migrate, invalidate
             session_fixation_strategy: migrate
 
             encoders:
                 somename:
-                    class: MyBundle\Entity\MyUser
-                MyBundle\Entity\MyUser: sha512
-                MyBundle\Entity\MyUser: plaintext
-                MyBundle\Entity\MyUser:
+                    class: MyBundle/Entity/MyUser
+                MyBundle/Entity/MyUser: sha512
+                MyBundle/Entity/MyUser: plaintext
+                MyBundle/Entity/MyUser:
                     algorithm: sha512
                     encode_as_base64: true
                     iterations: 5
-                MyBundle\Entity\MyUser:
+                MyBundle/Entity/MyUser:
                     id: my.custom.encoder.service.id
 
             providers:
@@ -34,7 +55,7 @@ Configuration Reference
                         foo: { password: foo, roles: ROLE_USER }
                         bar: { password: bar, roles: [ROLE_USER, ROLE_ADMIN] }
                 entity:
-                    entity: { class: Security:User, property: username }
+                    entity: { class: SecurityBundle:User, property: username }
 
             factories:
                 MyFactory: %kernel.root_dir%/../src/MyVendor/MyBundle/Resources/config/security_factories.xml
@@ -99,8 +120,7 @@ Configuration Reference
                     host: mydomain.foo
                     ip: 192.0.0.0/8
                     attributes:
-                        # a key to some controller
-                        _controller: AcmeDemo:Demo:access
+                        _controller: SomeController
                     roles: [ROLE_A, ROLE_B]
                     requires_channel: https
 
