@@ -1,5 +1,5 @@
 False
-===========
+=====
 
 Validates that a value is ``false``.
 

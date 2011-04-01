@@ -1,5 +1,5 @@
 True
-==========
+====
 
 Validates that a value is ``true``.
 
@@ -33,7 +33,7 @@ put the logic in a method which returns either ``true`` or ``false``.
         }
     }
 
-Then you can constrain this method with ``AssertTrue``.
+Then you can constrain this method with ``True``.
 
 .. configuration-block::
 
