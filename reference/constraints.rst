@@ -7,7 +7,7 @@ Validation Constraints Reference
 
    constraints/False
    constraints/True
-   constraints/AssertType
+   constraints/Type
    constraints/Choice
    constraints/Collection
    constraints/Date
@@ -37,7 +37,7 @@ The following constraints are natively available in Symfony2:
 
 * :doc:`False <constraints/False>`
 * :doc:`True <constraints/True>`
-* :doc:`AssertType <constraints/AssertType>`
+* :doc:`Type <constraints/Type>`
 * :doc:`Choice <constraints/Choice>`
 * :doc:`Collection <constraints/Collection>`
 * :doc:`Date <constraints/Date>`
