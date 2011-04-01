@@ -17,4 +17,5 @@
 * :doc:`/cookbook/bundles/extension`
 * :doc:`/cookbook/request/mime_type`
 * :doc:`/cookbook/security/voters`
+* :doc:`/cookbook/doctrine/reverse_engineering`
 * :doc:`/cookbook/symfony1`

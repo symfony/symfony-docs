@@ -1,5 +1,5 @@
-AssertType
-==========
+Type
+====
 
 Validates that a value has a specific data type
 
@@ -7,7 +7,7 @@ Validates that a value has a specific data type
 
     properties:
         age:
-            - AssertType: integer
+            - Type: integer
 
 Options
 -------

@@ -5,9 +5,9 @@ Validation Constraints Reference
    :maxdepth: 1
    :hidden:
 
-   constraints/AssertFalse
-   constraints/AssertTrue
-   constraints/AssertType
+   constraints/False
+   constraints/True
+   constraints/Type
    constraints/Choice
    constraints/Collection
    constraints/Date
@@ -35,9 +35,9 @@ Supported Constraints
 
 The following constraints are natively available in Symfony2:
 
-* :doc:`AssertFalse <constraints/AssertFalse>`
-* :doc:`AssertTrue <constraints/AssertTrue>`
-* :doc:`AssertType <constraints/AssertType>`
+* :doc:`False <constraints/False>`
+* :doc:`True <constraints/True>`
+* :doc:`Type <constraints/Type>`
 * :doc:`Choice <constraints/Choice>`
 * :doc:`Collection <constraints/Collection>`
 * :doc:`Date <constraints/Date>`

@@ -23,6 +23,7 @@ Cookbook
     bundles/extension
     request/mime_type
     security/voters
+    doctrine/reverse_engineering
     symfony1
 
 .. include:: map.rst.inc

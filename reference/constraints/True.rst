@@ -1,5 +1,5 @@
-AssertTrue
-==========
+True
+====
 
 Validates that a value is ``true``.
 
@@ -7,7 +7,7 @@ Validates that a value is ``true``.
 
     properties:
         termsAccepted:
-            - AssertTrue: ~
+            - True: ~
 
 Options
 -------
@@ -33,7 +33,7 @@ put the logic in a method which returns either ``true`` or ``false``.
         }
     }
 
-Then you can constrain this method with ``AssertTrue``.
+Then you can constrain this method with ``True``.
 
 .. configuration-block::
 
@@ -43,7 +43,7 @@ Then you can constrain this method with ``AssertTrue``.
         Acme\HelloBundle\Author:
             getters:
                 tokenValid:
-                    - AssertTrue: { message: "The token is invalid" }
+                    - True: { message: "The token is invalid" }
 
     .. code-block:: xml
 
@@ -64,7 +64,7 @@ Then you can constrain this method with ``AssertTrue``.
             protected $token;
 
             /**
-             * @validation:AssertTrue(message = "The token is invalid")
+             * @validation:True(message = "The token is invalid")
              */
             public function isTokenValid()
             {
@@ -76,7 +76,7 @@ Then you can constrain this method with ``AssertTrue``.
 
         // src/Acme/HelloBundle/Author.php
         use Symfony\Component\Validator\Mapping\ClassMetadata;
-        use Symfony\Component\Validator\Constraints\AssertTrue;
+        use Symfony\Component\Validator\Constraints\True;
         
         class Author
         {
@@ -84,7 +84,7 @@ Then you can constrain this method with ``AssertTrue``.
             
             public static function loadValidatorMetadata(ClassMetadata $metadata)
             {
-                $metadata->addGetterConstraint('tokenValid', new AssertTrue(array(
+                $metadata->addGetterConstraint('tokenValid', new True(array(
                     'message' => 'The token is invalid',
                 )));
             }

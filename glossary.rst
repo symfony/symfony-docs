@@ -56,7 +56,7 @@ Glossary
         that each may have. For more information, read the `Http Wikipedia`_
         article or the `HTTP 1.1 RFC`_.
 
-    Environment
+   Environment
         An environment is a string (e.g. ``prod`` or ``dev``) that corresponds
         to a specific set of configuration. The same application can be run
         on the same machine using different configuration by running the application

@@ -229,7 +229,7 @@ data.
         protected $sender;
         
         /**
-         * @validation:AssertType("boolean")
+         * @validation:Type("boolean")
          */
         protected $ccmyself = false;
         
@@ -266,7 +266,7 @@ automatically create the best-matching field.
                                     // of the @MaxLength constraint
             $this->add('message');  // TextField
             $this->add('sender');   // EmailField because of the @Email constraint
-            $this->add('ccmyself'); // CheckboxField because of @AssertType("boolean")
+            $this->add('ccmyself'); // CheckboxField because of @Type("boolean")
         }
     }
 

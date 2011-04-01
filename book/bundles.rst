@@ -209,8 +209,9 @@ using the Symfony2 built-in mechanisms.
 For simple configuration settings, rely on the default ``parameters`` entry of
 the Symfony2 configuration. Symfony2 parameters are simple key/value pairs; a
 value being any valid PHP value. Each parameter name should start with a
-lower-cased version of the bundle name (``acme.hello`` for ``AcmeHelloBundle``,
-or ``acme.social.blog`` for ``Acme\Social\BlogBundle`` for instance).
+lower-cased short version of the bundle name using underscores (``acme_hello``
+for ``AcmeHelloBundle``, or ``acme_social_blog`` for ``Acme\Social\BlogBundle``
+for instance), though this is just a best-practice suggestion.
 
 The end user can provide values in any configuration file:
 
