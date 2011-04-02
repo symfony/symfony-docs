@@ -211,7 +211,9 @@ the Symfony2 configuration. Symfony2 parameters are simple key/value pairs; a
 value being any valid PHP value. Each parameter name should start with a
 lower-cased short version of the bundle name using underscores (``acme_hello``
 for ``AcmeHelloBundle``, or ``acme_social_blog`` for ``Acme\Social\BlogBundle``
-for instance), though this is just a best-practice suggestion.
+for instance), though this is just a best-practice suggestion. The rest of
+the parameter name will use a period (``.``) to separate different parts
+(e.g. ``acme_hello.email.from``).
 
 The end user can provide values in any configuration file:
 
@@ -221,28 +223,28 @@ The end user can provide values in any configuration file:
 
         # app/config/config.yml
         parameters:
-            hello.email.from: fabien@example.com
+            acme_hello.email.from: fabien@example.com
 
     .. code-block:: xml
 
         <!-- app/config/config.xml -->
         <parameters>
-            <parameter key="hello.email.from">fabien@example.com</parameter>
+            <parameter key="acme_hello.email.from">fabien@example.com</parameter>
         </parameters>
 
     .. code-block:: php
 
         // app/config/config.php
-        $container->setParameter('hello.email.from', 'fabien@example.com');
+        $container->setParameter('acme_hello.email.from', 'fabien@example.com');
 
     .. code-block:: ini
 
         [parameters]
-        hello.email.from = fabien@example.com
+        acme_hello.email.from = fabien@example.com
 
 Retrieve the configuration parameters in your code from the container::
 
-    $container->getParameter('hello.email.from');
+    $container->getParameter('acme_hello.email.from');
 
 Even if this mechanism is simple enough, you are highly encouraged to use the
 semantic configuration described in the cookbook.
