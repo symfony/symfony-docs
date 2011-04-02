@@ -17,9 +17,9 @@ of tools to help generate model classes from your existing database.
     approximately 70-80% of the necessary mapping information based on fields,
     indexes and foreign key constraints. Doctrine can't discover inverse
     associations, inheritance types, entities with foreign keys as primary keys
-    or semantical operations on associations such as as cascade or lifecycle
-    events. An additional work on the generated entities will be necessary afterwards
-    to design your entities to fit your domain model specificities.
+    or semantical operations on associations such as cascade or lifecycle
+    events. Some additional work on the generated entities will be necessary
+    afterwards to design your each to fit your domain model specificities.
 
 This tutorial assumes you're using a simple blog application with the following
 two tables: ``blog_post`` and ``blog_comment``. A comment record is linked
