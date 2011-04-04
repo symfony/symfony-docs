@@ -176,8 +176,8 @@ Moreover, the ``admin`` user has a ``ROLE_ADMIN`` role, which includes the
 
 .. tip::
 
-    For readability, passwords are stored in clear in this simple
-    configuration, but using any hashing algorithm is a matter of tweaking the
+    For readability, passwords are stored in clear text in this simple
+    configuration, but you can use any hashing algorithm by tweaking the
     ``encoders`` section.
 
 Going to the ``http://localhost/Symfony/web/app_dev.php/demo/secured/hello``
