@@ -9,7 +9,7 @@ these additional resources:
  * List of open `bugs`_
  * List of open source `bundles`_
 
-.. _pull requests: https://github.com/fabpot/symfony/pulls
-.. _commits:       https://github.com/fabpot/symfony/commits/master
+.. _pull requests: https://github.com/symfony/symfony/pulls
+.. _commits:       https://github.com/symfony/symfony/commits/master
 .. _bugs:          http://trac.symfony-project.org/report/24
 .. _bundles:       http://symfony2bundles.org/

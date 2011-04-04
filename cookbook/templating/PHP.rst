@@ -20,7 +20,7 @@ template name instead of ``.twig``. The controller below renders the
 
     public function indexAction($name)
     {
-        return $this->render('Hello:Hello:index.html.php', array('name' => $name));
+        return $this->render('HelloBundle:Hello:index.html.php', array('name' => $name));
     }
 
 .. index::
@@ -40,11 +40,11 @@ the ``extend()`` call:
 .. code-block:: html+php
 
     <!-- src/Acme/HelloBundle/Resources/views/Hello/index.html.php -->
-    <?php $view->extend('AcmeHello::layout.html.php') ?>
+    <?php $view->extend('AcmeHelloBundle::layout.html.php') ?>
 
     Hello <?php echo $name ?>!
 
-The ``Hello::layout.html.php`` notation sounds familiar, doesn't it? It
+The ``HelloBundle::layout.html.php`` notation sounds familiar, doesn't it? It
 is the same notation used to reference a template. The ``::`` part simply
 means that the controller element is empty, so the corresponding file is
 directly stored under ``views/``.
@@ -102,7 +102,7 @@ decorating the template. In the ``index.html.php`` template, define a
 .. code-block:: html+php
 
     <!-- src/Acme/HelloBundle/Resources/views/Hello/index.html.php -->
-    <?php $view->extend('AcmeHello::layout.html.php') ?>
+    <?php $view->extend('AcmeHelloBundle::layout.html.php') ?>
 
     <?php $view['slots']->set('title', 'Hello World Application') ?>
 
@@ -151,7 +151,7 @@ And change the ``index.html.php`` template to include it:
 .. code-block:: html+php
 
     <!-- src/Acme/HelloBundle/Resources/views/Hello/index.html.php -->
-    <?php $view->extend('AcmeHello::layout.html.php') ?>
+    <?php $view->extend('AcmeHelloBundle::layout.html.php') ?>
 
     <?php echo $view->render('AcmeHello:Hello:hello.html.php', array('name' => $name)) ?>
 
@@ -174,9 +174,9 @@ If you create a ``fancy`` action, and want to include it into the
 .. code-block:: html+php
 
     <!-- src/Acme/HelloBundle/Resources/views/Hello/index.html.php -->
-    <?php echo $view['actions']->render('Hello:Hello:fancy', array('name' => $name, 'color' => 'green')) ?>
+    <?php echo $view['actions']->render('HelloBundle:Hello:fancy', array('name' => $name, 'color' => 'green')) ?>
 
-Here, the ``Hello:Hello:fancy`` string refers to the ``fancy`` action of the
+Here, the ``HelloBundle:Hello:fancy`` string refers to the ``fancy`` action of the
 ``Hello`` controller::
 
     // src/Acme/HelloBundle/Controller/HelloController.php
@@ -188,7 +188,7 @@ Here, the ``Hello:Hello:fancy`` string refers to the ``fancy`` action of the
             // create some object, based on the $color variable
             $object = ...;
 
-            return $this->render('Hello:Hello:fancy.html.php', array('name' => $name, 'object' => $object));
+            return $this->render('HelloBundle:Hello:fancy.html.php', array('name' => $name, 'object' => $object));
         }
 
         // ...
@@ -232,7 +232,7 @@ pattern:
     # src/Acme/HelloBundle/Resources/config/routing.yml
     hello: # The route name
         pattern:  /hello/{name}
-        defaults: { _controller: AcmeHello:Hello:index }
+        defaults: { _controller: AcmeHelloBundle:Hello:index }
 
 Using Assets: images, JavaScripts, and stylesheets
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

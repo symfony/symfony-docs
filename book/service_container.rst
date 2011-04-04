@@ -338,19 +338,19 @@ configuration.
         # app/config/config.yml
         imports:
             hello_bundle:
-                resource: @AcmeHello/Resources/config/services.yml
+                resource: @AcmeHelloBundle/Resources/config/services.yml
 
     .. code-block:: xml
 
         <!-- app/config/config.xml -->
         <imports>
-            <import resource="@AcmeHello/Resources/config/services.xml"/>
+            <import resource="@AcmeHelloBundle/Resources/config/services.xml"/>
         </imports>
 
     .. code-block:: php
 
         // app/config/config.php
-        $this->import('@AcmeHello/Resources/config/services.php');
+        $this->import('@AcmeHelloBundle/Resources/config/services.php');
 
 The ``imports`` directive allows your application to include service container
 configuration resources from any other location (most commonly from bundles).

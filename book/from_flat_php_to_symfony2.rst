@@ -572,7 +572,7 @@ same sample application, now built in Symfony2:
                 ->createQuery('SELECT b FROM AcmeBlog:Blog b')
                 ->execute();
 
-            return $this->render('AcmeBlog:Blog:list.html.php', array('blogs' => $blogs));
+            return $this->render('AcmeBlogBundle:Blog:list.html.php', array('blogs' => $blogs));
         }
 
         public function showAction($id)
@@ -582,7 +582,7 @@ same sample application, now built in Symfony2:
                 ->setParameter('id', $id)
                 ->getSingleResult();
 
-            return $this->render('AcmeBlog:Blog:show.html.php', array('blog' => $blog));
+            return $this->render('AcmeBlogBundle:Blog:show.html.php', array('blog' => $blog));
         }
     }
 
@@ -635,11 +635,11 @@ A routing configuration map provides this information in a readable format::
     # app/config/routing.yml
     blog_list:
         pattern:  /blog
-        defaults: { _controller: AcmeBlog:Blog:list }
+        defaults: { _controller: AcmeBlogBundle:Blog:list }
 
     blog_show:
         pattern:  /blog/show/{id}
-        defaults: { _controller: AcmeBlog:Blog:show }
+        defaults: { _controller: AcmeBlogBundle:Blog:show }
 
 Now that Symfony2 is handling all the mundane tasks, our front controller
 is dead simple. And since it contains so little, you never have to touch
