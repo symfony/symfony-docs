@@ -101,7 +101,7 @@ The standard pattern for using a form in a controller looks like this:
         }
 
         // Display the form with the values in $contactRequest
-        return $this->render('AcmeHello:Hello:contact.html.twig', array(
+        return $this->render('AcmeHelloBundle:Hello:contact.html.twig', array(
             'form' => $form
         ));
     }
@@ -306,7 +306,7 @@ of the form.
 .. code-block:: html+jinja
 
     # src/Acme/HelloBundle/Resources/views/Hello/contact.html.twig
-    {% extends 'AcmeHello::layout.html.twig' %}
+    {% extends 'AcmeHelloBundle::layout.html.twig' %}
 
     {% block content %}
     <form action="#" method="post">
@@ -325,7 +325,7 @@ can do so by using the other built-in form rendering helpers.
 .. code-block:: html+jinja
 
     # src/Acme/HelloBundle/Resources/views/Hello/contact.html.twig
-    {% extends 'AcmeHello::layout.html.twig' %}
+    {% extends 'AcmeHelloBundle::layout.html.twig' %}
 
     {% block content %}
     <form action="#" method="post" {{ form_enctype(form) }}>

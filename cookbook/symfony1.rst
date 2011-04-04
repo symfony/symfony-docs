@@ -246,7 +246,7 @@ include a routing resource from a bundle, you might do the following::
 
     # app/config/routing.yml
     hello:
-        resource: @Hello/Resources/config/routing.yml
+        resource: @HelloBundle/Resources/config/routing.yml
 
 To bring in configuration from the bundle, you'll need to import that configuration
 from your application configuration.

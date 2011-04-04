@@ -111,7 +111,7 @@ skeleton:
 
 .. code-block:: jinja
 
-    {% extends 'WebProfiler:Profiler:layout.html.twig' %}
+    {% extends 'WebProfilerBundle:Profiler:layout.html.twig' %}
 
     {% block toolbar %}
         {# the web debug toolbar content #}
@@ -166,5 +166,5 @@ tag in your configuration. For example, assuming your template is in some
 
         $container
             ->register('data_collector.your_collector_name', 'Acme\DebugBundle\Collector\Class\Name')
-            ->addTag('data_collector', array('template' => 'AcmeDebug:Collector:templatename', 'id' => 'your_collector_name'))
+            ->addTag('data_collector', array('template' => 'AcmeDebugBundle:Collector:templatename', 'id' => 'your_collector_name'))
         ;

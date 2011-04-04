@@ -18,7 +18,7 @@ Configuration
         document_managers:
             default:
                 mappings:
-                    AcmeDemo: ~
+                    AcmeDemoBundle: ~
                 metadata_cache_driver: array # array, apc, xcache, memcache
 
 If you wish to use memcache to cache your metadata, you need to configure the
@@ -39,7 +39,7 @@ If you wish to use memcache to cache your metadata, you need to configure the
             document_managers:
                 default:
                     mappings:
-                        AcmeDemo: ~
+                        AcmeDemoBundle: ~
                     metadata_cache_driver:
                         type: memcache
                         class: Doctrine\Common\Cache\MemcacheCache
@@ -59,7 +59,7 @@ If you wish to use memcache to cache your metadata, you need to configure the
 
             <doctrine_mongo_db:config default-database="hello_%kernel.environment%">
                 <doctrine_mongo_db:document-manager id="default">
-                    <doctrine_mongo_db:mapping name="AcmeDemo" />
+                    <doctrine_mongo_db:mapping name="AcmeDemoBundle" />
                     <doctrine_mongo_db:metadata-cache-driver type="memcache">
                         <doctrine_mongo_db:class>Doctrine\Common\Cache\MemcacheCache</doctrine_mongo_db:class>
                         <doctrine_mongo_db:host>localhost</doctrine_mongo_db:host>
@@ -179,11 +179,11 @@ following syntax:
                     connection: conn1
                     metadata_cache_driver: xcache
                     mappings:
-                        AcmeDemo: ~
+                        AcmeDemoBundle: ~
                 dm2:
                     connection: conn2
                     mappings:
-                        AcmeHello: ~
+                        AcmeHelloBundle: ~
 
     .. code-block:: xml
 
@@ -212,10 +212,10 @@ following syntax:
                     </doctrine_mongo_db:options>
                 </doctrine_mongo_db:connection>
                 <doctrine_mongo_db:document-manager id="dm1" metadata-cache-driver="xcache" connection="conn1">
-                    <doctrine_mongo_db:mapping name="AcmeDemo" />
+                    <doctrine_mongo_db:mapping name="AcmeDemoBundle" />
                 </doctrine_mongo_db:document-manager>
                 <doctrine_mongo_db:document-manager id="dm2" connection="conn2">
-                    <doctrine_mongo_db:mapping name="AcmeHello" />
+                    <doctrine_mongo_db:mapping name="AcmeHelloBundle" />
                 </doctrine_mongo_db:document-manager>
             </doctrine_mongo_db:config>
         </container>
@@ -330,7 +330,7 @@ Later you can retrieve the persisted document by its id.
         public function editAction($id)
         {
             $dm = $this->get('doctrine.odm.mongodb.document_manager');
-            $user = $dm->find('AcmeHello:User', $id);
+            $user = $dm->find('AcmeHelloBundle:User', $id);
 
             // ...
         }

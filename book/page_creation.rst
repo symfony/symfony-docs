@@ -107,10 +107,10 @@ you can also choose to use XML or PHP out of the box to configure routes:
         # app/config/routing.yml
         homepage:
             pattern:  /
-            defaults: { _controller: Framework:Default:index }
+            defaults: { _controller: FrameworkBundle:Default:index }
 
         hello:
-            resource: @AcmeDemo/Resources/config/routing.yml
+            resource: @AcmeDemoBundle/Resources/config/routing.yml
 
     .. code-block:: xml
 
@@ -122,10 +122,10 @@ you can also choose to use XML or PHP out of the box to configure routes:
             xsi:schemaLocation="http://symfony.com/schema/routing http://symfony.com/schema/routing/routing-1.0.xsd">
 
             <route id="homepage" pattern="/">
-                <default key="_controller">Framework:Default:index</default>
+                <default key="_controller">FrameworkBundle:Default:index</default>
             </route>
 
-            <import resource="@AcmeDemo/Resources/config/routing.xml" />
+            <import resource="@AcmeDemoBundle/Resources/config/routing.xml" />
         </routes>
 
     .. code-block:: php
@@ -136,9 +136,9 @@ you can also choose to use XML or PHP out of the box to configure routes:
 
         $collection = new RouteCollection();
         $collection->add('homepage', new Route('/', array(
-            '_controller' => 'Framework:Default:index',
+            '_controller' => 'FrameworkBundle:Default:index',
         )));
-        $collection->addCollection($loader->import("@AcmeDemo/Resources/config/routing.php"));
+        $collection->addCollection($loader->import("@AcmeDemoBundle/Resources/config/routing.php"));
 
         return $collection;
 
@@ -155,7 +155,7 @@ inside the ``AcmeDemoBundle``:
         # src/Acme/DemoBundle/Resources/config/routing.yml
         hello:
             pattern:  /hello/{name}
-            defaults: { _controller: AcmeDemo:Hello:index }
+            defaults: { _controller: AcmeDemoBundle:Hello:index }
 
     .. code-block:: xml
 
@@ -167,7 +167,7 @@ inside the ``AcmeDemoBundle``:
             xsi:schemaLocation="http://symfony.com/schema/routing http://symfony.com/schema/routing/routing-1.0.xsd">
 
             <route id="hello" pattern="/hello/{name}">
-                <default key="_controller">AcmeDemo:Hello:index</default>
+                <default key="_controller">AcmeDemoBundle:Hello:index</default>
             </route>
         </routes>
 
@@ -179,7 +179,7 @@ inside the ``AcmeDemoBundle``:
 
         $collection = new RouteCollection();
         $collection->add('hello', new Route('/hello/{name}', array(
-            '_controller' => 'AcmeDemo:Hello:index',
+            '_controller' => 'AcmeDemoBundle:Hello:index',
         )));
 
         return $collection;
@@ -202,7 +202,7 @@ Create the Controller
 ~~~~~~~~~~~~~~~~~~~~~
 
 When a URI such as ``/hello/Ryan`` is handled by the application, the ``hello``
-route is matched and the ``AcmeDemo:Hello:index`` controller is executed
+route is matched and the ``AcmeDemoBundle:Hello:index`` controller is executed
 by the framework. The second step of the page-creation process is to create
 this controller.
 
@@ -260,10 +260,10 @@ of writing the HTML inside the controller, use a template instead::
     {
         public function indexAction($name)
         {
-            return $this->render('AcmeDemo:Hello:index.html.twig', array('name' => $name));
+            return $this->render('AcmeDemoBundle:Hello:index.html.twig', array('name' => $name));
 
             // render a PHP template instead
-            // return $this->render('AcmeDemo:Hello:index.html.php', array('name' => $name));
+            // return $this->render('AcmeDemoBundle:Hello:index.html.php', array('name' => $name));
         }
     }
 
@@ -282,7 +282,7 @@ By default, Symfony2 supports two different templating languages: classic
 PHP templates and the succinct but powerful `Twig`_ templates. Don't be alarmed
 - you're free to choose either or even both in the same project.
 
-The controller renders the ``AcmeDemo:Hello:index.html.twig`` template,
+The controller renders the ``AcmeDemoBundle:Hello:index.html.twig`` template,
 which uses the following naming convention:
 
 *BundleName*:*ControllerName*:*TemplateName*

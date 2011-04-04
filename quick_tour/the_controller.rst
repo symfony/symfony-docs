@@ -72,7 +72,7 @@ You can also easily forward the action to another one with the ``forward()``
 method. As for the ``actions`` helper, it makes an internal sub-request, but
 it returns the ``Response`` object to allow for further modification::
 
-    $response = $this->forward('AcmeDemo:Hello:fancy', array('name' => $name, 'color' => 'green'));
+    $response = $this->forward('AcmeDemoBundle:Hello:fancy', array('name' => $name, 'color' => 'green'));
 
     // do something with the response or return it directly
 
