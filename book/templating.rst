@@ -369,7 +369,7 @@ Symfony2 uses a **bundle**:**controller**:**template** string syntax for
 templates. This allows for several different types of templates, each which
 lives in a specific location:
 
-* ``AcmeBlogBlogBundle:index.html.twig``: This syntax is used to specify a template
+* ``AcmeBlogBundle:index.html.twig``: This syntax is used to specify a template
   for a specific page. The three parts of the string, each separated by
   a colon (``:``), mean the following:
   

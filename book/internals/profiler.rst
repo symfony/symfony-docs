@@ -170,16 +170,16 @@ If you enable the web profiler, you also need to mount the profiler routes:
     .. code-block:: yaml
 
         _profiler:
-            resource: @WebProfiler/Resources/config/routing/profiler.xml
+            resource: @WebProfilerBundle/Resources/config/routing/profiler.xml
             prefix:   /_profiler
 
     .. code-block:: xml
 
-        <import resource="@WebProfiler/Resources/config/routing/profiler.xml" prefix="/_profiler" />
+        <import resource="@WebProfilerBundle/Resources/config/routing/profiler.xml" prefix="/_profiler" />
 
     .. code-block:: php
 
-        $collection->addCollection($loader->import("@WebProfiler/Resources/config/routing/profiler.xml"), '/_profiler');
+        $collection->addCollection($loader->import("@WebProfilerBundle/Resources/config/routing/profiler.xml"), '/_profiler');
 
 As the profiler adds some overhead, you might want to enable it only under
 certain circumstances in the production environment. The ``only-exceptions``
