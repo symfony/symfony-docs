@@ -110,7 +110,7 @@ you can also choose to use XML or PHP out of the box to configure routes:
             defaults: { _controller: FrameworkBundle:Default:index }
 
         hello:
-            resource: @AcmeDemoBundle/Resources/config/routing.yml
+            resource: "@AcmeDemoBundle/Resources/config/routing.yml"
 
     .. code-block:: xml
 
