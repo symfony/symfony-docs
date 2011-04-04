@@ -350,8 +350,14 @@ The Symfony Application Flow
 When you let Symfony handle each request, life is much easier. Symfony follows
 the same simple pattern for every request:
 
-.. image:: /book/images/request-flow.png
+.. _request-flow-figure:
+
+.. figure:: /book/images/request-flow.png
    :align: center
+   :alt: Symfony2 request flow
+
+   Incoming requests are interpreted by the routing and passed to controller
+   functions that return ``Response`` objects.
 
 Each "page" of your site is defined in a routing configuration file that
 maps different URLs to different PHP functions. The job of each PHP function,
