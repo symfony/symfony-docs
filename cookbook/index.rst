@@ -13,6 +13,7 @@ Cookbook
     validation/custom_constraint
     tools/autoloader
     tools/finder
+    logging/monolog
     cache/varnish
     testing/http_authentication
     testing/insulating_clients

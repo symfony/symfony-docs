@@ -7,6 +7,7 @@
 * :doc:`/cookbook/validation/custom_constraint`
 * :doc:`/cookbook/tools/autoloader`
 * :doc:`/cookbook/tools/finder`
+* :doc:`/cookbook/logging/monolog`
 * :doc:`/cookbook/cache/varnish`
 * :doc:`/cookbook/testing/http_authentication`
 * :doc:`/cookbook/testing/insulating_clients`
