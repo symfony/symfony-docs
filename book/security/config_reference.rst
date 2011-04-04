@@ -11,20 +11,41 @@ Configuration Reference
         # app/config/security.yml
         security:
             access_denied_url: /foo/error403
+            
+            access_decision_manager:
+                strategy: affirmative
+                allow_if_all_abstain: false
+                allow_if_equal_granted_denied: true
+            
+            acl:
+                connection: default # any name configured in doctrine.dbal section
+                tables:
+                    class: acl_classes
+                    entry: acl_entries
+                    object_identity: acl_object_identities
+                    object_identity_ancestors: acl_object_identity_ancestors
+                    security_identity: acl_security_identities
+                cache:
+                    id: service_id
+                    prefix: sf2_acl_
+                voter:
+                    allow_if_object_identity_unavailable: true
+
+            always_authenticate_before_granting: false
 
             # strategy can be: none, migrate, invalidate
             session_fixation_strategy: migrate
 
             encoders:
                 somename:
-                    class: MyBundle\Entity\MyUser
-                MyBundle\Entity\MyUser: sha512
-                MyBundle\Entity\MyUser: plaintext
-                MyBundle\Entity\MyUser:
+                    class: Acme\DemoBundle\Entity\User
+                Acme\DemoBundle\Entity\User: sha512
+                Acme\DemoBundle\Entity\User: plaintext
+                Acme\DemoBundle\Entity\User:
                     algorithm: sha512
                     encode_as_base64: true
-                    iterations: 5
-                MyBundle\Entity\MyUser:
+                    iterations: 5000
+                Acme\DemoBundle\Entity\User:
                     id: my.custom.encoder.service.id
 
             providers:
@@ -37,7 +58,7 @@ Configuration Reference
                     entity: { class: Security:User, property: username }
 
             factories:
-                MyFactory: %kernel.root_dir%/../src/MyVendor/MyBundle/Resources/config/security_factories.xml
+                MyFactory: %kernel.root_dir%/../src/Acme/DemoBundle/Resources/config/security_factories.xml
 
             firewalls:
                 somename:
@@ -95,12 +116,9 @@ Configuration Reference
 
             access_control:
                 -
-                    path: /foo
+                    path: ^/foo
                     host: mydomain.foo
                     ip: 192.0.0.0/8
-                    attributes:
-                        # a key to some controller
-                        _controller: AcmeDemo:Demo:access
                     roles: [ROLE_A, ROLE_B]
                     requires_channel: https
 

@@ -32,6 +32,13 @@ Glossary
         the same front controller, whose job is to bootstrap the Symfony
         application.
 
+   Controller
+        A *controller* is a PHP function that houses all the logic necessary
+        to return a ``Response`` object that represents a particular page.
+        Typically, a route is mapped to a controller, which then uses information
+        from the request to process information, perform actions, and ultimately
+        construct and return a ``Response`` object.
+
    Service
         A *Service* is a generic term for any PHP object that performs a
         specific task. A service is usually used "globally", such as a database

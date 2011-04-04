@@ -5,10 +5,21 @@ How to generate Entities from an Existing Database
 ==================================================
 
 When starting work on a brand new project that uses a database, two different
-situations comes naturally. In most cases, the database model is desinged
+situations comes naturally. In most cases, the database model is designed
 and built from scratch. Sometimes, however, you'll start with an existing and
 probably unchangeable database model. Fortunately, Doctrine comes with a bunch
 of tools to help generate model classes from your existing database.
+
+.. note::
+
+    As the `Doctrine tools documentation`_ says, reverse engineering is a
+    one-time process to get started on a project. Doctrine is able to convert
+    approximately 70-80% of the necessary mapping information based on fields,
+    indexes and foreign key constraints. Doctrine can't discover inverse
+    associations, inheritance types, entities with foreign keys as primary keys
+    or semantical operations on associations such as cascade or lifecycle
+    events. Some additional work on the generated entities will be necessary
+    afterwards to design each to fit your domain model specificities.
 
 This tutorial assumes you're using a simple blog application with the following
 two tables: ``blog_post`` and ``blog_comment``. A comment record is linked
@@ -17,23 +28,23 @@ to a post record thanks to a foreign key constraint.
 .. code-block:: sql
 
     CREATE TABLE `blog_post` (
-	  `id` bigint(20) NOT NULL AUTO_INCREMENT,
-	  `title` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
-	  `content` longtext COLLATE utf8_unicode_ci NOT NULL,
-	  `created_at` datetime NOT NULL,
-	  PRIMARY KEY (`id`),
-	) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+      `id` bigint(20) NOT NULL AUTO_INCREMENT,
+      `title` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
+      `content` longtext COLLATE utf8_unicode_ci NOT NULL,
+      `created_at` datetime NOT NULL,
+      PRIMARY KEY (`id`),
+    ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
-	CREATE TABLE `blog_comment` (
-	  `id` bigint(20) NOT NULL AUTO_INCREMENT,
-	  `post_id` bigint(20) NOT NULL,
-	  `author` varchar(20) COLLATE utf8_unicode_ci NOT NULL,
-	  `content` longtext COLLATE utf8_unicode_ci NOT NULL,
-	  `created_at` datetime NOT NULL,
-	  PRIMARY KEY (`id`),
-	  KEY `blog_comment_post_id_idx` (`post_id`),
-	  CONSTRAINT `blog_post_id` FOREIGN KEY (`post_id`) REFERENCES `blog_post` (`id`) ON DELETE CASCADE
-	) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+    CREATE TABLE `blog_comment` (
+      `id` bigint(20) NOT NULL AUTO_INCREMENT,
+      `post_id` bigint(20) NOT NULL,
+      `author` varchar(20) COLLATE utf8_unicode_ci NOT NULL,
+      `content` longtext COLLATE utf8_unicode_ci NOT NULL,
+      `created_at` datetime NOT NULL,
+      PRIMARY KEY (`id`),
+      KEY `blog_comment_post_id_idx` (`post_id`),
+      CONSTRAINT `blog_post_id` FOREIGN KEY (`post_id`) REFERENCES `blog_post` (`id`) ON DELETE CASCADE
+    ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 Before diving into the recipe, be sure your database connection parameters are
 correctly setup in the ``app/config/parameters.ini`` file (or wherever your
@@ -87,7 +98,7 @@ schema and build related entity classes by executing the following two commands.
 .. code-block:: bash
 
     $ php app/console doctrine:mapping:import AcmeBlog annotation
-	$ php app/console doctrine:generate:entities AcmeBlog
+    $ php app/console doctrine:generate:entities AcmeBlog
 
 The first command generates entity classes with an annotations mapping, but
 you can of course change the ``annotation`` argument to ``xml`` or ``yml``.
@@ -158,3 +169,5 @@ entity in the ``BlogComment`` entity class.
 The last command generated all getters and setters for your two ``BlogPost`` and
 ``BlogComment`` entity class properties. The generated entities are now ready to be
 used. Have fun!
+
+.. _`Doctrine tools documentation`: http://www.doctrine-project.org/docs/orm/2.0/en/reference/tools.html#reverse-engineering
