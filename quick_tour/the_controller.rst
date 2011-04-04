@@ -181,10 +181,10 @@ Moreover, the ``admin`` user has a ``ROLE_ADMIN`` role, which includes the
     ``encoders`` section.
 
 Going to the ``http://localhost/Symfony/web/app_dev.php/demo/secured/hello``
-URL will automatically redirect you to the login form as this resource is
-protected by a firewall via a login form.
+URL will automatically redirect you to the login form because this resource is
+protected by a ``firewall``.
 
-You can also force a given role to be required by using the ``@extra:Secure``
+You can also force the action to require a given role by using the ``@extra:Secure``
 annotation on the controller::
 
     /**
@@ -198,12 +198,12 @@ annotation on the controller::
     }
 
 Log in as ``user`` and from the secured hello page, click on the "Hello
-resource secured" link; Symfony2 should return a 403 HTTP status code.
+resource secured" link. Symfony2 should return a 403 HTTP status code.
 
 .. note::
 
     The Symfony2 security layer is very flexible and comes with many different
-    user provides (like one for the Doctrine ORM) and authentication providers
+    user providers (like one for the Doctrine ORM) and authentication providers
     (like HTTP basic, HTTP digest, or X509 certificates). Read the
     "`Security`_" chapter of the book for more information on how to use and
     configure them.
@@ -230,14 +230,14 @@ In this example, the resource will be cached for a day. But you can also use
 validation instead of expiration or a combination of both if that fits your
 needs better.
 
-Resource caching is managed by the Symfony2 built-in reverse. But as caching
-is only managed by regular HTTP cache headers, you can also replace it with
-Varnish or Squid and easily scale your application.
+Resource caching is managed by the Symfony2 built-in reverse proxy. But because 
+caching is only managed by regular HTTP cache headers, you can replace the 
+built-in reverse proxy with Varnish or Squid and easily scale your application.
 
 .. note::
 
     But what if you cannot cache whole pages? Symfony2 still has the solution
-    via Edge Side Includes (ESI) that are supported natively. Learn more by
+    via Edge Side Includes (ESI) which are supported natively. Learn more by
     reading the "`HTTP Cache`_" chapter of the book.
 
 Final Thoughts
@@ -245,8 +245,8 @@ Final Thoughts
 
 That's all there is to it, and I'm not even sure we have spent the allocated
 10 minutes. We briefly introduced bundles in the first part; and all the
-features we've learned about until now are part of the core framework bundle.
-But thanks to bundles, everything can be extended or replaced in Symfony2.
+features we've learned about so far are part of the core framework bundle.
+But thanks to bundles, everything in Symfony2 can be extended or replaced.
 That's the topic of the next part of this tutorial.
 
 .. _Security:   http://symfony.com/doc/2.0/book/security/index.html
