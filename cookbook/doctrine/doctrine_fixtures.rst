@@ -30,6 +30,9 @@ As the final step in configuration, you have to register the namespace in ``app/
 .. code-block:: php
 
     'Doctrine\\Common\\DataFixtures'    => __DIR__.'/../vendor/doctrine-fixtures/lib',
+    'Doctrine\\Common'                  => __DIR__.'/../vendor/doctrine-common/lib',
+
+Note that namespaces are registered with preference to the first match. Make sure ``Doctrine\Common`` is registered after ``Doctrine\\Common\\DataFixtures``.
 
 Simple Fixtures
 ---------------
@@ -47,7 +50,6 @@ In our first fixture we will add a default user to the table of ``User`` entity.
     //Vendor/MyBundle/DataFixtures/ORM/LoadUserData.php
     namespace Vendor\MyBundle\DataFixtures\ORM;
 
-    use Doctrine\ORM\EntityManager;
     use Doctrine\Common\DataFixtures\FixtureInterface;
     use Vendor\MyBundle\Entity\User; //Modify this to use your entity
 
@@ -60,8 +62,8 @@ In our first fixture we will add a default user to the table of ``User`` entity.
             $userAdmin->setPassword('test');
 
             $manager->persist($userAdmin);
-            $manager->flush();  
-        }  
+            $manager->flush()
+        }
     }
 
 Writing fixtures this way is quite easy and simple but is not sufficient when you are building something serious. The most serious limitation is that you can not share objects between fixtures. Lets see how we can overcome this limitation in the next section.
@@ -76,7 +78,6 @@ Sharing Objects Between Fixtures
     //Vendor/MyBundle/DataFixtures/ORM/LoadUserData.php
     namespace Vendor\MyBundle\DataFixtures\ORM;
 
-    use Doctrine\ORM\EntityManager;
     use Doctrine\Common\DataFixtures\AbstractFixture;
     use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
     use Vendor\MyBundle\Entity\User; //Modify this to use your entity
@@ -109,7 +110,6 @@ Sharing Objects Between Fixtures
     //Vendor/MyBundle/DataFixtures/ORM/LoadGroupData.php
     namespace Vendor\MyBundle\DataFixtures\ORM;
 
-    use Doctrine\ORM\EntityManager;
     use Doctrine\Common\DataFixtures\AbstractFixture;
     use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
     use Vendor\MyBundle\Entity\Group; //Modify this to use your entity
@@ -140,7 +140,6 @@ Sharing Objects Between Fixtures
     //Vendor/MyBundle/DataFixtures/ORM/LoadUserGroupData.php
     namespace Vendor\MyBundle\DataFixtures\ORM;
 
-    use Doctrine\ORM\EntityManager;
     use Doctrine\Common\DataFixtures\AbstractFixture;
     use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
     use Vendor\MyBundle\Entity\UserGroup; //Modify this to use your entity
