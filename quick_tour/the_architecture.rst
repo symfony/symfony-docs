@@ -313,9 +313,9 @@ Final Thoughts
 --------------
 
 Call me crazy, but after reading this part, you should be comfortable with
-moving things around and making Symfony2 work for you. Everything is done in
-Symfony2 to get out of your way. So, feel free to rename and move directories
-around as you see fit.
+moving things around and making Symfony2 work for you. Everything in
+Symfony2 is deigned to get out of your way. So, feel free to rename and 
+move directories around as you see fit.
 
 And that's all for the quick tour. From testing to sending emails, you still
 need to learn a lot to become a Symfony2 master. Ready to dig into these
