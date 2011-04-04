@@ -2,9 +2,9 @@ The Architecture
 ================
 
 You are my hero! Who would have thought that you would still be here after the
-first three parts? Your efforts will be well-rewarded soon. The first three
-parts didn't look too deeply at the architecture of the framework. As it makes
-Symfony2 stand apart from the framework crowd, let's dive into it now.
+first three parts? Your efforts will be well rewarded soon. The first three
+parts didn't look too deeply at the architecture of the framework. Because it makes
+Symfony2 stand apart from the framework crowd, let's dive in to the architecture now.
 
 Understanding the Directory Structure
 -------------------------------------
