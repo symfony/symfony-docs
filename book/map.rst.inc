@@ -1,5 +1,5 @@
 * :doc:`Symfony2 Fundamentals </book/http_fundamentals>`
-* :doc:`From flat PHP to Symfony2 </book/from_flat_php_to_symfony2>`
+* :doc:`When flat PHP meets Symfony </book/from_flat_php_to_symfony2>`
 * :doc:`The Basics of Page Creation </book/page_creation>`
 
 * :doc:`Controllers </book/controller>`

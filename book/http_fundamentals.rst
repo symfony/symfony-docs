@@ -27,7 +27,7 @@ two machines to communicate with each other. That's it! For example, when
 checking for the latest `xkcd`_ comic, the following (approximate) conversation
 takes place:
 
-.. image:: /book/images/http-xkcd.png
+.. image:: /images/http-xkcd.png
    :align: center
 
 And while the actual language used is a bit more formal, it's still dead-simple.
@@ -53,7 +53,7 @@ and then waits for the response.
 Take a look at the first part of the interaction (the request) between a
 browser and the xkcd web server:
 
-.. image:: /book/images/http-xkcd-request.png
+.. image:: /images/http-xkcd-request.png
    :align: center
 
 In HTTP-speak, this HTTP request would actually look something like this:
@@ -111,7 +111,7 @@ client needs (via the URI) and what the client wants to do with that resource
 prepares the resource and returns it in an HTTP response. Consider the response
 from the xkcd web server:
 
-.. image:: /book/images/http-xkcd.png
+.. image:: /images/http-xkcd.png
    :align: center
 
 Translated into HTTP, the response sent back to the browser will look something
@@ -350,8 +350,14 @@ The Symfony Application Flow
 When you let Symfony handle each request, life is much easier. Symfony follows
 the same simple pattern for every request:
 
-.. image:: /book/images/request-flow.png
+.. _request-flow-figure:
+
+.. figure:: /images/request-flow.png
    :align: center
+   :alt: Symfony2 request flow
+
+   Incoming requests are interpreted by the routing and passed to controller
+   functions that return ``Response`` objects.
 
 Each "page" of your site is defined in a routing configuration file that
 maps different URLs to different PHP functions. The job of each PHP function,
