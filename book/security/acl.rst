@@ -46,9 +46,9 @@ First, we need to configure the connection the ACL system is supposed to use:
     .. code-block:: xml
 
         <!-- app/config/security.xml -->
-        <security.acl>
+        <acl>
             <connection>default</connection>
-        </security.acl>
+        </acl>
 
     .. code-block:: php
 
