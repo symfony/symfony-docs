@@ -1,12 +1,10 @@
-
 The Architecture
 ================
 
-You are my hero! Who would have thought that you would still be
-here after the first three parts? Your efforts will be well
-rewarded soon. The first three parts didn't look too deeply at
-the architecture of the framework. Because it makes Symfony2
-stand apart from the framework crowd, let's dive in to the
+You are my hero! Who would have thought that you would still be here after the
+first three parts?  Your efforts will be well rewarded soon. The first three
+parts didn't look too deeply at the architecture of the framework. Because it
+makes Symfony2 stand apart from the framework crowd, let's dive in to the
 architecture now.
 
 Understanding the Directory Structure
@@ -240,11 +238,11 @@ specific configuration file:
 Extending a Bundle
 ~~~~~~~~~~~~~~~~~~
 
-In addition to being a nice way to organize and configure your code, a bundle can
-extend another one. Bundle inheritance allows you to override
-any existing bundle to customize its controllers, templates, and any of its files. 
-This is where the logical names come in handy, because they abstract where
-the resource is actually stored.
+In addition to being a nice way to organize and configure your code, a bundle
+can extend another one. Bundle inheritance allows you to override any existing
+bundle to customize its controllers, templates, and any of its files.  This is
+where the logical names come in handy, because they abstract where the resource
+is actually stored.
 
 For controllers, Symfony2 will automatically choose the right file according
 to the bundle inheritance tree.
