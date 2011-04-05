@@ -1,10 +1,13 @@
+
 The Architecture
 ================
 
-You are my hero! Who would have thought that you would still be here after the
-first three parts? Your efforts will be well rewarded soon. The first three
-parts didn't look too deeply at the architecture of the framework. Because it makes
-Symfony2 stand apart from the framework crowd, let's dive in to the architecture now.
+You are my hero! Who would have thought that you would still be
+here after the first three parts? Your efforts will be well
+rewarded soon. The first three parts didn't look too deeply at
+the architecture of the framework. Because it makes Symfony2
+stand apart from the framework crowd, let's dive in to the
+architecture now.
 
 Understanding the Directory Structure
 -------------------------------------
@@ -314,7 +317,7 @@ Final Thoughts
 
 Call me crazy, but after reading this part, you should be comfortable with
 moving things around and making Symfony2 work for you. Everything in
-Symfony2 is deigned to get out of your way. So, feel free to rename and 
+Symfony2 is designed to get out of your way. So, feel free to rename and 
 move directories around as you see fit.
 
 And that's all for the quick tour. From testing to sending emails, you still
