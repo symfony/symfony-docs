@@ -40,15 +40,15 @@ First, we need to configure the connection the ACL system is supposed to use:
     .. code-block:: yaml
 
         # app/config/security.yml
-        security.acl:
+        security:
             connection: default
 
     .. code-block:: xml
 
         <!-- app/config/security.xml -->
-        <acl>
+        <security.acl>
             <connection>default</connection>
-        </acl>
+        </security.acl>
 
     .. code-block:: php
 
