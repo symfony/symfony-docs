@@ -331,6 +331,11 @@ And the corresponding template might look like this:
             <label for="password">Password:</label>
             <input type="password" id="password" name="_password" />
 
+            <!--
+                To set the target path via the form instead of the session:
+                <input type="hidden" name="_target_path" value="/foo/bar" />
+            -->
+
             <input type="submit" name="login" />
         </form>
 
@@ -347,8 +352,22 @@ And the corresponding template might look like this:
             <label for="password">Password:</label>
             <input type="password" id="password" name="_password" />
 
+            {#
+                To set the target path via the form instead of the session:
+                <input type="hidden" name="_target_path" value="/foo/bar" />
+            #}
+
             <input type="submit" name="login" />
         </form>
+
+.. note::
+
+    The ``_target_path`` by default is dynamically set when accessing a restricted
+    path for which the current user does not have sufficient credentials. However
+    this can lead to race conditions like when the user browses in multiple tabs
+    or because of a missing ``favicon.ico`` that browsers automatically fetch.
+    To prevent this either add the ``_target_path`` to the form or set
+    a static path in the firewall configuration.
 
 The template must have a ``_username`` and ``_password`` fields, and the form
 submission URL must be the value of the ``check_path`` setting
