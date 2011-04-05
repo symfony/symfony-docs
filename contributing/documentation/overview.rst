@@ -14,7 +14,7 @@ language <format>` used by the documentation.
 
 The Symfony2 documentation is hosted on GitHub:
 
-.. code-block:: bash
+.. code-block:: text
 
     https://github.com/symfony/symfony-docs
 
