@@ -43,9 +43,6 @@ greeted. To create the page, we'll go through the simple two-step process.
     your webserver. The above URL assumes that ``localhost`` points to the
     ``web`` directory of your new Symfony2 project. For detailed information
     on this process, see the :doc:`Installing Symfony2</book/installation>`.
-    
-    If you've downloaded the `Symfony Standard Edition`_, delete the
-    ``src/Acme/DemoBundle`` directory, as you'll recreate it in this chapter.
 
 Create the Bundle
 ~~~~~~~~~~~~~~~~~
@@ -56,11 +53,12 @@ inside a bundle.
 
 A bundle is nothing more than a directory (with a PHP namespace) that houses
 everything related to a specific feature (see :ref:`page-creation-bundles`).
-To create a bundle called ``AcmeDemoBundle``, run the following command:
+To create a bundle called ``AcmeStudyBundle`` (a play bundle that you'll
+build in this chapter), run the following command:
 
 .. code-block:: text
 
-    php app/console init:bundle "Acme\DemoBundle" src
+    php app/console init:bundle "Acme\StudyBundle" src
 
 Next, be sure that the ``Acme`` namespace is loaded by adding the following
 to the ``app/autoload.php`` file (see the :ref:`Autoloading sidebar<autoloading-introduction-sidebar>`):
@@ -82,7 +80,7 @@ of the ``AppKernel`` class:
     {
         $bundles = array(
             // ...
-            new Acme\DemoBundle\AcmeDemoBundle(),
+            new Acme\StudyBundle\AcmeStudyBundle(),
         );
         
         // ...
@@ -110,7 +108,7 @@ you can also choose to use XML or PHP out of the box to configure routes:
             defaults: { _controller: FrameworkBundle:Default:index }
 
         hello:
-            resource: "@AcmeDemoBundle/Resources/config/routing.yml"
+            resource: "@AcmeStudyBundle/Resources/config/routing.yml"
 
     .. code-block:: xml
 
@@ -125,7 +123,7 @@ you can also choose to use XML or PHP out of the box to configure routes:
                 <default key="_controller">FrameworkBundle:Default:index</default>
             </route>
 
-            <import resource="@AcmeDemoBundle/Resources/config/routing.xml" />
+            <import resource="@AcmeStudyBundle/Resources/config/routing.xml" />
         </routes>
 
     .. code-block:: php
@@ -138,7 +136,7 @@ you can also choose to use XML or PHP out of the box to configure routes:
         $collection->add('homepage', new Route('/', array(
             '_controller' => 'FrameworkBundle:Default:index',
         )));
-        $collection->addCollection($loader->import("@AcmeDemoBundle/Resources/config/routing.php"));
+        $collection->addCollection($loader->import("@AcmeStudyBundle/Resources/config/routing.php"));
 
         return $collection;
 
@@ -146,20 +144,20 @@ The first few lines of the routing configuration file define which code to
 call when the user requests the "``/``" resource (the homepage) and serves
 as an example of routing configuration you may see in this file. More interesting
 is the last part, which imports another routing configuration file located
-inside the ``AcmeDemoBundle``:
+inside the ``AcmeStudyBundle``:
 
 .. configuration-block::
 
     .. code-block:: yaml
 
-        # src/Acme/DemoBundle/Resources/config/routing.yml
+        # src/Acme/StudyBundle/Resources/config/routing.yml
         hello:
             pattern:  /hello/{name}
-            defaults: { _controller: AcmeDemoBundle:Hello:index }
+            defaults: { _controller: AcmeStudyBundle:Hello:index }
 
     .. code-block:: xml
 
-        <!-- src/Acme/DemoBundle/Resources/config/routing.xml -->
+        <!-- src/Acme/StudyBundle/Resources/config/routing.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
 
         <routes xmlns="http://symfony.com/schema/routing"
@@ -167,19 +165,19 @@ inside the ``AcmeDemoBundle``:
             xsi:schemaLocation="http://symfony.com/schema/routing http://symfony.com/schema/routing/routing-1.0.xsd">
 
             <route id="hello" pattern="/hello/{name}">
-                <default key="_controller">AcmeDemoBundle:Hello:index</default>
+                <default key="_controller">AcmeStudyBundle:Hello:index</default>
             </route>
         </routes>
 
     .. code-block:: php
 
-        // src/Acme/DemoBundle/Resources/config/routing.php
+        // src/Acme/StudyBundle/Resources/config/routing.php
         use Symfony\Component\Routing\RouteCollection;
         use Symfony\Component\Routing\Route;
 
         $collection = new RouteCollection();
         $collection->add('hello', new Route('/hello/{name}', array(
-            '_controller' => 'AcmeDemoBundle:Hello:index',
+            '_controller' => 'AcmeStudyBundle:Hello:index',
         )));
 
         return $collection;
@@ -202,7 +200,7 @@ Create the Controller
 ~~~~~~~~~~~~~~~~~~~~~
 
 When a URI such as ``/hello/Ryan`` is handled by the application, the ``hello``
-route is matched and the ``AcmeDemoBundle:Hello:index`` controller is executed
+route is matched and the ``AcmeStudyBundle:Hello:index`` controller is executed
 by the framework. The second step of the page-creation process is to create
 this controller.
 
@@ -212,9 +210,9 @@ from the request to build and prepare the resource being requested. Except
 in some advanced cases, the end product of a controller is always the same:
 a Symfony2 ``Response`` object::
 
-    // src/Acme/DemoBundle/Controller/HelloController.php
+    // src/Acme/StudyBundle/Controller/HelloController.php
 
-    namespace Acme\DemoBundle\Controller;
+    namespace Acme\StudyBundle\Controller;
     use Symfony\Component\HttpFoundation\Response;
 
     class HelloController
@@ -250,9 +248,9 @@ Templates allows us to move all of the presentation (e.g. HTML code) into
 a separate file and reuse different portions of the page layout. Instead
 of writing the HTML inside the controller, use a template instead::
 
-    // src/Acme/DemoBundle/Controller/HelloController.php
+    // src/Acme/StudyBundle/Controller/HelloController.php
 
-    namespace Acme\DemoBundle\Controller;
+    namespace Acme\StudyBundle\Controller;
 
     use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
@@ -260,10 +258,10 @@ of writing the HTML inside the controller, use a template instead::
     {
         public function indexAction($name)
         {
-            return $this->render('AcmeDemoBundle:Hello:index.html.twig', array('name' => $name));
+            return $this->render('AcmeStudyBundle:Hello:index.html.twig', array('name' => $name));
 
             // render a PHP template instead
-            // return $this->render('AcmeDemoBundle:Hello:index.html.php', array('name' => $name));
+            // return $this->render('AcmeStudyBundle:Hello:index.html.php', array('name' => $name));
         }
     }
 
@@ -282,12 +280,12 @@ By default, Symfony2 supports two different templating languages: classic
 PHP templates and the succinct but powerful `Twig`_ templates. Don't be alarmed
 - you're free to choose either or even both in the same project.
 
-The controller renders the ``AcmeDemoBundle:Hello:index.html.twig`` template,
+The controller renders the ``AcmeStudyBundle:Hello:index.html.twig`` template,
 which uses the following naming convention:
 
 *BundleName*:*ControllerName*:*TemplateName*
 
-In this case, ``AcmeDemoBundle`` is the bundle name, ``Hello`` is the
+In this case, ``AcmeStudyBundle`` is the bundle name, ``Hello`` is the
 controller, and ``index.html.twig`` the template:
 
 .. configuration-block::
@@ -295,7 +293,7 @@ controller, and ``index.html.twig`` the template:
     .. code-block:: jinja
        :linenos:
 
-        {# src/Acme/DemoBundle/Resources/views/Hello/index.html.twig #}
+        {# src/Acme/StudyBundle/Resources/views/Hello/index.html.twig #}
         {% extends '::layout.html.twig' %}
 
         {% block body %}
@@ -304,7 +302,7 @@ controller, and ``index.html.twig`` the template:
 
     .. code-block:: php
 
-        <!-- src/Acme/DemoBundle/Resources/views/Hello/index.html.php -->
+        <!-- src/Acme/StudyBundle/Resources/views/Hello/index.html.php -->
         <?php $view->extend('::layout.html.php') ?>
 
         Hello <?php echo $view->escape($name) ?>!
@@ -480,9 +478,9 @@ about each of these directories in later chapters.
     .. code-block:: text
 
         Class Name:
-            Acme\DemoBundle\Controller\HelloController
+            Acme\StudyBundle\Controller\HelloController
         Path:
-            src/Acme/DemoBundle/Controller/HelloController.php
+            src/Acme/StudyBundle/Controller/HelloController.php
 
     The ``app/autoload.php`` configures the autoloader to look for different
     PHP namespaces in different directories and can be customized as necessary.
@@ -543,7 +541,7 @@ method of the ``AppKernel`` class::
             //new Symfony\Bundle\DoctrineMongoDBBundle\DoctrineMongoDBBundle(),
 
             // register your bundles
-            new Acme\DemoBundle\AcmeDemoBundle(),
+            new Acme\StudyBundle\AcmeStudyBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {
@@ -559,7 +557,7 @@ are used by your application (including the core Symfony bundles).
 .. tip::
 
    A bundle can live *anywhere* as long as it can be autoloaded by Symfony2.
-   For example, if ``AcmeDemoBundle`` lives inside the ``src/Acme``
+   For example, if ``AcmeStudyBundle`` lives inside the ``src/Acme``
    directory, be sure that the ``Acme`` namespace has been added to the
    ``app/autoload.php`` file and mapped to the ``src`` directory.
 
@@ -629,7 +627,7 @@ Bundle Directory Structure
 
 The directory structure of a bundle is simple and flexible. By default, the
 bundle system follows a set of conventions that help to keep code consistent
-between all Symfony2 bundles. Let's take a look at ``AcmeDemoBundle``, as it
+between all Symfony2 bundles. Let's take a look at ``AcmeStudyBundle``, as it
 contains some of the most common elements of a bundle:
 
 * *Controller/* contains the controllers of the bundle (e.g. ``HelloController.php``);
