@@ -325,7 +325,7 @@ means that the template lives outside of the bundles and in the ``app`` director
 
     .. code-block:: html+jinja
 
-        {% app/Resources/views/layout.html.twig %}
+        {# app/Resources/views/layout.html.twig #}
         <!DOCTYPE html>
         <html>
             <head>
@@ -627,7 +627,7 @@ Bundle Directory Structure
 
 The directory structure of a bundle is simple and flexible. By default, the
 bundle system follows a set of conventions that help to keep code consistent
-between all Symfony2 bundles. Let's take a look at ``AcmeStudyBundle``, as it
+between all Symfony2 bundles. Let's take a look at ``AcmeStudyoverBundle``, as it
 contains some of the most common elements of a bundle:
 
 * *Controller/* contains the controllers of the bundle (e.g. ``HelloController.php``);
