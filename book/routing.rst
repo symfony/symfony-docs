@@ -805,12 +805,12 @@ Notice that Symfony adds the string ``Controller`` to the class name (``Blog``
 
 .. note::
 
-   Symfony also supports two other controller formats. The first, which contains
-   no colon separators, refers to the controller as a service (see
-   :doc:`/cookbook/controller/service`). The second is formatted like
-   ``ControllerClassName::methodName``. When Symfony sees this format, it
-   will try to create a new instance of ``ControllerClassName`` and then
-   call the ``methodName`` method.
+   Symfony also supports two other controller formats. The first contains
+   one colon separator (e.g. ``service_name:indexAction``) and refers to
+   the controller as a service (see :doc:`/cookbook/controller/service`).
+   The second is formatted like ``ControllerClassName::methodName``. When
+   Symfony sees this format, it will try to create a new instance of ``ControllerClassName``
+   and then call the ``methodName`` method.
 
 Route Parameters and Controller Arguments
 -----------------------------------------
