@@ -30,7 +30,6 @@ The test suite need the following third-party libraries:
 * Doctrine Migrations
 * Swiftmailer
 * Twig
-* Zend Framework
 
 To install them all, run the `install_vendors.sh` script:
 

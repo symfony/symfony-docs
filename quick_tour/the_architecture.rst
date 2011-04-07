@@ -67,7 +67,7 @@ PHP autoloading can be configured via ``app/autoload.php``::
         'Doctrine\\Common' => __DIR__.'/../vendor/doctrine-common/lib',
         'Doctrine\\DBAL'   => __DIR__.'/../vendor/doctrine-dbal/lib',
         'Doctrine'         => __DIR__.'/../vendor/doctrine/lib',
-        'Zend\\Log'        => __DIR__.'/../vendor/zend-log',
+        'Monolog'          => __DIR__.'/../vendor/monolog/src',
         'Assetic'          => __DIR__.'/../vendor/assetic/src',
         'Acme'             => __DIR__.'/../src',
     ));
@@ -117,7 +117,7 @@ method of the ``AppKernel`` class::
             new Symfony\Bundle\FrameworkBundle\FrameworkBundle(),
             new Symfony\Bundle\SecurityBundle\SecurityBundle(),
             new Symfony\Bundle\TwigBundle\TwigBundle(),
-            new Symfony\Bundle\ZendBundle\ZendBundle(),
+            new Symfony\Bundle\MonologBundle\MonologBundle(),
             new Symfony\Bundle\SwiftmailerBundle\SwiftmailerBundle(),
             new Symfony\Bundle\DoctrineBundle\DoctrineBundle(),
             new Symfony\Bundle\AsseticBundle\AsseticBundle(),
