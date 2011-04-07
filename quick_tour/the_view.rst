@@ -259,7 +259,7 @@ Symfony2 provides the ``asset`` function to deal with them easily:
 
     <img src="{{ asset('images/logo.png') }}" />
 
-The ``asset`` function main purpose is to make your application more portable.
+The ``asset`` function's main purpose is to make your application more portable.
 Thanks to this function, you can move the application root directory anywhere
 under your web root directory without changing anything in your template's
 code.

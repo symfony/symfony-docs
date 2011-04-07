@@ -2,9 +2,10 @@ The Architecture
 ================
 
 You are my hero! Who would have thought that you would still be here after the
-first three parts? Your efforts will be well-rewarded soon. The first three
-parts didn't look too deeply at the architecture of the framework. As it makes
-Symfony2 stand apart from the framework crowd, let's dive into it now.
+first three parts?  Your efforts will be well rewarded soon. The first three
+parts didn't look too deeply at the architecture of the framework. Because it
+makes Symfony2 stand apart from the framework crowd, let's dive in to the
+architecture now.
 
 Understanding the Directory Structure
 -------------------------------------
@@ -237,11 +238,11 @@ specific configuration file:
 Extending a Bundle
 ~~~~~~~~~~~~~~~~~~
 
-In addition to be a nice way to organize and configure your code, a bundle can
-extend another one (bundles support inheritance). It allows you to override
-any existing bundle to customize its controllers, templates, and any file it
-contains. This is where the logical names come in handy as they abstract where
-the resource is actually stored.
+In addition to being a nice way to organize and configure your code, a bundle
+can extend another one. Bundle inheritance allows you to override any existing
+bundle to customize its controllers, templates, and any of its files.  This is
+where the logical names come in handy, because they abstract where the resource
+is actually stored.
 
 For controllers, Symfony2 will automatically choose the right file according
 to the bundle inheritance tree.
@@ -257,10 +258,11 @@ For controllers, you need to reference method names:
 ``AcmeDemoBundle:Welcome:index`` means the ``indexAction`` method from the
 ``Acme\DemoBundle\Controller\WelcomeController`` class.
 
-For templates, it is even more interesting as templates do not need to be
+For templates, the logical name ``AcmeDemoBundle:Welcome:index.html.twig`` is
+converted to the file path ``src/Acme/DemoBundle/Resources/views/Welcome/index.html.twig``.
+Templates become even more interesting when you realize they don't need to be
 stored on the filesystem. You can easily store them in a database table for
-instance. For instance, ``AcmeDemoBundle:Welcome:index.html.twig`` is
-converted to ``src/Acme/DemoBundle/Resources/views/Welcome/index.html.twig``.
+instance.
 
 Do you understand now why Symfony2 is so flexible? Share your bundles between
 applications, store them locally or globally, your choice.
@@ -276,9 +278,9 @@ templating system, and some other third party libraries and bundles.
 Understanding the Cache and Logs
 --------------------------------
 
-Symfony2 is probably one of the fastest full-stack frameworks around. But how
+Symfony2 is probably one of the fastest full-stack frameworks around. How
 can it be so fast if it parses and interprets tens of YAML and XML files for
-each request? This is partly due to its cache system. The application
+each request? The speed is partly due to its cache system. The application
 configuration is only parsed for the very first request and then compiled down
 to plain PHP code stored in the ``app/cache/`` directory. In the development
 environment, Symfony2 is smart enough to flush the cache when you change a
@@ -312,9 +314,9 @@ Final Thoughts
 --------------
 
 Call me crazy, but after reading this part, you should be comfortable with
-moving things around and making Symfony2 work for you. Everything is done in
-Symfony2 to get out of your way. So, feel free to rename and move directories
-around as you see fit.
+moving things around and making Symfony2 work for you. Everything in
+Symfony2 is designed to get out of your way. So, feel free to rename and 
+move directories around as you see fit.
 
 And that's all for the quick tour. From testing to sending emails, you still
 need to learn a lot to become a Symfony2 master. Ready to dig into these

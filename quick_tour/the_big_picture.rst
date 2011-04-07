@@ -256,8 +256,8 @@ retrieved through the ``$name`` method argument.
 
 If you have a closer look at the action code, you can see that instead of
 rendering a template like before, it just returns an array of parameters. The
-``@extra:Template()`` annotation takes care of rendering a template which name
-is determined based on some simple conventions (it will render
+``@extra:Template()`` annotation takes care of rendering a template the name 
+of which is determined based on some simple conventions (it will render
 ``src/Acme/DemoBundle/Resources/views/Demo/hello.html.twig``).
 
 .. tip::
