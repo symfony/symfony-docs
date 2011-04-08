@@ -74,8 +74,8 @@ for you to use in your controller (keep reading).
 
 The ``_controller`` parameter is a special key that tells Symfony which controller
 should be executed when a URL matches this route. The ``_controller`` string
-follows a :ref:`special syntax<controller-string-syntax>` that points to a
-specific PHP class and method:
+is called the :ref:`logical name<controller-string-syntax>`. It follows a
+pattern that points to a specific PHP class and method:
 
 .. code-block:: php
 
@@ -771,8 +771,9 @@ Controller Naming Pattern
 
 Every route must have a ``_controller`` parameter, which dictates which
 controller should be executed when that route is matched. This parameter
-uses a simple string pattern, which Symfony maps to a specific PHP method
-and class. The pattern has three parts, each separated by a colon:
+uses a simple string pattern called the *logical controller name*, which
+Symfony maps to a specific PHP method and class. The pattern has three parts,
+each separated by a colon:
 
     **bundle**:**controller**:**action**
 
