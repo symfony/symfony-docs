@@ -72,7 +72,7 @@ Symfony2 should welcome and congratulate you for your hard work so far!
 Understanding the Fundamentals
 ------------------------------
 
-One of the main goal of a framework is to ensure the `Separation of Concerns`_.
+One of the main goals of a framework is to ensure the `Separation of Concerns`_.
 It keeps your code organized and allows your application to evolve
 easily over time by avoiding the mix of database calls, HTML tags, and
 business logic in the same script. To achieve this goal, you must learn about
