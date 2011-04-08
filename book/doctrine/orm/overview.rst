@@ -48,7 +48,7 @@ necessary configuration is to specify the bundle name which contains your entiti
         $container->loadFromExtension('doctrine', array('orm' => array(
             "default_entity_manager" => "default",
             "entity_managers" => array(
-                "default => array(
+                "default" => array(
                     "mappings" => array("AcmeHelloBundle" => array()),
                 ),
             ),
