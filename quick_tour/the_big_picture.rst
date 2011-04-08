@@ -254,11 +254,13 @@ retrieved through the ``$name`` method argument.
     extensively in Symfony2 as a convenient way to configure the framework
     behavior and keep the configuration next to the code.
 
-If you have a closer look at the action code, you can see that instead of
+If you take a closer look at the action code, you can see that instead of
 rendering a template like before, it just returns an array of parameters. The
-``@extra:Template()`` annotation takes care of rendering a template the name 
-of which is determined based on some simple conventions (it will render
-``src/Acme/DemoBundle/Resources/views/Demo/hello.html.twig``).
+``@extra:Template()`` annotation tells Symfony to render the template for
+you, passing in each variable of the array to the template. The name of the
+template that's rendered follows the name of the controller. So, in this
+example, the ``AcmeDemoBundle:Demo:hello.html.twig`` template is rendered
+(located at ``src/Acme/DemoBundle/Resources/views/Demo/hello.html.twig``).
 
 .. tip::
 

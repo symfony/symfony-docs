@@ -69,8 +69,8 @@ templates. It takes the route name and an array of parameters as arguments and
 returns the associated friendly URL.
 
 You can also easily forward the action to another one with the ``forward()``
-method. It makes an internal sub-request, but it returns the ``Response`` 
-object to allow for further modification::
+method. Internally, Symfony makes a "sub-request", and returns the ``Response``
+object from that sub-request::
 
     $response = $this->forward('AcmeDemoBundle:Hello:fancy', array('name' => $name, 'color' => 'green'));
 
@@ -237,7 +237,7 @@ built-in reverse proxy with Varnish or Squid and easily scale your application.
 .. note::
 
     But what if you cannot cache whole pages? Symfony2 still has the solution
-    via Edge Side Includes (ESI) which are supported natively. Learn more by
+    via Edge Side Includes (ESI), which are supported natively. Learn more by
     reading the "`HTTP Cache`_" chapter of the book.
 
 Final Thoughts

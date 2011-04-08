@@ -278,7 +278,7 @@ templating system, and some other third party libraries and bundles.
 Understanding the Cache and Logs
 --------------------------------
 
-Symfony2 is probably one of the fastest full-stack frameworks around. How
+Symfony2 is probably one of the fastest full-stack frameworks around. But how
 can it be so fast if it parses and interprets tens of YAML and XML files for
 each request? The speed is partly due to its cache system. The application
 configuration is only parsed for the very first request and then compiled down
@@ -314,9 +314,9 @@ Final Thoughts
 --------------
 
 Call me crazy, but after reading this part, you should be comfortable with
-moving things around and making Symfony2 work for you. Everything in
-Symfony2 is designed to get out of your way. So, feel free to rename and 
-move directories around as you see fit.
+moving things around and making Symfony2 work for you. Everything in Symfony2
+is designed to get out of your way. So, feel free to rename and move directories
+around as you see fit.
 
 And that's all for the quick tour. From testing to sending emails, you still
 need to learn a lot to become a Symfony2 master. Ready to dig into these
