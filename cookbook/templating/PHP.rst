@@ -12,9 +12,41 @@ templates with PHP more powerful.
 Rendering PHP Templates
 -----------------------
 
-To render a PHP template instead of a Twig one, use ``.php`` in the
-template name instead of ``.twig``. The controller below renders the
-``index.html.php`` template::
+If you want to use the PHP templating engine, first, make sure to enable it in
+your application configuration file:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+    
+        # app/config/config.yml
+        framework:
+            # ...
+            templating:    { engines: ['twig', 'php'] }
+
+    .. code-block:: xml
+
+        <!-- app/config/config.xml -->
+        <framework:config ... >
+            <!-- ... -->
+            <framework:templating ... >
+                <framework:engine id="twig" />
+                <framework:engine id="php" />
+            </framework:templating>
+        </framework:config>
+
+    .. code-block:: php
+
+        $container->loadFromExtension('framework', array(
+            // ...
+            'templating'      => array(
+                'engines' => array('twig', 'php'),
+            ),
+        )); 
+
+You can now render a PHP template instead of a Twig one simply by using the
+``.php`` extension in the template name instead of ``.twig``. The controller
+below renders the ``index.html.php`` template::
 
     // src/Acme/HelloBundle/Controller/HelloController.php
 

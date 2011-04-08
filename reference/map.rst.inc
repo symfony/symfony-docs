@@ -7,7 +7,6 @@
   * :ref:`SwiftMailerBundle (swiftmailer) <swift-mailer-configuration>`
   * :doc:`TwigBundle (twig) </reference/bundle_configuration/TwigBundle>`
   * :doc:`WebProfilerBundle (web_profiler) </reference/bundle_configuration/WebProfilerBundle>`
-  * :doc:`ZendBundle (zend) </reference/bundle_configuration/ZendBundle>`
   * :doc:`MonologBundle (monolog) </reference/bundle_configuration/MonologBundle>`
 
 * :doc:`Form Field Reference</book/forms/fields/index>`

@@ -47,8 +47,8 @@ methods::
     $loader->registerNamespace('Symfony', __DIR__.'/vendor/symfony/src');
 
     $loader->registerNamespaces(array(
-        'Symfony' => __DIR__.'/vendor/symfony/src',
-        'Zend'    => __DIR__.'/vendor/zend/library',
+        'Symfony' => __DIR__.'/../vendor/symfony/src',
+        'Monolog' => __DIR__.'/../vendor/monolog/src',
     ));
 
 For classes that follow the PEAR naming convention, use the
