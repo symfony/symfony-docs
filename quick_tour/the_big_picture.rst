@@ -81,8 +81,8 @@ need to learn a few fundamental concepts and terms.
 .. tip::
 
     Want proof that using a framework is better than mixing everything
-    in the same script? Read the "`When Flat PHP meets Symfony`_" chapter
-    of the book.
+    in the same script? Read the ":doc:`/book/from_flat_php_to_symfony2`"
+    chapter of the book.
 
 The distribution comes with some sample code that you will use to learn more
 about the main Symfony2 concepts. Go to the following URL to be greeted by
@@ -157,7 +157,7 @@ controller creates the response by hand, based on the request::
 .. note::
 
     Don't be fooled by the simple concepts and the power that they hold. Read
-    the "`Symfony2 and HTTP Fundamentals`_" chapter of the book to learn more
+    the ":doc:`/book/http_fundamentals`" chapter of the book to learn more
     about how Symfony2 embraces HTTP and why it makes things simpler and more
     powerful at the same time.
 
@@ -205,8 +205,9 @@ Response can be tweaked before it is sent to the browser::
 .. tip::
 
     Extending the ``Controller`` base class is optional. As a matter of fact,
-    a controller can be a plain PHP function or even a PHP closure. "`The Controller`_"
-    chapter of the book tells you everything about Symfony2 controllers.
+    a controller can be a plain PHP function or even a PHP closure.
+    ":doc:`The Controller</book/controller>`" chapter of the book tells you
+    everything about Symfony2 controllers.
 
 The template name, ``AcmeDemoBundle:Welcome:index.html.twig``, is the template
 *logical name* and it references the
@@ -371,10 +372,6 @@ View".
 .. _Symfony2 Standard Edition:      http://symfony.com/download
 .. _Symfony in 5 minutes:           http://symfony.com/symfony-in-five-minutes
 .. _Separation of Concerns:         http://en.wikipedia.org/wiki/Separation_of_concerns
-.. _When Flat PHP meets Symfony:    http://symfony.com/doc/2.0/book/from_flat_php_to_symfony2.html
 .. _YAML:                           http://www.yaml.org/
-.. _Symfony2 and HTTP Fundamentals: http://symfony.com/doc/2.0/book/http_fundamentals.html
-.. _Learn more about the Routing:   http://symfony.com/doc/2.0/book/routing.html
-.. _The Controller:                 http://symfony.com/doc/2.0/book/controller.html
 .. _annotations in controllers:     http://bundles.symfony-reloaded.org/frameworkextrabundle/
 .. _Twig:                           http://www.twig-project.org/
