@@ -2,7 +2,7 @@ The View
 ========
 
 After reading the first part of this tutorial, you have decided that Symfony2
-was worth another 10 minutes. Good for you. In this second part, you will
+was worth another 10 minutes. Great choice! In this second part, you will
 learn more about the Symfony2 template engine, `Twig`_. Twig is a flexible,
 fast, and secure template engine for PHP. It makes your templates more
 readable and concise; it also makes them more friendly for web designers.
@@ -50,6 +50,18 @@ Below is a minimal template that illustrates a few basics:
         </body>
     </html>
 
+
+.. tip::
+
+   Comments can be included inside templates using the ``{# ... #}`` delimiter.
+
+To render a template, use the ``render`` method from within a controller
+and pass it any variables needed in the template::
+
+    $this->render('AcmeDemoBundle:Demo:hello.html.twig', array(
+        'name' => $name,
+    ));
+
 Variables passed to a template can be strings, arrays, or even objects. Twig
 abstracts the difference between them and let's you access "attributes" of a
 variable with the dot (``.``) notation:
@@ -92,10 +104,10 @@ the same as PHP classes: template inheritance allows you to build a base
 "layout" template that contains all the common elements of your site and
 defines "blocks" that child templates can override.
 
-The ``index.html.twig`` template inherits from ``layout.html.twig``, thanks to
+The ``hello.html.twig`` template inherits from ``layout.html.twig``, thanks to
 the ``extends`` tag:
 
-.. code-block:: jinja
+.. code-block:: html+jinja
 
     {# src/Acme/DemoBundle/Resources/views/Demo/hello.html.twig #}
     {% extends "AcmeDemoBundle::layout.html.twig" %}
@@ -115,6 +127,7 @@ Now, let's have a look at a simplified ``layout.html.twig``:
 
 .. code-block:: jinja
 
+    {# src/Acme/DemoBundle/Resources/views/layout.html.twig #}
     {% extends "::base.html.twig" %}
 
     {% block body %}
@@ -129,8 +142,8 @@ engine that a child template may override those portions of the template. The
 ``hello.html.twig`` template overrides the ``content`` block. The other one is
 defined in a base layout as the layout is itself decorated by another one.
 When the bundle part of the template name is empty (``::base.html.twig``),
-views are looked for in the ``app/Resources/`` directory. This directory store
-global views for your entire project:
+views are looked for in the ``app/Resources/`` directory. This directory stores
+global templates for your entire project:
 
 .. code-block:: jinja
 
@@ -153,14 +166,14 @@ Using Tags, Filters, and Functions
 ----------------------------------
 
 One of the best feature of Twig is its extensibility via tags, filters, and
-functions; Symfony2 comes bundled with many built-in ones to ease the web
-designer work.
+functions. Symfony2 comes bundled with many of these built-in to ease the
+work of the template designer.
 
 Including other Templates
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The best way to share a snippet of code between several distinct templates is
-to define a template that can then be included into another one.
+to create a new template that can then be included from other templates.
 
 Create an ``embedded.html.twig`` template:
 
@@ -188,8 +201,8 @@ And what if you want to embed the result of another controller in a template?
 That's very useful when working with Ajax, or when the embedded template needs
 some variable not available in the main template.
 
-If you create a ``fancy`` action, and want to include it into the ``index``
-template, use the ``render`` tag:
+Suppose you've created a ``fancy`` action, and you want to include it inside
+the ``index`` template. To do this, use the ``render`` tag:
 
 .. code-block:: jinja
 
@@ -197,8 +210,9 @@ template, use the ``render`` tag:
     {% render "AcmeDemoBundle:Demo:fancy" with { 'name': name, 'color': 'green' } %}
 
 Here, the ``AcmeDemoBundle:Demo:fancy`` string refers to the ``fancy`` action
-of the ``Demo`` controller, and the argument is used as simulated request path
-values::
+of the ``Demo`` controller. The arguments (``name`` and ``color``) act like
+simulated request variables (as if the ``fancyAction`` were handling a whole
+new request) and are made available to the controller::
 
     // src/Acme/DemoBundle/Controller/DemoController.php
 
@@ -223,9 +237,9 @@ of hardcoding URLs in templates, the ``path`` function knows how to generate
 URLs based on the routing configuration. That way, all your URLs can be easily
 updated by just changing the configuration:
 
-.. code-block:: jinja
+.. code-block:: html+jinja
 
-    <a href="{{ path('hello', { 'name': 'Thomas' }) }}">Greet Thomas!</a>
+    <a href="{{ path('_demo_hello', { 'name': 'Thomas' }) }}">Greet Thomas!</a>
 
 The ``path`` function takes the route name and an array of parameters as
 arguments. The route name is the main key under which routes are referenced
@@ -234,7 +248,7 @@ pattern::
 
     // src/Acme/DemoBundle/Controller/DemoController.php
     /**
-     * @extra:Route("/hello/{name}", defaults={"_format"="xml"}, name="_demo_hello")
+     * @extra:Route("/hello/{name}", name="_demo_hello")
      * @extra:Template()
      */
     public function helloAction($name)
@@ -244,7 +258,7 @@ pattern::
 
 .. tip::
 
-    The ``url`` function generates *absolute* URLs: ``{{ url('hello', {
+    The ``url`` function generates *absolute* URLs: ``{{ url('_demo_hello', {
     'name': 'Thomas' }) }}``.
 
 Including Assets: images, JavaScripts, and stylesheets
@@ -278,12 +292,12 @@ Twig is simple yet powerful. Thanks to layouts, blocks, templates and action
 inclusions, it is very easy to organize your templates in a logical and
 extensible way.
 
-You have only been working with Symfony2 for about 20 minutes, and you can
+You have only been working with Symfony2 for about 20 minutes, but you can
 already do pretty amazing stuff with it. That's the power of Symfony2. Learning
 the basics is easy, and you will soon learn that this simplicity is hidden
 under a very flexible architecture.
 
-But I get ahead of myself. First, you need to learn more about the controller
+But I'm getting ahead of myself. First, you need to learn more about the controller
 and that's exactly the topic of the next part of this tutorial. Ready for
 another 10 minutes with Symfony2?
 
