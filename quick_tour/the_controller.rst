@@ -23,8 +23,8 @@ in Symfony2 is straightforward. Tweak the route by adding a default value of
         return array('name' => $name);
     }
 
-According to the request format (as defined by the ``_format`` value),
-Symfony2 automatically selects the right template, here ``hello.xml.twig``:
+By using the request format (as defined by the ``_format`` value), Symfony2
+automatically selects the right template, here ``hello.xml.twig``:
 
 .. code-block:: xml+php
 
@@ -34,8 +34,8 @@ Symfony2 automatically selects the right template, here ``hello.xml.twig``:
     </hello>
 
 That's all there is to it. For standard formats, Symfony2 will also
-automatically choose the best ``Content-Type`` header for the response. If you
-want to support different formats for a single action, use the ``{_format}``
+automatically choose the best ``Content-Type`` header for the response. If
+you want to support different formats for a single action, use the ``{_format}``
 placeholder in the route pattern instead::
 
     // src/Acme/DemoBundle/Controller/DemoController.php
@@ -59,10 +59,10 @@ requirement.
 Redirecting and Forwarding
 --------------------------
 
-If you want to redirect the user to another page, use the ``RedirectResponse``
-class::
+If you want to redirect the user to another page, use the ``redirect()``
+method::
 
-    return new RedirectResponse($this->generateUrl('_demo_hello', array('name' => 'Lucas')));
+    return $this->redirect($this->generateUrl('_demo_hello', array('name' => 'Lucas')));
 
 The ``generateUrl()`` is the same method as the ``path()`` function we used in
 templates. It takes the route name and an array of parameters as arguments and
@@ -95,7 +95,7 @@ to the ``Request`` object::
 In a template, you can also access the ``Request`` object via the
 ``app.request`` variable:
 
-.. code-block:: html+php
+.. code-block:: html+jinja
 
     {{ app.request.query.get('page') }}
 
@@ -132,11 +132,14 @@ next request::
     // display the message back in the next request (in a template)
     {{ app.session.flash('notice') }}
 
+This is useful when you need to set a success message before redirecting
+the user to another page (which will then show the message).
+
 Securing Resources
 ------------------
 
-Symfony Standard Edition comes with a simple security configuration that fits
-most common needs:
+The Symfony Standard Edition comes with a simple security configuration that
+fits most common needs:
 
 .. code-block:: yaml
 
@@ -197,16 +200,18 @@ annotation on the controller::
         return array('name' => $name);
     }
 
-Log in as ``user`` and from the secured hello page, click on the "Hello
-resource secured" link. Symfony2 should return a 403 HTTP status code.
+Now, log in as ``user`` (who does *not* have the ``ROLE_ADMIN`` role) and
+from the secured hello page, click on the "Hello resource secured" link.
+Symfony2 should return a 403 HTTP status code, indicating that the user
+is "forbidden" from accessing that resource.
 
 .. note::
 
     The Symfony2 security layer is very flexible and comes with many different
     user providers (like one for the Doctrine ORM) and authentication providers
     (like HTTP basic, HTTP digest, or X509 certificates). Read the
-    "`Security`_" chapter of the book for more information on how to use and
-    configure them.
+    ":doc:`/book/security/overview`" chapter of the book for more information
+    on how to use and configure them.
 
 Caching Resources
 -----------------
@@ -231,23 +236,20 @@ validation instead of expiration or a combination of both if that fits your
 needs better.
 
 Resource caching is managed by the Symfony2 built-in reverse proxy. But because 
-caching is only managed by regular HTTP cache headers, you can replace the 
+caching is managed using regular HTTP cache headers, you can replace the 
 built-in reverse proxy with Varnish or Squid and easily scale your application.
 
 .. note::
 
     But what if you cannot cache whole pages? Symfony2 still has the solution
     via Edge Side Includes (ESI), which are supported natively. Learn more by
-    reading the "`HTTP Cache`_" chapter of the book.
+    reading the ":doc:`/book/http_cache`" chapter of the book.
 
 Final Thoughts
 --------------
 
-That's all there is to it, and I'm not even sure we have spent the allocated
-10 minutes. We briefly introduced bundles in the first part; and all the
+That's all there is to it, and I'm not even sure we have spent the full
+10 minutes. We briefly introduced bundles in the first part, and all the
 features we've learned about so far are part of the core framework bundle.
 But thanks to bundles, everything in Symfony2 can be extended or replaced.
 That's the topic of the next part of this tutorial.
-
-.. _Security:   http://symfony.com/doc/2.0/book/security/index.html
-.. _HTTP Cache: http://symfony.com/doc/2.0/book/http_cache.html
