@@ -88,7 +88,7 @@ can control. The following configuration options exist for a mapping:
   this path is relative it is assumed to be relative to the bundle root. This
   only works if the name of your mapping is a bundle name. If you want to use
   this option to specify absolute paths you should prefix the path with the
-  kernel parameters that exist in the DIC (for example %kernel.dir%).
+  kernel parameters that exist in the DIC (for example %kernel.root_dir%).
 - ``prefix`` A common namespace prefix that all documents of this mapping
   share. This prefix should never conflict with prefixes of other defined
   mappings otherwise some of your documents cannot be found by Doctrine. This
@@ -132,7 +132,7 @@ The following configuration shows a bunch of mapping examples:
                         alias: BundleAlias
                     doctrine_extensions:
                         type: xml
-                        dir: %kernel.dir%/../src/vendor/DoctrineExtensions/lib/DoctrineExtensions/Documents
+                        dir: %kernel.root_dir%/../src/vendor/DoctrineExtensions/lib/DoctrineExtensions/Documents
                         prefix: DoctrineExtensions\Documents\
                         alias: DExt
 
