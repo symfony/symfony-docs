@@ -74,8 +74,8 @@ for you to use in your controller (keep reading).
 
 The ``_controller`` parameter is a special key that tells Symfony which controller
 should be executed when a URL matches this route. The ``_controller`` string
-follows a :ref:`special syntax<controller-string-syntax>` that points to a
-specific PHP class and method:
+is called the :ref:`logical name<controller-string-syntax>`. It follows a
+pattern that points to a specific PHP class and method:
 
 .. code-block:: php
 
@@ -771,8 +771,9 @@ Controller Naming Pattern
 
 Every route must have a ``_controller`` parameter, which dictates which
 controller should be executed when that route is matched. This parameter
-uses a simple string pattern, which Symfony maps to a specific PHP method
-and class. The pattern has three parts, each separated by a colon:
+uses a simple string pattern called the *logical controller name*, which
+Symfony maps to a specific PHP method and class. The pattern has three parts,
+each separated by a colon:
 
     **bundle**:**controller**:**action**
 
@@ -803,14 +804,17 @@ The controller might look like this:
 Notice that Symfony adds the string ``Controller`` to the class name (``Blog``
 => ``BlogController``) and ``Action`` to the method name (``show`` => ``showAction``).
 
+You could also refer to this controller using its fully-qualified class name
+and method: ``Acme\BlogBundle\Controller\BlogController::showAction``.
+But if you follow some simple conventions, the logical name is more concise
+and allows more flexibility.
+
 .. note::
 
-   Symfony also supports two other controller formats. The first contains
-   one colon separator (e.g. ``service_name:indexAction``) and refers to
-   the controller as a service (see :doc:`/cookbook/controller/service`).
-   The second is formatted like ``ControllerClassName::methodName``. When
-   Symfony sees this format, it will try to create a new instance of ``ControllerClassName``
-   and then call the ``methodName`` method.
+   In addition to using the logical name or the fully-qualified class name,
+   Symfony supports a third way of referring to a controller. This method
+   uses just one colon separator (e.g. ``service_name:indexAction``) and
+   refers to the controller as a service (see :doc:`/cookbook/controller/service`).
 
 Route Parameters and Controller Arguments
 -----------------------------------------

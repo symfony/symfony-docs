@@ -19,17 +19,17 @@ Downloading Symfony2
 First, check that you have installed and configured a Web server (such as
 Apache) with PHP 5.3.2 or higher.
 
-Ready? Let's start by downloading "`Symfony2 Standard Edition`_", a Symfony
+Ready? Let's start by downloading the "`Symfony2 Standard Edition`_", a Symfony
 :term:`distribution` that is preconfigured for the most common use cases and
-also contains some code that demonstrates how to use Symfony2 (get an archive
+also contains some code that demonstrates how to use Symfony2 (get the archive
 with the *vendors* included to get started even faster).
 
-After unpacking the archive under the web server root directory, you should
+After unpacking the archive under your web server root directory, you should
 have a ``Symfony/`` directory that looks like this:
 
 .. code-block:: text
 
-    www/ <- the web root directory
+    www/ <- your web root directory
         Symfony/ <- the unpacked archive
             app/
                 cache/
@@ -58,8 +58,8 @@ URL to see the diagnostics for your machine:
 
     http://localhost/Symfony/web/config.php
 
-If there are any outstanding issues listed, correct them; you might also tweak
-your configuration by following the given recommendations. When everything is
+If there are any outstanding issues listed, correct them. You might also tweak
+your configuration by following any given recommendations. When everything is
 fine, click on "Go to the Welcome page" to request your first "real" Symfony2
 webpage:
 
@@ -72,17 +72,17 @@ Symfony2 should welcome and congratulate you for your hard work so far!
 Understanding the Fundamentals
 ------------------------------
 
-One of the main goal of a framework is to ensure the `Separation of Concerns`_.
-It keeps your code organized and allows your application to evolve
-easily over time by avoiding the mix of database calls, HTML tags, and
-business logic in the same script. To achieve this goal, you must learn about
-some fundamental concepts and terms.
+One of the main goals of a framework is to ensure the `Separation of Concerns`_.
+This keeps your code organized and allows your application to evolve easily
+over time by avoiding the mix of database calls, HTML tags, and business
+logic in the same script. To achieve this goal with Symfony, you'll first
+need to learn a few fundamental concepts and terms.
 
 .. tip::
 
-    Want some proofs that using a framework is better than mixing everything
-    in the same script? Read the "`From flat PHP to Symfony2`_" chapter of the
-    book.
+    Want proof that using a framework is better than mixing everything
+    in the same script? Read the ":doc:`/book/from_flat_php_to_symfony2`"
+    chapter of the book.
 
 The distribution comes with some sample code that you will use to learn more
 about the main Symfony2 concepts. Go to the following URL to be greeted by
@@ -100,7 +100,7 @@ What's going on here? Let's dissect the URL:
 * ``/demo/hello/Fabien``: This is the *virtual path* to the resource the user
   wants to access.
 
-Your responsibility as a developer is to write the code that maps the user
+Your responsibility as a developer is to write the code that maps the user's
 *request* (``/demo/hello/Fabien``) to the *resource* associated with it
 (``Hello Fabien!``).
 
@@ -108,8 +108,9 @@ Routing
 ~~~~~~~
 
 Symfony2 routes the request to the code that handles it by trying to match the
-requested URL according to some configured patterns. By default, they are
-defined in ``app/config/routing.yml`` configuration file:
+requested URL against some configured patterns. By default, these patterns
+(called routes) are defined in the ``app/config/routing.yml`` configuration
+file:
 
 .. code-block:: yaml
 
@@ -134,15 +135,15 @@ executed.
     but Symfony2 also supports XML, PHP, and annotations natively. The
     different formats are compatible and may be used interchangeably within an
     application. Also, the performance of your application does not depend on
-    the configuration format you chose as everything is cached on the very
+    the configuration format you choose as everything is cached on the very
     first request.
 
 Controllers
 ~~~~~~~~~~~
 
-A controller handles incoming *requests* and return *responses* (often in
-HTML). Instead of using the PHP global variables and functions to manage these
-HTTP messages, Symfony uses objects:
+A controller handles incoming *requests* and returns *responses* (often HTML
+code). Instead of using the PHP global variables and functions (like ``$_GET``
+or ``header()``) to manage these HTTP messages, Symfony uses objects:
 :class:`Symfony\\Component\\HttpFoundation\\Request` and
 :class:`Symfony\\Component\\HttpFoundation\\Response`. The simplest possible
 controller creates the response by hand, based on the request::
@@ -156,7 +157,7 @@ controller creates the response by hand, based on the request::
 .. note::
 
     Don't be fooled by the simple concepts and the power that they hold. Read
-    the "`The HTTP Spec and Symfony2`_" chapter of the book to learn more
+    the ":doc:`/book/http_fundamentals`" chapter of the book to learn more
     about how Symfony2 embraces HTTP and why it makes things simpler and more
     powerful at the same time.
 
@@ -204,13 +205,14 @@ Response can be tweaked before it is sent to the browser::
 .. tip::
 
     Extending the ``Controller`` base class is optional. As a matter of fact,
-    a controller can be a plain PHP function or even a PHP closure. "`The Controller`_"
-    chapter of the book tells you everything about Symfony2 controllers.
+    a controller can be a plain PHP function or even a PHP closure.
+    ":doc:`The Controller</book/controller>`" chapter of the book tells you
+    everything about Symfony2 controllers.
 
 The template name, ``AcmeDemoBundle:Welcome:index.html.twig``, is the template
 *logical name* and it references the
-``src/Acme/DemoBundle/Resources/views/Welcome/index.html.twig`` file. Again,
-the bundles section below will explain you why this is useful.
+``src/Acme/DemoBundle/Resources/views/Welcome/index.html.twig`` file. The
+bundles section below will explain why this is useful.
 
 Now, take a look at the end of the routing configuration again:
 
@@ -243,10 +245,11 @@ file, routes are defined as annotations on action methods::
         // ...
     }
 
-The ``@extra:Route()`` annotation defines the route for the ``helloAction``
-method and the pattern is ``/hello/{name}``. A string enclosed in curly
-brackets like ``{name}`` is a placeholder. As you can see, its value can be
-retrieved through the ``$name`` method argument.
+The ``@extra:Route()`` annotation defines a new route with a pattern of
+``/hello/{name}`` that executes the ``helloAction`` method when matched.
+A string enclosed in curly brackets like ``{name}`` is called a placeholder.
+As you can see, its value can be retrieved through the ``$name`` method
+argument.
 
 .. note::
 
@@ -307,13 +310,12 @@ Working with Environments
 Now that you have a better understanding of how Symfony2 works, have a closer
 look at the bottom of the page; you will notice a small bar with the Symfony2
 logo. This is called the "Web Debug Toolbar" and it is the developer's best
-friend. But this is only the tip of the iceberg; click on the weird
-hexadecimal number to reveal yet another very useful Symfony2 debugging tool:
-the profiler.
+friend. But this is only the tip of the iceberg; click on the weird hexadecimal
+number to reveal yet another very useful Symfony2 debugging tool: the profiler.
 
-Of course, these tools must not be available when you deploy your application
+Of course, you won't want to show these tools when you deploy your application
 to production. That's why you will find another front controller in the
-``web/`` directory (``app.php``), optimized for the production environment:
+``web/`` directory (``app.php``), which is optimized for the production environment:
 
 .. code-block:: text
 
@@ -336,13 +338,14 @@ even better looking URL:
 
 To make you application respond faster, Symfony2 maintains a cache under the
 ``app/cache/`` directory. In the development environment (``app_dev.php``),
-this cache is flushed automatically whenever you make changes to the code or
+this cache is flushed automatically whenever you make changes to any code or
 configuration. But that's not the case in the production environment
-(``app.php``) to make it perform even better; that's why you should always use
+(``app.php``) where performance is key. That's why you should always use
 the development environment when developing your application.
 
-Different :term:`environments<environment>` of a given application differ only in their
-configuration. In fact, a configuration can inherit from another one:
+Different :term:`environments<environment>` of a given application differ
+only in their configuration. In fact, a configuration can inherit from another
+one:
 
 .. code-block:: yaml
 
@@ -366,13 +369,9 @@ Symfony2 makes it really easy to implement web sites better and faster. If you
 are eager to learn more about Symfony2, dive into the next section: "The
 View".
 
-.. _Symfony2 Standard Edition:    http://symfony.com/download
-.. _Symfony in 5 minutes:         http://symfony.com/symfony-in-five-minutes
-.. _Separation of Concerns:       http://en.wikipedia.org/wiki/Separation_of_concerns
-.. _From flat PHP to Symfony2:    http://symfony.com/doc/2.0/book/from_flat_php_to_symfony2.html
-.. _YAML:                         http://www.yaml.org/
-.. _The HTTP Spec and Symfony2:   http://symfony.com/doc/2.0/book/http_fundamentals.html
-.. _Learn more about the Routing: http://symfony.com/doc/2.0/book/routing.html
-.. _The Controller:               http://symfony.com/doc/2.0/book/controller.html
-.. _annotations in controllers:   http://bundles.symfony-reloaded.org/frameworkextrabundle/
-.. _Twig:                         http://www.twig-project.org/
+.. _Symfony2 Standard Edition:      http://symfony.com/download
+.. _Symfony in 5 minutes:           http://symfony.com/symfony-in-five-minutes
+.. _Separation of Concerns:         http://en.wikipedia.org/wiki/Separation_of_concerns
+.. _YAML:                           http://www.yaml.org/
+.. _annotations in controllers:     http://bundles.symfony-reloaded.org/frameworkextrabundle/
+.. _Twig:                           http://www.twig-project.org/

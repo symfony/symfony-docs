@@ -2,15 +2,15 @@ The Architecture
 ================
 
 You are my hero! Who would have thought that you would still be here after the
-first three parts?  Your efforts will be well rewarded soon. The first three
+first three parts? Your efforts will be well rewarded soon. The first three
 parts didn't look too deeply at the architecture of the framework. Because it
-makes Symfony2 stand apart from the framework crowd, let's dive in to the
+makes Symfony2 stand apart from the framework crowd, let's dive into the
 architecture now.
 
 Understanding the Directory Structure
 -------------------------------------
 
-The directory structure of a Symfony2 :term:`application` is rather flexible
+The directory structure of a Symfony2 :term:`application` is rather flexible,
 but the directory structure of the *Standard Edition* distribution reflects
 the typical and recommended structure of a Symfony2 application:
 
@@ -79,7 +79,7 @@ PHP autoloading can be configured via ``app/autoload.php``::
     ));
     $loader->register();
 
-:class:`Symfony\\Component\\ClassLoader\\UniversalClassLoader` is used to
+The :class:`Symfony\\Component\\ClassLoader\\UniversalClassLoader` is used to
 autoload files that respect either the technical interoperability `standards`_
 for PHP 5.3 namespaces or the PEAR naming `convention`_ for classes. As you
 can see here, all dependencies are stored under the ``vendor/`` directory, but
@@ -89,7 +89,8 @@ your server or locally in your projects.
 .. note::
 
     If you want to learn more about the flexibility of the Symfony2
-    autoloader, read the "`How to autoload Classes`_" recipe in the cookbook.
+    autoloader, read the ":doc:`/cookbook/tools/autoloader`" recipe in the
+    cookbook.
 
 Understanding the Bundle System
 -------------------------------
@@ -135,10 +136,10 @@ method of the ``AppKernel`` class::
         return $bundles;
     }
 
-In addition to ``AcmeDemoBundle`` that we have already talked about, notice
-that the kernel also enables ``FrameworkBundle``, ``DoctrineBundle``,
-``SwiftmailerBundle``, and ``AsseticBundle``. They are all part of the core
-framework.
+In addition to the ``AcmeDemoBundle`` that we have already talked about, notice
+that the kernel also enables the ``FrameworkBundle``, ``DoctrineBundle``,
+``SwiftmailerBundle``, and ``AsseticBundle`` bundles. They are all part of
+the core framework.
 
 Configuring a Bundle
 ~~~~~~~~~~~~~~~~~~~~
@@ -208,10 +209,14 @@ PHP. Have a look at the default configuration:
         secure_controllers:  true
         secure_all_services: false
 
-Each entry like ``framework`` defines the configuration for a bundle.
+Each entry like ``framework`` defines the configuration for a specific bundle.
+For example, ``framework`` configures the ``FrameworkBundle`` while ``swiftmailer``
+configures the ``SwiftmailerBundle``.
 
 Each :term:`environment` can override the default configuration by providing a
-specific configuration file:
+specific configuration file. For example, the ``dev`` environment loads the
+``config_dev.yml`` file, which loads the main configuration (i.e. ``config.yml``)
+and then modifies it to add some debugging tools:
 
 .. code-block:: yaml
 
@@ -239,23 +244,20 @@ Extending a Bundle
 ~~~~~~~~~~~~~~~~~~
 
 In addition to being a nice way to organize and configure your code, a bundle
-can extend another one. Bundle inheritance allows you to override any existing
-bundle to customize its controllers, templates, and any of its files.  This is
-where the logical names come in handy, because they abstract where the resource
-is actually stored.
-
-For controllers, Symfony2 will automatically choose the right file according
-to the bundle inheritance tree.
+can extend another bundle. Bundle inheritance allows you to override any existing
+bundle in order to customize its controllers, templates, or any of its files.
+This is where the logical names come in handy, because they abstract where
+the resource is actually stored.
 
 When you want to reference a file from a bundle, use this notation:
-``@BUNDLE_NAME/PATH_TO_FILE``; Symfony2 will expand ``@BUNDLE_NAME`` to the
-path to the bundle. For instance, it converts
-``@AcmeDemoBundle/Controller/DemoController.php`` to
+``@BUNDLE_NAME/path/to/file``; Symfony2 will resolve ``@BUNDLE_NAME``
+to the real path to the bundle. For instance, the logical path
+``@AcmeDemoBundle/Controller/DemoController.php`` would be converted to
 ``src/Acme/DemoBundle/Controller/DemoController.php``.
 
-For controllers, you need to reference method names:
+For controllers, you need to reference method names using the format
 ``BUNDLE_NAME:CONTROLLER_NAME:ACTION_NAME``. For instance,
-``AcmeDemoBundle:Welcome:index`` means the ``indexAction`` method from the
+``AcmeDemoBundle:Welcome:index`` maps to the ``indexAction`` method from the
 ``Acme\DemoBundle\Controller\WelcomeController`` class.
 
 For templates, the logical name ``AcmeDemoBundle:Welcome:index.html.twig`` is
@@ -320,10 +322,8 @@ around as you see fit.
 
 And that's all for the quick tour. From testing to sending emails, you still
 need to learn a lot to become a Symfony2 master. Ready to dig into these
-topics now? Look no further - go to the official `book`_ and pick any topic
-you want.
+topics now? Look no further - go to the official :doc:`/book/index` and pick
+any topic you want.
 
 .. _standards:               http://groups.google.com/group/php-standards/web/psr-0-final-proposal
 .. _convention:              http://pear.php.net/
-.. _book:                    http://symfony.com/doc/2.0/book/
-.. _How to autoload Classes: http://symfony.com/doc/2.0/cookbook/tools/autoloader.html
