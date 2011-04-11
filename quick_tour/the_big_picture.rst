@@ -124,7 +124,7 @@ file:
         type:     annotation
         prefix:   /demo
 
-The first three lines of the routing configuration file define the code that
+The first three lines after the comment define the code that
 is executed when the user requests the "``/``" resource (i.e. the welcome
 page). When requested, the ``AcmeDemoBundle:Welcome:index`` controller will be
 executed.
