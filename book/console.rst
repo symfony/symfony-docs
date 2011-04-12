@@ -36,7 +36,7 @@ aswell we get this simple block of necessary code:
         {
             $name = $input->getArgument('name');
             if ($name) {
-                $output->write('Hello %name%', array('%name%' => $name));
+                $output->write('Hello ' . $name);
             } else {
                 $output->write('Hello!');
             }
@@ -54,7 +54,7 @@ Advanced Usage
 --------------
 
 Using the Dependency Injection Container
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Using the Symfony\Bundle\FrameworkBundle\Command\Command as base class we also have access to
 the dependency injection container. As an example we could easily extend our task to be translatable:
@@ -73,7 +73,7 @@ the dependency injection container. As an example we could easily extend our tas
             $name = $input->getArgument('name');
             $translator = $this->container->get('translator');
             if ($name) {
-                $output->write($translator->trans('Hello ' . $name . '!'));
+                $output->write($translator->trans('Hello %name%!', array('%name%' => $name)));
             } else {
                 $output->write($translator->trans('Hello!'));
             }
