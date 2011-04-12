@@ -318,7 +318,6 @@ You can also get the objects related to the latest request::
     $request  = $client->getRequest();
     $response = $client->getResponse();
     $crawler  = $client->getCrawler();
-    $profiler = $client->getProfiler();
 
 If your requests are not insulated, you can also access the ``Container`` and
 the ``Kernel``::
@@ -343,6 +342,16 @@ HTTP layer.
 
     If the information you need to check are available from the profiler, use
     them instead.
+
+Accessing the Profiler Data
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+To assert data collected by the profiler, you can get the profiler like this::
+
+    use Symfony\Component\HttpKernel\Profiler\Profiler;
+
+    $profiler = new Profiler();
+    $profiler = $profiler->loadFromResponse($client->getResponse());
 
 Redirections
 ~~~~~~~~~~~~
