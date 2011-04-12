@@ -17,6 +17,7 @@ Book
     security/index
     http_cache
     translation
+    console
     bundles
     service_container
     internals/index
