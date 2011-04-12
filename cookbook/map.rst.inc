@@ -19,4 +19,5 @@
 * :doc:`/cookbook/request/mime_type`
 * :doc:`/cookbook/security/voters`
 * :doc:`/cookbook/doctrine/reverse_engineering`
+* :doc:`/cookbook/doctrine/doctrine_fixtures`
 * :doc:`/cookbook/symfony1`
