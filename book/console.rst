@@ -36,7 +36,7 @@ aswell we get this simple block of necessary code:
         {
             $name = $input->getArgument('name');
             if ($name) {
-                $output->write('Hello ' . $name . '!');
+                $output->write('Hello %name%', array('%name%' => $name));
             } else {
                 $output->write('Hello!');
             }
@@ -52,6 +52,9 @@ We can now test the greeting by calling:
 
 Advanced Usage
 --------------
+
+Using the Dependency Injection Container
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Using the Symfony\Bundle\FrameworkBundle\Command\Command as base class we also have access to
 the dependency injection container. As an example we could easily extend our task to be translatable:
