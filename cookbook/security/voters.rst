@@ -48,8 +48,8 @@ values:
 In this example, we will check if the user's IP address matches against a list of
 blacklisted addresses. If the user's IP is blacklisted, we will return 
 ``VoterInterface::ACCESS_DENIED``, otherwise we will return 
-``VoterInterface::ACCESS_ABSTAIN`` as this voter purpose is only to deny users, 
-not to grant them.
+``VoterInterface::ACCESS_ABSTAIN`` as this voter's purpose is only to deny
+access, not to grant access.
 
 Creating a Custom Voter
 -----------------------
@@ -157,3 +157,6 @@ and tag it as a "security.voter":
    configuration file (e.g. ``app/config/config.yml``). For more information
    see :ref:`service-container-imports-directive`. To read more about defining
    services in general, see the :doc:`/book/service_container` chapter.
+
+That's it! Now, when deciding whether or not a user should have access,
+the new voter will deny access to any user in the list of blacklisted IPs.
