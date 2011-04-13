@@ -7,7 +7,7 @@ Cookbook
     email
     gmail
     configuration/environments
-	configuration/pdo_session_storage
+    configuration/pdo_session_storage
     templating/PHP
     controller/error_pages
     controller/service
