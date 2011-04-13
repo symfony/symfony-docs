@@ -34,19 +34,28 @@ format of your choice).
  * ``db_time_col``: The name of the time column in your session table (INTEGER)
  
 
-Now you have to define a PDO connection for the database in the ``config.yml``. For that 
-create a new service called ``pdo_connection``:
+Now you have to define a PDO connection for the database in the ``services.yml`` in your Bundle. 
+For that create a new service  ``session.storage.pdo``:
 
 .. configuration-block::
 
     .. code-block:: yaml
 
-        # app/config/config.yml
+        # src/Acme/DemoBundle/Resources/config/services.yml
         services:
-            pdo_connection:
+            session.storage.pdo:
                 class:    PDO
                 arguments:
                     dsn:      "mysql:dbname=mydatabase"
                     user:     myuser
                     password: mypassword
 
+Don't forget to import this ``services.yml`` file to your application ``config.yml``
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # app/config/config.yml
+        imports:
+		    - { resource: "@AcmeDemoBundle/Resources/config/services.yml" }
