@@ -64,7 +64,7 @@ Then you can constrain this method with ``True``.
             protected $token;
 
             /**
-             * @validation:True(message = "The token is invalid")
+             * @assert:True(message = "The token is invalid")
              */
             public function isTokenValid()
             {

@@ -57,7 +57,7 @@ constraint definition as array.
         class Author
         {
             /**
-             * @validation:Choice({"male", "female"})
+             * @assert:Choice({"male", "female"})
              */
             protected $gender;
         }
@@ -126,7 +126,7 @@ constraint.
         class Author
         {
             /**
-             * @validation:Choice(callback = "getGenders")
+             * @assert:Choice(callback = "getGenders")
              */
             protected $gender;
         }
@@ -164,7 +164,7 @@ you can pass the class name and the method as array.
         class Author
         {
             /**
-             * @validation:Choice(callback = {"Util", "getGenders"})
+             * @assert:Choice(callback = {"Util", "getGenders"})
              */
             protected $gender;
         }

@@ -212,24 +212,24 @@ data.
     class ContactRequest
     {
         /**
-         * @validation:MaxLength(100)
-         * @validation:NotBlank
+         * @assert:MaxLength(100)
+         * @assert:NotBlank
          */
         protected $subject = 'Subject...';
         
         /**
-         * @validation:NotBlank
+         * @assert:NotBlank
          */
         protected $message;
         
         /**
-         * @validation:Email
-         * @validation:NotBlank
+         * @assert:Email
+         * @assert:NotBlank
          */
         protected $sender;
         
         /**
-         * @validation:Type("boolean")
+         * @assert:Type("boolean")
          */
         protected $ccmyself = false;
         
