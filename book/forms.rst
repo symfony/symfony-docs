@@ -282,13 +282,13 @@ number:
         class Product
         {
             /**
-             * @validation:NotBlank()
+             * @assert:NotBlank()
              */
             public $name;
 
             /**
-             * @validation:NotBlank()
-             * @validation:Min(0)
+             * @assert:NotBlank()
+             * @assert:Min(0)
              */
             protected $price;
         }
