@@ -59,12 +59,11 @@ going to need to build a form. But before you begin, let's focus on the generic
        php app/console init:bundle "Acme\StoreBundle" src/
 
 This type of class is commonly called a "plain-old-PHP-object" (POPO) because,
-so far, it has nothing to do with Symfony and it doesn't persist to the
-database (i.e. it's not tied to Doctrine). It's quite simply a normal PHP
-object that directly solves a problem inside *your* application (i.e. the
-need to represent a product in your application). Of course, by the end of
-this chapter, you'll be able to submit data to a ``Product`` instance (via)
-a form, validate its data, and persist it to a database.
+so far, it has nothing to do with Symfony or any other library. It's quite
+simply a normal PHP object that directly solves a problem inside *your* application
+(i.e. the need to represent a product in your application). Of course, by
+the end of this chapter, you'll be able to submit data to a ``Product`` instance
+(via) a form, validate its data, and persist it to a database.
 
 So far, you've not actually done any work related to "forms" - you've simply
 created a PHP class that will help you solve a problem. The goal of the form
@@ -104,7 +103,7 @@ a controller:
             $form->setData($product);
 
             return $this->render('AcmeStoreBundle:Default:index.html.twig', array(
-                'form' => $this->get('form.factory')->createRenderer($form, 'twig'),
+                'form' => $form->createView(),
             ));
         }
     }
@@ -116,28 +115,21 @@ a controller:
    is covered later in the :ref:`book-forms-doctrine-field-guessing`.
 
 Creating a form is short and easy in Symfony2 because form objects are created
-via a "form builder". A form builder is simply an object you can interact
-with to succinctly create form objects.
+via a "form builder". A form builder is an object you can interact with to
+help you easily create form objects.
 
-In this example, you've created two fields on your form - ``name`` and ``price`` -
-corresponding to the ``name`` and ``price`` fields on the ``Product`` class.
+In this example, you've added two fields to your form - ``name`` and ``price`` -
+corresponding to the ``name`` and ``price`` properties of the ``Product`` class.
 The ``name`` field has a type of ``text``, meaning the user will submit simple
 text for this field. The ``price`` field has the type ``money``, which is
 special ``text`` field where money can be displayed and submitted in a localized
 format. Symfony2 comes with many build-in types that will be discussed shortly
 (see :ref:`book-forms-type-reference`).
 
-.. tip::
-
-   Notice that the form system is smart enough to access the ``price`` field
-   via the ``getPrice`` and ``setPrice`` methods. You have the option of
-   making any property either public or adding getter and setter methods
-   for it.
-
 Now that the form has been created, the next step is to render it in a template.
-To render the form, you should pass a special form "renderer" to your template.
-As you'll see, this is a special object that contains many helpful methods
-for rendering your form:
+To render the form, you should pass a special form "view" object to your
+template (see the ``$form->createView()`` in the controller above). This
+view object knows all about how to render your form:
 
 .. configuration-block::
 
@@ -146,7 +138,7 @@ for rendering your form:
         {# src/Acme/StoreBundle/Resources/views/Default/index.html.twig #}
         
         <form action="{{ path('store_product') }}" method="post">
-            {{ form.widget }}
+            {{ form_widget(form) }}
             
             <input type="submit" />
         </form>
@@ -156,7 +148,7 @@ for rendering your form:
         <?php // src/Acme/StoreBundle/Resources/views/Default/index.html.php ?>
         
         <form action="<?php echo $view['router']->generate('store_product') ?>" method="post">
-            <?php echo $form->getWidget() ?>
+            <?php echo $view['form']->widget($form) ?>
 
             <input type="submit" />
         </form>
@@ -164,8 +156,8 @@ for rendering your form:
 .. image:: /book/images/forms-simple.png
     :align: center
 
-That's it! By printing ``form.widget``, each field in the form is rendered,
-along with a label and any error messages for the field. As easy as this is,
+That's it! By printing ``form_widget(form)``, each field in the form is rendered,
+along with a label and any error messages for each field. As easy as this is,
 it's not very flexible (yet). Later, you'll learn how to customize the form
 output.
 
@@ -173,6 +165,15 @@ Before moving on, notice how the rendered name input field has the value
 of the ``name`` property from the ``$product`` object (i.e. "Test product").
 This is the first job of a form: to take data from an object and translate
 it into a format that's suitable for being rendered in an HTML form.
+
+.. tip::
+
+   The form system is smart enough to access the value of the protected ``price``
+   property via the ``getPrice`` and ``setPrice`` methods on ``Product``.
+   If a "getter" or "setter" method is available for a property, the form
+   component will use the methods instead of accessing the property directly.
+   Of course, getter and setter methods are required if a property is protected
+   or private.
 
 Handling Form Submissions
 ~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -210,11 +211,11 @@ the form, which translates that data back to the ``name`` and ``price``
 properties of the ``$product`` object. This all happens via the ``bindRequest()``
 method.
 
-The controller follows a common pattern for handling forms, and has three
+This controller follows a common pattern for handling forms, and has three
 possible paths:
 
-#. When loading the URL in a browser, the request method is ``GET``, meaning
-   that the form is simply created and rendered (but not bound);
+#. When initially loading the form in a browser, the request method is ``GET``,
+   meaning that the form is simply created and rendered (but not bound);
 
 #. When the user submits the form, but that submitted data is invalid (validation
    is covered in the next section), the form is bound and then rendered,
@@ -227,8 +228,8 @@ possible paths:
 
 .. note::
 
-   Redirecting a user after a successful form submit prevents the user from
-   being able to hit "refresh" and re-post the data.
+   Redirecting a user after a successful form submission prevents the user
+   from being able to hit "refresh" and re-post the data.
 
 .. index::
    single: Forms; Validation
@@ -241,12 +242,12 @@ or invalid data. In Symfony2, validation is applied to the underlying object
 (e.g. ``Product``). In other words, the question isn't whether the "form"
 is valid, but rather whether or not the ``$product`` object is valid after
 the form has applied the submitted data to it. Calling ``$form->isValid()``
-is just a shortcut that asks the ``$product`` object whether or not it has
-valid data.
+is a shortcut that asks the ``$product`` object whether or not it has valid
+data.
 
 Validation is done by adding a set of rules (called constraints) to a class.
 To see this in action, add validation constraints so that the ``name`` field
-cannot be empty and the ``price`` field can't be empty and must be a non-negative
+cannot be empty and the ``price`` field can't be empty or a non-negative
 number:
 
 .. configuration-block::
@@ -316,11 +317,17 @@ number:
 That's it! If you re-submit the form with invalid data, you'll see the corresponding
 errors printed out with the form.
 
+.. tip::
+
+   If you're 
+
 Validation is a very powerful feature of Symfony2 and has its own
 :doc:`dedicated chapter</book/validation>`.
 
 .. index::
    single: Forms; Built-in Field Types
+
+.. _book-forms-type-reference:
 
 Built-in Field Types
 --------------------
@@ -329,6 +336,10 @@ Symfony comes standard with a large group of field types that cover all of
 the common form fields and data types you'll encounter:
 
 .. include:: /reference/forms/types/map.rst.inc
+
+Of course, you can also create your own custom field types. This topic is
+covered in the ":doc:`/cookbook/forms/create_custom_fields`" article of the
+cookbook.
 
 .. index::
    single: Forms; Field type options
@@ -344,15 +355,16 @@ options:
     ->add('price', 'money', array('currency' => 'USD'))
 
 All fields have a number of different options. Many of them are specific
-to the specific type and details can be found in the documentation for those
+to the field type and details can be found in the documentation for those
 types. Some options, however, are shared between most fields:
 
 * ``required`` - The ``required`` option can be used to render an
   `HTML5 required attribute`_. Note that this is independent from validation:
   if you specify the required attribute on the field type but omit any required
-  validation, the object will validate with a blank value. A great way to
-  use this field is to apply validation to your class and then let it guess
-  the value for the ``required`` option automatically.
+  validation, the object will appear to be valid with a blank value. In other
+  words, this is a *nice* feature that will add client-side validation for
+  browsers that support HTML5. It's not, however, a replacement for true
+  server-side validation.
 
 * ``max_length`` - This option is used to add a ``max_length`` attribute,
   which is used by some browsers to limit the amount of text in a field.
@@ -365,10 +377,10 @@ Field Type Guessing
 
 Now that you've added validation metadata to the ``Product`` class, Symfony
 already knows a bit about your fields. If you allow it, Symfony can "guess"
-the type of your field and set it up on your behalf. In this example, Symfony
-assumes that both the ``name`` and ``price`` fields are normal ``text``
-fields. Of course it's right about the ``name`` field, meaning that you can
-modify your code to allow the field to be setup automatically:
+the type of your field and set it up for you. In this example, Symfony will
+guess from the validation that both the ``name`` and ``price`` fields are
+normal ``text`` fields. Since it's right about the ``name`` field, you can
+modify your code so that Symfony guesses the field for you:
 
 .. code-block:: php
 
@@ -385,11 +397,10 @@ modify your code to allow the field to be setup automatically:
 
 You'll notice two differences immediately. First, a ``data_class`` option
 is passed when creating the form. This tells Symfony which class to look
-to when guessing the fields. This is required to take advantage of field
-guessing. Next, you can now omit the ``text`` option on the ``name`` field.
-This field is correctly guessed. The ``money`` type was kept, however, for
-the ``price`` field as it's more specific than what the system could guess
-(``text``).
+at when guessing the fields. This is required to take advantage of field
+guessing. You can now omit the ``text`` type for the ``name`` field as this
+field is correctly guessed. The ``money`` type was kept, however, for the
+``price`` field as it's more specific than what the system could guess (``text``).
 
 .. note::
 
@@ -422,19 +433,14 @@ of code. Of course, you'll usually need much more flexibility when rendering:
 
         {# src/Acme/StoreBundle/Resources/views/Default/index.html.twig #}
         
-        <form action="{{ path('store_product') }}" method="post" {{ form.enctype }}>
-            {{ form.errors }}
-            
-            {% for field in form %}
-                <div>
-                    {{ field.label }}
-                    {{ field.errors }}
-                    {{ field.widget }}
-                </div>
-            {% endfor %}
-            
-            {{ form.rest }}
-            
+        <form action="{{ path('store_product') }}" method="post">
+            {{ form_errors(form) }}
+
+            {{ form_row(form.name) }}
+            {{ form_row(form.price) }}
+
+            {{ form_rest(form) }}
+
             <input type="submit" />
         </form>
 
@@ -442,122 +448,115 @@ of code. Of course, you'll usually need much more flexibility when rendering:
     
         <?php // src/Acme/StoreBundle/Resources/views/Default/index.html.php ?>
         
-        <form action="<?php echo $view['router']->generate('store_product') ?>" method="post" <?php echo $form->getEnctype() ?>>
-            <?php echo $form->getErrors() ?>
+        <form action="<?php echo $view['router']->generate('store_product') ?>" method="post" <?php echo $view['form']->enctype($form) ?>>
+            <?php echo $view['form']->errors($form) ?>
 
-            <?php foreach ($form as $field): ?>
-                <div>
-                    <?php echo $field->getLabel() ?>
-                    <?php echo $field->getErrors() ?>
-                    <?php echo $field->getWidget() ?>
-                </div>
-            <?php endforeach; ?>
+            <?php echo $view['form']->row($form['name']) ?>
+            <?php echo $view['form']->row($form['price']) ?>
 
-            <?php echo $form->getRest() ?>
+            <?php echo $view['form']->rest($form) ?>
 
             <input type="submit" />
         </form>
 
 Let's take a look at each part:
 
-* ``form.enctype`` - If at least on field is a file upload field, this will
-  render the obligatory ``enctype="multipart/form-data"``;
+* ``form_enctype(form)`` - If at least on field is a file upload field, this
+  renders the obligatory ``enctype="multipart/form-data"``;
 
-* ``form.errors`` - This will render any errors global to the whole form
+* ``form_errors(form)`` - This will render any errors global to the whole form
   (field-specific errors are displayed next to each field);
 
-* ``form.rest`` - This renders any fields that have not yet been rendered
+* ``form_row(form.price)`` - Renders the label, any errors, and the HTML
+  form widget for the given field (e.g. ``price``);
+
+* ``form_rest(form)`` - This renders any fields that have not yet been rendered
   and is usually a good idea to place at the bottom of each form (in case
-  you forgot to output a field).
+  you forgot to output a field or don't want to bother manually rendering
+  hidden fields).
 
-By looping through each field (via ``{% for field in form %}`` in Twig),
-you can customize the exact output of each field:
+The majority of the work is done by the ``form_row`` helper, which renders
+the label, errors and HTML form widget of each field inside a ``div`` tag
+by default. In the :ref:`forms-customize-blocks` section, you'll learn how
+the ``form_row`` output can be customized on many different levels.
 
-* ``field.label`` - Renders the label of the field, which is a humanized
-  version of the field name (e.g. ``first_name`` would be ``First name``)
-  but can easily be overridden;
+Rendering each Field by Hand
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-* ``field.errors`` - Renders each error specific to the field;
-
-* ``field.widget`` - Renders the actual form element representing the field.
-
-Rendering Specific Fields
-~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Instead of iterating through each field, you'll more commonly output each
-field exactly where you want it:
+The ``form_row`` helper is great because you can very quickly render your
+form and even customize the markup used. But since life isn't always so
+simple, you can also render each field entirely by hand:
 
 .. configuration-block::
 
     .. code-block:: html+jinja
 
-        {{ form.errors }}
+        {{ form_errors(form) }}
 
         <div>
-            {{ form.name.label }}
-            {{ form.name.errors }}
-            {{ form.name.widget }}
+            {{ form_label(form.name) }}
+            {{ form_errors(form.name) }}
+            {{ form_widget(form.name) }}
         </div>
 
         <div>
-            {{ form.price.label }}
-            {{ form.price.errors }}
-            {{ form.price.widget }}
+            {{ form_label(form.price) }}
+            {{ form_errors(form.price) }}
+            {{ form_widget(form.price) }}
         </div>
 
-        {{ form.rest }}
+        {{ form_rest(form) }}
 
     .. code-block:: html+php
 
-        <?php echo $form->getErrors() ?>
+        <?php echo $view['form']->errors($form) ?>
 
         <div>
-            <?php echo $form['name']->getLabel() ?>
-            <?php echo $form['name']->getErrors() ?>
-            <?php echo $form['name']->getWidget() ?>
+            <?php echo $view['form']->label($form['name']) ?>
+            <?php echo $view['form']->errors($form['name']) ?>
+            <?php echo $view['form']->widget($form['name']) ?>
         </div>
 
         <div>
-            <?php echo $form['price']->getLabel() ?>
-            <?php echo $form['price']->getErrors() ?>
-            <?php echo $form['price']->getWidget() ?>
+            <?php echo $view['form']->label($form['price']) ?>
+            <?php echo $view['form']->errors($form['price']) ?>
+            <?php echo $view['form']->widget($form['price']) ?>
         </div>
 
-        <?php echo $form->getRest() ?>
+        <?php echo $view['form']->rest($form) ?>
 
-In many cases, this can be simplified even further by rendering the entire
-"row" for a field at once:
+If the auto-generated label for a field isn't quite right, you can specify
+the label manually:
+
+You can also explicitly set the label for a field:
 
 .. configuration-block::
 
     .. code-block:: html+jinja
 
-        {{ form.errors }}
-
-        {{ form.name.row }}
-        {{ form.price.row }}
-
-        {{ form.rest }}
+        {{ form_label(form.name, 'Product name') }}
 
     .. code-block:: html+php
 
-        <?php echo $form->getErrors() ?>
+        <?php echo $view['form']->label($form['name'], 'Product name') ?>
 
-        <?php echo $form['name']->getRow() ?>
-        <?php echo $form['price']->getRow() ?>
+Finally, some field types have additional rendering options that can be passed
+to the widget. These options are documented with each type, but one common
+options is ``attr``, which allows you to modify attributes on the form element.
+The following would add the ``name_field`` class to the rendered input text
+field:
 
-        <?php echo $form->getRest() ?>
+.. configuration-block::
 
-When rendering the row for a field, the label, errors and form widget are
-all output and wrapped - by default - in a ``div`` HTML tag. As with *everything*
-related to form rendering, the way a "row" is rendered can be completely
-customized. See :ref:`book-forms-overriding-template-blocks` for more information.
+    .. code-block:: html+jinja
 
-.. tip::
-   One advantage of rendering a field row is that the row can be customized
-   on a field type-by-field type basis. For example, when a ``hidden`` field
-   type row is rendered, the label is not rendered (because it doesn't make
-   sense to put a label in front of a hidden field).
+        {{ form_widget(form.name, { 'attr': {'class': 'name_field'} }) }}
+
+    .. code-block:: html+php
+
+        <?php echo $view['form']->widget($form['name'], array(
+            'attr' => array('class' => 'name_field'),
+        )) ?>
 
 .. index::
    single: Forms; Creating form classes
@@ -565,10 +564,10 @@ customized. See :ref:`book-forms-overriding-template-blocks` for more informatio
 Creating Form Classes
 ---------------------
 
-As you've seen, forms can be created and used directly in a controller. A
-more robust option is to build a form in a standalone PHP class, which can
-then be used inside a controller or anywhere else in your application. Create
-a new class that will house the logic for building the product form:
+As you've seen, a form can be created and used directly in a controller. However,
+a better practice is to build the form in a separate, standalone PHP class,
+which can then be reused anywhere in your application. Create a new class
+that will house the logic for building the product form:
 
 .. code-block:: php
 
@@ -595,8 +594,8 @@ a new class that will house the logic for building the product form:
         }
     }
 
-This new class represents the product form, and can now be used to build a
-form object in the controller:
+This new class contains all the directions needed to create the product form.
+It can be used to quickly build a form object in the controller:
 
 .. code-block:: php
 
