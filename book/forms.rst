@@ -621,17 +621,185 @@ to create forms, but the choice is ultimately up to you.
 Forms and Doctrine
 ------------------
 
-Commonly, you'll create forms for data that ultimately needs to be persisted
-to a database. To make the ``Product`` example more robust, configure it
-to be persisted to a database by the Doctrine ORM:
+The goal of a form is to translate data from an object (e.g. ``Product``)
+to an HTML form and then translate user-submitted data back to the original
+object. As such, the topic of persisting the ``Product`` object to the database
+is entirely unrelated to the topic of forms. If you've configured the ``Product``
+class to be persisted by Doctrine, then persisting it after a form submission
+can be done when the form is valid:
 
+.. code-block:: php
 
+    if ($form->isValid()) {
+        // persist the $product object to the databse
+        // or do anything else you need to do
+
+        return $this->redirect($this->generateUrl('store_product_success'));
+    }
+
+For more information, see :doc:`/book/doctrine/orm/overview`.
+
+If the underlying object of a form (e.g. ``Product``) happens to be mapped
+with the Doctrine ORM, the form framework will use that information - along
+with the validation metadata - to guess the type of a particular field.
 
 .. index::
    single: Forms; Embedded forms
 
 Embedded Forms
 --------------
+
+Often, you'll want to build a form that will include fields from many different
+objects. For example, a registration form may contain data belonging to
+a ``User`` object as well as many ``Address`` objects. Fortunately, this
+ability is one of the strengths of the form component.
+
+Embedding a Single Object
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Suppose that each ``Product`` belongs to a simple ``Category`` object:
+
+.. code-block:: php
+
+    // src/Acme/StoreBundle/Entity/Category.php
+    namespace Acme\StoreBundle\Entity;
+
+    class Category
+    {
+        /**
+         * @assert:NotBlank()
+         */
+        public $name;
+    }
+
+The ``Product`` class has a new ``$category`` property, indicating to which
+``Category`` it belongs:
+
+.. code-block:: php
+    
+    class Product
+    {
+        // ...
+
+        /**
+         * @assert:Type(type="Acme\StoreBundle\Entity\Category")
+         */
+        protected $category;
+
+        // ...
+
+        public function getCategory()
+        {
+            return $this->category;
+        }
+
+        public function setCategory(Category $category)
+        {
+            $this->category = $category;
+        }
+    }
+
+Now that your application has been updated to reflect the new requirements,
+create a form class so that a ``Category`` object can be modified by the user:
+
+.. code-block:: php
+
+    // src/Acme/StoreBundle/Form/CategoryType.php
+    namespace Acme\StoreBundle\Form;
+
+    use Symfony\Component\Form\Type\AbstractType;
+    use Symfony\Component\Form\FormBuilder;
+
+    class CategoryType extends AbstractType
+    {
+        public function buildForm(FormBuilder $builder, array $options)
+        {
+            $builder->add('name');
+        }
+
+        public function getDefaultOptions(array $options)
+        {
+            return array(
+                'data_class' => 'Acme\StoreBundle\Entity\Category',
+            );
+        }
+    }
+
+The type of the ``name`` field is being guessed (as a ``text`` field) from
+the validation metadata of the ``Category`` object.
+
+The end goal is to allow the ``Category`` of a ``Product`` to be modified
+right inside the product form. To accomplish this, add a ``category`` field
+to the ``ProductType`` object whose type is an instance of the new ``CategoryType``
+class:
+
+.. code-block:: php
+
+    public function buildForm(FormBuilder $builder, array $options)
+    {
+        // ...
+
+        $builder->add('category', new CategoryType());
+    }
+
+The fields from ``CategoryType`` can now be rendered alongside those from
+the ``ProductType`` class. Render the ``Category`` fields in the same way
+as the original ``Product`` fields:
+
+.. configuration-block::
+
+    .. code-block:: html+jinja
+
+        {# ... #}
+        {{ form_row(form.price) }}
+
+        <h3>Category</h3>
+        <div class="category">
+            {{ form_row(form.category.name) }}
+        </div>
+
+        {{ form_rest(form) }}
+        {# ... #}
+
+    .. code-block:: html+php
+
+        <!-- ... -->
+        <?php echo $view['form']->row($form['price']) ?>
+
+        <h3>Category</h3>
+        <div class="category">
+            <?php echo $view['form']->row($form['category']['name']) ?>
+        </div>
+
+        <?php echo $view['form']->rest($form) ?>
+        <!-- ... -->
+
+When the user submits the form, the data submitted for the ``Category`` fields
+is merged into the ``Category`` object. In other words, everything works
+exactly as it does with the main ``Product`` object.
+
+Embedding a Collection of Forms
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+You can also embed a collection of forms into one form. This is done by
+using the ``collection`` field type. Assuming that you have a property
+called ``reviews`` and a class called ``ProductReviewType``, you could do
+the following inside ``ProductType``:
+
+.. code-block:: php
+
+
+    public function buildForm(FormBuilder $builder, array $options)
+    {
+        // ...
+
+        $builder->add('reviews', 'collection', array(
+           'type'       => new ProductReviewType(),
+        ));
+    }
+
+Form Themes
+-----------
 
 .. index::
    single: Forms; Customizing rendering
