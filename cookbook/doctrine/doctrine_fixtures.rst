@@ -1,67 +1,75 @@
 .. index::
    single: Doctrine; Creating fixtures in Symfony2
 
-How to create fixtures in Symfony2
+How to create Fixtures in Symfony2
 ==================================
 
 Fixtures are used to load the database with a set of data. This data can
 either be for testing or could be the initial data required for the
 application to run smoothly. Symfony2 has no built in way to manage fixtures
-but Doctrine2 has a library to help you write fixtures for ORM and ODM.
+but Doctrine2 has a library to help you write fixtures for the Doctrine
+:doc:`ORM</book/doctrine/orm/overview>` or :doc:`ODM</book/doctrine/mongodb-odm/overview>`.
 
 Setup and Configuration
 -----------------------
 
-If you don't have `Doctrine Data Fixtures`_ configured with Symfony2 yet,
-follow these steps to do so.
+If you don't have the `Doctrine Data Fixtures`_ library configured with Symfony2
+yet, follow these steps to do so.
 
-Add the following to ``bin/vendors.sh``
+Add the following to ``bin/vendors.sh``, right after the "Monolog" entry:
+
+.. code-block:: text
+
+    # Doctrine Fixtures
+    install_git doctrine-fixtures git://github.com/doctrine/data-fixtures.git
+
+Update vendors and rebuild the bootstrap file:
 
 .. code-block:: bash
 
-    #Doctrine Fixtures install_git doctrine-fixtures
-    git://github.com/doctrine/data-fixtures.git
+    $ bin/vendors.sh bin/build_bootstrap.php
 
-Update vendors and rebuild the bootstrap file
+If everything worked, the ``doctrine-fixtures`` library can now be found
+at ``vendor/doctrine-fixtures``.
 
-.. code-block:: bash
-
-    bin/vendors.sh bin/build_bootstrap.php
-
-As the final step in configuration, you have to register the namespace in
-``app/autoload.php``
+Finally, register the ``Doctrine\Common\DataFixtures`` namespace in ``app/autoload.php``.
 
 .. code-block:: php
 
-    'Doctrine\\Common\\DataFixtures' => __DIR__.'/../vendor/doctrine-fixtures/lib',
-    'Doctrine\\Common' => __DIR__.'/../vendor/doctrine-common/lib',
+    // ...
+    $loader->registerNamespaces(array(
+        // ...
+        'Doctrine\\Common\\DataFixtures' => __DIR__.'/../vendor/doctrine-fixtures/lib',
+        'Doctrine\\Common' => __DIR__.'/../vendor/doctrine-common/lib',
+        // ...
+    ));
 
-Note that namespaces are registered with preference to the first match. Make
-sure ``Doctrine\Common`` is registered after
-``Doctrine\\Common\\DataFixtures``.
+Be sure to register the new namespace *after* ``Doctrine\Common``. Otherwise,
+Symfony will look for data fixture classes inside the ``Doctrine\Common``
+directory. Symfony's autoloader always looks for a class inside the directory
+of the first matching namespace, so more specific namespaces should always
+come first.
 
-Simple Fixtures
----------------
+Writing Simple Fixtures
+-----------------------
 
 The ideal place to store your fixtures is inside
-``Vendor/MyBundle/DataFixtures/ORM`` and ``Vendor/MyBundle/DataFixtures/ODM``
-respectively for ORM and ODM.
+``src/VendorName/MyBundle/DataFixtures/ORM`` and ``src/VendorName/MyBundle/DataFixtures/ODM``
+respectively for the ORM and ODM. This tutorial assumes that you are using
+the ORM - but fixtures can be added just as easily if you're using the ODM.
 
-In this tutorial we will assume you are using ORM. If you are using ODM make
-the changes as required.
-
-In our first fixture we will add a default user to the table of ``User``
-entity.
+Imagine that you have a ``User`` class, and you'd like to load one ``User``
+entry:
 
 .. code-block:: php
 
     <?php
 
-    //Vendor/MyBundle/DataFixtures/ORM/LoadUserData.php
-    namespace Vendor\MyBundle\DataFixtures\ORM;
+    // src/VendorName/MyBundle/DataFixtures/ORM/LoadUserData.php
+    namespace VendorName\MyBundle\DataFixtures\ORM;
 
     use Doctrine\Common\DataFixtures\FixtureInterface;
-    use Vendor\MyBundle\Entity\User; //Modify this to use your entity
+    use VendorName\MyBundle\Entity\User;
 
     class LoadUserData implements FixtureInterface
     {
@@ -76,12 +84,56 @@ entity.
         }
     }
 
-Writing fixtures this way is quite easy and simple but is not sufficient when
-you are building something serious. The most serious limitation is that you
-can not share objects between fixtures. Lets see how we can overcome this
-limitation in the next section.
+In Doctrine2, fixtures are just objects where you load data by interacting
+with your entities as you normal do. This allows you to create the exact
+fixtures you want for your application.
 
-Sharing Objects Between Fixtures
+The most serious limitation is that you can not share objects between fixtures.
+Later, you'll see how to overcome this limitation.
+
+Executing Fixtures
+------------------
+
+Once your fixtures have been written, you load the fixtures via the command
+line via the ``doctrine:data:load`` command:
+
+.. code-block:: bash
+
+    $ php app/console doctrine:data:load
+
+If you're using the ODM, use the ``doctrine:mongodb:data:load`` command instead:
+
+.. code-block:: bash
+
+    $ php app/console doctrine:mongodb:data:load
+
+The task will look inside the ``DataFixtures/ORM`` (or ``DataFixtures/ODM``
+for the ODM) directory of each bundle and execute each class that implements
+the ``FixtureInterface``.
+
+Both commands come with a few options:
+
+* ``--fixtures=/path/to/fixture`` - Use this option to manually specify the
+  directory or file where the fixtures classes should be loaded;
+
+* ``--append`` - Use this flag to append data instead of deleting data before
+  loading it (the default behavior);
+
+* ``--em=manager_name`` - Manually specify the entity manager to use for
+  loading the data.
+
+.. note::
+
+   If using the ``doctrine:mongodb:data:load`` task, replace the ``--em=``
+   option with ``--dm=`` to manually specify the document manager.
+
+A full example use might look like:
+
+.. code-block:: bash
+
+   $ php app/console doctrine:data:load --fixtures=/path/to/fixture1 --fixtures=/path/to/fixture2 --append --em=foo_manager
+
+Sharing Objects between Fixtures
 --------------------------------
 
 .. code-block:: php
