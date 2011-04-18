@@ -301,7 +301,7 @@ number:
         use Symfony\Component\Validator\Constraints\NotBlank;
         use Symfony\Component\Validator\Constraints\Min;
 
-        class Author
+        class Product
         {
             // ...
 
