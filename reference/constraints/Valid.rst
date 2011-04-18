@@ -86,13 +86,13 @@ their properties. Furthermore, ``Author`` stores an ``Address`` instance in the
         class Address
         {
             /**
-             * @validation:NotBlank()
+             * @assert:NotBlank()
              */
             protected $street;
 
             /**
-             * @validation:NotBlank
-             * @validation:MaxLength(5)
+             * @assert:NotBlank
+             * @assert:MaxLength(5)
              */
             protected $zipCode;
         }
@@ -101,13 +101,13 @@ their properties. Furthermore, ``Author`` stores an ``Address`` instance in the
         class Author
         {
             /**
-             * @validation:NotBlank
-             * @validation:MinLength(4)
+             * @assert:NotBlank
+             * @assert:MinLength(4)
              */
             protected $firstName;
 
             /**
-             * @validation:NotBlank
+             * @assert:NotBlank
              */
             protected $lastName;
             
@@ -187,7 +187,7 @@ invalid address. To prevent that, we add the ``Valid`` constraint to the
             /* ... */
             
             /**
-             * @validation:Valid
+             * @assert:Valid
              */
             protected $address;
         }

@@ -55,7 +55,7 @@ not exceed a maximum size of 128 kilobytes and is a PDF document.
         class Author
         {
             /**
-             * @validation:File(maxSize = "128k", mimeTypes = {
+             * @assert:File(maxSize = "128k", mimeTypes = {
              *   "application/pdf",
              *   "application/x-pdf"
              * })
