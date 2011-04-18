@@ -110,9 +110,9 @@ a controller:
 
 .. tip::
 
-   If you're ultimately going to persist the ``Product`` object to Doctrine,
-   there is an even shorter way to configure the fields of the form. This
-   is covered later in the :ref:`book-forms-doctrine-field-guessing`.
+   Later, when you add validation to the ``Product`` object, you'll learn
+   that there is an even shorter way to configure the fields of the form. This
+   is covered later in the :ref:`book-forms-field-guessing`.
 
 Creating a form is short and easy in Symfony2 because form objects are created
 via a "form builder". A form builder is an object you can interact with to
@@ -317,10 +317,6 @@ number:
 That's it! If you re-submit the form with invalid data, you'll see the corresponding
 errors printed out with the form.
 
-.. tip::
-
-   If you're 
-
 Validation is a very powerful feature of Symfony2 and has its own
 :doc:`dedicated chapter</book/validation>`.
 
@@ -371,6 +367,8 @@ types. Some options, however, are shared between most fields:
 
 .. index::
    single: Forms; Field type guessing
+
+.. _book-forms-field-guessing:
 
 Field Type Guessing
 -------------------
@@ -798,14 +796,190 @@ the following inside ``ProductType``:
         ));
     }
 
-Form Themes
------------
+Form Theming
+------------
 
-.. index::
-   single: Forms; Customizing rendering
+Every part of how a form renders can be customized. You're free to change
+how each form "row" renders, change the markup used to render errors, or
+even customize how a textarea tag should be rendered. Nothing is off-limits,
+and different customizations can be used in different places.
 
-Customizing Form Rendering
---------------------------
+Symfony uses templates to render each and every part of a form. In Twig,
+the different pieces of a form - a row, a textarea tag, errors - are represented
+by Twig "blocks". To customize any part of how a form renders, you just need
+to override the appropriate block.
+
+To understand how this works, let's customize the ``form_row`` output and
+add a class attribute to the ``div`` element that surrounds each row. To
+do this, create a new template file that will store the new markup:
+
+.. configuration-block::
+
+    .. code-block:: html+jinja
+    
+        {# src/Acme/StoreBundle/Resources/views/Form/fields.html.twig #}
+    
+        {% block field__row %}
+        {% spaceless %}
+            <div class="form_row">
+                {{ form_label(form, label) }}
+                {{ form_errors(form) }}
+                {{ form_widget(form, _context) }}
+            </div>
+        {% endspaceless %}
+        {% endblock field__row %}
+
+    .. code-block:: html+php
+
+        <!-- src/Acme/StoreBundle/Resources/views/Form/field_row.html.php -->
+        <div class="form_row">
+            <?php echo $view['form']->label($form, $label) ?>
+            <?php echo $view['form']->errors($form) ?>
+            <?php echo $view['form']->widget($form, $parameters) ?>
+        </div>
+
+The ``field__row`` block is the name of the block used when rendering most
+fields via the ``form_row`` function. To use the ``field__row`` defined
+in this template, add the following to the top of the template that renders
+the form:
+
+.. configuration-block:: php
+
+    .. code-block:: html+jinja
+
+        {# index.html.twig #}
+        {% form_theme form 'AcmeStoreBundle:Form:fields.html.twig' %}
+        
+        <form ...>
+
+The ``form_theme`` tag "imports" a template and uses all of its form-related
+blocks when rendering the form. When ``form_row`` is called, it uses the
+``field__row`` block for the ``fields.html.twig`` template.
+
+To customize any portion of a form, you just need to override the appropriate
+block. Knowing exactly which block to override is the subject of the next
+section.
+
+Form Template Blocks
+~~~~~~~~~~~~~~~~~~~~
+
+Everything that a form renders - HTML form elements, errors, labels, etc -
+is defined in a base template as individual Twig blocks. By default, every
+block needed is defined in the `div_layout.html.twig`_ file that lives inside
+the core ``TwigBundle``. Inside this file, you can see every block needed
+to render a form and every default field type.
+
+Each block follows the same basic pattern and his broken up into two pieces,
+separated by two underscore characters (``__``). A few examples are:
+
+* ``field__row`` - used by ``form_row`` to render most fields;
+* ``textarea__widget`` - used by ``form_widget`` to render a ``textarea`` field type;
+* ``field_errors`` - used by ``form_errors`` to render errors for a field;
+
+Each block follows the same basic pattern: ``type__part``. The ``type`` portion
+corresponds to the field type being rendered (e.g. ``textarea`` or ``checkbox``)
+whereas the ``part`` portion corresponds to *what* is being rendered (e.g.
+``label``, ``widget``). By default, there are exactly 7 possible parts of
+a form that can be rendered:
+
+============  =========================   ============================
+``label``     (e.g. ``field__label``)     renders the field's label
+``widget``    (e.g. ``field__widget``)    renders the field's HTML representation
+``errors``    (e.g. ``field__errors``)    renders the field's errors
+``row``       (e.g. ``field__row``)       renders the field's entire row (label+widget+errors)
+``rows``      (e.g. ``field__rows``)      renders the child rows of a form
+``rest``      (e.g. ``field__rest``)      renders the unrendered fields of a form
+``encytype``  (e.g. ``field__enctype``)   renders the ``encytype`` attribute of a form
+============  =========================   ============================
+
+By knowing the field type (e.g. ``textarea``) and which part you want to
+customize (e.g. ``widget``), you can construct the block name that needs
+to be overridden (e.g. ``textarea__widget``). The best way to customize the
+block is to copy it to a new template, customize it, and then use the ``form_theme``
+tag as was shown in the earlier example.
+
+Form Type Block Inheritance
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+In some cases, the block you want to customize will appear to be missing.
+For example, if you look in the ``div_layout.html.twig`` file, you'll find
+no ``textarea_errors`` block. So how are the errors for a textarea field
+rendered?
+
+The answer is: via the ``field_errors`` block. When Symfony renders the errors
+for a textarea type, it first looks for a ``textarea_errors`` block before
+falling back to the ``field_errors`` block. Each field type has a *parent*
+type (the parent type of ``textarea`` is ``field``), and Symfony uses the
+block for the parent type if the base block doesn't exist.
+
+So, to override the errors for *only* ``textarea`` fields, copy the ``field_errors``
+block, rename it to ``textarea_errors`` and customize it. To override the
+default error rendering for *all* fields, copy and customize the ``field_errors``
+block directly.
+
+Global Form Theming
+~~~~~~~~~~~~~~~~~~~
+
+So far, you've seen how you can use the ``form_theme`` Twig block in a template
+to import form customizations that will be used inside that template. You can
+also tell Symfony to automatically use the form customizations from a template
+for all templates in your application. To automatically include the customized
+blocks from the ``fields.html.twig`` template created earlier, modify your
+application configuration file:
+
+.. configuration-block:: 
+
+    .. code-block:: yaml
+        
+        # app/config/config.yml
+        framework:
+            form:
+                resources: ['AcmeStoreBundle:Form:fields.html.twig']
+            # ...
+    
+    .. code-block:: xml
+    
+        <!-- app/config/config.xml -->
+        <framework:config ...>
+                <framework:form>
+                    <resource>AcmeStoreBundle:Form:fields.html.twig</resource>
+                </framework:form>
+                <!-- ... -->
+        </framework:config>
+
+    .. code-block:: php
+
+        // app/config/config.php
+        $container->loadFromExtension('framework', array(
+            'form' => array('resources' => array('AcmeStoreBundle:Form:fields.html.twig'))
+            // ...
+        ));
+
+Any blocks inside the ``fields.html.twig`` template are now used globally
+to define form output. 
+
+.. sidebar::  Customizing Form Output all in a Single File
+
+    You can also customize a form block right inside the template where that
+    customization is needed. Note that this method will only work if the
+    template used extends some base template via the ``{% extends %}``:
+    
+    .. code-block:: html+jinja
+    
+        {% extends '::base.html.twig' %}
+        
+        {% form_theme form _self %}
+
+        {% block field__row %}
+            {# custom field row output #}
+        {% endblock field__row %}
+        
+        {{ form_row(form.name) }}
+
+    The ``{% form_theme form _self %}`` tag allows form blocks to be customized
+    directly inside the template that will use those customizations. Use
+    this method to make form output customizations that will only ever be
+    needed in a single template.
 
 .. index::
    single: Forms; CSRF Protection
@@ -813,9 +987,47 @@ Customizing Form Rendering
 CSRF Protection
 ---------------
 
+CSRF - or `Cross-site request forgery`_ - is a method by which a malicious
+user attempts to make your legitimate users unknowingly submit data that
+they don't intend to submit. Fortunately, CSRF attacks can be prevented by
+using a CSRF token inside your forms.
+
+The good news is that, by default, Symfony embeds and validates CSRF tokens
+automatically for you. This means that you can take advantage of the CSRF
+protection without doing anything. In fact, every form in this chapter has
+taken advantage of the CSRF protection without doing anything!
+
+CSRF protected works by adding a field to your form - called ``_token`` by
+default - that contains a value that only you and your user knows. This ensures
+that the user - not some other entity - is submitting the given data. Symfony
+automatically validates the presence and accuracy of this token.
+
+The ``_token`` field is a hidden field and will be automatically rendered
+if you include the ``form_rest()`` function in your template, which ensures
+that all un-rendered fields are output.
+
 Final Thoughts
 --------------
 
+You now know all of the building blocks necessary to build complex and functional
+forms for your application. When building forms, keep in mind that the first
+goal of a form is to translate data from an object (``Product``) to an HTML
+form so that the user can modify that data. The second goal of a form is
+to take the data submitted by the user and to re-apply it to the object.
+
+There's still much more to learn about the powerful world of forms, such as
+how to handle file uploads and how to create a form where a dynamic number
+of sub-forms can be added (e.g. a todo list where you can keep adding more
+fields via Javascript before submitting). See the cookbook for these topics.
+
+Learn more from the Cookbook
+----------------------------
+
+* :doc:`/cookbook/forms/file_uploads`
+* :doc:`/cookbook/forms/custom_field_types`
+* :doc:`/cookbook/forms/dynamically_adding_fields`
 
 .. _`Symfony2 Form Component`: https://github.com/symfony/Form
 .. _`HTML5 required attribute`: http://diveintohtml5.org/forms.html
+.. _`div_layout.html.twig`: https://github.com/symfony/symfony/blob/form/src/Symfony/Bundle/TwigBundle/Resources/views/Form/div_layout.html.twig
+.. _`Cross-site request forgery`: http://en.wikipedia.org/wiki/Cross-site_request_forgery
