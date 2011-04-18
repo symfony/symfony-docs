@@ -629,7 +629,7 @@ can be done when the form is valid:
 .. code-block:: php
 
     if ($form->isValid()) {
-        // persist the $product object to the databse
+        // persist the $product object to the database
         // or do anything else you need to do
 
         return $this->redirect($this->generateUrl('store_product_success'));
