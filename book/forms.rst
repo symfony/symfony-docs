@@ -170,10 +170,10 @@ it into a format that's suitable for being rendered in an HTML form.
 
    The form system is smart enough to access the value of the protected ``price``
    property via the ``getPrice`` and ``setPrice`` methods on ``Product``.
-   If a "getter" or "setter" method is available for a property, the form
-   component will use the methods instead of accessing the property directly.
-   Of course, getter and setter methods are required if a property is protected
-   or private.
+   Unless a property is public, it *must* have a "getter" and "setter" method
+   so that the form component can get and put data onto the property. For
+   a Boolean property, you can use an "isser" method (e.g. ``isPublished``)
+   instead of a getter (e.g. ``getPublished``).
 
 Handling Form Submissions
 ~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -889,7 +889,7 @@ a form that can be rendered:
 ``row``       (e.g. ``field__row``)       renders the field's entire row (label+widget+errors)
 ``rows``      (e.g. ``field__rows``)      renders the child rows of a form
 ``rest``      (e.g. ``field__rest``)      renders the unrendered fields of a form
-``encytype``  (e.g. ``field__enctype``)   renders the ``encytype`` attribute of a form
+``enctype``   (e.g. ``field__enctype``)   renders the ``enctype`` attribute of a form
 ============  =========================   ============================
 
 By knowing the field type (e.g. ``textarea``) and which part you want to
