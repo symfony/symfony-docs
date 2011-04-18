@@ -12,7 +12,7 @@ but Doctrine2 has a library to help you write fixtures for ORM and ODM.
 Setup and Configuration
 -----------------------
 
-If you don't have `Doctrine Data Fixtures`_ configured with Symfony2 yes,
+If you don't have `Doctrine Data Fixtures`_ configured with Symfony2 yet,
 follow these steps to do so.
 
 Add the following to ``bin/vendors.sh``
