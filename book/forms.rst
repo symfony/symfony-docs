@@ -932,7 +932,7 @@ application configuration file:
     .. code-block:: yaml
         
         # app/config/config.yml
-        framework:
+        twig:
             form:
                 resources: ['AcmeStoreBundle:Form:fields.html.twig']
             # ...
@@ -940,17 +940,17 @@ application configuration file:
     .. code-block:: xml
     
         <!-- app/config/config.xml -->
-        <framework:config ...>
-                <framework:form>
+        <twig:config ...>
+                <twig:form>
                     <resource>AcmeStoreBundle:Form:fields.html.twig</resource>
-                </framework:form>
+                </twig:form>
                 <!-- ... -->
-        </framework:config>
+        </twig:config>
 
     .. code-block:: php
 
         // app/config/config.php
-        $container->loadFromExtension('framework', array(
+        $container->loadFromExtension('twig', array(
             'form' => array('resources' => array('AcmeStoreBundle:Form:fields.html.twig'))
             // ...
         ));
