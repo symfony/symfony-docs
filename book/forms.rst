@@ -819,7 +819,7 @@ do this, create a new template file that will store the new markup:
     
         {# src/Acme/StoreBundle/Resources/views/Form/fields.html.twig #}
     
-        {% block field__row %}
+        {% block field_row %}
         {% spaceless %}
             <div class="form_row">
                 {{ form_label(form, label) }}
@@ -827,7 +827,7 @@ do this, create a new template file that will store the new markup:
                 {{ form_widget(form, _context) }}
             </div>
         {% endspaceless %}
-        {% endblock field__row %}
+        {% endblock field_row %}
 
     .. code-block:: html+php
 
@@ -838,8 +838,8 @@ do this, create a new template file that will store the new markup:
             <?php echo $view['form']->widget($form, $parameters) ?>
         </div>
 
-The ``field__row`` block is the name of the block used when rendering most
-fields via the ``form_row`` function. To use the ``field__row`` defined
+The ``field_row`` block is the name of the block used when rendering most
+fields via the ``form_row`` function. To use the ``field_row`` defined
 in this template, add the following to the top of the template that renders
 the form:
 
@@ -854,7 +854,7 @@ the form:
 
 The ``form_theme`` tag "imports" a template and uses all of its form-related
 blocks when rendering the form. When ``form_row`` is called, it uses the
-``field__row`` block for the ``fields.html.twig`` template.
+``field_row`` block for the ``fields.html.twig`` template.
 
 To customize any portion of a form, you just need to override the appropriate
 block. Knowing exactly which block to override is the subject of the next
@@ -869,32 +869,32 @@ block needed is defined in the `div_layout.html.twig`_ file that lives inside
 the core ``TwigBundle``. Inside this file, you can see every block needed
 to render a form and every default field type.
 
-Each block follows the same basic pattern and his broken up into two pieces,
-separated by two underscore characters (``__``). A few examples are:
+Each block follows the same basic pattern and is broken up into two pieces,
+separated by a single underscore character (``_``). A few examples are:
 
-* ``field__row`` - used by ``form_row`` to render most fields;
-* ``textarea__widget`` - used by ``form_widget`` to render a ``textarea`` field type;
+* ``field_row`` - used by ``form_row`` to render most fields;
+* ``textarea_widget`` - used by ``form_widget`` to render a ``textarea`` field type;
 * ``field_errors`` - used by ``form_errors`` to render errors for a field;
 
-Each block follows the same basic pattern: ``type__part``. The ``type`` portion
+Each block follows the same basic pattern: ``type_part``. The ``type`` portion
 corresponds to the field type being rendered (e.g. ``textarea`` or ``checkbox``)
 whereas the ``part`` portion corresponds to *what* is being rendered (e.g.
 ``label``, ``widget``). By default, there are exactly 7 possible parts of
 a form that can be rendered:
 
 ============  =========================   ============================
-``label``     (e.g. ``field__label``)     renders the field's label
-``widget``    (e.g. ``field__widget``)    renders the field's HTML representation
-``errors``    (e.g. ``field__errors``)    renders the field's errors
-``row``       (e.g. ``field__row``)       renders the field's entire row (label+widget+errors)
-``rows``      (e.g. ``field__rows``)      renders the child rows of a form
-``rest``      (e.g. ``field__rest``)      renders the unrendered fields of a form
-``enctype``   (e.g. ``field__enctype``)   renders the ``enctype`` attribute of a form
+``label``     (e.g. ``field_label``)      renders the field's label
+``widget``    (e.g. ``field_widget``)     renders the field's HTML representation
+``errors``    (e.g. ``field_errors``)     renders the field's errors
+``row``       (e.g. ``field_row``)        renders the field's entire row (label+widget+errors)
+``rows``      (e.g. ``field_rows``)       renders the child rows of a form
+``rest``      (e.g. ``field_rest``)       renders the unrendered fields of a form
+``enctype``   (e.g. ``field_enctype``)    renders the ``enctype`` attribute of a form
 ============  =========================   ============================
 
 By knowing the field type (e.g. ``textarea``) and which part you want to
 customize (e.g. ``widget``), you can construct the block name that needs
-to be overridden (e.g. ``textarea__widget``). The best way to customize the
+to be overridden (e.g. ``textarea_widget``). The best way to customize the
 block is to copy it to a new template, customize it, and then use the ``form_theme``
 tag as was shown in the earlier example.
 
@@ -970,9 +970,9 @@ to define form output.
         
         {% form_theme form _self %}
 
-        {% block field__row %}
+        {% block field_row %}
             {# custom field row output #}
-        {% endblock field__row %}
+        {% endblock field_row %}
         
         {{ form_row(form.name) }}
 
