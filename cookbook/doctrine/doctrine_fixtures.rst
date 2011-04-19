@@ -161,12 +161,9 @@ Sharing Objects Between Fixtures
     {
         public function load($manager)
         {
-            $manager->persist($this->getReference('admin-user'));
-            $manager->persist($this->getReference('admin-group'));
-        
             $userGroupAdmin = new UserGroup();
-            $userGroupAdmin->setUser($this->getReference('admin-user'));
-            $userGroupAdmin->setGroup($this->getReference('admin-group'));
+            $userGroupAdmin->setUser($manager->merge($this->getReference('admin-user')));
+            $userGroupAdmin->setGroup($manager->merge($this->getReference('admin-group')));
 
             $manager->persist($userGroupAdmin);
             $manager->flush();
@@ -183,7 +180,5 @@ A brief explanation on how this works.
 The fixtures will be executed in the ascending order of the value returned by
 ``getOrder()``. Any object that is set with the ``setReference`` method and
 can be accessed via ``getReference`` in fixtures, which are of higher order.
-Also remember that, in order to use a reference with the entity manager, it
-has to first persisted.
 
 .. _`Doctrine Data Fixtures`: https://github.com/doctrine/data-fixtures
