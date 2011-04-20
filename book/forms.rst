@@ -363,16 +363,9 @@ Many of these are specific to the field type and details can be found in
 the documentation for each type. Some options, however, are shared between
 most fields:
 
-* ``required`` - The ``required`` option can be used to render an
-  `HTML5 required attribute`_. Note that this is independent from validation:
-  if you include the required attribute on the field type but omit any required
-  validation, the object will appear to be valid to your application with
-  a blank value. In other words, this is a *nice* feature that will add
-  client-side validation for browsers that support HTML5. It's not, however,
-  a replacement for true server-side validation.
+.. include:: /reference/forms/types/options/required.rst.inc
 
-* ``max_length`` - This option is used to add a ``max_length`` attribute,
-  which is used by some browsers to limit the amount of text in a field.
+.. include:: /reference/forms/types/options/max_length.rst.inc
 
 .. index::
    single: Forms; Field type guessing
@@ -1064,6 +1057,5 @@ Learn more from the Cookbook
 * :doc:`Dynamically adding Fields to a Form </cookbook/forms/dynamically_adding_fields>`
 
 .. _`Symfony2 Form Component`: https://github.com/symfony/Form
-.. _`HTML5 required attribute`: http://diveintohtml5.org/forms.html
 .. _`div_layout.html.twig`: https://github.com/symfony/symfony/blob/master/src/Symfony/Bundle/TwigBundle/Resources/views/Form/div_layout.html.twig
 .. _`Cross-site request forgery`: http://en.wikipedia.org/wiki/Cross-site_request_forgery
