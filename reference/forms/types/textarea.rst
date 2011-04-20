@@ -8,7 +8,7 @@ Renders a ``textarea`` HTML element.
 
 ============  ======
 Rendered as   ``textarea`` field
-Options       ``max_length``, ``required``, ``label``, ``read_only``, ``trim``
+Options       ``max_length``, ``required``, ``label``, ``read_only``, ``trim``, ``error_bubbling``
 Parent type   ``field``
 Class         :class:`Symfony\\Component\\Form\\Type\\TextareaType`
 ============  ======
@@ -25,3 +25,5 @@ Options
 .. include:: /reference/forms/types/options/read_only.rst.inc
 
 .. include:: /reference/forms/types/options/trim.rst.inc
+
+.. include:: /reference/forms/types/options/error_bubbling.rst.inc

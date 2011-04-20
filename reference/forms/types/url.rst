@@ -10,7 +10,7 @@ have a protocol.
 
 ============  ======
 Rendered as   ``text`` field
-Options       ``default_protocol``, ``max_length``, ``required``, ``label``, ``read_only``, ``trim``
+Options       ``default_protocol``, ``max_length``, ``required``, ``label``, ``read_only``, ``trim``, ``error_bubbling``
 Parent type   ``text``
 Class         :class:`Symfony\\Component\\Form\\Type\\UrlType`
 ============  ======
@@ -33,3 +33,5 @@ Options
 .. include:: /reference/forms/types/options/read_only.rst.inc
 
 .. include:: /reference/forms/types/options/trim.rst.inc
+
+.. include:: /reference/forms/types/options/error_bubbling.rst.inc
