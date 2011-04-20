@@ -434,7 +434,7 @@ Method                Description
 ``previousAll()``     All preceding siblings
 ``parents()``         Parent nodes
 ``children()``        Children
-``reduce($lambda)``   Nodes for which the callable returns true
+``reduce($lambda)``   Nodes for which the callable does not return false
 ===================== =========================================
 
 You can iteratively narrow your node selection by chaining method calls as
