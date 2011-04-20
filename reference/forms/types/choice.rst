@@ -17,19 +17,43 @@ Parent type   :doc:`form</reference/forms/types/form>` (if expanded), ``field`` 
 Class         :class:`Symfony\\Component\\Form\\Type\\ChoiceType`
 ============  ======
 
-HTML Element Rendering
-----------------------
+Select tag, Checkboxes or Radio Buttons
+---------------------------------------
 
 This field may be rendered as one of several different HTML fields, depending
 on the ``expanded`` and ``multiple`` options:
 
-============  =============  ===========
-**expanded**  **multiple**   **element type**
-false         false          ``select`` tag
-false         true           ``select`` tag (with ``multiple`` attribute)
-true          false          ``input`` ``radio`` tags
-true          true           ``input`` ``checkbox`` tags
-============  =============  ===========
+========================================  ============  ===========
+**element type**                          **expanded**  **multiple**
+select tag                                false         false          
+select tag (with ``multiple`` attribute)  false         true           
+radio buttons                             true          false          
+checkboxes                                true          true           
+========================================  ============  ===========
+
+Adding an "empty value"
+-----------------------
+
+If you're using the non-expanded version of the type (i.e. a ``select`` tag)
+element and you'd like to have a blank entry (e.g. "Choose an option") at
+the top of the select box, you can easily do so:
+
+* Set the ``multiple`` option to false
+* Set the ``required`` option to false
+
+With these two options, a blank choice will display at the top of the select
+box. To customize what that entry says, add the following when rendering
+the field:
+
+.. configuration-block::
+
+    .. code-block:: jinja
+
+        {{ form_widget(form.foo_choices, { 'empty_value': 'Choose an option' }) }}
+
+    .. code-block:: php
+    
+        <?php echo $view['form']->widget($form['foo_choices'], array('empty_value' => 'Choose an option')) ?>
 
 Options
 -------
@@ -64,7 +88,8 @@ Options
 * ``preferred_choices`` [type: array]
     If this option is specified, then a sub-set of the total number of options
     will be moved to the top of the select menu. The following would move
-    the "Baz" option to the top:
+    the "Baz" option to the top, with a visual separator between it and the
+    rest of the options:
     
     .. code-block:: php
     
@@ -72,6 +97,22 @@ Options
             'choices' => array('foo' => 'Foo', 'bar' => 'Bar', 'baz' => 'Baz'),
             'preferred_choices' => array('baz' => 'Baz'),
         ));
+    
+    Note that preferred choices are only meaningful when rendering as a
+    ``select`` element (i.e. ``expanded`` is false). The preferred choices
+    and normal choices are separated visually by a set of dotted lines
+    (i.e. ``-------------------``). This can be customized when rendering
+    the field:
+
+    .. configuration-block::
+    
+        .. code-block:: jinja
+        
+            {{ form_widget(form.foo_choices, { 'separator': '=====' }) }}
+
+        .. code-block:: php
+        
+            <?php echo $view['form']->widget($form['foo_choices'], array('separator' => '=====')) ?>
 
 .. include:: /reference/forms/types/options/required.rst.inc
 
