@@ -47,7 +47,7 @@ Main Relation  Other Relations
 ``set()``      ``setXXX()``
 ``has()``      ``hasXXX()``
 ``all()``      ``getXXXs()``
-``replace()``  ``setXXXs()``
+``replace()``  ``replaceXXXs()``
 ``remove()``   ``removeXXX()``
 ``clear()``    ``clearXXX()``
 ``isEmpty()``  ``isEmptyXXX()``
