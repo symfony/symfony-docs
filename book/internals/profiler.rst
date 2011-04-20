@@ -167,7 +167,7 @@ the redirects and gives you the opportunity to look at the collected data
 before following the redirect.
 
 When ``verbose`` is set to ``true``, the Web Debug Toolbar displays a lot of
-information. Setting ``verbose`` to ``false`` hide some secondary information
+information. Setting ``verbose`` to ``false`` hides some secondary information
 to make the toolbar shorter.
 
 If you enable the web profiler, you also need to mount the profiler routes:
