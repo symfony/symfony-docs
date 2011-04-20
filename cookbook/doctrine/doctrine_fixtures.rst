@@ -85,7 +85,7 @@ entry:
             $userAdmin->setPassword('test');
 
             $manager->persist($userAdmin);
-            $manager->flush()
+            $manager->flush();
         }
     }
 
