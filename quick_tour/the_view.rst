@@ -63,7 +63,7 @@ and pass it any variables needed in the template::
     ));
 
 Variables passed to a template can be strings, arrays, or even objects. Twig
-abstracts the difference between them and let's you access "attributes" of a
+abstracts the difference between them and lets you access "attributes" of a
 variable with the dot (``.``) notation:
 
 .. code-block:: jinja
