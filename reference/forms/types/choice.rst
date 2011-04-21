@@ -12,10 +12,12 @@ option.
 
 ============  ======
 Rendered as   can be various tags (see below)
-Options       ``multiple``, ``expanded``, ``choices``, ``choice_list``, ``preferred_choices``, ``required``, ``label``, ``read_only``, ``error_bubbling``
+Options       ``choices``, ``choice_list``, ``multiple``, ``expanded``, ``preferred_choices``, ``required``, ``label``, ``read_only``, ``error_bubbling``
 Parent type   :doc:`form</reference/forms/types/form>` (if expanded), ``field`` otherwise
 Class         :class:`Symfony\\Component\\Form\\Type\\ChoiceType`
 ============  ======
+
+.. _forms-reference-choice-tags:
 
 Select tag, Checkboxes or Radio Buttons
 ---------------------------------------
@@ -58,16 +60,6 @@ the field:
 Options
 -------
 
-* ``multiple`` [type: Boolean, default: false]
-    If true, the user will be able to select multiple options (as opposed
-    to choosing just one option). Depending on the value of the ``expanded``
-    option, this will render either a select tag or checkboxes if true and
-    a select tag or radio buttons if false.
-
-* ``expanded`` [type: Boolean, default: false]
-    If set to true, radio buttons or checkboxes will be rendered (depending
-    on the ``multiple`` value). If false, a select element will be rendered.
-
 * ``choices`` [type: array]
     This is the most basic way to specify the choices that should be used
     by this field. The ``choices`` option is an array, where the array key
@@ -85,34 +77,11 @@ Options
     For more advanced cases, a custom class that implements the interface
     can be created to supply the choices.
 
-* ``preferred_choices`` [type: array]
-    If this option is specified, then a sub-set of the total number of options
-    will be moved to the top of the select menu. The following would move
-    the "Baz" option to the top, with a visual separator between it and the
-    rest of the options:
-    
-    .. code-block:: php
-    
-        $builder->add('foo_choices', 'choice', array(
-            'choices' => array('foo' => 'Foo', 'bar' => 'Bar', 'baz' => 'Baz'),
-            'preferred_choices' => array('baz' => 'Baz'),
-        ));
-    
-    Note that preferred choices are only meaningful when rendering as a
-    ``select`` element (i.e. ``expanded`` is false). The preferred choices
-    and normal choices are separated visually by a set of dotted lines
-    (i.e. ``-------------------``). This can be customized when rendering
-    the field:
+.. include:: /reference/forms/types/options/multiple.rst.inc
 
-    .. configuration-block::
-    
-        .. code-block:: jinja
-        
-            {{ form_widget(form.foo_choices, { 'separator': '=====' }) }}
+.. include:: /reference/forms/types/options/expanded.rst.inc
 
-        .. code-block:: php
-        
-            <?php echo $view['form']->widget($form['foo_choices'], array('separator' => '=====')) ?>
+.. include:: /reference/forms/types/options/preferred_choices.rst.inc
 
 .. include:: /reference/forms/types/options/required.rst.inc
 
