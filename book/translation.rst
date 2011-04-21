@@ -651,7 +651,7 @@ need more control or want a different translation for specific cases (for
 ``0``, or when the count is negative, for example). For such cases, you can
 use explicit math intervals::
 
-    '{0} There is no apples|{1} There is one apple|]1,19] There are %count% apples|[20,Inf] There are many apples'
+    '{0} There is no apples|{1} There is one apple|[1,19] There are %count% apples|[20,Inf] There are many apples'
 
 The intervals follow the `ISO 31-11`_ notation. The above string specifies
 four different intervals: exactly ``0``, exactly ``1``, ``2-19``, and ``20``
