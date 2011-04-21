@@ -126,6 +126,7 @@ the configuration for the development environment:
         web_profiler:
             toolbar: true
             intercept_redirects: true
+            verbose: true
 
     .. code-block:: xml
 
@@ -141,6 +142,7 @@ the configuration for the development environment:
         <webprofiler:config
             toolbar="true"
             intercept-redirects="true"
+            verbose="true"
         />
 
     .. code-block:: php
@@ -154,6 +156,7 @@ the configuration for the development environment:
         $container->loadFromExtension('web_profiler', array(
             'toolbar' => true,
             'intercept-redirects' => true,
+            'verbose' => true,
         ));
 
 When ``only-exceptions`` is set to ``true``, the profiler only collects data
@@ -162,6 +165,10 @@ when an exception is thrown by the application.
 When ``intercept-redirects`` is set to ``true``, the web profiler intercepts
 the redirects and gives you the opportunity to look at the collected data
 before following the redirect.
+
+When ``verbose`` is set to ``true``, the Web Debug Toolbar displays a lot of
+information. Setting ``verbose`` to ``false`` hides some secondary information
+to make the toolbar shorter.
 
 If you enable the web profiler, you also need to mount the profiler routes:
 

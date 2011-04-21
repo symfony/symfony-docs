@@ -45,6 +45,7 @@ Main Relation  Other Relations
 ============== =================
 ``get()``      ``getXXX()``
 ``set()``      ``setXXX()``
+n/a            ``replaceXXX()``
 ``has()``      ``hasXXX()``
 ``all()``      ``getXXXs()``
 ``replace()``  ``setXXXs()``
@@ -56,3 +57,10 @@ Main Relation  Other Relations
 ``count()``    ``countXXX()``
 ``keys()``     n/a
 ============== =================
+
+.. note::
+
+    While "setXXX" and "replaceXXX" are very similar, there is one notable 
+    difference: "setXXX" may replace, or add new elements to the relation. 
+    "replaceXXX" on the other hand is specifically forbidden to add new 
+    elements, but most throw an exception in these cases.
