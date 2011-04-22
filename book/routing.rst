@@ -683,63 +683,6 @@ Like the other requirements, the ``_method`` requirement is parsed as a regular
 expression. To match ``GET`` *or* ``POST`` requests, you can use ``GET|POST``.
 
 .. index::
-   single: Routing; Scheme requirement
-
-Adding HTTP Scheme Requirements
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-You can also match on the HTTP *scheme* of the incoming request (i.e. HTTP or
-HTTPS). This can be used to force certain routes to be matched and generated
-with the given scheme. This can be accomplished with the following route
-configuration:
-
-.. configuration-block::
-
-    .. code-block:: yaml
-
-        secure:
-            pattern:  /secure
-            defaults: { _controller: AcmeDemoBundle:Main:secure }
-            requirements:
-                _scheme:  https
-
-    .. code-block:: xml
-
-        <?xml version="1.0" encoding="UTF-8" ?>
-
-        <routes xmlns="http://symfony.com/schema/routing"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/routing http://symfony.com/schema/routing/routing-1.0.xsd">
-
-            <route id="secure" pattern="/secure">
-                <default key="_controller">AcmeDemoBundle:Main:secure</default>
-                <requirement key="_scheme">https</requirement>
-            </route>
-        </routes>
-
-    .. code-block:: php
-
-        use Symfony\Component\Routing\RouteCollection;
-        use Symfony\Component\Routing\Route;
-
-        $collection = new RouteCollection();
-        $collection->add('secure', new Route('/secure', array(
-            '_controller' => 'AcmeDemoBundle:Main:secure',
-        ), array(
-            '_scheme' => 'https',
-        )));
-
-        return $collection;
-
-The above configuration forces the ``secure`` route to use HTTPS. When
-generating the ``secure`` URL, and if the current scheme is HTTP, Symfony will
-automatically generate an absolute URL with HTTPS as the scheme.
-
-The requirement is also enforced for incoming requests. If you try to access
-the ``/secure`` path with HTTP, you will be automatically redirected to the
-same URL but with the HTTPS scheme.
-
-.. index::
    single: Routing; Advanced example
    single: Routing; _format parameter
 
@@ -1191,3 +1134,8 @@ function that should be called to process the request. It both allows you
 to specify beautiful URLs and keeps the functionality of your application
 decoupled from those URLs. Routing is a two-way mechanism, meaning that it
 should also be used to generate URLs.
+
+Learn more from the Cookbook
+----------------------------
+
+* :doc:`/cookbook/routing/schema`
