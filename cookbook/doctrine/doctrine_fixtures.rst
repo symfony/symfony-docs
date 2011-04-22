@@ -21,8 +21,15 @@ Add the following to ``bin/vendors.sh``, right after the "Monolog" entry:
 .. code-block:: text
 
     # Doctrine Fixtures
-    install_git doctrine-fixtures git://github.com/doctrine/data-fixtures.git
+    install_git doctrine-fixtures https://github.com/doctrine/data-fixtures.git
 
+And also, the following after the "WebConfiguratorBundle" entry:
+
+.. code-block:: text
+
+    # DoctrineFixturesBundle
+    install_git DoctrineFixturesBundle https://github.com/symfony/DoctrineFixturesBundle.git
+ 
 Update vendors and rebuild the bootstrap file:
 
 .. code-block:: bash
@@ -100,13 +107,13 @@ Executing Fixtures
 ------------------
 
 Once your fixtures have been written, you can load them via the command
-line by using the ``doctrine:data:load`` command:
+line by using the ``doctrine:fixtures:load`` command:
 
 .. code-block:: bash
 
-    $ php app/console doctrine:data:load
+    $ php app/console doctrine:fixtures:load
 
-If you're using the ODM, use the ``doctrine:mongodb:data:load`` command instead:
+If you're using the ODM, use the ``doctrine:mongodb:fixtures:load`` command instead:
 
 .. code-block:: bash
 
@@ -129,14 +136,14 @@ Both commands come with a few options:
 
 .. note::
 
-   If using the ``doctrine:mongodb:data:load`` task, replace the ``--em=``
+   If using the ``doctrine:mongodb:fixtures:load`` task, replace the ``--em=``
    option with ``--dm=`` to manually specify the document manager.
 
 A full example use might look like this:
 
 .. code-block:: bash
 
-   $ php app/console doctrine:data:load --fixtures=/path/to/fixture1 --fixtures=/path/to/fixture2 --append --em=foo_manager
+   $ php app/console doctrine:fixtures:load --fixtures=/path/to/fixture1 --fixtures=/path/to/fixture2 --append --em=foo_manager
 
 Sharing Objects between Fixtures
 --------------------------------
