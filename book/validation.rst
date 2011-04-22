@@ -204,7 +204,7 @@ objects that can then be displayed with your form:
         $this->render('BlogBundle:Author:form.html.twig', array('form' => $form));
     }
 
-For more information, see the :doc:`Forms</book/forms/overview>` chapter.
+For more information, see the :doc:`Forms</book/forms>` chapter.
 
 .. index::
    pair: Validation; Configuration
@@ -222,7 +222,6 @@ configuration:
         # hello/config/config.yml
         framework:
             validation: { enabled: true, annotations: true }
-
 
     .. code-block:: xml
 

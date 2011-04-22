@@ -16,12 +16,7 @@
   * :doc:`MongoDB </book/doctrine/mongodb-odm/index>`
 
 * :doc:`Validation </book/validation>`
-
-* **Forms**:
-
-  * :doc:`Overview </book/forms/overview>` |
-  * :doc:`Templates </book/forms/view>` |
-  * :doc:`Form Fields </book/forms/fields>`
+* :doc:`Forms </book/forms>`
 
 * **Security**:
 
