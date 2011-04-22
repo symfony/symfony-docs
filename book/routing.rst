@@ -1134,3 +1134,8 @@ function that should be called to process the request. It both allows you
 to specify beautiful URLs and keeps the functionality of your application
 decoupled from those URLs. Routing is a two-way mechanism, meaning that it
 should also be used to generate URLs.
+
+Learn more from the Cookbook
+----------------------------
+
+* :doc:`/cookbook/routing/schema`
