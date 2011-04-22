@@ -461,7 +461,7 @@ of code. Of course, you'll usually need much more flexibility when rendering:
 
 Let's take a look at each part:
 
-* ``form_enctype(form)`` - If at least on field is a file upload field, this
+* ``form_enctype(form)`` - If at least one field is a file upload field, this
   renders the obligatory ``enctype="multipart/form-data"``;
 
 * ``form_errors(form)`` - This will render any errors global to the whole form
