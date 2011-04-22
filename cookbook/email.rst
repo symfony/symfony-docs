@@ -109,7 +109,7 @@ an email is pretty straightforward::
             ->setSubject('Hello Email')
             ->setFrom('send@example.com')
             ->setTo('recipient@example.com')
-            ->setBody($this->renderView('HelloBundle:Hello:email', array('name' => $name)))
+            ->setBody($this->renderView('HelloBundle:Hello:email.txt.twig', array('name' => $name)))
         ;
         $mailer->send($message);
 
