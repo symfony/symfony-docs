@@ -132,11 +132,10 @@ special ``text`` field where money can be displayed and submitted in a localized
 format. Symfony2 comes with many build-in types that will be discussed shortly
 (see :ref:`book-forms-type-reference`).
 
-Now that the form has been created, the next step is to render it in a template.
-To render the form, you should pass a special form "view" object to your
-template (see the ``$form->createView()`` in the controller above). By using
-this object - and a set of form helper functions - you can easily render
-your form:
+Now that the form has been created, the next step is to render it. This can
+be easily done by passing a special form "view" object to your template (see
+the ``$form->createView()`` in the controller above) and using a set of form
+helper functions:
 
 .. configuration-block::
 
