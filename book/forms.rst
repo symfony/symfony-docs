@@ -524,10 +524,8 @@ entirely by hand:
 
         <?php echo $view['form']->rest($form) ?>
 
-If the auto-generated label for a field isn't quite right, you can specify
-the label manually:
-
-You can also explicitly set the label for a field:
+If the auto-generated label for a field isn't quite right, you can explicitly
+specify it:
 
 .. configuration-block::
 
