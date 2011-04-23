@@ -13,7 +13,6 @@
   * :doc:`DBAL </book/doctrine/dbal/index>` |
   * :doc:`ORM </book/doctrine/orm/index>` |
   * :doc:`Migrations </book/doctrine/migrations/index>` |
-  * :doc:`MongoDB </book/doctrine/mongodb-odm/index>`
 
 * :doc:`Validation </book/validation>`
 * :doc:`Forms </book/forms>`
