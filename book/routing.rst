@@ -146,7 +146,7 @@ Creating Routes
 ---------------
 
 Symfony loads all the routes for your application from a single routing configuration
-file. The file is usually ``app/config/config.yml``, but can be configured
+file. The file is usually ``app/config/routing.yml``, but can be configured
 to be anything (including an XML or PHP file) via the application configuration
 file:
 
