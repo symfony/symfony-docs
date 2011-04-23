@@ -462,16 +462,16 @@ Let's take a look at each part:
 * ``form_enctype(form)`` - If at least one field is a file upload field, this
   renders the obligatory ``enctype="multipart/form-data"``;
 
-* ``form_errors(form)`` - This will render any errors global to the whole form
+* ``form_errors(form)`` - Renders any errors global to the whole form
   (field-specific errors are displayed next to each field);
 
 * ``form_row(form.price)`` - Renders the label, any errors, and the HTML
   form widget for the given field (e.g. ``price``);
 
-* ``form_rest(form)`` - This renders any fields that have not yet been rendered
-  and is usually a good idea to place at the bottom of each form (in case
-  you forgot to output a field or don't want to bother manually rendering
-  hidden fields).
+* ``form_rest(form)`` - Renders any fields that have not yet been rendered.
+  It's usually a good idea to place a call to this helper at the bottom of
+  each form (in case you forgot to output a field or don't want to bother
+  manually rendering hidden fields).
 
 The majority of the work is done by the ``form_row`` helper, which renders
 the label, errors and HTML form widget of each field inside a ``div`` tag
