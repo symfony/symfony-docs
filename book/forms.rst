@@ -608,9 +608,9 @@ It can be used to quickly build a form object in the controller:
         // ...
     }
 
-Placing the form logic into its own class means that the class can be easily
-reused and is properly isolated out of the controller. This is the best way
-to create forms, but the choice is ultimately up to you.
+Placing the form logic into its own class, properly isolated out of the
+controller to be easily reused, is the best way to create forms, but the choice
+is ultimately up to you.
 
 .. index::
    single: Forms; Doctrine
