@@ -163,9 +163,8 @@ helper functions:
     :align: center
 
 That's it! By printing ``form_widget(form)``, each field in the form is rendered,
-along with a label and any error messages for each field. As easy as this is,
-it's not very flexible (yet). Later, you'll learn how to customize the form
-output.
+along with a label and eventual error messages. As easy as this is, it's not
+very flexible (yet). Later, you'll learn how to customize the form output.
 
 Before moving on, notice how the rendered name input field has the value
 of the ``name`` property from the ``$product`` object (i.e. "Test product").
