@@ -395,10 +395,10 @@ modify your code so that Symfony guesses the field for you:
 
 You'll notice two differences immediately. First, a ``data_class`` option
 is passed when creating the form. This tells Symfony which class to look
-at when guessing the fields and is required to take advantage of field
-guessing. You can now omit the ``text`` type for the ``name`` field as this
-field is correctly guessed. The ``money`` type was kept, however, for the
-``price`` field as it's more specific than what the system could guess (``text``).
+at when is required to guessing the fields. You can now omit the ``text``
+type for the ``name`` field as this field is correctly guessed. The ``money``
+type was kept, however, for the ``price`` field as it's more specific
+than what the system could guess (``text``).
 
 .. note::
 
