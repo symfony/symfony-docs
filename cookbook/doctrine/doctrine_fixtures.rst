@@ -29,7 +29,7 @@ And also, the following after the "WebConfiguratorBundle" entry:
 
     # DoctrineFixturesBundle
     install_git DoctrineFixturesBundle https://github.com/symfony/DoctrineFixturesBundle.git
- 
+
 Update vendors and rebuild the bootstrap file:
 
 .. code-block:: bash
@@ -39,7 +39,7 @@ Update vendors and rebuild the bootstrap file:
 If everything worked, the ``doctrine-fixtures`` library can now be found
 at ``vendor/doctrine-fixtures``.
 
-Finally, register the ``Doctrine\Common\DataFixtures`` namespace in ``app/autoload.php``.
+Register the ``Doctrine\Common\DataFixtures`` namespace in ``app/autoload.php``.
 
 .. code-block:: php
 
@@ -51,11 +51,28 @@ Finally, register the ``Doctrine\Common\DataFixtures`` namespace in ``app/autolo
         // ...
     ));
 
-Be sure to register the new namespace *after* ``Doctrine\Common``. Otherwise,
-Symfony will look for data fixture classes inside the ``Doctrine\Common``
-directory. Symfony's autoloader always looks for a class inside the directory
-of the first matching namespace, so more specific namespaces should always
-come first.
+.. caution::
+
+    Be sure to register the new namespace *before* ``Doctrine\Common``. Otherwise,
+    Symfony will look for data fixture classes inside the ``Doctrine\Common``
+    directory. Symfony's autoloader always looks for a class inside the directory
+    of the first matching namespace, so more specific namespaces should always
+    come first.
+
+Finally, register the Bundle ``DoctrineFixturesBundle`` in ``app/AppKernel.php``.
+
+.. code-block:: php
+
+    // ...
+    public function registerBundles()
+    {
+        $bundles = array(
+            // ...
+            new Symfony\Bundle\DoctrineFixturesBundle\DoctrineFixturesBundle(),
+            // ...
+        );
+        // ...
+    }
 
 Writing Simple Fixtures
 -----------------------
@@ -176,14 +193,14 @@ the order in which fixtures are loaded.
 
             $manager->persist($userAdmin);
             $manager->flush();
-        
-            $this->addReference('admin-user', $userAdmin);        
+
+            $this->addReference('admin-user', $userAdmin);
         }
 
         public function getOrder()
         {
             return 1; // the order in which fixtures will be loaded
-        }    
+        }
     }
 
 The fixture class now implements ``OrderedFixtureInterface``, which tells
@@ -209,14 +226,14 @@ of 2:
 
             $manager->persist($groupAdmin);
             $manager->flush();
-        
-            $this->addReference('admin-group', $groupAdmin);  
+
+            $this->addReference('admin-group', $groupAdmin);
         }
 
         public function getOrder()
         {
             return 2; // the order in which fixtures will be loaded
-        }    
+        }
     }
 
 Both of the fixture classes extend ``AbstractFixture``, which allows you
@@ -233,7 +250,7 @@ references:
     use Doctrine\Common\DataFixtures\AbstractFixture;
     use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
     use VendorName\MyBundle\Entity\UserGroup;
-    
+
     class LoadUserGroupData extends AbstractFixture implements OrderedFixtureInterface
     {
         public function load($manager)
@@ -249,7 +266,7 @@ references:
         public function getOrder()
         {
             return 3;
-        }    
+        }
     }
 
 The fixtures will now be executed in the ascending order of the value returned
