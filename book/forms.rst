@@ -576,7 +576,7 @@ that will house the logic for building the product form:
 
     namespace Acme\StoreBundle\Form;
 
-    use Symfony\Component\Form\Type\AbstractType;
+    use Symfony\Component\Form\AbstractType;
     use Symfony\Component\Form\FormBuilder;
 
     class ProductType extends AbstractType
@@ -708,7 +708,7 @@ create a form class so that a ``Category`` object can be modified by the user:
     // src/Acme/StoreBundle/Form/CategoryType.php
     namespace Acme\StoreBundle\Form;
 
-    use Symfony\Component\Form\Type\AbstractType;
+    use Symfony\Component\Form\AbstractType;
     use Symfony\Component\Form\FormBuilder;
 
     class CategoryType extends AbstractType
