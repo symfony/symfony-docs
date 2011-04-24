@@ -5,7 +5,7 @@
 =====================
 
 A multi-purpose field used to allow the user to "choose" one or more options.
-It can be rendered as a ``select`` tag, radio tags, or checkboxes.
+It can be rendered as a ``select`` tag, radio buttons, or checkboxes.
 
 To use this field, you must specify *either* the ``choice_list`` or ``choices``
 option.
