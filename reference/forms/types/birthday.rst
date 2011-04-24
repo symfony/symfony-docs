@@ -15,6 +15,6 @@ The ``years`` option defaults to 120 years ago to the current year.
 ============  ======
 Rendered as   can be various tags (see below)
 Options       ``years``, see :class:`Symfony\\Component\\Form\\Type\\DateType`
-Parent type   ``date``
+Parent type   :doc:`date</reference/forms/types/date>`
 Class         :class:`Symfony\\Component\\Form\\Type\\BirthdayType`
 ============  ======
