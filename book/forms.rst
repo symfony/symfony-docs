@@ -132,11 +132,10 @@ special ``text`` field where money can be displayed and submitted in a localized
 format. Symfony2 comes with many build-in types that will be discussed shortly
 (see :ref:`book-forms-type-reference`).
 
-Now that the form has been created, the next step is to render it in a template.
-To render the form, you should pass a special form "view" object to your
-template (see the ``$form->createView()`` in the controller above). By using
-this object - and a set of form helper functions - you can easily render
-your form:
+Now that the form has been created, the next step is to render it. This can
+be easily done by passing a special form "view" object to your template (see
+the ``$form->createView()`` in the controller above) and using a set of form
+helper functions:
 
 .. configuration-block::
 
@@ -164,9 +163,8 @@ your form:
     :align: center
 
 That's it! By printing ``form_widget(form)``, each field in the form is rendered,
-along with a label and any error messages for each field. As easy as this is,
-it's not very flexible (yet). Later, you'll learn how to customize the form
-output.
+along with a label and eventual error messages. As easy as this is, it's not
+very flexible (yet). Later, you'll learn how to customize the form output.
 
 Before moving on, notice how the rendered name input field has the value
 of the ``name`` property from the ``$product`` object (i.e. "Test product").
@@ -397,10 +395,10 @@ modify your code so that Symfony guesses the field for you:
 
 You'll notice two differences immediately. First, a ``data_class`` option
 is passed when creating the form. This tells Symfony which class to look
-at when guessing the fields and is required to take advantage of field
-guessing. You can now omit the ``text`` type for the ``name`` field as this
-field is correctly guessed. The ``money`` type was kept, however, for the
-``price`` field as it's more specific than what the system could guess (``text``).
+at when is required to take advantage of field guessing.
+You can now omit the ``text`` type for the ``name`` field as this field is
+correctly guessed. The ``money`` type was kept, however, for the ``price``
+field as it's more specific than what the system could guess (``text``).
 
 .. note::
 
@@ -464,16 +462,16 @@ Let's take a look at each part:
 * ``form_enctype(form)`` - If at least one field is a file upload field, this
   renders the obligatory ``enctype="multipart/form-data"``;
 
-* ``form_errors(form)`` - This will render any errors global to the whole form
+* ``form_errors(form)`` - Renders any errors global to the whole form
   (field-specific errors are displayed next to each field);
 
 * ``form_row(form.price)`` - Renders the label, any errors, and the HTML
   form widget for the given field (e.g. ``price``);
 
-* ``form_rest(form)`` - This renders any fields that have not yet been rendered
-  and is usually a good idea to place at the bottom of each form (in case
-  you forgot to output a field or don't want to bother manually rendering
-  hidden fields).
+* ``form_rest(form)`` - Renders any fields that have not yet been rendered.
+  It's usually a good idea to place a call to this helper at the bottom of
+  each form (in case you forgot to output a field or don't want to bother
+  manually rendering hidden fields).
 
 The majority of the work is done by the ``form_row`` helper, which renders
 the label, errors and HTML form widget of each field inside a ``div`` tag
@@ -526,10 +524,8 @@ entirely by hand:
 
         <?php echo $view['form']->rest($form) ?>
 
-If the auto-generated label for a field isn't quite right, you can specify
-the label manually:
-
-You can also explicitly set the label for a field:
+If the auto-generated label for a field isn't quite right, you can explicitly
+specify it:
 
 .. configuration-block::
 
@@ -612,9 +608,9 @@ It can be used to quickly build a form object in the controller:
         // ...
     }
 
-Placing the form logic into its own class means that the class can be easily
-reused and is properly isolated out of the controller. This is the best way
-to create forms, but the choice is ultimately up to you.
+Placing the form logic into its own class, properly isolated out of the
+controller, allows to easily reuse the code and is the best way to create
+forms. But the choice is ultimately up to you.
 
 .. index::
    single: Forms; Doctrine
