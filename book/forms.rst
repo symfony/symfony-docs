@@ -791,7 +791,6 @@ the following inside ``ProductType``:
 
 .. code-block:: php
 
-
     public function buildForm(FormBuilder $builder, array $options)
     {
         // ...
