@@ -11,7 +11,7 @@ Can be rendered as text inputs or selects.
 Rendered as   can be various tags (see below)
 Options       ``years`` ``months`` ``days`` ``hours`` ``minutes`` ``seconds``, ``date_widget``, ``date_format`` ``time_widget`` ``with_seconds`` ``data_timezone`` ``user_timezone``
 Parent type   can be various tags (see below)
-Class         :class:`Symfony\\Component\\Form\\Type\\DateTimeType`
+Class         :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\DatetimeType`
 ============  ======
 
 .. include:: /reference/forms/types/options/years.rst.inc

@@ -24,7 +24,7 @@ you should just use the ``choice`` type directly.
 Rendered as   can be various tags (see :ref:`forms-reference-choice-tags`)
 Options       ``multiple``, ``expanded``, ``preferred_choices``, ``required``, ``label``, ``read_only``, ``error_bubbling``
 Parent type   :doc:`choice</reference/forms/types/choice>`
-Class         :class:`Symfony\\Component\\Form\\Type\\LanguageType`
+Class         :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\LanguageType`
 ============  ======
 
 Options

@@ -12,7 +12,7 @@ if the box is unchecked, the value will be set to false.
 Rendered as   ``input`` ``text`` field
 Options       ``value``, ``required``, ``label``, ``read_only``, ``error_bubbling``
 Parent type   ``field``
-Class         :class:`Symfony\\Component\\Form\\Type\\CheckboxType`
+Class         :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\CheckboxType`
 ============  ======
 
 .. code-block:: php

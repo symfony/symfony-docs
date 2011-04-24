@@ -11,7 +11,7 @@ Can be rendered as text inputs or selects.
 Rendered as   can be various tags (see below)
 Options       ``hours`` ``minutes`` ``seconds`` ``widget`` ``input`` ``with_seconds`` ``data_timezone`` ``user_timezone``
 Parent type   :doc:`form</reference/forms/types/field>` (if text), ``form`` otherwise
-Class         :class:`Symfony\\Component\\Form\\Type\\DateType`
+Class         :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\TimeType`
 ============  ======
 
 .. include:: /reference/forms/types/options/hours.rst.inc

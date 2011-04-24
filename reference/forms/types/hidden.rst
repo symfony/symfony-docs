@@ -10,7 +10,7 @@ The hidden type represents a hidden input field.
 Rendered as   ``input`` ``hidden`` field
 Options       ``error_bubbling``
 Parent type   ``field``
-Class         :class:`Symfony\\Component\\Form\\Type\\HiddenType`
+Class         :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\HiddenType`
 ============  ======
 
 Options

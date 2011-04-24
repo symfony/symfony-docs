@@ -16,7 +16,7 @@ If you want to have a Boolean field, use :doc:`checkbox</reference/forms/types/c
 Rendered as   ``input`` ``text`` field
 Options       ``value``, ``required``, ``label``, ``read_only``, ``error_bubbling``
 Parent type   ``field``
-Class         :class:`Symfony\\Component\\Form\\Type\\RadioType`
+Class         :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\RadioType`
 ============  ======
 
 Options

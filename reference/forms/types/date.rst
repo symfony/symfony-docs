@@ -19,7 +19,7 @@ Underlying Data Type  can be ``DateTime``, string, timestamp, or array (see :ref
 Rendered as           single text box or three select fields
 Options               ``years`` ``months`` ``days`` ``widget`` ``input`` ``format`` ``pattern`` ``data_timezone`` ``user_timezone``
 Parent type           ``field`` (if text), ``form`` otherwise
-Class                 :class:`Symfony\\Component\\Form\\Type\\DateType`
+Class                 :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\DateType`
 ====================  ======
 
 .. _form-reference-date-input:

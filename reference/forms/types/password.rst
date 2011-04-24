@@ -10,7 +10,7 @@ The ``password`` field renders an input password text box.
 Rendered as   ``input`` ``password`` field
 Options       ``always_empty``, ``max_length``, ``required``, ``label``, ``read_only``, ``trim``, ``error_bubbling``
 Parent type   :doc:`text</reference/forms/types/text>`
-Class         :class:`Symfony\\Component\\Form\\Type\\PasswordType`
+Class         :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\PasswordType`
 ============  ======
 
 Options
