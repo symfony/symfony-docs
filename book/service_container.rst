@@ -462,7 +462,7 @@ available for the core bundles can be found inside the :doc:`Reference Guide</re
 .. note::
 
    Natively, the service container only recognizes the ``parameters``,
-   ``services``, ``imports`` and ``interfaces`` directives. Any other directives
+   ``services``, and ``imports`` directives. Any other directives
    are handled by a service container extension.
 
 .. index::
@@ -572,13 +572,22 @@ service needs the ``my_mailer`` service in order to function. When you define
 this dependency in the service container, the container takes care of all
 the work of instantiating the objects.
 
+.. note::
+
+   The approach presented in this section is called "constructor injection".
+   The Symfony2 service container also supports "setter injection" as well
+   as "property injection".
+
 Core Symfony and Third-Party Bundle Services
 --------------------------------------------
 
 Since Symfony2 and all third-party bundles configure and retrieve their services
 via the container, you can easily access them or even use them in your own
-services. For example, to handle the storage of information on a user's
-session, Symfony2 provides a ``session`` service::
+services. To keep things simple, Symfony2 by defaults does not require that
+controllers be defined as services. Furthermore Symfony2 injects the entire
+service container into your controlller. For example, to handle the storage of
+information on a user's session, Symfony2 provides a ``session`` service,
+which you can access inside a standard controller as follows::
 
     public function indexAction($bar)
     {
