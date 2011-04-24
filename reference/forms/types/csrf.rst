@@ -10,7 +10,7 @@ The hidden type represents a hidden input field.
 Rendered as   ``input`` ``hidden`` field
 Options       ``csrf_provider``, ``page_id``, ``error_bubbling``
 Parent type   ``hidden``
-Class         :class:`Symfony\\Component\\Form\\Type\\CsrfType`
+Class         :class:`Symfony\\Component\\Form\\Extension\\Csrf\\Type\\CsrfType`
 ============  ======
 
 Options

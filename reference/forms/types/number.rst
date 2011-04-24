@@ -12,7 +12,7 @@ you want to use for your number.
 Rendered as   ``input`` ``text`` field
 Options       ``rounding_mode``, ``precision``, ``grouping`` ``required``, ``label``, ``read_only``, ``error_bubbling``
 Parent type   ``field``
-Class         :class:`Symfony\\Component\\Form\\Type\\NumberType`
+Class         :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\NumberType`
 ============  ======
 
 Options

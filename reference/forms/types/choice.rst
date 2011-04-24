@@ -14,7 +14,7 @@ option.
 Rendered as   can be various tags (see below)
 Options       ``choices``, ``choice_list``, ``multiple``, ``expanded``, ``preferred_choices``, ``required``, ``label``, ``read_only``, ``error_bubbling``
 Parent type   :doc:`form</reference/forms/types/form>` (if expanded), ``field`` otherwise
-Class         :class:`Symfony\\Component\\Form\\Type\\ChoiceType`
+Class         :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\ChoiceType`
 ============  ======
 
 .. _forms-reference-choice-tags:

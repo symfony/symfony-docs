@@ -4,4 +4,4 @@
 ``birthday`` Field Type
 =======================
 
-See :class:`Symfony\\Component\\Form\\Type\\BirthdayType`.
+See :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\BirthdayType`.

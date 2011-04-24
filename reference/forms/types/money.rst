@@ -15,7 +15,7 @@ how the input and output of the data is handled.
 Rendered as   ``input`` ``text`` field
 Options       ``currency``, ``divisor``, ``precision``, ``grouping`` ``required``, ``label``, ``read_only``, ``error_bubbling``
 Parent type   ``field``
-Class         :class:`Symfony\\Component\\Form\\Type\\MoneyType`
+Class         :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\MoneyType`
 ============  ======
 
 Options

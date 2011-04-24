@@ -4,4 +4,4 @@
 ``datetime`` Field Type
 =======================
 
-See :class:`Symfony\\Component\\Form\\Type\\DatetimeType`.
+See :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\DatetimeType`.

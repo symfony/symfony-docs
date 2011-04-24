@@ -16,7 +16,7 @@ This field adds a percentage sign "``%``" after the input box.
 Rendered as   ``input`` ``text`` field
 Options       ``type``, ``required``, ``label``, ``read_only``, ``error_bubbling``
 Parent type   ``field``
-Class         :class:`Symfony\\Component\\Form\\Type\\PercentType`
+Class         :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\PercentType`
 ============  ======
 
 Options

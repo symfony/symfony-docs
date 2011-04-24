@@ -4,4 +4,4 @@
 ``time`` Field Type
 ===================
 
-See :class:`Symfony\\Component\\Form\\Type\\TimeType`.
+See :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\TimeType`.

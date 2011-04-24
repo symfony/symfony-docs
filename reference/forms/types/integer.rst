@@ -16,7 +16,7 @@ integers. By default, all non-integer values (e.g. 6.78) will round down (e.g. 6
 Rendered as   ``input`` ``text`` field
 Options       ``rounding_mode``, ``required``, ``label``, ``read_only``, ``error_bubbling``
 Parent type   ``field``
-Class         :class:`Symfony\\Component\\Form\\Type\\IntegerType`
+Class         :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\IntegerType`
 ============  ======
 
 Options

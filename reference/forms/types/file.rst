@@ -4,4 +4,4 @@
 ``file`` Field Type
 ===================
 
-See :class:`Symfony\\Component\\Form\\Type\\FileType`.
+See :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\FileType`.

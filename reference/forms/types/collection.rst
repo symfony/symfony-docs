@@ -4,4 +4,4 @@
 ``collection`` Field Type
 =========================
 
-See :class:`Symfony\\Component\\Form\\Type\\CollectionType`.
+See :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\CollectionType`.

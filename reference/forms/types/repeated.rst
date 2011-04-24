@@ -4,4 +4,4 @@
 ``repeated`` Field Type
 =======================
 
-See :class:`Symfony\\Component\\Form\\Type\\RepeatedType`.
+See :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\RepeatedType`.

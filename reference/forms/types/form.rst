@@ -4,4 +4,4 @@
 ``form`` Field Type
 ===================
 
-See :class:`Symfony\\Component\\Form\\Type\\FormType`.
+See :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\FormType`.
