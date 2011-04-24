@@ -376,9 +376,9 @@ Field Type Guessing
 Now that you've added validation metadata to the ``Product`` class, Symfony
 already knows a bit about your fields. If you allow it, Symfony can "guess"
 the type of your field and set it up for you. In this example, Symfony will
-guess from the validation that both the ``name`` and ``price`` fields are
-normal ``text`` fields. Since it's right about the ``name`` field, you can
-modify your code so that Symfony guesses the field for you:
+guess from the validation rules that both the ``name`` and ``price`` fields
+are normal ``text`` fields. Since it's right about the ``name`` field, you
+can modify your code so that Symfony guesses the field for you:
 
 .. code-block:: php
 
@@ -395,10 +395,10 @@ modify your code so that Symfony guesses the field for you:
 
 You'll notice two differences immediately. First, a ``data_class`` option
 is passed when creating the form. This tells Symfony which class to look
-at when is required to take advantage of field guessing.
-You can now omit the ``text`` type for the ``name`` field as this field is
-correctly guessed. The ``money`` type was kept, however, for the ``price``
-field as it's more specific than what the system could guess (``text``).
+at for the validation information. Second, the ``text`` type for the ``name``
+field has now been omitted since it's correctly guessed from the validation
+rules. However, the ``money`` type for the ``price`` field was kept, since
+it's more specific than what the system could guess (``text``).
 
 .. note::
 
@@ -608,9 +608,9 @@ It can be used to quickly build a form object in the controller:
         // ...
     }
 
-Placing the form logic into its own class, properly isolated out of the
-controller, allows to easily reuse the code and is the best way to create
-forms. But the choice is ultimately up to you.
+Placing the form logic into its own class means that the form can be easily
+reused elsewhere in your project. This is the best way to create forms, but
+the choice is ultimately up to you.
 
 .. index::
    single: Forms; Doctrine
