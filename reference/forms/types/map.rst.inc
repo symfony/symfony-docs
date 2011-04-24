@@ -7,6 +7,7 @@
 * :doc:`checkbox</reference/forms/types/checkbox>`
 * :doc:`datetime</reference/forms/types/datetime>`
 * :doc:`date</reference/forms/types/date>`
+* :doc:`entity</reference/forms/types/entity>`
 * :doc:`file</reference/forms/types/file>`
 * :doc:`form</reference/forms/types/form>`
 * :doc:`hidden</reference/forms/types/hidden>`
