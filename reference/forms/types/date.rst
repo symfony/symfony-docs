@@ -86,7 +86,7 @@ Options
     set to ``text``, and will define how to transform the input.
     
 * ``pattern`` [type: string, default: null]
-    This option is only relevant when the ``widget`` is set to ``choide``.
+    This option is only relevant when the ``widget`` is set to ``choice``.
     The default pattern is based off the ``format`` option, and tries to
     match the characters ``M``, ``d``, and ``y`` in the format pattern. If
     no match is found, the default is the string ``{{ year }}-{{ month }}-{{ day }}``.

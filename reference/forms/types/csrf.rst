@@ -4,7 +4,7 @@
 ``csrf`` Field Type
 ===================
 
-The hidden type represents a hidden input field.
+The ``csrf`` type is a hidden input field containing a CSRF token.
 
 ============  ======
 Rendered as   ``input`` ``hidden`` field
