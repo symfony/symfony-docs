@@ -15,7 +15,7 @@ years ago to the current year.
 
 ====================  ======
 Underlying Data Type  can be ``DateTime``, string, timestamp, or array (see :ref:`form-reference-date-input`)
-Rendered as           can be a select boxes or a text box, based on the ``widget`` option
+Rendered as           can be three select boxes or a text box, based on the ``widget`` option
 Options               ``widget``, ``input``, ``years``, ``months``, ``days``, ``format``, ``pattern``, ``data_timezone``, ``user_timezone``
 Parent type           :doc:`date</reference/forms/types/date>`
 Class                 :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\BirthdayType`
@@ -54,7 +54,7 @@ Options
     set to ``text``, and will define how to transform the input.
     
 * ``pattern`` [type: string, default: null]
-    This option is only relevant when the ``widget`` is set to ``choide``.
+    This option is only relevant when the ``widget`` is set to ``choice``.
     The default pattern is based off the ``format`` option, and tries to
     match the characters ``M``, ``d``, and ``y`` in the format pattern. If
     no match is found, the default is the string ``{{ year }}-{{ month }}-{{ day }}``.
