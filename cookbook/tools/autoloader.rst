@@ -31,6 +31,17 @@ autoloader is straightforward::
     $loader = new UniversalClassLoader();
     $loader->register();
 
+For minor performance gains class paths can be cached in memory using APC by
+registering the :class:`Symfony\\Component\\ClassLoader\\ApcUniversalClassLoader`::
+
+    require_once '/path/to/src/Symfony/Component/ClassLoader/UniversalClassLoader.php';
+    require_once '/path/to/src/Symfony/Component/ClassLoader/ApcUniversalClassLoader.php';
+
+    use Symfony\Component\ClassLoader\ApcUniversalClassLoader;
+
+    $loader = new ApcUniversalClassLoader('apc.prefix.');
+    $loader->register();
+
 The autoloader is useful only if you add some libraries to autoload.
 
 .. note::
@@ -66,7 +77,7 @@ methods::
 
 .. note::
 
-    Some libraries also need that their root path be registered in the PHP
+    Some libraries also require their root path be registered in the PHP
     include path (``set_include_path()``).
 
 Classes from a sub-namespace or a sub-hierarchy of PEAR classes can be looked
