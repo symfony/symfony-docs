@@ -10,9 +10,9 @@ Forms
    If you're using an earlier version (such as a PR release), you should
    upgrade Symfony before reading this document.
 
-Dealing with HTML forms is one of the most common - and challenging - tasks
-for a web developer. Symfony2 integrates a Form component that makes dealing
-with forms easy. In this chapter, you'll build a complex form from the ground-up,
+Dealing with HTML forms is one of the most common - and challenging - tasks for
+a web developer. Symfony2 integrates a Form component that makes dealing with
+forms easy. In this chapter, you'll build a complex form from the ground-up,
 learning the most important features of the form library along the way.
 
 .. note::
@@ -64,12 +64,12 @@ going to need to build a form. But before you begin, let's focus on the generic
    
        php app/console init:bundle "Acme\StoreBundle" src/
 
-This type of class is commonly called a "plain-old-PHP-object" because,
-so far, it has nothing to do with Symfony or any other library. It's quite
-simply a normal PHP object that directly solves a problem inside *your* application
-(i.e. the need to represent a product in your application). Of course, by
-the end of this chapter, you'll be able to submit data to a ``Product`` instance
-(via a form), validate its data, and persist it to a database.
+This type of class is commonly called a "plain-old-PHP-object" because, so far,
+it has nothing to do with Symfony or any other library. It's quite simply a
+normal PHP object that directly solves a problem inside *your* application (i.e.
+the need to represent a product in your application). Of course, by the end of
+this chapter, you'll be able to submit data to a ``Product`` instance (via a
+form), validate its data, and persist it to a database.
 
 So far, you haven't actually done any work related to "forms" - you've simply
 created a PHP class that will help you solve a problem in *your* application.
@@ -162,9 +162,10 @@ helper functions:
 .. image:: /book/images/forms-simple.png
     :align: center
 
-That's it! By printing ``form_widget(form)``, each field in the form is rendered,
-along with a label and eventual error messages. As easy as this is, it's not
-very flexible (yet). Later, you'll learn how to customize the form output.
+That's it! By printing ``form_widget(form)``, each field in the form is
+rendered, along with a label and eventual error messages. As easy as this is,
+it's not very flexible (yet). Later, you'll learn how to customize the form
+output.
 
 Before moving on, notice how the rendered name input field has the value
 of the ``name`` property from the ``$product`` object (i.e. "Test product").
@@ -173,12 +174,12 @@ it into a format that's suitable for being rendered in an HTML form.
 
 .. tip::
 
-   The form system is smart enough to access the value of the protected ``price``
-   property via the ``getPrice()`` and ``setPrice()`` methods on the ``Product``
-   class. Unless a property is public, it *must* have a "getter" and "setter"
-   method so that the form component can get and put data onto the property.
-   For a Boolean property, you can use an "isser" method (e.g. ``isPublished()``)
-   instead of a getter (e.g. ``getPublished()``).
+   The form system is smart enough to access the value of the protected
+   ``price`` property via the ``getPrice()`` and ``setPrice()`` methods on the
+   ``Product`` class. Unless a property is public, it *must* have a "getter" and
+   "setter" method so that the form component can get and put data onto the
+   property. For a Boolean property, you can use an "isser" method (e.g.
+   ``isPublished()``) instead of a getter (e.g. ``getPublished()``).
 
 Handling Form Submissions
 ~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -211,10 +212,9 @@ controller:
         // ...
     }
 
-Now, when submitting the form, the controller binds the submitted data to
-the form, which translates that data back to the ``name`` and ``price``
-properties of the ``$product`` object. This all happens via the ``bindRequest()``
-method.
+Now, when submitting the form, the controller binds the submitted data to the
+form, which translates that data back to the ``name`` and ``price`` properties
+of the ``$product`` object. This all happens via the ``bindRequest()`` method.
 
 This controller follows a common pattern for handling forms, and has three
 possible paths:
@@ -228,7 +228,7 @@ possible paths:
    errors;
 
 #. When the user submits the form with valid data, the form is bound and
-   you have the opportunity to perform some action using the ``$product``
+   you have the opportunity to perform some actions using the ``$product``
    object (e.g. persisting it to the database) before redirecting the user
    to some other page (e.g. a "thank you" or "success" page).
 
@@ -251,9 +251,9 @@ the form has applied the submitted data to it. Calling ``$form->isValid()``
 is a shortcut that asks the ``$product`` object whether or not it has valid
 data.
 
-Validation is done by adding a set of rules (called constraints) to a class.
-To see this in action, add validation constraints so that the ``name`` field
-cannot be empty and the ``price`` field cannot be empty and must be a non-negative
+Validation is done by adding a set of rules (called constraints) to a class. To
+see this in action, add validation constraints so that the ``name`` field cannot
+be empty and the ``price`` field cannot be empty and must be a non-negative
 number:
 
 .. configuration-block::
@@ -320,8 +320,16 @@ number:
             }
         }
 
-That's it! If you re-submit the form with invalid data, you'll see the corresponding
-errors printed out with the form.
+That's it! If you re-submit the form with invalid data, you'll see the
+corresponding errors printed out with the form.
+
+.. note::
+
+   If you have a look at the generated HTML code, the Form component generates
+   new HTML5 fields including a special "required" attribute to enforce some
+   validation directly on the web browser. Some of modern web browsers like
+   Firefox 4, Chrome 3.0 or Opera 9.5 understand this special "required"
+   attribute.
 
 Validation is a very powerful feature of Symfony2 and has its own
 :doc:`dedicated chapter</book/validation>`.
@@ -384,8 +392,10 @@ can modify your code so that Symfony guesses the field for you:
 
     public function indexAction()
     {
+        $product = new Product();
+
         $form = $this->get('form.factory')
-            ->createBuilder('form', 'product', array(
+            ->createBuilder('form', $product, array(
                 'data_class' => 'Acme\StoreBundle\Entity\Product',
             ))
             ->add('name')
@@ -393,22 +403,28 @@ can modify your code so that Symfony guesses the field for you:
             ->getForm();
     }
 
-You'll notice two differences immediately. First, a ``data_class`` option
-is passed when creating the form. This tells Symfony which class to look
-at for the validation information. Second, the ``text`` type for the ``name``
-field has now been omitted since it's correctly guessed from the validation
-rules. However, the ``money`` type for the ``price`` field was kept, since
-it's more specific than what the system could guess (``text``).
+You'll notice two differences immediately. First, a ``data_class`` option is
+passed when creating the form. This tells Symfony which class to look at for the
+validation information. The ``createBuilder()`` methods also receives an array
+of object of the default data to initialize the form fields. Here we are passing
+the ``Product`` object.
+
+Second, the ``text`` type for the ``name`` field has now been omitted since it's
+correctly guessed from the validation rules. However, the ``money`` type for the
+``price`` field was kept, since it's more specific than what the system could
+guess (``text``).
 
 .. note::
 
     The ``createBuilder()`` method takes up to three arguments (but only
     the first is required):
     
-     * the string ``form`` (meaning you're building a form);
+     * the string ``form`` stands for the name of the form. If you look at
+       the generated code, the two fields are named ``name="form[price]"``
+       and ``name="form[name]"``;
      
-     * a name for the form (e.g. ``product``), which impacts how the ``name``
-       attribute of the fields are rendered (e.g. `name="product[name]"`);
+     * The default data to initialize the form fields. This argument can be an
+       associative array or a plain old PHP object like in this example;
      
      * an array of options for the form.
 
@@ -561,9 +577,9 @@ field:
 Creating Form Classes
 ---------------------
 
-As you've seen, a form can be created and used directly in a controller. However,
-a better practice is to build the form in a separate, standalone PHP class,
-which can then be reused anywhere in your application. Create a new class
+As you've seen, a form can be created and used directly in a controller.
+However, a better practice is to build the form in a separate, standalone PHP
+class, which can then be reused anywhere in your application. Create a new class
 that will house the logic for building the product form:
 
 .. code-block:: php
@@ -618,12 +634,12 @@ the choice is ultimately up to you.
 Forms and Doctrine
 ------------------
 
-The goal of a form is to translate data from an object (e.g. ``Product``)
-to an HTML form and then translate user-submitted data back to the original
-object. As such, the topic of persisting the ``Product`` object to the database
-is entirely unrelated to the topic of forms. If you've configured the ``Product``
-class to be persisted by Doctrine, then persisting it after a form submission
-can be done when the form is valid:
+The goal of a form is to translate data from an object (e.g. ``Product``) to an
+HTML form and then translate user-submitted data back to the original object. As
+such, the topic of persisting the ``Product`` object to the database is entirely
+unrelated to the topic of forms. If you've configured the ``Product`` class to
+be persisted by Doctrine, then persisting it after a form submission can be done
+when the form is valid:
 
 .. code-block:: php
 
@@ -725,9 +741,9 @@ create a form class so that a ``Category`` object can be modified by the user:
 The type of the ``name`` field is being guessed (as a ``text`` field) from
 the validation metadata of the ``Category`` object.
 
-The end goal is to allow the ``Category`` of a ``Product`` to be modified
-right inside the product form. To accomplish this, add a ``category`` field
-to the ``ProductType`` object whose type is an instance of the new ``CategoryType``
+The end goal is to allow the ``Category`` of a ``Product`` to be modified right
+inside the product form. To accomplish this, add a ``category`` field to the
+``ProductType`` object whose type is an instance of the new ``CategoryType``
 class:
 
 .. code-block:: php
@@ -771,7 +787,7 @@ as the original ``Product`` fields:
         <?php echo $view['form']->rest($form) ?>
         <!-- ... -->
 
-When the user submits the form, the data submitted for the ``Category`` fields
+When the user submits the form, the submitted data for the ``Category`` fields
 is merged onto the ``Category`` object. In other words, everything works
 exactly as it does with the main ``Product`` object. The ``Category`` instance
 is accessible naturally via ``$product->getCategory()`` and can be persisted
@@ -856,8 +872,8 @@ the form:
 
 The ``form_theme`` tag "imports" the template and uses all of its form-related
 blocks when rendering the form. In other words, when ``form_row`` is called
-later in this template, it will use the ``field_row`` block from the ``fields.html.twig``
-template.
+later in this template, it will use the ``field_row`` block from the
+``fields.html.twig`` template.
 
 To customize any portion of a form, you just need to override the appropriate
 block. Knowing exactly which block to override is the subject of the next
@@ -866,8 +882,8 @@ section.
 Form Template Blocks
 ~~~~~~~~~~~~~~~~~~~~
 
-Every part of a form that is rendered - HTML form elements, errors, labels, etc -
-is defined in a base template as individual Twig blocks. By default, every
+Every part of a form that is rendered - HTML form elements, errors, labels, etc
+- is defined in a base template as individual Twig blocks. By default, every
 block needed is defined in the `div_layout.html.twig`_ file that lives inside
 the core ``TwigBundle``. Inside this file, you can see every block needed
 to render a form and every default field type.
@@ -876,7 +892,8 @@ Each block follows the same basic pattern and is broken up into two pieces,
 separated by a single underscore character (``_``). A few examples are:
 
 * ``field_row`` - used by ``form_row`` to render most fields;
-* ``textarea_widget`` - used by ``form_widget`` to render a ``textarea`` field type;
+* ``textarea_widget`` - used by ``form_widget`` to render a ``textarea`` field
+  type;
 * ``field_errors`` - used by ``form_errors`` to render errors for a field;
 
 Each block follows the same basic pattern: ``type_part``. The ``type`` portion
@@ -915,10 +932,10 @@ falling back to the ``field_errors`` block. Each field type has a *parent*
 type (the parent type of ``textarea`` is ``field``), and Symfony uses the
 block for the parent type if the base block doesn't exist.
 
-So, to override the errors for *only* ``textarea`` fields, copy the ``field_errors``
-block, rename it to ``textarea_errors`` and customize it. To override the
-default error rendering for *all* fields, copy and customize the ``field_errors``
-block directly.
+So, to override the errors for *only* ``textarea`` fields, copy the
+``field_errors`` block, rename it to ``textarea_errors`` and customize it. To
+override the default error rendering for *all* fields, copy and customize the
+``field_errors`` block directly.
 
 Global Form Theming
 ~~~~~~~~~~~~~~~~~~~
@@ -1033,11 +1050,11 @@ section.
 Final Thoughts
 --------------
 
-You now know all of the building blocks necessary to build complex and functional
-forms for your application. When building forms, keep in mind that the first
-goal of a form is to translate data from an object (``Product``) to an HTML
-form so that the user can modify that data. The second goal of a form is
-to take the data submitted by the user and to re-apply it to the object.
+You now know all of the building blocks necessary to build complex and
+functional forms for your application. When building forms, keep in mind that
+the first goal of a form is to translate data from an object (``Product``) to an
+HTML form so that the user can modify that data. The second goal of a form is to
+take the data submitted by the user and to re-apply it to the object.
 
 There's still much more to learn about the powerful world of forms, such as
 how to handle file uploads and how to create a form where a dynamic number
