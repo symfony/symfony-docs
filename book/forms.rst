@@ -64,6 +64,29 @@ going to need to build a form. But before you begin, let's focus on the generic
    
        php app/console init:bundle "Acme\StoreBundle" src/
 
+   Add new bundle to app/AppKernel.php
+   
+   .. code-block:: php
+       
+       public function registerBundles()
+       {
+        $bundles = array(
+            ...
+            new Acme\StoreBundle\AcmeStoreBundle(),
+        );
+        ...
+
+   Add AcmeStoreBundle routing
+
+   .. code-block:: yaml
+   
+        store_product:
+            pattern:  /store_product
+            defaults: { _controller: AcmeStoreBundle:Default:index }
+        store_product_success:
+            pattern:  /store_product_success
+            defaults: { _controller: AcmeStoreBundle:Default:success }
+
 This type of class is commonly called a "plain-old-PHP-object" because,
 so far, it has nothing to do with Symfony or any other library. It's quite
 simply a normal PHP object that directly solves a problem inside *your* application
@@ -112,6 +135,12 @@ a controller:
                 'form' => $form->createView(),
             ));
         }
+        public function successAction()
+        {
+            return $this->render('AcmeStoreBundle:Default:success.html.twig', array(
+                'message' => 'Success!',
+                ));
+        }
     }
 
 .. tip::
@@ -158,6 +187,21 @@ helper functions:
 
             <input type="submit" />
         </form>
+
+.. configuration-block::
+        
+    .. code-block:: html+jinja
+    
+        {# src/Acme/StoreBundle/Resources/views/Default/success.html.twig #}
+        {{message}}
+        
+    .. code-block:: html+php
+    
+        <?php // src/Acme/StoreBundle/Resources/views/Default/index.html.php
+        
+            echo $view['message'];
+        
+        
 
 .. image:: /book/images/forms-simple.png
     :align: center
