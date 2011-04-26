@@ -96,17 +96,16 @@ a controller:
     {
         public function indexAction()
         {
-            $form = $this->get('form.factory')
-                ->createBuilder('form')
-                ->add('name', 'text')
-                ->add('price', 'money', array('currency' => 'USD'))
-                ->getForm();
-
             // create a product and give it some dummy data for this example
             $product = new Product();
             $product->name = 'Test product';
             $product->setPrice('50.00');
-            $form->setData($product);
+
+            $form = $this->get('form.factory')
+                ->createBuilder('form', $product)
+                ->add('name', 'text')
+                ->add('price', 'money', array('currency' => 'USD'))
+                ->getForm();
 
             return $this->render('AcmeStoreBundle:Default:index.html.twig', array(
                 'form' => $form->createView(),
@@ -193,10 +192,14 @@ controller:
 
     public function indexAction()
     {
-        // ...
-
+        // just setup a fresh $product object (no dummy data)
         $product = new Product();
-        $form->setData($product);
+        
+        $form = $this->get('form.factory')
+            ->createBuilder('form', $product)
+            ->add('name', 'text')
+            ->add('price', 'money', array('currency' => 'USD'))
+            ->getForm();
 
         $request = $this->get('request');
         if ($request->getMethod() == 'POST') {
@@ -327,7 +330,7 @@ corresponding errors printed out with the form.
 
    If you have a look at the generated HTML code, the Form component generates
    new HTML5 fields including a special "required" attribute to enforce some
-   validation directly on the web browser. Some of modern web browsers like
+   validation directly via the web browser. Some of modern web browsers like
    Firefox 4, Chrome 3.0 or Opera 9.5 understand this special "required"
    attribute.
 
@@ -395,21 +398,13 @@ can modify your code so that Symfony guesses the field for you:
         $product = new Product();
 
         $form = $this->get('form.factory')
-            ->createBuilder('form', $product, array(
-                'data_class' => 'Acme\StoreBundle\Entity\Product',
-            ))
+            ->createBuilder('form', $product)
             ->add('name')
             ->add('price', 'money', array('currency' => 'USD'))
             ->getForm();
     }
 
-You'll notice two differences immediately. First, a ``data_class`` option is
-passed when creating the form. This tells Symfony which class to look at for the
-validation information. The ``createBuilder()`` methods also receives an array
-of object of the default data to initialize the form fields. Here we are passing
-the ``Product`` object.
-
-Second, the ``text`` type for the ``name`` field has now been omitted since it's
+The ``text`` type for the ``name`` field has now been omitted since it's
 correctly guessed from the validation rules. However, the ``money`` type for the
 ``price`` field was kept, since it's more specific than what the system could
 guess (``text``).
@@ -419,9 +414,9 @@ guess (``text``).
     The ``createBuilder()`` method takes up to three arguments (but only
     the first is required):
     
-     * the string ``form`` stands for the name of the form. If you look at
-       the generated code, the two fields are named ``name="form[price]"``
-       and ``name="form[name]"``;
+     * the string ``form`` stands for the what you're building (a form) and
+       is also used as the name of the form. If you look at the generated
+       code, the two fields are named ``name="form[price]"`` and ``name="form[name]"``;
      
      * The default data to initialize the form fields. This argument can be an
        associative array or a plain old PHP object like in this example;
