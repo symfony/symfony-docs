@@ -471,7 +471,8 @@ Let's take a look at each part:
 * ``form_rest(form)`` - Renders any fields that have not yet been rendered.
   It's usually a good idea to place a call to this helper at the bottom of
   each form (in case you forgot to output a field or don't want to bother
-  manually rendering hidden fields).
+  manually rendering hidden fields). A good reason for including this part is
+  also discussed in the chapter :ref:`csrf-protection` below.
 
 The majority of the work is done by the ``form_row`` helper, which renders
 the label, errors and HTML form widget of each field inside a ``div`` tag
