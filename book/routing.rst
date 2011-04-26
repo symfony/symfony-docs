@@ -1096,7 +1096,7 @@ The ``generate`` method takes an array of wildcard values to generate the URI.
 But if you pass extra ones, they will be added to the URI as a query string::
 
     $router->generate('blog', array('page' => 2, 'category' => 'Symfony'));
-    // /blog/1?category=Symfony
+    // /blog/2?category=Symfony
 
 Generating URLs from a template
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
