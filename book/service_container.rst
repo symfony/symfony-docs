@@ -565,8 +565,8 @@ the service container gives us a much more appealing option:
 In YAML, the special ``@my_mailer`` syntax tells the container to look for
 a service named ``my_mailer`` and to pass that object into the constructor
 of ``NewsletterManager``. In this case, however, the specified service ``my_mailer``
-must exist. If it does not, an exception will be thrown. You can mark your dependencies
-as optional - this will be discussed in the next section.
+must exist. If it does not, an exception will be thrown. You can mark your
+dependencies as optional - this will be discussed in the next section.
 
 Using references is a very powerful tool that allows you to create independent service
 classes with well-defined dependencies. In this example, the ``newsletter_manager``
@@ -580,23 +580,15 @@ the work of instantiating the objects.
    The Symfony2 service container also supports "setter injection" as well
    as "property injection".
 
-
-Making references optional
+Making References Optional
 --------------------------
 
-As we have seen above, you can easily tell the container how to create
-your whole object tree, including all references.
-
-However, imagine one of your services has an optional dependency - this means
-that the dependency is not required for your service to work properly.
-
-Using the example above will not work as these references are always required
-to exist in the container - otherwise, an exception will be thrown. But with the
-following syntax, you can modify this example and specify this reference to be optional. The container will
-then inject it, if it exists; otherwise, it will just ignore it.
-
-The following is an excerpt from the example above, however slightly modified to make references
-optional:
+Sometimes, one of your services may have an optional dependency, meaning
+that the dependency is not required for your service to work properly. In
+the example above, the ``my_mailer`` service *must* exist, otherwise an exception
+will be thrown. By modifying the ``newsletter_manager`` service definition,
+you can make this reference optional. The container will then inject it if
+it exists and do nothing if it doesn't:
 
 .. configuration-block::
 
@@ -604,7 +596,7 @@ optional:
 
         # src/Acme/HelloBundle/Resources/config/services.yml
         parameters:
-            ....
+            # ...
 
         services:
             newsletter_manager:
@@ -640,15 +632,16 @@ optional:
             array(new Reference('my_mailer', ContainerInterface::IGNORE_ON_INVALID_REFERENCE))
         ));
 
-As you can see, all you have to do is to use in YAML @? instead of @ and when using XML,
-you just need to add the attribute on-invalid="ignore". When using PHP, just add the second param when instantiating
-the Reference object. That's it!
+In YAML, the special ``@?`` syntax tells the service container that the dependency
+is optional. Of course, the ``NewsletterManager`` must also be written to
+allow for an optional dependency:
 
-.. note::
+.. code-block:: php
 
-    Never ever use optional requirements to prevent the container from throwing exceptions.
-    It is your responsibility to specify the dependencies correctly; otherwise, your
-    application will break.
+        public function __construct(Mailer $mailer = null)
+        {
+            // ...
+        }
 
 Core Symfony and Third-Party Bundle Services
 --------------------------------------------
