@@ -181,7 +181,7 @@ that it actually does what you expect it to. Use the Crawler to make assertions
 on the DOM::
 
     // Assert that the response matches a given CSS selector.
-    $this->assertTrue(count($crawler->filter('h1')) > 0);
+    $this->assertTrue($crawler->filter('h1')->count() > 0);
 
 Or, test against the Response content directly if you just want to assert that
 the content contains some text, or if the Response is not an XML/HTML
@@ -200,7 +200,7 @@ assertions. To get you started faster, here is a list of the most common and
 useful assertions::
 
     // Assert that the response matches a given CSS selector.
-    $this->assertTrue(count($crawler->filter($selector)) > 0);
+    $this->assertTrue($crawler->filter($selector)->count() > 0);
 
     // Assert that the response matches a given CSS selector n times.
     $this->assertEquals($count, $crawler->filter($selector)->count());

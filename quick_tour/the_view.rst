@@ -10,8 +10,7 @@ readable and concise; it also makes them more friendly for web designers.
 .. note::
 
     Instead of Twig, you can also use :doc:`PHP </cookbook/templating/PHP>`
-    for your templates. Both template engines are supported by Symfony2 and
-    have the same level of support.
+    for your templates. Both template engines are supported by Symfony2.
 
 Getting familiar with Twig
 --------------------------
@@ -128,39 +127,15 @@ Now, let's have a look at a simplified ``layout.html.twig``:
 .. code-block:: jinja
 
     {# src/Acme/DemoBundle/Resources/views/layout.html.twig #}
-    {% extends "::base.html.twig" %}
+    <div class="symfony-content">
+        {% block content %}
+        {% endblock %}
+    </div>
 
-    {% block body %}
-        <h1>Demo Bundle</h1>
-
-        {% block content %}{% endblock %}
-    {% endblock %}
-
-The ``{% block %}`` tags define two blocks (``body`` and ``content``) that
-child templates can fill in. All the block tag does is to tell the template
-engine that a child template may override those portions of the template. The
-``hello.html.twig`` template overrides the ``content`` block. The other one is
-defined in a base layout as the layout is itself decorated by another one.
-When the bundle part of the template name is empty (``::base.html.twig``),
-views are looked for in the ``app/Resources/`` directory. This directory stores
-global templates for your entire project:
-
-.. code-block:: jinja
-
-    {# app/Resources/views/base.html.twig #}
-    <!DOCTYPE html>
-    <html>
-        <head>
-            <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-            <title>{% block title %}Welcome!{% endblock %}</title>
-            {% block stylesheets %}{% endblock %}
-            <link rel="shortcut icon" href="{{ asset('favicon.ico') }}" />
-        </head>
-        <body>
-            {% block body %}{% endblock %}
-            {% block javascripts %}{% endblock %}
-        </body>
-    </html>
+The ``{% block %}`` tags define blocks that child templates can fill in. All
+the block tag does is to tell the template engine that a child template may
+override those portions of the template. The ``hello.html.twig`` template
+overrides the ``content`` block.
 
 Using Tags, Filters, and Functions
 ----------------------------------
@@ -190,8 +165,8 @@ And change the ``index.html.twig`` template to include it:
     {% extends "AcmeDemoBundle::layout.html.twig" %}
 
     {# override the body block from embedded.html.twig #}
-    {% block body %}
-        {% include "AcmeDemoBundle:Hello:embedded.html.twig" %}
+    {% block content %}
+        {% include "AcmeDemoBundle:Demo:embedded.html.twig" %}
     {% endblock %}
 
 Embedding other Controllers
@@ -206,7 +181,7 @@ the ``index`` template. To do this, use the ``render`` tag:
 
 .. code-block:: jinja
 
-    {# src/Acme/DemoBundle/Resources/views/Hello/index.html.twig #}
+    {# src/Acme/DemoBundle/Resources/views/Demo/index.html.twig #}
     {% render "AcmeDemoBundle:Demo:fancy" with { 'name': name, 'color': 'green' } %}
 
 Here, the ``AcmeDemoBundle:Demo:fancy`` string refers to the ``fancy`` action
