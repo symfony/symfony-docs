@@ -540,7 +540,7 @@ without any arguments or options:
 
    To be able to load data fixtures to your database, you will need to have the 
    ``DoctrineFixturesBundle`` bundle installed. To learn how to do it, 
-   read the chapter :doc:`/cookbook/doctrine/doctrine_fixtures` in the Cookbook.
+   read the ":doc:`/cookbook/doctrine/doctrine_fixtures`" entry of the Cookbook.
 
 Form Integration
 ----------------
