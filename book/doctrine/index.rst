@@ -8,5 +8,5 @@ Learn about the Doctrine integration with Symfony2:
 
     model
     orm/index
-    dbal/index
+    dbal
     migrations/index
