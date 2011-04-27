@@ -12,12 +12,19 @@ you can use this field out-of-the-box. If you store your data as a number
 
 This field adds a percentage sign "``%``" after the input box.
 
-============  ======
-Rendered as   ``input`` ``text`` field
-Options       ``type``, ``required``, ``label``, ``read_only``, ``error_bubbling``
-Parent type   ``field``
-Class         :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\PercentType`
-============  ======
++-------------+-----------------------------------------------------------------------+
+| Rendered as | ``input`` ``text`` field                                              |
++-------------+-----------------------------------------------------------------------+
+| Options     | - ``type``                                                            |
+|             | - ``required``                                                        |
+|             | - ``label``                                                           |
+|             | - ``read_only``                                                       |
+|             | - ``error_bubbling``                                                  |
++-------------+-----------------------------------------------------------------------+
+| Parent type | ``field``                                                             |
++-------------+-----------------------------------------------------------------------+
+| Class       | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\PercentType` |
++-------------+-----------------------------------------------------------------------+
 
 Options
 -------

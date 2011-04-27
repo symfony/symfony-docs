@@ -406,11 +406,13 @@ longer required. The URL ``/blog`` will match this route and the value of
 the ``page`` parameter will be set to ``1``. The URL ``/blog/2`` will also
 match, giving the ``page`` parameter a value of ``2``. Perfect.
 
-=======  ==========
-/blog    {page} = 1
-/blog/1  {page} = 1
-/blog/2  {page} = 2
-=======  ==========
++---------+------------+
+| /blog   | {page} = 1 |
++---------+------------+
+| /blog/1 | {page} = 1 |
++---------+------------+
+| /blog/2 | {page} = 2 |
++---------+------------+
 
 .. index::
    single: Routing; Requirements
@@ -474,11 +476,13 @@ will *never* be matched. Instead, a URL like ``/blog/my-blog-post`` will match
 the first route (``blog``) and return a nonsense value of ``my-blog-post``
 to the ``{page}`` parameter.
 
-==================  =================  ============
-**URL**             **matched route**
-/blog/2             blog               {page} = 2
-/blog/my-blog-post  blog               {page} = my-blog-post
-==================  =================  ============
++--------------------+-------+-----------------------+
+| URL                | route | parameters            |
++====================+=======+=======================+
+| /blog/2            | blog  | {page} = 2            |
++--------------------+-------+-----------------------+
+| /blog/my-blog-post | blog  | {page} = my-blog-post |
++--------------------+-------+-----------------------+
 
 The answer to the problem is to add route *requirements*. The routes in this
 example would work perfectly if the ``/blog/{page}`` pattern *only* matched
@@ -534,11 +538,13 @@ is *not* a number).
 As a result, a URL like ``/blog/my-blog-post`` will now properly match the
 ``blog_show`` route.
 
-==================  =================  ============
-**URL**             **matched route**
-/blog/2             blog               {page} = 2
-/blog/my-blog-post  blog_show          {slug} = my-blog-post
-==================  =================  ============
++--------------------+-----------+-----------------------+
+| URL                | route     | parameters            |
++====================+===========+=======================+
+| /blog/2            | blog      | {page} = 2            |
++--------------------+-----------+-----------------------+
+| /blog/my-blog-post | blog_show | {slug} = my-blog-post |
++--------------------+-----------+-----------------------+
 
 .. sidebar:: Earlier Routes always Win
 
@@ -596,12 +602,15 @@ URL:
 For incoming requests, the ``{culture}`` portion of the URL is matched against
 the regular expression ``(en|fr)``.
 
-===     ==============
-/       {culture} = en
-/en     {culture} = en
-/fr     {culture} = fr
-/es     *won't match this route*
-===     ==============
++-----+--------------------------+
+| /   | {culture} = en           |
++-----+--------------------------+
+| /en | {culture} = en           |
++-----+--------------------------+
+| /fr | {culture} = fr           |
++-----+--------------------------+
+| /es | *won't match this route* |
++-----+--------------------------+
 
 .. index::
    single: Routing; Method requirement
@@ -779,10 +788,11 @@ each separated by a colon:
 
 For example, a ``_controller`` value of ``AcmeBlogBundle:Blog:show`` means:
 
-==============  ====================  ===============
-**Bundle**      **Controller Class**  **Method Name**
-AcmeBlogBundle  BlogController        showAction
-==============  ====================  ===============
++----------------+------------------+-------------+
+| Bundle         | Controller Class | Method Name |
++================+==================+=============+
+| AcmeBlogBundle | BlogController   | showAction  |
++----------------+------------------+-------------+
 
 The controller might look like this:
 

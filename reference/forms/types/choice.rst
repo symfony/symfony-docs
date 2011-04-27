@@ -10,12 +10,23 @@ It can be rendered as a ``select`` tag, radio buttons, or checkboxes.
 To use this field, you must specify *either* the ``choice_list`` or ``choices``
 option.
 
-============  ======
-Rendered as   can be various tags (see below)
-Options       ``choices``, ``choice_list``, ``multiple``, ``expanded``, ``preferred_choices``, ``required``, ``label``, ``read_only``, ``error_bubbling``
-Parent type   :doc:`form</reference/forms/types/form>` (if expanded), ``field`` otherwise
-Class         :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\ChoiceType`
-============  ======
++-------------+-----------------------------------------------------------------------------+
+| Rendered as | can be various tags (see below)                                             |
++-------------+-----------------------------------------------------------------------------+
+| Options     | - ``choices``                                                               |
+|             | - ``choice_list``                                                           |
+|             | - ``multiple``                                                              |
+|             | - ``expanded``                                                              |
+|             | - ``preferred_choices``                                                     |
+|             | - ``required``                                                              |
+|             | - ``label``                                                                 |
+|             | - ``read_only``                                                             |
+|             | - ``error_bubbling``                                                        |
++-------------+-----------------------------------------------------------------------------+
+| Parent type | :doc:`form</reference/forms/types/form>` (if expanded), ``field`` otherwise |
++-------------+-----------------------------------------------------------------------------+
+| Class       | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\ChoiceType`        |
++-------------+-----------------------------------------------------------------------------+
 
 .. _forms-reference-choice-tags:
 
@@ -25,13 +36,17 @@ Select tag, Checkboxes or Radio Buttons
 This field may be rendered as one of several different HTML fields, depending
 on the ``expanded`` and ``multiple`` options:
 
-========================================  ============  ===========
-**element type**                          **expanded**  **multiple**
-select tag                                false         false          
-select tag (with ``multiple`` attribute)  false         true           
-radio buttons                             true          false          
-checkboxes                                true          true           
-========================================  ============  ===========
++------------------------------------------+----------+----------+
+| element type                             | expanded | multiple |
++==========================================+==========+==========+
+| select tag                               | false    | false    |
++------------------------------------------+----------+----------+
+| select tag (with ``multiple`` attribute) | false    | true     |
++------------------------------------------+----------+----------+
+| radio buttons                            | true     | false    |
++------------------------------------------+----------+----------+
+| checkboxes                               | true     | true     |
++------------------------------------------+----------+----------+
 
 Adding an "empty value"
 -----------------------

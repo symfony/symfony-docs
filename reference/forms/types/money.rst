@@ -11,12 +11,22 @@ This field type allows you to specify a currency, whose symbol is rendered
 next to the text field. There are also several other options for customizing
 how the input and output of the data is handled.
 
-============  ======
-Rendered as   ``input`` ``text`` field
-Options       ``currency``, ``divisor``, ``precision``, ``grouping`` ``required``, ``label``, ``read_only``, ``error_bubbling``
-Parent type   ``field``
-Class         :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\MoneyType`
-============  ======
++-------------+---------------------------------------------------------------------+
+| Rendered as | ``input`` ``text`` field                                            |
++-------------+---------------------------------------------------------------------+
+| Options     | - ``currency``                                                      |
+|             | - ``divisor``                                                       |
+|             | - ``precision``                                                     |
+|             | - ``grouping``                                                      |
+|             | - ``required``                                                      |
+|             | - ``label``                                                         |
+|             | - ``read_only``                                                     |
+|             | - ``error_bubbling``                                                |
++-------------+---------------------------------------------------------------------+
+| Parent type | ``field``                                                           |
++-------------+---------------------------------------------------------------------+
+| Class       | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\MoneyType` |
++-------------+---------------------------------------------------------------------+
 
 Options
 -------

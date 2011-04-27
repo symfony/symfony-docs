@@ -6,12 +6,20 @@
 
 Renders a ``textarea`` HTML element. 
 
-============  ======
-Rendered as   ``textarea`` field
-Options       ``max_length``, ``required``, ``label``, ``read_only``, ``trim``, ``error_bubbling``
-Parent type   ``field``
-Class         :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\TextareaType`
-============  ======
++-------------+------------------------------------------------------------------------+
+| Rendered as | ``textarea`` field                                                     |
++-------------+------------------------------------------------------------------------+
+| Options     | - ``max_length``                                                       |
+|             | - ``required``                                                         |
+|             | - ``label``                                                            |
+|             | - ``read_only``                                                        |
+|             | - ``trim``                                                             |
+|             | - ``error_bubbling``                                                   |
++-------------+------------------------------------------------------------------------+
+| Parent type | ``field``                                                              |
++-------------+------------------------------------------------------------------------+
+| Class       | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\TextareaType` |
++-------------+------------------------------------------------------------------------+
 
 Options
 -------

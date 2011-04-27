@@ -3,12 +3,17 @@ MinLength
 
 Validates that the string length of a value is not smaller than the given limit.
 
-==============  ======
-Validates       a string
-Options         ``limit``, ``message``, ``charset``
-Default Option  ``limit``
-Class           :class:`Symfony\\Component\\Validator\\Constraints\\MinLength`
-==============  ======
++----------------+----------------------------------------------------------------+
+| Validates      | a string                                                       |
++----------------+----------------------------------------------------------------+
+| Options        | - ``limit``                                                    |
+|                | - ``message``                                                  |
+|                | - ``charset``                                                  |
++----------------+----------------------------------------------------------------+
+| Default Option | ``limit``                                                      |
++----------------+----------------------------------------------------------------+
+| Class          | :class:`Symfony\\Component\\Validator\\Constraints\\MinLength` |
++----------------+----------------------------------------------------------------+
 
 Options
 -------

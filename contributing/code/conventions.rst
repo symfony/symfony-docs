@@ -40,23 +40,35 @@ is a main relation:
 For many relations where the convention does not apply, the following methods
 must be used instead (where ``XXX`` is the name of the related thing):
 
-============== =================
-Main Relation  Other Relations
-============== =================
-``get()``      ``getXXX()``
-``set()``      ``setXXX()``
-n/a            ``replaceXXX()``
-``has()``      ``hasXXX()``
-``all()``      ``getXXXs()``
-``replace()``  ``setXXXs()``
-``remove()``   ``removeXXX()``
-``clear()``    ``clearXXX()``
-``isEmpty()``  ``isEmptyXXX()``
-``add()``      ``addXXX()``
-``register()`` ``registerXXX()``
-``count()``    ``countXXX()``
-``keys()``     n/a
-============== =================
++----------------+-------------------+
+| Main Relation  | Other Relations   |
++================+===================+
+| ``get()``      | ``getXXX()``      |
++----------------+-------------------+
+| ``set()``      | ``setXXX()``      |
++----------------+-------------------+
+| n/a            | ``replaceXXX()``  |
++----------------+-------------------+
+| ``has()``      | ``hasXXX()``      |
++----------------+-------------------+
+| ``all()``      | ``getXXXs()``     |
++----------------+-------------------+
+| ``replace()``  | ``setXXXs()``     |
++----------------+-------------------+
+| ``remove()``   | ``removeXXX()``   |
++----------------+-------------------+
+| ``clear()``    | ``clearXXX()``    |
++----------------+-------------------+
+| ``isEmpty()``  | ``isEmptyXXX()``  |
++----------------+-------------------+
+| ``add()``      | ``addXXX()``      |
++----------------+-------------------+
+| ``register()`` | ``registerXXX()`` |
++----------------+-------------------+
+| ``count()``    | ``countXXX()``    |
++----------------+-------------------+
+| ``keys()``     | n/a               |
++----------------+-------------------+
 
 .. note::
 

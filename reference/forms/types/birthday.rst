@@ -13,13 +13,25 @@ This type is essentially the same as the ``date`` type, but with a more appropri
 default for the ``years`` option.   The ``years`` option defaults to 120
 years ago to the current year.
 
-====================  ======
-Underlying Data Type  can be ``DateTime``, string, timestamp, or array (see :ref:`form-reference-date-input`)
-Rendered as           can be three select boxes or a text box, based on the ``widget`` option
-Options               ``widget``, ``input``, ``years``, ``months``, ``days``, ``format``, ``pattern``, ``data_timezone``, ``user_timezone``
-Parent type           :doc:`date</reference/forms/types/date>`
-Class                 :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\BirthdayType`
-====================  ======
++----------------------+-----------------------------------------------------------------------------------------------------+
+| Underlying Data Type | can be ``DateTime``, ``string``, ``timestamp``, or ``array`` (see :ref:`form-reference-date-input`) |
++----------------------+-----------------------------------------------------------------------------------------------------+
+| Rendered as          | can be three select boxes or a text box, based on the ``widget`` option                             |
++----------------------+-----------------------------------------------------------------------------------------------------+
+| Options              | - ``widget``                                                                                        |
+|                      | - ``input``                                                                                         |
+|                      | - ``years``                                                                                         |
+|                      | - ``months``                                                                                        |
+|                      | - ``days``                                                                                          |
+|                      | - ``format``                                                                                        |
+|                      | - ``pattern``                                                                                       |
+|                      | - ``data_timezone``                                                                                 |
+|                      | - ``user_timezone``                                                                                 |
++----------------------+-----------------------------------------------------------------------------------------------------+
+| Parent type          | :doc:`date</reference/forms/types/date>`                                                            |
++----------------------+-----------------------------------------------------------------------------------------------------+
+| Class                | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\BirthdayType`                              |
++----------------------+-----------------------------------------------------------------------------------------------------+
 
 Options
 -------

@@ -6,12 +6,17 @@
 
 The ``csrf`` type is a hidden input field containing a CSRF token.
 
-============  ======
-Rendered as   ``input`` ``hidden`` field
-Options       ``csrf_provider``, ``page_id``, ``error_bubbling``
-Parent type   ``hidden``
-Class         :class:`Symfony\\Component\\Form\\Extension\\Csrf\\Type\\CsrfType`
-============  ======
++-------------+--------------------------------------------------------------------+
+| Rendered as | ``input`` ``hidden`` field                                         |
++-------------+--------------------------------------------------------------------+
+| Options     | - ``csrf_provider``                                                |
+|             | - ``page_id``                                                      |
+|             | - ``error_bubbling``                                               |
++-------------+--------------------------------------------------------------------+
+| Parent type | ``hidden``                                                         |
++-------------+--------------------------------------------------------------------+
+| Class       | :class:`Symfony\\Component\\Form\\Extension\\Csrf\\Type\\CsrfType` |
++-------------+--------------------------------------------------------------------+
 
 Options
 -------
