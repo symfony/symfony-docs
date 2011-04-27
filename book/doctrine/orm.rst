@@ -512,7 +512,7 @@ without any arguments or options:
       :clear-metadata              Clear all metadata cache for a entity manager.
       :clear-query                 Clear all query cache for a entity manager.
       :clear-result                Clear result cache for a entity manager.
-    doctrine:data
+    doctrine:fixtures
       :load                        Load data fixtures to your database.
     doctrine:database
       :create                      Create the configured databases.
@@ -535,6 +535,12 @@ without any arguments or options:
       :update                      Processes the schema and either update the database schema of EntityManager Storage Connection or generate the SQL output.
 
     ...
+
+.. note::
+
+   To be able to load data fixtures to your database, you will need to have the 
+   ``DoctrineFixturesBundle`` bundle installed. To learn how to do it, 
+   read the chapter :doc:`/cookbook/doctrine/doctrine_fixtures` in the Cookbook.
 
 Form Integration
 ----------------
