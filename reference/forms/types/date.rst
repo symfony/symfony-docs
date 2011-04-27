@@ -14,13 +14,25 @@ correctly, the field will take care of all of the details (see the ``input`` opt
 The field can be rendered as a single text box or three select boxes (month,
 day, and year).
 
-====================  ======
-Underlying Data Type  can be ``DateTime``, string, timestamp, or array (see the ``input`` option)
-Rendered as           single text box or three select fields
-Options               ``widget``, ``input``, ``years``, ``months``, ``days``, ``format``, ``pattern``, ``data_timezone``, ``user_timezone``
-Parent type           ``field`` (if text), ``form`` otherwise
-Class                 :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\DateType`
-====================  ======
++----------------------+-----------------------------------------------------------------------------+
+| Underlying Data Type | can be ``DateTime``, string, timestamp, or array (see the ``input`` option) |
++----------------------+-----------------------------------------------------------------------------+
+| Rendered as          | single text box or three select fields                                      |
++----------------------+-----------------------------------------------------------------------------+
+| Options              | - ``widget``                                                                |
+|                      | - ``input``                                                                 |
+|                      | - ``years``                                                                 |
+|                      | - ``months``                                                                |
+|                      | - ``days``                                                                  |
+|                      | - ``format``                                                                |
+|                      | - ``pattern``                                                               |
+|                      | - ``data_timezone``                                                         |
+|                      | - ``user_timezone``                                                         |
++----------------------+-----------------------------------------------------------------------------+
+| Parent type          | ``field`` (if text), ``form`` otherwise                                     |
++----------------------+-----------------------------------------------------------------------------+
+| Class                | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\DateType`          |
++----------------------+-----------------------------------------------------------------------------+
 
 Basic Usage
 -----------

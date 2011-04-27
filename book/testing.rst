@@ -403,17 +403,23 @@ following:
 
 After creation, you can add more nodes:
 
-===================== ================================
-Method                Description                     
-===================== ================================
-``addHTMLDocument()`` An HTML document                
-``addXMLDocument()``  An XML document                 
-``addDOMDocument()``  A ``DOMDocument`` instance      
-``addDOMNodeList()``  A ``DOMNodeList`` instance      
-``addDOMNode()``      A ``DOMNode`` instance          
-``addNodes()``        An array of the above elements  
-``add()``             Accept any of the above elements
-===================== ================================
++-----------------------+----------------------------------+
+| Method                | Description                      |
++=======================+==================================+
+| ``addHTMLDocument()`` | An HTML document                 |
++-----------------------+----------------------------------+
+| ``addXMLDocument()``  | An XML document                  |
++-----------------------+----------------------------------+
+| ``addDOMDocument()``  | A ``DOMDocument`` instance       |
++-----------------------+----------------------------------+
+| ``addDOMNodeList()``  | A ``DOMNodeList`` instance       |
++-----------------------+----------------------------------+
+| ``addDOMNode()``      | A ``DOMNode`` instance           |
++-----------------------+----------------------------------+
+| ``addNodes()``        | An array of the above elements   |
++-----------------------+----------------------------------+
+| ``add()``             | Accept any of the above elements |
++-----------------------+----------------------------------+
 
 Traversing
 ~~~~~~~~~~
@@ -421,21 +427,31 @@ Traversing
 Like jQuery, the Crawler has methods to traverse the DOM of an HTML/XML
 document:
 
-===================== =========================================
-Method                Description
-===================== =========================================
-``filter('h1')``      Nodes that match the CSS selector
-``filterXpath('h1')`` Nodes that match the XPath expression
-``eq(1)``             Node for the specified index
-``first()``           First node
-``last()``            Last node
-``siblings()``        Siblings
-``nextAll()``         All following siblings
-``previousAll()``     All preceding siblings
-``parents()``         Parent nodes
-``children()``        Children
-``reduce($lambda)``   Nodes for which the callable does not return false
-===================== =========================================
++-----------------------+----------------------------------------------------+
+| Method                | Description                                        |
++=======================+====================================================+
+| ``filter('h1')``      | Nodes that match the CSS selector                  |
++-----------------------+----------------------------------------------------+
+| ``filterXpath('h1')`` | Nodes that match the XPath expression              |
++-----------------------+----------------------------------------------------+
+| ``eq(1)``             | Node for the specified index                       |
++-----------------------+----------------------------------------------------+
+| ``first()``           | First node                                         |
++-----------------------+----------------------------------------------------+
+| ``last()``            | Last node                                          |
++-----------------------+----------------------------------------------------+
+| ``siblings()``        | Siblings                                           |
++-----------------------+----------------------------------------------------+
+| ``nextAll()``         | All following siblings                             |
++-----------------------+----------------------------------------------------+
+| ``previousAll()``     | All preceding siblings                             |
++-----------------------+----------------------------------------------------+
+| ``parents()``         | Parent nodes                                       |
++-----------------------+----------------------------------------------------+
+| ``children()``        | Children                                           |
++-----------------------+----------------------------------------------------+
+| ``reduce($lambda)``   | Nodes for which the callable does not return false |
++-----------------------+----------------------------------------------------+
 
 You can iteratively narrow your node selection by chaining method calls as
 each method returns a new Crawler instance for the matching nodes::

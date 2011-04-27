@@ -75,12 +75,15 @@ defines what you want to *do* with the resource. The HTTP methods are the
 *verbs* of the request and define the few common ways that you can act upon
 the resource:
 
-========  ====================  
-*GET*     Retrieve the resource from the server
-*POST*    Create a resource on the server
-*PUT*     Update the resource on the server
-*DELETE*  Delete the resource from the server
-========  ====================
++----------+---------------------------------------+
+| *GET*    | Retrieve the resource from the server |
++----------+---------------------------------------+
+| *POST*   | Create a resource on the server       |
++----------+---------------------------------------+
+| *PUT*    | Update the resource on the server     |
++----------+---------------------------------------+
+| *DELETE* | Delete the resource from the server   |
++----------+---------------------------------------+
 
 With this in mind, you can imagine what an HTTP request might look like to
 delete a specific blog entry, for example:
@@ -299,11 +302,13 @@ the "look" of the site can remain consistent.
 A much better solution is to use a :term:`front controller`: a single PHP
 file that handles every request coming into your application. For example:
 
-======================  ===========
-``/index.php``          executes ``index.php``
-``/index.php/contact``  executes ``index.php``
-``/index.php/blog``     executes ``index.php``
-======================  ===========
++------------------------+------------------------+
+| ``/index.php``         | executes ``index.php`` |
++------------------------+------------------------+
+| ``/index.php/contact`` | executes ``index.php`` |
++------------------------+------------------------+
+| ``/index.php/blog``    | executes ``index.php`` |
++------------------------+------------------------+
 
 .. tip::
 

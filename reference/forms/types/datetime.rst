@@ -10,13 +10,26 @@ date and time (e.g. ``1984-06-05 12:15:30``).
 Can be rendered as a text input or select tags. The underlying format of the
 data can be a ``DateTime`` object, a string, a timestamp or an array.
 
-====================  ======
-Underlying Data Type  can be ``DateTime``, string, timestamp, or array (see the ``input`` option)
-Rendered as           single text box or three select fields
-Options               ``date_widget``, ``time_widget``, ``input``, ``years``, ``months``, ``days``, ``format``, ``pattern``, ``data_timezone``, ``user_timezone``
-Parent type           form
-Class                 :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\DatetimeType`
-====================  ======
++----------------------+-----------------------------------------------------------------------------+
+| Underlying Data Type | can be ``DateTime``, string, timestamp, or array (see the ``input`` option) |
++----------------------+-----------------------------------------------------------------------------+
+| Rendered as          | single text box or three select fields                                      |
++----------------------+-----------------------------------------------------------------------------+
+| Options              | - ``date_widget``                                                           |
+|                      | - ``time_widget``                                                           |
+|                      | - ``input``                                                                 |
+|                      | - ``years``                                                                 |
+|                      | - ``months``                                                                |
+|                      | - ``days``                                                                  |
+|                      | - ``format``                                                                |
+|                      | - ``pattern``                                                               |
+|                      | - ``data_timezone``                                                         |
+|                      | - ``user_timezone``                                                         |
++----------------------+-----------------------------------------------------------------------------+
+| Parent type          | form                                                                        |
++----------------------+-----------------------------------------------------------------------------+
+| Class                | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\DatetimeType`      |
++----------------------+-----------------------------------------------------------------------------+
 
 * ``date_widget`` [type: string, default: choice]
     Defines the ``widget`` option for the :doc:`date</reference/forms/types/date>` type

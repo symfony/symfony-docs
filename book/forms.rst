@@ -898,15 +898,21 @@ whereas the ``part`` portion corresponds to *what* is being rendered (e.g.
 ``label``, ``widget``). By default, there are exactly 7 possible parts of
 a form that can be rendered:
 
-============  =========================   ============================
-``label``     (e.g. ``field_label``)      renders the field's label
-``widget``    (e.g. ``field_widget``)     renders the field's HTML representation
-``errors``    (e.g. ``field_errors``)     renders the field's errors
-``row``       (e.g. ``field_row``)        renders the field's entire row (label+widget+errors)
-``rows``      (e.g. ``field_rows``)       renders the child rows of a form
-``rest``      (e.g. ``field_rest``)       renders the unrendered fields of a form
-``enctype``   (e.g. ``field_enctype``)    renders the ``enctype`` attribute of a form
-============  =========================   ============================
++-------------+--------------------------+------------------------------------------------------+
+| ``label``   | (e.g. ``field_label``)   | renders the field's label                            |
++-------------+--------------------------+------------------------------------------------------+
+| ``widget``  | (e.g. ``field_widget``)  | renders the field's HTML representation              |
++-------------+--------------------------+------------------------------------------------------+
+| ``errors``  | (e.g. ``field_errors``)  | renders the field's errors                           |
++-------------+--------------------------+------------------------------------------------------+
+| ``row``     | (e.g. ``field_row``)     | renders the field's entire row (label+widget+errors) |
++-------------+--------------------------+------------------------------------------------------+
+| ``rows``    | (e.g. ``field_rows``)    | renders the child rows of a form                     |
++-------------+--------------------------+------------------------------------------------------+
+| ``rest``    | (e.g. ``field_rest``)    | renders the unrendered fields of a form              |
++-------------+--------------------------+------------------------------------------------------+
+| ``enctype`` | (e.g. ``field_enctype``) | renders the ``enctype`` attribute of a form          |
++-------------+--------------------------+------------------------------------------------------+
 
 By knowing the field type (e.g. ``textarea``) and which part you want to
 customize (e.g. ``widget``), you can construct the block name that needs

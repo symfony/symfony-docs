@@ -6,12 +6,20 @@
 
 The text field represents the most basic input text field.
 
-============  ======
-Rendered as   ``input`` ``text`` field
-Options       ``max_length``, ``required``, ``label``, ``read_only``, ``trim``, ``error_bubbling``
-Parent type   ``field``
-Class         :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\TextType`
-============  ======
++-------------+--------------------------------------------------------------------+
+| Rendered as | ``input`` ``text`` field                                           |
++-------------+--------------------------------------------------------------------+
+| Options     | - ``max_length``                                                   |
+|             | - ``required``                                                     |
+|             | - ``label``                                                        |
+|             | - ``read_only``                                                    |
+|             | - ``trim``                                                         |
+|             | - ``error_bubbling``                                               |
++-------------+--------------------------------------------------------------------+
+| Parent type | ``field``                                                          |
++-------------+--------------------------------------------------------------------+
+| Class       | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\TextType` |
++-------------+--------------------------------------------------------------------+
 
 Options
 -------

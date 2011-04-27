@@ -20,12 +20,21 @@ Unlike the ``choice`` type, you don't need to specify a ``choices`` or
 of languages. You *can* specify either of these options manually, but then
 you should just use the ``choice`` type directly.
 
-============  ======
-Rendered as   can be various tags (see :ref:`forms-reference-choice-tags`)
-Options       ``multiple``, ``expanded``, ``preferred_choices``, ``required``, ``label``, ``read_only``, ``error_bubbling``
-Parent type   :doc:`choice</reference/forms/types/choice>`
-Class         :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\LanguageType`
-============  ======
++-------------+------------------------------------------------------------------------+
+| Rendered as | can be various tags (see :ref:`forms-reference-choice-tags`)           |
++-------------+------------------------------------------------------------------------+
+| Options     | - ``multiple``                                                         |
+|             | - ``expanded``                                                         |
+|             | - ``preferred_choices``                                                |
+|             | - ``required``                                                         |
+|             | - ``label``                                                            |
+|             | - ``read_only``                                                        |
+|             | - ``error_bubbling``                                                   |
++-------------+------------------------------------------------------------------------+
+| Parent type | :doc:`choice</reference/forms/types/choice>`                           |
++-------------+------------------------------------------------------------------------+
+| Class       | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\LanguageType` |
++-------------+------------------------------------------------------------------------+
 
 Options
 -------
