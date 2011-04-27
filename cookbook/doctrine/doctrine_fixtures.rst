@@ -8,7 +8,7 @@ Fixtures are used to load a controlled set of data into a database. This
 data can be used for testing or could be the initial data required for the
 application to run smoothly. Symfony2 has no built in way to manage fixtures
 but Doctrine2 has a library to help you write fixtures for the Doctrine
-:doc:`ORM</book/doctrine/orm/overview>` or :doc:`ODM</book/doctrine/mongodb-odm/overview>`.
+:doc:`ORM</book/doctrine/orm/overview>` or :doc:`ODM</cookbook/doctrine/mongodb>`.
 
 Setup and Configuration
 -----------------------
@@ -21,7 +21,14 @@ Add the following to ``bin/vendors.sh``, right after the "Monolog" entry:
 .. code-block:: text
 
     # Doctrine Fixtures
-    install_git doctrine-fixtures git://github.com/doctrine/data-fixtures.git
+    install_git doctrine-fixtures https://github.com/doctrine/data-fixtures.git
+
+And also, the following after the "WebConfiguratorBundle" entry:
+
+.. code-block:: text
+
+    # DoctrineFixturesBundle
+    install_git DoctrineFixturesBundle https://github.com/symfony/DoctrineFixturesBundle.git
 
 Update vendors and rebuild the bootstrap file:
 
@@ -32,7 +39,7 @@ Update vendors and rebuild the bootstrap file:
 If everything worked, the ``doctrine-fixtures`` library can now be found
 at ``vendor/doctrine-fixtures``.
 
-Finally, register the ``Doctrine\Common\DataFixtures`` namespace in ``app/autoload.php``.
+Register the ``Doctrine\Common\DataFixtures`` namespace in ``app/autoload.php``.
 
 .. code-block:: php
 
@@ -44,11 +51,28 @@ Finally, register the ``Doctrine\Common\DataFixtures`` namespace in ``app/autolo
         // ...
     ));
 
-Be sure to register the new namespace *after* ``Doctrine\Common``. Otherwise,
-Symfony will look for data fixture classes inside the ``Doctrine\Common``
-directory. Symfony's autoloader always looks for a class inside the directory
-of the first matching namespace, so more specific namespaces should always
-come first.
+.. caution::
+
+    Be sure to register the new namespace *before* ``Doctrine\Common``. Otherwise,
+    Symfony will look for data fixture classes inside the ``Doctrine\Common``
+    directory. Symfony's autoloader always looks for a class inside the directory
+    of the first matching namespace, so more specific namespaces should always
+    come first.
+
+Finally, register the Bundle ``DoctrineFixturesBundle`` in ``app/AppKernel.php``.
+
+.. code-block:: php
+
+    // ...
+    public function registerBundles()
+    {
+        $bundles = array(
+            // ...
+            new Symfony\Bundle\DoctrineFixturesBundle\DoctrineFixturesBundle(),
+            // ...
+        );
+        // ...
+    }
 
 Writing Simple Fixtures
 -----------------------
@@ -100,13 +124,13 @@ Executing Fixtures
 ------------------
 
 Once your fixtures have been written, you can load them via the command
-line by using the ``doctrine:data:load`` command:
+line by using the ``doctrine:fixtures:load`` command:
 
 .. code-block:: bash
 
-    $ php app/console doctrine:data:load
+    $ php app/console doctrine:fixtures:load
 
-If you're using the ODM, use the ``doctrine:mongodb:data:load`` command instead:
+If you're using the ODM, use the ``doctrine:mongodb:fixtures:load`` command instead:
 
 .. code-block:: bash
 
@@ -129,14 +153,14 @@ Both commands come with a few options:
 
 .. note::
 
-   If using the ``doctrine:mongodb:data:load`` task, replace the ``--em=``
+   If using the ``doctrine:mongodb:fixtures:load`` task, replace the ``--em=``
    option with ``--dm=`` to manually specify the document manager.
 
 A full example use might look like this:
 
 .. code-block:: bash
 
-   $ php app/console doctrine:data:load --fixtures=/path/to/fixture1 --fixtures=/path/to/fixture2 --append --em=foo_manager
+   $ php app/console doctrine:fixtures:load --fixtures=/path/to/fixture1 --fixtures=/path/to/fixture2 --append --em=foo_manager
 
 Sharing Objects between Fixtures
 --------------------------------
@@ -169,14 +193,14 @@ the order in which fixtures are loaded.
 
             $manager->persist($userAdmin);
             $manager->flush();
-        
-            $this->addReference('admin-user', $userAdmin);        
+
+            $this->addReference('admin-user', $userAdmin);
         }
 
         public function getOrder()
         {
             return 1; // the order in which fixtures will be loaded
-        }    
+        }
     }
 
 The fixture class now implements ``OrderedFixtureInterface``, which tells
@@ -202,14 +226,14 @@ of 2:
 
             $manager->persist($groupAdmin);
             $manager->flush();
-        
-            $this->addReference('admin-group', $groupAdmin);  
+
+            $this->addReference('admin-group', $groupAdmin);
         }
 
         public function getOrder()
         {
             return 2; // the order in which fixtures will be loaded
-        }    
+        }
     }
 
 Both of the fixture classes extend ``AbstractFixture``, which allows you
@@ -226,7 +250,7 @@ references:
     use Doctrine\Common\DataFixtures\AbstractFixture;
     use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
     use VendorName\MyBundle\Entity\UserGroup;
-    
+
     class LoadUserGroupData extends AbstractFixture implements OrderedFixtureInterface
     {
         public function load($manager)
@@ -242,7 +266,7 @@ references:
         public function getOrder()
         {
             return 3;
-        }    
+        }
     }
 
 The fixtures will now be executed in the ascending order of the value returned

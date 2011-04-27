@@ -130,7 +130,7 @@ Events
 ------
 
 Each event thrown by the Kernel is a subclass of
-:class:`Symfony\Component\HttpKernel\Event\KernelEvent`. This means that
+:class:`Symfony\\Component\\HttpKernel\\Event\\KernelEvent`. This means that
 each event has access to the same basic information:
 
 * ``getRequestType()`` - returns the *type* of the request
@@ -187,7 +187,7 @@ the ``Request`` and determine the Controller name (stored in the ``_controller``
 ``onCoreController`` Event
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-*Event Class*: :class:`Symfony\Component\HttpKernel\Event\FilterControllerEvent`
+*Event Class*: :class:`Symfony\\Component\\HttpKernel\\Event\\FilterControllerEvent`
 
 This event is not used by ``FrameworkBundle``, but can be an entry point used
 to modify the controller that should be executed:
@@ -211,7 +211,7 @@ to modify the controller that should be executed:
 ``onCoreView`` Event
 ~~~~~~~~~~~~~~~~~~~~
 
-*Event Class*: :class:`Symfony\Component\HttpKernel\Event\GetResponseForControllerResultEvent`
+*Event Class*: :class:`Symfony\\Component\\HttpKernel\\Event\\GetResponseForControllerResultEvent`
 
 This event is not used by ``FrameworkBundle``, but it can be used to implement
 a view sub-system. This event is called *only*  if the Controller does *not*
@@ -239,7 +239,7 @@ method::
 ``onCoreResponse`` Event
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
-*Event Class*: :class:`Symfony\Component\HttpKernel\Event\FilterResponseEvent`
+*Event Class*: :class:`Symfony\\Component\\HttpKernel\\Event\\FilterResponseEvent`
 
 The purpose of this event is to allow other systems to modify or replace
 the ``Response`` object after its creation:
@@ -275,7 +275,7 @@ The ``FrameworkBundle`` registers several listeners:
 ``onCoreException`` Event
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
-*Event Class*: :class:`Symfony\Component\HttpKernel\Event\GetResponseForExceptionEvent`
+*Event Class*: :class:`Symfony\\Component\\HttpKernel\\Event\\GetResponseForExceptionEvent`
 
 ``FrameworkBundle`` registers a
 :class:`Symfony\\Bundle\\FrameworkBundle\\Controller\\ExceptionListener` that

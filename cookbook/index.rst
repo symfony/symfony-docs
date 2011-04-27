@@ -26,6 +26,8 @@ Cookbook
     security/voters
     doctrine/reverse_engineering
     doctrine/doctrine_fixtures
+    doctrine/mongodb
+    routing/scheme
     symfony1
 
 .. include:: map.rst.inc

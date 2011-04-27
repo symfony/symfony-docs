@@ -20,4 +20,6 @@
 * :doc:`/cookbook/security/voters`
 * :doc:`/cookbook/doctrine/reverse_engineering`
 * :doc:`/cookbook/doctrine/doctrine_fixtures`
+* :doc:`/cookbook/doctrine/mongodb`
+* :doc:`/cookbook/routing/scheme`
 * :doc:`/cookbook/symfony1`

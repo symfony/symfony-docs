@@ -146,7 +146,7 @@ Creating Routes
 ---------------
 
 Symfony loads all the routes for your application from a single routing configuration
-file. The file is usually ``app/config/config.yml``, but can be configured
+file. The file is usually ``app/config/routing.yml``, but can be configured
 to be anything (including an XML or PHP file) via the application configuration
 file:
 
@@ -1062,8 +1062,8 @@ In an upcoming section, you'll learn how to generate URLs from inside templates.
 .. index::
    single: Routing; Absolute URLs
 
-Absolute URLs
-~~~~~~~~~~~~~
+Generating Absolute URLs
+~~~~~~~~~~~~~~~~~~~~~~~~
 
 By default, the router will generate relative URLs (e.g. ``/blog``). To generate
 an absolute URL, simply pass ``true`` to the third argument of the ``generate()``
@@ -1088,6 +1088,15 @@ method:
 
 .. index::
    single: Routing; Generating URLs in a template
+
+Generating URLs with Query Strings
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The ``generate`` method takes an array of wildcard values to generate the URI.
+But if you pass extra ones, they will be added to the URI as a query string::
+
+    $router->generate('blog', array('page' => 2, 'category' => 'Symfony'));
+    // /blog/2?category=Symfony
 
 Generating URLs from a template
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
