@@ -27,6 +27,7 @@ Cookbook
     doctrine/reverse_engineering
     doctrine/doctrine_fixtures
     doctrine/mongodb
+    doctrine/migrations
     routing/scheme
     symfony1
 
