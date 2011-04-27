@@ -71,13 +71,21 @@ Glossary
         to have a ``dev`` environment built for debugging and a ``prod`` environment
         that's optimized for speed.
 
-   Vendor
-        A vendor is a supplier of third-party PHP libraries and bundles. Any library
-        you add to your Symfoony project should go in the `vendor` directory. See
+   vendor
+        A *vendor* is a supplier of third-party PHP libraries and
+        bundles. Despite the usual commercial connotations of the word, vendors
+        in Symfony often (even usually) include free software. Any library you
+        add to your Symfoony project should go in the `vendor` directory. See
         `Architecture: Using Vendors`_.
 
+   Acme
+        *Acme* is a sample company name used in Symfony demos and
+        documentation. For example, it's used as a namespace where you would
+        normally use your own company's name.  See `Acme Corporation at
+        Wikipedia`_.
 
 .. _`service-oriented architecture`: http://wikipedia.org/wiki/Service-oriented_architecture
 .. _`HTTP Wikipedia`: http://en.wikipedia.org/wiki/Hypertext_Transfer_Protocol
 .. _`HTTP 1.1 RFC`: http://www.w3.org/Protocols/rfc2616/rfc2616.html
 .. _`Architecture: Using Vendors`:http://symfony.com/doc/2.0/quick_tour/the_architecture.html#using-vendors
+.. _`Acme Corporation at Wikipedia`:http://en.wikipedia.org/wiki/Acme_Corporation
