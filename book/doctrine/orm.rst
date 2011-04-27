@@ -24,8 +24,7 @@ configuration is to specify the bundle name which contains your entities.
         # app/config/config.yml
         doctrine:
             orm:
-                mappings:
-                    AcmeHelloBundle: ~
+                auto_mapping: true
 
     .. code-block:: xml
 
@@ -33,14 +32,13 @@ configuration is to specify the bundle name which contains your entities.
         <!-- xsi:schemaLocation="http://symfony.com/schema/dic/doctrine http://symfony.com/schema/dic/doctrine/doctrine-1.0.xsd"> -->
 
         <doctrine:config>
-            <doctrine:orm>
-                <doctrine:mapping name="AcmeHelloBundle" />
+            <doctrine:orm auto_mapping="true" />
         </doctrine:config>
 
     .. code-block:: php
 
         $container->loadFromExtension('doctrine', array('orm' => array(
-            "mappings" => array("AcmeHelloBundle" => array()),
+            "auto_mapping" => true,
         ));
 
 As Doctrine provides transparent persistence for PHP objects, it works with
@@ -248,8 +246,7 @@ the ORM resolves to:
 
     doctrine:
         orm:
-            mappings:
-                HelloBundle: ~
+            auto_mapping: true
             auto_generate_proxy_classes: true
             proxy_namespace: Proxies
             proxy_dir: %kernel.cache_dir%/doctrine/orm/Proxies
@@ -273,8 +270,7 @@ The following example shows an overview of the caching configurations:
 
     doctrine:
         orm:
-            mappings:
-                HelloBundle: ~
+            auto_mapping: true
             metadata_cache_driver: apc
             query_cache_driver: xcache
             result_cache_driver:
@@ -329,6 +325,7 @@ The following configuration shows a bunch of mapping examples:
 
     doctrine:
         orm:
+            auto_mapping: false
             mappings:
                 MyBundle1: ~
                 MyBundle2: yml
