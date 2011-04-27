@@ -14,8 +14,8 @@ persistence for PHP objects.
     official `documentation`_ website.
 
 To get started, enable and configure the :doc:`Doctrine DBAL
-</book/doctrine/dbal/overview>`, then enable the ORM. The minimal
-necessary configuration is to specify the bundle name which contains your entities.
+</book/doctrine/dbal>`, then enable the ORM. The minimal necessary
+configuration is to specify the bundle name which contains your entities.
 
 .. configuration-block::
 
@@ -24,11 +24,8 @@ necessary configuration is to specify the bundle name which contains your entiti
         # app/config/config.yml
         doctrine:
             orm:
-                default_entity_manager: default
-                entity_managers:
-                    default:
-                        mappings:
-                            AcmeHelloBundle: ~
+                mappings:
+                    AcmeHelloBundle: ~
 
     .. code-block:: xml
 
@@ -36,22 +33,14 @@ necessary configuration is to specify the bundle name which contains your entiti
         <!-- xsi:schemaLocation="http://symfony.com/schema/dic/doctrine http://symfony.com/schema/dic/doctrine/doctrine-1.0.xsd"> -->
 
         <doctrine:config>
-            <doctrine:orm default-entity-manager="default">
-                <doctrine:entity-manager name="default">
-                    <doctrine:mapping name="AcmeHelloBundle" />
-                </doctrine:entity-manager>
-            </doctrine:orm>
+            <doctrine:orm>
+                <doctrine:mapping name="AcmeHelloBundle" />
         </doctrine:config>
 
     .. code-block:: php
 
         $container->loadFromExtension('doctrine', array('orm' => array(
-            "default_entity_manager" => "default",
-            "entity_managers" => array(
-                "default" => array(
-                    "mappings" => array("AcmeHelloBundle" => array()),
-                ),
-            ),
+            "mappings" => array("AcmeHelloBundle" => array()),
         ));
 
 As Doctrine provides transparent persistence for PHP objects, it works with
@@ -259,31 +248,23 @@ the ORM resolves to:
 
     doctrine:
         orm:
+            mappings:
+                HelloBundle: ~
             auto_generate_proxy_classes: true
             proxy_namespace: Proxies
             proxy_dir: %kernel.cache_dir%/doctrine/orm/Proxies
             default_entity_manager: default
-            entity_managers:
-                default:
-                    mappings:
-                        HelloBundle: ~
-                    metadata_cache_driver: array
-                    query_cache_driver: array
-                    result_cache_driver: array
+            metadata_cache_driver: array
+            query_cache_driver: array
+            result_cache_driver: array
 
 There are lots of other configuration options that you can use to overwrite
 certain classes, but those are for very advanced use-cases only. You should
-look at the
-:doc:`configuration reference </reference/bundle_configuration/DoctrineBundle>`
-to get an overview of all the supported options.
+look at the :doc:`configuration reference
+</reference/bundle_configuration/DoctrineBundle>` to get an overview of all
+the supported options.
 
-.. note::
-
-    The ``default_entity_manager`` parameter is mandatory and you have to define
-    at least one entity manager. Thus the ``mappings`` configuration is
-    mandatory for each entity manager.
-
-For the caching drivers you can specifiy the values "array", "apc", "memcache"
+For the caching drivers you can specify the values "array", "apc", "memcache"
 or "xcache".
 
 The following example shows an overview of the caching configurations:
@@ -292,18 +273,15 @@ The following example shows an overview of the caching configurations:
 
     doctrine:
         orm:
-            default_entity_manager: default
-            entity_managers:
-                default:
-                    mappings:
-                        HelloBundle: ~
-                    metadata_cache_driver: apc
-                    query_cache_driver: xcache
-                    result_cache_driver:
-                        type: memcache
-                        host: localhost
-                        port: 11211
-                        instance_class: Memcache
+            mappings:
+                HelloBundle: ~
+            metadata_cache_driver: apc
+            query_cache_driver: xcache
+            result_cache_driver:
+                type: memcache
+                host: localhost
+                port: 11211
+                instance_class: Memcache
 
 Mapping Configuration
 ~~~~~~~~~~~~~~~~~~~~~
@@ -351,23 +329,20 @@ The following configuration shows a bunch of mapping examples:
 
     doctrine:
         orm:
-            default_entity_manager: default
-            entity_managers:
-                default:
-                    mappings:
-                        MyBundle1: ~
-                        MyBundle2: yml
-                        MyBundle3: { type: annotation, dir: Entity/ }
-                        MyBundle4: { type: xml, dir: Resources/config/doctrine/mapping }
-                        MyBundle5:
-                            type: yml
-                            dir: my-bundle-mappings-dir
-                            alias: BundleAlias
-                        doctrine_extensions:
-                            type: xml
-                            dir: %kernel.root_dir%/../src/vendor/DoctrineExtensions/lib/DoctrineExtensions/Entity
-                            prefix: DoctrineExtensions\Entity\
-                            alias: DExt
+            mappings:
+                MyBundle1: ~
+                MyBundle2: yml
+                MyBundle3: { type: annotation, dir: Entity/ }
+                MyBundle4: { type: xml, dir: Resources/config/doctrine/mapping }
+                MyBundle5:
+                    type: yml
+                    dir: my-bundle-mappings-dir
+                    alias: BundleAlias
+                doctrine_extensions:
+                    type: xml
+                    dir: %kernel.root_dir%/../src/vendor/DoctrineExtensions/lib/DoctrineExtensions/Entity
+                    prefix: DoctrineExtensions\Entity\
+                    alias: DExt
 
 Registering Event Listeners and Subscribers
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -450,8 +425,8 @@ retrieve it from the Symfony Dependency Injection Container::
         }
     }
 
-The service "doctrine.orm.entity_manager" is an alias for the default entity
-manager defined in the "default_entity_manager" configuration option.
+The service ``doctrine.orm.entity_manager`` is an alias for the default entity
+manager defined in the ``default_entity_manager`` configuration option.
 
 .. _doctrine-event-config:
 

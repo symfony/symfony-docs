@@ -86,25 +86,23 @@ can configure. The following block shows all possible configuration keys:
         <!-- xsi:schemaLocation="http://symfony.com/schema/dic/doctrine http://symfony.com/schema/dic/doctrine/doctrine-1.0.xsd"> -->
 
         <doctrine:config>
-            <doctrine:dbal>
-                <doctrine:connection
-                    name="default"
-                    dbname="database"
-                    host="localhost"
-                    port="1234"
-                    user="user"
-                    password="secret"
-                    driver="pdo_mysql"
-                    driver-class="MyNamespace\MyDriverImpl"
-                    path="%kernel.data_dir%/data.sqlite"
-                    memory="true"
-                    unix-socket="/tmp/mysql.sock"
-                    wrapper-class="MyDoctrineDbalConnectionWrapper"
-                    charset="UTF8"
-                    logging="%kernel.debug%"
-                    platform-service="MyOwnDatabasePlatformService"
-                />
-            </doctrine:dbal>
+            <doctrine:dbal
+                name="default"
+                dbname="database"
+                host="localhost"
+                port="1234"
+                user="user"
+                password="secret"
+                driver="pdo_mysql"
+                driver-class="MyNamespace\MyDriverImpl"
+                path="%kernel.data_dir%/data.sqlite"
+                memory="true"
+                unix-socket="/tmp/mysql.sock"
+                wrapper-class="MyDoctrineDbalConnectionWrapper"
+                charset="UTF8"
+                logging="%kernel.debug%"
+                platform-service="MyOwnDatabasePlatformService"
+            />
         </doctrine:config>
 
 If you want to configure multiple connections in YAML, put them under the
