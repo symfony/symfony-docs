@@ -619,8 +619,8 @@ tools later.
 
 .. tip::
 
-   Whenever creating a new bundle or using a third-party bundle, be sure
-   to always make sure that the bundle has been enabled in ``registerBundles()``.
+   Whenever creating a new bundle or using a third-party bundle, always make
+   sure the bundle has been enabled in ``registerBundles()``.
 
 Bundle Directory Structure
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
