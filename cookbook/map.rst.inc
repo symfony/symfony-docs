@@ -22,4 +22,5 @@
 * :doc:`/cookbook/doctrine/doctrine_fixtures`
 * :doc:`/cookbook/doctrine/mongodb`
 * :doc:`/cookbook/routing/scheme`
+* :doc:`/cookbook/debugging`
 * :doc:`/cookbook/symfony1`

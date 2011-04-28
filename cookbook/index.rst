@@ -29,6 +29,7 @@ Cookbook
     doctrine/mongodb
     doctrine/migrations
     routing/scheme
+    debugging
     symfony1
 
 .. include:: map.rst.inc
