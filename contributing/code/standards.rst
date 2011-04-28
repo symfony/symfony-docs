@@ -2,8 +2,8 @@ Coding Standards
 ================
 
 When contributing code to Symfony2, you must follow its coding standards. To
-make a long story short, here is the golden rule: *Imitate the existing
-Symfony2 code*.
+make a long story short, here is the golden rule: *Imitate the existing Symfony2
+code*.
 
 Structure
 ---------

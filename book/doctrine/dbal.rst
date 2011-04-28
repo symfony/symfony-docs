@@ -5,8 +5,8 @@ Doctrine DBAL
 =============
 
 The `Doctrine`_ Database Abstraction Layer (DBAL) is an abstraction layer that
-sits on top of `PDO`_ and offers an intuitive and flexible API for
-communicating with the most popular relational databases.
+sits on top of `PDO`_ and offers an intuitive and flexible API for communicating
+with the most popular relational databases.
 
 .. tip::
 

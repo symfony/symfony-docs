@@ -13,10 +13,9 @@ Tags:
 Enabling Custom PHP Template Helpers
 ------------------------------------
 
-To enable a custom template helper, add it as a regular service in one
-of your configuration, tag it with ``templating.helper`` and define an
-``alias`` attribute (the helper will be accessible via this alias in the
-templates):
+To enable a custom template helper, add it as a regular service in one of your
+configuration, tag it with ``templating.helper`` and define an ``alias``
+attribute (the helper will be accessible via this alias in the templates):
 
 .. configuration-block::
 
@@ -104,8 +103,8 @@ configuration, and tag it with ``kernel.listener``:
 Enabling Custom Template Engines
 --------------------------------
 
-To enable a custom template engine, add it as a regular service in one
-of your configuration, tag it with ``templating.engine``:
+To enable a custom template engine, add it as a regular service in one of your
+configuration, tag it with ``templating.engine``:
 
 .. configuration-block::
 
@@ -133,8 +132,8 @@ of your configuration, tag it with ``templating.engine``:
 Enabling Custom Routing Loaders
 -------------------------------
 
-To enable a custom routing loader, add it as a regular service in one
-of your configuration, and tag it with ``routing.loader``:
+To enable a custom routing loader, add it as a regular service in one of your
+configuration, and tag it with ``routing.loader``:
 
 .. configuration-block::
 
@@ -164,9 +163,9 @@ of your configuration, and tag it with ``routing.loader``:
 Using a custom logging channel with Monolog
 -------------------------------------------
 
-Monolog allows to share the handlers between several logging channels.
-The logger service uses the channel ``app`` but you can change the
-channel when injecting the logger in a service.
+Monolog allows to share the handlers between several logging channels. The
+logger service uses the channel ``app`` but you can change the channel when
+injecting the logger in a service.
 
 .. configuration-block::
 

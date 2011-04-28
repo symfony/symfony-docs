@@ -5,8 +5,8 @@ How to use Doctrine Migrations
 ==============================
 
 The database migrations feature is an extension of the database abstraction
-layer and offers you the ability to programmatically deploy new versions of
-your database schema in a safe and standardized way.
+layer and offers you the ability to programmatically deploy new versions of your
+database schema in a safe and standardized way.
 
 .. tip::
 
@@ -26,8 +26,8 @@ All of the migrations functionality is contained in a few console commands:
       :version  Manually add and delete migration versions from the version table.
 
 Every bundle manages its own migrations so when working with the above commands
-you must specify the bundle you want to work with. For example to see the
-status of a bundle migrations you can run the ``status`` command:
+you must specify the bundle you want to work with. For example to see the status
+of a bundle migrations you can run the ``status`` command:
 
 .. code-block:: bash
 

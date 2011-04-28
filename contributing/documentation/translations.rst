@@ -1,8 +1,8 @@
 Translations
 ============
 
-The Symfony2 documentation is written in English and many people are involved
-in the translation process.
+The Symfony2 documentation is written in English and many people are involved in
+the translation process.
 
 Contributing
 ------------
@@ -49,14 +49,14 @@ bugs, consider joining us; it's a very easy process:
 Adding a new Language
 ---------------------
 
-This section gives some guidelines for starting the translation of the
-Symfony2 documentation for a new language.
+This section gives some guidelines for starting the translation of the Symfony2
+documentation for a new language.
 
-As starting a translation is a lot of work, talk about your plan on the
-`Symfony docs mailing-list`_ and try to find motivated people willing to help.
+As starting a translation is a lot of work, talk about your plan on the `Symfony
+docs mailing-list`_ and try to find motivated people willing to help.
 
-When the team is ready, nominate a team manager; he will be responsible for
-the *master* repository.
+When the team is ready, nominate a team manager; he will be responsible for the
+*master* repository.
 
 Create the repository and copy the *English* documents.
 

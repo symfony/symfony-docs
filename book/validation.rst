@@ -5,13 +5,13 @@ Validation
 ==========
 
 Validation is a very common task in web applications. Data entered in forms
-needs to be validated. Data also needs to be validated before it is written
-into a database or passed to a web service.
+needs to be validated. Data also needs to be validated before it is written into
+a database or passed to a web service.
 
-Symfony2 ships with a `Validator`_ component that makes this task easy and transparent.
-This component is based on the `JSR303 Bean Validation specification`_. What?
-A Java specification in PHP? You heard right, but it's not as bad as it sounds.
-Let's look at how it can be used in PHP.
+Symfony2 ships with a `Validator`_ component that makes this task easy and
+transparent. This component is based on the `JSR303 Bean Validation
+specification`_. What? A Java specification in PHP? You heard right, but it's
+not as bad as it sounds. Let's look at how it can be used in PHP.
 
 .. index:
    single: Validation; The basics
@@ -20,8 +20,8 @@ The Basics of Validation
 ------------------------
 
 The best way to understand validation is to see it in action. To start, suppose
-you've created a plain-old-PHP object that you need to use somewhere in
-your application:
+you've created a plain-old-PHP object that you need to use somewhere in your
+application:
 
 .. code-block:: php
 
@@ -32,12 +32,12 @@ your application:
     }
 
 So far, this is just an ordinary class that serves some purpose inside your
-application. The goal of validation is to tell you whether or not the data
-of an object is valid. For this to work, you need to configure a list of
-rules (called :ref:`constraints<validation-constraints>`) that the object
-must follow in order to be valid. These rules can be specified via a number
-of different formats (YAML, XML, annotations, or PHP). To guarantee that
-the ``$name`` property is not empty, add the following:
+application. The goal of validation is to tell you whether or not the data of an
+object is valid. For this to work, you need to configure a list of rules (called
+:ref:`constraints<validation-constraints>`) that the object must follow in order
+to be valid. These rules can be specified via a number of different formats
+(YAML, XML, annotations, or PHP). To guarantee that the ``$name`` property is
+not empty, add the following:
 
 .. configuration-block::
 
@@ -96,10 +96,10 @@ the ``$name`` property is not empty, add the following:
 Using the ``validator`` Service
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-To actually validate an ``Author`` object, use the ``validate`` method
-on the ``validator`` service (class :class:`Symfony\\Component\\Validator\\Validator`).
-The job of the ``validator`` is easy: to read the constraints (i.e. rules)
-of a class and verify whether or not the data on the object satisfies those
+To actually validate an ``Author`` object, use the ``validate`` method on the
+``validator`` service (class :class:`Symfony\\Component\\Validator\\Validator`).
+The job of the ``validator`` is easy: to read the constraints (i.e. rules) of a
+class and verify whether or not the data on the object satisfies those
 constraints. If validation fails, an array of errors is returned. Take this
 simple example from inside a controller:
 
@@ -123,24 +123,23 @@ simple example from inside a controller:
         }
     }
 
-If the ``$name`` property is empty, you will see the following error
-message:
+If the ``$name`` property is empty, you will see the following error message:
 
 .. code-block:: text
 
     Acme\BlogBundle\Author.name:
         This value should not be blank
 
-If you insert a value into the ``name`` property, the happy success message
-will appear.
+If you insert a value into the ``name`` property, the happy success message will
+appear.
 
-Each validation error (called a "constraint violation"), is represented by
-a :class:`Symfony\\Component\\Validator\\ConstraintViolation` object, which
-holds a message describing the error. Moreover, the ``validate`` method returns
-a :class:`Symfony\\Component\\Validator\\ConstraintViolationList` object,
-which acts like an array. That's a long way of saying that you can use the
-errors returned by ``validate`` in more advanced ways. Start by rendering
-a template and passing in the ``$errorList`` variable:
+Each validation error (called a "constraint violation"), is represented by a
+:class:`Symfony\\Component\\Validator\\ConstraintViolation` object, which holds
+a message describing the error. Moreover, the ``validate`` method returns a
+:class:`Symfony\\Component\\Validator\\ConstraintViolationList` object, which
+acts like an array. That's a long way of saying that you can use the errors
+returned by ``validate`` in more advanced ways. Start by rendering a template
+and passing in the ``$errorList`` variable:
 
 .. code-block:: php
 
@@ -184,12 +183,12 @@ Inside the template, you can output the list of errors exactly as needed:
 Validation and Forms
 ~~~~~~~~~~~~~~~~~~~~
 
-The ``validator`` service can be used at any time to validate any object.
-In reality, however, you'll usually work with the ``validator`` indirectly
-via the ``Form`` class. The ``Form`` class uses the ``validator`` service
-internally to validate the underlying object after values have been submitted
-and bound. The constraint violations on the object are converted into ``FieldError``
-objects that can then be displayed with your form:
+The ``validator`` service can be used at any time to validate any object. In
+reality, however, you'll usually work with the ``validator`` indirectly via the
+``Form`` class. The ``Form`` class uses the ``validator`` service internally to
+validate the underlying object after values have been submitted and bound. The
+constraint violations on the object are converted into ``FieldError`` objects
+that can then be displayed with your form:
 
 .. code-block:: php
 
@@ -252,21 +251,21 @@ Constraints
 -----------
 
 The ``validator`` is designed to validate objects against *constraints* (i.e.
-rules). In order to validate an object, simply map one or more constraints
-to its class and then pass it to the ``validator`` service.
+rules). In order to validate an object, simply map one or more constraints to
+its class and then pass it to the ``validator`` service.
 
-A constraint is simply a PHP object that makes an assertive statement. In
-real life, a constraint could be: "The cake must not be burned". In Symfony2,
-constraints are similar: they are assertions that a condition is true. Given
-a value, a constraint will tell you whether or not that value adheres to
-the rules of the constraint.
+A constraint is simply a PHP object that makes an assertive statement. In real
+life, a constraint could be: "The cake must not be burned". In Symfony2,
+constraints are similar: they are assertions that a condition is true. Given a
+value, a constraint will tell you whether or not that value adheres to the rules
+of the constraint.
 
 Supported Constraints
 ~~~~~~~~~~~~~~~~~~~~~
 
-Symfony2 packages a large number of the most commonly-needed constraints.
-The full list of constraints with details is available in the
-:doc:`constraints reference section</reference/constraints>`.
+Symfony2 packages a large number of the most commonly-needed constraints. The
+full list of constraints with details is available in the :doc:`constraints
+reference section</reference/constraints>`.
 
 .. index::
    single: Validation; Constraints configuration
@@ -274,12 +273,12 @@ The full list of constraints with details is available in the
 Constraint Configuration
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
-Some constraints, like :doc:`NotBlank</reference/constraints/NotBlank>`,
-are simple whereas others, like the :doc:`Choice</reference/constraints/Choice>`
-constraint, have several configuration options available. The available
-options are public properties on the constraint and each can be set by passing
-an options array to the constraint. Suppose that the ``Author`` class has
-another property, ``gender`` that can be set to either "male" or "female":
+Some constraints, like :doc:`NotBlank</reference/constraints/NotBlank>`, are
+simple whereas others, like the :doc:`Choice</reference/constraints/Choice>`
+constraint, have several configuration options available. The available options
+are public properties on the constraint and each can be set by passing an
+options array to the constraint. Suppose that the ``Author`` class has another
+property, ``gender`` that can be set to either "male" or "female":
 
 .. configuration-block::
 
@@ -339,10 +338,10 @@ another property, ``gender`` that can be set to either "male" or "female":
             }
         }
 
-The options of a constraint can always be passed in as an array. Some constraints
-also allow you to pass the value of one, "default", option to the constraint
-in place of the array. In the case of the ``Choice`` constraint, the ``choices``
-options can be specified in this way.
+The options of a constraint can always be passed in as an array. Some
+constraints also allow you to pass the value of one, "default", option to the
+constraint in place of the array. In the case of the ``Choice`` constraint, the
+``choices`` options can be specified in this way.
 
 .. configuration-block::
 
@@ -393,10 +392,9 @@ options can be specified in this way.
             }
         }
 
-Be sure not to let the two different methods of specifying options confuse
-you. If you're unsure, either check the API documentation for the constraint
-or play it safe by always passing in an array of options (the first method
-shown above).
+Be sure not to let the two different methods of specifying options confuse you.
+If you're unsure, either check the API documentation for the constraint or play
+it safe by always passing in an array of options (the first method shown above).
 
 .. index::
    single: Validation; Constraint targets
@@ -406,8 +404,8 @@ shown above).
 Constraint Targets
 ------------------
 
-Constraints can be applied to a class property or a public getter method
-(e.g. ``getFullName``).
+Constraints can be applied to a class property or a public getter method (e.g.
+``getFullName``).
 
 .. index::
    single: Validation; Property constraints
@@ -416,9 +414,9 @@ Properties
 ~~~~~~~~~~
 
 Validating class properties is the most basic validation technique. Symfony2
-allows you to validate private, protected or public properties. The next
-listing shows you how to configure the properties ``$firstName`` and ``$lastName``
-of a class ``Author`` to have at least 3 characters.
+allows you to validate private, protected or public properties. The next listing
+shows you how to configure the properties ``$firstName`` and ``$lastName`` of a
+class ``Author`` to have at least 3 characters.
 
 .. configuration-block::
 
@@ -494,17 +492,18 @@ of a class ``Author`` to have at least 3 characters.
 Getters
 ~~~~~~~
 
-Constraints can also be applied to the return value of a method. Symfony2
-allows you to add a constraint to any public method whose name starts with
-"get" or "is". In this guide, both of these types of methods are referred
-to as "getters".
+Constraints can also be applied to the return value of a method. Symfony2 allows
+you to add a constraint to any public method whose name starts with "get" or
+"is". In this guide, both of these types of methods are referred to as
+"getters".
 
 The benefit of this technique is that it allows you to validate your object
 dynamically. Depending on the state of your object, the method may return
 different values which are then validated.
 
-The next listing shows you how to use the :doc:`True</reference/constraints/True>`
-constraint to validate whether a dynamically generated token is correct:
+The next listing shows you how to use the
+:doc:`True</reference/constraints/True>` constraint to validate whether a
+dynamically generated token is correct:
 
 .. configuration-block::
 
@@ -563,8 +562,8 @@ constraint to validate whether a dynamically generated token is correct:
             }
         }
 
-The public ``isTokenValid`` method will perform any logic to determine if
-the internal token is valid and then return ``true`` or ``false``.
+The public ``isTokenValid`` method will perform any logic to determine if the
+internal token is valid and then return ``true`` or ``false``.
 
 .. note::
 
@@ -576,12 +575,12 @@ the internal token is valid and then return ``true`` or ``false``.
 Final Thoughts
 --------------
 
-The Symfony2 ``validator`` is a powerful tool that can be leveraged to
-guarantee that the data of any object is "valid". The power behind validation
-lies in "constraints", which are rules that you can apply to properties or
-getter methods of your object. And while you'll most commonly use the validation
-framework indirectly when using forms, remember that it can be used anywhere
-to validate any object.
+The Symfony2 ``validator`` is a powerful tool that can be leveraged to guarantee
+that the data of any object is "valid". The power behind validation lies in
+"constraints", which are rules that you can apply to properties or getter
+methods of your object. And while you'll most commonly use the validation
+framework indirectly when using forms, remember that it can be used anywhere to
+validate any object.
 
 Learn more from the Cookbook
 ----------------------------

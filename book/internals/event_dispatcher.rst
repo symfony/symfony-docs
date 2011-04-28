@@ -5,26 +5,26 @@ The Event Dispatcher
 ====================
 
 Objected Oriented code has gone a long way to ensuring code extensibility. By
-creating classes that have well defined responsibilities, your code becomes
-more flexible and a developer can extend them with subclasses to modify their
+creating classes that have well defined responsibilities, your code becomes more
+flexible and a developer can extend them with subclasses to modify their
 behaviors. But if he wants to share his changes with other developers who have
 also made their own subclasses, code inheritance is moot.
 
 Consider the real-world example where you want to provide a plugin system for
-your project. A plugin should be able to add methods, or do something before
-or after a method is executed, without interfering with other plugins. This is
-not an easy problem to solve with single inheritance, and multiple inheritance
-(were it possible with PHP) has its own drawbacks.
+your project. A plugin should be able to add methods, or do something before or
+after a method is executed, without interfering with other plugins. This is not
+an easy problem to solve with single inheritance, and multiple inheritance (were
+it possible with PHP) has its own drawbacks.
 
-The Symfony2 Event Dispatcher implements the `Observer`_ pattern in a simple
-and effective way to make all these things possible and to make your projects
-truly extensible.
+The Symfony2 Event Dispatcher implements the `Observer`_ pattern in a simple and
+effective way to make all these things possible and to make your projects truly
+extensible.
 
-Take a simple example from the `Symfony2 HttpKernel component`_. Once a ``Response``
-object has been created, it may be useful to allow other elements in the
-system to modify it (e.g. add some cache headers) before it's actually
-used. To make this possible, the Symfony2 kernel throws an event - ``onCoreResponse``.
-Here's how it work:
+Take a simple example from the `Symfony2 HttpKernel component`_. Once a
+``Response`` object has been created, it may be useful to allow other elements
+in the system to modify it (e.g. add some cache headers) before it's actually
+used. To make this possible, the Symfony2 kernel throws an event -
+``onCoreResponse``. Here's how it work:
 
 * A *listener* (PHP object) tells a central *dispatcher* object that it
   wants to listen to the ``onCoreResponse`` event;
@@ -43,11 +43,11 @@ Here's how it work:
 Events
 ------
 
-When an event is dispatched, it's identified by a unique name (e.g. ``onCoreResponse``),
-which any number of listeners might be listening to. A
-:class:`Symfony\\Component\\EventDispatcher\\Event` instance is also created
-and passed to all of the listeners. As you'll see later, the ``Event`` object
-itself often contains data about the event being dispatched.
+When an event is dispatched, it's identified by a unique name (e.g.
+``onCoreResponse``), which any number of listeners might be listening to. A
+:class:`Symfony\\Component\\EventDispatcher\\Event` instance is also created and
+passed to all of the listeners. As you'll see later, the ``Event`` object itself
+often contains data about the event being dispatched.
 
 .. index::
    pair: Event Dispatcher; Naming conventions
@@ -75,31 +75,32 @@ Here are some examples of good event names:
 Event Names and Event Objects
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-When the dispatcher notifies listeners, it passes an actual ``Event`` object
-to those listeners. The base ``Event`` class is very simple: it contains
-a method for stopping :ref:`event propagation<event_dispatcher-event-propagation>`,
-but not much else.
+When the dispatcher notifies listeners, it passes an actual ``Event`` object to
+those listeners. The base ``Event`` class is very simple: it contains a method
+for stopping :ref:`event propagation<event_dispatcher-event-propagation>`, but
+not much else.
 
 Often times, data about a specific event needs to be passed along with the
-``Event`` object so that the listeners have needed information. In the case
-of the ``onCoreResponse`` event, the ``Event`` object that's created and
-passed to each listener is actually of type :class:`Symfony\\Component\\HttpKernel\\Event\\FilterResponseEvent`,
-a subclass of the base ``Event`` object. This class contains methods such
-as ``getResponse`` and ``setResponse``, allowing listeners to get or even
-replace the ``Response`` object.
+``Event`` object so that the listeners have needed information. In the case of
+the ``onCoreResponse`` event, the ``Event`` object that's created and passed to
+each listener is actually of type
+:class:`Symfony\\Component\\HttpKernel\\Event\\FilterResponseEvent`, a subclass
+of the base ``Event`` object. This class contains methods such as
+``getResponse`` and ``setResponse``, allowing listeners to get or even replace
+the ``Response`` object.
 
 The moral of the story is this: when creating a listener to an event, the
-``Event`` object that's passed to the listener may be a special subclass
-that has additional methods for retrieving information from and responding
-to the event.
+``Event`` object that's passed to the listener may be a special subclass that
+has additional methods for retrieving information from and responding to the
+event.
 
 The Dispatcher
 --------------
 
-The dispatcher is the central object of the event dispatcher system. In
-general, a single dispatcher is created, which maintains a register of listeners.
-When an event is dispatched via the dispatcher, it notifies all listeners
-registered with that event.
+The dispatcher is the central object of the event dispatcher system. In general,
+a single dispatcher is created, which maintains a register of listeners. When an
+event is dispatched via the dispatcher, it notifies all listeners registered
+with that event.
 
 .. code-block:: php
 
@@ -113,10 +114,10 @@ registered with that event.
 Connecting Listeners
 --------------------
 
-To take advantage of an existing event, you need to connect a listener to
-the dispatcher so that it can be notified when the event is dispatched.
-A call to the dispatcher ``addListener()`` method associates a PHP object
-(or :ref:`Closure<event_dispatcher-closures-as-listeners>`) to an event:
+To take advantage of an existing event, you need to connect a listener to the
+dispatcher so that it can be notified when the event is dispatched. A call to
+the dispatcher ``addListener()`` method associates a PHP object (or
+:ref:`Closure<event_dispatcher-closures-as-listeners>`) to an event:
 
 .. code-block:: php
 
@@ -156,8 +157,8 @@ the dispatcher calls the ``myListener::onFooAction`` method and passes the
         }
     }
 
-The method named called on a listener object is always equivalent to the
-name of the event (e.g. ``onFooAction``).
+The method named called on a listener object is always equivalent to the name of
+the event (e.g. ``onFooAction``).
 
 .. tip::
 
@@ -165,12 +166,12 @@ name of the event (e.g. ``onFooAction``).
     your :ref:`configuration <dic-tags-kernel-listener>`. As an added bonus,
     the listener objects are instantiated only when needed.
 
-In many cases, a special ``Event`` subclass that's specific to the given
-event is passed to the listener. This gives the listener access to special
-information about the event. Check the documentation or implementation of
-each event to determine the exact ``Symfony\Component\EventDispatcher\Event``
-instance that's being passed. For example, the ``onCoreResponse`` event
-passes an instance of ``Symfony\Component\HttpKernel\Event\FilterResponseEvent``:
+In many cases, a special ``Event`` subclass that's specific to the given event
+is passed to the listener. This gives the listener access to special information
+about the event. Check the documentation or implementation of each event to
+determine the exact ``Symfony\Component\EventDispatcher\Event`` instance that's
+being passed. For example, the ``onCoreResponse`` event passes an instance of
+``Symfony\Component\HttpKernel\Event\FilterResponseEvent``:
 
 .. code-block:: php
 
@@ -205,10 +206,10 @@ passes an instance of ``Symfony\Component\HttpKernel\Event\FilterResponseEvent``
 Creating and Dispatching an Event
 ---------------------------------
 
-In addition to registering listeners with existing events, you can create
-and throw your own events. This is useful when creating third-party libraries
-and also when you want to keep different components of your own system flexible
-and decoupled.
+In addition to registering listeners with existing events, you can create and
+throw your own events. This is useful when creating third-party libraries and
+also when you want to keep different components of your own system flexible and
+decoupled.
 
 The Static ``Events`` Class
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -237,20 +238,20 @@ define and document your event:
     }
 
 Notice that this class doesn't actually *do* anything. The purpose of the
-``Events`` class is just to be a location where information about common
-events can be centralized. Notice also that a special ``FilterOrderEvent``
-class will be passed to each listener of this event.
+``Events`` class is just to be a location where information about common events
+can be centralized. Notice also that a special ``FilterOrderEvent`` class will
+be passed to each listener of this event.
 
 Creating an Event object
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
-Later, when you dispatch this new event, you'll create an ``Event`` instance
-and pass it to the dispatcher. The dispatcher then passes this same instance
-to each of the listeners of the event. If you don't need to pass any information
-to your listeners, you can use the default ``Symfony\Component\EventDispatcher\Event``
-class. Most of the time, however, you *will* need to pass information about
-the event to each listener. To accomplish this, you'll create a new class
-that extends ``Symfony\Component\EventDispatcher\Event``.
+Later, when you dispatch this new event, you'll create an ``Event`` instance and
+pass it to the dispatcher. The dispatcher then passes this same instance to each
+of the listeners of the event. If you don't need to pass any information to your
+listeners, you can use the default ``Symfony\Component\EventDispatcher\Event``
+class. Most of the time, however, you *will* need to pass information about the
+event to each listener. To accomplish this, you'll create a new class that
+extends ``Symfony\Component\EventDispatcher\Event``.
 
 In this example, each listener will need access to some pretend ``Order``
 object. Create an ``Event`` class that makes this possible:
@@ -277,16 +278,15 @@ object. Create an ``Event`` class that makes this possible:
         }
     } 
 
-Each listener now has access to to ``Order`` object via the ``getOrder``
-method.
+Each listener now has access to to ``Order`` object via the ``getOrder`` method.
 
 Dispatch the Event
 ~~~~~~~~~~~~~~~~~~
 
 The :method:`Symfony\\Component\\EventDispatcher\\EventDispatcher::dispatch`
-method notifies all listeners of the given event. It takes two arguments:
-the name of the event to dispatch and the ``Event`` instance to pass to
-each listener of that event:
+method notifies all listeners of the given event. It takes two arguments: the
+name of the event to dispatch and the ``Event`` instance to pass to each
+listener of that event:
 
 .. code-block:: php
 
@@ -302,10 +302,10 @@ each listener of that event:
     $event = new FilterOrderEvent($order);
     $dispatcher->dispatch(Events::onStoreOrder, $event);
 
-Notice that the special ``FilterOrderEvent`` object is created and passed
-to the ``dispatch`` method. Now, any listener to the ``onStoreOrder`` event
-will receive the ``FilterOrderEvent`` and have access to the ``Order`` object
-via the ``getOrder`` method:
+Notice that the special ``FilterOrderEvent`` object is created and passed to the
+``dispatch`` method. Now, any listener to the ``onStoreOrder`` event will
+receive the ``FilterOrderEvent`` and have access to the ``Order`` object via the
+``getOrder`` method:
 
 .. code-block:: php
 
@@ -355,9 +355,9 @@ Or setter injection::
     }
 
 Choosing between the two is really a matter of taste. Many tend to prefer the
-constructor injection as the objects are fully initialized at construction
-time. But when you have a long list of dependencies, using setter injection
-can be the way to go, especially for optional dependencies.
+constructor injection as the objects are fully initialized at construction time.
+But when you have a long list of dependencies, using setter injection can be the
+way to go, especially for optional dependencies.
 
 .. tip::
 
@@ -372,15 +372,16 @@ Using Event Subscribers
 -----------------------
 
 The most common way to listen to an event is to register an *event listener*
-with the dispatcher. This listener can listen to one or more events and
-is notified each time those events are dispatched.
+with the dispatcher. This listener can listen to one or more events and is
+notified each time those events are dispatched.
 
-Another way to listen to events is via an *event subscriber*. An event subscriber
-is a PHP class that's able to tell the dispatcher exactly which events it should
-subscribe to. It implements the :class:`Symfony\\Component\\EventDispatcher\\EventSubscriberInterface`
+Another way to listen to events is via an *event subscriber*. An event
+subscriber is a PHP class that's able to tell the dispatcher exactly which
+events it should subscribe to. It implements the
+:class:`Symfony\\Component\\EventDispatcher\\EventSubscriberInterface`
 interface, which requires a single static method called ``getSubscribedEvents``.
-Take the following example of a subscriber that subscribes to the ``onCoreResponse``
-and ``onStoreOrder`` events:
+Take the following example of a subscriber that subscribes to the
+``onCoreResponse`` and ``onStoreOrder`` events:
 
 .. code-block:: php
 
@@ -407,9 +408,9 @@ and ``onStoreOrder`` events:
         }
     }
 
-This is very similar to a listener class, except that the class itself can
-tell the dispatcher which events it should listen to. To register a subscriber
-with the dispatcher, use the ``addSubscriberMethod`` method:
+This is very similar to a listener class, except that the class itself can tell
+the dispatcher which events it should listen to. To register a subscriber with
+the dispatcher, use the ``addSubscriberMethod`` method:
 
 .. code-block:: php
 
@@ -433,9 +434,10 @@ Stopping Event Flow/Propagation
 
 In some cases, it may make sense for a listener to prevent any other listeners
 from being called. In other words, the listener needs to be able to tell the
-dispatcher to stop all propagation of the event to future listeners (i.e. to
-not notify any more listeners). This can be accomplished from inside a listener
-via the :method:`Symfony\\Component\\EventDispatcher\\Event::stopPropagation` method:
+dispatcher to stop all propagation of the event to future listeners (i.e. to not
+notify any more listeners). This can be accomplished from inside a listener via
+the :method:`Symfony\\Component\\EventDispatcher\\Event::stopPropagation`
+method:
 
 .. code-block:: php
 

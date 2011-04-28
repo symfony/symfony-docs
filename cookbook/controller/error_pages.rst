@@ -4,8 +4,8 @@ How to customize Error Pages
 When any exception is thrown in Symfony2, the exception is caught inside the
 ``Kernel`` class and eventually forwarded to a special controller,
 ``FrameworkBundle:Exception:show`` for handling. This controller, which lives
-inside the core ``FrameworkBundle``, determines which error template to
-display and the status code that should be set for the given exception.
+inside the core ``FrameworkBundle``, determines which error template to display
+and the status code that should be set for the given exception.
 
 .. tip::
 
@@ -50,10 +50,10 @@ create a new file with the same name in the
 ``app/Resources/FrameworkBundle/views/Exception`` directory. This is the
 standard way of overriding any template that lives inside a bundle.
 
-The debug-friendly exception pages shown to the developer can even be
-customized in the same way by creating templates such as
-``exception.html.twig`` for the standard HTML exception page or
-``exception.json.twig`` for the JSON exception page.
+The debug-friendly exception pages shown to the developer can even be customized
+in the same way by creating templates such as ``exception.html.twig`` for the
+standard HTML exception page or ``exception.json.twig`` for the JSON exception
+page.
 
 .. tip::
 

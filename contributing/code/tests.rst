@@ -67,8 +67,8 @@ and if the tests are broken because of your modifications.
 Code Coverage
 -------------
 
-If you add a new feature, you also need to check the code coverage by using
-the `coverage-html` option:
+If you add a new feature, you also need to check the code coverage by using the
+`coverage-html` option:
 
 .. code-block:: bash
 

@@ -14,7 +14,8 @@ persisted transparently without imposing on your domain model.
     projects `documentation`_.
 
 To get started working with Doctrine and the MongoDB Object Document Mapper you
-just need to enable it and specify the bundle that contains your mapped documents:
+just need to enable it and specify the bundle that contains your mapped
+documents:
 
 .. code-block:: yaml
 
@@ -308,8 +309,8 @@ Doctrine uses the lightweight ``Doctrine\Common\EventManager`` class to trigger
 a number of different events which you can hook into. You can register Event
 Listeners or Subscribers by tagging the respective services with
 ``doctrine.odm.mongodb.<connection>_event_listener`` or
-``doctrine.odm.mongodb.<connection>_event_subscriber`` using the Dependency Injection
-container.
+``doctrine.odm.mongodb.<connection>_event_subscriber`` using the Dependency
+Injection container.
 
 You have to use the name of the MongoDB connection to clearly identify which
 connection the listeners should be registered with. If you are using multiple
@@ -318,8 +319,8 @@ connections you can hook different events into each connection.
 Multiple Connections
 ~~~~~~~~~~~~~~~~~~~~
 
-If you need multiple connections and document managers you can use the
-following syntax:
+If you need multiple connections and document managers you can use the following
+syntax:
 
 .. configuration-block
 
@@ -390,8 +391,8 @@ Now you can retrieve the configured services connection services::
     $conn1 = $container->get('doctrine.odm.mongodb.conn1_connection');
     $conn2 = $container->get('doctrine.odm.mongodb.conn2_connection');
 
-And you can also retrieve the configured document manager services which utilize the above
-connection services::
+And you can also retrieve the configured document manager services which utilize
+the above connection services::
 
     $dm1 = $container->get('doctrine.odm.mongodb.dm1_document_manager');
     $dm2 = $container->get('doctrine.odm.mongodb.dm2_document_manager');
@@ -400,10 +401,9 @@ Writing Document Classes
 ------------------------
 
 You can start writing document classes just how you normally would write some
-PHP classes. The only difference is that you must map the classes to the
-MongoDB ODM. You can provide the mapping information via xml, yaml or
-annotations. In this example, for simplicity and ease of reading we will use
-annotations.
+PHP classes. The only difference is that you must map the classes to the MongoDB
+ODM. You can provide the mapping information via xml, yaml or annotations. In
+this example, for simplicity and ease of reading we will use annotations.
 
 First, let's write a simple User class.
 
@@ -434,10 +434,9 @@ First, let's write a simple User class.
         }
     }
 
-This class can be used independent from any persistence layer as it is a
-regular PHP class and does not have any dependencies. Now we need to annotate
-the class so Doctrine can read the annotated mapping information from the doc
-blocks.
+This class can be used independent from any persistence layer as it is a regular
+PHP class and does not have any dependencies. Now we need to annotate the class
+so Doctrine can read the annotated mapping information from the doc blocks.
 
 .. code-block:: php-annotations
 
@@ -504,10 +503,11 @@ Later you can retrieve the persisted document by its id.
 Registering Event Listeners and Subscribers
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Registering events works like described in the :ref:`ORM Bundle documentation <doctrine-event-config>`.
-The MongoDB event tags are called "doctrine.odm.mongodb.default_event_listener" and
-"doctrine.odm.mongodb.default_event_subscriber" respectively where "default" is the name of the
-MongoDB document manager.
+Registering events works like described in the :ref:`ORM Bundle documentation
+<doctrine-event-config>`. The MongoDB event tags are called
+"doctrine.odm.mongodb.default_event_listener" and
+"doctrine.odm.mongodb.default_event_subscriber" respectively where "default" is
+the name of the MongoDB document manager.
 
 .. _MongoDB:       http://www.mongodb.org/
 .. _documentation: http://www.doctrine-project.org/docs/mongodb_odm/1.0/en

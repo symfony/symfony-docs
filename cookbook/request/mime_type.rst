@@ -4,16 +4,16 @@
 How to register a new Request Format and Mime Type
 ==================================================
 
-Every ``Request`` has a "format" (e.g. ``html``, ``json``), which is used
-to determine what type of content to return in the ``Response``. In fact,
-the request format, accessible via
-:method:`Symfony\\Component\\HttpFoundation\\Request::getRequestFormat`,
-is used to set the MIME type of the ``Content-Type`` header on the ``Response``
-object. Internally, Symfony contains a map of the most common formats (e.g.
-``html``, ``json``) and their associated MIME types (e.g. ``text/html``,
-``application/json``). Of course, additional format-MIME type entries can
-easily be added. This document will show how you can add the ``jsonp`` format
-and corresponding MIME type.
+Every ``Request`` has a "format" (e.g. ``html``, ``json``), which is used to
+determine what type of content to return in the ``Response``. In fact, the
+request format, accessible via
+:method:`Symfony\\Component\\HttpFoundation\\Request::getRequestFormat`, is used
+to set the MIME type of the ``Content-Type`` header on the ``Response`` object.
+Internally, Symfony contains a map of the most common formats (e.g. ``html``,
+``json``) and their associated MIME types (e.g. ``text/html``,
+``application/json``). Of course, additional format-MIME type entries can easily
+be added. This document will show how you can add the ``jsonp`` format and
+corresponding MIME type.
 
 Create an ``onCoreRequest`` Listener
 ------------------------------------
@@ -43,8 +43,8 @@ project::
 Registering your Listener
 -------------------------
 
-As for any other listener, you need to add it in one of your configuration
-file and register it as a listener by adding the ``kernel.listener`` tag:
+As for any other listener, you need to add it in one of your configuration file
+and register it as a listener by adding the ``kernel.listener`` tag:
 
 .. configuration-block::
 

@@ -10,48 +10,47 @@ also explain some of the design decisions behind it.
 Design Concepts
 ---------------
 
-Symfony2's object instance security capabilities are based on the concept of
-an Access Control List. Every domain object **instance** has its own ACL. The
-ACL instance holds a detailed list of Access Control Entries (ACEs) which are
-used to make access decisions. Symfony2's ACL system focuses on two main
-objectives:
+Symfony2's object instance security capabilities are based on the concept of an
+Access Control List. Every domain object **instance** has its own ACL. The ACL
+instance holds a detailed list of Access Control Entries (ACEs) which are used
+to make access decisions. Symfony2's ACL system focuses on two main objectives:
 
 - providing a way to efficiently retrieve a large amount of ACLs/ACEs for your
   domain objects, and to modify them;
 - providing a way to easily make decisions of whether a person is allowed to
   perform an action on a domain object or not.
 
-As indicated by the first point, one of the main capabilities of Symfony2's
-ACL system is a high-performance way of retrieving ACLs/ACEs. This is
-extremely important since each ACL might have several ACEs, and inherit from
-another ACL in a tree-like fashion. Therefore, we specifically do not leverage
-any ORM, but the default implementation interacts with your connection
-directly using Doctrine's DBAL.
+As indicated by the first point, one of the main capabilities of Symfony2's ACL
+system is a high-performance way of retrieving ACLs/ACEs. This is extremely
+important since each ACL might have several ACEs, and inherit from another ACL
+in a tree-like fashion. Therefore, we specifically do not leverage any ORM, but
+the default implementation interacts with your connection directly using
+Doctrine's DBAL.
 
 Object Identities
 ~~~~~~~~~~~~~~~~~
 
-The ACL system is completely decoupled from your domain objects. They don't
-even have to be stored in the same database, or on the same server. In order
-to achieve this decoupling, in the ACL system your objects are represented
-through object identity objects. Everytime, you want to retrieve the ACL for a
-domain object, the ACL system will first create an object identity from your
-domain object, and then pass this object identity to the ACL provider for
-further processing.
+The ACL system is completely decoupled from your domain objects. They don't even
+have to be stored in the same database, or on the same server. In order to
+achieve this decoupling, in the ACL system your objects are represented through
+object identity objects. Everytime, you want to retrieve the ACL for a domain
+object, the ACL system will first create an object identity from your domain
+object, and then pass this object identity to the ACL provider for further
+processing.
 
 
 Security Identities
 ~~~~~~~~~~~~~~~~~~~
 
-This is analog to the object identity, but represents a user, or a role in
-your application. Each role, or user has its own security identity.
+This is analog to the object identity, but represents a user, or a role in your
+application. Each role, or user has its own security identity.
 
 
 Database Table Structure
 ------------------------
 
-The default implementation uses five database tables as listed below. The
-tables are ordered from least rows to most rows in a typical application:
+The default implementation uses five database tables as listed below. The tables
+are ordered from least rows to most rows in a typical application:
 
 - *acl_security_identities*: This table records all security identities (SID)
   which hold ACEs. The default implementation ships with two security
@@ -90,11 +89,11 @@ two more sub-scopes:
 Pre-Authorization Decisions
 ---------------------------
 
-For pre-authorization decisions, that is decisions before any method, or
-secure action is invoked, we rely on the proven AccessDecisionManager service
-that is also used for reaching authorization decisions based on roles. Just
-like roles, the ACL system adds several new attributes which may be used to
-check for different permissions.
+For pre-authorization decisions, that is decisions before any method, or secure
+action is invoked, we rely on the proven AccessDecisionManager service that is
+also used for reaching authorization decisions based on roles. Just like roles,
+the ACL system adds several new attributes which may be used to check for
+different permissions.
 
 Built-in Permission Map
 ~~~~~~~~~~~~~~~~~~~~~~~
@@ -137,12 +136,11 @@ Built-in Permission Map
 Permission Attributes vs. Permission Bitmasks
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Attributes are used by the AccessDecisionManager, just like roles are
-attributes used by the AccessDecisionManager. Often, these attributes
-represent in fact an aggregate of integer bitmasks. Integer bitmasks on the
-other hand, are used by the ACL system internally to efficiently store your
-users' permissions in the database, and perform access checks using extremely
-fast bitmask operations.
+Attributes are used by the AccessDecisionManager, just like roles are attributes
+used by the AccessDecisionManager. Often, these attributes represent in fact an
+aggregate of integer bitmasks. Integer bitmasks on the other hand, are used by
+the ACL system internally to efficiently store your users' permissions in the
+database, and perform access checks using extremely fast bitmask operations.
 
 Extensibility
 ~~~~~~~~~~~~~
@@ -160,11 +158,10 @@ and typically involve the domain object which is returned by such a method.
 After invocation providers also allow to modify, or filter the domain object
 before it is returned.
 
-Due to current limitations of the PHP language, there are no
-post-authorization capabilities build into the core Security component.
-However, there is an experimental SecurityExtraBundle_ which adds these
-capabilities. See its documentation for further information on how this is
-accomplished.
+Due to current limitations of the PHP language, there are no post-authorization
+capabilities build into the core Security component. However, there is an
+experimental SecurityExtraBundle_ which adds these capabilities. See its
+documentation for further information on how this is accomplished.
 
 Process for Reaching Authorization Decisions
 --------------------------------------------
@@ -172,13 +169,13 @@ Process for Reaching Authorization Decisions
 The ACL class provides two methods for determining whether a security identity
 has the required bitmasks, ``isGranted`` and ``isFieldGranted``. When the ACL
 receives an authorization request through one of these methods, it delegates
-this request to an implementation of PermissionGrantingStrategy. This allows
-you to replace the way access decisions are reached without actually modifying
-the ACL class itself.
+this request to an implementation of PermissionGrantingStrategy. This allows you
+to replace the way access decisions are reached without actually modifying the
+ACL class itself.
 
 The PermissionGrantingStrategy first checks all your object-scope ACEs if none
-is applicable, the class-scope ACEs will be checked, if none is applicable,
-then the process will be repeated with the ACEs of the parent ACL. If no
-parent ACL exists, an exception will be thrown.
+is applicable, the class-scope ACEs will be checked, if none is applicable, then
+the process will be repeated with the ACEs of the parent ACL. If no parent ACL
+exists, an exception will be thrown.
 
 .. _SecurityExtraBundle: https://github.com/schmittjoh/SecurityExtraBundle

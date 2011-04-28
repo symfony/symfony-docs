@@ -28,8 +28,8 @@ Creating a Simple Form
 ----------------------
 
 Suppose you're building a simple store application that will need to display
-products. Because your users will need to edit and create products, you're
-going to need to build a form. But before you begin, let's focus on the generic
+products. Because your users will need to edit and create products, you're going
+to need to build a form. But before you begin, let's focus on the generic
 ``Product`` class that represents and stores the data for a single product:
 
 .. code-block:: php
@@ -80,9 +80,9 @@ Building the Form
 ~~~~~~~~~~~~~~~~~
 
 Now that you've created a ``Product`` class, the next step is to create and
-render the actual HTML form. In Symfony2, this is done by building a form
-object and then rendering it in a template. This can all be done from inside
-a controller:
+render the actual HTML form. In Symfony2, this is done by building a form object
+and then rendering it in a template. This can all be done from inside a
+controller:
 
 .. code-block:: php
 
@@ -119,9 +119,9 @@ a controller:
    that there is an even shorter way to configure the fields of the form. This
    is covered later in the :ref:`book-forms-field-guessing` section.
 
-Creating a form is short and easy in Symfony2 because form objects are built
-via a "form builder". A form builder is an object you can interact with to
-help you easily create form objects.
+Creating a form is short and easy in Symfony2 because form objects are built via
+a "form builder". A form builder is an object you can interact with to help you
+easily create form objects.
 
 In this example, you've added two fields to your form - ``name`` and ``price`` -
 corresponding to the ``name`` and ``price`` properties of the ``Product`` class.
@@ -131,10 +131,10 @@ special ``text`` field where money can be displayed and submitted in a localized
 format. Symfony2 comes with many build-in types that will be discussed shortly
 (see :ref:`book-forms-type-reference`).
 
-Now that the form has been created, the next step is to render it. This can
-be easily done by passing a special form "view" object to your template (see
-the ``$form->createView()`` in the controller above) and using a set of form
-helper functions:
+Now that the form has been created, the next step is to render it. This can be
+easily done by passing a special form "view" object to your template (see the
+``$form->createView()`` in the controller above) and using a set of form helper
+functions:
 
 .. configuration-block::
 
@@ -166,10 +166,10 @@ rendered, along with a label and eventual error messages. As easy as this is,
 it's not very flexible (yet). Later, you'll learn how to customize the form
 output.
 
-Before moving on, notice how the rendered name input field has the value
-of the ``name`` property from the ``$product`` object (i.e. "Test product").
-This is the first job of a form: to take data from an object and translate
-it into a format that's suitable for being rendered in an HTML form.
+Before moving on, notice how the rendered name input field has the value of the
+``name`` property from the ``$product`` object (i.e. "Test product"). This is
+the first job of a form: to take data from an object and translate it into a
+format that's suitable for being rendered in an HTML form.
 
 .. tip::
 
@@ -184,9 +184,8 @@ Handling Form Submissions
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The second job of a form is to translate user-submitted data back to the
-properties of an object. To make this happen, the submitted data from the
-user must be bound to the form. Add the following functionality to your
-controller:
+properties of an object. To make this happen, the submitted data from the user
+must be bound to the form. Add the following functionality to your controller:
 
 .. code-block:: php
 
@@ -246,13 +245,12 @@ possible paths:
 Form Validation
 ---------------
 
-In the previous section, you learned how a form can be submitted with valid
-or invalid data. In Symfony2, validation is applied to the underlying object
-(e.g. ``Product``). In other words, the question isn't whether the "form"
-is valid, but rather whether or not the ``$product`` object is valid after
-the form has applied the submitted data to it. Calling ``$form->isValid()``
-is a shortcut that asks the ``$product`` object whether or not it has valid
-data.
+In the previous section, you learned how a form can be submitted with valid or
+invalid data. In Symfony2, validation is applied to the underlying object (e.g.
+``Product``). In other words, the question isn't whether the "form" is valid,
+but rather whether or not the ``$product`` object is valid after the form has
+applied the submitted data to it. Calling ``$form->isValid()`` is a shortcut
+that asks the ``$product`` object whether or not it has valid data.
 
 Validation is done by adding a set of rules (called constraints) to a class. To
 see this in action, add validation constraints so that the ``name`` field cannot
@@ -345,8 +343,8 @@ Validation is a very powerful feature of Symfony2 and has its own
 Built-in Field Types
 --------------------
 
-Symfony comes standard with a large group of field types that cover all of
-the common form fields and data types you'll encounter:
+Symfony comes standard with a large group of field types that cover all of the
+common form fields and data types you'll encounter:
 
 .. include:: /reference/forms/types/map.rst.inc
 
@@ -367,10 +365,10 @@ options:
 
     ->add('price', 'money', array('currency' => 'USD'))
 
-Each field type has a number of different options that can be passed to it.
-Many of these are specific to the field type and details can be found in
-the documentation for each type. Some options, however, are shared between
-most fields:
+Each field type has a number of different options that can be passed to it. Many
+of these are specific to the field type and details can be found in the
+documentation for each type. Some options, however, are shared between most
+fields:
 
 .. include:: /reference/forms/types/options/required.rst.inc
 
@@ -385,11 +383,11 @@ Field Type Guessing
 -------------------
 
 Now that you've added validation metadata to the ``Product`` class, Symfony
-already knows a bit about your fields. If you allow it, Symfony can "guess"
-the type of your field and set it up for you. In this example, Symfony will
-guess from the validation rules that both the ``name`` and ``price`` fields
-are normal ``text`` fields. Since it's right about the ``name`` field, you
-can modify your code so that Symfony guesses the field for you:
+already knows a bit about your fields. If you allow it, Symfony can "guess" the
+type of your field and set it up for you. In this example, Symfony will guess
+from the validation rules that both the ``name`` and ``price`` fields are normal
+``text`` fields. Since it's right about the ``name`` field, you can modify your
+code so that Symfony guesses the field for you:
 
 .. code-block:: php
 
@@ -423,8 +421,8 @@ guess (``text``).
      
      * an array of options for the form.
 
-This example is pretty trivial, but field guessing can be a major time saver.
-As you'll see later, adding Doctrine metadata can further improve the system's
+This example is pretty trivial, but field guessing can be a major time saver. As
+you'll see later, adding Doctrine metadata can further improve the system's
 ability to guess field types.
 
 .. index::
@@ -433,8 +431,8 @@ ability to guess field types.
 Rendering a Form in a Template
 ------------------------------
 
-So far, you've seen how an entire form can be rendered with just one line
-of code. Of course, you'll usually need much more flexibility when rendering:
+So far, you've seen how an entire form can be rendered with just one line of
+code. Of course, you'll usually need much more flexibility when rendering:
 
 .. configuration-block::
 
@@ -485,18 +483,18 @@ Let's take a look at each part:
   manually rendering hidden fields). This helper is also useful for taking
   advantage of the automatic :ref:`CSRF Protection<forms-csrf>`.
 
-The majority of the work is done by the ``form_row`` helper, which renders
-the label, errors and HTML form widget of each field inside a ``div`` tag
-by default. In the :ref:`form-theming` section, you'll learn how
-the ``form_row`` output can be customized on many different levels.
+The majority of the work is done by the ``form_row`` helper, which renders the
+label, errors and HTML form widget of each field inside a ``div`` tag by
+default. In the :ref:`form-theming` section, you'll learn how the ``form_row``
+output can be customized on many different levels.
 
 Rendering each Field by Hand
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The ``form_row`` helper is great because you can very quickly render each
-field of your form (and the markup used for the "row" can be customized as
-well). But since life isn't always so simple, you can also render each field
-entirely by hand:
+The ``form_row`` helper is great because you can very quickly render each field
+of your form (and the markup used for the "row" can be customized as well). But
+since life isn't always so simple, you can also render each field entirely by
+hand:
 
 .. configuration-block::
 
@@ -603,8 +601,8 @@ that will house the logic for building the product form:
         }
     }
 
-This new class contains all the directions needed to create the product form.
-It can be used to quickly build a form object in the controller:
+This new class contains all the directions needed to create the product form. It
+can be used to quickly build a form object in the controller:
 
 .. code-block:: php
 
@@ -621,8 +619,8 @@ It can be used to quickly build a form object in the controller:
     }
 
 Placing the form logic into its own class means that the form can be easily
-reused elsewhere in your project. This is the best way to create forms, but
-the choice is ultimately up to you.
+reused elsewhere in your project. This is the best way to create forms, but the
+choice is ultimately up to you.
 
 .. index::
    single: Forms; Doctrine
@@ -648,9 +646,9 @@ when the form is valid:
 
 For more information, see the :doc:`Doctrine ORM chapter</book/doctrine/orm>`.
 
-If the underlying object of a form (e.g. ``Product``) happens to be mapped
-with the Doctrine ORM, the form framework will use that information - along
-with the validation metadata - to guess the type of a particular field.
+If the underlying object of a form (e.g. ``Product``) happens to be mapped with
+the Doctrine ORM, the form framework will use that information - along with the
+validation metadata - to guess the type of a particular field.
 
 .. index::
    single: Forms; Embedded forms
@@ -659,9 +657,9 @@ Embedded Forms
 --------------
 
 Often, you'll want to build a form that will include fields from many different
-objects. For example, a registration form may contain data belonging to
-a ``User`` object as well as many ``Address`` objects. Fortunately, this
-is easy and natural with the form component.
+objects. For example, a registration form may contain data belonging to a
+``User`` object as well as many ``Address`` objects. Fortunately, this is easy
+and natural with the form component.
 
 Embedding a Single Object
 ~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -734,8 +732,8 @@ create a form class so that a ``Category`` object can be modified by the user:
         }
     }
 
-The type of the ``name`` field is being guessed (as a ``text`` field) from
-the validation metadata of the ``Category`` object.
+The type of the ``name`` field is being guessed (as a ``text`` field) from the
+validation metadata of the ``Category`` object.
 
 The end goal is to allow the ``Category`` of a ``Product`` to be modified right
 inside the product form. To accomplish this, add a ``category`` field to the
@@ -751,9 +749,9 @@ class:
         $builder->add('category', new CategoryType());
     }
 
-The fields from ``CategoryType`` can now be rendered alongside those from
-the ``ProductType`` class. Render the ``Category`` fields in the same way
-as the original ``Product`` fields:
+The fields from ``CategoryType`` can now be rendered alongside those from the
+``ProductType`` class. Render the ``Category`` fields in the same way as the
+original ``Product`` fields:
 
 .. configuration-block::
 
@@ -784,18 +782,18 @@ as the original ``Product`` fields:
         <!-- ... -->
 
 When the user submits the form, the submitted data for the ``Category`` fields
-is merged onto the ``Category`` object. In other words, everything works
-exactly as it does with the main ``Product`` object. The ``Category`` instance
-is accessible naturally via ``$product->getCategory()`` and can be persisted
-to the database or used however you need.
+is merged onto the ``Category`` object. In other words, everything works exactly
+as it does with the main ``Product`` object. The ``Category`` instance is
+accessible naturally via ``$product->getCategory()`` and can be persisted to the
+database or used however you need.
 
 Embedding a Collection of Forms
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-You can also embed a collection of forms into one form. This is done by
-using the ``collection`` field type. Assuming that you have a property
-called ``reviews`` and a class called ``ProductReviewType``, you could do
-the following inside ``ProductType``:
+You can also embed a collection of forms into one form. This is done by using
+the ``collection`` field type. Assuming that you have a property called
+``reviews`` and a class called ``ProductReviewType``, you could do the following
+inside ``ProductType``:
 
 .. code-block:: php
 
@@ -813,19 +811,19 @@ the following inside ``ProductType``:
 Form Theming
 ------------
 
-Every part of how a form renders can be customized. You're free to change
-how each form "row" renders, change the markup used to render errors, or
-even customize how a textarea tag should be rendered. Nothing is off-limits,
-and different customizations can be used in different places.
+Every part of how a form renders can be customized. You're free to change how
+each form "row" renders, change the markup used to render errors, or even
+customize how a textarea tag should be rendered. Nothing is off-limits, and
+different customizations can be used in different places.
 
-Symfony uses templates to render each and every part of a form. In Twig,
-the different pieces of a form - a row, a textarea tag, errors - are represented
-by Twig "blocks". To customize any part of how a form renders, you just need
-to override the appropriate block.
+Symfony uses templates to render each and every part of a form. In Twig, the
+different pieces of a form - a row, a textarea tag, errors - are represented by
+Twig "blocks". To customize any part of how a form renders, you just need to
+override the appropriate block.
 
-To understand how this works, let's customize the ``form_row`` output and
-add a class attribute to the ``div`` element that surrounds each row. To
-do this, create a new template file that will store the new markup:
+To understand how this works, let's customize the ``form_row`` output and add a
+class attribute to the ``div`` element that surrounds each row. To do this,
+create a new template file that will store the new markup:
 
 .. configuration-block::
 
@@ -852,10 +850,9 @@ do this, create a new template file that will store the new markup:
             <?php echo $view['form']->widget($form, $parameters) ?>
         </div>
 
-The ``field_row`` block is the name of the block used when rendering most
-fields via the ``form_row`` function. To use the ``field_row`` block defined
-in this template, add the following to the top of the template that renders
-the form:
+The ``field_row`` block is the name of the block used when rendering most fields
+via the ``form_row`` function. To use the ``field_row`` block defined in this
+template, add the following to the top of the template that renders the form:
 
 .. configuration-block:: php
 
@@ -895,8 +892,8 @@ separated by a single underscore character (``_``). A few examples are:
 Each block follows the same basic pattern: ``type_part``. The ``type`` portion
 corresponds to the field type being rendered (e.g. ``textarea`` or ``checkbox``)
 whereas the ``part`` portion corresponds to *what* is being rendered (e.g.
-``label``, ``widget``). By default, there are exactly 7 possible parts of
-a form that can be rendered:
+``label``, ``widget``). By default, there are exactly 7 possible parts of a form
+that can be rendered:
 
 +-------------+--------------------------+------------------------------------------------------+
 | ``label``   | (e.g. ``field_label``)   | renders the field's label                            |
@@ -915,24 +912,23 @@ a form that can be rendered:
 +-------------+--------------------------+------------------------------------------------------+
 
 By knowing the field type (e.g. ``textarea``) and which part you want to
-customize (e.g. ``widget``), you can construct the block name that needs
-to be overridden (e.g. ``textarea_widget``). The best way to customize the
-block is to copy it from ``div_layout.html.twig`` to a new template, customize
-it, and then use the ``form_theme`` tag as shown in the earlier example.
+customize (e.g. ``widget``), you can construct the block name that needs to be
+overridden (e.g. ``textarea_widget``). The best way to customize the block is to
+copy it from ``div_layout.html.twig`` to a new template, customize it, and then
+use the ``form_theme`` tag as shown in the earlier example.
 
 Form Type Block Inheritance
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-In some cases, the block you want to customize will appear to be missing.
-For example, if you look in the ``div_layout.html.twig`` file, you'll find
-no ``textarea_errors`` block. So how are the errors for a textarea field
-rendered?
+In some cases, the block you want to customize will appear to be missing. For
+example, if you look in the ``div_layout.html.twig`` file, you'll find no
+``textarea_errors`` block. So how are the errors for a textarea field rendered?
 
 The answer is: via the ``field_errors`` block. When Symfony renders the errors
 for a textarea type, it looks first for a ``textarea_errors`` block before
-falling back to the ``field_errors`` block. Each field type has a *parent*
-type (the parent type of ``textarea`` is ``field``), and Symfony uses the
-block for the parent type if the base block doesn't exist.
+falling back to the ``field_errors`` block. Each field type has a *parent* type
+(the parent type of ``textarea`` is ``field``), and Symfony uses the block for
+the parent type if the base block doesn't exist.
 
 So, to override the errors for *only* ``textarea`` fields, copy the
 ``field_errors`` block, rename it to ``textarea_errors`` and customize it. To
@@ -977,8 +973,8 @@ configuration file:
             // ...
         ));
 
-Any blocks inside the ``fields.html.twig`` template are now used globally
-to define form output. 
+Any blocks inside the ``fields.html.twig`` template are now used globally to
+define form output. 
 
 .. sidebar::  Customizing Form Output all in a Single File
 
@@ -1011,24 +1007,24 @@ to define form output.
 CSRF Protection
 ---------------
 
-CSRF - or `Cross-site request forgery`_ - is a method by which a malicious
-user attempts to make your legitimate users unknowingly submit data that
-they don't intend to submit. Fortunately, CSRF attacks can be prevented by
-using a CSRF token inside your forms.
+CSRF - or `Cross-site request forgery`_ - is a method by which a malicious user
+attempts to make your legitimate users unknowingly submit data that they don't
+intend to submit. Fortunately, CSRF attacks can be prevented by using a CSRF
+token inside your forms.
 
 The good news is that, by default, Symfony embeds and validates CSRF tokens
 automatically for you. This means that you can take advantage of the CSRF
-protection without doing anything. In fact, every form in this chapter has
-taken advantage of the CSRF protection!
+protection without doing anything. In fact, every form in this chapter has taken
+advantage of the CSRF protection!
 
 CSRF protection works by adding a field to your form - called ``_token`` by
 default - that contains a value that only you and your user knows. This ensures
 that the user - not some other entity - is submitting the given data. Symfony
 automatically validates the presence and accuracy of this token.
 
-The ``_token`` field is a hidden field and will be automatically rendered
-if you include the ``form_rest()`` function in your template, which ensures
-that all un-rendered fields are output.
+The ``_token`` field is a hidden field and will be automatically rendered if you
+include the ``form_rest()`` function in your template, which ensures that all
+un-rendered fields are output.
 
 The CSRF token can be customized on a form-by-form basis. For example:
 
@@ -1060,10 +1056,10 @@ the first goal of a form is to translate data from an object (``Product``) to an
 HTML form so that the user can modify that data. The second goal of a form is to
 take the data submitted by the user and to re-apply it to the object.
 
-There's still much more to learn about the powerful world of forms, such as
-how to handle file uploads and how to create a form where a dynamic number
-of sub-forms can be added (e.g. a todo list where you can keep adding more
-fields via Javascript before submitting). See the cookbook for these topics.
+There's still much more to learn about the powerful world of forms, such as how
+to handle file uploads and how to create a form where a dynamic number of
+sub-forms can be added (e.g. a todo list where you can keep adding more fields
+via Javascript before submitting). See the cookbook for these topics.
 
 Learn more from the Cookbook
 ----------------------------

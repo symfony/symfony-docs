@@ -5,8 +5,8 @@ Authentication
 ==============
 
 Authentication in Symfony2 is managed by the Firewall system. It is made of
-listeners that enforce security and redirect the user if his credentials are
-not available, not sufficient, or just wrong.
+listeners that enforce security and redirect the user if his credentials are not
+available, not sufficient, or just wrong.
 
 .. note::
 
@@ -23,8 +23,8 @@ not available, not sufficient, or just wrong.
 The Firewall Map
 ----------------
 
-The Firewall can be configured to secure your application as a whole, or to
-use different authentication strategies for different parts of the application.
+The Firewall can be configured to secure your application as a whole, or to use
+different authentication strategies for different parts of the application.
 
 Typically, a website can open the public part to all, secure the backend via a
 form based authentication, and secure the public API/Web Service via an HTTP
@@ -101,9 +101,9 @@ Out of the box, Symfony2 supports the following authentication mechanisms:
 
 Each authentication mechanism consists of two classes that makes it work: a
 listener and an entry point. The *listener* tries to authenticate incoming
-requests. When the user is not authenticated or when the listener detects
-wrong credentials, the *entry point* creates a response to send feedback to
-the user and to provide a way for him to enter his credentials.
+requests. When the user is not authenticated or when the listener detects wrong
+credentials, the *entry point* creates a response to send feedback to the user
+and to provide a way for him to enter his credentials.
 
 You can configure a firewall to use more than one authentication mechanisms:
 
@@ -370,8 +370,8 @@ And the corresponding template might look like this:
     a static path in the firewall configuration.
 
 The template must have a ``_username`` and ``_password`` fields, and the form
-submission URL must be the value of the ``check_path`` setting
-(``/login_check`` by default).
+submission URL must be the value of the ``check_path`` setting (``/login_check``
+by default).
 
 Finally, add routes for the ``/login`` (``login_path`` value) and
 ``/login_check`` (``login_check`` value) URLs:
@@ -385,12 +385,12 @@ Finally, add routes for the ``/login`` (``login_path`` value) and
     <route id="_security_check" pattern="/login_check" />
 
 After an authentication failure, the user is redirected to the login page. You
-can use forward instead by setting the ``failure_forward`` to ``true``. You
-can also redirect or forward to another page if you set the ``failure_path``
+can use forward instead by setting the ``failure_forward`` to ``true``. You can
+also redirect or forward to another page if you set the ``failure_path``
 setting.
 
-After a successful authentication, the user is redirected based on the
-following algorithm:
+After a successful authentication, the user is redirected based on the following
+algorithm:
 
 * if ``always_use_default_target_path`` is ``true`` (``false`` by default),
   redirect the user to the ``default_target_path`` (``/`` by default);
@@ -506,9 +506,9 @@ X.509 certificates are a great way to authenticate users if you know them all:
         ));
 
 As Symfony2 does not validate the certificate itself, and because obviously it
-cannot enforce the password, you must first configure your web server
-correctly before enabling this authenticating mechanism. Here is a simple but
-working configuration for Apache:
+cannot enforce the password, you must first configure your web server correctly
+before enabling this authenticating mechanism. Here is a simple but working
+configuration for Apache:
 
 .. code-block:: xml
 
@@ -532,8 +532,8 @@ working configuration for Apache:
         SSLVerifyDepth 1
     </VirtualHost>
 
-By default, the username is the email declared in the certificate (the value
-of the ``SSL_CLIENT_S_DN_Email`` environment variable).
+By default, the username is the email declared in the certificate (the value of
+the ``SSL_CLIENT_S_DN_Email`` environment variable).
 
 .. tip::
 
@@ -548,9 +548,9 @@ Anonymous Users
 
 When you disable security, no user is attached to the request anymore. If you
 still want one, you can activate anonymous users. An anonymous user is
-authenticated but only has the ``IS_AUTHENTICATED_ANONYMOUSLY`` role. The
-"real" authentication only occurs whenever the user accesses a resource
-restricted by a more restrictive access control rule:
+authenticated but only has the ``IS_AUTHENTICATED_ANONYMOUSLY`` role. The "real"
+authentication only occurs whenever the user accesses a resource restricted by a
+more restrictive access control rule:
 
 .. configuration-block::
 
@@ -582,8 +582,8 @@ restricted by a more restrictive access control rule:
 
 As anonymous users are authenticated, the ``isAuthenticated()`` method returns
 ``true``. To check is the user is anonymous, check for the
-``IS_AUTHENTICATED_ANONYMOUSLY`` role instead (note that all non-anonymous
-users have the ``IS_AUTHENTICATED_FULLY`` role).
+``IS_AUTHENTICATED_ANONYMOUSLY`` role instead (note that all non-anonymous users
+have the ``IS_AUTHENTICATED_FULLY`` role).
 
 .. index::
    single: Security; Stateless Authentication
@@ -639,9 +639,9 @@ Impersonating a User
 --------------------
 
 Sometimes, it's useful to be able to switch from one user to another without
-having to logout and login again (for instance when you are debugging or try
-to understand a bug a user see and you cannot reproduce). This can be easily
-done by activating the ``switch-user`` listener:
+having to logout and login again (for instance when you are debugging or try to
+understand a bug a user see and you cannot reproduce). This can be easily done
+by activating the ``switch-user`` listener:
 
 .. configuration-block::
 
@@ -682,10 +682,10 @@ To switch back to the original user, use the special ``_exit`` username:
 
     http://example.com/somewhere?_switch_user=_exit
 
-Of course, this feature needs to be made available to a small group of users.
-By default, access is restricted to users having the 'ROLE_ALLOWED_TO_SWITCH'
-role. Change the default role with the ``role`` setting and for extra
-security, also change the parameter name via the ``parameter`` setting:
+Of course, this feature needs to be made available to a small group of users. By
+default, access is restricted to users having the 'ROLE_ALLOWED_TO_SWITCH' role.
+Change the default role with the ``role`` setting and for extra security, also
+change the parameter name via the ``parameter`` setting:
 
 .. configuration-block::
 
@@ -759,9 +759,9 @@ listener:
             ),
         ));
 
-By default, users are logged out when they access ``/logout`` path and they
-are redirected to ``/``. This can be easily changed via the ``path`` and
-``target`` settings:
+By default, users are logged out when they access ``/logout`` path and they are
+redirected to ``/``. This can be easily changed via the ``path`` and ``target``
+settings:
 
 .. configuration-block::
 
@@ -798,10 +798,10 @@ are redirected to ``/``. This can be easily changed via the ``path`` and
 Authentication and User Providers
 ---------------------------------
 
-By default, a firewall uses the first declared user provider for
-authentication. But if you want to use different user providers for different
-parts of your website, you can explicitly change the user provider for a
-firewall, or just for an authentication mechanism:
+By default, a firewall uses the first declared user provider for authentication.
+But if you want to use different user providers for different parts of your
+website, you can explicitly change the user provider for a firewall, or just for
+an authentication mechanism:
 
 .. configuration-block::
 
@@ -887,9 +887,9 @@ firewall, or just for an authentication mechanism:
         ));
 
 In the above example, ``/admin/.*`` URLs accept users from the ``certificate``
-user provider when using X.509 authenticating, and the ``default`` provider
-when the user signs in with a form. The ``/api/.*`` URLs use the ``default``
-provider for all authentication mechanisms.
+user provider when using X.509 authenticating, and the ``default`` provider when
+the user signs in with a form. The ``/api/.*`` URLs use the ``default`` provider
+for all authentication mechanisms.
 
 .. note::
 

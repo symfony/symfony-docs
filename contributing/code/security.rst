@@ -3,8 +3,8 @@ Reporting a Security Issue
 
 Found a security issue in Symfony2? Don't use the mailing-list or the bug
 tracker. All security issues must be sent to **security [at]
-symfony-project.com** instead. Emails sent to this address are forwarded to
-the Symfony core-team private mailing-list.
+symfony-project.com** instead. Emails sent to this address are forwarded to the
+Symfony core-team private mailing-list.
 
 For each report, we first try to confirm the vulnerability. When it is
 confirmed, the core-team works on a solution following these steps:

@@ -9,8 +9,8 @@ tutorials, and more.
 Contributing
 ------------
 
-Before contributing, you need to become familiar with the :doc:`markup
-language <format>` used by the documentation.
+Before contributing, you need to become familiar with the :doc:`markup language
+<format>` used by the documentation.
 
 The Symfony2 documentation is hosted on GitHub:
 
@@ -33,8 +33,8 @@ Next, create a dedicated branch for your changes (for organization):
 
 You can now make your changes directly to this branch and commit them. When
 you're done, push this branch to *your* GitHub fork and initiate a pull request.
-The pull request will be between your ``improving_foo_and_bar`` branch and
-the ``symfony-docs`` ``master`` branch.
+The pull request will be between your ``improving_foo_and_bar`` branch and the
+``symfony-docs`` ``master`` branch.
 
 .. image:: /images/docs-pull-request.png
    :align: center

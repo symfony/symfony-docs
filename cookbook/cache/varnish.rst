@@ -17,11 +17,11 @@ Configuration
 -------------
 
 As seen previously, Symfony2 is smart enough to detect whether it talks to a
-reverse proxy that understands ESI or not. It works out of the box when you
-use the Symfony2 reverse proxy, but you need a special configuration to make
-it work with Varnish. Thankfully, Symfony2 relies on yet another standard
-written by Akamaï (`Edge Architecture`_), so the configuration tips in this
-chapter can be useful even if you don't use Symfony2.
+reverse proxy that understands ESI or not. It works out of the box when you use
+the Symfony2 reverse proxy, but you need a special configuration to make it work
+with Varnish. Thankfully, Symfony2 relies on yet another standard written by
+Akamaï (`Edge Architecture`_), so the configuration tips in this chapter can be
+useful even if you don't use Symfony2.
 
 .. note::
 
@@ -64,10 +64,11 @@ Cache Invalidation
 ------------------
 
 You should never need to invalidate cached data because invalidation is already
-taken into account natively in the HTTP cache models (see :ref:`http-cache-invalidation`).
+taken into account natively in the HTTP cache models (see
+:ref:`http-cache-invalidation`).
 
-Still, Varnish can be configured to accept a special HTTP ``PURGE`` method
-that will invalidate the cache for a given resource:
+Still, Varnish can be configured to accept a special HTTP ``PURGE`` method that
+will invalidate the cache for a given resource:
 
 .. code-block:: text
 

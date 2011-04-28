@@ -35,12 +35,12 @@ method::
         }
     }
 
-In this example, two events are thrown: ``onFooPreSend``, before the method
-is executed, and ``onFooPostSend`` after the method is executed. Each uses
-a custom Event class to communicate information to the listeners of the two
-events. These event classes would need to be created by you and should allow,
-in this example, the variables ``$foo``, ``$bar`` and ``$ret`` to be retrieved
-and set by the listeners.
+In this example, two events are thrown: ``onFooPreSend``, before the method is
+executed, and ``onFooPostSend`` after the method is executed. Each uses a custom
+Event class to communicate information to the listeners of the two events. These
+event classes would need to be created by you and should allow, in this example,
+the variables ``$foo``, ``$bar`` and ``$ret`` to be retrieved and set by the
+listeners.
 
 For example, assuming the ``FilterSendReturnValue`` has a ``setReturnValue``
 method, one listener might look like this:

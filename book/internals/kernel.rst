@@ -5,9 +5,9 @@ Kernel
 ======
 
 The :class:`Symfony\\Component\\HttpKernel\\HttpKernel` class is the central
-class of Symfony2 and is responsible for handling client requests. Its main
-goal is to "convert" a :class:`Symfony\\Component\\HttpFoundation\\Request`
-object to a :class:`Symfony\\Component\\HttpFoundation\\Response` object.
+class of Symfony2 and is responsible for handling client requests. Its main goal
+is to "convert" a :class:`Symfony\\Component\\HttpFoundation\\Request` object to
+a :class:`Symfony\\Component\\HttpFoundation\\Response` object.
 
 Every Symfony2 Kernel implements
 :class:`Symfony\\Component\\HttpKernel\\HttpKernelInterface`::
@@ -23,8 +23,9 @@ Controllers
 To convert a Request to a Response, the Kernel relies on a "Controller". A
 Controller can be any valid PHP callable.
 
-The Kernel delegates the selection of what Controller should be executed
-to an implementation of
+The Kernel delegates the selection of what Controller should be executed to an
+implementation of
+
 :class:`Symfony\\Component\\HttpKernel\\Controller\\ControllerResolverInterface`::
 
     public function getController(Request $request);
@@ -32,6 +33,7 @@ to an implementation of
     public function getArguments(Request $request, $controller);
 
 The
+
 :method:`Symfony\\Component\\HttpKernel\\Controller\\ControllerResolverInterface::getController`
 method returns the Controller (a PHP callable) associated with the given
 Request. The default implementation
@@ -47,10 +49,11 @@ name (a "class::method" string, like
     ``_controller`` Request attribute (see :ref:`kernel-onCoreRequest`).
 
 The
+
 :method:`Symfony\\Component\\HttpKernel\\Controller\\ControllerResolverInterface::getArguments`
 method returns an array of arguments to pass to the Controller callable. The
-default implementation automatically resolves the method arguments, based on
-the Request attributes.
+default implementation automatically resolves the method arguments, based on the
+Request attributes.
 
 .. sidebar:: Matching Controller method arguments from Request attributes
 
@@ -98,10 +101,10 @@ each Event):
 
 9. The Response is returned.
 
-If an Exception is thrown during processing, the ``onCoreException`` is
-notified and listeners are given a change to convert the Exception to a
-Response. If that works, the ``onCoreResponse`` event is notified; if not the
-Exception is re-thrown.
+If an Exception is thrown during processing, the ``onCoreException`` is notified
+and listeners are given a change to convert the Exception to a Response. If that
+works, the ``onCoreResponse`` event is notified; if not the Exception is
+re-thrown.
 
 If you don't want Exceptions to be caught (for embedded requests for instance),
 disable the ``onCoreException`` event by passing ``false`` as the third argument
@@ -169,16 +172,16 @@ add the following code at the beginning of your listener method::
 
 *Event Class*: :class:`Symfony\\Component\\HttpKernel\\Event\\GetResponseEvent`
 
-The goal of this event is to either return a ``Response`` object immediately
-or setup variables so that a Controller can be called after the event. Any
-listener can return a ``Response`` object via the ``setResponse()`` method
-on the event. In this case, all other listeners won't be called.
+The goal of this event is to either return a ``Response`` object immediately or
+setup variables so that a Controller can be called after the event. Any listener
+can return a ``Response`` object via the ``setResponse()`` method on the event.
+In this case, all other listeners won't be called.
 
 This event is used by ``FrameworkBundle`` to populate the ``_controller``
 ``Request`` attribute, via the
-:class:`Symfony\\Bundle\\FrameworkBundle\\RequestListener`. RequestListener
-uses a :class:`Symfony\\Component\\Routing\\RouterInterface` object to match
-the ``Request`` and determine the Controller name (stored in the ``_controller``
+:class:`Symfony\\Bundle\\FrameworkBundle\\RequestListener`. RequestListener uses
+a :class:`Symfony\\Component\\Routing\\RouterInterface` object to match the
+``Request`` and determine the Controller name (stored in the ``_controller``
 ``Request`` attribute).
 
 .. index::
@@ -189,8 +192,8 @@ the ``Request`` and determine the Controller name (stored in the ``_controller``
 
 *Event Class*: :class:`Symfony\\Component\\HttpKernel\\Event\\FilterControllerEvent`
 
-This event is not used by ``FrameworkBundle``, but can be an entry point used
-to modify the controller that should be executed:
+This event is not used by ``FrameworkBundle``, but can be an entry point used to
+modify the controller that should be executed:
 
 .. code-block:: php
 
@@ -218,8 +221,8 @@ a view sub-system. This event is called *only*  if the Controller does *not*
 return a ``Response`` object. The purpose of the event is to allow some other
 return value to be converted into a ``Response``.
 
-The value returned by the Controller is accessible via the ``getControllerResult``
-method::
+The value returned by the Controller is accessible via the
+``getControllerResult`` method::
 
     use Symfony\Component\HttpKernel\Event\GetResponseForControllerResultEvent;
     use Symfony\Component\HttpFoundation\Response;
@@ -241,8 +244,8 @@ method::
 
 *Event Class*: :class:`Symfony\\Component\\HttpKernel\\Event\\FilterResponseEvent`
 
-The purpose of this event is to allow other systems to modify or replace
-the ``Response`` object after its creation:
+The purpose of this event is to allow other systems to modify or replace the
+``Response`` object after its creation:
 
 .. code-block:: php
 
@@ -280,11 +283,11 @@ The ``FrameworkBundle`` registers several listeners:
 ``FrameworkBundle`` registers a
 :class:`Symfony\\Bundle\\FrameworkBundle\\Controller\\ExceptionListener` that
 forwards the ``Request`` to a given Controller (the value of the
-``exception_listener.controller`` parameter -- must be in the
-``class::method`` notation).
+``exception_listener.controller`` parameter -- must be in the ``class::method``
+notation).
 
-A listener on this event can create and set a ``Response`` object, create
-and set a new ``Exception`` object, or do nothing:
+A listener on this event can create and set a ``Response`` object, create and
+set a new ``Exception`` object, or do nothing:
 
 .. code-block:: php
 

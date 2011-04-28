@@ -6,16 +6,16 @@
 
 See :class:`Symfony\\Component\\Form\\Type\\TimezoneType`.
 
-The ``timezone`` type is a subset of the ``ChoiceType`` that allows the user
-to select from all possible timezones.
+The ``timezone`` type is a subset of the ``ChoiceType`` that allows the user to
+select from all possible timezones.
 
-The "value" for each timezone is the full timezone name, such as ``America/Chicago``
-or ``Europe/Istanbul``.
+The "value" for each timezone is the full timezone name, such as
+``America/Chicago`` or ``Europe/Istanbul``.
 
 Unlike the ``choice`` type, you don't need to specify a ``choices`` or
-``choice_list`` option as the field type automatically uses a large list
-of locales. You *can* specify either of these options manually, but then
-you should just use the ``choice`` type directly.
+``choice_list`` option as the field type automatically uses a large list of
+locales. You *can* specify either of these options manually, but then you should
+just use the ``choice`` type directly.
 
 +-------------+------------------------------------------------------------------------+
 | Rendered as | can be various tags (see :ref:`forms-reference-choice-tags`)           |

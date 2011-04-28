@@ -1,8 +1,8 @@
 Reporting a Bug
 ===============
 
-Whenever you find a bug in Symfony2, we kindly ask you to report it. It helps
-us make a better Symfony2.
+Whenever you find a bug in Symfony2, we kindly ask you to report it. It helps us
+make a better Symfony2.
 
 .. caution::
 

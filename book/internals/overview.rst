@@ -4,17 +4,17 @@
 Internals Overview
 ==================
 
-Looks like you want to understand how Symfony2 works and how to extend it.
-That makes me very happy! This section is an in-depth explanation of the
-Symfony2 internals.
+Looks like you want to understand how Symfony2 works and how to extend it. That
+makes me very happy! This section is an in-depth explanation of the Symfony2
+internals.
 
 .. note::
 
     You need to read this section only if you want to understand how Symfony2
     works behind the scene, or if you want to extend Symfony2.
 
-The Symfony2 code is made of several independent layers. Each layer is built
-on top of the previous one.
+The Symfony2 code is made of several independent layers. Each layer is built on
+top of the previous one.
 
 .. tip::
 
@@ -28,9 +28,8 @@ on top of the previous one.
 ----------------------------
 
 The deepest level is the :namespace:`Symfony\\Component\\HttpFoundation`
-component. HttpFoundation provides the main objects needed to deal with HTTP.
-It is an Object-Oriented abstraction of some native PHP functions and
-variables:
+component. HttpFoundation provides the main objects needed to deal with HTTP. It
+is an Object-Oriented abstraction of some native PHP functions and variables:
 
 * The :class:`Symfony\\Component\\HttpFoundation\\Request` class abstracts
   the main PHP global variables like ``$_GET``, ``$_POST``, ``$_COOKIE``,
@@ -51,8 +50,8 @@ variables:
 ------------------------
 
 On top of HttpFoundation is the :namespace:`Symfony\\Component\\HttpKernel`
-component. HttpKernel handles the dynamic part of HTTP; it is a thin wrapper
-on top of the Request and Response classes to standardize the way requests are
+component. HttpKernel handles the dynamic part of HTTP; it is a thin wrapper on
+top of the Request and Response classes to standardize the way requests are
 handled. It also provides extension points and tools that makes it the ideal
 starting point to create a Web framework without too much overhead.
 

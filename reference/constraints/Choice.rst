@@ -1,8 +1,8 @@
 Choice
 ======
 
-The ``Choice`` constraint validates that a given value is one or more of
-a list of given choices.
+The ``Choice`` constraint validates that a given value is one or more of a list
+of given choices.
 
 +----------------+-----------------------------------------------------------------------+
 | Validates      | a scalar value or an array of scalar values (if ``multiple`` is true) |
@@ -73,8 +73,8 @@ Available Options
 Basic Usage
 -----------
 
-If the choices are simple, they can be passed to the constraint definition
-as an array.
+If the choices are simple, they can be passed to the constraint definition as an
+array.
 
 .. configuration-block::
 
@@ -136,10 +136,10 @@ as an array.
 Supplying the Choices with a Callback Function
 ----------------------------------------------
 
-You can also use a callback function to specify your options. This is useful
-if you want to keep your choices in some central location so that, for example,
-you can easily access those choices for validation or for building a select
-form element.
+You can also use a callback function to specify your options. This is useful if
+you want to keep your choices in some central location so that, for example, you
+can easily access those choices for validation or for building a select form
+element.
 
 .. code-block:: php
 
@@ -152,8 +152,8 @@ form element.
         }
     }
 
-You can pass the name of this method to the ``callback`` option of the ``Choice``
-constraint.
+You can pass the name of this method to the ``callback`` option of the
+``Choice`` constraint.
 
 .. configuration-block::
 
@@ -187,8 +187,8 @@ constraint.
             protected $gender;
         }
 
-If the static callback is stored in a different class, for example ``Util``,
-you can pass the class name and the method as an array.
+If the static callback is stored in a different class, for example ``Util``, you
+can pass the class name and the method as an array.
 
 .. configuration-block::
 

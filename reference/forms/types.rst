@@ -35,9 +35,9 @@ Form Types Reference
    types/timezone
    types/url
 
-A form is composed of *fields*, each of which are built with the help of
-a field *type* (e.g. a ``text`` type, ``choice`` type, etc). Symfony2 comes
-standard with a large list of field types that can be used in your application.
+A form is composed of *fields*, each of which are built with the help of a field
+*type* (e.g. a ``text`` type, ``choice`` type, etc). Symfony2 comes standard
+with a large list of field types that can be used in your application.
 
 Supported Field Types
 ---------------------

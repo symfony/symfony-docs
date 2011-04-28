@@ -76,10 +76,10 @@ the ``extend()`` call:
 
     Hello <?php echo $name ?>!
 
-The ``HelloBundle::layout.html.php`` notation sounds familiar, doesn't it? It
-is the same notation used to reference a template. The ``::`` part simply
-means that the controller element is empty, so the corresponding file is
-directly stored under ``views/``.
+The ``HelloBundle::layout.html.php`` notation sounds familiar, doesn't it? It is
+the same notation used to reference a template. The ``::`` part simply means
+that the controller element is empty, so the corresponding file is directly
+stored under ``views/``.
 
 Now, let's have a look at the ``layout.html.php`` file:
 
@@ -93,10 +93,10 @@ Now, let's have a look at the ``layout.html.php`` file:
     <?php $view['slots']->output('_content') ?>
 
 The layout is itself decorated by another one (``::base.html.php``). Symfony2
-supports multiple decoration levels: a layout can itself be decorated by
-another one. When the bundle part of the template name is empty, views are
-looked for in the ``app/Resources/views/`` directory. This directory store
-global views for your entire project:
+supports multiple decoration levels: a layout can itself be decorated by another
+one. When the bundle part of the template name is empty, views are looked for in
+the ``app/Resources/views/`` directory. This directory store global views for
+your entire project:
 
 .. code-block:: html+php
 
@@ -116,8 +116,8 @@ For both layouts, the ``$view['slots']->output('_content')`` expression is
 replaced by the content of the child template, ``index.html.php`` and
 ``layout.html.php`` respectively (more on slots in the next section).
 
-As you can see, Symfony2 provides methods on a mysterious ``$view`` object. In
-a template, the ``$view`` variable is always available and refers to a special
+As you can see, Symfony2 provides methods on a mysterious ``$view`` object. In a
+template, the ``$view`` variable is always available and refers to a special
 object that provides a bunch of methods that makes the template engine tick.
 
 .. index::
@@ -128,8 +128,8 @@ Working with Slots
 ------------------
 
 A slot is a snippet of code, defined in a template, and reusable in any layout
-decorating the template. In the ``index.html.php`` template, define a
-``title`` slot:
+decorating the template. In the ``index.html.php`` template, define a ``title``
+slot:
 
 .. code-block:: html+php
 
@@ -208,8 +208,8 @@ If you create a ``fancy`` action, and want to include it into the
     <!-- src/Acme/HelloBundle/Resources/views/Hello/index.html.php -->
     <?php echo $view['actions']->render('HelloBundle:Hello:fancy', array('name' => $name, 'color' => 'green')) ?>
 
-Here, the ``HelloBundle:Hello:fancy`` string refers to the ``fancy`` action of the
-``Hello`` controller::
+Here, the ``HelloBundle:Hello:fancy`` string refers to the ``fancy`` action of
+the ``Hello`` controller::
 
     // src/Acme/HelloBundle/Controller/HelloController.php
 
@@ -243,9 +243,9 @@ PHP objects that provide features useful in a template context. ``actions`` and
 Creating Links between Pages
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Speaking of web applications, creating links between pages is a must. Instead
-of hardcoding URLs in templates, the ``router`` helper knows how to generate
-URLs based on the routing configuration. That way, all your URLs can be easily
+Speaking of web applications, creating links between pages is a must. Instead of
+hardcoding URLs in templates, the ``router`` helper knows how to generate URLs
+based on the routing configuration. That way, all your URLs can be easily
 updated by changing the configuration:
 
 .. code-block:: html+php
@@ -255,9 +255,8 @@ updated by changing the configuration:
     </a>
 
 The ``generate()`` method takes the route name and an array of parameters as
-arguments. The route name is the main key under which routes are referenced
-and the parameters are the values of the placeholders defined in the route
-pattern:
+arguments. The route name is the main key under which routes are referenced and
+the parameters are the values of the placeholders defined in the route pattern:
 
 .. code-block:: yaml
 
@@ -274,14 +273,14 @@ Symfony2 provides the ``assets`` tag to deal with them easily:
 
 .. code-block:: html+php
 
-    <link href="<?php echo $view['assets']->getUrl('css/blog.css') ?>" rel="stylesheet" type="text/css" />
+    <link href="<?php echo $view['assets']->getUrl('css/blog.css') ?>"
+rel="stylesheet" type="text/css" />
 
     <img src="<?php echo $view['assets']->getUrl('images/logo.png') ?>" />
 
-The ``assets`` helper's main purpose is to make your application more
-portable. Thanks to this helper, you can move the application root directory
-anywhere under your web root directory without changing anything in your
-template's code.
+The ``assets`` helper's main purpose is to make your application more portable.
+Thanks to this helper, you can move the application root directory anywhere
+under your web root directory without changing anything in your template's code.
 
 Output Escaping
 ---------------

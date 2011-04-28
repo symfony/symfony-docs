@@ -4,9 +4,9 @@
 ``url`` Field Type
 ==================
 
-The ``url`` field is a text field that prepends the submitted value with
-a given protocol (e.g. ``http://``) if the submitted value doesn't already
-have a protocol.
+The ``url`` field is a text field that prepends the submitted value with a given
+protocol (e.g. ``http://``) if the submitted value doesn't already have a
+protocol.
 
 +-------------+-------------------------------------------------------------------+
 | Rendered as | ``text`` field                                                    |

@@ -4,14 +4,15 @@
 ``birthday`` Field Type
 =======================
 
-A special :doc:`date</reference/forms/types/date>` field that specializes
-in handling birthdate data.
+A special :doc:`date</reference/forms/types/date>` field that specializes in
+handling birthdate data.
 
-Can be rendered as a single text box or three select boxes (month, day, and year)
+Can be rendered as a single text box or three select boxes (month, day, and
+year)
 
-This type is essentially the same as the ``date`` type, but with a more appropriate
-default for the ``years`` option.   The ``years`` option defaults to 120
-years ago to the current year.
+This type is essentially the same as the ``date`` type, but with a more
+appropriate default for the ``years`` option.   The ``years`` option defaults to
+120 years ago to the current year.
 
 +----------------------+-----------------------------------------------------------------------------------------------------+
 | Underlying Data Type | can be ``DateTime``, ``string``, ``timestamp``, or ``array`` (see :ref:`form-reference-date-input`) |

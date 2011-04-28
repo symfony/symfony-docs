@@ -11,8 +11,8 @@ it has a syntax for simple types like strings, booleans, floats, or integers.
 But unlike PHP, it makes a difference between arrays (sequences) and hashes
 (mappings).
 
-The Symfony2 :namespace:`Symfony\\Component\\Yaml` Component knows how to
-parse YAML and dump a PHP array to YAML.
+The Symfony2 :namespace:`Symfony\\Component\\Yaml` Component knows how to parse
+YAML and dump a PHP array to YAML.
 
 .. note::
 
@@ -31,9 +31,8 @@ string and converts it to a PHP array::
     $yaml = new Parser();
     $value = $yaml->parse(file_get_contents('/path/to/file.yaml'));
 
-If an error occurs during parsing, the parser throws an exception indicating
-the error type and the line in the original YAML string where the error
-occurred::
+If an error occurs during parsing, the parser throws an exception indicating the
+error type and the line in the original YAML string where the error occurred::
 
     try {
         $value = $yaml->parse(file_get_contents('/path/to/file.yaml'));
@@ -151,8 +150,8 @@ spaces.
     using ``\`` escape sequences. It is very useful when you need to embed a
     ``\n`` or a unicode character in a string.
 
-When a string contains line breaks, you can use the literal style, indicated
-by the pipe (``|``), to indicate that the string will span several lines. In
+When a string contains line breaks, you can use the literal style, indicated by
+the pipe (``|``), to indicate that the string will span several lines. In
 literals, newlines are preserved:
 
 .. code-block:: yaml
@@ -238,8 +237,8 @@ Collections
 ~~~~~~~~~~~
 
 A YAML file is rarely used to describe a simple scalar. Most of the time, it
-describes a collection. A collection can be a sequence or a mapping of
-elements. Both sequences and mappings are converted to PHP arrays.
+describes a collection. A collection can be a sequence or a mapping of elements.
+Both sequences and mappings are converted to PHP arrays.
 
 Sequences use a dash followed by a space (``-`` ):
 
@@ -316,8 +315,8 @@ You can nest sequences and mappings as you like:
         - Introduction
         - Helpers
 
-YAML can also use flow styles for collections, using explicit indicators
-rather than indentation to denote scope.
+YAML can also use flow styles for collections, using explicit indicators rather
+than indentation to denote scope.
 
 A sequence can be written as a comma separated list within square brackets
 (``[]``):

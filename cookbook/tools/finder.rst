@@ -25,8 +25,8 @@ directories::
 The ``$file`` is an instance of :phpclass:`SplFileInfo`.
 
 The above code prints the names of all the files in the current directory
-recursively. The Finder class uses a fluent interface, so all methods return
-the Finder instance.
+recursively. The Finder class uses a fluent interface, so all methods return the
+Finder instance.
 
 .. tip::
 
@@ -41,8 +41,8 @@ Criteria
 Location
 ~~~~~~~~
 
-The location is the only mandatory criteria. It tells the finder which
-directory to use for the search::
+The location is the only mandatory criteria. It tells the finder which directory
+to use for the search::
 
     $finder->in(__DIR__);
 
@@ -95,8 +95,8 @@ If you want to follow links, use the ``followLinks()`` method::
 
     $finder->files()->followLinks();
 
-By default, the iterator ignores popular VCS files. This can be changed with
-the ``ignoreVCS()`` method::
+By default, the iterator ignores popular VCS files. This can be changed with the
+``ignoreVCS()`` method::
 
     $finder->ignoreVCS(false);
 

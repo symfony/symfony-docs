@@ -17,8 +17,8 @@ Options
 Example
 -------
 
-This constraint is very useful to execute custom validation logic. You can
-put the logic in a method which returns either ``true`` or ``false``.
+This constraint is very useful to execute custom validation logic. You can put
+the logic in a method which returns either ``true`` or ``false``.
 
 .. code-block:: php
 
@@ -95,8 +95,7 @@ Then you can constrain this method with ``True``.
             }
         }
 
-If the validation of this method fails, you will see a message similar to
-this:
+If the validation of this method fails, you will see a message similar to this:
 
 .. code-block:: text
 

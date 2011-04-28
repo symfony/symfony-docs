@@ -6,8 +6,7 @@ How to expose a Semantic Configuration for a Bundle
 ===================================================
 
 Semantic configuration provides an even more flexible way to provide
-configuration for a bundle with the following advantages over simple
-parameters:
+configuration for a bundle with the following advantages over simple parameters:
 
 * Possibility to define more than just parameters (services for instance);
 
@@ -37,11 +36,11 @@ parameters:
 Creating an Extension
 ---------------------
 
-To define a semantic configuration, create a Dependency Injection extension
-that extends
-:class:`Symfony\\Component\\DependencyInjection\\Extension\\Extension`
-who's class name should be constructed by replacing the ``Bundle`` postfix of the
-Bundle class with ``Extension`` inside a ``DependencyInjection`` subnamespace::
+To define a semantic configuration, create a Dependency Injection extension that
+extends :class:`Symfony\\Component\\DependencyInjection\\Extension\\Extension`
+who's class name should be constructed by replacing the ``Bundle`` postfix of
+the Bundle class with ``Extension`` inside a ``DependencyInjection``
+subnamespace::
 
     // Acme/HelloBundle/DependencyInjection/HelloExtension.php
     use Symfony\Component\HttpKernel\DependencyInjection\Extension;
@@ -110,9 +109,9 @@ file:
 Parsing a Configuration
 -----------------------
 
-Whenever a user includes the ``hello`` namespace in a configuration file, it
-is added to an array of configurations and passed to the ``load()`` method of
-your extension (Symfony2 automatically converts XML and YAML to an array).
+Whenever a user includes the ``hello`` namespace in a configuration file, it is
+added to an array of configurations and passed to the ``load()`` method of your
+extension (Symfony2 automatically converts XML and YAML to an array).
 
 So, given the following configuration:
 
@@ -159,8 +158,8 @@ The array passed to your method looks like the following::
     )
 
 Within ``load()``, the ``$container`` variable refers to a container that only
-knows about this namespace configuration. You can manipulate it the way you
-want to add services and parameters.
+knows about this namespace configuration. You can manipulate it the way you want
+to add services and parameters.
 
 The global parameters are the following:
 
