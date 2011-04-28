@@ -10,5 +10,6 @@ Reference Documents
     bundle_configuration/TwigBundle
     bundle_configuration/MonologBundle
     constraints
+    forms/types
 
 .. include:: map.rst.inc

@@ -1,33 +1,80 @@
 Choice
 ======
 
-Validates that a value is one or more of a list of choices.
+The ``Choice`` constraint validates that a given value is one or more of
+a list of given choices.
 
-.. code-block:: yaml
++----------------+-----------------------------------------------------------------------+
+| Validates      | a scalar value or an array of scalar values (if ``multiple`` is true) |
++----------------+-----------------------------------------------------------------------+
+| Options        | - ``choices``                                                         |
+|                | - ``callback``                                                        |
+|                | - ``multiple``                                                        |
+|                | - ``min``                                                             |
+|                | - ``max``                                                             |
+|                | - ``message``                                                         |
+|                | - ``minMessage``                                                      |
+|                | - ``maxMessage``                                                      |
++----------------+-----------------------------------------------------------------------+
+| Default Option | ``choices``                                                           |
++----------------+-----------------------------------------------------------------------+
+| Class          | :class:`Symfony\\Component\\Validator\\Constraints\\Choice`           |
++----------------+-----------------------------------------------------------------------+
 
-    properties:
-        gender:
-            - Choice: [male, female]
+Available Options
+-----------------
 
-Options
--------
+* ``choices`` (**default**) [type: array]
+    A required option (unless ``callback`` is specified) - this is the array
+    of options that should be considered in the valid set. The input value
+    will be matched against this array.
 
-* ``choices`` (**default**, required): The available choices
-* ``callback``: Can be used instead of ``choices``. A static callback method
-  returning the choices. If you pass a string, it is expected to be
-  the name of a static method in the validated class.
-* ``multiple``: Whether multiple choices are allowed. Default: ``false``
-* ``min``: The minimum amount of selected choices
-* ``max``: The maximum amount of selected choices
-* ``message``: The error message if validation fails
-* ``minMessage``: The error message if ``min`` validation fails
-* ``maxMessage``: The error message if ``max`` validation fails
+* ``callback``: [type: string|array]
+    This is a static callback method that can be used instead of the ``choices``
+    option to return the choices array.
+    
+    If you pass a string method name (e.g. ``getGenders``), that static method
+    will be called on the validated class.
+    
+    If you pass an array (e.g. ``array('Util', 'getGenders')``), it follows
+    the normal callable syntax where the first argument is the class name
+    and the second argument is the method name.
 
-Example 1: Choices as static array
-----------------------------------
+* ``multiple``: [type: Boolean, default: false]
+    If this option is true, the input value is expected to be an array instead
+    of a single, scalar value. The constraint will check that each value of
+    the input array can be found in the array of valid choices. If even one
+    of the input values cannot be found, the validation will fail.
 
-If the choices are few and easy to determine, they can be passed to the
-constraint definition as array.
+* ``min``: [type: integer]
+    If the ``multiple`` option is true, then you can use the ``min`` option
+    to force at least XX number of values to be selected. For example, if
+    ``min`` is 3, but the input array only contains 2 valid items, the
+    validation will fail.
+
+* ``max``: [type: integer]
+    If the ``multiple`` option is true, then you can use the ``max`` option
+    to force no more than XX number of values to be selected. For example, if
+    ``max`` is 3, but the input array contains 4 valid items, the validation
+    will fail.
+
+* ``message``: [type: string, default: `This value should be one of the given choices`]
+    This is the validation error message that's displayed when the input
+    value is invalid.
+
+* ``minMessage``: [type: string, default: `You should select at least {{ limit }} choices`]
+    This is the validation error message that's displayed when the user chooses
+    too few options per the ``min`` option.
+
+* ``maxMessage``: [type: string, default: `You should select at most {{ limit }} choices`]
+    This is the validation error message that's displayed when the user chooses
+    too many options per the ``max`` option.
+
+Basic Usage
+-----------
+
+If the choices are simple, they can be passed to the constraint definition
+as an array.
 
 .. configuration-block::
 
@@ -37,7 +84,9 @@ constraint definition as array.
         Acme\HelloBundle\Author:
             properties:
                 gender:
-                    - Choice: [male, female]
+                    - Choice:
+                        choices:  [male, female]
+                        message:  Choose a valid gender.
 
     .. code-block:: xml
 
@@ -45,8 +94,11 @@ constraint definition as array.
         <class name="Acme\HelloBundle\Author">
             <property name="gender">
                 <constraint name="Choice">
-                    <value>male</value>
-                    <value>female</value>
+                    <option name="choices">
+                        <value>male</value>
+                        <value>female</value>
+                    </option>
+                    <option name="message">Choose a valid gender.</option>
                 </constraint>
             </property>
         </class>
@@ -57,7 +109,7 @@ constraint definition as array.
         class Author
         {
             /**
-             * @validation:Choice({"male", "female"})
+             * @assert:Choice(choices = {"male", "female"}, message = "Choose a valid gender.")
              */
             protected $gender;
         }
@@ -74,16 +126,20 @@ constraint definition as array.
             
             public static function loadValidatorMetadata(ClassMetadata $metadata)
             {
-                $metadata->addPropertyConstraint('gender', new Choice(array('male', 'female')));
+                $metadata->addPropertyConstraint('gender', new Choice(
+                    'choices' => array('male', 'female'),
+                    'message' => 'Choose a valid gender',
+                ));
             }
         }
 
-Example 2: Choices from a callback
-----------------------------------
+Supplying the Choices with a Callback Function
+----------------------------------------------
 
-When you also need the choices in other contexts (such as a drop-down box in
-a form), it is more flexible to bind them to your domain model using a static
-callback method.
+You can also use a callback function to specify your options. This is useful
+if you want to keep your choices in some central location so that, for example,
+you can easily access those choices for validation or for building a select
+form element.
 
 .. code-block:: php
 
@@ -126,13 +182,13 @@ constraint.
         class Author
         {
             /**
-             * @validation:Choice(callback = "getGenders")
+             * @assert:Choice(callback = "getGenders")
              */
             protected $gender;
         }
 
 If the static callback is stored in a different class, for example ``Util``,
-you can pass the class name and the method as array.
+you can pass the class name and the method as an array.
 
 .. configuration-block::
 
@@ -164,7 +220,7 @@ you can pass the class name and the method as array.
         class Author
         {
             /**
-             * @validation:Choice(callback = {"Util", "getGenders"})
+             * @assert:Choice(callback = {"Util", "getGenders"})
              */
             protected $gender;
         }

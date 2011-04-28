@@ -99,7 +99,7 @@ Configuration Reference
                         <doctrine:mapping
                             name="DoctrineExtensions"
                             type="xml"
-                            dir="%kernel.dir%/../src/vendor/DoctrineExtensions/lib/DoctrineExtensions/Entity"
+                            dir="%kernel.root_dir%/../src/vendor/DoctrineExtensions/lib/DoctrineExtensions/Entity"
                             prefix="DoctrineExtensions\Entity"
                             alias="DExt"
                         />

@@ -7,7 +7,5 @@ Learn about the Doctrine integration with Symfony2:
     :maxdepth: 2
 
     model
-    orm/index
-    dbal/index
-    migrations/index
-    mongodb-odm/index
+    dbal
+    orm

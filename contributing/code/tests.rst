@@ -30,24 +30,19 @@ The test suite need the following third-party libraries:
 * Doctrine Migrations
 * Swiftmailer
 * Twig
-* Zend Framework
 
-To install them all, run the `install_vendors.sh` script:
+To install them all, run the `vendors.sh` script:
 
 .. code-block:: bash
 
-    $ sh install_vendors.sh
+    $ sh vendors.sh
 
 .. note::
 
     Note that the script takes some time to finish.
 
-After installation, you can update the vendors anytime with the
-`update_vendors.sh` script:
-
-.. code-block:: bash
-
-    $ sh update_vendors.sh
+After installation, you can update the vendors anytime by running the
+`vendors.sh` script again.
 
 Running
 -------

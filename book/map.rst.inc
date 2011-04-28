@@ -10,18 +10,11 @@
 * **Doctrine**:
 
   * :doc:`Introduction to the Model </book/doctrine/model>` |
-  * :doc:`DBAL </book/doctrine/dbal/index>` |
-  * :doc:`ORM </book/doctrine/orm/index>` |
-  * :doc:`Migrations </book/doctrine/migrations/index>` |
-  * :doc:`MongoDB </book/doctrine/mongodb-odm/index>`
+  * :doc:`DBAL </book/doctrine/dbal>` |
+  * :doc:`ORM </book/doctrine/orm>` |
 
 * :doc:`Validation </book/validation>`
-
-* **Forms**:
-
-  * :doc:`Overview </book/forms/overview>` |
-  * :doc:`Templates </book/forms/view>` |
-  * :doc:`Form Fields </book/forms/fields>`
+* :doc:`Forms </book/forms>`
 
 * **Security**:
 

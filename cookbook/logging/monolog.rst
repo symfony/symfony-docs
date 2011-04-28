@@ -212,4 +212,4 @@ depending of the level where the processor is called.
     service and implement the ``__invoke`` method on the class to make
     it callable. You can then add it in the processor stack.
 
-.. _Monolog https://github.com/Seldaek/monolog
+.. _Monolog: https://github.com/Seldaek/monolog

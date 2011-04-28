@@ -40,8 +40,9 @@ First, we need to configure the connection the ACL system is supposed to use:
     .. code-block:: yaml
 
         # app/config/security.yml
-        security.acl:
-            connection: default
+        security:
+            acl:
+                connection: default
 
     .. code-block:: xml
 

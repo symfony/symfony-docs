@@ -13,7 +13,7 @@ Book
     templating
     testing
     validation
-    forms/index
+    forms
     security/index
     http_cache
     translation

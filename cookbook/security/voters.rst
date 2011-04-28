@@ -46,8 +46,10 @@ values:
 * ``VoterInterface::ACCESS_DENIED``: The user is not allowed to access the application
 
 In this example, we will check if the user's IP address matches against a list of
-blacklisted addresses. We will return ``VoterInterface::ACCESS_DENIED`` or
-``VoterInterface::ACCESS_GRANTED`` depending on this criteria.
+blacklisted addresses. If the user's IP is blacklisted, we will return 
+``VoterInterface::ACCESS_DENIED``, otherwise we will return 
+``VoterInterface::ACCESS_ABSTAIN`` as this voter's purpose is only to deny
+access, not to grant access.
 
 Creating a Custom Voter
 -----------------------
@@ -89,7 +91,7 @@ and compare the IP address against a set of blacklisted IP addresses:
                 return VoterInterface::ACCESS_DENIED;
             }
 
-            return VoterInterface::ACCESS_GRANTED;
+            return VoterInterface::ACCESS_ABSTAIN;
         }
     }
 
@@ -156,28 +158,5 @@ and tag it as a "security.voter":
    see :ref:`service-container-imports-directive`. To read more about defining
    services in general, see the :doc:`/book/service_container` chapter.
 
-Finally, we need to change the authentication strategy. By default, the
-security component calls each voter until one of them grants access to the
-user. In our case, we want to force *all* voters to grant the user access
-before deciding that the user should actually have access to the application.
-To do that, we need to change the strategy by overriding the
-``security.access.decision_manager.strategy`` parameter:
-
-.. configuration-block::
-
-    .. code-block:: yaml
-
-        # src/Acme/AcmeBundle/Resources/config/services.yml
-        parameters:
-            security.access.decision_manager.strategy: unanimous
-
-    .. code-block:: xml
-
-        <!-- src/Acme/AcmeBundle/Resources/config/services.xml -->
-        <parameter key="security.access.decision_manager.strategy">unanimous</parameter>
-
-    .. code-block:: php
-
-        // src/Acme/AcmeBundle/Resources/config/services.php
-
-        $container->setParameter('security.access.decision_manager.strategy', 'unanimous');
+That's it! Now, when deciding whether or not a user should have access,
+the new voter will deny access to any user in the list of blacklisted IPs.

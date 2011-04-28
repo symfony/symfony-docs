@@ -165,7 +165,7 @@ no hidden layers or behind-the-scenes magic.
 Notice the syntax used to refer to the controller: ``AcmeHelloBundle:Hello:index``.
 Symfony2 uses a flexible string notation to refer to different controllers.
 This is the most common syntax and tells Symfony2 to look for a controller
-class called ``HelloController`` inside a bundle named ``HelloBundle``. The
+class called ``HelloController`` inside a bundle named ``AcmeHelloBundle``. The
 method ``indexAction()`` is then executed.
 
 For more details on the string format used to reference different controllers,
@@ -173,8 +173,8 @@ see :ref:`controller-string-syntax`.
 
 .. tip::
 
-    Notice that since our controller lives in the ``HelloBundle``, we've
-    placed the routing configuration inside the ``HelloBundle`` to stay
+    Notice that since our controller lives in the ``AcmeHelloBundle``, we've
+    placed the routing configuration inside the ``AcmeHelloBundle`` to stay
     organized. To load routing configuration that lives inside a bundle, it
     must be imported from your application's main routing resource. See
     :ref:`routing-include-external-resources` for more information.
@@ -189,7 +189,7 @@ Route Parameters as Controller Arguments
 
 We already know now that the ``_controller`` parameter ``AcmeHelloBundle:Hello:index``
 refers to a ``HelloController::indexAction()`` method that lives inside the
-``HelloBundle`` bundle. What's more interesting is the arguments that are
+``AcmeHelloBundle`` bundle. What's more interesting is the arguments that are
 passed to that method:
 
 .. code-block:: php

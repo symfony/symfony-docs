@@ -77,10 +77,10 @@ may not exist in the array.
         class Author
         {
             /**
-             * @validation:Collection(
+             * @assert:Collection(
              *   fields = {
-             *     "firstName" = @validation:NotNull(),
-             *     "lastName" = { @validation:NotBlank(), @validation:MinLength(4) }
+             *     "firstName" = @assert:NotNull(),
+             *     "lastName" = { @assert:NotBlank(), @assert:MinLength(4) }
              *   },
              *   allowMissingFields = true
              * )

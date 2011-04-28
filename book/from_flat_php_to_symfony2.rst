@@ -365,7 +365,7 @@ requested URI:
     require_once 'controllers.php';
 
     // route the request internally
-    $uri = $_REQUEST['REQUEST_URI'];
+    $uri = $_SERVER['REQUEST_URI'];
     if ($uri == '/index.php') {
         list_action();
     } elseif ($uri == '/index.php/show' && isset($_GET['id'])) {

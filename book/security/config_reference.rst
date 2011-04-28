@@ -106,6 +106,8 @@ Configuration Reference
                         always_remember_me: false
                         remember_me_parameter: _remember_me
                     logout:
+                        path:   /logout
+                        target: /
                         invalidate_session: false
                         delete_cookies:
                             a: { path: null, domain: null }

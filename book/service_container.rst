@@ -462,7 +462,7 @@ available for the core bundles can be found inside the :doc:`Reference Guide</re
 .. note::
 
    Natively, the service container only recognizes the ``parameters``,
-   ``services``, ``imports`` and ``interfaces`` directives. Any other directives
+   ``services``, and ``imports`` directives. Any other directives
    are handled by a service container extension.
 
 .. index::
@@ -564,21 +564,95 @@ the service container gives us a much more appealing option:
 
 In YAML, the special ``@my_mailer`` syntax tells the container to look for
 a service named ``my_mailer`` and to pass that object into the constructor
-of ``NewsletterManager``.
+of ``NewsletterManager``. In this case, however, the specified service ``my_mailer``
+must exist. If it does not, an exception will be thrown. You can mark your
+dependencies as optional - this will be discussed in the next section.
 
-This is a very powerful tool that allows you to create independent service
+Using references is a very powerful tool that allows you to create independent service
 classes with well-defined dependencies. In this example, the ``newsletter_manager``
 service needs the ``my_mailer`` service in order to function. When you define
 this dependency in the service container, the container takes care of all
 the work of instantiating the objects.
+
+.. note::
+
+   The approach presented in this section is called "constructor injection".
+   The Symfony2 service container also supports "setter injection" as well
+   as "property injection".
+
+Making References Optional
+--------------------------
+
+Sometimes, one of your services may have an optional dependency, meaning
+that the dependency is not required for your service to work properly. In
+the example above, the ``my_mailer`` service *must* exist, otherwise an exception
+will be thrown. By modifying the ``newsletter_manager`` service definition,
+you can make this reference optional. The container will then inject it if
+it exists and do nothing if it doesn't:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # src/Acme/HelloBundle/Resources/config/services.yml
+        parameters:
+            # ...
+
+        services:
+            newsletter_manager:
+                class:     %newsletter_manager.class%
+                arguments: [@?my_mailer]
+
+    .. code-block:: xml
+
+        <!-- src/Acme/HelloBundle/Resources/config/services.xml -->
+
+        <services>
+            <service id="my_mailer" ... >
+              <!-- ... -->
+            </service>
+            <service id="newsletter_manager" class="%newsletter_manager.class%">
+                <argument type="service" id="my_mailer" on-invalid="ignore" />
+            </service>
+        </services>
+
+    .. code-block:: php
+
+        // src/Acme/HelloBundle/Resources/config/services.php
+        use Symfony\Component\DependencyInjection\Definition;
+        use Symfony\Component\DependencyInjection\Reference;
+        use Symfony\Component\DependencyInjection\ContainerInterface;
+
+        // ...
+        $container->setParameter('newsletter_manager.class', 'Acme\HelloBundle\Newsletter\NewsletterManager');
+
+        $container->setDefinition('my_mailer', ... );
+        $container->setDefinition('newsletter_manager', new Definition(
+            '%newsletter_manager.class%',
+            array(new Reference('my_mailer', ContainerInterface::IGNORE_ON_INVALID_REFERENCE))
+        ));
+
+In YAML, the special ``@?`` syntax tells the service container that the dependency
+is optional. Of course, the ``NewsletterManager`` must also be written to
+allow for an optional dependency:
+
+.. code-block:: php
+
+        public function __construct(Mailer $mailer = null)
+        {
+            // ...
+        }
 
 Core Symfony and Third-Party Bundle Services
 --------------------------------------------
 
 Since Symfony2 and all third-party bundles configure and retrieve their services
 via the container, you can easily access them or even use them in your own
-services. For example, to handle the storage of information on a user's
-session, Symfony2 provides a ``session`` service::
+services. To keep things simple, Symfony2 by defaults does not require that
+controllers be defined as services. Furthermore Symfony2 injects the entire
+service container into your controller. For example, to handle the storage of
+information on a user's session, Symfony2 provides a ``session`` service,
+which you can access inside a standard controller as follows::
 
     public function indexAction($bar)
     {
