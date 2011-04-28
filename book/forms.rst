@@ -646,7 +646,7 @@ when the form is valid:
         return $this->redirect($this->generateUrl('store_product_success'));
     }
 
-For more information, see the :doc:`Doctrine ORM chapter</book/doctrine/orm/overview>`.
+For more information, see the :doc:`Doctrine ORM chapter</book/doctrine/orm>`.
 
 If the underlying object of a form (e.g. ``Product``) happens to be mapped
 with the Doctrine ORM, the form framework will use that information - along

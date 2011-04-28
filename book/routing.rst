@@ -1157,4 +1157,4 @@ should also be used to generate URLs.
 Learn more from the Cookbook
 ----------------------------
 
-* :doc:`/cookbook/routing/schema`
+* :doc:`/cookbook/routing/scheme`
