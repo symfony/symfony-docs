@@ -212,7 +212,7 @@ For more information, see the :doc:`Forms</book/forms>` chapter.
 Configuration
 -------------
 
-To use the Symfony2 validator, ensure that it's enable in your application
+To use the Symfony2 validator, ensure that it's enabled in your application
 configuration:
 
 .. configuration-block::
