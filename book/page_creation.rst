@@ -268,7 +268,7 @@ of writing the HTML inside the controller, use a template instead::
 .. note::
 
    In order to use the ``render()`` method, you must extend the
-   :class:`Symfony\Bundle\FrameworkBundle\Controller\Controller` class, which
+   :class:`Symfony\\Bundle\\FrameworkBundle\\Controller\\Controller` class, which
    adds shortcuts for tasks that are common inside controllers.
 
 The ``render()`` method creates a ``Response`` object filled with the content
