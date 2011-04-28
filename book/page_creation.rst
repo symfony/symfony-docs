@@ -66,7 +66,7 @@ to the ``app/autoload.php`` file (see the :ref:`Autoloading sidebar<autoloading-
 .. code-block:: php
 
         $loader->registerNamespaces(array(
-            'Acme'                         => __DIR__.'/../src',
+            'Acme' => __DIR__.'/../src',
             // ...
         ));
 
@@ -466,7 +466,7 @@ about each of these directories in later chapters.
     behalf the instance you need a class::
     
         $loader->registerNamespaces(array(
-            'Acme'                         => __DIR__.'/../src',
+            'Acme' => __DIR__.'/../src',
             // ...
         ));
     
