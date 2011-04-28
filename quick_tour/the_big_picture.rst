@@ -69,6 +69,8 @@ webpage:
 
 Symfony2 should welcome and congratulate you for your hard work so far!
 
+.. image:: /images/quick_tour/welcome.jpg
+
 Understanding the Fundamentals
 ------------------------------
 
