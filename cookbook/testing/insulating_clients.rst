@@ -32,8 +32,8 @@ can insulate your clients::
     $this->assertEquals(201, $harry->getResponse()->getStatusCode());
     $this->assertRegExp('/Hello/', $sally->getResponse()->getContent());
 
-Insulated clients transparently execute their requests in a dedicated and
-clean PHP process, thus avoiding any side-effects.
+Insulated clients transparently execute their requests in a dedicated and clean
+PHP process, thus avoiding any side-effects.
 
 .. tip::
 

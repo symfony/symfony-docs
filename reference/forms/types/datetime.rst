@@ -4,8 +4,8 @@
 ``datetime`` Field Type
 =======================
 
-This field type allows the user to modify data that represents a specific
-date and time (e.g. ``1984-06-05 12:15:30``).
+This field type allows the user to modify data that represents a specific date
+and time (e.g. ``1984-06-05 12:15:30``).
 
 Can be rendered as a text input or select tags. The underlying format of the
 data can be a ``DateTime`` object, a string, a timestamp or an array.

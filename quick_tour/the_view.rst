@@ -2,10 +2,10 @@ The View
 ========
 
 After reading the first part of this tutorial, you have decided that Symfony2
-was worth another 10 minutes. Great choice! In this second part, you will
-learn more about the Symfony2 template engine, `Twig`_. Twig is a flexible,
-fast, and secure template engine for PHP. It makes your templates more
-readable and concise; it also makes them more friendly for web designers.
+was worth another 10 minutes. Great choice! In this second part, you will learn
+more about the Symfony2 template engine, `Twig`_. Twig is a flexible, fast, and
+secure template engine for PHP. It makes your templates more readable and
+concise; it also makes them more friendly for web designers.
 
 .. note::
 
@@ -54,8 +54,8 @@ Below is a minimal template that illustrates a few basics:
 
    Comments can be included inside templates using the ``{# ... #}`` delimiter.
 
-To render a template, use the ``render`` method from within a controller
-and pass it any variables needed in the template::
+To render a template, use the ``render`` method from within a controller and
+pass it any variables needed in the template::
 
     $this->render('AcmeDemoBundle:Demo:hello.html.twig', array(
         'name' => $name,
@@ -98,10 +98,10 @@ Decorating Templates
 
 More often than not, templates in a project share common elements, like the
 well-known header and footer. In Symfony2, we like to think about this problem
-differently: a template can be decorated by another one. This works exactly
-the same as PHP classes: template inheritance allows you to build a base
-"layout" template that contains all the common elements of your site and
-defines "blocks" that child templates can override.
+differently: a template can be decorated by another one. This works exactly the
+same as PHP classes: template inheritance allows you to build a base "layout"
+template that contains all the common elements of your site and defines "blocks"
+that child templates can override.
 
 The ``hello.html.twig`` template inherits from ``layout.html.twig``, thanks to
 the ``extends`` tag:
@@ -119,8 +119,8 @@ the ``extends`` tag:
 
 The ``AcmeDemoBundle::layout.html.twig`` notation sounds familiar, doesn't it?
 It is the same notation used to reference a regular template. The ``::`` part
-simply means that the controller element is empty, so the corresponding file
-is directly stored under ``views/``.
+simply means that the controller element is empty, so the corresponding file is
+directly stored under ``views/``.
 
 Now, let's have a look at a simplified ``layout.html.twig``:
 
@@ -132,23 +132,23 @@ Now, let's have a look at a simplified ``layout.html.twig``:
         {% endblock %}
     </div>
 
-The ``{% block %}`` tags define blocks that child templates can fill in. All
-the block tag does is to tell the template engine that a child template may
-override those portions of the template. The ``hello.html.twig`` template
-overrides the ``content`` block.
+The ``{% block %}`` tags define blocks that child templates can fill in. All the
+block tag does is to tell the template engine that a child template may override
+those portions of the template. The ``hello.html.twig`` template overrides the
+``content`` block.
 
 Using Tags, Filters, and Functions
 ----------------------------------
 
 One of the best feature of Twig is its extensibility via tags, filters, and
-functions. Symfony2 comes bundled with many of these built-in to ease the
-work of the template designer.
+functions. Symfony2 comes bundled with many of these built-in to ease the work
+of the template designer.
 
 Including other Templates
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The best way to share a snippet of code between several distinct templates is
-to create a new template that can then be included from other templates.
+The best way to share a snippet of code between several distinct templates is to
+create a new template that can then be included from other templates.
 
 Create an ``embedded.html.twig`` template:
 
@@ -176,18 +176,18 @@ And what if you want to embed the result of another controller in a template?
 That's very useful when working with Ajax, or when the embedded template needs
 some variable not available in the main template.
 
-Suppose you've created a ``fancy`` action, and you want to include it inside
-the ``index`` template. To do this, use the ``render`` tag:
+Suppose you've created a ``fancy`` action, and you want to include it inside the
+``index`` template. To do this, use the ``render`` tag:
 
 .. code-block:: jinja
 
     {# src/Acme/DemoBundle/Resources/views/Demo/index.html.twig #}
     {% render "AcmeDemoBundle:Demo:fancy" with { 'name': name, 'color': 'green' } %}
 
-Here, the ``AcmeDemoBundle:Demo:fancy`` string refers to the ``fancy`` action
-of the ``Demo`` controller. The arguments (``name`` and ``color``) act like
-simulated request variables (as if the ``fancyAction`` were handling a whole
-new request) and are made available to the controller::
+Here, the ``AcmeDemoBundle:Demo:fancy`` string refers to the ``fancy`` action of
+the ``Demo`` controller. The arguments (``name`` and ``color``) act like
+simulated request variables (as if the ``fancyAction`` were handling a whole new
+request) and are made available to the controller::
 
     // src/Acme/DemoBundle/Controller/DemoController.php
 
@@ -207,9 +207,9 @@ new request) and are made available to the controller::
 Creating Links between Pages
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Speaking of web applications, creating links between pages is a must. Instead
-of hardcoding URLs in templates, the ``path`` function knows how to generate
-URLs based on the routing configuration. That way, all your URLs can be easily
+Speaking of web applications, creating links between pages is a must. Instead of
+hardcoding URLs in templates, the ``path`` function knows how to generate URLs
+based on the routing configuration. That way, all your URLs can be easily
 updated by just changing the configuration:
 
 .. code-block:: html+jinja
@@ -217,9 +217,8 @@ updated by just changing the configuration:
     <a href="{{ path('_demo_hello', { 'name': 'Thomas' }) }}">Greet Thomas!</a>
 
 The ``path`` function takes the route name and an array of parameters as
-arguments. The route name is the main key under which routes are referenced
-and the parameters are the values of the placeholders defined in the route
-pattern::
+arguments. The route name is the main key under which routes are referenced and
+the parameters are the values of the placeholders defined in the route pattern::
 
     // src/Acme/DemoBundle/Controller/DemoController.php
     /**
@@ -250,15 +249,13 @@ Symfony2 provides the ``asset`` function to deal with them easily:
 
 The ``asset`` function's main purpose is to make your application more portable.
 Thanks to this function, you can move the application root directory anywhere
-under your web root directory without changing anything in your template's
-code.
+under your web root directory without changing anything in your template's code.
 
 Escaping Variables
 ------------------
 
 Twig is configured to automatically escapes all output by default. Read Twig
-`documentation`_ to learn more about output escaping and the Escaper
-extension.
+`documentation`_ to learn more about output escaping and the Escaper extension.
 
 Final Thoughts
 --------------
@@ -269,12 +266,12 @@ extensible way.
 
 You have only been working with Symfony2 for about 20 minutes, but you can
 already do pretty amazing stuff with it. That's the power of Symfony2. Learning
-the basics is easy, and you will soon learn that this simplicity is hidden
-under a very flexible architecture.
+the basics is easy, and you will soon learn that this simplicity is hidden under
+a very flexible architecture.
 
-But I'm getting ahead of myself. First, you need to learn more about the controller
-and that's exactly the topic of the next part of this tutorial. Ready for
-another 10 minutes with Symfony2?
+But I'm getting ahead of myself. First, you need to learn more about the
+controller and that's exactly the topic of the next part of this tutorial. Ready
+for another 10 minutes with Symfony2?
 
 .. _Twig:          http://www.twig-project.org/
 .. _documentation: http://www.twig-project.org/documentation

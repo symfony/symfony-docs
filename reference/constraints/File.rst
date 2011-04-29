@@ -23,8 +23,8 @@ Options
 Example: Validating the file size and mime type
 -----------------------------------------------
 
-In this example we use the ``File`` constraint to verify that the file does
-not exceed a maximum size of 128 kilobytes and is a PDF document.
+In this example we use the ``File`` constraint to verify that the file does not
+exceed a maximum size of 128 kilobytes and is a PDF document.
 
 .. configuration-block::
 

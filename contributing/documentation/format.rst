@@ -10,8 +10,8 @@ reStructuredText
 reStructuredText "is an easy-to-read, what-you-see-is-what-you-get plaintext
 markup syntax and parser system".
 
-You can learn more about its syntax by reading existing Symfony2 `documents`_
-or by reading the `reStructuredText Primer`_ on the Sphinx website.
+You can learn more about its syntax by reading existing Symfony2 `documents`_ or
+by reading the `reStructuredText Primer`_ on the Sphinx website.
 
 If you are familiar with Markdown, be careful as things as sometimes very
 similar but different:
@@ -23,9 +23,9 @@ similar but different:
 Sphinx
 ------
 
-Sphinx is a build system that adds some nice tools to create documentation
-from reStructuredText documents. As such, it adds new directives and
-interpreted text roles to standard reST `markup`_.
+Sphinx is a build system that adds some nice tools to create documentation from
+reStructuredText documents. As such, it adds new directives and interpreted text
+roles to standard reST `markup`_.
 
 Syntax Highlighting
 ~~~~~~~~~~~~~~~~~~~
@@ -39,8 +39,8 @@ it with the ``code-block`` directive:
 
         { foo: bar, bar: { foo: bar, bar: baz } }
 
-If your PHP code begins with ``<?php``, then you need to use ``html+php`` as
-the highlighted pseudo-language:
+If your PHP code begins with ``<?php``, then you need to use ``html+php`` as the
+highlighted pseudo-language:
 
 .. code-block:: rst
 

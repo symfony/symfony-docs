@@ -5,8 +5,8 @@ Testing
 =======
 
 Whenever you write a new line of code, you also potentially add new bugs.
-Automated tests should have you covered and this tutorial shows you how to
-write unit and functional tests for your Symfony2 application.
+Automated tests should have you covered and this tutorial shows you how to write
+unit and functional tests for your Symfony2 application.
 
 Testing Framework
 -----------------
@@ -89,9 +89,9 @@ Running tests for a given file or directory is also very easy:
 Functional Tests
 ----------------
 
-Functional tests check the integration of the different layers of an
-application (from the routing to the views). They are no different from unit
-tests as far as PHPUnit is concerned, but they have a very specific workflow:
+Functional tests check the integration of the different layers of an application
+(from the routing to the views). They are no different from unit tests as far as
+PHPUnit is concerned, but they have a very specific workflow:
 
 * Make a request;
 * Test the response;
@@ -99,10 +99,10 @@ tests as far as PHPUnit is concerned, but they have a very specific workflow:
 * Test the response;
 * Rinse and repeat.
 
-Requests, clicks, and submissions are done by a client that knows how to talk
-to the application. To access such a client, your tests need to extend the
-Symfony2 ``WebTestCase`` class. The sandbox provides a simple functional test
-for ``HelloController`` that reads as follows::
+Requests, clicks, and submissions are done by a client that knows how to talk to
+the application. To access such a client, your tests need to extend the Symfony2
+``WebTestCase`` class. The sandbox provides a simple functional test for
+``HelloController`` that reads as follows::
 
     // src/Acme/HelloBundle/Tests/Controller/HelloControllerTest.php
     namespace Acme\HelloBundle\Tests\Controller;
@@ -166,8 +166,8 @@ Each ``Form`` field has specialized methods depending on its type::
     // upload a file
     $form['photo']->upload('/path/to/lucas.jpg');
 
-Instead of changing one field at a time, you can also pass an array of values
-to the ``submit()`` method::
+Instead of changing one field at a time, you can also pass an array of values to
+the ``submit()`` method::
 
     $crawler = $client->submit($form, array(
         'name'         => 'Lucas',
@@ -184,8 +184,7 @@ on the DOM::
     $this->assertTrue($crawler->filter('h1')->count() > 0);
 
 Or, test against the Response content directly if you just want to assert that
-the content contains some text, or if the Response is not an XML/HTML
-document::
+the content contains some text, or if the Response is not an XML/HTML document::
 
     $this->assertRegExp('/Hello Fabien/', $client->getResponse()->getContent());
 
@@ -244,8 +243,8 @@ The client knows how to make requests to a Symfony2 application::
 The ``request()`` method takes the HTTP method and a URL as arguments and
 returns a ``Crawler`` instance.
 
-Use the Crawler to find DOM elements in the Response. These elements can then
-be used to click on links and submit forms::
+Use the Crawler to find DOM elements in the Response. These elements can then be
+used to click on links and submit forms::
 
     $link = $crawler->selectLink('Go elsewhere...')->link();
     $crawler = $client->click($link);
@@ -253,11 +252,11 @@ be used to click on links and submit forms::
     $form = $crawler->selectButton('validate')->form();
     $crawler = $client->submit($form, array('name' => 'Fabien'));
 
-The ``click()`` and ``submit()`` methods both return a ``Crawler`` object.
-These methods are the best way to browse an application as it hides a lot of
-details. For instance, when you submit a form, it automatically detects the
-HTTP method and the form URL, it gives you a nice API to upload files, and it
-merges the submitted values with the form default ones, and more.
+The ``click()`` and ``submit()`` methods both return a ``Crawler`` object. These
+methods are the best way to browse an application as it hides a lot of details.
+For instance, when you submit a form, it automatically detects the HTTP method
+and the form URL, it gives you a nice API to upload files, and it merges the
+submitted values with the form default ones, and more.
 
 .. tip::
 
@@ -276,8 +275,8 @@ additional arguments of the ``request()`` method::
     // Specify HTTP headers
     $client->request('DELETE', '/post/12', array(), array(), array('PHP_AUTH_USER' => 'username', 'PHP_AUTH_PW' => 'pa$$word'));
 
-When a request returns a redirect response, the client automatically follows
-it. This behavior can be changed with the ``followRedirects()`` method::
+When a request returns a redirect response, the client automatically follows it.
+This behavior can be changed with the ``followRedirects()`` method::
 
     $client->followRedirects(false);
 
@@ -377,14 +376,14 @@ Response before the redirection and redirect yourself, calls the
 The Crawler
 -----------
 
-A Crawler instance is returned each time you make a request with the Client.
-It allows you to traverse HTML documents, select nodes, find links and forms.
+A Crawler instance is returned each time you make a request with the Client. It
+allows you to traverse HTML documents, select nodes, find links and forms.
 
 Creating a Crawler Instance
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-A Crawler instance is automatically created for you when you make a request
-with a Client. But you can create your own easily::
+A Crawler instance is automatically created for you when you make a request with
+a Client. But you can create your own easily::
 
     use Symfony\Component\DomCrawler\Crawler;
 
@@ -453,8 +452,8 @@ document:
 | ``reduce($lambda)``   | Nodes for which the callable does not return false |
 +-----------------------+----------------------------------------------------+
 
-You can iteratively narrow your node selection by chaining method calls as
-each method returns a new Crawler instance for the matching nodes::
+You can iteratively narrow your node selection by chaining method calls as each
+method returns a new Crawler instance for the matching nodes::
 
     $crawler
         ->filter('h1')
@@ -499,8 +498,8 @@ shortcut is often more convenient::
 
     $crawler->selectLink('Click here');
 
-It selects links that contain the given text, or clickable images for which
-the ``alt`` attribute contains the given text.
+It selects links that contain the given text, or clickable images for which the
+``alt`` attribute contains the given text.
 
 The Client ``click()`` method takes a ``Link`` instance as returned by the
 ``link()`` method::
@@ -612,8 +611,8 @@ create a ``phpunit.xml`` file to tweak the configuration for your local machine.
 
 By default, only the tests stored in "standard" bundles are run by the
 ``phpunit`` command (standard being tests under Vendor\\*Bundle\\Tests
-namespaces). But you can easily add more namespaces. For instance, the
-following configuration adds the tests from the installed third-party bundles:
+namespaces). But you can easily add more namespaces. For instance, the following
+configuration adds the tests from the installed third-party bundles:
 
 .. code-block:: xml
 
@@ -709,9 +708,9 @@ The Client used by functional tests creates a Kernel that runs in a special
             'logger' => array('priority' => 'debug'),
         ));
 
-You can also change the default environment (``test``) and override the
-default debug mode (``true``) by passing them as options to the
-``createClient()`` method::
+You can also change the default environment (``test``) and override the default
+debug mode (``true``) by passing them as options to the ``createClient()``
+method::
 
     $client = $this->createClient(array(
         'environment' => 'my_test_env',

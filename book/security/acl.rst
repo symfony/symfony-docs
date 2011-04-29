@@ -12,9 +12,9 @@ the ACL system comes in.
 Imagine you are designing a blog system where your users can comment on your
 posts. Now, you want a user to be able to edit his own comments, but not those
 of other users; besides, you yourself want to be able to edit all comments. In
-this scenario, ``Comment`` would be our domain object that you want to
-restrict access to. You could take several approaches to accomplish this using
-Symfony2, two basic approaches are (non-exhaustive):
+this scenario, ``Comment`` would be our domain object that you want to restrict
+access to. You could take several approaches to accomplish this using Symfony2,
+two basic approaches are (non-exhaustive):
 
 - *Enforce security in your business methods*: Basically, that means keeping a
   reference inside each ``Comment`` to all users who have access, and then
@@ -77,8 +77,7 @@ Fortunately, we have a task for this. Simply run the following command:
 Getting Started
 ---------------
 
-Coming back to our small example from the beginning, let's implement ACL for
-it.
+Coming back to our small example from the beginning, let's implement ACL for it.
 
 Creating an ACL, and adding an ACE
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -120,16 +119,16 @@ For now, I only want to highlight two:
 First, you may have noticed that ``->createAcl()`` does not accept domain
 objects directly, but only implementations of the ``ObjectIdentityInterface``.
 This additional step of indirection allows you to work with ACLs even when you
-have no actual domain object instance at hand. This will be extremely helpful
-if you want to check permissions for a large number of objects without
-actually hydrating these objects.
+have no actual domain object instance at hand. This will be extremely helpful if
+you want to check permissions for a large number of objects without actually
+hydrating these objects.
 
-The other interesting part is the ``->insertObjectAce()`` call. In our
-example, we are granting the user who is currently logged in owner access to
-the Comment. The ``MaskBuilder::MASK_OWNER`` is a pre-defined integer bitmask;
-don't worry the mask builder will abstract away most of the technical details,
-but using this technique we can store many different permissions in one
-database row which gives us a considerable boost in performance.
+The other interesting part is the ``->insertObjectAce()`` call. In our example,
+we are granting the user who is currently logged in owner access to the Comment.
+The ``MaskBuilder::MASK_OWNER`` is a pre-defined integer bitmask; don't worry
+the mask builder will abstract away most of the technical details, but using
+this technique we can store many different permissions in one database row which
+gives us a considerable boost in performance.
 
 .. tip::
 
@@ -157,8 +156,8 @@ Checking Access
     }
 
 In this example, we check whether the user has the ``EDIT`` permission.
-Internally, Symfony2 maps the permission to several integer bitmasks, and
-checks whether the user has any of them.
+Internally, Symfony2 maps the permission to several integer bitmasks, and checks
+whether the user has any of them.
 
 .. note::
 
@@ -170,9 +169,9 @@ Cumulative Permissions
 ----------------------
 
 In our first example above, we only granted the user the ``OWNER`` base
-permission. While this effectively also allows the user to perform any
-operation such as view, edit, etc. on the domain object, there are cases where
-we want to grant these permissions explicitly.
+permission. While this effectively also allows the user to perform any operation
+such as view, edit, etc. on the domain object, there are cases where we want to
+grant these permissions explicitly.
 
 The ``MaskBuilder`` can be used for creating bit masks easily by combining
 several base permissions:

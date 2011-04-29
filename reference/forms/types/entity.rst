@@ -5,9 +5,9 @@
 =====================
 
 A special ``choice`` field that's designed to load options from a Doctrine
-entity. For example, if you have a ``Category`` entity, you could use this
-field to display a ``select`` field of all, or some, of the ``Category``
-objects from the database.
+entity. For example, if you have a ``Category`` entity, you could use this field
+to display a ``select`` field of all, or some, of the ``Category`` objects from
+the database.
 
 +----------------------+------------------------------------------------------------------+
 | Underlying Data Type | An array of entity "identifiers" (e.g. an array of selected ids) |

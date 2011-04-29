@@ -7,11 +7,11 @@ addict! Without further ado, let's discover what controllers can do for you.
 Using Formats
 -------------
 
-Nowadays, a web application should be able to deliver more than just HTML
-pages. From XML for RSS feeds or Web Services, to JSON for Ajax requests,
-there are plenty of different formats to choose from. Supporting those formats
-in Symfony2 is straightforward. Tweak the route by adding a default value of
-``xml`` for the ``_format`` variable::
+Nowadays, a web application should be able to deliver more than just HTML pages.
+From XML for RSS feeds or Web Services, to JSON for Ajax requests, there are
+plenty of different formats to choose from. Supporting those formats in Symfony2
+is straightforward. Tweak the route by adding a default value of ``xml`` for the
+``_format`` variable::
 
     // src/Acme/DemoBundle/Controller/DemoController.php
     /**
@@ -34,8 +34,8 @@ automatically selects the right template, here ``hello.xml.twig``:
     </hello>
 
 That's all there is to it. For standard formats, Symfony2 will also
-automatically choose the best ``Content-Type`` header for the response. If
-you want to support different formats for a single action, use the ``{_format}``
+automatically choose the best ``Content-Type`` header for the response. If you
+want to support different formats for a single action, use the ``{_format}``
 placeholder in the route pattern instead::
 
     // src/Acme/DemoBundle/Controller/DemoController.php
@@ -105,12 +105,12 @@ Persisting Data in the Session
 ------------------------------
 
 Even if the HTTP protocol is stateless, Symfony2 provides a nice session object
-that represents the client (be it a real person using a browser, a bot, or a
-web service). Between two requests, Symfony2 stores the attributes in a cookie
-by using native PHP sessions.
+that represents the client (be it a real person using a browser, a bot, or a web
+service). Between two requests, Symfony2 stores the attributes in a cookie by
+using native PHP sessions.
 
-Storing and retrieving information from the session can be easily achieved
-from any controller::
+Storing and retrieving information from the session can be easily achieved from
+any controller::
 
     $session = $this->get('request')->getSession();
 
@@ -123,8 +123,8 @@ from any controller::
     // set the user locale
     $session->setLocale('fr');
 
-You can also store small messages that will only be available for the very
-next request::
+You can also store small messages that will only be available for the very next
+request::
 
     // store a message for the very next request (in a controller)
     $session->setFlash('notice', 'Congratulations, your action succeeded!');
@@ -132,8 +132,8 @@ next request::
     // display the message back in the next request (in a template)
     {{ app.session.flash('notice') }}
 
-This is useful when you need to set a success message before redirecting
-the user to another page (which will then show the message).
+This is useful when you need to set a success message before redirecting the
+user to another page (which will then show the message).
 
 Securing Resources
 ------------------
@@ -183,12 +183,12 @@ Moreover, the ``admin`` user has a ``ROLE_ADMIN`` role, which includes the
     configuration, but you can use any hashing algorithm by tweaking the
     ``encoders`` section.
 
-Going to the ``http://localhost/Symfony/web/app_dev.php/demo/secured/hello``
-URL will automatically redirect you to the login form because this resource is
+Going to the ``http://localhost/Symfony/web/app_dev.php/demo/secured/hello`` URL
+will automatically redirect you to the login form because this resource is
 protected by a ``firewall``.
 
-You can also force the action to require a given role by using the ``@extra:Secure``
-annotation on the controller::
+You can also force the action to require a given role by using the
+``@extra:Secure`` annotation on the controller::
 
     /**
      * @extra:Route("/hello/admin/{name}", name="_demo_secured_hello_admin")
@@ -200,10 +200,10 @@ annotation on the controller::
         return array('name' => $name);
     }
 
-Now, log in as ``user`` (who does *not* have the ``ROLE_ADMIN`` role) and
-from the secured hello page, click on the "Hello resource secured" link.
-Symfony2 should return a 403 HTTP status code, indicating that the user
-is "forbidden" from accessing that resource.
+Now, log in as ``user`` (who does *not* have the ``ROLE_ADMIN`` role) and from
+the secured hello page, click on the "Hello resource secured" link. Symfony2
+should return a 403 HTTP status code, indicating that the user is "forbidden"
+from accessing that resource.
 
 .. note::
 
@@ -216,10 +216,10 @@ is "forbidden" from accessing that resource.
 Caching Resources
 -----------------
 
-As soon as your website starts to generate more traffic, you will want to
-avoid generating the same resource again and again. Symfony2 uses HTTP cache
-headers to manage resources cache. For simple caching strategies, use the
-convenient ``@extra:Cache()`` annotation::
+As soon as your website starts to generate more traffic, you will want to avoid
+generating the same resource again and again. Symfony2 uses HTTP cache headers
+to manage resources cache. For simple caching strategies, use the convenient
+``@extra:Cache()`` annotation::
 
     /**
      * @extra:Route("/hello/{name}", name="_demo_hello")

@@ -9,8 +9,8 @@ The Symfony2 stable API is a subset of all Symfony2 published public methods
 * The method signature (arguments and return value type) won't change;
 * The semantic of what the method does won't change.
 
-The implementation itself can change though. The only valid case for a change
-in the stable API is in order to fix a security issue.
+The implementation itself can change though. The only valid case for a change in
+the stable API is in order to fix a security issue.
 
 .. note::
 

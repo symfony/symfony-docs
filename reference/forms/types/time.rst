@@ -6,9 +6,9 @@
 
 A field to capture time input.
 
-This can be rendered as a text field or a series of choice fields. The underlying
-data can be stored as a ``DateTime`` object, a string, a timestamp or an
-array.
+This can be rendered as a text field or a series of choice fields. The
+underlying data can be stored as a ``DateTime`` object, a string, a timestamp or
+an array.
 
 +----------------------+-----------------------------------------------------------------------------+
 | Underlying Data Type | can be ``DateTime``, string, timestamp, or array (see the ``input`` option) |
@@ -36,8 +36,8 @@ This field type is highly configurable, but easy to use. The most important
 options are ``input`` and ``widget``.
 
 Suppose that you have a ``startTime`` field whose underlying time data is a
-``DateTime`` object. The following configures the ``time`` type for that
-field as three different choice fields:
+``DateTime`` object. The following configures the ``time`` type for that field
+as three different choice fields:
 
 .. code-block:: php
 
@@ -46,8 +46,8 @@ field as three different choice fields:
         'widget' => 'choice',
     ));
 
-The ``input`` option *must* be changed to match the type of the underlying
-date data. For example, if the ``startTime`` field's data were a unix timestamp,
+The ``input`` option *must* be changed to match the type of the underlying date
+data. For example, if the ``startTime`` field's data were a unix timestamp,
 you'd need to set ``input`` to ``timestamp``:
 
 .. code-block:: php

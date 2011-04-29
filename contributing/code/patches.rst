@@ -69,8 +69,8 @@ topic branch:
 The above command automatically switches the code to the newly created branch
 (check the branch you are working on with `git branch`).
 
-Work on the code as much as you want and commit as much as you want; but keep
-in mind the following:
+Work on the code as much as you want and commit as much as you want; but keep in
+mind the following:
 
 * Follow the coding :doc:`standards <standards>` (use `git diff --check` to
   check for trailing spaces);
@@ -95,8 +95,8 @@ in mind the following:
 Submitting a Patch
 ------------------
 
-Before submitting your patch, update your branch (needed if it takes you a
-while to finish your changes):
+Before submitting your patch, update your branch (needed if it takes you a while
+to finish your changes):
 
 .. code-block:: bash
 
@@ -106,9 +106,8 @@ while to finish your changes):
     $ git checkout BRANCH_NAME
     $ git rebase master
 
-When doing the `rebase` command, you might have to fix merge conflicts. `git
-st` gives you the *unmerged* files. Resolve all conflicts, then continue the
-rebase:
+When doing the `rebase` command, you might have to fix merge conflicts. `git st`
+gives you the *unmerged* files. Resolve all conflicts, then continue the rebase:
 
 .. code-block:: bash
 
@@ -121,23 +120,23 @@ Check that all tests still pass and push your branch remotely:
 
     $ git push origin BRANCH_NAME
 
-You can now discuss your patch on the `dev mailing-list`_ or make a pull
-request (they must be done on the ``symfony/symfony`` repository). To ease the
-core team work, always include the modified components in your pull request
-message, like in:
+You can now discuss your patch on the `dev mailing-list`_ or make a pull request
+(they must be done on the ``symfony/symfony`` repository). To ease the core team
+work, always include the modified components in your pull request message, like
+in:
 
 .. code-block:: text
 
     [Yaml] foo bar
     [Form] [Validator] [FrameworkBundle] foo bar
 
-If you are going to send an email to the mailing-list, don't forget to
-reference you branch URL (``https://github.com/USERNAME/symfony.git
-BRANCH_NAME``) or the pull request URL.
+If you are going to send an email to the mailing-list, don't forget to reference
+you branch URL (``https://github.com/USERNAME/symfony.git BRANCH_NAME``) or the
+pull request URL.
 
 Based on the feedback from the mailing-list or via the pull request on GitHub,
-you might need to rework your patch. Before re-submitting the patch, rebase
-with master, don't merge; and force the push to the origin:
+you might need to rework your patch. Before re-submitting the patch, rebase with
+master, don't merge; and force the push to the origin:
 
 .. code-block:: bash
 

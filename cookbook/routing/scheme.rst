@@ -5,8 +5,8 @@ How to force routes to always use HTTPS
 =======================================
 
 Sometimes, you want to secure some routes and be sure that they are always
-accessed via the HTTPS protocol. The Routing component allows you to enforce
-the HTTP scheme via the ``_scheme`` requirement:
+accessed via the HTTPS protocol. The Routing component allows you to enforce the
+HTTP scheme via the ``_scheme`` requirement:
 
 .. configuration-block::
 
@@ -61,9 +61,9 @@ will automatically generate an absolute URL with HTTPS as the scheme:
     {{ path('secure') }}
     # generates https://example.com/secure
 
-The requirement is also enforced for incoming requests. If you try to access
-the ``/secure`` path with HTTP, you will automatically be redirected to the
-same URL, but with the HTTPS scheme.
+The requirement is also enforced for incoming requests. If you try to access the
+``/secure`` path with HTTP, you will automatically be redirected to the same
+URL, but with the HTTPS scheme.
 
 The above example uses ``https`` for the ``_scheme``, but you can also force a
 URL to always use ``http``.

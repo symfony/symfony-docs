@@ -6,9 +6,9 @@ Authorization
 
 When the user is authenticated, you can restrict access to your application
 resources via access control rules. Authorization in Symfony2 covers this need
-but it also provides a standard and powerful way to decide if a user can
-access any resource (a URL, a model object, a method call, ...) thanks to a
-flexible access decision manager.
+but it also provides a standard and powerful way to decide if a user can access
+any resource (a URL, a model object, a method call, ...) thanks to a flexible
+access decision manager.
 
 .. index::
    single: Security; Access Control
@@ -49,15 +49,15 @@ defined in your configuration:
             ),
         ));
 
-For each incoming request, Symfony2 tries to find a matching access control
-rule (the first one wins) and throws an
-:class:`Symfony\\Component\Security\\Core\\Exception\\AccessDeniedException` if the
-user has not the needed roles or an
+For each incoming request, Symfony2 tries to find a matching access control rule
+(the first one wins) and throws an
+:class:`Symfony\\Component\Security\\Core\\Exception\\AccessDeniedException` if
+the user has not the needed roles or an
 :class:`Symfony\\Component\Security\\Core\\Exception\\AuthenticationCredentialsNotFoundException`
 if he is not authenticated yet.
 
-In the example above, we match requests based on their path info, but there
-are many other ways as you will learn in the next section.
+In the example above, we match requests based on their path info, but there are
+many other ways as you will learn in the next section.
 
 .. tip::
 
@@ -141,9 +141,9 @@ HTTPS:
             ),
         ));
 
-If no ``requires-channel`` is defined, Symfony2 will accept both HTTP and
-HTTPS. But as soon as you set the setting to either HTTP or HTTPS, Symfony2
-will redirect users if needed.
+If no ``requires-channel`` is defined, Symfony2 will accept both HTTP and HTTPS.
+But as soon as you set the setting to either HTTP or HTTPS, Symfony2 will
+redirect users if needed.
 
 Access Control in Templates
 ---------------------------

@@ -4,11 +4,11 @@
 Translations
 ============
 
-The term "internationalization" refers to the process of abstracting strings
-and other locale-specific pieces out of your application and into a layer
-where they can be translated and converted based on the user's locale (i.e.
-language and country). For text, this means wrapping each with a function
-capable of translating the text (or "message") into the language of the user::
+The term "internationalization" refers to the process of abstracting strings and
+other locale-specific pieces out of your application and into a layer where they
+can be translated and converted based on the user's locale (i.e. language and
+country). For text, this means wrapping each with a function capable of
+translating the text (or "message") into the language of the user::
 
     // text will *always* print out in English
     echo 'Hello World';
@@ -25,8 +25,8 @@ capable of translating the text (or "message") into the language of the user::
     code (e.g. ``fr_FR`` for French/France).
 
 In this chapter, we'll learn how to prepare an application to support multiple
-locales and then how to create translations for multiple locales. Overall,
-the process has several common steps:
+locales and then how to create translations for multiple locales. Overall, the
+process has several common steps:
 
 1. Enable and configure Symfony's ``Translation`` component;
 
@@ -44,8 +44,8 @@ Configuration
 -------------
 
 Translations are handled by a ``Translator`` :term:`service` that uses the
-user's locale to lookup and return translated messages. Before using it,
-enable the ``Translator`` in your configuration:
+user's locale to lookup and return translated messages. Before using it, enable
+the ``Translator`` in your configuration:
 
 .. configuration-block::
 
@@ -69,8 +69,8 @@ enable the ``Translator`` in your configuration:
             'translator' => array('fallback' => 'en'),
         ));
 
-The ``fallback`` option defines the fallback locale when a translation does
-not exist in the user's locale.
+The ``fallback`` option defines the fallback locale when a translation does not
+exist in the user's locale.
 
 .. tip::
 
@@ -88,8 +88,8 @@ Basic Translation
 -----------------
 
 Translation of text is done through the  ``translator`` service
-(:class:`Symfony\\Component\\Translation\\Translator`). To translate a block
-of text (called a *message*), use the
+(:class:`Symfony\\Component\\Translation\\Translator`). To translate a block of
+text (called a *message*), use the
 :method:`Symfony\\Component\\Translation\\Translator::trans` method. Suppose,
 for example, that we're translating a simple message from inside a controller:
 
@@ -103,11 +103,11 @@ for example, that we're translating a simple message from inside a controller:
     }
 
 When this code is executed, Symfony2 will attempt to translate the message
-"Symfony2 is great" based on the ``locale`` of the user. For this to work,
-we need to tell Symfony2 how to translate the message via a "translation
-resource", which is a collection of message translations for a given locale.
-This "dictionary" of translations can be created in several different formats,
-XLIFF being the recommended format:
+"Symfony2 is great" based on the ``locale`` of the user. For this to work, we
+need to tell Symfony2 how to translate the message via a "translation resource",
+which is a collection of message translations for a given locale. This
+"dictionary" of translations can be created in several different formats, XLIFF
+being the recommended format:
 
 .. configuration-block::
 
@@ -138,8 +138,8 @@ XLIFF being the recommended format:
         # messages.fr.yml
         Symfony2 is great: J'aime Symfony2
 
-Now, if the language of the user's locale is French (e.g. ``fr_FR`` or ``fr_BE``),
-the message will be translated into ``J'aime Symfony2``.
+Now, if the language of the user's locale is French (e.g. ``fr_FR`` or
+``fr_BE``), the message will be translated into ``J'aime Symfony2``.
 
 The Translation Process
 ~~~~~~~~~~~~~~~~~~~~~~~
@@ -177,9 +177,9 @@ Sometimes, a message containing a variable needs to be translated:
         return new Response($t);
     }
 
-However, creating a translation for this string is impossible since the translator
-will try to look up the exact message, including the variable portions
-(e.g. "Hello Ryan" or "Hello Fabien"). Instead of writing a translation
+However, creating a translation for this string is impossible since the
+translator will try to look up the exact message, including the variable
+portions (e.g. "Hello Ryan" or "Hello Fabien"). Instead of writing a translation
 for every possible iteration of the ``$name`` variable, we can replace the
 variable with a "placeholder":
 
@@ -193,8 +193,8 @@ variable with a "placeholder":
     }
 
 Symfony2 will now look for a translation of the raw message (``Hello %name%``)
-and *then* replace the placeholders with their values. Creating a translation
-is done just as before:
+and *then* replace the placeholders with their values. Creating a translation is
+done just as before:
 
 .. configuration-block::
 
@@ -240,8 +240,8 @@ As we've seen, creating a translation is a two-step process:
 1. Create a translation for the message in each locale that you choose to
    support.
 
-The second step is done by creating message catalogues that define the translations
-for any number of different locales.
+The second step is done by creating message catalogues that define the
+translations for any number of different locales.
 
 .. index::
    single: Translations; Message catalogues
@@ -312,9 +312,9 @@ Creating Translations
 ~~~~~~~~~~~~~~~~~~~~~
 
 Each file consists of a series of id-translation pairs for the given domain and
-locale. The id is the identifier for the individual translation, and can
-be the message in the main locale (e.g. "Symfony is great") of your application
-or a unique identifier (e.g. "symfony2.great" - see the sidebar below):
+locale. The id is the identifier for the individual translation, and can be the
+message in the main locale (e.g. "Symfony is great") of your application or a
+unique identifier (e.g. "symfony2.great" - see the sidebar below):
 
 .. configuration-block::
 
@@ -444,10 +444,10 @@ Symfony2 will discover these files and use them when translating either
 Using Message Domains
 ---------------------
 
-As we've seen, message files are organized into the different locales that
-they translate. The message files can also be organized further into "domains".
-When creating message files, the domain is the first portion of the filename.
-The default domain is ``messages``. For example, suppose that, for organization,
+As we've seen, message files are organized into the different locales that they
+translate. The message files can also be organized further into "domains". When
+creating message files, the domain is the first portion of the filename. The
+default domain is ``messages``. For example, suppose that, for organization,
 translations were split into three different domains: ``messages``, ``admin``
 and ``navigation``. The French translation would have the following message
 files:
@@ -456,8 +456,8 @@ files:
 * ``admin.fr.xliff``
 * ``navigation.fr.xliff``
 
-When translating strings that are not in the default domain (``messages``),
-you must specify the domain as the third argument of ``trans()``:
+When translating strings that are not in the default domain (``messages``), you
+must specify the domain as the third argument of ``trans()``:
 
 .. code-block:: php
 
@@ -472,8 +472,8 @@ locale.
 Handling the User's Locale
 --------------------------
 
-The locale of the current user is stored in the session and is accessible
-via the ``session`` service:
+The locale of the current user is stored in the session and is accessible via
+the ``session`` service:
 
 .. code-block:: php
 
@@ -491,8 +491,8 @@ If the locale hasn't been set explicitly in the session, the ``fallback_locale``
 configuration parameter will be used by the ``Translator``. The parameter
 defaults to ``en`` (see `Configuration`_).
 
-Alternatively, you can guarantee that a locale is set on the user's session
-by defining a ``default_locale`` for the session service:
+Alternatively, you can guarantee that a locale is set on the user's session by
+defining a ``default_locale`` for the session service:
 
 .. configuration-block::
 
@@ -519,16 +519,16 @@ by defining a ``default_locale`` for the session service:
 The Locale and the URL
 ~~~~~~~~~~~~~~~~~~~~~~
 
-Since the locale of the user is stored in the session, it may be tempting
-to use the same URL to display a resource in many different languages based
-on the user's locale. For example, ``http://www.example.com/contact`` could
-show content in English for one user and French for another user. Unfortunately,
-this violates a fundamental rule of the Web: that a particular URL returns
-the same resource regardless of the user. To further muddy the problem, which
-version of the content would be indexed by search engines?
+Since the locale of the user is stored in the session, it may be tempting to use
+the same URL to display a resource in many different languages based on the
+user's locale. For example, ``http://www.example.com/contact`` could show
+content in English for one user and French for another user. Unfortunately, this
+violates a fundamental rule of the Web: that a particular URL returns the same
+resource regardless of the user. To further muddy the problem, which version of
+the content would be indexed by search engines?
 
-A better policy is to include the locale in the URL. This is fully-supported
-by the routing system using the special ``_locale`` parameter:
+A better policy is to include the locale in the URL. This is fully-supported by
+the routing system using the special ``_locale`` parameter:
 
 .. configuration-block::
 
@@ -563,13 +563,13 @@ by the routing system using the special ``_locale`` parameter:
 
         return $collection;
 
-When using the special `_locale` parameter in a route, the matched locale
-will *automatically be set on the user's session*. In other words, if a user
-visits the URI ``/fr/contact``, the locale ``fr`` will automatically be set
-as the locale for the user's session.
+When using the special `_locale` parameter in a route, the matched locale will
+*automatically be set on the user's session*. In other words, if a user visits
+the URI ``/fr/contact``, the locale ``fr`` will automatically be set as the
+locale for the user's session.
 
-You can now use the user's locale to create routes to other translated pages
-in your application.
+You can now use the user's locale to create routes to other translated pages in
+your application.
 
 .. index::
    single: Translations; Pluralization
@@ -584,11 +584,11 @@ rules::
     (($number % 10 == 1) && ($number % 100 != 11)) ? 0 : ((($number % 10 >= 2) && ($number % 10 <= 4) && (($number % 100 < 10) || ($number % 100 >= 20))) ? 1 : 2);
 
 As you can see, in Russian, you can have three different plural forms, each
-given an index of 0, 1 or 2. For each form, the plural is different, and
-so the translation is also different.
+given an index of 0, 1 or 2. For each form, the plural is different, and so the
+translation is also different.
 
-When a translation has different forms due to pluralization, you can provide
-all the forms as a string separated by a pipe (``|``)::
+When a translation has different forms due to pluralization, you can provide all
+the forms as a string separated by a pipe (``|``)::
 
     'There is one apple|There are %count% apples'
 
@@ -607,11 +607,11 @@ The second argument (``10`` in this example), is the *number* of objects being
 described and is used to determine which translation to use and also to populate
 the ``%count%`` placeholder.
 
-Based on the given number, the translator chooses the right plural form.
-In English, most words have a singular form when there is exactly one object
-and a plural form for all other numbers (0, 2, 3...). So, if ``count`` is
-``1``, the translator will use the first string (``There is one apple``)
-as the translation. Otherwise it will use ``There are %count% apples``.
+Based on the given number, the translator chooses the right plural form. In
+English, most words have a singular form when there is exactly one object and a
+plural form for all other numbers (0, 2, 3...). So, if ``count`` is ``1``, the
+translator will use the first string (``There is one apple``) as the
+translation. Otherwise it will use ``There are %count% apples``.
 
 Here is the French translation::
 
@@ -619,23 +619,23 @@ Here is the French translation::
 
 Even if the string looks similar (it is made of two sub-strings separated by a
 pipe), the French rules are different: the first form (no plural) is used when
-``count`` is ``0`` or ``1``. So, the translator will automatically use the
-first string (``Il y a %count% pomme``) when ``count`` is ``0`` or ``1``.
+``count`` is ``0`` or ``1``. So, the translator will automatically use the first
+string (``Il y a %count% pomme``) when ``count`` is ``0`` or ``1``.
 
 Each locale has its own set of rules, with some having as many as six different
 plural forms with complex rules behind which numbers map to which plural form.
-The rules are quite simple for English and French, but for Russian, you'd
-may want a hint to know which rule matches which string. To help translators,
-you can optionally "tag" each string::
+The rules are quite simple for English and French, but for Russian, you'd may
+want a hint to know which rule matches which string. To help translators, you
+can optionally "tag" each string::
 
     'one: There is one apple|some: There are %count% apples'
 
     'none_or_one: Il y a %count% pomme|some: Il y a %count% pommes'
 
-The tags are really only hints for translators and don't affect the logic
-used to determine which plural form to use. The tags can be any descriptive
-string that ends with a colon (``:``). The tags also do not need to be the
-same in the original message as in the translated one.
+The tags are really only hints for translators and don't affect the logic used
+to determine which plural form to use. The tags can be any descriptive string
+that ends with a colon (``:``). The tags also do not need to be the same in the
+original message as in the translated one.
 
 .. tip:
 
@@ -645,27 +645,27 @@ same in the original message as in the translated one.
 Explicit Interval Pluralization
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The easiest way to pluralize a message is to let Symfony2 use internal logic
-to choose which string to use based on a given number. Sometimes, you'll
-need more control or want a different translation for specific cases (for
-``0``, or when the count is negative, for example). For such cases, you can
-use explicit math intervals::
+The easiest way to pluralize a message is to let Symfony2 use internal logic to
+choose which string to use based on a given number. Sometimes, you'll need more
+control or want a different translation for specific cases (for ``0``, or when
+the count is negative, for example). For such cases, you can use explicit math
+intervals::
 
     '{0} There is no apples|{1} There is one apple|]1,19] There are %count% apples|[20,Inf] There are many apples'
 
-The intervals follow the `ISO 31-11`_ notation. The above string specifies
-four different intervals: exactly ``0``, exactly ``1``, ``2-19``, and ``20``
-and higher.
+The intervals follow the `ISO 31-11`_ notation. The above string specifies four
+different intervals: exactly ``0``, exactly ``1``, ``2-19``, and ``20`` and
+higher.
 
-You can also mix explicit math rules and standard rules. In this case, if
-the count is not matched by a specific interval, the standard rules take
-effect after removing the explicit rules::
+You can also mix explicit math rules and standard rules. In this case, if the
+count is not matched by a specific interval, the standard rules take effect
+after removing the explicit rules::
 
     '{0} There is no apples|[20,Inf] There are many apples|There is one apple|a_few: There are %count% apples'
 
-For example, for ``1`` apple, the standard rule ``There is one apple`` will
-be used. For ``2-19`` apples, the second standard rule ``There are %count%
-apples`` will be selected.
+For example, for ``1`` apple, the standard rule ``There is one apple`` will be
+used. For ``2-19`` apples, the second standard rule ``There are %count% apples``
+will be selected.
 
 An :class:`Symfony\\Component\\Translation\\Interval` can represent a finite set
 of numbers::
@@ -678,8 +678,8 @@ Or numbers between two other numbers::
     ]-1,2[
 
 The left delimiter can be ``[`` (inclusive) or ``]`` (exclusive). The right
-delimiter can be ``[`` (exclusive) or ``]`` (inclusive). Beside numbers, you
-can use ``-Inf`` and ``+Inf`` for the infinite.
+delimiter can be ``[`` (exclusive) or ``]`` (inclusive). Beside numbers, you can
+use ``-Inf`` and ``+Inf`` for the infinite.
 
 .. index::
    single: Translations; In templates
@@ -710,9 +710,9 @@ with message translation:
         {0} There is no apples|{1} There is one apple|]1,Inf] There are %count% apples
     {% endtranschoice %}
 
-The ``transChoice`` tag automatically gets the ``%count%`` variable from
-the current context and passes it to the translator. This mechanism only
-works when you use a placeholder following the ``%var%`` pattern.
+The ``transChoice`` tag automatically gets the ``%count%`` variable from the
+current context and passes it to the translator. This mechanism only works when
+you use a placeholder following the ``%var%`` pattern.
 
 You can also specify the message domain:
 
@@ -733,8 +733,8 @@ You can also specify the message domain:
 PHP Templates
 ~~~~~~~~~~~~~
 
-The translator service is accessible in PHP templates through the
-``translator`` helper:
+The translator service is accessible in PHP templates through the ``translator``
+helper:
 
 .. code-block:: html+php
 
@@ -749,9 +749,9 @@ The translator service is accessible in PHP templates through the
 Forcing Translation Locale
 --------------------------
 
-When translating a message, Symfony2 uses the locale from the user's session
-or the ``fallback`` locale if necessary. You can also manually specify the
-locale to use for translation:
+When translating a message, Symfony2 uses the locale from the user's session or
+the ``fallback`` locale if necessary. You can also manually specify the locale
+to use for translation:
 
 .. code-block:: php
 
@@ -773,16 +773,16 @@ locale to use for translation:
 Translating Database Content
 ----------------------------
 
-The translation of database content should be handled by Doctrine through
-the `Translatable Extension`_. For more information, see the documentation
-for that library.
+The translation of database content should be handled by Doctrine through the
+`Translatable Extension`_. For more information, see the documentation for that
+library.
 
 Summary
 -------
 
-With the Symfony2 Translation component, creating an internationalized application
-no longer needs to be a painful process and boils down to just a few basic
-steps:
+With the Symfony2 Translation component, creating an internationalized
+application no longer needs to be a painful process and boils down to just a few
+basic steps:
 
 * Abstract messages in your application by wrapping each in either the
   :method:`Symfony\\Component\\Translation\\Translator::trans` or

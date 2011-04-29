@@ -4,24 +4,24 @@ When Flat PHP meets Symfony
 **Why is Symfony2 better than just opening up a file and writing flat PHP?**
 
 If you've never used a PHP framework, aren't familiar with the MVC philosophy,
-or just wonder what all the *hype* is around Symfony2, this chapter is for
-you. Instead of *telling* you that Symfony2 allows you to develop faster and
-better software than with flat PHP, you'll see for yourself.
+or just wonder what all the *hype* is around Symfony2, this chapter is for you.
+Instead of *telling* you that Symfony2 allows you to develop faster and better
+software than with flat PHP, you'll see for yourself.
 
 In this chapter, you'll write a simple application in flat PHP, and then
 refactor it to be more organized. You'll travel through time, seeing the
-decisions behind why web development has evolved over the past several years
-to where it is now. 
+decisions behind why web development has evolved over the past several years to
+where it is now. 
 
-By the end, you'll see how Symfony2 can rescue you from mundane tasks and
-let you take back control of your code.
+By the end, you'll see how Symfony2 can rescue you from mundane tasks and let
+you take back control of your code.
 
 A simple Blog in flat PHP
 -------------------------
 
-In this chapter, you'll build the token blog application using only flat PHP.
-To begin, create a single page that displays blog entries that have been
-persisted to the database. Writing in flat PHP is quick and dirty:
+In this chapter, you'll build the token blog application using only flat PHP. To
+begin, create a single page that displays blog entries that have been persisted
+to the database. Writing in flat PHP is quick and dirty:
 
 .. code-block:: html+php
 
@@ -55,8 +55,8 @@ persisted to the database. Writing in flat PHP is quick and dirty:
     <?php
     mysql_close($link);
 
-That's quick to write, fast to execute, and, as your app grows, impossible
-to maintain. There are several problems that need to be addressed:
+That's quick to write, fast to execute, and, as your app grows, impossible to
+maintain. There are several problems that need to be addressed:
 
 * **No error-checking**: What if the connection to the database fails?
 
@@ -78,8 +78,8 @@ Let's get to work on solving these problems and more.
 Isolating the Presentation
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The code can immediately gain from separating the application "logic" from
-the code that prepares the HTML "presentation":
+The code can immediately gain from separating the application "logic" from the
+code that prepares the HTML "presentation":
 
 .. code-block:: html+php
 
@@ -124,23 +124,24 @@ is primarily an HTML file that uses a template-like PHP syntax:
         </body>
     </html>
 
-By convention, the file that contains all of the application logic - ``index.php`` -
-is known as a "controller". The term :term:`controller` is a word you'll hear
-a lot, regardless of the language or framework you use. It refers simply
-to the area of *your* code that processes user input and prepares the response.
+By convention, the file that contains all of the application logic -
+``index.php`` - is known as a "controller". The term :term:`controller` is a
+word you'll hear a lot, regardless of the language or framework you use. It
+refers simply to the area of *your* code that processes user input and prepares
+the response.
 
-In this case, our controller prepares data from the database and then includes
-a template to present that data. With the controller isolated, you could
-easily change *just* the template file if you needed to render the blog
-entries in some other format (e.g. ``list.json.php`` for JSON format). 
+In this case, our controller prepares data from the database and then includes a
+template to present that data. With the controller isolated, you could easily
+change *just* the template file if you needed to render the blog entries in some
+other format (e.g. ``list.json.php`` for JSON format). 
 
 Isolating the Application (Domain) Logic
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-So far the application contains only one page. But what if a second page
-needed to use the same database connection, or even the same array of blog
-posts? Refactor the code so that the core behavior and data-access functions
-of the application are isolated in a new file called ``model.php``:
+So far the application contains only one page. But what if a second page needed
+to use the same database connection, or even the same array of blog posts?
+Refactor the code so that the core behavior and data-access functions of the
+application are isolated in a new file called ``model.php``:
 
 .. code-block:: html+php
 
@@ -194,19 +195,19 @@ The controller (``index.php``) is now very simple:
 
     require 'templates/list.php';
 
-Now, the sole task of the controller is to get data from the model layer of
-the application (the model) and to call a template to render that data.
-This is a very simple example of the model-view-controller pattern.
+Now, the sole task of the controller is to get data from the model layer of the
+application (the model) and to call a template to render that data. This is a
+very simple example of the model-view-controller pattern.
 
 Isolating the Layout
 ~~~~~~~~~~~~~~~~~~~~
 
 At this point, the application has been refactored into three distinct pieces
-offering various advantages and the opportunity to reuse almost everything
-on different pages.
+offering various advantages and the opportunity to reuse almost everything on
+different pages.
 
-The only part of the code that *can't* be reused is the page layout. Fix
-that by creating a new ``layout.php`` file:
+The only part of the code that *can't* be reused is the page layout. Fix that by
+creating a new ``layout.php`` file:
 
 .. code-block:: html+php
 
@@ -220,8 +221,8 @@ that by creating a new ``layout.php`` file:
         </body>
     </html>
 
-The template (``templates/list.php``) can now be simplified to "extend"
-the layout:
+The template (``templates/list.php``) can now be simplified to "extend" the
+layout:
 
 .. code-block:: html+php
 
@@ -243,20 +244,20 @@ the layout:
     <?php include 'layout.php' ?>
 
 You've now introduced a methodology that that allows for the reuse of the
-layout. Unfortunately, to accomplish this, you're forced to use a few ugly
-PHP functions (``ob_start()``, ``ob_end_clean()``) in the template. Symfony2
-uses a ``Templating`` component that allows this to be accomplished cleanly
-and easily. You'll see it in action shortly.
+layout. Unfortunately, to accomplish this, you're forced to use a few ugly PHP
+functions (``ob_start()``, ``ob_end_clean()``) in the template. Symfony2 uses a
+``Templating`` component that allows this to be accomplished cleanly and easily.
+You'll see it in action shortly.
 
 Adding a Blog "show" Page
 -------------------------
 
-The blog "list" page has now been refactored so that the code is better-organized
-and reusable. To prove it, add a blog "show" page, which displays an individual
-blog post identified by an ``id`` query parameter.
+The blog "list" page has now been refactored so that the code is
+better-organized and reusable. To prove it, add a blog "show" page, which
+displays an individual blog post identified by an ``id`` query parameter.
 
-To begin, create a new function in the ``model.php`` file that retrieves
-an individual blog result based on a given id::
+To begin, create a new function in the ``model.php`` file that retrieves an
+individual blog result based on a given id::
 
     // model.php
     function get_post_by_id($id)
@@ -273,8 +274,7 @@ an individual blog result based on a given id::
         return $row;
     }
 
-Next, create a new file called ``show.php`` - the controller for this new
-page:
+Next, create a new file called ``show.php`` - the controller for this new page:
 
 .. code-block:: html+php
 
@@ -285,8 +285,8 @@ page:
 
     require 'templates/show.php';
 
-Finally, create the new template file - ``templates/show.php`` - to render
-the individual blog:
+Finally, create the new template file - ``templates/show.php`` - to render the
+individual blog:
 
 .. code-block:: html+php
 
@@ -303,20 +303,20 @@ the individual blog:
 
     <?php include 'layout.php' ?>
 
-Creating the second page is now very easy and no code is duplicated. Still,
-this page introduces even more lingering problems that a framework can solve
-for you. For example, a missing or invalid ``id`` query parameter will cause
-the page to crash. It would be better if this caused a 404 page to be rendered,
-but this can't really be done easily yet. Worse, had you forgotten to clean
-the ``id`` parameter via the ``mysql_real_escape_string()`` function, your
-entire database would be at risk for an SQL injection attack.
+Creating the second page is now very easy and no code is duplicated. Still, this
+page introduces even more lingering problems that a framework can solve for you.
+For example, a missing or invalid ``id`` query parameter will cause the page to
+crash. It would be better if this caused a 404 page to be rendered, but this
+can't really be done easily yet. Worse, had you forgotten to clean the ``id``
+parameter via the ``mysql_real_escape_string()`` function, your entire database
+would be at risk for an SQL injection attack.
 
-Another major problem is that each individual controller file must include
-the ``model.php`` file. What if each controller file suddenly needed to include
-an additional file or perform some other global task (e.g. enforce security)?
-As it stands now, that code would need to be added to every controller file.
-If you forget to include something in one file, hopefully it doesn't relate
-to security...
+Another major problem is that each individual controller file must include the
+``model.php`` file. What if each controller file suddenly needed to include an
+additional file or perform some other global task (e.g. enforce security)? As it
+stands now, that code would need to be added to every controller file. If you
+forget to include something in one file, hopefully it doesn't relate to
+security...
 
 A "Front Controller" to the Rescue
 ----------------------------------
@@ -343,8 +343,8 @@ application change slightly, but start to become more flexible:
 When using a front controller, a single PHP file (``index.php`` in this case)
 renders *every* request. For the blog show page, ``/index.php/show`` will
 actually execute the ``index.php`` file, which is now responsible for routing
-requests internally based on the full URI. As you'll see, a front controller
-is a very powerful tool.
+requests internally based on the full URI. As you'll see, a front controller is
+a very powerful tool.
 
 Creating the Front Controller
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -375,8 +375,9 @@ requested URI:
         echo '<html><body><h1>Page Not Found</h1></body></html>';
     }
 
-For organization, both controllers (formerly ``index.php`` and ``show.php``)
-are now PHP functions and each has been moved into a separate file, ``controllers.php``:
+For organization, both controllers (formerly ``index.php`` and ``show.php``) are
+now PHP functions and each has been moved into a separate file,
+``controllers.php``:
 
 .. code-block:: php
 
@@ -392,11 +393,11 @@ are now PHP functions and each has been moved into a separate file, ``controller
         require 'templates/show.php';
     }
 
-As a front controller, ``index.php`` has taken on an entirely new role, one
-that includes loading the core libraries and routing the application so that
-one of the two controllers (the ``list_action()`` and ``show_action()``
-functions) is called. In reality, the front controller is beginning to look and
-act a lot like Symfony2's mechanism for handling and routing requests.
+As a front controller, ``index.php`` has taken on an entirely new role, one that
+includes loading the core libraries and routing the application so that one of
+the two controllers (the ``list_action()`` and ``show_action()`` functions) is
+called. In reality, the front controller is beginning to look and act a lot like
+Symfony2's mechanism for handling and routing requests.
 
 .. tip::
 
@@ -405,28 +406,28 @@ act a lot like Symfony2's mechanism for handling and routing requests.
    by changing code in only one location. Before, an entire file needed to
    be renamed. In Symfony2, URLs are even more flexible.
 
-By now, the application has evolved from a single PHP file into a structure
-that is organized and allows for code reuse. You should be happier, but far
-from satisfied. For example, the "routing" system is fickle, and wouldn't
-recognize that the list page (``/index.php``) should be accessible also via ``/``
-(if Apache rewrite rules were added). Also, instead of developing the blog,
-a lot of time is being spent working on the "architecture" of the code (e.g.
-routing, calling controllers, templates, etc.). More time will need to be
-spent to handle form submissions, input validation, logging and security.
-Why should you have to reinvent solutions to all these routine problems?
+By now, the application has evolved from a single PHP file into a structure that
+is organized and allows for code reuse. You should be happier, but far from
+satisfied. For example, the "routing" system is fickle, and wouldn't recognize
+that the list page (``/index.php``) should be accessible also via ``/`` (if
+Apache rewrite rules were added). Also, instead of developing the blog, a lot of
+time is being spent working on the "architecture" of the code (e.g. routing,
+calling controllers, templates, etc.). More time will need to be spent to handle
+form submissions, input validation, logging and security. Why should you have to
+reinvent solutions to all these routine problems?
 
 Add a Touch of Symfony2
 ~~~~~~~~~~~~~~~~~~~~~~~
 
-Symfony2 to the rescue. Before actually using Symfony2, you need to make
-sure PHP knows how to find the Symfony2 classes. This is accomplished via
-an autoloader that Symfony provides. An autoloader is a tool that makes it
-possible to start using PHP classes without explicitly including the file
-containing the class.
+Symfony2 to the rescue. Before actually using Symfony2, you need to make sure
+PHP knows how to find the Symfony2 classes. This is accomplished via an
+autoloader that Symfony provides. An autoloader is a tool that makes it possible
+to start using PHP classes without explicitly including the file containing the
+class.
 
 First, `download symfony`_ and place it into a ``vendor/symfony/`` directory.
-Next, create an ``app/bootstrap.php`` file. Use it to ``require`` the two
-files in the application and to configure the autoloader:
+Next, create an ``app/bootstrap.php`` file. Use it to ``require`` the two files
+in the application and to configure the autoloader:
 
 .. code-block:: html+php
 
@@ -443,16 +444,16 @@ files in the application and to configure the autoloader:
 
     $loader->register();
 
-This tells the autoloader where the ``Symfony`` classes are. With this, you
-can start using Symfony classes without using the ``require`` statement for
-the files that contain them.
+This tells the autoloader where the ``Symfony`` classes are. With this, you can
+start using Symfony classes without using the ``require`` statement for the
+files that contain them.
 
-Core to Symfony's philosophy is the idea that an application's main job is
-to interpret each request and return a response. To this end, Symfony2 provides
+Core to Symfony's philosophy is the idea that an application's main job is to
+interpret each request and return a response. To this end, Symfony2 provides
 both a :class:`Symfony\\Component\\HttpFoundation\\Request` and a
 :class:`Symfony\\Component\\HttpFoundation\\Response` class. These classes are
-object-oriented representations of the raw HTTP request being processed and
-the HTTP response being returned. Use them to improve the blog:
+object-oriented representations of the raw HTTP request being processed and the
+HTTP response being returned. Use them to improve the blog:
 
 .. code-block:: html+php
 
@@ -478,8 +479,8 @@ the HTTP response being returned. Use them to improve the blog:
     // echo the headers and send the response
     $response->send();
 
-The controllers are now responsible for returning a ``Response`` object.
-To make this easier, you can add a new ``render_template()`` function, which,
+The controllers are now responsible for returning a ``Response`` object. To make
+this easier, you can add a new ``render_template()`` function, which,
 incidentally, acts quite a bit like the Symfony2 templating engine:
 
 .. code-block:: php
@@ -514,29 +515,29 @@ incidentally, acts quite a bit like the Symfony2 templating engine:
     }
 
 By bringing in a small part of Symfony2, the application is more flexible and
-reliable. The ``Request`` provides a dependable way to access information
-about the HTTP request. Specifically, the ``getPathInfo()`` method returns
-a cleaned URI (always returning ``/show`` and never ``/index.php/show``).
-So, even if the user goes to ``/index.php/show``, the application is intelligent
-enough to route the request through ``show_action()``.
+reliable. The ``Request`` provides a dependable way to access information about
+the HTTP request. Specifically, the ``getPathInfo()`` method returns a cleaned
+URI (always returning ``/show`` and never ``/index.php/show``). So, even if the
+user goes to ``/index.php/show``, the application is intelligent enough to route
+the request through ``show_action()``.
 
 The ``Response`` object gives flexibility when constructing the HTTP response,
 allowing HTTP headers and content to be added via an object-oriented interface.
-And while the responses in this application are simple, this flexibility
-will pay dividends as your application grows.
+And while the responses in this application are simple, this flexibility will
+pay dividends as your application grows.
 
 The Sample Application in Symfony2
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The blog has come a *long* way, but it still contains a lot of code for such
-a simple application. Along the way, we've also invented a simple routing
-system and a method using ``ob_start()`` and ``ob_end_clean()`` to render
-templates. If, for some reason, you needed to continue building this "framework"
-from scratch, you could at least use Symfony's standalone `Routing`_ and
+The blog has come a *long* way, but it still contains a lot of code for such a
+simple application. Along the way, we've also invented a simple routing system
+and a method using ``ob_start()`` and ``ob_end_clean()`` to render templates.
+If, for some reason, you needed to continue building this "framework" from
+scratch, you could at least use Symfony's standalone `Routing`_ and
 `Templating`_ components, which already solve these problems.
 
-Instead of re-solving common problems, you can let Symfony2 take care of
-them for you. Here's the same sample application, now built in Symfony2:
+Instead of re-solving common problems, you can let Symfony2 take care of them
+for you. Here's the same sample application, now built in Symfony2:
 
 .. code-block:: html+php
 
@@ -568,10 +569,10 @@ them for you. Here's the same sample application, now built in Symfony2:
         }
     }
 
-The two controllers are still lightweight. Each uses the Doctrine ORM library
-to retrieve objects from the database and the ``Templating`` component to
-render a template and return a ``Response`` object. The list template is
-now quite a bit simpler:
+The two controllers are still lightweight. Each uses the Doctrine ORM library to
+retrieve objects from the database and the ``Templating`` component to render a
+template and return a ``Response`` object. The list template is now quite a bit
+simpler:
 
 .. code-block:: html+php
 
@@ -610,9 +611,9 @@ The layout is nearly identical:
     We'll leave the show template as an exercise, as it should be trivial to
     create based on the list template.
 
-When Symfony2's engine (called the ``Kernel``) boots up, it needs a map so
-that it knows which controllers to execute based on the request information.
-A routing configuration map provides this information in a readable format::
+When Symfony2's engine (called the ``Kernel``) boots up, it needs a map so that
+it knows which controllers to execute based on the request information. A
+routing configuration map provides this information in a readable format::
 
     # app/config/routing.yml
     blog_list:
@@ -623,10 +624,10 @@ A routing configuration map provides this information in a readable format::
         pattern:  /blog/show/{id}
         defaults: { _controller: AcmeBlogBundle:Blog:show }
 
-Now that Symfony2 is handling all the mundane tasks, the front controller
-is dead simple. And since it does so little, you'll never have to touch
-it once it's created (and if you use a Symfony2 distribution, you won't
-even need to create it!):
+Now that Symfony2 is handling all the mundane tasks, the front controller is
+dead simple. And since it does so little, you'll never have to touch it once
+it's created (and if you use a Symfony2 distribution, you won't even need to
+create it!):
 
 .. code-block:: html+php
 
@@ -676,17 +677,17 @@ migrating the blog from flat PHP to Symfony2 has improved life:
   more powerful tools such as `Varnish`_. This is covered in a later chapter
   all about :doc:`caching</book/http_cache>`.
 
-And perhaps best of all, by using Symfony2, you now have access to a whole
-set of **high-quality open source tools developed by the Symfony2 community**!
-For more information, check out `Symfony2Bundles.org`_
+And perhaps best of all, by using Symfony2, you now have access to a whole set
+of **high-quality open source tools developed by the Symfony2 community**! For
+more information, check out `Symfony2Bundles.org`_
 
 Better templates
 ----------------
 
-If you choose to use it, Symfony2 comes standard with a templating engine
-called `Twig`_ that makes templates faster to write and easier to read.
-It means that the sample application could contain even less code! Take,
-for example, the list template written in Twig:
+If you choose to use it, Symfony2 comes standard with a templating engine called
+`Twig`_ that makes templates faster to write and easier to read. It means that
+the sample application could contain even less code! Take, for example, the list
+template written in Twig:
 
 .. code-block:: html+jinja
 
@@ -723,9 +724,9 @@ The corresponding ``layout.html.twig`` template is also easier to write:
         </body>
     </html>
 
-Twig is well-supported in Symfony2. And while PHP templates will always
-be supported in Symfony2, we'll continue to discuss the many advantages of
-Twig. For more information, see the :doc:`templating chapter</book/templating>`.
+Twig is well-supported in Symfony2. And while PHP templates will always be
+supported in Symfony2, we'll continue to discuss the many advantages of Twig.
+For more information, see the :doc:`templating chapter</book/templating>`.
 
 Learn more from the Cookbook
 ----------------------------

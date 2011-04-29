@@ -18,6 +18,7 @@ The Voter Interface
 -------------------
 
 A custom voter must implement
+
 :class:`Symfony\\Component\\Security\\Core\\Authorization\\Voter\\VoterInterface`,
 which requires the following three methods:
 
@@ -31,22 +32,22 @@ which requires the following three methods:
     }
 
 
-The ``supportsAttribute()`` method is used to check if the voter supports
-the given user attribute (i.e: a role, an acl, etc.).
+The ``supportsAttribute()`` method is used to check if the voter supports the
+given user attribute (i.e: a role, an acl, etc.).
 
 The ``supportsClass()`` method is used to check if the voter supports the
 current user token class.
 
-The ``vote()`` method must implement the business logic that verifies whether
-or not the user is granted access. This method must return one of the following
+The ``vote()`` method must implement the business logic that verifies whether or
+not the user is granted access. This method must return one of the following
 values:
 
 * ``VoterInterface::ACCESS_GRANTED``: The user is allowed to access the application
 * ``VoterInterface::ACCESS_ABSTAIN``: The voter cannot decide if the user is granted or not
 * ``VoterInterface::ACCESS_DENIED``: The user is not allowed to access the application
 
-In this example, we will check if the user's IP address matches against a list of
-blacklisted addresses. If the user's IP is blacklisted, we will return 
+In this example, we will check if the user's IP address matches against a list
+of blacklisted addresses. If the user's IP is blacklisted, we will return 
 ``VoterInterface::ACCESS_DENIED``, otherwise we will return 
 ``VoterInterface::ACCESS_ABSTAIN`` as this voter's purpose is only to deny
 access, not to grant access.
@@ -54,8 +55,8 @@ access, not to grant access.
 Creating a Custom Voter
 -----------------------
 
-To blacklist a user based on its IP, we can use the ``request`` service
-and compare the IP address against a set of blacklisted IP addresses:
+To blacklist a user based on its IP, we can use the ``request`` service and
+compare the IP address against a set of blacklisted IP addresses:
 
 .. code-block:: php
 
@@ -95,8 +96,8 @@ and compare the IP address against a set of blacklisted IP addresses:
         }
     }
 
-That's it! The voter is done. The next step is to inject the voter into
-the security layer. This can be done easily through the service container.
+That's it! The voter is done. The next step is to inject the voter into the
+security layer. This can be done easily through the service container.
 
 Declaring the Voter as a Service
 --------------------------------

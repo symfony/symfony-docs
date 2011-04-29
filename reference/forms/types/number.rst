@@ -4,9 +4,9 @@
 ``number`` Field Type
 =====================
 
-Renders an input text field and specializes in handling number input. This
-type offers different options for the precision, rounding, and grouping that
-you want to use for your number.
+Renders an input text field and specializes in handling number input. This type
+offers different options for the precision, rounding, and grouping that you want
+to use for your number.
 
 +-------------+----------------------------------------------------------------------+
 | Rendered as | ``input`` ``text`` field                                             |

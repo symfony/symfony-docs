@@ -7,10 +7,10 @@ Symfony2 devs.
 Anyone may propose topics on the `symfony-dev`_ mailing-list until 24 hours
 before the meeting, ideally including well prepared relevant information via
 some URL. 24 hours before the meeting a link to a `doodle`_ will be posted
-including a list of all proposed topics. Anyone can vote on the topics until
-the beginning of the meeting to define the order in the agenda. Each topic
-will be timeboxed to 15mins and the meeting lasts one hour, leaving enough
-time for at least 4 topics.
+including a list of all proposed topics. Anyone can vote on the topics until the
+beginning of the meeting to define the order in the agenda. Each topic will be
+timeboxed to 15mins and the meeting lasts one hour, leaving enough time for at
+least 4 topics.
 
 .. caution::
 

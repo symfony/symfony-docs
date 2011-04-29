@@ -5,8 +5,8 @@ Doctrine ORM
 ============
 
 `Doctrine`_ is an Object relational mapper (ORM) for PHP that sits on top of a
-powerful DataBase Abstraction Layer (DBAL). It provides transparent
-persistence for PHP objects.
+powerful DataBase Abstraction Layer (DBAL). It provides transparent persistence
+for PHP objects.
 
 .. tip::
 
@@ -14,8 +14,8 @@ persistence for PHP objects.
     official `documentation`_ website.
 
 To get started, enable and configure the :doc:`Doctrine DBAL
-</book/doctrine/dbal>`, then enable the ORM. The minimal necessary
-configuration is to specify the bundle name which contains your entities.
+</book/doctrine/dbal>`, then enable the ORM. The minimal necessary configuration
+is to specify the bundle name which contains your entities.
 
 .. configuration-block::
 
@@ -41,8 +41,8 @@ configuration is to specify the bundle name which contains your entities.
             "auto_mapping" => true,
         ));
 
-As Doctrine provides transparent persistence for PHP objects, it works with
-any PHP class:
+As Doctrine provides transparent persistence for PHP objects, it works with any
+PHP class:
 
 .. code-block:: php
 
@@ -149,8 +149,8 @@ write mapping information with annotations, XML, or YAML:
     of the Entity class, and let the ``doctrine:generate:entities`` command do
     it for you.
 
-Create the database and the schema related to your metadata information with
-the following commands:
+Create the database and the schema related to your metadata information with the
+following commands:
 
 .. code-block:: bash
 
@@ -204,8 +204,8 @@ Eventually, use your entity and manage its persistent state with Doctrine:
 
 Now the scenario arises where you want to change your mapping information and
 update your development database schema without blowing away everything and
-losing your existing data. So first let's just add a new property to our ``User``
-entity:
+losing your existing data. So first let's just add a new property to our
+``User`` entity:
 
 .. code-block:: php
 
@@ -256,13 +256,13 @@ the ORM resolves to:
             result_cache_driver: array
 
 There are lots of other configuration options that you can use to overwrite
-certain classes, but those are for very advanced use-cases only. You should
-look at the :doc:`configuration reference
-</reference/bundle_configuration/DoctrineBundle>` to get an overview of all
-the supported options.
+certain classes, but those are for very advanced use-cases only. You should look
+at the :doc:`configuration reference
+</reference/bundle_configuration/DoctrineBundle>` to get an overview of all the
+supported options.
 
-For the caching drivers you can specify the values "array", "apc", "memcache"
-or "xcache".
+For the caching drivers you can specify the values "array", "apc", "memcache" or
+"xcache".
 
 The following example shows an overview of the caching configurations:
 
@@ -375,16 +375,16 @@ connections you can hook different events into each connection.
 
     </container>
 
-Although the Event Listener and Subscriber tags are prefixed with ``doctrine.dbal``
-these tags also work for the ORM events. Internally Doctrine re-uses the EventManager
-that is registered with the connection for the ORM.
+Although the Event Listener and Subscriber tags are prefixed with
+``doctrine.dbal`` these tags also work for the ORM events. Internally Doctrine
+re-uses the EventManager that is registered with the connection for the ORM.
 
 Multiple Entity Managers
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
-You can use multiple EntityManagers in a Symfony application. This is
-necessary if you are using different databases or even vendors with entirely
-different sets of entities.
+You can use multiple EntityManagers in a Symfony application. This is necessary
+if you are using different databases or even vendors with entirely different
+sets of entities.
 
 The following configuration code shows how to define two EntityManagers:
 
@@ -405,9 +405,9 @@ The following configuration code shows how to define two EntityManagers:
                     mappings:
                         MyBundle3: ~
 
-Just like the DBAL, if you have configured multiple ``EntityManager``
-instances and want to get a specific one you can use the full service name to
-retrieve it from the Symfony Dependency Injection Container::
+Just like the DBAL, if you have configured multiple ``EntityManager`` instances
+and want to get a specific one you can use the full service name to retrieve it
+from the Symfony Dependency Injection Container::
 
     class UserController extends Controller
     {
@@ -433,10 +433,11 @@ Registering Event Listeners and Subscribers
 Doctrine ships with an event system that allows to hook into many different
 events happening during the lifecycle of entities or at other occasions.
 
-To register services to act as event listeners or subscribers (listeners from here)
-you have to tag them with the appropriate names. Depending on your use-case you can hook
-a listener into every DBAL Connection and ORM Entity Manager or just into one
-specific DBAL connection and all the EntityManagers that use this connection.
+To register services to act as event listeners or subscribers (listeners from
+here) you have to tag them with the appropriate names. Depending on your
+use-case you can hook a listener into every DBAL Connection and ORM Entity
+Manager or just into one specific DBAL connection and all the EntityManagers
+that use this connection.
 
 .. configuration-block::
 
@@ -497,8 +498,8 @@ Console Commands
 ----------------
 
 The Doctrine2 ORM integration offers several console commands under the
-``doctrine`` namespace. To view the command list you can run the console
-without any arguments or options:
+``doctrine`` namespace. To view the command list you can run the console without
+any arguments or options:
 
 .. code-block:: bash
 
@@ -548,8 +549,8 @@ Form Integration
 There is a tight integration between Doctrine ORM and the Symfony2 Form
 component. Since Doctrine Entities are plain old php objects they nicely
 integrate into the Form component by default, at least for the primitive data
-types such as strings, integers and fields. However you can also integrate
-them nicely with associations.
+types such as strings, integers and fields. However you can also integrate them
+nicely with associations.
 
 This is done by the help of a dedicated field:
 :class:`Symfony\\Component\\Form\\EntityChoiceField`. It provides a list of

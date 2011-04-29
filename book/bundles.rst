@@ -17,13 +17,12 @@ Bundle Name
 -----------
 
 A bundle is also a PHP namespace. The namespace must follow the technical
-interoperability `standards`_ for PHP 5.3 namespaces and class names: it
-starts with a vendor segment, followed by zero or more category segments, and
-it ends with the namespace short name, which must end with a ``Bundle``
-suffix.
+interoperability `standards`_ for PHP 5.3 namespaces and class names: it starts
+with a vendor segment, followed by zero or more category segments, and it ends
+with the namespace short name, which must end with a ``Bundle`` suffix.
 
-A namespace becomes a bundle as soon as you add a bundle class to it. The
-bundle class name must follow these simple rules:
+A namespace becomes a bundle as soon as you add a bundle class to it. The bundle
+class name must follow these simple rules:
 
 * Use only alphanumeric characters and underscores;
 * Use a CamelCased name;
@@ -62,8 +61,7 @@ class name.
 Directory Structure
 -------------------
 
-The basic directory structure of a ``HelloBundle`` bundle must read as
-follows:
+The basic directory structure of a ``HelloBundle`` bundle must read as follows:
 
 .. code-block:: text
 
@@ -95,9 +93,9 @@ The following files are mandatory:
     These conventions ensure that automated tools can rely on this default
     structure to work.
 
-The depth of sub-directories should be kept to the minimal for most used
-classes and files (2 levels at a maximum). More levels can be defined for
-non-strategic, less-used files.
+The depth of sub-directories should be kept to the minimal for most used classes
+and files (2 levels at a maximum). More levels can be defined for non-strategic,
+less-used files.
 
 The bundle directory is read-only. If you need to write temporary files, store
 them under the ``cache/`` or ``log/`` directory of the host application. Tools
@@ -127,8 +125,8 @@ The following classes and files have specific emplacements:
 Classes
 -------
 
-The bundle directory structure is used as the namespace hierarchy. For
-instance, a ``HelloController`` controller is stored in
+The bundle directory structure is used as the namespace hierarchy. For instance,
+a ``HelloController`` controller is stored in
 ``Bundle/HelloBundle/Controller/HelloController.php`` and the fully qualified
 class name is ``Bundle\HelloBundle\Controller\HelloController``.
 
@@ -155,8 +153,8 @@ any other language.
 Tests
 -----
 
-A bundle should come with a test suite written with PHPUnit and stored under
-the ``Tests/`` directory. Tests should follow the following principles:
+A bundle should come with a test suite written with PHPUnit and stored under the
+``Tests/`` directory. Tests should follow the following principles:
 
 * The test suite must be executable with a simple ``phpunit`` command run from
   a sample application;
@@ -180,8 +178,8 @@ directory; the ``Resources/doc/index.rst`` file is the only mandatory file.
 Controllers
 -----------
 
-As a best practice, controllers in a bundle that's meant to be distributed
-to others must not extend the
+As a best practice, controllers in a bundle that's meant to be distributed to
+others must not extend the
 :class:`Symfony\\Bundle\\FrameworkBundle\\Controller\\Controller` base class.
 They can implement
 :class:`Symfony\\Foundation\\DependencyInjection\\ContainerAwareInterface` or
@@ -197,8 +195,8 @@ instead.
 Templates
 ---------
 
-If a bundle provides templates, they must use Twig. A bundle must not provide
-a main layout, except if it provides a full working application.
+If a bundle provides templates, they must use Twig. A bundle must not provide a
+main layout, except if it provides a full working application.
 
 Translation Files
 -----------------
@@ -211,17 +209,17 @@ A bundle must not override existing messages from another bundle.
 Configuration
 -------------
 
-To provide more flexibility, a bundle can provide configurable settings by
-using the Symfony2 built-in mechanisms.
+To provide more flexibility, a bundle can provide configurable settings by using
+the Symfony2 built-in mechanisms.
 
 For simple configuration settings, rely on the default ``parameters`` entry of
 the Symfony2 configuration. Symfony2 parameters are simple key/value pairs; a
 value being any valid PHP value. Each parameter name should start with a
 lower-cased short version of the bundle name using underscores (``acme_hello``
 for ``AcmeHelloBundle``, or ``acme_social_blog`` for ``Acme\Social\BlogBundle``
-for instance), though this is just a best-practice suggestion. The rest of
-the parameter name will use a period (``.``) to separate different parts
-(e.g. ``acme_hello.email.from``).
+for instance), though this is just a best-practice suggestion. The rest of the
+parameter name will use a period (``.``) to separate different parts (e.g.
+``acme_hello.email.from``).
 
 The end user can provide values in any configuration file:
 

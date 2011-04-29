@@ -4,12 +4,11 @@
 ``money`` Field Type
 ====================
 
-Renders an input text field and specializes in handling submitted "money"
-data.
+Renders an input text field and specializes in handling submitted "money" data.
 
-This field type allows you to specify a currency, whose symbol is rendered
-next to the text field. There are also several other options for customizing
-how the input and output of the data is handled.
+This field type allows you to specify a currency, whose symbol is rendered next
+to the text field. There are also several other options for customizing how the
+input and output of the data is handled.
 
 +-------------+---------------------------------------------------------------------+
 | Rendered as | ``input`` ``text`` field                                            |

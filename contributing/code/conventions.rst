@@ -4,14 +4,14 @@ Conventions
 The :doc:`standards` document describes the coding standards for the Symfony2
 projects and the internal and third-party bundles. This document describes
 coding standards and conventions used in the core framework to make it more
-consistent and predictable. You can follow them in your own code, but you
-don't need to.
+consistent and predictable. You can follow them in your own code, but you don't
+need to.
 
 Method Names
 ------------
 
-When an object has a "main" many relation with related "things"
-(objects, parameters, ...), the method names are normalized:
+When an object has a "main" many relation with related "things" (objects,
+parameters, ...), the method names are normalized:
 
   * ``get()``
   * ``set()``
@@ -26,8 +26,8 @@ When an object has a "main" many relation with related "things"
   * ``count()``
   * ``keys()``
 
-The usage of these methods are only allowed when it is clear that there
-is a main relation:
+The usage of these methods are only allowed when it is clear that there is a
+main relation:
 
 * a ``CookieJar`` has many ``Cookie`` objects;
 

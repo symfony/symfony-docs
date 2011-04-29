@@ -6,8 +6,8 @@ How to create Fixtures in Symfony2
 
 Fixtures are used to load a controlled set of data into a database. This data
 can be used for testing or could be the initial data required for the
-application to run smoothly. Symfony2 has no built in way to manage fixtures
-but Doctrine2 has a library to help you write fixtures for the Doctrine
+application to run smoothly. Symfony2 has no built in way to manage fixtures but
+Doctrine2 has a library to help you write fixtures for the Doctrine
 :doc:`ORM</book/doctrine/orm>` or :doc:`ODM</cookbook/doctrine/mongodb>`.
 
 Setup and Configuration
@@ -36,8 +36,8 @@ Update vendors and rebuild the bootstrap file:
 
     $ bin/vendors.sh bin/build_bootstrap.php
 
-If everything worked, the ``doctrine-fixtures`` library can now be found
-at ``vendor/doctrine-fixtures``.
+If everything worked, the ``doctrine-fixtures`` library can now be found at
+``vendor/doctrine-fixtures``.
 
 Register the ``Doctrine\Common\DataFixtures`` namespace in ``app/autoload.php``.
 
@@ -59,7 +59,8 @@ Register the ``Doctrine\Common\DataFixtures`` namespace in ``app/autoload.php``.
     of the first matching namespace, so more specific namespaces should always
     come first.
 
-Finally, register the Bundle ``DoctrineFixturesBundle`` in ``app/AppKernel.php``.
+Finally, register the Bundle ``DoctrineFixturesBundle`` in
+``app/AppKernel.php``.
 
 .. code-block:: php
 
@@ -77,12 +78,12 @@ Finally, register the Bundle ``DoctrineFixturesBundle`` in ``app/AppKernel.php``
 Writing Simple Fixtures
 -----------------------
 
-Doctrine2 fixtures are PHP classes where you can create objects and persist
-them to the database. Like all classes in Symfony2, fixtures should live inside
-one of your application bundles.
+Doctrine2 fixtures are PHP classes where you can create objects and persist them
+to the database. Like all classes in Symfony2, fixtures should live inside one
+of your application bundles.
 
-For a bundle located at ``src/VendorName/MyBundle``, the fixture classes
-should live inside ``src/VendorName/MyBundle/DataFixtures/ORM`` or
+For a bundle located at ``src/VendorName/MyBundle``, the fixture classes should
+live inside ``src/VendorName/MyBundle/DataFixtures/ORM`` or
 ``src/VendorName/MyBundle/DataFixtures/ODM`` respectively for the ORM and ODM,
 This tutorial assumes that you are using the ORM - but fixtures can be added
 just as easily if you're using the ODM.
@@ -113,9 +114,9 @@ entry:
         }
     }
 
-In Doctrine2, fixtures are just objects where you load data by interacting
-with your entities as you normally do. This allows you to create the exact
-fixtures you need for your application.
+In Doctrine2, fixtures are just objects where you load data by interacting with
+your entities as you normally do. This allows you to create the exact fixtures
+you need for your application.
 
 The most serious limitation is that you cannot share objects between fixtures.
 Later, you'll see how to overcome this limitation.
@@ -123,22 +124,23 @@ Later, you'll see how to overcome this limitation.
 Executing Fixtures
 ------------------
 
-Once your fixtures have been written, you can load them via the command
-line by using the ``doctrine:fixtures:load`` command:
+Once your fixtures have been written, you can load them via the command line by
+using the ``doctrine:fixtures:load`` command:
 
 .. code-block:: bash
 
     $ php app/console doctrine:fixtures:load
 
-If you're using the ODM, use the ``doctrine:mongodb:fixtures:load`` command instead:
+If you're using the ODM, use the ``doctrine:mongodb:fixtures:load`` command
+instead:
 
 .. code-block:: bash
 
     $ php app/console doctrine:mongodb:data:load
 
-The task will look inside the ``DataFixtures/ORM`` (or ``DataFixtures/ODM``
-for the ODM) directory of each bundle and execute each class that implements
-the ``FixtureInterface``.
+The task will look inside the ``DataFixtures/ORM`` (or ``DataFixtures/ODM`` for
+the ODM) directory of each bundle and execute each class that implements the
+``FixtureInterface``.
 
 Both commands come with a few options:
 
@@ -166,13 +168,13 @@ Sharing Objects between Fixtures
 --------------------------------
 
 Writing a basic fixture is simple. But what if you have multiple fixture classes
-and want to be able to refer to the data loaded in other fixture classes?
-For example, what if you load a ``User`` object in one fixture, and then
-want to refer to reference it in a different fixture in order to assign that
-user to a particular group?
+and want to be able to refer to the data loaded in other fixture classes? For
+example, what if you load a ``User`` object in one fixture, and then want to
+refer to reference it in a different fixture in order to assign that user to a
+particular group?
 
-The Doctrine fixtures library handles this easily by allowing you to specify
-the order in which fixtures are loaded.
+The Doctrine fixtures library handles this easily by allowing you to specify the
+order in which fixtures are loaded.
 
 .. code-block:: php
 
@@ -205,8 +207,8 @@ the order in which fixtures are loaded.
 
 The fixture class now implements ``OrderedFixtureInterface``, which tells
 Doctrine that you want to control the order of your fixtures. Create another
-fixture class and make it load after ``LoadUserData`` by returning an order
-of 2:
+fixture class and make it load after ``LoadUserData`` by returning an order of
+2:
 
 .. code-block:: php
 
@@ -236,11 +238,10 @@ of 2:
         }
     }
 
-Both of the fixture classes extend ``AbstractFixture``, which allows you
-to create objects and then set them as references so that they can be used
-later in other fixtures. For example, the ``$userAdmin`` and ``$groupAdmin``
-objects can be referenced later via the ``admin-user`` and ``admin-group``
-references:
+Both of the fixture classes extend ``AbstractFixture``, which allows you to
+create objects and then set them as references so that they can be used later in
+other fixtures. For example, the ``$userAdmin`` and ``$groupAdmin`` objects can
+be referenced later via the ``admin-user`` and ``admin-group`` references:
 
 .. code-block:: php
 
@@ -270,9 +271,8 @@ references:
     }
 
 The fixtures will now be executed in the ascending order of the value returned
-by ``getOrder()``. Any object that is set with the ``setReference()`` method
-can be accessed via ``getReference()`` in fixture classes that have a higher
-order.
+by ``getOrder()``. Any object that is set with the ``setReference()`` method can
+be accessed via ``getReference()`` in fixture classes that have a higher order.
 
 Fixtures allow you to create any type of data you need via the normal PHP
 interface for creating and persisting objects. By controlling the order of

@@ -5,17 +5,16 @@ Users
 =====
 
 Security only makes sense because your application is accessed by clients you
-cannot trust. A client can be a human behind a browser, but also a device, a
-web service, or even a bot.
+cannot trust. A client can be a human behind a browser, but also a device, a web
+service, or even a bot.
 
 Defining the Users
 ------------------
 
 During authentication, Symfony2 tries to retrieve a user matching the client
 credentials (most of the time a username and a password). As Symfony2 makes no
-assumption about the client/user PHP representation, it's up to the
-application to define a user class and hook it up with Symfony2 via a user
-provider class.
+assumption about the client/user PHP representation, it's up to the application
+to define a user class and hook it up with Symfony2 via a user provider class.
 
 .. index::
    single: Security; UserProviderInterface
@@ -114,8 +113,8 @@ the :class:`Symfony\\Component\\Security\\Core\\Encoder\\EncoderFactoryInterface
     $user->setPassword($password);
 
 When encoding your passwords, it's better to also define a unique salt per user
-(the ``getSalt()`` method can return the primary key if users are persisted in
-a database for instance).
+(the ``getSalt()`` method can return the primary key if users are persisted in a
+database for instance).
 
 .. index::
    single: Security; Configuring Encoders
@@ -125,8 +124,8 @@ Configuring Encoders
 
 In this section, we will look at how you can set-up different encoders for your
 users. An encoder can either be one of the built-in encoders (
-:class:`Symfony\\Component\\Security\\Core\\Encoder\\PlaintextPasswordEncoder`, or
-:class:`Symfony\\Component\\Security\\Core\\Encoder\\MessageDigestPasswordEncoder`),
+:class:`Symfony\\Component\\Security\\Core\\Encoder\\PlaintextPasswordEncoder`,
+or :class:`Symfony\\Component\\Security\\Core\\Encoder\\MessageDigestPasswordEncoder`),
 or even a custom service. The following lists all available configuration
 options, you only need to select the one which suits your needs best:
 
@@ -231,8 +230,8 @@ Defining a Provider
 -------------------
 
 As we have seen in the previous section, a provider implements
-:class:`Symfony\\Component\\Security\\Core\\User\\UserProviderInterface`. Symfony2
-comes with the following providers:
+:class:`Symfony\\Component\\Security\\Core\\User\\UserProviderInterface`.
+Symfony2 comes with the following providers:
 
 * In-Memory Provider: Mainly intended for development, and unit-tests
 * Doctrine Entity Provider: A provider for Doctrine ORM entities
@@ -338,8 +337,8 @@ The ``entity`` entry configures the Entity class to use for the user, and
 ``property`` the PHP column name where the username is stored.
 
 If retrieving the user is more complex than a simple ``findOneBy()`` call,
-remove the ``property`` setting and make your Entity Repository class
-implement :class:`Symfony\\Component\\Security\\Core\\User\\UserProviderInterface`::
+remove the ``property`` setting and make your Entity Repository class implement
+:class:`Symfony\\Component\\Security\\Core\\User\\UserProviderInterface`::
 
     /**
      * @orm:Entity(repositoryClass="Acme\MyBundle\Entity\UserRepository")
@@ -500,8 +499,8 @@ The first argument configures the Document class to use for the user, and the
 second argument defines the PHP column name where the username is stored.
 
 If retrieving the user is more complex than a simple ``findOneBy()`` call,
-remove the second argument and make your Document Repository class
-implement :class:`Symfony\\Component\\Security\\Core\\User\\UserProviderInterface`::
+remove the second argument and make your Document Repository class implement
+:class:`Symfony\\Component\\Security\\Core\\User\\UserProviderInterface`::
 
     /**
      * @Document(repositoryClass="Acme\MyBundle\Document\UserRepository")
@@ -548,13 +547,13 @@ Roles
 
 A User can have as many roles as needed. Roles are usually defined as strings,
 but they can be any object implementing
-:class:`Symfony\\Component\\Security\\Core\\Role\\RoleInterface` (roles are always
-objects internally). Roles defined as strings should begin with the ``ROLE_``
-prefix to be automatically managed by Symfony2.
+:class:`Symfony\\Component\\Security\\Core\\Role\\RoleInterface` (roles are
+always objects internally). Roles defined as strings should begin with the
+``ROLE_`` prefix to be automatically managed by Symfony2.
 
-The roles are used by the access decision manager to secure resources. Read
-the :doc:`Authorization </book/security/authorization>` document to learn
-more about access control, roles, and voters.
+The roles are used by the access decision manager to secure resources. Read the
+:doc:`Authorization </book/security/authorization>` document to learn more about
+access control, roles, and voters.
 
 .. tip::
 

@@ -97,8 +97,8 @@ Sending Emails
 
 The Swiftmailer library works by creating, configuring and then sending
 ``Swift_Message`` objects. The "mailer" is responsible for the actual delivery
-of the message and is accessible via the ``mailer`` service. Overall, sending
-an email is pretty straightforward::
+of the message and is accessible via the ``mailer`` service. Overall, sending an
+email is pretty straightforward::
 
     public function indexAction($name)
     {
@@ -119,9 +119,9 @@ an email is pretty straightforward::
 To keep things decoupled, the email body has been stored in a template and
 rendered with the ``renderView()`` method.
 
-The ``$message`` object supports many more options, such as including attachments,
-adding HTML content, and much more. Fortunately, Swiftmailer covers the topic
-of `Creating Messages`_ in great detail in its documentation.
+The ``$message`` object supports many more options, such as including
+attachments, adding HTML content, and much more. Fortunately, Swiftmailer covers
+the topic of `Creating Messages`_ in great detail in its documentation.
 
 .. tip::
 

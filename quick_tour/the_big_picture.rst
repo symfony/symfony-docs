@@ -2,8 +2,8 @@ The Big Picture
 ===============
 
 Start using Symfony2 in 10 minutes! This chapter walks you through some of the
-most important concepts behind Symfony2. It explains how to get started
-quickly by showing you the structure of a simple project.
+most important concepts behind Symfony2. It explains how to get started quickly
+by showing you the structure of a simple project.
 
 If you've used a web framework before, you should feel right at home with
 Symfony2. If not, welcome to a whole new way of developing web applications!
@@ -75,10 +75,10 @@ Understanding the Fundamentals
 ------------------------------
 
 One of the main goals of a framework is to ensure the `Separation of Concerns`_.
-This keeps your code organized and allows your application to evolve easily
-over time by avoiding the mix of database calls, HTML tags, and business
-logic in the same script. To achieve this goal with Symfony, you'll first
-need to learn a few fundamental concepts and terms.
+This keeps your code organized and allows your application to evolve easily over
+time by avoiding the mix of database calls, HTML tags, and business logic in the
+same script. To achieve this goal with Symfony, you'll first need to learn a few
+fundamental concepts and terms.
 
 .. tip::
 
@@ -126,9 +126,9 @@ file:
         type:     annotation
         prefix:   /demo
 
-The first three lines (after the comment) define the code that is executed
-when the user requests the "``/``" resource (i.e. the welcome page). When
-requested, the ``AcmeDemoBundle:Welcome:index`` controller will be executed.
+The first three lines (after the comment) define the code that is executed when
+the user requests the "``/``" resource (i.e. the welcome page). When requested,
+the ``AcmeDemoBundle:Welcome:index`` controller will be executed.
 
 .. tip::
 
@@ -164,8 +164,8 @@ controller creates the response by hand, based on the request::
 
 Symfony2 chooses the controller based on the ``_controller`` value from the
 routing configuration: ``AcmeDemoBundle:Welcome:index``. This string is the
-controller *logical name*, and it references the ``indexAction`` method from
-the ``Acme\DemoBundle\Controller\WelcomeController`` class::
+controller *logical name*, and it references the ``indexAction`` method from the
+``Acme\DemoBundle\Controller\WelcomeController`` class::
 
     // src/Acme/DemoBundle/Controller/WelcomeController.php
     namespace Acme\DemoBundle\Controller;
@@ -192,8 +192,8 @@ useful shortcut methods, like the
 :method:`Symfony\\Bundle\\FrameworkBundle\\Controller\\Controller::render`
 method that loads and renders a template
 (``AcmeDemoBundle:Welcome:index.html.twig``). The returned value is a Response
-object populated with the rendered content. So, if the needs arise, the
-Response can be tweaked before it is sent to the browser::
+object populated with the rendered content. So, if the needs arise, the Response
+can be tweaked before it is sent to the browser::
 
     public function indexAction()
     {
@@ -247,10 +247,9 @@ file, routes are defined as annotations on action methods::
     }
 
 The ``@extra:Route()`` annotation defines a new route with a pattern of
-``/hello/{name}`` that executes the ``helloAction`` method when matched.
-A string enclosed in curly brackets like ``{name}`` is called a placeholder.
-As you can see, its value can be retrieved through the ``$name`` method
-argument.
+``/hello/{name}`` that executes the ``helloAction`` method when matched. A
+string enclosed in curly brackets like ``{name}`` is called a placeholder. As
+you can see, its value can be retrieved through the ``$name`` method argument.
 
 .. note::
 
@@ -260,11 +259,11 @@ argument.
 
 If you take a closer look at the action code, you can see that instead of
 rendering a template like before, it just returns an array of parameters. The
-``@extra:Template()`` annotation tells Symfony to render the template for
-you, passing in each variable of the array to the template. The name of the
-template that's rendered follows the name of the controller. So, in this
-example, the ``AcmeDemoBundle:Demo:hello.html.twig`` template is rendered
-(located at ``src/Acme/DemoBundle/Resources/views/Demo/hello.html.twig``).
+``@extra:Template()`` annotation tells Symfony to render the template for you,
+passing in each variable of the array to the template. The name of the template
+that's rendered follows the name of the controller. So, in this example, the
+``AcmeDemoBundle:Demo:hello.html.twig`` template is rendered (located at
+``src/Acme/DemoBundle/Resources/views/Demo/hello.html.twig``).
 
 .. tip::
 
@@ -300,10 +299,10 @@ Bundles
 You might have wondered why the :term:`bundle` word is used in many names we
 have seen so far. All the code you write for your application is organized in
 bundles. In Symfony2 speak, a bundle is a structured set of files (PHP files,
-stylesheets, JavaScripts, images, ...) that implements a single feature (a
-blog, a forum, ...) and which can be easily shared with other developers. As
-of now, we have manipulated one bundle, ``AcmeDemoBundle``. You will learn
-more about bundles in the last chapter of this tutorial.
+stylesheets, JavaScripts, images, ...) that implements a single feature (a blog,
+a forum, ...) and which can be easily shared with other developers. As of now,
+we have manipulated one bundle, ``AcmeDemoBundle``. You will learn more about
+bundles in the last chapter of this tutorial.
 
 Working with Environments
 -------------------------
@@ -315,8 +314,8 @@ friend. But this is only the tip of the iceberg; click on the weird hexadecimal
 number to reveal yet another very useful Symfony2 debugging tool: the profiler.
 
 Of course, you won't want to show these tools when you deploy your application
-to production. That's why you will find another front controller in the
-``web/`` directory (``app.php``), which is optimized for the production environment:
+to production. That's why you will find another front controller in the ``web/``
+directory (``app.php``), which is optimized for the production environment:
 
 .. code-block:: text
 
@@ -330,23 +329,22 @@ And if you use Apache with ``mod_rewrite`` enabled, you can even omit the
     http://localhost/Symfony/web/demo/hello/Fabien
 
 Last but not least, on the production servers, you should point your web root
-directory to the ``web/`` directory to secure your installation and have an
-even better looking URL:
+directory to the ``web/`` directory to secure your installation and have an even
+better looking URL:
 
 .. code-block:: text
 
     http://localhost/demo/hello/Fabien
 
 To make you application respond faster, Symfony2 maintains a cache under the
-``app/cache/`` directory. In the development environment (``app_dev.php``),
-this cache is flushed automatically whenever you make changes to any code or
+``app/cache/`` directory. In the development environment (``app_dev.php``), this
+cache is flushed automatically whenever you make changes to any code or
 configuration. But that's not the case in the production environment
-(``app.php``) where performance is key. That's why you should always use
-the development environment when developing your application.
+(``app.php``) where performance is key. That's why you should always use the
+development environment when developing your application.
 
-Different :term:`environments<environment>` of a given application differ
-only in their configuration. In fact, a configuration can inherit from another
-one:
+Different :term:`environments<environment>` of a given application differ only
+in their configuration. In fact, a configuration can inherit from another one:
 
 .. code-block:: yaml
 
@@ -358,8 +356,8 @@ one:
         toolbar: true
         intercept_redirects: false
 
-The ``dev`` environment (defined in ``config_dev.yml``) inherits from the
-global ``config.yml`` file and extends it by enabling the web debug toolbar.
+The ``dev`` environment (defined in ``config_dev.yml``) inherits from the global
+``config.yml`` file and extends it by enabling the web debug toolbar.
 
 Final Thoughts
 --------------
@@ -367,8 +365,7 @@ Final Thoughts
 Congratulations! You've had your first taste of Symfony2 code. That wasn't so
 hard, was it? There's a lot more to explore, but you should already see how
 Symfony2 makes it really easy to implement web sites better and faster. If you
-are eager to learn more about Symfony2, dive into the next section: "The
-View".
+are eager to learn more about Symfony2, dive into the next section: "The View".
 
 .. _Symfony2 Standard Edition:      http://symfony.com/download
 .. _Symfony in 5 minutes:           http://symfony.com/symfony-in-five-minutes

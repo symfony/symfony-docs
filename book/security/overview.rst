@@ -11,12 +11,12 @@ providing authentication and authorization.
 refers to the process of deciding whether a user is allowed to perform an
 action or not (authentication is always performed before authorization).
 
-This document is a quick overview over these main concepts, but it barely scratches
-the surface. If you want to get to know the real power of Symfony2's security 
-layer, you should also read these more specific documents: 
-:doc:`Users </book/security/users>`,
-:doc:`Authentication </book/security/authentication>`, and
-:doc:`Authorization </book/security/authorization>`.
+This document is a quick overview over these main concepts, but it barely
+scratches the surface. If you want to get to know the real power of Symfony2's
+security  layer, you should also read these more specific documents: 
+:doc:`Users </book/security/users>`, :doc:`Authentication
+</book/security/authentication>`, and :doc:`Authorization
+</book/security/authorization>`.
 
 .. index::
    pair: Security; Configuration
@@ -231,8 +231,8 @@ Users
 -----
 
 During authentication, Symfony2 asks a user provider to create the user object
-matching the client request (via credentials like a username and a password).
-To get started fast, you can define an in-memory provider directly in your
+matching the client request (via credentials like a username and a password). To
+get started fast, you can define an in-memory provider directly in your
 configuration:
 
 .. configuration-block::
@@ -268,7 +268,8 @@ configuration:
 
 The above configuration defines a 'foo' user with a 'foo' password. After
 authentication, you can access the authenticated user via the security context
-(the user is an instance of :class:`Symfony\\Component\\Security\\Core\\User\\User`)::
+(the user is an instance of
+:class:`Symfony\\Component\\Security\\Core\\User\\User`)::
 
     $user = $container->get('security.context')->getToken()->getUser();
 

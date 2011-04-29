@@ -4,36 +4,36 @@
 HTTP Cache
 ==========
 
-The nature of rich web applications means that they're dynamic. No matter
-how efficient your application, each request will always contain more overhead
-than serving a static file.
+The nature of rich web applications means that they're dynamic. No matter how
+efficient your application, each request will always contain more overhead than
+serving a static file.
 
 And for most Web applications, that's fine. Symfony2 is lightning fast, and
 unless you're doing some serious heavy-lifting, each request will come back
 quickly without putting too much stress on your server.
 
 But as your site grows, that overhead can become a problem. The processing
-that's normally performed on every request should be done only once. This
-is exactly what caching aims to accomplish.
+that's normally performed on every request should be done only once. This is
+exactly what caching aims to accomplish.
 
 Caching on the Shoulders of Giants
 ----------------------------------
 
-The most effective way to improve performance of an application is to cache
-the full output of a page and then bypass the application entirely on each
+The most effective way to improve performance of an application is to cache the
+full output of a page and then bypass the application entirely on each
 subsequent request. Of course, this isn't always possible for highly dynamic
 websites, or is it? In this chapter, we'll show you how the Symfony2 cache
 system works and why we think this is the best possible approach.
 
-The Symfony2 cache system is different because it relies on the simplicity
-and power of the HTTP cache as defined in the :term:`HTTP specification`.
-Instead of reinventing a caching methodology, Symfony2 embraces the standard
-that defines basic communication on the Web. Once you understand the fundamental
-HTTP validation and expiration caching models, you'll be ready to master
-the Symfony2 cache system.
+The Symfony2 cache system is different because it relies on the simplicity and
+power of the HTTP cache as defined in the :term:`HTTP specification`. Instead of
+reinventing a caching methodology, Symfony2 embraces the standard that defines
+basic communication on the Web. Once you understand the fundamental HTTP
+validation and expiration caching models, you'll be ready to master the Symfony2
+cache system.
 
-For the purposes of learning how to cache with Symfony2, we'll cover the
-subject in four steps:
+For the purposes of learning how to cache with Symfony2, we'll cover the subject
+in four steps:
 
 * **Step 1**: A :ref:`gateway cache <gateway-caches>`, or reverse proxy, is
   an independent layer that sits in front of your application. The reverse
@@ -56,10 +56,10 @@ subject in four steps:
   With ESI, you can even cache an entire page for 60 minutes, but an embedded
   sidebar for only 5 minutes.
 
-Since caching with HTTP isn't unique to Symfony, many articles already exist
-on the topic. If you're new to HTTP caching, we *highly* recommend Ryan
-Tomayko's article `Things Caches Do`_. Another in-depth resource is Mark
-Nottingham's `Cache Tutorial`_.
+Since caching with HTTP isn't unique to Symfony, many articles already exist on
+the topic. If you're new to HTTP caching, we *highly* recommend Ryan Tomayko's
+article `Things Caches Do`_. Another in-depth resource is Mark Nottingham's
+`Cache Tutorial`_.
 
 .. index::
    single: Cache; Proxy
@@ -74,18 +74,18 @@ Caching with a Gateway Cache
 When caching with HTTP, the *cache* is separated from your application entirely
 and sits between your application and the client making the request.
 
-The job of the cache is to accept requests from the client and pass them
-back to your application. The cache will also receive responses back from
-your application and forward them on to the client. The cache is the "middle-man"
-of the request-response communication between the client and your application.
+The job of the cache is to accept requests from the client and pass them back to
+your application. The cache will also receive responses back from your
+application and forward them on to the client. The cache is the "middle-man" of
+the request-response communication between the client and your application.
 
 Along the way, the cache will store each response that is deemed "cacheable"
 (See :ref:`http-cache-introduction`). If the same resource is requested again,
 the cache sends the cached response to the client, ignoring your application
 entirely.
 
-This type of cache is knows as an HTTP gateway cache and many exist such
-as `Varnish`_, `Squid in reverse proxy mode`_, and the Symfony2 reverse proxy.
+This type of cache is knows as an HTTP gateway cache and many exist such as
+`Varnish`_, `Squid in reverse proxy mode`_, and the Symfony2 reverse proxy.
 
 .. index::
    single: Cache; Types of
@@ -121,9 +121,9 @@ different types of caches:
     obvious as we talk about caching responses containing content that is
     specific to exactly one user (e.g. account information).
 
-Each response from your application will likely go through one or both of
-the first two cache types. These caches are outside of your control but follow
-the HTTP cache directions set in the response.
+Each response from your application will likely go through one or both of the
+first two cache types. These caches are outside of your control but follow the
+HTTP cache directions set in the response.
 
 .. index::
    single: Cache; Symfony2 Reverse Proxy
@@ -133,12 +133,11 @@ the HTTP cache directions set in the response.
 Symfony2 Reverse Proxy
 ~~~~~~~~~~~~~~~~~~~~~~
 
-Symfony2 comes with a reverse proxy (also called a gateway cache) written
-in PHP. Enable it and cacheable responses from your application will start
-to be cached right away. Installing it is just as easy. Each new Symfony2
-application comes with a pre-configured caching kernel (``AppCache``) that
-wraps the default one (``AppKernel``). The caching Kernel *is* the reverse
-proxy.
+Symfony2 comes with a reverse proxy (also called a gateway cache) written in
+PHP. Enable it and cacheable responses from your application will start to be
+cached right away. Installing it is just as easy. Each new Symfony2 application
+comes with a pre-configured caching kernel (``AppCache``) that wraps the default
+one (``AppKernel``). The caching Kernel *is* the reverse proxy.
 
 To enabling caching, modify the code of a front controller to use the caching
 kernel::
@@ -255,10 +254,10 @@ misses.
 Introduction to HTTP Caching
 ----------------------------
 
-To take advantage of the available cache layers, your application must be
-able to communicate which responses are cacheable and the rules that govern
-when/how that cache should become stale. This is done by setting HTTP cache
-headers on the response.
+To take advantage of the available cache layers, your application must be able
+to communicate which responses are cacheable and the rules that govern when/how
+that cache should become stale. This is done by setting HTTP cache headers on
+the response.
 
 .. tip::
 
@@ -275,8 +274,8 @@ HTTP specifies four response cache headers that we're concerned with:
 * ``ETag``
 * ``Last-Modified``
 
-The most important and versatile header is the ``Cache-Control`` header,
-which is actually a collection of various cache information.
+The most important and versatile header is the ``Cache-Control`` header, which
+is actually a collection of various cache information.
 
 .. note::
 
@@ -298,8 +297,8 @@ information is separated by a comma:
 
      Cache-Control: max-age=3600, must-revalidate
 
-Symfony provides an abstraction around the ``Cache-Control`` header to make
-its creation more manageable:
+Symfony provides an abstraction around the ``Cache-Control`` header to make its
+creation more manageable:
 
 .. code-block:: php
 
@@ -320,10 +319,10 @@ Public vs Private Responses
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Both gateway and proxy caches are considered "shared" caches as the cached
-content is shared by more than one user. If a user-specific response were
-ever mistakenly stored by a shared cache, it might be returned later to any
-number of different users. Imagine if your account information were cached
-and then returned to every subsequent user who asked for their account page!
+content is shared by more than one user. If a user-specific response were ever
+mistakenly stored by a shared cache, it might be returned later to any number of
+different users. Imagine if your account information were cached and then
+returned to every subsequent user who asked for their account page!
 
 To handle this situation, every response may be set to be public or private:
 
@@ -334,8 +333,8 @@ To handle this situation, every response may be set to be public or private:
   for a single user and must not be cached by a shared cache.
 
 Symfony conservatively defaults each response to be private. To take advantage
-of shared caches (like the Symfony2 reverse proxy), the response will need
-to be explicitly set as public.
+of shared caches (like the Symfony2 reverse proxy), the response will need to be
+explicitly set as public.
 
 .. index::
    single: Cache; Safe methods
@@ -343,10 +342,10 @@ to be explicitly set as public.
 Safe Methods
 ~~~~~~~~~~~~
 
-HTTP caching only works for "safe" HTTP methods (like GET and HEAD). Being
-safe means that you never change the application's state on the server when
-serving the request (you can of course log information, cache data, etc).
-This has two very reasonable consequences:
+HTTP caching only works for "safe" HTTP methods (like GET and HEAD). Being safe
+means that you never change the application's state on the server when serving
+the request (you can of course log information, cache data, etc). This has two
+very reasonable consequences:
 
 * You should *never* change the state of your application when responding
   to a GET or HEAD request. Even if you don't use a gateway cache, the presence
@@ -362,12 +361,12 @@ Caching Rules and Defaults
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 HTTP 1.1 allows caching anything by default unless there is an explicit
-``Cache-Control`` header. In practice, most caches do nothing when requests
-have a cookie, an authorization header, use a non-safe method (i.e. PUT, POST,
+``Cache-Control`` header. In practice, most caches do nothing when requests have
+a cookie, an authorization header, use a non-safe method (i.e. PUT, POST,
 DELETE), or when responses have a redirect status code.
 
-Symfony2 automatically sets a sensible and conservative ``Cache-Control``
-header when none is set by the developer by following these rules:
+Symfony2 automatically sets a sensible and conservative ``Cache-Control`` header
+when none is set by the developer by following these rules:
 
 * If no cache header is defined (``Cache-Control``, ``Expires``, ``ETag``
   or ``Last-Modified``), ``Cache-Control`` is set to ``no-cache``, meaning
@@ -442,9 +441,9 @@ HTTP headers: ``Expires`` or ``Cache-Control``.
 Expiration with the ``Expires`` Header
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-According to the HTTP specification, "the ``Expires`` header field gives
-the date/time after which the response is considered stale." The ``Expires``
-header can be set with the ``setExpires()`` ``Response`` method. It takes a
+According to the HTTP specification, "the ``Expires`` header field gives the
+date/time after which the response is considered stale." The ``Expires`` header
+can be set with the ``setExpires()`` ``Response`` method. It takes a
 ``DateTime`` instance as an argument::
 
     $date = new DateTime();
@@ -473,12 +472,11 @@ more than one year in the future."
 Expiration with the ``Cache-Control`` Header
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Because of the ``Expires`` header limitations, most of the time, you should
-use the ``Cache-Control`` header instead. Recall that the ``Cache-Control``
-header is used to specify many different cache directives. For expiration,
-there are two directives, ``max-age`` and ``s-maxage``. The first one is
-used by all caches, whereas the second one is only taken into account by
-shared caches::
+Because of the ``Expires`` header limitations, most of the time, you should use
+the ``Cache-Control`` header instead. Recall that the ``Cache-Control`` header
+is used to specify many different cache directives. For expiration, there are
+two directives, ``max-age`` and ``s-maxage``. The first one is used by all
+caches, whereas the second one is only taken into account by shared caches::
 
     // Sets the number of seconds after which the response
     // should no longer be considered fresh
@@ -498,21 +496,21 @@ additional directives)::
 Validation
 ~~~~~~~~~~
 
-When a resource needs to be updated as soon as a change is made to the underlying
-data, the expiration model falls short. With the expiration model, the application
-won't be asked to return the updated response until the cache finally becomes
-stale.
+When a resource needs to be updated as soon as a change is made to the
+underlying data, the expiration model falls short. With the expiration model,
+the application won't be asked to return the updated response until the cache
+finally becomes stale.
 
 The validation model addresses this issue. Under this model, the cache continues
-to store responses. The difference is that, for each request, the cache asks
-the application whether or not the cached response is still valid. If the
-cache *is* still valid, your application should return a 304 status code
-and no content. This tells the cache that it's ok to return the cached response.
+to store responses. The difference is that, for each request, the cache asks the
+application whether or not the cached response is still valid. If the cache *is*
+still valid, your application should return a 304 status code and no content.
+This tells the cache that it's ok to return the cached response.
 
-Under this model, you mainly save bandwidth as the representation is not
-sent twice to the same client (a 304 response is sent instead). But if you
-design your application carefully, you might be able to get the bare minimum
-data needed to send a 304 response and save CPU also (see below for an implementation
+Under this model, you mainly save bandwidth as the representation is not sent
+twice to the same client (a 304 response is sent instead). But if you design
+your application carefully, you might be able to get the bare minimum data
+needed to send a 304 response and save CPU also (see below for an implementation
 example).
 
 .. tip::
@@ -522,8 +520,8 @@ example).
     Instead, the response is simply a light-weight set of directions that
     tell cache that it should use its stored version.
 
-Like with expiration, there are two different HTTP headers that can be used
-to implement the validation model: ``ETag`` and ``Last-Modified``.
+Like with expiration, there are two different HTTP headers that can be used to
+implement the validation model: ``ETag`` and ``Last-Modified``.
 
 .. index::
    single: Cache; Etag header
@@ -537,11 +535,11 @@ identifies one representation of the target resource. It's entirely generated
 and set by your application so that you can tell, for example, if the ``/about``
 resource that's stored by the cache is up-to-date with what your application
 would return. An ``ETag`` is like a fingerprint and is used to quickly compare
-if two different versions of a resource are equivalent. Like fingerprints,
-each ``ETag`` must be unique across all representations of the same resource.
+if two different versions of a resource are equivalent. Like fingerprints, each
+``ETag`` must be unique across all representations of the same resource.
 
-Let's walk through a simple implementation that generates the ETag as the
-md5 of the content::
+Let's walk through a simple implementation that generates the ETag as the md5 of
+the content::
 
     public function indexAction()
     {
@@ -552,17 +550,17 @@ md5 of the content::
         return $response;
     }
 
-The ``Response::isNotModified()`` method compares the ``ETag`` sent with
-the ``Request`` with the one set on the ``Response``. If the two match, the
-method automatically sets the ``Response`` status code to 304.
+The ``Response::isNotModified()`` method compares the ``ETag`` sent with the
+``Request`` with the one set on the ``Response``. If the two match, the method
+automatically sets the ``Response`` status code to 304.
 
 This algorithm is simple enough and very generic, but you need to create the
 whole ``Response`` before being able to compute the ETag, which is sub-optimal.
 In other words, it saves on bandwidth, but not CPU cycles.
 
-In the :ref:`optimizing-cache-validation` section, we'll show how validation
-can be used more intelligently to determine the validity of a cache without
-doing so much work.
+In the :ref:`optimizing-cache-validation` section, we'll show how validation can
+be used more intelligently to determine the validity of a cache without doing so
+much work.
 
 .. tip::
 
@@ -577,12 +575,12 @@ doing so much work.
 Validation with the ``Last-Modified`` Header
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The ``Last-Modified`` header is the second form of validation. According
-to the HTTP specification, "The ``Last-Modified`` header field indicates
-the date and time at which the origin server believes the representation
-was last modified." In other words, the application decides whether or not
-the cached content has been updated based on whether or not it's been updated
-since the response was cached.
+The ``Last-Modified`` header is the second form of validation. According to the
+HTTP specification, "The ``Last-Modified`` header field indicates the date and
+time at which the origin server believes the representation was last modified."
+In other words, the application decides whether or not the cached content has
+been updated based on whether or not it's been updated since the response was
+cached.
 
 For instance, you can use the latest update date for all the objects needed to
 compute the resource representation as the value for the ``Last-Modified``
@@ -653,8 +651,8 @@ exposing a simple and efficient pattern::
         }
     }
 
-When the ``Response`` is not modified, the ``isNotModified()`` automatically sets
-the response status code to ``304``, removes the content, and removes some
+When the ``Response`` is not modified, the ``isNotModified()`` automatically
+sets the response status code to ``304``, removes the content, and removes some
 headers that must not be present for ``304`` responses (see
 :method:`Symfony\\Component\\HttpFoundation\\Response::setNotModified`).
 
@@ -665,15 +663,15 @@ headers that must not be present for ``304`` responses (see
 Varying the Response
 ~~~~~~~~~~~~~~~~~~~~
 
-So far, we've assumed that each URI has exactly one representation of the
-target resource. By default, HTTP caching is done by using the URI of the
-resource as the cache key. If two people request the same URI of a cacheable
-resource, the second person will receive the cached version.
+So far, we've assumed that each URI has exactly one representation of the target
+resource. By default, HTTP caching is done by using the URI of the resource as
+the cache key. If two people request the same URI of a cacheable resource, the
+second person will receive the cached version.
 
-Sometimes this isn't enough and different versions of the same URI need to
-be cached based on one or more request header values. For instance, if you
-compress pages when the client supports it, any given URI has two representations:
-one when the client supports compression, and one when it does not. This
+Sometimes this isn't enough and different versions of the same URI need to be
+cached based on one or more request header values. For instance, if you compress
+pages when the client supports it, any given URI has two representations: one
+when the client supports compression, and one when it does not. This
 determination is done by the value of the ``Accept-Encoding`` request header.
 
 In this case, we need the cache to store both a compressed and uncompressed
@@ -705,11 +703,12 @@ which the response varies.
 Expiration and Validation
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
-You can of course use both validation and expiration within the same ``Response``.
-As expiration wins over validation, you can easily benefit from the best of
-both worlds. In other words, by using both expiration and validation, you
-can instruct the cache to server the cached content, while checking back
-at some interval (the expiration) to verify that the content is still valid.
+You can of course use both validation and expiration within the same
+``Response``. As expiration wins over validation, you can easily benefit from
+the best of both worlds. In other words, by using both expiration and
+validation, you can instruct the cache to server the cached content, while
+checking back at some interval (the expiration) to verify that the content is
+still valid.
 
 .. index::
     pair: Cache; Configuration
@@ -717,8 +716,8 @@ at some interval (the expiration) to verify that the content is still valid.
 More Response Methods
 ~~~~~~~~~~~~~~~~~~~~~
 
-The Response class provides many more methods related to the cache. Here are
-the most useful ones::
+The Response class provides many more methods related to the cache. Here are the
+most useful ones::
 
     // Marks the Response stale
     $response->expire();
@@ -749,16 +748,16 @@ Using Edge Side Includes
 ------------------------
 
 Gateway caches are a great way to make your website perform better. But they
-have one limitation: they can only cache whole pages. If you can't cache
-whole pages or if parts of a page has "more" dynamic parts, you are out of
-luck. Fortunately, Symfony2 provides a solution for these cases, based on a
-technology called `ESI`_, or Edge Side Includes. Akamaï wrote this specification
-almost 10 years ago, and it allows specific parts of a page to have a different
-caching strategy than the main page.
+have one limitation: they can only cache whole pages. If you can't cache whole
+pages or if parts of a page has "more" dynamic parts, you are out of luck.
+Fortunately, Symfony2 provides a solution for these cases, based on a technology
+called `ESI`_, or Edge Side Includes. Akamaï wrote this specification almost 10
+years ago, and it allows specific parts of a page to have a different caching
+strategy than the main page.
 
 The ESI specification describes tags you can embed in your pages to communicate
-with the gateway cache. Only one tag is implemented in Symfony2, ``include``,
-as this is the only useful one outside of Akamaï context:
+with the gateway cache. Only one tag is implemented in Symfony2, ``include``, as
+this is the only useful one outside of Akamaï context:
 
 .. code-block:: html
 
@@ -779,17 +778,17 @@ as this is the only useful one outside of Akamaï context:
     An ESI tag represents a page fragment that can be fetched via the given
     URL.
 
-When a request is handled, the gateway cache fetches the entire page from
-its cache or requests it from the backend application. If the response contains
-one or more ESI tags, these are processed in the same way. In other words,
-the gateway cache either retrieves the included page fragment from its cache
-or requests the page fragment from the backend application again. When all
-the ESI tags have been resolved, the gateway cache merges each into the main
-page and sends the final content to the client.
+When a request is handled, the gateway cache fetches the entire page from its
+cache or requests it from the backend application. If the response contains one
+or more ESI tags, these are processed in the same way. In other words, the
+gateway cache either retrieves the included page fragment from its cache or
+requests the page fragment from the backend application again. When all the ESI
+tags have been resolved, the gateway cache merges each into the main page and
+sends the final content to the client.
 
-All of this happens transparently at the gateway cache level (i.e. outside
-of your application). As you'll see, if you choose to take advantage of ESI
-tags, Symfony2 makes the process of including them almost effortless.
+All of this happens transparently at the gateway cache level (i.e. outside of
+your application). As you'll see, if you choose to take advantage of ESI tags,
+Symfony2 makes the process of including them almost effortless.
 
 Using ESI in Symfony2
 ~~~~~~~~~~~~~~~~~~~~~
@@ -821,9 +820,9 @@ First, to use ESI, be sure to enable it in your application configuration:
             'esi'    => array('enabled' => true),
         ));
 
-Now, suppose we have a page that is relatively static, except for a news
-ticker at the bottom of the content. With ESI, we can cache the news ticker
-independent of the rest of the page.
+Now, suppose we have a page that is relatively static, except for a news ticker
+at the bottom of the content. With ESI, we can cache the news ticker independent
+of the rest of the page.
 
 .. code-block:: php
 
@@ -836,12 +835,12 @@ independent of the rest of the page.
     }
 
 In this example, we've given the full-page cache a lifetime of ten minutes.
-Next, let's include the news ticker in the template by embedding an action.
-This is done via the ``render`` helper (See `templating-embedding-controller`
-for more details).
+Next, let's include the news ticker in the template by embedding an action. This
+is done via the ``render`` helper (See `templating-embedding-controller` for
+more details).
 
-As the embedded content comes from another page (or controller for that
-matter), Symfony2 uses the standard ``render`` helper to configure ESI tags:
+As the embedded content comes from another page (or controller for that matter),
+Symfony2 uses the standard ``render`` helper to configure ESI tags:
 
 .. configuration-block::
 
@@ -853,19 +852,19 @@ matter), Symfony2 uses the standard ``render`` helper to configure ESI tags:
 
         <?php echo $view['actions']->render('...:news', array(), array('standalone' => true)) ?>
 
-By setting ``standalone`` to ``true``, you tell Symfony2 that the action
-should be rendered as an ESI tag. You might be wondering why you would want to
-use a helper instead of just writing the ESI tag yourself. That's because
-using a helper makes your application work even if there is no gateway cache
-installed. Let's see how it works.
+By setting ``standalone`` to ``true``, you tell Symfony2 that the action should
+be rendered as an ESI tag. You might be wondering why you would want to use a
+helper instead of just writing the ESI tag yourself. That's because using a
+helper makes your application work even if there is no gateway cache installed.
+Let's see how it works.
 
 When standalone is ``false`` (the default), Symfony2 merges the included page
-content within the main one before sending the response to the client. But
-when standalone is ``true``, *and* if Symfony2 detects that it's talking
-to a gateway cache that supports ESI, it generates an ESI include tag. But
-if there is no gateway cache or if it does not support ESI, Symfony2 will
-just merge the included page content within the main one as it would have
-done were standalone set to ``false``.
+content within the main one before sending the response to the client. But when
+standalone is ``true``, *and* if Symfony2 detects that it's talking to a gateway
+cache that supports ESI, it generates an ESI include tag. But if there is no
+gateway cache or if it does not support ESI, Symfony2 will just merge the
+included page content within the main one as it would have done were standalone
+set to ``false``.
 
 .. note::
 
@@ -888,12 +887,11 @@ of the master page.
 With ESI, the full page cache will be valid for 600 seconds, but the news
 component cache will only last for 60 seconds.
 
-A requirement of ESI, however, is that the embedded action be accessible
-via a URL so the gateway cache can fetch it independently of the rest of
-the page. Of course, an action can't be accessed via a URL unless it has
-a route that points to it. Symfony2 takes care of this via a generic route
-and controller. For the ESI include tag to work properly, you must define
-the ``_internal`` route:
+A requirement of ESI, however, is that the embedded action be accessible via a
+URL so the gateway cache can fetch it independently of the rest of the page. Of
+course, an action can't be accessed via a URL unless it has a route that points
+to it. Symfony2 takes care of this via a generic route and controller. For the
+ESI include tag to work properly, you must define the ``_internal`` route:
 
 .. configuration-block::
 
@@ -965,19 +963,19 @@ Cache Invalidation
     and naming things." --Phil Karlton
 
 You should never need to invalidate cached data because invalidation is already
-taken into account natively in the HTTP cache models. If you use validation,
-you never need to invalidate anything by definition; and if you use expiration
-and need to invalidate a resource, it means that you set the expires date
-too far away in the future.
+taken into account natively in the HTTP cache models. If you use validation, you
+never need to invalidate anything by definition; and if you use expiration and
+need to invalidate a resource, it means that you set the expires date too far
+away in the future.
 
 .. note::
 
     It's also because there is no invalidation mechanism that you can use any
     reverse proxy without changing anything in your application code.
 
-Actually, all reverse proxies provide ways to purge cached data, but you
-should avoid them as much as possible. The most standard way is to purge the
-cache for a given URL by requesting it with the special ``PURGE`` HTTP method.
+Actually, all reverse proxies provide ways to purge cached data, but you should
+avoid them as much as possible. The most standard way is to purge the cache for
+a given URL by requesting it with the special ``PURGE`` HTTP method.
 
 Here is how you can configure the Symfony2 reverse proxy to support the
 ``PURGE`` HTTP method::
@@ -1010,12 +1008,11 @@ Here is how you can configure the Symfony2 reverse proxy to support the
 Summary
 -------
 
-Symfony2 was designed to follow the proven rules of the road: HTTP. Caching
-is no exception. Mastering the Symfony2 cache system means becoming familiar
-with the HTTP cache models and using them effectively. This means that, instead
-of relying only on Symfony2 documentation and code examples, you have access
-to a world of knowledge related to HTTP caching and gateway caches such as
-Varnish.
+Symfony2 was designed to follow the proven rules of the road: HTTP. Caching is
+no exception. Mastering the Symfony2 cache system means becoming familiar with
+the HTTP cache models and using them effectively. This means that, instead of
+relying only on Symfony2 documentation and code examples, you have access to a
+world of knowledge related to HTTP caching and gateway caches such as Varnish.
 
 Learn more from the Cookbook
 ----------------------------

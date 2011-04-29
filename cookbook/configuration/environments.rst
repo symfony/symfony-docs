@@ -7,10 +7,10 @@ How to Master and Create new Environments
 Every application is the combination of code and a set of configuration that
 dictates how that code should function. The configuration may define the
 database being used, whether or not something should be cached, or how verbose
-logging should be. In Symfony2, the idea of "environments" is the idea that
-the same codebase can be run using multiple different configurations. For
-example, the ``dev`` environment should use configuration that makes development
-easy and friendly, while the ``prod`` environment should use a set of configuration
+logging should be. In Symfony2, the idea of "environments" is the idea that the
+same codebase can be run using multiple different configurations. For example,
+the ``dev`` environment should use configuration that makes development easy and
+friendly, while the ``prod`` environment should use a set of configuration
 optimized for speed.
 
 .. index::
@@ -20,11 +20,10 @@ Different Environments, Different Configuration Files
 -----------------------------------------------------
 
 A typical Symfony2 application begins with three environments: ``dev``,
-``prod``, and ``test``. As discussed, each "environment" simply represents
-a way to execute the same codebase with different configuration. It should
-be no surprise then that each environment loads its own individual configuration
-file. If you're using the YAML configuration format, the following files
-are used:
+``prod``, and ``test``. As discussed, each "environment" simply represents a way
+to execute the same codebase with different configuration. It should be no
+surprise then that each environment loads its own individual configuration file.
+If you're using the YAML configuration format, the following files are used:
 
  * for the ``dev`` environment: ``app/config/config_dev.yml``
  * for the ``prod`` environment: ``app/config/config_prod.yml``
@@ -80,12 +79,12 @@ easily and transparently:
 
         // ...
 
-To share common configuration, each environment's configuration file
-simply first imports from a central configuration file (``config.yml``).
-The remainder of the file can then deviate from the default configuration
-by overriding individual parameters. For example, by default, the ``web_profiler``
-toolbar is disabled. However, in the ``dev`` environment, the toolbar is
-activated by modifying the default value in the ``dev`` configuration file:
+To share common configuration, each environment's configuration file simply
+first imports from a central configuration file (``config.yml``). The remainder
+of the file can then deviate from the default configuration by overriding
+individual parameters. For example, by default, the ``web_profiler`` toolbar is
+disabled. However, in the ``dev`` environment, the toolbar is activated by
+modifying the default value in the ``dev`` configuration file:
 
 .. configuration-block::
 
@@ -142,8 +141,8 @@ either the ``app.php`` (for the ``prod`` environment) or the ``app_dev.php``
    directory of the application as its root. Read more in
    :doc:`Installing Symfony2</book/installation>`.
 
-If you open up one of these files, you'll quickly see that the environment
-used by each is explicitly set:
+If you open up one of these files, you'll quickly see that the environment used
+by each is explicitly set:
 
 .. code-block:: php
    :linenos:
@@ -158,9 +157,9 @@ used by each is explicitly set:
     $kernel = new AppCache(new AppKernel('prod', false));
     $kernel->handle(Request::createFromGlobals())->send();
 
-As you can see, the ``prod`` key specifies that this environment will run
-in the ``prod`` environment. A Symfony2 application can be executed in any
-environment by using this code and changing the environment string.
+As you can see, the ``prod`` key specifies that this environment will run in the
+``prod`` environment. A Symfony2 application can be executed in any environment
+by using this code and changing the environment string.
 
 .. note::
 
@@ -221,13 +220,12 @@ Creating a New Environment
 
 By default, a Symfony2 application has three environments that handle most
 cases. Of course, since an environment is nothing more than a string that
-corresponds to a set of configuration, creating a new environment is quite
-easy.
+corresponds to a set of configuration, creating a new environment is quite easy.
 
 Suppose, for example, that before deployment, you need to benchmark your
 application. One way to benchmark the application is to use near-production
-settings, but with Symfony2's ``web_profiler`` enabled. This allows Symfony2
-to record information about your application while benchmarking.
+settings, but with Symfony2's ``web_profiler`` enabled. This allows Symfony2 to
+record information about your application while benchmarking.
 
 The best way to accomplish this is via a new environment called, for example,
 ``benchmark``. Start by creating a new configuration file:
@@ -269,13 +267,14 @@ The best way to accomplish this is via a new environment called, for example,
 And with this simple addition, the application now supports a new environment
 called ``benchmark``.
 
-This new configuration file imports the configuration from the ``prod`` environment
-and modifies it. This guarantees that the new environment is identical to
-the ``prod`` environment, except for any changes explicitly made here.
+This new configuration file imports the configuration from the ``prod``
+environment and modifies it. This guarantees that the new environment is
+identical to the ``prod`` environment, except for any changes explicitly made
+here.
 
-Because you'll want this environment to be accessible via a browser, you
-should also create a front controller for it. Copy the ``web/app.php`` file
-to ``web/app_benchmark.php`` and edit the environment to be ``benchmark``:
+Because you'll want this environment to be accessible via a browser, you should
+also create a front controller for it. Copy the ``web/app.php`` file to
+``web/app_benchmark.php`` and edit the environment to be ``benchmark``:
 
 .. code-block:: php
 
@@ -315,11 +314,11 @@ Environments and the Cache Directory
 ------------------------------------
 
 Symfony2 takes advantage of caching in many ways: the application configuration,
-routing configuration, Twig templates and more are cached to PHP objects
-stored in files on the filesystem.
+routing configuration, Twig templates and more are cached to PHP objects stored
+in files on the filesystem.
 
-By default, these cached files are largely stored in the ``app/cache`` directory.
-However, each environment caches its own set of files:
+By default, these cached files are largely stored in the ``app/cache``
+directory. However, each environment caches its own set of files:
 
 .. code-block:: text
 
@@ -327,8 +326,8 @@ However, each environment caches its own set of files:
     app/cache/prod  - cache directory for the *prod* environment
 
 Sometimes, when debugging, it may be helpful to inspect a cached file to
-understand how something is working. When doing so, remember to look in
-the directory of the environment you're using (most commonly ``dev`` while
+understand how something is working. When doing so, remember to look in the
+directory of the environment you're using (most commonly ``dev`` while
 developing and debugging). While it can vary, the ``app/cache/dev`` directory
 includes the following:
 

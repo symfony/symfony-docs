@@ -11,12 +11,11 @@ configuration is optimized for two main purposes:
  * Be as similar as possible as the production environment to avoid problems
    when deploying the project.
 
-And to make the production environment as fast as possible, Symfony creates
-big PHP files in your cache containing the aggregation of PHP classes your
-project needs for every request. However, this behavior can confuse your IDE
-or your debugger. This recipe shows you how you can tweak this caching
-mechanism to make it friendlier when you need to debug code that involves
-Symfony classes.
+And to make the production environment as fast as possible, Symfony creates big
+PHP files in your cache containing the aggregation of PHP classes your project
+needs for every request. However, this behavior can confuse your IDE or your
+debugger. This recipe shows you how you can tweak this caching mechanism to make
+it friendlier when you need to debug code that involves Symfony classes.
 
 The ``app_dev.php`` front controller reads as follows by default::
 
@@ -31,9 +30,8 @@ The ``app_dev.php`` front controller reads as follows by default::
     $kernel->loadClassCache();
     $kernel->handle(Request::createFromGlobals())->send();
 
-To make you debugger happier, disable all PHP class caches by removing the
-call to ``loadClassCache()`` and by replacing the require statements like
-below::
+To make you debugger happier, disable all PHP class caches by removing the call
+to ``loadClassCache()`` and by replacing the require statements like below::
 
     // ...
 

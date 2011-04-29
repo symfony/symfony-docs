@@ -92,8 +92,8 @@ pattern of class extension:
         }
     }
 
-Next, create a class that will listen to the ``onFooMethodIsNotFound`` event
-and *add* the method ``bar()``:
+Next, create a class that will listen to the ``onFooMethodIsNotFound`` event and
+*add* the method ``bar()``:
 
 .. code-block:: php
 
@@ -121,8 +121,8 @@ and *add* the method ``bar()``:
         }
     }
 
-Finally, add the new ``bar`` method to the ``Foo`` class by register an
-instance of ``Bar`` with the ``onFooMethodIsNotFound`` event:
+Finally, add the new ``bar`` method to the ``Foo`` class by register an instance
+of ``Bar`` with the ``onFooMethodIsNotFound`` event:
 
 .. code-block:: php
 

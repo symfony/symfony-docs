@@ -4,8 +4,8 @@
 ``choice`` Field Type
 =====================
 
-A multi-purpose field used to allow the user to "choose" one or more options.
-It can be rendered as a ``select`` tag, radio buttons, or checkboxes.
+A multi-purpose field used to allow the user to "choose" one or more options. It
+can be rendered as a ``select`` tag, radio buttons, or checkboxes.
 
 To use this field, you must specify *either* the ``choice_list`` or ``choices``
 option.
@@ -33,8 +33,8 @@ option.
 Select tag, Checkboxes or Radio Buttons
 ---------------------------------------
 
-This field may be rendered as one of several different HTML fields, depending
-on the ``expanded`` and ``multiple`` options:
+This field may be rendered as one of several different HTML fields, depending on
+the ``expanded`` and ``multiple`` options:
 
 +------------------------------------------+----------+----------+
 | element type                             | expanded | multiple |
@@ -52,15 +52,15 @@ Adding an "empty value"
 -----------------------
 
 If you're using the non-expanded version of the type (i.e. a ``select`` tag)
-element and you'd like to have a blank entry (e.g. "Choose an option") at
-the top of the select box, you can easily do so:
+element and you'd like to have a blank entry (e.g. "Choose an option") at the
+top of the select box, you can easily do so:
 
 * Set the ``multiple`` option to false
 * Set the ``required`` option to false
 
 With these two options, a blank choice will display at the top of the select
-box. To customize what that entry says, add the following when rendering
-the field:
+box. To customize what that entry says, add the following when rendering the
+field:
 
 .. configuration-block::
 

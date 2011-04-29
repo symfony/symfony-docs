@@ -16,8 +16,8 @@ The "value" for each country is the two-letter country code.
 
 Unlike the ``choice`` type, you don't need to specify a ``choices`` or
 ``choice_list`` option as the field type automatically uses all of the countries
-of the world. You *can* specify either of these options manually, but then
-you should just use the ``choice`` type directly.
+of the world. You *can* specify either of these options manually, but then you
+should just use the ``choice`` type directly.
 
 +-------------+-----------------------------------------------------------------------+
 | Rendered as | can be various tags (see :ref:`forms-reference-choice-tags`)          |

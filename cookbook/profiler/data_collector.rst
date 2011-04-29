@@ -129,9 +129,8 @@ skeleton:
         {# the panel content #}
     {% endblock %}
 
-Each block is optional. The ``toolbar`` block is used for the web debug
-toolbar and ``menu`` and ``panel`` are used to add a panel to the web
-profiler.
+Each block is optional. The ``toolbar`` block is used for the web debug toolbar
+and ``menu`` and ``panel`` are used to add a panel to the web profiler.
 
 All blocks have access to the ``collector`` object.
 

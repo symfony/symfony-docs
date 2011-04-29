@@ -5,10 +5,10 @@ How to create a Custom Validation Constraint
 --------------------------------------------
 
 You can create a custom constraint by extending the base constraint class,
-:class:`Symfony\\Component\\Validator\\Constraint`. Options for your
-constraint are represented as public properties on the constraint class. For
-example, the :doc:`Url</reference/constraints/Url>` constraint includes
-the ``message`` and ``protocols`` properties:
+:class:`Symfony\\Component\\Validator\\Constraint`. Options for your constraint
+are represented as public properties on the constraint class. For example, the
+:doc:`Url</reference/constraints/Url>` constraint includes the ``message`` and
+``protocols`` properties:
 
 .. code-block:: php
 
@@ -22,8 +22,8 @@ the ``message`` and ``protocols`` properties:
 
 As you can see, a constraint class is fairly minimal. The actual validation is
 performed by a another "constraint validator" class. The constraint validator
-class is specified by the constraint's ``validatedBy()`` method, which
-includes some simple default logic:
+class is specified by the constraint's ``validatedBy()`` method, which includes
+some simple default logic:
 
 .. code-block:: php
 
@@ -37,8 +37,8 @@ In other words, if you create a custom ``Constraint`` (e.g. ``MyConstraint``),
 Symfony2 will automatically look for another class, ``MyConstraintValidator``
 when actually performing the validation.
 
-The validator class is also simple, and only has one required method: ``isValid``.
-Take the ``NotBlankValidator`` as an example:
+The validator class is also simple, and only has one required method:
+``isValid``. Take the ``NotBlankValidator`` as an example:
 
 .. code-block:: php
 
@@ -59,10 +59,10 @@ Take the ``NotBlankValidator`` as an example:
 Constraint Validators with Dependencies
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-If your constraint validator has dependencies, such as a database connection,
-it will need to be configured as a service in the dependency injection
-container. This service must include the ``validator.constraint_validator``
-tag and an ``alias`` attribute:
+If your constraint validator has dependencies, such as a database connection, it
+will need to be configured as a service in the dependency injection container.
+This service must include the ``validator.constraint_validator`` tag and an
+``alias`` attribute:
 
 .. configuration-block::
 

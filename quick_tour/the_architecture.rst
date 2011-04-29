@@ -11,8 +11,8 @@ Understanding the Directory Structure
 -------------------------------------
 
 The directory structure of a Symfony2 :term:`application` is rather flexible,
-but the directory structure of the *Standard Edition* distribution reflects
-the typical and recommended structure of a Symfony2 application:
+but the directory structure of the *Standard Edition* distribution reflects the
+typical and recommended structure of a Symfony2 application:
 
 * ``app/``:    The application configuration;
 * ``src/``:    The project's PHP code;
@@ -23,8 +23,8 @@ The Web Directory
 ~~~~~~~~~~~~~~~~~
 
 The web root directory is the home of all public and static files like images,
-stylesheets, and JavaScript files. It is also where each :term:`front controller`
-lives::
+stylesheets, and JavaScript files. It is also where each :term:`front
+controller` lives::
 
     // web/app.php
     require_once __DIR__.'/../app/bootstrap.php';
@@ -44,8 +44,8 @@ bootstrap the application.
 The Application Directory
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The ``AppKernel`` class is the main entry point of the application
-configuration and as such, it is stored in the ``app/`` directory.
+The ``AppKernel`` class is the main entry point of the application configuration
+and as such, it is stored in the ``app/`` directory.
 
 This class must implement two methods:
 
@@ -81,10 +81,10 @@ PHP autoloading can be configured via ``app/autoload.php``::
 
 The :class:`Symfony\\Component\\ClassLoader\\UniversalClassLoader` is used to
 autoload files that respect either the technical interoperability `standards`_
-for PHP 5.3 namespaces or the PEAR naming `convention`_ for classes. As you
-can see here, all dependencies are stored under the ``vendor/`` directory, but
-this is just a convention. You can store them wherever you want, globally on
-your server or locally in your projects.
+for PHP 5.3 namespaces or the PEAR naming `convention`_ for classes. As you can
+see here, all dependencies are stored under the ``vendor/`` directory, but this
+is just a convention. You can store them wherever you want, globally on your
+server or locally in your projects.
 
 .. note::
 
@@ -138,8 +138,8 @@ method of the ``AppKernel`` class::
 
 In addition to the ``AcmeDemoBundle`` that we have already talked about, notice
 that the kernel also enables the ``FrameworkBundle``, ``DoctrineBundle``,
-``SwiftmailerBundle``, and ``AsseticBundle`` bundles. They are all part of
-the core framework.
+``SwiftmailerBundle``, and ``AsseticBundle`` bundles. They are all part of the
+core framework.
 
 Configuring a Bundle
 ~~~~~~~~~~~~~~~~~~~~
@@ -205,13 +205,13 @@ PHP. Have a look at the default configuration:
         secure_all_services: false
 
 Each entry like ``framework`` defines the configuration for a specific bundle.
-For example, ``framework`` configures the ``FrameworkBundle`` while ``swiftmailer``
-configures the ``SwiftmailerBundle``.
+For example, ``framework`` configures the ``FrameworkBundle`` while
+``swiftmailer`` configures the ``SwiftmailerBundle``.
 
 Each :term:`environment` can override the default configuration by providing a
 specific configuration file. For example, the ``dev`` environment loads the
-``config_dev.yml`` file, which loads the main configuration (i.e. ``config.yml``)
-and then modifies it to add some debugging tools:
+``config_dev.yml`` file, which loads the main configuration (i.e.
+``config.yml``) and then modifies it to add some debugging tools:
 
 .. code-block:: yaml
 
@@ -239,14 +239,14 @@ Extending a Bundle
 ~~~~~~~~~~~~~~~~~~
 
 In addition to being a nice way to organize and configure your code, a bundle
-can extend another bundle. Bundle inheritance allows you to override any existing
-bundle in order to customize its controllers, templates, or any of its files.
-This is where the logical names come in handy, because they abstract where
-the resource is actually stored.
+can extend another bundle. Bundle inheritance allows you to override any
+existing bundle in order to customize its controllers, templates, or any of its
+files. This is where the logical names come in handy, because they abstract
+where the resource is actually stored.
 
 When you want to reference a file from a bundle, use this notation:
-``@BUNDLE_NAME/path/to/file``; Symfony2 will resolve ``@BUNDLE_NAME``
-to the real path to the bundle. For instance, the logical path
+``@BUNDLE_NAME/path/to/file``; Symfony2 will resolve ``@BUNDLE_NAME`` to the
+real path to the bundle. For instance, the logical path
 ``@AcmeDemoBundle/Controller/DemoController.php`` would be converted to
 ``src/Acme/DemoBundle/Controller/DemoController.php``.
 
@@ -256,10 +256,10 @@ For controllers, you need to reference method names using the format
 ``Acme\DemoBundle\Controller\WelcomeController`` class.
 
 For templates, the logical name ``AcmeDemoBundle:Welcome:index.html.twig`` is
-converted to the file path ``src/Acme/DemoBundle/Resources/views/Welcome/index.html.twig``.
-Templates become even more interesting when you realize they don't need to be
-stored on the filesystem. You can easily store them in a database table for
-instance.
+converted to the file path
+``src/Acme/DemoBundle/Resources/views/Welcome/index.html.twig``. Templates
+become even more interesting when you realize they don't need to be stored on
+the filesystem. You can easily store them in a database table for instance.
 
 Do you understand now why Symfony2 is so flexible? Share your bundles between
 applications, store them locally or globally, your choice.
@@ -280,19 +280,19 @@ can it be so fast if it parses and interprets tens of YAML and XML files for
 each request? The speed is partly due to its cache system. The application
 configuration is only parsed for the very first request and then compiled down
 to plain PHP code stored in the ``app/cache/`` directory. In the development
-environment, Symfony2 is smart enough to flush the cache when you change a
-file. But in the production environment, it is your responsibility to clear
-the cache when you update your code or change its configuration.
+environment, Symfony2 is smart enough to flush the cache when you change a file.
+But in the production environment, it is your responsibility to clear the cache
+when you update your code or change its configuration.
 
 When developing a web application, things can go wrong in many ways. The log
-files in the ``app/logs/`` directory tell you everything about the requests
-and help you fix the problem quickly.
+files in the ``app/logs/`` directory tell you everything about the requests and
+help you fix the problem quickly.
 
 Using the Command Line Interface
 --------------------------------
 
-Each application comes with a command line interface tool (``app/console``)
-that helps you maintain your application. It provides commands that boost your
+Each application comes with a command line interface tool (``app/console``) that
+helps you maintain your application. It provides commands that boost your
 productivity by automating tedious and repetitive tasks.
 
 Run it without any arguments to learn more about its capabilities:
@@ -311,14 +311,14 @@ Final Thoughts
 --------------
 
 Call me crazy, but after reading this part, you should be comfortable with
-moving things around and making Symfony2 work for you. Everything in Symfony2
-is designed to get out of your way. So, feel free to rename and move directories
+moving things around and making Symfony2 work for you. Everything in Symfony2 is
+designed to get out of your way. So, feel free to rename and move directories
 around as you see fit.
 
 And that's all for the quick tour. From testing to sending emails, you still
-need to learn a lot to become a Symfony2 master. Ready to dig into these
-topics now? Look no further - go to the official :doc:`/book/index` and pick
-any topic you want.
+need to learn a lot to become a Symfony2 master. Ready to dig into these topics
+now? Look no further - go to the official :doc:`/book/index` and pick any topic
+you want.
 
 .. _standards:               http://groups.google.com/group/php-standards/web/psr-0-final-proposal
 .. _convention:              http://pear.php.net/
