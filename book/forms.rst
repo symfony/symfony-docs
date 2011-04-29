@@ -142,7 +142,7 @@ helper functions:
 
         {# src/Acme/StoreBundle/Resources/views/Default/index.html.twig #}
         
-        <form action="{{ path('store_product') }}" method="post">
+        <form action="{{ path('store_product') }}" method="post" {{ form_enctype(form) }}>
             {{ form_widget(form) }}
             
             <input type="submit" />
@@ -152,7 +152,7 @@ helper functions:
     
         <?php // src/Acme/StoreBundle/Resources/views/Default/index.html.php ?>
         
-        <form action="<?php echo $view['router']->generate('store_product') ?>" method="post">
+        <form action="<?php echo $view['router']->generate('store_product') ?>" method="post" <?php echo $view['form']->enctype($form) ?> >
             <?php echo $view['form']->widget($form) ?>
 
             <input type="submit" />
