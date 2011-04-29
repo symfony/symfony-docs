@@ -11,7 +11,7 @@ We will first need to create a new field type class.  We will extend ``FileType`
 for this example, and call our class ``AssetType``, as it represents the
 location we will be placing our assets.  Our field type will support the
 options ``path`` and ``keep_filename``.  The ``path`` option will specify
-where the asset should be placed, and the ``keep_filename`` option, when 
+where the asset should be placed, and the ``keep_filename`` option, when
 set to ``true`` will retain the uploaded file's name.
 
 .. code-block:: html+php
@@ -40,7 +40,7 @@ set to ``true`` will retain the uploaded file's name.
                     new FileToStringTransformer()))
                 ->appendNormTransformer(new FileToArrayTransformer())
                 ->addEventSubscriber(new MoveFileUploadListener(
-                    $this->assetDir . '/' . $options['path'], 
+                    $this->assetDir . '/' . $options['path'],
                     $options['keep_filename']), 10)
                 ->add('file', 'field')
                 ->add('token', 'hidden')
@@ -57,7 +57,7 @@ set to ``true`` will retain the uploaded file's name.
     }
 
 The main difference between our class and ``FileType`` is the ``MoveFileUploadListener``
-class.  This replaces the ``FixFileUploadListener`` that was there before.  
+class.  This replaces the ``FixFileUploadListener`` that was there before.
 The difference is that ``MoveFileUploadListener`` is a class listening to
 the form event, and will execute before the field values are returned. This
 class takes a destination as its first argument, and whether or not to preserve
@@ -139,11 +139,11 @@ are services, this can be configured in your dependency injection configuration.
         $container->setDefinition('form.type.file', $definition);
 
 .. note::
-    The tag ``form.type`` on your service tells the Form Factory to accept 
+    The tag ``form.type`` on your service tells the Form Factory to accept
     this service as a field type.  In other words, any service with this
     tag can be loaded as a form type.  Give your tag a unique alias to
     create a new form type, rather than substituting out an existing one.
-    
+
 All ``file`` form types will now use your ``AssetType`` class.  The example
 below illustrates the use of the new AssetType class.  We add an ``attachment``
 file field to the ``GenericBlog`` class, and tell it to place the files in
@@ -157,11 +157,11 @@ the ``uploads/attachments`` directory, and to preserve the filename.
         {
             $builder->add('name');
             $builder->add('attachment', 'file', array(
-                'path' => 'uploads/attachments', 
+                'path' => 'uploads/attachments',
                 'keep_filename' => true
             ));
         }
-        
+
         public function getDefaultOptions(array $options)
         {
             return array(
