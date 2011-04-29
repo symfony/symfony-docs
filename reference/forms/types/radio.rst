@@ -12,12 +12,19 @@ The ``radio`` type isn't usually used directly. More commonly it's used
 internally by other types such as :doc:`choice</reference/forms/types/choice>`.
 If you want to have a Boolean field, use :doc:`checkbox</reference/forms/types/checkbox>`.
 
-============  ======
-Rendered as   ``input`` ``text`` field
-Options       ``value``, ``required``, ``label``, ``read_only``, ``error_bubbling``
-Parent type   ``field``
-Class         :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\RadioType`
-============  ======
++-------------+---------------------------------------------------------------------+
+| Rendered as | ``input`` ``text`` field                                            |
++-------------+---------------------------------------------------------------------+
+| Options     | - ``value``                                                         |
+|             | - ``required``                                                      |
+|             | - ``label``                                                         |
+|             | - ``read_only``                                                     |
+|             | - ``error_bubbling``                                                |
++-------------+---------------------------------------------------------------------+
+| Parent type | ``field``                                                           |
++-------------+---------------------------------------------------------------------+
+| Class       | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\RadioType` |
++-------------+---------------------------------------------------------------------+
 
 Options
 -------

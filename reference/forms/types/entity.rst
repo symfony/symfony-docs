@@ -9,13 +9,26 @@ entity. For example, if you have a ``Category`` entity, you could use this
 field to display a ``select`` field of all, or some, of the ``Category``
 objects from the database.
 
-====================  ======
-Underlying Data Type  An array of entity "identifiers" (e.g. an array of selected ids)
-Rendered as           can be various tags (see :ref:`forms-reference-choice-tags`)
-Options               ``class``, ``property``, ``query_builder``, ``multiple``, ``expanded``, ``preferred_choices``, ``required``, ``label``, ``read_only``, ``error_bubbling``
-Parent type           :doc:`choice</reference/forms/types/choice>`
-Class                 :class:`Symfony\Bridge\Doctrine\Form\Type\\EntityType`
-====================  ======
++----------------------+------------------------------------------------------------------+
+| Underlying Data Type | An array of entity "identifiers" (e.g. an array of selected ids) |
++----------------------+------------------------------------------------------------------+
+| Rendered as          | can be various tags (see :ref:`forms-reference-choice-tags`)     |
++----------------------+------------------------------------------------------------------+
+| Options              | - ``class``                                                      |
+|                      | - ``property``                                                   |
+|                      | - ``query_builder``                                              |
+|                      | - ``multiple``                                                   |
+|                      | - ``expanded``                                                   |
+|                      | - ``preferred_choices``                                          |
+|                      | - ``required``                                                   |
+|                      | - ``label``                                                      |
+|                      | - ``read_only``                                                  |
+|                      | - ``error_bubbling``                                             |
++----------------------+------------------------------------------------------------------+
+| Parent type          | :doc:`choice</reference/forms/types/choice>`                     |
++----------------------+------------------------------------------------------------------+
+| Class                | :class:`Symfony\Bridge\Doctrine\Form\Type\\EntityType`           |
++----------------------+------------------------------------------------------------------+
 
 Options
 -------

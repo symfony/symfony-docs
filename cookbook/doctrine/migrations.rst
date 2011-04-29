@@ -1,8 +1,8 @@
 .. index::
    pair: Doctrine; Migrations
 
-Migrations
-==========
+How to use Doctrine Migrations
+==============================
 
 The database migrations feature is an extension of the database abstraction
 layer and offers you the ability to programmatically deploy new versions of

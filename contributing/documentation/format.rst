@@ -93,21 +93,31 @@ The previous reST snippet renders as follow:
 
 The current list of supported formats are the following:
 
-=============== ===========
-Markup format   Displayed
-=============== ===========
-html            HTML
-xml             XML
-php             PHP
-yaml            YAML
-jinja           Twig
-html+jinja      Twig
-jinja+html      Twig
-php+html        PHP
-html+php        PHP
-ini             INI
-php-annotations Annotations
-=============== ===========
++-----------------+-------------+
+| Markup format   | Displayed   |
++=================+=============+
+| html            | HTML        |
++-----------------+-------------+
+| xml             | XML         |
++-----------------+-------------+
+| php             | PHP         |
++-----------------+-------------+
+| yaml            | YAML        |
++-----------------+-------------+
+| jinja           | Twig        |
++-----------------+-------------+
+| html+jinja      | Twig        |
++-----------------+-------------+
+| jinja+html      | Twig        |
++-----------------+-------------+
+| php+html        | PHP         |
++-----------------+-------------+
+| html+php        | PHP         |
++-----------------+-------------+
+| ini             | INI         |
++-----------------+-------------+
+| php-annotations | Annotations |
++-----------------+-------------+
 
 Testing Documentation
 ~~~~~~~~~~~~~~~~~~~~~

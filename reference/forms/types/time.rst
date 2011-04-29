@@ -10,13 +10,24 @@ This can be rendered as a text field or a series of choice fields. The underlyin
 data can be stored as a ``DateTime`` object, a string, a timestamp or an
 array.
 
-====================  ======
-Underlying Data Type  can be ``DateTime``, string, timestamp, or array (see the ``input`` option)
-Rendered as           can be various tags (see below)
-Options               ``widget``, ``input``, ``with_seconds``, ``hours``, ``minutes``, ``seconds``, ``data_timezone``, ``user_timezone``
-Parent type           form
-Class                 :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\TimeType`
-====================  ======
++----------------------+-----------------------------------------------------------------------------+
+| Underlying Data Type | can be ``DateTime``, string, timestamp, or array (see the ``input`` option) |
++----------------------+-----------------------------------------------------------------------------+
+| Rendered as          | can be various tags (see below)                                             |
++----------------------+-----------------------------------------------------------------------------+
+| Options              | - ``widget``                                                                |
+|                      | - ``input``                                                                 |
+|                      | - ``with_seconds``                                                          |
+|                      | - ``hours``                                                                 |
+|                      | - ``minutes``                                                               |
+|                      | - ``seconds``                                                               |
+|                      | - ``data_timezone``                                                         |
+|                      | - ``user_timezone``                                                         |
++----------------------+-----------------------------------------------------------------------------+
+| Parent type          | form                                                                        |
++----------------------+-----------------------------------------------------------------------------+
+| Class                | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\TimeType`          |
++----------------------+-----------------------------------------------------------------------------+
 
 Basic Usage
 -----------

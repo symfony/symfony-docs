@@ -34,13 +34,15 @@ bundle class name must follow these simple rules:
 
 Here are some valid bundle namespaces and class names:
 
-=================================== ==============================
-Namespace                           Bundle Class Name
-=================================== ==============================
-``Acme\Bundle\BlogBundle``          ``AcmeBlogBundle``
-``Acme\Bundle\Social\BlogBundle``   ``AcmeSocialBlogBundle``
-``Acme\BlogBundle``                 ``AcmeBlogBundle``
-=================================== ==============================
++-----------------------------------+--------------------------+
+| Namespace                         | Bundle Class Name        |
++===================================+==========================+
+| ``Acme\Bundle\BlogBundle``        | ``AcmeBlogBundle``       |
++-----------------------------------+--------------------------+
+| ``Acme\Bundle\Social\BlogBundle`` | ``AcmeSocialBlogBundle`` |
++-----------------------------------+--------------------------+
+| ``Acme\BlogBundle``               | ``AcmeBlogBundle``       |
++-----------------------------------+--------------------------+
 
 By convention, the ``getName()`` method of the bundle class should return the
 class name.
@@ -104,17 +106,23 @@ files are going to be part of the repository.
 
 The following classes and files have specific emplacements:
 
-========================= ===========================
-Type                      Directory
-========================= ===========================
-Controllers               ``Controller/``
-Translation files         ``Resources/translations/``
-Templates                 ``Resources/views/``
-Unit and Functional Tests ``Tests/``
-Web Resources             ``Resources/public/``
-Configuration             ``Resources/config/``
-Commands                  ``Command/``
-========================= ===========================
++---------------------------+-----------------------------+
+| Type                      | Directory                   |
++===========================+=============================+
+| Controllers               | ``Controller/``             |
++---------------------------+-----------------------------+
+| Translation files         | ``Resources/translations/`` |
++---------------------------+-----------------------------+
+| Templates                 | ``Resources/views/``        |
++---------------------------+-----------------------------+
+| Unit and Functional Tests | ``Tests/``                  |
++---------------------------+-----------------------------+
+| Web Resources             | ``Resources/public/``       |
++---------------------------+-----------------------------+
+| Configuration             | ``Resources/config/``       |
++---------------------------+-----------------------------+
+| Commands                  | ``Command/``                |
++---------------------------+-----------------------------+
 
 Classes
 -------

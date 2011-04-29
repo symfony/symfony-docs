@@ -4,12 +4,22 @@ Choice
 The ``Choice`` constraint validates that a given value is one or more of
 a list of given choices.
 
-==============  ======
-Validates       a scalar value or an array of scalar values (if ``multiple`` is true)
-Options         ``choices``, ``callback``, ``multiple``, ``min``, ``max``, ``message``, ``minMessage``, ``maxMessage``
-Default Option  ``choices``
-Class           :class:`Symfony\\Component\\Validator\\Constraints\\Choice`
-==============  ======
++----------------+-----------------------------------------------------------------------+
+| Validates      | a scalar value or an array of scalar values (if ``multiple`` is true) |
++----------------+-----------------------------------------------------------------------+
+| Options        | - ``choices``                                                         |
+|                | - ``callback``                                                        |
+|                | - ``multiple``                                                        |
+|                | - ``min``                                                             |
+|                | - ``max``                                                             |
+|                | - ``message``                                                         |
+|                | - ``minMessage``                                                      |
+|                | - ``maxMessage``                                                      |
++----------------+-----------------------------------------------------------------------+
+| Default Option | ``choices``                                                           |
++----------------+-----------------------------------------------------------------------+
+| Class          | :class:`Symfony\\Component\\Validator\\Constraints\\Choice`           |
++----------------+-----------------------------------------------------------------------+
 
 Available Options
 -----------------

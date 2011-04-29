@@ -4,11 +4,11 @@
 How to create Fixtures in Symfony2
 ==================================
 
-Fixtures are used to load a controlled set of data into a database. This
-data can be used for testing or could be the initial data required for the
+Fixtures are used to load a controlled set of data into a database. This data
+can be used for testing or could be the initial data required for the
 application to run smoothly. Symfony2 has no built in way to manage fixtures
 but Doctrine2 has a library to help you write fixtures for the Doctrine
-:doc:`ORM</book/doctrine/orm/overview>` or :doc:`ODM</cookbook/doctrine/mongodb>`.
+:doc:`ORM</book/doctrine/orm>` or :doc:`ODM</cookbook/doctrine/mongodb>`.
 
 Setup and Configuration
 -----------------------
