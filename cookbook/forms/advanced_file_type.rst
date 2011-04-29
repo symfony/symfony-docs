@@ -116,6 +116,8 @@ are services, this can be configured in your dependency injection configuration.
             form.type.file:
                 class: Acme\MyBundle\Form\AssetType
                 arguments: [path/to/web/dir]
+                tags:
+                    - { name: form.type, alias: file }
 
     .. code-block:: xml
 
@@ -132,11 +134,16 @@ are services, this can be configured in your dependency injection configuration.
         // app/config/services.php
         use Symfony\Component\DependencyInjection\Definition;
 
-        $container->setDefinition('form.type.file', new Definition(
-            'Acme\MyBundle\Form\AssetType',
-            array('path/to/web/dir'),
-        ));
+        $definition = new Definition('Acme\MyBundle\Form\AssetType', array('path/to/web/dir'));
+        $definition->addTag('form.type', array('alias' => 'file'));
+        $container->setDefinition('form.type.file', $definition);
 
+.. note::
+    The tag ``form.type`` on your service tells the Form Factory to accept 
+    this service as a field type.  In other words, any service with this
+    tag can be loaded as a form type.  Give your tag a unique alias to
+    create a new form type, rather than substituting out an existing one.
+    
 All ``file`` form types will now use your ``AssetType`` class.  The example
 below illustrates the use of the new AssetType class.  We add an ``attachment``
 file field to the ``GenericBlog`` class, and tell it to place the files in
