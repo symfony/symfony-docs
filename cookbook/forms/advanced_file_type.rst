@@ -9,10 +9,8 @@ Create a new field type
 
 We will first need to create a new field type class.  We will extend ``FileType``
 for this example, and call our class ``AssetType``, as it represents the
-location we will be placing our assets.  Our field type will support the
-options ``path`` and ``keep_filename``.  The ``path`` option will specify
-where the asset should be placed, and the ``keep_filename`` option, when
-set to ``true`` will retain the uploaded file's name.
+location we will be placing our assets.  Our field type will support a ``path``
+option.  This option will specify where the asset should be placed.
 
 .. code-block:: html+php
 
@@ -40,8 +38,7 @@ set to ``true`` will retain the uploaded file's name.
                     new FileToStringTransformer()))
                 ->appendNormTransformer(new FileToArrayTransformer())
                 ->addEventSubscriber(new MoveFileUploadListener(
-                    $this->assetDir . '/' . $options['path'],
-                    $options['keep_filename']), 10)
+                    $this->assetDir . '/' . $options['path']), 10)
                 ->add('file', 'field')
                 ->add('token', 'hidden')
                 ->add('name', 'hidden');
@@ -51,7 +48,6 @@ set to ``true`` will retain the uploaded file's name.
         {
             return array(
                 'path' => 'uploads',
-                'keep_filename' => true,
             );
         }
     }
@@ -60,8 +56,7 @@ The main difference between our class and ``FileType`` is the ``MoveFileUploadLi
 class.  This replaces the ``FixFileUploadListener`` that was there before.
 The difference is that ``MoveFileUploadListener`` is a class listening to
 the form event, and will execute before the field values are returned. This
-class takes a destination as its first argument, and whether or not to preserve
-the original filename as the second argument.
+class takes the new file location as its first argument.
 
 .. code-block:: html+php
 
@@ -74,12 +69,10 @@ the original filename as the second argument.
     class MoveFileUploadListener implements EventSubscriberInterface
     {
         protected $newLocation;
-        protected $keepFilename;
 
-        public function __construct($newLocation, $keepFilename = false)
+        public function __construct($newLocation)
         {
             $this->newLocation = $newLocation;
-            $this->keepFilename = $keepFilename;
         }
 
         public static function getSubscribedEvents()
@@ -93,9 +86,9 @@ the original filename as the second argument.
 
             // Newly uploaded file
             if ($data['file'] instanceof UploadedFile && $data['file']->isValid()) {
-                $filename = $this->keepFilename ? $data['file']->getOriginalName() : null;
+                $filename = sprintf('%s.%s', $data['file']->getName(), $data['file']->getExtension());
                 $data['file']->move($this->newLocation, $filename);
-                $data['name'] = $data['file']->getName();
+                $data['name'] = $filename;
             }
 
             $event->setData($data);
@@ -147,7 +140,7 @@ are services, this can be configured in your dependency injection configuration.
 All ``file`` form types will now use your ``AssetType`` class.  The example
 below illustrates the use of the new AssetType class.  We add an ``attachment``
 file field to the ``GenericBlog`` class, and tell it to place the files in
-the ``uploads/attachments`` directory, and to preserve the filename.
+the ``uploads/attachments`` directory.
 
 .. code-block:: php
 
@@ -158,7 +151,6 @@ the ``uploads/attachments`` directory, and to preserve the filename.
             $builder->add('name');
             $builder->add('attachment', 'file', array(
                 'path' => 'uploads/attachments',
-                'keep_filename' => true
             ));
         }
 
