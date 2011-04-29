@@ -1,15 +1,18 @@
 Advanced File Type Usage
 ========================
 
-The following cookbook recipe outlines how to extend the FileType field to customize the location of your uploads
+The following cookbook recipe outlines how to extend the FileType field
+to customize the location of your uploads
 
 Create a new field type
 -----------------------
 
-We will first need to create a new field type class.  We will extend ``FileType`` for this example, and call our class
-``AssetType``, as it represents the location we will be placing our assets.  Our field type will support the options
-``path`` and ``keep_filename``.  The ``path`` option will specify where the asset should be placed, and the ``keep_filename``
-option, when set to ``true`` will retain the uploaded file's name.
+We will first need to create a new field type class.  We will extend ``FileType``
+for this example, and call our class ``AssetType``, as it represents the
+location we will be placing our assets.  Our field type will support the
+options ``path`` and ``keep_filename``.  The ``path`` option will specify
+where the asset should be placed, and the ``keep_filename`` option, when 
+set to ``true`` will retain the uploaded file's name.
 
 .. code-block:: html+php
 
@@ -33,9 +36,12 @@ option, when set to ``true`` will retain the uploaded file's name.
         public function buildForm(FormBuilder $builder, array $options)
         {
             $builder
-                ->appendNormTransformer(new ReversedTransformer(new FileToStringTransformer()))
+                ->appendNormTransformer(new ReversedTransformer(
+                    new FileToStringTransformer()))
                 ->appendNormTransformer(new FileToArrayTransformer())
-                ->addEventSubscriber(new MoveFileUploadListener($this->assetDir . '/' . $options['path'], $options['keep_filename']), 10)
+                ->addEventSubscriber(new MoveFileUploadListener(
+                    $this->assetDir . '/' . $options['path'], 
+                    $options['keep_filename']), 10)
                 ->add('file', 'field')
                 ->add('token', 'hidden')
                 ->add('name', 'hidden');
@@ -50,10 +56,12 @@ option, when set to ``true`` will retain the uploaded file's name.
         }
     }
 
-The main difference between our class and ``FileType`` is the ``MoveFileUploadListener`` class.  This replaces the
-``FixFileUploadListener`` that was there before.  The difference is that ``MoveFileUploadListener`` is a class listening
-to the form event, and will execute before the field values are returned.  This class takes a destination as its first
-argument, and whether or not to preserve the original filename as the second argument.
+The main difference between our class and ``FileType`` is the ``MoveFileUploadListener``
+class.  This replaces the ``FixFileUploadListener`` that was there before.  
+The difference is that ``MoveFileUploadListener`` is a class listening to
+the form event, and will execute before the field values are returned. This
+class takes a destination as its first argument, and whether or not to preserve
+the original filename as the second argument.
 
 .. code-block:: html+php
 
@@ -85,7 +93,8 @@ argument, and whether or not to preserve the original filename as the second arg
 
             // Newly uploaded file
             if ($data['file'] instanceof UploadedFile && $data['file']->isValid()) {
-                $data['file']->move($this->newLocation, $this->keepFilename ? $data['file']->getOriginalName() : null);
+                $filename = $this->keepFilename ? $data['file']->getOriginalName() : null;
+                $data['file']->move($this->newLocation, $filename);
                 $data['name'] = $data['file']->getName();
             }
 
@@ -93,9 +102,10 @@ argument, and whether or not to preserve the original filename as the second arg
         }
     }
 
-This function moves the file to its new location, sets the new name in the event data, and returns the data successfully.
-The final step remaining is setting our new field type in our service container.  Because all field types are services,
-this can be configured in your dependency injection configuration.
+This function moves the file to its new location, sets the new name in the
+event data, and returns the data successfully. The final step remaining is
+setting our new field type in our service container.  Because all field types
+are services, this can be configured in your dependency injection configuration.
 
 .. configuration-block::
 
@@ -127,9 +137,10 @@ this can be configured in your dependency injection configuration.
             array('path/to/web/dir'),
         ));
 
-All ``file`` form types will now use your ``AssetType`` class.  The example below illustrates the use of the
-new AssetType class.  We add an ``attachment`` file field to the ``GenericBlog`` class, and tell it to place
-the files in the ``uploads/attachments`` directory, and to preserve the filename.
+All ``file`` form types will now use your ``AssetType`` class.  The example
+below illustrates the use of the new AssetType class.  We add an ``attachment``
+file field to the ``GenericBlog`` class, and tell it to place the files in
+the ``uploads/attachments`` directory, and to preserve the filename.
 
 .. code-block:: php
 

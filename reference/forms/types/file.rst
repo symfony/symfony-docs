@@ -19,8 +19,8 @@ The ``file`` type represents a file input in your form.
 Basic Usage
 -----------
 
-Files are uploaded to the server and set to a cached path by default.  To move the file to a
-specific path, take the configuration example below
+Files are uploaded to the server and set to a cached path by default.  To
+move the file to a specific path, take the configuration example below:
 
 .. code-block:: php
 
@@ -28,7 +28,8 @@ specific path, take the configuration example below
         'type'  => 'object',
     ));
 
-Your entity will now be passed a ``File`` instance when it is bound.  You can modify your entity setter like this:
+Your entity will now be passed a ``File`` instance when it is bound.  You 
+can modify your entity setter like this:
 
 .. code-block:: php
 
@@ -44,7 +45,7 @@ Options
 -------
 
 * ``type`` [type: string, default: ``string``]
-  The input will be returned from the widget in this format.  Valid options are ``string`` 
-  and ``object``.  If set  to ``object``, an instance of  
-  :class:Symfony\\Component\\HttpFoundation\\File\\File is returned.  If set to ``string``, 
-  the path of the newly uploaded file is returned.
+  The input will be returned from the widget in this format.  Valid options
+  are ``string`` and ``object``.  If set  to ``object``, an instance of  
+  :class:Symfony\\Component\\HttpFoundation\\File\\File is returned.  If
+  set to ``string``, the path of the newly uploaded file is returned.
