@@ -34,7 +34,7 @@ your controller::
 
     $logger = $this->get('logger');
     $logger->info('We just go the logger');
-    $logger->err('An error occured');
+    $logger->err('An error occurred');
 
 .. tip::
 

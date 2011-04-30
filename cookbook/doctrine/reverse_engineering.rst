@@ -60,10 +60,10 @@ tables fields.
 
 .. code-block:: bash
 
-    php app/console doctrine:mapping:convert xml ./src/Acme/BlogBundle/Resources/config/doctrine/metada/orm --from-database --force
+    php app/console doctrine:mapping:convert xml ./src/Acme/BlogBundle/Resources/config/doctrine/metadata/orm --from-database --force
 
 This command line tool asks Doctrine to introspect the database and generate
-the XML metadata files under the ``src/Acme/BlogBundle/Resources/config/doctrine/metada/orm``
+the XML metadata files under the ``src/Acme/BlogBundle/Resources/config/doctrine/metadata/orm``
 folder of your bundle.
 
 .. tip::
