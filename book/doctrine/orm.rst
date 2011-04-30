@@ -341,44 +341,6 @@ The following configuration shows a bunch of mapping examples:
                     prefix: DoctrineExtensions\Entity\
                     alias: DExt
 
-Registering Event Listeners and Subscribers
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Doctrine uses the lightweight ``Doctrine\Common\EventManager`` class to trigger
-a number of different events which you can hook into. You can register Event
-Listeners or Subscribers by tagging the respective services with
-``doctrine.dbal.<connection>_event_listener`` or
-``doctrine.dbal.<connection>_event_subscriber`` using the Dependency Injection
-container.
-
-You have to use the name of the DBAL connection to clearly identify which
-connection the listeners should be registered with. If you are using multiple
-connections you can hook different events into each connection.
-
-.. code-block:: xml
-
-    <container xmlns="http://symfony.com/schema/dic/services"
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
-
-        <services>
-
-            <service id="doctrine.extensions.versionable_listener" class="DoctrineExtensions\Versionable\VersionableListener">
-                <tag name="doctrine.dbal.default_event_subscriber" />
-            </service>
-
-            <service id="mybundle.doctrine.mylistener" class="MyBundle\Doctrine\MyListener">
-                <tag name="doctrine.dbal.default_event_listener" event="prePersist" />
-            </service>
-
-        </services>
-
-    </container>
-
-Although the Event Listener and Subscriber tags are prefixed with ``doctrine.dbal``
-these tags also work for the ORM events. Internally Doctrine re-uses the EventManager
-that is registered with the connection for the ORM.
-
 Multiple Entity Managers
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -425,18 +387,50 @@ retrieve it from the Symfony Dependency Injection Container::
 The service ``doctrine.orm.entity_manager`` is an alias for the default entity
 manager defined in the ``default_entity_manager`` configuration option.
 
+Registering Event Listeners and Subscribers
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+.. code-block:: xml
+
+    <container xmlns="http://symfony.com/schema/dic/services"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+        <services>
+
+            <service id="doctrine.extensions.versionable_listener" class="DoctrineExtensions\Versionable\VersionableListener">
+                <tag name="doctrine.dbal.default_event_subscriber" />
+            </service>
+
+            <service id="mybundle.doctrine.mylistener" class="MyBundle\Doctrine\MyListener">
+                <tag name="doctrine.dbal.default_event_listener" event="prePersist" />
+            </service>
+
+        </services>
+
+    </container>
+
+Although the Event Listener and Subscriber tags are prefixed with ``doctrine.dbal``
+these tags also work for the ORM events. Internally Doctrine re-uses the EventManager
+that is registered with the connection for the ORM.
+
 .. _doctrine-event-config:
 
 Registering Event Listeners and Subscribers
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Doctrine ships with an event system that allows to hook into many different
-events happening during the lifecycle of entities or at other occasions.
+Doctrine uses the lightweight ``Doctrine\Common\EventManager`` class to
+trigger a number of different events which you can hook into. You can register
+Event Listeners or Subscribers by tagging the respective services with
+``doctrine.event_listener`` or ``doctrine.event_subscriber`` using the service
+container.
 
-To register services to act as event listeners or subscribers (listeners from here)
-you have to tag them with the appropriate names. Depending on your use-case you can hook
-a listener into every DBAL Connection and ORM Entity Manager or just into one
-specific DBAL connection and all the EntityManagers that use this connection.
+To register services to act as event listeners or subscribers (listeners from
+here) you have to tag them with the appropriate names. Depending on your
+use-case you can hook a listener into every DBAL Connection and ORM Entity
+Manager or just into one specific DBAL connection and all the EntityManagers
+that use this connection.
 
 .. configuration-block::
 
@@ -454,15 +448,15 @@ specific DBAL connection and all the EntityManagers that use this connection.
             my.listener:
                 class: MyEventListener
                 tags:
-                    - { name: doctrine.common.event_listener }
+                    - { name: doctrine.event_listener }
             my.listener2:
                 class: MyEventListener2
                 tags:
-                    - { name: doctrine.dbal.default_event_listener }
+                    - { name: doctrine.event_listener, connection: default }
             my.subscriber:
                 class: MyEventSubscriber
                 tags:
-                    - { name: doctrine.dbal.default_event_subscriber }
+                    - { name: doctrine.event_subscriber, connection: default }
 
     .. code-block:: xml
 
@@ -478,13 +472,13 @@ specific DBAL connection and all the EntityManagers that use this connection.
 
             <services>
                 <service id="my.listener" class="MyEventListener">
-                    <tag name="doctrine.common.event_listener" />
+                    <tag name="doctrine.event_listener" />
                 </service>
                 <service id="my.listener2" class="MyEventListener2">
-                    <tag name="doctrine.dbal.default_event_listener" />
+                    <tag name="doctrine.event_listener" connection="default" />
                 </service>
                 <service id="my.subscriber" class="MyEventSubscriber">
-                    <tag name="doctrine.dbal.default_event_subscriber" />
+                    <tag name="doctrine.event_subscriber" connection="default" />
                 </service>
             </services>
         </container>
