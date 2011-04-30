@@ -66,7 +66,7 @@ to the ``app/autoload.php`` file (see the :ref:`Autoloading sidebar<autoloading-
 .. code-block:: php
 
         $loader->registerNamespaces(array(
-            'Acme'                         => __DIR__.'/../src',
+            'Acme' => __DIR__.'/../src',
             // ...
         ));
 
@@ -268,7 +268,7 @@ of writing the HTML inside the controller, use a template instead::
 .. note::
 
    In order to use the ``render()`` method, you must extend the
-   :class:`Symfony\Bundle\FrameworkBundle\Controller\Controller` class, which
+   :class:`Symfony\\Bundle\\FrameworkBundle\\Controller\\Controller` class, which
    adds shortcuts for tasks that are common inside controllers.
 
 The ``render()`` method creates a ``Response`` object filled with the content
@@ -466,7 +466,7 @@ about each of these directories in later chapters.
     behalf the instance you need a class::
     
         $loader->registerNamespaces(array(
-            'Acme'                         => __DIR__.'/../src',
+            'Acme' => __DIR__.'/../src',
             // ...
         ));
     
@@ -619,8 +619,8 @@ tools later.
 
 .. tip::
 
-   Whenever creating a new bundle or using a third-party bundle, be sure
-   to always make sure that the bundle has been enabled in ``registerBundles()``.
+   Whenever creating a new bundle or using a third-party bundle, always make
+   sure the bundle has been enabled in ``registerBundles()``.
 
 Bundle Directory Structure
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
