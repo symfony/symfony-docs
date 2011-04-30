@@ -273,7 +273,7 @@ Symfony2 looks for message files (i.e. translations) in two locations:
   live in the ``Resources/translations/`` directory of the bundle;
 
 * To override any bundle translations, place message files in the
-  ``app/translations`` directory.
+  ``app/Resources/translations`` directory.
 
 The filename of the translations is also important as Symfony2 uses a convention
 to determine details about the translations. Each message file must be named
