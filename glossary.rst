@@ -27,7 +27,7 @@ Glossary
         lives inside a bundle. (see :ref:`page-creation-bundles`)
 
    Front Controller
-        A *Front Controller* is a short PHP that lives in the web directory
+        A *Front Controller* is a short PHP script that lives in the web directory
         of your project. Typically, *all* requests are handled by executing
         the same front controller, whose job is to bootstrap the Symfony
         application.

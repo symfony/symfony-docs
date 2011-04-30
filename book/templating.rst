@@ -1121,7 +1121,7 @@ and in Symfony2, that's absolutely fine.
 Learn more from the Cookbook
 ----------------------------
 
-* :doc:`/cookbook/controller/PHP`
+* :doc:`/cookbook/templating/PHP`
 * :doc:`/cookbook/controller/error_pages`
 
 .. _`Twig`: http://www.twig-project.org
