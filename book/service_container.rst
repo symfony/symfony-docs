@@ -404,19 +404,19 @@ invokes the service container extension inside the ``FrameworkBundle``:
 
         # app/config/config.yml
         framework:
+            secret:        xxxxxxxxxx
             charset:       UTF-8
             error_handler: null
             csrf_protection:
                 enabled: true
-                secret: xxxxxxxxxx
             router:        { resource: "%kernel.root_dir%/config/routing.yml" }
             # ...
 
     .. code-block:: xml
 
         <!-- app/config/config.xml -->
-        <framework:config charset="UTF-8" error-handler="null">
-            <framework:csrf-protection enabled="true" secret="xxxxxxxxxx" />
+        <framework:config charset="UTF-8" error-handler="null" secret="xxxxxxxxxx">
+            <framework:csrf-protection enabled="true" />
             <framework:router resource="%kernel.root_dir%/config/routing.xml" cache-warmer="true" />
             <!-- ... -->
         </framework>
@@ -425,9 +425,10 @@ invokes the service container extension inside the ``FrameworkBundle``:
 
         // app/config/config.php
         $container->loadFromExtension('framework', array(
+            'secret'          => 'xxxxxxxxxx',
             'charset'         => 'UTF-8',
             'error_handler'   => null,
-            'csrf-protection' => array('enabled' => true, 'secret' => 'xxxxxxxxxx'),
+            'csrf-protection' => array('enabled' => true),
             'router'          => array('resource' => '%kernel.root_dir%/config/routing.php'),
             // ...
         ));
