@@ -291,7 +291,7 @@ can control. The following configuration options exist for a mapping:
 - ``dir`` Path to the mapping or entity files (depending on the driver). If
   this path is relative it is assumed to be relative to the bundle root. This
   only works if the name of your mapping is a bundle name. If you want to use
-  this option to specifiy absolute paths you should prefix the path with the
+  this option to specify absolute paths you should prefix the path with the
   kernel parameters that exist in the DIC (for example %kernel.root_dir%).
 - ``prefix`` A common namespace prefix that all entities of this mapping
   share. This prefix should never conflict with prefixes of other defined
