@@ -567,7 +567,7 @@ URL:
             pattern:   /{culture}
             defaults:  { _controller: AcmeDemoBundle:Main:homepage, culture: en }
             requirements:
-                culture:  en|fr
+                culture:  en|fr|
 
     .. code-block:: xml
 
@@ -580,7 +580,7 @@ URL:
             <route id="homepage" pattern="/{culture}">
                 <default key="_controller">AcmeDemoBundle:Main:homepage</default>
                 <default key="culture">en</default>
-                <requirement key="culture">en|fr</requirement>
+                <requirement key="culture">en|fr|</requirement>
             </route>
         </routes>
 
@@ -594,13 +594,13 @@ URL:
             '_controller' => 'AcmeDemoBundle:Main:homepage',
             'culture' => 'en',
         ), array(
-            'culture' => 'en|fr',
+            'culture' => 'en|fr|',
         )));
 
         return $collection;
 
 For incoming requests, the ``{culture}`` portion of the URL is matched against
-the regular expression ``(en|fr)``.
+the regular expression ``(en|fr|)``.
 
 +-----+--------------------------+
 | /   | {culture} = en           |
