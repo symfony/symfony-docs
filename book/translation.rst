@@ -718,7 +718,7 @@ You can also specify the message domain and pass some additional variables:
         {0} There is no apples|{1} There is one apple|]1,Inf] There are %count% apples
     {% endtranschoice %}
 
-The ``trans`` and ``transchoice` filters can be used to translate *variable
+The ``trans`` and ``transchoice`` filters can be used to translate *variable
 texts* and complex expressions:
 
 .. code-block:: jinja
@@ -733,10 +733,21 @@ texts* and complex expressions:
 
 .. tip::
 
-    As the translation tags are just wrappers around static block of texts,
-    which are never escaped by Twig, automatic output escaping is never
-    applied; but the automatic output escaping rules apply to the output of
-    filters.
+    Using the translation tags or filters have the same effect, but with
+    one subtle difference: automatic output escaping is only applied to the
+    translated strings when using a filter. In other words, if you need to
+    be sure that your translated string is *not* output escaped, you must
+    apply the raw filter after the translation filter:
+    
+    .. code-block:: jinja
+
+            {# no change is needed - the translated text is never escaped #}
+            {% trans %}
+                <h3>foo</h3>
+            {% endtrans %}
+
+            {# With filters, you must unescape the translated text #}
+            {{ '<h3>foo</h3>' | trans | raw }}    
 
 PHP Templates
 ~~~~~~~~~~~~~
