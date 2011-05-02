@@ -664,9 +664,12 @@ The Client used by functional tests creates a Kernel that runs in a special
             toolbar: false
             intercept_redirects: false
 
-        zend:
-            logger:
-                priority: debug
+        monolog:
+            handlers:
+                main:
+                    type:  stream
+                    path:  %kernel.logs_dir%/%kernel.environment%.log
+                    level: debug
 
     .. code-block:: xml
 
@@ -685,9 +688,13 @@ The Client used by functional tests creates a Kernel that runs in a special
                 <framework:test />
             </framework:config>
 
-            <zend:config>
-                <zend:logger priority="debug" />
-            </zend:config>
+            <monolog:config>
+                <monolog:main
+                    type="stream"
+                    path="%kernel.logs_dir%/%kernel.environment%.log"
+                    level="debug"
+                 />               
+            </monolog:config>
         </container>
 
     .. code-block:: php
@@ -705,9 +712,13 @@ The Client used by functional tests creates a Kernel that runs in a special
             'intercept-redirects' => false,
         ));
 
-        $container->loadFromExtension('zend', array(
-            'logger' => array('priority' => 'debug'),
-        ));
+        $container->loadFromExtension('monolog', array(
+            'handlers' => array(
+                'main' => array('type' => 'stream',
+                                'path' => '%kernel.logs_dir%/%kernel.environment%.log'
+                                'level' => 'debug')
+           
+        )));
 
 You can also change the default environment (``test``) and override the
 default debug mode (``true``) by passing them as options to the

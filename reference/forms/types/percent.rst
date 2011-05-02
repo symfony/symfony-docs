@@ -1,8 +1,8 @@
 .. index::
    single: Forms; Fields; percent
 
-``percent`` Field Type
-======================
+percent Field Type
+==================
 
 
 The ``percent`` type renders an input text field and specializes in handling

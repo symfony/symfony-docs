@@ -1,8 +1,8 @@
 .. index::
    single: Forms; Fields; integer
 
-``integer`` Field Type
-======================
+integer Field Type
+==================
 
 Renders an input "number" field. Basically, this is a text field that's good
 at handling data that's in an integer form. The input ``number`` field looks

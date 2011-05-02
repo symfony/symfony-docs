@@ -320,7 +320,7 @@ Now, every request is handled exactly the same. Instead of individual URLs
 executing different PHP files, the front controller is *always* executed,
 and the routing of different URLs to different parts of your application
 is done internally. This solves both problems with the original approach.
-Almost all modern web apps do this - including apps like Wordpress.
+Almost all modern web apps do this - including apps like WordPress.
 
 Stay Organized
 ~~~~~~~~~~~~~~

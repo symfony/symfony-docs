@@ -1,8 +1,8 @@
 .. index::
    single: Forms; Fields; choice
 
-``entity`` Field Type
-=====================
+entity Field Type
+=================
 
 A special ``choice`` field that's designed to load options from a Doctrine
 entity. For example, if you have a ``Category`` entity, you could use this

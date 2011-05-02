@@ -1,8 +1,8 @@
 .. index::
    single: Forms; Fields; radio
 
-``radio`` Field Type
-====================
+radio Field Type
+================
 
 Creates a single radio button. This should always be used for a field that
 has a Boolean value: if the radio button is selected, the field will be set

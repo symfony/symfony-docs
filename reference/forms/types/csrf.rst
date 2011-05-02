@@ -1,8 +1,8 @@
 .. index::
    single: Forms; Fields; csrf
 
-``csrf`` Field Type
-===================
+csrf Field Type
+===============
 
 The ``csrf`` type is a hidden input field containing a CSRF token.
 

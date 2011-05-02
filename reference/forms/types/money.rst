@@ -1,8 +1,8 @@
 .. index::
    single: Forms; Fields; money
 
-``money`` Field Type
-====================
+money Field Type
+================
 
 Renders an input text field and specializes in handling submitted "money"
 data.
