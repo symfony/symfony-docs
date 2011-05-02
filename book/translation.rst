@@ -741,14 +741,14 @@ texts* and complex expressions:
 
     .. code-block:: jinja
 
-            {% message = '<h3>foo</h3>' %}
-
             {# text translated between tags is never escaped #}
             {% trans %}
-                {{ message }}
+                <h3>foo</h3>
             {% endtrans %}
 
-            {# a variable translated via a filter must be escaped #}
+            {% message = '<h3>foo</h3>' %}
+
+            {# a variable translated via a filter is escaped by default #}
             {{ message | trans | raw }}
 
             {# but static strings are never escaped #}
