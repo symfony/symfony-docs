@@ -12,9 +12,7 @@ for this example, and call our class ``AssetType``, as it represents the
 location we will be placing our assets.  Our field type will support a ``path``
 option.  This option will specify where the asset should be placed.
 
-.. code-block:: html+php
-
-    <?php
+.. code-block:: php
 
     namespace Acme\MyBundle\Form;
 
@@ -58,9 +56,7 @@ The difference is that ``MoveFileUploadListener`` is a class listening to
 the form event, and will execute before the field values are returned. This
 class takes the new file location as its first argument.
 
-.. code-block:: html+php
-
-    <?php
+.. code-block:: php
 
     namespace Acme\MyBundle\EventListener;
 
