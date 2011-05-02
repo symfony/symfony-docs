@@ -746,7 +746,7 @@ texts* and complex expressions:
                 <h3>foo</h3>
             {% endtrans %}
 
-            {% message = '<h3>foo</h3>' %}
+            {% set message = '<h3>foo</h3>' %}
 
             {# a variable translated via a filter is escaped by default #}
             {{ message | trans | raw }}
