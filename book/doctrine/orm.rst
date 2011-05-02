@@ -546,12 +546,12 @@ types such as strings, integers and fields. However you can also integrate
 them nicely with associations.
 
 This is done by the help of a dedicated field:
-:class:`Symfony\\Brigde\Doctrine\Form\Type\EntityType`. It provides a list of
+:class:`Symfony\\Bridge\\Doctrine\\Form\\Type\\EntityType`. It provides a list of
 choices from which an entity can be selected.
 
 .. code-block:: php
 
-    use Symfony\Component\Form\EntityChoiceField;
+    use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 
     $builder->add('users','entity',
          array('class' => 'Acme\\HelloBundle\\Entity\\User',
