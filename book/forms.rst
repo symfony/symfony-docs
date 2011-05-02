@@ -877,6 +877,9 @@ To customize any portion of a form, you just need to override the appropriate
 block. Knowing exactly which block to override is the subject of the next
 section.
 
+In the following section, you'll learn more about how to customize different
+portions of a form. For a more extensive discussion, see :doc:`/cookbook/form/twig_form_customization`.
+
 .. _form-template-blocks:
 
 Form Template Blocks
@@ -1079,6 +1082,7 @@ Learn more from the Cookbook
 * :doc:`Handling File Uploads </cookbook/forms/file_uploads>`
 * :doc:`Creating Custom Field Types </cookbook/forms/custom_field_types>`
 * :doc:`Dynamically adding Fields to a Form </cookbook/forms/dynamically_adding_fields>`
+* :doc:`/cookbook/form/twig_form_customization`
 
 .. _`Symfony2 Form Component`: https://github.com/symfony/Form
 .. _`div_layout.html.twig`: https://github.com/symfony/symfony/blob/master/src/Symfony/Bundle/TwigBundle/Resources/views/Form/div_layout.html.twig
