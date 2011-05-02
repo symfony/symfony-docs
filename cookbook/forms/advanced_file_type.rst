@@ -16,9 +16,12 @@ option.  This option will specify where the asset should be placed.
 
     namespace Acme\MyBundle\Form;
 
-    use Acme\MyBundle\EventListener;
-
-    // ... other namespaces
+    use Symfony\Component\Form\Extension\Core\Type\FileType;
+    use Symfony\Component\Form\FormBuilder;
+    use Symfony\Component\Form\ReversedTransformer;
+    use Symfony\Component\Form\Extension\Core\DataTransformer\FileToStringTransformer;
+    use Symfony\Component\Form\Extension\Core\DataTransformer\FileToArrayTransformer;
+    use Acme\StoreBundle\EventListener\MoveFileUploadListener;
 
     class AssetType extends FileType
     {
@@ -60,7 +63,11 @@ class takes the new file location as its first argument.
 
     namespace Acme\MyBundle\EventListener;
 
-    // ... other namespaces
+    use Symfony\Component\Form\Events;
+    use Symfony\Component\Form\Event\FilterDataEvent;
+    use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+    use Symfony\Component\HttpFoundation\File\File;
+    use Symfony\Component\HttpFoundation\File\UploadedFile;
 
     class MoveFileUploadListener implements EventSubscriberInterface
     {
