@@ -1,8 +1,8 @@
 .. index::
    single: Forms; Fields; choice
 
-``choice`` Field Type
-=====================
+choice Field Type
+=================
 
 A multi-purpose field used to allow the user to "choose" one or more options.
 It can be rendered as a ``select`` tag, radio buttons, or checkboxes.

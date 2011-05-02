@@ -1,8 +1,8 @@
 .. index::
    single: Forms; Fields; date
 
-``date`` Field Type
-===================
+date Field Type
+===============
 
 A field that allows the user to modify date information via a variety of
 different HTML elements.
@@ -76,7 +76,9 @@ Options
 
       * ``choice``: renders three select inputs.  The order of the selects
         is defined in the ``pattern`` option.
-    
+
+.. _form-reference-date-input:
+
 * ``input`` [type: string, default: ``datetime``]
     The value of the input for the widget.  Can be ``string``, ``datetime``
     or ``array``.  The form type input value will be returned  in the format

@@ -1,8 +1,8 @@
 .. index::
    single: Forms; Fields; hidden
 
-``hidden`` Field Type
-=====================
+hidden Field Type
+=================
 
 The hidden type represents a hidden input field.
 
