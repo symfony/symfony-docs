@@ -89,9 +89,8 @@ class takes the new file location as its first argument.
 
             // Newly uploaded file
             if ($data['file'] instanceof UploadedFile && $data['file']->isValid()) {
-                $filename = sprintf('%s.%s', $data['file']->getName(), $data['file']->getExtension());
-                $data['file']->move($this->newLocation, $filename);
-                $data['name'] = $filename;
+                $data['name'] = $data['file']->getName() . $data['file']->getExtension();
+                $data['file']->move($this->newLocation, $data['name']);
             }
 
             $event->setData($data);
