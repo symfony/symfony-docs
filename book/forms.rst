@@ -430,6 +430,8 @@ ability to guess field types.
 .. index::
    single: Forms; Rendering in a Template
 
+.. _form-rendering-template:
+
 Rendering a Form in a Template
 ------------------------------
 
@@ -836,9 +838,9 @@ do this, create a new template file that will store the new markup:
         {% block field_row %}
         {% spaceless %}
             <div class="form_row">
-                {{ form_label(form, label) }}
+                {{ form_label(form) }}
                 {{ form_errors(form) }}
-                {{ form_widget(form, _context) }}
+                {{ form_widget(form) }}
             </div>
         {% endspaceless %}
         {% endblock field_row %}
@@ -874,6 +876,8 @@ later in this template, it will use the ``field_row`` block from the
 To customize any portion of a form, you just need to override the appropriate
 block. Knowing exactly which block to override is the subject of the next
 section.
+
+.. _form-template-blocks:
 
 Form Template Blocks
 ~~~~~~~~~~~~~~~~~~~~
@@ -995,8 +999,12 @@ to define form output.
         {% block field_row %}
             {# custom field row output #}
         {% endblock field_row %}
-        
-        {{ form_row(form.name) }}
+
+        {% block content %}
+            {# ... #}
+            
+            {{ form_row(form.name) }}
+        {% endblock %}
 
     The ``{% form_theme form _self %}`` tag allows form blocks to be customized
     directly inside the template that will use those customizations. Use
