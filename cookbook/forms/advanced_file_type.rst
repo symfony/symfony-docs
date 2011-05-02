@@ -71,11 +71,11 @@ class takes the new file location as its first argument.
 
     class MoveFileUploadListener implements EventSubscriberInterface
     {
-        protected $newLocation;
+        protected $path;
 
-        public function __construct($newLocation)
+        public function __construct($path)
         {
-            $this->newLocation = $newLocation;
+            $this->path = $path;
         }
 
         public static function getSubscribedEvents()
@@ -90,7 +90,22 @@ class takes the new file location as its first argument.
             // Newly uploaded file
             if ($data['file'] instanceof UploadedFile && $data['file']->isValid()) {
                 $data['name'] = $data['file']->getName() . $data['file']->getExtension();
-                $data['file']->move($this->newLocation, $data['name']);
+                $data['file']->move($this->path, $data['name']);
+            }
+
+            // Existing uploaded file
+            if (!$data['file'] && $data['name']) {
+                $path = $this->path . DIRECTORY_SEPARATOR . $data ['name'];
+
+                if (file_exists($path)) {
+                    $data['file'] = new File($path);
+                }
+            }
+
+            // Clear other fields if we still don't have a file, but keep
+            // possible existing files of the field
+            if (!$data['file']) {
+                $data = $form->getNormData();
             }
 
             $event->setData($data);
