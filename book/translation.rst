@@ -738,18 +738,21 @@ texts* and complex expressions:
     variables translated using a filter. In other words, if you need to
     be sure that your translated variable is *not* output escaped, you must
     apply the raw filter after the translation filter:
-    
+
     .. code-block:: jinja
 
             {% message = '<h3>foo</h3>' %}
 
-            {# no change is needed - the translated text is never escaped #}
+            {# text translated between tags is never escaped #}
             {% trans %}
                 {{ message }}
             {% endtrans %}
 
-            {# With filters, you must unescape the translated text #}
-            {{ message | trans | raw }}    
+            {# a variable translated via a filter must be escaped #}
+            {{ message | trans | raw }}
+
+            {# but static strings are never escaped #}
+            {{ '<h3>foo</h3>' | trans }}
 
 PHP Templates
 ~~~~~~~~~~~~~
