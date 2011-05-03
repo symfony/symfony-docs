@@ -834,6 +834,7 @@ do this, create a new template file that will store the new markup:
     .. code-block:: html+jinja
     
         {# src/Acme/StoreBundle/Resources/views/Form/fields.html.twig #}
+        {% extends 'TwigBundle:Form:div_layout.html.twig' %}
     
         {% block field_row %}
         {% spaceless %}
@@ -998,6 +999,7 @@ to define form output.
         {% extends '::base.html.twig' %}
         
         {% form_theme form _self %}
+        {% use 'TwigBundle:Form:div_layout.html.twig' %}
 
         {% block field_row %}
             {# custom field row output #}
@@ -1013,6 +1015,19 @@ to define form output.
     directly inside the template that will use those customizations. Use
     this method to quickly make form output customizations that will only
     ever be needed in a single template.
+    
+    The ``use`` tag is also helpful as it gives you access to all of the
+    blocks defined inside ``div_layout.html.twig``. For example, this ``use``
+    statement is necessary to make the following form customization, as it
+    gives you access to the ``attributes`` block defined in ``div_layout.html.twig``:
+
+    .. code-block:: html+jinja
+
+        {% block text_widget %}
+            <div class="text_widget">
+                <input type="text" {{ block('attributes') }} value="{{ value }}" />
+            </div>
+        {% endblock %}
 
 .. index::
    single: Forms; CSRF Protection
