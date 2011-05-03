@@ -36,6 +36,19 @@ above templates would render:
         <input type="text" id="form_name" name="form[name]" />
     </div>
 
+To quickly prototype and test a form, you can render the entire form with
+just one line:
+
+.. configuration-block::
+
+    .. code-block:: jinja
+
+        {{ form_widget(form) }}
+
+    .. code-block:: php
+
+        <?php echo $view['form']->widget($form) ?>
+
 The remainder of this recipe will explain how every part of the form's markup
 can be modified at several different levels. For more information about form
 rendering in general, see :ref:`form-rendering-template`.
