@@ -53,7 +53,8 @@ Glossary
         an application. Instead of creating services directly, the developer
         *trains* the service container (via configuration) on how to create
         the services. The service container takes care of lazily instantiating
-        and injecting dependent services.
+        and injecting dependent services. See :doc:`/book/service_container` 
+	chapter.
 
    HTTP Specification
         The *Http Specification* is a document that describes the Hypertext
@@ -71,25 +72,76 @@ Glossary
         to have a ``dev`` environment built for debugging and a ``prod`` environment
         that's optimized for speed.
 
-   vendor
-        A *vendor* is a supplier of third-party PHP libraries and
-        bundles. Despite the usual commercial connotations of the word, vendors
+   Vendor
+        A *vendor* is a supplier of PHP libraries and bundles including Symfony2
+        itself. Despite the usual commercial connotations of the word, vendors
         in Symfony often (even usually) include free software. Any library you
-        add to your Symfoony project should go in the `vendor` directory. See
-        `Architecture: Using Vendors`_.
+        add to your Symfony2 project should go in the ``vendor`` directory. See
+        :ref:`The Architecture: Using Vendors <using-vendors>`.
 
    Acme
         *Acme* is a sample company name used in Symfony demos and
         documentation. For example, it's used as a namespace where you would
-        normally use your own company's name.  See `Acme Corporation at
-        Wikipedia`_.
+        normally use your own company's name.  See 
+	`Acme Corporation at Wikipedia`_.
 
    Action
-	An *action* is a 
-See the :doc:/book/controller chapter.
+	An *action* is controller code that executes for a given
+	route. Synonomous with *controller*, but most *controller* PHP classes
+	include several *actions*. See the 
+	:doc:`Controller Chapter </book/controller>`.
+
+   Asset
+        An *asset* is any non-executable, static component of a web application,
+        including CSS, js, images and video. Assets may be placed directly in
+        the project's ``web`` directory, or published from a :term:`Bundle` to the web
+        directory using the ``assets:install`` console task.
+
+   Kernel
+        The *Kernel* is the core of Symfony2. The Kernel object handles HTTP
+        requests using all the bundles and libraries registered to it. See
+        :ref:`The Architecture: The Application Directory <the-app-dir>` and the
+        :doc:`book/internals/kernel` chapter.
+
+   Firewall
+        In Symfony2, a *Firewall* doesn't have to do with networking. Instead,
+        it defines the authentication mechanisms, either for the whole
+        application or for just a part of it. See the
+        :doc:`book/security/overview` chapters.
+
+   YAML 
+	*YAML* is a recursive acronym for "YAML Ain't a Markup Language". It's a
+	lightweight, humane data serialization language used extensively in
+	Symfony2's configuration files.  See the :doc:`reference/YAML` reference
+	chapter.
+
+
+TODO
+====
+
+Logical Name
+
+Routing
+Resource
+
+Entity (Doctrine)
+Entity Repository (Doctrine)
+   is the new Table / Peer . http://www.doctrine-project.org/docs/orm/2.0/en/tutorials/getting-started-xml-edition.html#entity-repositories
+
+Namespace
+
+Proxy (Doctrine)
+       A proxy object is an object that is put in place or used instead of the "real" object. See http://www.doctrine-project.org/docs/orm/2.0/en/reference/configuration.html#proxy-objects
+
+Also link to book sections about Environments etc http://symfony.com/doc/2.0/book/page_creation.html
+
+
+Slots
+ still exist but they're mostly hidden if you use Twig templates. More obvious in the PHP templates.
+
+
 
 .. _`service-oriented architecture`: http://wikipedia.org/wiki/Service-oriented_architecture
 .. _`HTTP Wikipedia`: http://en.wikipedia.org/wiki/Hypertext_Transfer_Protocol
 .. _`HTTP 1.1 RFC`: http://www.w3.org/Protocols/rfc2616/rfc2616.html
-.. _`Architecture: Using Vendors`:http://symfony.com/doc/2.0/quick_tour/the_architecture.html#using-vendors
-.. _`Acme Corporation at Wikipedia`:http://en.wikipedia.org/wiki/Acme_Corporation
+.. _`Acme Corporation at Wikipedia`: http://en.wikipedia.org/wiki/Acme_Corporation
