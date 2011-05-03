@@ -34,4 +34,4 @@ If your problem definitely looks like a bug, report it using the official bug
 .. _users mailing-list: http://groups.google.com/group/symfony-users
 .. _forum: http://forum.symfony-project.org/
 .. _IRC channel: irc://irc.freenode.net/symfony
-.. _tracker: http://trac.symfony-project.org/
+.. _tracker: https://github.com/symfony/symfony/issues
