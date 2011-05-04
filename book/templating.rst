@@ -369,19 +369,19 @@ Symfony2 uses a **bundle**:**controller**:**template** string syntax for
 templates. This allows for several different types of templates, each which
 lives in a specific location:
 
-* ``AcmeBlogBundle:index.html.twig``: This syntax is used to specify a template
-  for a specific page. The three parts of the string, each separated by
-  a colon (``:``), mean the following:
-  
-    * ``AcmeBlog``: (*bundle*) the template lives inside the ``AcmeBlogBundle``
-      (e.g. ``src/Acme/BlogBundle``);
+* ``AcmeBlogBundle:Blog:index.html.twig``: This syntax is used to specify a
+  template for a specific page. The three parts of the string, each separated
+  by a colon (``:``), mean the following:
+
+    * ``AcmeBlogBundle``: (*bundle*) the template lives inside the
+      ``AcmeBlogBundle`` (e.g. ``src/Acme/BlogBundle``);
 
     * ``Blog``: (*controller*) indicates that the template lives inside the
       ``Blog`` subdirectory of ``Resources/views``;
 
     * ``index.html.twig``: (*template*) the actual name of the file is
       ``index.html.twig``.
-  
+
   Assuming that the ``AcmeBlogBundle`` lives at ``src/Acme/BlogBundle``, the
   final path to the layout would be ``src/Acme/BlogBundle/Resources/views/Blog/index.html.twig``.
 

@@ -463,7 +463,7 @@ about each of these directories in later chapters.
     Because of the autoloader, you never need to worry about using ``include``
     or ``require`` statements. Instead, Symfony2 uses the namespace of a class
     to determine its location and automatically includes the file on your
-    behalf the instance you need a class::
+    behalf the instant you need a class::
     
         $loader->registerNamespaces(array(
             'Acme' => __DIR__.'/../src',

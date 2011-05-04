@@ -14,8 +14,9 @@ persistence for PHP objects.
     official `documentation`_ website.
 
 To get started, enable and configure the :doc:`Doctrine DBAL
-</book/doctrine/dbal>`, then enable the ORM. The minimal necessary
-configuration is to specify the bundle name which contains your entities.
+</book/doctrine/dbal>`, then enable the ORM. If you follow the conventions
+described in this chapter, you just need to tell Doctrine to auto map your
+entities:
 
 .. configuration-block::
 
@@ -107,7 +108,7 @@ write mapping information with annotations, XML, or YAML:
 
     .. code-block:: yaml
 
-        # Acme/HelloBundle/Resources/config/doctrine/metadata/orm/Acme.HelloBundle.Entity.User.dcm.yml
+        # Acme/HelloBundle/Resources/config/Acme.HelloBundle.Entity.User.orm.dcm.yml
         Acme\HelloBundle\Entity\User:
             type: entity
             table: user
@@ -123,7 +124,7 @@ write mapping information with annotations, XML, or YAML:
 
     .. code-block:: xml
 
-        <!-- Acme/HelloBundle/Resources/config/doctrine/metadata/orm/Acme.HelloBundle.Entity.User.dcm.xml -->
+        <!-- Acme/HelloBundle/Resources/config/Acme.HelloBundle.Entity.User.orm.dcm.xml -->
         <doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
               xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
@@ -149,6 +150,11 @@ write mapping information with annotations, XML, or YAML:
     of the Entity class, and let the ``doctrine:generate:entities`` command do
     it for you.
 
+.. tip::
+
+    Instead of creating one file per entity, you can also define all your
+    mapping information into a single ``doctrine.orm.dcm.yml`` file.
+
 Create the database and the schema related to your metadata information with
 the following commands:
 
@@ -173,7 +179,7 @@ Eventually, use your entity and manage its persistent state with Doctrine:
             $user = new User();
             $user->setName('Jonathan H. Wage');
 
-            $em = $this->get('doctrine.orm.entity_manager');
+            $em = $this->get('registry')->getEntityManager();
             $em->persist($user);
             $em->flush();
 
@@ -182,7 +188,7 @@ Eventually, use your entity and manage its persistent state with Doctrine:
 
         public function editAction($id)
         {
-            $em = $this->get('doctrine.orm.entity_manager');
+            $em = $this->get('registry')->getEntityManager();
             $user = $em->find('AcmeHelloBundle:User', $id);
             $user->setBody('new body');
             $em->persist($user);
@@ -193,7 +199,7 @@ Eventually, use your entity and manage its persistent state with Doctrine:
 
         public function deleteAction($id)
         {
-            $em = $this->get('doctrine.orm.entity_manager');
+            $em = $this->get('registry')->getEntityManager();
             $user = $em->find('AcmeHelloBundle:User', $id);
             $em->remove($user);
             $em->flush();
@@ -204,8 +210,8 @@ Eventually, use your entity and manage its persistent state with Doctrine:
 
 Now the scenario arises where you want to change your mapping information and
 update your development database schema without blowing away everything and
-losing your existing data. So first let's just add a new property to our ``User``
-entity:
+losing your existing data. So first let's just add a new property to our
+``User`` entity:
 
 .. code-block:: php
 
@@ -236,8 +242,8 @@ Configuration
 -------------
 
 In the overview we already described the only necessary configuration option
-"mappings" to get the Doctrine ORM running with Symfony 2. All the other
-configuration options are used with reasonable default values.
+to get the Doctrine ORM running with Symfony 2. All the other configuration
+options are used with reasonable default values.
 
 This following configuration example shows all the configuration defaults that
 the ORM resolves to:
@@ -286,23 +292,27 @@ Explicit definition of all the mapped entities is the only necessary
 configuration for the ORM and there are several configuration options that you
 can control. The following configuration options exist for a mapping:
 
-- ``type`` One of ``annotations``, ``xml``, ``yml``, ``php`` or ``staticphp``.
+* ``type`` One of ``annotations``, ``xml``, ``yml``, ``php`` or ``staticphp``.
   This specifies which type of metadata type your mapping uses.
-- ``dir`` Path to the mapping or entity files (depending on the driver). If
+
+* ``dir`` Path to the mapping or entity files (depending on the driver). If
   this path is relative it is assumed to be relative to the bundle root. This
   only works if the name of your mapping is a bundle name. If you want to use
   this option to specify absolute paths you should prefix the path with the
   kernel parameters that exist in the DIC (for example %kernel.root_dir%).
-- ``prefix`` A common namespace prefix that all entities of this mapping
+
+* ``prefix`` A common namespace prefix that all entities of this mapping
   share. This prefix should never conflict with prefixes of other defined
   mappings otherwise some of your entities cannot be found by Doctrine. This
   option defaults to the bundle namespace + ``Entity``, for example for an
   application bundle called ``AcmeHelloBundle`` prefix would be
   ``Acme\HelloBundle\Entity``.
-- ``alias`` Doctrine offers a way to alias entity namespaces to simpler,
-  shorter names to be used in DQL queries or for Repository access. When using a
-  bundle the alias defaults to the bundle name.
-- ``is_bundle`` This option is a derived value from ``dir`` and by default is
+
+* ``alias`` Doctrine offers a way to alias entity namespaces to simpler,
+  shorter names to be used in DQL queries or for Repository access. When using
+  a bundle the alias defaults to the bundle name.
+
+* ``is_bundle`` This option is a derived value from ``dir`` and by default is
   set to true if dir is relative proved by a ``file_exists()`` check that
   returns false. It is false if the existence check returns true. In this case
   an absolute path was specified and the metadata files are most likely in a
@@ -312,12 +322,14 @@ To avoid having to configure lots of information for your mappings you should
 follow these conventions:
 
 1. Put all your entities in a directory ``Entity/`` inside your bundle. For
-   example ``Acme/HelloBundle/Entity/``.
+example ``Acme/HelloBundle/Entity/``.
+
 2. If you are using xml, yml or php mapping put all your configuration files
-   into the "Resources/config/doctrine/metadata/doctrine/orm/" directory
-   suffixed with dcm.xml, dcm.yml or dcm.php respectively.
-3. Annotations is assumed if an ``Entity/`` but no
-   "Resources/config/doctrine/metadata/orm/" directory is found.
+into the "Resources/config/" directory suffixed with ``orm.dcm.xml``,
+``orm.dcm.yml`` or ``orm.dcm.php`` respectively.
+
+3. Annotations is assumed if an ``Entity/`` but no "Resources/config/"
+directory is found.
 
 The following configuration shows a bunch of mapping examples:
 
@@ -344,7 +356,7 @@ The following configuration shows a bunch of mapping examples:
 Multiple Entity Managers
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
-You can use multiple EntityManagers in a Symfony application. This is
+You can use multiple ``EntityManager``s in a Symfony2 application. This is
 necessary if you are using different databases or even vendors with entirely
 different sets of entities.
 
@@ -368,52 +380,17 @@ The following configuration code shows how to define two EntityManagers:
                         MyBundle3: ~
 
 Just like the DBAL, if you have configured multiple ``EntityManager``
-instances and want to get a specific one you can use the full service name to
-retrieve it from the Symfony Dependency Injection Container::
+instances and want to get a specific one, use its name to retrieve it from the
+Doctrine registry::
 
     class UserController extends Controller
     {
         public function indexAction()
         {
-            $em =  $this->get('doctrine.orm.entity_manager');
-            $defaultEm =  $this->get('doctrine.orm.default_entity_manager');
-            $customerEm = $this->get('doctrine.orm.customer_entity_manager');
-
-            // $em === $defaultEm => true
-            // $defaultEm === $customerEm => false
+            $em =  $this->get('registry')->getEntityManager();
+            $customerEm =  $this->get('registry')->getEntityManager('customer);
         }
     }
-
-The service ``doctrine.orm.entity_manager`` is an alias for the default entity
-manager defined in the ``default_entity_manager`` configuration option.
-
-Registering Event Listeners and Subscribers
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-
-.. code-block:: xml
-
-    <container xmlns="http://symfony.com/schema/dic/services"
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
-
-        <services>
-
-            <service id="doctrine.extensions.versionable_listener" class="DoctrineExtensions\Versionable\VersionableListener">
-                <tag name="doctrine.dbal.default_event_subscriber" />
-            </service>
-
-            <service id="mybundle.doctrine.mylistener" class="MyBundle\Doctrine\MyListener">
-                <tag name="doctrine.dbal.default_event_listener" event="prePersist" />
-            </service>
-
-        </services>
-
-    </container>
-
-Although the Event Listener and Subscriber tags are prefixed with ``doctrine.dbal``
-these tags also work for the ORM events. Internally Doctrine re-uses the EventManager
-that is registered with the connection for the ORM.
 
 .. _doctrine-event-config:
 
@@ -545,11 +522,9 @@ integrate into the Form component by default, at least for the primitive data
 types such as strings, integers and fields. However you can also integrate
 them nicely with associations.
 
-This is done by the help of a dedicated field:
-:class:`Symfony\\Bridge\\Doctrine\\Form\\Type\\EntityType`. It provides a list of
-choices from which an entity can be selected.
-
-.. code-block:: php
+This is done by the help of a dedicated type:
+:class:`Symfony\\Bridge\\Doctrine\\Form\\Type\\EntityType`. It provides a list
+of choices from which an entity can be selected::
 
     use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 
@@ -557,13 +532,12 @@ choices from which an entity can be selected.
          array('class' => 'Acme\\HelloBundle\\Entity\\User',
     ));
 
-The required 'class' option expects the Entity class name as an argument.
-The optional 'property' option allows you to choose the property used to 
-display the entity (``__toString`` will be used if not set). 
-The optional 'query_builder' option expects a ``QueryBuilder`` instance or
-a closure receiving the repository as an argument and returning the QueryBuilder
-used to get the choices. If not set all entities will be used.
-
+The required ``class`` option expects the Entity class name as an argument.
+The optional ``property`` option allows you to choose the property used to
+display the entity (``__toString`` will be used if not set). The optional
+'query_builder' option expects a ``QueryBuilder`` instance or a closure
+receiving the repository as an argument and returning the QueryBuilder used to
+get the choices. If not set all entities will be used.
 
 .. _documentation: http://www.doctrine-project.org/docs/orm/2.0/en
 .. _Doctrine:      http://www.doctrine-project.org
