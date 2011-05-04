@@ -132,8 +132,8 @@ When customizing the form field block, you have two options on *where* the
 customized form block can live:
 
 +--------------------------------------+-----------------------------------+-------------------------------------------+
-| **Method**                           | **Pros**                          | **Cons**                                  |
-+--------------------------------------+-----------------------------------+-------------------------------------------+
+| Method                               | Pros                              | Cons                                      |
++======================================+===================================+===========================================+
 | Inside the same template as the form | Quick and easy                    | Can't be reused in other templates        |
 +--------------------------------------+-----------------------------------+-------------------------------------------+
 | Inside a separate template           | Can be reused by many templates   | Requires an extra template to be created  |
