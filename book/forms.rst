@@ -569,6 +569,12 @@ field:
             'attr' => array('class' => 'name_field'),
         )) ?>
 
+Twig Template Function Reference
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+If you're using Twig, a full reference of the form rendering functions is
+available in the :doc:`reference manual</reference/forms/twig_reference>`.
+
 .. index::
    single: Forms; Creating form classes
 
