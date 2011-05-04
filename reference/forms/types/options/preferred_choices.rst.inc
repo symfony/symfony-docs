@@ -8,7 +8,7 @@
     
         $builder->add('foo_choices', 'choice', array(
             'choices' => array('foo' => 'Foo', 'bar' => 'Bar', 'baz' => 'Baz'),
-            'preferred_choices' => array('baz' => 'Baz'),
+            'preferred_choices' => array('baz'),
         ));
     
     Note that preferred choices are only meaningful when rendering as a
