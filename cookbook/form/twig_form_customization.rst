@@ -5,6 +5,9 @@ If you're using Twig to render your forms, Symfony gives you a wide variety
 of ways to customize their exact output. In this guide, you'll learn how
 to customize every possible part of your form with as little effort as possible.
 
+Form Rendering Basics
+---------------------
+
 Recall that the label, error and HTML widget of a form field can easily
 be rendered by using the ``form_row`` Twig function:
 
@@ -39,32 +42,26 @@ above templates would render:
 To quickly prototype and test a form, you can render the entire form with
 just one line:
 
-.. configuration-block::
+.. code-block:: jinja
 
-    .. code-block:: jinja
-
-        {{ form_widget(form) }}
-
-    .. code-block:: php
-
-        <?php echo $view['form']->widget($form) ?>
+    {{ form_widget(form) }}
 
 The remainder of this recipe will explain how every part of the form's markup
 can be modified at several different levels. For more information about form
 rendering in general, see :ref:`form-rendering-template`.
 
-Form Theming Basics
--------------------
+What are Form Themes?
+---------------------
 
 When any part of a form is rendered - field labels, errors, ``input`` text fields,
 ``select`` tags, etc - Symfony uses the markup from a base Twig template file
 that ships with Symfony. This template, `div_layout.html.twig`_, contains
 Twig blocks that define each and every part of a form that can be rendered.
-This template represents the default form "theme", and later, you'll learn how
-to customize this default theme.
+This template represents the default form "theme" and in the next section,
+you'll learn how to import your own set of customized form blocks (i.e. themes).
 
 For example, when the widget of a ``text`` type field is rendered, an ``input``
-``text`` field is rendered:
+``text`` field is generated
 
 .. code-block:: html+jinja
 
@@ -96,18 +93,122 @@ that lives in ``div_layout.html.twig``:
 
 The point is, the blocks inside ``div_layout.html.twig`` dictate the HTML
 output of each part of a form. To customize form output, you just need to
-identify and override the correct block.
+identify and override the correct block. When any number of these form block
+customizations are put into a template, that template is known as a from "theme".
+When rendering a form, you can choose which form theme(s) you want to apply.
 
-Example: Wrapping each ``text`` Field inside a ``div``
-------------------------------------------------------
+.. _cookbook-form-twig-customization-sidebar:
+
+.. sidebar:: Knowing which block to customize
+
+    In this example, the customized block name is ``text_widget`` because you
+    want to override the HTML ``widget`` for all ``text`` field types. If you
+    need to customize textarea fields, you would customize ``textarea_widget``.
+    
+    As you can see, the block name is a combination of the field type and
+    which part of the field is being rendered (e.g. ``widget``, ``label``,
+    ``errors``, ``row``). As such, to customize how errors are rendered for
+    just input ``text`` fields, you should customize the ``text_errors`` block.
+    
+    More commonly, however, you'll want to customize how errors are displayed
+    across *all* fields. You can do this by customizing the ``field_errors``
+    block. This takes advantage of field type inheritance. Specifically,
+    since the ``text`` type extends from the ``field`` type, the form component
+    will first look for the type-specific block (e.g. ``text_errors``) before
+    falling back to its parent block name if it doesn't exist (e.g. ``field_errors``).
+
+    For more information on this topic, see :ref:`form-template-blocks`.
+
+.. _cookbook-form-twig-two-methods:
+
+Form Theming: The 2 Methods
+---------------------------
 
 To see the power of form theming, suppose you want to wrap every input ``text``
-field with a ``div``. The key to doing this is to redefine the ``text_widget``
-block inside a template and then to use the ``form_theme`` tag to point Symfony
-to that template.
+field with a ``div`` tag. The key to doing this is to customize the ``text_widget``
+block.
 
-One way to do this is to create a new template and place the customized block
-there:
+When customizing the form field block, you have two options on *where* the
+customized form block can live:
+
++--------------------------------------+-----------------------------------+-------------------------------------------+
+| **Method**                           | **Pros**                          | **Cons**                                  |
++--------------------------------------+-----------------------------------+-------------------------------------------+
+| Inside the same template as the form | Quick and easy                    | Can't be reused in other templates        |
++--------------------------------------+-----------------------------------+-------------------------------------------+
+| Inside a separate template           | Can be reused by many templates   | Requires an extra template to be created  |
++--------------------------------------+-----------------------------------+-------------------------------------------+
+
+Both methods have the same effect but are better in different situations.
+In the next section, you'll learn how to make the same form customization
+using both methods.
+
+.. _cookbook-form-theming-self:
+
+Method 1: Inside the same Template as the Form
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The easiest way to customize the ``text_widget`` block is to customize it
+directly in the template that's actually rendering the form.
+
+.. code-block:: html+jinja
+
+    {% extends '::base.html.twig' %}
+
+    {% form_theme form _self %}
+    {% use 'TwigBundle:Form:div_layout.html.twig' %}
+
+    {% block text_widget %}
+        <div class="text_widget">
+            <input type="text" {{ block('attributes') }} value="{{ value }}" />
+        </div>
+    {% endblock %}
+
+    {% block content %}
+        {# render the form #}
+        
+        {{ form_row(form.name) }}
+    {% endblock %}
+
+.. caution::
+    Note that this **only** works if your template extends a base template
+    via the ``extends`` tag. If your template doesn't extend a base template,
+    you should put your customized blocks in a separate template (see
+    :ref:`cookbook-form-twig-separate-template`).
+
+By using the special ``{% form_theme form _self %}`` tag, Twig looks inside
+the same template for any overridden form blocks. Assuming the ``form.name``
+field is a ``text`` type field, when its widget is rendered, the customized
+``text_widget`` block will be used.
+
+The disadvantage of this method is that the customized form block can't be
+reused when rendering other forms in other templates. In other words, this method
+is most useful when making form customizations that are specific to a single
+form in your application. If you want to reuse a form customization across
+several (or all) forms in your application, read on to the next section.
+
+.. note::
+    Be sure also to include the ``use`` statement somewhere in your template
+    when using this method:
+   
+    .. code-block:: jinja
+   
+        {% use 'TwigBundle:Form:div_layout.html.twig' %}
+    
+    This "imports" all of the blocks from the base ``div_layout.html.twig``
+    template, which gives you access to the ``attributes`` block. In general,
+    the ``use`` tag is helpful when your template *already* extends a base
+    template, but you still need to import blocks from a second template.
+    Read more about `Horizontal Reuse`_ in the Twig documentation.
+
+.. _cookbook-form-twig-separate-template:
+
+Method 2: Inside a Separate Template
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+You can also choose to put the customized ``text_widget`` form block in a
+separate template entirely. The code and end-result are the same, but you
+can now re-use the form customization across many templates:
 
 .. code-block:: html+jinja
 
@@ -140,94 +241,31 @@ tell Symfony to use the template via the ``form_theme`` tag:
     {{ form_widget(form.name) }}
 
 When the ``form.name`` widget is rendered, Symfony will use the ``text_widget``
-block from your new template. In fact, *all* ``text`` type fields rendered
-in this template will now be wrapped in the ``<div class="text_widget">`` tag.
-
-.. _cookbook-form-twig-customization-sidebar:
-
-.. sidebar:: Knowing which block to customize
-
-    In this example, the customized block name is ``text_widget`` because you
-    want to override the HTML ``widget`` for all ``text`` field types. If you
-    need to customize textarea fields, you would customize ``textarea_widget``.
-    
-    As you can see, the block name is a combination of the field type and
-    which part of the field is being rendered (e.g. ``widget``, ``label``,
-    ``errors``, ``row``). As such, to customize how errors are rendered for
-    just input ``text`` fields, you should customize the ``text_errors`` block.
-    
-    More commonly, however, you'll want to customize how errors are displayed
-    across *all* fields. You can do this by customizing the ``field_errors``
-    block. This takes advantage of field type inheritance. Specifically,
-    since the ``text`` type extends from the ``field`` type, the form component
-    will first look for the type-specific block (e.g. ``text_errors``) before
-    falling back to its parent block name if it doesn't exist (e.g. ``field_errors``).
-
-    For more information on this topic, see :ref:`form-template-blocks`.
-
-As easy as this is, this customization can be accomplished with even less
-effort and without creating a separate template file.
-
-.. _cookbook-form-theming-self:
-
-Single-File Form Theming 
-~~~~~~~~~~~~~~~~~~~~~~~~
-
-Instead of creating a separate file, the ``text_widget`` can be overridden
-directly inside the template that needs the customization. Note that this
-only works if your template extends some base template:
-
-.. code-block:: jinja
-
-    {% extends '::base.html.twig' %}
-
-    {% form_theme form _self %}
-    {% use 'TwigBundle:Form:div_layout.html.twig' %}
-
-    {% block text_widget %}
-        <div class="text_widget">
-            <input type="text" {{ block('attributes') }} value="{{ value }}" />
-        </div>
-    {% endblock %}
-
-    {% block content %}
-        {# ... #}
-        
-        {{ form_row(form.name) }}
-    {% endblock %}
-
-By using the special ``{% form_theme form _self %}`` tag, Twig looks inside
-the same template for any overridden form blocks. This has the same effect
-as before, but without needing a separate template.
-
-.. note::
-    Also be sure to include the ``use`` statement somewhere in your template:
-   
-    .. code-block:: jinja
-   
-        {% use 'TwigBundle:Form:div_layout.html.twig' %}
-    
-    This "imports" all of the blocks from the base ``div_layout.html.twig``
-    template, which gives you access to the ``attributes`` block. This is
-    very similar to the ``extends`` tag used when the customized block was
-    in its own template. The ``use`` tag is helpful when your template *already*
-    extends a base template, but you still need to import blocks from a second
-    template. Read more about `Horizontal Reuse`_ in the Twig documentation.
+block from the new template and the ``input`` tag will be wrapped in the
+``div`` element specified in the customized block.
 
 .. _cookbook-form-twig-import-base-blocks:
 
-Importing Base Form Blocks
-~~~~~~~~~~~~~~~~~~~~~~~~~~
+Referencing Base Form Blocks
+----------------------------
 
 So far, to override a particular form block, the best method is to copy
 the default block from ``div_layout.html.twig``, paste it into a different template,
-and the customize it. In many cases, you can avoid doing this by importing
-the base block before customizing it. Start by modifying the ``use`` block
-in the template where you're rendering the form:
+and the customize it. In many cases, you can avoid doing this by referencing
+the base block when customizing it.
+
+This is easy to do, but varies slightly depending on if your form block customizations
+are in the same template as the form or a separate template.
+
+Referencing Blocks from inside the same Template as the Form
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Start by modifying the ``use`` tag in the template where you're rendering
+the form:
 
 .. code-block:: jinja
 
-  {% use 'TwigBundle:Form:div_layout.html.twig' with text_widget as base_text_widget %}
+    {% use 'TwigBundle:Form:div_layout.html.twig' with text_widget as base_text_widget %}
 
 Now, when the blocks from ``div_layout.html.twig`` are imported, the ``text_widget``
 block is called ``base_text_widget``. This means that when you redefine the
@@ -241,32 +279,31 @@ block is called ``base_text_widget``. This means that when you redefine the
         </div>
     {% endblock %}
 
-.. sidebar:: Importing Base Blocks from an External Template
+Referencing Base Blocks from an External Template
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-    The above description works when your form block customizations live
-    directly inside the template that uses them (via the ``{% form_theme form _self %}``).
-    If your form customizations live inside an external template, you can
-    reference the base block by using the ``parent()`` Twig function:
-    
-    .. code-block:: html+jinja
+If your form customizations live inside an external template, you can reference
+the base block by using the ``parent()`` Twig function:
 
-        {# src/Acme/DemoBundle/Resources/views/Form/fields.html.twig #}
-        {% extends 'TwigBundle:Form:div_layout.html.twig' %}
+.. code-block:: html+jinja
 
-        {% block text_widget %}
-            <div class="text_widget">
-                {{ parent() }}
-            </div>
-        {% endblock text_widget %}
+    {# src/Acme/DemoBundle/Resources/views/Form/fields.html.twig #}
+    {% extends 'TwigBundle:Form:div_layout.html.twig' %}
+
+    {% block text_widget %}
+        <div class="text_widget">
+            {{ parent() }}
+        </div>
+    {% endblock text_widget %}
 
 .. _cookbook-form-global-theming:
 
-Making Global Customizations
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Making Application-wide Customizations
+--------------------------------------
 
 If you'd like a certain form customization to be global to your application,
 you can accomplish this by making the form customizations to an external
-file and then importing it inside your application configuration:
+template and then importing it inside your application configuration:
 
 .. configuration-block:: 
 
@@ -282,10 +319,10 @@ file and then importing it inside your application configuration:
     
         <!-- app/config/config.xml -->
         <twig:config ...>
-                <twig:form>
-                    <resource>AcmeDemoBundle:Form:fields.html.twig</resource>
-                </twig:form>
-                <!-- ... -->
+            <twig:form>
+                <resource>AcmeDemoBundle:Form:fields.html.twig</resource>
+            </twig:form>
+            <!-- ... -->
         </twig:config>
 
     .. code-block:: php
@@ -352,14 +389,13 @@ Other Common Customizations
 ---------------------------
 
 So far, this recipe has shown you several different ways to customize a single
-piece of how a form is rendered. You've learned the pattern used for
-:ref:`naming form blocks<cookbook-form-twig-customization-sidebar>` as well
-as tricks that allow you to :ref:`import base form blocks<cookbook-form-twig-import-base-blocks>`
-and how to :ref:`create form themes inside a single file<cookbook-form-theming-self>`.
+piece of how a form is rendered. The key is to customize a specific Twig
+block that corresponds to the portion of the form you want to control (see
+:ref:`naming form blocks<cookbook-form-twig-customization-sidebar>`).
 
-If you've read this far, you already know everything you need to in order to
-customize any part of any form. Still, in this section, you'll find even
-more common form customizations.
+In the next sections, you'll see how you can make several common form customizations.
+To apply these customizations, use one of the two methods described in the
+:ref:`cookbook-form-twig-two-methods` section.
 
 Customizing Error Output
 ~~~~~~~~~~~~~~~~~~~~~~~~
@@ -403,10 +439,8 @@ and customize the ``field_errors`` block:
     {% endspaceless %}
     {% endblock field_errors %}
 
-To make this customization globally, place this block in its own Twig template
-file and then configure Symfony to use it (see :ref:`cookbook-form-global-theming`).
-You can also choose to bring in this customization only where you need it
-by using the ``form_theme`` tag (see the :ref:`form_theme example<cookbook-form-theme-import-template>`).
+.. tip::
+    See :ref:`cookbook-form-twig-two-methods` for how to apply this customization.
 
 You can also customize the error output for just one specific field type.
 For example, certain errors that are more global to your form (i.e. not specific
@@ -422,7 +456,7 @@ as above, but now call the block ``form_errors``. Now, when errors for the
 of the default ``field_errors`` block.
 
 Customizing the "Form Row"
---------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 When you can manage it, the easiest way to render a form field is via the
 ``form_row`` function, which renders the label, errors and HTML widget of
@@ -440,10 +474,87 @@ class to the ``div`` element around each row:
         </div>
     {% endblock field_row %}
 
-Like with all other custom form blocks, this block can be imported and used
-in your template in a variety of ways. For information on making this customization
-globally, see :ref:`cookbook-form-global-theming`. To bring in this customization
-only where you need it, use the ``form_theme`` tag and see the :ref:`form_theme example<cookbook-form-theme-import-template>`.
+.. tip::
+    See :ref:`cookbook-form-twig-two-methods` for how to apply this customization.
+
+Adding a "Required" Asterisk to Field Labels
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+If you want to denote all of your required fields with a required asterisk (``*``),
+you can do this by customizing the ``field_label`` block.
+
+If you're making the form customization inside the same template as your
+form, modify the ``use`` tag and add the following:
+
+.. code-block:: html+jinja
+
+    {% use 'TwigBundle:Form:div_layout.html.twig' with field_label as base_field_label %}
+
+    {% block field_label %}
+        {{ block('parent_field_label') }}
+
+        {% if required %}
+            <span class="required" title="This field is required">*</span>
+        {% endif %}
+    {% endblock %}
+
+If you're making the form customization inside a separate template, use the
+following:
+
+.. code-block:: html+jinja
+
+    {% block field_label %}
+        {{ parent() }}
+
+        {% if required %}
+            <span class="required" title="This field is required">*</span>
+        {% endif %}
+    {% endblock %}
+
+.. tip::
+    See :ref:`cookbook-form-twig-two-methods` for how to apply this customization.
+
+Adding "help" messages
+~~~~~~~~~~~~~~~~~~~~~~
+
+You can also customize your form widgets to have an optional "help" message.
+
+If you're making the form customization inside the same template as your
+form, modify the ``use`` tag and add the following:
+
+.. code-block:: html+jinja
+
+    {% use 'TwigBundle:Form:div_layout.html.twig' with field_widget as base_field_widget %}
+
+    {% block field_widget %}
+        {{ block('base_field_widget') }}
+
+        {% if help is defined %}
+            <span class="help">{{ help }}</div>
+        {% endif %}
+    {% endblock %}
+
+If you're making the form customization inside a separate template, use the
+following:
+
+.. code-block:: html+jinja
+
+    {% block field_widget %}
+        {{ parent() }}
+
+        {% if help is defined %}
+            <span class="help">{{ help }}</div>
+        {% endif %}
+    {% endblock %}
+
+To render a help message below a field, pass in a ``help`` variable:
+
+.. code-block:: jinja
+
+    {{ form_widget(form.title, { 'help': 'foobar' }) }}
+
+.. tip::
+    See :ref:`cookbook-form-twig-two-methods` for how to apply this customization.
 
 .. _`div_layout.html.twig`: https://github.com/symfony/symfony/blob/master/src/Symfony/Bundle/TwigBundle/Resources/views/Form/div_layout.html.twig
 .. _`Horizontal Reuse`: http://www.twig-project.org/doc/templates.html#horizontal-reuse
