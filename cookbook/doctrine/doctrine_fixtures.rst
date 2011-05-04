@@ -134,7 +134,7 @@ If you're using the ODM, use the ``doctrine:mongodb:fixtures:load`` command inst
 
 .. code-block:: bash
 
-    $ php app/console doctrine:mongodb:data:load
+    $ php app/console doctrine:mongodb:fixtures:load
 
 The task will look inside the ``DataFixtures/ORM`` (or ``DataFixtures/ODM``
 for the ODM) directory of each bundle and execute each class that implements
