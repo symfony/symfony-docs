@@ -712,9 +712,9 @@ You can also specify the message domain and pass some additional variables:
 
 .. code-block:: jinja
 
-    {% trans with {'name': 'Fabien'} from "app" %}Hello %name%{% endtrans %}
+    {% trans with {'%name%': 'Fabien'} from "app" %}Hello %name%{% endtrans %}
 
-    {% transchoice count with {'name': 'Fabien'} from "app" %}
+    {% transchoice count with {'%name%': 'Fabien'} from "app" %}
         {0} There is no apples|{1} There is one apple|]1,Inf] There are %count% apples
     {% endtranschoice %}
 
@@ -727,9 +727,9 @@ texts* and complex expressions:
 
     {{ message | transchoice(5) }}
 
-    {{ message | trans({'name': 'Fabien'}, "app") }}
+    {{ message | trans({'%name%': 'Fabien'}, "app") }}
 
-    {{ message | transchoice(5, {'name': 'Fabien'}, 'app') }}
+    {{ message | transchoice(5, {'%name%': 'Fabien'}, 'app') }}
 
 .. tip::
 
