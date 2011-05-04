@@ -491,7 +491,7 @@ form, modify the ``use`` tag and add the following:
     {% use 'TwigBundle:Form:div_layout.html.twig' with field_label as base_field_label %}
 
     {% block field_label %}
-        {{ block('parent_field_label') }}
+        {{ block('base_field_label') }}
 
         {% if required %}
             <span class="required" title="This field is required">*</span>
