@@ -116,29 +116,6 @@ Glossary
 	chapter.
 
 
-TODO
-====
-
-Logical Name
-
-Routing
-Resource
-
-Entity (Doctrine)
-Entity Repository (Doctrine)
-   is the new Table / Peer . http://www.doctrine-project.org/docs/orm/2.0/en/tutorials/getting-started-xml-edition.html#entity-repositories
-
-Namespace
-
-Proxy (Doctrine)
-       A proxy object is an object that is put in place or used instead of the "real" object. See http://www.doctrine-project.org/docs/orm/2.0/en/reference/configuration.html#proxy-objects
-
-Also link to book sections about Environments etc http://symfony.com/doc/2.0/book/page_creation.html
-
-
-Slots
- still exist but they're mostly hidden if you use Twig templates. More obvious in the PHP templates.
-
 
 
 .. _`service-oriented architecture`: http://wikipedia.org/wiki/Service-oriented_architecture
