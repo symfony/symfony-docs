@@ -106,8 +106,8 @@ while to finish your changes):
     $ git checkout BRANCH_NAME
     $ git rebase master
 
-When doing the `rebase` command, you might have to fix merge conflicts. `git
-st` gives you the *unmerged* files. Resolve all conflicts, then continue the
+When doing the ``rebase`` command, you might have to fix merge conflicts. ``git
+status`` gives you the *unmerged* files. Resolve all conflicts, then continue the
 rebase:
 
 .. code-block:: bash
