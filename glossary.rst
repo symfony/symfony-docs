@@ -54,7 +54,7 @@ Glossary
         *trains* the service container (via configuration) on how to create
         the services. The service container takes care of lazily instantiating
         and injecting dependent services. See :doc:`/book/service_container` 
-	chapter.
+        chapter.
 
    HTTP Specification
         The *Http Specification* is a document that describes the Hypertext
@@ -83,13 +83,13 @@ Glossary
         *Acme* is a sample company name used in Symfony demos and
         documentation. For example, it's used as a namespace where you would
         normally use your own company's name.  See 
-	`Acme Corporation at Wikipedia`_.
+        `Acme Corporation at Wikipedia`_.
 
    Action
-	An *action* is controller code that executes for a given
-	route. Synonomous with *controller*, but most *controller* PHP classes
-	include several *actions*. See the 
-	:doc:`Controller Chapter </book/controller>`.
+        An *action* is controller code that executes for a given
+        route. Synonomous with *controller*, but most *controller* PHP classes
+        include several *actions*. See the 
+        :doc:`Controller Chapter </book/controller>`.
 
    Asset
         An *asset* is any non-executable, static component of a web application,
@@ -110,10 +110,10 @@ Glossary
         :doc:`book/security/overview` chapters.
 
    YAML 
-	*YAML* is a recursive acronym for "YAML Ain't a Markup Language". It's a
-	lightweight, humane data serialization language used extensively in
-	Symfony2's configuration files.  See the :doc:`reference/YAML` reference
-	chapter.
+        *YAML* is a recursive acronym for "YAML Ain't a Markup Language". It's a
+        lightweight, humane data serialization language used extensively in
+        Symfony2's configuration files.  See the :doc:`reference/YAML` reference
+        chapter.
 
 
 
