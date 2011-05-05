@@ -108,7 +108,7 @@ write mapping information with annotations, XML, or YAML:
 
     .. code-block:: yaml
 
-        # Acme/HelloBundle/Resources/config/Acme.HelloBundle.Entity.User.orm.dcm.yml
+        # Acme/HelloBundle/Resources/config/doctrine/Acme.HelloBundle.Entity.User.orm.dcm.yml
         Acme\HelloBundle\Entity\User:
             type: entity
             table: user
@@ -124,7 +124,7 @@ write mapping information with annotations, XML, or YAML:
 
     .. code-block:: xml
 
-        <!-- Acme/HelloBundle/Resources/config/Acme.HelloBundle.Entity.User.orm.dcm.xml -->
+        <!-- Acme/HelloBundle/Resources/config/doctrine/Acme.HelloBundle.Entity.User.orm.dcm.xml -->
         <doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
               xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
@@ -325,11 +325,11 @@ follow these conventions:
 example ``Acme/HelloBundle/Entity/``.
 
 2. If you are using xml, yml or php mapping put all your configuration files
-into the "Resources/config/" directory suffixed with ``orm.dcm.xml``,
+into the "Resources/config/doctrine/" directory suffixed with ``orm.dcm.xml``,
 ``orm.dcm.yml`` or ``orm.dcm.php`` respectively.
 
-3. Annotations is assumed if an ``Entity/`` but no "Resources/config/"
-directory is found.
+3. Annotations is assumed if an ``Entity/`` but no
+"Resources/config/doctrine/" directory is found.
 
 The following configuration shows a bunch of mapping examples:
 
