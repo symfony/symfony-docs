@@ -550,7 +550,7 @@ them for you. Here's the same sample application, now built in Symfony2:
     {
         public function listAction()
         {
-            $blogs = $this->container->get('doctrine.orm.entity_manager')
+            $blogs = $this->get('doctrine')->getEntityManager()
                 ->createQuery('SELECT b FROM AcmeBlog:Blog b')
                 ->execute();
 
@@ -559,7 +559,7 @@ them for you. Here's the same sample application, now built in Symfony2:
 
         public function showAction($id)
         {
-            $blog = $this->container->get('doctrine.orm.entity_manager')
+            $blog = $this->get('doctrine')->getEntityManager()
                 ->createQuery('SELECT b FROM AcmeBlog:Blog b WHERE id = :id')
                 ->setParameter('id', $id)
                 ->getSingleResult();
