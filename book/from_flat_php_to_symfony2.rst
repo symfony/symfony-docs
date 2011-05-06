@@ -508,7 +508,7 @@ incidentally, acts quite a bit like the Symfony2 templating engine:
     {
         ob_start();
         require $path;
-        $html = ob_end_clean();
+        $html = ob_get_clean();
 
         return $html;
     }
