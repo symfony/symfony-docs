@@ -682,7 +682,8 @@ be accomplished with the following route configuration:
 Despite the fact that these two routes have identical patterns (``/contact``),
 the first route will match only GET requests and the second route will match
 only POST requests. This means that you can display the form and handle the
-form submitted data via the same URL, while using distinct controllers for the two actions.
+form submitted data via the same URL, while using distinct controllers for 
+the two actions.
 
 .. note::
     If no ``_method`` requirement is specified, the route will match on
