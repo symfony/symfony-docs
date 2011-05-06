@@ -179,7 +179,7 @@ Eventually, use your entity and manage its persistent state with Doctrine:
             $user = new User();
             $user->setName('Jonathan H. Wage');
 
-            $em = $this->get('registry')->getEntityManager();
+            $em = $this->get('doctrine.orm.entity_manager')->getEntityManager();
             $em->persist($user);
             $em->flush();
 
@@ -188,7 +188,7 @@ Eventually, use your entity and manage its persistent state with Doctrine:
 
         public function editAction($id)
         {
-            $em = $this->get('registry')->getEntityManager();
+            $em = $this->get('doctrine.orm.entity_manager')->getEntityManager();
             $user = $em->find('AcmeHelloBundle:User', $id);
             $user->setBody('new body');
             $em->persist($user);
@@ -199,7 +199,7 @@ Eventually, use your entity and manage its persistent state with Doctrine:
 
         public function deleteAction($id)
         {
-            $em = $this->get('registry')->getEntityManager();
+            $em = $this->get('doctrine.orm.entity_manager')->getEntityManager();
             $user = $em->find('AcmeHelloBundle:User', $id);
             $em->remove($user);
             $em->flush();
@@ -380,15 +380,14 @@ The following configuration code shows how to define two EntityManagers:
                         MyBundle3: ~
 
 Just like the DBAL, if you have configured multiple ``EntityManager``
-instances and want to get a specific one, use its name to retrieve it from the
-Doctrine registry::
+instances and want to get a specific one, use its name to retrieve it:
 
     class UserController extends Controller
     {
         public function indexAction()
         {
-            $em =  $this->get('registry')->getEntityManager();
-            $customerEm =  $this->get('registry')->getEntityManager('customer);
+            $em =  $this->get('doctrine.orm.entity_manager')->getEntityManager();
+            $customerEm =  $this->get('doctrine.orm.entity_manager')->getEntityManager('customer);
         }
     }
 
