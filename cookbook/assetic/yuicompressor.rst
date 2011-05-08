@@ -58,7 +58,7 @@ stylesheets:
         ));
 
 You now have access to two new Assetic filters in your application:
-``yui_css`` and ``yui_js``. These will use the YUI Compressor minify
+``yui_css`` and ``yui_js``. These will use the YUI Compressor to minify
 stylesheets and Javascripts, respectively.
 
 Minify your Assets
@@ -91,7 +91,7 @@ Disable Minification in Debug Mode
 ----------------------------------
 
 Minified Javascript is very difficult to read, let alone debug. Because of
-this, Assetic let's you disable a certain filter when your application is in
+this, Assetic lets you disable a certain filter when your application is in
 debug mode. You can do this be prefixing the filter name in your template with
 a question mark: ``?``. This tells Assetic to only apply this filter when
 debug mode is off.
