@@ -80,22 +80,21 @@ Glossary
         :ref:`The Architecture: Using Vendors <using-vendors>`.
 
    Acme
-        *Acme* is a sample company name used in Symfony demos and
-        documentation. For example, it's used as a namespace where you would
-        normally use your own company's name.  See 
-        `Acme Corporation at Wikipedia`_.
+        *Acme* is a sample company name used in Symfony demos and documentation.
+        Ut's used as a namespace where you would normally use your own company's
+        name (e.g. ``Acme\BlogBundle``).
 
    Action
-        An *action* is controller code that executes for a given
-        route. Synonomous with *controller*, but most *controller* PHP classes
-        include several *actions*. See the 
-        :doc:`Controller Chapter </book/controller>`.
+        An *action* is a PHP function or method that executes, for example,
+        when a given route is matched. The term action is synonymous with
+        *controller*, though a controller may also refer to an entire PHP
+        class that includes several actions. See the :doc:`Controller Chapter </book/controller>`.
 
    Asset
         An *asset* is any non-executable, static component of a web application,
-        including CSS, js, images and video. Assets may be placed directly in
-        the project's ``web`` directory, or published from a :term:`Bundle` to the web
-        directory using the ``assets:install`` console task.
+        including CSS, JavaScript, images and video. Assets may be placed
+        directly in the project's ``web`` directory, or published from a :term:`Bundle`
+        to the web directory using the ``assets:install`` console task.
 
    Kernel
         The *Kernel* is the core of Symfony2. The Kernel object handles HTTP
@@ -105,7 +104,8 @@ Glossary
 
    Firewall
         In Symfony2, a *Firewall* doesn't have to do with networking. Instead,
-        it defines the authentication mechanisms, either for the whole
+        it defines the authentication mechanisms (i.e. it handles the process
+        of determining the identity of your users), either for the whole
         application or for just a part of it. See the
         :doc:`book/security/overview` chapters.
 
@@ -121,4 +121,3 @@ Glossary
 .. _`service-oriented architecture`: http://wikipedia.org/wiki/Service-oriented_architecture
 .. _`HTTP Wikipedia`: http://en.wikipedia.org/wiki/Hypertext_Transfer_Protocol
 .. _`HTTP 1.1 RFC`: http://www.w3.org/Protocols/rfc2616/rfc2616.html
-.. _`Acme Corporation at Wikipedia`: http://en.wikipedia.org/wiki/Acme_Corporation

@@ -1098,15 +1098,15 @@ key in the parameter hash:
 
     .. code-block:: html+jinja
 
-        <a href="{{ path('article_show', {'id':123, '_format':pdf}) }}">
-	   PDF Version</a>
+        <a href="{{ path('article_show', {'id': 123, '_format': 'pdf'}) }}">
+	        PDF Version
+	    </a>
 
-    .. code-block:: php
+    .. code-block:: html+php
 
-        <a href="<?php echo $view['router']->generate('article_show', 
-	   array('id' => 123, '_format' => 'pdf',) ?>">PDF Version</a>
-
-
+        <a href="<?php echo $view['router']->generate('article_show', array('id' => 123, '_format' => 'pdf')) ?>">
+            PDF Version
+        </a>
 
 Final Thoughts
 --------------
