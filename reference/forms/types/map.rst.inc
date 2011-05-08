@@ -4,7 +4,6 @@
 * :doc:`collection</reference/forms/types/collection>`
 * :doc:`country</reference/forms/types/country>`
 * :doc:`csrf</reference/forms/types/csrf>`
-* :doc:`checkbox</reference/forms/types/checkbox>`
 * :doc:`datetime</reference/forms/types/datetime>`
 * :doc:`date</reference/forms/types/date>`
 * :doc:`entity</reference/forms/types/entity>`
