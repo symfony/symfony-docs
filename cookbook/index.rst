@@ -11,6 +11,7 @@ Cookbook
     controller/error_pages
     controller/service
     validation/custom_constraint
+    form/twig_form_customization
     tools/autoloader
     tools/finder
     logging/monolog

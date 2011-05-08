@@ -430,6 +430,8 @@ ability to guess field types.
 .. index::
    single: Forms; Rendering in a Template
 
+.. _form-rendering-template:
+
 Rendering a Form in a Template
 ------------------------------
 
@@ -566,6 +568,12 @@ field:
         <?php echo $view['form']->widget($form['name'], array(
             'attr' => array('class' => 'name_field'),
         )) ?>
+
+Twig Template Function Reference
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+If you're using Twig, a full reference of the form rendering functions is
+available in the :doc:`reference manual</reference/forms/twig_reference>`.
 
 .. index::
    single: Forms; Creating form classes
@@ -832,13 +840,14 @@ do this, create a new template file that will store the new markup:
     .. code-block:: html+jinja
     
         {# src/Acme/StoreBundle/Resources/views/Form/fields.html.twig #}
+        {% extends 'TwigBundle:Form:div_layout.html.twig' %}
     
         {% block field_row %}
         {% spaceless %}
             <div class="form_row">
-                {{ form_label(form, label) }}
+                {{ form_label(form) }}
                 {{ form_errors(form) }}
-                {{ form_widget(form, _context) }}
+                {{ form_widget(form) }}
             </div>
         {% endspaceless %}
         {% endblock field_row %}
@@ -874,6 +883,11 @@ later in this template, it will use the ``field_row`` block from the
 To customize any portion of a form, you just need to override the appropriate
 block. Knowing exactly which block to override is the subject of the next
 section.
+
+In the following section, you'll learn more about how to customize different
+portions of a form. For a more extensive discussion, see :doc:`/cookbook/form/twig_form_customization`.
+
+.. _form-template-blocks:
 
 Form Template Blocks
 ~~~~~~~~~~~~~~~~~~~~
@@ -991,17 +1005,35 @@ to define form output.
         {% extends '::base.html.twig' %}
         
         {% form_theme form _self %}
+        {% use 'TwigBundle:Form:div_layout.html.twig' %}
 
         {% block field_row %}
             {# custom field row output #}
         {% endblock field_row %}
-        
-        {{ form_row(form.name) }}
+
+        {% block content %}
+            {# ... #}
+            
+            {{ form_row(form.name) }}
+        {% endblock %}
 
     The ``{% form_theme form _self %}`` tag allows form blocks to be customized
     directly inside the template that will use those customizations. Use
     this method to quickly make form output customizations that will only
     ever be needed in a single template.
+    
+    The ``use`` tag is also helpful as it gives you access to all of the
+    blocks defined inside ``div_layout.html.twig``. For example, this ``use``
+    statement is necessary to make the following form customization, as it
+    gives you access to the ``attributes`` block defined in ``div_layout.html.twig``:
+
+    .. code-block:: html+jinja
+
+        {% block text_widget %}
+            <div class="text_widget">
+                <input type="text" {{ block('attributes') }} value="{{ value }}" />
+            </div>
+        {% endblock %}
 
 .. index::
    single: Forms; CSRF Protection
@@ -1071,6 +1103,7 @@ Learn more from the Cookbook
 * :doc:`Handling File Uploads </cookbook/forms/file_uploads>`
 * :doc:`Creating Custom Field Types </cookbook/forms/custom_field_types>`
 * :doc:`Dynamically adding Fields to a Form </cookbook/forms/dynamically_adding_fields>`
+* :doc:`/cookbook/form/twig_form_customization`
 
 .. _`Symfony2 Form Component`: https://github.com/symfony/Form
 .. _`div_layout.html.twig`: https://github.com/symfony/symfony/blob/master/src/Symfony/Bundle/TwigBundle/Resources/views/Form/div_layout.html.twig
