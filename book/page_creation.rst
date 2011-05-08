@@ -294,7 +294,7 @@ controller, and ``index.html.twig`` the template:
        :linenos:
 
         {# src/Acme/StudyBundle/Resources/views/Hello/index.html.twig #}
-        {% extends '::layout.html.twig' %}
+        {% extends '::base.html.twig' %}
 
         {% block body %}
             Hello {{ name }}!
