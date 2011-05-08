@@ -388,7 +388,7 @@ Doctrine registry::
         public function indexAction()
         {
             $em =  $this->get('registry')->getEntityManager();
-            $customerEm =  $this->get('registry')->getEntityManager('customer);
+            $customerEm =  $this->get('registry')->getEntityManager('customer');
         }
     }
 
