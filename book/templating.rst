@@ -1089,7 +1089,24 @@ but can return any other format based on the format requested by the user.
 The request format is most often managed by the routing, where a route can
 be configured so that ``/contact`` sets the request format to ``html`` while
 ``/contact.xml`` sets the format to ``xml``. For more information, see the
-:doc:`Routing</book/routing>` chapter.
+:ref:`Advanced Example in the Routing chapter <advanced-routing-example>`.
+
+To create links that include the format parameter, include a ``_format``
+key in the parameter hash:
+
+.. configuration-block::
+
+    .. code-block:: html+jinja
+
+        <a href="{{ path('article_show', {'id':123, '_format':pdf}) }}">
+	   PDF Version</a>
+
+    .. code-block:: php
+
+        <a href="<?php echo $view['router']->generate('article_show', 
+	   array('id' => 123, '_format' => 'pdf',) ?>">PDF Version</a>
+
+
 
 Final Thoughts
 --------------
