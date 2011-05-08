@@ -2,7 +2,7 @@ How to Minify Javascripts and Stylesheets with YUI Compressor
 =============================================================
 
 Yahoo! provides an excellent utility for minifying Javascripts and stylesheets
-so they travel over the wire faster, the YUI Compressor. Thanks to Assetic,
+so they travel over the wire faster, the `YUI Compressor`_. Thanks to Assetic,
 you can take advantage of this tool very easily.
 
 Download the YUI Compressor JAR
@@ -111,3 +111,5 @@ debug mode is off.
             array('?yui_js')) as $url): ?>
         <script src="<?php echo $view->escape($url) ?>"></script>
         <?php endforeach; ?>
+
+.. _YUI Compressor: http://developer.yahoo.com/yui/compressor/
