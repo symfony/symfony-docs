@@ -20,7 +20,7 @@ just need to enable it and specify the bundle that contains your mapped document
 
     # app/config/config.yml
 
-    doctrine_mongo_db:
+    doctrine_mongodb:
         document_managers:
             default:
                 mappings:
@@ -173,7 +173,7 @@ Configuration
 .. code-block:: yaml
 
     # app/config/config.yml
-    doctrine_mongo_db:
+    doctrine_mongodb:
         connections:
             default:
                 server: mongodb://localhost:27017
@@ -194,7 +194,7 @@ If you wish to use memcache to cache your metadata, you need to configure the
     .. code-block:: yaml
 
         # app/config/config.yml
-        doctrine_mongo_db:
+        doctrine_mongodb:
             default_database: hello_%kernel.environment%
             connections:
                 default:
@@ -222,22 +222,22 @@ If you wish to use memcache to cache your metadata, you need to configure the
             xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd
                                 http://symfony.com/schema/dic/doctrine/odm/mongodb http://symfony.com/schema/dic/doctrine/odm/mongodb/mongodb-1.0.xsd">
 
-            <doctrine_mongo_db:config default-database="hello_%kernel.environment%">
-                <doctrine_mongo_db:document-manager id="default">
-                    <doctrine_mongo_db:mapping name="AcmeDemoBundle" />
-                    <doctrine_mongo_db:metadata-cache-driver type="memcache">
-                        <doctrine_mongo_db:class>Doctrine\Common\Cache\MemcacheCache</doctrine_mongo_db:class>
-                        <doctrine_mongo_db:host>localhost</doctrine_mongo_db:host>
-                        <doctrine_mongo_db:port>11211</doctrine_mongo_db:port>
-                        <doctrine_mongo_db:instance-class>Memcache</doctrine_mongo_db:instance-class>
-                    </doctrine_mongo_db:metadata-cache-driver>
-                </doctrine_mongo_db:document-manager>
-                <doctrine_mongo_db:connection id="default" server="mongodb://localhost:27017">
-                    <doctrine_mongo_db:options>
-                        <doctrine_mongo_db:connect>true</doctrine_mongo_db:connect>
-                    </doctrine_mongo_db:options>
-                </doctrine_mongo_db:connection>
-            </doctrine_mongo_db:config>
+            <doctrine_mongodb:config default-database="hello_%kernel.environment%">
+                <doctrine_mongodb:document-manager id="default">
+                    <doctrine_mongodb:mapping name="AcmeDemoBundle" />
+                    <doctrine_mongodb:metadata-cache-driver type="memcache">
+                        <doctrine_mongodb:class>Doctrine\Common\Cache\MemcacheCache</doctrine_mongodb:class>
+                        <doctrine_mongodb:host>localhost</doctrine_mongodb:host>
+                        <doctrine_mongodb:port>11211</doctrine_mongodb:port>
+                        <doctrine_mongodb:instance-class>Memcache</doctrine_mongodb:instance-class>
+                    </doctrine_mongodb:metadata-cache-driver>
+                </doctrine_mongodb:document-manager>
+                <doctrine_mongodb:connection id="default" server="mongodb://localhost:27017">
+                    <doctrine_mongodb:options>
+                        <doctrine_mongodb:connect>true</doctrine_mongodb:connect>
+                    </doctrine_mongodb:options>
+                </doctrine_mongodb:connection>
+            </doctrine_mongodb:config>
         </container>
 
 Mapping Configuration
@@ -283,7 +283,7 @@ The following configuration shows a bunch of mapping examples:
 
 .. code-block:: yaml
 
-    doctrine_mongo_db:
+    doctrine_mongodb:
         document_managers:
             default:
                 mappings:
@@ -325,7 +325,7 @@ following syntax:
 
     .. code-block:: yaml
 
-        doctrine_mongo_db:
+        doctrine_mongodb:
             default_database: hello_%kernel.environment%
             default_connection: conn2
             default_document_manager: dm2
@@ -360,29 +360,29 @@ following syntax:
             xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd
                                 http://symfony.com/schema/dic/doctrine/odm/mongodb http://symfony.com/schema/dic/doctrine/odm/mongodb/mongodb-1.0.xsd">
 
-            <doctrine_mongo_db:config
+            <doctrine_mongodb:config
                     default-database="hello_%kernel.environment%"
                     default-document-manager="dm2"
                     default-connection="dm2"
                     proxy-namespace="Proxies"
                     auto-generate-proxy-classes="true">
-                <doctrine_mongo_db:connection id="conn1" server="mongodb://localhost:27017">
-                    <doctrine_mongo_db:options>
-                        <doctrine_mongo_db:connect>true</doctrine_mongo_db:connect>
-                    </doctrine_mongo_db:options>
-                </doctrine_mongo_db:connection>
-                <doctrine_mongo_db:connection id="conn2" server="mongodb://localhost:27017">
-                    <doctrine_mongo_db:options>
-                        <doctrine_mongo_db:connect>true</doctrine_mongo_db:connect>
-                    </doctrine_mongo_db:options>
-                </doctrine_mongo_db:connection>
-                <doctrine_mongo_db:document-manager id="dm1" metadata-cache-driver="xcache" connection="conn1">
-                    <doctrine_mongo_db:mapping name="AcmeDemoBundle" />
-                </doctrine_mongo_db:document-manager>
-                <doctrine_mongo_db:document-manager id="dm2" connection="conn2">
-                    <doctrine_mongo_db:mapping name="AcmeHelloBundle" />
-                </doctrine_mongo_db:document-manager>
-            </doctrine_mongo_db:config>
+                <doctrine_mongodb:connection id="conn1" server="mongodb://localhost:27017">
+                    <doctrine_mongodb:options>
+                        <doctrine_mongodb:connect>true</doctrine_mongodb:connect>
+                    </doctrine_mongodb:options>
+                </doctrine_mongodb:connection>
+                <doctrine_mongodb:connection id="conn2" server="mongodb://localhost:27017">
+                    <doctrine_mongodb:options>
+                        <doctrine_mongodb:connect>true</doctrine_mongodb:connect>
+                    </doctrine_mongodb:options>
+                </doctrine_mongodb:connection>
+                <doctrine_mongodb:document-manager id="dm1" metadata-cache-driver="xcache" connection="conn1">
+                    <doctrine_mongodb:mapping name="AcmeDemoBundle" />
+                </doctrine_mongodb:document-manager>
+                <doctrine_mongodb:document-manager id="dm2" connection="conn2">
+                    <doctrine_mongodb:mapping name="AcmeHelloBundle" />
+                </doctrine_mongodb:document-manager>
+            </doctrine_mongodb:config>
         </container>
 
 Now you can retrieve the configured services connection services::
