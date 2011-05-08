@@ -14,7 +14,7 @@ Book
     testing
     validation
     forms
-    security/index
+    security
     http_cache
     translation
     console
