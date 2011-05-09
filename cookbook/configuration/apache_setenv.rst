@@ -10,7 +10,7 @@ to store certain credentials outside of your project code. Database configuratio
 is one such example. The flexibility of the symfony service container allows
 you to do this with relative ease.
 
-First, using the `SetEnv`_ directive in your apache configuration, declare
+First, using the SetEnv_ directive in your apache configuration, declare
 your server-specific credentials
 
 .. code-block:: apache
@@ -31,7 +31,7 @@ your server-specific credentials
 .. note::
 
     Your Apache configuration may differ significantly from the one above. For
-    more information on server configuration and the `SetEnv`_ directive, see
+    more information on server configuration and the SetEnv_ directive, see
     the apache documentation.
 
 Now that you have declared an apache environment variable, it will be available
@@ -106,5 +106,3 @@ Finally, we'll reference these parameters wherever we need them.
 
 
 .. _SetEnv: http://httpd.apache.org/docs/current/env.html
-
-__ SetEnv_
