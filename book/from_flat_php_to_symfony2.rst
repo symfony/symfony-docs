@@ -438,7 +438,7 @@ files in the application and to configure the autoloader:
 
     $loader = new Symfony\Component\ClassLoader\UniversalClassLoader();
     $loader->registerNamespaces(array(
-        'Symfony'                        => __DIR__.'/vendor/symfony/src',
+        'Symfony' => __DIR__.'/vendor/symfony/src',
     ));
 
     $loader->register();
@@ -508,7 +508,7 @@ incidentally, acts quite a bit like the Symfony2 templating engine:
     {
         ob_start();
         require $path;
-        $html = ob_end_clean();
+        $html = ob_get_clean();
 
         return $html;
     }
@@ -550,7 +550,7 @@ them for you. Here's the same sample application, now built in Symfony2:
     {
         public function listAction()
         {
-            $blogs = $this->container->get('doctrine.orm.entity_manager')
+            $blogs = $this->get('doctrine')->getEntityManager()
                 ->createQuery('SELECT b FROM AcmeBlog:Blog b')
                 ->execute();
 
@@ -559,7 +559,7 @@ them for you. Here's the same sample application, now built in Symfony2:
 
         public function showAction($id)
         {
-            $blog = $this->container->get('doctrine.orm.entity_manager')
+            $blog = $this->get('doctrine')->getEntityManager()
                 ->createQuery('SELECT b FROM AcmeBlog:Blog b WHERE id = :id')
                 ->setParameter('id', $id)
                 ->getSingleResult();

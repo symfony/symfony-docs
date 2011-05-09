@@ -1,8 +1,8 @@
 .. index::
    single: Forms; Fields; time
 
-``time`` Field Type
-===================
+time Field Type
+===============
 
 A field to capture time input.
 

@@ -41,6 +41,8 @@ framework and registers the autoloader (see below).
 Like any front controller, ``app.php`` uses a Kernel Class, ``AppKernel``, to
 bootstrap the application.
 
+.. _the-app-dir:
+
 The Application Directory
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -155,11 +157,11 @@ PHP. Have a look at the default configuration:
         - { resource: security.yml }
 
     framework:
+        secret:        %csrf_secret%
         charset:       UTF-8
         error_handler: null
         csrf_protection:
             enabled: true
-            secret: %csrf_secret%
         router:        { resource: "%kernel.root_dir%/config/routing.yml" }
         validation:    { enabled: true, annotations: true }
         templating:    { engines: ['twig'] } #assets_version: SomeVersionScheme
@@ -263,6 +265,8 @@ instance.
 
 Do you understand now why Symfony2 is so flexible? Share your bundles between
 applications, store them locally or globally, your choice.
+
+.. _using-vendors:
 
 Using Vendors
 -------------

@@ -1,8 +1,8 @@
 .. index::
    single: Forms; Fields; number
 
-``number`` Field Type
-=====================
+number Field Type
+=================
 
 Renders an input text field and specializes in handling number input. This
 type offers different options for the precision, rounding, and grouping that

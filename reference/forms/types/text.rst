@@ -1,8 +1,8 @@
 .. index::
    single: Forms; Fields; text
 
-``text`` Field Type
-===================
+text Field Type
+===============
 
 The text field represents the most basic input text field.
 

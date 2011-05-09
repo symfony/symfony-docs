@@ -1,8 +1,8 @@
 .. index::
    single: Forms; Fields; textarea
 
-``textarea`` Field Type
-=========================
+textarea Field Type
+===================
 
 Renders a ``textarea`` HTML element. 
 

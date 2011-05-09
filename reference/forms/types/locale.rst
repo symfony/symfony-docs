@@ -1,8 +1,8 @@
 .. index::
    single: Forms; Fields; locale
 
-``locale`` Field Type
-=====================
+locale Field Type
+=================
 
 The ``locale`` type is a subset of the ``ChoiceType`` that allows the user
 to select from a large list of locales (language+country). As an added bonus,

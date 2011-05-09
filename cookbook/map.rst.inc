@@ -5,6 +5,7 @@
 * :doc:`/cookbook/controller/error_pages`
 * :doc:`/cookbook/controller/service`
 * :doc:`/cookbook/validation/custom_constraint`
+* :doc:`/cookbook/form/twig_form_customization`
 * :doc:`/cookbook/tools/autoloader`
 * :doc:`/cookbook/tools/finder`
 * :doc:`/cookbook/logging/monolog`

@@ -1,8 +1,8 @@
 .. index::
    single: Forms; Fields; password
 
-``password`` Field Type
-=======================
+password Field Type
+===================
 
 The ``password`` field renders an input password text box.
 

@@ -1,8 +1,8 @@
 .. index::
    single: Forms; Fields; checkbox
 
-``checkbox`` Field Type
-=======================
+checkbox Field Type
+===================
 
 Creates a single input checkbox. This should always be used for a field that
 has a Boolean value: if the box is checked, the field will be set to true,

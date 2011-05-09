@@ -228,7 +228,7 @@ define and document your event:
          * The onStoreOrder event is thrown each time an order is created
          * in the system.
          * 
-         * The event listener recieves an Acme\StoreBundle\Event\FilterOrderEvent
+         * The event listener receives an Acme\StoreBundle\Event\FilterOrderEvent
          * instance.
          *
          * @var string
@@ -409,7 +409,7 @@ and ``onStoreOrder`` events:
 
 This is very similar to a listener class, except that the class itself can
 tell the dispatcher which events it should listen to. To register a subscriber
-with the dispatcher, use the ``addSubscriberMethod`` method:
+with the dispatcher, use the :method:``Symfony\\Component\\EventDispatcher\\EventDispatcher::addSubscriber`` method:
 
 .. code-block:: php
 

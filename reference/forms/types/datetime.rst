@@ -1,8 +1,8 @@
 .. index::
    single: Forms; Fields; datetime
 
-``datetime`` Field Type
-=======================
+datetime Field Type
+===================
 
 This field type allows the user to modify data that represents a specific
 date and time (e.g. ``1984-06-05 12:15:30``).

@@ -1,8 +1,8 @@
 .. index::
    single: Forms; Fields; url
 
-``url`` Field Type
-==================
+url Field Type
+==============
 
 The ``url`` field is a text field that prepends the submitted value with
 a given protocol (e.g. ``http://``) if the submitted value doesn't already

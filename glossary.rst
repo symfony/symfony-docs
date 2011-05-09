@@ -27,7 +27,7 @@ Glossary
         lives inside a bundle. (see :ref:`page-creation-bundles`)
 
    Front Controller
-        A *Front Controller* is a short PHP that lives in the web directory
+        A *Front Controller* is a short PHP script that lives in the web directory
         of your project. Typically, *all* requests are handled by executing
         the same front controller, whose job is to bootstrap the Symfony
         application.
@@ -53,7 +53,8 @@ Glossary
         an application. Instead of creating services directly, the developer
         *trains* the service container (via configuration) on how to create
         the services. The service container takes care of lazily instantiating
-        and injecting dependent services.
+        and injecting dependent services. See :doc:`/book/service_container` 
+        chapter.
 
    HTTP Specification
         The *Http Specification* is a document that describes the Hypertext
@@ -70,6 +71,52 @@ Glossary
         in different environments. This is useful as it allows a single application
         to have a ``dev`` environment built for debugging and a ``prod`` environment
         that's optimized for speed.
+
+   Vendor
+        A *vendor* is a supplier of PHP libraries and bundles including Symfony2
+        itself. Despite the usual commercial connotations of the word, vendors
+        in Symfony often (even usually) include free software. Any library you
+        add to your Symfony2 project should go in the ``vendor`` directory. See
+        :ref:`The Architecture: Using Vendors <using-vendors>`.
+
+   Acme
+        *Acme* is a sample company name used in Symfony demos and documentation.
+        Ut's used as a namespace where you would normally use your own company's
+        name (e.g. ``Acme\BlogBundle``).
+
+   Action
+        An *action* is a PHP function or method that executes, for example,
+        when a given route is matched. The term action is synonymous with
+        *controller*, though a controller may also refer to an entire PHP
+        class that includes several actions. See the :doc:`Controller Chapter </book/controller>`.
+
+   Asset
+        An *asset* is any non-executable, static component of a web application,
+        including CSS, JavaScript, images and video. Assets may be placed
+        directly in the project's ``web`` directory, or published from a :term:`Bundle`
+        to the web directory using the ``assets:install`` console task.
+
+   Kernel
+        The *Kernel* is the core of Symfony2. The Kernel object handles HTTP
+        requests using all the bundles and libraries registered to it. See
+        :ref:`The Architecture: The Application Directory <the-app-dir>` and the
+        :doc:`book/internals/kernel` chapter.
+
+   Firewall
+        In Symfony2, a *Firewall* doesn't have to do with networking. Instead,
+        it defines the authentication mechanisms (i.e. it handles the process
+        of determining the identity of your users), either for the whole
+        application or for just a part of it. See the
+        :doc:`book/security/overview` chapters.
+
+   YAML 
+        *YAML* is a recursive acronym for "YAML Ain't a Markup Language". It's a
+        lightweight, humane data serialization language used extensively in
+        Symfony2's configuration files.  See the :doc:`reference/YAML` reference
+        chapter.
+
+
+
 
 .. _`service-oriented architecture`: http://wikipedia.org/wiki/Service-oriented_architecture
 .. _`HTTP Wikipedia`: http://en.wikipedia.org/wiki/Hypertext_Transfer_Protocol

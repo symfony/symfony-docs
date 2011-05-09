@@ -8,7 +8,13 @@
   * :doc:`WebProfilerBundle (web_profiler) </reference/bundle_configuration/WebProfilerBundle>`
   * :doc:`MonologBundle (monolog) </reference/bundle_configuration/MonologBundle>`
 
-* :doc:`Form Type Reference</reference/forms/types>`
-* :doc:`/reference/constraints`
-* :doc:`/reference/dic_tags`
-* :doc:`/reference/YAML`
+* **Forms**
+
+  * :doc:`Form Field Type Reference</reference/forms/types>`
+  * :doc:`Twig Template Function Reference</reference/forms/twig_reference>`
+
+* **Other Areas**
+
+  * :doc:`/reference/constraints`
+  * :doc:`/reference/dic_tags`
+  * :doc:`/reference/YAML`

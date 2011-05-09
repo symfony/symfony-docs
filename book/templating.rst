@@ -369,19 +369,19 @@ Symfony2 uses a **bundle**:**controller**:**template** string syntax for
 templates. This allows for several different types of templates, each which
 lives in a specific location:
 
-* ``AcmeBlogBundle:index.html.twig``: This syntax is used to specify a template
-  for a specific page. The three parts of the string, each separated by
-  a colon (``:``), mean the following:
-  
-    * ``AcmeBlog``: (*bundle*) the template lives inside the ``AcmeBlogBundle``
-      (e.g. ``src/Acme/BlogBundle``);
+* ``AcmeBlogBundle:Blog:index.html.twig``: This syntax is used to specify a
+  template for a specific page. The three parts of the string, each separated
+  by a colon (``:``), mean the following:
+
+    * ``AcmeBlogBundle``: (*bundle*) the template lives inside the
+      ``AcmeBlogBundle`` (e.g. ``src/Acme/BlogBundle``);
 
     * ``Blog``: (*controller*) indicates that the template lives inside the
       ``Blog`` subdirectory of ``Resources/views``;
 
     * ``index.html.twig``: (*template*) the actual name of the file is
       ``index.html.twig``.
-  
+
   Assuming that the ``AcmeBlogBundle`` lives at ``src/Acme/BlogBundle``, the
   final path to the layout would be ``src/Acme/BlogBundle/Resources/views/Blog/index.html.twig``.
 
@@ -1089,7 +1089,24 @@ but can return any other format based on the format requested by the user.
 The request format is most often managed by the routing, where a route can
 be configured so that ``/contact`` sets the request format to ``html`` while
 ``/contact.xml`` sets the format to ``xml``. For more information, see the
-:doc:`Routing</book/routing>` chapter.
+:ref:`Advanced Example in the Routing chapter <advanced-routing-example>`.
+
+To create links that include the format parameter, include a ``_format``
+key in the parameter hash:
+
+.. configuration-block::
+
+    .. code-block:: html+jinja
+
+        <a href="{{ path('article_show', {'id': 123, '_format': 'pdf'}) }}">
+	        PDF Version
+	    </a>
+
+    .. code-block:: html+php
+
+        <a href="<?php echo $view['router']->generate('article_show', array('id' => 123, '_format' => 'pdf')) ?>">
+            PDF Version
+        </a>
 
 Final Thoughts
 --------------
@@ -1121,7 +1138,7 @@ and in Symfony2, that's absolutely fine.
 Learn more from the Cookbook
 ----------------------------
 
-* :doc:`/cookbook/controller/PHP`
+* :doc:`/cookbook/templating/PHP`
 * :doc:`/cookbook/controller/error_pages`
 
 .. _`Twig`: http://www.twig-project.org

@@ -1,8 +1,8 @@
 .. index::
    single: Forms; Fields; country
 
-``country`` Field Type
-======================
+country Field Type
+==================
 
 The ``country`` type is a subset of the ``ChoiceType`` that displays countries
 of the world. As an added bonus, the country names are displayed in the language
