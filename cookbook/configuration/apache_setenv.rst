@@ -2,7 +2,7 @@
    single: Environments; Apache SetEnv
 
 How to store parameters in Apache using SetEnv
-=========================================
+==============================================
 
 In the chapter :doc:`/cookbook/configuration/environments`, you saw how 
 to manage your project configuration. At times, it may benefit your application 
@@ -10,7 +10,7 @@ to store certain credentials outside of your project code. Database configuratio
 is one such example. The flexibility of the symfony service container allows
 you to do this with relative ease.
 
-First, using the `SetEnv`__ directive in your apache configuration, declare
+First, using the `SetEnv`_ directive in your apache configuration, declare
 your server-specific credentials
 
 .. code-block:: apache
