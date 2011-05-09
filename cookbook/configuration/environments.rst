@@ -344,3 +344,7 @@ includes the following:
 
 * ``twig/`` - this directory contains all the cached Twig templates.
 
+Going Further
+-------------
+
+Read the article on :doc:`/cookbook/configuration/apache_setenv`.
