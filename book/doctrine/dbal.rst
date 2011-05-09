@@ -132,10 +132,10 @@ which is the first one defined or the one configured via the
 Each connection is also accessible via the ``doctrine.dbal.[name]_connection``
 service where ``[name]`` if the name of the connection.
 
-Registering custom Types
-~~~~~~~~~~~~~~~~~~~~~~~~
+Registering custom Mapping Types
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-You can register custom types throught the configuration. They will be added to
+You can register custom types through the configuration. They will be added to
 all configured connections.
 
 .. configuration-block::
@@ -158,7 +158,8 @@ all configured connections.
 
             <doctrine:config>
                 <doctrine:dbal>
-                    <doctrine:type name="custom" class="Acme\HelloBundle\MyCustomType" />
+                    <doctrine:type name="custom_first" class="Acme\HelloBundle\Type\CustomFirst" />
+                    <doctrine:type name="custom_second" class="Acme\HelloBundle\Type\CustomSecond" />
                 </doctrine:dbal>
             </doctrine:config>
         </container>
