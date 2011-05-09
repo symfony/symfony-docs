@@ -37,7 +37,7 @@ class:
 
     // app/AppKernel.php
     // ...
-    
+
     class AppKernel extends Kernel
     {
         // ...
@@ -259,7 +259,7 @@ The best way to accomplish this is via a new environment called, for example,
     .. code-block:: php
 
         // app/config/config_benchmark.php
-        
+
         $loader->import('config_prod.php')
 
         $container->loadFromExtension('framework', array(
@@ -301,7 +301,7 @@ The new environment is now accessible via::
    about the application or underlying infrastructure. To be sure these environments
    aren't accessible, the front controller is usually protected from external
    IP addresses via the following code at the top of the controller:
-   
+
     .. code-block:: php
 
         if (!in_array(@$_SERVER['REMOTE_ADDR'], array('127.0.0.1', '::1'))) {
@@ -343,90 +343,4 @@ includes the following:
   URLs to different routes;
 
 * ``twig/`` - this directory contains all the cached Twig templates.
-
-.. index::
-   single: Environments; Apache SetEnv
-
-Storing Parameters in Apache using SetEnv
-===================================================
-
-You've seen how to set parameters in the :doc:`/book/service_container` by
-importing a file such as `services.php`.  At times, it may behoove your
-application to store certain credentials outside of your application.  Database 
-configuration is one such example.  The flexibility of the symfony service
-container allows you to do this with relative ease.
-
-First, using the `SetEnv`__ directive in your apache configuration, declare your
-server-specific credentials
-
-.. code-block:: xml
-
-    <VirtualHost *:80>
-        ServerName      Symfony2
-        DocumentRoot    "/path/to/symfony_2_app/web"
-        DirectoryIndex  index.php index.html
-        SetEnv          SYMFONY__DATABASE__USER user
-        SetEnv          SYMFONY__DATABASE__PASSWORD secret
-
-        <Directory "/path/to/my_symfony_2_app/web">
-            AllowOverride All
-            Allow from All
-        </Directory>
-    </VirtualHost>
-    
-.. note::
-
-    Your Apache configuration may differ significantly from the one above.  For
-    more information on server configuration and the `SetEnv`__ directive, see 
-    the apache documentation.
-
-.. _SetEnv: http://httpd.apache.org/docs/current/env.html
-
-__ SetEnv_
-
-Now that we have declared an apache environment variable, it will be available 
-to our application in the PHP `$_SERVER` global.  Use the `imports` directive in
-your configuration in order to import a `parameters.php` file like so:
-
-.. code-block:: yaml
-
-    # app/config/config.yml
-    imports:
-    - { resource: parameters.php }
-
-In `parameters.php` we will tell our service container of the parameters we set
-in apache.
-
-.. code-block:: php
-
-    # app/config/parameters.php
-    $container->setParameter('database_user', $_SERVER['SYMFONY__DATABASE__USER']);
-    $container->setParameter('database_password', $_SERVER['SYMFONY__DATABASE__PASSWORD']);
-    
-Finally, we'll reference these parameters wherever we need them.
-
-.. configuration-block::
-
-    .. code-block:: yaml
-
-        doctrine:
-            dbal:
-                driver                pdo_mysql
-                dbname:               Symfony2
-                user:                 %database_user%
-                password:             %database_password%
-
-    .. code-block:: xml
-
-        <!-- xmlns:doctrine="http://symfony.com/schema/dic/doctrine" -->
-        <!-- xsi:schemaLocation="http://symfony.com/schema/dic/doctrine http://symfony.com/schema/dic/doctrine/doctrine-1.0.xsd"> -->
-
-        <doctrine:config>
-            <doctrine:dbal
-                driver="pdo_mysql"
-                dbname="database"
-                user="%database_user"
-                password="%database_password"
-            />
-        </doctrine:config>
 
