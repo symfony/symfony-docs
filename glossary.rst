@@ -81,7 +81,7 @@ Glossary
 
    Acme
         *Acme* is a sample company name used in Symfony demos and documentation.
-        Ut's used as a namespace where you would normally use your own company's
+        It's used as a namespace where you would normally use your own company's
         name (e.g. ``Acme\BlogBundle``).
 
    Action
