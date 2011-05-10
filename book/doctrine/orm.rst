@@ -108,7 +108,7 @@ write mapping information with annotations, XML, or YAML:
 
     .. code-block:: yaml
 
-        # Acme/HelloBundle/Resources/config/doctrine/Acme.HelloBundle.Entity.User.orm.dcm.yml
+        # Acme/HelloBundle/Resources/config/doctrine/Acme.HelloBundle.Entity.User.orm.yml
         Acme\HelloBundle\Entity\User:
             type: entity
             table: user
@@ -124,7 +124,7 @@ write mapping information with annotations, XML, or YAML:
 
     .. code-block:: xml
 
-        <!-- Acme/HelloBundle/Resources/config/doctrine/Acme.HelloBundle.Entity.User.orm.dcm.xml -->
+        <!-- Acme/HelloBundle/Resources/config/doctrine/Acme.HelloBundle.Entity.User.orm.xml -->
         <doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
               xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
@@ -153,7 +153,7 @@ write mapping information with annotations, XML, or YAML:
 .. tip::
 
     Instead of creating one file per entity, you can also define all your
-    mapping information into a single ``doctrine.orm.dcm.yml`` file.
+    mapping information into a single ``doctrine.orm.yml`` file.
 
 Create the database and the schema related to your metadata information with
 the following commands:
@@ -179,7 +179,7 @@ Eventually, use your entity and manage its persistent state with Doctrine:
             $user = new User();
             $user->setName('Jonathan H. Wage');
 
-            $em = $this->get('registry')->getEntityManager();
+            $em = $this->get('doctrine')->getEntityManager();
             $em->persist($user);
             $em->flush();
 
@@ -188,7 +188,7 @@ Eventually, use your entity and manage its persistent state with Doctrine:
 
         public function editAction($id)
         {
-            $em = $this->get('registry')->getEntityManager();
+            $em = $this->get('doctrine')->getEntityManager();
             $user = $em->find('AcmeHelloBundle:User', $id);
             $user->setBody('new body');
             $em->persist($user);
@@ -199,7 +199,7 @@ Eventually, use your entity and manage its persistent state with Doctrine:
 
         public function deleteAction($id)
         {
-            $em = $this->get('registry')->getEntityManager();
+            $em = $this->get('doctrine')->getEntityManager();
             $user = $em->find('AcmeHelloBundle:User', $id);
             $em->remove($user);
             $em->flush();
@@ -325,8 +325,8 @@ follow these conventions:
 example ``Acme/HelloBundle/Entity/``.
 
 2. If you are using xml, yml or php mapping put all your configuration files
-into the "Resources/config/doctrine/" directory suffixed with ``orm.dcm.xml``,
-``orm.dcm.yml`` or ``orm.dcm.php`` respectively.
+into the "Resources/config/doctrine/" directory suffixed with ``orm.xml``,
+``orm.yml`` or ``orm.php`` respectively.
 
 3. Annotations is assumed if an ``Entity/`` but no
 "Resources/config/doctrine/" directory is found.
@@ -387,8 +387,8 @@ Doctrine registry::
     {
         public function indexAction()
         {
-            $em =  $this->get('registry')->getEntityManager();
-            $customerEm =  $this->get('registry')->getEntityManager('customer');
+            $em =  $this->get('doctrine')->getEntityManager();
+            $customerEm =  $this->get('doctrine')->getEntityManager('customer');
         }
     }
 
@@ -509,8 +509,8 @@ without any arguments or options:
 
 .. note::
 
-   To be able to load data fixtures to your database, you will need to have the 
-   ``DoctrineFixturesBundle`` bundle installed. To learn how to do it, 
+   To be able to load data fixtures to your database, you will need to have the
+   ``DoctrineFixturesBundle`` bundle installed. To learn how to do it,
    read the ":doc:`/cookbook/doctrine/doctrine_fixtures`" entry of the Cookbook.
 
 Form Integration
