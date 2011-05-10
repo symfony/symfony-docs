@@ -70,7 +70,7 @@ file and register it as a listener by adding the ``kernel.listener`` tag:
             acme.demobundle.listener.request:
                 class: Acme\DemoBundle\RequestListener
                 tags:
-                    - { name: kernel.listener event: onCoreRequest }
+                    - { name: kernel.listener, event: onCoreRequest }
 
     .. code-block:: php
 
