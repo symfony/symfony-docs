@@ -320,7 +320,7 @@ template and then importing it inside your application configuration:
         <!-- app/config/config.xml -->
         <twig:config ...>
             <twig:form>
-                <resource>AcmeDemoBundle:Form:fields.html.twig</resource>
+                <twig:resource>AcmeDemoBundle:Form:fields.html.twig</twig:resource>
             </twig:form>
             <!-- ... -->
         </twig:config>
