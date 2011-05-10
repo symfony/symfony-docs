@@ -643,7 +643,7 @@ exposing a simple and efficient pattern::
         $response->setLastModified($article->getPublishedAt());
 
         // Check that the Response is not modified for the given Request
-        if ($response->isNotModified($request)) {
+        if ($response->isNotModified($this->get('request'))) {
             // return the 304 Response immediately
             return $response;
         } else {
