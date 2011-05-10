@@ -244,7 +244,7 @@ the layout:
 
 You've now introduced a methodology that that allows for the reuse of the
 layout. Unfortunately, to accomplish this, you're forced to use a few ugly
-PHP functions (``ob_start()``, ``ob_end_clean()``) in the template. Symfony2
+PHP functions (``ob_start()``, ``ob_get_clean()``) in the template. Symfony2
 uses a ``Templating`` component that allows this to be accomplished cleanly
 and easily. You'll see it in action shortly.
 
@@ -530,7 +530,7 @@ The Sample Application in Symfony2
 
 The blog has come a *long* way, but it still contains a lot of code for such
 a simple application. Along the way, we've also invented a simple routing
-system and a method using ``ob_start()`` and ``ob_end_clean()`` to render
+system and a method using ``ob_start()`` and ``ob_get_clean()`` to render
 templates. If, for some reason, you needed to continue building this "framework"
 from scratch, you could at least use Symfony's standalone `Routing`_ and
 `Templating`_ components, which already solve these problems.
