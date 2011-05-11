@@ -1,6 +1,7 @@
 * :doc:`/cookbook/email`
 * :doc:`/cookbook/gmail`
 * :doc:`/cookbook/configuration/environments`
+* :doc:`/cookbook/configuration/apache_setenv`
 * :doc:`/cookbook/templating/PHP`
 * :doc:`/cookbook/controller/error_pages`
 * :doc:`/cookbook/controller/service`

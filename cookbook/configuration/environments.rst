@@ -37,7 +37,7 @@ class:
 
     // app/AppKernel.php
     // ...
-    
+
     class AppKernel extends Kernel
     {
         // ...
@@ -259,7 +259,7 @@ The best way to accomplish this is via a new environment called, for example,
     .. code-block:: php
 
         // app/config/config_benchmark.php
-        
+
         $loader->import('config_prod.php')
 
         $container->loadFromExtension('framework', array(
@@ -301,7 +301,7 @@ The new environment is now accessible via::
    about the application or underlying infrastructure. To be sure these environments
    aren't accessible, the front controller is usually protected from external
    IP addresses via the following code at the top of the controller:
-   
+
     .. code-block:: php
 
         if (!in_array(@$_SERVER['REMOTE_ADDR'], array('127.0.0.1', '::1'))) {
@@ -343,3 +343,8 @@ includes the following:
   URLs to different routes;
 
 * ``twig/`` - this directory contains all the cached Twig templates.
+
+Going Further
+-------------
+
+Read the article on :doc:`/cookbook/configuration/apache_setenv`.
