@@ -1,5 +1,5 @@
 .. index::
-   single: Environments; Eternal Parameters
+   single: Environments; External Parameters
 
 How to Set External Parameters in the Dependency Injection Container
 ====================================================================
