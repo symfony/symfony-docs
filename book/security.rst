@@ -80,7 +80,7 @@ authentication (i.e. the old-school username/password box):
                     <user name="admin" password="adminpass" roles="ROLE_ADMIN" />
                 </provider>
 
-                <encoder class="Symfony\Component\Security\Core\User\User">plaintext</encoder>
+                <encoder class="Symfony\Component\Security\Core\User\User" algorithm="plaintext" />
             </config>
         </srv:container>    
 
@@ -815,6 +815,149 @@ field of that class.
 For more information on creating your own custom provider (e.g. if you needed
 to load users via a web service), see :doc:`/cookbook/security/custom_provider`.
 
+Encoding the User's Password
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+So far, for simplicity, all the examples have stored the users' passwords
+in plaintext (whether those users are stored in a configuration file or in
+a database somewhere). Of course, in a real application, you'll want to encode
+your users' passwords for security reasons. This is easily accomplished by
+mapping your User class to one of several built-in "encoders". For example,
+to store your users in memory, but obscure their passwords via ``sha1``,
+do the following:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # app/config/config.yml
+        security:
+            # ...
+
+            providers:
+                in_memory:
+                    users:
+                        ryan:  { password: bb87a29949f3a1ee0559f8a57357487151281386, roles: 'ROLE_USER' }
+                        admin: { password: 74913f5cd5f61ec0bcfdb775414c2fb3d161b620, roles: 'ROLE_ADMIN' }
+
+            encoders:
+                Symfony\Component\Security\Core\User\User:
+                    algorithm:   sha1
+                    iterations: 1
+                    encode_as_base64: false
+    
+    .. code-block:: xml
+
+        <!-- app/config/config.xml -->
+        <srv:container xmlns="http://symfony.com/schema/dic/security"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:srv="http://symfony.com/schema/dic/services"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+            <config>
+                <!-- ... -->
+
+                <provider name="in_memory">
+                    <user name="ryan" password="bb87a29949f3a1ee0559f8a57357487151281386" roles="ROLE_USER" />
+                    <user name="admin" password="74913f5cd5f61ec0bcfdb775414c2fb3d161b620" roles="ROLE_ADMIN" />
+                </provider>
+
+                <encoder class="Symfony\Component\Security\Core\User\User" algorithm="sha1" iterations="1" encode_as_base64="false" />
+            </config>
+        </srv:container>    
+
+    .. code-block:: php
+    
+        // app/config/config.php
+        $container->loadFromExtension('security', array(
+            // ...
+
+            'providers' => array(
+                'in_memory' => array(
+                    'users' => array(
+                        'ryan' => array('password' => 'bb87a29949f3a1ee0559f8a57357487151281386', 'roles' => 'ROLE_USER'),
+                        'admin' => array('password' => '74913f5cd5f61ec0bcfdb775414c2fb3d161b620', 'roles' => 'ROLE_ADMIN'),
+                    ),
+                ),
+            ),
+            'encoders' => array(
+                'Symfony\Component\Security\Core\User\User' => array(
+                    'algorithm'         => 'sha1',
+                    'iterations'        => 1,
+                    'encode_as_base64'  => false,
+                ),
+            ),
+        ));
+
+By setting the ``iterations`` to ``1`` and the ``encode_as_base64`` to false,
+the password is simply run through the ``sha1`` algorithm one time and without
+any extra encoding. You can now calculate the hashed password either programmatically
+(e.g. ``hash('ryanpass')``) or via some online tool like `functions-online.com`_
+
+If you're creating your users dynamically (and storing them in a database),
+you can use even tougher hashing algorithms and then rely on an actual password
+encoder object to help you encode passwords. For example, suppose your User
+object is ``Acme\UserBundle\Entity\User`` (like in the above example). First,
+configure the encoder for that user:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # app/config/config.yml
+        security:
+            # ...
+
+            encoders:
+                Acme\UserBundle\Entity\User: sha512
+    
+    .. code-block:: xml
+
+        <!-- app/config/config.xml -->
+        <srv:container xmlns="http://symfony.com/schema/dic/security"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:srv="http://symfony.com/schema/dic/services"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+            <config>
+                <!-- ... -->
+
+                <encoder class="Acme\UserBundle\Entity\User" algorithm="sha512" />
+            </config>
+        </srv:container>    
+
+    .. code-block:: php
+    
+        // app/config/config.php
+        $container->loadFromExtension('security', array(
+            // ...
+
+            'encoders' => array(
+                'Acme\UserBundle\Entity\User' => 'sha512',
+            ),
+        ));
+
+In this case, you're using the stronger ``sha512`` algorithm. Also, since
+you've simply specified the algorithm (``sha512``) as a string, the system
+will default to hashing your password 5000 times in a row and then encoding
+it as base64. In other words, the password has been greatly obfuscated so
+that the hashed password can't be decoded (i.e. you can't determine the password
+from the hashed password).
+
+If you have some sort of registration form for users, you'll need to be able
+to determine the hashed password so that you can set it on your user. No
+matter what algorithm you configure for your user object, this can always
+be done by doing the following in a controller:
+
+.. code-block:: php
+
+    $factory = $this->get('security.encoder_factory');
+    $user = new Acme\UserBundle\Entity\User();
+
+    $encoder = $factory->getEncoder($user);
+    $password = $encoder->encodePassword('ryanpass', $user->getSalt());
+    $user->setPassword($password);
+
 Retrieving the User Object
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -1118,6 +1261,28 @@ is defined by the ``target`` parameter above (the homepage). For more informatio
 on configuring the logout, see the
 :doc:`Security Configuration Reference</reference/configuration/security`.
 
+Access Control in Templates
+---------------------------
+
+If you want to check if the current user has a role inside a template, use
+the built-in helper function:
+
+.. configuration-block::
+
+    .. code-block:: html+jinja
+    
+        {% if is_granted('ROLE_ADMIN') %}
+            <a href="...">Delete</a>
+        {% endif %}
+
+    .. code-block:: html+php
+        
+        <?php if ($view['security']->isGranted('ROLE_ADMIN')): ?>
+            <a href="...">Delete</a>
+        <?php endif; ?>
+
+
 .. _`security component`: https://github.com/symfony/Security
 .. _`SecurityExtraBundle`: https://github.com/schmittjoh/SecurityExtraBundle
 .. _`UserBundle`: https://github.com/friendsofsymfony/UserBundle
+.. _`functions-online.com`: http://www.functions-online.com/sha1.html
