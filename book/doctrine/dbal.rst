@@ -132,16 +132,17 @@ which is the first one defined or the one configured via the
 Each connection is also accessible via the ``doctrine.dbal.[name]_connection``
 service where ``[name]`` if the name of the connection.
 
-Registering custom Mapping Types
+Registering Custom Mapping Types
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-You can register custom types through the configuration. They will be added to
-all configured connections.
+You can register custom mapping types through the configuration. They will
+be added to all configured connections.
 
 .. configuration-block::
 
     .. code-block:: yaml
 
+        # app/config/config.yml
         doctrine:
             dbal:
                 types:
@@ -150,6 +151,7 @@ all configured connections.
 
     .. code-block:: xml
 
+        <!-- app/config/config.xml -->
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xmlns:doctrine="http://symfony.com/schema/dic/doctrine"
@@ -163,6 +165,18 @@ all configured connections.
                 </doctrine:dbal>
             </doctrine:config>
         </container>
+
+    .. code-block:: php
+    
+        // app/config/config.php
+        $container->loadFromExtension('doctrine', array(
+            'dbal' => array(
+                'types' => array(
+                    'custom_first'  => 'Acme\HelloBundle\Type\CustomFirst',
+                    'custom_second' => 'Acme\HelloBundle\Type\CustomSecond',
+                ),
+            ),
+        ));
 
 .. _PDO:           http://www.php.net/pdo
 .. _documentation: http://www.doctrine-project.org/docs/dbal/2.0/en
