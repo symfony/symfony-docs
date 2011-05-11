@@ -24,7 +24,7 @@ format of your choice).
             auto_start:     true
             storage_id:     session.storage.pdo
             
-		parameters:
+        parameters:
             pdo.db_options:
                 db_table: session
                 db_id_col: session_id
@@ -48,7 +48,23 @@ format of your choice).
  * ``db_id_col``: The name of the id column in your session table (VARCHAR(255) or larger)
  * ``db_data_col``: The name of the value column in your session table (TEXT or CLOB)
  * ``db_time_col``: The name of the time column in your session table (INTEGER)
-					
+	
+With the given configuration the database connection settings are defined for the
+session storage connection only. This is OK when you use a separate database for 
+the session data.
+If you like to store the session data in the same database as the rest of your
+projects data, you can use the connection settings from the parameter.ini via
+the placeholder-variables
+
+.. configuration-block::
+
+    .. code-block:: yaml
+        pdo:
+            class: PDO
+            arguments:
+                dsn:      "mysql:dbname=%database_name%"
+                user:     %database_user%
+                password: %database_password%
 			
 The SQL-Statement for creating the needed Database-Table could look like the following (MySQL):
 
