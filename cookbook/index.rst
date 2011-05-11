@@ -32,6 +32,7 @@ Cookbook
     routing/scheme
     debugging
     assetic/yuicompressor
+    console
     symfony1
 
 .. include:: map.rst.inc

@@ -1,13 +1,15 @@
-Console Commands
-================
+How to Create Console/Command-Line Commands
+===========================================
 
-Symfony2 ships with a console component. The framework offers a simple convention that allows
-you to register your own console commands for any recurring task, cronjobs, imports or other batch-jobs.
+Symfony2 ships with a console component. The framework offers a simple convention
+that allows you to register your own console commands for any recurring task,
+cronjobs, imports or other batch-jobs.
 
-To make the console commands available automatically with Symfony2 you have to create a ``Command``
-directory inside your bundle and create a php file suffixed with ``Command.php`` for each
-task that you want to provide. If we want to to extend the HelloBundle to greet us from the commandline
-aswell we get this simple block of necessary code:
+To make the console commands available automatically with Symfony2 you have
+to create a ``Command`` directory inside your bundle and create a php file
+suffixed with ``Command.php`` for each task that you want to provide. If
+we want to to extend the HelloBundle to greet us from the command line as
+well we get this simple block of necessary code:
 
 .. code-block: php
 
@@ -56,8 +58,9 @@ Advanced Usage
 Using the Dependency Injection Container
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Using the Symfony\Bundle\FrameworkBundle\Command\Command as base class we also have access to
-the dependency injection container. As an example we could easily extend our task to be translatable:
+Using the Symfony\Bundle\FrameworkBundle\Command\Command as base class we
+also have access to the dependency injection container. As an example we
+could easily extend our task to be translatable:
 
 .. code-block: php
 
