@@ -24,4 +24,5 @@
 * :doc:`/cookbook/doctrine/mongodb`
 * :doc:`/cookbook/routing/scheme`
 * :doc:`/cookbook/debugging`
+* :doc:`/cookbook/assetic/yuicompressor`
 * :doc:`/cookbook/symfony1`

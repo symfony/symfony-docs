@@ -31,6 +31,7 @@ Cookbook
     doctrine/migrations
     routing/scheme
     debugging
+    assetic/yuicompressor
     symfony1
 
 .. include:: map.rst.inc
