@@ -85,7 +85,7 @@ yaml.
 
     .. code-block:: yaml
 
-        # Acme/HelloBundle/Resources/config/doctrine/metadata/mongodb/Acme.HelloBundle.Document.User.dcm.yml
+        # Acme/HelloBundle/Resources/config/doctrine/Acme.HelloBundle.Document.User.mongodb.yml
         Acme\HelloBundle\Document\User:
             type: document
             collection: user
@@ -98,7 +98,7 @@ yaml.
 
     .. code-block:: xml
 
-        <!-- Acme/HelloBundle/Resources/config/doctrine/metadata/mongodb/Acme.HelloBundle.Document.User.dcm.xml -->
+        <!-- Acme/HelloBundle/Resources/config/doctrine/Acme.HelloBundle.Document.User.mongodb.xml -->
         <doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
               xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
@@ -154,7 +154,7 @@ Now, use your document and manage its persistent state with Doctrine:
 
         public function deleteAction($id)
         {
-            $dm = $this->get('doctrine.odm.entity_manager');
+            $dm = $this->get('doctrine.odm.mongodb.document_manager');
             $user = $dm->createQuery('find all from AcmeHelloBundle:User where id = ?', $id);
             $dm->remove($user);
             $dm->flush();
@@ -271,13 +271,13 @@ can control. The following configuration options exist for a mapping:
 To avoid having to configure lots of information for your mappings you should
 follow these conventions:
 
-1. Put all your entities in a directory ``Document/`` inside your bundle. For
+1. Put all your documents in a directory ``Document/`` inside your bundle. For
    example ``Acme/HelloBundle/Document/``.
 2. If you are using xml, yml or php mapping put all your configuration files
-   into the ``Resources/config/doctrine/metadata/doctrine/mongodb/`` directory
-   suffixed with dcm.xml, dcm.yml or dcm.php respectively.
+   into the ``Resources/config/doctrine/`` directory
+   suffixed with mongodb.xml, mongodb.yml or mongodb.php respectively.
 3. Annotations is assumed if an ``Document/`` but no
-   ``Resources/config/doctrine/metadata/mongodb/`` directory is found.
+   ``Resources/config/doctrine/`` directory is found.
 
 The following configuration shows a bunch of mapping examples:
 
