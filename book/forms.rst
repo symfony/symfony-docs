@@ -230,7 +230,7 @@ of the ``$product`` object. This all happens via the ``bindRequest()`` method.
         $product = new Product();
         $product->name = 'Test product';
     
-        $product->bindRequest($this->get('request'), $product);
+        $form->bindRequest($this->get('request'));
         echo $product->name;
 
     The above statement will echo ``Foo``, because ``bindRequest`` ultimately
