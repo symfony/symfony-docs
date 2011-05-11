@@ -24,14 +24,6 @@ format of your choice).
             auto_start:     true
             storage_id:     session.storage.pdo
             
-Now you have to define a PDO connection for the database in the ``services.yml`` in your Bundle. 
-For that create a new service  ``session.storage.pdo``:
-
-.. configuration-block::
-
-    .. code-block:: yaml
-
-        # src/Acme/DemoBundle/Resources/config/services.yml
 		parameters:
             pdo.db_options:
                 db_table: session
@@ -42,9 +34,7 @@ For that create a new service  ``session.storage.pdo``:
         services:
             session.storage.pdo:
                 class:    Symfony\Component\HttpFoundation\SessionStorage\PdoSessionStorage
-                arguments:
-                    - @pdo
-					- %pdo.db_options%
+                arguments: [@pdo, %pdo.db_options% ]
 					
             pdo:
                 class: PDO
@@ -59,16 +49,6 @@ For that create a new service  ``session.storage.pdo``:
  * ``db_data_col``: The name of the value column in your session table (TEXT or CLOB)
  * ``db_time_col``: The name of the time column in your session table (INTEGER)
 					
-Don't forget to import this ``services.yml`` file to your application ``config.yml``
-
-.. configuration-block::
-
-    .. code-block:: yaml
-
-        # app/config/config.yml
-        imports:
-		    - { resource: "@AcmeDemoBundle/Resources/config/services.yml" }
-			
 			
 The SQL-Statement for creating the needed Database-Table could look like the following (MySQL):
 
