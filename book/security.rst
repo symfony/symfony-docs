@@ -1281,6 +1281,22 @@ the built-in helper function:
             <a href="...">Delete</a>
         <?php endif; ?>
 
+Access Control in Controllers
+-----------------------------
+
+If you want to check if the current user has a role in your controller, use
+the ``isGranted`` method of the security context:
+
+.. code-block:: php
+
+    public function indexAction()
+    {
+        // show different content to admin users
+        if($this->get('security.context')->isGranted('ADMIN')) {
+            // Load admin content here
+        }
+        // load other regular content here
+    }
 
 .. _`security component`: https://github.com/symfony/Security
 .. _`SecurityExtraBundle`: https://github.com/schmittjoh/SecurityExtraBundle
