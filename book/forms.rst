@@ -230,7 +230,7 @@ of the ``$product`` object. This all happens via the ``bindRequest()`` method.
         $product = new Product();
         $product->name = 'Test product';
     
-        $product->bindRequest($this->get('request'));
+        $product->bindRequest($this->get('request'), $product);
         echo $product->name;
 
     The above statement will echo ``Foo``, because ``bindRequest`` ultimately
@@ -619,13 +619,6 @@ that will house the logic for building the product form:
             $builder->add('name');
             $builder->add('price', 'money', array('currency' => 'USD'));
         }
-
-        public function getDefaultOptions(array $options)
-        {
-            return array(
-                'data_class' => 'Acme\StoreBundle\Entity\Product',
-            );
-        }
     }
 
 This new class contains all the directions needed to create the product form.
@@ -640,10 +633,34 @@ It can be used to quickly build a form object in the controller:
 
     public function indexAction()
     {
-        $form = $this->get('form.factory')->create(new ProductType());
+        $product = // ...
+        $form = $this->get('form.factory')->create(new ProductType(), $product);
         
         // ...
     }
+
+.. note::
+    You can also set the data on the form via the ``setData()`` method:
+    
+    .. code-block:: php
+    
+        $form = $this->get('form.factory')->create(new ProductType());
+        $form->setData($product);
+
+    If you use the ``setData`` method - and want to take advantage of field
+    type guessing, be sure to add the following to your form class:
+    
+    .. code-block:: php
+    
+        public function getDefaultOptions(array $options)
+        {
+            return array(
+                'data_class' => 'Acme\StoreBundle\Entity\Product',
+            );
+        }
+    
+    This is necessary because the object is passed to the form after field
+    type guessing.
 
 Placing the form logic into its own class means that the form can be easily
 reused elsewhere in your project. This is the best way to create forms, but
@@ -671,6 +688,13 @@ when the form is valid:
 
         return $this->redirect($this->generateUrl('store_product_success'));
     }
+
+If, for some reason, you don't have access to your original ``$product``
+object, you can fetch it from the form:
+
+.. code-block:: php
+
+    $product = $form->getData();
 
 For more information, see the :doc:`Doctrine ORM chapter</book/doctrine/orm>`.
 
