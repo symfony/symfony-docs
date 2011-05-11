@@ -460,6 +460,50 @@ that use this connection.
             </services>
         </container>
 
+Registering custom DQL functions
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+You can register custom DQL functions throught the configuration.
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        doctrine:
+            orm:
+                entity_managers:
+                    default:
+                        dql:
+                            string_functions:
+                                test_string: Acme\HelloBundle\DQL\StringFunction
+                                second_string: Acme\HelloBundle\DQL\SecondStringFunction
+                            numeric_functions:
+                                test_numeric: Acme\HelloBundle\DQL\NumericFunction
+                            datetime_functions:
+                                test_datetime: Acme\HelloBundle\DQL\DatetimeFunction
+
+    .. code-block:: xml
+
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:doctrine="http://symfony.com/schema/dic/doctrine"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd
+                                http://symfony.com/schema/dic/doctrine http://symfony.com/schema/dic/doctrine/doctrine-1.0.xsd">
+
+            <doctrine:config>
+                <doctrine:orm>
+                    <doctrine:entity-manager name="default">
+                        <doctrine:dql>
+                            <doctrine:string-function name="test_string>Acme\HelloBundle\DQL\StringFunction</doctrine:string-function>
+                            <doctrine:string-function name="second_string>Acme\HelloBundle\DQL\SecondStringFunction</doctrine:string-function>
+                            <doctrine:numeric-function name="test_numeric>Acme\HelloBundle\DQL\NumericFunction</doctrine:numeric-function>
+                            <doctrine:datetime-function name="test_datetime>Acme\HelloBundle\DQL\DatetimeFunction</doctrine:datetime-function>
+                        </doctrine:dql>
+                    </doctrine:entity-manager>
+                </doctrine:orm>
+            </doctrine:config>
+        </container>
+
 .. index::
    single: Doctrine; ORM Console Commands
    single: CLI; Doctrine ORM
