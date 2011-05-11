@@ -1,22 +1,21 @@
-How to Minify Javascripts and Stylesheets with YUI Compressor
+How to Minify JavaScripts and Stylesheets with YUI Compressor
 =============================================================
 
-Yahoo! provides an excellent utility for minifying Javascripts and stylesheets
+Yahoo! provides an excellent utility for minifying JavaScripts and stylesheets
 so they travel over the wire faster, the `YUI Compressor`_. Thanks to Assetic,
 you can take advantage of this tool very easily.
 
 Download the YUI Compressor JAR
 -------------------------------
 
-The YUI Compressor is written in Java and distributed as a JAR. Download the
-JAR from the Yahoo! site and save it to
-``app/Resources/java/yuicompressor.jar``.
+The YUI Compressor is written in Java and distributed as a JAR. `Download the JAR`_
+from the Yahoo! site and save it to ``app/Resources/java/yuicompressor.jar``.
 
-Configure the YUI filters
+Configure the YUI Filters
 -------------------------
 
 Now you need to configure two Assetic filters in your application, one for
-minifying Javascripts with the YUI Compressor and one for minifying
+minifying JavaScripts with the YUI Compressor and one for minifying
 stylesheets:
 
 .. configuration-block::
@@ -59,7 +58,7 @@ stylesheets:
 
 You now have access to two new Assetic filters in your application:
 ``yui_css`` and ``yui_js``. These will use the YUI Compressor to minify
-stylesheets and Javascripts, respectively.
+stylesheets and JavaScripts, respectively.
 
 Minify your Assets
 ------------------
@@ -84,17 +83,40 @@ the view layer, this work is done in your templates:
         <script src="<?php echo $view->escape($url) ?>"></script>
         <?php endforeach; ?>
 
+.. note::
+
+    The above example assumes that your JavaScript files are in the ``js/src``
+    directory. This isn't important however - you can include your Javascript
+    files no matter where they are.
+
 With the addition of the ``yui_js`` filter to the asset tags above, you should
-now see minified Javascripts coming over the wire much faster.
+now see minified JavaScripts coming over the wire much faster. The same process
+can be repeated to minify your stylesheets.
+
+.. configuration-block::
+
+    .. code-block:: html+jinja
+
+        {% stylesheets 'css/src/*' filter='yui_css' %}
+        <link rel="stylesheet" type="text/css" media="screen" href="{{ asset_url }}" />
+        {% endjavascripts %}
+
+    .. code-block:: html+php
+
+        <?php foreach ($view['assetic']->stylesheets(
+            array('css/src/*'),
+            array('yui_css')) as $url): ?>
+        <link rel="stylesheet" type="text/css" media="screen" href="<?php echo $view->escape($url) ?>" />
+        <?php endforeach; ?>
 
 Disable Minification in Debug Mode
 ----------------------------------
 
-Minified Javascript is very difficult to read, let alone debug. Because of
-this, Assetic lets you disable a certain filter when your application is in
-debug mode. You can do this be prefixing the filter name in your template with
-a question mark: ``?``. This tells Assetic to only apply this filter when
-debug mode is off.
+Minified JavaScripts and Stylesheets are very difficult to read, let alone
+debug. Because of this, Assetic lets you disable a certain filter when your
+application is in debug mode. You can do this be prefixing the filter name
+in your template with a question mark: ``?``. This tells Assetic to only
+apply this filter when debug mode is off.
 
 .. configuration-block::
 
@@ -112,4 +134,5 @@ debug mode is off.
         <script src="<?php echo $view->escape($url) ?>"></script>
         <?php endforeach; ?>
 
-.. _YUI Compressor: http://developer.yahoo.com/yui/compressor/
+.. _`YUI Compressor`: http://developer.yahoo.com/yui/compressor/
+.. _`Download the JAR`: http://yuilibrary.com/downloads/#yuicompressor
