@@ -184,8 +184,8 @@ As a best practice, controllers in a bundle that's meant to be distributed
 to others must not extend the
 :class:`Symfony\\Bundle\\FrameworkBundle\\Controller\\Controller` base class.
 They can implement
-:class:`Symfony\\Foundation\\DependencyInjection\\ContainerAwareInterface` or
-extend :class:`Symfony\\Foundation\\DependencyInjection\\ContainerAware`
+:class:`Symfony\\Component\\DependencyInjection\\ContainerAwareInterface` or
+extend :class:`Symfony\\Component\\DependencyInjection\\ContainerAware`
 instead.
 
 .. note::
