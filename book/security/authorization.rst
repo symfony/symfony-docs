@@ -169,3 +169,21 @@ syntax:
 
     If you need access to the user from a template, you need to pass it
     explicitly.
+
+Access Control in Controllers
+-----------------------------
+
+If you want to check a user role in your controller, you use the
+``isGranted``method of the security context:
+
+.. code-block:: php
+
+    // DefaultController.php
+    public function indexAction()
+    {
+        // show different content to admin users
+        if($this->get('security.context')->isGranted('ADMIN')) {
+            // Load admin content here
+        }
+        // load other regular content here
+    }
