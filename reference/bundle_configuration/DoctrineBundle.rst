@@ -38,9 +38,8 @@ Configuration Reference
                 auto_generate_proxy_classes:    true
                 proxy_namespace:                Proxies
                 proxy_dir:                      %kernel.cache_dir%/doctrine/orm/Proxies
-                default_entity_manager:         default # Required
+                default_entity_manager:         default # The first defined is used if not set
                 entity_managers:
-                    # At least one has to be defined
                     default:
                         # The name of a DBAL connection (the one marked as default is used if not set)
                         connection:                     conn1
@@ -56,6 +55,13 @@ Configuration Reference
                             port:           11211
                             instance_class: Memcache
                             class:          Doctrine\Common\Cache\MemcacheCache
+                        dql:
+                            string_functions:
+                                test_string: Acme\HelloBundle\DQL\StringFunction
+                            numeric_functions:
+                                test_numeric: Acme\HelloBundle\DQL\NumericFunction
+                            datetime_functions:
+                                test_datetime: Acme\HelloBundle\DQL\DatetimeFunction
                     em2:
                         # ...
 
@@ -94,6 +100,11 @@ Configuration Reference
                     <doctrine:entity-manager name="default" query-cache-driver="array" result-cache-driver="array" connection="conn1" class-metadata-factory-name="Doctrine\ORM\Mapping\ClassMetadataFactory">
                         <doctrine:metadata-cache-driver type="memcache" host="localhost" port="11211" instance-class="Memcache" class="Doctrine\Common\Cache\MemcacheCache" />
                         <doctrine:mapping name="AcmeHelloBundle" />
+                        <doctrine:dql>
+                            <doctrine:string-function name="test_string>Acme\HelloBundle\DQL\StringFunction</doctrine:string-function>
+                            <doctrine:numeric-function name="test_numeric>Acme\HelloBundle\DQL\NumericFunction</doctrine:numeric-function>
+                            <doctrine:datetime-function name="test_datetime>Acme\HelloBundle\DQL\DatetimeFunction</doctrine:datetime-function>
+                        </doctrine:dql>
                     </doctrine:entity-manager>
                     <doctrine:entity-manager name="em2" connection="conn2" metadata-cache-driver="apc">
                         <doctrine:mapping
