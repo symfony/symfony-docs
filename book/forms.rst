@@ -219,6 +219,23 @@ Now, when submitting the form, the controller binds the submitted data to the
 form, which translates that data back to the ``name`` and ``price`` properties
 of the ``$product`` object. This all happens via the ``bindRequest()`` method.
 
+.. note::
+
+    As soon as ``bindRequest()`` is called, the submitted data is transferred
+    to the underlying object immediately. For example, imagine that ``Foo``
+    is submitted for the ``name`` field:
+
+    .. code-block:: php
+
+        $product = new Product();
+        $product->name = 'Test product';
+    
+        $product->bindRequest($this->get('request'));
+        echo $product->name;
+
+    The above statement will echo ``Foo``, because ``bindRequest`` ultimately
+    moves the submitted data back to the ``$product`` object.
+
 This controller follows a common pattern for handling forms, and has three
 possible paths:
 
@@ -648,13 +665,19 @@ when the form is valid:
 .. code-block:: php
 
     if ($form->isValid()) {
-        // persist the $product object to the database
-        // or do anything else you need to do
+        $em = $this->get('doctrine')->getEntityManager();
+        $em->persist($product);
+        $em->flush();
 
         return $this->redirect($this->generateUrl('store_product_success'));
     }
 
 For more information, see the :doc:`Doctrine ORM chapter</book/doctrine/orm>`.
+
+The key thing to understand is that when the form is bound, the submitted
+data is transferred to the underlying object immediately. If you want to
+persist that data, you simply need to persist the object itself (which already
+contains the submitted data).
 
 If the underlying object of a form (e.g. ``Product``) happens to be mapped
 with the Doctrine ORM, the form framework will use that information - along
