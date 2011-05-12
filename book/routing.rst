@@ -710,7 +710,7 @@ routing system can be:
 
         article_show:
           pattern:  /articles/{culture}/{year}/{title}.{_format}
-          defaults  { _controller: AcmeDemoBundle:Article:show, _format: html }
+          defaults:  { _controller: AcmeDemoBundle:Article:show, _format: html }
           requirements:
               culture:  en|fr
               _format:  html|rss
