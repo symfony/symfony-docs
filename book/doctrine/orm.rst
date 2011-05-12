@@ -517,7 +517,7 @@ The following configuration shows a bunch of mapping examples:
 Multiple Entity Managers
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
-You can use multiple ``EntityManager``s in a Symfony2 application. This is
+You can use multiple entity managers in a Symfony2 application. This is
 necessary if you are using different databases or even vendors with entirely
 different sets of entities.
 
