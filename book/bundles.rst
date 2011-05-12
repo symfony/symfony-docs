@@ -57,7 +57,7 @@ class name.
 
     Symfony2 core Bundles do not prefix the Bundle class with ``Symfony``
     and always add a ``Bundle`` subnamespace; for example:
-    :class:``Symfony\Bundle\FrameworkBundle\FrameworkBundle``.
+    :class:`Symfony\\Bundle\\FrameworkBundle\\FrameworkBundle`.
 
 Directory Structure
 -------------------
@@ -184,8 +184,8 @@ As a best practice, controllers in a bundle that's meant to be distributed
 to others must not extend the
 :class:`Symfony\\Bundle\\FrameworkBundle\\Controller\\Controller` base class.
 They can implement
-:class:`Symfony\\Foundation\\DependencyInjection\\ContainerAwareInterface` or
-extend :class:`Symfony\\Foundation\\DependencyInjection\\ContainerAware`
+:class:`Symfony\\Component\\DependencyInjection\\ContainerAwareInterface` or
+extend :class:`Symfony\\Component\\DependencyInjection\\ContainerAware`
 instead.
 
 .. note::

@@ -50,10 +50,21 @@ create a new file with the same name in the
 ``app/Resources/FrameworkBundle/views/Exception`` directory. This is the
 standard way of overriding any template that lives inside a bundle.
 
-The debug-friendly exception pages shown to the developer can even be
-customized in the same way by creating templates such as
-``exception.html.twig`` for the standard HTML exception page or
-``exception.json.twig`` for the JSON exception page.
+You can also provide specific templates according to the HTTP status code. For
+instance, create a
+``app/Resources/FrameworkBundle/views/Exception/error404.html.twig`` template
+to display a special page for 404 (page not found) errors.
+
+Symfony uses the following algorithm to determine which template to use:
+
+* First, it looks for a template for the given format and status code (like
+  ``error404.json.twig``);
+
+* If it does not exist, it looks for a template for the given format (like
+  ``error.json.twig``);
+
+* If it does not exist, it falls back to the HTML template (like
+  ``error.html.twig``).
 
 .. tip::
 
@@ -63,3 +74,10 @@ customized in the same way by creating templates such as
     ``vendor/symfony/src/Symfony/Bundle/FrameworkBundle``. Often, the easiest
     way to customize an error page is to copy it from the ``FrameworkBundle``
     into ``app/Resources/FrameworkBundle/views/Exception`` and then modify it.
+
+.. note::
+
+    The debug-friendly exception pages shown to the developer can even be
+    customized in the same way by creating templates such as
+    ``exception.html.twig`` for the standard HTML exception page or
+    ``exception.json.twig`` for the JSON exception page.

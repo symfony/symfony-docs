@@ -219,6 +219,23 @@ Now, when submitting the form, the controller binds the submitted data to the
 form, which translates that data back to the ``name`` and ``price`` properties
 of the ``$product`` object. This all happens via the ``bindRequest()`` method.
 
+.. note::
+
+    As soon as ``bindRequest()`` is called, the submitted data is transferred
+    to the underlying object immediately. For example, imagine that ``Foo``
+    is submitted for the ``name`` field:
+
+    .. code-block:: php
+
+        $product = new Product();
+        $product->name = 'Test product';
+    
+        $form->bindRequest($this->get('request'));
+        echo $product->name;
+
+    The above statement will echo ``Foo``, because ``bindRequest`` ultimately
+    moves the submitted data back to the ``$product`` object.
+
 This controller follows a common pattern for handling forms, and has three
 possible paths:
 
@@ -602,13 +619,6 @@ that will house the logic for building the product form:
             $builder->add('name');
             $builder->add('price', 'money', array('currency' => 'USD'));
         }
-
-        public function getDefaultOptions(array $options)
-        {
-            return array(
-                'data_class' => 'Acme\StoreBundle\Entity\Product',
-            );
-        }
     }
 
 This new class contains all the directions needed to create the product form.
@@ -623,10 +633,34 @@ It can be used to quickly build a form object in the controller:
 
     public function indexAction()
     {
-        $form = $this->get('form.factory')->create(new ProductType());
+        $product = // ...
+        $form = $this->get('form.factory')->create(new ProductType(), $product);
         
         // ...
     }
+
+.. note::
+    You can also set the data on the form via the ``setData()`` method:
+    
+    .. code-block:: php
+    
+        $form = $this->get('form.factory')->create(new ProductType());
+        $form->setData($product);
+
+    If you use the ``setData`` method - and want to take advantage of field
+    type guessing, be sure to add the following to your form class:
+    
+    .. code-block:: php
+    
+        public function getDefaultOptions(array $options)
+        {
+            return array(
+                'data_class' => 'Acme\StoreBundle\Entity\Product',
+            );
+        }
+    
+    This is necessary because the object is passed to the form after field
+    type guessing.
 
 Placing the form logic into its own class means that the form can be easily
 reused elsewhere in your project. This is the best way to create forms, but
@@ -648,13 +682,26 @@ when the form is valid:
 .. code-block:: php
 
     if ($form->isValid()) {
-        // persist the $product object to the database
-        // or do anything else you need to do
+        $em = $this->get('doctrine')->getEntityManager();
+        $em->persist($product);
+        $em->flush();
 
         return $this->redirect($this->generateUrl('store_product_success'));
     }
 
+If, for some reason, you don't have access to your original ``$product``
+object, you can fetch it from the form:
+
+.. code-block:: php
+
+    $product = $form->getData();
+
 For more information, see the :doc:`Doctrine ORM chapter</book/doctrine/orm>`.
+
+The key thing to understand is that when the form is bound, the submitted
+data is transferred to the underlying object immediately. If you want to
+persist that data, you simply need to persist the object itself (which already
+contains the submitted data).
 
 If the underlying object of a form (e.g. ``Product``) happens to be mapped
 with the Doctrine ORM, the form framework will use that information - along
