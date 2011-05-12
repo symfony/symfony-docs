@@ -112,7 +112,7 @@ and tag it as a "security.voter":
 
         services:
             security.access.blacklist_voter:
-                class:      Acme\DemoBundle\Security\Authorization\Voter
+                class:      Acme\DemoBundle\Security\Authorization\Voter\ClientIpVoter
                 arguments:  [@request, [123.123.123.123, 171.171.171.171]]
                 public:     false
                 tags:
@@ -123,7 +123,7 @@ and tag it as a "security.voter":
         <!-- src/Acme/AcmeBundle/Resources/config/services.xml -->
 
         <service id="security.access.blacklist_voter"
-                 class="Acme\DemoBundle\Security\Authorization\Voter" public="false">
+                 class="Acme\DemoBundle\Security\Authorization\Voter\ClientIpVoter" public="false">
             <argument type="service" id="request" strict="false" />
             <argument type="collection">
                 <argument>123.123.123.123</argument>
@@ -140,7 +140,7 @@ and tag it as a "security.voter":
         use Symfony\Component\DependencyInjection\Reference;
 
         $definition = new Definition(
-            'Acme\DemoBundle\Security\Authorization\Voter',
+            'Acme\DemoBundle\Security\Authorization\Voter\ClientIpVoter',
             array(
                 new Reference('request'),
                 array('123.123.123.123', '171.171.171.171'),
