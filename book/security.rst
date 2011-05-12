@@ -1172,7 +1172,7 @@ rules by creating a role hierarchy:
         security:
             role_hierarchy:
                 ROLE_ADMIN:       ROLE_USER
-                ROLE_SUPER_ADMIN: [ROLE_USER, ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH]
+                ROLE_SUPER_ADMIN: [ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH]
 
     .. code-block:: xml
 
@@ -1180,7 +1180,7 @@ rules by creating a role hierarchy:
         <config>
             <role-hierarchy>
                 <role id="ROLE_ADMIN">ROLE_USER</role>
-                <role id="ROLE_SUPER_ADMIN">ROLE_USER,ROLE_ADMIN,ROLE_ALLOWED_TO_SWITCH</role>
+                <role id="ROLE_SUPER_ADMIN">ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH</role>
             </role-hierarchy>
         </config>
 
@@ -1190,12 +1190,13 @@ rules by creating a role hierarchy:
         $container->loadFromExtension('security', array(
             'role_hierarchy' => array(
                 'ROLE_ADMIN'       => 'ROLE_USER',
-                'ROLE_SUPER_ADMIN' => array('ROLE_USER', 'ROLE_ADMIN', 'ROLE_ALLOWED_TO_SWITCH'),
+                'ROLE_SUPER_ADMIN' => array('ROLE_ADMIN', 'ROLE_ALLOWED_TO_SWITCH'),
             ),
         ));
 
-In the above configuration, users with 'ROLE_ADMIN' role will also have the
-'ROLE_USER' role. The 'ROLE_SUPER_ADMIN' role has multiple inheritance.
+In the above configuration, users with ``ROLE_ADMIN`` role will also have the
+``ROLE_USER`` role. The ``ROLE_SUPER_ADMIN`` role has ``ROLE_ADMIN``, ``ROLE_ALLOWED_TO_SWITCH``
+and ``ROLE_USER`` (inherited from ``ROLE_ADMIN``).
 
 Logging Out
 -----------
