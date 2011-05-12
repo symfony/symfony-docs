@@ -161,22 +161,23 @@ and tag it as a "security.voter":
 Changing the Access Decision Strategy
 -------------------------------------
 
-In order to test the new voter, we need to change the default access
-decision strategy, which grants by default access if any voter grants
+In order for the new voter to take effect, we need to change the default access
+decision strategy, which, by default, grants access if *any* voter grants
 access.
 
-In our case, we will choose the ``unanimous`` strategy unlike
-``affirmative`` strategy to enforce all voters to grant access. If only
-one voter denies the access, access is not granted to the end user.
+In our case, we will choose the ``unanimous`` strategy. Unlike the ``affirmative``
+strategy (the default), with the ``unanimous`` strategy, if only one voter
+denies access (e.g. the ``ClientIpVoter``), access is not granted to the
+end user.
 
-To do that, we just need to override the default
-``access_decision_manager`` section of the ``app/config/security.yml``
-file with the following code.
+To do that, override the default ``access_decision_manager`` section of your
+application configuration file with the following code.
+
+.. configuration-block::
 
     .. code-block:: yaml
 
         # app/config/security.yml
-
         security:
             access_decision_manager:
                 # Strategy can be: affirmative, unanimous or consensus
