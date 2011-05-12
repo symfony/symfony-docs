@@ -113,12 +113,12 @@ authentication (i.e. the old-school username/password box):
             ),
         ));
 
-    .. tip::
+.. tip::
 
-        A standard Symfony distribution separates the security configuration
-        into a ``app/config/security.yml`` file. If you don't have this file,
-        you can put the configuration directly into your ``app/config/config.yml``
-        file.
+    A standard Symfony distribution separates the security configuration
+    into a ``app/config/security.yml`` file. If you don't have this file,
+    you can put the configuration directly into your ``app/config/config.yml``
+    file.
 
 The end result of this configuration is the following:
 
@@ -148,7 +148,7 @@ or not the user needs to be authenticated, and if he does, to send a Response
 back to the user initiating the authentication process. 
 
 A firewall is activated when the URL of an incoming request matches the configured
-firewall's regular expression pattern. In this example, the pattern, ``~/``,
+firewall's regular expression pattern. In this example, the pattern, ``^/``,
 will match *every* incoming request. The fact that the firewall is activated
 does *not* mean, however, that the HTTP authentication username and password
 box is displayed for every URL. For example, any user can access ``/foo``
@@ -195,6 +195,14 @@ But since ``ryan`` doesn't have the ``ROLE_ADMIN`` role, he's still denied
 access to ``/admin/foo``. Ultimately, this means that the user will see some
 sort of message indicating that access has been denied.
 
+.. tip::
+
+    When Symfony denies the user access, the user sees an error screen and
+    receives a 403 HTTP status code (``Forbidden``). You can customize the
+    access denied error screen by following the directions in the
+    :ref:`Error Pages<cookbook-error-pages-by-status-code>` cookbook entry
+    to customize the 403 error page.
+
 If the ``admin`` user requests ``/admin/foo``, a similar process takes place,
 except now, after being authenticated, the access control layer will let the
 request pass through:
@@ -225,7 +233,8 @@ Using a Traditional Login Form
 So far, you've seen how to blanket your application beneath a firewall and
 then protect access to certain areas with roles. By using HTTP Authentication,
 you can effortlessly tap into the native username/password box offered by
-all browsers.
+all browsers. In fact, Symfony supports many authentication mechanisms out
+of the box. For details, see the :doc:`Security Configuration Reference</reference/configuration/security>`.
 
 In this section, you'll enhance this process by allowing the user to authenticate
 via a traditional HTML login form.
@@ -278,11 +287,25 @@ First, enable form login under your firewall:
             ),
         ));
 
-.. note::
+.. tip::
 
-    Symfony supports many authentication mechanisms beyond just HTTP authentication
-    and form login. For details, see the
-    :doc:`Security Configuration Reference</reference/configuration/security>`.
+    If you don't need to customize your ``login_path`` or ``check_path``
+    values (the values used here are the default values), you can shorten
+    your configuration:
+    
+    .. configuration-block::
+    
+        .. code-block:: yaml
+        
+            form_login: ~
+        
+        .. code-block:: xml
+        
+            <form-login />
+        
+        .. code-block:: php
+        
+            'form_login' => array(),
 
 Now, when the security system initiates the authentication process, it will
 redirect the user to the login form (``/login`` by default). Implementing
@@ -362,7 +385,7 @@ Next, create the controller that will display the login form:
                 $error = $this->get('request')->getSession()->get(SecurityContext::AUTHENTICATION_ERROR);
             }
 
-            return $this->render('SecurityBundle:Security:login.html.twig', array(
+            return $this->render('AcmeSecurityBundle:Security:login.html.twig', array(
                 // last username entered by the user
                 'last_username' => $this->get('request')->getSession()->get(SecurityContext::LAST_USERNAME),
                 'error'         => $error,
@@ -379,6 +402,23 @@ be displayed back to the user.
 Now, create the corresponding template:
 
 .. configuration-block::
+
+    .. code-block:: html+jinja
+
+        {# src/Acme/SecurityBundle/Resources/views/Security/login.html.twig #}
+        {% if error %}
+            <div>{{ error.message }}</div>
+        {% endif %}
+
+        <form action="{{ path('login_check') }}" method="post">
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="_username" value="{{ last_username }}" />
+
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="_password" />
+
+            <input type="submit" name="login" />
+        </form>
 
     .. code-block:: html+php
 
@@ -397,27 +437,11 @@ Now, create the corresponding template:
             <input type="submit" name="login" />
         </form>
 
-    .. code-block:: jinja
-
-        {# src/Acme/SecurityBundle/Resources/views/Security/login.html.twig #}
-        {% if error %}
-            <div>{{ error.message }}</div>
-        {% endif %}
-
-        <form action="{{ path('login_check') }}" method="post">
-            <label for="username">Username:</label>
-            <input type="text" id="username" name="_username" value="{{ last_username }}" />
-
-            <label for="password">Password:</label>
-            <input type="password" id="password" name="_password" />
-
-            <input type="submit" name="login" />
-        </form>
-
 The form has very few requirements. First, by submitting the form to ``/login_check``
 (via the ``login_check`` route), the security system will intercept the form
 submission and process the form for you automatically. Second, the security
-system expects the submitted fields to be called ``_username`` and ``_password``.
+system expects the submitted fields to be called ``_username`` and ``_password``
+(these values can be :ref:`configured</reference-security-firewall-form-username>`).
 
 That's it! When you submit the form, the security system will automatically
 check the user's credentials and either authenticate the user or send the
@@ -477,10 +501,10 @@ Let's review the whole process:
     **3. Be sure ``/login_check`` is behind a firewall**
     
     Finally, make sure that your ``check_path`` URL (e.g. ``/login_check``)
-    is behind a firewall (in this example, the firewall matches *all* URLs,
-    including ``/login_check``). If ``/login_check`` doesn't match any firewall,
-    you'll receive a ``Unable to find the controller for path "/login_check"``
-    exception.
+    is behind the firewall you're using for your form login (in this example,
+    the single firewall matches *all* URLs, including ``/login_check``). If
+    ``/login_check`` doesn't match any firewall, you'll receive a ``Unable
+    to find the controller for path "/login_check"`` exception.
 
 By default, if the submitted credentials are correct, the user will be redirected
 to the homepage (``/``). This can be highly customized, allowing you to,
@@ -1386,6 +1410,50 @@ setting:
                 ),
             ),
         ));
+
+Stateless Authentication
+------------------------
+
+By default, Symfony2 relies on a cookie (the Session) to persist the security
+context of the user. But if you use certificates or HTTP authentication for
+instance, persistence is not needed as credentials are available for each
+request. In that case, and if you don't need to store anything else between
+requests, you can activate the stateless authentication (which means that no
+cookie will be ever created by Symfony2):
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # app/config/security.yml
+        security:
+            firewalls:
+                main:
+                    http_basic: true
+                    stateless:  true
+
+    .. code-block:: xml
+
+        <!-- app/config/security.xml -->
+        <config>
+            <firewall stateless="true">
+                <http-basic />
+            </firewall>
+        </config>
+
+    .. code-block:: php
+
+        // app/config/security.php
+        $container->loadFromExtension('security', array(
+            'firewalls' => array(
+                'main' => array('http_basic' => true, 'stateless' => true),
+            ),
+        ));
+
+.. note::
+
+    If you use a form login, Symfony2 will create a cookie even if you set
+    ``stateless`` to ``true``.
 
 .. _`security component`: https://github.com/symfony/Security
 .. _`SecurityExtraBundle`: https://github.com/schmittjoh/SecurityExtraBundle
