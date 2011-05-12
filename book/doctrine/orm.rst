@@ -282,9 +282,9 @@ It is bad practice to make queries in the Symfony controllers. Such queries
 should be done in the model layer of your bundle. Doctrine is using special 
 classes called Repositories to encapsulate queries.
 
-Doctrine provides a default repository implementation for your entity classes, 
-so you can use their common methods to query your entities data. One of them is 
-the ``findAll`` function.
+Doctrine provides a default implementation for your repository classes, so you 
+can use their common methods to query your entities data. One of them is the 
+``findAll`` function.
 
 .. code-block:: php
 
