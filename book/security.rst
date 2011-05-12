@@ -514,9 +514,8 @@ Let's review the whole process:
     for most applications, having one main firewall is enough. 
 
 By default, if the submitted credentials are correct, the user will be redirected
-to the homepage (``/``). This can be highly customized, allowing you to,
-for example, redirect the user to the referrer URL or control the exact redirect
-URL.
+to the page original page that was requested. This can be highly customized,
+allowing you to, for example, redirect the user to a specific URL.
 
 For more details on this and how to customize the form login process in general,
 see :doc:`/cookbook/security/form_login`.
