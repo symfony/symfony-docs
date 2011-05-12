@@ -649,14 +649,14 @@ exposing a simple and efficient pattern::
         } else {
             // Do some more heavy stuff here
             // like getting more stuff from the DB
-	    $article->getMoreHeavyStuff();
+            $article->getMoreHeavyStuff();
             // and rendering a template 
-	    // with the $response you've already started.
-	    return $this->render(
-		'MyBundle:MyController:article.html.twig',
-		array('article' => $article),
-		$response
-	    );
+            // with the $response you've already started.
+            return $this->render(
+                'MyBundle:MyController:article.html.twig',
+                array('article' => $article),
+                $response
+            );
 
         }
     }
