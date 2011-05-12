@@ -22,7 +22,7 @@ entities:
 
     .. code-block:: yaml
 
-        # src/app/config/config.yml
+        # app/config/config.yml
         doctrine:
             orm:
                 auto_mapping: true
