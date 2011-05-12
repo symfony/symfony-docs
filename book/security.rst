@@ -500,11 +500,18 @@ Let's review the whole process:
 
     **3. Be sure ``/login_check`` is behind a firewall**
     
-    Finally, make sure that your ``check_path`` URL (e.g. ``/login_check``)
+    Next, make sure that your ``check_path`` URL (e.g. ``/login_check``)
     is behind the firewall you're using for your form login (in this example,
     the single firewall matches *all* URLs, including ``/login_check``). If
     ``/login_check`` doesn't match any firewall, you'll receive a ``Unable
     to find the controller for path "/login_check"`` exception.
+
+    **4. Multiple firewalls don't share security context**
+
+    If you're using multiple firewalls and you authenticate against one firewall,
+    you will *not* be authenticated against any other firewalls automatically.
+    Different firewalls are like different security systems. That's why,
+    for most applications, having one main firewall is enough. 
 
 By default, if the submitted credentials are correct, the user will be redirected
 to the homepage (``/``). This can be highly customized, allowing you to,
@@ -764,7 +771,7 @@ this by creating a ``User`` class and configuring the ``entity`` provider.
 .. tip:
 
     A high-quality open source bundle is available that allows your users
-    to be stored via the Doctrine ORM or ODM. Read more about the `UserBundle`_
+    to be stored via the Doctrine ORM or ODM. Read more about the `FOSUserBundle`_
     on GitHub.
 
 With this approach, you'll first create your own ``User`` class, which will
@@ -999,10 +1006,9 @@ look like:
 .. note::
 
     Anonymous users are technically authenticated, meaning that the ``isAuthenticated()``
-    method of an anonymous user object will return true. To check is the
-    user is anonymous, check for the ``IS_AUTHENTICATED_ANONYMOUSLY`` role
-    instead (note that all non-anonymous users have the ``IS_AUTHENTICATED_FULLY``
-    role).
+    method of an anonymous user object will return true. To check if your
+    user is actually authenticated, check for the ``IS_AUTHENTICATED_FULLY``
+    role. 
 
 Using Multiple User Providers
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -1457,5 +1463,5 @@ cookie will be ever created by Symfony2):
 
 .. _`security component`: https://github.com/symfony/Security
 .. _`SecurityExtraBundle`: https://github.com/schmittjoh/SecurityExtraBundle
-.. _`UserBundle`: https://github.com/friendsofsymfony/UserBundle
+.. _`FOSUserBundle`: https://github.com/FriendsOfSymfony/UserBundle
 .. _`functions-online.com`: http://www.functions-online.com/sha1.html
