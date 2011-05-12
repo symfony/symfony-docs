@@ -234,6 +234,136 @@ you just need to run the following command:
 Now your database will be updated and the new column added to the database
 table.
 
+Queries
+~~~~~~~
+
+As you have already seen, working with single objects is straight forward and
+easy with the entity manager. But how to query a set of of objects. As every
+operation this is done via the entity manager. So let us change the delete 
+action from the previous example to use a Query instead of loading the object
+and afterwards delete it.
+
+.. code-block:: php
+
+    public function deleteAction($id)
+    {
+        $em = $this->get('doctrine')->getEntityManager();
+                   ->createQuery('DELETE FROM Acme\HelloBundle\Entity\User u 
+                            WHERE u.id=?', $id)
+                   ->getResult();
+
+        // ...
+    }
+    
+Of course you can use SELECT and UPDATE-Queries too. Doctrine brings it own 
+Query Language called DQL (Doctrine Query Language). DQL often looks like plain 
+SQL but works on classes and their attributes.
+
+.. tip::
+
+    You can read more about the Doctrine Query language on the
+    official `query language documentation`_ website.
+
+Repositories
+~~~~~~~~~~~~
+
+It is bad practise to make queries in the Symfony controllers because . Such queries 
+should be done in special classes called Repositories.
+
+Symfony is providing default repository implementations for your entity classes, 
+so you can use their common methods to query your entities data. One of them is
+the findAll-function.
+
+.. code-block:: php
+
+    $em = $this->get('doctrine')->getEntityManager();
+    $em->getRepository('ShiftUpTaskBoxxBundle:BoardColumn')
+        ->findAll();
+
+If you want to create your own finder-Method or other functions to query or 
+manipulate your data, you need to create a custom repository class for an entity.
+To do so you need to add the name of the repository class to your mapping 
+definition.
+
+.. configuration-block::
+
+    .. code-block:: php-annotations
+
+        // Acme/HelloBundle/Entity/User.php
+        namespace Acme\HelloBundle\Entity;
+
+        /**
+         * @orm:Entity(repositoryClass="Acme\HelloBundle\Repository\UserRepository")
+         */
+        class User
+        {
+            //...
+        }
+
+    .. code-block:: yaml
+
+        # Acme/HelloBundle/Resources/config/doctrine/Acme.HelloBundle.Entity.User.orm.yml
+        Acme\HelloBundle\Entity\User:
+            type: entity
+            table: user
+            repositoryClass: Acme\HelloBundle\Repository\UserRepository
+            #...
+
+    .. code-block:: xml
+
+        <!-- Acme/HelloBundle/Resources/config/doctrine/Acme.HelloBundle.Entity.User.orm.xml -->
+        <doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
+                            http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+
+            <entity name="Acme\HelloBundle\Entity\User" table="user"
+                    repository-class="Acme\HelloBundle\Repository\UserRepository">
+                <id name="id" type="integer" column="id">
+                    <generator strategy="AUTO"/>
+                </id>
+                <field name="name" column="name" type="string" length="255" />
+            </entity>
+
+        </doctrine-mapping>
+
+Afterwards you can run the following command to create the repository class.
+
+    $ php app/console doctrine:generate:repositories
+
+Just add any method you need to access the User-Database-Table to the newly 
+generated class. 
+
+.. code-block:: php
+
+    namespace Acme\HelloBundle\Repository;
+
+    class UserRepository extends EntityRepository
+    {
+        public function findAllOrderedByName()
+        {
+            return $this->_em
+                        ->createQuery('SELECT u FROM Acme\HelloBundle\Entity\User u 
+                                        ORDER BY u.name ASC')
+                        ->getResult();
+        }
+    }
+
+.. tip::
+
+    The entity manager can be accessed via $this->_em in the repositories
+    functions.
+
+The usage of this repository-method is the same as with the default finder 
+functions.
+
+.. code-block:: php
+
+    $em = $this->get('doctrine')->getEntityManager();
+    $em->getRepository('ShiftUpTaskBoxxBundle:BoardColumn')
+        ->findAllOrderedByName();
+
+
 .. index::
    single: Configuration; Doctrine ORM
    single: Doctrine; ORM Configuration
@@ -242,7 +372,7 @@ Configuration
 -------------
 
 In the overview we already described the only necessary configuration option
-to get the Doctrine ORM running with Symfony 2. All the other configuration
+to get the Doctrine ORM running with Symfony2. All the other configuration
 options are used with reasonable default values.
 
 This following configuration example shows all the configuration defaults that
@@ -617,3 +747,4 @@ get the choices. If not set all entities will be used.
 
 .. _documentation: http://www.doctrine-project.org/docs/orm/2.0/en
 .. _Doctrine:      http://www.doctrine-project.org
+.. _query language documentation: http://www.doctrine-project.org/docs/orm/2.0/en/reference/dql-doctrine-query-language.html
