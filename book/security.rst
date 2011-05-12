@@ -1337,6 +1337,13 @@ the built-in helper function:
             <a href="...">Delete</a>
         <?php endif; ?>
 
+.. note::
+
+    If you use this function and are *not* at a URL where there is a firewall
+    active, an exception will be thrown. Again, it's almost always a good
+    idea to have a main firewall that covers all URLs (as has been shown
+    in this chapter).
+
 Access Control in Controllers
 -----------------------------
 
@@ -1353,6 +1360,11 @@ the ``isGranted`` method of the security context:
         }
         // load other regular content here
     }
+
+.. note::
+
+    A firewall must be active or an exception will be thrown when the ``isGranted``
+    method is called. See the note above about templates for more details.
 
 Impersonating a User
 --------------------
