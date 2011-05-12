@@ -163,7 +163,7 @@ Advanced Usage with the Service Container
 -----------------------------------------
 
 By Using ``Symfony\Bundle\FrameworkBundle\Command\Command`` as the base class
-for the command (instead of the more basic ``Symfony\Component\Console\Command``),
+for the command (instead of the more basic ``Symfony\Component\Console\Command\Command``),
 you have access to the service container. In other words, you have access
 to use any service configured to work inside Symfony. For example, you could
 easily extend the task to be translatable:
