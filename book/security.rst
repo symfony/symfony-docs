@@ -14,7 +14,8 @@ have access to a given resource. This part of the process is called **authorizat
 and it means that the system is checking to see if you have privileges to
 perform a certain action.
 
-    DIAGRAM of authentication/authorization
+    .. image:: /images/book/security_authentication_authorization.png
+       :align: center
 
 Since the best way to learn is to see an example, let's dive right in.
 
@@ -154,8 +155,8 @@ does *not* mean, however, that the HTTP authentication username and password
 box is displayed for every URL. For example, any user can access ``/foo``
 without being prompted to authenticate. 
 
-    DIAGRAM of an anonymous user - passes through firewall, authorization
-    is cool with them
+.. image:: /images/book/security_anonymous_user_access.png
+   :align: center
 
 This works first because the firewall allows *anonymous users* via the ``anonymous``
 configuration parameter. In other words, the firewall doesn't require the
@@ -175,20 +176,24 @@ that any URL matching ``/admin/*`` requires the ``ROLE_ADMIN`` role. Roles
 are the basis for authorization: a user can access ``/admin/foo`` if and
 only if it has the ``ROLE_ADMIN`` role.
 
-    DIAGRAM here of ryan coming in, firewall asks for password, then he
-    gets denied access
+.. image:: /images/book/security_anonymous_user_denied_authorization.png
+   :align: center
 
 Like before, when the user originally makes the request, the firewall doesn't
 ask for any identification. However, as soon as the access control layer
 denies the user access (because the anonymous user doesn't have the ``ROLE_ADMIN``
-role), the firewall jumps into action and initiates the authentication process
-(e.g. it redirects the user to a login form or displays the HTTP Authentication
-username and password box).
+role), the firewall jumps into action and initiates the authentication process.
+The authentication process depends on the authentication mechanism you're
+using. For example, if you're using the form login authentication method,
+the user will be redirected to the login page. If you're using HTTP Authentication,
+the user will be sent an HTTP 401 response so that the user sees the username
+and password box.
 
 The user now has the opportunity to submit its credentials back to the application.
 If the credentials are valid, the original request can be re-tried.
 
-    DIAGRAM of ryan being rejected by the authorization layer
+.. image:: /images/book/security_ryan_no_role_admin_access.png
+   :align: center
 
 In this example, the user ``ryan`` successfully authenticates with the firewall.
 But since ``ryan`` doesn't have the ``ROLE_ADMIN`` role, he's still denied
