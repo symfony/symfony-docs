@@ -54,7 +54,7 @@ session storage connection only. This is OK when you use a separate database for
 the session data.
 If you like to store the session data in the same database as the rest of your
 projects data, you can use the connection settings from the parameter.ini via
-the placeholder-variables
+the placeholder-variables.
 
 .. configuration-block::
 
