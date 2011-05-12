@@ -368,8 +368,8 @@ the common form fields and data types you'll encounter:
 .. include:: /reference/forms/types/map.rst.inc
 
 Of course, you can also create your own custom field types. This topic is
-covered in the ":doc:`/cookbook/forms/create_custom_fields`" article of the
-cookbook.
+covered in the ":doc:`/cookbook/forms/create_custom_field_type`" article
+of the cookbook.
 
 .. index::
    single: Forms; Field type options
@@ -1149,7 +1149,6 @@ Learn more from the Cookbook
 
 * :doc:`Handling File Uploads </cookbook/forms/file_uploads>`
 * :doc:`Creating Custom Field Types </cookbook/forms/custom_field_types>`
-* :doc:`Dynamically adding Fields to a Form </cookbook/forms/dynamically_adding_fields>`
 * :doc:`/cookbook/form/twig_form_customization`
 
 .. _`Symfony2 Form Component`: https://github.com/symfony/Form

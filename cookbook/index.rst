@@ -7,11 +7,14 @@ Cookbook
     email
     gmail
     configuration/environments
+    configuration/pdo_session_storage
     templating/PHP
     controller/error_pages
     controller/service
     validation/custom_constraint
     form/twig_form_customization
+    form/create_custom_field_type
+    form/file_uploads
     tools/autoloader
     tools/finder
     logging/monolog
