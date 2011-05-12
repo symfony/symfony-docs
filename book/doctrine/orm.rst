@@ -22,7 +22,7 @@ entities:
 
     .. code-block:: yaml
 
-        # app/config/config.yml
+        # src/app/config/config.yml
         doctrine:
             orm:
                 auto_mapping: true
@@ -47,7 +47,7 @@ any PHP class:
 
 .. code-block:: php
 
-    // Acme/HelloBundle/Entity/User.php
+    // src/Acme/HelloBundle/Entity/User.php
     namespace Acme\HelloBundle\Entity;
 
     class User
@@ -85,7 +85,7 @@ write mapping information with annotations, XML, or YAML:
 
     .. code-block:: php-annotations
 
-        // Acme/HelloBundle/Entity/User.php
+        // src/Acme/HelloBundle/Entity/User.php
         namespace Acme\HelloBundle\Entity;
 
         /**
@@ -108,7 +108,7 @@ write mapping information with annotations, XML, or YAML:
 
     .. code-block:: yaml
 
-        # Acme/HelloBundle/Resources/config/doctrine/Acme.HelloBundle.Entity.User.orm.yml
+        # src/Acme/HelloBundle/Resources/config/doctrine/Acme.HelloBundle.Entity.User.orm.yml
         Acme\HelloBundle\Entity\User:
             type: entity
             table: user
@@ -124,7 +124,7 @@ write mapping information with annotations, XML, or YAML:
 
     .. code-block:: xml
 
-        <!-- Acme/HelloBundle/Resources/config/doctrine/Acme.HelloBundle.Entity.User.orm.xml -->
+        <!-- src/Acme/HelloBundle/Resources/config/doctrine/Acme.HelloBundle.Entity.User.orm.xml -->
         <doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
               xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
@@ -167,7 +167,7 @@ Eventually, use your entity and manage its persistent state with Doctrine:
 
 .. code-block:: php
 
-    // Acme/HelloBundle/Controller/UserController.php
+    // src/Acme/HelloBundle/Controller/UserController.php
     namespace Acme\HelloBundle\Controller;
 
     use Acme\HelloBundle\Entity\User;
@@ -215,6 +215,7 @@ losing your existing data. So first let's just add a new property to our
 
 .. code-block:: php
 
+    // src/Acme/HelloBundle/Entity/User.php
     namespace Acme\HelloBundle\Entity;
 
     /** @orm:Entity */
@@ -250,7 +251,7 @@ and afterwards delete it.
 
     public function deleteAction($id)
     {
-        $query = $this->get('doctrine')->getEntityManager();
+        $query = $this->get('doctrine')->getEntityManager()
                    ->createQuery('DELETE FROM Acme\HelloBundle\Entity\User u 
                             WHERE u.id = :id');
         $query->setParameters(array(
@@ -278,10 +279,10 @@ Repositories
 ~~~~~~~~~~~~
 
 It is bad practice to make queries in the Symfony controllers. Such queries 
-should be done in the model in the model layer of your bundle. Doctrine is using
+should be done in the model layer of your bundle. Doctrine is using
 special classes called Repositories to encapsulate queries.
 
-Doctrine provides default repository implementations for your entity classes, 
+Doctrine provides a default repository implementation for your entity classes, 
 so you can use their common methods to query your entities data. One of them is 
 the ``findAll`` function.
 
@@ -299,7 +300,7 @@ add the name of the repository class to your mapping definition.
 
     .. code-block:: php-annotations
 
-        // Acme/HelloBundle/Entity/User.php
+        // src/Acme/HelloBundle/Entity/User.php
         namespace Acme\HelloBundle\Entity;
 
         /**
@@ -312,7 +313,7 @@ add the name of the repository class to your mapping definition.
 
     .. code-block:: yaml
 
-        # Acme/HelloBundle/Resources/config/doctrine/Acme.HelloBundle.Entity.User.orm.yml
+        # src/Acme/HelloBundle/Resources/config/doctrine/Acme.HelloBundle.Entity.User.orm.yml
         Acme\HelloBundle\Entity\User:
             type: entity
             table: user
@@ -321,7 +322,7 @@ add the name of the repository class to your mapping definition.
 
     .. code-block:: xml
 
-        <!-- Acme/HelloBundle/Resources/config/doctrine/Acme.HelloBundle.Entity.User.orm.xml -->
+        <!-- src/Acme/HelloBundle/Resources/config/doctrine/Acme.HelloBundle.Entity.User.orm.xml -->
         <doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
               xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
@@ -351,6 +352,7 @@ The following code shows a sample repository class.
 
 .. code-block:: php
 
+    // src/Acme/HelloBundle/Repository/UserRepository.php
     namespace Acme\HelloBundle\Repository;
 
     use Doctrine\ORM\EntityRepository;
@@ -366,13 +368,14 @@ The following code shows a sample repository class.
         }
     }
 
-.. note::
+.. tip::
 
     The entity manager can be accessed via ``$this->getEntityManager()`` in the 
     repositories functions. 
 
 .. note::
-    note that there is a drawback when using a DQL DELETE statement: it does not 
+
+    Note that there is a drawback when using a DQL DELETE statement: it does not 
     remove the entity from the UnitOfWork if it was previously loaded 
     (same issue for UPDATE statements).
     The UnitOfWork works in the memory (and then flushes the changes) whereas 
