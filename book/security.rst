@@ -519,8 +519,10 @@ Let's review the whole process:
     for most applications, having one main firewall is enough. 
 
 By default, if the submitted credentials are correct, the user will be redirected
-to the page original page that was requested. This can be highly customized,
-allowing you to, for example, redirect the user to a specific URL.
+to the page original page that was requested. If the user originally went
+straight to the login page, he'll be redirected to the homepage. This can
+be highly customized, allowing you to, for example, redirect the user to
+a specific URL.
 
 For more details on this and how to customize the form login process in general,
 see :doc:`/cookbook/security/form_login`.
@@ -1247,7 +1249,7 @@ the firewall can handle this automatically for you when you activate the
             'firewalls' => array(
                 'secured_area' => array(
                     // ...
-                    'logout' => array('path' => 'logout', 'target' => '/')
+                    'logout' => array('path' => 'logout', 'target' => '/'),
                 ),
             ),
             // ...
@@ -1255,9 +1257,28 @@ the firewall can handle this automatically for you when you activate the
 
 Once this is configured under your firewall, sending a user to ``/logout``
 (or whatever your configure the ``path`` to be), will un-authenticate the
-current user. Note that you will *not* need to implement a controller for
-this URL as the firewall takes care of everything. You may, however, want
-to create a route so that you can use it to generate the URL:
+current user. The user will then be sent to the homepage (the value defined
+by the ``target`` parameter). Both the ``path`` and ``target`` config parameters
+default to what's specified here. In other words, unless you need to customize
+them, you can omit them entirely and shorten your configuration:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+    
+        logout: ~
+    
+    .. code-block:: xml
+    
+        <logout />
+    
+    .. code-block:: php
+    
+        'logout' => array(),
+
+Note that you will *not* need to implement a controller for the ``/logout``
+URL as the firewall takes care of everything. You may, however, want to create
+a route so that you can use it to generate the URL:
 
 .. configuration-block::
 
