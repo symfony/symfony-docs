@@ -13,6 +13,8 @@ Cookbook
     controller/service
     validation/custom_constraint
     form/twig_form_customization
+    form/create_custom_field_type
+    form/file_uploads
     tools/autoloader
     tools/finder
     logging/monolog

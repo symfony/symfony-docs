@@ -174,7 +174,7 @@ Access Control in Controllers
 -----------------------------
 
 If you want to check a user role in your controller, you use the
-``isGranted``method of the security context:
+``isGranted`` method of the security context:
 
 .. code-block:: php
 

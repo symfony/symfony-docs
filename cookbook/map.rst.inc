@@ -6,6 +6,8 @@
 * :doc:`/cookbook/controller/service`
 * :doc:`/cookbook/validation/custom_constraint`
 * :doc:`/cookbook/form/twig_form_customization`
+* :doc:`/cookbook/form/create_custom_field_type`
+* :doc:`/cookbook/form/file_uploads`
 * :doc:`/cookbook/tools/autoloader`
 * :doc:`/cookbook/tools/finder`
 * :doc:`/cookbook/logging/monolog`
