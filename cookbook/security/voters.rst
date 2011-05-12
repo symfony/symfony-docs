@@ -158,5 +158,29 @@ and tag it as a "security.voter":
    see :ref:`service-container-imports-directive`. To read more about defining
    services in general, see the :doc:`/book/service_container` chapter.
 
+Changing the Access Decision Strategy
+-------------------------------------
+
+In order to test the new voter, we need to change the default access
+decision strategy, which grants by default access if any voter grants
+access.
+
+In our case, we will choose the ``unanimous`` strategy unlike
+``affirmative`` strategy to enforce all voters to grant access. If only
+one voter denies the access, access is not granted to the end user.
+
+To do that, we just need to override the default
+``access_decision_manager`` section of the ``app/config/security.yml``
+file with the following code.
+
+    .. code-block:: yaml
+
+        # app/config/security.yml
+
+        security:
+            access_decision_manager:
+                # Strategy can be: affirmative, unanimous or consensus
+                strategy: unanimous
+
 That's it! Now, when deciding whether or not a user should have access,
 the new voter will deny access to any user in the list of blacklisted IPs.
