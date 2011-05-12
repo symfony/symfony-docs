@@ -241,11 +241,11 @@ table.
 Queries
 ~~~~~~~
 
-As you have already seen, working with single objects is straight forward and
-easy with the entity manager. But how to query a set of objects? As every
-operation this is done via the entity manager. So let us change the delete 
-action from the previous example to use a query instead of loading the object
-and afterwards delete it.
+As you have already seen, working with single objects is straightforward and
+easy with the entity manager. But how can you query for a set of objects?
+As every with any Doctrine operation, this is done via the entity manager.
+Change the delete action used in the previous example to use a query instead
+of loading the object and then deleting it afterwards:
 
 .. code-block:: php
 
@@ -263,14 +263,26 @@ and afterwards delete it.
         // ...
     }
     
-Of course you can use SELECT and UPDATE queries too. Doctrine brings it own 
+Of course you can use SELECT and UPDATE queries too. Doctrine brings its own 
 Query Language called DQL (Doctrine Query Language). The DQL has some 
 similarities with SQL but is a query language with its own syntax.
 
 .. tip::
 
-    You can read more about the Doctrine Query Language on the
-    official `Doctrine Query Language documentation`_ website.
+    You can read more about the Doctrine Query Language on the official
+    `Doctrine Query Language documentation`_ website. The advantage of DQL
+    is that it is database-agnostic - the same queries can be written in
+    DQL and work with any supported database engine.
+
+.. note::
+
+    There is a drawback when using a DQL DELETE or UPDATE statement. Specifically,
+    since this operation is made directly to the database, Doctrine isn't
+    aware of the option internally. For example, if you query for an object
+    and then make an update to that object directly in the database via an
+    UPDATE statement, the object itself won't reflect that update. So, be
+    careful when using these statements - your objects can become out-of-sync
+    with your database inside a single request.
 
 .. index::
    single: Doctrine ORM; Repository;
@@ -279,8 +291,9 @@ Repositories
 ~~~~~~~~~~~~
 
 It is bad practice to make queries in the Symfony controllers. Such queries 
-should be done in the model layer of your bundle. Doctrine is using special 
-classes called Repositories to encapsulate queries.
+should be done in the model layer of your bundle so that they can be tested
+and reused through your application. Fortunately, Doctrine allows you to
+use special classes called Repositories to encapsulate queries.
 
 Doctrine provides a default implementation for your repository classes, so you 
 can use their common methods to query your entities data. One of them is the 
@@ -289,11 +302,10 @@ can use their common methods to query your entities data. One of them is the
 .. code-block:: php
 
     $em = $this->get('doctrine')->getEntityManager();
-    $users = $em->getRepository('AcmeHelloBundle:User')
-                  ->findAll();
+    $users = $em->getRepository('AcmeHelloBundle:User')->findAll();
 
 If you want to create your own function to query or manipulate your data, you 
-need to create a custom repository class for an entity. To do so you need to 
+need to create a custom repository class for an entity. To do so, you need to 
 add the name of the repository class to your mapping definition.
 
 .. configuration-block::
@@ -338,16 +350,17 @@ add the name of the repository class to your mapping definition.
 
         </doctrine-mapping>
 
-The repository class is created if you run the following command to create your
-entities.
+The repository class is created for you if you run the following command
+to generate your entities.
 
     $ php app/console doctrine:generate:entities
 
-If you have already generated your entity class before adding the repositoryClass
-mapping you have to create the class on your own. For that create the class in 
-the Repository folder of your bundle. The class has to extend
-``Doctrine\ORM\EntityRepository``.
-After the creation of the class you can add any method to query your entities. 
+If you have already generated your entity class before adding the ``repositoryClass``
+mapping, you have to create the class on your own. Fortunately, it's pretty
+easy. Simply create the class in the ``Repository`` directory of your bundle
+and be sure it extends ``Doctrine\ORM\EntityRepository``. Once you've created
+the class, you can add any method to query your entities.
+
 The following code shows a sample repository class.
 
 .. code-block:: php
@@ -371,22 +384,9 @@ The following code shows a sample repository class.
 .. tip::
 
     The entity manager can be accessed via ``$this->getEntityManager()`` in the 
-    repositories functions. 
+    repositories functions.
 
-.. note::
-
-    Note that there is a drawback when using a DQL DELETE statement: it does not 
-    remove the entity from the UnitOfWork if it was previously loaded 
-    (same issue for UPDATE statements).
-    The UnitOfWork works in the memory (and then flushes the changes) whereas 
-    your DQL query will act on the database. So the UnitOfWork and the database 
-    are not in sync anymore.
-    This can be an issue for instance if your query makes a change in your User 
-    entity affecting the one loaded in memory by your UserProvider for the 
-    authentication as the User object will be out of sync.
-
-The usage of this new method in your repository class is the same as with the 
-default finder functions.
+The usage of this new method is the same as with the default finder functions.
 
 .. code-block:: php
 
