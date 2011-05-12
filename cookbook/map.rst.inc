@@ -26,4 +26,5 @@
 * :doc:`/cookbook/debugging`
 * :doc:`/cookbook/assetic/yuicompressor`
 * :doc:`/cookbook/console`
+* :doc:`/cookbook/configuration/pdo_session_storage`
 * :doc:`/cookbook/symfony1`
