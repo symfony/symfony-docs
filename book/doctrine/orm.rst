@@ -235,16 +235,15 @@ Now your database will be updated and the new column added to the database
 table.
 
 .. index::
-   single: Queries; Doctrine
    single: Doctrine ORM; Queries;
 
 Queries
 ~~~~~~~
 
 As you have already seen, working with single objects is straight forward and
-easy with the entity manager. But how to query a set of objects. As every
+easy with the entity manager. But how to query a set of objects? As every
 operation this is done via the entity manager. So let us change the delete 
-action from the previous example to use a Query instead of loading the object
+action from the previous example to use a query instead of loading the object
 and afterwards delete it.
 
 .. code-block:: php
@@ -263,7 +262,7 @@ and afterwards delete it.
         // ...
     }
     
-Of course you can use SELECT and UPDATE-Queries too. Doctrine brings it own 
+Of course you can use SELECT and UPDATE queries too. Doctrine brings it own 
 Query Language called DQL (Doctrine Query Language). The DQL has some 
 similarities with SQL but is a query language with its own syntax.
 
@@ -273,19 +272,18 @@ similarities with SQL but is a query language with its own syntax.
     official `Doctrine Query Language documentation`_ website.
 
 .. index::
-   single: Repository; Doctrine
    single: Doctrine ORM; Repository;
 
 Repositories
 ~~~~~~~~~~~~
 
-It is bad practice to make queries in the Symfony controllers because you make 
-your controller depend on the entity implementation. Such queries should be done 
-in special classes called Repositories.
+It is bad practice to make queries in the Symfony controllers. Such queries 
+should be done in the model in the model layer of your bundle. Doctrine is using
+special classes called Repositories to encapsulate queries.
 
-Doctrine and therefore Symfony is providing default repository implementations 
-for your entity classes, so you can use their common methods to query your 
-entities data. One of them is the findAll function.
+Doctrine provides default repository implementations for your entity classes, 
+so you can use their common methods to query your entities data. One of them is 
+the ``findAll`` function.
 
 .. code-block:: php
 
@@ -303,8 +301,6 @@ add the name of the repository class to your mapping definition.
 
         // Acme/HelloBundle/Entity/User.php
         namespace Acme\HelloBundle\Entity;
-
-        use Doctrine\ORM\EntityRepository;
 
         /**
          * @orm:Entity(repositoryClass="Acme\HelloBundle\Repository\UserRepository")
@@ -348,14 +344,16 @@ entities.
 
 If you have already generated your entity class before adding the repositoryClass
 mapping you have to create the class on your own. For that create the class in 
-the Repository folder of your bundle. The class needs to be inherited from 
-Doctrine\ORM\EntityRepository.
-After the creation of the class you can add any method you need to access the 
-User-Database-Table. The following code shows a sample Repository class.
+the Repository folder of your bundle. The class has to extend
+``Doctrine\ORM\EntityRepository``.
+After the creation of the class you can add any method to query your entities. 
+The following code shows a sample repository class.
 
 .. code-block:: php
 
     namespace Acme\HelloBundle\Repository;
+
+    use Doctrine\ORM\EntityRepository;
 
     class UserRepository extends EntityRepository
     {
@@ -370,7 +368,7 @@ User-Database-Table. The following code shows a sample Repository class.
 
 .. note::
 
-    The entity manager can be accessed via $this->getEntityManager() in the 
+    The entity manager can be accessed via ``$this->getEntityManager()`` in the 
     repositories functions. 
 
 .. note::
