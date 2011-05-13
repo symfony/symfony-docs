@@ -155,6 +155,43 @@ will work:
     $ php app/console demo:greet Fabien --iterations=5 --yell
     $ php app/console demo:greet Fabien --yell --iterations=5
 
+Testing Commands
+----------------
+
+Symfony2 provides several tools to help you test your commands. The most
+useful one is the :class:`Symfony\\Component\\Console\\Tester\\CommandTester`
+class. It uses special input and output classes to ease testing without a real
+console::
+
+    use Symfony\Component\Console\Tester\CommandTester;
+    use Symfony\Bundle\FrameworkBundle\Console\Application;
+
+    class ListCommandTest extends \PHPUnit_Framework_TestCase
+    {
+        public function testExecute()
+        {
+            // mock the Kernel or create one depending on your needs
+            $application = new Application($kernel);
+
+            $command = $application->find('demo:greet');
+            $commandTester = new CommandTester($command);
+            $commandTester->execute(array('command' => $command->getFullName()));
+
+            $this->assertRegExp('/.../', $commandTester->getDisplay());
+
+            // ...
+        }
+    }
+
+The :method:`Symfony\\Component\\Console\\Tester\\CommandTester::getDisplay`
+method returns what would have been displayed during a normal call from the
+console.
+
+.. tip::
+
+    You can also test a whole console application by using
+    :class:`Symfony\\Component\\Console\\Tester\\ApplicationTester`.
+
 Getting Services from the Service Container
 -------------------------------------------
 
@@ -174,3 +211,51 @@ example, you could easily extend the task to be translatable::
             $output->writeln($translator->trans('Hello!'));
         }
     }
+
+Calling an existing Command
+---------------------------
+
+If a command depends on another one being run before it, instead of asking the
+user to remember the order of execution, you can call it directly yourself.
+This is also useful if you want to create a "meta" command that just runs a
+bunch of other commands (for instance, all commands that need to be run when
+the project's code has changed on the production servers: clearing the cache,
+generating Doctrine2 proxies, dumping Assetic assets, ...).
+
+Calling a command from another one is straightforward::
+
+    protected function execute(InputInterface $input, OutputInterface $output)
+    {
+        $command = $this->getApplication()->find('demo:greet');
+
+        $arguments = array(
+            'name'   => 'Fabien',
+            '--yell' => true,
+        );
+
+        $input = new ArrayInput($arguments);
+        $returnCode = $command->run($input, $output);
+
+        // ...
+    }
+
+First, you :method:`Symfony\\Component\\Console\\Command\\Command::find` the
+command you want to execute by passing the command name.
+
+Then, you need to create a new
+:class:`Symfony\\Component\\Console\\Input\\ArrayInput` with the arguments and
+options you want to pass to the command.
+
+Eventually, calling the ``run()`` method actually executes the command and
+returns the returned code from the command (``0`` if everything went fine, any
+other integer otherwise).
+
+.. note::
+
+    Most of the time, calling a command from code that is not executed on the
+    command line is not a good idea for several reasons. First, the commands
+    output is optimized for the console. But more important, you can think of
+    a command as being like a controller; it should use the model to do
+    something and display feedback to the user. So, instead of calling a
+    command from the Web, refactor your code and move the logic to a new
+    class.
