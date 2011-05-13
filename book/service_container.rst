@@ -575,11 +575,145 @@ service needs the ``my_mailer`` service in order to function. When you define
 this dependency in the service container, the container takes care of all
 the work of instantiating the objects.
 
-.. note::
+Injecting dependencies into the constructor in this manner is an excellent way of 
+ensuring that the dependency is available to use. If you have optional dependencies for a 
+class then "setter injection" may be a better option. This means injecting the dependency
+using a method call rather than through the constructor. The class would look like this:
 
-   The approach presented in this section is called "constructor injection".
-   The Symfony2 service container also supports "setter injection" as well
-   as "property injection".
+    namespace Acme\HelloBundle\Newsletter;
+    use Acme\HelloBundle\Mailer;
+
+    class NewsletterManager
+    {
+        protected $mailer;
+
+        public function setMailer(Mailer $mailer)
+        {
+            $this->mailer = $mailer;
+        }
+
+        // ...
+    }
+
+This way no exception is thrown if the dependency is not injected. Injecting the
+dependency by the setter method just needs a change of syntax:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # src/Acme/HelloBundle/Resources/config/services.yml
+        parameters:
+            # ...
+            newsletter_manager.class: Acme\HelloBundle\Newsletter\NewsletterManager
+
+        services:
+            my_mailer:
+                # ...
+            newsletter_manager:
+                class:     %newsletter_manager.class%
+                calls:
+                    - [ setMailer, [ @my_mailer ] ]
+
+    .. code-block:: xml
+
+        <!-- src/Acme/HelloBundle/Resources/config/services.xml -->
+        <parameters>
+            <!-- ... -->
+            <parameter key="newsletter_manager.class">Acme\HelloBundle\Newsletter\NewsletterManager</parameter>
+        </parameters>
+
+        <services>
+            <service id="my_mailer" ... >
+              <!-- ... -->
+            </service>
+            <service id="newsletter_manager" class="%newsletter_manager.class%">
+                <call method="setMailer">
+                     <argument type="service" id="my_mailer" />
+                </call>
+            </service>
+        </services>
+
+    .. code-block:: php
+
+        // src/Acme/HelloBundle/Resources/config/services.php
+        use Symfony\Component\DependencyInjection\Definition;
+        use Symfony\Component\DependencyInjection\Reference;
+
+        // ...
+        $container->setParameter('newsletter_manager.class', 'Acme\HelloBundle\Newsletter\NewsletterManager');
+
+        $container->setDefinition('my_mailer', ... );
+        $container->setDefinition('newsletter_manager', new Definition(
+            '%newsletter_manager.class%'
+        ))->addMethodCall('setMailer', array(
+            new Reference('my_mailer')
+        ));
+
+The service container also supports property injection, using this you can skip the setter method
+altogether and set the property directly:
+
+    namespace Acme\HelloBundle\Newsletter;
+    use Acme\HelloBundle\Mailer;
+
+    class NewsletterManager
+    {
+        protected $mailer;
+
+        // ...
+    }
+
+With the following config
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # src/Acme/HelloBundle/Resources/config/services.yml
+        parameters:
+            # ...
+            newsletter_manager.class: Acme\HelloBundle\Newsletter\NewsletterManager
+
+        services:
+            my_mailer:
+                # ...
+            newsletter_manager:
+                class:     %newsletter_manager.class%
+                properties:
+                    mailer: @my_mailer
+                
+    .. code-block:: xml
+
+        <!-- src/Acme/HelloBundle/Resources/config/services.xml -->
+        <parameters>
+            <!-- ... -->
+            <parameter key="newsletter_manager.class">Acme\HelloBundle\Newsletter\NewsletterManager</parameter>
+        </parameters>
+
+        <services>
+            <service id="my_mailer" ... >
+              <!-- ... -->
+            </service>
+            <service id="newsletter_manager" class="%newsletter_manager.class%">
+                <property name="mailer"  type="service" id="my_mailer" />
+            </service>
+        </services>
+
+    .. code-block:: php
+
+        // src/Acme/HelloBundle/Resources/config/services.php
+        use Symfony\Component\DependencyInjection\Definition;
+        use Symfony\Component\DependencyInjection\Reference;
+
+        // ...
+        $container->setParameter('newsletter_manager.class', 'Acme\HelloBundle\Newsletter\NewsletterManager');
+
+        $container->setDefinition('my_mailer', ... );
+        $container->setDefinition('newsletter_manager', new Definition(
+            '%newsletter_manager.class%'
+        ))->setProperty('mailer', new Reference('my_mailer')));
+
+Note that the property does not need to be made public to use property injection.
 
 Making References Optional
 --------------------------
