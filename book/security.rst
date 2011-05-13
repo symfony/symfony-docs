@@ -30,7 +30,7 @@ Basic Example: HTTP Authentication
 The security component can be configured via your application configuration.
 In fact, most standard security setups are just matter of using the right
 configuration. The following configuration tells Symfony to secure any URL
-matching ``/admin/*`` and to ask the user who he/she is using basic HTTP
+matching ``/admin/*`` and to ask the user for credentials using basic HTTP
 authentication (i.e. the old-school username/password box):
 
 .. configuration-block::
@@ -117,21 +117,22 @@ authentication (i.e. the old-school username/password box):
 .. tip::
 
     A standard Symfony distribution separates the security configuration
-    into a ``app/config/security.yml`` file. If you don't have this file,
-    you can put the configuration directly into your ``app/config/config.yml``
-    file.
+    into a separate file (e.g. ``app/config/security.yml``). If you don't
+    have a separate security file, you can put the configuration directly
+    into your main config file (e.g. ``app/config/config.yml``).
 
-The end result of this configuration is the following:
+The end result of this configuration is a fully-functional security system
+that looks like the following:
 
  * There are two users in the system (``ryan`` and ``admin``);
- * Users authenticate themselves via a basic HTTP authentication prompt;
+ * Users authenticate themselves via the basic HTTP authentication prompt;
  * Any URL matching ``/admin/*`` is secured, and only the ``admin`` user
    can access it;
  * All URLs *not* matching ``/admin/*`` are accessible by all users (and the
    user is never prompted to login).
 
-To understand how security works, let's look briefly at how security works
-and how each part of the configuration comes into play.
+Let's look briefly at how security works and how each part of the configuration
+comes into play.
 
 How Security Works: Authentication and Authorization
 ----------------------------------------------------
@@ -145,24 +146,24 @@ Firewalls (Authentication)
 
 When a user makes a request to a URL that's protected by a firewall, the
 security system is activated. The job of the firewall is to determine whether
-or not the user needs to be authenticated, and if he does, to send a Response
+or not the user needs to be authenticated, and if he does, to send a response
 back to the user initiating the authentication process. 
 
 A firewall is activated when the URL of an incoming request matches the configured
-firewall's regular expression pattern. In this example, the pattern, ``^/``,
-will match *every* incoming request. The fact that the firewall is activated
-does *not* mean, however, that the HTTP authentication username and password
-box is displayed for every URL. For example, any user can access ``/foo``
-without being prompted to authenticate. 
+firewall's regular expression ``pattern`` config value. In this example, the
+``pattern`` (``^/``) will match *every* incoming request. The fact that the
+firewall is activated does *not* mean, however, that the HTTP authentication
+username and password box is displayed for every URL. For example, any user
+can access ``/foo`` without being prompted to authenticate. 
 
 .. image:: /images/book/security_anonymous_user_access.png
    :align: center
 
 This works first because the firewall allows *anonymous users* via the ``anonymous``
 configuration parameter. In other words, the firewall doesn't require the
-user to fully authenticate immediately. And because no special roles are
-needed to access ``/foo``, the request can be fulfilled without ever asking
-the user to authenticate.
+user to fully authenticate immediately. And because no special ``role`` is
+needed to access ``/foo`` (under the ``access_control`` section), the request
+can be fulfilled without ever asking the user to authenticate.
 
 If you remove the ``anonymous`` key, the firewall will *always* make a user
 fully authenticate immediately.
@@ -171,10 +172,11 @@ Access Controls (Authorization)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 If a user requests ``/admin/foo``, however, the process behaves differently.
-This is because of the ``access_control`` configuration parameter that says
-that any URL matching ``/admin/*`` requires the ``ROLE_ADMIN`` role. Roles
-are the basis for authorization: a user can access ``/admin/foo`` if and
-only if it has the ``ROLE_ADMIN`` role.
+This is because of the ``access_control`` configuration section that says
+that any URL matching the regular expression pattern ``^admin`` (i.e. ``/admin``
+or anything matching ``/admin/*``) requires the ``ROLE_ADMIN`` role. Roles
+are the basis for most authorization: a user can access ``/admin/foo`` only
+if it has the ``ROLE_ADMIN`` role.
 
 .. image:: /images/book/security_anonymous_user_denied_authorization.png
    :align: center
@@ -185,7 +187,7 @@ denies the user access (because the anonymous user doesn't have the ``ROLE_ADMIN
 role), the firewall jumps into action and initiates the authentication process.
 The authentication process depends on the authentication mechanism you're
 using. For example, if you're using the form login authentication method,
-the user will be redirected to the login page. If you're using HTTP Authentication,
+the user will be redirected to the login page. If you're using HTTP authentication,
 the user will be sent an HTTP 401 response so that the user sees the username
 and password box.
 
@@ -208,9 +210,9 @@ sort of message indicating that access has been denied.
     :ref:`Error Pages<cookbook-error-pages-by-status-code>` cookbook entry
     to customize the 403 error page.
 
-If the ``admin`` user requests ``/admin/foo``, a similar process takes place,
-except now, after being authenticated, the access control layer will let the
-request pass through:
+Finally, if the ``admin`` user requests ``/admin/foo``, a similar process
+takes place, except now, after being authenticated, the access control layer
+will let the request pass through:
 
     DIAGRAM of admin being allowed access
 
@@ -229,6 +231,20 @@ the request flow is always the same:
     6) Retrying original request
 
 .. note::
+
+    The *exact* process actually depends a little bit on the authentication
+    mechanism. For example, when using form login, the user submits its credentials
+    to one URL that processes the form (e.g. ``/login_check``) and then is
+    redirected back to the originally requested URL (e.g. ``/admin/foo``).
+    But with HTTP authentication, the user submits its credentials directly
+    to the original URL (e.g. ``/admin/foo``) and then the page is returned
+    to the user in that same request (i.e. no redirect).
+    
+    These types of idiosyncrasies shouldn't cause you any problems, but they're
+    good to keep in mind.
+
+.. tip::
+
     You'll also learn later how *anything* can be secured in Symfony2, including
     specific controllers, objects, or even PHP methods.
 
@@ -1498,6 +1514,33 @@ cookie will be ever created by Symfony2):
 
     If you use a form login, Symfony2 will create a cookie even if you set
     ``stateless`` to ``true``.
+
+Final Words
+-----------
+
+Security can be a deep and complex issue to solve correctly in your application.
+Fortunately, Symfony's security component follows a well-proven security
+model based around *authentication* and *authorization*. Authentication,
+which always happens first, is handled by a firewall whose job is to determine
+the identity of the user through several different methods (e.g. HTTP authentication,
+login form, etc). In the cookbook, you'll find examples of other methods
+for handling authentication, including how to implement a "remember me" cookie
+functionality.
+
+Once a user is authenticated, the authorization layer can determine whether
+or not the user should have access to a specific resource. Most commonly,
+*roles* are applied to URLs, classes or methods and if the current user
+doesn't have that role, access is denied. The authorization layer, however,
+is much deeper, and follows a system of "voting" so that multiple parties
+can determine if the current user should have access to a given resource.
+Find out more about this and other topics in the cookbook.
+
+Learn more from the Cookbook
+----------------------------
+
+* :doc:`Forcing HTTP/HTTPS </cookbook/security/force_https>`
+* :doc:`Blacklist users by IP address with a custom voter </cookbook/security/voters>`
+* :doc:`Access Control Lists (ACLs) </cookbook/security/acl>`
 
 .. _`security component`: https://github.com/symfony/Security
 .. _`SecurityExtraBundle`: https://github.com/schmittjoh/SecurityExtraBundle
