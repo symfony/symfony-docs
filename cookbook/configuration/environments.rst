@@ -343,3 +343,9 @@ includes the following:
   URLs to different routes;
 
 * ``twig/`` - this directory contains all the cached Twig templates.
+
+
+Going Further
+-------------
+
+Read the article on :doc:`/cookbook/configuration/external_parameters`.
