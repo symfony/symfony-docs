@@ -485,6 +485,7 @@ to handle the actual delivery of the messages. This pretend class might look
 something like this::
 
     namespace Acme\HelloBundle\Newsletter;
+
     use Acme\HelloBundle\Mailer;
 
     class NewsletterManager
@@ -578,9 +579,10 @@ the work of instantiating the objects.
 Injecting dependencies into the constructor in this manner is an excellent way of 
 ensuring that the dependency is available to use. If you have optional dependencies for a 
 class then "setter injection" may be a better option. This means injecting the dependency
-using a method call rather than through the constructor. The class would look like this:
+using a method call rather than through the constructor. The class would look like this::
 
     namespace Acme\HelloBundle\Newsletter;
+
     use Acme\HelloBundle\Mailer;
 
     class NewsletterManager
@@ -595,8 +597,7 @@ using a method call rather than through the constructor. The class would look li
         // ...
     }
 
-This way no exception is thrown if the dependency is not injected. Injecting the
-dependency by the setter method just needs a change of syntax:
+Injecting the dependency by the setter method just needs a change of syntax:
 
 .. configuration-block::
 
@@ -651,9 +652,10 @@ dependency by the setter method just needs a change of syntax:
         ));
 
 The service container also supports property injection, using this you can skip the setter method
-altogether and set the property directly:
+altogether and set the property directly::
 
     namespace Acme\HelloBundle\Newsletter;
+
     use Acme\HelloBundle\Mailer;
 
     class NewsletterManager
@@ -713,7 +715,9 @@ With the following config
             '%newsletter_manager.class%'
         ))->setProperty('mailer', new Reference('my_mailer')));
 
-Note that the property does not need to be made public to use property injection.
+.. note::
+  
+    The property does not need to be made public to use property injection.
 
 Making References Optional
 --------------------------
@@ -808,6 +812,7 @@ Let's also pass the templating engine service to the ``NewsletterManager``
 so that it can generate the email content via a template::
 
     namespace Acme\HelloBundle\Newsletter;
+
     use Symfony\Component\Templating\EngineInterface;
 
     class NewsletterManager
