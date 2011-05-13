@@ -112,7 +112,7 @@ and tag it as a "security.voter":
 
         services:
             security.access.blacklist_voter:
-                class:      Acme\DemoBundle\Security\Authorization\Voter
+                class:      Acme\DemoBundle\Security\Authorization\Voter\ClientIpVoter
                 arguments:  [@request, [123.123.123.123, 171.171.171.171]]
                 public:     false
                 tags:
@@ -123,7 +123,7 @@ and tag it as a "security.voter":
         <!-- src/Acme/AcmeBundle/Resources/config/services.xml -->
 
         <service id="security.access.blacklist_voter"
-                 class="Acme\DemoBundle\Security\Authorization\Voter" public="false">
+                 class="Acme\DemoBundle\Security\Authorization\Voter\ClientIpVoter" public="false">
             <argument type="service" id="request" strict="false" />
             <argument type="collection">
                 <argument>123.123.123.123</argument>
@@ -140,7 +140,7 @@ and tag it as a "security.voter":
         use Symfony\Component\DependencyInjection\Reference;
 
         $definition = new Definition(
-            'Acme\DemoBundle\Security\Authorization\Voter',
+            'Acme\DemoBundle\Security\Authorization\Voter\ClientIpVoter',
             array(
                 new Reference('request'),
                 array('123.123.123.123', '171.171.171.171'),
@@ -157,6 +157,31 @@ and tag it as a "security.voter":
    configuration file (e.g. ``app/config/config.yml``). For more information
    see :ref:`service-container-imports-directive`. To read more about defining
    services in general, see the :doc:`/book/service_container` chapter.
+
+Changing the Access Decision Strategy
+-------------------------------------
+
+In order for the new voter to take effect, we need to change the default access
+decision strategy, which, by default, grants access if *any* voter grants
+access.
+
+In our case, we will choose the ``unanimous`` strategy. Unlike the ``affirmative``
+strategy (the default), with the ``unanimous`` strategy, if only one voter
+denies access (e.g. the ``ClientIpVoter``), access is not granted to the
+end user.
+
+To do that, override the default ``access_decision_manager`` section of your
+application configuration file with the following code.
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # app/config/security.yml
+        security:
+            access_decision_manager:
+                # Strategy can be: affirmative, unanimous or consensus
+                strategy: unanimous
 
 That's it! Now, when deciding whether or not a user should have access,
 the new voter will deny access to any user in the list of blacklisted IPs.
