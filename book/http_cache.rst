@@ -647,9 +647,17 @@ exposing a simple and efficient pattern::
             // return the 304 Response immediately
             return $response;
         } else {
-            // do some more heavy stuff here
+            // Do some more heavy stuff here
             // like getting more stuff from the DB
-            // and rendering a template
+            $article->getMoreHeavyStuff();
+            // and rendering a template 
+            // with the $response you've already started.
+            return $this->render(
+                'MyBundle:MyController:article.html.twig',
+                array('article' => $article),
+                $response
+            );
+
         }
     }
 
