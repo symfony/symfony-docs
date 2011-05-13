@@ -8,6 +8,7 @@ Cookbook
     gmail
     configuration/environments
     configuration/pdo_session_storage
+    configuration/external_parameters
     templating/PHP
     controller/error_pages
     controller/service
