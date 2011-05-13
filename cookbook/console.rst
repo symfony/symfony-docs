@@ -179,4 +179,3 @@ easily extend the task to be translatable:
         } else {
             $output->writeln($translator->trans('Hello!'));
         }
-    }
