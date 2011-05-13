@@ -42,7 +42,7 @@ Options
     cast into a string and so must have a ``__toString()`` method.
 
 * ``query_builder`` [type: ``Doctrine\ORM\QueryBuilder`` or a Closure]
-    If specified, this is used to query the subset of options (and there
+    If specified, this is used to query the subset of options (and their
     order) that should be used for the field. The value of this option can
     either be a ``QueryBuilder`` object or a Closure. If using a Closure,
     it should take a single argument, which is the ``EntityRepository`` of
