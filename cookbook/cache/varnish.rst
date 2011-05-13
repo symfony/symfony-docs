@@ -88,3 +88,5 @@ that will invalidate the cache for a given resource:
 
     You must protect the ``PURGE`` HTTP method somehow to avoid random people
     purging your cached data.
+
+.. _`Edge Architecture`: http://www.w3.org/TR/edge-arch

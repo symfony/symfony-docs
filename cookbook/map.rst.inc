@@ -1,11 +1,14 @@
 * :doc:`/cookbook/email`
 * :doc:`/cookbook/gmail`
 * :doc:`/cookbook/configuration/environments`
+* :doc:`/cookbook/configuration/external_parameters`
 * :doc:`/cookbook/templating/PHP`
 * :doc:`/cookbook/controller/error_pages`
 * :doc:`/cookbook/controller/service`
 * :doc:`/cookbook/validation/custom_constraint`
 * :doc:`/cookbook/form/twig_form_customization`
+* :doc:`/cookbook/form/create_custom_field_type`
+* :doc:`/cookbook/form/file_uploads`
 * :doc:`/cookbook/tools/autoloader`
 * :doc:`/cookbook/tools/finder`
 * :doc:`/cookbook/logging/monolog`
@@ -26,4 +29,5 @@
 * :doc:`/cookbook/debugging`
 * :doc:`/cookbook/assetic/yuicompressor`
 * :doc:`/cookbook/console`
+* :doc:`/cookbook/configuration/pdo_session_storage`
 * :doc:`/cookbook/symfony1`
