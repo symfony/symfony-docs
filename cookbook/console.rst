@@ -1,21 +1,19 @@
-How to Create Console/Command-Line Commands
+How to create Console/Command-Line Commands
 ===========================================
 
-Symfony2 ships with a console component, which allows you to create command-line
-tasks inside a rich and powerful framework. Your console commands can be used
-for any recurring task, such as cronjobs, imports or other batch jobs.
+Symfony2 ships with a Console component, which allows you to create
+command-line commands. Your console commands can be used for any recurring
+task, such as cronjobs, imports, or other batch jobs.
 
-Creating a Basic Command
+Creating a basic Command
 ------------------------
 
-To make the console commands available automatically with Symfony2, create
-a ``Command`` directory inside your bundle and create a php file suffixed
-with ``Command.php`` for each task that you want to provide. For example,
-if you want to extend the ``AcmeDemoBundle`` (available in the Symfony Standard
+To make the console commands available automatically with Symfony2, create a
+``Command`` directory inside your bundle and create a php file suffixed with
+``Command.php`` for each command that you want to provide. For example, if you
+want to extend the ``AcmeDemoBundle`` (available in the Symfony Standard
 Edition) to greet us from the command line, create ``GreetCommand.php`` and
-add the following to it:
-
-.. code-block:: php
+add the following to it::
 
     // src/Acme/DemoBundle/Command/GreetCommand.php
     namespace Acme\DemoBundle\Command;
@@ -42,7 +40,7 @@ add the following to it:
         {
             $name = $input->getArgument('name');
             if ($name) {
-                $text = 'Hello ' . $name;
+                $text = 'Hello '.$name;
             } else {
                 $text = 'Hello';
             }
@@ -61,7 +59,9 @@ Test the new console command by running the following
 
     $ php app/console demo:greet Fabien
 
-This will print the following to the command line::
+This will print the following to the command line:
+
+.. code-block:: text
 
     Hello Fabien
 
@@ -75,16 +75,14 @@ This prints::
 
     HELLO FABIEN
 
-Command Arguments
-~~~~~~~~~~~~~~~~~
+Using Command Arguments
+-----------------------
 
 The most interesting part of the commands are the arguments and options that
 you can make available. Arguments are the strings - separated by spaces - that
 come after the command name itself. They are ordered, and can be optional
 or required. For example, add an optional ``last_name`` argument to the command
-and make the ``name`` argument required:
-
-.. code-block:: php
+and make the ``name`` argument required::
 
     $this
         // ...
@@ -92,12 +90,10 @@ and make the ``name`` argument required:
         ->addArgument('last_name', InputArgument::OPTIONAL, 'Your last name?')
         // ...
 
-You now have access to a ``last_name`` argument in your command:
-
-.. code-block:: php
+You now have access to a ``last_name`` argument in your command::
 
     if ($lastName = $input->getArgument('last_name')) {
-        $text .= ' ' . $lastName;
+        $text .= ' '.$lastName;
     }
 
 The command can now be used in either of the following ways:
@@ -107,24 +103,24 @@ The command can now be used in either of the following ways:
     $ php app/console demo:greet Fabien
     $ php app/console demo:greet Fabien Potencier
 
-Command Options
----------------
+Using Command Options
+---------------------
 
-Unlike arguments, options are not ordered (meaning you can specify them in
-any order) and are specified with two dashes (e.g. ``--yell``). Options are
-*always* optional, and can be setup to accept a value (e.g. ``dir=src``)
-or simply as a boolean flag without a value (e.g. ``yell``).
+Unlike arguments, options are not ordered (meaning you can specify them in any
+order) and are specified with two dashes (e.g. ``--yell`` -- you can also
+declare a one-letter shortcut that you can call with a single dash like
+``-y``). Options are *always* optional, and can be setup to accept a value
+(e.g. ``dir=src``) or simply as a boolean flag without a value (e.g.
+``yell``).
 
 .. tip::
 
-    It's also possible to make an option *optionally* accept a value (so
-    that ``--yell`` or ``yell=loud`` work). Options can also be configured
-    to accept an array of values.
+    It is also possible to make an option *optionally* accept a value (so that
+    ``--yell`` or ``yell=loud`` work). Options can also be configured to
+    accept an array of values.
 
 For example, add a new option to the command that can be used to specify
-how many times in a row the message should be printed:
-
-.. code-block:: php
+how many times in a row the message should be printed::
 
     $this
         // ...
@@ -159,16 +155,14 @@ will work:
     $ php app/console demo:greet Fabien --iterations=5 --yell
     $ php app/console demo:greet Fabien --yell --iterations=5
 
-Advanced Usage with the Service Container
------------------------------------------
+Getting Services from the Service Container
+-------------------------------------------
 
-By Using ``Symfony\Bundle\FrameworkBundle\Command\Command`` as the base class
-for the command (instead of the more basic ``Symfony\Component\Console\Command\Command``),
-you have access to the service container. In other words, you have access
-to use any service configured to work inside Symfony. For example, you could
-easily extend the task to be translatable:
-
-.. code-block:: php
+By using ``Symfony\Bundle\FrameworkBundle\Command\Command`` as the base class
+for the command (instead of the more basic
+``Symfony\Component\Console\Command\Command``), you have access to the service
+container. In other words, you have access to any configured service. For
+example, you could easily extend the task to be translatable::
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
@@ -179,3 +173,4 @@ easily extend the task to be translatable:
         } else {
             $output->writeln($translator->trans('Hello!'));
         }
+    }
