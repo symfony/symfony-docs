@@ -253,7 +253,7 @@ other integer otherwise).
 .. note::
 
     Most of the time, calling a command from code that is not executed on the
-    command line is not a good idea for several reasons. First, the commands
+    command line is not a good idea for several reasons. First, the command's
     output is optimized for the console. But more important, you can think of
     a command as being like a controller; it should use the model to do
     something and display feedback to the user. So, instead of calling a
