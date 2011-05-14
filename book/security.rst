@@ -214,7 +214,8 @@ Finally, if the ``admin`` user requests ``/admin/foo``, a similar process
 takes place, except now, after being authenticated, the access control layer
 will let the request pass through:
 
-    DIAGRAM of admin being allowed access
+.. image:: /images/book/security_admin_role_access.png
+   :align: center
 
 The request flow when a user requests a protected resource is straightforward,
 but incredibly flexible. As you'll see later, authentication can be handled
@@ -222,13 +223,11 @@ in any number of ways, including via a form login, X.509 certificate, or by
 authenticating the user via Twitter. Regardless of the authentication method,
 the request flow is always the same:
 
-    DIAGRAM of the 6 steps for auth
-    1) Access a protected resource
-    2) Application redirects to login form
-    3) Enter your credentials
-    4) Sending credentials to server
-    5) Validating credentials
-    6) Retrying original request
+#. A user accesses a protected resource;
+#. The application redirects the user to the login form;
+#. The user submits its credentials (e.g. username/password);
+#. The firewall authenticates the user;
+#. The authenticated user re-tries the original request.
 
 .. note::
 
@@ -535,38 +534,20 @@ see :doc:`/cookbook/security/form_login`.
 
         .. code-block:: yaml
 
-            # app/config/config.yml
-            security:
-                # ...
-
-                access_control:
-                    - { path: ^/, roles: ROLE_ADMIN }
-
-                # ...
+            access_control:
+                - { path: ^/, roles: ROLE_ADMIN }
 
         .. code-block:: xml
 
-            <!-- app/config/config.xml -->
-            <config>
-                <!-- ... -->
-
-                <access-control>
-                    <rule path="^/" role="ROLE_ADMIN" />
-                </access-control>
-                
-                <!-- ... -->
-            </config>    
+            <access-control>
+                <rule path="^/" role="ROLE_ADMIN" />
+            </access-control>
 
         .. code-block:: php
 
-            // app/config/config.php
-            $container->loadFromExtension('security', array(
-                // ...
-                'access_control' => array(
-                    array('path' => '^/', 'role' => 'ROLE_ADMIN'),
-                ),
-                // ...
-            ));
+            'access_control' => array(
+                array('path' => '^/', 'role' => 'ROLE_ADMIN'),
+            ),
 
     Removing the access control on the ``/login`` URL fixes the problem:
 
@@ -657,12 +638,10 @@ provides a standard and powerful way to decide if a user can access any resource
 (a URL, a model object, a method call, ...). This works by assigning specific
 roles to each user, and then requiring different roles for different resources.
 
-    DIAGRAM here of negotiating in authorization
-
 The process of authorization has two different sides:
 
 #. The user has a specific set of roles;
-#. A resource requires a specific set of roles in order to be accessed.
+#. A resource requires a specific role in order to be accessed.
 
 In this section, you'll focus on how to secure different resources (e.g. URLs,
 method calls, etc) with different roles. Later, you'll learn more about how
@@ -673,7 +652,8 @@ Securing Specific URL Patterns
 
 The most basic way to secure part of your application is to secure an entire
 URL pattern. You've seen this already in the first example of this chapter,
-where anything matching ``/admin/*`` required the ``ROLE_ADMIN`` role.
+where anything matching the regular expression pattern ``^/admin`` requires
+the ``ROLE_ADMIN`` role.
 
 You can define as many URL patterns as you need - each is a regular expression.
 
@@ -691,20 +671,13 @@ You can define as many URL patterns as you need - each is a regular expression.
     .. code-block:: xml
 
         <!-- app/config/config.xml -->
-        <srv:container xmlns="http://symfony.com/schema/dic/security"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xmlns:srv="http://symfony.com/schema/dic/services"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
-
-            <config>
-                <!-- ... -->
-
-                <access-control>
-                    <rule path="^/admin/users" role="ROLE_SUPER_ADMIN" />
-                    <rule path="^/admin" role="ROLE_ADMIN" />
-                </access-control>
-            </config>
-        </srv:container>    
+        <config>
+            <!-- ... -->
+            <access-control>
+                <rule path="^/admin/users" role="ROLE_SUPER_ADMIN" />
+                <rule path="^/admin" role="ROLE_ADMIN" />
+            </access-control>
+        </config> 
 
     .. code-block:: php
     
@@ -726,7 +699,7 @@ You can define as many URL patterns as you need - each is a regular expression.
 For each incoming request, Symfony2 tries to find a matching access control
 rule (the first one wins). If the user isn't authenticated yet, the authentication
 process is initiated (i.e. the user is given a chance to login). However,
-if the user *is* authenticated but doesn't have the required roles, a
+if the user *is* authenticated but doesn't have the required role, an
 :class:`Symfony\\Component\Security\\Core\\Exception\\AccessDeniedException`
 exception is thrown, which you can handle and turn into a nice "access denied"
 error page for the user. See :doc:`/cookbook/controller/error_pages` for
@@ -806,7 +779,7 @@ Users
 -----
 
 In the previous sections, you learned how you can protect different resources
-by requiring a set of *roles* for that resource. In this section we'll explore
+by requiring a set of *roles* for a resource. In this section we'll explore
 the other side of authorization: users.
 
 Where do Users come from? (*User Providers*)
@@ -845,20 +818,13 @@ In fact, you've seen this already in the example in this chapter.
     .. code-block:: xml
 
         <!-- app/config/config.xml -->
-        <srv:container xmlns="http://symfony.com/schema/dic/security"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xmlns:srv="http://symfony.com/schema/dic/services"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
-
-            <config>
-                <!-- ... -->
-
-                <provider name="default_provider">
-                    <user name="ryan" password="ryanpass" roles="ROLE_USER" />
-                    <user name="admin" password="kitten" roles="ROLE_ADMIN" />
-                </provider>
-            </config>
-        </srv:container>    
+        <config>
+            <!-- ... -->
+            <provider name="default_provider">
+                <user name="ryan" password="ryanpass" roles="ROLE_USER" />
+                <user name="admin" password="kitten" roles="ROLE_ADMIN" />
+            </provider>
+        </config>
 
     .. code-block:: php
     
@@ -974,7 +940,7 @@ Encoding the User's Password
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 So far, for simplicity, all the examples have stored the users' passwords
-in plaintext (whether those users are stored in a configuration file or in
+in plain text (whether those users are stored in a configuration file or in
 a database somewhere). Of course, in a real application, you'll want to encode
 your users' passwords for security reasons. This is easily accomplished by
 mapping your User class to one of several built-in "encoders". For example,
@@ -988,7 +954,6 @@ do the following:
         # app/config/config.yml
         security:
             # ...
-
             providers:
                 in_memory:
                     users:
@@ -1004,29 +969,21 @@ do the following:
     .. code-block:: xml
 
         <!-- app/config/config.xml -->
-        <srv:container xmlns="http://symfony.com/schema/dic/security"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xmlns:srv="http://symfony.com/schema/dic/services"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+        <config>
+            <!-- ... -->
+            <provider name="in_memory">
+                <user name="ryan" password="bb87a29949f3a1ee0559f8a57357487151281386" roles="ROLE_USER" />
+                <user name="admin" password="74913f5cd5f61ec0bcfdb775414c2fb3d161b620" roles="ROLE_ADMIN" />
+            </provider>
 
-            <config>
-                <!-- ... -->
-
-                <provider name="in_memory">
-                    <user name="ryan" password="bb87a29949f3a1ee0559f8a57357487151281386" roles="ROLE_USER" />
-                    <user name="admin" password="74913f5cd5f61ec0bcfdb775414c2fb3d161b620" roles="ROLE_ADMIN" />
-                </provider>
-
-                <encoder class="Symfony\Component\Security\Core\User\User" algorithm="sha1" iterations="1" encode_as_base64="false" />
-            </config>
-        </srv:container>    
+            <encoder class="Symfony\Component\Security\Core\User\User" algorithm="sha1" iterations="1" encode_as_base64="false" />
+        </config>
 
     .. code-block:: php
     
         // app/config/config.php
         $container->loadFromExtension('security', array(
             // ...
-
             'providers' => array(
                 'in_memory' => array(
                     'users' => array(
@@ -1047,7 +1004,7 @@ do the following:
 By setting the ``iterations`` to ``1`` and the ``encode_as_base64`` to false,
 the password is simply run through the ``sha1`` algorithm one time and without
 any extra encoding. You can now calculate the hashed password either programmatically
-(e.g. ``hash('ryanpass')``) or via some online tool like `functions-online.com`_
+(e.g. ``hash('sha1', 'ryanpass')``) or via some online tool like `functions-online.com`_
 
 If you're creating your users dynamically (and storing them in a database),
 you can use even tougher hashing algorithms and then rely on an actual password
@@ -1069,17 +1026,11 @@ configure the encoder for that user:
     .. code-block:: xml
 
         <!-- app/config/config.xml -->
-        <srv:container xmlns="http://symfony.com/schema/dic/security"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xmlns:srv="http://symfony.com/schema/dic/services"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+        <config>
+            <!-- ... -->
 
-            <config>
-                <!-- ... -->
-
-                <encoder class="Acme\UserBundle\Entity\User" algorithm="sha512" />
-            </config>
-        </srv:container>    
+            <encoder class="Acme\UserBundle\Entity\User" algorithm="sha512" />
+        </config>
 
     .. code-block:: php
     
@@ -1101,8 +1052,8 @@ from the hashed password).
 
 If you have some sort of registration form for users, you'll need to be able
 to determine the hashed password so that you can set it on your user. No
-matter what algorithm you configure for your user object, this can always
-be done by doing the following in a controller:
+matter what algorithm you configure for your user object, the hashed password
+can always be determined in the following way from a controller:
 
 .. code-block:: php
 
@@ -1161,24 +1112,18 @@ a new provider that chains the two together:
     .. code-block:: xml
 
         <!-- app/config/config.xml -->
-        <srv:container xmlns="http://symfony.com/schema/dic/security"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xmlns:srv="http://symfony.com/schema/dic/services"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
-
-            <config>
-                <provider name=="chain_provider">
-                    <provider>in_memory</provider>
-                    <provider>user_db</provider>
-                </provider>
-                <provider name="in_memory">
-                    <user name="foo" password="test" />
-                </provider>
-                <provider name="user_db">
-                    <entity class="Acme\UserBundle\Entity\User" property="name" />
-                </provider>
-            </config>
-        </srv:container>
+        <config>
+            <provider name=="chain_provider">
+                <provider>in_memory</provider>
+                <provider>user_db</provider>
+            </provider>
+            <provider name="in_memory">
+                <user name="foo" password="test" />
+            </provider>
+            <provider name="user_db">
+                <entity class="Acme\UserBundle\Entity\User" property="username" />
+            </provider>
+        </config>
 
     .. code-block:: php
 
@@ -1194,14 +1139,56 @@ a new provider that chains the two together:
                     ),
                 ),
                 'user_db' => array(
-                    'entity' => array('class' => 'Acme\UserBundle\Entity\User', 'property' => 'name'),
+                    'entity' => array('class' => 'Acme\UserBundle\Entity\User', 'property' => 'username'),
                 ),
             ),
         ));
 
-Now, when all authentication mechanisms will use the ``chain_provider``,
-since it's the first specified. The ``chain_provider`` will, in turn, try
-to load the user from both the ``in_memory`` and ``user_db`` providers.
+Now, all authentication mechanisms will use the ``chain_provider``, since
+it's the first specified. The ``chain_provider`` will, in turn, try to load
+the user from both the ``in_memory`` and ``user_db`` providers.
+
+.. tip::
+
+    If you have no reasons to separate your ``in_memory`` users from your
+    ``user_db`` users, you can accomplish this even more easily by combining
+    the two sources into a single provider:
+    
+    .. configuration-block::
+
+        .. code-block:: yaml
+
+            # app/config/security.yml
+            security:
+                providers:
+                    main_provider:
+                        users:
+                            foo: { password: test }
+                        entity: { class: Acme\UserBundle\Entity\User, property: username }
+
+        .. code-block:: xml
+
+            <!-- app/config/config.xml -->
+            <config>
+                <provider name=="main_provider">
+                    <user name="foo" password="test" />
+                    <entity class="Acme\UserBundle\Entity\User" property="username" />
+                </provider>
+            </config>
+
+        .. code-block:: php
+
+            // app/config/config.php
+            $container->loadFromExtension('security', array(
+                'providers' => array(
+                    'main_provider' => array(
+                        'users' => array(
+                            'foo' => array('password' => 'test'),
+                        ),
+                        'entity' => array('class' => 'Acme\UserBundle\Entity\User', 'property' => 'username'),
+                    ),
+                ),
+            ));
 
 You can also configure the firewall or individual authentication mechanisms
 to use a specific provider. Again, unless a provider is specified explicitly,
@@ -1220,24 +1207,18 @@ the first provider is always used:
                     http_basic:
                         realm: "Secured Demo Area"
                         provider: in_memory
-            # ...
+                    form_login: ~
     
     .. code-block:: xml
 
         <!-- app/config/config.xml -->
-        <srv:container xmlns="http://symfony.com/schema/dic/security"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xmlns:srv="http://symfony.com/schema/dic/services"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
-
-            <config>
-                <firewall name="secured_area" pattern="^/" provider="user_db">
-                    <!-- ... -->
-                    <http-basic realm="Secured Demo Area" provider="in_memory" />
-                </firewall>
+        <config>
+            <firewall name="secured_area" pattern="^/" provider="user_db">
                 <!-- ... -->
-            </config>
-        </srv:container>    
+                <http-basic realm="Secured Demo Area" provider="in_memory" />
+                <form-login />
+            </firewall>
+        </config>
 
     .. code-block:: php
     
@@ -1251,9 +1232,9 @@ the first provider is always used:
                         // ...
                         'provider' => 'in_memory',
                     ),
+                    'form_login' => array(),
                 ),
             ),
-            // ...
         ));
 
 In this example, if a user tries to login via HTTP authentication, the authentication
@@ -1279,7 +1260,7 @@ doesn't need to be defined anywhere - you can just start using it.
 
 .. note::
 
-    All roles **must** being with the ``ROLE_`` prefix to be managed by
+    All roles **must** begin with the ``ROLE_`` prefix to be managed by
     Symfony2. If you define your own roles with a dedicated ``Role`` class
     (more advanced), don't use the ``ROLE_`` prefix.
 
@@ -1328,7 +1309,7 @@ Logging Out
 
 Usually, you'll also want your users to be able to log out. Fortunately,
 the firewall can handle this automatically for you when you activate the
-``firewall`` config parameter:
+``logout`` config parameter:
 
 .. configuration-block::
 
@@ -1342,23 +1323,18 @@ the firewall can handle this automatically for you when you activate the
                     logout:
                         path:   /logout
                         target: /
+            # ...
     
     .. code-block:: xml
 
         <!-- app/config/config.xml -->
-        <srv:container xmlns="http://symfony.com/schema/dic/security"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xmlns:srv="http://symfony.com/schema/dic/services"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
-
-            <config>
-                <firewall name="secured_area" pattern="^/">
-                    <!-- ... -->
-                    <logout path="/logout" target="/" />
-                </firewall>
+        <config>
+            <firewall name="secured_area" pattern="^/">
                 <!-- ... -->
-            </config>
-        </srv:container>    
+                <logout path="/logout" target="/" />
+            </firewall>
+            <!-- ... -->
+        </config>
 
     .. code-block:: php
     
@@ -1431,8 +1407,8 @@ a route so that you can use it to generate the URL:
         return $collection;
 
 Once the user has been logged out, he will be redirected to whatever path
-is defined by the ``target`` parameter above (the homepage). For more information
-on configuring the logout, see the
+is defined by the ``target`` parameter above (e.g. the ``homepage``). For
+more information on configuring the logout, see the
 :doc:`Security Configuration Reference</reference/configuration/security>`.
 
 Access Control in Templates
@@ -1490,7 +1466,7 @@ Impersonating a User
 Sometimes, it's useful to be able to switch from one user to another without
 having to logout and login again (for instance when you are debugging or trying
 to understand a bug a user sees that you can't reproduce). This can be easily
-done by activating the ``switch-user`` firewall listener:
+done by activating the ``switch_user`` firewall listener:
 
 .. configuration-block::
 
@@ -1535,7 +1511,7 @@ To switch back to the original user, use the special ``_exit`` username:
     http://example.com/somewhere?_switch_user=_exit
 
 Of course, this feature needs to be made available to a small group of users.
-By default, access is restricted to users having the 'ROLE_ALLOWED_TO_SWITCH'
+By default, access is restricted to users having the ``ROLE_ALLOWED_TO_SWITCH``
 role. The name of this role can be modified via the ``role`` setting. For
 extra security, you can also change the query parameter name via the ``parameter``
 setting:
@@ -1591,7 +1567,7 @@ cookie will be ever created by Symfony2):
         security:
             firewalls:
                 main:
-                    http_basic: true
+                    http_basic: ~
                     stateless:  true
 
     .. code-block:: xml
@@ -1608,7 +1584,7 @@ cookie will be ever created by Symfony2):
         // app/config/security.php
         $container->loadFromExtension('security', array(
             'firewalls' => array(
-                'main' => array('http_basic' => true, 'stateless' => true),
+                'main' => array('http_basic' => array(), 'stateless' => true),
             ),
         ));
 
@@ -1643,6 +1619,7 @@ Learn more from the Cookbook
 * :doc:`Forcing HTTP/HTTPS </cookbook/security/force_https>`
 * :doc:`Blacklist users by IP address with a custom voter </cookbook/security/voters>`
 * :doc:`Access Control Lists (ACLs) </cookbook/security/acl>`
+* :doc:`/cookbook/security/remember_me`
 
 .. _`security component`: https://github.com/symfony/Security
 .. _`SecurityExtraBundle`: https://github.com/schmittjoh/SecurityExtraBundle
