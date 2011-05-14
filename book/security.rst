@@ -376,14 +376,16 @@ login form submission (i.e. ``/login_check``):
         return $collection;
 
 .. note::
-    No ``_controller`` is necessary for the ``login_check`` route, as the
-    firewall will handle the form submission on your behalf.
 
-Notice that the names of these routes (``login`` and ``login_check``) aren't
-important. What's important is that:
+    You will *not* need to implement a controller for the ``/login_check``
+    URL as the firewall will automatically catch and process any form submitted
+    to this URL. It's optional, but helpful, to create a route so that you
+    can use it to generate the form submission URL in the login template below.
 
-* the ``/login`` URL is the same as the ``login_path`` config value;
-* the ``/login_check`` URL is the same as the ``check_path`` config value.
+Notice that the name of the ``login`` route isn't important. What's important
+is that the URL of the route (``/login``) matches the ``check_path`` config
+value, as that's where the security system will redirect users that need
+to login.
 
 Next, create the controller that will display the login form:
 
@@ -424,7 +426,7 @@ In other words, your job is to display the login form and any login errors
 that may have occurred, but the security system itself takes care of checking
 the submitted username and password and authenticating the user.
 
-Now, create the corresponding template:
+Finally, create the corresponding template:
 
 .. configuration-block::
 
