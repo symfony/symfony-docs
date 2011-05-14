@@ -38,6 +38,8 @@ Cookbook
     security/force_https
     security/form_login
     security/securing_services
+    security/entity_provider
+    security/custom_provider
     debugging
     assetic/yuicompressor
     console

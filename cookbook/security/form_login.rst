@@ -1,6 +1,12 @@
 How to customize your Form Login
 ================================
 
+This article has not been fully written yet, but will soon. If you're interested
+in writing this entry, see :doc:`/contributing/documentation/overview`.
+
+Form Login Configuration Reference
+----------------------------------
+
 .. configuration-block::
 
     .. code-block:: yaml

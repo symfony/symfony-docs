@@ -53,7 +53,7 @@ authentication (i.e. the old-school username/password box):
                 in_memory:
                     users:
                         ryan:  { password: ryanpass, roles: 'ROLE_USER' }
-                        admin: { password: adminpass, roles: 'ROLE_ADMIN' }
+                        admin: { password: kitten, roles: 'ROLE_ADMIN' }
 
             encoders:
                 Symfony\Component\Security\Core\User\User: plaintext
@@ -78,7 +78,7 @@ authentication (i.e. the old-school username/password box):
 
                 <provider name="in_memory">
                     <user name="ryan" password="ryanpass" roles="ROLE_USER" />
-                    <user name="admin" password="adminpass" roles="ROLE_ADMIN" />
+                    <user name="admin" password="kitten" roles="ROLE_ADMIN" />
                 </provider>
 
                 <encoder class="Symfony\Component\Security\Core\User\User" algorithm="plaintext" />
@@ -105,7 +105,7 @@ authentication (i.e. the old-school username/password box):
                 'in_memory' => array(
                     'users' => array(
                         'ryan' => array('password' => 'ryanpass', 'roles' => 'ROLE_USER'),
-                        'admin' => array('password' => 'adminpass', 'roles' => 'ROLE_ADMIN'),
+                        'admin' => array('password' => 'kitten', 'roles' => 'ROLE_ADMIN'),
                     ),
                 ),
             ),
@@ -232,10 +232,10 @@ the request flow is always the same:
 
 .. note::
 
-    The *exact* process actually depends a little bit on the authentication
-    mechanism. For example, when using form login, the user submits its credentials
-    to one URL that processes the form (e.g. ``/login_check``) and then is
-    redirected back to the originally requested URL (e.g. ``/admin/foo``).
+    The *exact* process actually depends a little bit on which authentication
+    mechanism you're using. For example, when using form login, the user
+    submits its credentials to one URL that processes the form (e.g. ``/login_check``)
+    and then is redirected back to the originally requested URL (e.g. ``/admin/foo``).
     But with HTTP authentication, the user submits its credentials directly
     to the original URL (e.g. ``/admin/foo``) and then the page is returned
     to the user in that same request (i.e. no redirect).
@@ -254,8 +254,9 @@ Using a Traditional Login Form
 So far, you've seen how to blanket your application beneath a firewall and
 then protect access to certain areas with roles. By using HTTP Authentication,
 you can effortlessly tap into the native username/password box offered by
-all browsers. In fact, Symfony supports many authentication mechanisms out
-of the box. For details, see the :doc:`Security Configuration Reference</reference/configuration/security>`.
+all browsers. However, Symfony supports many authentication mechanisms out
+of the box. For details on all of them, see the
+:doc:`Security Configuration Reference</reference/configuration/security>`.
 
 In this section, you'll enhance this process by allowing the user to authenticate
 via a traditional HTML login form.
@@ -331,7 +332,7 @@ First, enable form login under your firewall:
 Now, when the security system initiates the authentication process, it will
 redirect the user to the login form (``/login`` by default). Implementing
 this login form visually is your job. First, create two routes: one that
-will display the login form (i.e.``/login``) and one that will handle the
+will display the login form (i.e. ``/login``) and one that will handle the
 login form submission (i.e. ``/login_check``):
 
 .. configuration-block::
@@ -399,7 +400,7 @@ Next, create the controller that will display the login form:
     {
         public function loginAction()
         {
-            // get the error if any (works with forward and redirect -- see below)
+            // get the login error if there is one
             if ($this->get('request')->attributes->has(SecurityContext::AUTHENTICATION_ERROR)) {
                 $error = $this->get('request')->attributes->get(SecurityContext::AUTHENTICATION_ERROR);
             } else {
@@ -416,9 +417,13 @@ Next, create the controller that will display the login form:
 
 Don't let this controller confuse you. As you'll see in a moment, when the
 user submits the form, the security system automatically handles the form
-submission for you. If the user submitted an invalid username or password,
-the controller reads the form submission error information so that it can
-be displayed back to the user.
+submission for you. If the user had submitted an invalid username or password,
+this controller reads the form submission error from the security system so
+that it can be displayed back to the user.
+
+In other words, your job is to display the login form and any login errors
+that may have occurred, but the security system itself takes care of checking
+the submitted username and password and authenticating the user.
 
 Now, create the corresponding template:
 
@@ -438,6 +443,11 @@ Now, create the corresponding template:
             <label for="password">Password:</label>
             <input type="password" id="password" name="_password" />
 
+            {#
+                If you want to control the URL the user is redirected to on success (more details below)
+                <input type="hidden" name="_target_path" value="/account" />
+            #}
+
             <input type="submit" name="login" />
         </form>
 
@@ -455,16 +465,28 @@ Now, create the corresponding template:
             <label for="password">Password:</label>
             <input type="password" id="password" name="_password" />
 
+            <!--
+                If you want to control the URL the user is redirected to on success (more details below)
+                <input type="hidden" name="_target_path" value="/account" />
+            -->
+
             <input type="submit" name="login" />
         </form>
+
+.. tip::
+
+    The ``error`` variable passed into the template is an instance of
+    :class:`Symfony\\Component\\Security\\Core\\Exception\\AuthenticationException`.
+    It may contain more information - or even sensitive information - about
+    the authentication failure, so use it wisely!
 
 The form has very few requirements. First, by submitting the form to ``/login_check``
 (via the ``login_check`` route), the security system will intercept the form
 submission and process the form for you automatically. Second, the security
 system expects the submitted fields to be called ``_username`` and ``_password``
-(these values can be :ref:`configured</reference-security-firewall-form-username>`).
+(these field names can be :ref:`configured</reference-security-firewall-form-username>`).
 
-That's it! When you submit the form, the security system will automatically
+And that's it! When you submit the form, the security system will automatically
 check the user's credentials and either authenticate the user or send the
 user back to the login form where the error can be displayed.
 
@@ -476,9 +498,18 @@ Let's review the whole process:
 #. The ``/login`` page renders login form via the route and controller created
    in this example;
 #. The user submits the login form to ``/login_check``;
-#. The security system intercepts the request and checks the user's submitted
-   credentials, authenticating the user if they are correct and sending the
+#. The security system intercepts the request, checks the user's submitted
+   credentials, authenticates the user if they are correct, and sends the
    user back to the login form if they are not.
+
+By default, if the submitted credentials are correct, the user will be redirected
+to the original page that was requested (e.g. ``/admin/foo``). If the user
+originally went straight to the login page, he'll be redirected to the homepage.
+This can be highly customized, allowing you to, for example, redirect the
+user to a specific URL.
+
+For more details on this and how to customize the form login process in general,
+see :doc:`/cookbook/security/form_login`.
 
 .. sidebar:: Avoid Common Pitfalls
 
@@ -488,10 +519,10 @@ Let's review the whole process:
 
     First, be sure that you've defined the ``/login`` and ``/login_check``
     routes correctly and that they correspond to the ``login_path`` and
-    ``check_path`` config values. A misconfiguration here can might mean
-    that you're redirected to a 404 page instead of the login page, or that
-    submitting the login form does nothing (you just see the login form over
-    and over again).
+    ``check_path`` config values. A misconfiguration here can mean that you're
+    redirected to a 404 page instead of the login page, or that submitting
+    the login form does nothing (you just see the login form over and over
+    again).
 
     **2. Be sure the login page isn't secure**
 
@@ -502,22 +533,102 @@ Let's review the whole process:
 
     .. configuration-block::
 
-        a firewall that covers all URLs with an access_control that covers
-        all URLs
+        .. code-block:: yaml
+
+            # app/config/config.yml
+            security:
+                # ...
+
+                access_control:
+                    - { path: ^/, roles: ROLE_ADMIN }
+
+                # ...
+
+        .. code-block:: xml
+
+            <!-- app/config/config.xml -->
+            <config>
+                <!-- ... -->
+
+                <access-control>
+                    <rule path="^/" role="ROLE_ADMIN" />
+                </access-control>
+                
+                <!-- ... -->
+            </config>    
+
+        .. code-block:: php
+
+            // app/config/config.php
+            $container->loadFromExtension('security', array(
+                // ...
+                'access_control' => array(
+                    array('path' => '^/', 'role' => 'ROLE_ADMIN'),
+                ),
+                // ...
+            ));
 
     Removing the access control on the ``/login`` URL fixes the problem:
 
     .. configuration-block::
 
-        Make the access control NOT include the login form
-    
+        .. code-block:: yaml
+
+            access_control:
+                - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+                - { path: ^/, roles: ROLE_ADMIN }
+
+        .. code-block:: xml
+
+            <access-control>
+                <rule path="^/login" role="IS_AUTHENTICATED_ANONYMOUSLY" />
+                <rule path="^/" role="ROLE_ADMIN" />
+            </access-control>
+
+        .. code-block:: php
+
+            'access_control' => array(
+                array('path' => '^/login', 'role' => 'IS_AUTHENTICATED_ANONYMOUSLY'),
+                array('path' => '^/', 'role' => 'ROLE_ADMIN'),
+            ),
+
     Also, if your firewall does *not* allow for anonymous users, you'll need
     to create a special firewall that allows anonymous users for the login
     page:
     
     .. configuration-block::
-    
-        Show non-anonymous, with second firewall
+
+        .. code-block:: yaml
+
+            firewalls:
+                login_firewall:
+                    pattern:    ^/login
+                    anonymous:  ~
+                secured_area:
+                    pattern:    ^/
+                    login_form: ~
+
+        .. code-block:: xml
+
+            <firewall name="login_firewall" pattern="^/login">
+                <anonymous />
+            </firewall>            
+            <firewall name="secured_area" pattern="^/">
+                <login_form />
+            </firewall> 
+
+        .. code-block:: php
+
+            'firewalls' => array(
+                'login_firewall' => array(
+                    'pattern' => '^/login',
+                    'anonymous' => array(),
+                ),
+                'secured_area' => array(
+                    'pattern' => '^/',
+                    'form_login' => array(),
+                ),
+            ),
 
     **3. Be sure ``/login_check`` is behind a firewall**
     
@@ -532,16 +643,7 @@ Let's review the whole process:
     If you're using multiple firewalls and you authenticate against one firewall,
     you will *not* be authenticated against any other firewalls automatically.
     Different firewalls are like different security systems. That's why,
-    for most applications, having one main firewall is enough. 
-
-By default, if the submitted credentials are correct, the user will be redirected
-to the page original page that was requested. If the user originally went
-straight to the login page, he'll be redirected to the homepage. This can
-be highly customized, allowing you to, for example, redirect the user to
-a specific URL.
-
-For more details on this and how to customize the form login process in general,
-see :doc:`/cookbook/security/form_login`.
+    for most applications, having one main firewall is enough.
 
 Authorization
 -------------
@@ -738,7 +840,7 @@ In fact, you've seen this already in the example in this chapter.
                 default_provider:
                     users:
                         ryan:  { password: ryanpass, roles: 'ROLE_USER' }
-                        admin: { password: adminpass, roles: 'ROLE_ADMIN' }
+                        admin: { password: kitten, roles: 'ROLE_ADMIN' }
     
     .. code-block:: xml
 
@@ -753,7 +855,7 @@ In fact, you've seen this already in the example in this chapter.
 
                 <provider name="default_provider">
                     <user name="ryan" password="ryanpass" roles="ROLE_USER" />
-                    <user name="admin" password="adminpass" roles="ROLE_ADMIN" />
+                    <user name="admin" password="kitten" roles="ROLE_ADMIN" />
                 </provider>
             </config>
         </srv:container>    
@@ -767,7 +869,7 @@ In fact, you've seen this already in the example in this chapter.
                 'default_provider' => array(
                     'users' => array(
                         'ryan' => array('password' => 'ryanpass', 'roles' => 'ROLE_USER'),
-                        'admin' => array('password' => 'adminpass', 'roles' => 'ROLE_ADMIN'),
+                        'admin' => array('password' => 'kitten', 'roles' => 'ROLE_ADMIN'),
                     ),
                 ),
             ),
@@ -1331,7 +1433,7 @@ a route so that you can use it to generate the URL:
 Once the user has been logged out, he will be redirected to whatever path
 is defined by the ``target`` parameter above (the homepage). For more information
 on configuring the logout, see the
-:doc:`Security Configuration Reference</reference/configuration/security`.
+:doc:`Security Configuration Reference</reference/configuration/security>`.
 
 Access Control in Templates
 ---------------------------
