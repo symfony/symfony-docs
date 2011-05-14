@@ -667,7 +667,6 @@ format you prefer:
         # app/config/config.yml
         framework:
             charset:       UTF-8
-            error_handler: null
             csrf_protection:
                 enabled: true
                 secret: xxxxxxxxxx
@@ -704,7 +703,6 @@ format you prefer:
 
         $container->loadFromExtension('framework', array(
             'charset'         => 'UTF-8',
-            'error_handler'   => null,
             'csrf-protection' => array('enabled' => true, 'secret' => 'xxxxxxxxxx'),
             'router'          => array('resource' => '%kernel.root_dir%/config/routing.php'),
             'validation'      => array('enabled' => true, 'annotations' => true),
