@@ -667,7 +667,6 @@ format you prefer:
         # app/config/config.yml
         framework:
             charset:       UTF-8
-            error_handler: null
             csrf_protection:
                 enabled: true
                 secret: xxxxxxxxxx
