@@ -124,12 +124,12 @@ authentication (i.e. the old-school username/password box):
 The end result of this configuration is a fully-functional security system
 that looks like the following:
 
- * There are two users in the system (``ryan`` and ``admin``);
- * Users authenticate themselves via the basic HTTP authentication prompt;
- * Any URL matching ``/admin/*`` is secured, and only the ``admin`` user
-   can access it;
- * All URLs *not* matching ``/admin/*`` are accessible by all users (and the
-   user is never prompted to login).
+* There are two users in the system (``ryan`` and ``admin``);
+* Users authenticate themselves via the basic HTTP authentication prompt;
+* Any URL matching ``/admin/*`` is secured, and only the ``admin`` user
+  can access it;
+* All URLs *not* matching ``/admin/*`` are accessible by all users (and the
+  user is never prompted to login).
 
 Let's look briefly at how security works and how each part of the configuration
 comes into play.
