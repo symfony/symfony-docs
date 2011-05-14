@@ -721,6 +721,9 @@ authorization from inside a controller:
 
 .. code-block:: php
 
+    use Symfony\Component\Security\Core\Exception\AccessDeniedException
+    // ...
+
     public function helloAction($name)
     {
         if (false === $this->get('security.context')->isGranted('ROLE_ADMIN')) {
