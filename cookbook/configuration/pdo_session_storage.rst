@@ -34,7 +34,7 @@ configuration format of your choice).
         services:
             session.storage.pdo:
                 class:     Symfony\Component\HttpFoundation\SessionStorage\PdoSessionStorage
-                arguments: [@pdo, [], %pdo.db_options%]
+                arguments: [@pdo, {}, %pdo.db_options%]
 					
             pdo:
                 class: PDO
