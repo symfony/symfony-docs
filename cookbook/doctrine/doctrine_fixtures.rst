@@ -30,11 +30,11 @@ And also, the following after the "WebConfiguratorBundle" entry:
     # DoctrineFixturesBundle
     install_git DoctrineFixturesBundle https://github.com/symfony/DoctrineFixturesBundle.git
 
-Update vendors and rebuild the bootstrap file:
+Update the vendor libraries:
 
 .. code-block:: bash
 
-    $ bin/vendors.sh bin/build_bootstrap.php
+    $ bin/vendors.sh
 
 If everything worked, the ``doctrine-fixtures`` library can now be found
 at ``vendor/doctrine-fixtures``.
