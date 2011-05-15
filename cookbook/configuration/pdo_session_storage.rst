@@ -19,9 +19,10 @@ configuration format of your choice).
     .. code-block:: yaml
 
         # app/config/config.yml
-        session:
-            # ...
-            storage_id:     session.storage.pdo
+        framework:
+            session:
+                # ...
+                storage_id:     session.storage.pdo
             
         parameters:
             pdo.db_options:
@@ -33,7 +34,7 @@ configuration format of your choice).
         services:
             session.storage.pdo:
                 class:     Symfony\Component\HttpFoundation\SessionStorage\PdoSessionStorage
-                arguments: [@pdo, %pdo.db_options%]
+                arguments: [@pdo, [], %pdo.db_options%]
 					
             pdo:
                 class: PDO
