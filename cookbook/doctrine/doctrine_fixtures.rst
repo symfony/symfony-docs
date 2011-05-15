@@ -92,8 +92,6 @@ entry:
 
 .. code-block:: php
 
-    <?php
-
     // src/VendorName/MyBundle/DataFixtures/ORM/LoadUserData.php
     namespace VendorName\MyBundle\DataFixtures\ORM;
 
