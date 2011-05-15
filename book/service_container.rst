@@ -743,6 +743,49 @@ the container has several other tools available that help to *tag* services
 for special functionality, create more complex services, and perform operations
 after the container is built.
 
+Aliasing
+~~~~~~~~
+
+When using core or third party bundles within your application, you may want
+to use shortcuts to access some services. You can do so by aliasing them and,
+furthermore, you can even alias non-public services.
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        services:
+           foo:
+             class: Acme\HelloBundle\Foo\Bar
+           bar:
+             alias: foo
+
+    .. code-block:: xml
+
+        <service id="foo" class="Acme\HelloBundle\Extension\RadiusExtension">
+        </service>
+
+        <service id="bar" alias="foo">
+        </service>
+
+    .. code-block:: php
+
+        $definition = new Definition('Acme\HelloBundle\Extension\RadiusExtension');
+        $container->setDefinition('foo', $definition);
+
+        $containerBuilder->setAlias('bar', 'foo');
+
+You could now access the service ``foo`` within your configuration by referencing
+the service ``bar``. Of course, when using the container directly, you could type
+
+.. configuration-block::
+
+    .. code-block:: php
+
+       $container->get('bar'); // Would return the foo service
+
+as well.
+
 Requiring files
 ~~~~~~~~~~~~~~~
 
