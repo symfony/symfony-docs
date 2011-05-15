@@ -651,73 +651,11 @@ Injecting the dependency by the setter method just needs a change of syntax:
             new Reference('my_mailer')
         ));
 
-The service container also supports property injection, using this you can skip the setter method
-altogether and set the property directly::
-
-    namespace Acme\HelloBundle\Newsletter;
-
-    use Acme\HelloBundle\Mailer;
-
-    class NewsletterManager
-    {
-        protected $mailer;
-
-        // ...
-    }
-
-With the following config
-
-.. configuration-block::
-
-    .. code-block:: yaml
-
-        # src/Acme/HelloBundle/Resources/config/services.yml
-        parameters:
-            # ...
-            newsletter_manager.class: Acme\HelloBundle\Newsletter\NewsletterManager
-
-        services:
-            my_mailer:
-                # ...
-            newsletter_manager:
-                class:     %newsletter_manager.class%
-                properties:
-                    mailer: @my_mailer
-                
-    .. code-block:: xml
-
-        <!-- src/Acme/HelloBundle/Resources/config/services.xml -->
-        <parameters>
-            <!-- ... -->
-            <parameter key="newsletter_manager.class">Acme\HelloBundle\Newsletter\NewsletterManager</parameter>
-        </parameters>
-
-        <services>
-            <service id="my_mailer" ... >
-              <!-- ... -->
-            </service>
-            <service id="newsletter_manager" class="%newsletter_manager.class%">
-                <property name="mailer"  type="service" id="my_mailer" />
-            </service>
-        </services>
-
-    .. code-block:: php
-
-        // src/Acme/HelloBundle/Resources/config/services.php
-        use Symfony\Component\DependencyInjection\Definition;
-        use Symfony\Component\DependencyInjection\Reference;
-
-        // ...
-        $container->setParameter('newsletter_manager.class', 'Acme\HelloBundle\Newsletter\NewsletterManager');
-
-        $container->setDefinition('my_mailer', ... );
-        $container->setDefinition('newsletter_manager', new Definition(
-            '%newsletter_manager.class%'
-        ))->setProperty('mailer', new Reference('my_mailer')));
-
 .. note::
   
-    The property does not need to be made public to use property injection.
+    The approaches presented in this section are called "constructor injection"
+    and "setter injection". The Symfony2 service container also supports
+    "property injection".
 
 Making References Optional
 --------------------------
