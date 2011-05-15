@@ -243,7 +243,7 @@ Queries
 
 As you have already seen, working with single objects is straightforward and
 easy with the entity manager. But how can you query for a set of objects?
-As every with any Doctrine operation, this is done via the entity manager.
+As with any Doctrine operation, this is done via the entity manager.
 Change the delete action used in the previous example to use a query instead
 of loading the object and then deleting it afterwards:
 
