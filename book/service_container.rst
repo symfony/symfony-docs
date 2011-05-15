@@ -743,6 +743,36 @@ the container has several other tools available that help to *tag* services
 for special functionality, create more complex services, and perform operations
 after the container is built.
 
+Requiring files
+~~~~~~~~~~~~~~~
+
+There might be use cases when you need to include another file just before
+the service itself gets loaded. To do so, you can use the ``file`` directive.
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        services:
+           foo:
+             class: Acme\HelloBundle\Foo\Bar
+             file: /full/path/to/your/file/foo.php
+
+    .. code-block:: xml
+
+        <service id="foo" class="Acme\HelloBundle\Extension\RadiusExtension">
+            <file name="/full/path/to/your/file/foo.php" />
+        </service>
+
+    .. code-block:: php
+
+        $definition = new Definition('Acme\HelloBundle\Extension\RadiusExtension');
+        $definition->setFile('/full/path/to/your/file/foo.php');
+        $container->setDefinition('foo', $definition);
+
+Notice that symfony will internally call the PHP function require_once
+which means that your file will be included only once per request.
+
 Tags (``tags``)
 ~~~~~~~~~~~~~~~
 
