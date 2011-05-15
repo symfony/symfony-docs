@@ -747,7 +747,7 @@ Marking services as public / private
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 When defining your services, you most of the time want to be able to use
-these definitions within your application code. We call these services
+these definitions within your application code. These services are called
 ``public``. For example, the ``doctrine`` service registered with the
 container when using the DoctrineBundle is a public service as you can
 access it via
@@ -776,12 +776,11 @@ Here is an example:
 
     .. code-block:: xml
 
-        <service id="foo" class="Acme\HelloBundle\Extension\RadiusExtension" public="false">
-        </service>
+        <service id="foo" class="Acme\HelloBundle\Foo\Bar" public="false" />
 
     .. code-block:: php
 
-        $definition = new Definition('Acme\HelloBundle\Extension\RadiusExtension');
+        $definition = new Definition('Acme\HelloBundle\Foo\Bar');
         $definition->setPublic(false);
         $container->setDefinition('foo', $definition);
 
@@ -793,6 +792,10 @@ as the service ``foo`` is marked as private.
 
 However, if a service has been marked as private, you can still alias it (see below)
 to access this service (via the alias).
+
+.. note::
+
+   Services are by default public.
 
 Aliasing
 ~~~~~~~~
@@ -813,29 +816,23 @@ furthermore, you can even alias non-public services.
 
     .. code-block:: xml
 
-        <service id="foo" class="Acme\HelloBundle\Extension\RadiusExtension">
-        </service>
+        <service id="foo" class="Acme\HelloBundle\Foo\Bar"/>
 
-        <service id="bar" alias="foo">
-        </service>
+        <service id="bar" alias="foo" />
 
     .. code-block:: php
 
-        $definition = new Definition('Acme\HelloBundle\Extension\RadiusExtension');
+        $definition = new Definition('Acme\HelloBundle\Foo\Bar');
         $container->setDefinition('foo', $definition);
 
         $containerBuilder->setAlias('bar', 'foo');
 
-You could now access the service ``foo`` within your configuration by referencing
-the service ``bar``. Of course, when using the container directly, you could type
-
+This means that when using the container directly, you can access the ``foo`` service by asking for the ``bar`` service like this
 .. configuration-block::
 
     .. code-block:: php
 
        $container->get('bar'); // Would return the foo service
-
-as well.
 
 Requiring files
 ~~~~~~~~~~~~~~~
@@ -850,18 +847,18 @@ the service itself gets loaded. To do so, you can use the ``file`` directive.
         services:
            foo:
              class: Acme\HelloBundle\Foo\Bar
-             file: /full/path/to/your/file/foo.php
+             file: %kernel.root_dir%/src/path/to/file/foo.php
 
     .. code-block:: xml
 
-        <service id="foo" class="Acme\HelloBundle\Extension\RadiusExtension">
-            <file name="/full/path/to/your/file/foo.php" />
+        <service id="foo" class="Acme\HelloBundle\Foo\Bar">
+            <file name="%kernel.root_dir%/src/path/to/file/foo.php" />
         </service>
 
     .. code-block:: php
 
-        $definition = new Definition('Acme\HelloBundle\Extension\RadiusExtension');
-        $definition->setFile('/full/path/to/your/file/foo.php');
+        $definition = new Definition('Acme\HelloBundle\Foo\Bar');
+        $definition->setFile('%kernel.root_dir%/src/path/to/file/foo.php');
         $container->setDefinition('foo', $definition);
 
 Notice that symfony will internally call the PHP function require_once
