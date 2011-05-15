@@ -743,6 +743,57 @@ the container has several other tools available that help to *tag* services
 for special functionality, create more complex services, and perform operations
 after the container is built.
 
+Marking services as public / private
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+When defining your services, you most of the time want to be able to use
+these definitions within your application code. We call these services
+``public``. For example, the ``doctrine`` service registered with the
+container when using the DoctrineBundle is a public service as you can
+access it via
+
+   $doctrine = $container->get('doctrine');
+
+and then operate on it, like calling methods et cetera.
+
+However, there are use-cases when you don't want a service to be public, for
+example when a service is only defined because it could be used as an
+argument for another service.
+
+Simply said: A service will be private when you do not want to access it
+directly from your code.
+
+Here is an example:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        services:
+           foo:
+             class: Acme\HelloBundle\Foo\Bar
+             public: false
+
+    .. code-block:: xml
+
+        <service id="foo" class="Acme\HelloBundle\Extension\RadiusExtension" public="false">
+        </service>
+
+    .. code-block:: php
+
+        $definition = new Definition('Acme\HelloBundle\Extension\RadiusExtension');
+        $definition->setPublic(false);
+        $container->setDefinition('foo', $definition);
+
+You are now not able to call
+
+    $container->get('foo');
+
+as the service ``foo`` is marked as private.
+
+However, if a service has been marked as private, you can still alias it (see below)
+to access this service (via the alias).
+
 Aliasing
 ~~~~~~~~
 
