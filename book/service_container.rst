@@ -576,10 +576,14 @@ service needs the ``my_mailer`` service in order to function. When you define
 this dependency in the service container, the container takes care of all
 the work of instantiating the objects.
 
-Injecting dependencies into the constructor in this manner is an excellent way of 
-ensuring that the dependency is available to use. If you have optional dependencies for a 
-class then "setter injection" may be a better option. This means injecting the dependency
-using a method call rather than through the constructor. The class would look like this::
+Optional Dependencies: Setter Injection
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Injecting dependencies into the constructor in this manner is an excellent
+way of ensuring that the dependency is available to use. If you have optional
+dependencies for a class, then "setter injection" may be a better option. This
+means injecting the dependency using a method call rather than through the
+constructor. The class would look like this::
 
     namespace Acme\HelloBundle\Newsletter;
 
