@@ -27,7 +27,7 @@ Newsletter Manager which uses setter injection to set its dependencies::
         // ...
     }
 
-and you also have Greeting Card class which shares the same dependencies::
+and also have Greeting Card class which shares the same dependencies::
 
     namespace Acme\HelloBundle\Mail;
 
