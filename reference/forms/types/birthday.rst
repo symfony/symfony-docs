@@ -18,9 +18,10 @@ years ago to the current year.
 +----------------------+------------------------------------------------------------------------------------------------------------------------+
 | Rendered as          | can be three select boxes or a text box, based on the ``widget`` option                                                |
 +----------------------+------------------------------------------------------------------------------------------------------------------------+
-| Options              | - ``widget``                                                                                                           |
-|                      | - ``input``                                                                                                            |
-|                      | - ``years``                                                                                                            |
+| Options              | - ``years``                                                                                                            |
++----------------------+------------------------------------------------------------------------------------------------------------------------+
+| Inherited            | - ``widget``                                                                                                           |
+| options              | - ``input``                                                                                                            |
 |                      | - ``months``                                                                                                           |
 |                      | - ``days``                                                                                                             |
 |                      | - ``format``                                                                                                           |
@@ -35,6 +36,13 @@ years ago to the current year.
 
 Options
 -------
+
+.. include:: /reference/forms/types/options/years_birthday.rst.inc
+
+Inherited options
+-----------------
+
+These options inherit from the parent dateType class.
 
 * ``widget`` [type: string, default: ``choice``]
     Type of widget used for this form type.  Can be ``text`` or ``choice``.  
@@ -53,8 +61,6 @@ Options
     .. code-block:: php
 
         array('month' => 4, 'day' => 21, 'year' => 2011 )
-
-.. include:: /reference/forms/types/options/years.rst.inc
 
 .. include:: /reference/forms/types/options/months.rst.inc
 

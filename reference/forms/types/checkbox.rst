@@ -37,6 +37,8 @@ Options
     The value that's actually used as the value for the checkbox. This does
     not affect the value that's set on your object.
 
+.. include:: /reference/forms/types/options/inherit_expl.rst.inc
+
 .. include:: /reference/forms/types/options/required.rst.inc
 
 .. include:: /reference/forms/types/options/label.rst.inc
