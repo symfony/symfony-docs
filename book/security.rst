@@ -173,7 +173,7 @@ Access Controls (Authorization)
 
 If a user requests ``/admin/foo``, however, the process behaves differently.
 This is because of the ``access_control`` configuration section that says
-that any URL matching the regular expression pattern ``^admin`` (i.e. ``/admin``
+that any URL matching the regular expression pattern ``^/admin`` (i.e. ``/admin``
 or anything matching ``/admin/*``) requires the ``ROLE_ADMIN`` role. Roles
 are the basis for most authorization: a user can access ``/admin/foo`` only
 if it has the ``ROLE_ADMIN`` role.
@@ -585,7 +585,7 @@ see :doc:`/cookbook/security/form_login`.
 
             firewalls:
                 login_firewall:
-                    pattern:    ^/login
+                    pattern:    ^/login$
                     anonymous:  ~
                 secured_area:
                     pattern:    ^/
@@ -593,7 +593,7 @@ see :doc:`/cookbook/security/form_login`.
 
         .. code-block:: xml
 
-            <firewall name="login_firewall" pattern="^/login">
+            <firewall name="login_firewall" pattern="^/login$">
                 <anonymous />
             </firewall>            
             <firewall name="secured_area" pattern="^/">
@@ -604,7 +604,7 @@ see :doc:`/cookbook/security/form_login`.
 
             'firewalls' => array(
                 'login_firewall' => array(
-                    'pattern' => '^/login',
+                    'pattern' => '^/login$',
                     'anonymous' => array(),
                 ),
                 'secured_area' => array(
