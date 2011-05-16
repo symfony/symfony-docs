@@ -21,7 +21,6 @@
 * :doc:`/cookbook/profiler/data_collector`
 * :doc:`/cookbook/bundles/extension`
 * :doc:`/cookbook/request/mime_type`
-* :doc:`/cookbook/security/voters`
 * :doc:`/cookbook/doctrine/reverse_engineering`
 * :doc:`/cookbook/doctrine/doctrine_fixtures`
 * :doc:`/cookbook/doctrine/mongodb`
@@ -29,5 +28,13 @@
 * :doc:`/cookbook/debugging`
 * :doc:`/cookbook/assetic/yuicompressor`
 * :doc:`/cookbook/console`
+* :doc:`/cookbook/security/voters`
+* :doc:`/cookbook/security/acl`
+* :doc:`/cookbook/security/acl_advanced`
+* :doc:`/cookbook/security/force_https`
+* :doc:`/cookbook/security/form_login`
+* :doc:`/cookbook/security/securing_services`
+* :doc:`/cookbook/security/entity_provider`
+* :doc:`/cookbook/security/custom_provider`
 * :doc:`/cookbook/configuration/pdo_session_storage`
 * :doc:`/cookbook/symfony1`

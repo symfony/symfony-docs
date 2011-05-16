@@ -6,9 +6,10 @@ Reference Documents
 
     dic_tags
     YAML
-    bundle_configuration/DoctrineBundle
-    bundle_configuration/TwigBundle
-    bundle_configuration/MonologBundle
+    configuration/doctrine
+    configuration/twig
+    configuration/monolog
+    configuration/security
     constraints
     forms/types
     forms/twig_reference

@@ -50,8 +50,13 @@ create a new file with the same name in the
 ``app/Resources/FrameworkBundle/views/Exception`` directory. This is the
 standard way of overriding any template that lives inside a bundle.
 
-You can also provide specific templates according to the HTTP status code. For
-instance, create a
+.. _cookbook-error-pages-by-status-code:
+
+Customizing the 404 Page and other Error Pages
+----------------------------------------------
+
+You can also customize specific error templates according to the HTTP status
+code. For instance, create a
 ``app/Resources/FrameworkBundle/views/Exception/error404.html.twig`` template
 to display a special page for 404 (page not found) errors.
 
