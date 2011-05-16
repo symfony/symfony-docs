@@ -18,10 +18,11 @@ option.
 |             | - ``multiple``                                                              |
 |             | - ``expanded``                                                              |
 |             | - ``preferred_choices``                                                     |
-|             | - ``required``                                                              |
-|             | - ``label``                                                                 |
-|             | - ``read_only``                                                             |
 |             | - ``error_bubbling``                                                        |
++-------------+-----------------------------------------------------------------------------+
+| Inherited   | - ``required``                                                              |
+| options     | - ``label``                                                                 |
+|             | - ``read_only``                                                             |
 +-------------+-----------------------------------------------------------------------------+
 | Parent type | :doc:`form</reference/forms/types/form>` (if expanded), ``field`` otherwise |
 +-------------+-----------------------------------------------------------------------------+
@@ -98,10 +99,12 @@ Options
 
 .. include:: /reference/forms/types/options/preferred_choices.rst.inc
 
+.. include:: /reference/forms/types/options/error_bubbling.rst.inc
+
+.. include:: /reference/forms/types/options/inherit_expl.rst.inc
+
 .. include:: /reference/forms/types/options/required.rst.inc
 
 .. include:: /reference/forms/types/options/label.rst.inc
 
 .. include:: /reference/forms/types/options/read_only.rst.inc
-
-.. include:: /reference/forms/types/options/error_bubbling.rst.inc
