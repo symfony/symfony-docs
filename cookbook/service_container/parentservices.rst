@@ -20,7 +20,7 @@ Newsletter Manager which uses setter injection to set its dependencies::
             $this->mailer = $mailer;
         }
 
-	public function setEmailFormatter(EmailFormatter $emailFormatter)
+        public function setEmailFormatter(EmailFormatter $emailFormatter)
         {
             $this->mailer = $mailer;
         }
@@ -44,7 +44,7 @@ and also have Greeting Card class which shares the same dependencies::
             $this->mailer = $mailer;
         }
 
-	public function setEmailFormatter(EmailFormatter $emailFormatter)
+        public function setEmailFormatter(EmailFormatter $emailFormatter)
         {
             $this->mailer = $mailer;
         }
@@ -73,7 +73,7 @@ The config for these classes would look something like this:
                     - [ setMailer, [ @my_mailer ] ]
                     - [ setEmailFormatter, [ @my_email_formatter] ]
 
-	    greeting_card_manager:
+            greeting_card_manager:
                 class:     %greeting_card_manager.class%
                 calls:
                     - [ setMailer, [ @my_mailer ] ]
@@ -161,7 +161,7 @@ be to extract them to a super class::
             $this->mailer = $mailer;
         }
 
-	public function setEmailFormatter(EmailFormatter $emailFormatter)
+        public function setEmailFormatter(EmailFormatter $emailFormatter)
         {
             $this->mailer = $mailer;
         }
@@ -270,12 +270,16 @@ so you can also reduce the repetition by specifying a parent for a service.
         ))->addMethodCall('setEmailFormatter', array(
             new Reference('my_email_formatter')
         ));
-        $container->setDefinition('newsletter_manager', new Definition(
+        $container->setDefinition('newsletter_manager', new DefinitionDecorator(
+            'mail_manager'
+        ))->setClass(
             '%newsletter_manager.class%'
-        ));
-        $container->setDefinition('greeting_card_manager', new Definition(
+        );
+        $container->setDefinition('greeting_card_manager', new DefinitionDecorator(
+            'mail_manager'
+        ))->setClass(
             '%greeting_card_manager.class%'
-        ));
+        );
 
 The setter methods defined for the parent service will be called so they only need to be configured
 in one place.
@@ -287,7 +291,7 @@ in one place.
 
 The parent class is abstract as it should not be directly instantiated. Setting it to abstract 
 in the config file as has been done above will mean that it can only be used as a parent service
-and cannot be used directly as a service to inject.
+and cannot be used directly as a service to inject and will be removed at compile time.
 
 Overriding Parent Dependencies
 ------------------------------
@@ -390,14 +394,18 @@ pass a different dependency just to the NewsletterManager the config would look 
         ))->addMethodCall('setEmailFormatter', array(
             new Reference('my_email_formatter')
         ));
-        $container->setDefinition('newsletter_manager', new Definition(
+        $container->setDefinition('newsletter_manager', new DefinitionDecorator(
+            'mail_manager'
+        ))->setClass(
             '%newsletter_manager.class%'
-        ))->addMethodCall('setMailer', array(
+        )->addMethodCall('setMailer', array(
             new Reference('my_alternative_mailer')
         ));
-        $container->setDefinition('greeting_card_manager', new Definition(
+        $container->setDefinition('newsletter_manager', new DefinitionDecorator(
+            'mail_manager'
+        ))->setClass(
             '%greeting_card_manager.class%'
-        ));
+        );
 
 The GreetingCardManager will receive the same dependencies as before, the NewsletterManager will
 receive the usual EmailFormatter but the alternative Mailer.
@@ -502,9 +510,11 @@ If you had the following config:
         )->addMethodCall('setFilter', array(
             new Reference('my_filter')
         ));
-        $container->setDefinition('newsletter_manager', new Definition(
+        $container->setDefinition('newsletter_manager', new DefinitionDecorator(
+            'mail_manager'
+        ))->setClass(
             '%newsletter_manager.class%'
-        ))->addMethodCall('setFilter', array(
+        )->addMethodCall('setFilter', array(
             new Reference('another_filter')
         ));
 
