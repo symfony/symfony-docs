@@ -7,11 +7,15 @@ Cookbook
     email
     gmail
     configuration/environments
+    configuration/pdo_session_storage
+    configuration/external_parameters
     templating/PHP
     controller/error_pages
     controller/service
     validation/custom_constraint
     form/twig_form_customization
+    form/create_custom_field_type
+    form/file_uploads
     tools/autoloader
     tools/finder
     logging/monolog
@@ -24,12 +28,19 @@ Cookbook
     profiler/data_collector
     bundles/extension
     request/mime_type
-    security/voters
     doctrine/reverse_engineering
     doctrine/doctrine_fixtures
     doctrine/mongodb
     doctrine/migrations
     routing/scheme
+    security/voters
+    security/acl
+    security/acl_advanced
+    security/force_https
+    security/form_login
+    security/securing_services
+    security/entity_provider
+    security/custom_provider
     debugging
     assetic/yuicompressor
     console

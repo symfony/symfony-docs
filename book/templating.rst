@@ -832,7 +832,7 @@ configuration file:
         ));
 
 Several configuration options are available and are covered in the
-:doc:`Configuration Appendix</reference/bundle_configuration/FrameworkBundle>`.
+:doc:`Configuration Appendix</reference/configuration/framework>`.
 
 .. note::
 

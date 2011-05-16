@@ -1,11 +1,14 @@
 * :doc:`/cookbook/email`
 * :doc:`/cookbook/gmail`
 * :doc:`/cookbook/configuration/environments`
+* :doc:`/cookbook/configuration/external_parameters`
 * :doc:`/cookbook/templating/PHP`
 * :doc:`/cookbook/controller/error_pages`
 * :doc:`/cookbook/controller/service`
 * :doc:`/cookbook/validation/custom_constraint`
 * :doc:`/cookbook/form/twig_form_customization`
+* :doc:`/cookbook/form/create_custom_field_type`
+* :doc:`/cookbook/form/file_uploads`
 * :doc:`/cookbook/tools/autoloader`
 * :doc:`/cookbook/tools/finder`
 * :doc:`/cookbook/logging/monolog`
@@ -18,7 +21,6 @@
 * :doc:`/cookbook/profiler/data_collector`
 * :doc:`/cookbook/bundles/extension`
 * :doc:`/cookbook/request/mime_type`
-* :doc:`/cookbook/security/voters`
 * :doc:`/cookbook/doctrine/reverse_engineering`
 * :doc:`/cookbook/doctrine/doctrine_fixtures`
 * :doc:`/cookbook/doctrine/mongodb`
@@ -26,4 +28,13 @@
 * :doc:`/cookbook/debugging`
 * :doc:`/cookbook/assetic/yuicompressor`
 * :doc:`/cookbook/console`
+* :doc:`/cookbook/security/voters`
+* :doc:`/cookbook/security/acl`
+* :doc:`/cookbook/security/acl_advanced`
+* :doc:`/cookbook/security/force_https`
+* :doc:`/cookbook/security/form_login`
+* :doc:`/cookbook/security/securing_services`
+* :doc:`/cookbook/security/entity_provider`
+* :doc:`/cookbook/security/custom_provider`
+* :doc:`/cookbook/configuration/pdo_session_storage`
 * :doc:`/cookbook/symfony1`

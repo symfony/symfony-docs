@@ -47,7 +47,7 @@ any PHP class:
 
 .. code-block:: php
 
-    // Acme/HelloBundle/Entity/User.php
+    // src/Acme/HelloBundle/Entity/User.php
     namespace Acme\HelloBundle\Entity;
 
     class User
@@ -85,7 +85,7 @@ write mapping information with annotations, XML, or YAML:
 
     .. code-block:: php-annotations
 
-        // Acme/HelloBundle/Entity/User.php
+        // src/Acme/HelloBundle/Entity/User.php
         namespace Acme\HelloBundle\Entity;
 
         /**
@@ -108,7 +108,7 @@ write mapping information with annotations, XML, or YAML:
 
     .. code-block:: yaml
 
-        # Acme/HelloBundle/Resources/config/doctrine/Acme.HelloBundle.Entity.User.orm.yml
+        # src/Acme/HelloBundle/Resources/config/doctrine/Acme.HelloBundle.Entity.User.orm.yml
         Acme\HelloBundle\Entity\User:
             type: entity
             table: user
@@ -124,7 +124,7 @@ write mapping information with annotations, XML, or YAML:
 
     .. code-block:: xml
 
-        <!-- Acme/HelloBundle/Resources/config/doctrine/Acme.HelloBundle.Entity.User.orm.xml -->
+        <!-- src/Acme/HelloBundle/Resources/config/doctrine/Acme.HelloBundle.Entity.User.orm.xml -->
         <doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
               xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
@@ -167,7 +167,7 @@ Eventually, use your entity and manage its persistent state with Doctrine:
 
 .. code-block:: php
 
-    // Acme/HelloBundle/Controller/UserController.php
+    // src/Acme/HelloBundle/Controller/UserController.php
     namespace Acme\HelloBundle\Controller;
 
     use Acme\HelloBundle\Entity\User;
@@ -215,6 +215,7 @@ losing your existing data. So first let's just add a new property to our
 
 .. code-block:: php
 
+    // src/Acme/HelloBundle/Entity/User.php
     namespace Acme\HelloBundle\Entity;
 
     /** @orm:Entity */
@@ -235,6 +236,166 @@ Now your database will be updated and the new column added to the database
 table.
 
 .. index::
+   single: Doctrine ORM; Queries;
+
+Queries
+~~~~~~~
+
+As you have already seen, working with single objects is straightforward and
+easy with the entity manager. But how can you query for a set of objects?
+As with any Doctrine operation, this is done via the entity manager.
+Change the delete action used in the previous example to use a query instead
+of loading the object and then deleting it afterwards:
+
+.. code-block:: php
+
+    public function deleteAction($id)
+    {
+        $query = $this->get('doctrine')->getEntityManager()
+                   ->createQuery('DELETE FROM Acme\HelloBundle\Entity\User u 
+                            WHERE u.id = :id');
+        $query->setParameters(array(
+                    'id' => $id
+        ));
+
+        $query->execute();
+
+        // ...
+    }
+    
+Of course you can use SELECT and UPDATE queries too. Doctrine brings its own 
+Query Language called DQL (Doctrine Query Language). The DQL has some 
+similarities with SQL but is a query language with its own syntax.
+
+.. tip::
+
+    You can read more about the Doctrine Query Language on the official
+    `Doctrine Query Language documentation`_ website. The advantage of DQL
+    is that it is database-agnostic - the same queries can be written in
+    DQL and work with any supported database engine.
+
+.. note::
+
+    There is a drawback when using a DQL DELETE or UPDATE statement. Specifically,
+    since this operation is made directly to the database, Doctrine isn't
+    aware of the option internally. For example, if you query for an object
+    and then make an update to that object directly in the database via an
+    UPDATE statement, the object itself won't reflect that update. So, be
+    careful when using these statements - your objects can become out-of-sync
+    with your database inside a single request.
+
+.. index::
+   single: Doctrine ORM; Repository;
+
+Repositories
+~~~~~~~~~~~~
+
+It is bad practice to make queries in the Symfony controllers. Such queries 
+should be done in the model layer of your bundle so that they can be tested
+and reused through your application. Fortunately, Doctrine allows you to
+use special classes called Repositories to encapsulate queries.
+
+Doctrine provides a default implementation for your repository classes, so you 
+can use their common methods to query your entities data. One of them is the 
+``findAll`` function.
+
+.. code-block:: php
+
+    $em = $this->get('doctrine')->getEntityManager();
+    $users = $em->getRepository('AcmeHelloBundle:User')->findAll();
+
+If you want to create your own function to query or manipulate your data, you 
+need to create a custom repository class for an entity. To do so, you need to 
+add the name of the repository class to your mapping definition.
+
+.. configuration-block::
+
+    .. code-block:: php-annotations
+
+        // src/Acme/HelloBundle/Entity/User.php
+        namespace Acme\HelloBundle\Entity;
+
+        /**
+         * @orm:Entity(repositoryClass="Acme\HelloBundle\Repository\UserRepository")
+         */
+        class User
+        {
+            //...
+        }
+
+    .. code-block:: yaml
+
+        # src/Acme/HelloBundle/Resources/config/doctrine/Acme.HelloBundle.Entity.User.orm.yml
+        Acme\HelloBundle\Entity\User:
+            type: entity
+            table: user
+            repositoryClass: Acme\HelloBundle\Repository\UserRepository
+            #...
+
+    .. code-block:: xml
+
+        <!-- src/Acme/HelloBundle/Resources/config/doctrine/Acme.HelloBundle.Entity.User.orm.xml -->
+        <doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
+                            http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+
+            <entity name="Acme\HelloBundle\Entity\User" table="user"
+                    repository-class="Acme\HelloBundle\Repository\UserRepository">
+                <id name="id" type="integer" column="id">
+                    <generator strategy="AUTO"/>
+                </id>
+                <field name="name" column="name" type="string" length="255" />
+            </entity>
+
+        </doctrine-mapping>
+
+The repository class is created for you if you run the following command
+to generate your entities.
+
+    $ php app/console doctrine:generate:entities
+
+If you have already generated your entity class before adding the ``repositoryClass``
+mapping, you have to create the class on your own. Fortunately, it's pretty
+easy. Simply create the class in the ``Repository`` directory of your bundle
+and be sure it extends ``Doctrine\ORM\EntityRepository``. Once you've created
+the class, you can add any method to query your entities.
+
+The following code shows a sample repository class.
+
+.. code-block:: php
+
+    // src/Acme/HelloBundle/Repository/UserRepository.php
+    namespace Acme\HelloBundle\Repository;
+
+    use Doctrine\ORM\EntityRepository;
+
+    class UserRepository extends EntityRepository
+    {
+        public function findAllOrderedByName()
+        {
+            return $this->getEntityManager()
+                        ->createQuery('SELECT u FROM Acme\HelloBundle\Entity\User u 
+                                        ORDER BY u.name ASC')
+                        ->getResult();
+        }
+    }
+
+.. tip::
+
+    The entity manager can be accessed via ``$this->getEntityManager()`` in the 
+    repositories functions.
+
+The usage of this new method is the same as with the default finder functions.
+
+.. code-block:: php
+
+    $em = $this->get('doctrine')->getEntityManager();
+    $users = $em->getRepository('AcmeHelloBundle:User')
+                ->findAllOrderedByName();
+
+
+.. index::
    single: Configuration; Doctrine ORM
    single: Doctrine; ORM Configuration
 
@@ -242,7 +403,7 @@ Configuration
 -------------
 
 In the overview we already described the only necessary configuration option
-to get the Doctrine ORM running with Symfony 2. All the other configuration
+to get the Doctrine ORM running with Symfony2. All the other configuration
 options are used with reasonable default values.
 
 This following configuration example shows all the configuration defaults that
@@ -264,7 +425,7 @@ the ORM resolves to:
 There are lots of other configuration options that you can use to overwrite
 certain classes, but those are for very advanced use-cases only. You should
 look at the :doc:`configuration reference
-</reference/bundle_configuration/DoctrineBundle>` to get an overview of all
+</reference/configuration/doctrine>` to get an overview of all
 the supported options.
 
 For the caching drivers you can specify the values "array", "apc", "memcache"
@@ -356,7 +517,7 @@ The following configuration shows a bunch of mapping examples:
 Multiple Entity Managers
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
-You can use multiple ``EntityManager``s in a Symfony2 application. This is
+You can use multiple entity managers in a Symfony2 application. This is
 necessary if you are using different databases or even vendors with entirely
 different sets of entities.
 
@@ -617,3 +778,4 @@ get the choices. If not set all entities will be used.
 
 .. _documentation: http://www.doctrine-project.org/docs/orm/2.0/en
 .. _Doctrine:      http://www.doctrine-project.org
+.. _Doctrine Query Language documentation: http://www.doctrine-project.org/docs/orm/2.0/en/reference/dql-doctrine-query-language.html
