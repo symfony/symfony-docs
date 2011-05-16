@@ -14,8 +14,8 @@ have access to a given resource. This part of the process is called **authorizat
 and it means that the system is checking to see if you have privileges to
 perform a certain action.
 
-    .. image:: /images/book/security_authentication_authorization.png
-       :align: center
+.. image:: /images/book/security_authentication_authorization.png
+   :align: center
 
 Since the best way to learn is to see an example, let's dive right in.
 
