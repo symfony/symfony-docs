@@ -1,8 +1,8 @@
 .. index::
    single: Security, Voters
 
-How to implement your own Voter
-===============================
+How to implement your own Voter to blacklist IP Addresses
+=========================================================
 
 The Symfony2 security component provides several layers to authenticate users.
 One of the layers is called a `voter`. A voter is a dedicated class that checks

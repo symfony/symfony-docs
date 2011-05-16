@@ -425,7 +425,7 @@ the ORM resolves to:
 There are lots of other configuration options that you can use to overwrite
 certain classes, but those are for very advanced use-cases only. You should
 look at the :doc:`configuration reference
-</reference/bundle_configuration/DoctrineBundle>` to get an overview of all
+</reference/configuration/doctrine>` to get an overview of all
 the supported options.
 
 For the caching drivers you can specify the values "array", "apc", "memcache"
