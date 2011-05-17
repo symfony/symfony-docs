@@ -242,7 +242,7 @@ the layout:
 
     <?php include 'layout.php' ?>
 
-You've now introduced a methodology that that allows for the reuse of the
+You've now introduced a methodology that allows for the reuse of the
 layout. Unfortunately, to accomplish this, you're forced to use a few ugly
 PHP functions (``ob_start()``, ``ob_get_clean()``) in the template. Symfony2
 uses a ``Templating`` component that allows this to be accomplished cleanly
