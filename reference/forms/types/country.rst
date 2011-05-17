@@ -22,21 +22,24 @@ you should just use the ``choice`` type directly.
 +-------------+-----------------------------------------------------------------------+
 | Rendered as | can be various tags (see :ref:`forms-reference-choice-tags`)          |
 +-------------+-----------------------------------------------------------------------+
-| Options     | - ``multiple``                                                        |
-|             | - ``expanded``                                                        |
+| Inherited   | - ``multiple``                                                        |
+| options     | - ``expanded``                                                        |
 |             | - ``preferred_choices``                                               |
+|             | - ``error_bubbling``                                                  |
 |             | - ``required``                                                        |
 |             | - ``label``                                                           |
 |             | - ``read_only``                                                       |
-|             | - ``error_bubbling``                                                  |
 +-------------+-----------------------------------------------------------------------+
-| Parent type | :doc:`choice</reference/forms/types/choice>`                          |
+| Parent type | :doc:`choice</reference/forms/types/choice>`,                         |
+|             | `field`                                                               |
 +-------------+-----------------------------------------------------------------------+
 | Class       | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\CountryType` |
 +-------------+-----------------------------------------------------------------------+
 
-Options
--------
+Inherited options
+-----------------
+
+The following options are inherited from the parent ``choiceType`` class
 
 .. include:: /reference/forms/types/options/multiple.rst.inc
 
@@ -44,12 +47,14 @@ Options
 
 .. include:: /reference/forms/types/options/preferred_choices.rst.inc
 
+.. include:: /reference/forms/types/options/error_bubbling.rst.inc
+
+The following options are inherited from the parent ``fieldType`` class
+
 .. include:: /reference/forms/types/options/required.rst.inc
 
 .. include:: /reference/forms/types/options/label.rst.inc
 
 .. include:: /reference/forms/types/options/read_only.rst.inc
-
-.. include:: /reference/forms/types/options/error_bubbling.rst.inc
 
 .. _`Locale::getDefault()`: http://php.net/manual/en/locale.getdefault.php
