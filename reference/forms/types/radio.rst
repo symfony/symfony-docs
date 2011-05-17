@@ -16,8 +16,9 @@ If you want to have a Boolean field, use :doc:`checkbox</reference/forms/types/c
 | Rendered as | ``input`` ``text`` field                                            |
 +-------------+---------------------------------------------------------------------+
 | Options     | - ``value``                                                         |
-|             | - ``required``                                                      |
-|             | - ``label``                                                         |
++-------------+---------------------------------------------------------------------+
+| Inherited   | - ``required``                                                      |
+| options     | - ``label``                                                         |
 |             | - ``read_only``                                                     |
 |             | - ``error_bubbling``                                                |
 +-------------+---------------------------------------------------------------------+
@@ -32,6 +33,8 @@ Options
 * ``value`` [type: mixed, default: 1]
     The value that's actually used as the value for the radio button. This does
     not affect the value that's set on your object.
+
+.. include:: /reference/forms/types/options/inherit_expl.rst.inc
 
 .. include:: /reference/forms/types/options/required.rst.inc
 
