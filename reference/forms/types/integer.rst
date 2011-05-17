@@ -16,8 +16,9 @@ integers. By default, all non-integer values (e.g. 6.78) will round down (e.g. 6
 | Rendered as | ``input`` ``text`` field                                              |
 +-------------+-----------------------------------------------------------------------+
 | Options     | - ``rounding_mode``                                                   |
-|             | - ``required``                                                        |
-|             | - ``label``                                                           |
++-------------+-----------------------------------------------------------------------+
+| Inherited   | - ``required``                                                        |
+| options     | - ``label``                                                           |
 |             | - ``read_only``                                                       |
 |             | - ``error_bubbling``                                                  |
 +-------------+-----------------------------------------------------------------------+
@@ -42,6 +43,11 @@ Options
         Rounding mode to round away from zero.
     * ``IntegerToLocalizedStringTransformer::ROUND_CEILING``
         Rounding mode to round towards positive infinity.
+
+Inherited options
+-----------------
+
+.. include:: /reference/forms/types/options/inherited_expl.rst.inc
 
 .. include:: /reference/forms/types/options/required.rst.inc
 
