@@ -126,14 +126,14 @@ The config for these classes would look something like this:
         $container->setDefinition('my_mailer', ... );
         $container->setDefinition('my_email_formatter', ... );
         $container->setDefinition('newsletter_manager', new Definition(
-            '%newsletter_manager.class%'
+            new Reference('newsletter_manager.class')
         ))->addMethodCall('setMailer', array(
             new Reference('my_mailer')
         ))->addMethodCall('setEmailFormatter', array(
             new Reference('my_email_formatter')
         ));
         $container->setDefinition('greeting_card_manager', new Definition(
-            '%greeting_card_manager.class%'
+            new Reference('greeting_card_manager.class')
         ))->addMethodCall('setMailer', array(
             new Reference('my_mailer')
         ))->addMethodCall('setEmailFormatter', array(
@@ -273,12 +273,12 @@ so you can also reduce the repetition by specifying a parent for a service.
         $container->setDefinition('newsletter_manager', new DefinitionDecorator(
             'mail_manager'
         ))->setClass(
-            '%newsletter_manager.class%'
+            new Reference('newsletter_manager.class')
         );
         $container->setDefinition('greeting_card_manager', new DefinitionDecorator(
             'mail_manager'
         ))->setClass(
-            '%greeting_card_manager.class%'
+            new Reference('greeting_card_manager.class')
         );
 
 The setter methods defined for the parent service will be called so they only need to be configured
