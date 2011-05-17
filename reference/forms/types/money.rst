@@ -18,8 +18,9 @@ how the input and output of the data is handled.
 |             | - ``divisor``                                                       |
 |             | - ``precision``                                                     |
 |             | - ``grouping``                                                      |
-|             | - ``required``                                                      |
-|             | - ``label``                                                         |
++-------------+---------------------------------------------------------------------+
+| Inherited   | - ``required``                                                      |
+| options     | - ``label``                                                         |
 |             | - ``read_only``                                                     |
 |             | - ``error_bubbling``                                                |
 +-------------+---------------------------------------------------------------------+
@@ -60,6 +61,8 @@ Options
     you can modify this value. You probably won't need to do this unless,
     for example, you want to round to the nearest dollar (set the precision
     to ``0``).
+
+.. include:: /reference/forms/types/options/inherit_expl.rst.inc
 
 .. include:: /reference/forms/types/options/required.rst.inc
 
