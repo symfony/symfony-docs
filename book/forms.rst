@@ -1118,9 +1118,10 @@ The CSRF token can be customized on a form-by-form basis. For example:
         public function getDefaultOptions(array $options)
         {
             return array(
-                'data_class'        => 'Acme\StoreBundle\Entity\Product',
-                'csrf_protection'   => true,
-                'csrf_field_name'   => '_token',
+                'data_class'      => 'Acme\StoreBundle\Entity\Product',
+                'csrf_protection' => true,
+                'csrf_field_name' => '_token',
+                'intention'  => 'product_creation',
             );
         }
     }
@@ -1129,6 +1130,11 @@ To disable CSRF protection, set the ``csrf_protection`` option to false.
 Customizations can also be made globally in your project. For more information,
 see the :ref:`form configuration reference </reference-frameworkbundle-forms>`
 section.
+
+.. note::
+
+    The ``intention`` option is optional but greatly enhances the security of
+    the generated token by making it different for each form.
 
 Final Thoughts
 --------------
