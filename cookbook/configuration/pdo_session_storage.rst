@@ -26,15 +26,15 @@ configuration format of your choice).
             
         parameters:
             pdo.db_options:
-                db_table: session
-                db_id_col: session_id
+                db_table:    session
+                db_id_col:   session_id
                 db_data_col: session_value
                 db_time_col: session_time
 		
         services:
             session.storage.pdo:
                 class:     Symfony\Component\HttpFoundation\SessionStorage\PdoSessionStorage
-                arguments: [@pdo, {}, %pdo.db_options%]
+                arguments: [@pdo, %session.storage.options%, %pdo.db_options%]
 					
             pdo:
                 class: PDO
