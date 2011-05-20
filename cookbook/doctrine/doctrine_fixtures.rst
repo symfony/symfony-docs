@@ -30,11 +30,11 @@ And also, the following after the "WebConfiguratorBundle" entry:
     # DoctrineFixturesBundle
     install_git DoctrineFixturesBundle https://github.com/symfony/DoctrineFixturesBundle.git
 
-Update vendors and rebuild the bootstrap file:
+Update the vendor libraries:
 
 .. code-block:: bash
 
-    $ bin/vendors.sh bin/build_bootstrap.php
+    $ bin/vendors.sh
 
 If everything worked, the ``doctrine-fixtures`` library can now be found
 at ``vendor/doctrine-fixtures``.
@@ -91,8 +91,6 @@ Imagine that you have a ``User`` class, and you'd like to load one ``User``
 entry:
 
 .. code-block:: php
-
-    <?php
 
     // src/VendorName/MyBundle/DataFixtures/ORM/LoadUserData.php
     namespace VendorName\MyBundle\DataFixtures\ORM;

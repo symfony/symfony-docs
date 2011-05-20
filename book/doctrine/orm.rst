@@ -243,7 +243,7 @@ Queries
 
 As you have already seen, working with single objects is straightforward and
 easy with the entity manager. But how can you query for a set of objects?
-As every with any Doctrine operation, this is done via the entity manager.
+As with any Doctrine operation, this is done via the entity manager.
 Change the delete action used in the previous example to use a query instead
 of loading the object and then deleting it afterwards:
 
@@ -425,7 +425,7 @@ the ORM resolves to:
 There are lots of other configuration options that you can use to overwrite
 certain classes, but those are for very advanced use-cases only. You should
 look at the :doc:`configuration reference
-</reference/bundle_configuration/DoctrineBundle>` to get an overview of all
+</reference/configuration/doctrine>` to get an overview of all
 the supported options.
 
 For the caching drivers you can specify the values "array", "apc", "memcache"

@@ -1,12 +1,13 @@
 * **Bundle Configuration**:
 
-  * :doc:`FrameworkBundle (framework) </reference/bundle_configuration/FrameworkBundle>`
-  * :doc:`DoctrineBundle (doctrine) </reference/bundle_configuration/DoctrineBundle>`
-  * :doc:`SecurityBundle (security) </book/security/config_reference>`
+  * :doc:`FrameworkBundle (framework) </reference/configuration/framework>`
+  * :doc:`DoctrineBundle (doctrine) </reference/configuration/doctrine>`
+  * :doc:`SecurityBundle (security) </reference/configuration/security>`
   * :ref:`SwiftMailerBundle (swiftmailer) <swift-mailer-configuration>`
-  * :doc:`TwigBundle (twig) </reference/bundle_configuration/TwigBundle>`
-  * :doc:`WebProfilerBundle (web_profiler) </reference/bundle_configuration/WebProfilerBundle>`
-  * :doc:`MonologBundle (monolog) </reference/bundle_configuration/MonologBundle>`
+  * :doc:`TwigBundle (twig) </reference/configuration/twig>`
+  * :doc:`WebProfilerBundle (web_profiler) </reference/configuration/web_profiler>`
+  * :doc:`MonologBundle (monolog) </reference/configuration/monolog>`
+  * :doc:`SecurityBundle (security) </reference/configuration/security>`
 
 * **Forms**
 

@@ -242,7 +242,7 @@ the layout:
 
     <?php include 'layout.php' ?>
 
-You've now introduced a methodology that that allows for the reuse of the
+You've now introduced a methodology that allows for the reuse of the
 layout. Unfortunately, to accomplish this, you're forced to use a few ugly
 PHP functions (``ob_start()``, ``ob_get_clean()``) in the template. Symfony2
 uses a ``Templating`` component that allows this to be accomplished cleanly
@@ -498,14 +498,17 @@ incidentally, acts quite a bit like the Symfony2 templating engine:
     function show_action($id)
     {
         $post = get_post_by_id($id);
-        $html = render_template('templates/show.php');
+        $html = render_template('templates/show.php', array(
+            'post' => $post,
+        ));
 
         return new Response($html);
     }
 
     // helper function to render templates
-    function render_template($path)
+    function render_template($path, array $args)
     {
+        extract($args);
         ob_start();
         require $path;
         $html = ob_get_clean();

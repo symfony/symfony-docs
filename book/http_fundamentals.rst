@@ -392,7 +392,7 @@ by adding an entry for ``/contact`` to your routing configuration file:
 
     contact:
         pattern:  /contact
-        defaults: { _controller: AcmeDemo:Main:contact }
+        defaults: { _controller: AcmeDemoBundle:Main:contact }
 
 .. note::
 
@@ -402,7 +402,7 @@ by adding an entry for ``/contact`` to your routing configuration file:
 
 When someone visits the ``/contact`` page, this route is matched, and the
 specified controller is executed. As you'll learn in the :doc:`routing chapter</book/routing>`,
-the ``AcmeDemo:Main:contact`` string is a short syntax that points to a
+the ``AcmeDemoBundle:Main:contact`` string is a short syntax that points to a
 specific PHP method ``contactAction`` inside a class called ``MainController``:
 
 .. code-block:: php
