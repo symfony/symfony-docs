@@ -353,7 +353,7 @@ add the name of the repository class to your mapping definition.
 The repository class is created for you if you run the following command
 to generate your entities.
 
-    $ php app/console doctrine:generate:entities
+    $ php app/console doctrine:generate:entities AcmeHelloBundle
 
 If you have already generated your entity class before adding the ``repositoryClass``
 mapping, you have to create the class on your own. Fortunately, it's pretty
