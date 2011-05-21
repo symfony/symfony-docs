@@ -16,6 +16,7 @@ Form Types Reference
    types/csrf
    types/date
    types/datetime
+   types/entity
    types/file
    types/form
    types/hidden
