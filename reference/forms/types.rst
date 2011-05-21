@@ -18,6 +18,7 @@ Form Types Reference
    types/datetime
    types/entity
    types/file
+   types/field
    types/form
    types/hidden
    types/integer
