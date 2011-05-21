@@ -752,6 +752,8 @@ these definitions within your application code. These services are called
 container when using the DoctrineBundle is a public service as you can
 access it via
 
+.. codeblock::php
+
    $doctrine = $container->get('doctrine');
 
 and then operate on it, like calling methods et cetera.
@@ -759,6 +761,10 @@ and then operate on it, like calling methods et cetera.
 However, there are use-cases when you don't want a service to be public, for
 example when a service is only defined because it could be used as an
 argument for another service.
+
+You should note, however, that using a private service twice as an argument
+will result in two different instances being used as the instantiation is
+inlined.
 
 Simply said: A service will be private when you do not want to access it
 directly from your code.
@@ -786,12 +792,14 @@ Here is an example:
 
 You are now not able to call
 
+.. code-block::php
+
     $container->get('foo');
 
 as the service ``foo`` is marked as private.
 
-However, if a service has been marked as private, you can still alias it (see below)
-to access this service (via the alias).
+However, if a service has been marked as private, you can still alias it (see
+below) to access this service (via the alias).
 
 .. note::
 
@@ -827,8 +835,8 @@ furthermore, you can even alias non-public services.
 
         $containerBuilder->setAlias('bar', 'foo');
 
-This means that when using the container directly, you can access the ``foo`` service by asking for the ``bar`` service like this
-.. configuration-block::
+This means that when using the container directly, you can access the ``foo``
+service by asking for the ``bar`` service like this
 
     .. code-block:: php
 
