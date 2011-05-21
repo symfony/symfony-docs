@@ -11,7 +11,10 @@ The ``csrf`` type is a hidden input field containing a CSRF token.
 +-------------+--------------------------------------------------------------------+
 | Options     | - ``csrf_provider``                                                |
 |             | - ``page_id``                                                      |
-|             | - ``error_bubbling``                                               |
+|             | - ``property_path``                                                |
++-------------+--------------------------------------------------------------------+
+| Inherited   | - ``error_bubbling``                                               |
+| options     |                                                                    |
 +-------------+--------------------------------------------------------------------+
 | Parent type | ``hidden``                                                         |
 +-------------+--------------------------------------------------------------------+
@@ -27,6 +30,13 @@ Options
 
 * ``page_id`` [type: string]
     An optional page identifier used to generate the CSRF token.
+
+.. include:: /reference/forms/types/options/property_path.rst.inc
+
+Inherited options
+-----------------
+
+These options are inherited from the parent ``fieldType`` class.
 
 * ``error_bubbling`` [type: Boolean, default: true]
    .. include:: /reference/forms/types/options/error_bubbling.rst.inc

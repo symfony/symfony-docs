@@ -16,8 +16,9 @@ This field adds a percentage sign "``%``" after the input box.
 | Rendered as | ``input`` ``text`` field                                              |
 +-------------+-----------------------------------------------------------------------+
 | Options     | - ``type``                                                            |
-|             | - ``required``                                                        |
-|             | - ``label``                                                           |
++-------------+-----------------------------------------------------------------------+
+| Inherited   | - ``required``                                                        |
+| options     | - ``label``                                                           |
 |             | - ``read_only``                                                       |
 |             | - ``error_bubbling``                                                  |
 +-------------+-----------------------------------------------------------------------+
@@ -43,6 +44,8 @@ Options
         If your data is stored as an integer (e.g. 55), then use this option.
         The raw value (``55``) is shown to the user and stored on your object.
         Note that this only works for integer values.
+
+.. include:: /reference/forms/types/options/inherit_expl.rst.inc
 
 .. include:: /reference/forms/types/options/required.rst.inc
 

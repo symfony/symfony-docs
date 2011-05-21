@@ -20,27 +20,31 @@ you should just use the ``choice`` type directly.
 +-------------+------------------------------------------------------------------------+
 | Rendered as | can be various tags (see :ref:`forms-reference-choice-tags`)           |
 +-------------+------------------------------------------------------------------------+
-| Options     | - ``multiple``                                                         |
-|             | - ``expanded``                                                         |
+| Inherited   | - ``multiple``                                                         |
+| options     | - ``expanded``                                                         |
 |             | - ``preferred_choices``                                                |
 |             | - ``required``                                                         |
 |             | - ``label``                                                            |
 |             | - ``read_only``                                                        |
 |             | - ``error_bubbling``                                                   |
 +-------------+------------------------------------------------------------------------+
-| Parent type | :doc:`choice</reference/forms/types/choice>`                           |
+| Parent type | :doc:`choice</reference/forms/types/choice>`, field                    |
 +-------------+------------------------------------------------------------------------+
 | Class       | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\TimezoneType` |
 +-------------+------------------------------------------------------------------------+
 
-Options
--------
+Inherited options
+-----------------
+
+These options inherit from the parent ``choiceType`` class:
 
 .. include:: /reference/forms/types/options/multiple.rst.inc
 
 .. include:: /reference/forms/types/options/expanded.rst.inc
 
 .. include:: /reference/forms/types/options/preferred_choices.rst.inc
+
+These options inherit from the parent ``fieldType`` class:
 
 .. include:: /reference/forms/types/options/required.rst.inc
 

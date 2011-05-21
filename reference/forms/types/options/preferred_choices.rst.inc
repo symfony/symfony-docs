@@ -1,3 +1,4 @@
+
 * ``preferred_choices`` [type: array]
     If this option is specified, then a sub-set of the total number of options
     will be moved to the top of the select menu. The following would move
