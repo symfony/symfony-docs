@@ -107,7 +107,7 @@ Glossary
         it defines the authentication mechanisms (i.e. it handles the process
         of determining the identity of your users), either for the whole
         application or for just a part of it. See the
-        :doc:`/book/security/overview` chapters.
+        :doc:`/book/security` chapters.
 
    YAML 
         *YAML* is a recursive acronym for "YAML Ain't a Markup Language". It's a
