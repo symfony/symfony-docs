@@ -22,7 +22,7 @@ This field adds a percentage sign "``%``" after the input box.
 |             | - ``read_only``                                                       |
 |             | - ``error_bubbling``                                                  |
 +-------------+-----------------------------------------------------------------------+
-| Parent type | ``field``                                                             |
+| Parent type | :doc:`field</reference/forms/types/field>`                            |
 +-------------+-----------------------------------------------------------------------+
 | Class       | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\PercentType` |
 +-------------+-----------------------------------------------------------------------+
@@ -45,7 +45,10 @@ Options
         The raw value (``55``) is shown to the user and stored on your object.
         Note that this only works for integer values.
 
-.. include:: /reference/forms/types/options/inherit_expl.rst.inc
+Inherited Options
+-----------------
+
+These options inherit from the :doc:`field</reference/forms/types/field>` type:
 
 .. include:: /reference/forms/types/options/required.rst.inc
 

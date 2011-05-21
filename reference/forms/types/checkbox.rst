@@ -18,10 +18,13 @@ if the box is unchecked, the value will be set to false.
 |             | - ``read_only``                                                        |
 |             | - ``error_bubbling``                                                   |
 +-------------+------------------------------------------------------------------------+
-| Parent type | ``field``                                                              |
+| Parent type | :doc:`field</reference/forms/types/field>`                             |
 +-------------+------------------------------------------------------------------------+
 | Class       | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\CheckboxType` |
 +-------------+------------------------------------------------------------------------+
+
+Example Usage
+-------------
 
 .. code-block:: php
 
@@ -37,7 +40,10 @@ Options
     The value that's actually used as the value for the checkbox. This does
     not affect the value that's set on your object.
 
-.. include:: /reference/forms/types/options/inherit_expl.rst.inc
+Inherited options
+-----------------
+
+These options inherit from the :doc:`field</reference/forms/types/field>` type:
 
 .. include:: /reference/forms/types/options/required.rst.inc
 

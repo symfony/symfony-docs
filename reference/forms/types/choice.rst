@@ -29,6 +29,39 @@ option.
 | Class       | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\ChoiceType`        |
 +-------------+-----------------------------------------------------------------------------+
 
+Example Usage
+-------------
+
+The easiest way to use this field is to specify the choices directly via the
+``choices`` option. The key of the array becomes the value that's actually
+set on your underlying object (e.g. ``m``), while the value is what the
+user sees on the form (e.g. ``Male``).
+
+.. code-block:: php
+
+    $builder->add('gender', 'choice', array(
+        'choices'   => array('m' => 'Male', 'f' => 'Female'),
+        'required'  => false,
+    ));
+
+By setting ``multiple`` to true, you can allow the user to choose multiple
+values. The widget will be rendered as a multiple ``select`` tag or a series
+of checkboxes depending on the ``expanded`` option:
+
+.. code-block:: php
+
+    $builder->add('availability', 'choice', array(
+        'choices'   => array(
+            'morning'   => 'Morning',
+            'afternoon' => 'Afternoon',
+            'evening'   => 'Evening',
+        ),
+        'multiple'  => true,
+    ));
+
+You can also use the ``choice_list`` option, which takes an object that can
+specify the choices for your widget.
+
 .. _forms-reference-choice-tags:
 
 Select tag, Checkboxes or Radio Buttons
@@ -101,7 +134,10 @@ Options
 
 .. include:: /reference/forms/types/options/error_bubbling.rst.inc
 
-.. include:: /reference/forms/types/options/inherit_expl.rst.inc
+Inherited options
+-----------------
+
+These options inherit from the :doc:`field</reference/forms/types/field>` type:
 
 .. include:: /reference/forms/types/options/required.rst.inc
 

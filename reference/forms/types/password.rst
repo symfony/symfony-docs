@@ -18,7 +18,7 @@ The ``password`` field renders an input password text box.
 |             | - ``read_only``                                                        |
 |             | - ``error_bubbling``                                                   |
 +-------------+------------------------------------------------------------------------+
-| Parent type | :doc:`text</reference/forms/types/text>`, field                        |
+| Parent type | :doc:`text</reference/forms/types/text>`                               |
 +-------------+------------------------------------------------------------------------+
 | Class       | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\PasswordType` |
 +-------------+------------------------------------------------------------------------+
@@ -38,7 +38,10 @@ Options
 
 .. include:: /reference/forms/types/options/trim.rst.inc
 
-.. include:: /reference/forms/types/options/inherit_expl.rst.inc
+Inherited Options
+-----------------
+
+These options inherit from the :doc:`field</reference/forms/types/field>` type:
 
 .. include:: /reference/forms/types/options/required.rst.inc
 

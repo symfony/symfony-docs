@@ -31,15 +31,15 @@ you should just use the ``choice`` type directly.
 |             | - ``read_only``                                                        |
 |             | - ``error_bubbling``                                                   |
 +-------------+------------------------------------------------------------------------+
-| Parent type | :doc:`choice</reference/forms/types/choice>`, field                    |
+| Parent type | :doc:`choice</reference/forms/types/choice>`                           |
 +-------------+------------------------------------------------------------------------+
 | Class       | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\LanguageType` |
 +-------------+------------------------------------------------------------------------+
 
-Inherited options
+Inherited Options
 -----------------
 
-These options are inherited from the parent ``choiceType`` class:
+These options inherit from the :doc:`choice</reference/forms/types/choice>` type:
 
 .. include:: /reference/forms/types/options/multiple.rst.inc
 
@@ -49,7 +49,7 @@ These options are inherited from the parent ``choiceType`` class:
 
 .. include:: /reference/forms/types/options/error_bubbling.rst.inc
 
-These options are inherited from the parent ``fieldType`` class:
+These options inherit from the :doc:`field</reference/forms/types/field>` type:
 
 .. include:: /reference/forms/types/options/required.rst.inc
 

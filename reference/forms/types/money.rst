@@ -24,7 +24,7 @@ how the input and output of the data is handled.
 |             | - ``read_only``                                                     |
 |             | - ``error_bubbling``                                                |
 +-------------+---------------------------------------------------------------------+
-| Parent type | ``field``                                                           |
+| Parent type | :doc:`field</reference/forms/types/field>`                          |
 +-------------+---------------------------------------------------------------------+
 | Class       | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\MoneyType` |
 +-------------+---------------------------------------------------------------------+
@@ -62,7 +62,10 @@ Options
     for example, you want to round to the nearest dollar (set the precision
     to ``0``).
 
-.. include:: /reference/forms/types/options/inherit_expl.rst.inc
+Inherited Options
+-----------------
+
+These options inherit from the :doc:`field</reference/forms/types/field>` type:
 
 .. include:: /reference/forms/types/options/required.rst.inc
 

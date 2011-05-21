@@ -4,8 +4,8 @@
 birthday Field Type
 ===================
 
-A special :doc:`date</reference/forms/types/date>` field that specializes
-in handling birthdate data.
+A :doc:`date</reference/forms/types/date>` field that specializes in handling
+birthdate data.
 
 Can be rendered as a single text box or three select boxes (month, day, and year)
 
@@ -37,50 +37,26 @@ years ago to the current year.
 Options
 -------
 
-.. include:: /reference/forms/types/options/years_birthday.rst.inc
+* ``years`` [type: ``array``, default: 120 years ago to the current year ]
+    List of years available to the year field type.  This option is only
+    relevant when the ``widget`` option is set to ``choice``.
 
 Inherited options
 -----------------
 
-These options inherit from the parent dateType class.
+These options inherit from the :doc:`date</reference/forms/types/date>` type:
 
-* ``widget`` [type: string, default: ``choice``]
-    Type of widget used for this form type.  Can be ``text`` or ``choice``.  
+.. include:: /reference/forms/types/options/date_widget.rst.inc
     
-      * ``text``: renders a single input of type text. User's input is validated
-        based on the ``format`` option.
-
-      * ``choice``: renders three select inputs.  The order of the selects
-        is defined in the ``pattern`` option.
-    
-* ``input`` [type: string, default: datetime]
-    The value of the input for the widget.  Can be ``string``, ``datetime``
-    or ``array``.  The form type input value will be returned  in the format
-    specified.  The input of April 21th, 2011 as an array would return:
-    
-    .. code-block:: php
-
-        array('month' => 4, 'day' => 21, 'year' => 2011 )
+.. include:: /reference/forms/types/options/date_input.rst.inc
 
 .. include:: /reference/forms/types/options/months.rst.inc
 
 .. include:: /reference/forms/types/options/days.rst.inc
 
-* ``format`` [type: integer, default: IntlDateFormatter::MEDIUM]
-    Option passed to the IntlDateFormatter class, used to transform user input
-    into the proper format. This is critical when the ``widget`` option is
-    set to ``text``, and will define how to transform the input.
+.. include:: /reference/forms/types/options/date_format.rst.inc
     
-* ``pattern`` [type: string, default: null]
-    This option is only relevant when the ``widget`` is set to ``choice``.
-    The default pattern is based off the ``format`` option, and tries to
-    match the characters ``M``, ``d``, and ``y`` in the format pattern. If
-    no match is found, the default is the string ``{{ year }}-{{ month }}-{{ day }}``.
-    Tokens for this option include:
-
-      * ``{{ year }}``: Replaced with the ``year`` widget
-      * ``{{ month }}``: Replaced with the ``month`` widget
-      * ``{{ day }}``: Replaced with the ``day`` widget
+.. include:: /reference/forms/types/options/date_pattern.rst.inc
 
 .. include:: /reference/forms/types/options/data_timezone.rst.inc
 

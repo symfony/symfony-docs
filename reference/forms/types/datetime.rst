@@ -26,10 +26,13 @@ data can be a ``DateTime`` object, a string, a timestamp or an array.
 |                      | - ``data_timezone``                                                         |
 |                      | - ``user_timezone``                                                         |
 +----------------------+-----------------------------------------------------------------------------+
-| Parent type          | form                                                                        |
+| Parent type          | :doc:`form</reference/forms/types/form>`                                    |
 +----------------------+-----------------------------------------------------------------------------+
 | Class                | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\DatetimeType`      |
 +----------------------+-----------------------------------------------------------------------------+
+
+Options
+-------
 
 * ``date_widget`` [type: string, default: choice]
     Defines the ``widget`` option for the :doc:`date</reference/forms/types/date>` type

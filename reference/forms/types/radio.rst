@@ -22,7 +22,7 @@ If you want to have a Boolean field, use :doc:`checkbox</reference/forms/types/c
 |             | - ``read_only``                                                     |
 |             | - ``error_bubbling``                                                |
 +-------------+---------------------------------------------------------------------+
-| Parent type | ``field``                                                           |
+| Parent type | :doc:`field</reference/forms/types/field>`                          |
 +-------------+---------------------------------------------------------------------+
 | Class       | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\RadioType` |
 +-------------+---------------------------------------------------------------------+
@@ -34,7 +34,10 @@ Options
     The value that's actually used as the value for the radio button. This does
     not affect the value that's set on your object.
 
-.. include:: /reference/forms/types/options/inherit_expl.rst.inc
+Inherited Options
+-----------------
+
+These options inherit from the :doc:`field</reference/forms/types/field>` type:
 
 .. include:: /reference/forms/types/options/required.rst.inc
 

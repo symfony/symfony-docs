@@ -47,7 +47,7 @@ Options
 Inherited options
 -----------------
 
-.. include:: /reference/forms/types/options/inherit_expl.rst.inc
+These options inherit from the :doc:`field</reference/forms/types/field>` type:
 
 .. include:: /reference/forms/types/options/required.rst.inc
 

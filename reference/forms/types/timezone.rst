@@ -28,7 +28,7 @@ you should just use the ``choice`` type directly.
 |             | - ``read_only``                                                        |
 |             | - ``error_bubbling``                                                   |
 +-------------+------------------------------------------------------------------------+
-| Parent type | :doc:`choice</reference/forms/types/choice>`, field                    |
+| Parent type | :doc:`choice</reference/forms/types/choice>`                           |
 +-------------+------------------------------------------------------------------------+
 | Class       | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\TimezoneType` |
 +-------------+------------------------------------------------------------------------+
@@ -36,7 +36,7 @@ you should just use the ``choice`` type directly.
 Inherited options
 -----------------
 
-These options inherit from the parent ``choiceType`` class:
+These options inherit from the :doc:`choice</reference/forms/types/choice>` type:
 
 .. include:: /reference/forms/types/options/multiple.rst.inc
 
@@ -44,7 +44,7 @@ These options inherit from the parent ``choiceType`` class:
 
 .. include:: /reference/forms/types/options/preferred_choices.rst.inc
 
-These options inherit from the parent ``fieldType`` class:
+These options inherit from the :doc:`field</reference/forms/types/field>` type:
 
 .. include:: /reference/forms/types/options/required.rst.inc
 

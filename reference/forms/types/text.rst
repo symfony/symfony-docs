@@ -17,7 +17,7 @@ The text field represents the most basic input text field.
 |             | - ``read_only``                                                    |
 |             | - ``error_bubbling``                                               |
 +-------------+--------------------------------------------------------------------+
-| Parent type | ``field``                                                          |
+| Parent type | :doc:`field</reference/forms/types/field>`                         |
 +-------------+--------------------------------------------------------------------+
 | Class       | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\TextType` |
 +-------------+--------------------------------------------------------------------+
@@ -29,7 +29,10 @@ Options
 
 .. include:: /reference/forms/types/options/trim.rst.inc
 
-.. include:: /reference/forms/types/options/inherit_expl.rst.inc
+Inherited Options
+-----------------
+
+These options inherit from the :doc:`field</reference/forms/types/field>` type:
 
 .. include:: /reference/forms/types/options/required.rst.inc
 

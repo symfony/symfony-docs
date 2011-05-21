@@ -36,7 +36,7 @@ Options
 Inherited options
 -----------------
 
-These options are inherited from the parent ``fieldType`` class.
+These options inherit from the :doc:`field</reference/forms/types/field>` type:
 
 * ``error_bubbling`` [type: Boolean, default: true]
    .. include:: /reference/forms/types/options/error_bubbling.rst.inc
