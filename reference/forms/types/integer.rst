@@ -47,7 +47,7 @@ Options
 Inherited options
 -----------------
 
-.. include:: /reference/forms/types/options/inherited_expl.rst.inc
+.. include:: /reference/forms/types/options/inherit_expl.rst.inc
 
 .. include:: /reference/forms/types/options/required.rst.inc
 

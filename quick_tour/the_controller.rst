@@ -210,7 +210,7 @@ is "forbidden" from accessing that resource.
     The Symfony2 security layer is very flexible and comes with many different
     user providers (like one for the Doctrine ORM) and authentication providers
     (like HTTP basic, HTTP digest, or X509 certificates). Read the
-    ":doc:`/book/security/overview`" chapter of the book for more information
+    ":doc:`/book/security`" chapter of the book for more information
     on how to use and configure them.
 
 Caching Resources
