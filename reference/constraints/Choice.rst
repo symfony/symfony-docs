@@ -106,10 +106,12 @@ as an array.
     .. code-block:: php-annotations
 
         // src/Acme/HelloBundle/Author.php
+        use Symfony\Component\Validator\Constraints as Assert;
+
         class Author
         {
             /**
-             * @assert:Choice(choices = {"male", "female"}, message = "Choose a valid gender.")
+             * @Assert\Choice(choices = {"male", "female"}, message = "Choose a valid gender.")
              */
             protected $gender;
         }
@@ -179,10 +181,12 @@ constraint.
     .. code-block:: php-annotations
 
         // src/Acme/HelloBundle/Author.php
+        use Symfony\Component\Validator\Constraints as Assert;
+
         class Author
         {
             /**
-             * @assert:Choice(callback = "getGenders")
+             * @Assert\Choice(callback = "getGenders")
              */
             protected $gender;
         }
@@ -217,10 +221,12 @@ you can pass the class name and the method as an array.
     .. code-block:: php-annotations
 
         // src/Acme/HelloBundle/Author.php
+        use Symfony\Component\Validator\Constraints as Assert;
+
         class Author
         {
             /**
-             * @assert:Choice(callback = {"Util", "getGenders"})
+             * @Assert\Choice(callback = {"Util", "getGenders"})
              */
             protected $gender;
         }

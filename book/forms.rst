@@ -306,16 +306,18 @@ number:
     .. code-block:: php-annotations
 
         // Acme/StoreBundle/Entity/Product.php
+        use Symfony\Component\Validator\Constraints as Assert;
+
         class Product
         {
             /**
-             * @assert:NotBlank()
+             * @Assert\NotBlank()
              */
             public $name;
 
             /**
-             * @assert:NotBlank()
-             * @assert:Min(0)
+             * @Assert\NotBlank()
+             * @Assert\Min(0)
              */
             protected $price;
         }
@@ -728,10 +730,12 @@ Suppose that each ``Product`` belongs to a simple ``Category`` object:
     // src/Acme/StoreBundle/Entity/Category.php
     namespace Acme\StoreBundle\Entity;
 
+    use Symfony\Component\Validator\Constraints as Assert;
+
     class Category
     {
         /**
-         * @assert:NotBlank()
+         * @Assert\NotBlank()
          */
         public $name;
     }
@@ -740,13 +744,15 @@ The ``Product`` class has a new ``$category`` property, indicating to which
 ``Category`` it belongs:
 
 .. code-block:: php
-    
+
+    use Symfony\Component\Validator\Constraints as Assert;
+
     class Product
     {
         // ...
 
         /**
-         * @assert:Type(type="Acme\StoreBundle\Entity\Category")
+         * @Assert\Type(type="Acme\StoreBundle\Entity\Category")
          */
         protected $category;
 

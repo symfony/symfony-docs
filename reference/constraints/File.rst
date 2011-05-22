@@ -52,10 +52,12 @@ not exceed a maximum size of 128 kilobytes and is a PDF document.
     .. code-block:: php-annotations
 
         // src/Acme/HelloBundle/Author.php
+        use Symfony\Component\Validator\Constraints as Assert;
+
         class Author
         {
             /**
-             * @assert:File(maxSize = "128k", mimeTypes = {
+             * @Assert\File(maxSize = "128k", mimeTypes = {
              *   "application/pdf",
              *   "application/x-pdf"
              * })

@@ -14,9 +14,12 @@ in Symfony2 is straightforward. Tweak the route by adding a default value of
 ``xml`` for the ``_format`` variable::
 
     // src/Acme/DemoBundle/Controller/DemoController.php
+    use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+    use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+
     /**
-     * @extra:Route("/hello/{name}", defaults={"_format"="xml"}, name="_demo_hello")
-     * @extra:Template()
+     * @Route("/hello/{name}", defaults={"_format"="xml"}, name="_demo_hello")
+     * @Template()
      */
     public function helloAction($name)
     {
@@ -39,9 +42,12 @@ you want to support different formats for a single action, use the ``{_format}``
 placeholder in the route pattern instead::
 
     // src/Acme/DemoBundle/Controller/DemoController.php
+    use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+    use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+
     /**
-     * @extra:Route("/hello/{name}.{_format}", defaults={"_format"="html"}, requirements={"_format"="html|xml|json"}, name="_demo_hello")
-     * @extra:Template()
+     * @Route("/hello/{name}.{_format}", defaults={"_format"="html"}, requirements={"_format"="html|xml|json"}, name="_demo_hello")
+     * @Template()
      */
     public function helloAction($name)
     {
@@ -187,13 +193,17 @@ Going to the ``http://localhost/Symfony/web/app_dev.php/demo/secured/hello``
 URL will automatically redirect you to the login form because this resource is
 protected by a ``firewall``.
 
-You can also force the action to require a given role by using the ``@extra:Secure``
+You can also force the action to require a given role by using the ``@Secure``
 annotation on the controller::
 
+    use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+    use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+    use JMS\SecurityExtraBundle\Annotation\Secure;
+
     /**
-     * @extra:Route("/hello/admin/{name}", name="_demo_secured_hello_admin")
-     * @extra:Secure(roles="ROLE_ADMIN")
-     * @extra:Template()
+     * @Route("/hello/admin/{name}", name="_demo_secured_hello_admin")
+     * @Secure(roles="ROLE_ADMIN")
+     * @Template()
      */
     public function helloAdminAction($name)
     {
@@ -219,12 +229,16 @@ Caching Resources
 As soon as your website starts to generate more traffic, you will want to
 avoid generating the same resource again and again. Symfony2 uses HTTP cache
 headers to manage resources cache. For simple caching strategies, use the
-convenient ``@extra:Cache()`` annotation::
+convenient ``@Cache()`` annotation::
+
+    use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+    use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+    use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
 
     /**
-     * @extra:Route("/hello/{name}", name="_demo_hello")
-     * @extra:Template()
-     * @extra:Cache(maxage="86400")
+     * @Route("/hello/{name}", name="_demo_hello")
+     * @Template()
+     * @Cache(maxage="86400")
      */
     public function helloAction($name)
     {

@@ -52,10 +52,12 @@ Basic Usage
     .. code-block:: php-annotations
 
         // src/Acme/HelloBundle/Author.php
+        use Symfony\Component\Validator\Constraints as Assert;
+
         class Author
         {
             /**
-             * @assert:MinLength(3)
+             * @Assert\MinLength(3)
              */
             protected $firstName;
         }

@@ -222,9 +222,12 @@ and the parameters are the values of the placeholders defined in the route
 pattern::
 
     // src/Acme/DemoBundle/Controller/DemoController.php
+    use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+    use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+
     /**
-     * @extra:Route("/hello/{name}", name="_demo_hello")
-     * @extra:Template()
+     * @Route("/hello/{name}", name="_demo_hello")
+     * @Template()
      */
     public function helloAction($name)
     {

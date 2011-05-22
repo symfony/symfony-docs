@@ -52,10 +52,12 @@ Basic Usage
     .. code-block:: php-annotations
 
         // src/Acme/HelloBundle/Blog.php
+        use Symfony\Component\Validator\Constraints as Assert;
+
         class Blog
         {
             /**
-             * @assert:MaxLength(100)
+             * @Assert\MaxLength(100)
              */
             protected $summary;
         }

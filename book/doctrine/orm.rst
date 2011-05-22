@@ -88,20 +88,22 @@ write mapping information with annotations, XML, or YAML:
         // src/Acme/HelloBundle/Entity/User.php
         namespace Acme\HelloBundle\Entity;
 
+        use Doctrine\ORM\Mapping as ORM;
+
         /**
-         * @orm:Entity
+         * @ORM\Entity
          */
         class User
         {
             /**
-             * @orm:Id
-             * @orm:Column(type="integer")
-             * @orm:GeneratedValue(strategy="AUTO")
+             * @ORM\Id
+             * @ORM\Column(type="integer")
+             * @ORM\GeneratedValue(strategy="AUTO")
              */
             protected $id;
 
             /**
-             * @orm:Column(type="string", length="255")
+             * @ORM\Column(type="string", length="255")
              */
             protected $name;
         }
@@ -218,10 +220,12 @@ losing your existing data. So first let's just add a new property to our
     // src/Acme/HelloBundle/Entity/User.php
     namespace Acme\HelloBundle\Entity;
 
-    /** @orm:Entity */
+    use Doctrine\ORM\Mapping as ORM;
+
+    /** @ORM\Entity */
     class User
     {
-        /** @orm:Column(type="string") */
+        /** @ORM\Column(type="string") */
         protected $new;
 
         // ...
@@ -315,8 +319,10 @@ add the name of the repository class to your mapping definition.
         // src/Acme/HelloBundle/Entity/User.php
         namespace Acme\HelloBundle\Entity;
 
+        use Doctrine\ORM\Mapping as ORM;
+
         /**
-         * @orm:Entity(repositoryClass="Acme\HelloBundle\Repository\UserRepository")
+         * @ORM\Entity(repositoryClass="Acme\HelloBundle\Repository\UserRepository")
          */
         class User
         {
