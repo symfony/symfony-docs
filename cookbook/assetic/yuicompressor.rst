@@ -99,7 +99,7 @@ can be repeated to minify your stylesheets.
 
         {% stylesheets 'css/src/*' filter='yui_css' %}
         <link rel="stylesheet" type="text/css" media="screen" href="{{ asset_url }}" />
-        {% endjavascripts %}
+        {% endstylesheets %}
 
     .. code-block:: html+php
 
