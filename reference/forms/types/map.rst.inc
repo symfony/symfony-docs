@@ -3,6 +3,7 @@ Text Fields
 
 * :doc:`text</reference/forms/types/text>`
 * :doc:`textarea</reference/forms/types/textarea>`
+* :doc:`email</reference/forms/types/email>`
 * :doc:`integer</reference/forms/types/integer>`
 * :doc:`money</reference/forms/types/money>`
 * :doc:`number</reference/forms/types/number>`

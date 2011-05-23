@@ -16,6 +16,7 @@ Form Types Reference
    types/csrf
    types/date
    types/datetime
+   types/email
    types/entity
    types/file
    types/field
