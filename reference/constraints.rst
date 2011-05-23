@@ -8,6 +8,7 @@ Validation Constraints Reference
    constraints/False
    constraints/True
    constraints/Type
+   constraints/Callback
    constraints/Choice
    constraints/Collection
    constraints/Date
@@ -38,6 +39,7 @@ The following constraints are natively available in Symfony2:
 * :doc:`False <constraints/False>`
 * :doc:`True <constraints/True>`
 * :doc:`Type <constraints/Type>`
+* :doc:`Callback <constraints/Callback>`
 * :doc:`Choice <constraints/Choice>`
 * :doc:`Collection <constraints/Collection>`
 * :doc:`Date <constraints/Date>`
