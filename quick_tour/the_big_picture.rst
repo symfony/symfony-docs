@@ -232,11 +232,14 @@ to the ``src/Acme/DemoBundle/Controller/DemoController.php`` file. In this
 file, routes are defined as annotations on action methods::
 
     // src/Acme/DemoBundle/Controller/DemoController.php
+    use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+    use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+
     class DemoController extends Controller
     {
         /**
-         * @extra:Route("/hello/{name}", name="_demo_hello")
-         * @extra:Template()
+         * @Route("/hello/{name}", name="_demo_hello")
+         * @Template()
          */
         public function helloAction($name)
         {
@@ -246,11 +249,10 @@ file, routes are defined as annotations on action methods::
         // ...
     }
 
-The ``@extra:Route()`` annotation defines a new route with a pattern of
-``/hello/{name}`` that executes the ``helloAction`` method when matched.
-A string enclosed in curly brackets like ``{name}`` is called a placeholder.
-As you can see, its value can be retrieved through the ``$name`` method
-argument.
+The ``@Route()`` annotation defines a new route with a pattern of
+``/hello/{name}`` that executes the ``helloAction`` method when matched. A
+string enclosed in curly brackets like ``{name}`` is called a placeholder. As
+you can see, its value can be retrieved through the ``$name`` method argument.
 
 .. note::
 
@@ -260,17 +262,17 @@ argument.
 
 If you take a closer look at the action code, you can see that instead of
 rendering a template like before, it just returns an array of parameters. The
-``@extra:Template()`` annotation tells Symfony to render the template for
-you, passing in each variable of the array to the template. The name of the
+``@Template()`` annotation tells Symfony to render the template for you,
+passing in each variable of the array to the template. The name of the
 template that's rendered follows the name of the controller. So, in this
 example, the ``AcmeDemoBundle:Demo:hello.html.twig`` template is rendered
 (located at ``src/Acme/DemoBundle/Resources/views/Demo/hello.html.twig``).
 
 .. tip::
 
-    The ``@extra:Route()`` and ``@extra:Template()`` annotations are more
-    powerful than the simple examples shown in this tutorial. Learn more about
-    "`annotations in controllers`_" in the official documentation.
+    The ``@Route()`` and ``@Template()`` annotations are more powerful than
+    the simple examples shown in this tutorial. Learn more about "`annotations
+    in controllers`_" in the official documentation.
 
 Templates
 ~~~~~~~~~

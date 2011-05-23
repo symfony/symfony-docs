@@ -74,13 +74,15 @@ may not exist in the array.
     .. code-block:: php-annotations
 
         // src/Acme/HelloBundle/Author.php
+        use Symfony\Component\Validator\Constraints as Assert;
+
         class Author
         {
             /**
-             * @assert:Collection(
+             * @Assert\Collection(
              *   fields = {
-             *     "firstName" = @assert:NotNull(),
-             *     "lastName" = { @assert:NotBlank(), @assert:MinLength(4) }
+             *     "firstName" = @Assert\NotNull(),
+             *     "lastName" = { @Assert\NotBlank(), @Assert\MinLength(4) }
              *   },
              *   allowMissingFields = true
              * )

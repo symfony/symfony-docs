@@ -61,10 +61,12 @@ the ``$name`` property is not empty, add the following:
     .. code-block:: php-annotations
 
         // Acme/BlogBundle/Author.php
+        use Symfony\Component\Validator\Constraints as Assert;
+
         class Author
         {
             /**
-             * @assert:NotBlank()
+             * @Assert\NotBlank()
              */
             public $name;
         }
@@ -309,10 +311,12 @@ another property, ``gender`` that can be set to either "male" or "female":
     .. code-block:: php-annotations
 
         // Acme/BlogBundle/Author.php
+        use Symfony\Component\Validator\Constraints as Assert;
+
         class Author
         {
             /**
-             * @assert:Choice(
+             * @Assert\Choice(
              *     choices = { "male", "female" },
              *     message = "Choose a valid gender."
              * )
@@ -369,10 +373,12 @@ options can be specified in this way.
     .. code-block:: php-annotations
 
         // Acme/BlogBundle/Author.php
+        use Symfony\Component\Validator\Constraints as Assert;
+
         class Author
         {
             /**
-             * @assert:Choice({"male", "female"})
+             * @Assert\Choice({"male", "female"})
              */
             protected $gender;
         }
@@ -451,17 +457,19 @@ of a class ``Author`` to have at least 3 characters.
     .. code-block:: php-annotations
 
         // Acme/BlogBundle/Author.php
+        use Symfony\Component\Validator\Constraints as Assert;
+
         class Author
         {
             /**
-             * @assert:NotBlank()
-             * @assert:MinLength(3)
+             * @Assert\NotBlank()
+             * @Assert\MinLength(3)
              */
             private $firstName;
 
             /**
-             * @assert:NotBlank()
-             * @assert:MinLength(3)
+             * @Assert\NotBlank()
+             * @Assert\MinLength(3)
              */
             private $lastName;
         }
@@ -530,10 +538,12 @@ constraint to validate whether a dynamically generated token is correct:
     .. code-block:: php-annotations
 
         // Acme/BlogBundle/Author.php
+        use Symfony\Component\Validator\Constraints as Assert;
+
         class Author
         {
             /**
-             * @assert:True(message = "The token is invalid")
+             * @Assert\True(message = "The token is invalid")
              */
             public function isTokenValid()
             {

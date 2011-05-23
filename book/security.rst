@@ -740,8 +740,10 @@ which can secure your controller using annotations:
 
 .. code-block:: php
 
+    use JMS\SecurityExtraBundle\Annotation\Secure;
+
     /**
-     * @extra:Secure(roles="ROLE_ADMIN")
+     * @Secure(roles="ROLE_ADMIN")
      */
     public function helloAction($name)
     {
@@ -875,17 +877,18 @@ be stored in the database.
 .. code-block:: php
 
     // src/Acme/UserBundle/Entity/User.php
-    
     namespace Acme\UserBundle\Entity;
+
     use Symfony\Component\Security\Core\User\UserInterface;
+    use Doctrine\ORM\Mapping as ORM;
 
     /**
-     * @orm:Entity
+     * @ORM\Entity
      */
     class User implements UserInterface
     {
         /**
-         * @orm:Column(type="string", length="255")
+         * @ORM\Column(type="string", length="255")
          */
         protected $username;
         

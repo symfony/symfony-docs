@@ -83,16 +83,18 @@ their properties. Furthermore, ``Author`` stores an ``Address`` instance in the
     .. code-block:: php-annotations
 
         // src/Acme/HelloBundle/Address.php
+        use Symfony\Component\Validator\Constraints as Assert;
+
         class Address
         {
             /**
-             * @assert:NotBlank()
+             * @Assert\NotBlank()
              */
             protected $street;
 
             /**
-             * @assert:NotBlank
-             * @assert:MaxLength(5)
+             * @Assert\NotBlank
+             * @Assert\MaxLength(5)
              */
             protected $zipCode;
         }
@@ -101,13 +103,13 @@ their properties. Furthermore, ``Author`` stores an ``Address`` instance in the
         class Author
         {
             /**
-             * @assert:NotBlank
-             * @assert:MinLength(4)
+             * @Assert\NotBlank
+             * @Assert\MinLength(4)
              */
             protected $firstName;
 
             /**
-             * @assert:NotBlank
+             * @Assert\NotBlank
              */
             protected $lastName;
             
@@ -182,12 +184,14 @@ invalid address. To prevent that, we add the ``Valid`` constraint to the
     .. code-block:: php-annotations
 
         // src/Acme/HelloBundle/Author.php
+        use Symfony\Component\Validator\Constraints as Assert;
+
         class Author
         {
             /* ... */
             
             /**
-             * @assert:Valid
+             * @Assert\Valid
              */
             protected $address;
         }

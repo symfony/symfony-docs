@@ -59,12 +59,14 @@ Then you can constrain this method with ``True``.
     .. code-block:: php-annotations
 
         // src/Acme/HelloBundle/Author.php
+        use Symfony\Component\Validator\Constraints as Assert;
+
         class Author
         {
             protected $token;
 
             /**
-             * @assert:True(message = "The token is invalid")
+             * @Assert\True(message = "The token is invalid")
              */
             public function isTokenValid()
             {
