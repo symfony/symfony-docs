@@ -44,6 +44,8 @@ Cookbook
     debugging
     assetic/yuicompressor
     console
+    service_container/factories
+    service_container/parentservices
     symfony1
 
 .. include:: map.rst.inc

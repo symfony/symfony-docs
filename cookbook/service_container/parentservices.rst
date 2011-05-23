@@ -1,9 +1,9 @@
 How to Manage Common Dependencies with Parent Services
 ======================================================
 
-As you add more functionality to your application you may well start to have
-related classes that share some of the same dependencies. For example you may have a 
-Newsletter Manager which uses setter injection to set its dependencies::
+As you add more functionality to your application, you may well start to have
+related classes that share some of the same dependencies. For example you
+may have a Newsletter Manager which uses setter injection to set its dependencies::
 
     namespace Acme\HelloBundle\Mail;
 
@@ -27,7 +27,7 @@ Newsletter Manager which uses setter injection to set its dependencies::
         // ...
     }
 
-and also have Greeting Card class which shares the same dependencies::
+and also a Greeting Card class which shares the same dependencies::
 
     namespace Acme\HelloBundle\Mail;
 
@@ -51,7 +51,7 @@ and also have Greeting Card class which shares the same dependencies::
         // ...
     }
 
-The config for these classes would look something like this:
+The service config for these classes would look something like this:
 
 .. configuration-block::
 
@@ -140,11 +140,12 @@ The config for these classes would look something like this:
             new Reference('my_email_formatter')
         ));
 
-There is a lot of repetition in both the classes and the configuration. This means that if you
-change the Mailer of EmailFormatter classes to be injected then you need to update the config
-in two places now. Likewise if you needed to make changes to the setter methods you would need to 
-do this for both classes. The typical way to deal with the common methods of these related classes would
-be to extract them to a super class::
+There is a lot of repetition in both the classes and the configuration. This
+means that if you changed, for example, the ``Mailer`` of ``EmailFormatter``
+classes to be injected via the constructor, you would need to update the config
+in two places. Likewise if you needed to make changes to the setter methods
+you would need to do this in both classes. The typical way to deal with the
+common methods of these related classes would be to extract them to a super class::
 
     namespace Acme\HelloBundle\Mail;
 
@@ -168,7 +169,8 @@ be to extract them to a super class::
         // ...
     }
 
-The NewsletterManager and GreetingCardManager can then extend this super class::
+The ``NewsletterManager`` and ``GreetingCardManager`` can then extend this
+super class::
 
     namespace Acme\HelloBundle\Mail;
 
@@ -186,8 +188,9 @@ and::
         // ...
     }
 
-The Symfony2 service container also supports extending services in the configuration
-so you can also reduce the repetition by specifying a parent for a service.
+In a similar fashion, the Symfony2 service container also supports extending
+services in the configuration so you can also reduce the repetition by specifying
+a parent for a service.
 
 .. configuration-block::
 
@@ -281,25 +284,33 @@ so you can also reduce the repetition by specifying a parent for a service.
             '%greeting_card_manager.class%'
         );
 
-The setter methods defined for the parent service will be called so they only need to be configured
-in one place.
+In this context, having a ``parent`` service implies that the arguments and
+method calls of the parent service should be used for the child services.
+Specifically, the setter methods defined for the parent service will be called
+when the child services are instantiated.
 
 .. note::
 
-   The parent service must be specified in the config for its method calls to be made.
-   It will not be called even though the service class extends the parent class.
+   If you remove the ``parent`` config key, the services will still be instantiated
+   and they will still of course extend the ``MailManager`` class. The difference
+   is that omitting the ``parent`` config key will mean that the ``calls``
+   defined on the ``mail_manager`` service will not be executed when the
+   child services are instantiated.
 
-The parent class is abstract as it should not be directly instantiated. Setting it to abstract 
-in the config file as has been done above will mean that it can only be used as a parent service
-and cannot be used directly as a service to inject and will be removed at compile time.
+The parent class is abstract as it should not be directly instantiated. Setting
+it to abstract in the config file as has been done above will mean that it
+can only be used as a parent service and cannot be used directly as a service
+to inject and will be removed at compile time. In other words, it exists merely
+as a "template" that other services can use.
 
 Overriding Parent Dependencies
 ------------------------------
 
-There may be times where you want to override what class is passed in for a dependencies
-for one of the child services only. Fortunately this is easily done, just adding the method 
-call config for that service will override the dependency set by the parent class. So if you needed to
-pass a different dependency just to the NewsletterManager the config would look like this:
+There may be times where you want to override what class is passed in for
+a dependency of one child service only. Fortunately, by adding the method
+call config for the child service, the dependencies set by the parent class
+will be overridden. So if you needed to pass a different dependency just
+to the ``NewsletterManager`` class, the config would look like this:
 
 .. configuration-block::
 
@@ -407,17 +418,22 @@ pass a different dependency just to the NewsletterManager the config would look 
             '%greeting_card_manager.class%'
         );
 
-The GreetingCardManager will receive the same dependencies as before, the NewsletterManager will
-receive the usual EmailFormatter but the alternative Mailer.
+The ``GreetingCardManager`` will receive the same dependencies as before,
+but the ``NewsletterManager`` will be passed the ``my_alternative_mailer``
+instead of the ``my_mailer`` service.
 
 Collections of Dependencies
 ---------------------------
 
-Worth knowing is that the setter method will be called for the parent service and again 
-replacing the dependency for the child rather than the Service Container deciding not to call it for the 
-base class. Whilst this does not matter in the above example due to the simplistic nature of 
-the setter it would in some cases, for example, if the setter added the passed dependencies 
-to a collection. The following shows such a case, if the the parent class looks like this::
+It should be noted that the overridden setter method in the previous example
+is actually called twice - once per the parent definition and once per the
+child definition. In the previous example, that was fine, since the second
+``setMailer`` call replaces mailer object set by the first call.
+
+In some cases, however, this can be a problem. For example, if the overridden
+method call involves adding something to a collection, then two objects will
+be added to that collection. The following shows such a case, if the parent
+class looks like this::
 
     namespace Acme\HelloBundle\Mail;
 
@@ -518,7 +534,9 @@ If you had the following config:
             new Reference('another_filter')
         ));
 
-This would lead to the $filters array containing both a my_filter and a another_filter object. This is 
-great if you just want to add additional filters to the subclasses. If you want to replace the 
-filters passed to the subclass then removing the parent setting from the config will 
-prevent the base class call to setFilter.
+In this example, the ``setFilter`` of the ``newsletter_manager`` service
+will be called twice, resulting in the ``$filters`` array containing both
+``my_filter`` and ``another_filter`` objects. This is great if you just want
+to add additional filters to the subclasses. If you want to replace the filters
+passed to the subclass, removing the parent setting from the config will 
+prevent the base class from calling to ``setFilter``.

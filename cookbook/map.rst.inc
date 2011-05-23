@@ -37,4 +37,6 @@
 * :doc:`/cookbook/security/entity_provider`
 * :doc:`/cookbook/security/custom_provider`
 * :doc:`/cookbook/configuration/pdo_session_storage`
+* :doc:`/cookbook/service_container/factories`
+* :doc:`/cookbook/service_container/parentservices`
 * :doc:`/cookbook/symfony1`
