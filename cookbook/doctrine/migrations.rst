@@ -35,18 +35,22 @@ Update the vendor libraries:
 
     $ php bin/vendors.php
 
-Now ensure your libraries will be autoloaded in ``autoload.php`` and
-your bundle enabled in ``AppKernel.php`` by including the following:
+Next, ensure the new ``Doctrine\DBAL\Migrations`` namespace will be autoloaded
+via ``autoload.php``. The new ``Migrations`` namespace *must* be placed above
+the ``Doctrine\\DBAL`` entry so that the autoloader looks inside the migrations
+directory for those classes:
 
 .. code-block:: php
 
     // app/autoload.php
     $loader->registerNamespaces(array(
         //...
-        'Symfony'                    => array(__DIR__.'/../vendor/symfony/src', __DIR__.'/../vendor/bundles'),
         'Doctrine\\DBAL\\Migrations' => __DIR__.'/../vendor/doctrine-migrations/lib',
         'Doctrine\\DBAL'             => __DIR__.'/../vendor/doctrine-dbal/lib',
     ));
+
+Finally, be sure to enable the bundle in ``AppKernel.php`` by including the
+following:
 
 .. code-block:: php
 
