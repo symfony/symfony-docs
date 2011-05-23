@@ -31,6 +31,7 @@ Form Types Reference
    types/percent
    types/radio
    types/repeated
+   types/search
    types/text
    types/textarea
    types/time

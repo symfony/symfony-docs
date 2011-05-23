@@ -9,6 +9,7 @@ Text Fields
 * :doc:`number</reference/forms/types/number>`
 * :doc:`password</reference/forms/types/password>`
 * :doc:`percent</reference/forms/types/percent>`
+* :doc:`search</reference/forms/types/search>`
 * :doc:`url</reference/forms/types/url>`
 
 Choice Fields
