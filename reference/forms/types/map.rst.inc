@@ -51,5 +51,5 @@ Hidden Fields
 Base Fields
 ~~~~~~~~~~~
 
-* :doc:`hidden</reference/forms/types/hidden>`
+* :doc:`field</reference/forms/types/field>`
 * :doc:`form</reference/forms/types/form>`
