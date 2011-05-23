@@ -24,6 +24,7 @@
 * :doc:`/cookbook/doctrine/reverse_engineering`
 * :doc:`/cookbook/doctrine/doctrine_fixtures`
 * :doc:`/cookbook/doctrine/mongodb`
+* :doc:`/cookbook/doctrine/migrations`
 * :doc:`/cookbook/routing/scheme`
 * :doc:`/cookbook/debugging`
 * :doc:`/cookbook/assetic/yuicompressor`
