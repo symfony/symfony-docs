@@ -9,7 +9,7 @@ a given protocol (e.g. ``http://``) if the submitted value doesn't already
 have a protocol.
 
 +-------------+-------------------------------------------------------------------+
-| Rendered as | ``text`` field                                                    |
+| Rendered as | ``input url`` field                                               |
 +-------------+-------------------------------------------------------------------+
 | Options     | - ``default_protocol``                                            |
 |             | - ``max_length``                                                  |
