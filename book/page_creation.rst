@@ -492,7 +492,7 @@ The Source (``src``) Directory
 Put simply, the ``src/`` directory contains all of the actual PHP code that
 runs the application. In fact, when developing, the vast majority of work
 will likely be done inside this directory. By default, the ``src/`` directory
-is empty. When you begin development, you'll being to populate the directory
+is empty. When you begin development, you'll begin to populate the directory
 with *bundles* that contain your application code.
 
 But what exactly is a :term:`bundle`?
