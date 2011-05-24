@@ -4,20 +4,22 @@
 search Field Type
 =================
 
-The ``search`` field is a text field that is used for the entry of searches, and is rendered by default using a ``search`` input type which can be used by user agents to present a specialised rendering for search boxes (such as the `one used in WebKit-based browsers`_).
+The ``search`` field is a text field that is used for the entry of searches,
+and is rendered by default using a ``search`` input type which can be used
+by user agents to present a specialized rendering for search boxes (such
+as the `one used in WebKit-based browsers`_).
 
 +-------------+----------------------------------------------------------------------+
 | Rendered as | ``input search`` field                                               |
 +-------------+----------------------------------------------------------------------+
-| Inherited   | - ``default_protocol``                                               |
-| options     | - ``max_length``                                                     |
-|             | - ``required``                                                       |
+| Inherited   | - ``max_length``                                                     |
+| options     | - ``required``                                                       |
 |             | - ``label``                                                          |
 |             | - ``read_only``                                                      |
 |             | - ``trim``                                                           |
 |             | - ``error_bubbling``                                                 |
 +-------------+----------------------------------------------------------------------+
-| Parent type | ``text``                                                             |
+| Parent type | :doc:`text</reference/forms/types/text>`                             |
 +-------------+----------------------------------------------------------------------+
 | Class       | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\SearchType` |
 +-------------+----------------------------------------------------------------------+
