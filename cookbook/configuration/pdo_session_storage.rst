@@ -6,13 +6,13 @@ How to use PdoSessionStorage to store Sessions in the Database
 
 The default session storage of Symfony2 writes the session information to
 file(s). Most medium to large websites use a database to store the session
-values instead of files, because databases are easier to use and scale in
-a multi-webserver environment.
+values instead of files, because databases are easier to use and scale in a
+multi-webserver environment.
 
 Symfony2 has a built-in solution for database session storage called
-:class:`Symfony\\\Component\\HttpFoundation\\SessionStorage\\PdoSessionStorage`.
+:class:`Symfony\\Component\\HttpFoundation\\SessionStorage\\PdoSessionStorage`.
 To use it, you just need to change some parameters in ``config.yml`` (or the
-configuration format of your choice).
+configuration format of your choice):
 
 .. configuration-block::
 
@@ -23,25 +23,25 @@ configuration format of your choice).
             session:
                 # ...
                 storage_id:     session.storage.pdo
-            
+
         parameters:
             pdo.db_options:
                 db_table:    session
                 db_id_col:   session_id
                 db_data_col: session_value
                 db_time_col: session_time
-		
+
         services:
             session.storage.pdo:
                 class:     Symfony\Component\HttpFoundation\SessionStorage\PdoSessionStorage
                 arguments: [@pdo, %session.storage.options%, %pdo.db_options%]
-					
+
             pdo:
                 class: PDO
                 arguments:
                     dsn:      "mysql:dbname=mydatabase"
                     user:     myuser
-                    password: mypassword				
+                    password: mypassword
 
 
 * ``db_table``: The name of the session table in your database
@@ -52,13 +52,13 @@ configuration format of your choice).
 Sharing your Database Connection Information
 --------------------------------------------
 
-With the given configuration, the database connection settings are defined
-for the session storage connection only. This is OK when you use a separate
+With the given configuration, the database connection settings are defined for
+the session storage connection only. This is OK when you use a separate
 database for the session data.
 
 But if you'd like to store the session data in the same database as the rest
-of your project's data, you can use the connection settings from the parameter.ini
-by referencing the database-related parameters defined there:
+of your project's data, you can use the connection settings from the
+parameter.ini by referencing the database-related parameters defined there:
 
 .. configuration-block::
 
@@ -74,8 +74,8 @@ by referencing the database-related parameters defined there:
 Example MySQL Statement
 -----------------------
 
-The SQL-Statement for creating the needed Database-Table could look like
-the following (MySQL):
+The SQL-Statement for creating the needed Database-Table could look like the
+following (MySQL):
 
 .. code-block:: sql
 
