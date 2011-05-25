@@ -5,16 +5,21 @@ Requirements for running Symfony2
 =================================
 
 To run Symfony2, your system needs to adhere to a list of requirements. You can
-easily see if your system passes all requirements by running the web/check.php
-in your symfony distribution. Below is the list of required and optional
-requirements.
+easily see if your system passes all requirements by running the ``web/config.php``
+in your symfony distribution. To check your requirements from the command
+line, run:
+
+.. code-block:: bash
+
+    php app/check.php
+
+Below is the list of required and optional requirements.
 
 Required
 --------
 
 * PHP needs to be a minimum version of PHP 5.3.2
 * Your PHP.ini needs to have the date.timezone setting
-* The app/cache and app/logs directories need to be writable
 
 Optional
 --------
