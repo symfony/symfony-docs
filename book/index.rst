@@ -6,6 +6,7 @@ Book
 
     http_fundamentals
     from_flat_php_to_symfony2
+    installation
     page_creation
     doctrine/index
     controller
