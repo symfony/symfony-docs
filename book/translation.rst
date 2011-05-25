@@ -708,6 +708,11 @@ The ``transchoice`` tag automatically gets the ``%count%`` variable from
 the current context and passes it to the translator. This mechanism only
 works when you use a placeholder following the ``%var%`` pattern.
 
+.. tip::
+
+    If you need to use the percent character (``%``) in a string, escape it by
+    doubling it: ``{% trans %}Percent: %percent%%%{% endtrans %}``
+
 You can also specify the message domain and pass some additional variables:
 
 .. code-block:: jinja
