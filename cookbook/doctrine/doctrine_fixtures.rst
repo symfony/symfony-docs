@@ -16,25 +16,19 @@ Setup and Configuration
 If you don't have the `Doctrine Data Fixtures`_ library configured with Symfony2
 yet, follow these steps to do so.
 
-Add the following to ``bin/vendors.sh``, right after the "Monolog" entry:
+If you're using the Standard Distribution, add the following to your ``bin/deps``
+file:
 
 .. code-block:: text
 
-    # Doctrine Fixtures
-    install_git doctrine-fixtures https://github.com/doctrine/data-fixtures.git
-
-And also, the following after the "WebConfiguratorBundle" entry:
-
-.. code-block:: text
-
-    # DoctrineFixturesBundle
-    install_git DoctrineFixturesBundle https://github.com/symfony/DoctrineFixturesBundle.git
+    /                       doctrine-fixtures     http://github.com/doctrine/data-fixtures.git
+    /bundles/Symfony/Bundle DoctrineFixturesBundle http://github.com/symfony/DoctrineFixturesBundle.git
 
 Update the vendor libraries:
 
 .. code-block:: bash
 
-    $ bin/vendors.sh
+    $ php bin/vendors.php
 
 If everything worked, the ``doctrine-fixtures`` library can now be found
 at ``vendor/doctrine-fixtures``.
