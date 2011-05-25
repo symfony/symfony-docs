@@ -4,7 +4,7 @@
 Installing and Configuring Symfony
 ==================================
 
-The goal of this chapter is to get you up-and-running with a working application
+The goal of this chapter is to get you up and running with a working application
 built on top of Symfony. Fortunately, Symfony offers "distributions", which
 are functional Symfony "starter" projects that you can download and begin
 developing in immediately.
@@ -35,7 +35,7 @@ Symfony2 distribution. Here, you'll need to make two choices:
   on your computer, you should download Symfony2 "without vendors", as it
   adds a bit more flexibility when including third-party/vendor libraries.
 
-Download one of the archives somewhere under your local web server/s root
+Download one of the archives somewhere under your local web server's root
 directory and unpack it. From a UNIX command line, this can be done with
 one of the following commands (replacing ``###`` with your actual filename):
 
@@ -94,7 +94,7 @@ sample code inside the ``src/`` directory.
 
 Symfony2 comes with a visual server configuration tester to help make sure
 your Web server and PHP are configured to use Symfony. Use the following URL
-URL to check your configuration:
+to check your configuration:
 
 .. code-block:: text
 
@@ -142,23 +142,41 @@ development! Your distribution may contain some sample code - check the
 to learn about what sample code was included with your distribution and how
 you can remove it later.
 
+If you're new to Symfony, join us in the ":doc:`page_creation`", where you'll
+learn how to create pages, change configuration, and do everything else you'll
+need in your new application.
+
 Using Source Control
-~~~~~~~~~~~~~~~~~~~~
+--------------------
 
 If you're using a version control system like ``Git`` or ``Subversion``, you
-can begin committing your project as normal. If you've downloaded the archive
-*without vendors*, you can safely ignore the entire ``vendors/`` directory
-and not commit it to source control. With ``Git``, this is done by creating
-and adding the following to a ``.gitignore`` file:
+can setup your version control system and begin committing your project to
+it as normal. For ``Git``, this can be done easily with the following command:
+
+.. code-block:: bash
+
+    git init
+
+For more information on setting up and using Git, check out the `GitHub Bootcamp`_
+tutorials.
+
+Ignoring the ``vendor/`` Directory
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+If you've downloaded the archive *without vendors*, you can safely ignore
+the entire ``vendors/`` directory and not commit it to source control. With
+``Git``, this is done by creating and adding the following to a ``.gitignore``
+file:
 
 .. code-block:: text
 
     vendor/
 
 Now, the vendor directory won't be committed to source control. This is fine
-(actually, it's great!) because when someone else clones our checks out the
+(actually, it's great!) because when someone else clones or checks out the
 project, he/she can simply run the ``php bin/vendors.php`` script to download
 all the necessary vendor libraries.
 
 .. _`http://symfony.com/download`: http://symfony.com/download
 .. _`Git`: http://git-scm.com/
+.. _`GitHub Bootcamp`: http://help.github.com/set-up-git-redirect
