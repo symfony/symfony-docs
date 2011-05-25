@@ -11,7 +11,7 @@
 
   * :doc:`Introduction to the Model </book/doctrine/model>` |
   * :doc:`DBAL </book/doctrine/dbal>` |
-  * :doc:`ORM </book/doctrine/orm>` |
+  * :doc:`ORM </book/doctrine/orm>`
 
 * :doc:`Validation </book/validation>`
 * :doc:`Forms </book/forms>`

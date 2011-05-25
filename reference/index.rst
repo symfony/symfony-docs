@@ -6,6 +6,7 @@ Reference Documents
 
     dic_tags
     YAML
+    configuration/framework
     configuration/doctrine
     configuration/twig
     configuration/monolog
