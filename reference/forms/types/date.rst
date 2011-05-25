@@ -58,7 +58,7 @@ you'd need to set ``input`` to ``timestamp``:
 .. code-block:: php
 
     $builder->add('publishedAt', 'date', array(
-        'input'  => 'datetime',
+        'input'  => 'timestamp',
         'widget' => 'choice',
     ));
 
