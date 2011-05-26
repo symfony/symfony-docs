@@ -306,16 +306,18 @@ number:
     .. code-block:: php-annotations
 
         // Acme/StoreBundle/Entity/Product.php
+        use Symfony\Component\Validator\Constraints as Assert;
+
         class Product
         {
             /**
-             * @assert:NotBlank()
+             * @Assert\NotBlank()
              */
             public $name;
 
             /**
-             * @assert:NotBlank()
-             * @assert:Min(0)
+             * @Assert\NotBlank()
+             * @Assert\Min(0)
              */
             protected $price;
         }
@@ -368,8 +370,8 @@ the common form fields and data types you'll encounter:
 .. include:: /reference/forms/types/map.rst.inc
 
 Of course, you can also create your own custom field types. This topic is
-covered in the ":doc:`/cookbook/forms/create_custom_fields`" article of the
-cookbook.
+covered in the ":doc:`/cookbook/forms/create_custom_field_type`" article
+of the cookbook.
 
 .. index::
    single: Forms; Field type options
@@ -728,10 +730,12 @@ Suppose that each ``Product`` belongs to a simple ``Category`` object:
     // src/Acme/StoreBundle/Entity/Category.php
     namespace Acme\StoreBundle\Entity;
 
+    use Symfony\Component\Validator\Constraints as Assert;
+
     class Category
     {
         /**
-         * @assert:NotBlank()
+         * @Assert\NotBlank()
          */
         public $name;
     }
@@ -740,13 +744,15 @@ The ``Product`` class has a new ``$category`` property, indicating to which
 ``Category`` it belongs:
 
 .. code-block:: php
-    
+
+    use Symfony\Component\Validator\Constraints as Assert;
+
     class Product
     {
         // ...
 
         /**
-         * @assert:Type(type="Acme\StoreBundle\Entity\Category")
+         * @Assert\Type(type="Acme\StoreBundle\Entity\Category")
          */
         protected $category;
 
@@ -1118,9 +1124,10 @@ The CSRF token can be customized on a form-by-form basis. For example:
         public function getDefaultOptions(array $options)
         {
             return array(
-                'data_class'        => 'Acme\StoreBundle\Entity\Product',
-                'csrf_protection'   => true,
-                'csrf_field_name'   => '_token',
+                'data_class'      => 'Acme\StoreBundle\Entity\Product',
+                'csrf_protection' => true,
+                'csrf_field_name' => '_token',
+                'intention'  => 'product_creation',
             );
         }
     }
@@ -1129,6 +1136,11 @@ To disable CSRF protection, set the ``csrf_protection`` option to false.
 Customizations can also be made globally in your project. For more information,
 see the :ref:`form configuration reference </reference-frameworkbundle-forms>`
 section.
+
+.. note::
+
+    The ``intention`` option is optional but greatly enhances the security of
+    the generated token by making it different for each form.
 
 Final Thoughts
 --------------
@@ -1147,9 +1159,8 @@ fields via Javascript before submitting). See the cookbook for these topics.
 Learn more from the Cookbook
 ----------------------------
 
-* :doc:`Handling File Uploads </cookbook/forms/file_uploads>`
-* :doc:`Creating Custom Field Types </cookbook/forms/custom_field_types>`
-* :doc:`Dynamically adding Fields to a Form </cookbook/forms/dynamically_adding_fields>`
+* :doc:`Handling File Uploads </cookbook/form/file_uploads>`
+* :doc:`Creating Custom Field Types </cookbook/form/custom_field_types>`
 * :doc:`/cookbook/form/twig_form_customization`
 
 .. _`Symfony2 Form Component`: https://github.com/symfony/Form

@@ -18,15 +18,49 @@ option.
 |             | - ``multiple``                                                              |
 |             | - ``expanded``                                                              |
 |             | - ``preferred_choices``                                                     |
-|             | - ``required``                                                              |
-|             | - ``label``                                                                 |
-|             | - ``read_only``                                                             |
 |             | - ``error_bubbling``                                                        |
++-------------+-----------------------------------------------------------------------------+
+| Inherited   | - ``required``                                                              |
+| options     | - ``label``                                                                 |
+|             | - ``read_only``                                                             |
 +-------------+-----------------------------------------------------------------------------+
 | Parent type | :doc:`form</reference/forms/types/form>` (if expanded), ``field`` otherwise |
 +-------------+-----------------------------------------------------------------------------+
 | Class       | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\ChoiceType`        |
 +-------------+-----------------------------------------------------------------------------+
+
+Example Usage
+-------------
+
+The easiest way to use this field is to specify the choices directly via the
+``choices`` option. The key of the array becomes the value that's actually
+set on your underlying object (e.g. ``m``), while the value is what the
+user sees on the form (e.g. ``Male``).
+
+.. code-block:: php
+
+    $builder->add('gender', 'choice', array(
+        'choices'   => array('m' => 'Male', 'f' => 'Female'),
+        'required'  => false,
+    ));
+
+By setting ``multiple`` to true, you can allow the user to choose multiple
+values. The widget will be rendered as a multiple ``select`` tag or a series
+of checkboxes depending on the ``expanded`` option:
+
+.. code-block:: php
+
+    $builder->add('availability', 'choice', array(
+        'choices'   => array(
+            'morning'   => 'Morning',
+            'afternoon' => 'Afternoon',
+            'evening'   => 'Evening',
+        ),
+        'multiple'  => true,
+    ));
+
+You can also use the ``choice_list`` option, which takes an object that can
+specify the choices for your widget.
 
 .. _forms-reference-choice-tags:
 
@@ -98,10 +132,15 @@ Options
 
 .. include:: /reference/forms/types/options/preferred_choices.rst.inc
 
+.. include:: /reference/forms/types/options/error_bubbling.rst.inc
+
+Inherited options
+-----------------
+
+These options inherit from the :doc:`field</reference/forms/types/field>` type:
+
 .. include:: /reference/forms/types/options/required.rst.inc
 
 .. include:: /reference/forms/types/options/label.rst.inc
 
 .. include:: /reference/forms/types/options/read_only.rst.inc
-
-.. include:: /reference/forms/types/options/error_bubbling.rst.inc

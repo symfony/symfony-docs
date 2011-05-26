@@ -11,20 +11,11 @@
 
   * :doc:`Introduction to the Model </book/doctrine/model>` |
   * :doc:`DBAL </book/doctrine/dbal>` |
-  * :doc:`ORM </book/doctrine/orm>` |
+  * :doc:`ORM </book/doctrine/orm>`
 
 * :doc:`Validation </book/validation>`
 * :doc:`Forms </book/forms>`
-
-* **Security**:
-
-  * :doc:`Overview </book/security/overview>` |
-  * :doc:`/book/security/users` |
-  * :doc:`/book/security/authentication` |
-  * :doc:`/book/security/authorization` |
-  * :doc:`ACLs </book/security/acl>` |
-  * :doc:`Advanced ACLs </book/security/acl_advanced>` |
-  * :doc:`Configuration Reference </book/security/config_reference>`
+* :doc:`Security </book/security>`
 
 * :doc:`/book/http_cache`
 * :doc:`/book/translation`

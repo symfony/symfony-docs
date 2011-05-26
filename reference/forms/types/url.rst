@@ -9,7 +9,7 @@ a given protocol (e.g. ``http://``) if the submitted value doesn't already
 have a protocol.
 
 +-------------+-------------------------------------------------------------------+
-| Rendered as | ``text`` field                                                    |
+| Rendered as | ``input url`` field                                               |
 +-------------+-------------------------------------------------------------------+
 | Options     | - ``default_protocol``                                            |
 |             | - ``max_length``                                                  |
@@ -19,7 +19,7 @@ have a protocol.
 |             | - ``trim``                                                        |
 |             | - ``error_bubbling``                                              |
 +-------------+-------------------------------------------------------------------+
-| Parent type | ``text``                                                          |
+| Parent type | :doc:`text</reference/forms/types/text>`                          |
 +-------------+-------------------------------------------------------------------+
 | Class       | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\UrlType` |
 +-------------+-------------------------------------------------------------------+

@@ -43,10 +43,6 @@ variables:
   :class:`Symfony\\Component\\HttpFoundation\\SessionStorage\\SessionStorageInterface`
   interface abstract session management ``session_*()`` functions.
 
-.. seealso::
-
-    Read more about the :doc:`HttpFoundation <http_foundation>` component.
-
 ``HttpKernel`` Component
 ------------------------
 

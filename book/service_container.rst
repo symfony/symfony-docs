@@ -404,11 +404,11 @@ invokes the service container extension inside the ``FrameworkBundle``:
 
         # app/config/config.yml
         framework:
-            secret:        xxxxxxxxxx
-            charset:       UTF-8
-            error_handler: null
-            csrf_protection:
-                enabled: true
+            secret:          xxxxxxxxxx
+            charset:         UTF-8
+            error_handler:   null
+            form:            true
+            csrf_protection: true
             router:        { resource: "%kernel.root_dir%/config/routing.yml" }
             # ...
 
@@ -416,7 +416,8 @@ invokes the service container extension inside the ``FrameworkBundle``:
 
         <!-- app/config/config.xml -->
         <framework:config charset="UTF-8" error-handler="null" secret="xxxxxxxxxx">
-            <framework:csrf-protection enabled="true" />
+            <framework:form />
+            <framework:csrf-protection />
             <framework:router resource="%kernel.root_dir%/config/routing.xml" cache-warmer="true" />
             <!-- ... -->
         </framework>
@@ -428,7 +429,8 @@ invokes the service container extension inside the ``FrameworkBundle``:
             'secret'          => 'xxxxxxxxxx',
             'charset'         => 'UTF-8',
             'error_handler'   => null,
-            'csrf-protection' => array('enabled' => true),
+            'form'            => array(),
+            'csrf-protection' => array(),
             'router'          => array('resource' => '%kernel.root_dir%/config/routing.php'),
             // ...
         ));
@@ -485,6 +487,7 @@ to handle the actual delivery of the messages. This pretend class might look
 something like this::
 
     namespace Acme\HelloBundle\Newsletter;
+
     use Acme\HelloBundle\Mailer;
 
     class NewsletterManager
@@ -575,11 +578,90 @@ service needs the ``my_mailer`` service in order to function. When you define
 this dependency in the service container, the container takes care of all
 the work of instantiating the objects.
 
-.. note::
+Optional Dependencies: Setter Injection
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-   The approach presented in this section is called "constructor injection".
-   The Symfony2 service container also supports "setter injection" as well
-   as "property injection".
+Injecting dependencies into the constructor in this manner is an excellent
+way of ensuring that the dependency is available to use. If you have optional
+dependencies for a class, then "setter injection" may be a better option. This
+means injecting the dependency using a method call rather than through the
+constructor. The class would look like this::
+
+    namespace Acme\HelloBundle\Newsletter;
+
+    use Acme\HelloBundle\Mailer;
+
+    class NewsletterManager
+    {
+        protected $mailer;
+
+        public function setMailer(Mailer $mailer)
+        {
+            $this->mailer = $mailer;
+        }
+
+        // ...
+    }
+
+Injecting the dependency by the setter method just needs a change of syntax:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # src/Acme/HelloBundle/Resources/config/services.yml
+        parameters:
+            # ...
+            newsletter_manager.class: Acme\HelloBundle\Newsletter\NewsletterManager
+
+        services:
+            my_mailer:
+                # ...
+            newsletter_manager:
+                class:     %newsletter_manager.class%
+                calls:
+                    - [ setMailer, [ @my_mailer ] ]
+
+    .. code-block:: xml
+
+        <!-- src/Acme/HelloBundle/Resources/config/services.xml -->
+        <parameters>
+            <!-- ... -->
+            <parameter key="newsletter_manager.class">Acme\HelloBundle\Newsletter\NewsletterManager</parameter>
+        </parameters>
+
+        <services>
+            <service id="my_mailer" ... >
+              <!-- ... -->
+            </service>
+            <service id="newsletter_manager" class="%newsletter_manager.class%">
+                <call method="setMailer">
+                     <argument type="service" id="my_mailer" />
+                </call>
+            </service>
+        </services>
+
+    .. code-block:: php
+
+        // src/Acme/HelloBundle/Resources/config/services.php
+        use Symfony\Component\DependencyInjection\Definition;
+        use Symfony\Component\DependencyInjection\Reference;
+
+        // ...
+        $container->setParameter('newsletter_manager.class', 'Acme\HelloBundle\Newsletter\NewsletterManager');
+
+        $container->setDefinition('my_mailer', ... );
+        $container->setDefinition('newsletter_manager', new Definition(
+            '%newsletter_manager.class%'
+        ))->addMethodCall('setMailer', array(
+            new Reference('my_mailer')
+        ));
+
+.. note::
+  
+    The approaches presented in this section are called "constructor injection"
+    and "setter injection". The Symfony2 service container also supports
+    "property injection".
 
 Making References Optional
 --------------------------
@@ -674,6 +756,7 @@ Let's also pass the templating engine service to the ``NewsletterManager``
 so that it can generate the email content via a template::
 
     namespace Acme\HelloBundle\Newsletter;
+
     use Symfony\Component\Templating\EngineInterface;
 
     class NewsletterManager
@@ -742,6 +825,126 @@ involving a ``service`` configuration key and a few parameters. However,
 the container has several other tools available that help to *tag* services
 for special functionality, create more complex services, and perform operations
 after the container is built.
+
+Marking Services as public / private
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+When defining services, you'll usually want to be able to access these definitions
+within your application code. These services are called ``public``. For example,
+the ``doctrine`` service registered with the container when using the DoctrineBundle
+is a public service as you can access it via::
+
+   $doctrine = $container->get('doctrine');
+
+However, there are use-cases when you don't want a service to be public. This
+is common when a service is only defined because it could be used as an
+argument for another service.
+
+.. note::
+
+    If you use a private service as an argument to more than one other service,
+    this will result in two different instances being used as the instantiation
+    of the private service is done inline (e.g. ``new PrivateFooBar()``).
+
+Simply said: A service will be private when you do not want to access it
+directly from your code.
+
+Here is an example:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        services:
+           foo:
+             class: Acme\HelloBundle\Foo
+             public: false
+
+    .. code-block:: xml
+
+        <service id="foo" class="Acme\HelloBundle\Foo" public="false" />
+
+    .. code-block:: php
+
+        $definition = new Definition('Acme\HelloBundle\Foo');
+        $definition->setPublic(false);
+        $container->setDefinition('foo', $definition);
+
+Now that the service is private, you *cannot* call::
+
+    $container->get('foo');
+
+However, if a service has been marked as private, you can still alias it (see
+below) to access this service (via the alias).
+
+.. note::
+
+   Services are by default public.
+
+Aliasing
+~~~~~~~~
+
+When using core or third party bundles within your application, you may want
+to use shortcuts to access some services. You can do so by aliasing them and,
+furthermore, you can even alias non-public services.
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        services:
+           foo:
+             class: Acme\HelloBundle\Foo
+           bar:
+             alias: foo
+
+    .. code-block:: xml
+
+        <service id="foo" class="Acme\HelloBundle\Foo"/>
+
+        <service id="bar" alias="foo" />
+
+    .. code-block:: php
+
+        $definition = new Definition('Acme\HelloBundle\Foo');
+        $container->setDefinition('foo', $definition);
+
+        $containerBuilder->setAlias('bar', 'foo');
+
+This means that when using the container directly, you can access the ``foo``
+service by asking for the ``bar`` service like this::
+
+    $container->get('bar'); // Would return the foo service
+
+Requiring files
+~~~~~~~~~~~~~~~
+
+There might be use cases when you need to include another file just before
+the service itself gets loaded. To do so, you can use the ``file`` directive.
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        services:
+           foo:
+             class: Acme\HelloBundle\Foo\Bar
+             file: %kernel.root_dir%/src/path/to/file/foo.php
+
+    .. code-block:: xml
+
+        <service id="foo" class="Acme\HelloBundle\Foo\Bar">
+            <file name="%kernel.root_dir%/src/path/to/file/foo.php" />
+        </service>
+
+    .. code-block:: php
+
+        $definition = new Definition('Acme\HelloBundle\Foo\Bar');
+        $definition->setFile('%kernel.root_dir%/src/path/to/file/foo.php');
+        $container->setDefinition('foo', $definition);
+
+Notice that symfony will internally call the PHP function require_once
+which means that your file will be included only once per request.
 
 Tags (``tags``)
 ~~~~~~~~~~~~~~~

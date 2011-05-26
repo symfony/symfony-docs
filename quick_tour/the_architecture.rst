@@ -157,14 +157,14 @@ PHP. Have a look at the default configuration:
         - { resource: security.yml }
 
     framework:
-        secret:        %csrf_secret%
-        charset:       UTF-8
-        error_handler: null
-        csrf_protection:
-            enabled: true
-        router:        { resource: "%kernel.root_dir%/config/routing.yml" }
-        validation:    { enabled: true, annotations: true }
-        templating:    { engines: ['twig'] } #assets_version: SomeVersionScheme
+        secret:          %csrf_secret%
+        charset:         UTF-8
+        error_handler:   null
+        form:            true
+        csrf_protection: true
+        router:          { resource: "%kernel.root_dir%/config/routing.yml" }
+        validation:      { annotations: true }
+        templating:      { engines: ['twig'] } #assets_version: SomeVersionScheme
         session:
             default_locale: %locale%
             lifetime:       3600

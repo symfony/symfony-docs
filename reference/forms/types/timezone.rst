@@ -20,8 +20,8 @@ you should just use the ``choice`` type directly.
 +-------------+------------------------------------------------------------------------+
 | Rendered as | can be various tags (see :ref:`forms-reference-choice-tags`)           |
 +-------------+------------------------------------------------------------------------+
-| Options     | - ``multiple``                                                         |
-|             | - ``expanded``                                                         |
+| Inherited   | - ``multiple``                                                         |
+| options     | - ``expanded``                                                         |
 |             | - ``preferred_choices``                                                |
 |             | - ``required``                                                         |
 |             | - ``label``                                                            |
@@ -33,14 +33,18 @@ you should just use the ``choice`` type directly.
 | Class       | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\TimezoneType` |
 +-------------+------------------------------------------------------------------------+
 
-Options
--------
+Inherited options
+-----------------
+
+These options inherit from the :doc:`choice</reference/forms/types/choice>` type:
 
 .. include:: /reference/forms/types/options/multiple.rst.inc
 
 .. include:: /reference/forms/types/options/expanded.rst.inc
 
 .. include:: /reference/forms/types/options/preferred_choices.rst.inc
+
+These options inherit from the :doc:`field</reference/forms/types/field>` type:
 
 .. include:: /reference/forms/types/options/required.rst.inc
 

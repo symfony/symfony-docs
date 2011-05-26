@@ -14,12 +14,13 @@ you want to use for your number.
 | Options     | - ``rounding_mode``                                                  |
 |             | - ``precision``                                                      |
 |             | - ``grouping``                                                       |
-|             | - ``required``                                                       |
-|             | - ``label``                                                          |
++-------------+----------------------------------------------------------------------+
+| Inherited   | - ``required``                                                       |
+| options     | - ``label``                                                          |
 |             | - ``read_only``                                                      |
 |             | - ``error_bubbling``                                                 |
 +-------------+----------------------------------------------------------------------+
-| Parent type | ``field``                                                            |
+| Parent type | :doc:`field</reference/forms/types/field>`                           |
 +-------------+----------------------------------------------------------------------+
 | Class       | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\NumberType` |
 +-------------+----------------------------------------------------------------------+
@@ -56,6 +57,11 @@ Options
     * ``IntegerToLocalizedStringTransformer::ROUND_HALFUP``
         Rounding mode to round towards "nearest neighbor" unless both neighbors
         are equidistant, in which case round up.
+
+Inherited Options
+-----------------
+
+These options inherit from the :doc:`field</reference/forms/types/field>` type:
 
 .. include:: /reference/forms/types/options/required.rst.inc
 

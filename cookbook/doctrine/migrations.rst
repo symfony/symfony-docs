@@ -13,6 +13,59 @@ your database schema in a safe and standardized way.
     You can read more about the Doctrine Database Migrations on the projects
     `documentation`_.
 
+Installation
+------------
+
+Doctrine migrations are maintained in the `DoctrineMigrationsBundle`_.
+Make sure you have the ``doctrine-migrations`` and ``DoctrineMigrationsBundle``
+libraries configured in your project.  Follow these steps to install the
+libraries in the Symfony Standard distribution.
+
+Add the following to ``bin/deps``.  This will register the Migrations Bundle
+and the doctrine-migrations library as dependencies in your application:
+
+.. code-block:: text
+
+    /                       doctrine-migrations       https://github.com/doctrine/migrations.git
+    /bundles/Symfony/Bundle DoctrineMigrationsBundle  https://github.com/symfony/DoctrineMigrationsBundle.git
+
+Update the vendor libraries:
+
+.. code-block:: bash
+
+    $ php bin/vendors.php
+
+Next, ensure the new ``Doctrine\DBAL\Migrations`` namespace will be autoloaded
+via ``autoload.php``. The new ``Migrations`` namespace *must* be placed above
+the ``Doctrine\\DBAL`` entry so that the autoloader looks inside the migrations
+directory for those classes:
+
+.. code-block:: php
+
+    // app/autoload.php
+    $loader->registerNamespaces(array(
+        //...
+        'Doctrine\\DBAL\\Migrations' => __DIR__.'/../vendor/doctrine-migrations/lib',
+        'Doctrine\\DBAL'             => __DIR__.'/../vendor/doctrine-dbal/lib',
+    ));
+
+Finally, be sure to enable the bundle in ``AppKernel.php`` by including the
+following:
+
+.. code-block:: php
+
+    // app/AppKernel.php
+    public function registerBundles()
+    {
+        $bundles = array(
+            //...
+            new Symfony\Bundle\DoctrineMigrationsBundle\DoctrineMigrationsBundle(),
+        );
+    }
+
+Usage
+-----
+
 All of the migrations functionality is contained in a few console commands:
 
 .. code-block:: bash
@@ -112,3 +165,4 @@ migrate:
     $ php app/console doctrine:migrations:migrate
 
 .. _documentation: http://www.doctrine-project.org/docs/migrations/2.0/en
+.. _DoctrineMigrationsBundle: https://github.com/symfony/DoctrineMigrationsBundle

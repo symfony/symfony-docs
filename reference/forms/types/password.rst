@@ -11,10 +11,11 @@ The ``password`` field renders an input password text box.
 +-------------+------------------------------------------------------------------------+
 | Options     | - ``always_empty``                                                     |
 |             | - ``max_length``                                                       |
-|             | - ``required``                                                         |
-|             | - ``label``                                                            |
-|             | - ``read_only``                                                        |
 |             | - ``trim``                                                             |
++-------------+------------------------------------------------------------------------+
+| Inherited   | - ``required``                                                         |
+| options     | - ``label``                                                            |
+|             | - ``read_only``                                                        |
 |             | - ``error_bubbling``                                                   |
 +-------------+------------------------------------------------------------------------+
 | Parent type | :doc:`text</reference/forms/types/text>`                               |
@@ -35,12 +36,17 @@ Options
 
 .. include:: /reference/forms/types/options/max_length.rst.inc
 
+.. include:: /reference/forms/types/options/trim.rst.inc
+
+Inherited Options
+-----------------
+
+These options inherit from the :doc:`field</reference/forms/types/field>` type:
+
 .. include:: /reference/forms/types/options/required.rst.inc
 
 .. include:: /reference/forms/types/options/label.rst.inc
 
 .. include:: /reference/forms/types/options/read_only.rst.inc
-
-.. include:: /reference/forms/types/options/trim.rst.inc
 
 .. include:: /reference/forms/types/options/error_bubbling.rst.inc

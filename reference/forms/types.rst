@@ -16,8 +16,10 @@ Form Types Reference
    types/csrf
    types/date
    types/datetime
+   types/email
    types/entity
    types/file
+   types/field
    types/form
    types/hidden
    types/integer
@@ -29,6 +31,7 @@ Form Types Reference
    types/percent
    types/radio
    types/repeated
+   types/search
    types/text
    types/textarea
    types/time

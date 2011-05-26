@@ -16,12 +16,13 @@ If you want to have a Boolean field, use :doc:`checkbox</reference/forms/types/c
 | Rendered as | ``input`` ``text`` field                                            |
 +-------------+---------------------------------------------------------------------+
 | Options     | - ``value``                                                         |
-|             | - ``required``                                                      |
-|             | - ``label``                                                         |
++-------------+---------------------------------------------------------------------+
+| Inherited   | - ``required``                                                      |
+| options     | - ``label``                                                         |
 |             | - ``read_only``                                                     |
 |             | - ``error_bubbling``                                                |
 +-------------+---------------------------------------------------------------------+
-| Parent type | ``field``                                                           |
+| Parent type | :doc:`field</reference/forms/types/field>`                          |
 +-------------+---------------------------------------------------------------------+
 | Class       | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\RadioType` |
 +-------------+---------------------------------------------------------------------+
@@ -32,6 +33,11 @@ Options
 * ``value`` [type: mixed, default: 1]
     The value that's actually used as the value for the radio button. This does
     not affect the value that's set on your object.
+
+Inherited Options
+-----------------
+
+These options inherit from the :doc:`field</reference/forms/types/field>` type:
 
 .. include:: /reference/forms/types/options/required.rst.inc
 

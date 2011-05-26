@@ -1,8 +1,17 @@
 .. index::
    single: Security; Configuration Reference
 
-Configuration Reference
-=======================
+Security Configuration Reference
+================================
+
+The security system is one of the most powerful parts of Symfony2, and can
+largely be controlled via its configuration.
+
+Full Default Configuration
+--------------------------
+
+The following is the full default configuration for the security system.
+Each part will be explained in the next section.
 
 .. configuration-block::
 
@@ -11,6 +20,11 @@ Configuration Reference
         # app/config/security.yml
         security:
             access_denied_url: /foo/error403
+
+            always_authenticate_before_granting: false
+
+            # strategy can be: none, migrate, invalidate
+            session_fixation_strategy: migrate
             
             access_decision_manager:
                 strategy: affirmative
@@ -30,11 +44,6 @@ Configuration Reference
                     prefix: sf2_acl_
                 voter:
                     allow_if_object_identity_unavailable: true
-
-            always_authenticate_before_granting: false
-
-            # strategy can be: none, migrate, invalidate
-            session_fixation_strategy: migrate
 
             encoders:
                 somename:
@@ -130,4 +139,3 @@ Configuration Reference
                 ROLE_SUPERADMIN: [ROLE_ADMIN, ROLE_USER]
                 anything: { id: ROLE_SUPERADMIN, value: 'ROLE_USER, ROLE_ADMIN' }
                 anything: { id: ROLE_SUPERADMIN, value: [ROLE_USER, ROLE_ADMIN] }
-
