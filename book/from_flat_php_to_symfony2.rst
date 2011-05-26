@@ -565,7 +565,7 @@ them for you. Here's the same sample application, now built in Symfony2:
             $blog = $this->get('doctrine')
                 ->getEntityManager()
                 ->getRepository('AcmeBlogBundle:Blog')
-                ->findOneById($id);
+                ->find($id);
             
             if (!$blog) {
                 // cause the 404 page not found to be displayed
