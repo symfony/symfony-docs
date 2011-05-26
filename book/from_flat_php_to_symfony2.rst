@@ -566,6 +566,11 @@ them for you. Here's the same sample application, now built in Symfony2:
                 ->createQuery('SELECT b FROM AcmeBlog:Blog b WHERE id = :id')
                 ->setParameter('id', $id)
                 ->getSingleResult();
+            
+            if (!$blog) {
+                // cause the 404 page not found to be displayed
+                throw $this->createNotFoundException();
+            }
 
             return $this->render('AcmeBlogBundle:Blog:show.html.php', array('blog' => $blog));
         }
