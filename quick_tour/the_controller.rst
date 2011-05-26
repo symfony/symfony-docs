@@ -103,7 +103,7 @@ In a template, you can also access the ``Request`` object via the
 
 .. code-block:: html+jinja
 
-    {{ app.request.query.get('page') }}
+    {{ app.request.attributes.get('page') }}
 
     {{ app.request.parameter('page') }}
 
