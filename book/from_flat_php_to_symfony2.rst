@@ -554,7 +554,7 @@ them for you. Here's the same sample application, now built in Symfony2:
         public function listAction()
         {
             $blogs = $this->get('doctrine')->getEntityManager()
-                ->createQuery('SELECT b FROM AcmeBlog:Blog b')
+                ->createQuery('SELECT b FROM AcmeBlogBundle:Blog b')
                 ->execute();
 
             return $this->render('AcmeBlogBundle:Blog:list.html.php', array('blogs' => $blogs));
@@ -562,10 +562,10 @@ them for you. Here's the same sample application, now built in Symfony2:
 
         public function showAction($id)
         {
-            $blog = $this->get('doctrine')->getEntityManager()
-                ->createQuery('SELECT b FROM AcmeBlog:Blog b WHERE id = :id')
-                ->setParameter('id', $id)
-                ->getSingleResult();
+            $blog = $this->get('doctrine')
+                ->getEntityManager()
+                ->getRepository('AcmeBlogBundle:Blog')
+                ->findOneById($id);
             
             if (!$blog) {
                 // cause the 404 page not found to be displayed
