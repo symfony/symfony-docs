@@ -116,7 +116,7 @@ If there are any issues, correct them now before moving on.
     .. code-block:: bash
 
         rm -rf app/cache/*
-        rm -rf app/log/*
+        rm -rf app/logs/*
 
         sudo chmod +a "www-data allow delete,write,append,file_inherit,directory_inherit" app/cache app/logs
 
