@@ -94,17 +94,17 @@ Creating an ACL, and adding an ACE
         // ...
 
         if ($form->isValid()) {
-            $entityManager = $this->container->get('doctrine.orm.default_entity_manager');
+            $entityManager = $this->get('doctrine.orm.default_entity_manager');
             $entityManager->persist($comment);
             $entityManager->flush();
 
             // creating the ACL
-            $aclProvider = $this->container->get('security.acl.provider');
+            $aclProvider = $this->get('security.acl.provider');
             $objectIdentity = ObjectIdentity::fromDomainObject($comment);
             $acl = $aclProvider->createAcl($objectIdentity);
 
             // retrieving the security identity of the currently logged-in user
-            $securityContext = $this->container->get('security.context');
+            $securityContext = $this->get('security.context');
             $user = $securityContext->getToken()->getUser();
             $securityIdentity = UserSecurityIdentity::fromAccount($user);
 
@@ -144,7 +144,7 @@ Checking Access
     // BlogController.php
     public function editCommentAction(Comment $comment)
     {
-        $securityContext = $this->container->get('security.context');
+        $securityContext = $this->get('security.context');
 
         // check for edit access
         if (false === $securityContext->isGranted('EDIT', $comment))
