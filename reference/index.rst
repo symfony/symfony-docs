@@ -14,5 +14,6 @@ Reference Documents
     constraints
     forms/types
     forms/twig_reference
+    requirements
 
 .. include:: map.rst.inc
