@@ -20,7 +20,7 @@ Full Default Configuration
             # general configuration
             cache_warmer:   %kernel.debug%
             charset:        ~
-            secret:         ~
+            secret:         ~ # Required
             exception_controller: Symfony\\Bundle\\FrameworkBundle\\Controller\\ExceptionController::showAction
             ide:            ~
             test:           ~
@@ -52,7 +52,7 @@ Full Default Configuration
             # router configuration
             router:
                 cache_warmer:   false
-                resource:       ~
+                resource:       ~ # Required
                 type:           ~
                 http_port:      80
                 https_port:     443
@@ -75,7 +75,7 @@ Full Default Configuration
                 assets_base_urls: []
                 cache:          ~
                 cache_warmer:   false
-                engines:        []
+                engines:        [] # Required
                 loaders:        []
                 packages:       []
 
@@ -90,11 +90,10 @@ Full Default Configuration
                 enable_annotations: false
 
             # annotations configuration
-            annotations:
-                cache:          file
-                file_cache:
-                    dir:   %kernel.cache_dir%/annotations
-                    debug: %kernel.debug%
+             annotations:
+                 cache:             file
+                 file_cache_dir:    %kernel.cache_dir%/annotations
+                 debug:             true
 
 General Configuration
 ---------------------
