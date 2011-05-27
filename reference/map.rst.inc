@@ -3,7 +3,7 @@
   * :doc:`FrameworkBundle (framework) </reference/configuration/framework>`
   * :doc:`DoctrineBundle (doctrine) </reference/configuration/doctrine>`
   * :doc:`SecurityBundle (security) </reference/configuration/security>`
-  * :ref:`SwiftMailerBundle (swiftmailer) <swift-mailer-configuration>`
+  * :doc:`SwiftMailerBundle (swiftmailer) </reference/configuration/swiftmailer>`
   * :doc:`TwigBundle (twig) </reference/configuration/twig>`
   * :doc:`WebProfilerBundle (web_profiler) </reference/configuration/web_profiler>`
   * :doc:`MonologBundle (monolog) </reference/configuration/monolog>`
