@@ -4,12 +4,6 @@
 Forms
 =====
 
-.. caution::
-
-   This document covers the form framework for Symfony2 beta1 and later.
-   If you're using an earlier version (such as a PR release), you should
-   upgrade Symfony before reading this document.
-
 Dealing with HTML forms is one of the most common - and challenging - tasks for
 a web developer. Symfony2 integrates a Form component that makes dealing with
 forms easy. In this chapter, you'll build a complex form from the ground-up,
