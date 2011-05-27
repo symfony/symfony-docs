@@ -118,11 +118,9 @@ If there are any issues, correct them now before moving on.
         rm -rf app/cache/*
         rm -rf app/log/*
 
-        sudo chmod +a "www-data allow delete,write,append,file_inherit,directory_inherit" app/cache
-        sudo chmod +a "www-data allow delete,write,append,file_inherit,directory_inherit" app/logs
+        sudo chmod +a "www-data allow delete,write,append,file_inherit,directory_inherit" app/cache app/logs
 
-        sudo chmod +a "yourname allow delete,write,append,file_inherit,directory_inherit" app/cache
-        sudo chmod +a "yourname allow delete,write,append,file_inherit,directory_inherit" app/logs
+        sudo chmod +a "yourname allow delete,write,append,file_inherit,directory_inherit" app/cache app/logs
 
 When everything is fine, click on "Go to the Welcome page" to request your
 first "real" Symfony2 webpage:
