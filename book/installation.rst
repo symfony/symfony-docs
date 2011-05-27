@@ -81,7 +81,8 @@ by running the following command from the command line:
     You can call ``php bin/vendors.php --min`` if you don't want all of the
     Git history for your vendor libraries. This makes the installation much
     faster, but you can't "freeze" your vendor libraries later at an arbitrary
-    point.
+    point. Also, to update your vendors, you'll need to use ``php bin/vendors.php --reinstall``,
+    which deletes your vendors and reinstalls them.
 
 This command downloads all of the necessary vendor libraries - including Symfony
 itself - into the ``vendor/`` directory.
