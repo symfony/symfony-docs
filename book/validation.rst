@@ -115,7 +115,7 @@ simple example from inside a controller:
         $author = new Acme\BlogBundle\Author();
         // ... do something to the $author object
 
-        $validator = $container->get('validator');
+        $validator = $this->container->get('validator');
         $errorList = $validator->validate($author);
 
         if (count($errorList) > 0) {
