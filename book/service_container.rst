@@ -148,7 +148,7 @@ Symfony2 controller, we can easily access the new ``my_mailer`` service::
         public function sendEmailAction()
         {
             // ...
-            $mailer = $this->container->get('my_mailer');
+            $mailer = $this->get('my_mailer');
             $mailer->send('ryan@foobar.net', ... );
         }
     }
@@ -507,7 +507,7 @@ fairly easily from inside a controller::
 
     public function sendNewsletterAction()
     {
-        $mailer = $this->container->get('my_mailer');
+        $mailer = $this->get('my_mailer');
         $newsletter = new Acme\HelloBundle\Newsletter\NewsletterManager($mailer);
         // ...
     }
@@ -739,7 +739,7 @@ which you can access inside a standard controller as follows::
 
     public function indexAction($bar)
     {
-        $session = $this->container->get('session');
+        $session = $this->get('session');
         $session->set('foo', $bar);
 
         // ...
