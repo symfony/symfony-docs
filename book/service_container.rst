@@ -960,19 +960,19 @@ to be used for a specific purpose. Take the following example:
 
         services:
             foo.twig.extension:
-                class: Acme\HelloBundle\Extension\FooExtension
+                class: Acme\HelloBundle\Extension\AcmeFooExtension
                 tags:
                     -  { name: twig.extension }
 
     .. code-block:: xml
 
-        <service id="foo.twig.extension" class="Acme\HelloBundle\Extension\RadiusExtension">
+        <service id="foo.twig.extension" class="Acme\HelloBundle\Extension\AcmeRadiusExtension">
             <tag name="twig.extension" />
         </service>
 
     .. code-block:: php
 
-        $definition = new Definition('Acme\HelloBundle\Extension\RadiusExtension');
+        $definition = new Definition('Acme\HelloBundle\Extension\AcmeRadiusExtension');
         $definition->addTag('twig.extension');
         $container->setDefinition('foo.twig.extension', $definition);
 
