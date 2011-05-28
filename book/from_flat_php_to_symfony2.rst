@@ -490,7 +490,10 @@ incidentally, acts quite a bit like the Symfony2 templating engine:
     function list_action()
     {
         $posts = get_all_posts();
-        $html = render_template('templates/list.php');
+        $html = render_template('templates/list.php, array(
+	        'posts' => $posts,
+	
+	');
 
         return new Response($html);
     }
