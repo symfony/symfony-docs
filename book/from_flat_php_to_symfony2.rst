@@ -492,7 +492,6 @@ incidentally, acts quite a bit like the Symfony2 templating engine:
         $posts = get_all_posts();
         $html = render_template('templates/list.php, array(
 	        'posts' => $posts,
-	
 	');
 
         return new Response($html);
