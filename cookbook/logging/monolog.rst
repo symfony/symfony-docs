@@ -244,7 +244,7 @@ and/or request. The following example will add a unique token for each request.
                 }
                 $this->token .= '-' . substr(uniqid(), -8);
             }
-            $record['token'] = $this->token;
+            $record['extra']['token'] = $this->token;
 
             return $record;
         }
@@ -257,7 +257,7 @@ and/or request. The following example will add a unique token for each request.
         services:
             monolog.formatter.session_request:
                 class: Monolog\Formatter\LineFormatter
-                arguments: [ "[%%datetime%%] [%%token%%] %%channel%%.%%level_name%%: %%message%%\n" ]
+                arguments: [ "[%%datetime%%] [%%extra.token%%] %%channel%%.%%level_name%%: %%message%%\n" ]
 
             monolog.processor.session_request:
                 class: Acme\MyBundle\SessionRequestProcessor
