@@ -272,4 +272,8 @@ and/or request. The following example will add a unique token for each request.
                     formatter: monolog.formatter.session_request
             processors: [ @monolog.processor.session_request ]
 
+.. note::
+
+    If you use several handlers, you can also register the processor at the handler level instead of globally.
+
 .. _Monolog: https://github.com/Seldaek/monolog
