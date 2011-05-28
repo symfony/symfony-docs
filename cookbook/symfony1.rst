@@ -17,7 +17,7 @@ So, sit back and relax as we take you from "then" to "now".
 Directory Structure
 -------------------
 
-When looking at a Symfony2 project - for example, the `Symfony2 Sandbox`_ -
+When looking at a Symfony2 project - for example, the `Symfony2 Standard`_ -
 you'll notice a very different directory structure than in symfony1. The
 differences, however, are somewhat superficial.
 
@@ -251,4 +251,4 @@ include a routing resource from a bundle, you might do the following::
 To bring in configuration from the bundle, you'll need to import that configuration
 from your application configuration.
 
-.. _`Symfony2 Sandbox`: https://github.com/symfony/symfony-sandbox
+.. _`Symfony2 Standard`: https://github.com/symfony/symfony-standard
