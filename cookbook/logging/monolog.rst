@@ -212,4 +212,64 @@ depending of the level where the processor is called.
     service and implement the ``__invoke`` method on the class to make
     it callable. You can then add it in the processor stack.
 
+Adding a session/request token
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Sometimes it is hard to tell which entries in the log belong to which session
+and/or request. The following example will add a unique token for each request.
+
+.. code-block:: php
+
+    namespace Acme\MyBundle;
+
+    use Symfony\Component\HttpFoundation\Session;
+
+    class SessionRequestProcessor
+    {
+        private $session;
+        private $token;
+
+        public function __construct(Session $session)
+        {
+            $this->session = $session;
+        }
+
+        public function __invoke(array $record)
+        {
+            if (null === $this->token) {
+                try {
+                    $this->token = substr($this->session->getId(), 0, 8);
+                } catch (\RuntimeException $e) {
+                    $this->token = '????????';
+                }
+                $this->token .= '-' . substr(uniqid(), -8);
+            }
+            $record['token'] = $this->token;
+
+            return $record;
+        }
+    }
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        services:
+            monolog.formatter.session_request:
+                class: Monolog\Formatter\LineFormatter
+                arguments: [ "[%%datetime%%] [%%token%%] %%channel%%.%%level_name%%: %%message%%\n" ]
+
+            monolog.processor.session_request:
+                class: Acme\MyBundle\SessionRequestProcessor
+                arguments: [ @session ]
+
+        monolog:
+            handlers:
+                main:
+                    type: stream
+                    path: %kernel.logs_dir%/%kernel.environment%.log
+                    level: debug
+                    formatter: monolog.formatter.session_request
+            processors: [ @monolog.processor.session_request ]
+
 .. _Monolog: https://github.com/Seldaek/monolog
