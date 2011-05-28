@@ -671,7 +671,7 @@ format you prefer:
             form:            true
             csrf_protection: true
             router:          { resource: "%kernel.root_dir%/config/routing.yml" }
-            validation:      { annotations: true }
+            validation:      { enable_annotations: true }
             templating:      { engines: ['twig'] } #assets_version: SomeVersionScheme
             session:
                 default_locale: en
