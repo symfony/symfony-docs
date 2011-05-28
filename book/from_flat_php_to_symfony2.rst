@@ -551,26 +551,26 @@ them for you. Here's the same sample application, now built in Symfony2:
     {
         public function listAction()
         {
-            $blogs = $this->get('doctrine')->getEntityManager()
+            $posts = $this->get('doctrine')->getEntityManager()
                 ->createQuery('SELECT b FROM AcmeBlogBundle:Blog b')
                 ->execute();
 
-            return $this->render('AcmeBlogBundle:Blog:list.html.php', array('blogs' => $blogs));
+            return $this->render('AcmeBlogBundle:Blog:list.html.php', array('posts' => $posts));
         }
 
         public function showAction($id)
         {
-            $blog = $this->get('doctrine')
+            $post = $this->get('doctrine')
                 ->getEntityManager()
                 ->getRepository('AcmeBlogBundle:Blog')
                 ->find($id);
             
-            if (!$blog) {
+            if (!$post) {
                 // cause the 404 page not found to be displayed
                 throw $this->createNotFoundException();
             }
 
-            return $this->render('AcmeBlogBundle:Blog:show.html.php', array('blog' => $blog));
+            return $this->render('AcmeBlogBundle:Blog:show.html.php', array('post' => $post));
         }
     }
 
