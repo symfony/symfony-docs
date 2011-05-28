@@ -11,13 +11,14 @@ TwigBundle Configuration Reference
         twig:
             form:
                 resources:
-                    - MyBundle::form.html.twig
+                    - TwigBundle:Form:div_layout.html.twig  # Default
+                    - MyBundle::form.html.twig  # Example
             extensions:
-                - twig.extension.debug
-                - twig.extension.text
+                - twig.extension.debug  # Example
+                - twig.extension.text   # Example
             globals:
-                foo: "@bar"
-                pi:  3.14
+                foo: "@bar" # Example
+                pi:  3.14   # Example
             auto_reload:         %kernel.debug%
             autoescape:          true
             base_template_class: Twig_Template
