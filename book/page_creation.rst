@@ -627,7 +627,11 @@ Bundle Directory Structure
 
 The directory structure of a bundle is simple and flexible. By default, the
 bundle system follows a set of conventions that help to keep code consistent
+<<<<<<< HEAD
 between all Symfony2 bundles. Let's take a look at ``AcmeHelloBundle``, as it
+=======
+between all Symfony2 bundles. Let's take a look at ``AcmeStudyBundle``, as it
+>>>>>>> Fixing typo in page creation chapter
 contains some of the most common elements of a bundle:
 
 * *Controller/* contains the controllers of the bundle (e.g. ``HelloController.php``);
