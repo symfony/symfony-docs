@@ -106,7 +106,7 @@ If there are any issues, correct them now before moving on.
 
 .. sidebar:: Setting up Permissions
 
-    One common issue is that the ``app/cache`` and ``app/log`` directories
+    One common issue is that the ``app/cache`` and ``app/logs`` directories
     must be writable both by the web server and the command line user. On
     a UNIX system, if your web server user is different from your command
     line user, you can run the following commands just once in your project
