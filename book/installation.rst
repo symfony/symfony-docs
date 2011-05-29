@@ -126,7 +126,7 @@ If there are any issues, correct them now before moving on.
 
     **2. Without using ACL**
 
-    When you cannot use the acl to give the right permissions, you will
+    If you don't have access to changing the ACL of the directories, you will
     need to change the umask so that the cache and log directories will
     be group-writable or world-writable (depending if the web server user
     and the command line user are in the same group or not). To achieve
@@ -141,7 +141,7 @@ If there are any issues, correct them now before moving on.
 
         umask(0000); // This will let the permissions be 0777
 
-    Note that using the acl is recommended when you have access to them
+    Note that using the ACL is recommended when you have access to them
     on your server because changing the umask is not thread-safe.
 
 When everything is fine, click on "Go to the Welcome page" to request your
