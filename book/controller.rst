@@ -257,7 +257,7 @@ the following guidelines in mind while you develop.
 The order of the controller arguments does not matter.
 ......................................................
 
-Symfony2 is able to matches the parameter names from the route to the variable
+Symfony2 is able to match the parameter names from the route to the variable
 names in the controller method's signature. In other words, it realizes that
 the ``last_name`` parameter matches up with the ``$last_name`` argument.
 The arguments of the controller could be totally reordered and still work
