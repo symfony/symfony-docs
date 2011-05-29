@@ -43,7 +43,7 @@ one of the following commands (replacing ``###`` with your actual filename):
 
     # for .tgz file
     tar zxvf Symfony_Standard_Vendors_2.0.###.tgz
-    
+
     # for a .zip file
     unzip Symfony_Standard_Vendors_2.0.###.tgz
 
@@ -113,6 +113,8 @@ If there are any issues, correct them now before moving on.
     to ensure that permissions will be setup properly. Change ``www-data``
     to the web server user and ``yourname`` to your command line user:
 
+    **1. Using ACL**
+
     .. code-block:: bash
 
         rm -rf app/cache/*
@@ -121,6 +123,26 @@ If there are any issues, correct them now before moving on.
         sudo chmod +a "www-data allow delete,write,append,file_inherit,directory_inherit" app/cache app/logs
 
         sudo chmod +a "yourname allow delete,write,append,file_inherit,directory_inherit" app/cache app/logs
+
+    **2. Without using ACL**
+
+    When you cannot use the acl to give the right permissions, you will
+    need to change the umask so that the cache and log directories will
+    be group-writable or world-writable (depending if the web server user
+    and the command line user are in the same group or not). To achieve
+    this, put the following line at the beginning of the ``app/console``,
+    ``web/app.php`` and ``web/app_dev.php`` files:
+
+    .. code-block:: php
+
+        umask(0002); // This will let the permissions be 0775
+
+        // or
+
+        umask(0000); // This will let the permissions be 0777
+
+    Note that using the acl is recommended when you have access to them
+    on your server because changing the umask is not thread-safe.
 
 When everything is fine, click on "Go to the Welcome page" to request your
 first "real" Symfony2 webpage:
