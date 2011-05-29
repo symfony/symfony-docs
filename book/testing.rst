@@ -101,21 +101,21 @@ tests as far as PHPUnit is concerned, but they have a very specific workflow:
 
 Requests, clicks, and submissions are done by a client that knows how to talk
 to the application. To access such a client, your tests need to extend the
-Symfony2 ``WebTestCase`` class. The sandbox provides a simple functional test
-for ``HelloController`` that reads as follows::
+Symfony2 ``WebTestCase`` class. The Symfony2 Standard Edition provides a
+simple functional test for ``HDemoController`` that reads as follows::
 
-    // src/Acme/HelloBundle/Tests/Controller/HelloControllerTest.php
-    namespace Acme\HelloBundle\Tests\Controller;
+    // src/Acme/DemoBundle/Tests/Controller/DemoControllerTest.php
+    namespace Acme\DemoBundle\Tests\Controller;
 
     use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
-    class HelloControllerTest extends WebTestCase
+    class DemoControllerTest extends WebTestCase
     {
         public function testIndex()
         {
             $client = $this->createClient();
 
-            $crawler = $client->request('GET', '/hello/Fabien');
+            $crawler = $client->request('GET', '/demo/hello/Fabien');
 
             $this->assertTrue($crawler->filter('html:contains("Hello Fabien")')->count() > 0);
         }

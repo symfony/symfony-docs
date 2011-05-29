@@ -12,9 +12,8 @@ after the fact.
 
 You rarely have to deal with the profiler directly as Symfony2 provides
 visualizer tools like the Web Debug Toolbar and the Web Profiler. If you use
-the Symfony2 sandbox, or create an application with the Symfony2 console, the
-profiler, the web debug toolbar, and the web profiler are all already
-configured with sensible settings.
+the Symfony2 Standard Edition, the profiler, the web debug toolbar, and the
+web profiler are all already configured with sensible settings.
 
 .. note::
 

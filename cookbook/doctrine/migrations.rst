@@ -92,7 +92,7 @@ status of a bundle migrations you can run the ``status`` command:
         >> Configuration Source:                               manually configured
         >> Version Table Name:                                 hello_bundle_migration_versions
         >> Migrations Namespace:                               Application\Migrations
-        >> Migrations Directory:                               /path/to/symfony-sandbox/app/DoctrineMigrations
+        >> Migrations Directory:                               /path/to/project/app/DoctrineMigrations
         >> Current Version:                                    0
         >> Latest Version:                                     0
         >> Executed Migrations:                                0
@@ -146,7 +146,7 @@ migration to execute:
        >> Configuration Source:                               manually configured
        >> Version Table Name:                                 hello_bundle_migration_versions
        >> Migrations Namespace:                               Application\Migrations
-       >> Migrations Directory:                               /path/to/symfony-sandbox/app/DoctrineMigrations
+       >> Migrations Directory:                               /path/to/project/app/DoctrineMigrations
        >> Current Version:                                    0
        >> Latest Version:                                     2010-06-21 14:06:55 (20100621140655)
        >> Executed Migrations:                                0

@@ -113,7 +113,7 @@ were added or moved.
 In Symfony2, a new class - ``UniversalClassLoader`` - handles this process.
 The idea behind the autoloader is simple: the name of your class (including
 the namespace) must match up with the path to the file containing that class.
-Take the ``HelloController`` from the Symfony2 sandbox as an example::
+Take the ``HelloController`` from the Symfony2 Standard Edition as an example::
 
     namespace Acme\HelloBundle\Controller;
 
