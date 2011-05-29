@@ -286,7 +286,7 @@ page:
     require 'templates/show.php';
 
 Finally, create the new template file - ``templates/show.php`` - to render
-the individual blog:
+the individual blog post:
 
 .. code-block:: html+php
 
@@ -328,12 +328,12 @@ application change slightly, but start to become more flexible:
 .. code-block:: text
 
     Without a front controller
-    /index.php          => Blog list page (index.php executed)
-    /show.php           => Blog show page (show.php executed)
+    /index.php          => Blog post list page (index.php executed)
+    /show.php           => Blog post show page (show.php executed)
 
     With index.php as the front controller
-    /index.php          => Blog list page (index.php executed)
-    /index.php/show     => Blog show page (index.php executed)
+    /index.php          => Blog post list page (index.php executed)
+    /index.php/show     => Blog post show page (index.php executed)
 
 .. tip::
     The ``index.php`` portion of the URI can be removed if using Apache
@@ -341,7 +341,7 @@ application change slightly, but start to become more flexible:
     blog show page would be simply ``/show``.
 
 When using a front controller, a single PHP file (``index.php`` in this case)
-renders *every* request. For the blog show page, ``/index.php/show`` will
+renders *every* request. For the blog post show page, ``/index.php/show`` will
 actually execute the ``index.php`` file, which is now responsible for routing
 requests internally based on the full URI. As you'll see, a front controller
 is a very powerful tool.
@@ -352,8 +352,8 @@ Creating the Front Controller
 You're about to take a **big** step with the application. With one file handling
 all requests, you can centralize things such as security handling, configuration
 loading, and routing. In this application, ``index.php`` must now be smart
-enough to render the blog list page *or* the blog show page based on the
-requested URI:
+enough to render the blog post list page *or* the blog post show page based
+on the requested URI:
 
 .. code-block:: html+php
 
@@ -401,7 +401,7 @@ act a lot like Symfony2's mechanism for handling and routing requests.
 .. tip::
 
    Another advantage of a front controller is flexible URLs. Notice that
-   the URL to the blog show page could be changed from ``/show`` to ``/read``
+   the URL to the blog post show page could be changed from ``/show`` to ``/read``
    by changing code in only one location. Before, an entire file needed to
    be renamed. In Symfony2, URLs are even more flexible.
 
