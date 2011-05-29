@@ -212,7 +212,7 @@ depending of the level where the processor is called.
     service and implement the ``__invoke`` method on the class to make
     it callable. You can then add it in the processor stack.
 
-Adding a session/request token
+Adding a Session/Request Token
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Sometimes it is hard to tell which entries in the log belong to which session
@@ -257,11 +257,12 @@ and/or request. The following example will add a unique token for each request.
         services:
             monolog.formatter.session_request:
                 class: Monolog\Formatter\LineFormatter
-                arguments: [ "[%%datetime%%] [%%extra.token%%] %%channel%%.%%level_name%%: %%message%%\n" ]
+                arguments:
+                    - "[%%datetime%%] [%%extra.token%%] %%channel%%.%%level_name%%: %%message%%\n"
 
             monolog.processor.session_request:
                 class: Acme\MyBundle\SessionRequestProcessor
-                arguments: [ @session ]
+                arguments:  [ @session ]
 
         monolog:
             handlers:
@@ -274,6 +275,7 @@ and/or request. The following example will add a unique token for each request.
 
 .. note::
 
-    If you use several handlers, you can also register the processor at the handler level instead of globally.
+    If you use several handlers, you can also register the processor at the
+    handler level instead of globally.
 
 .. _Monolog: https://github.com/Seldaek/monolog
