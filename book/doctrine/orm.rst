@@ -155,7 +155,7 @@ write mapping information with annotations, XML, or YAML:
 .. tip::
 
     Instead of creating one file per entity, you can also define all your
-    mapping information into a single ``doctrine.orm.yml`` file.
+    mapping information into a single ``mapping.orm.yml`` file.
 
 Create the database and the schema related to your metadata information with
 the following commands:
