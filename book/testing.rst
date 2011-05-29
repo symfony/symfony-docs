@@ -102,7 +102,7 @@ tests as far as PHPUnit is concerned, but they have a very specific workflow:
 Requests, clicks, and submissions are done by a client that knows how to talk
 to the application. To access such a client, your tests need to extend the
 Symfony2 ``WebTestCase`` class. The Symfony2 Standard Edition provides a
-simple functional test for ``HDemoController`` that reads as follows::
+simple functional test for ``DemoController`` that reads as follows::
 
     // src/Acme/DemoBundle/Tests/Controller/DemoControllerTest.php
     namespace Acme\DemoBundle\Tests\Controller;
