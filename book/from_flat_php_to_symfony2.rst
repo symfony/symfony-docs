@@ -552,17 +552,17 @@ them for you. Here's the same sample application, now built in Symfony2:
         public function listAction()
         {
             $posts = $this->get('doctrine')->getEntityManager()
-                ->createQuery('SELECT b FROM AcmeBlogBundle:Blog b')
+                ->createQuery('SELECT p FROM AcmeBlogBundle:Post p')
                 ->execute();
 
-            return $this->render('AcmeBlogBundle:Blog:list.html.php', array('posts' => $posts));
+            return $this->render('AcmeBlogBundle:Post:list.html.php', array('posts' => $posts));
         }
 
         public function showAction($id)
         {
             $post = $this->get('doctrine')
                 ->getEntityManager()
-                ->getRepository('AcmeBlogBundle:Blog')
+                ->getRepository('AcmeBlogBundle:Post')
                 ->find($id);
             
             if (!$post) {
@@ -570,7 +570,11 @@ them for you. Here's the same sample application, now built in Symfony2:
                 throw $this->createNotFoundException();
             }
 
+<<<<<<< HEAD
             return $this->render('AcmeBlogBundle:Blog:show.html.php', array('post' => $post));
+=======
+            return $this->render('AcmeBlogBundle:Post:show.html.php', array('post' => $post));
+>>>>>>> Fixing typos
         }
     }
 
