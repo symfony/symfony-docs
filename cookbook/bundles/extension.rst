@@ -136,7 +136,7 @@ So, given the following configuration:
             xsi:schemaLocation="http://www.example.com/symfony/schema/ http://www.example.com/symfony/schema/hello-1.0.xsd">
 
             <hello:config foo="foo">
-                <hello:bar>foo</hello:bar>
+                <hello:bar>bar</hello:bar>
             </hello:config>
 
         </container>
