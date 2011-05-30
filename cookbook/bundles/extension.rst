@@ -122,8 +122,8 @@ So, given the following configuration:
 
         # app/config/config.yml
         hello:
-            foo: foo
-            bar: bar
+            foo: fooValue
+            bar: barValue
 
     .. code-block:: xml
 
@@ -135,8 +135,8 @@ So, given the following configuration:
             xmlns:hello="http://www.example.com/symfony/schema/"
             xsi:schemaLocation="http://www.example.com/symfony/schema/ http://www.example.com/symfony/schema/hello-1.0.xsd">
 
-            <hello:config foo="foo">
-                <hello:bar>foo</hello:bar>
+            <hello:config foo="fooValue">
+                <hello:bar>barValue</hello:bar>
             </hello:config>
 
         </container>
@@ -145,16 +145,16 @@ So, given the following configuration:
 
         // app/config/config.php
         $container->loadFromExtension('hello', array(
-            'foo' => 'foo',
-            'bar' => 'bar',
+            'foo' => 'fooValue',
+            'bar' => 'barValue',
         ));
 
 The array passed to your method looks like the following::
 
     array(
         array(
-            'foo' => 'foo',
-            'bar' => 'bar',
+            'foo' => 'fooValue',
+            'bar' => 'barValue',
         )
     )
 
