@@ -373,32 +373,33 @@ to manage in Symfony2.
 Redirecting
 ~~~~~~~~~~~
 
-If you want to redirect the user to another page, use a special ``RedirectResponse``
-class, which is designed specifically to redirect the user to another URL::
-
-    // ...
-    use Symfony\Component\HttpFoundation\RedirectResponse;
-
-    class HelloController extends Controller
-    {
-      public function indexAction()
-      {
-          return new RedirectResponse($this->generateUrl('hello', array('name' => 'Lucas')));
-      }
-    }
-
-The ``generateUrl()`` method is just a shortcut that calls ``generate()``
-on the ``router`` service. It takes the route name and an array of parameters
-as arguments and returns the associated friendly URL. See the :doc:`Routing </book/routing>`
-chapter for more information.
-
-By default, the ``redirect`` method does a 302 (temporary) redirect. To perform
-a 301 (permanent) redirect, modify the second argument::
+If you want to redirect the user to another page, use the ``redirect()`` method::
 
     public function indexAction()
     {
-        return new RedirectResponse($this->generateUrl('hello', array('name' => 'Lucas')), 301);
+        return $this->redirect($this->generateUrl('homepage'));
     }
+
+The ``generateUrl()`` method is just a help function that generates the URL
+for a given route. For more information, see the :doc:`Routing </book/routing>`
+chapter.
+
+By default, the ``redirect()`` method performs a 302 (temporary) redirect. To
+perform a 301 (permanent) redirect, modify the second argument::
+
+    public function indexAction()
+    {
+        return $this->redirect($this->generateUrl('homepage'), 301);
+    }
+
+.. tip::
+
+    The ``redirect()`` method is simply a shortcut that creates a ``Response``
+    object that specializes in redirecting the user. It's equivalent to:
+    
+        use Symfony\Component\HttpFoundation\RedirectResponse;
+        
+        return new RedirectResponse($this->generateUrl('homepage'));
 
 .. index::
    single: Controller; Forwarding
@@ -607,7 +608,7 @@ Let's show an example where we're processing a form submit::
             
             $this->get('session')->setFlash('notice', 'Your changes were saved!');
 
-            return new RedirectResponse($this->generateUrl(...));
+            return $this->redirect($this->generateUrl(...));
         }
         
         return $this->render(...);
