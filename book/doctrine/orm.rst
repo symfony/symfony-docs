@@ -459,7 +459,7 @@ Explicit definition of all the mapped entities is the only necessary
 configuration for the ORM and there are several configuration options that you
 can control. The following configuration options exist for a mapping:
 
-* ``type`` One of ``annotations``, ``xml``, ``yml``, ``php`` or ``staticphp``.
+* ``type`` One of ``annotation``, ``xml``, ``yml``, ``php`` or ``staticphp``.
   This specifies which type of metadata type your mapping uses.
 
 * ``dir`` Path to the mapping or entity files (depending on the driver). If
