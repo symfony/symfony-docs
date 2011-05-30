@@ -95,7 +95,7 @@ a controller:
             $product->name = 'Test product';
             $product->setPrice('50.00');
 
-            $form = $this->createFormBuilder($prduct)
+            $form = $this->createFormBuilder($product)
                 ->add('name', 'text')
                 ->add('price', 'money', array('currency' => 'USD'))
                 ->getForm();
