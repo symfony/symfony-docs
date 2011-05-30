@@ -95,8 +95,7 @@ a controller:
             $product->name = 'Test product';
             $product->setPrice('50.00');
 
-            $form = $this->get('form.factory')
-                ->createBuilder('form', $product)
+            $form = $this->createFormBuilder($prduct)
                 ->add('name', 'text')
                 ->add('price', 'money', array('currency' => 'USD'))
                 ->getForm();
@@ -189,8 +188,7 @@ controller:
         // just setup a fresh $product object (no dummy data)
         $product = new Product();
         
-        $form = $this->get('form.factory')
-            ->createBuilder('form', $product)
+        $form = $this->createFormBuilder($product)
             ->add('name', 'text')
             ->add('price', 'money', array('currency' => 'USD'))
             ->getForm();
@@ -410,8 +408,7 @@ can modify your code so that Symfony guesses the field for you:
     {
         $product = new Product();
 
-        $form = $this->get('form.factory')
-            ->createBuilder('form', $product)
+        $form = $this->createFormBuilder($product)
             ->add('name')
             ->add('price', 'money', array('currency' => 'USD'))
             ->getForm();
@@ -630,7 +627,7 @@ It can be used to quickly build a form object in the controller:
     public function indexAction()
     {
         $product = // ...
-        $form = $this->get('form.factory')->create(new ProductType(), $product);
+        $form = $this->createForm(new ProductType(), $product);
         
         // ...
     }
@@ -640,7 +637,7 @@ It can be used to quickly build a form object in the controller:
     
     .. code-block:: php
     
-        $form = $this->get('form.factory')->create(new ProductType());
+        $form = $this->createForm(new ProductType());
         $form->setData($product);
 
     If you use the ``setData`` method - and want to take advantage of field
