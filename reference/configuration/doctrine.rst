@@ -27,7 +27,7 @@ Configuration Reference
                         memory:               true
                         unix_socket:          /tmp/mysql.sock
                         wrapper_class:        MyDoctrineDbalConnectionWrapper
-                        charset:              UTF-8
+                        charset:              UTF8
                         logging:              %kernel.debug%
                         platform_service:     MyOwnDatabasePlatformService
                     conn1:
@@ -88,7 +88,7 @@ Configuration Reference
                         memory="true"
                         unix-socket="/tmp/mysql.sock"
                         wrapper-class="MyDoctrineDbalConnectionWrapper"
-                        charset="UTF-8"
+                        charset="UTF8"
                         logging="%kernel.debug%"
                         platform-service="MyOwnDatabasePlatformService"
                     />
