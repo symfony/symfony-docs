@@ -346,9 +346,9 @@ HTTP layer.
 Accessing the Profiler Data
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-To assert data collected by the profiler, you can get the profiler like this::
+To assert data collected by the profiler, you can get the profile like this::
 
-    $profiler = $client->getProfiler();
+    $profile = $client->getProfiler()->loadProfileFromResponse($client->getResponse());
 
 Redirections
 ~~~~~~~~~~~~
