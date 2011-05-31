@@ -44,7 +44,7 @@ name (a "class::method" string, like
 
     The default implementation uses the
     :class:`Symfony\\Bundle\\FrameworkBundle\\RequestListener` to define the
-    ``_controller`` Request attribute (see :ref:`kernel-onCoreRequest`).
+    ``_controller`` Request attribute (see :ref:`kernel-core_request`).
 
 The
 :method:`Symfony\\Component\\HttpKernel\\Controller\\ControllerResolverInterface::getArguments`
@@ -76,13 +76,13 @@ To convert the ``Request``, ``handle()`` relies on the Resolver and an ordered
 chain of Event notifications (see the next section for more information about
 each Event):
 
-1. Before doing anything else, the ``onCoreRequest`` event is notified -- if
+1. Before doing anything else, the ``core.request`` event is notified -- if
    one of the listener returns a ``Response``, it jumps to step 8 directly;
 
 2. The Resolver is called to determine the Controller to execute;
 
-3. Listeners of the ``onCoreController`` event can now manipulate the
-   Controller callable the way they want (change it, wrap it, ...);
+3. Listeners of the ``core.response`` event can now manipulate the Controller
+   callable the way they want (change it, wrap it, ...);
 
 4. The Kernel checks that the Controller is actually a valid PHP callable;
 
@@ -91,21 +91,21 @@ each Event):
 6. The Kernel calls the Controller;
 
 7. If the Controller does not return a ``Response``, listeners of the
-   ``onCoreView`` event can convert the Controller return value to a ``Response``;
+   ``core.view`` event can convert the Controller return value to a ``Response``;
 
-8. Listeners of the ``onCoreResponse`` event can manipulate the ``Response``
+8. Listeners of the ``core.response`` event can manipulate the ``Response``
    (content and headers);
 
 9. The Response is returned.
 
-If an Exception is thrown during processing, the ``onCoreException`` is
+If an Exception is thrown during processing, the ``core.exception`` is
 notified and listeners are given a change to convert the Exception to a
-Response. If that works, the ``onCoreResponse`` event is notified; if not the
+Response. If that works, the ``core.response`` event is notified; if not the
 Exception is re-thrown.
 
-If you don't want Exceptions to be caught (for embedded requests for instance),
-disable the ``onCoreException`` event by passing ``false`` as the third argument
-to the ``handle()`` method.
+If you don't want Exceptions to be caught (for embedded requests for
+instance), disable the ``core.exception`` event by passing ``false`` as the
+third argument to the ``handle()`` method.
 
 .. index::
   single: Internals; Internal Requests
@@ -160,32 +160,32 @@ add the following code at the beginning of your listener method::
     :doc:`dedicated chapter </book/internals/event_dispatcher>` first.
 
 .. index::
-   single: Event; onCoreRequest
+   single: Event; core.request
 
-.. _kernel-onCoreRequest:
+.. _kernel-core-request:
 
-``onCoreRequest`` Event
-~~~~~~~~~~~~~~~~~~~~~~~
+``core.request`` Event
+~~~~~~~~~~~~~~~~~~~~~~
 
 *Event Class*: :class:`Symfony\\Component\\HttpKernel\\Event\\GetResponseEvent`
 
 The goal of this event is to either return a ``Response`` object immediately
 or setup variables so that a Controller can be called after the event. Any
-listener can return a ``Response`` object via the ``setResponse()`` method
-on the event. In this case, all other listeners won't be called.
+listener can return a ``Response`` object via the ``setResponse()`` method on
+the event. In this case, all other listeners won't be called.
 
 This event is used by ``FrameworkBundle`` to populate the ``_controller``
 ``Request`` attribute, via the
 :class:`Symfony\\Bundle\\FrameworkBundle\\RequestListener`. RequestListener
 uses a :class:`Symfony\\Component\\Routing\\RouterInterface` object to match
-the ``Request`` and determine the Controller name (stored in the ``_controller``
-``Request`` attribute).
+the ``Request`` and determine the Controller name (stored in the
+``_controller`` ``Request`` attribute).
 
 .. index::
-   single: Event; onCoreController
+   single: Event; core.controller
 
-``onCoreController`` Event
-~~~~~~~~~~~~~~~~~~~~~~~~~~
+``core.controller`` Event
+~~~~~~~~~~~~~~~~~~~~~~~~~
 
 *Event Class*: :class:`Symfony\\Component\\HttpKernel\\Event\\FilterControllerEvent`
 
@@ -206,20 +206,20 @@ to modify the controller that should be executed:
     }
 
 .. index::
-   single: Event; onCoreView
+   single: Event; core.view
 
-``onCoreView`` Event
-~~~~~~~~~~~~~~~~~~~~
+``core.view`` Event
+~~~~~~~~~~~~~~~~~~~
 
 *Event Class*: :class:`Symfony\\Component\\HttpKernel\\Event\\GetResponseForControllerResultEvent`
 
 This event is not used by ``FrameworkBundle``, but it can be used to implement
-a view sub-system. This event is called *only*  if the Controller does *not*
+a view sub-system. This event is called *only* if the Controller does *not*
 return a ``Response`` object. The purpose of the event is to allow some other
 return value to be converted into a ``Response``.
 
-The value returned by the Controller is accessible via the ``getControllerResult``
-method::
+The value returned by the Controller is accessible via the
+``getControllerResult`` method::
 
     use Symfony\Component\HttpKernel\Event\GetResponseForControllerResultEvent;
     use Symfony\Component\HttpFoundation\Response;
@@ -234,15 +234,15 @@ method::
     }
 
 .. index::
-   single: Event; onCoreResponse
+   single: Event; core.response
 
-``onCoreResponse`` Event
-~~~~~~~~~~~~~~~~~~~~~~~~
+``core.response`` Event
+~~~~~~~~~~~~~~~~~~~~~~~
 
 *Event Class*: :class:`Symfony\\Component\\HttpKernel\\Event\\FilterResponseEvent`
 
-The purpose of this event is to allow other systems to modify or replace
-the ``Response`` object after its creation:
+The purpose of this event is to allow other systems to modify or replace the
+``Response`` object after its creation:
 
 .. code-block:: php
 
@@ -254,26 +254,26 @@ the ``Response`` object after its creation:
 
 The ``FrameworkBundle`` registers several listeners:
 
-* :class:`Symfony\\Component\\HttpKernel\\Profiler\\ProfilerListener`:
+* :class:`Symfony\\Component\\HttpKernel\\Profiler\\EventListener\\ProfilerListener`:
   collects data for the current request;
 
-* :class:`Symfony\\Bundle\\WebProfilerBundle\\WebDebugToolbarListener`:
+* :class:`Symfony\\Bundle\\WebProfilerBundle\\EventListener\\WebDebugToolbarListener`:
   injects the Web Debug Toolbar;
 
-* :class:`Symfony\\Component\\HttpKernel\\ResponseListener`: fixes the
+* :class:`Symfony\\Component\\HttpKernel\\EventListener\\ResponseListener`: fixes the
   Response ``Content-Type`` based on the request format;
 
-* :class:`Symfony\\Component\\HttpKernel\\Cache\\EsiListener`: adds a
+* :class:`Symfony\\Component\\HttpKernel\\EventListener\\EsiListener`: adds a
   ``Surrogate-Control`` HTTP header when the Response needs to be parsed for
   ESI tags.
 
 .. index::
-   single: Event; onCoreException
+   single: Event; core.exception
 
-.. _kernel-onCoreException:
+.. _kernel-core.exception:
 
-``onCoreException`` Event
-~~~~~~~~~~~~~~~~~~~~~~~~~
+``core.exception`` Event
+~~~~~~~~~~~~~~~~~~~~~~~~
 
 *Event Class*: :class:`Symfony\\Component\\HttpKernel\\Event\\GetResponseForExceptionEvent`
 
