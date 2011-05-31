@@ -348,10 +348,7 @@ Accessing the Profiler Data
 
 To assert data collected by the profiler, you can get the profiler like this::
 
-    use Symfony\Component\HttpKernel\Profiler\Profiler;
-
-    $profiler = new Profiler();
-    $profiler = $profiler->loadFromResponse($client->getResponse());
+    $profiler = $client->getProfiler();
 
 Redirections
 ~~~~~~~~~~~~
