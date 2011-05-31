@@ -336,45 +336,19 @@ template and then importing it inside your application configuration:
 Any customized form blocks inside the ``AcmeDemoBundle:Form:fields.html.twig``
 template will be used globally when form elements are rendered.
 
-Use table-layout for the forms instead of divs
-----------------------------------------------
-
 Standard twig uses the div layout for forms, however some people prefer the table layout.
-Change you config.yml into this to make it system-wide:
+The technique to change to the table layout uses the same technique as it is listed above,
+however you will need to change:
 
-.. configuration-block:: 
+``AcmeDemoBundle:Form:fields.html.twig`` to ``TwigBundle:Form:table_layout.html.twig``
 
-    .. code-block:: yaml
-        
-        # app/config/config.yml
-        twig:
-            form:
-                resources: ['TwigBundle:Form:table_layout.html.twig']
-            # ...
-    
-    .. code-block:: xml
-    
-        <!-- app/config/config.xml -->
-        <twig:config ...>
-            <twig:form>
-                <twig:resource>TwigBundle:Form:table_layout.html.twig</twig:resource>
-            </twig:form>
-            <!-- ... -->
-        </twig:config>
-
-    .. code-block:: php
-
-        // app/config/config.php
-        $container->loadFromExtension('twig', array(
-            'form' => array('resources' => array('TwigBundle:Form:table_layout.html.twig'))
-            // ...
-        ));
-		
 Or if you only want to use it so now and then, you can put it in your twig template like this:
 
 .. code-block:: html+jinja
 	
 	{% form_theme form 'TwigBundle:Form:table_layout.html.twig' %}
+	
+Keep in mind the ``form`` in the above code is the variable that contains the ``FormView`` instance here.
 
 How to customize an Individual field
 ------------------------------------
