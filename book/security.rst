@@ -900,6 +900,11 @@ custom user class is that it implements the :class:`Symfony\\Component\\Security
 interface. This means that your concept of a "user" can be anything, as long
 as it implements this interface.
 
+.. note:
+
+    A user object must be serializable, and unserializable. For this reason, it is recommended that you turn on
+    eager fetching for all relationships that involve a user object.
+
 Next, configure an ``entity`` user provider, and point it to your ``User``
 class:
 
