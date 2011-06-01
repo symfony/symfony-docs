@@ -1370,7 +1370,7 @@ the firewall can handle this automatically for you when you activate the
         ));
 
 Once this is configured under your firewall, sending a user to ``/logout``
-(or whatever your configure the ``path`` to be), will un-authenticate the
+(or whatever you configure the ``path`` to be), will un-authenticate the
 current user. The user will then be sent to the homepage (the value defined
 by the ``target`` parameter). Both the ``path`` and ``target`` config parameters
 default to what's specified here. In other words, unless you need to customize
