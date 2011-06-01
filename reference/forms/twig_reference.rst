@@ -39,7 +39,7 @@ or collection of fields, each underlying form row will be rendered.
 .. code-block:: jinja
 
     {# render a widget, but add a "foo" class to it #}
-    {{ form_wiget(form.name, { 'attr': {'class': 'foo'} }) }}
+    {{ form_widget(form.name, { 'attr': {'class': 'foo'} }) }}
 
 The second argument to ``form_widget`` is an array of variables. The most
 common variable is ``attr``, which is an array of HTML attributes to apply
@@ -55,7 +55,7 @@ label, errors and widget.
 .. code-block:: jinja
 
     {# render a field row, but add a "foo" class to it #}
-    {{ form_wiget(form.name, { 'attr': {'class': 'foo'} }) }}
+    {{ form_widget(form.name, { 'attr': {'class': 'foo'} }) }}
 
 The second argument to ``form_row`` is an array of variables. The most
 common variable is ``attr``, which is an array of HTML attributes to apply
