@@ -65,9 +65,9 @@ request after the fact? When the profiler stores data about a Request, it also
 associates a token with it; this token is available in the ``X-Debug-Token``
 HTTP header of the Response::
 
-    $profiler = $container->get('profiler')->getFromResponse($response);
+    $profile = $container->get('profiler')->loadProfileFromResponse($response);
 
-    $profiler = $container->get('profiler')->getFromToken($token);
+    $profile = $container->get('profiler')->loadProfile($token);
 
 .. tip::
 
@@ -75,13 +75,7 @@ HTTP header of the Response::
     want to get the token for an Ajax request, use a tool like Firebug to get
     the value of the ``X-Debug-Token`` HTTP header.
 
-You can also set the token from your code, based for instance on the username
-or any other information, to ease the retrieval later on::
-
-    $profiler->setToken('abcd');
-
-You can also use the ``find()`` method to access tokens based on some
-criteria::
+Use the ``find()`` method to access tokens based on some criteria::
 
     // get the latest 10 tokens
     $tokens = $container->get('profiler')->find('', '', 10);
@@ -97,8 +91,8 @@ where the information were generated, use the ``export()`` and ``import()``
 methods::
 
     // on the production machine
-    $profiler = $container->get('profiler')->getFromToken($token);
-    $data = $profiler->export();
+    $profile = $container->get('profiler')->loadProfile($token);
+    $data = $profiler->export($profile);
 
     // on the development machine
     $profiler->import($data);
