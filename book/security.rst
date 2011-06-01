@@ -856,6 +856,18 @@ by Symfony (:class:`Symfony\\Component\\Security\\Core\\User\\User`).
     Any user provider can load users directly from configuration by specifying
     the ``users`` configuration parameter and listing the users beneath it.
 
+.. caution::
+
+    If your username is completely numeric (e.g. ``77``) or contains a dash
+    (e.g. ``user-name``), you should use that alternative syntax when specifying
+    users in YAML:
+    
+    .. code-block:: yaml
+    
+        users:
+            - { name: 77, password: pass, roles: 'ROLE_USER' }
+            - { name: user-name, password: pass, roles: 'ROLE_USER' }
+
 For smaller sites, this method is quick and easy to setup. For more complex
 systems, you'll want to load your users from the database.
 
