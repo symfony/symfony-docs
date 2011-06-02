@@ -374,7 +374,7 @@ header when none is set by the developer by following these rules:
   that the response will not be cached;
 
 * If ``Cache-Control`` is empty (but one of the other cache headers is present),
-  its value is set to ``private, max-age=0, must-revalidate``;
+  its value is set to ``private, must-revalidate``;
 
 * But if at least one ``Cache-Control`` directive is set, and no 'public' or
   ``private`` directives have been explicitly added, Symfony2 adds the
