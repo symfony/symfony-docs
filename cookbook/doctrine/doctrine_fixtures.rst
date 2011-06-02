@@ -75,9 +75,9 @@ Doctrine2 fixtures are PHP classes where you can create objects and persist
 them to the database. Like all classes in Symfony2, fixtures should live inside
 one of your application bundles.
 
-For a bundle located at ``src/VendorName/MyBundle``, the fixture classes
-should live inside ``src/VendorName/MyBundle/DataFixtures/ORM`` or
-``src/VendorName/MyBundle/DataFixtures/ODM`` respectively for the ORM and ODM,
+For a bundle located at ``src/Acme/HelloBundle``, the fixture classes
+should live inside ``src/Acme/HelloBundle/DataFixtures/ORM`` or
+``src/Acme/HelloBundle/DataFixtures/ODM`` respectively for the ORM and ODM,
 This tutorial assumes that you are using the ORM - but fixtures can be added
 just as easily if you're using the ODM.
 
@@ -86,11 +86,11 @@ entry:
 
 .. code-block:: php
 
-    // src/VendorName/MyBundle/DataFixtures/ORM/LoadUserData.php
-    namespace VendorName\MyBundle\DataFixtures\ORM;
+    // src/Acme/HelloBundle/DataFixtures/ORM/LoadUserData.php
+    namespace Acme\HelloBundle\DataFixtures\ORM;
 
     use Doctrine\Common\DataFixtures\FixtureInterface;
-    use VendorName\MyBundle\Entity\User;
+    use Acme\HelloBundle\Entity\User;
 
     class LoadUserData implements FixtureInterface
     {
@@ -168,12 +168,12 @@ the order in which fixtures are loaded.
 
 .. code-block:: php
 
-    // src/VendorName/MyBundle/DataFixtures/ORM/LoadUserData.php
-    namespace VendorName\MyBundle\DataFixtures\ORM;
+    // src/Acme/HelloBundle/DataFixtures/ORM/LoadUserData.php
+    namespace Acme\HelloBundle\DataFixtures\ORM;
 
     use Doctrine\Common\DataFixtures\AbstractFixture;
     use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
-    use VendorName\MyBundle\Entity\User;
+    use Acme\HelloBundle\Entity\User;
 
     class LoadUserData extends AbstractFixture implements OrderedFixtureInterface
     {
@@ -202,12 +202,12 @@ of 2:
 
 .. code-block:: php
 
-    // src/VendorName/MyBundle/DataFixtures/ORM/LoadGroupData.php
-    namespace VendorName\MyBundle\DataFixtures\ORM;
+    // src/Acme/HelloBundle/DataFixtures/ORM/LoadGroupData.php
+    namespace Acme\HelloBundle\DataFixtures\ORM;
 
     use Doctrine\Common\DataFixtures\AbstractFixture;
     use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
-    use VendorName\MyBundle\Entity\Group;
+    use Acme\HelloBundle\Entity\Group;
 
     class LoadGroupData extends AbstractFixture implements OrderedFixtureInterface
     {
@@ -236,12 +236,12 @@ references:
 
 .. code-block:: php
 
-    // src/VendorName/MyBundle/DataFixtures/ORM/LoadUserGroupData.php
-    namespace VendorName\MyBundle\DataFixtures\ORM;
+    // src/Acme/HelloBundle/DataFixtures/ORM/LoadUserGroupData.php
+    namespace Acme\HelloBundle\DataFixtures\ORM;
 
     use Doctrine\Common\DataFixtures\AbstractFixture;
     use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
-    use VendorName\MyBundle\Entity\UserGroup;
+    use Acme\HelloBundle\Entity\UserGroup;
 
     class LoadUserGroupData extends AbstractFixture implements OrderedFixtureInterface
     {
@@ -269,5 +269,50 @@ order.
 Fixtures allow you to create any type of data you need via the normal PHP
 interface for creating and persisting objects. By controlling the order of
 fixtures and setting references, almost anything can be handled by fixtures.
+
+Using the Container in the Fixtures
+-----------------------------------
+
+In some cases you may need to access some services to load the fixtures.
+Symfony2 makes it really easy: the container will be injected in all fixture
+classes implementing :class:`Symfony\\Component\\DependencyInjection\\ContainerAwareInterface`.
+
+Let's rewrite the first firxtures to encode the password sotred in the database.
+This will use the encoder factory to encode the password, ensuring it is
+encoded in the way used by the security component when checking it:
+
+.. code-block:: php
+
+    // src/Acme/HelloBundle/DataFixtures/ORM/LoadUserData.php
+    namespace Acme\HelloBundle\DataFixtures\ORM;
+
+    use Doctrine\Common\DataFixtures\FixtureInterface;
+    use Symfony\Component\DependencyInjection\ContainerAwareInterface;
+    use Symfony\Component\DependencyInjection\ContainerInterface;
+    use Acme\HelloBundle\Entity\User;
+
+    class LoadUserData implements FixtureInterface, ContainerAwareInterface
+    {
+        private $container;
+
+        public function setContainer(ContainerInterface $container)
+        {
+            $this->container = $container;
+        }
+
+        public function load($manager)
+        {
+            $userAdmin = new User();
+            $userAdmin->setUsername('admin');
+            $userAdmin->setSalt(md5(time()));
+
+            $encoder = $this->container->get('security.encoder_factory')->getEncoder($userAdmin);
+            $userAdmin->setPassword($encoder->encodePassword('test', $userAdmin->getSalt()));
+
+            $manager->persist($userAdmin);
+            $manager->flush();
+        }
+    }
+
 
 .. _`Doctrine Data Fixtures`: https://github.com/doctrine/data-fixtures
