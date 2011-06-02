@@ -362,7 +362,7 @@ the common form fields and data types you'll encounter:
 .. include:: /reference/forms/types/map.rst.inc
 
 Of course, you can also create your own custom field types. This topic is
-covered in the ":doc:`/cookbook/forms/create_custom_field_type`" article
+covered in the ":doc:`/cookbook/form/create_custom_field_type`" article
 of the cookbook.
 
 .. index::
