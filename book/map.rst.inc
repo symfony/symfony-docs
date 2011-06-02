@@ -7,6 +7,7 @@
 * :doc:`Controllers </book/controller>`
 * :doc:`Routing </book/routing>`
 * :doc:`Templating </book/templating>`
+* :doc:`/book/doctrine`
 * :doc:`Testing </book/testing>`
 
 * **Doctrine**:
