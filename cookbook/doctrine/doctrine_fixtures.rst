@@ -277,9 +277,10 @@ In some cases you may need to access some services to load the fixtures.
 Symfony2 makes it really easy: the container will be injected in all fixture
 classes implementing :class:`Symfony\\Component\\DependencyInjection\\ContainerAwareInterface`.
 
-Let's rewrite the first firxtures to encode the password sotred in the database.
-This will use the encoder factory to encode the password, ensuring it is
-encoded in the way used by the security component when checking it:
+Let's rewrite the first fixture to encode the password before it's stored
+in the database (a very good practice). This will use the encoder factory
+to encode the password, ensuring it is encoded in the way used by the security
+component when checking it:
 
 .. code-block:: php
 
@@ -314,5 +315,10 @@ encoded in the way used by the security component when checking it:
         }
     }
 
+As you can see, all you need to do is add ``ContainerAwareInterface`` to
+the class and then create a new ``setContainer()`` method that implements
+that interface. Before the fixture is executed, Symfony will call the ``setContainer()``
+method automatically. As long as you store the container as a property on
+the class (as shown above), you can access it in the ``load()`` method.
 
 .. _`Doctrine Data Fixtures`: https://github.com/doctrine/data-fixtures
