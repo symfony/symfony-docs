@@ -912,6 +912,11 @@ custom user class is that it implements the :class:`Symfony\\Component\\Security
 interface. This means that your concept of a "user" can be anything, as long
 as it implements this interface.
 
+.. note:
+
+    The user object will be serialized and saved in the session during requests, therefore it is recommended
+    that you `implement the \Serializable interface`_ in your user object.
+
 Next, configure an ``entity`` user provider, and point it to your ``User``
 class:
 
@@ -1644,4 +1649,5 @@ Learn more from the Cookbook
 .. _`security component`: https://github.com/symfony/Security
 .. _`SecurityExtraBundle`: https://github.com/schmittjoh/SecurityExtraBundle
 .. _`FOSUserBundle`: https://github.com/FriendsOfSymfony/UserBundle
+.. _`implement the \Serializable interface`: http://php.net/manual/en/class.serializable.php
 .. _`functions-online.com`: http://www.functions-online.com/sha1.html
