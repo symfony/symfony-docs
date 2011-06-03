@@ -30,6 +30,38 @@ objects from the database.
 | Class                | :class:`Symfony\Bridge\Doctrine\Form\Type\\EntityType`           |
 +----------------------+------------------------------------------------------------------+
 
+Basic Usage
+-----------
+
+The ``entity`` type has just one required option: the entity which should
+be listed inside the choice field::
+
+    $builder->add('users', 'entity', array(
+        'class' => 'Acme\\HelloBundle\\Entity\\User',
+    ));
+
+In this case, all ``User`` objects will be loaded from the database and rendered
+as either a ``select`` tag, a set or radio buttons or a series of checkboxes
+(this depends on the ``multiple`` and ``expanded`` values).
+
+Using a Custom Query for the Entities
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+If you need to specify a custom query to use when fetching the entities (e.g.
+you only want to return some entities, or need to order them), use the ``query_builder``
+option. The easiest way to use the option is as follows::
+
+    use Doctrine\ORM\EntityRepository;
+    // ...
+
+    $builder->add('users', 'entity', array(
+        'class' => 'Acme\\HelloBundle\\Entity\\User',
+        'query_builder' => function(EntityRepository $er) {
+            return $er->createQueryBuilder('u')
+                ->orderBy('u.username', 'ASC');
+        },
+    ));
+
 Options
 -------
 
