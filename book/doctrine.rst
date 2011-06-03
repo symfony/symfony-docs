@@ -851,10 +851,77 @@ Doctrine's `Association Mapping Documentation`_. Keep in mind that when using
 Doctrine in Symfony, you'll need to prepend all annotations with ``ORM\``
 (e.g. ``ORM\OneToMany``), which is not reflected in Doctrine's documentation.
 
+Configuration
+-------------
+
+.. tip::
+
+    An extensive configuration reference related to Doctrine can be found
+    in the Doctrine section of the :doc:`reference manual</reference/bundles/doctrine>`.
+
+Doctrine is highly configurable, though you probably won't ever need to worry
+about most of its options. There are, however, some common options you should
+be aware of.
+
+
+
 .. book-doctrine-field-types:
 
 Doctrine Field Types Reference
 ------------------------------
+
+TODO
+
+.. index::
+   single: Doctrine; ORM Console Commands
+   single: CLI; Doctrine ORM
+
+Console Commands
+----------------
+
+The Doctrine2 ORM integration offers several console commands under the
+``doctrine`` namespace. To view the command list you can run the console
+without any arguments or options:
+
+.. code-block:: bash
+
+    php app/console
+
+A list of available command will print out, many of which start with the
+``doctrine:`` prefix. You can find out more information about any of these
+commands (or any commands) by running the help command. For example, to get
+details about the ``doctrine:database:create`` task, run:
+
+.. code-block:: bash
+
+    php app/console help doctrine:database:create
+
+Some notable or interesting tasks include:
+
+* ``doctrine:ensure-production-settings`` - checks to see if the current
+  environment is configured efficiently for production. This should always
+  be run in the ``prod`` environment:
+  
+  .. code-block:: bash
+  
+    php app/console doctrine:ensure-production-settings --env=prod
+
+* ``doctrine:mapping:import`` - allows Doctrine to introspect an existing
+  database and create mapping information. For more information, see
+  :doc:`/cookbook/doctrine/reverse_engineering`.
+
+* ``doctrine:mapping:info`` - tells you all of the entities that Doctrine
+  is aware and whether or not there are any basic errors with the mapping.
+
+* ``doctrine:query:dql`` and ``doctrine:query:sql`` - allow you to execute
+  DQL or SQL queries directly from the command line.
+
+.. note::
+
+   To be able to load data fixtures to your database, you will need to have the
+   ``DoctrineFixturesBundle`` bundle installed. To learn how to do it,
+   read the ":doc:`/cookbook/doctrine/doctrine_fixtures`" entry of the Cookbook.
+
 
 .. _`Doctrine`: http://www.doctrine-project.org/
 .. _`Basic Mapping Documentation`: http://www.doctrine-project.org/docs/orm/2.0/en/reference/basic-mapping.html
