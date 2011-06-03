@@ -39,7 +39,7 @@ Creating an Extension
 
 To define a semantic configuration, create a Dependency Injection extension
 that extends
-:class:`Symfony\\Component\\DependencyInjection\\Extension\\Extension`
+:class:`Symfony\\Component\\HttpKernel\\DependencyInjection\\Extension`
 who's class name should be constructed by replacing the ``Bundle`` postfix of the
 Bundle class with ``Extension`` inside a ``DependencyInjection`` subnamespace::
 
