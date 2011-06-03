@@ -1,5 +1,5 @@
 .. index::
-   single: Forms
+   single: Doctrine
 
 Databases and Doctrine ("The Model")
 ====================================
