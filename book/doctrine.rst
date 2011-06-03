@@ -854,23 +854,164 @@ Doctrine in Symfony, you'll need to prepend all annotations with ``ORM\``
 Configuration
 -------------
 
-.. tip::
-
-    An extensive configuration reference related to Doctrine can be found
-    in the Doctrine section of the :doc:`reference manual</reference/bundles/doctrine>`.
-
 Doctrine is highly configurable, though you probably won't ever need to worry
-about most of its options. There are, however, some common options you should
-be aware of.
+about most of its options. To find out more about configuring Doctrine, see
+the Doctrine section of the :doc:`reference manual</reference/bundles/doctrine>`.
 
+Lifecycle Callbacks
+-------------------
 
+Sometimes, you need to perform an action right before or after an entity
+is inserted, updated, or deleted. These types of actions are known as "lifecycle"
+callbacks, as they're callback methods that you need to execute during different
+stages of the lifecycle of an entity (e.g. the entity is inserted or deleted).
+
+To use lifecycle callbacks, first enable them on your entity:
+
+.. configuration-block::
+
+    .. code-block:: php-annotations
+
+    /**
+     * @ORM\Entity()
+     * @ORM\HasLifecycleCallbacks()
+     */
+    class Product
+    {
+        // ...
+    }
+
+Now, you can tell Doctrine to execute a method on any of the available lifecycle
+events. For example, suppose you want to set a ``created`` date column to
+the current date, only when the entity is first persisted (i.e. inserted):
+
+.. configuration-block::
+
+    .. code-block:: php-annotations
+
+        /**
+         * @ORM\prePersist
+         */
+        public function setCreatedValue()
+        {
+            $this->created = new \DateTime();
+        }
+
+.. note::
+
+    The above example assumes that you've created and mapped a ``created``
+    property (not shown here).
+
+Now, right before the entity is first persisted, Doctrine will call this method
+and the ``created`` field will be set to the current date.
+
+This can be repeated for any of the other lifecycle events, which include:
+
+* ``preRemove``
+* ``postRemove``
+* ``prePersist``
+* ``postPersist``
+* ``preUpdate``
+* ``postUpdate``
+* ``postLoad``
+* ``loadClassMetadata``
+
+For more information on what these lifecycle events mean and lifecycle callbacks
+in general, see Doctrine's `Lifecycle Events documentation`_
+
+.. sidebar:: Lifecycle Callbacks and Event Listeners
+
+    Notice that the ``setCreatedValue()`` method receives no arguments. This
+    is always the case for lifecylce callbacks and is intentional: lifecycle
+    callbacks should be simple methods that are concerned with internally
+    transforming data in the entity (e.g. setting a created/updated field,
+    generating a slug value).
+    
+    If you need to do some heavier lifting - like perform logging or send
+    an email - you should register an external class as an event listener
+    or subscriber and give it access to whatever resources you need. For
+    more information, see :doc:`/cookbook/doctrine/event_listeners_subscribers`.
+
+Doctrine Extensions: Timestampable, Sluggable, etc.
+---------------------------------------------------
+
+Doctrine is quite flexible, and a number of third-party extensions are available
+that allow you to easily perform repeated and common tasks on your entities.
+These include thing such as *Sluggable*, *Timestampable*, *Loggable*, *Translatable*,
+and *Tree*.
+
+For more information on how to find and use these extensions, see the cookbook
+article about :doc:`using common Doctrine extensions</cookbook/doctrine/common_extensions>`.
 
 .. book-doctrine-field-types:
 
 Doctrine Field Types Reference
 ------------------------------
 
-TODO
+Doctrine comes with a large number of field types available. Each of these
+maps to a specific column type in whatever database you're using. The following
+types are supported in Doctrine:
+
+* **Strings**
+  * ``string`` (used for shorter strings)
+  * ``text`` (used for larger strings)
+
+* **Numbers**
+  * ``integer``
+  * ``smallint``
+  * ``bigint``
+  * ``decimal``
+  * ``float``
+
+* **Dates and Times** - map to a `DateTime`_ object in PHP
+  * ``date``
+  * ``time``
+  * ``datetime``
+
+* **Other Types**
+  * ``boolean``
+  * ``object`` (serialized and stored in a ``CLOB`` field)
+  * ``array`` (serialized and stored in a ``CLOB`` field)
+
+For more information, see Doctrine's `Mapping Types documentation`_.
+
+Field Options
+~~~~~~~~~~~~~
+
+Each field can have a set of options applied to it. The available options are
+``type`` (defaults to ``string``), ``name``, ``length``, ``unique`` and ``nullable``.
+Take a few annotations examples:
+
+.. code-block:: php-annotations:
+
+    /**
+     * A string field with length 255 that cannot be null
+     * (the default values for "type", "length" and *nullable* options)
+     * 
+     * @ORM\Column()
+     */
+    protected $name;
+
+    /**
+     * A string field of length 150 that persists to an "email_address" column
+     * and has a unique index.
+     *
+     * @ORM\Column(name="email_address", unique="true", length="150")
+     */
+    protected $email;
+
+.. note::
+
+    There are a few more options not listed here. For more details, see
+    Doctrine's `Property Mapping documentation`_
+
+* ``type`` (default: ``string``) - the mapping type
+* ``name`` (default: the field name) - the name of the column in the database
+* ``length`` (default: ``255``) [*applies only to a string column*]
+* ``unique`` (default: ``false``)
+* ``nullable`` (default: ``false``)
+* ``precision`` (default: ``0``) [*applies only to a ``decimal`` column*]
+* ``scale`` (default: 0) [*applies ]
 
 .. index::
    single: Doctrine; ORM Console Commands
@@ -928,3 +1069,7 @@ Some notable or interesting tasks include:
 .. _`Query Builder`: http://www.doctrine-project.org/docs/orm/2.0/en/reference/query-builder.html
 .. _`Doctrine Query Language`: http://www.doctrine-project.org/docs/orm/2.0/en/reference/dql-doctrine-query-language.html
 .. _`Association Mapping Documentation`: http://www.doctrine-project.org/docs/orm/2.0/en/reference/association-mapping.html
+.. _`DateTime`: http://php.net/manual/en/class.datetime.php
+.. _`Mapping Types Documentation`: http://www.doctrine-project.org/docs/orm/2.0/en/reference/basic-mapping.html#doctrine-mapping-types
+.. _`Property Mapping documentation`: http://www.doctrine-project.org/docs/orm/2.0/en/reference/basic-mapping.html#property-mapping
+.. _`Lifecycle Events documentation`: http://www.doctrine-project.org/docs/orm/2.0/en/reference/events.html#lifecycle-events

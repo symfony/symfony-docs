@@ -15,6 +15,7 @@ Cookbook
     doctrine/doctrine_fixtures
     doctrine/mongodb
     doctrine/migrations
+    doctrine/common_extensions
     doctrine/event_listeners_subscribers
     doctrine/reverse_engineering
     doctrine/multiple_entity_managers
