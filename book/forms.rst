@@ -1151,7 +1151,7 @@ Learn more from the Cookbook
 ----------------------------
 
 * :doc:`Handling File Uploads </cookbook/form/file_uploads>`
-* :doc:`Creating Custom Field Types </cookbook/form/custom_field_types>`
+* :doc:`Creating Custom Field Types </cookbook/form/create_custom_field_type>`
 * :doc:`/cookbook/form/twig_form_customization`
 
 .. _`Symfony2 Form Component`: https://github.com/symfony/Form
