@@ -173,6 +173,44 @@ the ``Product`` class via annotations:
             protected $description;
         }
 
+    .. code-block:: yaml
+
+        # src/Acme/StoreBundle/Resources/config/doctrine/Product.orm.yml
+        Acme\StoreBundle\Entity\Product:
+            type: entity
+            table: product
+            id:
+                id:
+                    type: integer
+                    generator: { strategy: AUTO }
+            fields:
+                name:
+                    type: string
+                    length: 100
+                price:
+                    type: decimal
+                    scale: 2
+                description:
+                    type: text
+
+    .. code-block:: xml
+
+        <!-- src/Acme/StoreBundle/Resources/config/doctrine/Product.orm.xml -->
+        <doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
+                            http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+
+            <entity name="Acme\StoreBundle\Entity\Product" table="product">
+                <id name="id" type="integer" column="id">
+                    <generator strategy="AUTO" />
+                </id>
+                <field name="name" column="name" type="string" length="100" />
+                <field name="price" column="price" type="decimal" scale="2" />
+                <field name="description" column="description" type="text" />
+            </entity>
+        </doctrine-mapping>
+
 .. tip::
 
     The table option is optional and if omitted, will be determined automatically
@@ -544,15 +582,13 @@ To do this, add the name of the repository class to your mapping definition.
         Acme\StoreBundle\Entity\Product:
             type: entity
             repositoryClass: Acme\StoreBundle\Repository\ProductRepository
-            #...
+            # ...
 
     .. code-block:: xml
 
         <!-- src/Acme/StoreBundle/Resources/config/doctrine/Product.orm.xml -->
-        <doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
-              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-              xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
-                            http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+        <!-- ... -->
+        <doctrine-mapping>
 
             <entity name="Acme\StoreBundle\Entity\Product"
                     repository-class="Acme\StoreBundle\Repository\ProductRepository">
@@ -870,20 +906,19 @@ is inserted, updated, or deleted. These types of actions are known as "lifecycle
 callbacks, as they're callback methods that you need to execute during different
 stages of the lifecycle of an entity (e.g. the entity is inserted or deleted).
 
-To use lifecycle callbacks, first enable them on your entity:
+If you're using annotations for your metadata, start by enabling the lifecycle
+callbacks. This is not necessary if you're using YAML or XML for your mapping:
 
-.. configuration-block::
+.. code-block:: php-annotations
 
-    .. code-block:: php-annotations
-
-        /**
-         * @ORM\Entity()
-         * @ORM\HasLifecycleCallbacks()
-         */
-        class Product
-        {
-            // ...
-        }
+    /**
+     * @ORM\Entity()
+     * @ORM\HasLifecycleCallbacks()
+     */
+    class Product
+    {
+        // ...
+    }
 
 Now, you can tell Doctrine to execute a method on any of the available lifecycle
 events. For example, suppose you want to set a ``created`` date column to
@@ -900,6 +935,29 @@ the current date, only when the entity is first persisted (i.e. inserted):
         {
             $this->created = new \DateTime();
         }
+
+    .. code-block:: yaml
+
+        # src/Acme/StoreBundle/Resources/config/doctrine/Product.orm.yml
+        Acme\StoreBundle\Entity\Product:
+            type: entity
+            # ...
+            lifecycleCallbacks:
+                prePersist: [ setCreatedValue ]
+
+    .. code-block:: xml
+
+        <!-- src/Acme/StoreBundle/Resources/config/doctrine/Product.orm.xml -->
+        <!-- ... -->
+        <doctrine-mapping>
+
+            <entity name="Acme\StoreBundle\Entity\Product" ... >
+                    <!-- ... -->
+                    <lifecycle-callbacks>
+                        <lifecycle-callback type="prePersist" method="setCreatedValue" />
+                    </lifecycle-callbacks>
+            </entity>
+        </doctrine-mapping>
 
 .. note::
 
