@@ -414,6 +414,8 @@ As you might expect, the ``remove()`` method notifies Doctrine that you'd
 like to remove the given entity from the database. The actual ``DELETE`` query,
 however, isn't actually executed until the ``flush()`` method is called.
 
+.. _`book-doctrine-queries`:
+
 Querying for Objects
 --------------------
 
@@ -475,7 +477,7 @@ Doctrine `Doctrine Query Language`_ documentation.
 
     This is done to prevent SQL injection attacks and should always be used.
     If you're using multiple parameters, you can also set their values at
-    once using the ``setParameters`` method:
+    once using the ``setParameters`` method::
 
         ->setParameters(array(
             'price' => '19.99',
@@ -601,6 +603,8 @@ The usage of this new method is the same as with the default finder methods.
 
     When using a custom repository class, you still have access to the default
     finder methods such as ``find()`` and ``findAll()``.
+
+.. _`book-doctrine-relations`:
 
 Entity Relationships/Associations
 ---------------------------------
@@ -856,7 +860,7 @@ Configuration
 
 Doctrine is highly configurable, though you probably won't ever need to worry
 about most of its options. To find out more about configuring Doctrine, see
-the Doctrine section of the :doc:`reference manual</reference/bundles/doctrine>`.
+the Doctrine section of the :doc:`reference manual</reference/configuration/doctrine>`.
 
 Lifecycle Callbacks
 -------------------
@@ -872,14 +876,14 @@ To use lifecycle callbacks, first enable them on your entity:
 
     .. code-block:: php-annotations
 
-    /**
-     * @ORM\Entity()
-     * @ORM\HasLifecycleCallbacks()
-     */
-    class Product
-    {
-        // ...
-    }
+        /**
+         * @ORM\Entity()
+         * @ORM\HasLifecycleCallbacks()
+         */
+        class Product
+        {
+            // ...
+        }
 
 Now, you can tell Doctrine to execute a method on any of the available lifecycle
 events. For example, suppose you want to set a ``created`` date column to
@@ -943,7 +947,7 @@ and *Tree*.
 For more information on how to find and use these extensions, see the cookbook
 article about :doc:`using common Doctrine extensions</cookbook/doctrine/common_extensions>`.
 
-.. book-doctrine-field-types:
+.. _book-doctrine-field-types:
 
 Doctrine Field Types Reference
 ------------------------------
@@ -982,7 +986,7 @@ Each field can have a set of options applied to it. The available options are
 ``type`` (defaults to ``string``), ``name``, ``length``, ``unique`` and ``nullable``.
 Take a few annotations examples:
 
-.. code-block:: php-annotations:
+.. code-block:: php-annotations
 
     /**
      * A string field with length 255 that cannot be null
@@ -1004,14 +1008,6 @@ Take a few annotations examples:
 
     There are a few more options not listed here. For more details, see
     Doctrine's `Property Mapping documentation`_
-
-* ``type`` (default: ``string``) - the mapping type
-* ``name`` (default: the field name) - the name of the column in the database
-* ``length`` (default: ``255``) [*applies only to a string column*]
-* ``unique`` (default: ``false``)
-* ``nullable`` (default: ``false``)
-* ``precision`` (default: ``0``) [*applies only to a ``decimal`` column*]
-* ``scale`` (default: 0) [*applies ]
 
 .. index::
    single: Doctrine; ORM Console Commands
