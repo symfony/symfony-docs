@@ -78,7 +78,7 @@ the database for you:
 
 .. code-block:: bash
 
-    php app/console doctrine:database:create
+    php app/console doctrine:database:create --mapping-type=yml
 
 Creating an Entity Class
 ~~~~~~~~~~~~~~~~~~~~~~~~
@@ -93,17 +93,26 @@ inside the ``Entity`` directory of your ``AcmeStoreBundle``::
 
     class Product
     {
-        private $name;
+        protected $name;
 
-        private $price;
+        protected $price;
 
-        private $description;
+        protected $description;
     }
 
 The class - often called an "entity", meaning *a basic class that holds data*
 - is simple and helps fulfill the business requirement of needing products
 in your application. This class can't be persisted to a database yet - it's
 just a simple PHP class.
+
+.. tip::
+
+    Once you learn the concepts behind Doctrine, you can have Doctrine create
+    this entity class for you:
+    
+    .. code-block:: bash
+    
+        php app/console doctrine:generate:entity AcmeStoreBundle:Product
 
 2) Add Mapping Information
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -151,17 +160,17 @@ the ``Product`` class via annotations:
             /**
              * @ORM\Column(type="string", length="100")
              */
-            private $name;
+            protected $name;
 
             /**
              * @ORM\Column(type="decimal", scale="2")
              */
-            private $price;
+            protected $price;
 
             /**
              * @ORM\Column(type="text")
              */
-            private $description;
+            protected $description;
         }
 
 .. tip::
@@ -172,6 +181,14 @@ the ``Product`` class via annotations:
 Doctrine allows you to choose from a wide variety of different field types,
 each with their own options. For information on the available field types,
 see the :ref:`book-doctrine-field-types` section.
+
+.. seealso::
+
+    You can also check out Doctrine's `Basic Mapping Documentation`_ for
+    all details about mapping information. Keep in mind that when you use
+    Doctrine inside Symfony, you'll need to prepend all annotations with
+    ``ORM\`` (e.g. ``ORM\Column(..)``), which is not shown in Doctrine's
+    documentation.
 
 Generating Getters and Setters
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -191,6 +208,13 @@ mapping information) and make sure that all of its getters and setters are
 generated. This is a safe task - you can run it over and over again: it
 only generates getters and setters that don't exist (i.e. it doesn't replace
 your existing methods).
+
+.. tip::
+
+    Doctrine doesn't care whether your properties are ``public``, ``protected``
+    or ``private``, or whether or not you have a getter or setter function
+    for a property. The getters and setters are generated here only because
+    you'll need them to interact with your PHP object.
 
 Creating the Database Tables/Schema
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -338,6 +362,17 @@ Once you have your repository, you have access to all sorts of helpful methods::
 
     Of course, you can also issue complex queries, which you'll learn more
     about in the :ref:`book-doctrine-queries` section.
+
+.. tip::
+
+    When you render any page, you can see how many queries were made in the
+    bottom right corner of the web debug toolbar.
+
+    .. image:: /images/book/doctrine_web_debug_toolbar.png
+       :align: center
+
+    If you click the icon, the profiler will open, showing you the exact
+    queries that were made.
 
 Updating an Object
 ~~~~~~~~~~~~~~~~~~
@@ -503,7 +538,7 @@ To do this, add the name of the repository class to your mapping definition.
 
     .. code-block:: yaml
 
-        # src/Acme/StoreBundle/Resources/config/doctrine/Acme.StoreBundle.Entity.Product.orm.yml
+        # src/Acme/StoreBundle/Resources/config/doctrine/Product.orm.yml
         Acme\StoreBundle\Entity\Product:
             type: entity
             repositoryClass: Acme\StoreBundle\Repository\ProductRepository
@@ -511,7 +546,7 @@ To do this, add the name of the repository class to your mapping definition.
 
     .. code-block:: xml
 
-        <!-- src/Acme/StoreBundle/Resources/config/doctrine/Acme.StoreBundle.Entity.Product.orm.xml -->
+        <!-- src/Acme/StoreBundle/Resources/config/doctrine/Product.orm.xml -->
         <doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
               xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
@@ -567,11 +602,262 @@ The usage of this new method is the same as with the default finder methods.
     When using a custom repository class, you still have access to the default
     finder methods such as ``find()`` and ``findAll()``.
 
+Entity Relationships/Associations
+---------------------------------
+
+Suppose that the products in your application all belong to exactly on "category".
+In this case, you'll need a ``Category`` object and a way to relate a ``Product``
+object to a ``Category`` object. Start by creating the ``Category`` entity.
+Since you know that you'll eventually need to persist the class through Doctrine,
+you can let Doctrine create the class for you:
+
+.. code-block:: bash
+
+    php app/console doctrine:generate:entity AcmeStoreBundle:Category "name:string(255)" --mapping-type=yml
+
+This task generates the ``Category`` entity for you, with an ``id`` field,
+a ``name`` field and the associated getter and setter functions.
+
+Relationship Mapping Metadata
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+To relate the ``Category`` and ``Product`` entities, start by creating a
+``products`` property on the ``Category`` class::
+
+    // src/Acme/StoreBundle/Entity/Category.php
+    // ...
+    
+    class Category
+    {
+        // ...
+        
+        /**
+         * @ORM\OneToMany(targetEntity="Product", mappedBy="category")
+         */
+        protected $products;
+
+        public function __construct()
+        {
+            $this->products = new Doctrine\Common\Collections\ArrayCollection();
+        }
+    }
+
+First, since a ``Category`` object will relate to many ``Product`` objects,
+a ``products`` array property is added to hold those ``Product`` objects.
+The code in the ``__construct()`` method is important because Doctrine requires
+the ``$products`` property to be an ``ArrayCollection`` object. This object
+looks and acts just like an array, but has some added flexibility.
+
+Next, since each ``Product`` class can relate to exactly one ``Category``
+object, you'll want to add a ``$category`` property to the ``Product`` class::
+
+    // src/Acme/StoreBundle/Entity/Product.php
+    // ...
+
+    class Product
+    {
+        // ...
+    
+        /**
+         * @ORM\ManyToOne(targetEntity="Category", inversedBy="products")
+         * @ORM\JoinColumn(name="category_id", referencedColumnName="id")
+         */
+        protected $category;
+    }
+
+Finally, now that you've added a new property to both the ``Category`` and
+``Product`` classes, tell Doctrine to generate the missing getter and setter
+methods for you:
+
+.. code-block:: bash
+
+    php app/console doctrine:generate:entities Acme
+
+If you ignore the Doctrine metadata, you now have two classes - ``Category``
+and ``Product`` with a natural one-to-many relationship. The ``Category``
+class holds an array of ``Product`` objects and the ``Product`` object can
+hold one ``Category`` object.
+
+Now, look at the metadata above the ``$category`` property on the ``Product``
+class. The information here tells doctrine that the related class is ``Category``
+and that it should store the ``id`` of the category record on a ``category_id``
+field that lives on the ``product`` table. In other words, the related ``Category``
+object will be stored on the ``$category`` property, but behind the scenes,
+Doctrine will persist this relationship by storing the category's id value
+on a ``category_id`` column in the database.
+
+    DIAGRAM here of Product with related category on left, and on the right,
+    a diagram showing how the two tables are related.
+
+Before you continue, be sure tell Doctrine to add the new ``category`` table
+and ``product.category_id`` column:
+
+.. code-block:: bash
+
+    php app/console doctrine:schema:update --force
+
+Saving Related Entities
+~~~~~~~~~~~~~~~~~~~~~~~
+
+Now, let's see the code in action. Imagine you're inside a controller::
+
+    // ...
+    use Acme\StoreBundle\Entity\Category;
+    use Acme\StoreBundle\Entity\Product;
+    // ...
+
+    class DefaultController extends Controller
+    {
+        public function createProductAction()
+        {
+            $category = new Category();
+            $category->setName('Main Products');
+            
+            $product = new Product();
+            $product->setName('Foo');
+            $product->setPrice(19.99);
+            $product->setCategory();
+            
+            $em = $this->get('doctrine')->getEntityManager();
+            $em->persist($category);
+            $em->persist($product);
+            $em->flush();
+        }
+    }
+
+Now, a single row is added to both the ``category`` and ``product`` tables.
+The ``product.category_id`` column for the new product is set to whatever
+the ``id`` is of the new category. Doctrine managers the persistence of this
+relationship for you.
+
+.. note::
+
+    This task should only be really used during development. For a more robust
+    method of systematically updating your production database, read about
+    :doc:`Doctrine migrations</cookbook/doctrine/migrations>`.
+
+Fetching Related Objects
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+When you need to fetch associated objects, your workflow looks just like it
+did before. First, fetch a ``$product`` object and then access its related
+``Category``::
+
+    public function showAction($id)
+    {
+        $product = $this->get('doctrine')
+            ->getEntityManager()
+            ->getRepository('AcmeStoreBundle:Product')
+            ->find($id);
+
+        $category = $product->getCategory();
+        
+        // ...
+    }
+
+In this example, you first query for a ``Product`` object based on the product's
+``id``. This issues a query for *just* the single ``Product`` object and
+prepares the ``$product`` object. Later, when you call ``$product->getCategory()``,
+Doctrine silently makes a second query to find the ``Category`` that's related
+this ``Product``. It prepares the ``Category`` object and returns it to you.
+
+    DIAGRAM of querying for the Product object (on left) getting it from
+    db (on the right). You should then see the category_id of that Product.
+    Finally, we call ->getCategory() (on left) and it fetches the Category
+    from the DB (on the right).
+
+What's important is the fact that you have easy access to the product's related
+category, but the category data isn't actually retrieved until you ask for
+the category (i.e. it's "lazily loaded").
+
+You can also query in the other direction::
+
+    public function showProductAction($id)
+    {
+        $category = $this->get('doctrine')
+            ->getEntityManager()
+            ->getRepository('AcmeStoreBundle:Category')
+            ->find($id);
+
+        $products = $category->getProducts();
+    
+        // ...
+    }
+
+In this case, the same things occurs: you first query out for a single ``Category``
+object, and then Doctrine makes a second query to retrieve the related ``Product``
+objects only when you ask for them (e.g. when you call ``->getProducts()``).
+The ``$products`` variable is an array of ``Product`` objects that all relate
+to the given ``Category`` object via their ``category_id`` column.
+
+Joining to Related Records
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+In the above examples, two queries were made - one for the original object
+(e.g. a ``Category``) and one for the related object(s) (e.g. the ``Product``
+objects).
+
+.. tip::
+
+    Remember that you can see all of the queries made during a request via
+    the web debug toolbar.
+
+Of course, if you *know* that you'll need to access both objects, you can
+avoid the second query by joining in the original query. Add the following
+method to the ``ProductRepository`` class::
+
+    // src/Acme/StoreBundle/Repository/ProductRepository.php
+    
+    public function findOneByIdJoinedToCategory($id)
+    {
+        $query = $this->getEntityManager()
+            ->createQuery('
+                SELECT p, c FROM AcmeStoreBundle:Product p
+                JOIN p.category c
+                WHERE p.id = :id'
+            )->setParameter('id', $id)
+            ->setMaxResults(1);
+
+        $results = $query->getResult();
+        if (count($results) > 0) {
+            return array_shift($results);
+        }
+
+        return null;
+    }
+
+Now, you can use this method in your controller to query for a ``Product``
+object and its related ``Category`` all with just one query::
+
+    public function showAction($id)
+    {
+        $product = $this->get('doctrine')
+            ->getEntityManager()
+            ->getRepository('AcmeStoreBundle:Product')
+            ->findOneByIdJoinedToCategory($id);
+
+        $category = $product->getCategory();
+    
+        // ...
+    }    
+
+More Information on Associations
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+This section has been an introduction to one common type of entity relationship,
+the one-to-many relationship. For more advanced details and examples of how
+to use other types of relations (e.g. ``one-to-one``, ``many-to-many``), see
+Doctrine's `Association Mapping Documentation`_. Keep in mind that when using
+Doctrine in Symfony, you'll need to prepend all annotations with ``ORM\``
+(e.g. ``ORM\OneToMany``), which is not reflected in Doctrine's documentation.
+
 .. book-doctrine-field-types:
 
-Doctrine Field Types
---------------------
+Doctrine Field Types Reference
+------------------------------
 
 .. _`Doctrine`: http://www.doctrine-project.org/
+.. _`Basic Mapping Documentation`: http://www.doctrine-project.org/docs/orm/2.0/en/reference/basic-mapping.html
 .. _`Query Builder`: http://www.doctrine-project.org/docs/orm/2.0/en/reference/query-builder.html
-.. _`Doctrine Query Language`: Doctrine Query Language
+.. _`Doctrine Query Language`: http://www.doctrine-project.org/docs/orm/2.0/en/reference/dql-doctrine-query-language.html
+.. _`Association Mapping Documentation`: http://www.doctrine-project.org/docs/orm/2.0/en/reference/association-mapping.html
