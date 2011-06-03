@@ -110,7 +110,7 @@ write mapping information with annotations, XML, or YAML:
 
     .. code-block:: yaml
 
-        # src/Acme/HelloBundle/Resources/config/doctrine/Acme.HelloBundle.Entity.User.orm.yml
+        # src/Acme/HelloBundle/Resources/config/doctrine/User.orm.yml
         Acme\HelloBundle\Entity\User:
             type: entity
             table: user
@@ -126,7 +126,7 @@ write mapping information with annotations, XML, or YAML:
 
     .. code-block:: xml
 
-        <!-- src/Acme/HelloBundle/Resources/config/doctrine/Acme.HelloBundle.Entity.User.orm.xml -->
+        <!-- src/Acme/HelloBundle/Resources/config/doctrine/User.orm.xml -->
         <doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
               xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
