@@ -13,7 +13,6 @@ Book
     templating
     doctrine
     testing
-    doctrine/index
     validation
     forms
     security

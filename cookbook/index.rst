@@ -18,6 +18,7 @@ Cookbook
     doctrine/common_extensions
     doctrine/event_listeners_subscribers
     doctrine/reverse_engineering
+    doctrine/dbal
     doctrine/multiple_entity_managers
     doctrine/custom_dql_functions
 
