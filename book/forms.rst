@@ -502,6 +502,14 @@ the label, errors and HTML form widget of each field inside a ``div`` tag
 by default. In the :ref:`form-theming` section, you'll learn how
 the ``form_row`` output can be customized on many different levels.
 
+.. tip::
+
+    As of HTML5, user agents can interactively validate the form
+    "constraints". Generated forms take full advantage of this new feature by
+    adding sensible HTML attributes. It can however be disabled by using the
+    ``novalidate`` attribute on the ``form`` tag or ``formnovalidate`` on the
+    submit tag.
+
 Rendering each Field by Hand
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
