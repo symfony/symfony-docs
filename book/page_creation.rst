@@ -246,10 +246,12 @@ Create the Template
 
 Templates allows us to move all of the presentation (e.g. HTML code) into
 a separate file and reuse different portions of the page layout. Instead
-of writing the HTML inside the controller, use a template instead::
+of writing the HTML inside the controller, use a template instead:
+
+.. code-block:: php
+    :linenos:
 
     // src/Acme/HelloBundle/Controller/HelloController.php
-
     namespace Acme\HelloBundle\Controller;
 
     use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -267,9 +269,12 @@ of writing the HTML inside the controller, use a template instead::
 
 .. note::
 
-   In order to use the ``render()`` method, you must extend the
-   :class:`Symfony\\Bundle\\FrameworkBundle\\Controller\\Controller` class, which
-   adds shortcuts for tasks that are common inside controllers.
+   In order to use the ``render()`` method, your controller must extend the
+   ``Symfony\Bundle\FrameworkBundle\Controller\Controller`` class (API
+   docs: :class:`Symfony\\Bundle\\FrameworkBundle\\Controller\\Controller`),
+   which adds shortcuts for tasks that are common inside controllers. This
+   is done in the above example by adding the ``use`` statement on line 4
+   and then extending ``Controller`` on line 6.
 
 The ``render()`` method creates a ``Response`` object filled with the content
 of the given, rendered template. Like any other controller, you will ultimately
