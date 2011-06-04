@@ -36,6 +36,7 @@ Cookbook
     testing/insulating_clients
     testing/profiling
 
+    security/remember_me
     security/voters
     security/acl
     security/acl_advanced

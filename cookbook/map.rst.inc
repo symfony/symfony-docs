@@ -48,6 +48,7 @@
 
 * **Security**
 
+  * :doc:`/cookbook/security/remember_me`
   * :doc:`/cookbook/security/voters`
   * :doc:`/cookbook/security/acl`
   * :doc:`/cookbook/security/acl_advanced`
