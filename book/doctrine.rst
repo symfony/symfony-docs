@@ -370,10 +370,9 @@ Let's walk through this example:
   In fact, since Doctrine is aware of all your managed entities, when you
   call the ``flush()`` method, it calculates an overall changeset and executes
   the most efficient query/queries possible. For example, if you're persist
-  100 ``Product`` objects and then call ``persist()``, Doctrine will execute
-  a *single*, multi-line ``INSERT`` query (assuming your database engine supports
-  this). This pattern is called *Unit of Work*, and it's used because it's
-  fast and efficient.
+  100 ``Product`` objects and then call ``persist()``, Doctrine will create
+  a *single* prepared statement and re-use it for each insert. This pattern
+  is called *Unit of Work*, and it's used because it's fast and efficient.
 
 When creating or updating objects, the workflow is always the same. In the
 next section, you'll see how Doctrine is smart enough to automatically issue
