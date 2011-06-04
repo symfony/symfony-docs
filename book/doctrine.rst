@@ -17,7 +17,7 @@ be.
     This chapter is all about the Doctrine ORM, which aims to let you map
     objects to a relational database (such as *MySQL*, *PostgreSQL* or *Microsoft SQL*).
     If you prefer to use raw database queries, this is easy, and explained
-    in the ":doc:`/cookbook/doctrine/using_dbal`" cookbook entry.
+    in the ":doc:`/cookbook/doctrine/dbal`" cookbook entry.
 
     You can also persist data to `MongoDB`_ using Doctrine ODM library. For
     more information, read the ":doc:`/cookbook/doctrine/mongodb`" cookbook
@@ -381,7 +381,7 @@ an ``UPDATE`` query if the record already exists in the database.
 
 .. tip::
 
-    Symfony provides a library that allows you to programmatically load testing
+    Doctrine provides a library that allows you to programmatically load testing
     data into your project (i.e. "fixture data"). For information, see
     :doc:`/cookbook/doctrine/doctrine_fixtures`.
 
