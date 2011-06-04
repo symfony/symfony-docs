@@ -56,7 +56,7 @@ going to need to build a form. But before you begin, let's focus on the generic
    
    .. code-block:: text
    
-       php app/console init:bundle "Acme\StoreBundle" src/
+       php app/console init:bundle Acme/StoreBundle src/
 
 This type of class is commonly called a "plain-old-PHP-object" because, so far,
 it has nothing to do with Symfony or any other library. It's quite simply a

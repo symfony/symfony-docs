@@ -58,7 +58,7 @@ build in this chapter), run the following command:
 
 .. code-block:: text
 
-    php app/console init:bundle "Acme\HelloBundle" src
+    php app/console init:bundle Acme/HelloBundle src
 
 Next, be sure that the ``Acme`` namespace is loaded by adding the following
 to the ``app/autoload.php`` file (see the :ref:`Autoloading sidebar<autoloading-introduction-sidebar>`):
@@ -611,7 +611,7 @@ be used.
 And as easy as this is, Symfony also provides a command-line interface for
 generating a basic bundle skeleton::
 
-    php app/console init:bundle "Acme\TestBundle" src
+    php app/console init:bundle Acme/TestBundle src
 
 The bundle skeleton generates with a basic controller, template and routing
 resource that can be customized. We'll talk more about Symfony2's command-line
