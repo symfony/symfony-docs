@@ -504,11 +504,10 @@ the ``form_row`` output can be customized on many different levels.
 
 .. tip::
 
-    As of HTML5, user agents can interactively validate the form
-    "constraints". Generated forms take full advantage of this new feature by
-    adding sensible HTML attributes. It can however be disabled by using the
-    ``novalidate`` attribute on the ``form`` tag or ``formnovalidate`` on the
-    submit tag.
+    As of HTML5, browsers can interactively validate the form "constraints".
+    Generated forms take full advantage of this new feature by adding sensible
+    HTML attributes. It can however be disabled by using the ``novalidate``
+    attribute on the ``form`` tag or ``formnovalidate`` on the submit tag.
 
 Rendering each Field by Hand
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
