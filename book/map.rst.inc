@@ -7,13 +7,8 @@
 * :doc:`Controllers </book/controller>`
 * :doc:`Routing </book/routing>`
 * :doc:`Templating </book/templating>`
+* :doc:`/book/doctrine`
 * :doc:`Testing </book/testing>`
-
-* **Doctrine**:
-
-  * :doc:`Introduction to the Model </book/doctrine/model>` |
-  * :doc:`DBAL </book/doctrine/dbal>` |
-  * :doc:`ORM </book/doctrine/orm>`
 
 * :doc:`Validation </book/validation>`
 * :doc:`Forms </book/forms>`

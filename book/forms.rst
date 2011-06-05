@@ -689,7 +689,7 @@ object, you can fetch it from the form:
 
     $product = $form->getData();
 
-For more information, see the :doc:`Doctrine ORM chapter</book/doctrine/orm>`.
+For more information, see the :doc:`Doctrine ORM chapter</book/doctrine>`.
 
 The key thing to understand is that when the form is bound, the submitted
 data is transferred to the underlying object immediately. If you want to

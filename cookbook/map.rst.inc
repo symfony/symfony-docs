@@ -14,10 +14,15 @@
 
 * **Database Interaction (Doctrine)**
 
-  * :doc:`/cookbook/doctrine/reverse_engineering`
   * :doc:`/cookbook/doctrine/doctrine_fixtures`
   * :doc:`/cookbook/doctrine/mongodb`
   * :doc:`/cookbook/doctrine/migrations`
+  * :doc:`/cookbook/doctrine/common_extensions`
+  * :doc:`/cookbook/doctrine/event_listeners_subscribers`
+  * :doc:`/cookbook/doctrine/dbal`
+  * :doc:`/cookbook/doctrine/reverse_engineering`
+  * :doc:`/cookbook/doctrine/multiple_entity_managers`
+  * :doc:`/cookbook/doctrine/custom_dql_functions`
 
 * **Forms and Validation**
 
