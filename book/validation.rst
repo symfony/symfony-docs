@@ -221,7 +221,7 @@ configuration:
 
     .. code-block:: yaml
 
-        # hello/config/config.yml
+        # app/config/config.yml
         framework:
             validation: { enabled: true, enable_annotations: true }
 
