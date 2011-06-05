@@ -272,8 +272,8 @@ number:
 
     .. code-block:: yaml
 
-        # Acme/DemoBundle/Resources/config/validation.yml
-        Acme\DemoBundle\Entity\Product:
+        # Acme/StoreBundle/Resources/config/validation.yml
+        Acme\StoreBundle\Entity\Product:
             properties:
                 name:
                     - NotBlank: ~
@@ -283,8 +283,8 @@ number:
 
     .. code-block:: xml
 
-        <!-- Acme/BlogBundle/Resources/config/validation.xml -->
-        <class name="Acme\DemoBundle\Entity\Product">
+        <!-- Acme/StoreBundle/Resources/config/validation.xml -->
+        <class name="Acme\StoreBundle\Entity\Product">
             <property name="name">
                 <constraint name="NotBlank" />
             </property>
