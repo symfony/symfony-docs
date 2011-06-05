@@ -3,10 +3,6 @@
 Registering Event Listeners and Subscribers
 ===========================================
 
-.. caution::
-
-    This cookbook article is out of date and needs to be updated.
-
 Doctrine uses the lightweight ``Doctrine\Common\EventManager`` class to
 trigger a number of different events which you can hook into. You can register
 Event Listeners or Subscribers by tagging the respective services with
