@@ -11,8 +11,8 @@ Book
     controller
     routing
     templating
+    doctrine
     testing
-    doctrine/index
     validation
     forms
     security

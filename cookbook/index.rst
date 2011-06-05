@@ -12,10 +12,15 @@ Cookbook
     assetic/yuicompressor
     templating/PHP
 
-    doctrine/reverse_engineering
     doctrine/doctrine_fixtures
     doctrine/mongodb
     doctrine/migrations
+    doctrine/common_extensions
+    doctrine/event_listeners_subscribers
+    doctrine/reverse_engineering
+    doctrine/dbal
+    doctrine/multiple_entity_managers
+    doctrine/custom_dql_functions
 
     form/twig_form_customization
     form/create_custom_field_type
