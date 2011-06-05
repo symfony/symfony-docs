@@ -140,11 +140,8 @@ allows you to persist entire *objects* to the database and fetch entire objects
 out of the database. This works by mapping a PHP class to a database table,
 and the properties of that PHP class to columns on the table:
 
-    DIAGRAM here of the Product class on the left (looking like an object
-    with visible name, price, description properties) and a "product" table
-    on the right, with name, price and description columns. In the middle
-    is Doctrine, which is handling a two-way street, transforming data in
-    both directions.
+.. image:: /images/book/doctrine_image_1.png
+   :align: center
 
 For Doctrine to be able to do this, you just have to create "metadata", or
 configuration that tells Doctrine exactly how the ``Product`` class and its
@@ -808,8 +805,8 @@ object will be stored on the ``$category`` property, but behind the scenes,
 Doctrine will persist this relationship by storing the category's id value
 on a ``category_id`` column of the ``product`` table.
 
-    DIAGRAM here of Product with related category on left, and on the right,
-    a diagram showing how the two tables are related.
+.. image:: /images/book/doctrine_image_2.png
+   :align: center
 
 The metadata above the ``$products`` property of the ``Category`` object
 is less important, and simply tells Doctrine to look at the ``Product.category``
@@ -894,10 +891,8 @@ Doctrine silently makes a second query to find the ``Category`` that's related
 to this ``Product``. It prepares the ``$category`` object and returns it to
 you.
 
-    DIAGRAM of querying for the Product object (on left) getting it from
-    db (on the right). You should then see the category_id of that Product.
-    Finally, we call ->getCategory() (on left) and it fetches the Category
-    from the DB (on the right).
+.. image:: /images/book/doctrine_image_3.png
+   :align: center
 
 What's important is the fact that you have easy access to the product's related
 category, but the category data isn't actually retrieved until you ask for
