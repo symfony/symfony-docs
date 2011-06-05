@@ -34,6 +34,7 @@ To get started, configure the database connection parameters:
                 dbname:   Symfony2
                 user:     root
                 password: null
+                charset:  UTF8
 
     .. code-block:: xml
     
