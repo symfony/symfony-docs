@@ -485,7 +485,7 @@ The form has very few requirements. First, by submitting the form to ``/login_ch
 (via the ``login_check`` route), the security system will intercept the form
 submission and process the form for you automatically. Second, the security
 system expects the submitted fields to be called ``_username`` and ``_password``
-(these field names can be :ref:`configured</reference-security-firewall-form-username>`).
+(these field names can be :ref:`configured<reference-security-firewall-form-login>`).
 
 And that's it! When you submit the form, the security system will automatically
 check the user's credentials and either authenticate the user or send the
@@ -511,6 +511,8 @@ user to a specific URL.
 
 For more details on this and how to customize the form login process in general,
 see :doc:`/cookbook/security/form_login`.
+
+.. _book-security-common-pitfalls:
 
 .. sidebar:: Avoid Common Pitfalls
 
@@ -714,6 +716,8 @@ Any URL like ``/admin/blog`` will match the second rule and require ``ROLE_ADMIN
 You can also force ``HTTP`` or ``HTTPS`` via an ``access_control`` entry.
 For more information, see :doc:`/cookbook/security/force_https`.
 
+.. _book-security-securing-controller:
+
 Securing a Controller
 ~~~~~~~~~~~~~~~~~~~~~
 
@@ -734,6 +738,8 @@ authorization from inside a controller:
 
         // ...
     }
+
+.. _book-security-securing-controller-annotations:
 
 You can also choose to install and use the optional ``SecurityExtraBundle``,
 which can secure your controller using annotations:

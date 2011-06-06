@@ -1,11 +1,9 @@
 How to secure any Service or Method in your Application
 =======================================================
 
-In the :doc:`/book/security` book pages you can see how to secure 
-``ContainerAware`` controllers by requesting the ``security.context`` service 
-from the Service Container and checking the current user's role:
-
-.. code-block:: php
+In the security chapter, you can see how to :ref:`secure a controller<book-security-securing-controller>`
+by requesting the ``security.context`` service from the Service Container
+and checking the current user's role::
 
     use Symfony\Component\Security\Core\Exception\AccessDeniedException
     // ...
@@ -19,12 +17,12 @@ from the Service Container and checking the current user's role:
         // ...
     }
 
-You can also secure any service in a similar way by injecting the 
-``security.context`` service into it. For a general introduction to injecting 
-dependencies into services see the :doc:`/book/service_container` chapter of 
-the book. For example, you have a ``NewsletterManager`` class for sending out 
-newsletters and want to restrict its use to only users with the 
-``ROLE_NEWSLETTER_ADMIN`` role. The class currently looks like this:
+You can also secure *any* service in a similar way by injecting the ``security.context``
+service into it. For a general introduction to injecting dependencies into
+services see the :doc:`/book/service_container` chapter of the book. For
+example, suppose you have a ``NewsletterManager`` class that sends out emails
+and you want to restrict its use to only users who have some ``ROLE_NEWSLETTER_ADMIN``
+role. Before you add security, the class looks something like this:
 
 .. code-block:: php
 
@@ -35,26 +33,28 @@ newsletters and want to restrict its use to only users with the
 
         public function sendNewsletter()
         {
-            //--
+            // where you actually do the work
         }
 
         // ...
     }
 
-You want to check the user's role when the ``sendNewsletter()`` method is 
+Your goal is to check the user's role when the ``sendNewsletter()`` method is 
 called. The first step towards this is to inject the ``security.context`` 
-service into the object. As we require the service it is an ideal candidate 
-for constructor injection as this makes it a required dependency:
-
-.. code-block:: php
+service into the object. Since it won't make sense *not* to perform the security
+check, this is an ideal candidate for constructor injection, which guarantees
+that the security context object will be available inside the ``NewsletterManager``
+class::
 
     namespace Acme\HelloBundle\Newsletter;
+    
+    use Symfony\Component\Security\Core\SecurityContextInterface;
 
     class NewsletterManager
     {
         protected $securityContext;
 
-        public function __construct($securityContext)
+        public function __construct(SecurityContextInterface $securityContext)
         {
             $this->securityContext = $securityContext;
         }
@@ -62,7 +62,7 @@ for constructor injection as this makes it a required dependency:
         // ...
     }
 
-Then in your config you can inject the service:
+Then in your service configuration, you can inject the service:
 
 .. configuration-block::
 
@@ -70,12 +70,9 @@ Then in your config you can inject the service:
 
         # src/Acme/HelloBundle/Resources/config/services.yml
         parameters:
-            # ...
             newsletter_manager.class: Acme\HelloBundle\Newsletter\NewsletterManager
 
         services:
-            my_mailer:
-                # ...
             newsletter_manager:
                 class:     %newsletter_manager.class%
                 arguments: [@security.context]
@@ -84,14 +81,10 @@ Then in your config you can inject the service:
 
         <!-- src/Acme/HelloBundle/Resources/config/services.xml -->
         <parameters>
-            <!-- ... -->
             <parameter key="newsletter_manager.class">Acme\HelloBundle\Newsletter\NewsletterManager</parameter>
         </parameters>
 
         <services>
-            <service id="my_mailer" ... >
-              <!-- ... -->
-            </service>
             <service id="newsletter_manager" class="%newsletter_manager.class%">
                 <argument type="service" id="security.context"/>
             </service>
@@ -103,7 +96,6 @@ Then in your config you can inject the service:
         use Symfony\Component\DependencyInjection\Definition;
         use Symfony\Component\DependencyInjection\Reference;
 
-        // ...
         $container->setParameter('newsletter_manager.class', 'Acme\HelloBundle\Newsletter\NewsletterManager');
 
         $container->setDefinition('newsletter_manager', new Definition(
@@ -112,21 +104,19 @@ Then in your config you can inject the service:
         ));
 
 The injected service can then be used to perform the security check when the
-``sendNewsletter()`` method is called:
-
-.. code-block:: php::
+``sendNewsletter()`` method is called::
 
     namespace Acme\HelloBundle\Newsletter;
 
     use Symfony\Component\Security\Core\Exception\AccessDeniedException
-    use Symfony\Component\Security\Core\SecurityContext;
+    use Symfony\Component\Security\Core\SecurityContextInterface;
     // ...
 
     class NewsletterManager
     {
         protected $securityContext;
 
-        public function __construct(SecurityContext $securityContext)
+        public function __construct(SecurityContextInterface $securityContext)
         {
             $this->securityContext = $securityContext;
         }
@@ -143,80 +133,42 @@ The injected service can then be used to perform the security check when the
         // ...
     }
 
-If the current user does not have the ``ROLE_NEWSLETTER_ADMIN`` then they 
-will be prompted to log in.
+If the current user does not have the ``ROLE_NEWSLETTER_ADMIN``, they will
+be prompted to log in.
 
 Securing Methods Using Annotations
-~~~~~~~~~~~~~~~~~~~~~~~~~~
+----------------------------------
 
-You can also secure method calls in any service using annotations using the 
-``SecurityExtraBundle`` optional bundle. This is included in the standard
-Symfony2 distribution. The default configuration for the 
-``SecurityExtraBundle`` only secures Controllers and not all services:
+You can also secure method calls in any service with annotations by using the 
+optional `SecurityExtraBundle`_ bundle. This bundle is included in the Symfony2
+Standard Distribution.
 
-.. configuration-block::
-
-    .. code-block:: yaml
-
-        # app/config/config.yml
-        jms_security_extra:
-            secure_controllers:  true
-            secure_all_services: false
-    
-    .. code-block:: xml
-
-        <!-- app/config/config.xml -->
-        <srv:container xmlns="http://symfony.com/schema/dic/security"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xmlns:srv="http://symfony.com/schema/dic/services"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
-
-            <jms_security_extra secure_controllers="true"secure_all_services="true" />
-                
-        </srv:container>    
-
-    .. code-block:: php
-    
-        // app/config/config.php
-        $container->loadFromExtension('jms_security_extra', array(            
-             'secure_controllers'  => true,
-             'secure_all_services' => false,
-        ));
-
-To use annotations to secure other services you can set ``secure_all_services``
-to true. Alternatively you can specify individual services to secure by tagging
-them with ``security.secure_service``:
+To enable the annotations functionality, :ref:`tag<book-service-container-tags>`
+the service you want to secure with the ``security.secure_service`` tag
+(you can also automatically enable this functionality for all services, see
+the :ref:`sidebar<securing-services-annotations-sidebar>` below):
 
 .. configuration-block::
 
     .. code-block:: yaml
 
         # src/Acme/HelloBundle/Resources/config/services.yml
-        parameters:
-            # ...
-            newsletter_manager.class: Acme\HelloBundle\Newsletter\NewsletterManager
+        # ...
 
         services:
-            my_mailer:
-                # ...
             newsletter_manager:
-                class:     %newsletter_manager.class%
+                # ...
                 tags:
                     -  { name: security.secure_service }
 
     .. code-block:: xml
 
         <!-- src/Acme/HelloBundle/Resources/config/services.xml -->
-        <parameters>
-            <!-- ... -->
-            <parameter key="newsletter_manager.class">Acme\HelloBundle\Newsletter\NewsletterManager</parameter>
-        </parameters>
+        <!-- ... -->
 
         <services>
-            <service id="my_mailer" ... >
-              <!-- ... -->
-            </service>
             <service id="newsletter_manager" class="%newsletter_manager.class%">
+                <!-- ... -->
                 <tag name="security.secure_service" />
             </service>
         </services>
@@ -227,16 +179,14 @@ them with ``security.secure_service``:
         use Symfony\Component\DependencyInjection\Definition;
         use Symfony\Component\DependencyInjection\Reference;
 
-        // ...
-        $container->setParameter('newsletter_manager.class', 'Acme\HelloBundle\Newsletter\NewsletterManager');
-
-        $definition = new Definition('%newsletter_manager.class%');
+        $definition = new Definition(
+            '%newsletter_manager.class%',
+            array(new Reference('security.context'))
+        ));
         $definition->addTag('security.secure_service');
         $container->setDefinition('newsletter_manager', $definition);        
 
-You can then achieve the same results as above using an annotation:
-
-.. code-block:: php::
+You can then achieve the same results as above using an annotation::
 
     namespace Acme\HelloBundle\Newsletter;
 
@@ -267,5 +217,46 @@ You can then achieve the same results as above using an annotation:
 The ``SecurityExtraBundle`` also allows you to secure the parameters and return
 values of methods. For more information, see the `SecurityExtraBundle`_ 
 documentation.
+
+.. _securing-services-annotations-sidebar:
+
+.. sidebar:: Activating the Annotations Functionality for all Services
+
+    When securing the method of a service (as shown above), you can either
+    tag each service individually, or activate the functionality for *all*
+    services at once. To do so, set the ``secure_all_services`` configuration
+    option to true:
+
+    .. configuration-block::
+
+        .. code-block:: yaml
+
+            # app/config/config.yml
+            jms_security_extra:
+                # ...
+                secure_all_services: false
+    
+        .. code-block:: xml
+
+            <!-- app/config/config.xml -->
+            <srv:container xmlns="http://symfony.com/schema/dic/security"
+                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                xmlns:srv="http://symfony.com/schema/dic/services"
+                xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+                <jms_security_extra secure_controllers="true" secure_all_services="true" />
+                
+            </srv:container>    
+
+        .. code-block:: php
+    
+            // app/config/config.php
+            $container->loadFromExtension('jms_security_extra', array(            
+                // ...
+                'secure_all_services' => false,
+            ));
+
+    The disadvantage of this method is that, if activated, the initial page
+    load may be very slow depending on how many services you have defined.
 
 .. _`SecurityExtraBundle`: https://github.com/schmittjoh/SecurityExtraBundle

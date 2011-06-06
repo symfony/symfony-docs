@@ -946,6 +946,8 @@ the service itself gets loaded. To do so, you can use the ``file`` directive.
 Notice that symfony will internally call the PHP function require_once
 which means that your file will be included only once per request.
 
+.. _book-service-container-tags:
+
 Tags (``tags``)
 ~~~~~~~~~~~~~~~
 
