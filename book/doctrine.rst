@@ -1065,7 +1065,7 @@ the current date, only when the entity is first persisted (i.e. inserted):
         <!-- ... -->
         <doctrine-mapping>
 
-            <entity name="Acme\StoreBundle\Entity\Product" ... >
+            <entity name="Acme\StoreBundle\Entity\Product">
                     <!-- ... -->
                     <lifecycle-callbacks>
                         <lifecycle-callback type="prePersist" method="setCreatedValue" />
