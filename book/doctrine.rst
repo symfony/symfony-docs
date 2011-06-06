@@ -131,8 +131,8 @@ just a simple PHP class.
     
         php app/console doctrine:generate:entity AcmeStoreBundle:Product "name:string(255) price:float description:text"
 
-2) Add Mapping Information
-~~~~~~~~~~~~~~~~~~~~~~~~~~
+Add Mapping Information
+~~~~~~~~~~~~~~~~~~~~~~~
 
 Doctrine allows you to work with databases in a much more interesting way
 than just fetching rows of column-based table into an array. Instead, Doctrine
