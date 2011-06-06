@@ -966,13 +966,13 @@ to be used for a specific purpose. Take the following example:
 
     .. code-block:: xml
 
-        <service id="foo.twig.extension" class="Acme\HelloBundle\Extension\RadiusExtension">
+        <service id="foo.twig.extension" class="Acme\HelloBundle\Extension\FooExtension">
             <tag name="twig.extension" />
         </service>
 
     .. code-block:: php
 
-        $definition = new Definition('Acme\HelloBundle\Extension\RadiusExtension');
+        $definition = new Definition('Acme\HelloBundle\Extension\FooExtension');
         $definition->addTag('twig.extension');
         $container->setDefinition('foo.twig.extension', $definition);
 
