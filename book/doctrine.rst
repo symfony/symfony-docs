@@ -332,7 +332,7 @@ of the bundle:
         $product->setPrice('19.99');
         $product->setDescription('Lorem ipsum dolor');
 
-        $em = $this->get('doctrine')->getEntityManager();
+        $em = $this->getDoctrine()->getEntityManager();
         $em->persist($product);
         $em->flush();
 
@@ -390,8 +390,7 @@ on its ``id`` value::
 
     public function showAction($id)
     {
-        $product = $this->get('doctrine')
-            ->getEntityManager()
+        $product = $this->getDoctrine()
             ->getRepository('AcmeStoreBundle:Product')
             ->find($id);
         
@@ -407,8 +406,7 @@ as its "repository". You can think of a repository as a PHP class whose only
 job is to help you fetch entities of a certain class. You can access the
 repository object for an entity class via::
 
-    $repository = $this->get('doctrine')
-        ->getEntityManager()
+    $repository = $this->getDoctrine()
         ->getRepository('AcmeStoreBundle:Product');
 
 .. note::
@@ -459,7 +457,7 @@ you have a route that maps a product id to an update action in a controller::
 
     public function updateAction($id)
     {
-        $em = $this->get('doctrine')->getEntityManager();
+        $em = $this->getDoctrine()->getEntityManager();
         $product = $em->getRepository('AcmeStoreBundle:Product')->find($id);
 
         if (!$product) {
@@ -523,7 +521,7 @@ Imaging that you want to query for products, but only return products that
 cost more than ``19.99``, ordered from cheapest to most expensive. From inside
 a controller, do the following::
 
-    $em = $this->get('doctrine')->getEntityManager();
+    $em = $this->getDoctrine()->getEntityManager();
     $query = $em->createQuery(
         'SELECT p FROM AcmeStoreBundle:Product p WHERE p.price > :price ORDER BY p.price ASC'
     )->setParameter('price', '19.99');
@@ -597,8 +595,7 @@ Instead of writing the queries directly, you can alternatively use Doctrine's
 If you use an IDE, you can also take advantage of auto-completion as you
 type the method names. From inside a controller::
 
-    $repository = $this->get('doctrine')
-        ->getEntityManager()
+    $repository = $this->getDoctrine()
         ->getRepository('AcmeStoreBundle:Product');
 
     $query = $repository->createQueryBuilder('p')
@@ -699,7 +696,7 @@ ordered alphabetically.
 
 You can use this new method just like the default finder methods of the repository::
 
-    $em = $this->get('doctrine')->getEntityManager();
+    $em = $this->getDoctrine()->getEntityManager();
     $products = $em->getRepository('AcmeStoreBundle:Product')
                 ->findAllOrderedByName();
 
@@ -849,7 +846,7 @@ Now, let's see the code in action. Imagine you're inside a controller::
             // relate this product to the category
             $product->setCategory($category);
             
-            $em = $this->get('doctrine')->getEntityManager();
+            $em = $this->getDoctrine()->getEntityManager();
             $em->persist($category);
             $em->persist($product);
             $em->flush();
@@ -874,8 +871,7 @@ did before. First, fetch a ``$product`` object and then access its related
 
     public function showAction($id)
     {
-        $product = $this->get('doctrine')
-            ->getEntityManager()
+        $product = $this->getDoctrine()
             ->getRepository('AcmeStoreBundle:Product')
             ->find($id);
 
@@ -902,8 +898,7 @@ You can also query in the other direction::
 
     public function showProductAction($id)
     {
-        $category = $this->get('doctrine')
-            ->getEntityManager()
+        $category = $this->getDoctrine()
             ->getRepository('AcmeStoreBundle:Category')
             ->find($id);
 
@@ -924,8 +919,7 @@ to the given ``Category`` object via their ``category_id`` value.
     a "proxy" object in place of the true object. Look again at the above
     example::
     
-        $product = $this->get('doctrine')
-            ->getEntityManager()
+        $product = $this->getDoctrine()
             ->getRepository('AcmeStoreBundle:Product')
             ->find($id);
 
@@ -986,8 +980,7 @@ object and its related ``Category`` with just one query::
 
     public function showAction($id)
     {
-        $product = $this->get('doctrine')
-            ->getEntityManager()
+        $product = $this->getDoctrine()
             ->getRepository('AcmeStoreBundle:Product')
             ->findOneByIdJoinedToCategory($id);
 
