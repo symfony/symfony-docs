@@ -153,14 +153,6 @@ Symfony2 controller, we can easily access the new ``my_mailer`` service::
         }
     }
 
-.. tip::
-
-    When using a traditional controller, there's an even shorter way to
-    access a service from the container. This is exactly equivalent to the
-    above method, but with less keystrokes::
-
-        $mailer = $this->get('my_mailer');
-
 When we ask for the ``my_mailer`` service from the container, the container
 constructs the object and returns it. This is another major advantage of
 using the service container. Namely, a service is *never* constructed until
