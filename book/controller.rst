@@ -246,7 +246,7 @@ The controller for this can take several arguments::
         // ...
     }
 
-Notice that both placeholder variables (``{{first_name}}``, ``{{last_name}}``)
+Notice that both placeholder variables (``{first_name}``, ``{last_name}``)
 as well as the default ``color`` variable are available as arguments in the
 controller. When a route is matched, the placeholder variables are merged
 with the ``defaults`` to make one array that's available to your controller.
@@ -395,7 +395,7 @@ perform a 301 (permanent) redirect, modify the second argument::
 .. tip::
 
     The ``redirect()`` method is simply a shortcut that creates a ``Response``
-    object that specializes in redirecting the user. It's equivalent to:
+    object that specializes in redirecting the user. It's equivalent to::
     
         use Symfony\Component\HttpFoundation\RedirectResponse;
         
@@ -502,7 +502,7 @@ Accessing other Services
 When extending the base controller class, you can access any Symfony2 service
 via the ``get()`` method. Here are several common services you might need::
 
-    $request = $this->get('request');
+    $request = $this->getRequest();
 
     $response = $this->get('response');
 
@@ -574,7 +574,7 @@ by using the native PHP sessions.
 Storing and retrieving information from the session can be easily achieved
 from any controller::
 
-    $session = $this->get('request')->getSession();
+    $session = $this->getRequest()->getSession();
 
     // store an attribute for reuse during a later user request
     $session->set('foo', 'bar');
@@ -603,7 +603,7 @@ Let's show an example where we're processing a form submit::
 
     public function updateAction()
     {
-        if ('POST' === $this->get('request')->getMethod()) {
+        if ('POST' === $this->getRequest()->getMethod()) {
             // do some sort of processing
             
             $this->get('session')->setFlash('notice', 'Your changes were saved!');
@@ -675,7 +675,7 @@ The Request Object
 Besides the values of the routing placeholders, the controller also has access
 to the ``Request`` object when extending the base ``Controller`` class::
 
-    $request = $this->get('request');
+    $request = $this->getRequest();
 
     $request->isXmlHttpRequest(); // is it an Ajax request?
 
@@ -687,6 +687,17 @@ to the ``Request`` object when extending the base ``Controller`` class::
 
 Like the ``Response`` object, the request headers are stored in a ``HeaderBag``
 object and are easily accessible.
+
+.. tip::
+
+    The ``Request`` object can also be injected as a parameter of an *action*::
+
+        use Symfony\Component\HttpFoundation\Request;
+
+        public function indexAction(Request $request)
+        {
+            $name = $request->cookies->get('name');
+        }
 
 .. index::
    single: Controller; Overview
