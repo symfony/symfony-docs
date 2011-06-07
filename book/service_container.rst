@@ -138,8 +138,9 @@ be specified in YAML, XML or PHP:
     for ``prod``).
 
 An instance of the ``Acme\HelloBundle\Mailer`` object is now available via
-the service container. Since the container is available in any traditional
-Symfony2 controller, we can easily access the new ``my_mailer`` service::
+the service container. The container is available in any traditional Symfony2
+controller where you can access the services of the container via the ``get()``
+shortcut method::
 
     class HelloController extends Controller
     {
