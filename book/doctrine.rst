@@ -322,6 +322,7 @@ of the bundle:
     :linenos:
 
     // src/Acme/StoreBundle/Controller/DefaultController.php
+    use Acme\StoreBundle\Entity\Product;
     use Symfony\Component\HttpFoundation\Response;
     // ...
     
@@ -350,7 +351,7 @@ Let's walk through this example:
   object like any other, normal PHP object;
 
 * **line 12** This line fetches Doctrine's *entity manager* object, which is
-  responsibly for handling the process of persisting and fetching objects
+  responsible for handling the process of persisting and fetching objects
   to and from the database;
 
 * **line 13** The ``persist()`` method tells Doctrine to "manage" the ``$product``
