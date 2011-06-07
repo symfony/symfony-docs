@@ -421,13 +421,9 @@ guess (``text``).
 
 .. note::
 
-    The ``createBuilder()`` method takes up to three arguments (but only
-    the first is required):
+    The ``createFormBuilder()`` method takes up to two arguments neither
+    of which are required):
     
-     * the string ``form`` stands for the what you're building (a form) and
-       is also used as the name of the form. If you look at the generated
-       code, the two fields are named ``name="form[price]"`` and ``name="form[name]"``;
-     
      * The default data to initialize the form fields. This argument can be an
        associative array or a plain old PHP object like in this example;
      
