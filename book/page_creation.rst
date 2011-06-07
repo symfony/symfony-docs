@@ -671,11 +671,11 @@ format you prefer:
 
         # app/config/config.yml
         framework:
-            charset:         UTF-8
             secret:          xxxxxxxxxx
-            form:            true
-            csrf_protection: true
+            charset:         UTF-8
             router:          { resource: "%kernel.root_dir%/config/routing.yml" }
+            csrf_protection: true
+            form:            true
             validation:      { enable_annotations: true }
             templating:      { engines: ['twig'] } #assets_version: SomeVersionScheme
             session:
@@ -688,31 +688,35 @@ format you prefer:
             debug:            %kernel.debug%
             strict_variables: %kernel.debug%
 
+        # ...
+
     .. code-block:: xml
 
         <!-- app/config/config.xml -->
-        <framework:config charset="UTF-8" error-handler="null" secret="xxxxxxxxxx">
+        <framework:config charset="UTF-8" secret="xxxxxxxxxx">
             <framework:router resource="%kernel.root_dir%/config/routing.xml" />
+            <framework:csrf-protection />
+            <framework:form />
             <framework:validation annotations="true" />
-            <framework:session default-locale="en" lifetime="3600" auto-start="true" />
             <framework:templating assets-version="SomeVersionScheme">
                 <framework:engine id="twig" />
             </framework:templating>
-            <framework:form />
-            <framework:csrf-protection />
+            <framework:session default-locale="en" lifetime="3600" auto-start="true" />
         </framework:config>
 
         <!-- Twig Configuration -->
         <twig:config debug="%kernel.debug%" strict-variables="%kernel.debug%" />
+        
+        <!-- ... -->
 
     .. code-block:: php
 
         $container->loadFromExtension('framework', array(
-            'charset'         => 'UTF-8',
             'secret'          => 'xxxxxxxxxx',
-            'form'            => array(),
-            'csrf-protection' => array(),
+            'charset'         => 'UTF-8',
             'router'          => array('resource' => '%kernel.root_dir%/config/routing.php'),
+            'csrf-protection' => array(),
+            'form'            => array(),
             'validation'      => array('annotations' => true),
             'templating'      => array(
                 'engines' => array('twig'),
@@ -730,6 +734,8 @@ format you prefer:
             'debug'            => '%kernel.debug%',
             'strict_variables' => '%kernel.debug%',
         ));
+
+        // ...
 
 .. note::
 
