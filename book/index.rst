@@ -20,7 +20,7 @@ Book
     translation
     bundles
     service_container
-    internals/index
+    internals
     stable_api
 
 .. include:: map.rst.inc
