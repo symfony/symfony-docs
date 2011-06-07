@@ -26,14 +26,14 @@ and the doctrine-migrations library as dependencies in your application:
 
 .. code-block:: text
 
-    /                       doctrine-migrations       https://github.com/doctrine/migrations.git
-    /bundles/Symfony/Bundle DoctrineMigrationsBundle  https://github.com/symfony/DoctrineMigrationsBundle.git
+    doctrine-migrations      /                       https://github.com/doctrine/migrations.git
+    DoctrineMigrationsBundle /bundles/Symfony/Bundle https://github.com/symfony/DoctrineMigrationsBundle.git
 
 Update the vendor libraries:
 
 .. code-block:: bash
 
-    $ php bin/vendors.php
+    $ php bin/vendors install
 
 Next, ensure the new ``Doctrine\DBAL\Migrations`` namespace will be autoloaded
 via ``autoload.php``. The new ``Migrations`` namespace *must* be placed above

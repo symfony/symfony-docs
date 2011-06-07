@@ -74,18 +74,10 @@ by running the following command from the command line:
 
 .. code-block:: bash
 
-    php bin/vendors.php
+    php bin/vendors install
 
-.. tip::
-
-    You can call ``php bin/vendors.php --min`` if you don't want all of the
-    Git history for your vendor libraries. This makes the installation much
-    faster, but you can't "freeze" your vendor libraries later at an arbitrary
-    point. Also, to update your vendors, you'll need to use ``php bin/vendors.php --reinstall``,
-    which deletes your vendors and reinstalls them.
-
-This command downloads all of the necessary vendor libraries - including Symfony
-itself - into the ``vendor/`` directory.
+This command downloads all of the necessary vendor libraries - including
+Symfony itself - into the ``vendor/`` directory.
 
 Configuration and Setup
 ~~~~~~~~~~~~~~~~~~~~~~~
@@ -196,8 +188,8 @@ file:
 
 Now, the vendor directory won't be committed to source control. This is fine
 (actually, it's great!) because when someone else clones or checks out the
-project, he/she can simply run the ``php bin/vendors.php`` script to download
-all the necessary vendor libraries.
+project, he/she can simply run the ``php bin/vendors install`` script to
+download all the necessary vendor libraries.
 
 .. _`http://symfony.com/download`: http://symfony.com/download
 .. _`Git`: http://git-scm.com/
