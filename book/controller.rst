@@ -1,8 +1,8 @@
 .. index::
    single: Controller
 
-The Controller
-==============
+Controller
+==========
 
 A controller is a PHP function you create that takes information from the
 HTTP request and constructs and returns an HTTP response (as a Symfony2

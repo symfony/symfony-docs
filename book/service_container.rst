@@ -2,8 +2,8 @@
    single: Service Container
    single: Dependency Injection Container
 
-The Service Container
-=====================
+Service Container
+=================
 
 A modern PHP application is full of objects. One object may facilitate the
 delivery of email messages while another may allow you to persist information
