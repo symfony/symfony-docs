@@ -817,7 +817,7 @@ configuration file:
     .. code-block:: xml
 
         <!-- app/config/config.xml -->
-        <framework:templating cache-warmer="true">
+        <framework:templating>
             <framework:engine id="twig" />
         </framework:templating>
 

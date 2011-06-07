@@ -418,7 +418,7 @@ invokes the service container extension inside the ``FrameworkBundle``:
         <framework:config charset="UTF-8" error-handler="null" secret="xxxxxxxxxx">
             <framework:form />
             <framework:csrf-protection />
-            <framework:router resource="%kernel.root_dir%/config/routing.xml" cache-warmer="true" />
+            <framework:router resource="%kernel.root_dir%/config/routing.xml" />
             <!-- ... -->
         </framework>
 

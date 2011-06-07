@@ -18,7 +18,6 @@ Full Default Configuration
 
         framework:
             # general configuration
-            cache_warmer:   %kernel.debug%
             charset:        ~
             secret:         ~ # Required
             exception_controller: Symfony\\Bundle\\FrameworkBundle\\Controller\\ExceptionController::showAction
@@ -51,7 +50,6 @@ Full Default Configuration
 
             # router configuration
             router:
-                cache_warmer:   false
                 resource:       ~ # Required
                 type:           ~
                 http_port:      80
@@ -74,7 +72,6 @@ Full Default Configuration
                 assets_version: ~
                 assets_base_urls: []
                 cache:          ~
-                cache_warmer:   false
                 engines:        [] # Required
                 loaders:        []
                 packages:       []
@@ -97,8 +94,6 @@ Full Default Configuration
 
 General Configuration
 ---------------------
-
-* ``cache_warmer`` (type: string)
 
 * ``charset`` (type: string)
 

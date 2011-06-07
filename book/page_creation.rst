@@ -691,11 +691,11 @@ format you prefer:
     .. code-block:: xml
 
         <!-- app/config/config.xml -->
-        <framework:config charset="UTF-8" error-handler="null" cache-warmer="false" secret="xxxxxxxxxx">
-            <framework:router resource="%kernel.root_dir%/config/routing.xml" cache-warmer="true" />
+        <framework:config charset="UTF-8" error-handler="null" secret="xxxxxxxxxx">
+            <framework:router resource="%kernel.root_dir%/config/routing.xml" />
             <framework:validation annotations="true" />
             <framework:session default-locale="en" lifetime="3600" auto-start="true" />
-            <framework:templating assets-version="SomeVersionScheme" cache-warmer="true">
+            <framework:templating assets-version="SomeVersionScheme">
                 <framework:engine id="twig" />
             </framework:templating>
             <framework:form />
@@ -703,7 +703,7 @@ format you prefer:
         </framework:config>
 
         <!-- Twig Configuration -->
-        <twig:config debug="%kernel.debug%" strict-variables="%kernel.debug%" cache-warmer="true" />
+        <twig:config debug="%kernel.debug%" strict-variables="%kernel.debug%" />
 
     .. code-block:: php
 
