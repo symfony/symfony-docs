@@ -227,7 +227,7 @@ in a number of different formats including YAML, XML or directly inside the
 
 .. tip::
 
-    The table option is optional and if omitted, will be determined automatically
+    The table name is optional and if omitted, will be determined automatically
     based on the name of the entity class.
 
 Doctrine allows you to choose from a wide variety of different field types,
