@@ -155,8 +155,8 @@ each Event):
 
 2. The Resolver is called to determine the Controller to execute;
 
-3. Listeners of the ``core.response`` event can now manipulate the Controller
-   callable the way they want (change it, wrap it, ...);
+3. Listeners of the ``core.controller`` event can now manipulate the
+   Controller callable the way they want (change it, wrap it, ...);
 
 4. The Kernel checks that the Controller is actually a valid PHP callable;
 
@@ -478,7 +478,7 @@ The Dispatcher
 ~~~~~~~~~~~~~~
 
 The dispatcher is the central object of the event dispatcher system. In
-general, a single dispatcher is created, which maintains a register of
+general, a single dispatcher is created, which maintains a registry of
 listeners. When an event is dispatched via the dispatcher, it notifies all
 listeners registered with that event.
 
