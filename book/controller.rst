@@ -368,7 +368,7 @@ forwarding, rendering templates and accessing core services, are very easy
 to manage in Symfony2.
 
 .. index::
-   single: Controller; Request
+   single: Controller; Redirecting
 
 Redirecting
 ~~~~~~~~~~~
