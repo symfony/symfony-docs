@@ -395,10 +395,12 @@ perform a 301 (permanent) redirect, modify the second argument::
 .. tip::
 
     The ``redirect()`` method is simply a shortcut that creates a ``Response``
-    object that specializes in redirecting the user. It's equivalent to::
-    
+    object that specializes in redirecting the user. It's equivalent to:
+
+    .. code-block:: php
+
         use Symfony\Component\HttpFoundation\RedirectResponse;
-        
+
         return new RedirectResponse($this->generateUrl('homepage'));
 
 .. index::
