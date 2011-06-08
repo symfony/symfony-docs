@@ -296,7 +296,7 @@ component when checking it:
     {
         private $container;
 
-        public function setContainer(ContainerInterface $container)
+        public function setContainer(ContainerInterface $container = null)
         {
             $this->container = $container;
         }
