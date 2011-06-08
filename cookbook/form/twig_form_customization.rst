@@ -358,8 +358,8 @@ So far, you've seen the different ways you can customize the widget output
 of all text field types. You can also customize individual fields. For example,
 suppose you have two ``text`` fields - ``first_name`` and ``last_name`` - but
 you only want to customize one of the fields. This can be accomplished by
-customizing a block whose name is a combination of the field name and which
-part of the field is being customized. For example:
+customizing a block whose name is a combination of the field id attribute and
+which part of the field is being customized. For example:
 
 .. code-block:: html+jinja
 
