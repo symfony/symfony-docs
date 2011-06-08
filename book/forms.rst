@@ -30,13 +30,13 @@ going to need to build a form. But before you begin, let's focus on the generic
 
     // src/Acme/StoreBundle/Entity/Product.php
     namespace Acme\StoreBundle\Entity;
-    
+
     class Product
     {
         public $name;
-        
+
         protected $price;
-        
+
         public function getPrice()
         {
             return $this->price;
@@ -53,9 +53,9 @@ going to need to build a form. But before you begin, let's focus on the generic
    If you're coding along with this example, be sure to create and enable
    the ``AcmeStoreBundle``. Run the following command and follow the on-screen
    directions:
-   
+
    .. code-block:: text
-   
+
        php app/console init:bundle Acme/StoreBundle src/
 
 This type of class is commonly called a "plain-old-PHP-object" because, so far,
@@ -134,17 +134,17 @@ helper functions:
     .. code-block:: html+jinja
 
         {# src/Acme/StoreBundle/Resources/views/Default/index.html.twig #}
-        
+
         <form action="{{ path('store_product') }}" method="post" {{ form_enctype(form) }}>
             {{ form_widget(form) }}
-            
+
             <input type="submit" />
         </form>
 
     .. code-block:: html+php
-    
+
         <?php // src/Acme/StoreBundle/Resources/views/Default/index.html.php ?>
-        
+
         <form action="<?php echo $view['router']->generate('store_product') ?>" method="post" <?php echo $view['form']->enctype($form) ?> >
             <?php echo $view['form']->widget($form) ?>
 
@@ -187,7 +187,7 @@ controller:
     {
         // just setup a fresh $product object (no dummy data)
         $product = new Product();
-        
+
         $form = $this->createFormBuilder($product)
             ->add('name', 'text')
             ->add('price', 'money', array('currency' => 'USD'))
@@ -203,7 +203,7 @@ controller:
                 return $this->redirect($this->generateUrl('store_product_success'));
             }
         }
-        
+
         // ...
     }
 
@@ -221,7 +221,7 @@ of the ``$product`` object. This all happens via the ``bindRequest()`` method.
 
         $product = new Product();
         $product->name = 'Test product';
-    
+
         $form->bindRequest($this->get('request'));
         echo $product->name;
 
@@ -328,7 +328,7 @@ number:
             public static function loadValidatorMetadata(ClassMetadata $metadata)
             {
                 $metadata->addPropertyConstraint('name', new NotBlank());
-                
+
                 $metadata->addPropertyConstraint('price', new NotBlank());
                 $metadata->addPropertyConstraint('price', new Min(0));
             }
@@ -423,10 +423,10 @@ guess (``text``).
 
     The ``createFormBuilder()`` method takes up to two arguments neither
     of which are required):
-    
+
      * The default data to initialize the form fields. This argument can be an
        associative array or a plain old PHP object like in this example;
-     
+
      * an array of options for the form.
 
 This example is pretty trivial, but field guessing can be a major time saver.
@@ -449,7 +449,7 @@ of code. Of course, you'll usually need much more flexibility when rendering:
     .. code-block:: html+jinja
 
         {# src/Acme/StoreBundle/Resources/views/Default/index.html.twig #}
-        
+
         <form action="{{ path('store_product') }}" method="post" {{ form_enctype(form) }}>
             {{ form_errors(form) }}
 
@@ -462,9 +462,9 @@ of code. Of course, you'll usually need much more flexibility when rendering:
         </form>
 
     .. code-block:: html+php
-    
+
         <?php // src/Acme/StoreBundle/Resources/views/Default/index.html.php ?>
-        
+
         <form action="<?php echo $view['router']->generate('store_product') ?>" method="post" <?php echo $view['form']->enctype($form) ?>>
             <?php echo $view['form']->errors($form) ?>
 
@@ -631,30 +631,30 @@ It can be used to quickly build a form object in the controller:
     {
         $product = // ...
         $form = $this->createForm(new ProductType(), $product);
-        
+
         // ...
     }
 
 .. note::
     You can also set the data on the form via the ``setData()`` method:
-    
+
     .. code-block:: php
-    
+
         $form = $this->createForm(new ProductType());
         $form->setData($product);
 
     If you use the ``setData`` method - and want to take advantage of field
     type guessing, be sure to add the following to your form class:
-    
+
     .. code-block:: php
-    
+
         public function getDefaultOptions(array $options)
         {
             return array(
                 'data_class' => 'Acme\StoreBundle\Entity\Product',
             );
         }
-    
+
     This is necessary because the object is passed to the form after field
     type guessing.
 
@@ -859,7 +859,7 @@ the following inside ``ProductType``:
         // ...
 
         $builder->add('reviews', 'collection', array(
-           'type'       => new ProductReviewType(),
+           'type' => new ProductReviewType(),
         ));
     }
 
@@ -885,10 +885,10 @@ do this, create a new template file that will store the new markup:
 .. configuration-block::
 
     .. code-block:: html+jinja
-    
+
         {# src/Acme/StoreBundle/Resources/views/Form/fields.html.twig #}
-        {% extends 'TwigBundle:Form:div_layout.html.twig' %}
-    
+        {% extends 'div_layout.html.twig' %}
+
         {% block field_row %}
         {% spaceless %}
             <div class="form_row">
@@ -919,7 +919,7 @@ the form:
 
         {# src/Acme/StoreBundle/Resources/views/Default/index.html.twig #}
         {% form_theme form 'AcmeStoreBundle:Form:fields.html.twig' %}
-        
+
         <form ...>
 
 The ``form_theme`` tag "imports" the template and uses all of its form-related
@@ -942,7 +942,7 @@ Form Template Blocks
 Every part of a form that is rendered - HTML form elements, errors, labels, etc
 - is defined in a base template as individual Twig blocks. By default, every
 block needed is defined in the `div_layout.html.twig`_ file that lives inside
-the core ``TwigBundle``. Inside this file, you can see every block needed
+the `Twig Bridge`_. Inside this file, you can see every block needed
 to render a form and every default field type.
 
 Each block follows the same basic pattern and is broken up into two pieces,
@@ -978,14 +978,14 @@ a form that can be rendered:
 By knowing the field type (e.g. ``textarea``) and which part you want to
 customize (e.g. ``widget``), you can construct the block name that needs
 to be overridden (e.g. ``textarea_widget``). The best way to customize the
-block is to copy it from ``div_layout.html.twig`` to a new template, customize
+block is to copy it from `div_layout.html.twig`_ to a new template, customize
 it, and then use the ``form_theme`` tag as shown in the earlier example.
 
 Form Type Block Inheritance
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 In some cases, the block you want to customize will appear to be missing.
-For example, if you look in the ``div_layout.html.twig`` file, you'll find
+For example, if you look in the `div_layout.html.twig`_ file, you'll find
 no ``textarea_errors`` block. So how are the errors for a textarea field
 rendered?
 
@@ -1010,18 +1010,18 @@ templates in your application. To automatically include the customized blocks
 from the ``fields.html.twig`` template created earlier, modify your application
 configuration file:
 
-.. configuration-block:: 
+.. configuration-block::
 
     .. code-block:: yaml
-        
+
         # app/config/config.yml
         twig:
             form:
                 resources: ['AcmeStoreBundle:Form:fields.html.twig']
             # ...
-    
+
     .. code-block:: xml
-    
+
         <!-- app/config/config.xml -->
         <twig:config ...>
                 <twig:form>
@@ -1039,20 +1039,20 @@ configuration file:
         ));
 
 Any blocks inside the ``fields.html.twig`` template are now used globally
-to define form output. 
+to define form output.
 
 .. sidebar::  Customizing Form Output all in a Single File
 
     You can also customize a form block right inside the template where that
     customization is needed. Note that this method will only work if the
     template used extends some base template via the ``{% extends %}``:
-    
+
     .. code-block:: html+jinja
-    
+
         {% extends '::base.html.twig' %}
-        
+
         {% form_theme form _self %}
-        {% use 'TwigBundle:Form:div_layout.html.twig' %}
+        {% use 'div_layout.html.twig' %}
 
         {% block field_row %}
             {# custom field row output #}
@@ -1060,7 +1060,7 @@ to define form output.
 
         {% block content %}
             {# ... #}
-            
+
             {{ form_row(form.name) }}
         {% endblock %}
 
@@ -1068,11 +1068,11 @@ to define form output.
     directly inside the template that will use those customizations. Use
     this method to quickly make form output customizations that will only
     ever be needed in a single template.
-    
+
     The ``use`` tag is also helpful as it gives you access to all of the
-    blocks defined inside ``div_layout.html.twig``. For example, this ``use``
+    blocks defined inside `div_layout.html.twig`_. For example, this ``use``
     statement is necessary to make the following form customization, as it
-    gives you access to the ``attributes`` block defined in ``div_layout.html.twig``:
+    gives you access to the ``attributes`` block defined in `div_layout.html.twig`_:
 
     .. code-block:: html+jinja
 
@@ -1158,5 +1158,6 @@ Learn more from the Cookbook
 * :doc:`/cookbook/form/twig_form_customization`
 
 .. _`Symfony2 Form Component`: https://github.com/symfony/Form
-.. _`div_layout.html.twig`: https://github.com/symfony/symfony/blob/master/src/Symfony/Bundle/TwigBundle/Resources/views/Form/div_layout.html.twig
+.. _`Twig Bridge`: https://github.com/symfony/symfony/tree/master/src/Symfony/Bridge/Twig
+.. _`div_layout.html.twig`: https://github.com/symfony/symfony/blob/master/src/Symfony/Bridge/Twig/Resources/views/Form/div_layout.html.twig
 .. _`Cross-site request forgery`: http://en.wikipedia.org/wiki/Cross-site_request_forgery
