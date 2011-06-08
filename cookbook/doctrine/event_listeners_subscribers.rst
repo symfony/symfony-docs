@@ -31,11 +31,11 @@ that use this connection.
             my.listener:
                 class: MyEventListener
                 tags:
-                    - { name: doctrine.event_listener }
+                    - { name: doctrine.event_listener, event: postLoad }
             my.listener2:
                 class: MyEventListener2
                 tags:
-                    - { name: doctrine.event_listener, connection: default }
+                    - { name: doctrine.event_listener, event: postLoad, connection: default }
             my.subscriber:
                 class: MyEventSubscriber
                 tags:
@@ -55,10 +55,10 @@ that use this connection.
 
             <services>
                 <service id="my.listener" class="MyEventListener">
-                    <tag name="doctrine.event_listener" />
+                    <tag name="doctrine.event_listener" event="postLoad" />
                 </service>
                 <service id="my.listener2" class="MyEventListener2">
-                    <tag name="doctrine.event_listener" connection="default" />
+                    <tag name="doctrine.event_listener" event="postLoad" connection="default" />
                 </service>
                 <service id="my.subscriber" class="MyEventSubscriber">
                     <tag name="doctrine.event_subscriber" connection="default" />
