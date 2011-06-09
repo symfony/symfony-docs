@@ -71,22 +71,23 @@ the view layer, this work is done in your templates:
 
     .. code-block:: html+jinja
 
-        {% javascripts 'js/src/*' filter='yui_js' %}
+        {% javascripts '@AcmeFooBundle/Resources/public/js/*' filter='yui_js' %}
         <script src="{{ asset_url }}"></script>
         {% endjavascripts %}
 
     .. code-block:: html+php
 
         <?php foreach ($view['assetic']->javascripts(
-            array('js/src/*'),
+            array('@AcmeFooBundle/Resources/public/js/*'),
             array('yui_js')) as $url): ?>
         <script src="<?php echo $view->escape($url) ?>"></script>
         <?php endforeach; ?>
 
 .. note::
 
-    The above example assumes that your JavaScript files are in the ``js/src``
-    directory. This isn't important however - you can include your Javascript
+    The above example assumes that you have a bundle called ``AcmeFooBundle``
+    and your JavaScript files are in the ``Resources/public/js`` directory under
+    your bundle. This isn't important however - you can include your Javascript
     files no matter where they are.
 
 With the addition of the ``yui_js`` filter to the asset tags above, you should
@@ -97,14 +98,14 @@ can be repeated to minify your stylesheets.
 
     .. code-block:: html+jinja
 
-        {% stylesheets 'css/src/*' filter='yui_css' %}
+        {% stylesheets '@AcmeFooBundle/Resources/public/css/*' filter='yui_css' %}
         <link rel="stylesheet" type="text/css" media="screen" href="{{ asset_url }}" />
         {% endstylesheets %}
 
     .. code-block:: html+php
 
         <?php foreach ($view['assetic']->stylesheets(
-            array('css/src/*'),
+            array('@AcmeFooBundle/Resources/public/css/*'),
             array('yui_css')) as $url): ?>
         <link rel="stylesheet" type="text/css" media="screen" href="<?php echo $view->escape($url) ?>" />
         <?php endforeach; ?>
@@ -122,14 +123,14 @@ apply this filter when debug mode is off.
 
     .. code-block:: html+jinja
 
-        {% javascripts 'js/src/*' filter='?yui_js' %}
+        {% javascripts '@AcmeFooBundle/Resources/public/js/*' filter='?yui_js' %}
         <script src="{{ asset_url }}"></script>
         {% endjavascripts %}
 
     .. code-block:: html+php
 
         <?php foreach ($view['assetic']->javascripts(
-            array('js/src/*'),
+            array('@AcmeFooBundle/Resources/public/js/*'),
             array('?yui_js')) as $url): ?>
         <script src="<?php echo $view->escape($url) ?>"></script>
         <?php endforeach; ?>
