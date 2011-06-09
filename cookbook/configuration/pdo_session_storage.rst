@@ -43,6 +43,36 @@ configuration format of your choice):
                     user:     myuser
                     password: mypassword
 
+    .. code-block:: xml
+
+        <!-- app/config/config.xml -->
+        <framework:config>
+            <framework:session storage-id="session.storage.pdo" default-locale="en" lifetime="3600" auto-start="true"/>
+        </framework:config>
+
+        <parameters>
+            <parameter key="pdo.db_options" type="collection">
+                <parameter key="db_table">session</parameter>
+                <parameter key="db_id_col">session_id</parameter>
+                <parameter key="db_data_col">session_value</parameter>
+                <parameter key="db_time_col">session_time</parameter>
+            </parameter>
+            <parameter key="pdo.options" />
+        </parameters>
+
+        <services>
+            <service id="pdo" class="PDO">
+                <argument id="dsn">mysql:dbname=sf2demo</argument>
+                <argument id="user">root</argument>
+                <argument id="password">password</argument>
+            </service>
+
+            <service id="session.storage.pdo" class="Symfony\Component\HttpFoundation\SessionStorage\PdoSessionStorage">
+                <argument type="service" id="pdo" />
+                <argument>%pdo.db_options%</argument>
+                <argument>%pdo.options%</argument>
+            </service>
+        </services>
 
 * ``db_table``: The name of the session table in your database
 * ``db_id_col``: The name of the id column in your session table (VARCHAR(255) or larger)
@@ -70,6 +100,14 @@ parameter.ini by referencing the database-related parameters defined there:
                 dsn:      "mysql:dbname=%database_name%"
                 user:     %database_user%
                 password: %database_password%
+
+    .. code-block:: xml
+
+        <service id="pdo" class="PDO">
+            <argument id="dsn">mysql:dbname=%database_name%</argument>
+            <argument id="user">%database_user%</argument>
+            <argument id="password">%database_password%</argument>
+        </service>
 
 Example MySQL Statement
 -----------------------
