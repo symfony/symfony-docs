@@ -167,6 +167,8 @@ instance is returned each time you ask for the service. This is almost always
 the behavior you'll need (it's more flexible and powerful), but we'll learn
 later how you can configure a service that has multiple instances.
 
+.. _book-service-container-parameters:
+
 Service Parameters
 ------------------
 
