@@ -149,6 +149,12 @@ properties should be *mapped* to the database. This metadata can be specified
 in a number of different formats including YAML, XML or directly inside the
 ``Product`` class via annotations:
 
+.. note::
+
+    A bundle can accept only one metadata definition format. For example, it's
+    not possible to mix YAML metadata definitions with annotated PHP entity
+    class definitions.
+
 .. configuration-block::
 
     .. code-block:: php-annotations
