@@ -168,25 +168,25 @@ in a number of different formats including YAML, XML or directly inside the
         // src/Acme/StoreBundle/Document/Product.php
         namespace Acme\StoreBundle\Document;
 
-        use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
+        use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 
         /**
-         * @ODM\Document
+         * @MongoDB\Document
          */
         class Product
         {
             /**
-             * @ODM\Id
+             * @MongoDB\Id
              */
             protected $id;
 
             /**
-             * @ODM\String
+             * @MongoDB\String
              */
             protected $name;
 
             /**
-             * @ODM\Float
+             * @MongoDB\Float
              */
             protected $price;
         }
@@ -226,10 +226,10 @@ see the :ref:`cookbook-mongodb-field-types` section.
 
     You can also check out Doctrine's `Basic Mapping Documentation`_ for
     all details about mapping information. If you use annotations, you'll
-    need to prepend all annotations with ``ODM\`` (e.g. ``ODM\String``),
+    need to prepend all annotations with ``MongoDB\`` (e.g. ``MongoDB\String``),
     which is not shown in Doctrine's documentation. You'll also need to include
-    the ``use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;`` statement,
-    which *imports* the ``ODM`` annotations prefix.
+    the ``use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;`` statement,
+    which *imports* the ``MongoDB`` annotations prefix.
 
 Generating Getters and Setters
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -484,10 +484,10 @@ To do this, add the name of the repository class to your mapping definition.
         // src/Acme/StoreBundle/Document/Product.php
         namespace Acme\StoreBundle\Document;
 
-        use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
+        use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 
         /**
-         * @ODM\Document(repositoryClass="Acme\StoreBundle\Repository\ProductRepository")
+         * @MongoDB\Document(repositoryClass="Acme\StoreBundle\Repository\ProductRepository")
          */
         class Product
         {
