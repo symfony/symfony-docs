@@ -436,16 +436,11 @@ To take advantage of this system, you'll create a ``Configuration`` class
 and build a tree that defines your configuration in that class::
 
     // src/Acme/HelloBundle/DependencyExtension/Configuration.php
-    namespace Acme\HelloBundle\DependenyInjection;
+    namespace Acme\HelloBundle\DependencyInjection;
 
     use Symfony\Component\Config\Definition\Builder\TreeBuilder;
     use Symfony\Component\Config\Definition\ConfigurationInterface;
 
-    /**
-     * FrameworkExtension configuration structure.
-     *
-     * @author Jeremy Mikola <jmikola@gmail.com>
-     */
     class Configuration implements ConfigurationInterface
     {
         public function getConfigTreeBuilder()
@@ -458,6 +453,8 @@ and build a tree that defines your configuration in that class::
                     ->scalarNode('my_type')->defaultValue('bar')->end()
                 ->end()
             ;
+
+            return $treeBuilder;
         }
 
 This is a *very* simple example, but you can now use this class in your ``load()``
@@ -524,6 +521,11 @@ In this case, the extension class must also implement a ``getAlias()`` method
 and return a unique alias named after the bundle (e.g. ``acme_hello``). This
 is required because the class name doesn't follow the standards by ending
 in ``Extension``.
+
+Additionally, the ``load()`` method of your extension will *only* be called
+if the user specifies the ``acme_hello`` alias in at least one configuration
+file. Once again, this is because the Extension class doesn't follow the
+standards set out above, so nothing happens automatically.
 
 .. _`FrameworkBundle Configuration`: https://github.com/symfony/symfony/blob/master/src/Symfony/Bundle/FrameworkBundle/DependencyInjection/Configuration.php
 .. _`TwigBundle Configuration`: https://github.com/symfony/symfony/blob/master/src/Symfony/Bundle/TwigBundle/DependencyInjection/Configuration.php
