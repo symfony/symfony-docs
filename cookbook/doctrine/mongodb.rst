@@ -428,8 +428,8 @@ Deleting an Object
 Deleting an object is very similar, but requires a call to the ``remove()``
 method of the document manager::
 
-    $em->remove($product);
-    $em->flush();
+    $dm->remove($product);
+    $dm->flush();
 
 As you might expect, the ``remove()`` method notifies Doctrine that you'd
 like to remove the given document from the MongoDB. The actual delete operation
