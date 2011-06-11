@@ -13,9 +13,6 @@ TwigBundle Configuration Reference
                 resources:
                     - TwigBundle:Form:div_layout.html.twig  # Default
                     - MyBundle::form.html.twig  # Example
-            extensions:
-                - twig.extension.debug  # Example
-                - twig.extension.text   # Example
             globals:
                 foo: "@bar" # Example
                 pi:  3.14   # Example
@@ -41,8 +38,6 @@ TwigBundle Configuration Reference
                 </twig:form>
                 <twig:global key="foo" id="bar" type="service" />
                 <twig:global key="pi">3.14</twig:global>
-                <twig:extension id="twig.extension.debug" />
-                <twig:extension id="twig.extension.text" />
             </twig:config>
         </container>
 
@@ -53,10 +48,6 @@ TwigBundle Configuration Reference
                 'resources' => array(
                     'MyBundle::form.html.twig',
                 )
-             ),
-             'extensions' => array(
-                 'twig.extension.debug',
-                 'twig.extension.text',
              ),
              'globals' => array(
                  'foo' => '@bar',
