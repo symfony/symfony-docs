@@ -443,6 +443,18 @@ Once you have your repository, you have access to all sorts of helpful methods::
     Of course, you can also issue complex queries, which you'll learn more
     about in the :ref:`book-doctrine-queries` section.
 
+You can also take advantage of the useful ``findBy`` and ``findOneBy`` methods
+to easily fetch objects based on multiple conditions::
+
+    // query for one product matching be name and price
+    $product = $repository->findOneBy(array('name' => 'foo', 'price' => 19.99));
+
+    // query for all prdocuts matching the name, ordered by price
+    $product = $repository->findBy(
+        array('name' => 'foo'),
+        array('price', 'ASC')
+    );
+
 .. tip::
 
     When you render any page, you can see how many queries were made in the
