@@ -29,23 +29,24 @@ Installation
 
 To use the MongoDB ODM, you'll need two libraries provided by Doctrine and
 one bundle that integrates them into Symfony. If you're using the Symfony
-Standard Distribution, add the following to your ``bin/deps`` file:
+Standard Distribution, add the following to the ``deps`` file at the root
+of your project:
 
 .. code-block:: text
 
-    /bundles/Symfony/Bundle DoctrineMongoDBBundle git://github.com/symfony/DoctrineMongoDBBundle.git
-    /                       mongodb-odm           git://github.com/doctrine/mongodb-odm.git
-    /                       mongodb               git://github.com/doctrine/mongodb.git
+    DoctrineMongoDBBundle   /bundles/Symfony/Bundle git://github.com/symfony/DoctrineMongoDBBundle.git
+    mongodb-odm             /                       git://github.com/doctrine/mongodb-odm.git
+    mongodb                 /                       git://github.com/doctrine/mongodb.git
 
 Now, update the vendor libraries by running:
 
 .. code-block:: bash
 
-    $ php bin/vendors.php
+    $ ./bin/vendors
 
 Next, add the ``Doctrine\ODM\MongoDB`` and ``Doctrine\MongoDB`` namespaces
 to the ``app/autoload.php`` file so that these libraries can be autoloaded.
-Be sure to add them anywhere *above* the ``Doctrine`` namespace (shown here):
+Be sure to add them anywhere *above* the ``Doctrine`` namespace (shown here)::
 
     // app/autoload.php
     $loader->registerNamespaces(array(
@@ -98,8 +99,8 @@ A Simple Example: A Product
 ---------------------------
 
 The best way to understand the Doctrine MongoDB ODM is to see it in action.
-In this section, you'll walk through each step needed to create start persisting
-document to and from MongoDB.
+In this section, you'll walk through each step needed to start persisting
+documents to and from MongoDB.
 
 .. sidebar:: Code along with the example
 
@@ -215,7 +216,7 @@ in a number of different formats including YAML, XML or directly inside the
                 <field fieldName="name" type="string" />
                 <field fieldName="price" type="float" />
             </document>
-        </doctrine-mapping>
+        </doctrine-mongo-mapping>
 
 Doctrine allows you to choose from a wide variety of different field types,
 each with their own options. For information on the available field types,
@@ -291,7 +292,7 @@ of the bundle:
 
 Let's walk through this example:
 
-* **lines 7-10** In this section, you instantiate and work with the ``$product``
+* **lines 8-10** In this section, you instantiate and work with the ``$product``
   object like any other, normal PHP object;
 
 * **line 12** This line fetches Doctrine's *document manager* object, which is
@@ -310,7 +311,7 @@ Let's walk through this example:
 
   In fact, since Doctrine is aware of all your managed objects, when you
   call the ``flush()`` method, it calculates an overall changeset and executes
-  the most efficient query/queries possible.
+  the most efficient operation possible.
 
 When creating or updating objects, the workflow is always the same. In the
 next section, you'll see how Doctrine is smart enough to update entries if
@@ -345,7 +346,7 @@ you've configured a route to display a specific ``Product`` based on its
 When you query for a particular type of object, you always use what's known
 as its "repository". You can think of a repository as a PHP class whose only
 job is to help you fetch objects of a certain class. You can access the
-repository object for an entity class via::
+repository object for a document class via::
 
     $repository = $this->get('doctrine.odm.mongodb.document_manager')
         ->getRepository('AcmeStoreBundle:Product');
@@ -376,6 +377,18 @@ Once you have your repository, you have access to all sorts of helpful methods::
 
     Of course, you can also issue complex queries, which you'll learn more
     about in the :ref:`book-doctrine-queries` section.
+
+You can also take advantage of the useful ``findBy`` and ``findOneBy`` methods
+to easily fetch objects based on multiple conditions::
+
+    // query for one product matching be name and price
+    $product = $repository->findOneBy(array('name' => 'foo', 'price' => 19.99));
+
+    // query for all prdocuts matching the name, ordered by price
+    $product = $repository->findBy(
+        array('name' => 'foo'),
+        array('price', 'ASC')
+    );
 
 Updating an Object
 ~~~~~~~~~~~~~~~~~~
@@ -419,20 +432,131 @@ method of the document manager::
     $em->flush();
 
 As you might expect, the ``remove()`` method notifies Doctrine that you'd
-like to remove the given entity from the MongoDB. The actual delete operation
+like to remove the given document from the MongoDB. The actual delete operation
 however, isn't actually executed until the ``flush()`` method is called.
 
 Querying for Objects
 --------------------
 
-Writing Queries
-~~~~~~~~~~~~~~~
+As you saw above, the built-in repository class allows you to query for one
+or many objects based on an number of different parameters. When this is
+enough, this is the easiest way to query for documents. Of course, you can
+also create more complex queries.
 
 Using the Query Builder
 ~~~~~~~~~~~~~~~~~~~~~~~
 
+Doctrine's ODM ships with a query "Builder" object, which allows you to construct
+a query for exactly which documents you want to return. If you use an IDE,
+you can also take advantage of auto-completion as you type the method names.
+From inside a controller::
+
+    $products = $this->get('doctrine.odm.mongodb.document_manager')
+        ->createQueryBuilder('AcmeStoreBundle:Product')
+        ->field('name')->equals('foo')
+        ->limit(10)
+        ->sort('price', 'ASC')
+        ->getQuery()
+        ->execute()
+
+In this case, 10 products with a name of "foo", ordered from lowest price
+to highest price are returned.
+
+The ``QueryBuilder`` object contains every method necessary to build your
+query. For more information on Doctrine's Query Builder, consult Doctrine's
+`Query Builder`_ documentation. For a list of the available conditions you
+can place on the query, see the `Conditional Operators`_ documentation specifically.
+
 Custom Repository Classes
 ~~~~~~~~~~~~~~~~~~~~~~~~~
+
+In the previous section, you began constructing and using more complex queries
+from inside a controller. In order to isolate, test and reuse these queries,
+it's a good idea to create a custom repository class for your document and
+add methods with your query logic there.
+
+To do this, add the name of the repository class to your mapping definition.
+
+.. configuration-block::
+
+    .. code-block:: php-annotations
+
+        // src/Acme/StoreBundle/Document/Product.php
+        namespace Acme\StoreBundle\Document;
+
+        use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
+
+        /**
+         * @ODM\Document(repositoryClass="Acme\StoreBundle\Repository\ProductRepository")
+         */
+        class Product
+        {
+            //...
+        }
+
+    .. code-block:: yaml
+
+        # src/Acme/StoreBundle/Resources/config/doctrine/Product.mongodb.yml
+        Acme\StoreBundle\Document\Product:
+            repositoryClass: Acme\StoreBundle\Repository\ProductRepository
+            # ...
+
+    .. code-block:: xml
+
+        <!-- src/Acme/StoreBundle/Resources/config/doctrine/Product.mongodb.xml -->
+        <!-- ... -->
+        <doctrine-mongo-mapping xmlns="http://doctrine-project.org/schemas/odm/doctrine-mongo-mapping"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:schemaLocation="http://doctrine-project.org/schemas/odm/doctrine-mongo-mapping
+                            http://doctrine-project.org/schemas/odm/doctrine-mongo-mapping.xsd">
+
+            <document name="Acme\StoreBundle\Document\Product"
+                    repository-class="Acme\StoreBundle\Repository\ProductRepository">
+                <!-- ... -->
+            </document>
+
+        </doctrine-mong-mapping>
+
+Doctrine can generate the repository class for you by running the same command
+used earlier to generate the missing getter and setter methods:
+
+.. code-block:: bash
+
+    php app/console doctrine:mongodb:generate:documents AcmeStoreBundle
+
+Next, add a new method - ``findAllOrderedByName()`` - to the newly generated
+repository class. This method will query for all of the ``Product`` documents,
+ordered alphabetically.
+
+.. code-block:: php
+
+    // src/Acme/StoreBundle/Repository/ProductRepository.php
+    namespace Acme\StoreBundle\Repository;
+
+    use Doctrine\ODM\MongoDB\DocumentRepository;
+
+    class ProductRepository extends DocumentRepository
+    {
+        public function findAllOrderedByName()
+        {
+            return $this->createQueryBuilder()
+                ->sort('name', 'ASC')
+                ->getQuery()
+                ->execute();
+        }
+    }
+
+You can use this new method just like the default finder methods of the repository::
+
+    $product = $this->get('doctrine.odm.mongodb.document_manager')
+        ->getRepository('AcmeStoreBundle:Product')
+        ->findAllOrderedByName();
+                
+
+.. note::
+
+    When using a custom repository class, you still have access to the default
+    finder methods such as ``find()`` and ``findAll()``.
 
 Doctrine Extensions: Timestampable, Sluggable, etc.
 ---------------------------------------------------
@@ -445,28 +569,34 @@ and *Tree*.
 For more information on how to find and use these extensions, see the cookbook
 article about :doc:`using common Doctrine extensions</cookbook/doctrine/common_extensions>`.
 
-.. _book-doctrine-field-types:
+.. _cookbook-mongodb-field-types:
 
 Doctrine Field Types Reference
 ------------------------------
 
 Doctrine comes with a large number of field types available. Each of these
-maps a PHP data type to a specific column type in whatever database you're
-using. The following types are supported in Doctrine:
+maps a PHP data type to a specific `MongoDB type`_. The following are just *some*
+of the types supported by Doctrine:
 
------> Fill in types
+* ``string``
+* ``int``
+* ``float``
+* ``date``
+* ``timestamp``
+* ``boolean``
+* ``file``
 
 For more information, see Doctrine's `Mapping Types documentation`_.
 
 .. index::
-   single: Doctrine; ORM Console Commands
-   single: CLI; Doctrine ORM
+   single: Doctrine; ODM Console Commands
+   single: CLI; Doctrine ODM
 
 Console Commands
 ----------------
 
-The Doctrine2 ORM integration offers several console commands under the
-``doctrine`` namespace. To view the command list you can run the console
+The Doctrine2 ODM integration offers several console commands under the
+``doctrine:mongodb`` namespace. To view the command list you can run the console
 without any arguments:
 
 .. code-block:: bash
@@ -482,13 +612,9 @@ For example, to get details about the ``doctrine:mongodb:query`` task, run:
 
     php app/console help doctrine:mongodb:query
 
-Some notable or interesting tasks include:
-
-----> List cool tasks here
-
 .. note::
 
-   To be able to load data fixtures to your database, you will need to have the
+   To be able to load data fixtures into MongoDB, you will need to have the
    ``DoctrineFixturesBundle`` bundle installed. To learn how to do it,
    read the ":doc:`/cookbook/doctrine/doctrine_fixtures`" entry of the Cookbook.
 
@@ -499,242 +625,72 @@ Some notable or interesting tasks include:
 Configuration
 -------------
 
-.. code-block:: yaml
-
-    # app/config/config.yml
-    doctrine_mongodb:
-        connections:
-            default:
-                server: mongodb://localhost:27017
-                options:
-                    connect: true
-        default_database: hello_%kernel.environment%
-        document_managers:
-            default:
-                mappings:
-                    AcmeDemoBundle: ~
-                metadata_cache_driver: array # array, apc, xcache, memcache
-
-If you wish to use memcache to cache your metadata, you need to configure the
-``Memcache`` instance; for example, you can do the following:
-
-.. configuration-block::
-
-    .. code-block:: yaml
-
-        # app/config/config.yml
-        doctrine_mongodb:
-            default_database: hello_%kernel.environment%
-            connections:
-                default:
-                    server: mongodb://localhost:27017
-                    options:
-                        connect: true
-            document_managers:
-                default:
-                    mappings:
-                        AcmeDemoBundle: ~
-                    metadata_cache_driver:
-                        type: memcache
-                        class: Doctrine\Common\Cache\MemcacheCache
-                        host: localhost
-                        port: 11211
-                        instance_class: Memcache
-
-    .. code-block:: xml
-
-        <?xml version="1.0" ?>
-
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xmlns:doctrine_mongodb="http://symfony.com/schema/dic/doctrine/odm/mongodb"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd
-                                http://symfony.com/schema/dic/doctrine/odm/mongodb http://symfony.com/schema/dic/doctrine/odm/mongodb/mongodb-1.0.xsd">
-
-            <doctrine_mongodb:config default-database="hello_%kernel.environment%">
-                <doctrine_mongodb:document-manager id="default">
-                    <doctrine_mongodb:mapping name="AcmeDemoBundle" />
-                    <doctrine_mongodb:metadata-cache-driver type="memcache">
-                        <doctrine_mongodb:class>Doctrine\Common\Cache\MemcacheCache</doctrine_mongodb:class>
-                        <doctrine_mongodb:host>localhost</doctrine_mongodb:host>
-                        <doctrine_mongodb:port>11211</doctrine_mongodb:port>
-                        <doctrine_mongodb:instance-class>Memcache</doctrine_mongodb:instance-class>
-                    </doctrine_mongodb:metadata-cache-driver>
-                </doctrine_mongodb:document-manager>
-                <doctrine_mongodb:connection id="default" server="mongodb://localhost:27017">
-                    <doctrine_mongodb:options>
-                        <doctrine_mongodb:connect>true</doctrine_mongodb:connect>
-                    </doctrine_mongodb:options>
-                </doctrine_mongodb:connection>
-            </doctrine_mongodb:config>
-        </container>
-
-Mapping Configuration
-~~~~~~~~~~~~~~~~~~~~~
-
-Explicit definition of all the mapped documents is the only necessary
-configuration for the ODM and there are several configuration options that you
-can control. The following configuration options exist for a mapping:
-
-- ``type`` One of ``annotations``, ``xml``, ``yml``, ``php`` or ``staticphp``.
-  This specifies which type of metadata type your mapping uses.
-- ``dir`` Path to the mapping or entity files (depending on the driver). If
-  this path is relative it is assumed to be relative to the bundle root. This
-  only works if the name of your mapping is a bundle name. If you want to use
-  this option to specify absolute paths you should prefix the path with the
-  kernel parameters that exist in the DIC (for example %kernel.root_dir%).
-- ``prefix`` A common namespace prefix that all documents of this mapping
-  share. This prefix should never conflict with prefixes of other defined
-  mappings otherwise some of your documents cannot be found by Doctrine. This
-  option defaults to the bundle namespace + ``Document``, for example for an
-  application bundle called ``AcmeHelloBundle``, the prefix would be
-  ``Acme\HelloBundle\Document``.
-- ``alias`` Doctrine offers a way to alias document namespaces to simpler,
-  shorter names to be used in queries or for Repository access.
-- ``is_bundle`` This option is a derived value from ``dir`` and by default is
-  set to true if dir is relative proved by a ``file_exists()`` check that
-  returns false. It is false if the existence check returns true. In this case
-  an absolute path was specified and the metadata files are most likely in a
-  directory outside of a bundle.
-
-To avoid having to configure lots of information for your mappings you should
-follow these conventions:
-
-1. Put all your documents in a directory ``Document/`` inside your bundle. For
-   example ``Acme/HelloBundle/Document/``.
-2. If you are using xml, yml or php mapping put all your configuration files
-   into the ``Resources/config/doctrine/`` directory
-   suffixed with mongodb.xml, mongodb.yml or mongodb.php respectively.
-3. Annotations is assumed if an ``Document/`` but no
-   ``Resources/config/doctrine/`` directory is found.
-
-The following configuration shows a bunch of mapping examples:
-
-.. code-block:: yaml
-
-    doctrine_mongodb:
-        document_managers:
-            default:
-                mappings:
-                    MyBundle1: ~
-                    MyBundle2: yml
-                    MyBundle3: { type: annotation, dir: Documents/ }
-                    MyBundle4: { type: xml, dir: Resources/config/doctrine/mapping }
-                    MyBundle5:
-                        type: yml
-                        dir: my-bundle-mappings-dir
-                        alias: BundleAlias
-                    doctrine_extensions:
-                        type: xml
-                        dir: %kernel.root_dir%/../src/vendor/DoctrineExtensions/lib/DoctrineExtensions/Documents
-                        prefix: DoctrineExtensions\Documents\
-                        alias: DExt
+For detailed information on configuration options available when using the
+Doctrine ODM, see the :doc:`MongoDB Reference</reference/configuration/mongodb>` section.
 
 Registering Event Listeners and Subscribers
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Doctrine uses the lightweight ``Doctrine\Common\EventManager`` class to trigger
-a number of different events which you can hook into. You can register Event
-Listeners or Subscribers by tagging the respective services with
-``doctrine.odm.mongodb.<connection>_event_listener`` or
-``doctrine.odm.mongodb.<connection>_event_subscriber`` using the Dependency Injection
-container.
+Doctrine allows you to register listeners and subscribers that are notified
+when different events occur inside Doctrine's ODM. For more information,
+see Doctrine's `Event Documentation`_.
 
-You have to use the name of the MongoDB connection to clearly identify which
-connection the listeners should be registered with. If you are using multiple
-connections you can hook different events into each connection.
+In Symfony, you can register a listener or subscriber by creating a :term:`service`
+and then :ref:`tagging<book-service-container-tags>` it with a specific tag.
 
-Multiple Connections
-~~~~~~~~~~~~~~~~~~~~
+* **event listener**: Use the ``doctrine.odm.mongodb.<connection>_event_listener``
+    tag, where ``<connection>`` name is replaced by the name of your connection
+    (usually ``default``). Also, be sure to add an ``event`` key to the tag
+    specifying which event to listen to. Assuming your connection is called
+    ``default``, then:
 
-If you need multiple connections and document managers you can use the
-following syntax:
+    .. configuration-block::
+    
+        .. code-block:: yaml
+        
+            services:
+                my_doctrine_listener:
+                    class:   Acme\HelloBundle\Listener\MyDoctrineListener
+                    # ...
+                    tags:
+                        -  { name: doctrine.odm.mongodb.default_event_listener, event: postPersist }
 
-.. configuration-block
+        .. code-block:: xml
+        
+            <service id="my_doctrine_listener" class="Acme\HelloBundle\Listener\MyDoctrineListener">
+                <!-- ... -->
+                <tag name="doctrine.odm.mongodb.default_event_listener" event="postPersist" />
+            </service>.
 
-    .. code-block:: yaml
+        .. code-block:: php
 
-        doctrine_mongodb:
-            default_database: hello_%kernel.environment%
-            default_connection: conn2
-            default_document_manager: dm2
-            metadata_cache_driver: apc
-            connections:
-                conn1:
-                    server: mongodb://localhost:27017
-                    options:
-                        connect: true
-                conn2:
-                    server: mongodb://localhost:27017
-                    options:
-                        connect: true
-            document_managers:
-                dm1:
-                    connection: conn1
-                    metadata_cache_driver: xcache
-                    mappings:
-                        AcmeDemoBundle: ~
-                dm2:
-                    connection: conn2
-                    mappings:
-                        AcmeHelloBundle: ~
+            $definition = new Definition('Acme\HelloBundle\Listener\MyDoctrineListener');
+            // ...
+            $definition->addTag('doctrine.odm.mongodb.default_event_listener');
+            $container->setDefinition('my_doctrine_listener', $definition);
 
-    .. code-block:: xml
+* **event subscriber**: Use the ``doctrine.odm.mongodb.<connection>_event_subscriber``
+    tag. No other keys are needed in the tag.
 
-        <?xml version="1.0" ?>
+Summary
+-------
 
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xmlns:doctrine_mongodb="http://symfony.com/schema/dic/doctrine/odm/mongodb"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd
-                                http://symfony.com/schema/dic/doctrine/odm/mongodb http://symfony.com/schema/dic/doctrine/odm/mongodb/mongodb-1.0.xsd">
+With Doctrine, you can focus on your objects and how they're useful in your
+application and worry about persisting to MongoDB second. This is because
+Doctrine allows you to use any PHP object to hold your data and relies on
+mapping metadata information to map an object's data to a MongoDB collection.
 
-            <doctrine_mongodb:config
-                    default-database="hello_%kernel.environment%"
-                    default-document-manager="dm2"
-                    default-connection="dm2"
-                    proxy-namespace="Proxies"
-                    auto-generate-proxy-classes="true">
-                <doctrine_mongodb:connection id="conn1" server="mongodb://localhost:27017">
-                    <doctrine_mongodb:options>
-                        <doctrine_mongodb:connect>true</doctrine_mongodb:connect>
-                    </doctrine_mongodb:options>
-                </doctrine_mongodb:connection>
-                <doctrine_mongodb:connection id="conn2" server="mongodb://localhost:27017">
-                    <doctrine_mongodb:options>
-                        <doctrine_mongodb:connect>true</doctrine_mongodb:connect>
-                    </doctrine_mongodb:options>
-                </doctrine_mongodb:connection>
-                <doctrine_mongodb:document-manager id="dm1" metadata-cache-driver="xcache" connection="conn1">
-                    <doctrine_mongodb:mapping name="AcmeDemoBundle" />
-                </doctrine_mongodb:document-manager>
-                <doctrine_mongodb:document-manager id="dm2" connection="conn2">
-                    <doctrine_mongodb:mapping name="AcmeHelloBundle" />
-                </doctrine_mongodb:document-manager>
-            </doctrine_mongodb:config>
-        </container>
-
-Now you can retrieve the configured services connection services::
-
-    $conn1 = $container->get('doctrine.odm.mongodb.conn1_connection');
-    $conn2 = $container->get('doctrine.odm.mongodb.conn2_connection');
-
-And you can also retrieve the configured document manager services which utilize the above
-connection services::
-
-    $dm1 = $container->get('doctrine.odm.mongodb.dm1_document_manager');
-    $dm2 = $container->get('doctrine.odm.mongodb.dm2_document_manager');
-
-Registering Event Listeners and Subscribers
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Registering events works like described in the :ref:`ORM Bundle documentation <doctrine-event-config>`.
-The MongoDB event tags are called "doctrine.odm.mongodb.default_event_listener" and
-"doctrine.odm.mongodb.default_event_subscriber" respectively where "default" is the name of the
-MongoDB document manager.
+And even though Doctrine revolves around a simple concept, it's incredibly
+powerful, allowing you to create complex queries and subscribe to events
+that allow you to take different actions as objects go through their persistence
+lifecycle.
 
 .. _`MongoDB`:          http://www.mongodb.org/
 .. _`documentation`:    http://www.doctrine-project.org/docs/mongodb_odm/1.0/en
 .. _`Quick Start`:      http://www.mongodb.org/display/DOCS/Quickstart
 .. _`Basic Mapping Documentation`: http://www.doctrine-project.org/docs/mongodb_odm/1.0/en/reference/basic-mapping.html
+.. _`MongoDB type`: http://us.php.net/manual/en/mongo.types.php
 .. _`Mapping Types Documentation`: http://www.doctrine-project.org/docs/mongodb_odm/1.0/en/reference/basic-mapping.html#doctrine-mapping-types
+.. _`Query Builder`: http://www.doctrine-project.org/docs/mongodb_odm/1.0/en/reference/query-builder-api.html
+.. _`Conditional Operators`: http://www.doctrine-project.org/docs/mongodb_odm/1.0/en/reference/query-builder-api.html#conditional-operators
+.. _`Event Documentation`: http://www.doctrine-project.org/docs/mongodb_odm/1.0/en/reference/events.html
