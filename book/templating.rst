@@ -93,6 +93,11 @@ it:
 Twig comes with a long list of `tags`_ and `filters`_ that are available
 by default. You can even `add your own extensions`_ to Twig as needed.
 
+.. tip::
+
+    Registering a Twig extension is an easy as creating a new service and tag
+    it with ``twig.extension`` :ref:`tag<book-service-container-tags>`.
+
 As you'll see throughout the documentation, Twig also supports functions
 and new functions can be easily added. For example, the following uses a
 standard ``if`` tag and the ``cycle`` function to print ten div tags, with
