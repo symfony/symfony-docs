@@ -196,7 +196,8 @@ lifecycle callbacks implemented::
         public function preUpload()
         {
             if ($this->file) {
-                $this->setPath($this->generatePath($this->file));
+                // do whatever you want to generate a unique name
+                $this->setPath(uniq().'.'.$this->file->guessExtension());
             }
         }
 
@@ -212,7 +213,7 @@ lifecycle callbacks implemented::
             // you must throw an exception here if the file cannot be moved
             // so that the entity is not persisted to the database
             // which the UploadedFile move() method does
-            $this->file->move($this->getUploadRootDir(), $this->generatePath($this->file));
+            $this->file->move($this->getUploadRootDir(), $this->path);
 
             unset($this->file);
         }
@@ -225,12 +226,6 @@ lifecycle callbacks implemented::
             if ($file = $this->getFullPath()) {
                 unlink($file);
             }
-        }
-
-        protected function generatePath(UploadedFile $file)
-        {
-            // do whatever you want to generate a unique name
-            return uniq().'.'.$this->file->guessExtension();
         }
     }
 
