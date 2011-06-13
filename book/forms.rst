@@ -887,7 +887,6 @@ do this, create a new template file that will store the new markup:
     .. code-block:: html+jinja
 
         {# src/Acme/StoreBundle/Resources/views/Form/fields.html.twig #}
-        {% extends 'div_layout.html.twig' %}
 
         {% block field_row %}
         {% spaceless %}
@@ -922,8 +921,8 @@ the form:
 
         <form ...>
 
-The ``form_theme`` tag "imports" the template and uses all of its form-related
-blocks when rendering the form. In other words, when ``form_row`` is called
+The ``form_theme`` tag "imports" the blocks defined in the template and uses
+them when rendering the form. In other words, when ``form_row`` is called
 later in this template, it will use the ``field_row`` block from the
 ``fields.html.twig`` template.
 
@@ -1017,7 +1016,9 @@ configuration file:
         # app/config/config.yml
         twig:
             form:
-                resources: ['AcmeStoreBundle:Form:fields.html.twig']
+                resources:
+                    - 'div_layout.html.twig'
+                    - 'AcmeStoreBundle:Form:fields.html.twig'
             # ...
 
     .. code-block:: xml
@@ -1025,6 +1026,7 @@ configuration file:
         <!-- app/config/config.xml -->
         <twig:config ...>
                 <twig:form>
+                    <resource>div_layout.html.twig</resource>
                     <resource>AcmeStoreBundle:Form:fields.html.twig</resource>
                 </twig:form>
                 <!-- ... -->
@@ -1034,7 +1036,10 @@ configuration file:
 
         // app/config/config.php
         $container->loadFromExtension('twig', array(
-            'form' => array('resources' => array('AcmeStoreBundle:Form:fields.html.twig'))
+            'form' => array('resources' => array(
+                'div_layout.html.twig',
+                'AcmeStoreBundle:Form:fields.html.twig',
+             ))
             // ...
         ));
 
@@ -1044,15 +1049,13 @@ to define form output.
 .. sidebar::  Customizing Form Output all in a Single File
 
     You can also customize a form block right inside the template where that
-    customization is needed. Note that this method will only work if the
-    template used extends some base template via the ``{% extends %}``:
+    customization is needed :
 
     .. code-block:: html+jinja
 
         {% extends '::base.html.twig' %}
 
         {% form_theme form _self %}
-        {% use 'div_layout.html.twig' %}
 
         {% block field_row %}
             {# custom field row output #}
@@ -1069,10 +1072,10 @@ to define form output.
     this method to quickly make form output customizations that will only
     ever be needed in a single template.
 
-    The ``use`` tag is also helpful as it gives you access to all of the
-    blocks defined inside `div_layout.html.twig`_. For example, this ``use``
-    statement is necessary to make the following form customization, as it
-    gives you access to the ``attributes`` block defined in `div_layout.html.twig`_:
+    The form blocks defined in the extension resources (`div_layout.html.twig`_)
+    and in parent views themes are accessible from a form block. This feature is
+    shown in the following form customization which uses the ``attributes`` block
+    defined in `div_layout.html.twig`_:
 
     .. code-block:: html+jinja
 

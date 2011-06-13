@@ -6,8 +6,8 @@ rendering forms. There are several different functions available, and each
 is responsible for rendering a different part of a form (e.g. labels, errors,
 widgets, etc).
 
-form_label(form.name, label)
-----------------------------
+form_label(form.name, label, variables)
+---------------------------------------
 
 Renders the label for the given field. You can optionally pass the specific
 label you want to display as the second argument.
@@ -16,7 +16,7 @@ label you want to display as the second argument.
 
     {{ form_label(form.name) }}
 
-    {{ form_label(form.name, 'Your Name') }}
+    {{ form_label(form.name, 'Your Name', { 'attr': {'class': 'foo'} }) }}
 
 form_errors(form.name)
 ----------------------
