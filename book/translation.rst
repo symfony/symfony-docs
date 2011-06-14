@@ -261,6 +261,16 @@ It's the responsibility of the developer (or translator) of an internationalized
 application to create these translations. Translations are stored on the
 filesystem and discovered by Symfony, thanks to some conventions.
 
+.. tip::
+
+    Each time you create a *new* translation resource (or install a bundle
+    that includes a translation resource), be sure to clear your cache so
+    that Symfony can discover the new translation resource:
+    
+    .. code-block:: bash
+    
+        $ php app/console cache:clear
+
 .. index::
    single: Translations; Translation resource locations
 

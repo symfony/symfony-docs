@@ -93,6 +93,11 @@ it:
 Twig comes with a long list of `tags`_ and `filters`_ that are available
 by default. You can even `add your own extensions`_ to Twig as needed.
 
+.. tip::
+
+    Registering a Twig extension is as easy as creating a new service and tagging
+    it with ``twig.extension`` :ref:`tag<book-service-container-tags>`.
+
 As you'll see throughout the documentation, Twig also supports functions
 and new functions can be easily added. For example, the following uses a
 standard ``if`` tag and the ``cycle`` function to print ten div tags, with
@@ -776,6 +781,77 @@ should render with the subdirectory (e.g. ``/my_app/images/logo.png``). The
 being used and generating the correct paths accordingly.
 
 .. index::
+   single: Templating; Including stylesheets and Javascripts
+   single: Stylesheets; Including stylesheets
+   single: Javascripts; Including Javascripts
+
+Including Stylesheets and Javascripts in Twig
+---------------------------------------------
+
+No site would be complete without including Javascript files and stylesheets.
+In Symfony, the inclusion of these assets is handled elegantly by taking
+advantage of Symfony's template inheritance.
+
+.. tip::
+
+    This section will teach you the philosophy behind including stylesheet
+    and Javascript assets in Symfony. Symfony also packages another library,
+    called assetic, which follows this philosophy but allows you to do much
+    more interesting things with those assets.
+
+Start by adding two blocks to your base template that will hold your assets:
+one called ``stylesheets`` inside the ``head`` tag and another called ``javascripts``
+just above the closing ``body`` tag. These blocks will contain all of the
+stylesheets and Javascripts that you'll need throughout your site::
+
+.. code-block:: html+twig
+
+    {# 'app/Resources/views/base.html.twig' #}
+    <html>
+        <head>
+            {# ... #}
+
+            {% block stylesheets %}
+                <link href="{{ asset('/css/main.css') }}" type="text/css" rel="stylesheet" />
+            {% endblock %}
+        </head>
+        <body>
+            {# ... #}
+
+            {% block javascripts %}
+                <script src="{{ asset('/js/main.js') }}" type="text/javascript"></script>
+            {% endblock %}
+        </body>
+    </html>
+
+That's easy enough! But what if you need to include an extra stylesheet or
+Javascript from a child template? For example, suppose you have a contact
+page and you need to include a ``contact.css`` stylesheet *just* on that
+page. From inside that contact page's template, do the following:
+
+.. code-block:: html+twig
+
+    {# src/Acme/DemoBundle/Resources/views/Contact/contact.html.twig #}
+    {# extends '::base.html.twig' #}
+
+    {% block stylesheets %}
+        {{ parent() }}
+        
+        <link href="{{ asset('/css/contact.css') }}" type="text/css" rel="stylesheet" />
+    {% endblock %}
+    
+    {# ... #}
+
+In the child template, you simply override the ``stylesheets`` block and 
+put your new stylesheet tag inside of that block. Of course, since you want
+to add to the parent block's content (and not actually *replace* it), you
+should use the ``parent()`` Twig function to include everything from the ``stylesheets``
+block of the base template.
+
+The end result is a page that includes both the ``main.css`` and ``contact.css``
+stylesheets.
+
+.. index::
    single: Templating; The templating service
 
 Configuring and using the ``templating`` Service
@@ -817,7 +893,7 @@ configuration file:
     .. code-block:: xml
 
         <!-- app/config/config.xml -->
-        <framework:templating cache-warmer="true">
+        <framework:templating>
             <framework:engine id="twig" />
         </framework:templating>
 

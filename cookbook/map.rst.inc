@@ -14,17 +14,23 @@
 
 * **Database Interaction (Doctrine)**
 
-  * :doc:`/cookbook/doctrine/reverse_engineering`
   * :doc:`/cookbook/doctrine/doctrine_fixtures`
   * :doc:`/cookbook/doctrine/mongodb`
   * :doc:`/cookbook/doctrine/migrations`
+  * :doc:`/cookbook/doctrine/file_uploads`
+  * :doc:`/cookbook/doctrine/common_extensions`
+  * :doc:`/cookbook/doctrine/event_listeners_subscribers`
+  * :doc:`/cookbook/doctrine/dbal`
+  * :doc:`/cookbook/doctrine/reverse_engineering`
+  * :doc:`/cookbook/doctrine/multiple_entity_managers`
+  * :doc:`/cookbook/doctrine/custom_dql_functions`
 
 * **Forms and Validation**
 
   * :doc:`/cookbook/form/twig_form_customization`
   * :doc:`/cookbook/form/create_custom_field_type`
-  * :doc:`/cookbook/form/file_uploads`
   * :doc:`/cookbook/validation/custom_constraint`
+  * (doctrine) :doc:`/cookbook/doctrine/file_uploads`
 
 * **Configuration and the Service Container**
 
@@ -48,6 +54,7 @@
 
 * **Security**
 
+  * :doc:`/cookbook/security/remember_me`
   * :doc:`/cookbook/security/voters`
   * :doc:`/cookbook/security/acl`
   * :doc:`/cookbook/security/acl_advanced`

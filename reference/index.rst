@@ -4,15 +4,22 @@ Reference Documents
 .. toctree::
     :hidden:
 
-    dic_tags
-    YAML
     configuration/framework
     configuration/doctrine
+    configuration/security
+    configuration/swiftmailer
     configuration/twig
     configuration/monolog
-    configuration/security
-    constraints
+    configuration/web_profiler
+    configuration/mongodb
+
     forms/types
     forms/twig_reference
+
+    constraints
+    dic_tags
+    YAML
+    requirements
+    model
 
 .. include:: map.rst.inc

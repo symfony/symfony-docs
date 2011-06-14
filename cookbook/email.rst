@@ -102,16 +102,13 @@ an email is pretty straightforward::
 
     public function indexAction($name)
     {
-        // get the mailer first (mandatory to initialize Swift Mailer)
-        $mailer = $this->get('mailer');
-
         $message = \Swift_Message::newInstance()
             ->setSubject('Hello Email')
             ->setFrom('send@example.com')
             ->setTo('recipient@example.com')
             ->setBody($this->renderView('HelloBundle:Hello:email.txt.twig', array('name' => $name)))
         ;
-        $mailer->send($message);
+        $this->get('mailer')->send($message);
 
         return $this->render(...);
     }

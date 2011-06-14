@@ -6,8 +6,8 @@ rendering forms. There are several different functions available, and each
 is responsible for rendering a different part of a form (e.g. labels, errors,
 widgets, etc).
 
-form_label(form.name, label)
-----------------------------
+form_label(form.name, label, variables)
+---------------------------------------
 
 Renders the label for the given field. You can optionally pass the specific
 label you want to display as the second argument.
@@ -16,7 +16,7 @@ label you want to display as the second argument.
 
     {{ form_label(form.name) }}
 
-    {{ form_label(form.name, 'Your Name') }}
+    {{ form_label(form.name, 'Your Name', { 'attr': {'class': 'foo'} }) }}
 
 form_errors(form.name)
 ----------------------
@@ -39,7 +39,7 @@ or collection of fields, each underlying form row will be rendered.
 .. code-block:: jinja
 
     {# render a widget, but add a "foo" class to it #}
-    {{ form_wiget(form.name, { 'attr': {'class': 'foo'} }) }}
+    {{ form_widget(form.name, { 'attr': {'class': 'foo'} }) }}
 
 The second argument to ``form_widget`` is an array of variables. The most
 common variable is ``attr``, which is an array of HTML attributes to apply
@@ -55,7 +55,7 @@ label, errors and widget.
 .. code-block:: jinja
 
     {# render a field row, but add a "foo" class to it #}
-    {{ form_wiget(form.name, { 'attr': {'class': 'foo'} }) }}
+    {{ form_widget(form.name, { 'attr': {'class': 'foo'} }) }}
 
 The second argument to ``form_row`` is an array of variables. The most
 common variable is ``attr``, which is an array of HTML attributes to apply

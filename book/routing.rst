@@ -900,7 +900,6 @@ be done by "importing" that file:
 
         // app/config/routing.php
         use Symfony\Component\Routing\RouteCollection;
-        use Symfony\Component\Routing\Route;
 
         $collection = new RouteCollection();
         $collection->addCollection($loader->import("@AcmeHelloBundle/Resources/config/routing.php"));
@@ -988,7 +987,6 @@ instead of simply ``/hello/{name}``:
 
         // app/config/routing.php
         use Symfony\Component\Routing\RouteCollection;
-        use Symfony\Component\Routing\Route;
 
         $collection = new RouteCollection();
         $collection->addCollection($loader->import("@AcmeHelloBundle/Resources/config/routing.php"), '/admin');

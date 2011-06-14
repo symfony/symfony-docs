@@ -2,8 +2,8 @@
    single: Service Container
    single: Dependency Injection Container
 
-The Service Container
-=====================
+Service Container
+=================
 
 A modern PHP application is full of objects. One object may facilitate the
 delivery of email messages while another may allow you to persist information
@@ -138,8 +138,9 @@ be specified in YAML, XML or PHP:
     for ``prod``).
 
 An instance of the ``Acme\HelloBundle\Mailer`` object is now available via
-the service container. Since the container is available in any traditional
-Symfony2 controller, we can easily access the new ``my_mailer`` service::
+the service container. The container is available in any traditional Symfony2
+controller where you can access the services of the container via the ``get()``
+shortcut method::
 
     class HelloController extends Controller
     {
@@ -148,18 +149,10 @@ Symfony2 controller, we can easily access the new ``my_mailer`` service::
         public function sendEmailAction()
         {
             // ...
-            $mailer = $this->container->get('my_mailer');
+            $mailer = $this->get('my_mailer');
             $mailer->send('ryan@foobar.net', ... );
         }
     }
-
-.. tip::
-
-    When using a traditional controller, there's an even shorter way to
-    access a service from the container. This is exactly equivalent to the
-    above method, but with less keystrokes::
-
-        $mailer = $this->get('my_mailer');
 
 When we ask for the ``my_mailer`` service from the container, the container
 constructs the object and returns it. This is another major advantage of
@@ -173,6 +166,8 @@ As an added bonus, the ``Mailer`` service is only created once and the same
 instance is returned each time you ask for the service. This is almost always
 the behavior you'll need (it's more flexible and powerful), but we'll learn
 later how you can configure a service that has multiple instances.
+
+.. _book-service-container-parameters:
 
 Service Parameters
 ------------------
@@ -406,7 +401,6 @@ invokes the service container extension inside the ``FrameworkBundle``:
         framework:
             secret:          xxxxxxxxxx
             charset:         UTF-8
-            error_handler:   null
             form:            true
             csrf_protection: true
             router:        { resource: "%kernel.root_dir%/config/routing.yml" }
@@ -415,10 +409,10 @@ invokes the service container extension inside the ``FrameworkBundle``:
     .. code-block:: xml
 
         <!-- app/config/config.xml -->
-        <framework:config charset="UTF-8" error-handler="null" secret="xxxxxxxxxx">
+        <framework:config charset="UTF-8" secret="xxxxxxxxxx">
             <framework:form />
             <framework:csrf-protection />
-            <framework:router resource="%kernel.root_dir%/config/routing.xml" cache-warmer="true" />
+            <framework:router resource="%kernel.root_dir%/config/routing.xml" />
             <!-- ... -->
         </framework>
 
@@ -428,7 +422,6 @@ invokes the service container extension inside the ``FrameworkBundle``:
         $container->loadFromExtension('framework', array(
             'secret'          => 'xxxxxxxxxx',
             'charset'         => 'UTF-8',
-            'error_handler'   => null,
             'form'            => array(),
             'csrf-protection' => array(),
             'router'          => array('resource' => '%kernel.root_dir%/config/routing.php'),
@@ -507,7 +500,7 @@ fairly easily from inside a controller::
 
     public function sendNewsletterAction()
     {
-        $mailer = $this->container->get('my_mailer');
+        $mailer = $this->get('my_mailer');
         $newsletter = new Acme\HelloBundle\Newsletter\NewsletterManager($mailer);
         // ...
     }
@@ -739,7 +732,7 @@ which you can access inside a standard controller as follows::
 
     public function indexAction($bar)
     {
-        $session = $this->container->get('session');
+        $session = $this->get('session');
         $session->set('foo', $bar);
 
         // ...
@@ -946,6 +939,8 @@ the service itself gets loaded. To do so, you can use the ``file`` directive.
 Notice that symfony will internally call the PHP function require_once
 which means that your file will be included only once per request.
 
+.. _book-service-container-tags:
+
 Tags (``tags``)
 ~~~~~~~~~~~~~~~
 
@@ -966,13 +961,13 @@ to be used for a specific purpose. Take the following example:
 
     .. code-block:: xml
 
-        <service id="foo.twig.extension" class="Acme\HelloBundle\Extension\RadiusExtension">
+        <service id="foo.twig.extension" class="Acme\HelloBundle\Extension\FooExtension">
             <tag name="twig.extension" />
         </service>
 
     .. code-block:: php
 
-        $definition = new Definition('Acme\HelloBundle\Extension\RadiusExtension');
+        $definition = new Definition('Acme\HelloBundle\Extension\FooExtension');
         $definition->addTag('twig.extension');
         $container->setDefinition('foo.twig.extension', $definition);
 

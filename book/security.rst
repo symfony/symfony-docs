@@ -485,7 +485,7 @@ The form has very few requirements. First, by submitting the form to ``/login_ch
 (via the ``login_check`` route), the security system will intercept the form
 submission and process the form for you automatically. Second, the security
 system expects the submitted fields to be called ``_username`` and ``_password``
-(these field names can be :ref:`configured</reference-security-firewall-form-username>`).
+(these field names can be :ref:`configured<reference-security-firewall-form-login>`).
 
 And that's it! When you submit the form, the security system will automatically
 check the user's credentials and either authenticate the user or send the
@@ -511,6 +511,8 @@ user to a specific URL.
 
 For more details on this and how to customize the form login process in general,
 see :doc:`/cookbook/security/form_login`.
+
+.. _book-security-common-pitfalls:
 
 .. sidebar:: Avoid Common Pitfalls
 
@@ -714,6 +716,8 @@ Any URL like ``/admin/blog`` will match the second rule and require ``ROLE_ADMIN
 You can also force ``HTTP`` or ``HTTPS`` via an ``access_control`` entry.
 For more information, see :doc:`/cookbook/security/force_https`.
 
+.. _book-security-securing-controller:
+
 Securing a Controller
 ~~~~~~~~~~~~~~~~~~~~~
 
@@ -734,6 +738,8 @@ authorization from inside a controller:
 
         // ...
     }
+
+.. _book-security-securing-controller-annotations:
 
 You can also choose to install and use the optional ``SecurityExtraBundle``,
 which can secure your controller using annotations:
@@ -856,6 +862,18 @@ by Symfony (:class:`Symfony\\Component\\Security\\Core\\User\\User`).
     Any user provider can load users directly from configuration by specifying
     the ``users`` configuration parameter and listing the users beneath it.
 
+.. caution::
+
+    If your username is completely numeric (e.g. ``77``) or contains a dash
+    (e.g. ``user-name``), you should use that alternative syntax when specifying
+    users in YAML:
+    
+    .. code-block:: yaml
+    
+        users:
+            - { name: 77, password: pass, roles: 'ROLE_USER' }
+            - { name: user-name, password: pass, roles: 'ROLE_USER' }
+
 For smaller sites, this method is quick and easy to setup. For more complex
 systems, you'll want to load your users from the database.
 
@@ -899,6 +917,12 @@ As far as the security system is concerned, the only requirement for your
 custom user class is that it implements the :class:`Symfony\\Component\\Security\\Core\\User\\UserInterface`
 interface. This means that your concept of a "user" can be anything, as long
 as it implements this interface.
+
+.. note::
+
+    The user object will be serialized and saved in the session during requests,
+    therefore it is recommended that you `implement the \Serializable interface`_
+    in your user object.
 
 Next, configure an ``entity`` user provider, and point it to your ``User``
 class:
@@ -1358,7 +1382,7 @@ the firewall can handle this automatically for you when you activate the
         ));
 
 Once this is configured under your firewall, sending a user to ``/logout``
-(or whatever your configure the ``path`` to be), will un-authenticate the
+(or whatever you configure the ``path`` to be), will un-authenticate the
 current user. The user will then be sent to the homepage (the value defined
 by the ``target`` parameter). Both the ``path`` and ``target`` config parameters
 default to what's specified here. In other words, unless you need to customize
@@ -1632,4 +1656,5 @@ Learn more from the Cookbook
 .. _`security component`: https://github.com/symfony/Security
 .. _`SecurityExtraBundle`: https://github.com/schmittjoh/SecurityExtraBundle
 .. _`FOSUserBundle`: https://github.com/FriendsOfSymfony/UserBundle
+.. _`implement the \Serializable interface`: http://php.net/manual/en/class.serializable.php
 .. _`functions-online.com`: http://www.functions-online.com/sha1.html

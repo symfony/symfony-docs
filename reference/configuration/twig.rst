@@ -11,18 +11,15 @@ TwigBundle Configuration Reference
         twig:
             form:
                 resources:
-                    - MyBundle::form.html.twig
-            extensions:
-                - twig.extension.debug
-                - twig.extension.text
+                    - TwigBundle:Form:div_layout.html.twig  # Default
+                    - MyBundle::form.html.twig  # Example
             globals:
-                foo: "@bar"
-                pi:  3.14
+                foo: "@bar" # Example
+                pi:  3.14   # Example
             auto_reload:         %kernel.debug%
             autoescape:          true
             base_template_class: Twig_Template
             cache:               %kernel.cache_dir%/twig
-            cache_warmer:        false
             charset:             %kernel.charset%
             debug:               %kernel.debug%
             strict_variables:    false
@@ -35,14 +32,12 @@ TwigBundle Configuration Reference
             xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd
                                 http://symfony.com/schema/dic/twig http://symfony.com/schema/dic/doctrine/twig-1.0.xsd">
 
-            <twig:config auto-reload="%kernel.debug%" autoescape="true" base-template-class="Twig_Template" cache="%kernel.cache_dir%/twig" cache-warmer="false" charset="%kernel.charset%" debug="%kernel.debug%" strict-variables="false">
+            <twig:config auto-reload="%kernel.debug%" autoescape="true" base-template-class="Twig_Template" cache="%kernel.cache_dir%/twig" charset="%kernel.charset%" debug="%kernel.debug%" strict-variables="false">
                 <twig:form>
                     <twig:resource>MyBundle::form.html.twig</twig:resource>
                 </twig:form>
                 <twig:global key="foo" id="bar" type="service" />
                 <twig:global key="pi">3.14</twig:global>
-                <twig:extension id="twig.extension.debug" />
-                <twig:extension id="twig.extension.text" />
             </twig:config>
         </container>
 
@@ -54,10 +49,6 @@ TwigBundle Configuration Reference
                     'MyBundle::form.html.twig',
                 )
              ),
-             'extensions' => array(
-                 'twig.extension.debug',
-                 'twig.extension.text',
-             ),
              'globals' => array(
                  'foo' => '@bar',
                  'pi'  => 3.14,
@@ -66,7 +57,6 @@ TwigBundle Configuration Reference
              'autoescape'          => true,
              'base_template_class' => 'Twig_Template',
              'cache'               => '%kernel.cache_dir%/twig',
-             'cache_warmer'        => false,
              'charset'             => '%kernel.charset%',
              'debug'               => '%kernel.debug%',
              'strict_variables'    => false,

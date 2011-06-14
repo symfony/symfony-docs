@@ -31,18 +31,22 @@ The test suite need the following third-party libraries:
 * Swiftmailer
 * Twig
 
-To install them all, run the `vendors.php` script:
+To install them all, run the `vendors` script:
 
 .. code-block:: bash
 
-    $ php vendors.php
+    $ php vendors install
 
 .. note::
 
     Note that the script takes some time to finish.
 
-After installation, you can update the vendors anytime by running the
-`vendors.php` script again.
+After installation, you can update the vendors to their latest version with
+the follow command:
+
+.. code-block:: bash
+
+    $ php vendors update
 
 Running
 -------

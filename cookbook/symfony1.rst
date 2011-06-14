@@ -17,7 +17,7 @@ So, sit back and relax as we take you from "then" to "now".
 Directory Structure
 -------------------
 
-When looking at a Symfony2 project - for example, the `Symfony2 Sandbox`_ -
+When looking at a Symfony2 project - for example, the `Symfony2 Standard`_ -
 you'll notice a very different directory structure than in symfony1. The
 differences, however, are somewhat superficial.
 
@@ -113,20 +113,20 @@ were added or moved.
 In Symfony2, a new class - ``UniversalClassLoader`` - handles this process.
 The idea behind the autoloader is simple: the name of your class (including
 the namespace) must match up with the path to the file containing that class.
-Take the ``HelloController`` from the Symfony2 sandbox as an example::
+Take the ``HelloController`` from the Symfony2 Standard Edition as an example::
 
-    namespace Acme\HelloBundle\Controller;
+    namespace Acme\DemoBundle\Controller;
 
     use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
-    class HelloController extends Controller
+    class DemoController extends Controller
     {
         // ...
 
-The file itself lives at ``src/Acme/HelloBundle/Controller/HelloController.php``.
+The file itself lives at ``src/Acme/DemoBundle/Controller/DemoController.php``.
 As you can see, the location of the file follows the namespace of the class.
-Specifically, the namespace, ``Acme\HelloBundle\Controller``, spells out
-the directory that the file should live in (``src\Acme\HelloController\Controller``).
+Specifically, the namespace, ``Acme\DemoBundle\Controller``, spells out
+the directory that the file should live in (``src\Acme\DemoController\Controller``).
 This is because, in the ``app/autoload.php`` file, you'll configure Symfony
 to look for the ``Acme`` namespace in the ``src`` directory:
 
@@ -141,7 +141,7 @@ to look for the ``Acme`` namespace in the ``src`` directory:
     ));
 
 If the file did *not* live at this exact location, you'd receive a
-``Class "Acme\HelloBundle\Controller\HelloController" does not exist.``
+``Class "Acme\DemoBundle\Controller\DemoController" does not exist.``
 error. In Symfony2, a "class does not exist" means that the suspect class
 namespace and physical location do not match. Basically, Symfony2 is looking
 in one exact location for that class, but that location doesn't exist (or
@@ -223,7 +223,7 @@ In Symfony2, the bundles are activated inside the application kernel::
             new Symfony\Bundle\FrameworkBundle\FrameworkBundle(),
             new Symfony\Bundle\TwigBundle\TwigBundle(),
             // ...
-            new Acme\HelloBundle\AcmeHelloBundle(),
+            new Acme\DemoBundle\AcmeDemoBundle(),
         );
         
         return $bundles;
@@ -239,16 +239,60 @@ You also need to be sure that the ``Acme`` namespace is set to be autoloaded::
         // ...
     ));
 
+Routing (``routing.yml``) and Configration (``config.yml``)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 In symfony1, the ``routing.yml`` and ``app.yml`` configuration files were
 automatically loaded inside any plugin. In Symfony2, routing and application
 configuration inside a bundle must be included manually. For example, to
-include a routing resource from a bundle, you might do the following::
+include a routing resource from a bundle called ``AcmeDemoBundle``, you can
+do the following::
 
     # app/config/routing.yml
-    hello:
-        resource: @HelloBundle/Resources/config/routing.yml
+    _hello:
+        resource: "@AcmeDemoBundle/Resources/config/routing.yml"
 
-To bring in configuration from the bundle, you'll need to import that configuration
-from your application configuration.
+This will load the routes found in the ``Resources/config/routing.yml`` file
+of the ``AcmeDemoBundle``. The special ``@AcmeDemoBundle`` is a shortcut syntax
+that, internally, resolves to the full path to that bundle.
 
-.. _`Symfony2 Sandbox`: https://github.com/symfony/symfony-sandbox
+You can use this same strategy to bring in configuration from a bundle:
+
+.. code-block:: yaml
+
+    # app/config/config.yml
+    imports:
+        - { resource: "@AcmeDemoBundle/Resources/config/config.yml" }
+
+In Symfony2, configuration is a bit like ``app.yml`` in symfony1, exact much
+more systematic. With ``app.yml``, you could simply create any keys you wanted.
+By default, these entries were meaningless and depended entirely on how you
+used them in your application:
+
+.. code-block:: yaml
+
+    # some app.yml file from symfony1
+    all:
+      email:
+        from_address:  foo.bar@example.com
+
+In Symfony2, you can also create arbitrary entries under the ``parameters``
+key of your configuration:
+
+.. code-block:: yaml
+
+    parameters:
+        email.from_address: foo.bar@example.com
+
+You can now access this from a controller, for example::
+
+    public function helloAction($name)
+    {
+        $fromAddress = $this->container->getParameter('email.from_address');
+    }
+
+In reality, the Symfony2 configuration is much more powerful and is used
+primarily to configure objects that you can use. For more information, see
+the chapter titled ":doc:`/book/service_container`".
+
+.. _`Symfony2 Standard`: https://github.com/symfony/symfony-standard

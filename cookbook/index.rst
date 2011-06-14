@@ -4,35 +4,44 @@ Cookbook
 .. toctree::
     :hidden:
 
-    email
-    gmail
-    configuration/environments
-    configuration/pdo_session_storage
-    configuration/external_parameters
-    templating/PHP
     controller/error_pages
     controller/service
-    validation/custom_constraint
-    form/twig_form_customization
-    form/create_custom_field_type
-    form/file_uploads
-    tools/autoloader
-    tools/finder
-    logging/monolog
-    cache/varnish
-    testing/http_authentication
-    testing/insulating_clients
-    testing/profiling
-    event_dispatcher/class_extension
-    event_dispatcher/method_behavior
-    profiler/data_collector
-    bundles/extension
-    request/mime_type
-    doctrine/reverse_engineering
+    
+    routing/scheme
+    
+    assetic/yuicompressor
+    templating/PHP
+
     doctrine/doctrine_fixtures
     doctrine/mongodb
     doctrine/migrations
-    routing/scheme
+    doctrine/file_uploads
+    doctrine/common_extensions
+    doctrine/event_listeners_subscribers
+    doctrine/reverse_engineering
+    doctrine/dbal
+    doctrine/multiple_entity_managers
+    doctrine/custom_dql_functions
+
+    form/twig_form_customization
+    form/create_custom_field_type
+    validation/custom_constraint
+
+    configuration/environments
+    configuration/external_parameters
+    service_container/factories
+    service_container/parentservices
+    configuration/pdo_session_storage
+    bundles/extension
+
+    email
+    gmail
+
+    testing/http_authentication
+    testing/insulating_clients
+    testing/profiling
+
+    security/remember_me
     security/voters
     security/acl
     security/acl_advanced
@@ -41,11 +50,20 @@ Cookbook
     security/securing_services
     security/entity_provider
     security/custom_provider
-    debugging
-    assetic/yuicompressor
+
+    cache/varnish
+
+    tools/autoloader
+    tools/finder
     console
-    service_container/factories
-    service_container/parentservices
+    debugging
+    logging/monolog
+    
+    event_dispatcher/class_extension
+    event_dispatcher/method_behavior
+    request/mime_type
+    profiler/data_collector
+
     symfony1
 
 .. include:: map.rst.inc

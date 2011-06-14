@@ -15,9 +15,9 @@ magic ``__call()`` method in the class you want to be extended like this:
 
         public function __call($method, $arguments)
         {
-            // create an event named 'onFooMethodIsNotFound'
+            // create an event named 'foo.method_is_not_found'
             $event = new HandleUndefinedMethodEvent($this, $method, $arguments);
-            $this->dispatcher->dispatch($this, 'onFooMethodIsNotFound', $event);
+            $this->dispatcher->dispatch($this, 'foo.method_is_not_found', $event);
 
             // no listener was able to process the event? The method does not exist
             if (!$event->isProcessed()) {
@@ -29,9 +29,9 @@ magic ``__call()`` method in the class you want to be extended like this:
         }
     }
 
-This uses a special ``HandleUndefinedMethodEvent`` that should also be created.
-This is a generic class that could be reused each time you need to use this
-pattern of class extension:
+This uses a special ``HandleUndefinedMethodEvent`` that should also be
+created. This is a generic class that could be reused each time you need to
+use this pattern of class extension:
 
 .. code-block:: php
 
@@ -40,15 +40,11 @@ pattern of class extension:
     class HandleUndefinedMethodEvent extends Event
     {
         protected $subject;
-        
         protected $method;
-        
         protected $arguments;
-        
         protected $returnValue;
-        
         protected $isProcessed = false;
-    
+
         public function __construct($subject, $method, $arguments)
         {
             $this->subject = $subject;
@@ -92,7 +88,7 @@ pattern of class extension:
         }
     }
 
-Next, create a class that will listen to the ``onFooMethodIsNotFound`` event
+Next, create a class that will listen to the ``foo.method_is_not_found`` event
 and *add* the method ``bar()``:
 
 .. code-block:: php
@@ -122,9 +118,9 @@ and *add* the method ``bar()``:
     }
 
 Finally, add the new ``bar`` method to the ``Foo`` class by register an
-instance of ``Bar`` with the ``onFooMethodIsNotFound`` event:
+instance of ``Bar`` with the ``foo.method_is_not_found`` event:
 
 .. code-block:: php
 
     $bar = new Bar();
-    $dispatcher->addListener('onFooMethodIsNotFound', $bar);
+    $dispatcher->addListener('foo.method_is_not_found', $bar);

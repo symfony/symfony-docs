@@ -101,21 +101,21 @@ tests as far as PHPUnit is concerned, but they have a very specific workflow:
 
 Requests, clicks, and submissions are done by a client that knows how to talk
 to the application. To access such a client, your tests need to extend the
-Symfony2 ``WebTestCase`` class. The sandbox provides a simple functional test
-for ``HelloController`` that reads as follows::
+Symfony2 ``WebTestCase`` class. The Symfony2 Standard Edition provides a
+simple functional test for ``DemoController`` that reads as follows::
 
-    // src/Acme/HelloBundle/Tests/Controller/HelloControllerTest.php
-    namespace Acme\HelloBundle\Tests\Controller;
+    // src/Acme/DemoBundle/Tests/Controller/DemoControllerTest.php
+    namespace Acme\DemoBundle\Tests\Controller;
 
     use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
-    class HelloControllerTest extends WebTestCase
+    class DemoControllerTest extends WebTestCase
     {
         public function testIndex()
         {
             $client = $this->createClient();
 
-            $crawler = $client->request('GET', '/hello/Fabien');
+            $crawler = $client->request('GET', '/demo/hello/Fabien');
 
             $this->assertTrue($crawler->filter('html:contains("Hello Fabien")')->count() > 0);
         }
@@ -346,12 +346,10 @@ HTTP layer.
 Accessing the Profiler Data
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-To assert data collected by the profiler, you can get the profiler like this::
+To assert data collected by the profiler, you can get the profile for the
+current request like this::
 
-    use Symfony\Component\HttpKernel\Profiler\Profiler;
-
-    $profiler = new Profiler();
-    $profiler = $profiler->loadFromResponse($client->getResponse());
+    $profile = $client->getProfile();
 
 Redirections
 ~~~~~~~~~~~~

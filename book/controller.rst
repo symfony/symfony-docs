@@ -1,8 +1,8 @@
 .. index::
    single: Controller
 
-The Controller
-==============
+Controller
+==========
 
 A controller is a PHP function you create that takes information from the
 HTTP request and constructs and returns an HTTP response (as a Symfony2
@@ -246,7 +246,7 @@ The controller for this can take several arguments::
         // ...
     }
 
-Notice that both placeholder variables (``{{first_name}}``, ``{{last_name}}``)
+Notice that both placeholder variables (``{first_name}``, ``{last_name}``)
 as well as the default ``color`` variable are available as arguments in the
 controller. When a route is matched, the placeholder variables are merged
 with the ``defaults`` to make one array that's available to your controller.
@@ -373,32 +373,35 @@ to manage in Symfony2.
 Redirecting
 ~~~~~~~~~~~
 
-If you want to redirect the user to another page, use a special ``RedirectResponse``
-class, which is designed specifically to redirect the user to another URL::
-
-    // ...
-    use Symfony\Component\HttpFoundation\RedirectResponse;
-
-    class HelloController extends Controller
-    {
-      public function indexAction()
-      {
-          return new RedirectResponse($this->generateUrl('hello', array('name' => 'Lucas')));
-      }
-    }
-
-The ``generateUrl()`` method is just a shortcut that calls ``generate()``
-on the ``router`` service. It takes the route name and an array of parameters
-as arguments and returns the associated friendly URL. See the :doc:`Routing </book/routing>`
-chapter for more information.
-
-By default, the ``redirect`` method does a 302 (temporary) redirect. To perform
-a 301 (permanent) redirect, modify the second argument::
+If you want to redirect the user to another page, use the ``redirect()`` method::
 
     public function indexAction()
     {
-        return new RedirectResponse($this->generateUrl('hello', array('name' => 'Lucas')), 301);
+        return $this->redirect($this->generateUrl('homepage'));
     }
+
+The ``generateUrl()`` method is just a help function that generates the URL
+for a given route. For more information, see the :doc:`Routing </book/routing>`
+chapter.
+
+By default, the ``redirect()`` method performs a 302 (temporary) redirect. To
+perform a 301 (permanent) redirect, modify the second argument::
+
+    public function indexAction()
+    {
+        return $this->redirect($this->generateUrl('homepage'), 301);
+    }
+
+.. tip::
+
+    The ``redirect()`` method is simply a shortcut that creates a ``Response``
+    object that specializes in redirecting the user. It's equivalent to:
+
+    .. code-block:: php
+
+        use Symfony\Component\HttpFoundation\RedirectResponse;
+
+        return new RedirectResponse($this->generateUrl('homepage'));
 
 .. index::
    single: Controller; Forwarding
@@ -501,7 +504,7 @@ Accessing other Services
 When extending the base controller class, you can access any Symfony2 service
 via the ``get()`` method. Here are several common services you might need::
 
-    $request = $this->get('request');
+    $request = $this->getRequest();
 
     $response = $this->get('response');
 
@@ -573,7 +576,7 @@ by using the native PHP sessions.
 Storing and retrieving information from the session can be easily achieved
 from any controller::
 
-    $session = $this->get('request')->getSession();
+    $session = $this->getRequest()->getSession();
 
     // store an attribute for reuse during a later user request
     $session->set('foo', 'bar');
@@ -602,12 +605,12 @@ Let's show an example where we're processing a form submit::
 
     public function updateAction()
     {
-        if ('POST' === $this->get('request')->getMethod()) {
+        if ('POST' === $this->getRequest()->getMethod()) {
             // do some sort of processing
             
             $this->get('session')->setFlash('notice', 'Your changes were saved!');
 
-            return new RedirectResponse($this->generateUrl(...));
+            return $this->redirect($this->generateUrl(...));
         }
         
         return $this->render(...);
@@ -674,7 +677,7 @@ The Request Object
 Besides the values of the routing placeholders, the controller also has access
 to the ``Request`` object when extending the base ``Controller`` class::
 
-    $request = $this->get('request');
+    $request = $this->getRequest();
 
     $request->isXmlHttpRequest(); // is it an Ajax request?
 
@@ -686,6 +689,17 @@ to the ``Request`` object when extending the base ``Controller`` class::
 
 Like the ``Response`` object, the request headers are stored in a ``HeaderBag``
 object and are easily accessible.
+
+.. tip::
+
+    The ``Request`` object can also be injected as a parameter of an *action*::
+
+        use Symfony\Component\HttpFoundation\Request;
+
+        public function indexAction(Request $request)
+        {
+            $name = $request->cookies->get('name');
+        }
 
 .. index::
    single: Controller; Overview
