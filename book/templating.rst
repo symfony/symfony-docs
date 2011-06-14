@@ -802,9 +802,9 @@ advantage of Symfony's template inheritance.
 Start by adding two blocks to your base template that will hold your assets:
 one called ``stylesheets`` inside the ``head`` tag and another called ``javascripts``
 just above the closing ``body`` tag. These blocks will contain all of the
-stylesheets and Javascripts that you'll need throughout your site::
+stylesheets and Javascripts that you'll need throughout your site:
 
-.. code-block:: html+twig
+.. code-block:: html+jinja
 
     {# 'app/Resources/views/base.html.twig' #}
     <html>
@@ -829,7 +829,7 @@ Javascript from a child template? For example, suppose you have a contact
 page and you need to include a ``contact.css`` stylesheet *just* on that
 page. From inside that contact page's template, do the following:
 
-.. code-block:: html+twig
+.. code-block:: html+jinja
 
     {# src/Acme/DemoBundle/Resources/views/Contact/contact.html.twig #}
     {# extends '::base.html.twig' #}
