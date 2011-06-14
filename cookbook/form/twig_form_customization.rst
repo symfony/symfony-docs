@@ -156,7 +156,6 @@ directly in the template that's actually rendering the form.
     {% extends '::base.html.twig' %}
 
     {% form_theme form _self %}
-    {% use 'div_layout.html.twig' %}
 
     {% block text_widget %}
         <div class="text_widget">
@@ -170,12 +169,6 @@ directly in the template that's actually rendering the form.
         {{ form_row(form.name) }}
     {% endblock %}
 
-.. caution::
-    Note that this **only** works if your template extends a base template
-    via the ``extends`` tag. If your template doesn't extend a base template,
-    you should put your customized blocks in a separate template (see
-    :ref:`cookbook-form-twig-separate-template`).
-
 By using the special ``{% form_theme form _self %}`` tag, Twig looks inside
 the same template for any overridden form blocks. Assuming the ``form.name``
 field is a ``text`` type field, when its widget is rendered, the customized
@@ -186,20 +179,6 @@ reused when rendering other forms in other templates. In other words, this metho
 is most useful when making form customizations that are specific to a single
 form in your application. If you want to reuse a form customization across
 several (or all) forms in your application, read on to the next section.
-
-.. note::
-    Be sure also to include the ``use`` statement somewhere in your template
-    when using this method:
-
-    .. code-block:: jinja
-
-        {% use 'div_layout.html.twig' %}
-
-    This "imports" all of the blocks from the base `div_layout.html.twig`_
-    template, which gives you access to the ``attributes`` block. In general,
-    the ``use`` tag is helpful when your template *already* extends a base
-    template, but you still need to import blocks from a second template.
-    Read more about `Horizontal Reuse`_ in the Twig documentation.
 
 .. _cookbook-form-twig-separate-template:
 
@@ -213,20 +192,12 @@ can now re-use the form customization across many templates:
 .. code-block:: html+jinja
 
     {# src/Acme/DemoBundle/Resources/views/Form/fields.html.twig #}
-    {% extends 'div_layout.html.twig' %}
 
     {% block text_widget %}
         <div class="text_widget">
             <input type="text" {{ block('attributes') }} value="{{ value }}" />
         </div>
     {% endblock %}
-
-.. note::
-
-    The template extends the base template (`div_layout.html.twig`_)
-    so that you have access to the ``field_widget`` block defined there. If
-    you forget the ``extends`` tag, the HTML input element will be missing
-    several HTML attributes (since the ``attributes`` block isn't defined).
 
 Now that you've created the customized form block, you need to tell Symfony
 to use it. Inside the template where you're actually rendering your form,
@@ -260,7 +231,7 @@ are in the same template as the form or a separate template.
 Referencing Blocks from inside the same Template as the Form
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Start by modifying the ``use`` tag in the template where you're rendering
+Import the blocks by adding a ``use`` tag in the template where you're rendering
 the form:
 
 .. code-block:: jinja
@@ -288,6 +259,7 @@ the base block by using the ``parent()`` Twig function:
 .. code-block:: html+jinja
 
     {# src/Acme/DemoBundle/Resources/views/Form/fields.html.twig #}
+
     {% extends 'div_layout.html.twig' %}
 
     {% block text_widget %}
@@ -312,24 +284,30 @@ template and then importing it inside your application configuration:
         # app/config/config.yml
         twig:
             form:
-                resources: ['AcmeDemoBundle:Form:fields.html.twig']
+                resources:
+                    - 'div_layout.html.twig'
+                    - 'AcmeStoreBundle:Form:fields.html.twig'
             # ...
 
     .. code-block:: xml
 
         <!-- app/config/config.xml -->
         <twig:config ...>
-            <twig:form>
-                <twig:resource>AcmeDemoBundle:Form:fields.html.twig</twig:resource>
-            </twig:form>
-            <!-- ... -->
+                <twig:form>
+                    <resource>div_layout.html.twig</resource>
+                    <resource>AcmeStoreBundle:Form:fields.html.twig</resource>
+                </twig:form>
+                <!-- ... -->
         </twig:config>
 
     .. code-block:: php
 
         // app/config/config.php
         $container->loadFromExtension('twig', array(
-            'form' => array('resources' => array('AcmeDemoBundle:Form:fields.html.twig'))
+            'form' => array('resources' => array(
+                'div_layout.html.twig',
+                'AcmeStoreBundle:Form:fields.html.twig',
+             ))
             // ...
         ));
 
@@ -337,10 +315,38 @@ Any customized form blocks inside the ``AcmeDemoBundle:Form:fields.html.twig``
 template will be used globally when form elements are rendered.
 
 By default, twig uses a *div* layout when rendering forms. Some people, however,
-may prefer to render forms in a *table* layout. The technique to change to
-the table layout is the same as shown above, except you will need to change:
+may prefer to render forms in a *table* layout. Use the ``table_layout.html.twig``
+resource to use such a layout:
 
-``AcmeDemoBundle:Form:fields.html.twig`` to ``table_layout.html.twig``
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # app/config/config.yml
+        twig:
+            form:
+                resources: ['table_layout.html.twig']
+            # ...
+
+    .. code-block:: xml
+
+        <!-- app/config/config.xml -->
+        <twig:config ...>
+                <twig:form>
+                    <resource>table_layout.html.twig</resource>
+                </twig:form>
+                <!-- ... -->
+        </twig:config>
+
+    .. code-block:: php
+
+        // app/config/config.php
+        $container->loadFromExtension('twig', array(
+            'form' => array('resources' => array(
+                'table_layout.html.twig',
+             ))
+            // ...
+        ));
 
 If you only want to make the change in one template, do the following:
 
@@ -364,7 +370,6 @@ which part of the field is being customized. For example:
 .. code-block:: html+jinja
 
     {% form_theme form _self %}
-    {% use 'div_layout.html.twig' %}
 
     {% block _product_name_widget %}
         <div class="text_widget">
@@ -388,7 +393,6 @@ You can also override the markup for an entire field row using the same method:
 .. code-block:: html+jinja
 
     {% form_theme form _self %}
-    {% use 'div_layout.html.twig' %}
 
     {% block _product_name_row %}
         <div class="name_row">
@@ -518,6 +522,8 @@ following:
 
 .. code-block:: html+jinja
 
+    {% extends 'div_layout.html.twig' %}
+
     {% block field_label %}
         {{ parent() }}
 
@@ -554,6 +560,8 @@ following:
 
 .. code-block:: html+jinja
 
+    {% extends 'div_layout.html.twig' %}
+
     {% block field_widget %}
         {{ parent() }}
 
@@ -572,4 +580,3 @@ To render a help message below a field, pass in a ``help`` variable:
     See :ref:`cookbook-form-twig-two-methods` for how to apply this customization.
 
 .. _`div_layout.html.twig`: https://github.com/symfony/symfony/blob/master/src/Symfony/Bridge/Twig/Resources/views/Form/div_layout.html.twig
-.. _`Horizontal Reuse`: http://www.twig-project.org/doc/templates.html#horizontal-reuse
