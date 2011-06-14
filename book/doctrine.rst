@@ -236,6 +236,15 @@ in a number of different formats including YAML, XML or directly inside the
     The table name is optional and if omitted, will be determined automatically
     based on the name of the entity class.
 
+.. tip::
+
+    When using another library or program (ie. Doxygen) that uses annotations, 
+    you must use the @IgnoreAnnotation annotation to indicate which annotations 
+    Symfony and Doctrine should ignore.  This annotation should be placed in the 
+    comment block of the class it applies to.  Failing to do so may result in an 
+    Exception being thrown.
+    Example:  @IgnoreAnnotation("fn") will prevent "@fn ..." from throwing an Exception.
+
 Doctrine allows you to choose from a wide variety of different field types,
 each with their own options. For information on the available field types,
 see the :ref:`book-doctrine-field-types` section.
