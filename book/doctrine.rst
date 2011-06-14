@@ -238,12 +238,20 @@ in a number of different formats including YAML, XML or directly inside the
 
 .. tip::
 
-    When using another library or program (ie. Doxygen) that uses annotations, 
-    you must use the @IgnoreAnnotation annotation to indicate which annotations 
-    Symfony and Doctrine should ignore.  This annotation should be placed in the 
-    comment block of the class it applies to.  Failing to do so may result in an 
-    Exception being thrown.
-    Example:  @IgnoreAnnotation("fn") will prevent "@fn ..." from throwing an Exception.
+    When using another library or program (ie. Doxygen) that uses annotations,
+    you must use the ``@IgnoreAnnotation`` annotation to indicate which annotations
+    Symfony and Doctrine should ignore.  This annotation should be placed in the
+    comment block of the class it applies to.  Failing to do so may result
+    in an exception being thrown.
+    
+    For example, to prevent the ``@fn`` annotation from throwing an exception,
+    add the following::
+    
+        /**
+         * @IgnoreAnnotation("fn")
+         * 
+         */
+        class Product
 
 Doctrine allows you to choose from a wide variety of different field types,
 each with their own options. For information on the available field types,
