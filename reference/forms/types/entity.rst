@@ -62,6 +62,10 @@ option. The easiest way to use the option is as follows::
         },
     ));
 
+.. include:: /reference/forms/types/options/select_how_rendered.rst.inc
+
+.. include:: /reference/forms/types/options/empty_value.rst.inc
+
 Options
 -------
 

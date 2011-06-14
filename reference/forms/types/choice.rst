@@ -64,49 +64,9 @@ specify the choices for your widget.
 
 .. _forms-reference-choice-tags:
 
-Select tag, Checkboxes or Radio Buttons
----------------------------------------
+.. include:: /reference/forms/types/options/select_how_rendered.rst.inc
 
-This field may be rendered as one of several different HTML fields, depending
-on the ``expanded`` and ``multiple`` options:
-
-+------------------------------------------+----------+----------+
-| element type                             | expanded | multiple |
-+==========================================+==========+==========+
-| select tag                               | false    | false    |
-+------------------------------------------+----------+----------+
-| select tag (with ``multiple`` attribute) | false    | true     |
-+------------------------------------------+----------+----------+
-| radio buttons                            | true     | false    |
-+------------------------------------------+----------+----------+
-| checkboxes                               | true     | true     |
-+------------------------------------------+----------+----------+
-
-Adding an "empty value"
------------------------
-
-If you're using the non-expanded version of the type (i.e. a ``select`` tag)
-element and you'd like to have a blank entry (e.g. "Choose an option") at
-the top of the select box, you can easily do so by doing the following:
-
-* Set the ``multiple`` option to false;
-
-* Set the ``required`` option to false or explicitly pass in the ``empty_value``
-  option in the template (as shown below).
-
-If ``required`` is true, a blank choice will display at the top of the select
-box. To customize what that entry says (or if you have ``required`` set to
-``false``), add the following when rendering the field:
-
-.. configuration-block::
-
-    .. code-block:: jinja
-
-        {{ form_widget(form.foo_choices, { 'empty_value': 'Choose an option' }) }}
-
-    .. code-block:: php
-    
-        <?php echo $view['form']->widget($form['foo_choices'], array('empty_value' => 'Choose an option')) ?>
+.. include:: /reference/forms/types/options/empty_value.rst.inc
 
 Options
 -------
