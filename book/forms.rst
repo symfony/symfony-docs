@@ -1149,14 +1149,17 @@ HTML form so that the user can modify that data. The second goal of a form is to
 take the data submitted by the user and to re-apply it to the object.
 
 There's still much more to learn about the powerful world of forms, such as
-how to handle file uploads and how to create a form where a dynamic number
-of sub-forms can be added (e.g. a todo list where you can keep adding more
-fields via Javascript before submitting). See the cookbook for these topics.
+how to handle :doc:`file uploads with Doctrine
+</cookbook/doctrine/file_uploads>` or how to create a form where a dynamic
+number of sub-forms can be added (e.g. a todo list where you can keep adding
+more fields via Javascript before submitting). See the cookbook for these
+topics.
 
 Learn more from the Cookbook
 ----------------------------
 
-* :doc:`Handling File Uploads </cookbook/form/file_uploads>`
+* :doc:`/cookbook/doctrine/file_uploads`
+* :doc:`File Field Reference </reference/forms/types/file>`
 * :doc:`Creating Custom Field Types </cookbook/form/create_custom_field_type>`
 * :doc:`/cookbook/form/twig_form_customization`
 
