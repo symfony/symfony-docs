@@ -269,10 +269,10 @@ doesn't replace your existing methods).
 
 .. note::
 
-    Doctrine doesn't care whether your properties are ``public``, ``protected``
-    or ``private``, or whether or not you have a getter or setter function
-    for a property. The getters and setters are generated here only because
-    you'll need them to interact with your PHP object.
+    Doctrine doesn't care whether your properties are ``protected`` or ``private``,
+    or whether or not you have a getter or setter function for a property.
+    The getters and setters are generated here only because you'll need them
+    to interact with your PHP object.
 
 .. tip::
 

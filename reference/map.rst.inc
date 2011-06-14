@@ -8,6 +8,7 @@
   * :doc:`MonologBundle (monolog) </reference/configuration/monolog>`
   * :doc:`SecurityBundle (security) </reference/configuration/security>`
   * :doc:`WebProfilerBundle (web_profiler) </reference/configuration/web_profiler>`
+  * :doc:`DoctrineMongoDBBundle (doctrine_mongo_db) </reference/configuration/mongodb>`
 
 * **Forms**
 
