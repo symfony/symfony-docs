@@ -20,7 +20,7 @@ Basic Setup
 
 First, create a simple Doctrine Entity class to work with::
 
-    // src/Acme/DemoBundle/Entity/Download.php
+    // src/Acme/DemoBundle/Entity/Document.php
     namespace Acme\DemoBundle\Entity;
 
     use Doctrine\ORM\Mapping as ORM;
@@ -29,7 +29,7 @@ First, create a simple Doctrine Entity class to work with::
     /**
      * @ORM\Entity
      */
-    class Download
+    class Document
     {
         /**
          * @ORM\Id @ORM\Column(type="integer")
@@ -59,10 +59,10 @@ First, create a simple Doctrine Entity class to work with::
         }
     }
 
-The ``Download`` entity has a name and it is associated with a file. The ``path``
+The ``Document`` entity has a name and it is associated with a file. The ``path``
 property stores the relative path to the file and is persisted to the database.
 The ``getFullPath()`` is a convenience method that uses the ``getUploadRootDir()``
-method to return the absolute path to the download file.
+method to return the absolute path to the file.
 
 .. tip::
 
@@ -87,13 +87,13 @@ look like this::
         // ...
     }
 
-Next, create this property on your ``Download`` class and add some validation
+Next, create this property on your ``Document`` class and add some validation
 rules::
 
-    // src/Acme/DemoBundle/Entity/Download.php
+    // src/Acme/DemoBundle/Entity/Document.php
 
     // ...
-    class Download
+    class Document
     {
         /**
          * @Assert\File(maxSize="6000000")
@@ -111,7 +111,7 @@ rules::
 
 The following controller shows you how to handle the entire process::
 
-    use Acme\DemoBundle\Entity\Download;
+    use Acme\DemoBundle\Entity\Document;
     use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
     // ...
 
@@ -120,8 +120,8 @@ The following controller shows you how to handle the entire process::
      */
     public function uploadAction()
     {
-        $download = new Download();
-        $form = $this->createFormBuilder($download)
+        $document = new Document();
+        $form = $this->createFormBuilder($document)
             ->add('name')
             ->add('file')
             ->getForm()
@@ -132,7 +132,7 @@ The following controller shows you how to handle the entire process::
             if ($form->isValid()) {
                 $em = $this->getDoctrine()->getEntityManager();
 
-                $em->persist($download);
+                $em->persist($document);
                 $em->flush();
 
                 $this->redirect($this->generateUrl('...'));
@@ -156,13 +156,13 @@ The following controller shows you how to handle the entire process::
             <input type="submit" value="Upload Document" />
         </form>
 
-The previous controller will automatically persist the ``Download`` entity
+The previous controller will automatically persist the ``Document`` entity
 with the submitted name, but it will do nothing about the file and the ``path``
 property will be blank.
 
 An easy way to handle the file upload is to move it just before the entity is
 persisted and then set the ``path`` property accordingly. Start by calling
-a new ``upload()`` method on the ``Download`` class, which you'll create
+a new ``upload()`` method on the ``Document`` class, which you'll create
 in a moment to handle the file upload::
 
     if ($form->isValid()) {
@@ -220,11 +220,11 @@ callback::
      * @ORM\Entity
      * @ORM\HasLifecycleCallbacks
      */
-    class Download
+    class Document
     {
     }
 
-Next, refactor the ``Download`` class to take advantage of these callbacks::
+Next, refactor the ``Document`` class to take advantage of these callbacks::
 
     use Symfony\Component\HttpFoundation\File\UploadedFile;
 
@@ -232,7 +232,7 @@ Next, refactor the ``Download`` class to take advantage of these callbacks::
      * @ORM\Entity
      * @ORM\HasLifecycleCallbacks
      */
-    class Download
+    class Document
     {
         /**
          * @ORM\PrePersist()
