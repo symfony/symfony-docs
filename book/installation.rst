@@ -105,7 +105,7 @@ If there are any issues, correct them now before moving on.
     to ensure that permissions will be setup properly. Change ``www-data``
     to the web server user and ``yourname`` to your command line user:
 
-    **1. Using ACL**
+    **1. Using ACL on a system that supports chmod +a**
 
     .. code-block:: bash
 
@@ -116,7 +116,14 @@ If there are any issues, correct them now before moving on.
 
         sudo chmod +a "yourname allow delete,write,append,file_inherit,directory_inherit" app/cache app/logs
 
-    **2. Without using ACL**
+    **2. Using Acl on a system that does not support chmod +a**
+
+    ..code-block:: bash
+
+        setfacl -m u:www-data:rw -R app/cache app/logs
+        setfacl -m u:yourname:rw -R app/cache app/logs
+
+    **3. Without using ACL**
 
     If you don't have access to changing the ACL of the directories, you will
     need to change the umask so that the cache and log directories will
