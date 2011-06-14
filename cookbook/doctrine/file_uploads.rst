@@ -1,19 +1,35 @@
 How to handle File Uploads with Doctrine
 ========================================
 
-Handling file uploads with Doctrine entities is no much different than
-handling any other upload. But if you want to integrate the file upload into
-the entity lifecycle (creation, update, and removal), you need to take care of
-a lot of details we will talk about in this cookbook entry.
+Handling file uploads with Doctrine entities is no different than handling
+any other file upload. In other words, you're free to move the file in your
+controller after handling a form submission. For examples of how to do this,
+see the :doc:`file type reference</reference/forms/types/file>` page.
 
-First, let's create a simple Doctrine Entity to work with::
+If you choose to, you can also integrate the file upload into your entity
+lifecycle (i.e. creation, update and removal). In this case, as your entity
+is created, updated, and removed from Doctrine, the file uploading and removal
+processing will take place automatically (without needing to do anything in
+your controller);
+
+To make this work, you'll need to take care of a number of details, which
+will be covered in this cookbook entry.
+
+Basic Setup
+-----------
+
+First, create a simple Doctrine Entity class to work with::
+
+    // src/Acme/DemoBundle/Entity/Download.php
+    namespace Acme\DemoBundle\Entity;
 
     use Doctrine\ORM\Mapping as ORM;
+    use Symfony\Component\Validator\Constraints as Assert;
 
     /**
      * @ORM\Entity
      */
-    class Document
+    class Download
     {
         /**
          * @ORM\Id @ORM\Column(type="integer")
@@ -43,29 +59,41 @@ First, let's create a simple Doctrine Entity to work with::
         }
     }
 
-A ``Document`` has a name and it is associated with a file. The ``path``
-property stores the relative path to the file and ``getFullPath()`` uses the
-``getUploadRootDir()`` to return the absolute path to the document.
+The ``Download`` entity has a name and it is associated with a file. The ``path``
+property stores the relative path to the file and is persisted to the database.
+The ``getFullPath()`` is a convenience method that uses the ``getUploadRootDir()``
+method to return the absolute path to the download file.
 
 .. tip::
 
-    If you have not done so yet, you should probably read the
+    If you have not done so already, you should probably read the
     :doc:`file</reference/forms/types/file>` type documentation first to
     understand how the basic upload process works.
 
-To receive the uploaded file, we use a "virtual" ``file`` field::
+To handle the actual file upload in the form, use a "virtual" ``file`` field.
+For example, if you're building your form directly in a controller, it might
+look like this::
 
-    $form = $this->createFormBuilder($document)
-        ->add('name')
-        ->add('file')
-        ->getForm()
-    ;
+    public function uploadAction()
+    {
+        // ...
 
-Validation rules should be declared on this virtual ``file`` property::
+        $form = $this->createFormBuilder($document)
+            ->add('name')
+            ->add('file')
+            ->getForm()
+        ;
 
-    use Symfony\Component\Validator\Constraints as Assert;
+        // ...
+    }
 
-    class Document
+Next, create this property on your ``Download`` class and add some validation
+rules::
+
+    // src/Acme/DemoBundle/Entity/Download.php
+
+    // ...
+    class Download
     {
         /**
          * @Assert\File(maxSize="6000000")
@@ -77,16 +105,23 @@ Validation rules should be declared on this virtual ``file`` property::
 
 .. note::
 
-    As we are using the ``File`` constraint, Symfony2 will automatically guess
-    that the field is a file upload input; that's why we have not set it
-    explicitly during form creation.
+    As you are using the ``File`` constraint, Symfony2 will automatically guess
+    that the form field is a file upload input. That's why you did not have
+    to set it explicitly when creating the form above (``->add('file')``).
 
-The following controller shows you how to manage the form::
+The following controller shows you how to handle the entire process::
 
-    public function uploadAction(Post $post)
+    use Acme\DemoBundle\Entity\Download;
+    use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+    // ...
+
+    /**
+     * @Template()
+     */
+    public function uploadAction()
     {
-        $document = new Document();
-        $form = $this->createFormBuilder($document)
+        $download = new Download();
+        $form = $this->createFormBuilder($download)
             ->add('name')
             ->add('file')
             ->getForm()
@@ -97,14 +132,14 @@ The following controller shows you how to manage the form::
             if ($form->isValid()) {
                 $em = $this->getDoctrine()->getEntityManager();
 
-                $em->persist($document);
+                $em->persist($download);
                 $em->flush();
 
-                $this->redirect('...');
+                $this->redirect($this->generateUrl('...'));
             }
         }
 
-        return array('post' => $post, 'form' => $form->createView());
+        return array('form' => $form->createView());
     }
 
 .. note::
@@ -121,12 +156,14 @@ The following controller shows you how to manage the form::
             <input type="submit" value="Upload Document" />
         </form>
 
-The previous code will automatically persist document entities with their
-names, but it will do nothing about the file, because it is not managed by
-Doctrine. However, moving the file can be done just before the document is
-persisted to the database by calling the ``move()`` method of the
-:class:`Symfony\\Component\\HttpFoundation\\File\\UploadedFile` instance
-returned for the ``file`` field when the form is submitted::
+The previous controller will automatically persist the ``Download`` entity
+with the submitted name, but it will do nothing about the file and the ``path``
+property will be blank.
+
+An easy way to handle the file upload is to move it just before the entity is
+persisted and then set the ``path`` property accordingly. Start by calling
+a new ``upload()`` method on the ``Download`` class, which you'll create
+in a moment to handle the file upload::
 
     if ($form->isValid()) {
         $em = $this->getDoctrine()->getEntityManager();
@@ -139,7 +176,8 @@ returned for the ``file`` field when the form is submitted::
         $this->redirect('...');
     }
 
-And here is the implementation of the ``upload`` method::
+The ``upload()`` method will take advantage of the :class:`Symfony\\Component\\HttpFoundation\\File\\UploadedFile`
+object, which is what's returned after a ``file`` field is submitted::
 
     public function upload()
     {
@@ -149,38 +187,44 @@ And here is the implementation of the ``upload`` method::
         }
 
         // we use the original file name here but you should
-        // sanitize at least it to avoid any security issues
+        // sanitize it at least to avoid any security issues
+        
+        // move takes the target directory and then the target filename to move to
         $this->file->move($this->getUploadRootDir(), $this->file->getOriginalName());
 
+        // set the path property to the filename where you'ved saved the file
         $this->setPath($this->file->getOriginalName());
 
-        // clean up the file property as we won't need it anymore
+        // clean up the file property as you won't need it anymore
         unset($this->file);
     }
 
+Using Lifecycle Callbacks
+-------------------------
+
 Even if this implementation works, it suffers from a major flaw: What if there
-is a problem when the entity is persisted? The file is already moved to its
-final location but the entity still references the previous file.
+is a problem when the entity is persisted? The file would have already moved
+to its final location even though the entity's ``path`` property didn't
+persist correctly.
 
-To avoid these issues, we are going to change the implementation so that the
-database operation and the moving of the file becomes atomic: if there is a
-problem when persisting the entity or if the file cannot be moved, then
-nothing happens.
+To avoid these issues, you should change the implementation so that the database
+operation and the moving of the file become atomic: if there is a problem
+persisting the entity or if the file cannot be moved, then *nothing* should
+happen.
 
-To make the operation atomic, we need to do the moving of the file when
-Doctrine persists the entity to the database. This can be accomplished by
-hooking into the entity lifecycle::
+To do this, you need to move the file right as Doctrine persists the entity
+to the database. This can be accomplished by hooking into an entity lifecycle
+callback::
 
     /**
      * @ORM\Entity
      * @ORM\HasLifecycleCallbacks
      */
-    class Document
+    class Download
     {
     }
 
-And here is the ``Document`` class that shows the final version with all
-lifecycle callbacks implemented::
+Next, refactor the ``Download`` class to take advantage of these callbacks::
 
     use Symfony\Component\HttpFoundation\File\UploadedFile;
 
@@ -188,7 +232,7 @@ lifecycle callbacks implemented::
      * @ORM\Entity
      * @ORM\HasLifecycleCallbacks
      */
-    class Document
+    class Download
     {
         /**
          * @ORM\PrePersist()
@@ -212,7 +256,7 @@ lifecycle callbacks implemented::
 
             // you must throw an exception here if the file cannot be moved
             // so that the entity is not persisted to the database
-            // which the UploadedFile move() method does
+            // which the UploadedFile move() method does automatically
             $this->file->move($this->getUploadRootDir(), $this->path);
 
             unset($this->file);
@@ -229,9 +273,16 @@ lifecycle callbacks implemented::
         }
     }
 
+The class now does everything you need: it generates a unique filename before
+persisting, moves the file after persisting, and removes the file if the
+entity is ever deleted.
+
+Using the ``id`` as the filename
+--------------------------------
+
 If you want to use the ``id`` as the name of the file, the implementation is
-slightly different as we need to save the extension under the ``path``
-property, instead of the path::
+slightly different as you need to save the extension under the ``path``
+property, instead of the actual filename::
 
     use Symfony\Component\HttpFoundation\File\UploadedFile;
 
@@ -264,6 +315,7 @@ property, instead of the path::
             // so that the entity is not persisted to the database
             // which the UploadedFile move() method does
             $this->file->move($this->getUploadRootDir(), $this->id.'.'.$this->file->guessExtension());
+
             unset($this->file);
         }
 

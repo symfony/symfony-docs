@@ -17,6 +17,7 @@
   * :doc:`/cookbook/doctrine/doctrine_fixtures`
   * :doc:`/cookbook/doctrine/mongodb`
   * :doc:`/cookbook/doctrine/migrations`
+  * :doc:`/cookbook/doctrine/file_uploads`
   * :doc:`/cookbook/doctrine/common_extensions`
   * :doc:`/cookbook/doctrine/event_listeners_subscribers`
   * :doc:`/cookbook/doctrine/dbal`
@@ -28,8 +29,8 @@
 
   * :doc:`/cookbook/form/twig_form_customization`
   * :doc:`/cookbook/form/create_custom_field_type`
-  * :doc:`/cookbook/form/file_uploads`
   * :doc:`/cookbook/validation/custom_constraint`
+  * (doctrine) :doc:`/cookbook/doctrine/file_uploads`
 
 * **Configuration and the Service Container**
 

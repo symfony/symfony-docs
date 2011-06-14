@@ -1155,10 +1155,10 @@ topics.
 Learn more from the Cookbook
 ----------------------------
 
-* :doc:`Handling File Uploads </cookbook/form/file_uploads>`
+* :doc:`/cookbook/doctrine/file_uploads`
+* :doc:`File Field Reference </reference/forms/types/file>`
 * :doc:`Creating Custom Field Types </cookbook/form/create_custom_field_type>`
 * :doc:`/cookbook/form/twig_form_customization`
-* :doc:`/cookbook/doctrine/file_uploads`
 
 .. _`Symfony2 Form Component`: https://github.com/symfony/Form
 .. _`Twig Bridge`: https://github.com/symfony/symfony/tree/master/src/Symfony/Bridge/Twig

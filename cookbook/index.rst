@@ -15,6 +15,7 @@ Cookbook
     doctrine/doctrine_fixtures
     doctrine/mongodb
     doctrine/migrations
+    doctrine/file_uploads
     doctrine/common_extensions
     doctrine/event_listeners_subscribers
     doctrine/reverse_engineering
@@ -24,7 +25,6 @@ Cookbook
 
     form/twig_form_customization
     form/create_custom_field_type
-    form/file_uploads
     validation/custom_constraint
 
     configuration/environments
