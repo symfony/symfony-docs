@@ -35,8 +35,8 @@ of your project:
 .. code-block:: text
 
     DoctrineMongoDBBundle   /bundles/Symfony/Bundle git://github.com/symfony/DoctrineMongoDBBundle.git
-    mongodb-odm             /                       git://github.com/doctrine/mongodb-odm.git
-    mongodb                 /                       git://github.com/doctrine/mongodb.git
+    doctrine-mongodb-odm    /                       git://github.com/doctrine/mongodb-odm.git
+    doctrine-mongodb        /                       git://github.com/doctrine/mongodb.git
 
 Now, update the vendor libraries by running:
 
@@ -51,8 +51,8 @@ Be sure to add them anywhere *above* the ``Doctrine`` namespace (shown here)::
     // app/autoload.php
     $loader->registerNamespaces(array(
         // ...
-        'Doctrine\\ODM\\MongoDB'    => __DIR__.'/../vendor/mongodb-odm/lib',
-        'Doctrine\\MongoDB'         => __DIR__.'/../vendor/mongodb/lib',
+        'Doctrine\\ODM\\MongoDB'    => __DIR__.'/../vendor/doctrine-mongodb-odm/lib',
+        'Doctrine\\MongoDB'         => __DIR__.'/../vendor/doctrine-mongodb/lib',
         'Doctrine'                  => __DIR__.'/../vendor/doctrine/lib',
         // ...
     ));
@@ -251,10 +251,10 @@ doesn't replace your existing methods).
 
 .. note::
 
-    Doctrine doesn't care whether your properties are ``public``, ``protected``
-    or ``private``, or whether or not you have a getter or setter function
-    for a property. The getters and setters are generated here only because
-    you'll need them to interact with your PHP object.
+    Doctrine doesn't care whether your properties are ``protected`` or ``private``,
+    or whether or not you have a getter or setter function for a property.
+    The getters and setters are generated here only because you'll need them
+    to interact with your PHP object.
 
 Persisting Objects to MongoDB
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -309,9 +309,9 @@ Let's walk through this example:
 
 .. note::
 
-  In fact, since Doctrine is aware of all your managed objects, when you
-  call the ``flush()`` method, it calculates an overall changeset and executes
-  the most efficient operation possible.
+    In fact, since Doctrine is aware of all your managed objects, when you
+    call the ``flush()`` method, it calculates an overall changeset and executes
+    the most efficient operation possible.
 
 When creating or updating objects, the workflow is always the same. In the
 next section, you'll see how Doctrine is smart enough to update entries if
