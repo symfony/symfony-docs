@@ -1,14 +1,14 @@
 * **Bundle Configuration**:
 
   * :doc:`FrameworkBundle (framework) </reference/configuration/framework>`
+  * :doc:`AsseticBundle (assetic) </reference/configuration/assetic>`
   * :doc:`DoctrineBundle (doctrine) </reference/configuration/doctrine>`
   * :doc:`SecurityBundle (security) </reference/configuration/security>`
   * :doc:`SwiftMailerBundle (swiftmailer) </reference/configuration/swiftmailer>`
   * :doc:`TwigBundle (twig) </reference/configuration/twig>`
   * :doc:`MonologBundle (monolog) </reference/configuration/monolog>`
-  * :doc:`SecurityBundle (security) </reference/configuration/security>`
   * :doc:`WebProfilerBundle (web_profiler) </reference/configuration/web_profiler>`
-  * :doc:`DoctrineMongoDBBundle (doctrine_mongo_db) </reference/configuration/mongodb>`
+  * :doc:`DoctrineMongoDBBundle (doctrine_mongodb) </reference/configuration/mongodb>`
 
 * **Forms**
 
