@@ -126,8 +126,8 @@ If there are any issues, correct them now before moving on.
 
     .. code-block:: bash
 
-        setfacl -m u:www-data:rw -R app/cache app/logs
-        setfacl -m u:yourname:rw -R app/cache app/logs
+        sudo setfacl -R -m u:www-data:rwx -m u:yourname:rwx app/cache app/logs
+        sudo setfacl -dR -m u:www-data:rwx -m u:yourname:rwx app/cache app/logs
 
     **3. Without using ACL**
 
