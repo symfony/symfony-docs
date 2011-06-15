@@ -12,7 +12,7 @@ to constantly recompile the PHP source code. There are a number of
 Further optimizations
 ---------------------
 
-Byte code caches usually minor the source files for changes. This ensures that
+Byte code caches usually monitor the source files for changes. This ensures that
 if the source file changes, the byte code is recompiled automatically. However
 this obviously adds overhead.
 
