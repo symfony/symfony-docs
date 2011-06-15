@@ -81,7 +81,7 @@ pattern that points to a specific PHP class and method:
 
     // src/Acme/BlogBundle/Controller/BlogController.php
     
-    namespace Acme/BlogBundle/Controller;
+    namespace Acme\BlogBundle\Controller;
     use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
     class BlogController extends Controller
