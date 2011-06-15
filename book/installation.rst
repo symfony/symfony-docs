@@ -109,11 +109,13 @@ If there are any issues, correct them now before moving on.
 
     .. code-block:: bash
 
+        Many systems allow you to use the ``chmod +a`` command. Try this first,
+        and if you get an error - try the next method:
+
         rm -rf app/cache/*
         rm -rf app/logs/*
 
         sudo chmod +a "www-data allow delete,write,append,file_inherit,directory_inherit" app/cache app/logs
-
         sudo chmod +a "yourname allow delete,write,append,file_inherit,directory_inherit" app/cache app/logs
 
     **2. Using Acl on a system that does not support chmod +a**
