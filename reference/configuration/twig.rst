@@ -11,18 +11,30 @@ TwigBundle Configuration Reference
         twig:
             form:
                 resources:
-                    - TwigBundle:Form:div_layout.html.twig  # Default
-                    - MyBundle::form.html.twig  # Example
+
+                    # Default:
+                    - div_layout.html.twig
+
+                    # Example:
+                    - MyBundle::form.html.twig
             globals:
-                foo: "@bar" # Example
-                pi:  3.14   # Example
-            auto_reload:         %kernel.debug%
-            autoescape:          true
-            base_template_class: Twig_Template
-            cache:               %kernel.cache_dir%/twig
-            charset:             %kernel.charset%
-            debug:               %kernel.debug%
-            strict_variables:    false
+
+                # Examples:
+                foo:                 "@bar"
+                pi:                  3.14
+
+                # Prototype
+                key:
+                    id:                   ~
+                    type:                 ~
+                    value:                ~
+            autoescape:           ~
+            base_template_class:  ~ # Example: Twig_Template
+            cache:                %kernel.cache_dir%/twig
+            charset:              %kernel.charset%
+            debug:                %kernel.debug%
+            strict_variables:     ~
+            auto_reload:          ~
 
     .. code-block:: xml
 
