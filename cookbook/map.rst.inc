@@ -15,6 +15,9 @@
 * :doc:`/cookbook/event_dispatcher/class_extension`
 * :doc:`/cookbook/event_dispatcher/method_behavior`
 * :doc:`/cookbook/profiler/data_collector`
+* :doc:`/cookbook/performance/autoloader`
+* :doc:`/cookbook/performance/bootstap_files`
+* :doc:`/cookbook/performance/bytecodecache`
 * :doc:`/cookbook/bundles/extension`
 * :doc:`/cookbook/request/mime_type`
 * :doc:`/cookbook/security/voters`
