@@ -124,7 +124,7 @@ If there are any issues, correct them now before moving on.
     another utility called ``setfacl``. On some systems, this will need to
     be installed before using it:
 
-    ..code-block:: bash
+    .. code-block:: bash
 
         setfacl -m u:www-data:rw -R app/cache app/logs
         setfacl -m u:yourname:rw -R app/cache app/logs
