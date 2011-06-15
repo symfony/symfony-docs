@@ -952,9 +952,10 @@ We learned in the :ref:`template-naming-locations` section that the template
 in question lives at ``Resources/views/Blog/index.html.twig`` inside the
 ``AcmeBlogBundle`` bundle. To override the bundle template, copy the ``index.html.twig``
 template to ``app/Resources/AcmeBlogBundle/views/Blog/index.html.twig`` (the
-``AcmeBlogBundle`` directory might not exist). Now, when the
-``AcmeBlogBundle:Blog:index.html.twig`` template is rendered, Symfony2 will look
-first for the template at
+``AcmeBlogBundle`` directory might not exist).
+
+Now, when the ``AcmeBlogBundle:Blog:index.html.twig`` template is rendered,
+Symfony2 will look first for the template at
 ``app/Resources/AcmeBlogBundle/views/Blog/index.html.twig`` before looking
 at  ``src/Acme/BlogBundle/Resources/views/Blog/index.html.twig``. You're
 now free to customize the template for your application.
