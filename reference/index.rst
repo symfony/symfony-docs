@@ -5,6 +5,7 @@ Reference Documents
     :hidden:
 
     configuration/framework
+    configuration/assetic
     configuration/doctrine
     configuration/security
     configuration/swiftmailer
