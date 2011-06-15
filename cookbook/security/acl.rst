@@ -67,12 +67,11 @@ First, we need to configure the connection the ACL system is supposed to use:
     objects, be it Doctrine ORM, Mongo ODM, Propel, or raw SQL, the choice is 
     yours.
 
-After the connection is configured, we have to import the database structure.
-Fortunately, we have a task for this. Simply run the following command:
+After the connection is configured, we have to update the database structure:
 
 .. code-block:: text
 
-    php app/console init:acl
+    php app/console doctrine:schema:update --force
 
 Getting Started
 ---------------
