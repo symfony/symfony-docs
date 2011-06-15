@@ -20,6 +20,6 @@ Some byte code caches offer a mode for this reason that does not do these checks
 Obviously when enabling this mode it will be up to the server admin to ensure
 that the cache is cleared if source files change.
 
-To enable this mode in APC simple add ``apc.stat=0'' to your php.ini configuration.
+To enable this mode in APC simple add ``apc.stat=0`` to your php.ini configuration.
 
 .. _`byte code caches`: http://en.wikipedia.org/wiki/List_of_PHP_accelerators
