@@ -118,6 +118,10 @@ If there are any issues, correct them now before moving on.
 
     **2. Using Acl on a system that does not support chmod +a**
 
+    Some systems, like Ubuntu, don't support ``chmod +a``, but do support
+    another utility called ``setfacl``. On some systems, this will need to
+    be installed before using it:
+
     ..code-block:: bash
 
         setfacl -m u:www-data:rw -R app/cache app/logs
