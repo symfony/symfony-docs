@@ -66,4 +66,4 @@ Cookbook
 
     symfony1
 
-.. include:: map.rst.inc
+.. include:: /cookbook/map.rst.inc

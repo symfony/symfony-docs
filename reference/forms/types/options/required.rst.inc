@@ -1,4 +1,4 @@
-* ``required`` [type: Boolean, default: true]
+*   ``required`` [type: Boolean, default: true]
     The ``required`` option can be used to render an `HTML5 required attribute`_.
     Note that this is independent from validation: if you include the required
     attribute on the field type but omit any required validation, the object

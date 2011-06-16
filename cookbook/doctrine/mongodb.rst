@@ -141,10 +141,10 @@ inside the ``Document`` directory of your ``AcmeStoreBundle``::
         protected $price;
     }
 
-The class - often called a "document", meaning *a basic class that holds data*
-- is simple and helps fulfill the business requirement of needing products
-in your application. This class can't be persisted to Doctrine MongoDB yet
-- it's just a simple PHP class.
+The class - often called a "document", meaning *a basic class that holds data* -
+is simple and helps fulfill the business requirement of needing products
+in your application. This class can't be persisted to Doctrine MongoDB yet -
+it's just a simple PHP class.
 
 Add Mapping Information
 ~~~~~~~~~~~~~~~~~~~~~~~

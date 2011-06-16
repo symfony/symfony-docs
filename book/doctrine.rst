@@ -117,8 +117,8 @@ inside the ``Entity`` directory of your ``AcmeStoreBundle``::
         protected $description;
     }
 
-The class - often called an "entity", meaning *a basic class that holds data*
-- is simple and helps fulfill the business requirement of needing products
+The class - often called an "entity", meaning *a basic class that holds data* -
+is simple and helps fulfill the business requirement of needing products
 in your application. This class can't be persisted to a database yet - it's
 just a simple PHP class.
 

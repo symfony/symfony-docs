@@ -27,7 +27,7 @@ have a protocol.
 Options
 -------
 
-* ``default_protocol`` [type: string, default: ``http``]
+*   ``default_protocol`` [type: string, default: ``http``]
 
     If a value is submitted that doesn't begin with some protocol (e.g. ``http://``,
     ``ftp://``, etc), this protocol will be prepended to the string when

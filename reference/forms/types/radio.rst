@@ -30,7 +30,7 @@ If you want to have a Boolean field, use :doc:`checkbox</reference/forms/types/c
 Options
 -------
 
-* ``value`` [type: mixed, default: 1]
+*   ``value`` [type: mixed, default: 1]
     The value that's actually used as the value for the radio button. This does
     not affect the value that's set on your object.
 

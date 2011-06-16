@@ -216,4 +216,4 @@ If you validate an author with an invalid address now, you can see that the
 validation of the ``Address`` fields failed.
 
     Acme\HelloBundle\Author.address.zipCode:
-        This value is too long. It should have 5 characters or less
+    This value is too long. It should have 5 characters or less

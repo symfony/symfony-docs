@@ -938,8 +938,8 @@ portions of a form. For a more extensive discussion, see :doc:`/cookbook/form/tw
 Form Template Blocks
 ~~~~~~~~~~~~~~~~~~~~
 
-Every part of a form that is rendered - HTML form elements, errors, labels, etc
-- is defined in a base template as individual Twig blocks. By default, every
+Every part of a form that is rendered - HTML form elements, errors, labels, etc -
+is defined in a base template as individual Twig blocks. By default, every
 block needed is defined in the `div_layout.html.twig`_ file that lives inside
 the `Twig Bridge`_. Inside this file, you can see every block needed
 to render a form and every default field type.
