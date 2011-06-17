@@ -106,15 +106,15 @@ documents to and from MongoDB.
 
     If you want to follow along with the example in this chapter, create
     an ``AcmeStoreBundle`` via:
-    
+
     .. code-block:: bash
-    
+
         php app/console init:bundle Acme/StoreBundle src/
 
     Next, be sure that the new bundle is enabled in the kernel::
-    
+
         // app/AppKernel.php
-        
+
         public function registerBundles()
         {
             $bundles = array(
@@ -131,7 +131,7 @@ Without even thinking about Doctrine or MongoDB, you already know that you
 need a ``Product`` object to represent those products. Create this class
 inside the ``Document`` directory of your ``AcmeStoreBundle``::
 
-    // src/Acme/StoreBundle/Document/Product.php    
+    // src/Acme/StoreBundle/Document/Product.php
     namespace Acme\StoreBundle\Document;
 
     class Product
@@ -551,7 +551,7 @@ You can use this new method just like the default finder methods of the reposito
     $product = $this->get('doctrine.odm.mongodb.document_manager')
         ->getRepository('AcmeStoreBundle:Product')
         ->findAllOrderedByName();
-                
+
 
 .. note::
 
@@ -638,16 +638,16 @@ see Doctrine's `Event Documentation`_.
 In Symfony, you can register a listener or subscriber by creating a :term:`service`
 and then :ref:`tagging<book-service-container-tags>` it with a specific tag.
 
-* **event listener**: Use the ``doctrine.odm.mongodb.<connection>_event_listener``
+*   **event listener**: Use the ``doctrine.odm.mongodb.<connection>_event_listener``
     tag, where ``<connection>`` name is replaced by the name of your connection
     (usually ``default``). Also, be sure to add an ``event`` key to the tag
     specifying which event to listen to. Assuming your connection is called
     ``default``, then:
 
     .. configuration-block::
-    
+
         .. code-block:: yaml
-        
+
             services:
                 my_doctrine_listener:
                     class:   Acme\HelloBundle\Listener\MyDoctrineListener
@@ -656,7 +656,7 @@ and then :ref:`tagging<book-service-container-tags>` it with a specific tag.
                         -  { name: doctrine.odm.mongodb.default_event_listener, event: postPersist }
 
         .. code-block:: xml
-        
+
             <service id="my_doctrine_listener" class="Acme\HelloBundle\Listener\MyDoctrineListener">
                 <!-- ... -->
                 <tag name="doctrine.odm.mongodb.default_event_listener" event="postPersist" />
@@ -669,7 +669,7 @@ and then :ref:`tagging<book-service-container-tags>` it with a specific tag.
             $definition->addTag('doctrine.odm.mongodb.default_event_listener');
             $container->setDefinition('my_doctrine_listener', $definition);
 
-* **event subscriber**: Use the ``doctrine.odm.mongodb.<connection>_event_subscriber``
+*   **event subscriber**: Use the ``doctrine.odm.mongodb.<connection>_event_subscriber``
     tag. No other keys are needed in the tag.
 
 Summary
