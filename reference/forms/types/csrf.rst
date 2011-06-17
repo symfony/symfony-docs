@@ -39,5 +39,6 @@ Inherited options
 These options inherit from the :doc:`field</reference/forms/types/field>` type:
 
 * ``error_bubbling`` [type: Boolean, default: true]
+
   .. include:: /reference/forms/types/options/error_bubbling.rst.inc
      :start-line: 1
