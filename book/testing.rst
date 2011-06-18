@@ -113,7 +113,7 @@ simple functional test for ``DemoController`` that reads as follows::
     {
         public function testIndex()
         {
-            $client = $this->createClient();
+            $client = static::createClient();
 
             $crawler = $client->request('GET', '/demo/hello/Fabien');
 
@@ -722,7 +722,7 @@ You can also change the default environment (``test``) and override the
 default debug mode (``true``) by passing them as options to the
 ``createClient()`` method::
 
-    $client = $this->createClient(array(
+    $client = static::createClient(array(
         'environment' => 'my_test_env',
         'debug'       => false,
     ));
@@ -730,7 +730,7 @@ default debug mode (``true``) by passing them as options to the
 If your application behaves according to some HTTP headers, pass them as the
 second argument of ``createClient()``::
 
-    $client = $this->createClient(array(), array(
+    $client = static::createClient(array(
         'HTTP_HOST'       => 'en.example.com',
         'HTTP_USER_AGENT' => 'MySuperBrowser/1.0',
     ));

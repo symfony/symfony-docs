@@ -7,8 +7,8 @@ How to test the Interaction of several Clients
 If you need to simulate an interaction between different Clients (think of a
 chat for instance), create several Clients::
 
-    $harry = $this->createClient();
-    $sally = $this->createClient();
+    $harry = static::createClient();
+    $sally = static::createClient();
 
     $harry->request('POST', '/say/sally/Hello');
     $sally->request('GET', '/messages');
@@ -20,8 +20,8 @@ This works except when your code maintains a global state or if it depends on
 third-party libraries that has some kind of global state. In such a case, you
 can insulate your clients::
 
-    $harry = $this->createClient();
-    $sally = $this->createClient();
+    $harry = static::createClient();
+    $sally = static::createClient();
 
     $harry->insulate();
     $sally->insulate();

@@ -7,7 +7,7 @@ How to simulate HTTP Authentication in a Functional Test
 If your application needs HTTP authentication, pass the username and password
 as server variables to ``createClient()``::
 
-    $client = $this->createClient(array(), array(
+    $client = static::createClient(array(), array(
         'PHP_AUTH_USER' => 'username',
         'PHP_AUTH_PW'   => 'pa$$word',
     ));
