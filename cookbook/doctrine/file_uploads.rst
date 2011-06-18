@@ -307,7 +307,7 @@ property, instead of the actual filename::
          */
         public function upload()
         {
-            if (!$this->file) {
+            if ($this->file===null) {
                 return;
             }
 
