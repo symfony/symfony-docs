@@ -234,7 +234,7 @@ documentation.
             # app/config/config.yml
             jms_security_extra:
                 # ...
-                secure_all_services: false
+                secure_all_services: true
     
         .. code-block:: xml
 
@@ -253,7 +253,7 @@ documentation.
             // app/config/config.php
             $container->loadFromExtension('jms_security_extra', array(            
                 // ...
-                'secure_all_services' => false,
+                'secure_all_services' => true,
             ));
 
     The disadvantage of this method is that, if activated, the initial page
