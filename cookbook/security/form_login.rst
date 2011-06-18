@@ -1,6 +1,11 @@
 How to customize your Form Login
 ================================
 
+Using a :ref:`form login<book-security-form-login>` for authentication is
+a common, and flexible, method for handling authentication in Symfony2. Pretty
+much every aspect of the form login can be customized. The full, default
+configuration is shown in the next section.
+
 Form Login Configuration Reference
 ----------------------------------
 
@@ -15,11 +20,18 @@ Form Login Configuration Reference
                     form_login:
                         check_path:                     /login_check
                         login_path:                     /login
-                        failure_path:                   null
+                        use_forward:                    false
                         always_use_default_target_path: false
                         default_target_path:            /
                         target_path_parameter:          _target_path
                         use_referer:                    false
+                        failure_path:                   null
+                        failure_forward:                false
+                        username_parameter:             _username
+                        password_parameter:             _password
+                        csrf_parameter:                 _csrf_token
+                        intention:                      authenticate
+                        post_only:                      true
 
     .. code-block:: xml
 
@@ -29,11 +41,18 @@ Form Login Configuration Reference
                 <form-login
                     check_path="/login_check"
                     login_path="/login"
-                    failure_path="null"
+                    use_forward="false"
                     always_use_default_target_path="false"
                     default_target_path="/"
                     target_path_parameter="_target_path"
                     use_referer="false"
+                    failure_path="null"
+                    failure_forward="false"
+                    username_parameter="_username"
+                    password_parameter="_password"
+                    csrf_parameter="_csrf_token"
+                    intention="authenticate"
+                    post_only="true"
                 />
             </firewall>
         </config>
@@ -46,15 +65,21 @@ Form Login Configuration Reference
                 'main' => array('form_login' => array(
                     'check_path'                     => '/login_check',
                     'login_path'                     => '/login',
-                    'failure_path'                   => null,
+                    'user_forward'                   => false,
                     'always_use_default_target_path' => false,
                     'default_target_path'            => '/',
                     'target_path_parameter'          => _target_path,
                     'use_referer'                    => false,
+                    'failure_path'                   => null,
+                    'failure_forward'                => false,
+                    'username_parameter'             => '_username',
+                    'password_parameter'             => '_password',
+                    'csrf_parameter'                 => '_csrf_token',
+                    'intention'                      => 'authenticate',
+                    'post_only'                      => true,
                 )),
             ),
         ));
-
 
 You can change where the login form redirects to using the various config 
 options. By default the form will redirect to the url the user requested 

@@ -247,6 +247,8 @@ the request flow is always the same:
     You'll also learn later how *anything* can be secured in Symfony2, including
     specific controllers, objects, or even PHP methods.
 
+.. _book-security-form-login:
+
 Using a Traditional Login Form
 ------------------------------
 
