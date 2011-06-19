@@ -351,23 +351,26 @@ current request like this::
 
     $profile = $client->getProfile();
 
-Redirections
-~~~~~~~~~~~~
+Redirecting
+~~~~~~~~~~~
 
 By default, the Client doesn't follow HTTP redirects, so that you can get
-the Response before the redirection. You next have to manually redirect by
-calling the ``followRedirect()`` method::
+and examine the Response before redirecting. Once you do want the client
+to redirect, call the ``followRedirect()`` method::
 
+    // do something that would cause a redirect to be issued (e.g. fill out a form)
+
+    // follow the redirect
     $crawler = $client->followRedirect();
 
-But if you want the Client to automatically redirect, calls the
+If you want the Client to always automatically redirect, you can call the
 ``followRedirects()`` method::
 
     $client->followRedirects();
 
     $crawler = $client->request('GET', '/');
 
-    // all redirections are executed
+    // all redirects are followed
 
     // set Client back to manual redirection
     $client->followRedirects(false);
