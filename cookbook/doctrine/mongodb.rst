@@ -32,11 +32,7 @@ one bundle that integrates them into Symfony. If you're using the Symfony
 Standard Distribution, add the following to the ``deps`` file at the root
 of your project:
 
-.. code-block:: text
-
-    DoctrineMongoDBBundle   /bundles/Symfony/Bundle git://github.com/symfony/DoctrineMongoDBBundle.git
-    doctrine-mongodb-odm    /                       git://github.com/doctrine/mongodb-odm.git
-    doctrine-mongodb        /                       git://github.com/doctrine/mongodb.git    
+.. code-block:: text    
 
     [DoctrineMongoDBBundle]
         git=git://github.com/symfony/DoctrineMongoDBBundle.git
