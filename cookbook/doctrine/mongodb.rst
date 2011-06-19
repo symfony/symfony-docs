@@ -35,7 +35,7 @@ of your project:
 .. code-block:: text    
 
     [DoctrineMongoDBBundle]
-        git=git://github.com/symfony/DoctrineMongoDBBundle.git
+        git=http://github.com/symfony/DoctrineMongoDBBundle.git
         target=/bundles/Symfony/Bundle/DoctrineMongoDBBundle
 
     [doctrine-mongodb-odm]
