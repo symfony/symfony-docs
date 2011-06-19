@@ -923,23 +923,16 @@ Several configuration options are available and are covered in the
 Overriding Bundle Templates
 ---------------------------
 
-One of the best features of Symfony2 is a bundle system that encourages the
-organization of components in a way that makes them easy to reuse in other
-projects or distribute as open source libraries. In fact, the Symfony2 community
-prides itself on creating and maintaining high quality bundles for a large
-number of different features. To find out more about the open source bundles
-that are available, visit `Symfony2Bundles.org`_
-
-In Symfony2, almost every part of a bundle can be overridden so that you can
-use and customize it for your specific application. Templates are no exception.
+The Symfony2 community prides itself on creating and maintaining high quality
+bundles (see `Symfony2Bundles.org`_) for a large number of different features.
+Once you use a bundle a third-party bundle, you'll likely need to override
+and customize one or more of its templates.
 
 Suppose you've included the imaginary open-source ``AcmeBlogBundle`` in your
 project (e.g. in the ``src/Acme/BlogBundle`` directory). And while you're
 really happy with everything, you want to override the blog "list" page to
 customize the markup specifically for your application. By digging into the
-``Blog`` controller of the ``AcmeBlogBundle``, you find the following:
-
-.. code-block:: php
+``Blog`` controller of the ``AcmeBlogBundle``, you find the following::
 
     public function indexAction()
     {
@@ -948,37 +941,31 @@ customize the markup specifically for your application. By digging into the
         $this->render('AcmeBlogBundle:Blog:index.html.twig', array('blogs' => $blogs));
     }
 
-We learned in the :ref:`template-naming-locations` section that the template
-in question lives at ``Resources/views/Blog/index.html.twig`` inside the
-``AcmeBlogBundle`` bundle. When this template is requested, by default Symfony2
-will look at the following paths in order to locate the template to render:
+When the ``AcmeBlogBundle:Blog:index.html.twig`` is rendered, Symfony2 actually
+looks in two different locations for the template:
 
 #. ``app/Resources/AcmeBlogBundle/views/Blog/index.html.twig``
 #. ``src/Acme/BlogBundle/Resources/views/Blog/index.html.twig``
 
-So to override the bundle template, copy the ``index.html.twig``
-template to ``app/Resources/AcmeBlogBundle/views/Blog/index.html.twig`` (the
-``AcmeBlogBundle`` directory might not exist so you'll need to create it).
-You're now free to customize the template.
+To override the bundle template, just copy the ``index.html.twig`` template
+from the bundle to ``app/Resources/AcmeBlogBundle/views/Blog/index.html.twig``
+(the ``app/Resources/AcmeBlogBundle`` directory won't exist, so you'll need
+to create it). You're now free to customize the template.
 
-Now, when the ``AcmeBlogBundle:Blog:index.html.twig`` template is rendered,
-Symfony2 will look first for the template in your app's Resources directory
-as described above, followed by the ``AcmeBlogBundle`` Resources directory.
-
-This logic also applies when templates inherit from a base template in the bundle.
-Suppose also that each template in ``AcmeBlogBundle`` inherits from a base
-template called ``AcmeBlogBundle::layout.html.twig``. As above, Symfony2 will
-look at the following paths to locate the template:
+This logic also applies to base bundle templates. Suppose also that each
+template in ``AcmeBlogBundle`` inherits from a base template called
+``AcmeBlogBundle::layout.html.twig``. Just as before, Symfony2 will look in
+the following two places for the template:
 
 #. ``app/Resources/AcmeBlogBundle/views/layout.html.twig``
 #. ``src/Acme/BlogBundle/Resources/views/layout.html.twig``
 
-So, as before, to override the template, just copy it to
-``app/Resources/AcmeBlogBundle/views/layout.html.twig``. You're then free to
+Once again, to override the template, just copy it from the bundle to
+``app/Resources/AcmeBlogBundle/views/layout.html.twig``. You're now free to
 customize this copy as you see fit.
 
 If you take a step back, you'll see that Symfony2 always starts by looking in
-the ``app/Resources/BUNDLE_NAME/views/`` directory for a template. If the
+the ``app/Resources/{BUNDLE_NAME}/views/`` directory for a template. If the
 template doesn't exist there, it continues by checking inside the
 ``Resources/views`` directory of the bundle itself. This means that all bundle
 templates can be overridden by placing them in the correct ``app/Resources``
