@@ -354,20 +354,23 @@ current request like this::
 Redirections
 ~~~~~~~~~~~~
 
-By default, the Client follows HTTP redirects. But if you want to get the
-Response before the redirection and redirect yourself, calls the
+By default, the Client doesn't follow HTTP redirects, so that you can get
+the Response before the redirection. You next have to manually redirect by
+calling the ``followRedirect()`` method::
+
+    $crawler = $client->followRedirect();
+
+But if you want the Client to automatically redirect, calls the
 ``followRedirects()`` method::
 
-    $client->followRedirects(false);
+    $client->followRedirects();
 
     $crawler = $client->request('GET', '/');
 
-    // do something with the redirect response
+    // all redirections are executed
 
-    // follow the redirection manually
-    $crawler = $client->followRedirect();
-
-    $client->followRedirects(true);
+    // set Client back to manual redirection
+    $client->followRedirects(false);
 
 .. index::
    single: Tests; Crawler
