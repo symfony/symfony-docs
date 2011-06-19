@@ -950,21 +950,32 @@ customize the markup specifically for your application. By digging into the
 
 We learned in the :ref:`template-naming-locations` section that the template
 in question lives at ``Resources/views/Blog/index.html.twig`` inside the
-``AcmeBlogBundle`` bundle. To override the bundle template, copy the ``index.html.twig``
+``AcmeBlogBundle`` bundle. When this template is requested, by default Symfony2
+will look at the following paths in order to locate the template to render:
+
+# app/Resources/AcmeBlogBundle/views/Blog/index.html.twig
+# src/Acme/BlogBundle/Resources/views/Blog/index.html.twig
+
+So to override the bundle template, copy the ``index.html.twig``
 template to ``app/Resources/AcmeBlogBundle/views/Blog/index.html.twig`` (the
-``AcmeBlogBundle`` directory might not exist).
+``AcmeBlogBundle`` directory might not exist so you'll need to create it).
+You're now free to customize the template.
 
 Now, when the ``AcmeBlogBundle:Blog:index.html.twig`` template is rendered,
-Symfony2 will look first for the template at
-``app/Resources/AcmeBlogBundle/views/Blog/index.html.twig`` before looking
-at  ``src/Acme/BlogBundle/Resources/views/Blog/index.html.twig``. You're
-now free to customize the template for your application.
+Symfony2 will look first for the template in your app's Resources directory
+as described above, followed by the ``AcmeBlogBundle`` Resources directory.
 
+This logic also applies when templates inherit from a base template in the bundle.
 Suppose also that each template in ``AcmeBlogBundle`` inherits from a base
-template specific to the ``AcmeBlogBundle`` called
-``AcmeBlogBundle::layout.html.twig``. By default, this template lives at
-``Resources/views/layout.html.twig`` inside ``AcmeBlogBundle``. To override
-it, just copy it to ``app/Resources/AcmeBlogBundle/views/layout.html.twig``.
+template called ``AcmeBlogBundle::layout.html.twig``. As above, Symfony2 will
+look at the following paths to locate the template:
+
+# app/Resources/AcmeBlogBundle/views/layout.html.twig
+# src/Acme/BlogBundle/Resources/views/layout.html.twig
+
+So, as before, to override the template, just copy it to
+``app/Resources/AcmeBlogBundle/views/layout.html.twig``. You're then free to
+customize this copy as you see fit.
 
 If you take a step back, you'll see that Symfony2 always starts by looking in
 the ``app/Resources/BUNDLE_NAME/views/`` directory for a template. If the
