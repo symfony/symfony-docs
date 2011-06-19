@@ -36,13 +36,23 @@ of your project:
 
     DoctrineMongoDBBundle   /bundles/Symfony/Bundle git://github.com/symfony/DoctrineMongoDBBundle.git
     doctrine-mongodb-odm    /                       git://github.com/doctrine/mongodb-odm.git
-    doctrine-mongodb        /                       git://github.com/doctrine/mongodb.git
+    doctrine-mongodb        /                       git://github.com/doctrine/mongodb.git    
+
+    [DoctrineMongoDBBundle]
+        git=git://github.com/symfony/DoctrineMongoDBBundle.git
+        target=/bundles/Symfony/Bundle/DoctrineMongoDBBundle
+
+    [doctrine-mongodb-odm]
+        git=http://github.com/doctrine/mongodb-odm.git
+    
+    [doctrine-mongodb]
+        git=http://github.com/doctrine/mongodb.git
 
 Now, update the vendor libraries by running:
 
 .. code-block:: bash
 
-    $ ./bin/vendors
+    $ ./bin/vendors install
 
 Next, add the ``Doctrine\ODM\MongoDB`` and ``Doctrine\MongoDB`` namespaces
 to the ``app/autoload.php`` file so that these libraries can be autoloaded.
@@ -83,12 +93,15 @@ the MongoDB ODM across your application:
 
     # app/config/config.yml
     doctrine_mongodb:
-        document_managers:
-            default:
-                auto_mapping: true
-                database:     my_test_database
-        connections:
-            default:
+    connections:
+        default:
+            server: mongodb://localhost:27017
+            options:
+                connect: true
+    default_database: test_database
+    document_managers:
+        default:
+            auto_mapping: true
 
 .. note::
 
