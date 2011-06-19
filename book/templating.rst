@@ -953,8 +953,8 @@ in question lives at ``Resources/views/Blog/index.html.twig`` inside the
 ``AcmeBlogBundle`` bundle. When this template is requested, by default Symfony2
 will look at the following paths in order to locate the template to render:
 
-# app/Resources/AcmeBlogBundle/views/Blog/index.html.twig
-# src/Acme/BlogBundle/Resources/views/Blog/index.html.twig
+#. ``app/Resources/AcmeBlogBundle/views/Blog/index.html.twig``
+#. ``src/Acme/BlogBundle/Resources/views/Blog/index.html.twig``
 
 So to override the bundle template, copy the ``index.html.twig``
 template to ``app/Resources/AcmeBlogBundle/views/Blog/index.html.twig`` (the
@@ -970,8 +970,8 @@ Suppose also that each template in ``AcmeBlogBundle`` inherits from a base
 template called ``AcmeBlogBundle::layout.html.twig``. As above, Symfony2 will
 look at the following paths to locate the template:
 
-# app/Resources/AcmeBlogBundle/views/layout.html.twig
-# src/Acme/BlogBundle/Resources/views/layout.html.twig
+#. ``app/Resources/AcmeBlogBundle/views/layout.html.twig``
+#. ``src/Acme/BlogBundle/Resources/views/layout.html.twig``
 
 So, as before, to override the template, just copy it to
 ``app/Resources/AcmeBlogBundle/views/layout.html.twig``. You're then free to
