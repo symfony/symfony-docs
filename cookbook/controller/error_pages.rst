@@ -17,7 +17,7 @@ display and the status code that should be set for the given exception.
 All of the error templates live inside ``FrameworkBundle``. To override the
 templates, we simply rely on the standard method for overriding templates that
 live inside a bundle. For more information, see
-:ref:`overiding-bundle-templates`.
+:ref:`overriding-bundle-templates`.
 
 For example, to override the default error template that's shown to the
 end-user, create a new template located at

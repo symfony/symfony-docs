@@ -364,7 +364,7 @@ By default, templates can live in two different locations:
 * ``app/Resources/views/`` The applications ``views`` directory can contain
   application-wide base templates (i.e. your application's layouts) as well as
   templates that override bundle templates (see
-  :ref:`overiding-bundle-templates`);
+  :ref:`overriding-bundle-templates`);
 
 * ``path/to/bundle/Resources/views/`` Each bundle houses its templates in its
   ``Resources/views`` directory (and subdirectories). The majority of templates
@@ -401,7 +401,7 @@ lives in a specific location:
   that the template is not located in any bundle, but instead in the root
   ``app/Resources/views/`` directory.
 
-In the :ref:`overiding-bundle-templates` section, you'll find out how each
+In the :ref:`overriding-bundle-templates` section, you'll find out how each
 template living inside the ``AcmeBlogBundle``, for example, can be overridden
 by placing a template of the same name in the ``app/Resources/AcmeBlogBundle/views/``
 directory. This gives the power to override templates from any vendor bundle.
@@ -918,7 +918,7 @@ Several configuration options are available and are covered in the
 .. index::
     single; Template; Overriding templates
 
-.. _overiding-bundle-templates:
+.. _overriding-bundle-templates:
 
 Overriding Bundle Templates
 ---------------------------
