@@ -8,7 +8,7 @@ In order to get optimal performance from Symfony2, it is recommended that
 you use a so called byte code cache. The idea of a byte code cache is to remove
 the need to constantly recompile the PHP source code. There are a number of
 `byte code caches`_ available, some of which are open source. The most widely
-used byte code cache is probably `ACP`_
+used byte code cache is probably `APC`_
 
 Further Optimizations
 ---------------------
