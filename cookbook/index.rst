@@ -58,6 +58,10 @@ Cookbook
     console
     debugging
     logging/monolog
+
+    performance/autoloader
+    performance/bootstrap_files
+    performance/bytecodecache
     
     event_dispatcher/class_extension
     event_dispatcher/method_behavior

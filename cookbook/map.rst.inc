@@ -79,7 +79,7 @@
 * **Performance**
 
   * :doc:`/cookbook/performance/autoloader`
-  * :doc:`/cookbook/performance/bootstap_files`
+  * :doc:`/cookbook/performance/bootstrap_files`
   * :doc:`/cookbook/performance/bytecodecache`
 
 * **Extending Symfony**
