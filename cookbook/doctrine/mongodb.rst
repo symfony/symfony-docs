@@ -32,7 +32,7 @@ one bundle that integrates them into Symfony. If you're using the Symfony
 Standard Distribution, add the following to the ``deps`` file at the root
 of your project:
 
-.. code-block:: text    
+.. code-block:: text
 
     [DoctrineMongoDBBundle]
         git=http://github.com/symfony/DoctrineMongoDBBundle.git
@@ -89,15 +89,15 @@ the MongoDB ODM across your application:
 
     # app/config/config.yml
     doctrine_mongodb:
-    connections:
-        default:
-            server: mongodb://localhost:27017
-            options:
-                connect: true
-    default_database: test_database
-    document_managers:
-        default:
-            auto_mapping: true
+        connections:
+            default:
+                server: mongodb://localhost:27017
+                options:
+                    connect: true
+        default_database: test_database
+        document_managers:
+            default:
+                auto_mapping: true
 
 .. note::
 
