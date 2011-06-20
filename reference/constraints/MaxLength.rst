@@ -18,11 +18,11 @@ Validates that the string length of a value is not larger than the given limit.
 Options
 -------
 
-* ``limit`` (**default**, required) [type: integer]
+*   ``limit`` (**default**, required) [type: integer]
     This is the maximum length of the string. If set to 10, the string must
     be no more than 10 characters in length.
 
-* ``message`` [type: string, default: ``This value is too long. It should have {{ limit }} characters or less``]
+*   ``message`` [type: string, default: ``This value is too long. It should have {{ limit }} characters or less``]
     This is the validation error message when the validation fails.
 
 Basic Usage

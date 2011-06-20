@@ -34,13 +34,13 @@ data can be a ``DateTime`` object, a string, a timestamp or an array.
 Options
 -------
 
-* ``date_widget`` [type: string, default: choice]
+*   ``date_widget`` [type: string, default: choice]
     Defines the ``widget`` option for the :doc:`date</reference/forms/types/date>` type
 
-* ``time_widget`` [type: string, default: choice]
+*   ``time_widget`` [type: string, default: choice]
     Defines the ``widget`` option for the :doc:`time</reference/forms/types/time>` type
 
-* ``input`` [type: string, default: ``datetime``]
+*   ``input`` [type: string, default: ``datetime``]
     The value of the input for the widget.  Can be ``string``, ``datetime``
     or ``array``.  The form type input value will be returned in the format
     specified.  The input of ``April 21th, 2011 18:15:30`` as an array would return:

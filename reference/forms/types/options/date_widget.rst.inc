@@ -1,4 +1,4 @@
-* ``widget`` [type: string, default: ``choice``]
+*   ``widget`` [type: string, default: ``choice``]
     Type of widget used for this form type.  Can be ``text`` or ``single_text`` or ``choice``.
 
       * ``text``: renders a three field input of type text (month, day, year).

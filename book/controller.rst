@@ -546,8 +546,8 @@ The ``NotFoundHttpException`` will return a 404 HTTP response back to the
 browser. When viewing a page in debug mode, a full exception with stacktrace
 is displayed so that the cause of the exception can be easily tracked down.
 
-Of course, you're free to throw any ``Exception`` class in your controller
-- Symfony2 will automatically return a 500 HTTP response code.
+Of course, you're free to throw any ``Exception`` class in your controller -
+Symfony2 will automatically return a 500 HTTP response code.
 
 .. code-block:: php
 
