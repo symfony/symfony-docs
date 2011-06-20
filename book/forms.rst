@@ -348,6 +348,31 @@ corresponding errors printed out with the form.
 Validation is a very powerful feature of Symfony2 and has its own
 :doc:`dedicated chapter</book/validation>`.
 
+.. _book-forms-validation-groups:
+
+Validation Groups
+~~~~~~~~~~~~~~~~~
+
+If your object takes advantage of :ref:`validation groups <book-validation-validation-groups>`,
+you'll need to specify which validation group(s) your form should use::
+
+    $form = $this->createFormBuilder($user)
+        ->setAttribute('validation_groups', array('registration'))
+        // ...
+    ;
+
+If you're creating :ref:`form classes<book-form-creating-form-classes>` (a good
+practice), then you'll need to add the following to the ``buildForm()`` method::
+
+    public function buildForm(FormBuilder $builder, array $options)
+    {
+        // Restrict the constraints to the 'registration' group
+        $builder->setAttribute('validation_groups', array('registration'));
+    }
+
+In both of these cases, *only* the ``registration`` validation group will
+be used to validate the underlying object.
+
 .. index::
    single: Forms; Built-in Field Types
 
@@ -590,6 +615,8 @@ available in the :doc:`reference manual</reference/forms/twig_reference>`.
 
 .. index::
    single: Forms; Creating form classes
+
+.. _book-form-creating-form-classes:
 
 Creating Form Classes
 ---------------------
