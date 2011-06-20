@@ -557,8 +557,8 @@ the dispatcher calls the ``AcmeListener::onFooAction`` method and passes the
 .. tip::
 
     If you use the Symfony2 MVC framework, listeners can be registered via
-    your :ref:`configuration <dic-tags-kernel-listener>`. As an added bonus,
-    the listener objects are instantiated only when needed.
+    your :ref:`configuration <dic-tags-kernel-event-listener>`. As an added
+    bonus, the listener objects are instantiated only when needed.
 
 In many cases, a special ``Event`` subclass that's specific to the given event
 is passed to the listener. This gives the listener access to special
@@ -609,7 +609,7 @@ that serves to define and document your event:
         /**
          * The store.order event is thrown each time an order is created
          * in the system.
-         * 
+         *
          * The event listener receives an Acme\StoreBundle\Event\FilterOrderEvent
          * instance.
          *
