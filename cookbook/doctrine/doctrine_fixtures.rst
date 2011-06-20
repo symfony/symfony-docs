@@ -21,14 +21,18 @@ file:
 
 .. code-block:: text
 
-    doctrine-fixtures      /                       http://github.com/doctrine/data-fixtures.git
-    DoctrineFixturesBundle /bundles/Symfony/Bundle http://github.com/symfony/DoctrineFixturesBundle.git
+    [doctrine-fixtures]
+        git=http://github.com/doctrine/data-fixtures.git
+
+    [DocrineFixturesBundle]
+        git=http://github.com/symfony/DoctrineFixturesBundle.git
+        target=/bundles/Symfony/Bundle/DoctrineFixturesBundle  
 
 Update the vendor libraries:
 
 .. code-block:: bash
 
-    $ php bin/vendors install
+    $ php bin/vendor update
 
 If everything worked, the ``doctrine-fixtures`` library can now be found
 at ``vendor/doctrine-fixtures``.
