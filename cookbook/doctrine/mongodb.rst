@@ -89,12 +89,15 @@ the MongoDB ODM across your application:
 
     # app/config/config.yml
     doctrine_mongodb:
+        connections:
+            default:
+                server: mongodb://localhost:27017
+                options:
+                    connect: true
+        default_database: test_database
         document_managers:
             default:
                 auto_mapping: true
-                database:     my_test_database
-        connections:
-            default:
 
 .. note::
 
