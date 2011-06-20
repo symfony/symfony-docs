@@ -30,6 +30,8 @@ Configuration Reference
                         charset:              UTF8
                         logging:              %kernel.debug%
                         platform_service:     MyOwnDatabasePlatformService
+                        mapping_types:
+                            enum: string
                     conn1:
                         # ...
                 types:
@@ -91,9 +93,12 @@ Configuration Reference
                         charset="UTF8"
                         logging="%kernel.debug%"
                         platform-service="MyOwnDatabasePlatformService"
-                    />
+                    >
+                        <doctrine:option key="foo">bar</doctrine:option>
+                        <doctrine:mapping-type name="enum">string</doctrine:mapping-type>
+                    </doctrine:connection>
                     <doctrine:connection name="conn1" />
-                    <doctrine:type name="custom" class="Acme\HelloBundle\MyCustomType" />
+                    <doctrine:type name="custom">Acme\HelloBundle\MyCustomType</doctrine:type>
                 </doctrine:dbal>
 
                 <doctrine:orm default-entity-manager="default" auto-generate-proxy-classes="true" proxy-namespace="Proxies" proxy-dir="%kernel.cache_dir%/doctrine/orm/Proxies">
@@ -235,6 +240,10 @@ can configure. The following block shows all possible configuration keys:
                 charset:              UTF8
                 logging:              %kernel.debug%
                 platform_service:     MyOwnDatabasePlatformService
+                mapping_types:
+                    enum: string
+                types:
+                    custom: Acme\HelloBundle\MyCustomType
 
     .. code-block:: xml
 
@@ -258,7 +267,11 @@ can configure. The following block shows all possible configuration keys:
                 charset="UTF8"
                 logging="%kernel.debug%"
                 platform-service="MyOwnDatabasePlatformService"
-            />
+            >
+                <doctrine:option key="foo">bar</doctrine:option>
+                <doctrine:mapping-type name="enum">string</doctrine:mapping-type>
+                <doctrine:type name="custom">Acme\HelloBundle\MyCustomType</doctrine:type>
+            </doctrine:dbal>
         </doctrine:config>
 
 If you want to configure multiple connections in YAML, put them under the
