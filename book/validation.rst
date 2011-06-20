@@ -590,6 +590,8 @@ Now, create the ``isPasswordLegal()`` method, and include the logic you need::
     constraint to a property with the same name later (or vice versa) without
     changing your validation logic.
 
+.. _book-validation-validation-groups:
+
 Validation Groups
 -----------------
 
