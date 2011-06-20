@@ -990,6 +990,7 @@ additional arguments (beyond just the ``name`` parameter).
 * form.field_factory.guesser
 * kernel.cache_warmer
 * kernel.listener
+* monolog.logger
 * routing.loader
 * security.listener.factory
 * security.voter
@@ -997,7 +998,6 @@ additional arguments (beyond just the ``name`` parameter).
 * twig.extension
 * translation.loader
 * validator.constraint_validator
-* zend.logger.writer
 
 Learn more from the Cookbook
 ----------------------------
