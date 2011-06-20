@@ -34,15 +34,21 @@ of your project:
 
 .. code-block:: text
 
-    DoctrineMongoDBBundle   /bundles/Symfony/Bundle git://github.com/symfony/DoctrineMongoDBBundle.git
-    doctrine-mongodb-odm    /                       git://github.com/doctrine/mongodb-odm.git
-    doctrine-mongodb        /                       git://github.com/doctrine/mongodb.git
+    [doctrine-mongodb]
+        git=http://github.com/doctrine/mongodb.git
+
+    [doctrine-mongodb-odm]
+        git=http://github.com/doctrine/mongodb-odm.git
+
+    [DoctrineMongoDBBundle]
+        git=http://github.com/symfony/DoctrineMongoDBBundle.git
+        target=/bundles/Symfony/Bundle/DoctrineMongoDBBundle
 
 Now, update the vendor libraries by running:
 
 .. code-block:: bash
 
-    $ ./bin/vendors
+    $ php bin/vendors install
 
 Next, add the ``Doctrine\ODM\MongoDB`` and ``Doctrine\MongoDB`` namespaces
 to the ``app/autoload.php`` file so that these libraries can be autoloaded.

@@ -26,8 +26,12 @@ and the doctrine-migrations library as dependencies in your application:
 
 .. code-block:: text
 
-    doctrine-migrations      /                       https://github.com/doctrine/migrations.git
-    DoctrineMigrationsBundle /bundles/Symfony/Bundle https://github.com/symfony/DoctrineMigrationsBundle.git
+    [doctrine-migrations]
+        git=http://github.com/doctrine/migrations.git
+
+    [DoctrineMigrationsBundle]
+        git=http://github.com/symfony/DoctrineMigrationsBundle.git
+        target=/bundles/Symfony/Bundle/DoctrineMigrationsBundle
 
 Update the vendor libraries:
 
