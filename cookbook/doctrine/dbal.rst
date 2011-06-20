@@ -17,7 +17,7 @@ with the most popular relational databases. In other words, the DBAL library
 makes it easy to execute queries and perform other database actions.
 
 .. tip::
-    
+
     Read the official Doctrine `DBAL Documentation`_ to learn all the details
     and capabilities of Doctrine's DBAL library.
 
@@ -37,7 +37,7 @@ To get started, configure the database connection parameters:
                 charset:  UTF8
 
     .. code-block:: xml
-    
+
         // app/config/config.xml
         <doctrine:config>
             <doctrine:dbal
@@ -108,6 +108,63 @@ mapping types, read Doctrine's `Custom Mapping Types`_ section of their document
 
             <doctrine:config>
                 <doctrine:dbal>
+                <doctrine:dbal default-connection="default">
+                    <doctrine:connection>
+                        <doctrine:mapping-type name="enum">string</doctrine:mapping-type>
+                    </doctrine:connection>
+                </doctrine:dbal>
+            </doctrine:config>
+        </container>
+
+    .. code-block:: php
+
+        // app/config/config.php
+        $container->loadFromExtension('doctrine', array(
+            'dbal' => array(
+                'connections' => array(
+                    'default' => array(
+                        'mapping_types' => array(
+                            'enum'  => 'string',
+                        ),
+                    ),
+                ),
+            ),
+        ));
+
+Registering Custom Mapping Types in the SchemaTool
+--------------------------------------------------
+
+The SchemaTool is used to inspect the database to compare the schema. To
+achieve this task, it needs to know which mapping type needs to be used
+for each database types. Registering new ones can be done through the configuration.
+
+Let's map the ENUM type (not suppoorted by DBAL by default) to a the ``string``
+mapping type:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # app/config/config.yml
+        doctrine:
+            dbal:
+                connection:
+                    default:
+                        // Other connections parameters
+                        mapping_types:
+                            enum: string
+
+    .. code-block:: xml
+
+        <!-- app/config/config.xml -->
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:doctrine="http://symfony.com/schema/dic/doctrine"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd
+                                http://symfony.com/schema/dic/doctrine http://symfony.com/schema/dic/doctrine/doctrine-1.0.xsd">
+
+            <doctrine:config>
+                <doctrine:dbal>
                     <doctrine:type name="custom_first" class="Acme\HelloBundle\Type\CustomFirst" />
                     <doctrine:type name="custom_second" class="Acme\HelloBundle\Type\CustomSecond" />
                 </doctrine:dbal>
@@ -115,7 +172,7 @@ mapping types, read Doctrine's `Custom Mapping Types`_ section of their document
         </container>
 
     .. code-block:: php
-    
+
         // app/config/config.php
         $container->loadFromExtension('doctrine', array(
             'dbal' => array(
