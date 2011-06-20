@@ -27,7 +27,7 @@ objects from the database.
 +----------------------+------------------------------------------------------------------+
 | Parent type          | :doc:`choice</reference/forms/types/choice>`                     |
 +----------------------+------------------------------------------------------------------+
-| Class                | :class:`Symfony\Bridge\Doctrine\Form\Type\\EntityType`           |
+| Class                | :class:`Symfony\\Bridge\\Doctrine\\Form\\Type\\EntityType`       |
 +----------------------+------------------------------------------------------------------+
 
 Basic Usage

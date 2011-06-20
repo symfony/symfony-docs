@@ -706,7 +706,7 @@ For each incoming request, Symfony2 tries to find a matching access control
 rule (the first one wins). If the user isn't authenticated yet, the authentication
 process is initiated (i.e. the user is given a chance to login). However,
 if the user *is* authenticated but doesn't have the required role, an
-:class:`Symfony\\Component\Security\\Core\\Exception\\AccessDeniedException`
+:class:`Symfony\\Component\\Security\\Core\\Exception\\AccessDeniedException`
 exception is thrown, which you can handle and turn into a nice "access denied"
 error page for the user. See :doc:`/cookbook/controller/error_pages` for
 more information.

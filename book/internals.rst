@@ -23,7 +23,7 @@ on top of the previous one.
 
     Autoloading is not managed by the framework directly; it's done
     independently with the help of the
-    :class:`Symfony\\Component\\HttpFoundation\\UniversalClassLoader` class
+    :class:`Symfony\\Component\\ClassLoader\\UniversalClassLoader` class
     and the ``src/autoload.php`` file. Read the :doc:`dedicated chapter
     </cookbook/tools/autoloader>` for more information.
 
@@ -117,8 +117,8 @@ name (a "class::method" string, like
 .. tip::
 
     The default implementation uses the
-    :class:`Symfony\\Bundle\\FrameworkBundle\\RequestListener` to define the
-    ``_controller`` Request attribute (see :ref:`kernel-core_request`).
+    :class:`Symfony\\Bundle\\FrameworkBundle\\EventListener\\RouterListener`
+    to define the ``_controller`` Request attribute (see :ref:`kernel-core_request`).
 
 The
 :method:`Symfony\\Component\\HttpKernel\\Controller\\ControllerResolverInterface::getArguments`
@@ -250,7 +250,7 @@ the event. In this case, all other listeners won't be called.
 
 This event is used by ``FrameworkBundle`` to populate the ``_controller``
 ``Request`` attribute, via the
-:class:`Symfony\\Bundle\\FrameworkBundle\\RequestListener`. RequestListener
+:class:`Symfony\\Bundle\\FrameworkBundle\\EventListener\\RouterListener`. RequestListener
 uses a :class:`Symfony\\Component\\Routing\\RouterInterface` object to match
 the ``Request`` and determine the Controller name (stored in the
 ``_controller`` ``Request`` attribute).
@@ -328,7 +328,7 @@ The purpose of this event is to allow other systems to modify or replace the
 
 The ``FrameworkBundle`` registers several listeners:
 
-* :class:`Symfony\\Component\\HttpKernel\\Profiler\\EventListener\\ProfilerListener`:
+* :class:`Symfony\\Component\\HttpKernel\\EventListener\\ProfilerListener`:
   collects data for the current request;
 
 * :class:`Symfony\\Bundle\\WebProfilerBundle\\EventListener\\WebDebugToolbarListener`:
@@ -352,7 +352,7 @@ The ``FrameworkBundle`` registers several listeners:
 *Event Class*: :class:`Symfony\\Component\\HttpKernel\\Event\\GetResponseForExceptionEvent`
 
 ``FrameworkBundle`` registers a
-:class:`Symfony\\Bundle\\FrameworkBundle\\Controller\\ExceptionListener` that
+:class:`Symfony\\Component\\HttpKernel\\EventListener\\ExceptionListener` that
 forwards the ``Request`` to a given Controller (the value of the
 ``exception_listener.controller`` parameter -- must be in the
 ``class::method`` notation).

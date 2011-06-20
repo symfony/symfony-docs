@@ -55,7 +55,7 @@ What are Form Themes?
 
 When any part of a form is rendered - field labels, errors, ``input`` text fields,
 ``select`` tags, etc - Symfony uses the markup from a base Twig template file
-that ships with Symfony. This template, `div_layout.html.twig`_, contains
+that ships with Symfony. This template, `form_div_layout.html.twig`_, contains
 Twig blocks that define each and every part of a form that can be rendered.
 This template represents the default form "theme" and in the next section,
 you'll learn how to import your own set of customized form blocks (i.e. themes).
@@ -69,7 +69,7 @@ For example, when the widget of a ``text`` type field is rendered, an ``input``
 
     <input type="text" id="form_name" name="form[name]" required="required" value="foo" />
 
-Internally, Symfony uses the ``text_widget`` block from the `div_layout.html.twig`_
+Internally, Symfony uses the ``text_widget`` block from the `form_div_layout.html.twig`_
 template to render the field. This is because the field type is ``text`` and
 you're rendering its ``widget`` (as opposed to its ``label`` or ``errors``).
 The default implementation of the ``text_widget`` block looks like this:
@@ -82,7 +82,7 @@ The default implementation of the ``text_widget`` block looks like this:
     {% endblock text_widget %}
 
 As you can see, this block itself renders another block - ``field_widget``
-that lives in `div_layout.html.twig`_:
+that lives in `form_div_layout.html.twig`_:
 
 .. code-block:: html+jinja
 
@@ -91,7 +91,7 @@ that lives in `div_layout.html.twig`_:
         <input type="{{ type }}" {{ block('attributes') }} value="{{ value }}" />
     {% endblock field_widget %}
 
-The point is, the blocks inside `div_layout.html.twig`_ dictate the HTML
+The point is, the blocks inside `form_div_layout.html.twig`_ dictate the HTML
 output of each part of a form. To customize form output, you just need to
 identify and override the correct block. When any number of these form block
 customizations are put into a template, that template is known as a from "theme".
@@ -221,7 +221,7 @@ Referencing Base Form Blocks
 ----------------------------
 
 So far, to override a particular form block, the best method is to copy
-the default block from `div_layout.html.twig`_, paste it into a different template,
+the default block from `form_div_layout.html.twig`_, paste it into a different template,
 and the customize it. In many cases, you can avoid doing this by referencing
 the base block when customizing it.
 
@@ -236,9 +236,9 @@ the form:
 
 .. code-block:: jinja
 
-    {% use 'div_layout.html.twig' with text_widget as base_text_widget %}
+    {% use 'form_div_layout.html.twig' with text_widget as base_text_widget %}
 
-Now, when the blocks from `div_layout.html.twig`_ are imported, the ``text_widget``
+Now, when the blocks from `form_div_layout.html.twig`_ are imported, the ``text_widget``
 block is called ``base_text_widget``. This means that when you redefine the
 ``text_widget`` block, you can reference the default markup via ``base_text_widget``:
 
@@ -260,7 +260,7 @@ the base block by using the ``parent()`` Twig function:
 
     {# src/Acme/DemoBundle/Resources/views/Form/fields.html.twig #}
 
-    {% extends 'div_layout.html.twig' %}
+    {% extends 'form_div_layout.html.twig' %}
 
     {% block text_widget %}
         <div class="text_widget">
@@ -285,7 +285,7 @@ template and then importing it inside your application configuration:
         twig:
             form:
                 resources:
-                    - 'div_layout.html.twig'
+                    - 'form_div_layout.html.twig'
                     - 'AcmeStoreBundle:Form:fields.html.twig'
             # ...
 
@@ -294,7 +294,7 @@ template and then importing it inside your application configuration:
         <!-- app/config/config.xml -->
         <twig:config ...>
                 <twig:form>
-                    <resource>div_layout.html.twig</resource>
+                    <resource>form_div_layout.html.twig</resource>
                     <resource>AcmeStoreBundle:Form:fields.html.twig</resource>
                 </twig:form>
                 <!-- ... -->
@@ -305,7 +305,7 @@ template and then importing it inside your application configuration:
         // app/config/config.php
         $container->loadFromExtension('twig', array(
             'form' => array('resources' => array(
-                'div_layout.html.twig',
+                'form_div_layout.html.twig',
                 'AcmeStoreBundle:Form:fields.html.twig',
              ))
             // ...
@@ -507,7 +507,7 @@ form, modify the ``use`` tag and add the following:
 
 .. code-block:: html+jinja
 
-    {% use 'div_layout.html.twig' with field_label as base_field_label %}
+    {% use 'form_div_layout.html.twig' with field_label as base_field_label %}
 
     {% block field_label %}
         {{ block('base_field_label') }}
@@ -522,7 +522,7 @@ following:
 
 .. code-block:: html+jinja
 
-    {% extends 'div_layout.html.twig' %}
+    {% extends 'form_div_layout.html.twig' %}
 
     {% block field_label %}
         {{ parent() }}
@@ -545,7 +545,7 @@ form, modify the ``use`` tag and add the following:
 
 .. code-block:: html+jinja
 
-    {% use 'div_layout.html.twig' with field_widget as base_field_widget %}
+    {% use 'form_div_layout.html.twig' with field_widget as base_field_widget %}
 
     {% block field_widget %}
         {{ block('base_field_widget') }}
@@ -560,7 +560,7 @@ following:
 
 .. code-block:: html+jinja
 
-    {% extends 'div_layout.html.twig' %}
+    {% extends 'form_div_layout.html.twig' %}
 
     {% block field_widget %}
         {{ parent() }}
@@ -579,4 +579,4 @@ To render a help message below a field, pass in a ``help`` variable:
 .. tip::
     See :ref:`cookbook-form-twig-two-methods` for how to apply this customization.
 
-.. _`div_layout.html.twig`: https://github.com/symfony/symfony/blob/master/src/Symfony/Bridge/Twig/Resources/views/Form/div_layout.html.twig
+.. _`form_div_layout.html.twig`: https://github.com/symfony/symfony/blob/master/src/Symfony/Bridge/Twig/Resources/views/Form/form_div_layout.html.twig

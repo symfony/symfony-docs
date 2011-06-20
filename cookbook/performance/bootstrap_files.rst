@@ -26,4 +26,4 @@ file since there will be less files to monitor for changes. Of course if this
 feature is disabled in the byte code cache (e.g. ``apc.stat=0`` in APC), there
 is no longer a reason to use a bootstrap file.
 
-.. _`bootstrap file`: https://github.com/symfony/symfony-standard/blob/master/bin/build_bootstrap
+.. _`bootstrap file`: https://github.com/sensio/SensioDistributionBundle/blob/master/Resources/bin/build_bootstrap.php

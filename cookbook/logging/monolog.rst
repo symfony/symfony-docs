@@ -39,7 +39,7 @@ your controller::
 .. tip::
 
     Using only the methods of the
-    :class:`Symfony\Component\HttpKernel\Log\LoggerInterface` interface
+    :class:`Symfony\\Component\\HttpKernel\\Log\\LoggerInterface` interface
     allows to change the logger implementation without changing your code.
 
 Using several handlers

@@ -229,7 +229,9 @@ page in this case).
 
 Congratulations! After creating only a route and a controller, you already
 have a fully-functional page! If you've setup everything correctly, your
-application should greet you::
+application should greet you:
+
+.. code-block:: text
 
     http://localhost/app_dev.php/hello/Ryan
 
@@ -413,18 +415,22 @@ use a Kernel class, ``AppKernel``, to bootstrap the application.
 
 .. tip::
 
-   Having a front controller means different and more flexible URLs than
-   are used in a typical flat PHP application. When using a front controller,
-   URLs are formatted in the following way:
+    Having a front controller means different and more flexible URLs than
+    are used in a typical flat PHP application. When using a front controller,
+    URLs are formatted in the following way:
+   
+    .. code-block:: text
 
-       http://localhost/app.php/hello/Ryan
+        http://localhost/app.php/hello/Ryan
 
-   The front controller, ``app.php``, is executed and the URI ``/hello/Ryan``
-   is routed internally using the routing configuration. By using Apache
-   ``mod_rewrite`` rules, you can force the ``app.php`` file to be executed without
-   needing to specify it in the URL::
+    The front controller, ``app.php``, is executed and the URI ``/hello/Ryan``
+    is routed internally using the routing configuration. By using Apache
+    ``mod_rewrite`` rules, you can force the ``app.php`` file to be executed without
+    needing to specify it in the URL:
+   
+    .. code-block:: text
 
-    http://localhost/hello/Ryan
+        http://localhost/hello/Ryan
 
 Though front controllers are essential in handling every request, you'll
 rarely need to modify or even think about them. We'll mention them again
@@ -783,12 +789,16 @@ A Symfony2 project generally begins with three environments (``dev``, ``test``
 and ``prod``), though creating new environments is easy. You can view your
 application in different environments simply by changing the front controller
 in your browser. To see the application in the ``dev`` environment, access
-the application via the development front controller::
+the application via the development front controller:
+
+.. code-block:: text
 
     http://localhost/app_dev.php/hello/Ryan
 
 If you'd like to see how your application will behave in the production environment,
-call the ``prod`` front controller instead::
+call the ``prod`` front controller instead:
+
+.. code-block:: text
 
     http://localhost/app.php/hello/Ryan
 
