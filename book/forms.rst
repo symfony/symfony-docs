@@ -356,7 +356,7 @@ Validation Groups
 If your object takes advantage of :ref:`validation groups <book-validation-validation-groups>`,
 you'll need to specify which validation group(s) your form should use::
 
-    $form = $this->createFormBuilder($user)
+    $form = $this->createFormBuilder($users)
         ->setAttribute('validation_groups', array('registration'))
         // ...
     ;
@@ -967,7 +967,7 @@ Form Template Blocks
 
 Every part of a form that is rendered - HTML form elements, errors, labels, etc
 - is defined in a base template as individual Twig blocks. By default, every
-block needed is defined in the `div_layout.html.twig`_ file that lives inside
+block needed is defined in the `form_div_layout.html.twig`_ file that lives inside
 the `Twig Bridge`_. Inside this file, you can see every block needed
 to render a form and every default field type.
 
@@ -1004,14 +1004,14 @@ a form that can be rendered:
 By knowing the field type (e.g. ``textarea``) and which part you want to
 customize (e.g. ``widget``), you can construct the block name that needs
 to be overridden (e.g. ``textarea_widget``). The best way to customize the
-block is to copy it from `div_layout.html.twig`_ to a new template, customize
+block is to copy it from `form_div_layout.html.twig`_ to a new template, customize
 it, and then use the ``form_theme`` tag as shown in the earlier example.
 
 Form Type Block Inheritance
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 In some cases, the block you want to customize will appear to be missing.
-For example, if you look in the `div_layout.html.twig`_ file, you'll find
+For example, if you look in the `form_div_layout.html.twig`_ file, you'll find
 no ``textarea_errors`` block. So how are the errors for a textarea field
 rendered?
 
@@ -1044,7 +1044,7 @@ configuration file:
         twig:
             form:
                 resources:
-                    - 'div_layout.html.twig'
+                    - 'form_div_layout.html.twig'
                     - 'AcmeStoreBundle:Form:fields.html.twig'
             # ...
 
@@ -1053,7 +1053,7 @@ configuration file:
         <!-- app/config/config.xml -->
         <twig:config ...>
                 <twig:form>
-                    <resource>div_layout.html.twig</resource>
+                    <resource>form_div_layout.html.twig</resource>
                     <resource>AcmeStoreBundle:Form:fields.html.twig</resource>
                 </twig:form>
                 <!-- ... -->
@@ -1064,7 +1064,7 @@ configuration file:
         // app/config/config.php
         $container->loadFromExtension('twig', array(
             'form' => array('resources' => array(
-                'div_layout.html.twig',
+                'form_div_layout.html.twig',
                 'AcmeStoreBundle:Form:fields.html.twig',
              ))
             // ...
@@ -1099,10 +1099,10 @@ to define form output.
     this method to quickly make form output customizations that will only
     ever be needed in a single template.
 
-    The form blocks defined in the extension resources (`div_layout.html.twig`_)
+    The form blocks defined in the extension resources (`form_div_layout.html.twig`_)
     and in parent views themes are accessible from a form block. This feature is
     shown in the following form customization which uses the ``attributes`` block
-    defined in `div_layout.html.twig`_:
+    defined in `form_div_layout.html.twig`_:
 
     .. code-block:: html+jinja
 
@@ -1192,5 +1192,5 @@ Learn more from the Cookbook
 
 .. _`Symfony2 Form Component`: https://github.com/symfony/Form
 .. _`Twig Bridge`: https://github.com/symfony/symfony/tree/master/src/Symfony/Bridge/Twig
-.. _`div_layout.html.twig`: https://github.com/symfony/symfony/blob/master/src/Symfony/Bridge/Twig/Resources/views/Form/div_layout.html.twig
+.. _`div_layout.html.twig`: https://github.com/symfony/symfony/blob/master/src/Symfony/Bridge/Twig/Resources/views/Form/form_div_layout.html.twig
 .. _`Cross-site request forgery`: http://en.wikipedia.org/wiki/Cross-site_request_forgery
