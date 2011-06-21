@@ -123,60 +123,8 @@ and the `IS_AUTHENTICATED_FULLY`` roles.
 You can use these additional roles for finer grained control over access to 
 parts of a site. For example, you may want you user to be able to view their 
 account at ``/account`` when authenticated by cookie but to have to provide 
-their login details to be able to edit the account details. One way to achieve 
-this would be to allow access to ``/account`` but not to ``/account/edit`` using
-the ``access_control`` rules in the config:
-
-.. configuration-block::
-
-    .. code-block:: yaml
-
-        # app/config/security.yml
-        access_decision_manager:
-            # Strategy can be: affirmative, unanimous or consensus
-            strategy: unanimous
-    
-        access_control:
-            - { path: ^/account/edit, roles: [IS_AUTHENTICATED_FULLY, ROLE_USER] }
-            - { path: ^/account, roles: ROLE_USER }
-
-    .. code-block:: xml
-
-        <!-- app/config/security.xml -->
-        <config>
-            <access-decision-manager
-                strategy="unanimous"
-            />
-
-            <access-control>
-                <rule path="^/account/edit" roles="IS_AUTHENTICATED_FULLY, ROLE_USER" />
-                <rule path="^/account" roles="ROLE_USER" />
-            </access-control>
-
-        </config>
-
-    .. code-block:: php
-
-        // app/config/security.php
-        $container->loadFromExtension('security', array(
-             'access_decision_manager' => array(
-                'strategy' => 'unanimous',
-            ),            
-            'access_control' => array(
-                array('path' => '^/account/edit', 'roles' => 'IS_AUTHENTICATED_FULLY, ROLE_USER'),
-                array('path' => '^/account', 'roles' => 'ROLE_USER'),
-            ),
-        ));
-
-.. note::
-
-    For the user to need to have both the ``ROLE_USER`` and 
-    ``IS_AUTHENTICATED_FULLY`` to gain access rather than just one we have had 
-    to change the decision strategy to ``unanimous``. If it is set to 
-    ``affirmative`` they would only need one of these roles and would be 
-    allowed access if they were only authenticated using the cookie.
-
-Alternatively you can secure specific controller actions using these roles. 
+their login details to be able to edit the account details. 
+You can do this by securing specific controller actions using these roles. 
 The edit action in the controller could be secured using the service context. 
 Here access to the action is only allowed if the user has the 
 ``IS_AUTHENTICATED_FULLY`` role.
