@@ -356,8 +356,9 @@ Validation Groups
 If your object takes advantage of :ref:`validation groups <book-validation-validation-groups>`,
 you'll need to specify which validation group(s) your form should use::
 
-    $form = $this->createFormBuilder($users)
-        ->setAttribute('validation_groups', array('registration'))
+    $form = $this->createFormBuilder($users, array(
+            'validation_groups' => array('registration')
+        )
         // ...
     ;
 
