@@ -116,7 +116,9 @@ This is only possible if anonymous access has been allowed. If a user has
 provided their login details in the current session then they will be assigned
 the ``IS_AUTHENTICATED_FULLY`` role. If they have authenticated via a 
 remember me cookie then they will have the ``IS_AUTHENTICATED_REMEMBERED`` 
-role.
+role. If a user was authenticated by a remember me cookie and then provides
+their login details they will have both the ``IS_AUTHENTICATED_REMEMBERED``
+and the `IS_AUTHENTICATED_FULLY`` roles.
 
 You can use these additional roles for finer grained control over access to 
 parts of a site. For example, you may want you user to be able to view their 
@@ -132,7 +134,7 @@ the ``access_control`` rules in the config:
         # app/config/security.yml
         access_decision_manager:
             # Strategy can be: affirmative, unanimous or consensus
-            strategy: affirmative
+            strategy: unanimous
     
         access_control:
             - { path: ^/account/edit, roles: [IS_AUTHENTICATED_FULLY, ROLE_USER] }
@@ -158,7 +160,7 @@ the ``access_control`` rules in the config:
         // app/config/security.php
         $container->loadFromExtension('security', array(
              'access_decision_manager' => array(
-                'strategy' => 'affirmative',
+                'strategy' => 'unanimous',
             ),            
             'access_control' => array(
                 array('path' => '^/account/edit', 'roles' => 'IS_AUTHENTICATED_FULLY, ROLE_USER'),
@@ -172,7 +174,7 @@ the ``access_control`` rules in the config:
     ``IS_AUTHENTICATED_FULLY`` to gain access rather than just one we have had 
     to change the decision strategy to ``unanimous``. If it is set to 
     ``affirmative`` they would only need one of these roles and would be 
-    allowed access if they were only authentiacted using the cookie.
+    allowed access if they were only authenticated using the cookie.
 
 Alternatively you can secure specific controller actions using these roles. 
 The edit action in the controller could be secured using the service context. 
