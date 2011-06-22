@@ -72,8 +72,9 @@ method to return the absolute path to the file.
 
 .. note::
 
-    If you have not done so already, you should enable validation by annotation,
-    see :doc:`file</book/validation.html#configuration>` for configuration reference.
+    If you're using annotations to specify your annotation rules (as shown
+    in this example), be sure that you've enabled validation by annotation
+    (see :ref:`validation configuration<book-validation-configuration>`).
 
 To handle the actual file upload in the form, use a "virtual" ``file`` field.
 For example, if you're building your form directly in a controller, it might

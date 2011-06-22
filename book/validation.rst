@@ -242,6 +242,8 @@ For more information, see the :doc:`Forms</book/forms>` chapter.
 .. index::
    pair: Validation; Configuration
 
+.. _book-validation-configuration:
+
 Configuration
 -------------
 
