@@ -4,7 +4,7 @@ The Dependency Injection Tags
 Tags:
 
 * ``data_collector``
-* ``kernel.listener``
+* ``kernel.event_listener``
 * ``templating.helper``
 * ``templating.renderer``
 * ``routing.loader``
@@ -70,13 +70,15 @@ configuration, and tag it with ``twig.extension``:
             ->addTag('twig.extension')
         ;
 
-.. _dic-tags-kernel-listener:
+.. _dic-tags-kernel-event-listener:
 
 Enabling Custom Listeners
 -------------------------
 
 To enable a custom listener, add it as a regular service in one of your
-configuration, and tag it with ``kernel.listener``:
+configuration, and tag it with ``kernel.event_listener``. You must provide
+the name of the event your service listens to, as well as the method that
+will be called:
 
 .. configuration-block::
 
@@ -86,20 +88,26 @@ configuration, and tag it with ``kernel.listener``:
             kernel.listener.your_listener_name:
                 class: Fully\Qualified\Listener\Class\Name
                 tags:
-                    - { name: kernel.listener }
+                    - { name: kernel.event_listener, event: xxx, method: onXxx }
 
     .. code-block:: xml
 
         <service id="kernel.listener.your_listener_name" class="Fully\Qualified\Listener\Class\Name">
-            <tag name="kernel.listener" />
+            <tag name="kernel.event_listener" event="xxx" method="onXxx" />
         </service>
 
     .. code-block:: php
 
         $container
             ->register('kernel.listener.your_listener_name', 'Fully\Qualified\Listener\Class\Name')
-            ->addTag('kernel.listener')
+            ->addTag('kernel.event_listener', array('event' => 'xxx', 'method' => 'onXxx'))
         ;
+
+.. note::
+
+    You can also specify a priority as a positive or negative integer, which
+    allows you to make sure your listener will always be called before or after
+    another one.
 
 Enabling Custom Template Engines
 --------------------------------

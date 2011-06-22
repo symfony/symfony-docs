@@ -10,9 +10,9 @@ display and the status code that should be set for the given exception.
 .. tip::
 
     The customization of exception handling is actually much more powerful
-    than what's written here. An internal event, ``core.exception``, is thrown
+    than what's written here. An internal event, ``kernel.exception``, is thrown
     which allows complete control over exception handling. For more
-    information, see :ref:`kernel-core.exception`.
+    information, see :ref:`kernel-kernel.exception`.
 
 All of the error templates live inside ``FrameworkBundle``. To override the
 templates, we simply rely on the standard method for overriding templates that

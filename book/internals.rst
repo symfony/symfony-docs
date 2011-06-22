@@ -150,12 +150,12 @@ To convert the ``Request``, ``handle()`` relies on the Resolver and an ordered
 chain of Event notifications (see the next section for more information about
 each Event):
 
-1. Before doing anything else, the ``core.request`` event is notified -- if
+1. Before doing anything else, the ``kernel.request`` event is notified -- if
    one of the listener returns a ``Response``, it jumps to step 8 directly;
 
 2. The Resolver is called to determine the Controller to execute;
 
-3. Listeners of the ``core.controller`` event can now manipulate the
+3. Listeners of the ``kernel.controller`` event can now manipulate the
    Controller callable the way they want (change it, wrap it, ...);
 
 4. The Kernel checks that the Controller is actually a valid PHP callable;
@@ -165,20 +165,20 @@ each Event):
 6. The Kernel calls the Controller;
 
 7. If the Controller does not return a ``Response``, listeners of the
-   ``core.view`` event can convert the Controller return value to a ``Response``;
+   ``kernel.view`` event can convert the Controller return value to a ``Response``;
 
-8. Listeners of the ``core.response`` event can manipulate the ``Response``
+8. Listeners of the ``kernel.response`` event can manipulate the ``Response``
    (content and headers);
 
 9. The Response is returned.
 
-If an Exception is thrown during processing, the ``core.exception`` is
+If an Exception is thrown during processing, the ``kernel.exception`` is
 notified and listeners are given a change to convert the Exception to a
-Response. If that works, the ``core.response`` event is notified; if not the
+Response. If that works, the ``kernel.response`` event is notified; if not the
 Exception is re-thrown.
 
 If you don't want Exceptions to be caught (for embedded requests for
-instance), disable the ``core.exception`` event by passing ``false`` as the
+instance), disable the ``kernel.exception`` event by passing ``false`` as the
 third argument to the ``handle()`` method.
 
 .. index::
@@ -234,11 +234,11 @@ add the following code at the beginning of your listener method::
     :doc:`dedicated chapter </book/internals/event_dispatcher>` first.
 
 .. index::
-   single: Event; core.request
+   single: Event; kernel.request
 
 .. _kernel-core-request:
 
-``core.request`` Event
+``kernel.request`` Event
 ......................
 
 *Event Class*: :class:`Symfony\\Component\\HttpKernel\\Event\\GetResponseEvent`
@@ -256,9 +256,9 @@ the ``Request`` and determine the Controller name (stored in the
 ``_controller`` ``Request`` attribute).
 
 .. index::
-   single: Event; core.controller
+   single: Event; kernel.controller
 
-``core.controller`` Event
+``kernel.controller`` Event
 .........................
 
 *Event Class*: :class:`Symfony\\Component\\HttpKernel\\Event\\FilterControllerEvent`
@@ -270,7 +270,7 @@ to modify the controller that should be executed:
 
     use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
 
-    public function onCoreController(FilterControllerEvent $event)
+    public function onKernelController(FilterControllerEvent $event)
     {
         $controller = $event->getController();
         // ...
@@ -280,9 +280,9 @@ to modify the controller that should be executed:
     }
 
 .. index::
-   single: Event; core.view
+   single: Event; kernel.view
 
-``core.view`` Event
+``kernel.view`` Event
 ...................
 
 *Event Class*: :class:`Symfony\\Component\\HttpKernel\\Event\\GetResponseForControllerResultEvent`
@@ -298,7 +298,7 @@ The value returned by the Controller is accessible via the
     use Symfony\Component\HttpKernel\Event\GetResponseForControllerResultEvent;
     use Symfony\Component\HttpFoundation\Response;
 
-    public function onCoreView(GetResponseForControllerResultEvent $event)
+    public function onKernelView(GetResponseForControllerResultEvent $event)
     {
         $val = $event->getReturnValue();
         $response = new Response();
@@ -308,9 +308,9 @@ The value returned by the Controller is accessible via the
     }
 
 .. index::
-   single: Event; core.response
+   single: Event; kernel.response
 
-``core.response`` Event
+``kernel.response`` Event
 .......................
 
 *Event Class*: :class:`Symfony\\Component\\HttpKernel\\Event\\FilterResponseEvent`
@@ -320,7 +320,7 @@ The purpose of this event is to allow other systems to modify or replace the
 
 .. code-block:: php
 
-    public function onCoreResponse(FilterResponseEvent $event)
+    public function onKernelResponse(FilterResponseEvent $event)
     {
         $response = $event->getResponse();
         // .. modify the response object
@@ -342,11 +342,11 @@ The ``FrameworkBundle`` registers several listeners:
   ESI tags.
 
 .. index::
-   single: Event; core.exception
+   single: Event; kernel.exception
 
-.. _kernel-core.exception:
+.. _kernel-kernel.exception:
 
-``core.exception`` Event
+``kernel.exception`` Event
 ........................
 
 *Event Class*: :class:`Symfony\\Component\\HttpKernel\\Event\\GetResponseForExceptionEvent`
@@ -365,7 +365,7 @@ and set a new ``Exception`` object, or do nothing:
     use Symfony\Component\HttpKernel\Event\GetResponseForExceptionEvent;
     use Symfony\Component\HttpFoundation\Response;
 
-    public function onCoreException(GetResponseForExceptionEvent $event)
+    public function onKernelException(GetResponseForExceptionEvent $event)
     {
         $exception = $event->getException();
         $response = new Response();
@@ -403,17 +403,17 @@ Take a simple example from the `Symfony2 HttpKernel component`_. Once a
 ``Response`` object has been created, it may be useful to allow other elements
 in the system to modify it (e.g. add some cache headers) before it's actually
 used. To make this possible, the Symfony2 kernel throws an event -
-``core.response``. Here's how it work:
+``kernel.response``. Here's how it work:
 
 * A *listener* (PHP object) tells a central *dispatcher* object that it wants
-  to listen to the ``core.response`` event;
+  to listen to the ``kernel.response`` event;
 
 * At some point, the Symfony2 kernel tells the *dispatcher* object to dispatch
-  the ``core.response`` event, passing with it an ``Event`` object that has
+  the ``kernel.response`` event, passing with it an ``Event`` object that has
   access to the ``Response`` object;
 
 * The dispatcher notifies (i.e. calls a method on) all listeners of the
-  ``core.response`` event, allowing each of them to make any modification to
+  ``kernel.response`` event, allowing each of them to make any modification to
   the ``Response`` object.
 
 .. index::
@@ -423,7 +423,7 @@ Events
 ~~~~~~
 
 When an event is dispatched, it's identified by a unique name (e.g.
-``core.response``), which any number of listeners might be listening to. A
+``kernel.response``), which any number of listeners might be listening to. A
 :class:`Symfony\\Component\\EventDispatcher\\Event` instance is also created
 and passed to all of the listeners. As you'll see later, the ``Event`` object
 itself often contains data about the event being dispatched.
@@ -439,14 +439,14 @@ naming conventions:
 
 * use only lowercase letters, numbers, dots (``.``), and underscores (``_``);
 
-* prefix names with a namespace followed by a dot (e.g. ``core.``);
+* prefix names with a namespace followed by a dot (e.g. ``kernel.``);
 
 * end names with a verb that indicates what action is being taken (e.g.
   ``request``).
 
 Here are some examples of good event names:
 
-* ``core.response``
+* ``kernel.response``
 * ``form.pre_set_data``
 
 .. index::
@@ -462,7 +462,7 @@ propagation<event_dispatcher-event-propagation>`, but not much else.
 
 Often times, data about a specific event needs to be passed along with the
 ``Event`` object so that the listeners have needed information. In the case of
-the ``core.response`` event, the ``Event`` object that's created and passed to
+the ``kernel.response`` event, the ``Event`` object that's created and passed to
 each listener is actually of type
 :class:`Symfony\\Component\\HttpKernel\\Event\\FilterResponseEvent`, a
 subclass of the base ``Event`` object. This class contains methods such as
@@ -557,21 +557,21 @@ the dispatcher calls the ``AcmeListener::onFooAction`` method and passes the
 .. tip::
 
     If you use the Symfony2 MVC framework, listeners can be registered via
-    your :ref:`configuration <dic-tags-kernel-listener>`. As an added bonus,
-    the listener objects are instantiated only when needed.
+    your :ref:`configuration <dic-tags-kernel-event-listener>`. As an added
+    bonus, the listener objects are instantiated only when needed.
 
 In many cases, a special ``Event`` subclass that's specific to the given event
 is passed to the listener. This gives the listener access to special
 information about the event. Check the documentation or implementation of each
 event to determine the exact ``Symfony\Component\EventDispatcher\Event``
-instance that's being passed. For example, the ``core.event`` event passes an
+instance that's being passed. For example, the ``kernel.event`` event passes an
 instance of ``Symfony\Component\HttpKernel\Event\FilterResponseEvent``:
 
 .. code-block:: php
 
     use Symfony\Component\HttpKernel\Event\FilterResponseEvent
 
-    public function onCoreResponse(FilterResponseEvent $event)
+    public function onKernelResponse(FilterResponseEvent $event)
     {
         $response = $event->getResponse();
         $request = $event->getRequest();
@@ -609,7 +609,7 @@ that serves to define and document your event:
         /**
          * The store.order event is thrown each time an order is created
          * in the system.
-         * 
+         *
          * The event listener receives an Acme\StoreBundle\Event\FilterOrderEvent
          * instance.
          *
@@ -764,7 +764,7 @@ events it should subscribe to. It implements the
 :class:`Symfony\\Component\\EventDispatcher\\EventSubscriberInterface`
 interface, which requires a single static method called
 ``getSubscribedEvents``. Take the following example of a subscriber that
-subscribes to the ``core.response`` and ``store.order`` events:
+subscribes to the ``kernel.response`` and ``store.order`` events:
 
 .. code-block:: php
 
@@ -778,12 +778,12 @@ subscribes to the ``core.response`` and ``store.order`` events:
         static public function getSubscribedEvents()
         {
             return array(
-                'core.response' => 'onCoreResponse',
-                'store.order'   => 'onStoreOrder',
+                'kernel.response' => 'onKernelResponse',
+                'store.order'     => 'onStoreOrder',
             );
         }
 
-        public function onCoreResponse(FilterResponseEvent $event)
+        public function onKernelResponse(FilterResponseEvent $event)
         {
             // ...
         }
