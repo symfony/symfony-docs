@@ -415,7 +415,7 @@ Template Suffix
 ~~~~~~~~~~~~~~~
 
 The **bundle**:**controller**:**template** format of each template specifies
-*where*  the template file is located. Every template name also has two extensions
+*where* the template file is located. Every template name also has two extensions
 that specify the *format* and *engine* for that template.
 
 * **AcmeBlogBundle:Blog:index.html.twig** - HTML format, Twig engine
