@@ -927,7 +927,7 @@ the service itself gets loaded. To do so, you can use the ``file`` directive.
     .. code-block:: xml
 
         <service id="foo" class="Acme\HelloBundle\Foo\Bar">
-            <file name="%kernel.root_dir%/src/path/to/file/foo.php" />
+            <file>%kernel.root_dir%/src/path/to/file/foo.php</file>
         </service>
 
     .. code-block:: php
