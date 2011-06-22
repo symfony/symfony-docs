@@ -1,11 +1,14 @@
-How to create a custom Security Extension
-=========================================
+.. index::
+   single: Security; Custom Authentication Provider
+
+How to create a custom Authentication Provider
+==============================================
 
 If you have read the chapter on :doc:`/book/security`, you understand the
 distinction Symfony2 makes between authentication and authorization in the
 implementation of security. This chapter discusses the core classes involved
-in the authorization process, and how to implement a custom authorization
-extension. Because authentication and authorization are separate concepts,
+in the authentication process, and how to implement a custom authentication
+provider. Because authentication and authorization are separate concepts,
 this extension will be user-provider agnostic, and will function with your
 application's user providers, may they be based in memory, a database, or
 wherever else you choose to store them.
@@ -14,7 +17,7 @@ Meet WSSE
 ---------
 
 The following chapter demonstrates how to create a custom authentication
-extension for WSSE authentication. The security protocol for WSSE provides
+provider for WSSE authentication. The security protocol for WSSE provides
 several security benefits:
 
 1. Username / Password encryption
@@ -101,8 +104,7 @@ an authenticated token in the security context if successful.
         protected $securityContext;
         protected $authenticationManager;
 
-        public function __construct(SecurityContextInterface $securityContext,
-            AuthenticationManagerInterface $authenticationManager)
+        public function __construct(SecurityContextInterface $securityContext, AuthenticationManagerInterface $authenticationManager)
         {
             $this->securityContext = $securityContext;
             $this->authenticationManager = $authenticationManager;
@@ -111,6 +113,10 @@ an authenticated token in the security context if successful.
         public function handle(GetResponseEvent $event)
         {
             $request = $event->getRequest();
+
+            if (!$request->headers->has('x-wsse')) {
+                return;
+            }
 
             $wsseRegex = '/UsernameToken Username="([^"]+)", PasswordDigest="([^"]+)", Nonce="([^"]+)", Created="([^"]+)"/';
 
@@ -152,7 +158,7 @@ a 403 Response is returned.
     A class not used above, the
     :class:`Symfony\\Component\\Security\\Http\\Firewall\\AbstractAuthenticationListener`
     class, is a very useful base class which provides commonly needed functionality
-    for authentication extensions. This includes maintaining the token in
+    for security extensions. This includes maintaining the token in
     the session, providing success / failure handlers, login form urls,
     and more. As WSSE does not require maintaining authentication sessions
     or login forms, it won't be used for this example.
@@ -191,8 +197,7 @@ the ``PasswordDigest`` header value matches with the user's password.
         {
             $user = $this->userProvider->loadUserByUsername($token->getUsername());
 
-            if($user && $this->validateDigest($token->digest, $token->nonce, $token->created, $user->getPassword()))
-            {
+            if ($user && $this->validateDigest($token->digest, $token->nonce, $token->created, $user->getPassword())) {
                 $token->setUser($user);
                 return $token;
             }
@@ -237,10 +242,10 @@ The Factory
 -----------
 
 You have created a custom token, custom listener, and custom provider.
-Now you need to tie them all together. How do you make your extension
+Now you need to tie them all together. How do you make your provider
 available to your security configuration? The answer is by using a
 ``factory``. A factory is where you hook in to the security component,
-telling it the name of your extension and any configuration options available
+telling it the name of your provider and any configuration options available
 for it. First, you must create a class which implements
 :class:`Symfony\\Bundle\\SecurityBundle\\DependencyInjection\\Security\\Factory\\SecurityFactoryInterface`.
 
@@ -293,6 +298,7 @@ position at which the provider is called, a ``getKey`` method which
 defines the configuration key used to reference the provider, and an
 ``addConfiguration`` method, which is used to define the configuration
 options underneath the configuration key in your security configuration.
+Setting configuration options are explained later in this chapter.
 
 .. note::
 
@@ -402,14 +408,14 @@ to import it.
         # app/config/security.yml
         security:
           factories:
-            - "%kernel.root_dir%/../vendor/bundles/Acme/DemoBundle/Resources/config/security_factories.xml"
+            - "%kernel.root_dir%/../src/Acme/DemoBundle/Resources/config/security_factories.xml"
 
     .. code-block:: xml
 
         <!-- app/config/security.xml -->
         <config>
             <factories>
-              "%kernel.root_dir%/../vendor/bundles/Acme/DemoBundle/Resources/config/security_factories.xml
+              "%kernel.root_dir%/../src/Acme/DemoBundle/Resources/config/security_factories.xml
             </factories>
         </config>
 
@@ -418,7 +424,7 @@ to import it.
         // app/config/security.php
         $container->loadFromExtension('security', array(
             'factories' => array(
-              "%kernel.root_dir%/../vendor/bundles/Acme/DemoBundle/Resources/config/security_factories.xml"
+              "%kernel.root_dir%/../src/Acme/DemoBundle/Resources/config/security_factories.xml"
             ),
         ));
 
@@ -433,16 +439,23 @@ protection.
                 pattern:   /api/.*
                 wsse:      true
 
-Congratulations!  You have written your very own security extension!
+Congratulations!  You have written your very own custom security authentication
+provider!
 
 A Little Extra
 --------------
 
-How about making your WSSE security extension a bit more exciting? The
-possibilities are endless. You can start by adding options under the
-``wsse`` key in your security configuration. For instance, the time allowed
-before expiring the Created header item, by default, is 5 minutes. Make this
-configurable, so different firewalls can have different timeout lengths.
+How about making your WSSE authentication provider a bit more exciting? The
+possibilities are endless.  Why don't you start by adding some spackle
+to that shine?
+
+Configuration
+~~~~~~~~~~~~~
+
+You can add custom options under the ``wsse`` key in your security configuration.
+For instance, the time allowed before expiring the Created header item,
+by default, is 5 minutes. Make this configurable, so different firewalls
+can have different timeout lengths.
 
 You will first need to edit ``WsseFactory`` and define the new option in
 the ``addConfiguration`` method.
@@ -455,9 +468,11 @@ the ``addConfiguration`` method.
 
         public function addConfiguration(NodeDefinition $node)
         {
-          $builder = $node->children();
-
-          $builder->scalarNode('lifetime')->defaultValue(300);
+          $node
+            ->children()
+              ->scalarNode('lifetime')->defaultValue(300)
+            ->end()
+          ;
         }
     }
 
@@ -470,8 +485,7 @@ to your authentication provider in order to put it to use.
 
     class WsseFactory implements SecurityFactoryInterface
     {
-        public function create(ContainerBuilder $container, $id,
-          $config, $userProvider, $defaultEntryPoint)
+        public function create(ContainerBuilder $container, $id, $config, $userProvider, $defaultEntryPoint)
         {
             $providerId = 'security.authentication.provider.wsse.'.$id;
             $container
