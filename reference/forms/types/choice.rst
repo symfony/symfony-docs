@@ -71,7 +71,7 @@ specify the choices for your widget.
 Options
 -------
 
-* ``choices`` [type: array]
+*   ``choices`` [type: array]
     This is the most basic way to specify the choices that should be used
     by this field. The ``choices`` option is an array, where the array key
     is the item value and the array value is the item's label:
@@ -82,7 +82,7 @@ Options
             'choices' => array('m' => 'Male', 'f' => 'Female')
         ));
 
-* ``choice_list`` [type: ``Symfony\Component\Form\ChoiceList\ChoiceListInterface``]
+*   ``choice_list`` [type: ``Symfony\Component\Form\ChoiceList\ChoiceListInterface``]
     This is one way of specifying the options to be used for this field.
     The ``choice_list`` option must be an instance of the ``ChoiceListInterface``.
     For more advanced cases, a custom class that implements the interface

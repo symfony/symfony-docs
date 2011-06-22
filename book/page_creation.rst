@@ -284,8 +284,8 @@ return that ``Response`` object.
 
 Notice that there are two different examples for rendering the template.
 By default, Symfony2 supports two different templating languages: classic
-PHP templates and the succinct but powerful `Twig`_ templates. Don't be alarmed
-- you're free to choose either or even both in the same project.
+PHP templates and the succinct but powerful `Twig`_ templates. Don't be
+alarmed - you're free to choose either or even both in the same project.
 
 The controller renders the ``AcmeHelloBundle:Hello:index.html.twig`` template,
 which uses the following naming convention:

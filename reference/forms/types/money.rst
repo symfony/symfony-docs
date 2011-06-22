@@ -32,7 +32,7 @@ how the input and output of the data is handled.
 Options
 -------
 
-* ``currency`` [type: string, default ``EUR``]
+*   ``currency`` [type: string, default ``EUR``]
     Specifies the currency that the money is being specified in. This determines
     the currency symbol that should be shown by the text box. Depending on
     the currency - the currency symbol may be shown before or after the input
@@ -40,7 +40,7 @@ Options
     
     This can also be set to false to hide the currency symbol.
 
-* ``divisor`` [type: integer, default: ``1``]
+*   ``divisor`` [type: integer, default: ``1``]
     If, for some reason, you need to divide your starting value by a number
     before rendering it to the user, you can use the ``divisor`` option.
     For example:
@@ -56,7 +56,7 @@ Options
     value ``99``, it will be multiplied by ``100`` and ``9900`` will ultimately
     be set back on your object.
 
-* ``precision`` [type: integer, default: 2]
+*   ``precision`` [type: integer, default: 2]
     For some reason, if you need some precision other than 2 decimal places,
     you can modify this value. You probably won't need to do this unless,
     for example, you want to round to the nearest dollar (set the precision

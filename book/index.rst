@@ -23,4 +23,4 @@ Book
     internals
     stable_api
 
-.. include:: map.rst.inc
+.. include:: /book/map.rst.inc

@@ -20,5 +20,6 @@ Options
 -------
 
 * ``error_bubbling`` [type: Boolean, default: true]
-   .. include:: /reference/forms/types/options/error_bubbling.rst.inc
-      :start-line: 1
+
+  .. include:: /reference/forms/types/options/error_bubbling.rst.inc
+     :start-line: 1
