@@ -450,7 +450,7 @@ Properties
 
 Validating class properties is the most basic validation technique. Symfony2
 allows you to validate private, protected or public properties. The next
-listing shows you how to configure the ``$firstName`` property of an ``Author`
+listing shows you how to configure the ``$firstName`` property of an ``Author``
 class to have at least 3 characters.
 
 .. configuration-block::
@@ -634,7 +634,7 @@ With this configuration, there are two validation groups:
 
 * ``Default`` - contains *all* of the constraints;
 
-* ``registration`` - contains the constraints on the ``email`` and ``password
+* ``registration`` - contains the constraints on the ``email`` and ``password``
   fields only.
 
 To tell the validator to use a specific group, pass one or more group names
