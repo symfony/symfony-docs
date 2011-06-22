@@ -118,7 +118,7 @@ name (a "class::method" string, like
 
     The default implementation uses the
     :class:`Symfony\\Bundle\\FrameworkBundle\\EventListener\\RouterListener`
-    to define the ``_controller`` Request attribute (see :ref:`kernel-core_request`).
+    to define the ``_controller`` Request attribute (see :ref:`kernel-core-request`).
 
 The
 :method:`Symfony\\Component\\HttpKernel\\Controller\\ControllerResolverInterface::getArguments`
@@ -239,7 +239,7 @@ add the following code at the beginning of your listener method::
 .. _kernel-core-request:
 
 ``kernel.request`` Event
-......................
+........................
 
 *Event Class*: :class:`Symfony\\Component\\HttpKernel\\Event\\GetResponseEvent`
 
@@ -259,7 +259,7 @@ the ``Request`` and determine the Controller name (stored in the
    single: Event; kernel.controller
 
 ``kernel.controller`` Event
-.........................
+...........................
 
 *Event Class*: :class:`Symfony\\Component\\HttpKernel\\Event\\FilterControllerEvent`
 
@@ -283,7 +283,7 @@ to modify the controller that should be executed:
    single: Event; kernel.view
 
 ``kernel.view`` Event
-...................
+.....................
 
 *Event Class*: :class:`Symfony\\Component\\HttpKernel\\Event\\GetResponseForControllerResultEvent`
 
@@ -311,7 +311,7 @@ The value returned by the Controller is accessible via the
    single: Event; kernel.response
 
 ``kernel.response`` Event
-.......................
+.........................
 
 *Event Class*: :class:`Symfony\\Component\\HttpKernel\\Event\\FilterResponseEvent`
 
@@ -347,7 +347,7 @@ The ``FrameworkBundle`` registers several listeners:
 .. _kernel-kernel.exception:
 
 ``kernel.exception`` Event
-........................
+..........................
 
 *Event Class*: :class:`Symfony\\Component\\HttpKernel\\Event\\GetResponseForExceptionEvent`
 
@@ -1126,3 +1126,4 @@ Learn more from the Cookbook
 .. _`Symfony2 HttpKernel component`: https://github.com/symfony/HttpKernel
 .. _Closures: http://php.net/manual/en/functions.anonymous.php
 .. _`Symfony2 Dependency Injection component`: https://github.com/symfony/DependencyInjection
+.. _PHP callable: http://www.php.net/manual/en/language.pseudo-types.php#language.types.callback

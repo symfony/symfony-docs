@@ -16,7 +16,7 @@ easily be added. This document will show how you can add the ``jsonp`` format
 and corresponding MIME type.
 
 Create an ``kernel.request`` Listener
------------------------------------
+-------------------------------------
 
 The key to defining a new MIME type is to create a class that will "listen" to
 the ``kernel.request`` event dispatched by the Symfony kernel. The
