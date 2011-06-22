@@ -50,6 +50,7 @@ Cookbook
     security/securing_services
     security/entity_provider
     security/custom_provider
+    security/custom_extension
 
     cache/varnish
 
