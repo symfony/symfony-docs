@@ -24,20 +24,20 @@ several security benefits:
 2. Safe guarding against replay attacks
 3. No web server configuration required
 
-WSSE is very useful for the securing of web services, may they be
-SOAP or REST.
+WSSE is very useful for the securing of web services, may they be SOAP or
+REST.
 
 There is plenty of great documentation on `WSSE`_, but this article will
 focus not on the security protocol, but rather the manner in which a custom
 protocol can be added to your Symfony2 application. The basis of WSSE is
-the request header is checked for encrypted credentials, verified using a
-timestamp and nonce, and authenticated for the requested user using a
+that a request header is checked for encrypted credentials, verified using
+a timestamp and `nonce`_, and authenticated for the requested user using a
 password digest.
 
 .. note::
 
-    WSSE also supports application key validation, which is useful for web services,
-    but is outside the scope of this chapter.
+    WSSE also supports application key validation, which is useful for web
+    services, but is outside the scope of this chapter.
 
 The Token
 ---------
@@ -51,7 +51,8 @@ provider.
 
 .. code-block:: php
 
-    namespace Acme\HelloBundle\Security\Authentication\Token;
+    // src/Acme/DemoBundle/Security/Authentication/Token/WsseUserToken.php
+    namespace Acme\DemoBundle\Security\Authentication\Token;
 
     use Symfony\Component\Security\Core\Authentication\Token\AbstractToken;
 
@@ -81,13 +82,14 @@ The Listener
 Next, you need a listener to listen on the security context. The listener
 is responsible for fielding requests to the firewall and calling the authentication
 provider. A listener must be an instance of
-:class:`Symfony\\Component\\Security\\Http\\Firewall\\ListenerInterface`. A security
-listener should handle the
-:class:`Symfony\\Component\\HttpKernel\\Event\\GetResponseEvent` event, and set
-an authenticated token in the security context if successful.
+:class:`Symfony\\Component\\Security\\Http\\Firewall\\ListenerInterface`.
+A security listener should handle the
+:class:`Symfony\\Component\\HttpKernel\\Event\\GetResponseEvent` event, and
+set an authenticated token in the security context if successful.
 
 .. code-block:: php
 
+    // src/Acme/DemoBundle/Security/Firewall/WsseListener.php
     namespace Acme\DemoBundle\Security\Firewall;
 
     use Symfony\Component\HttpFoundation\Response;
@@ -136,7 +138,9 @@ an authenticated token in the security context if successful.
                     } else if ($returnValue instanceof Response) {
                         return $event->setResponse($response);
                     }
-                } catch (AuthenticationException $e) {}
+                } catch (AuthenticationException $e) {
+                    // you might log something here
+                }
             }
 
             $response = new Response();
@@ -145,12 +149,11 @@ an authenticated token in the security context if successful.
         }
     }
 
-This listener checks the request for the expected `X-WSSE` header,
-matches the value returned for the expected WSSE information,
-creates a token using that information, and passes the token on to
-the authentication manager. If the proper information is not provided,
-or the authentication manager throws an
-:class:`Symfony\\Component\\Security\\Core\\Exception\\AuthenticationException`,
+This listener checks the request for the expected `X-WSSE` header, matches
+the value returned for the expected WSSE information, creates a token using
+that information, and passes the token on to the authentication manager. If
+the proper information is not provided, or the authentication manager throws
+an :class:`Symfony\\Component\\Security\\Core\\Exception\\AuthenticationException`,
 a 403 Response is returned.
 
 .. note::
@@ -158,10 +161,10 @@ a 403 Response is returned.
     A class not used above, the
     :class:`Symfony\\Component\\Security\\Http\\Firewall\\AbstractAuthenticationListener`
     class, is a very useful base class which provides commonly needed functionality
-    for security extensions. This includes maintaining the token in
-    the session, providing success / failure handlers, login form urls,
-    and more. As WSSE does not require maintaining authentication sessions
-    or login forms, it won't be used for this example.
+    for security extensions. This includes maintaining the token in the session,
+    providing success / failure handlers, login form urls, and more. As WSSE
+    does not require maintaining authentication sessions or login forms, it
+    won't be used for this example.
 
 The Authentication Provider
 ---------------------------
@@ -173,6 +176,7 @@ the ``PasswordDigest`` header value matches with the user's password.
 
 .. code-block:: php
 
+    // src/Acme/DemoBundle/Security/Authentication/Provider/WsseProvider.php
     namespace Acme\DemoBundle\Security\Authentication\Provider;
 
     use Symfony\Component\Security\Core\Authentication\Provider\AuthenticationProviderInterface;
@@ -241,16 +245,17 @@ the ``PasswordDigest`` header value matches with the user's password.
 The Factory
 -----------
 
-You have created a custom token, custom listener, and custom provider.
-Now you need to tie them all together. How do you make your provider
-available to your security configuration? The answer is by using a
-``factory``. A factory is where you hook in to the security component,
-telling it the name of your provider and any configuration options available
-for it. First, you must create a class which implements
+You have created a custom token, custom listener, and custom provider. Now
+you need to tie them all together. How do you make your provider available
+to your security configuration? The answer is by using a ``factory``. A factory
+is where you hook into the security component, telling it the name of your
+provider and any configuration options available for it. First, you must
+create a class which implements
 :class:`Symfony\\Bundle\\SecurityBundle\\DependencyInjection\\Security\\Factory\\SecurityFactoryInterface`.
 
 .. code-block:: php
 
+    // src/Acme/DemoBundle/DependencyInjection/Security/Factory/WsseFactory.php
     namespace Acme\DemoBundle\DependencyInjection\Security\Factory;
 
     use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -290,15 +295,20 @@ for it. First, you must create a class which implements
     }
 
 The :class:`Symfony\\Bundle\\SecurityBundle\\DependencyInjection\\Security\\Factory\\SecurityFactoryInterface`
-requires the following methods: A ``create`` method, which adds the
-listener and authentication provider to the DI container for the
-appropriate security context, a ``getPosition`` method, which must be
-of type 'pre_auth', 'form', 'http', and 'remember_me' and defines the
-position at which the provider is called, a ``getKey`` method which
-defines the configuration key used to reference the provider, and an
-``addConfiguration`` method, which is used to define the configuration
-options underneath the configuration key in your security configuration.
-Setting configuration options are explained later in this chapter.
+requires the following methods:
+
+* ``create`` method, which adds the listener and authentication provider
+  to the DI container for the appropriate security context;
+
+* ``getPosition`` method, which must be of type ``pre_auth``, ``form``, ``http``,
+  and ``remember_me`` and defines the position at which the provider is called;
+
+* ``getKey`` method which defines the configuration key used to reference
+  the provider;
+
+* ``addConfiguration`` method, which is used to define the configuration
+  options underneath the configuration key in your security configuration.
+  Setting configuration options are explained later in this chapter.
 
 .. note::
 
@@ -325,7 +335,7 @@ Configuration
 
 It's time to see your authentication provider in action. You will need to
 do a few things in order to make this work. The first thing is to add the
-services above to the DI container.  Your factory class above makes reference
+services above to the DI container. Your factory class above makes reference
 to service ids that do not exist yet: ``wsse.security.authentication.provider`` and
 ``wsse.security.authentication.listener``. It's time to define those services.
 
@@ -333,7 +343,7 @@ to service ids that do not exist yet: ``wsse.security.authentication.provider`` 
 
     .. code-block:: yaml
 
-        # src/Acme/HelloBundle/Resources/config/services.yml
+        # src/Acme/DemoBundle/Resources/config/services.yml
         services:
           wsse.security.authentication.provider:
             class:  Acme\DemoBundle\Security\Authentication\Provider\WsseProvider
@@ -346,7 +356,7 @@ to service ids that do not exist yet: ``wsse.security.authentication.provider`` 
 
     .. code-block:: xml
 
-        <!-- src/Acme/HelloBundle/Resources/config/services.xml -->
+        <!-- src/Acme/DemoBundle/Resources/config/services.xml -->
         <services>
             <service id="wsse.security.authentication.provider"
               class="Acme\DemoBundle\Security\Authentication\Provider\WsseProvider" public="false">
@@ -363,7 +373,7 @@ to service ids that do not exist yet: ``wsse.security.authentication.provider`` 
 
     .. code-block:: php
 
-        // src/Acme/HelloBundle/Resources/config/services.php
+        // src/Acme/DemoBundle/Resources/config/services.php
         use Symfony\Component\DependencyInjection\Definition;
         use Symfony\Component\DependencyInjection\Reference;
 
@@ -381,14 +391,14 @@ to service ids that do not exist yet: ``wsse.security.authentication.provider`` 
         ));
 
 Now that your services are defined, tell your security context about your
-factory.  Factories must be included in an individual configuration file,
-at the time of this writing.  You need to create a file with your factory
+factory. Factories must be included in an individual configuration file,
+at the time of this writing. You need to create a file with your factory
 service in it, and then use the ``factories`` key in your configuration
 to import it.
 
 .. code-block:: xml
 
-    <!-- vendor/bundles/Acme/DemoBundle/Resources/config/security_factories.xml -->
+    <!-- src/Acme/DemoBundle/Resources/config/security_factories.xml -->
     <container xmlns="http://symfony.com/schema/dic/services"
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
@@ -428,8 +438,7 @@ to import it.
             ),
         ));
 
-You are finished! You can now define parts of your app as under WSSE
-protection.
+You are finished! You can now define parts of your app as under WSSE protection.
 
 .. code-block:: yaml
 
@@ -446,7 +455,7 @@ A Little Extra
 --------------
 
 How about making your WSSE authentication provider a bit more exciting? The
-possibilities are endless.  Why don't you start by adding some spackle
+possibilities are endless. Why don't you start by adding some spackle
 to that shine?
 
 Configuration
@@ -476,10 +485,10 @@ the ``addConfiguration`` method.
         }
     }
 
-Now, in the ``create`` method of the factory, the ``$config``
-argument will contain a 'lifetime' key, set to five minutes
-unless otherwise set in the configuration. Pass this argument
-to your authentication provider in order to put it to use.
+Now, in the ``create`` method of the factory, the ``$config`` argument will
+contain a 'lifetime' key, set to 5 minutes (300 seconds) unless otherwise
+set in the configuration. Pass this argument to your authentication provider
+in order to put it to use.
 
 .. code-block:: php
 
@@ -492,12 +501,21 @@ to your authentication provider in order to put it to use.
                 ->setDefinition($providerId,
                   new DefinitionDecorator('wsse.security.authentication.provider'))
                 ->replaceArgument(0, new Reference($userProvider))
-                ->replaceArgument(1, $config['lifetime'])
+                ->replaceArgument(2, $config['lifetime'])
             ;
-            # ...
+            // ...
         }
-        # ...
+        // ...
     }
+
+.. note::
+
+    You'll also need to add a third argument to the ``wsse.security.authentication.provider``
+    service configuration, which can be blank, but will be filled in with
+    the lifetime in the factory. The ``WsseProvider`` class will also now
+    need to accept a third constructor argument - the lifetime - which it
+    should use instead of the hard-coded 300 seconds. These two steps are
+    not shown here.
 
 The lifetime of each wsse request is now configurable, and can be
 set to any desirable value per firewall.
@@ -514,3 +532,4 @@ The rest is up to you! Any relevant configuration items can be defined
 in the factory and consumed or passed to the other classes in the container.
 
 .. _`WSSE`: http://www.xml.com/pub/a/2003/12/17/dive.html
+.. _`nonce`: http://en.wikipedia.org/wiki/Cryptographic_nonce
