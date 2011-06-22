@@ -356,18 +356,19 @@ Validation Groups
 If your object takes advantage of :ref:`validation groups <book-validation-validation-groups>`,
 you'll need to specify which validation group(s) your form should use::
 
-    $form = $this->createFormBuilder($users)
-        ->setAttribute('validation_groups', array('registration'))
+    $form = $this->createFormBuilder($users, array(
+            'validation_groups' => array('registration')
+        )
         // ...
     ;
 
 If you're creating :ref:`form classes<book-form-creating-form-classes>` (a good
-practice), then you'll need to add the following to the ``buildForm()`` method::
+practice), then you'll need to add the following to the ``getDefaultOptions()`` method::
 
-    public function buildForm(FormBuilder $builder, array $options)
-    {
-        // Restrict the constraints to the 'registration' group
-        $builder->setAttribute('validation_groups', array('registration'));
+    public function getDefaultOptions(array $options) {
+        return array(
+            'validation_groups' => array('registration')
+        );
     }
 
 In both of these cases, *only* the ``registration`` validation group will
