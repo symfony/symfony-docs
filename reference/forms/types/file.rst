@@ -54,7 +54,7 @@ used to move the ``attachment`` file to a permanent location:
 The ``move()`` method takes a directory and a file name as its arguments::
 
     // use the original file name
-    $file->move($dir, $this->getClientOriginalName());
+    $file->move($dir, $file->getClientOriginalName());
 
     // compute a random name and try to guess the extension (more secure)
     $extension = $file->guessExtension();
