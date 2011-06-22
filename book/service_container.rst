@@ -651,7 +651,7 @@ Injecting the dependency by the setter method just needs a change of syntax:
         ));
 
 .. note::
-  
+
     The approaches presented in this section are called "constructor injection"
     and "setter injection". The Symfony2 service container also supports
     "property injection".
@@ -989,7 +989,8 @@ additional arguments (beyond just the ``name`` parameter).
 * data_collector
 * form.field_factory.guesser
 * kernel.cache_warmer
-* kernel.listener
+* kernel.event_listener
+* monolog.logger
 * routing.loader
 * security.listener.factory
 * security.voter
@@ -997,7 +998,6 @@ additional arguments (beyond just the ``name`` parameter).
 * twig.extension
 * translation.loader
 * validator.constraint_validator
-* zend.logger.writer
 
 Learn more from the Cookbook
 ----------------------------

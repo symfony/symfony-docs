@@ -15,12 +15,12 @@ object. Internally, Symfony contains a map of the most common formats (e.g.
 easily be added. This document will show how you can add the ``jsonp`` format
 and corresponding MIME type.
 
-Create an ``core.request`` Listener
+Create an ``kernel.request`` Listener
 -----------------------------------
 
 The key to defining a new MIME type is to create a class that will "listen" to
-the ``core.request`` event dispatched by the Symfony kernel. The
-``core.request`` event is dispatched early in Symfony's request handling
+the ``kernel.request`` event dispatched by the Symfony kernel. The
+``kernel.request`` event is dispatched early in Symfony's request handling
 process and allows you to modify the request object.
 
 Create the following class, replacing the path with a path to a bundle in your
@@ -34,7 +34,7 @@ project::
 
     class RequestListener
     {
-        public function onCoreRequest(GetResponseEvent $event)
+        public function onKernelRequest(GetResponseEvent $event)
         {
             $event->getRequest()->setFormat('jsonp', 'application/javascript');
         }
@@ -44,7 +44,7 @@ Registering your Listener
 -------------------------
 
 As for any other listener, you need to add it in one of your configuration
-file and register it as a listener by adding the ``kernel.listener`` tag:
+file and register it as a listener by adding the ``kernel.event_listener`` tag:
 
 .. configuration-block::
 
@@ -58,7 +58,7 @@ file and register it as a listener by adding the ``kernel.listener`` tag:
             xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <service id="acme.demobundle.listener.request" class="Acme\DemoBundle\RequestListener">
-                <tag name="kernel.listener" event="core.request" method="onCoreRequest" />
+                <tag name="kernel.event_listener" event="kernel.request" method="onKernelRequest" />
             </service>
 
         </container>
@@ -70,18 +70,18 @@ file and register it as a listener by adding the ``kernel.listener`` tag:
             acme.demobundle.listener.request:
                 class: Acme\DemoBundle\RequestListener
                 tags:
-                    - { name: kernel.listener, event: core.request, method: onCoreRequest }
+                    - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest }
 
     .. code-block:: php
 
         # app/config/config.php
         $definition = new Definition('Acme\DemoBundle\RequestListener');
-        $definition->addTag('kernel.listener', array('event' => 'core.request', 'method' => 'onCoreRequest'));
+        $definition->addTag('kernel.event_listener', array('event' => 'kernel.request', 'method' => 'onKernelRequest'));
         $container->setDefinition('acme.demobundle.listener.request', $definition);
 
 At this point, the ``acme.demobundle.listener.request`` service has been
 configured and will be notified when the Symfony kernel dispatches the
-``core.request`` event.
+``kernel.request`` event.
 
 .. tip::
 
