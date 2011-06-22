@@ -67,17 +67,21 @@ provider.
 .. note::
 
     The ``WsseUserToken`` class extends the security component's
-    ``AbstractToken`` class, which provides basic token functionality.
-    Implement the ``TokenInterface`` on any class to use as a token.
+    :class:`Symfony\\Component\\Security\\Core\\Authentication\\Token\\AbstractToken`
+    class, which provides basic token functionality. Implement the
+    :class:`Symfony\\Component\\Security\\Core\\Authentication\\Token\\TokenInterface`
+    on any class to use as a token.
 
 The Listener
 ------------
 
 Next, you need a listener to listen on the security context. The listener
 is responsible for fielding requests to the firewall and calling the authentication
-provider. A listener must be an instance of ``ListenerInterface``. A security
-listener should handle the ``GetResponseEvent`` event, and set an authenticated
-token in the security context if successful.
+provider. A listener must be an instance of
+:class:`Symfony\\Component\\Security\\Http\\Firewall\\ListenerInterface`. A security
+listener should handle the
+:class:`Symfony\\Component\\HttpKernel\\Event\\GetResponseEvent` event, and set
+an authenticated token in the security context if successful.
 
 .. code-block:: php
 
@@ -135,17 +139,19 @@ token in the security context if successful.
         }
     }
 
-This listener checks the request for the expected `X-WSSE`` header,
+This listener checks the request for the expected `X-WSSE` header,
 matches the value returned for the expected WSSE information,
 creates a token using that information, and passes the token on to
 the authentication manager. If the proper information is not provided,
-or the authentication manager throws an ``AuthenticationException``,
+or the authentication manager throws an
+:class:`Symfony\\Component\\Security\\Core\\Exception\\AuthenticationException`,
 a 403 Response is returned.
 
 .. note::
 
-    A class not used above, the ``AbstractAuthenticationListener`` class,
-    is a very useful base class which provides commonly needed functionality
+    A class not used above, the
+    :class:`Symfony\\Component\\Security\\Http\\Firewall\\AbstractAuthenticationListener`
+    class, is a very useful base class which provides commonly needed functionality
     for authentication extensions. This includes maintaining the token in
     the session, providing success / failure handlers, login form urls,
     and more. As WSSE does not require maintaining authentication sessions
@@ -221,11 +227,11 @@ the ``PasswordDigest`` header value matches with the user's password.
 
 .. note::
 
-    The ``AuthenticationProviderInterface`` requires an ``authenticate``
-    method on the user token, and a ``supports`` method, which tells the
-    authentication manager whether or not to use this provider for the given
-    token. In the case of multiple providers, the authentication manager will
-    then move to the next provider in the list.
+    The :class:`Symfony\\Component\\Security\\Core\\Authentication\\Provider\\AuthenticationProviderInterface`
+    requires an ``authenticate`` method on the user token, and a ``supports``
+    method, which tells the authentication manager whether or not to use this
+    provider for the given token. In the case of multiple providers, the
+    authentication manager will then move to the next provider in the list.
 
 The Factory
 -----------
@@ -235,7 +241,8 @@ Now you need to tie them all together. How do you make your extension
 available to your security configuration? The answer is by using a
 ``factory``. A factory is where you hook in to the security component,
 telling it the name of your extension and any configuration options available
-for it. First, you must create a class which implements ``SecurityFactoryInterface``.
+for it. First, you must create a class which implements
+:class:`Symfony\\Bundle\\SecurityBundle\\DependencyInjection\\Security\\Factory\\SecurityFactoryInterface`.
 
 .. code-block:: php
 
@@ -277,22 +284,23 @@ for it. First, you must create a class which implements ``SecurityFactoryInterfa
         {}
     }
 
-The ``SecurityFactoryInterface`` requires the following methods:
-A ``create`` method, which adds the listener and authentication
-provider to the DI container for the appropriate security context,
-a ``getPosition`` method, which must be of type 'pre_auth', 'form',
-'http', and 'remember_me' and defines the position at which the provider
-is called, a ``getKey`` method which defines the configuration key
-used to reference the provider, and an ``addConfiguration`` method,
-which is used to define the configuration options underneath the
-configuration key in your security configuration.
+The :class:`Symfony\\Bundle\\SecurityBundle\\DependencyInjection\\Security\\Factory\\SecurityFactoryInterface`
+requires the following methods: A ``create`` method, which adds the
+listener and authentication provider to the DI container for the
+appropriate security context, a ``getPosition`` method, which must be
+of type 'pre_auth', 'form', 'http', and 'remember_me' and defines the
+position at which the provider is called, a ``getKey`` method which
+defines the configuration key used to reference the provider, and an
+``addConfiguration`` method, which is used to define the configuration
+options underneath the configuration key in your security configuration.
 
 .. note::
 
-    A class not used in this example, ``AbstractFactory``, is a very useful
-    base class which provides commonly needed functionality for security
-    factories. It may be useful when defining an authentication provider
-    of a different type.
+    A class not used in this example,
+    :class:`Symfony\\Bundle\\SecurityBundle\\DependencyInjection\\Security\\Factory\\AbstractFactory`,
+    is a very useful base class which provides commonly needed functionality
+    for security factories. It may be useful when defining an authentication
+    provider of a different type.
 
 Now that you have created a factory class, the ``wsse`` key can be used as
 a firewall in your security configuration.
@@ -300,11 +308,11 @@ a firewall in your security configuration.
 .. note::
 
     You may be wondering "why do we need a special factory class to add listeners
-    and providers to the DI container?". This is a very good question.  The reason
-    is you can use your firewall multiple times, to secure multiple parts of
-    your application. Because of this, each time your firewall is used, a new
-    service is created in the DI container. The factory is what creates these
-    new services.
+    and providers to the dependency injection container?". This is a very
+    good question. The reason is you can use your firewall multiple times,
+    to secure multiple parts of your application. Because of this, each
+    time your firewall is used, a new service is created in the DI container.
+    The factory is what creates these new services.
 
 Configuration
 -------------
