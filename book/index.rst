@@ -18,7 +18,6 @@ Book
     security
     http_cache
     translation
-    bundles
     service_container
     internals
     stable_api

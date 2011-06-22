@@ -32,6 +32,8 @@ Cookbook
     service_container/factories
     service_container/parentservices
     configuration/pdo_session_storage
+
+    bundles/best_practices
     bundles/extension
 
     email

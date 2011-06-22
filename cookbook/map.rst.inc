@@ -39,6 +39,10 @@
   * :doc:`/cookbook/service_container/factories`
   * :doc:`/cookbook/service_container/parentservices`
   * :doc:`/cookbook/configuration/pdo_session_storage`
+
+* **Bundles**
+
+  * :doc:`/cookbook/bundles/best_practices`
   * :doc:`/cookbook/bundles/extension`
 
 * **Emailing**

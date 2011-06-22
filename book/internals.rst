@@ -62,7 +62,7 @@ Dependency Injection component and a powerful plugin system (bundles).
 
     Read more about the :doc:`HttpKernel <kernel>` component. Read more about
     :doc:`Dependency Injection </book/service_container>` and :doc:`Bundles
-    </book/bundles>`.
+    </cookbook/bundles/best_practices>`.
 
 ``FrameworkBundle`` Bundle
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
