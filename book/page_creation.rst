@@ -105,7 +105,7 @@ you can also choose to use XML or PHP out of the box to configure routes:
         # app/config/routing.yml
         homepage:
             pattern:  /
-            defaults: { _controller: FrameworkBundle:Default:index }
+            defaults: { _controller: AcmeDemoBundle:Welcome:index }
 
         hello:
             resource: "@AcmeHelloBundle/Resources/config/routing.yml"
@@ -120,7 +120,7 @@ you can also choose to use XML or PHP out of the box to configure routes:
             xsi:schemaLocation="http://symfony.com/schema/routing http://symfony.com/schema/routing/routing-1.0.xsd">
 
             <route id="homepage" pattern="/">
-                <default key="_controller">FrameworkBundle:Default:index</default>
+                <default key="_controller">AcmeDemoBundle:Welcome:index</default>
             </route>
 
             <import resource="@AcmeHelloBundle/Resources/config/routing.xml" />
@@ -134,7 +134,7 @@ you can also choose to use XML or PHP out of the box to configure routes:
 
         $collection = new RouteCollection();
         $collection->add('homepage', new Route('/', array(
-            '_controller' => 'FrameworkBundle:Default:index',
+            '_controller' => 'AcmeDemoBundle:Welcome:index',
         )));
         $collection->addCollection($loader->import("@AcmeHelloBundle/Resources/config/routing.php"));
 

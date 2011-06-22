@@ -652,19 +652,19 @@ configuration:
 
         homepage:
             pattern:  /
-            defaults: { _controller: FrameworkBundle:Default:index }
+            defaults: { _controller: AcmeDemoBundle:Welcome:index }
 
     .. code-block:: xml
 
         <route id="homepage" pattern="/">
-            <default key="_controller">FrameworkBundle:Default:index</default>
+            <default key="_controller">AcmeDemoBundle:Welcome:index</default>
         </route>
 
     .. code-block:: php
 
         $collection = new RouteCollection();
         $collection->add('homepage', new Route('/', array(
-            '_controller' => 'FrameworkBundle:Default:index',
+            '_controller' => 'AcmeDemoBundle:Welcome:index',
         )));
 
         return $collection;
