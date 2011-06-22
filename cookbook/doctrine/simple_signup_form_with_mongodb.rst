@@ -5,12 +5,12 @@ Some forms have extra fields which value are not needed to be stored into databa
 
 .. tip::
 
-    If you are not familiar with Doctrine MongoDB Bundle, you should read this :doc:`file</cookbook/doctrine/mongodb>` cookbook first to learn how to setup the MongoDB Bundle to be able to work with MongoDB.
+    If you are not familiar with Doctrine MongoDB Bundle, you should read this :doc:`file</cookbook/doctrine/mongodb>` recipe first to learn how to setup the MongoDB Bundle to be able to work with MongoDB.
 
 The simple Account model
 ------------------------
 
-So, in this tutorial we begin with the model for the ``Account``: 
+So, in this tutorial we begin with the model for the ``Account``::
 
     // src/Acme/AccountBundle/Document/Account.php
     namespace Acme\AccountBundle\Document;
@@ -72,12 +72,12 @@ This ``Account`` document contains three fields and two of them (email and passw
 
 .. tip::
 
-    The validation is done with the annotations. If you don't know how it works - please read the documentation :doc:`file</book/validation>`
+    The validation is done with the annotations. If you don't know how it works - please read the documentation :doc:`file</book/validation>`.
 
 Create form for the model
 -------------------------
 
-Now, you need to create form for this ``Account`` model: 
+Now, you need to create form for this ``Account`` model::
 
     // src/Acme/AccountBundle/Form/Account.php
     namespace Acme\AccountBundle\Form; 
@@ -108,12 +108,12 @@ We just added two fields: email and password (repeated to confirm the entered pa
 
 .. tip::
 
-    To explore more things about form component, read this documentation :doc:`file</book/forms>. 
+    To explore more things about form component, read this documentation :doc:`file</book/forms>`. 
 
 Embedding Account form into Signup form
 ---------------------------------------
 
-The form for sign up is not the same as the form for Account. It contains further fields like accepting the terms which value is not needed to be stored into database. So, now we need to create own form for this purpose and embed the existing ``Account`` form. For validation and creation of Account data we need simple domain model for the sign up form:
+The form for sign up is not the same as the form for Account. It contains further fields like accepting the terms which value is not needed to be stored into database. So, now we need to create own form for this purpose and embed the existing ``Account`` form. For validation and creation of Account data we need simple domain model for the sign up form::
 
     // src/Acme/AccountBundle/Entity/Signup.php
     namespace Acme\AccountBundle\Entity;
@@ -156,7 +156,7 @@ The form for sign up is not the same as the form for Account. It contains furthe
         }
     }
 
-And the form for this ``Signup`` model: 
+And the form for this ``Signup`` model::
 
     // src/Acme/AccountBundle/Form/Signup.php
     namespace Acme\AccountBundle\Form; 
@@ -179,7 +179,7 @@ We added two fields into the form. You don't need to use special method for embe
 Handle the form submission
 --------------------------
 
-Now we need controller to handle the form actions, first we create simple controller for displaying the sign up form: 
+Now we need controller to handle the form actions, first we create simple controller for displaying the sign up form::
 
     namespace Acme\AccountBundle\Controller;
 
@@ -199,7 +199,7 @@ Now we need controller to handle the form actions, first we create simple contro
         }
     }
 
-and it's template: 
+and it's template:: 
 
     <form action="{{ path('create')}}" method="post" {{ form_enctype(form) }}>
         {{ form_widget(form) }}
@@ -207,7 +207,7 @@ and it's template:
         <input type="submit" />
     </form>        
 
-At least we need the controller which handles the form submission. This performs the validation and saves the data into the database:
+At least we need the controller which handles the form submission. This performs the validation and saves the data into the database::
 
     public function createAction()
     {
