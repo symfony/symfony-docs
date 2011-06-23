@@ -52,7 +52,7 @@ Cookbook
     security/securing_services
     security/entity_provider
     security/custom_provider
-    security/custom_extension
+    security/custom_authentication_provider
 
     cache/varnish
 
