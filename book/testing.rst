@@ -736,7 +736,7 @@ default debug mode (``true``) by passing them as options to the
 If your application behaves according to some HTTP headers, pass them as the
 second argument of ``createClient()``::
 
-    $client = static::createClient(array(
+    $client = static::createClient(array(), array(
         'HTTP_HOST'       => 'en.example.com',
         'HTTP_USER_AGENT' => 'MySuperBrowser/1.0',
     ));
