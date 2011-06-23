@@ -14,31 +14,29 @@ method:
 
 .. code-block:: jinja
 
-    {{ form_row(form.name) }}
+    {{ form_row(form.age) }}
 
 .. code-block:: php
 
-    <?php echo $view['form']->row($form['name']) }} ?>
-
+    <?php echo $view['form']->row($form['age']) }} ?>
 
 You can also render each of the three parts of the field individually:
 
 .. code-block:: jinja
 
     <div>
-        {{ form_label(form.name) }}
-        {{ form_errors(form.name) }}
-        {{ form_widget(form.name) }}
+        {{ form_label(form.age) }}
+        {{ form_errors(form.age) }}
+        {{ form_widget(form.age) }}
     </div>
 
 .. code-block:: php
 
     <div>
-        <?php echo $view['form']->label($form['name']) }} ?>
-        <?php echo $view['form']->errors($form['name']) }} ?>
-        <?php echo $view['form']->widget($form['name']) }} ?>
+        <?php echo $view['form']->label($form['age']) }} ?>
+        <?php echo $view['form']->errors($form['age']) }} ?>
+        <?php echo $view['form']->widget($form['age']) }} ?>
     </div>
-
 
 In both cases, the form label, errors and HTML widget are rendered by using
 a set of markup that ships standard with Symfony. For example, both of the
@@ -47,11 +45,11 @@ above templates would render:
 .. code-block:: html
 
     <div>
-        <label for="form_name">Name</label>
+        <label for="form_age">Age</label>
         <ul>
             <li>This field is required</li>
         </ul>
-        <input type="text" id="form_name" name="form[name]" />
+        <input type="number" id="form_age" name="form[age]" />
     </div>
 
 To quickly prototype and test a form, you can render the entire form with
@@ -148,8 +146,8 @@ generate the markup for an integer widget - the corresponding template file is
 
 .. _cookbook-form-theming-methods:
 
-Form Theming: The 2 Methods
----------------------------
+Form Theming
+------------
 
 To see the power of form theming, suppose you want to wrap every input ``number``
 field with a ``div`` tag. The key to doing this is to customize the
@@ -252,8 +250,8 @@ block from the new template and the ``input`` tag will be wrapped in the
 PHP Method
 ~~~~~~~~~~
 
-In PHP your unique option is to create a new template file which is similar the
-the second option for Twig.
+In PHP there is only one method which is to create a new template file - this is
+similar to the second method used by Twigs.
 
 The template must be named after the part to theme:
 
@@ -361,7 +359,7 @@ template and then importing it inside your application configuration:
             form:
                 resources:
                     - 'form_div_layout.html.twig'
-                    - 'AcmeStoreBundle:Form:fields.html.twig'
+                    - 'AcmeDemoBundle:Form:fields.html.twig'
             # ...
 
         # PHP
@@ -370,7 +368,7 @@ template and then importing it inside your application configuration:
                 form:
                     resources:
                         - 'FrameworkBundle:Form'
-                        - 'AcmeStoreBundle:Form'
+                        - 'AcmeDemoBundle:Form'
             # ...
 
 
@@ -382,7 +380,7 @@ template and then importing it inside your application configuration:
         <twig:config ...>
                 <twig:form>
                     <resource>form_div_layout.html.twig</resource>
-                    <resource>AcmeStoreBundle:Form:fields.html.twig</resource>
+                    <resource>AcmeDemoBundle:Form:fields.html.twig</resource>
                 </twig:form>
                 <!-- ... -->
         </twig:config>
@@ -392,7 +390,7 @@ template and then importing it inside your application configuration:
             <framework:templating>
                 <framework:form>
                     <resource>FrameworkBundle:Form</resource>
-                    <resource>AcmeStoreBundle:Form</resource>
+                    <resource>AcmeDemoBundle:Form</resource>
                 </framework:form>
             </framework:templating>
             <!-- ... -->
@@ -407,7 +405,7 @@ template and then importing it inside your application configuration:
         $container->loadFromExtension('twig', array(
             'form' => array('resources' => array(
                 'form_div_layout.html.twig',
-                'AcmeStoreBundle:Form:fields.html.twig',
+                'AcmeDemoBundle:Form:fields.html.twig',
              ))
             // ...
         ));
@@ -417,7 +415,7 @@ template and then importing it inside your application configuration:
             'templating' => array('form' =>
                 array('resources' => array(
                     'FrameworkBundle:Form',
-                    'AcmeStoreBundle:Form',
+                    'AcmeDemoBundle:Form',
              )))
             // ...
         ));
@@ -427,7 +425,7 @@ template (Twig) or ``src/Acme/DemoBundle/Resources/views/Form`` folder (PHP)
  will be used globally when form elements are rendered.
 
 By default, twig uses a *div* layout when rendering forms. Some people, however,
-may prefer to render forms in a *table* layout. Use the ``table_layout.html.twig``
+may prefer to render forms in a *table* layout. Use the ``form_table_layout.html.twig``
 resource (Twig) or ``FrameworkBundle:FormTable`` resource (PHP) to use such a
 layout:
 
@@ -440,7 +438,7 @@ layout:
         # Twig
         twig:
             form:
-                resources: ['table_layout.html.twig']
+                resources: ['form_table_layout.html.twig']
             # ...
 
         # PHP
@@ -457,7 +455,7 @@ layout:
         <!-- Twig -->
         <twig:config ...>
                 <twig:form>
-                    <resource>table_layout.html.twig</resource>
+                    <resource>form_table_layout.html.twig</resource>
                 </twig:form>
                 <!-- ... -->
         </twig:config>
@@ -479,7 +477,7 @@ layout:
         // Twig
         $container->loadFromExtension('twig', array(
             'form' => array('resources' => array(
-                'table_layout.html.twig',
+                'form_table_layout.html.twig',
              ))
             // ...
         ));
@@ -497,7 +495,7 @@ If you only want to make the change in one template, do the following:
 
 .. code-block:: html+jinja
 
-	{% form_theme form 'table_layout.html.twig' %}
+	{% form_theme form 'form_table_layout.html.twig' %}
 
 .. code-block:: html+php
 
@@ -607,7 +605,6 @@ when you use the ``form_errors`` helper:
 .. code-block:: php
 
     <?php echo $view['form']->render($form['age']); ?>
-
 
 By default, the errors are rendered inside an unordered list:
 
@@ -739,8 +736,8 @@ following:
         {% endif %}
     {% endblock %}
 
-When using PHP as a templating engine you have to copy the content of the
-orignal template:
+When using PHP as a templating engine you have to copy the content from the
+original template:
 
 .. code-block:: html+php
 
@@ -792,8 +789,8 @@ following:
         {% endif %}
     {% endblock %}
 
-When using PHP as a templating engine you have to copy the content of the
-orignal template:
+When using PHP as a templating engine you have to copy the content from the
+original template:
 
 .. code-block:: html+php
 
