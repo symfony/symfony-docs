@@ -6,9 +6,9 @@ Cookbook
 
     controller/error_pages
     controller/service
-    
+
     routing/scheme
-    
+
     assetic/yuicompressor
     templating/PHP
 
@@ -23,7 +23,7 @@ Cookbook
     doctrine/multiple_entity_managers
     doctrine/custom_dql_functions
 
-    form/twig_form_customization
+    form/form_customization
     form/create_custom_field_type
     validation/custom_constraint
 
@@ -65,7 +65,7 @@ Cookbook
     performance/autoloader
     performance/bootstrap_files
     performance/bytecodecache
-    
+
     event_dispatcher/class_extension
     event_dispatcher/method_behavior
     request/mime_type
