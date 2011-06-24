@@ -229,10 +229,12 @@ and then modifies it to add some debugging tools:
         toolbar: true
         intercept_redirects: false
 
-    zend:
-        logger:
-            priority: debug
-            path:     %kernel.logs_dir%/%kernel.environment%.log
+    monolog:
+        handlers:
+            main:
+                type:  stream
+                path:  %kernel.logs_dir%/%kernel.environment%.log
+                level: debug
 
     assetic:
         use_controller: true

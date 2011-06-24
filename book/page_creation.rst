@@ -82,7 +82,7 @@ of the ``AppKernel`` class:
             // ...
             new Acme\HelloBundle\AcmeHelloBundle(),
         );
-        
+
         // ...
 
         return $bundles;
@@ -418,7 +418,7 @@ use a Kernel class, ``AppKernel``, to bootstrap the application.
     Having a front controller means different and more flexible URLs than
     are used in a typical flat PHP application. When using a front controller,
     URLs are formatted in the following way:
-   
+
     .. code-block:: text
 
         http://localhost/app.php/hello/Ryan
@@ -427,7 +427,7 @@ use a Kernel class, ``AppKernel``, to bootstrap the application.
     is routed internally using the routing configuration. By using Apache
     ``mod_rewrite`` rules, you can force the ``app.php`` file to be executed without
     needing to specify it in the URL:
-   
+
     .. code-block:: text
 
         http://localhost/hello/Ryan
@@ -475,12 +475,12 @@ about each of these directories in later chapters.
     or ``require`` statements. Instead, Symfony2 uses the namespace of a class
     to determine its location and automatically includes the file on your
     behalf the instant you need a class::
-    
+
         $loader->registerNamespaces(array(
             'Acme' => __DIR__.'/../src',
             // ...
         ));
-    
+
     With this configuration, Symfony2 will look inside the ``src`` directory
     for any class in the ``Acme`` namespace (your pretend company's namespace).
     For autoloading to work, the class name and path to the file must follow
@@ -712,7 +712,7 @@ format you prefer:
 
         <!-- Twig Configuration -->
         <twig:config debug="%kernel.debug%" strict-variables="%kernel.debug%" />
-        
+
         <!-- ... -->
 
     .. code-block:: php
@@ -806,9 +806,9 @@ call the ``prod`` front controller instead:
 
    If you open the ``web/app.php`` file, you'll find that it's configured explicitly
    to use the ``prod`` environment::
-   
+
        $kernel = new AppCache(new AppKernel('prod', false));
-   
+
    You can create a new front controller for a new environment by copying
    this file and changing ``prod`` to some other value.
 
@@ -861,10 +861,12 @@ the configuration file for the ``dev`` environment.
             toolbar: true
             intercept_redirects: true
 
-        zend:
-            logger:
-                priority: debug
-                path:     %kernel.logs_dir%/%kernel.environment%.log
+        monolog:
+            handlers:
+                main:
+                    type:  stream
+                    path:  %kernel.logs_dir%/%kernel.environment%.log
+                    level: debug
 
     .. code-block:: xml
 
@@ -883,9 +885,14 @@ the configuration file for the ``dev`` environment.
             intercept-redirects="true"
         />
 
-        <zend:config>
-            <zend:logger priority="info" path="%kernel.logs_dir%/%kernel.environment%.log" />
-        </zend:config>
+        <monolog:config>
+            <monolog:handler
+                name="main"
+                type="stream"
+                path="%kernel.logs_dir%/%kernel.environment%.log"
+                level="debug"
+            >
+        </monolog:config>
 
     .. code-block:: php
 
@@ -902,12 +909,14 @@ the configuration file for the ``dev`` environment.
             'intercept-redirects' => true,
         ));
 
-        $container->loadFromExtension('zend', array(
-            'logger' => array(
-                'priority' => 'info',
-                'path'     => '%kernel.logs_dir%/%kernel.environment%.log',
-            ),
-        ));
+        $container->loadFromExtension('monolog', array(
+                'handlers' => array(
+                    'main' => array(
+                        'type'  => 'stream',
+                        'path'  => '%kernel.logs_dir%/%kernel.environment%.log',
+                        'level' => 'debug',
+                    ),
+        )));
 
 The ``imports`` key is similar to a PHP ``include`` statement and guarantees
 that the main configuration file (``config.yml``) is loaded first. The rest
