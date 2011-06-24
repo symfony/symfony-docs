@@ -14,22 +14,22 @@ This explains how to integrate two types of domain model into the form, too.
     this :doc:`file</cookbook/doctrine/mongodb>` recipe first to learn 
     how to setup the MongoDB Bundle to be able to work with MongoDB.
 
-The simple Account model
+The simple User model
 ------------------------
 
-So, in this tutorial we begin with the model for the ``Account``::
+So, in this tutorial we begin with the model for the ``User``::
 
-    // src/Acme/AccountBundle/Document/Account.php
+    // src/Acme/AccountBundle/Document/User.php
     namespace Acme\AccountBundle\Document;
     use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
     use Symfony\Component\Validator\Constraints as Assert;
     use Symfony\Bundle\DoctrineMongoDBBundle\Validator\Constraints\Unique as MongoDBUnique;
 
     /**
-     * @MongoDB\Document(collection="accounts")
+     * @MongoDB\Document(collection="users")
      * @MongoDBUnique(path="email")
      */
-    class Account
+    class User
     {
         /**
          * @MongoDB\Id
@@ -76,23 +76,29 @@ So, in this tutorial we begin with the model for the ``Account``::
         }
     }
 
-This ``Account`` document contains three fields and two of them (email and
+This ``User`` document contains three fields and two of them (email and
 password) should display on the form. The email property must be unique 
 on the database, so we've added this validation at the top of the class. 
+
+.. note::
+
+    If you want to integrate this User entity with the security system, 
+    you need to implement the UserInterface of security component 
+    :doc:`file</book/security>`.
 
 Create form for the model
 -------------------------
 
-Now, you need to create form for this ``Account`` model::
+Now, you need to create form for this ``User`` model::
 
-    // src/Acme/AccountBundle/Form/Account.php
+    // src/Acme/AccountBundle/Form/UserType.php
     namespace Acme\AccountBundle\Form; 
 
     use Symfony\Component\Form\AbstractType;
     use Symfony\Component\Form\Extension\Core\Type\RepeatedType; 
     use Symfony\Component\Form\FormBuilder; 
 
-    class AccountType extends AbstractType
+    class UserType extends AbstractType
     {
         public function buildForm(FormBuilder $builder, array $options)
         {
@@ -106,26 +112,26 @@ Now, you need to create form for this ``Account`` model::
     
         public function getDefaultOptions(array $options)
         {
-            return array('data_class' => 'Acme\AccountBundle\Document\Account');
+            return array('data_class' => 'Acme\AccountBundle\Document\User');
         }
     }
 
 We just added two fields: email and password (repeated to confirm the entered 
 password). The ``data_class`` option tells the form the name of data class and 
-this is your ``Account`` document and the form is able to create the data model. 
+this is your ``User`` document and the form is able to create the data model. 
 
 .. tip::
 
     To explore more things about form component, 
     read this documentation :doc:`file</book/forms>`. 
 
-Embedding Account form into Signup form
----------------------------------------
+Embedding User form into Signup form
+------------------------------------
 
-The form for sign up is not the same as the form for Account. 
+The form for sign up is not the same as the form for User. 
 It contains further fields like accepting the terms which value is not needed 
 to be stored into database. So, now we need to create own form for this purpose 
-and embed the existing ``Account`` form. For validation and creation of Account 
+and embed the existing ``User`` form. For validation and creation of User 
 data we need simple domain model for the sign up form::
 
     // src/Acme/AccountBundle/Form/Signup.php
@@ -133,14 +139,14 @@ data we need simple domain model for the sign up form::
 
     use Symfony\Component\Validator\Constraints as Assert;
 
-    use Acme\AccountBundle\Document\Account;
+    use Acme\AccountBundle\Document\User;
 
     class Signup
     {    
         /**
-         * @Assert\Type(type="Acme\AccountBundle\Document\Account")
+         * @Assert\Type(type="Acme\AccountBundle\Document\User")
          */
-        protected $account; 
+        protected $user; 
     
         /**
          * @Assert\NotBlank()
@@ -148,14 +154,14 @@ data we need simple domain model for the sign up form::
          */
         protected $termsAccepted;
     
-        public function setAccount(Account $account)
+        public function setUser(User $user)
         {
-            $this->account = $account; 
+            $this->user = $user; 
         }
     
-        public function getAccount()
+        public function getUser()
         {
-            return $this->account; 
+            return $this->user; 
         }
     
         public function getTermsAccepted()
@@ -182,14 +188,14 @@ And the form for this ``Signup`` model::
     {
         public function buildForm(FormBuilder $builder, array $options)
         {
-            $builder->add('account', new AccountType());
+            $builder->add('user', new UserType());
             $builder->add('terms', 'checkbox', array('property_path' => 'termsAccepted'));
         }
     }
 
 We added two fields into the form. You don't need to use special method 
 for embedding form. A form is a field, too - so you can add this like the fields, 
-with the expectation that you need to instance the class ``AccountType``.
+with the expectation that you need to instance the class ``UserType``.
 
 Handling the Form Submission
 ----------------------------
@@ -236,10 +242,10 @@ This performs the validation and saves the data into the database::
         if ($form->isValid()) {
             $signup = $form->getData();
         
-            $dm->persist($signup->getAccount()); 
+            $dm->persist($signup->getUser()); 
             $dm->flush();
         
-            return $this->redirect($this->generateUrl('welcome', array('id' => $signup->getAccount()->getId())));
+            return $this->redirect($this->generateUrl('welcome', array('id' => $signup->getUser()->getId())));
         }
     
         return $this->render('AcmeAccountBundle:Account:signup.html.twig', array('form' => $form->createView()));
