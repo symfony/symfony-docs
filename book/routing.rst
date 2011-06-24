@@ -192,7 +192,7 @@ A basic route consists of just two parts: the ``pattern`` to match and a
 
     .. code-block:: yaml
 
-        homepage:
+        _welcome:
             pattern:   /
             defaults:  { _controller: AcmeDemoBundle:Main:homepage }
 
@@ -204,7 +204,7 @@ A basic route consists of just two parts: the ``pattern`` to match and a
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/routing http://symfony.com/schema/routing/routing-1.0.xsd">
 
-            <route id="homepage" pattern="/">
+            <route id="_welcome" pattern="/">
                 <default key="_controller">AcmeDemoBundle:Main:homepage</default>
             </route>
 
@@ -216,7 +216,7 @@ A basic route consists of just two parts: the ``pattern`` to match and a
         use Symfony\Component\Routing\Route;
 
         $collection = new RouteCollection();
-        $collection->add('homepage', new Route('/', array(
+        $collection->add('_welcome', new Route('/', array(
             '_controller' => 'AcmeDemoBundle:Main:homepage',
         )));
 

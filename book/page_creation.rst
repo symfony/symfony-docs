@@ -103,7 +103,7 @@ you can also choose to use XML or PHP out of the box to configure routes:
     .. code-block:: yaml
 
         # app/config/routing.yml
-        homepage:
+        _welcome:
             pattern:  /
             defaults: { _controller: AcmeDemoBundle:Welcome:index }
 
@@ -119,7 +119,7 @@ you can also choose to use XML or PHP out of the box to configure routes:
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/routing http://symfony.com/schema/routing/routing-1.0.xsd">
 
-            <route id="homepage" pattern="/">
+            <route id="_welcome" pattern="/">
                 <default key="_controller">AcmeDemoBundle:Welcome:index</default>
             </route>
 
@@ -133,7 +133,7 @@ you can also choose to use XML or PHP out of the box to configure routes:
         use Symfony\Component\Routing\Route;
 
         $collection = new RouteCollection();
-        $collection->add('homepage', new Route('/', array(
+        $collection->add('_welcome', new Route('/', array(
             '_controller' => 'AcmeDemoBundle:Welcome:index',
         )));
         $collection->addCollection($loader->import("@AcmeHelloBundle/Resources/config/routing.php"));

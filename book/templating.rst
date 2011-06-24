@@ -650,20 +650,20 @@ configuration:
 
     .. code-block:: yaml
 
-        homepage:
+        _welcome:
             pattern:  /
             defaults: { _controller: AcmeDemoBundle:Welcome:index }
 
     .. code-block:: xml
 
-        <route id="homepage" pattern="/">
+        <route id="_welcome" pattern="/">
             <default key="_controller">AcmeDemoBundle:Welcome:index</default>
         </route>
 
     .. code-block:: php
 
         $collection = new RouteCollection();
-        $collection->add('homepage', new Route('/', array(
+        $collection->add('_welcome', new Route('/', array(
             '_controller' => 'AcmeDemoBundle:Welcome:index',
         )));
 
