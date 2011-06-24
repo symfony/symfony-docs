@@ -865,8 +865,6 @@ the configuration file for the ``dev`` environment.
             handlers:
                 main:
                     type:  stream
-                    path:  %kernel.logs_dir%/%kernel.environment%.log
-                    level: debug
 
     .. code-block:: xml
 
@@ -886,12 +884,7 @@ the configuration file for the ``dev`` environment.
         />
 
         <monolog:config>
-            <monolog:handler
-                name="main"
-                type="stream"
-                path="%kernel.logs_dir%/%kernel.environment%.log"
-                level="debug"
-            >
+            <monolog:handler name="main" type="stream" />
         </monolog:config>
 
     .. code-block:: php
@@ -913,8 +906,6 @@ the configuration file for the ``dev`` environment.
                 'handlers' => array(
                     'main' => array(
                         'type'  => 'stream',
-                        'path'  => '%kernel.logs_dir%/%kernel.environment%.log',
-                        'level' => 'debug',
                     ),
         )));
 

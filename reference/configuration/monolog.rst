@@ -74,7 +74,7 @@ Configuration Reference
                     formatter="my_formatter"
                 >
                     <monolog:processor callback="some_callable" />
-                </monolog:handler />
+                </monolog:handler>
                 <monolog:handler
                     name="main"
                     type="fingerscrossed"
