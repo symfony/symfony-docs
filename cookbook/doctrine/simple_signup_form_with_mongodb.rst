@@ -1,23 +1,22 @@
-How to implement simple Sign up Form with MongoDB
-=================================================
+How to implement a simple Registration Form with MongoDB
+========================================================
 
-Some forms have extra fields which value are not needed to be stored into 
-database. In this example we create sign up form with some extra fields and 
-embed the form for storing the account information. We use MongoDB for 
-storing data. 
-
-This explains how to integrate two types of domain model into the form, too.
+Some forms have extra fields whose values don't need to be stored in the
+database. In this example, we'll create a registration form with some extra
+fields and (like a "terms accepted" checkbox field) and embed the form that
+actually stores the account information. We'll use MongoDB for storing the data. 
 
 .. tip::
 
-    If you are not familiar with Doctrine MongoDB Bundle, you should read 
-    this :doc:`file</cookbook/doctrine/mongodb>` recipe first to learn 
-    how to setup the MongoDB Bundle to be able to work with MongoDB.
+    If you are not familiar with Doctrine's MongoDB library, read
+    ":doc:`/cookbook/doctrine/mongodb`" cookbook entry first to learn 
+    how to setup and work with MongoDB inside Symfony.
 
-The simple Account model
+The simple Account Model
 ------------------------
 
 So, in this tutorial we begin with the model for the ``Account``::
+Because your application will have users, you'll 
 
     // src/Acme/AccountBundle/Document/Account.php
     namespace Acme\AccountBundle\Document;
