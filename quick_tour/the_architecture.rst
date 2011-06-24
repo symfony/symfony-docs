@@ -233,8 +233,6 @@ and then modifies it to add some debugging tools:
         handlers:
             main:
                 type:  stream
-                path:  %kernel.logs_dir%/%kernel.environment%.log
-                level: debug
 
     assetic:
         use_controller: true
