@@ -264,7 +264,7 @@ You can use this same strategy to bring in configuration from a bundle:
     imports:
         - { resource: "@AcmeDemoBundle/Resources/config/config.yml" }
 
-In Symfony2, configuration is a bit like ``app.yml`` in symfony1, exact much
+In Symfony2, configuration is a bit like ``app.yml`` in symfony1, except much
 more systematic. With ``app.yml``, you could simply create any keys you wanted.
 By default, these entries were meaningless and depended entirely on how you
 used them in your application:
