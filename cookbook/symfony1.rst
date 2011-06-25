@@ -250,16 +250,6 @@ In Symfony2, the bundles are activated inside the application kernel::
         return $bundles;
     }
 
-You also need to be sure that the ``Acme`` namespace is set to be autoloaded::
-
-    // app/autoload.php
-    $loader = new UniversalClassLoader();
-    $loader->registerNamespaces(array(
-        'Symfony'                        => __DIR__.'/../vendor/symfony/src',
-        'Acme'                           => __DIR__.'/../src',
-        // ...
-    ));
-
 Routing (``routing.yml``) and Configration (``config.yml``)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
