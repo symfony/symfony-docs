@@ -4,7 +4,8 @@
 How to allow / character in a route parameter
 =============================================
 
-Sometimes, you need to compose URLs with parameters that can contain a slash ``/``. But Symfony uses this character as separator between route parts.
+Sometimes, you need to compose URLs with parameters that can contain a slash 
+``/``. But Symfony uses this character as separator between route parts.
 
 Configure the route
 -------------------
