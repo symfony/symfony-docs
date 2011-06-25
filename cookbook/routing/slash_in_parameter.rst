@@ -44,7 +44,7 @@ You must explicitely allow ``/`` to be part of your parameter specifying a more 
 
         $collection = new RouteCollection();
         $collection->add('secure', new Route('/hello/{name}', array(
-            '_controller' => 'AcmeDemoBundle:Main:secure',
+            '_controller' => 'AcmeDemoBundle:Demo:hello',
         ), array(
             'name' => '.+',
         )));
@@ -58,7 +58,7 @@ You must explicitely allow ``/`` to be part of your parameter specifying a more 
         class DemoController
         {
             /**
-             * @Route("/hello/{name}", name="_demo_hello", requirements={"name" = ".+"})
+             * @Route("/hello/{name}", name="_hello", requirements={"name" = ".+"})
              */
             public function helloAction($name)
             {
