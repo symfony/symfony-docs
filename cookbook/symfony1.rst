@@ -45,7 +45,7 @@ lives inside a bundle (roughly equivalent to a symfony1 plugin) and, by default,
 each bundle lives inside the ``src`` directory. In that way, the ``src``
 directory is a bit like the ``plugins`` directory in symfony1, but much more
 flexible. Additionally, while *your* bundles will live in the ``src/`` directory,
-third-party bundles may live in the ``vendor/`` directory.
+third-party bundles may live in the ``vendor/bundles/`` directory.
 
 To get a better picture of the ``src/`` directory, let's first think of a
 symfony1 application. First, part of your code likely lives inside one or
@@ -72,9 +72,10 @@ The ``vendor/`` Directory
 
 The ``vendor/`` directory is basically equivalent to the ``lib/vendor/``
 directory in symfony1, which was the conventional directory for all vendor
-libraries. By default, you'll find the Symfony2 library files in this directory,
-along with several other dependent libraries such as Doctrine2, Twig and
-Swiftmailer.
+libraries and bundles. By default, you'll find the Symfony2 library files in
+this directory, along with several other dependent libraries such as Doctrine2,
+Twig and Swiftmailer. 3rd party Symfony2 bundles usually live in the
+``vendor/bundles/``.
 
 The ``web/`` Directory
 ~~~~~~~~~~~~~~~~~~~~~~
