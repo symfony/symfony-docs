@@ -98,7 +98,7 @@ available, run the following command::
 Autoloading
 -----------
 
-One of the advantageous of modern frameworks is never needing to worry about
+One of the advantages of modern frameworks is never needing to worry about
 requiring files. By making use of an autoloader, you can refer to any class
 in your project and trust that it's available. This is made possible via an
 autoloader. Autoloading has changed in Symfony2 to be more universal, faster,
