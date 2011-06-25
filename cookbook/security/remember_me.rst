@@ -89,7 +89,8 @@ might ultimately look like this:
 
         <form action="<?php echo $view['router']->generate('login_check') ?>" method="post">
             <label for="username">Username:</label>
-            <input type="text" id="username" name="_username" value="<?php echo $last_username ?>" />
+            <input type="text" id="username" 
+                   name="_username" value="<?php echo $last_username ?>" />
 
             <label for="password">Password:</label>
             <input type="password" id="password" name="_password" />
@@ -156,7 +157,9 @@ In the following example, the action is only allowed if the user has the
 
     public function editAction()
     {
-        if (false === $this->get('security.context')->isGranted('IS_AUTHENTICATED_FULLY')) {
+        if (false === $this->get('security.context')->isGranted(
+            'IS_AUTHENTICATED_FULLY'
+        )) {
             throw new AccessDeniedException();
         }
 

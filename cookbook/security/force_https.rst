@@ -11,7 +11,9 @@ to use ``HTTPS`` then you could use the following config:
         .. code-block:: yaml
 
             access_control:
-                - { path: ^/secure, roles: ROLE_ADMIN, requires_channel: https }
+                - path: ^/secure
+                  roles: ROLE_ADMIN
+                  requires_channel: https
 
         .. code-block:: xml
 
@@ -22,7 +24,10 @@ to use ``HTTPS`` then you could use the following config:
         .. code-block:: php
 
             'access_control' => array(
-                array('path' => '^/secure', 'role' => 'ROLE_ADMIN', 'requires_channel' => 'https'),
+                array('path' => '^/secure', 
+                      'role' => 'ROLE_ADMIN', 
+                      'requires_channel' => 'https'
+                ),
             ),
 
 The login form itself needs to allow anonymous access otherwise users will
@@ -35,18 +40,25 @@ role:
         .. code-block:: yaml
 
             access_control:
-                - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: https  }
+                - path: ^/login
+                  roles: IS_AUTHENTICATED_ANONYMOUSLY
+                  requires_channel: https
 
         .. code-block:: xml
 
             <access-control>
-                <rule path="^/login" role="IS_AUTHENTICATED_ANONYMOUSLY" requires_channel="https" />
+                <rule path="^/login" 
+                      role="IS_AUTHENTICATED_ANONYMOUSLY" 
+                      requires_channel="https" />
             </access-control>
 
         .. code-block:: php
 
             'access_control' => array(
-                array('path' => '^/login', 'role' => 'IS_AUTHENTICATED_ANONYMOUSLY', 'requires_channel' => 'https'),
+                array('path' => '^/login', 
+                      'role' => 'IS_AUTHENTICATED_ANONYMOUSLY', 
+                      'requires_channel' => 'https'
+                ),
             ),
 
 It is also possible to specify using ``HTTPS`` in the routing configuration
