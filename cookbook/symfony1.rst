@@ -100,9 +100,9 @@ Autoloading
 
 One of the advantages of modern frameworks is never needing to worry about
 requiring files. By making use of an autoloader, you can refer to any class
-in your project and trust that it's available. This is made possible via an
-autoloader. Autoloading has changed in Symfony2 to be more universal, faster,
-and independent of needing to clear your cache.
+in your project and trust that it's available. Autoloading has changed in
+Symfony2 to be more universal, faster, and independent of needing to clear
+your cache.
 
 In symfony1, autoloading was done by searching the entire project for the
 presence of PHP class files and caching this information in a giant array.
@@ -113,22 +113,26 @@ were added or moved.
 In Symfony2, a new class - ``UniversalClassLoader`` - handles this process.
 The idea behind the autoloader is simple: the name of your class (including
 the namespace) must match up with the path to the file containing that class.
-Take the ``HelloController`` from the Symfony2 Standard Edition as an example::
+Take the ``FrameworkExtraBundle`` from the Symfony2 Standard Edition as an
+example::
 
-    namespace Acme\DemoBundle\Controller;
+    namespace Sensio\Bundle\FrameworkExtraBundle;
 
-    use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+    use Symfony\Component\HttpKernel\Bundle\Bundle;
+    // ...
 
-    class DemoController extends Controller
+    class SensioFrameworkExtraBundle extends Bundle
     {
         // ...
 
-The file itself lives at ``src/Acme/DemoBundle/Controller/DemoController.php``.
+The file itself lives at
+``vendor/bundle/Sensio/Bundle/FrameworkExtraBundle/SensioFrameworkExtraBundle.php``.
 As you can see, the location of the file follows the namespace of the class.
-Specifically, the namespace, ``Acme\DemoBundle\Controller``, spells out
-the directory that the file should live in (``src\Acme\DemoController\Controller``).
-This is because, in the ``app/autoload.php`` file, you'll configure Symfony
-to look for the ``Acme`` namespace in the ``src`` directory:
+Specifically, the namespace, ``Sensio\Bundle\FrameworkExtraBundle``, spells out
+the directory that the file should live in 
+(``vendor/bundle/Sensio/Bundle/FrameworkExtraBundle``). This is because, in the
+``app/autoload.php`` file, you'll configure Symfony to look for the ``Sensio``
+namespace in the ``vendor/bundle`` directory:
 
 .. code-block:: php
 
@@ -137,7 +141,7 @@ to look for the ``Acme`` namespace in the ``src`` directory:
     // ...
     $loader->registerNamespaces(array(
         // ...
-        'Acme'             => __DIR__.'/../src',
+        'Sensio'           => __DIR__.'/../vendor/bundles',
     ));
 
 If the file did *not* live at this exact location, you'd receive a
@@ -149,9 +153,26 @@ contains a different class). In order for a class to be autoloaded, you
 **never need to clear your cache** in Symfony2.
 
 As mentioned before, for the autoloader to work, it needs to know that the
-``Acme`` namespace lives in the ``src`` directory and that, for example,
-the ``Doctrine`` namespace lives in the ``vendor/doctrine/lib/`` directory.
-This mapping is entirely controlled by you via the ``app/autoload.php`` file.
+``Sensio`` namespace lives in the ``vendor/bundles`` directory and that, for
+example, the ``Doctrine`` namespace lives in the ``vendor/doctrine/lib/``
+directory. This mapping is entirely controlled by you via the
+``app/autoload.php`` file.
+
+If you look at the ``HelloController`` from the Symfony2 Standard Edition you
+can see that it lives in the ``Acme\DemoBundle\Controller`` namespace. Yet, the
+``Acme`` namespace is not defined in the ``app/autoload.php``. By default you
+do not need to explicitly configure the location of bundles that live in the
+``src/`` directory. The ``UniversalClassLoader`` is configured to fallback to
+the ``src/`` dierectory using its ``registerNamespaceFallbacks`` method:
+
+.. code-block:: php
+
+    // app/autoload.php
+
+    // ...
+    $loader->registerNamespaceFallbacks(array(
+        __DIR__.'/../src',
+    ));
 
 Using the Console
 -----------------
