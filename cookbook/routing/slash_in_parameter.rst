@@ -9,9 +9,12 @@ Sometimes, you need to compose URLs with parameters that can contain a slash ``/
 Configure the route
 -------------------
 
-By default, the symfony routing components requires that the parameters match the following regex pattern: ``[^/]+``. This means that all characters are allowed excepted ``/``. 
+By default, the symfony routing components requires that the parameters 
+match the following regex pattern: ``[^/]+``. This means that all characters 
+are allowed excepted ``/``. 
 
-You must explicitely allow ``/`` to be part of your parameter specifying a more permissive regex pattern.
+You must explicitely allow ``/`` to be part of your parameter specifying 
+a more permissive regex pattern.
 
 .. configuration-block::
 
