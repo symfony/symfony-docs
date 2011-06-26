@@ -1,5 +1,5 @@
-When Flat PHP meets Symfony
-===========================
+Symfony2 versus Flat PHP
+========================
 
 **Why is Symfony2 better than just opening up a file and writing flat PHP?**
 
