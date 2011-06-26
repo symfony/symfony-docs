@@ -164,7 +164,7 @@ can see that it lives in the ``Acme\DemoBundle\Controller`` namespace. Yet, the
 ``Acme`` namespace is not defined in the ``app/autoload.php``. By default you
 do not need to explicitly configure the location of bundles that live in the
 ``src/`` directory. The ``UniversalClassLoader`` is configured to fallback to
-the ``src/`` dierectory using its ``registerNamespaceFallbacks`` method:
+the ``src/`` directory using its ``registerNamespaceFallbacks`` method:
 
 .. code-block:: php
 
