@@ -1,14 +1,14 @@
 The Big Picture
 ===============
 
-Start using Symfony2 in 10 minutes! This chapter walks you through some of the
-most important concepts behind Symfony2. It explains how to get started
-quickly by showing you the structure of a simple project.
+Start using Symfony2 in 10 minutes! This chapter will walk you through some
+of the most important concepts behind Symfony2 and explain how you can get
+started quickly by showing you a simple project in action.
 
 If you've used a web framework before, you should feel right at home with
 Symfony2. If not, welcome to a whole new way of developing web applications!
 
-.. tip:
+.. tip::
 
     Want to learn why and when you need to use a framework? Read the "`Symfony
     in 5 minutes`_" document.
@@ -19,7 +19,7 @@ Downloading Symfony2
 First, check that you have installed and configured a Web server (such as
 Apache) with PHP 5.3.2 or higher.
 
-Ready? Let's start by downloading the "`Symfony2 Standard Edition`_", a Symfony
+Ready? Start by downloading the "`Symfony2 Standard Edition`_", a Symfony
 :term:`distribution` that is preconfigured for the most common use cases and
 also contains some code that demonstrates how to use Symfony2 (get the archive
 with the *vendors* included to get started even faster).
@@ -35,17 +35,30 @@ have a ``Symfony/`` directory that looks like this:
                 cache/
                 config/
                 logs/
+                Resources/
+            bin/
             src/
                 Acme/
                     DemoBundle/
                         Controller/
                         Resources/
+                        ...
             vendor/
                 symfony/
                 doctrine/
                 ...
             web/
                 app.php
+                ...
+
+.. note::
+
+    If you downloaded the Standard Edition *without vendors*, simply run the
+    following command to download all of the vendor libraries:
+    
+    .. code-block:: bash
+    
+        ./bin/vendors install
 
 Checking the Configuration
 --------------------------
@@ -60,8 +73,8 @@ URL to see the diagnostics for your machine:
 
 If there are any outstanding issues listed, correct them. You might also tweak
 your configuration by following any given recommendations. When everything is
-fine, click on "Go to the Welcome page" to request your first "real" Symfony2
-webpage:
+fine, click on "*Bypass configuration and go to the Welcome page*" to request
+your first "real" Symfony2 webpage:
 
 .. code-block:: text
 
@@ -70,13 +83,14 @@ webpage:
 Symfony2 should welcome and congratulate you for your hard work so far!
 
 .. image:: /images/quick_tour/welcome.jpg
+   :align: center
 
 Understanding the Fundamentals
 ------------------------------
 
-One of the main goals of a framework is to ensure the `Separation of Concerns`_.
+One of the main goals of a framework is to ensure `Separation of Concerns`_.
 This keeps your code organized and allows your application to evolve easily
-over time by avoiding the mix of database calls, HTML tags, and business
+over time by avoiding the mixing of database calls, HTML tags, and business
 logic in the same script. To achieve this goal with Symfony, you'll first
 need to learn a few fundamental concepts and terms.
 
@@ -86,13 +100,16 @@ need to learn a few fundamental concepts and terms.
     in the same script? Read the ":doc:`/book/from_flat_php_to_symfony2`"
     chapter of the book.
 
-The distribution comes with some sample code that you will use to learn more
+The distribution comes with some sample code that you can use to learn more
 about the main Symfony2 concepts. Go to the following URL to be greeted by
 Symfony2 (replace *Fabien* with your first name):
 
 .. code-block:: text
 
     http://localhost/Symfony/web/app_dev.php/demo/hello/Fabien
+
+.. image:: /images/quick_tour/hello_fabien.png
+   :align: center
 
 What's going on here? Let's dissect the URL:
 
@@ -104,7 +121,7 @@ What's going on here? Let's dissect the URL:
 
 Your responsibility as a developer is to write the code that maps the user's
 *request* (``/demo/hello/Fabien``) to the *resource* associated with it
-(``Hello Fabien!``).
+(the ``Hello Fabien!`` HTML page).
 
 Routing
 ~~~~~~~
@@ -112,11 +129,14 @@ Routing
 Symfony2 routes the request to the code that handles it by trying to match the
 requested URL against some configured patterns. By default, these patterns
 (called routes) are defined in the ``app/config/routing.yml`` configuration
-file:
+file. When you're in the ``dev`` :ref:`environment<quick-tour-big-picture-environments>` -
+indicated by the app_**dev**.php front controller - the ``app/config/routing_dev.yml``
+configuration file is also loaded. In the Standard Edition, the routes to
+these "demo" pages are placed in that file:
 
 .. code-block:: yaml
 
-    # app/config/routing.yml
+    # app/config/routing_dev.yml
     _welcome:
         pattern:  /
         defaults: { _controller: AcmeDemoBundle:Welcome:index }
@@ -126,9 +146,12 @@ file:
         type:     annotation
         prefix:   /demo
 
+    # ...
+
 The first three lines (after the comment) define the code that is executed
-when the user requests the "``/``" resource (i.e. the welcome page). When
-requested, the ``AcmeDemoBundle:Welcome:index`` controller will be executed.
+when the user requests the "``/``" resource (i.e. the welcome page you saw
+earlier). When requested, the ``AcmeDemoBundle:Welcome:index`` controller
+will be executed. In the next section, you'll learn exactly what that means.
 
 .. tip::
 
@@ -142,12 +165,12 @@ requested, the ``AcmeDemoBundle:Welcome:index`` controller will be executed.
 Controllers
 ~~~~~~~~~~~
 
-A controller handles incoming *requests* and returns *responses* (often HTML
-code). Instead of using the PHP global variables and functions (like ``$_GET``
-or ``header()``) to manage these HTTP messages, Symfony uses objects:
-:class:`Symfony\\Component\\HttpFoundation\\Request` and
-:class:`Symfony\\Component\\HttpFoundation\\Response`. The simplest possible
-controller creates the response by hand, based on the request::
+A controller is a fancy name for a PHP function or method that handles incoming
+*requests* and returns *responses* (often HTML code). Instead of using the
+PHP global variables and functions (like ``$_GET`` or ``header()``) to manage
+these HTTP messages, Symfony uses objects: :class:`Symfony\\Component\\HttpFoundation\\Request`
+and :class:`Symfony\\Component\\HttpFoundation\\Response`. The simplest possible
+controller might create the response by hand, based on the request::
 
     use Symfony\Component\HttpFoundation\Response;
 
@@ -157,10 +180,10 @@ controller creates the response by hand, based on the request::
 
 .. note::
 
-    Don't be fooled by the simple concepts and the power that they hold. Read
-    the ":doc:`/book/http_fundamentals`" chapter of the book to learn more
-    about how Symfony2 embraces HTTP and why it makes things simpler and more
-    powerful at the same time.
+    Symfony2 embraces the HTTP Specification, which are the rules that govern
+    all communication on the We. Read the ":doc:`/book/http_fundamentals`"
+    chapter of the book to learn more about this and the added power that
+    this brings.
 
 Symfony2 chooses the controller based on the ``_controller`` value from the
 routing configuration: ``AcmeDemoBundle:Welcome:index``. This string is the
@@ -182,13 +205,13 @@ the ``Acme\DemoBundle\Controller\WelcomeController`` class::
 
 .. tip::
 
-    You could have used
-    ``Acme\DemoBundle\Controller\WelcomeController::indexAction`` for the
-    ``_controller`` value but if you follow some simple conventions, the
-    logical name is more concise and allows for more flexibility.
+    You could have used the full class and method name - 
+    ``Acme\DemoBundle\Controller\WelcomeController::indexAction`` - for the
+    ``_controller`` value. But if you follow some simple conventions, the
+    logical name is shorter and allows for more flexibility.
 
-The controller class extends the built-in ``Controller`` class, which provides
-useful shortcut methods, like the
+The ``WelcomeController`` class extends the built-in ``Controller`` class,
+which provides useful shortcut methods, like the
 :method:`Symfony\\Bundle\\FrameworkBundle\\Controller\\Controller::render`
 method that loads and renders a template
 (``AcmeDemoBundle:Welcome:index.html.twig``). The returned value is a Response
@@ -203,6 +226,11 @@ Response can be tweaked before it is sent to the browser::
         return $response;
     }
 
+No matter how you do it, the end goal of your controller is always to return
+the ``Response`` object that should be delivered back to the user. This ``Response``
+object can be populated with HTML code, represent a client redirect, or even
+return the contents of a JPG image with a ``Content-Type`` header of ``image/jpg``.
+
 .. tip::
 
     Extending the ``Controller`` base class is optional. As a matter of fact,
@@ -212,21 +240,23 @@ Response can be tweaked before it is sent to the browser::
 
 The template name, ``AcmeDemoBundle:Welcome:index.html.twig``, is the template
 *logical name* and it references the
-``src/Acme/DemoBundle/Resources/views/Welcome/index.html.twig`` file. The
-bundles section below will explain why this is useful.
+``Resources/views/Welcome/index.html.twig`` file inside the ``AcmeDemoBundle``
+(located at ``src/Acme/DemoBundle``). The bundles section below will explain
+why this is useful.
 
-Now, take a look at the end of the routing configuration again:
+Now, take a look at the routing configuration again and find the ``_demo``
+key:
 
 .. code-block:: yaml
 
-    # app/config/routing.yml
+    # app/config/routing_dev.yml
     _demo:
         resource: "@AcmeDemoBundle/Controller/DemoController.php"
         type:     annotation
         prefix:   /demo
 
-Symfony2 can read the routing information from different resources written in
-YAML, XML, PHP, or even embedded in PHP annotations. Here, the resource
+Symfony2 can read/import the routing information from different files written
+in YAML, XML, PHP, or even embedded in PHP annotations. Here, the file's
 *logical name* is ``@AcmeDemoBundle/Controller/DemoController.php`` and refers
 to the ``src/Acme/DemoBundle/Controller/DemoController.php`` file. In this
 file, routes are defined as annotations on action methods::
@@ -260,13 +290,13 @@ you can see, its value can be retrieved through the ``$name`` method argument.
     extensively in Symfony2 as a convenient way to configure the framework
     behavior and keep the configuration next to the code.
 
-If you take a closer look at the action code, you can see that instead of
-rendering a template like before, it just returns an array of parameters. The
-``@Template()`` annotation tells Symfony to render the template for you,
-passing in each variable of the array to the template. The name of the
-template that's rendered follows the name of the controller. So, in this
-example, the ``AcmeDemoBundle:Demo:hello.html.twig`` template is rendered
-(located at ``src/Acme/DemoBundle/Resources/views/Demo/hello.html.twig``).
+If you take a closer look at the controller code, you can see that instead of
+rendering a template and returning a ``Response`` object like before, it
+just returns an array of parameters. The ``@Template()`` annotation tells
+Symfony to render the template for you, passing in each variable of the array
+to the template. The name of the template that's rendered follows the name
+of the controller. So, in this example, the ``AcmeDemoBundle:Demo:hello.html.twig``
+template is rendered (located at ``src/Acme/DemoBundle/Resources/views/Demo/hello.html.twig``).
 
 .. tip::
 
@@ -307,14 +337,25 @@ blog, a forum, ...) and which can be easily shared with other developers. As
 of now, we have manipulated one bundle, ``AcmeDemoBundle``. You will learn
 more about bundles in the last chapter of this tutorial.
 
+.. _quick-tour-big-picture-environments:
+
 Working with Environments
 -------------------------
 
-Now that you have a better understanding of how Symfony2 works, have a closer
-look at the bottom of the page; you will notice a small bar with the Symfony2
-logo. This is called the "Web Debug Toolbar" and it is the developer's best
-friend. But this is only the tip of the iceberg; click on the weird hexadecimal
-number to reveal yet another very useful Symfony2 debugging tool: the profiler.
+Now that you have a better understanding of how Symfony2 works, take a closer
+look at the bottom of any Symfony2 rendered page. You should notice a small
+bar with the Symfony2 logo. This is called the "Web Debug Toolbar" and it
+is the developer's best friend.
+
+.. image:: /images/quick_tour/web_debug_toolbar.png
+   :align: center
+
+But what you see initially is only the tip of the iceberg; click on the weird
+hexadecimal number to reveal yet another very useful Symfony2 debugging tool:
+the profiler.
+
+.. image:: /images/quick_tour/profiler.png
+   :align: center
 
 Of course, you won't want to show these tools when you deploy your application
 to production. That's why you will find another front controller in the
@@ -360,8 +401,9 @@ one:
         toolbar: true
         intercept_redirects: false
 
-The ``dev`` environment (defined in ``config_dev.yml``) inherits from the
-global ``config.yml`` file and extends it by enabling the web debug toolbar.
+The ``dev`` environment (which loads the ``config_dev.yml`` configuration file)
+imports the global ``config.yml`` file and then modifies it by, in this example,
+enabling the web debug toolbar.
 
 Final Thoughts
 --------------
@@ -369,8 +411,8 @@ Final Thoughts
 Congratulations! You've had your first taste of Symfony2 code. That wasn't so
 hard, was it? There's a lot more to explore, but you should already see how
 Symfony2 makes it really easy to implement web sites better and faster. If you
-are eager to learn more about Symfony2, dive into the next section: "The
-View".
+are eager to learn more about Symfony2, dive into the next section:
+":doc:`The View<the_view>`".
 
 .. _Symfony2 Standard Edition:      http://symfony.com/download
 .. _Symfony in 5 minutes:           http://symfony.com/symfony-in-five-minutes
