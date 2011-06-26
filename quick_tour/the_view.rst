@@ -281,8 +281,8 @@ the basics is easy, and you will soon learn that this simplicity is hidden
 under a very flexible architecture.
 
 But I'm getting ahead of myself. First, you need to learn more about the controller
-and that's exactly the topic of the next part of this tutorial. Ready for
-another 10 minutes with Symfony2?
+and that's exactly the topic of the :doc:`next part of this tutorial<the_controller>`.
+Ready for another 10 minutes with Symfony2?
 
 .. _Twig:          http://www.twig-project.org/
 .. _documentation: http://www.twig-project.org/documentation
