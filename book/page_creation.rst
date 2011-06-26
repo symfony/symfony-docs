@@ -54,11 +54,11 @@ inside a bundle.
 A bundle is nothing more than a directory (with a PHP namespace) that houses
 everything related to a specific feature (see :ref:`page-creation-bundles`).
 To create a bundle called ``AcmeHelloBundle`` (a play bundle that you'll
-build in this chapter), run the following command:
+build in this chapter), run the following command and follow the instructions:
 
 .. code-block:: text
 
-    php app/console init:bundle Acme/HelloBundle src
+    php app/console generate:bundle
 
 Next, be sure that the ``Acme`` namespace is loaded by adding the following
 to the ``app/autoload.php`` file (see the :ref:`Autoloading sidebar<autoloading-introduction-sidebar>`):
