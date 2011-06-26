@@ -54,9 +54,9 @@ going to need to build a form. But before you begin, let's focus on the generic
    the ``AcmeStoreBundle``. Run the following command and follow the on-screen
    directions:
 
-   .. code-block:: text
+   .. code-block:: bash
 
-       php app/console init:bundle Acme/StoreBundle src/
+        ./app/console generate:bundle --namespace=Acme/StoreBundle
 
 This type of class is commonly called a "plain-old-PHP-object" because, so far,
 it has nothing to do with Symfony or any other library. It's quite simply a

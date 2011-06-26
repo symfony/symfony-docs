@@ -54,26 +54,16 @@ inside a bundle.
 A bundle is nothing more than a directory (with a PHP namespace) that houses
 everything related to a specific feature (see :ref:`page-creation-bundles`).
 To create a bundle called ``AcmeHelloBundle`` (a play bundle that you'll
-build in this chapter), run the following command:
+build in this chapter), run the following command and follow the on-screen
+instructions (use all of the default options):
 
-.. code-block:: text
+.. code-block:: bash
+    
+    ./app/console generate:bundle --namespace=Acme/HelloBundle
 
-    php app/console init:bundle Acme/HelloBundle src
-
-Next, be sure that the ``Acme`` namespace is loaded by adding the following
-to the ``app/autoload.php`` file (see the :ref:`Autoloading sidebar<autoloading-introduction-sidebar>`):
-
-.. code-block:: php
-
-        $loader->registerNamespaces(array(
-            'Acme' => __DIR__.'/../src',
-            // ...
-        ));
-
-Finally, initialize the bundle by adding it to the ``registerBundles`` method
-of the ``AppKernel`` class:
-
-.. code-block:: php
+Behind the scenes, a directory is created for the bundle at ``src/Acme/HelloBundle``.
+A line is also automatically added to the ``app/AppKernel.php`` file so that
+the bundle is registered with the kernel::
 
     // app/AppKernel.php
     public function registerBundles()
@@ -82,7 +72,6 @@ of the ``AppKernel`` class:
             // ...
             new Acme\HelloBundle\AcmeHelloBundle(),
         );
-
         // ...
 
         return $bundles;
@@ -620,9 +609,11 @@ And while it doesn't do anything yet, ``AcmeTestBundle`` is now ready to
 be used.
 
 And as easy as this is, Symfony also provides a command-line interface for
-generating a basic bundle skeleton::
+generating a basic bundle skeleton:
 
-    php app/console init:bundle Acme/TestBundle src
+.. code-block:: bash
+
+    ./app/console generate:bundle --namespace=Acme/TestBundle
 
 The bundle skeleton generates with a basic controller, template and routing
 resource that can be customized. We'll talk more about Symfony2's command-line

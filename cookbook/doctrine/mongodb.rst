@@ -118,19 +118,7 @@ documents to and from MongoDB.
 
     .. code-block:: bash
 
-        php app/console init:bundle Acme/StoreBundle src/
-
-    Next, be sure that the new bundle is enabled in the kernel::
-
-        // app/AppKernel.php
-
-        public function registerBundles()
-        {
-            $bundles = array(
-                // ...
-                new Acme\StoreBundle\AcmeStoreBundle(),
-            );
-        }
+        ./app/console generate:bundle --namespace=Acme/StoreBundle
 
 Creating a Document Class
 ~~~~~~~~~~~~~~~~~~~~~~~~~
