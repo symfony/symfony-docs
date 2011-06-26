@@ -817,7 +817,7 @@ routing and Twig templates are compiled into flat PHP classes and cached.
 When viewing changes in the ``prod`` environment, you'll need to clear these
 cached files and allow them to rebuild::
 
-    rm -rf app/cache/*
+    ./app/console cache:clear --env=prod
 
 .. note::
 

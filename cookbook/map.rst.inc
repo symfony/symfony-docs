@@ -43,6 +43,7 @@
 * **Bundles**
 
   * :doc:`/cookbook/bundles/best_practices`
+  * :doc:`/cookbook/bundles/inheritance`
   * :doc:`/cookbook/bundles/extension`
 
 * **Emailing**

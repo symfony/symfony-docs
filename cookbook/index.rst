@@ -34,6 +34,7 @@ Cookbook
     configuration/pdo_session_storage
 
     bundles/best_practices
+    bundles/inheritance
     bundles/extension
 
     email
