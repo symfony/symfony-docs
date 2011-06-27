@@ -315,7 +315,7 @@ Any customized form blocks inside the ``AcmeDemoBundle:Form:fields.html.twig``
 template will be used globally when form elements are rendered.
 
 By default, twig uses a *div* layout when rendering forms. Some people, however,
-may prefer to render forms in a *table* layout. Use the ``table_layout.html.twig``
+may prefer to render forms in a *table* layout. Use the ``form_table_layout.html.twig``
 resource to use such a layout:
 
 .. configuration-block::
@@ -325,7 +325,7 @@ resource to use such a layout:
         # app/config/config.yml
         twig:
             form:
-                resources: ['table_layout.html.twig']
+                resources: ['form_table_layout.html.twig']
             # ...
 
     .. code-block:: xml
@@ -333,7 +333,7 @@ resource to use such a layout:
         <!-- app/config/config.xml -->
         <twig:config ...>
                 <twig:form>
-                    <resource>table_layout.html.twig</resource>
+                    <resource>form_table_layout.html.twig</resource>
                 </twig:form>
                 <!-- ... -->
         </twig:config>
@@ -343,7 +343,7 @@ resource to use such a layout:
         // app/config/config.php
         $container->loadFromExtension('twig', array(
             'form' => array('resources' => array(
-                'table_layout.html.twig',
+                'form_table_layout.html.twig',
              ))
             // ...
         ));
@@ -352,7 +352,7 @@ If you only want to make the change in one template, do the following:
 
 .. code-block:: html+jinja
 
-	{% form_theme form 'table_layout.html.twig' %}
+	{% form_theme form 'form_table_layout.html.twig' %}
 
 Note that the ``form`` variable in the above code is the form view variable
 that you passed to your template.
