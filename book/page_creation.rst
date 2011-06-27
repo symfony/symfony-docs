@@ -64,8 +64,8 @@ build in this chapter), run the following command and follow the on-screen
 instructions (use all of the default options):
 
 .. code-block:: bash
-    
-    ./app/console generate:bundle --namespace=Acme/HelloBundle --format=yml
+
+    php app/console generate:bundle --namespace=Acme/HelloBundle --format=yml
 
 Behind the scenes, a directory is created for the bundle at ``src/Acme/HelloBundle``.
 A line is also automatically added to the ``app/AppKernel.php`` file so that
@@ -641,7 +641,7 @@ generating a basic bundle skeleton:
 
 .. code-block:: bash
 
-    ./app/console generate:bundle --namespace=Acme/TestBundle
+    php app/console generate:bundle --namespace=Acme/TestBundle
 
 The bundle skeleton generates with a basic controller, template and routing
 resource that can be customized. You'll learn more about Symfony2's command-line
@@ -850,7 +850,7 @@ routing and Twig templates are compiled into flat PHP classes and cached.
 When viewing changes in the ``prod`` environment, you'll need to clear these
 cached files and allow them to rebuild::
 
-    ./app/console cache:clear --env=prod
+    php app/console cache:clear --env=prod
 
 .. note::
 

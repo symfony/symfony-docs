@@ -124,13 +124,13 @@ line by using the ``doctrine:fixtures:load`` command:
 
 .. code-block:: bash
 
-    $ php app/console doctrine:fixtures:load
+    php app/console doctrine:fixtures:load
 
 If you're using the ODM, use the ``doctrine:mongodb:fixtures:load`` command instead:
 
 .. code-block:: bash
 
-    $ php app/console doctrine:mongodb:fixtures:load
+    php app/console doctrine:mongodb:fixtures:load
 
 The task will look inside the ``DataFixtures/ORM`` (or ``DataFixtures/ODM``
 for the ODM) directory of each bundle and execute each class that implements
@@ -156,7 +156,7 @@ A full example use might look like this:
 
 .. code-block:: bash
 
-   $ php app/console doctrine:fixtures:load --fixtures=/path/to/fixture1 --fixtures=/path/to/fixture2 --append --em=foo_manager
+   php app/console doctrine:fixtures:load --fixtures=/path/to/fixture1 --fixtures=/path/to/fixture2 --append --em=foo_manager
 
 Sharing Objects between Fixtures
 --------------------------------

@@ -58,7 +58,7 @@ have a ``Symfony/`` directory that looks like this:
     
     .. code-block:: bash
     
-        ./bin/vendors install
+        php bin/vendors install
 
 Checking the Configuration
 --------------------------

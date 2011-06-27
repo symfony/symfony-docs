@@ -212,12 +212,12 @@ First, build a base layout file:
         <html>
             <head>
                 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-                <title><?php echo $view['slots']->output('title', 'Test Application') ?></title>
+                <title><?php $view['slots']->output('title', 'Test Application') ?></title>
             </head>
             <body>
                 <div id="sidebar">
                     <?php if ($view['slots']->has('sidebar'): ?>
-                        <?php echo $view['slots']->output('sidebar') ?>
+                        <?php $view['slots']->output('sidebar') ?>
                     <?php else: ?>
                         <ul>
                             <li><a href="/">Home</a></li>
@@ -227,7 +227,7 @@ First, build a base layout file:
                 </div>
 
                 <div id="content">
-                    <?php echo $view['slots']->output('body') ?>
+                    <?php $view['slots']->output('body') ?>
                 </div>
             </body>
         </html>

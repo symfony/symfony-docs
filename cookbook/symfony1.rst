@@ -89,7 +89,7 @@ directory. This allows you to keep assets organized inside your bundle, but
 still make them available to the public. To make sure that all bundles are
 available, run the following command::
 
-    ./app/console_dev assets:install web --symlink
+    php app/console assets:install web
 
 .. note::
 
