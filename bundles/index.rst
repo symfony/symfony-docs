@@ -5,6 +5,7 @@ Symfony SE Bundles
     :hidden:
 
     SensioFrameworkExtraBundle/index
+    SensioGeneratorBundle/index
     JMSSecurityExtraBundle/index
 
 .. include:: /bundles/map.rst.inc
