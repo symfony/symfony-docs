@@ -100,7 +100,7 @@ by default. You can even `add your own extensions`_ to Twig as needed.
 
 As you'll see throughout the documentation, Twig also supports functions
 and new functions can be easily added. For example, the following uses a
-standard ``if`` tag and the ``cycle`` function to print ten div tags, with
+standard ``for`` tag and the ``cycle`` function to print ten div tags, with
 alternating ``odd``, ``even`` classes:
 
 .. code-block:: html+jinja
