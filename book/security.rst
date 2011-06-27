@@ -1147,7 +1147,7 @@ a new provider that chains the two together:
 
         <!-- app/config/config.xml -->
         <config>
-            <provider name=="chain_provider">
+            <provider name="chain_provider">
                 <provider>in_memory</provider>
                 <provider>user_db</provider>
             </provider>
