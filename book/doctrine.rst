@@ -37,7 +37,7 @@ persist it to the database and fetch it back out.
     
     .. code-block:: bash
     
-        ./app/console generate:bundle --namespace=Acme/StoreBundle
+        php app/console generate:bundle --namespace=Acme/StoreBundle
 
 Configuring the Database
 ~~~~~~~~~~~~~~~~~~~~~~~~
