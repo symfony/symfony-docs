@@ -221,7 +221,7 @@ is:
 
 .. note::
 
-    Once you have dumped the output this you will need to run the console
+    Once you have dumped the output you will need to run the console
     command again to see any new changes. If you run it on your development
     server you will need to remove the files in order to start letting Assetic
     process the assets on the fly again.
