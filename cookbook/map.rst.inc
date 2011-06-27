@@ -6,6 +6,7 @@
 * **Routing**
 
   * :doc:`/cookbook/routing/scheme`
+  * :doc:`/cookbook/routing/slash_in_parameter`
 
 * **Templating and Assets**
 

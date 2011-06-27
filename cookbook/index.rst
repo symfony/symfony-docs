@@ -8,6 +8,7 @@ Cookbook
     controller/service
     
     routing/scheme
+    routing/slash_in_parameter
     
     assetic/yuicompressor
     templating/PHP

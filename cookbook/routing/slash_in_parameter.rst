@@ -1,20 +1,25 @@
 .. index::
    single: Routing; Allow / in route parameter
 
-How to allow / character in a route parameter
-=============================================
+How to allow a "/" character in a route parameter
+=================================================
 
 Sometimes, you need to compose URLs with parameters that can contain a slash 
-``/``. But Symfony uses this character as separator between route parts.
+``/``. For example, take the classic ``/hello/{name}`` route. By default,
+``/hello/Fabien`` will match this route but not ``/hello/Fabien/Kris``. This
+is because Symfony uses this character as separator between route parts.
 
-Configure the route
+This guide covers how you can modify a route so that ``/hello/Fabien/Kris``
+matches the ``/hello/{name}`` route, where ``{name}`` equals ``Fabien/Kris``.
+
+Configure the Route
 -------------------
 
 By default, the symfony routing components requires that the parameters 
 match the following regex pattern: ``[^/]+``. This means that all characters 
-are allowed excepted ``/``. 
+are allowed except ``/``. 
 
-You must explicitely allow ``/`` to be part of your parameter specifying 
+You must explicitly allow ``/`` to be part of your parameter by specifying 
 a more permissive regex pattern.
 
 .. configuration-block::
@@ -55,7 +60,7 @@ a more permissive regex pattern.
 
         return $collection;
 
-    .. code-block:: annotation
+    .. code-block:: php-annotations
 
         use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 
@@ -69,3 +74,5 @@ a more permissive regex pattern.
                 // ...
             }
         }
+
+That's it! Now, the ``{name}`` parameter can contain the ``/`` character.
