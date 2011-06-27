@@ -737,7 +737,7 @@ format you prefer:
             <framework:templating assets-version="SomeVersionScheme">
                 <framework:engine id="twig" />
             </framework:templating>
-            <framework:session default-locale="%lcoale%" auto-start="true" />
+            <framework:session default-locale="%locale%" auto-start="true" />
         </framework:config>
 
         <!-- Twig Configuration -->
