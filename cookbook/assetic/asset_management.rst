@@ -1,15 +1,18 @@
 How to Use Assetic for Asset Management
 =======================================
 
-Assetic is an asset management library which is packaged with the standard
-Symfony2 distribution, it has a bundle to allow it to be easily used
-in Symfony2 directly from Twig or PHP templates. It works with assets and
-filters. The assets are files such as CSS, JavaScript and images files.
-There are various filters that can be applied to these files before they
-are served to the browser. This allows a separation between the asset files
-stored in the application and the files actually presented to the user.
-Without using Assetic or another asset manager you are just directly serving
-up the files that are stored in the application:
+Assetic is a powerful asset management library which is packaged with the
+Symfony2 Standard Edition and can be easily used in Symfony2 directly from
+Twig or PHP templates.
+
+Assetic combines two major ideas: assets and filters. The assets are files
+such as CSS, JavaScript and images files. The filters are things that can
+be applied to these files before they are served to the browser. This allows
+a separation between the asset files stored in the application and the files
+actually presented to the user.
+
+Without Assetic, you just serve the files that are stored in the application
+directly:
 
 .. configuration-block::
 
@@ -22,12 +25,22 @@ up the files that are stored in the application:
         <script src="<?php echo $view['assets']->getUrl('js/script.js') ?>"
                 type="text/javascript" />
 
+But *with* Assetic, you can manipulate these assets however you want (or
+load them from anywhere) before serving them. These means you can:
+
+* Minify and combine all of your CSS and JS files
+
+* Run all (or just some) of your CSS or JS files through some sort of compiler,
+  such as LESS, SASS or CoffeeScript
+
+* Run image optimizations on your images
+
 Assets
 ------
 
 Using Assetic provides many advantages over directly serving the files.
 The files do not need to be stored where they are served from and can be
-drawn from various sources such as within a bundle:
+drawn from various sources such as from within a bundle:
 
 .. configuration-block::
 
@@ -35,15 +48,21 @@ drawn from various sources such as within a bundle:
 
         {% javascripts '@AcmeFooBundle/Resources/public/js/*'
         %}
-        <script src="{{ asset_url }}"></script>
+        <script type="text/javascript" src="{{ asset_url }}"></script>
         {% endjavascripts %}
 
     .. code-block:: html+php
 
         <?php foreach ($view['assetic']->javascripts(
             array('@AcmeFooBundle/Resources/public/js/*')) as $url): ?>
-        <script src="<?php echo $view->escape($url) ?>"></script>
+        <script type="text/javascript" src="<?php echo $view->escape($url) ?>"></script>
         <?php endforeach; ?>
+
+In this example, all of the files in the ``Resources/public/js/`` directory
+of the ``AcmeFooBundle`` will be loaded and served from a different location.
+The actual rendered tag might simply look like:
+
+    <script src="/js/abcd123.js"></script>
 
 You can also combine several files into one. This helps to reduce the number
 of HTTP requests which is good for front end performance, as most browsers
@@ -72,7 +91,6 @@ but still serve them as a single file:
                   '@AcmeBarBundle/Resources/public/js/calendar.js')) as $url): ?>
         <script src="<?php echo $view->escape($url) ?>"></script>
         <?php endforeach; ?>
-
 
 This does not only apply to your own files you can also use Assetic to
 combine third party assets, such as jQuery with your own into a single file:

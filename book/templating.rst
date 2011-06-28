@@ -798,7 +798,7 @@ advantage of Symfony's template inheritance.
     and Javascript assets in Symfony. Symfony also packages another library,
     called assetic, which follows this philosophy but allows you to do much
     more interesting things with those assets. For more information on 
-    using assetic see :doc:`/cookbook/assetic/yuicompressor`.
+    using assetic see :doc:`/cookbook/assetic/asset_management`.
 
 
 Start by adding two blocks to your base template that will hold your assets:

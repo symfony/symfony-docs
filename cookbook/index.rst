@@ -9,9 +9,9 @@ Cookbook
     
     routing/scheme
     routing/slash_in_parameter
-    
+
+    assetic/asset_management
     assetic/yuicompressor
-    templating/PHP
 
     doctrine/doctrine_fixtures
     doctrine/mongodb
@@ -57,6 +57,8 @@ Cookbook
     security/custom_authentication_provider
 
     cache/varnish
+
+    templating/PHP
 
     tools/autoloader
     tools/finder

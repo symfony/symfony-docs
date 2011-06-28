@@ -8,10 +8,10 @@
   * :doc:`/cookbook/routing/scheme`
   * :doc:`/cookbook/routing/slash_in_parameter`
 
-* **Templating and Assets**
+* **Handling JavaScript and CSS Assets**
 
+  * :doc:`/cookbook/assetic/asset_management`
   * :doc:`/cookbook/assetic/yuicompressor`
-  * :doc:`/cookbook/templating/PHP`
 
 * **Database Interaction (Doctrine)**
 
@@ -74,6 +74,10 @@
 * **Caching**
 
   * :doc:`/cookbook/cache/varnish`
+
+* **Templating**
+
+  * :doc:`/cookbook/templating/PHP`
 
 * **Tools, Logging and Internals**
 
