@@ -132,7 +132,7 @@ be specified in YAML, XML or PHP:
 
     When Symfony2 initializes, it builds the service container using the
     application configuration (``app/config/config.yml`` by default). The
-    exact file that's loaded is dictated by the ``AppKernel::loadConfig()``
+    exact file that's loaded is dictated by the ``AppKernel::registerContainerConfiguration()``
     method, which loads an environment-specific configuration file (e.g.
     ``config_dev.yml`` for the ``dev`` environment or ``config_prod.yml``
     for ``prod``).
