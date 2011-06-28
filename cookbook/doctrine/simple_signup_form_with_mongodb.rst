@@ -15,10 +15,11 @@ actually stores the account information. We'll use MongoDB for storing the data.
 The simple User model
 ---------------------
 
-So, in this tutorial we begin with the model for the ``User``::
+So, in this tutorial we begin with the model for a ``User`` document::
 
     // src/Acme/AccountBundle/Document/User.php
     namespace Acme\AccountBundle\Document;
+
     use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
     use Symfony\Component\Validator\Constraints as Assert;
     use Symfony\Bundle\DoctrineMongoDBBundle\Validator\Constraints\Unique as MongoDBUnique;
@@ -80,14 +81,14 @@ on the database, so we've added this validation at the top of the class.
 
 .. note::
 
-    If you want to integrate this User entity with the security system, 
-    you need to implement the UserInterface of security component 
-    :doc:`file</book/security>`.
+    If you want to integrate this User within the security system,you need
+    to implement the :ref:`UserInterface<book-security-user-entity>` of the
+    security component .
 
-Create form for the model
--------------------------
+Create a Form for the Model
+---------------------------
 
-Now, you need to create form for this ``User`` model::
+Next, create the form for the ``User`` model::
 
     // src/Acme/AccountBundle/Form/UserType.php
     namespace Acme\AccountBundle\Form; 
@@ -115,31 +116,33 @@ Now, you need to create form for this ``User`` model::
     }
 
 We just added two fields: email and password (repeated to confirm the entered 
-password). The ``data_class`` option tells the form the name of data class and 
-this is your ``User`` document and the form is able to create the data model. 
+password). The ``data_class`` option tells the form the name of data class
+(i.e. your ``User`` document).
 
 .. tip::
 
-    To explore more things about form component, 
-    read this documentation :doc:`file</book/forms>`. 
+    To explore more things about form component, read this documentation :doc:`file</book/forms>`. 
 
-Embedding User form into Signup form
-------------------------------------
+Embedding the User form into a Registration Form
+------------------------------------------------
 
-The form for sign up is not the same as the form for User. 
-It contains further fields like accepting the terms which value is not needed 
-to be stored into database. So, now we need to create own form for this purpose 
-and embed the existing ``User`` form. For validation and creation of User 
-data we need simple domain model for the sign up form::
+The form that you'll use for the registration page is not the same as the
+form for used to simply modify the ``User`` (i.e. ``UserType). The registration
+form will contain further fields like "accept the terms", whose value is
+won't be stored into database.
 
-    // src/Acme/AccountBundle/Form/Signup.php
+In other words, create a second form for registration, which embeds the ``User``
+form and adds the extra field needed. Start by creating a simple class which
+represents the "registration"
+
+    // src/Acme/AccountBundle/Form/Registration.php
     namespace Acme\AccountBundle\Form;
 
     use Symfony\Component\Validator\Constraints as Assert;
 
     use Acme\AccountBundle\Document\User;
 
-    class Signup
+    class Registration
     {    
         /**
          * @Assert\Type(type="Acme\AccountBundle\Document\User")
@@ -173,16 +176,16 @@ data we need simple domain model for the sign up form::
         }
     }
 
-And the form for this ``Signup`` model::
+Next, create the form for this ``Registration`` model::
 
-    // src/Acme/AccountBundle/Form/SignupType.php
+    // src/Acme/AccountBundle/Form/RegistrationType.php
     namespace Acme\AccountBundle\Form; 
 
     use Symfony\Component\Form\AbstractType;
     use Symfony\Component\Form\Extension\Core\Type\RepeatedType; 
     use Symfony\Component\Form\FormBuilder; 
 
-    class SignupType extends AbstractType
+    class RegistrationType extends AbstractType
     {
         public function buildForm(FormBuilder $builder, array $options)
         {
@@ -191,16 +194,18 @@ And the form for this ``Signup`` model::
         }
     }
 
-We added two fields into the form. You don't need to use special method 
-for embedding form. A form is a field, too - so you can add this like the fields, 
-with the expectation that you need to instance the class ``UserType``.
+You don't need to use special method for embedding the ``UserType`` form.
+A form is a field, too - so you can add this like any other field, with the
+expectation that the corresponding ``user`` property will hold an instance
+of the class ``UserType``.
 
 Handling the Form Submission
 ----------------------------
 
-Now we need controller to handle the form actions, first we create 
-simple controller for displaying the sign up form::
+Next, you need a controller to handle the form. Start by creating a simple
+controller for displaying the registration form::
 
+    // src/Acme/AccountBundle/Controller/AccountController.php
     namespace Acme\AccountBundle\Controller;
 
     use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -210,15 +215,17 @@ simple controller for displaying the sign up form::
 
     class AccountController extends Controller
     {
-        public function signupAction()
+        public function registerAction()
         {
-            $form = $this->createForm(new Form\SignupType(), new Form\Signup());
+            $form = $this->createForm(new Form\RegistrationType(), new Form\Registration());
         
-            return $this->render('AcmeAccountBundle:Account:signup.html.twig', array('form' => $form->createView()));
+            return $this->render('AcmeAccountBundle:Account:register.html.twig', array('form' => $form->createView()));
         }
     }
 
 and it's template:: 
+
+    {# src/Acme/AccountBundle/Resources/views/Account/register.html.twig #}
 
     <form action="{{ path('create')}}" method="post" {{ form_enctype(form) }}>
         {{ form_widget(form) }}
@@ -226,25 +233,28 @@ and it's template::
         <input type="submit" />
     </form>        
 
-At least we need the controller which handles the form submission. 
-This performs the validation and saves the data into the database::
+Finally, create the controller which handles the form submission.  This performs
+the validation and saves the data into MongoDB::
 
     public function createAction()
     {
         $dm = $this->get('doctrine.odm.mongodb.default_document_manager');
     
-        $form = $this->createForm(new Form\SignupType(), new Form\Signup());
+        $form = $this->createForm(new Form\RegistrationType(), new Form\Registration());
     
         $form->bindRequest($this->get('request')); 
     
         if ($form->isValid()) {
-            $signup = $form->getData();
+            $registration = $form->getData();
         
-            $dm->persist($signup->getUser()); 
+            $dm->persist($registration->getUser()); 
             $dm->flush();
         
-            return $this->redirect($this->generateUrl('welcome', array('id' => $signup->getUser()->getId())));
+            return $this->redirect(...);
         }
     
-        return $this->render('AcmeAccountBundle:Account:signup.html.twig', array('form' => $form->createView()));
+        return $this->render('AcmeAccountBundle:Account:register.html.twig', array('form' => $form->createView()));
     }
+
+That's it! Your form now validates, and allows you to save the ``User``
+object to MongoDB.

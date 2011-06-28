@@ -879,6 +879,8 @@ by Symfony (:class:`Symfony\\Component\\Security\\Core\\User\\User`).
 For smaller sites, this method is quick and easy to setup. For more complex
 systems, you'll want to load your users from the database.
 
+.. _book-security-user-entity:
+
 Loading Users from the Database
 ...............................
 
