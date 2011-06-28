@@ -1,15 +1,16 @@
 How to customize Form Rendering
 ===============================
 
-Symfony gives you a wide variety of ways to customize the form rendering. In this
-guide, you'll learn how to customize every possible part of your form with as
-little effort as possible whether you use Twig or PHP as the templating engine.
+Symfony gives you a wide variety of ways to customize how a form is rendered.
+In this guide, you'll learn how to customize every possible part of your
+form with as little effort as possible whether you use Twig or PHP as your
+templating engine.
 
 Form Rendering Basics
 ---------------------
 
 Recall that the label, error and HTML widget of a form field can easily
-be rendered by using the ``form_row`` Twig function or the ``row`` helper
+be rendered by using the ``form_row`` Twig function or the ``row`` PHP helper
 method:
 
 .. code-block:: jinja
@@ -70,18 +71,23 @@ rendering in general, see :ref:`form-rendering-template`.
 What are Form Themes?
 ---------------------
 
-Symfony uses fragments which are markup templates for each and every part of a
-form - field labels, errors, ``input`` text fields, ``select`` tags, etc - when
-rendering a form.
+Symfony uses form fragments - a small piece of a template that renders just
+one part of a form - to render every part of a form - - field labels, errors,
+``input`` text fields, ``select`` tags, etc
 
 The fragments are defined as blocks in Twig and as template files in PHP.
 
-A theme is no more than a set of fragments to use when rendering a form. Symfony
-comes with a default theme (`form_div_layout.html.twig`_ in Twig and ``FrameworkBundle:Form``
-in PHP).
+A *theme* is nothing more than a set of fragments that you want to use when
+rendering a form. In other words, if you want to customize one portion of
+how a form is rendered, you'll import a *theme* which contains a customization
+of the appropriate form fragments.
 
-In the next section you will learn how to customize a theme by overriding some or
-all of the fragments in a base theme.
+Symfony comes with a default theme (`form_div_layout.html.twig`_ in Twig and
+``FrameworkBundle:Form`` in PHP) that defines each and every fragment needed
+to render every part of a form.
+
+In the next section you will learn how to customize a theme by overriding
+some or all of its fragments.
 
 For example, when the widget of a ``integer`` type field is rendered, an ``input``
 ``number`` field is generated
@@ -146,7 +152,7 @@ As you can see, this fragment itself renders another fragment - ``field_widget``
 
 The point is, the fragments dictate the HTML output of each part of a form. To
 customize the form output, you just need to identify and override the correct
-fragment. A set of these form fragment customizations is known as a from "theme".
+fragment. A set of these form fragment customizations is known as a form "theme".
 When rendering a form, you can choose which form theme(s) you want to apply.
 
 In Twig a theme is a single template file and the fragments are the blocks defined
@@ -281,7 +287,7 @@ block from the new template and the ``input`` tag will be wrapped in the
 Form Theming in PHP
 -------------------
 
-When using PHP as a templating engine the only method to customize a fragment
+When using PHP as a templating engine, the only method to customize a fragment
 is to create a new template file - this is similar to the second method used by
 Twig.
 
@@ -378,7 +384,7 @@ Making Application-wide Customizations
 --------------------------------------
 
 If you'd like a certain form customization to be global to your application,
-you can accomplish this by making the form customizations to an external
+you can accomplish this by making the form customizations in an external
 template and then importing it inside your application configuration:
 
 Twig
@@ -397,7 +403,6 @@ form is rendered.
         twig:
             form:
                 resources:
-                    - 'form_div_layout.html.twig'
                     - 'AcmeDemoBundle:Form:fields.html.twig'
             # ...
 
@@ -407,7 +412,6 @@ form is rendered.
 
         <twig:config ...>
                 <twig:form>
-                    <resource>form_div_layout.html.twig</resource>
                     <resource>AcmeDemoBundle:Form:fields.html.twig</resource>
                 </twig:form>
                 <!-- ... -->
@@ -419,7 +423,6 @@ form is rendered.
 
         $container->loadFromExtension('twig', array(
             'form' => array('resources' => array(
-                'form_div_layout.html.twig',
                 'AcmeDemoBundle:Form:fields.html.twig',
              ))
             // ...
@@ -489,7 +492,6 @@ form is rendered.
             templating:
                 form:
                     resources:
-                        - 'FrameworkBundle:Form'
                         - 'AcmeDemoBundle:Form'
             # ...
 
@@ -501,7 +503,6 @@ form is rendered.
         <framework:config ...>
             <framework:templating>
                 <framework:form>
-                    <resource>FrameworkBundle:Form</resource>
                     <resource>AcmeDemoBundle:Form</resource>
                 </framework:form>
             </framework:templating>
@@ -517,7 +518,6 @@ form is rendered.
         $container->loadFromExtension('framework', array(
             'templating' => array('form' =>
                 array('resources' => array(
-                    'FrameworkBundle:Form',
                     'AcmeDemoBundle:Form',
              )))
             // ...
@@ -614,6 +614,7 @@ Here, the ``_product_name_widget`` fragment defines the template to use for the
 field whose *id* is ``product_name`` (and name is ``product[name]``).
 
 .. tip::
+
    The ``product`` portion of the field is the form name, which may be set
    manually or generated automatically based on your form type name (e.g.
    ``ProductType`` equates to ``product``). If you're not sure what your
