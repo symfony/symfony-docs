@@ -632,7 +632,7 @@ could be used to render the message:
 
     .. code-block:: php
     
-        <?php if ($view['session']->hasFlash('notice') ?>
+        <?php if ($view['session']->hasFlash('notice')): ?>
             <div class="flash-notice">
                 <?php echo $view['session']->getFlash('notice') ?>
             </div>
