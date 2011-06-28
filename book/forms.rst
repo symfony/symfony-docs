@@ -143,7 +143,7 @@ helper functions:
 
     .. code-block:: html+php
 
-        <?php // src/Acme/StoreBundle/Resources/views/Default/index.html.php ?>
+        <!-- src/Acme/StoreBundle/Resources/views/Default/index.html.php -->
 
         <form action="<?php echo $view['router']->generate('store_product') ?>" method="post" <?php echo $view['form']->enctype($form) ?> >
             <?php echo $view['form']->widget($form) ?>
@@ -489,7 +489,7 @@ of code. Of course, you'll usually need much more flexibility when rendering:
 
     .. code-block:: html+php
 
-        <?php // src/Acme/StoreBundle/Resources/views/Default/index.html.php ?>
+        <!-- // src/Acme/StoreBundle/Resources/views/Default/index.html.php -->
 
         <form action="<?php echo $view['router']->generate('store_product') ?>" method="post" <?php echo $view['form']->enctype($form) ?>>
             <?php echo $view['form']->errors($form) ?>
@@ -901,12 +901,16 @@ how each form "row" renders, change the markup used to render errors, or
 even customize how a textarea tag should be rendered. Nothing is off-limits,
 and different customizations can be used in different places.
 
-Symfony uses templates to render each and every part of a form. In Twig,
-the different pieces of a form - a row, a textarea tag, errors - are represented
-by Twig "blocks". To customize any part of how a form renders, you just need
-to override the appropriate block.
+Symfony uses templates to render each and every part of a form which are called
+fragments - a row, a textarea tag, errors, etc.
 
-To understand how this works, let's customize the ``form_row`` output and
+In Twig, the fragments  are represented by Twig "blocks". To customize any part
+of how a form renders, you just need to override the appropriate block.
+
+In PHP, the fragments are individual template files. To customize any part of how
+a form renders, you just need to create a new template file.
+
+To understand how this works, let's customize the ``form_row`` fragment and
 add a class attribute to the ``div`` element that surrounds each row. To
 do this, create a new template file that will store the new markup:
 
@@ -929,50 +933,65 @@ do this, create a new template file that will store the new markup:
     .. code-block:: html+php
 
         <!-- src/Acme/StoreBundle/Resources/views/Form/field_row.html.php -->
+
         <div class="form_row">
             <?php echo $view['form']->label($form, $label) ?>
             <?php echo $view['form']->errors($form) ?>
             <?php echo $view['form']->widget($form, $parameters) ?>
         </div>
 
-The ``field_row`` block is the name of the block used when rendering most
-fields via the ``form_row`` function. To use the ``field_row`` block defined
-in this template, add the following to the top of the template that renders
-the form:
+The ``field_row`` fragment is used when rendering most fields via the ``form_row``
+function. To use the ``field_row`` fragment defined in this template, add the
+following to the top of the template that renders the form:
 
 .. configuration-block:: php
 
     .. code-block:: html+jinja
 
         {# src/Acme/StoreBundle/Resources/views/Default/index.html.twig #}
+
         {% form_theme form 'AcmeStoreBundle:Form:fields.html.twig' %}
 
         <form ...>
 
-The ``form_theme`` tag "imports" the blocks defined in the template and uses
+    .. code-block:: html+php
+
+        <!-- src/Acme/StoreBundle/Resources/views/Default/index.html.php -->
+
+        <?php $view['form']->setTheme($form, array('AcmeStoreBundle:Form')) ?>
+
+        <form ...>
+
+The ``form_theme`` tag "imports" the fragments defined in the theme and uses
 them when rendering the form. In other words, when ``form_row`` is called
-later in this template, it will use the ``field_row`` block from the
-``fields.html.twig`` template.
+later in this template, it will use the ``field_row`` block from your custom
+theme.
 
 To customize any portion of a form, you just need to override the appropriate
-block. Knowing exactly which block to override is the subject of the next
+fragment. Knowing exactly which block to override is the subject of the next
 section.
 
 In the following section, you'll learn more about how to customize different
-portions of a form. For a more extensive discussion, see :doc:`/cookbook/form/twig_form_customization`.
+portions of a form. For a more extensive discussion, see :doc:`/cookbook/form/form_customization`.
 
 .. _form-template-blocks:
 
 Form Template Blocks
 ~~~~~~~~~~~~~~~~~~~~
 
-Every part of a form that is rendered - HTML form elements, errors, labels, etc -
-is defined in a base template as individual Twig blocks. By default, every
-block needed is defined in the `form_div_layout.html.twig`_ file that lives inside
-the `Twig Bridge`_. Inside this file, you can see every block needed
-to render a form and every default field type.
+In Symfony, every fragment a form that is rendered - HTML form elements, errors,
+labels, etc - is defined in a base theme.
 
-Each block follows the same basic pattern and is broken up into two pieces,
+The fragments are defined as blocks in Twig and as template files in PHP.
+
+In Twig, every block needed is defined in the `form_div_layout.html.twig`_ file
+that lives inside the `Twig Bridge`_. Inside this file, you can see every block
+needed to render a form and every default field type.
+
+In PHP, the fragments are individual template files. By default they are located in
+the `FrameworkBundle/Resources/views/Form` folder.
+
+Each fragment name follows the same basic pattern and is broken up into two pieces,
 separated by a single underscore character (``_``). A few examples are:
 
 * ``field_row`` - used by ``form_row`` to render most fields;
@@ -980,7 +999,7 @@ separated by a single underscore character (``_``). A few examples are:
   type;
 * ``field_errors`` - used by ``form_errors`` to render errors for a field;
 
-Each block follows the same basic pattern: ``type_part``. The ``type`` portion
+Each fragment follows the same basic pattern: ``type_part``. The ``type`` portion
 corresponds to the field type being rendered (e.g. ``textarea`` or ``checkbox``)
 whereas the ``part`` portion corresponds to *what* is being rendered (e.g.
 ``label``, ``widget``). By default, there are exactly 7 possible parts of
@@ -1003,37 +1022,34 @@ a form that can be rendered:
 +-------------+--------------------------+------------------------------------------------------+
 
 By knowing the field type (e.g. ``textarea``) and which part you want to
-customize (e.g. ``widget``), you can construct the block name that needs
-to be overridden (e.g. ``textarea_widget``). The best way to customize the
-block is to copy it from `form_div_layout.html.twig`_ to a new template, customize
-it, and then use the ``form_theme`` tag as shown in the earlier example.
+customize (e.g. ``widget``), you can construct the fragment name that needs
+to be overridden (e.g. ``textarea_widget``).
 
 Form Type Block Inheritance
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-In some cases, the block you want to customize will appear to be missing.
-For example, if you look in the `form_div_layout.html.twig`_ file, you'll find
-no ``textarea_errors`` block. So how are the errors for a textarea field
-rendered?
+In some cases, the fragment you want to customize will appear to be missing.
+For example, there is no ``textarea_errors`` fragment in the default themes
+provided with Symfony. So how are the errors for a textarea field rendered?
 
-The answer is: via the ``field_errors`` block. When Symfony renders the errors
-for a textarea type, it looks first for a ``textarea_errors`` block before
-falling back to the ``field_errors`` block. Each field type has a *parent*
+The answer is: via the ``field_errors`` fragment. When Symfony renders the errors
+for a textarea type, it looks first for a ``textarea_errors`` fragment before
+falling back to the ``field_errors`` fragment. Each field type has a *parent*
 type (the parent type of ``textarea`` is ``field``), and Symfony uses the
-block for the parent type if the base block doesn't exist.
+fragment for the parent type if the base fragment doesn't exist.
 
 So, to override the errors for *only* ``textarea`` fields, copy the
-``field_errors`` block, rename it to ``textarea_errors`` and customize it. To
+``field_errors`` fragment, rename it to ``textarea_errors`` and customize it. To
 override the default error rendering for *all* fields, copy and customize the
-``field_errors`` block directly.
+``field_errors`` fragment directly.
 
 Global Form Theming
 ~~~~~~~~~~~~~~~~~~~
 
-So far, you've seen how you can use the ``form_theme`` Twig block in a template
-to import form customizations that will be used inside that template. You can
-also tell Symfony to automatically use certain form customizations for all
-templates in your application. To automatically include the customized blocks
+When using Twig, you've seen how you can use the ``form_theme`` Twig tag in a
+template to import form customizations that will be used inside that template.
+You can also tell Symfony to automatically use certain form customizations for
+all templates in your application. To automatically include the customized blocks
 from the ``fields.html.twig`` template created earlier, modify your application
 configuration file:
 
@@ -1042,6 +1058,7 @@ configuration file:
     .. code-block:: yaml
 
         # app/config/config.yml
+
         twig:
             form:
                 resources:
@@ -1052,6 +1069,7 @@ configuration file:
     .. code-block:: xml
 
         <!-- app/config/config.xml -->
+
         <twig:config ...>
                 <twig:form>
                     <resource>form_div_layout.html.twig</resource>
@@ -1063,6 +1081,7 @@ configuration file:
     .. code-block:: php
 
         // app/config/config.php
+
         $container->loadFromExtension('twig', array(
             'form' => array('resources' => array(
                 'form_div_layout.html.twig',
@@ -1074,7 +1093,13 @@ configuration file:
 Any blocks inside the ``fields.html.twig`` template are now used globally
 to define form output.
 
-.. sidebar::  Customizing Form Output all in a Single File
+.. note::
+
+    The `form_div_layout.html.twig`_ theme is automatically added as a default
+    when it is not provided in the list of resources. It would not have been
+    necessary to provide it in the examples above.
+
+.. sidebar::  Customizing Form Output all in a Single File in Twig
 
     You can also customize a form block right inside the template where that
     customization is needed :
@@ -1109,9 +1134,67 @@ to define form output.
 
         {% block text_widget %}
             <div class="text_widget">
-                <input type="text" {{ block('attributes') }} value="{{ value }}" />
+                <input type="text" {{ block('widget_attributes') }} value="{{ value }}" />
             </div>
         {% endblock %}
+
+When using PHP, you've seen how you can use the ``setTheme`` helper method in a
+template to import form customizations that will be used inside that template.
+You can also tell Symfony to automatically use certain form customizations for all
+templates in your application. To automatically include the customized templates
+from the `Acme/StoreBundle/Resources/views/Form` folder created earlier, modify
+your application configuration file:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # app/config/config.yml
+
+        framework:
+            templating:
+                form:
+                    resources:
+                        - 'FrameworkBundle:Form'
+                        - 'AcmeStoreBundle:Form'
+        # ...
+
+
+    .. code-block:: xml
+
+        <!-- app/config/config.xml -->
+
+        <framework:config ...>
+            <framework:templating>
+                <framework:form>
+                    <resource>FrameworkBundle:Form</resource>
+                    <resource>AcmeStoreBundle:Form</resource>
+                </framework:form>
+            </framework:templating>
+            <!-- ... -->
+        </framework:config>
+
+    .. code-block:: php
+
+        // app/config/config.php
+
+        $container->loadFromExtension('framework', array(
+            'templating' => array('form' =>
+                array('resources' => array(
+                    'FrameworkBundle:Form',
+                    'AcmeStoreBundle:Form',
+             )))
+            // ...
+        ));
+
+Any framents inside the `Acme/StoreBundle/Resources/views/Form` folder are now
+used globally to define form output.
+
+.. note::
+
+    The `FrameworkBundle:Form`_ theme is automatically added as a default when
+    it is not provided in the list of resources. It would not have been necessary
+    to provide it in the examples above.
 
 .. index::
    single: Forms; CSRF Protection
@@ -1189,9 +1272,10 @@ Learn more from the Cookbook
 * :doc:`/cookbook/doctrine/file_uploads`
 * :doc:`File Field Reference </reference/forms/types/file>`
 * :doc:`Creating Custom Field Types </cookbook/form/create_custom_field_type>`
-* :doc:`/cookbook/form/twig_form_customization`
+* :doc:`/cookbook/form/form_customization`
 
 .. _`Symfony2 Form Component`: https://github.com/symfony/Form
 .. _`Twig Bridge`: https://github.com/symfony/symfony/tree/master/src/Symfony/Bridge/Twig
 .. _`form_div_layout.html.twig`: https://github.com/symfony/symfony/blob/master/src/Symfony/Bridge/Twig/Resources/views/Form/form_div_layout.html.twig
+.. _`FrameworkBundle:Form`: https://github.com/symfony/symfony/tree/master/src/Symfony/Bundle/FrameworkBundle/Resources/views/Form
 .. _`Cross-site request forgery`: http://en.wikipedia.org/wiki/Cross-site_request_forgery

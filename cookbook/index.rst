@@ -6,7 +6,7 @@ Cookbook
 
     controller/error_pages
     controller/service
-    
+
     routing/scheme
     routing/slash_in_parameter
 
@@ -26,6 +26,7 @@ Cookbook
 
     form/twig_form_customization
     form/simple_signup_form_with_mongodb
+    form/form_customization
     form/create_custom_field_type
     validation/custom_constraint
 
@@ -70,7 +71,7 @@ Cookbook
     performance/autoloader
     performance/bootstrap_files
     performance/bytecodecache
-    
+
     event_dispatcher/class_extension
     event_dispatcher/method_behavior
     request/mime_type

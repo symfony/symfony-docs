@@ -16,7 +16,9 @@ label you want to display as the second argument.
 
     {{ form_label(form.name) }}
 
+    {# The two following syntaxes are equivalent #}
     {{ form_label(form.name, 'Your Name', { 'attr': {'class': 'foo'} }) }}
+    {{ form_label(form.name, null, { 'label': 'Your name', 'attr': {'class': 'foo'} }) }}
 
 form_errors(form.name)
 ----------------------
@@ -55,13 +57,11 @@ label, errors and widget.
 .. code-block:: jinja
 
     {# render a field row, but add a "foo" class to it #}
-    {{ form_widget(form.name, { 'attr': {'class': 'foo'} }) }}
+    {{ form_row(form.name, { 'label': 'foo' }) }}
 
-The second argument to ``form_row`` is an array of variables. The most
-common variable is ``attr``, which is an array of HTML attributes to apply
-to the HTML widget inside the row. In some cases, certain types also have
-other template-related options that can be passed. These are discussed on
-a type-by-type basis.
+The second argument to ``form_row`` is an array of variables. The templates
+provided in symfony only allow to override the label as shown in the example
+above.
 
 form_rest(form, variables)
 --------------------------

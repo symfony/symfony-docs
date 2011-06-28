@@ -77,6 +77,8 @@ Full Default Configuration
                     ssl:                  []
                 cache:                ~
                 engines:              # Required
+                form:
+                    resources:        [FrameworkBundle:Form]
 
                     # Example:
                     - twig
