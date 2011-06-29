@@ -6,11 +6,12 @@
 * **Routing**
 
   * :doc:`/cookbook/routing/scheme`
+  * :doc:`/cookbook/routing/slash_in_parameter`
 
-* **Templating and Assets**
+* **Handling JavaScript and CSS Assets**
 
+  * :doc:`/cookbook/assetic/asset_management`
   * :doc:`/cookbook/assetic/yuicompressor`
-  * :doc:`/cookbook/templating/PHP`
 
 * **Database Interaction (Doctrine)**
 
@@ -28,6 +29,8 @@
 * **Forms and Validation**
 
   * :doc:`/cookbook/form/twig_form_customization`
+  * :doc:`/cookbook/form/simple_signup_form_with_mongodb`
+  * :doc:`/cookbook/form/form_customization`
   * :doc:`/cookbook/form/create_custom_field_type`
   * :doc:`/cookbook/validation/custom_constraint`
   * (doctrine) :doc:`/cookbook/doctrine/file_uploads`
@@ -39,6 +42,11 @@
   * :doc:`/cookbook/service_container/factories`
   * :doc:`/cookbook/service_container/parentservices`
   * :doc:`/cookbook/configuration/pdo_session_storage`
+
+* **Bundles**
+
+  * :doc:`/cookbook/bundles/best_practices`
+  * :doc:`/cookbook/bundles/inheritance`
   * :doc:`/cookbook/bundles/extension`
 
 * **Emailing**
@@ -63,10 +71,15 @@
   * :doc:`/cookbook/security/securing_services`
   * :doc:`/cookbook/security/entity_provider`
   * :doc:`/cookbook/security/custom_provider`
+  * :doc:`/cookbook/security/custom_authentication_provider`
 
 * **Caching**
 
   * :doc:`/cookbook/cache/varnish`
+
+* **Templating**
+
+  * :doc:`/cookbook/templating/PHP`
 
 * **Tools, Logging and Internals**
 
@@ -75,6 +88,12 @@
   * :doc:`/cookbook/console`
   * :doc:`/cookbook/debugging`
   * :doc:`/cookbook/logging/monolog`
+
+* **Performance**
+
+  * :doc:`/cookbook/performance/autoloader`
+  * :doc:`/cookbook/performance/bootstrap_files`
+  * :doc:`/cookbook/performance/bytecodecache`
 
 * **Extending Symfony**
 

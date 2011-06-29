@@ -5,6 +5,7 @@ Reference Documents
     :hidden:
 
     configuration/framework
+    configuration/assetic
     configuration/doctrine
     configuration/security
     configuration/swiftmailer
@@ -22,4 +23,4 @@ Reference Documents
     requirements
     model
 
-.. include:: map.rst.inc
+.. include:: /reference/map.rst.inc

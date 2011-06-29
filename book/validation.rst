@@ -25,7 +25,9 @@ your application:
 
 .. code-block:: php
 
-    // Acme/BlogBundle/Author.php
+    // src/Acme/BlogBundle/Entity/Author.php
+    namespace Acme\BlogBundle\Entity;
+    
     class Author
     {
         public $name;
@@ -33,26 +35,28 @@ your application:
 
 So far, this is just an ordinary class that serves some purpose inside your
 application. The goal of validation is to tell you whether or not the data
-of an object is valid. For this to work, you need to configure a list of
-rules (called :ref:`constraints<validation-constraints>`) that the object
-must follow in order to be valid. These rules can be specified via a number
-of different formats (YAML, XML, annotations, or PHP). To guarantee that
-the ``$name`` property is not empty, add the following:
+of an object is valid. For this to work, you'll configure a list of rules
+(called :ref:`constraints<validation-constraints>`) that the object must
+follow in order to be valid. These rules can be specified via a number of
+different formats (YAML, XML, annotations, or PHP).
+
+For example, to guarantee that the ``$name`` property is not empty, add the
+following:
 
 .. configuration-block::
 
     .. code-block:: yaml
 
-        # Acme/BlogBundle/Resources/config/validation.yml
-        Acme\BlogBundle\Author:
+        # src/Acme/BlogBundle/Resources/config/validation.yml
+        Acme\BlogBundle\Entity\Author:
             properties:
                 name:
                     - NotBlank: ~
 
     .. code-block:: xml
 
-        <!-- Acme/BlogBundle/Resources/config/validation.xml -->
-        <class name="Acme\BlogBundle\Author">
+        <!-- src/Acme/BlogBundle/Resources/config/validation.xml -->
+        <class name="Acme\BlogBundle\Entity\Author">
             <property name="name">
                 <constraint name="NotBlank" />
             </property>
@@ -60,7 +64,7 @@ the ``$name`` property is not empty, add the following:
 
     .. code-block:: php-annotations
 
-        // Acme/BlogBundle/Author.php
+        // src/Acme/BlogBundle/Entity/Author.php
         use Symfony\Component\Validator\Constraints as Assert;
 
         class Author
@@ -73,7 +77,8 @@ the ``$name`` property is not empty, add the following:
 
     .. code-block:: php
 
-        // Acme/BlogBundle/Author.php
+        // src/Acme/BlogBundle/Entity/Author.php
+
         use Symfony\Component\Validator\Mapping\ClassMetadata;
         use Symfony\Component\Validator\Constraints\NotBlank;
 
@@ -98,7 +103,7 @@ the ``$name`` property is not empty, add the following:
 Using the ``validator`` Service
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-To actually validate an ``Author`` object, use the ``validate`` method
+Next, to actually validate an ``Author`` object, use the ``validate`` method
 on the ``validator`` service (class :class:`Symfony\\Component\\Validator\\Validator`).
 The job of the ``validator`` is easy: to read the constraints (i.e. rules)
 of a class and verify whether or not the data on the object satisfies those
@@ -108,11 +113,12 @@ simple example from inside a controller:
 .. code-block:: php
 
     use Symfony\Component\HttpFoundation\Response;
+    use Acme\BlogBundle\Entity\Author;
     // ...
 
     public function indexAction()
     {
-        $author = new Acme\BlogBundle\Author();
+        $author = new Author();
         // ... do something to the $author object
 
         $validator = $this->get('validator');
@@ -136,13 +142,14 @@ message:
 If you insert a value into the ``name`` property, the happy success message
 will appear.
 
-Each validation error (called a "constraint violation"), is represented by
-a :class:`Symfony\\Component\\Validator\\ConstraintViolation` object, which
-holds a message describing the error. Moreover, the ``validate`` method returns
-a :class:`Symfony\\Component\\Validator\\ConstraintViolationList` object,
-which acts like an array. That's a long way of saying that you can use the
-errors returned by ``validate`` in more advanced ways. Start by rendering
-a template and passing in the ``$errorList`` variable:
+.. tip::
+
+    Most of the time, you won't interact directly with the ``validator``
+    service or need to worry about printing out the errors. Most of the time,
+    you'll use validation indirectly when handling submitted form data. For
+    more information, see the :ref:`book-validation-forms`.
+
+You could also pass the collection of errors into a template.
 
 .. code-block:: php
 
@@ -180,42 +187,68 @@ Inside the template, you can output the list of errors exactly as needed:
         <?php endforeach; ?>
         </ul>
 
+.. note::
+
+    Each validation error (called a "constraint violation"), is represented by
+    a :class:`Symfony\\Component\\Validator\\ConstraintViolation` object.
+
 .. index::
    single: Validation; Validation with forms
+
+.. _book-validation-forms:
 
 Validation and Forms
 ~~~~~~~~~~~~~~~~~~~~
 
 The ``validator`` service can be used at any time to validate any object.
 In reality, however, you'll usually work with the ``validator`` indirectly
-via the ``Form`` class. The ``Form`` class uses the ``validator`` service
+when working with forms. Symfony's form library uses the ``validator`` service
 internally to validate the underlying object after values have been submitted
 and bound. The constraint violations on the object are converted into ``FieldError``
-objects that can then be displayed with your form:
+objects that can easily be displayed with your form. The typical form submission
+workflow looks like the following from inside a controller::
 
-.. code-block:: php
+    use Acme\BlogBundle\Entity\Author;
+    use Acme\BlogBundle\Form\AuthorType;
+    use Symfony\Component\HttpFoundation\Request;
+    // ...
 
-    $author = new Acme\BlogBundle\Author();
-    $form = new Acme\BlogBundle\AuthorForm('author', $author, $this->get('validator'));
-    $form->bind($this->get('request')->request->get('customer'));
-
-    if ($form->isValid()) {
-        // process the Author object
-    } else {
-        // render the template with the errors
-        $this->render('BlogBundle:Author:form.html.twig', array('form' => $form));
+    public function updateAction(Request $request)
+    {
+        $author = new Acme\BlogBundle\Entity\Author();
+        $form = $this->createForm(new AuthorType(), $author);
+        
+        if ($request->getMethod() == 'POST') {
+            $form->bindRequest($request);
+            
+            if ($form->isValid()) {
+                // the validation passed, do something with the $author object
+                
+                $this->redirect($this->generateUrl('...'));
+            }
+        }
+        
+        return $this->render('BlogBundle:Author:form.html.twig', array(
+            'form' => $form->createView(),
+        ));
     }
+
+.. note::
+
+    This example uses an ``AuthorType`` form class, which is not shown here.
 
 For more information, see the :doc:`Forms</book/forms>` chapter.
 
 .. index::
    pair: Validation; Configuration
 
+.. _book-validation-configuration:
+
 Configuration
 -------------
 
-To use the Symfony2 validator, ensure that it's enabled in your application
-configuration:
+The Symfony2 validator is enabled by default, but you must explicitly enable
+annotations if you're using the annotation method to specify your constraints:
 
 .. configuration-block::
 
@@ -223,27 +256,21 @@ configuration:
 
         # app/config/config.yml
         framework:
-            validation: { enabled: true, enable_annotations: true }
+            validation: { enable_annotations: true }
 
     .. code-block:: xml
 
         <!-- app/config/config.xml -->
         <framework:config>
-            <framework:validation enabled="true" enable_annotations="true" />
+            <framework:validation enable_annotations="true" />
         </framework:config>
 
     .. code-block:: php
 
         // app/config/config.php
         $container->loadFromExtension('framework', array('validation' => array(
-            'enabled'     => true,
             'enable_annotations' => true,
         ));
-
-.. note::
-
-    The ``annotations`` configuration needs to be set to ``true`` only if
-    you're mapping constraints via annotations.
 
 .. index::
    single: Validation; Constraints
@@ -257,11 +284,11 @@ The ``validator`` is designed to validate objects against *constraints* (i.e.
 rules). In order to validate an object, simply map one or more constraints
 to its class and then pass it to the ``validator`` service.
 
-A constraint is simply a PHP object that makes an assertive statement. In
-real life, a constraint could be: "The cake must not be burned". In Symfony2,
-constraints are similar: they are assertions that a condition is true. Given
-a value, a constraint will tell you whether or not that value adheres to
-the rules of the constraint.
+Behind the scenes, a constraint is simply a PHP object that makes an assertive
+statement. In real life, a constraint could be: "The cake must not be burned".
+In Symfony2, constraints are similar: they are assertions that a condition
+is true. Given a value, a constraint will tell you whether or not that value
+adheres to the rules of the constraint.
 
 Supported Constraints
 ~~~~~~~~~~~~~~~~~~~~~
@@ -278,25 +305,24 @@ Constraint Configuration
 
 Some constraints, like :doc:`NotBlank</reference/constraints/NotBlank>`,
 are simple whereas others, like the :doc:`Choice</reference/constraints/Choice>`
-constraint, have several configuration options available. The available
-options are public properties on the constraint and each can be set by passing
-an options array to the constraint. Suppose that the ``Author`` class has
-another property, ``gender`` that can be set to either "male" or "female":
+constraint, have several configuration options available. Suppose that the
+``Author`` class has another property, ``gender`` that can be set to either
+"male" or "female":
 
 .. configuration-block::
 
     .. code-block:: yaml
 
-        # Acme/BlogBundle/Resources/config/validation.yml
-        Acme\BlogBundle\Author:
+        # src/Acme/BlogBundle/Resources/config/validation.yml
+        Acme\BlogBundle\Entity\Author:
             properties:
                 gender:
                     - Choice: { choices: [male, female], message: Choose a valid gender. }
 
     .. code-block:: xml
 
-        <!-- Acme/BlogBundle/Resources/config/validation.xml -->
-        <class name="Acme\BlogBundle\Author">
+        <!-- src/Acme/BlogBundle/Resources/config/validation.xml -->
+        <class name="Acme\BlogBundle\Entity\Author">
             <property name="gender">
                 <constraint name="Choice">
                     <option name="choices">
@@ -310,7 +336,7 @@ another property, ``gender`` that can be set to either "male" or "female":
 
     .. code-block:: php-annotations
 
-        // Acme/BlogBundle/Author.php
+        // src/Acme/BlogBundle/Entity/Author.php
         use Symfony\Component\Validator\Constraints as Assert;
 
         class Author
@@ -326,7 +352,7 @@ another property, ``gender`` that can be set to either "male" or "female":
 
     .. code-block:: php
 
-        // Acme/BlogBundle/Author.php
+        // src/Acme/BlogBundle/Entity/Author.php
         use Symfony\Component\Validator\Mapping\ClassMetadata;
         use Symfony\Component\Validator\Constraints\NotBlank;
 
@@ -343,25 +369,25 @@ another property, ``gender`` that can be set to either "male" or "female":
             }
         }
 
-The options of a constraint can always be passed in as an array. Some constraints
-also allow you to pass the value of one, "default", option to the constraint
-in place of the array. In the case of the ``Choice`` constraint, the ``choices``
+The options of a constraint can always be passed in as an array. Some constraints,
+however, also allow you to pass the value of one, "*default*", option in place
+of the array. In the case of the ``Choice`` constraint, the ``choices``
 options can be specified in this way.
 
 .. configuration-block::
 
     .. code-block:: yaml
 
-        # Acme/BlogBundle/Resources/config/validation.yml
-        Acme\BlogBundle\Author:
+        # src/Acme/BlogBundle/Resources/config/validation.yml
+        Acme\BlogBundle\Entity\Author:
             properties:
                 gender:
                     - Choice: [male, female]
 
     .. code-block:: xml
 
-        <!-- Acme/BlogBundle/Resources/config/validation.xml -->
-        <class name="Acme\BlogBundle\Author">
+        <!-- src/Acme/BlogBundle/Resources/config/validation.xml -->
+        <class name="Acme\BlogBundle\Entity\Author">
             <property name="gender">
                 <constraint name="Choice">
                     <value>male</value>
@@ -372,7 +398,7 @@ options can be specified in this way.
 
     .. code-block:: php-annotations
 
-        // Acme/BlogBundle/Author.php
+        // src/Acme/BlogBundle/Entity/Author.php
         use Symfony\Component\Validator\Constraints as Assert;
 
         class Author
@@ -385,7 +411,7 @@ options can be specified in this way.
 
     .. code-block:: php
 
-        // Acme/BlogBundle/Author.php
+        // src/Acme/BlogBundle/Entity/Author.php
         use Symfony\Component\Validator\Mapping\ClassMetadata;
         use Symfony\Component\Validator\Constraints\Choice;
 
@@ -399,10 +425,12 @@ options can be specified in this way.
             }
         }
 
-Be sure not to let the two different methods of specifying options confuse
-you. If you're unsure, either check the API documentation for the constraint
-or play it safe by always passing in an array of options (the first method
-shown above).
+This is purely meant to make the configuration of the most common option of
+a constraint shorter and quicker.
+
+If you're ever unsure of how to specify an option, either check the API documentation
+for the constraint or play it safe by always passing in an array of options
+(the first method shown above).
 
 .. index::
    single: Validation; Constraint targets
@@ -412,8 +440,9 @@ shown above).
 Constraint Targets
 ------------------
 
-Constraints can be applied to a class property or a public getter method
-(e.g. ``getFullName``).
+Constraints can be applied to a class property (e.g. ``name``) or a public
+getter method (e.g. ``getFullName``). The first is the most common and easy
+to use, but the second allows you to specify more complex validation rules.
 
 .. index::
    single: Validation; Property constraints
@@ -423,32 +452,25 @@ Properties
 
 Validating class properties is the most basic validation technique. Symfony2
 allows you to validate private, protected or public properties. The next
-listing shows you how to configure the properties ``$firstName`` and ``$lastName``
-of a class ``Author`` to have at least 3 characters.
+listing shows you how to configure the ``$firstName`` property of an ``Author``
+class to have at least 3 characters.
 
 .. configuration-block::
 
     .. code-block:: yaml
 
-        # Acme/BlogBundle/Resources/config/validation.yml
-        Acme\BlogBundle\Author:
+        # src/Acme/BlogBundle/Resources/config/validation.yml
+        Acme\BlogBundle\Entity\Author:
             properties:
                 firstName:
-                    - NotBlank: ~
-                    - MinLength: 3
-                lastName:
                     - NotBlank: ~
                     - MinLength: 3
 
     .. code-block:: xml
 
-        <!-- Acme/BlogBundle/Resources/config/validation.xml -->
-        <class name="Acme\BlogBundle\Author">
+        <!-- src/Acme/BlogBundle/Resources/config/validation.xml -->
+        <class name="Acme\BlogBundle\Entity\Author">
             <property name="firstName">
-                <constraint name="NotBlank" />
-                <constraint name="MinLength">3</constraint>
-            </property>
-            <property name="lastName">
                 <constraint name="NotBlank" />
                 <constraint name="MinLength">3</constraint>
             </property>
@@ -456,7 +478,7 @@ of a class ``Author`` to have at least 3 characters.
 
     .. code-block:: php-annotations
 
-        // Acme/BlogBundle/Author.php
+        // Acme/BlogBundle/Entity/Author.php
         use Symfony\Component\Validator\Constraints as Assert;
 
         class Author
@@ -466,17 +488,11 @@ of a class ``Author`` to have at least 3 characters.
              * @Assert\MinLength(3)
              */
             private $firstName;
-
-            /**
-             * @Assert\NotBlank()
-             * @Assert\MinLength(3)
-             */
-            private $lastName;
         }
 
     .. code-block:: php
 
-        // Acme/BlogBundle/Author.php
+        // src/Acme/BlogBundle/Entity/Author.php
         use Symfony\Component\Validator\Mapping\ClassMetadata;
         use Symfony\Component\Validator\Constraints\NotBlank;
         use Symfony\Component\Validator\Constraints\MinLength;
@@ -485,14 +501,10 @@ of a class ``Author`` to have at least 3 characters.
         {
             private $firstName;
 
-            private $lastName;
-
             public static function loadValidatorMetadata(ClassMetadata $metadata)
             {
                 $metadata->addPropertyConstraint('firstName', new NotBlank());
                 $metadata->addPropertyConstraint('firstName', new MinLength(3));
-                $metadata->addPropertyConstraint('lastName', new NotBlank());
-                $metadata->addPropertyConstraint('lastName', new MinLength(3));
             }
         }
 
@@ -508,44 +520,43 @@ allows you to add a constraint to any public method whose name starts with
 to as "getters".
 
 The benefit of this technique is that it allows you to validate your object
-dynamically. Depending on the state of your object, the method may return
-different values which are then validated.
-
-The next listing shows you how to use the :doc:`True</reference/constraints/True>`
-constraint to validate whether a dynamically generated token is correct:
+dynamically. For example, suppose you want to make sure that a password field
+doesn't match the first name of the user (for security reasons). You can
+do this by creating an ``isPasswordLegal`` method, and then asserting that
+this method must return ``true``:
 
 .. configuration-block::
 
     .. code-block:: yaml
 
-        # Acme/BlogBundle/Resources/config/validation.yml
-        Acme\BlogBundle\Author:
+        # src/Acme/BlogBundle/Resources/config/validation.yml
+        Acme\BlogBundle\Entity\Author:
             getters:
-                tokenValid:
-                    - True: { message: "The token is invalid" }
+                passwordLegal:
+                    - True: { message: "The password cannot match your first name" }
 
     .. code-block:: xml
 
-        <!-- Acme/BlogBundle/Resources/config/validation.xml -->
-        <class name="Acme\BlogBundle\Author">
-            <getter property="tokenValid">
+        <!-- src/Acme/BlogBundle/Resources/config/validation.xml -->
+        <class name="Acme\BlogBundle\Entity\Author">
+            <getter property="passwordLegal">
                 <constraint name="True">
-                    <option name="message">The token is invalid</option>
+                    <option name="message">The password cannot match your first name</option>
                 </constraint>
             </getter>
         </class>
 
     .. code-block:: php-annotations
 
-        // Acme/BlogBundle/Author.php
+        // src/Acme/BlogBundle/Entity/Author.php
         use Symfony\Component\Validator\Constraints as Assert;
 
         class Author
         {
             /**
-             * @Assert\True(message = "The token is invalid")
+             * @Assert\True(message = "The password cannot match your first name")
              */
-            public function isTokenValid()
+            public function isPasswordLegal()
             {
                 // return true or false
             }
@@ -553,28 +564,26 @@ constraint to validate whether a dynamically generated token is correct:
 
     .. code-block:: php
 
-        // Acme/BlogBundle/Author.php
+        // src/Acme/BlogBundle/Entity/Author.php
         use Symfony\Component\Validator\Mapping\ClassMetadata;
         use Symfony\Component\Validator\Constraints\True;
 
         class Author
         {
-
             public static function loadValidatorMetadata(ClassMetadata $metadata)
             {
-                $metadata->addGetterConstraint('tokenValid', new True(array(
-                    'message' => 'The token is invalid',
+                $metadata->addGetterConstraint('passwordLegal', new True(array(
+                    'message' => 'The password cannot match your first name',
                 )));
-            }
-
-            public function isTokenValid()
-            {
-                // return true or false
             }
         }
 
-The public ``isTokenValid`` method will perform any logic to determine if
-the internal token is valid and then return ``true`` or ``false``.
+Now, create the ``isPasswordLegal()`` method, and include the logic you need::
+
+    public function isPasswordLegal()
+    {
+        return ($this->firstName != $this->password);
+    }
 
 .. note::
 
@@ -582,6 +591,62 @@ the internal token is valid and then return ``true`` or ``false``.
     ("get" or "is") is omitted in the mapping. This allows you to move the
     constraint to a property with the same name later (or vice versa) without
     changing your validation logic.
+
+.. _book-validation-validation-groups:
+
+Validation Groups
+-----------------
+
+So far, you've been able to add constraints to a class and ask whether or
+not that class passes all of the defined constraints. In some cases, however,
+you'll need to validate an object against only *some* of the constraints
+on that class. To do this, you can organize each constraint into one or more
+"validation groups", and then apply validation against just one group of
+constraints.
+
+For example, suppose you have a ``User`` class, which is used both when a
+user registers and when a user updates his/her contact information later::
+
+    // src/Acme/BlogBundle/Entity/User.php
+    namespace Acme\BlogBundle\Entity;
+    
+    use Symfony\Component\Security\Core\User\UserInterface
+    use Symfony\Component\Validator\Constraints as Assert;
+    
+    class User implements UserInterface
+    {
+        /**
+        * @Assert\Email(groups={"registration"})
+        */
+        private $email;
+
+        /**
+        * @Assert\NotBlank(groups={"registration"})
+        * @Assert\MinLength(limit=7, groups={"registration"})
+        */
+        private $password;
+
+        /**
+        * @Assert\MinLength(2)
+        */
+        private $city;
+    }
+
+With this configuration, there are two validation groups:
+
+* ``Default`` - contains *all* of the constraints;
+
+* ``registration`` - contains the constraints on the ``email`` and ``password``
+  fields only.
+
+To tell the validator to use a specific group, pass one or more group names
+as the second argument to the ``validate()`` method::
+
+    $errorList = $validator->validate($author, array('registration'));
+
+Of course, you'll usually work with validation indirectly through the form
+library. For information on how to use validation groups inside forms, see
+:ref:`book-forms-validation-groups`.
 
 Final Thoughts
 --------------

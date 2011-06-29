@@ -165,12 +165,16 @@ fits most common needs:
                     admin: { password: adminpass, roles: [ 'ROLE_ADMIN' ] }
 
         firewalls:
+            dev:
+                pattern:  ^/(_(profiler|wdt)|css|images|js)/
+                security: false
+
             login:
-                pattern:  /demo/secured/login
+                pattern:  ^/demo/secured/login$
                 security: false
 
             secured_area:
-                pattern:    /demo/secured/.*
+                pattern:    ^/demo/secured/
                 form_login:
                     check_path: /demo/secured/login_check
                     login_path: /demo/secured/login
@@ -266,4 +270,4 @@ That's all there is to it, and I'm not even sure we have spent the full
 10 minutes. We briefly introduced bundles in the first part, and all the
 features we've learned about so far are part of the core framework bundle.
 But thanks to bundles, everything in Symfony2 can be extended or replaced.
-That's the topic of the next part of this tutorial.
+That's the topic of the :doc:`next part of this tutorial<the_architecture>`.

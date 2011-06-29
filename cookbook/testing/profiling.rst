@@ -19,7 +19,7 @@ check that the profiler is indeed available (it is enabled by default in the
     {
         public function testIndex()
         {
-            $client = $this->createClient();
+            $client = static::createClient();
             $crawler = $client->request('GET', '/hello/Fabien');
 
             // Write some assertions about the Response

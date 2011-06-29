@@ -4,8 +4,6 @@
 timezone Field Type
 ===================
 
-See :class:`Symfony\\Component\\Form\\Type\\TimezoneType`.
-
 The ``timezone`` type is a subset of the ``ChoiceType`` that allows the user
 to select from all possible timezones.
 

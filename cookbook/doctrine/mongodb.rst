@@ -34,15 +34,21 @@ of your project:
 
 .. code-block:: text
 
-    DoctrineMongoDBBundle   /bundles/Symfony/Bundle git://github.com/symfony/DoctrineMongoDBBundle.git
-    doctrine-mongodb-odm    /                       git://github.com/doctrine/mongodb-odm.git
-    doctrine-mongodb        /                       git://github.com/doctrine/mongodb.git
+    [doctrine-mongodb]
+        git=http://github.com/doctrine/mongodb.git
+
+    [doctrine-mongodb-odm]
+        git=http://github.com/doctrine/mongodb-odm.git
+
+    [DoctrineMongoDBBundle]
+        git=http://github.com/symfony/DoctrineMongoDBBundle.git
+        target=/bundles/Symfony/Bundle/DoctrineMongoDBBundle
 
 Now, update the vendor libraries by running:
 
 .. code-block:: bash
 
-    $ ./bin/vendors
+    $ php bin/vendors install
 
 Next, add the ``Doctrine\ODM\MongoDB`` and ``Doctrine\MongoDB`` namespaces
 to the ``app/autoload.php`` file so that these libraries can be autoloaded.
@@ -83,12 +89,15 @@ the MongoDB ODM across your application:
 
     # app/config/config.yml
     doctrine_mongodb:
+        connections:
+            default:
+                server: mongodb://localhost:27017
+                options:
+                    connect: true
+        default_database: test_database
         document_managers:
             default:
                 auto_mapping: true
-                database:     my_test_database
-        connections:
-            default:
 
 .. note::
 
@@ -106,22 +115,10 @@ documents to and from MongoDB.
 
     If you want to follow along with the example in this chapter, create
     an ``AcmeStoreBundle`` via:
-    
-    .. code-block:: bash
-    
-        php app/console init:bundle Acme/StoreBundle src/
 
-    Next, be sure that the new bundle is enabled in the kernel::
-    
-        // app/AppKernel.php
-        
-        public function registerBundles()
-        {
-            $bundles = array(
-                // ...
-                new Acme\StoreBundle\AcmeStoreBundle(),
-            );
-        }
+    .. code-block:: bash
+
+        php app/console generate:bundle --namespace=Acme/StoreBundle
 
 Creating a Document Class
 ~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -131,7 +128,7 @@ Without even thinking about Doctrine or MongoDB, you already know that you
 need a ``Product`` object to represent those products. Create this class
 inside the ``Document`` directory of your ``AcmeStoreBundle``::
 
-    // src/Acme/StoreBundle/Document/Product.php    
+    // src/Acme/StoreBundle/Document/Product.php
     namespace Acme\StoreBundle\Document;
 
     class Product
@@ -141,10 +138,10 @@ inside the ``Document`` directory of your ``AcmeStoreBundle``::
         protected $price;
     }
 
-The class - often called a "document", meaning *a basic class that holds data*
-- is simple and helps fulfill the business requirement of needing products
-in your application. This class can't be persisted to Doctrine MongoDB yet
-- it's just a simple PHP class.
+The class - often called a "document", meaning *a basic class that holds data* -
+is simple and helps fulfill the business requirement of needing products
+in your application. This class can't be persisted to Doctrine MongoDB yet -
+it's just a simple PHP class.
 
 Add Mapping Information
 ~~~~~~~~~~~~~~~~~~~~~~~
@@ -551,7 +548,7 @@ You can use this new method just like the default finder methods of the reposito
     $product = $this->get('doctrine.odm.mongodb.document_manager')
         ->getRepository('AcmeStoreBundle:Product')
         ->findAllOrderedByName();
-                
+
 
 .. note::
 
@@ -638,16 +635,16 @@ see Doctrine's `Event Documentation`_.
 In Symfony, you can register a listener or subscriber by creating a :term:`service`
 and then :ref:`tagging<book-service-container-tags>` it with a specific tag.
 
-* **event listener**: Use the ``doctrine.odm.mongodb.<connection>_event_listener``
+*   **event listener**: Use the ``doctrine.odm.mongodb.<connection>_event_listener``
     tag, where ``<connection>`` name is replaced by the name of your connection
     (usually ``default``). Also, be sure to add an ``event`` key to the tag
     specifying which event to listen to. Assuming your connection is called
     ``default``, then:
 
     .. configuration-block::
-    
+
         .. code-block:: yaml
-        
+
             services:
                 my_doctrine_listener:
                     class:   Acme\HelloBundle\Listener\MyDoctrineListener
@@ -656,7 +653,7 @@ and then :ref:`tagging<book-service-container-tags>` it with a specific tag.
                         -  { name: doctrine.odm.mongodb.default_event_listener, event: postPersist }
 
         .. code-block:: xml
-        
+
             <service id="my_doctrine_listener" class="Acme\HelloBundle\Listener\MyDoctrineListener">
                 <!-- ... -->
                 <tag name="doctrine.odm.mongodb.default_event_listener" event="postPersist" />
@@ -669,7 +666,7 @@ and then :ref:`tagging<book-service-container-tags>` it with a specific tag.
             $definition->addTag('doctrine.odm.mongodb.default_event_listener');
             $container->setDefinition('my_doctrine_listener', $definition);
 
-* **event subscriber**: Use the ``doctrine.odm.mongodb.<connection>_event_subscriber``
+*   **event subscriber**: Use the ``doctrine.odm.mongodb.<connection>_event_subscriber``
     tag. No other keys are needed in the tag.
 
 Summary

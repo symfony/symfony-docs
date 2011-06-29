@@ -18,9 +18,8 @@ Book
     security
     http_cache
     translation
-    bundles
     service_container
     internals
     stable_api
 
-.. include:: map.rst.inc
+.. include:: /book/map.rst.inc

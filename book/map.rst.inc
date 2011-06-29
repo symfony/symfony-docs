@@ -12,7 +12,6 @@
 * :doc:`/book/security`
 * :doc:`/book/http_cache`
 * :doc:`/book/translation`
-* :doc:`/book/bundles`
 * :doc:`/book/service_container`
 * :doc:`/book/internals`
 * :doc:`/book/stable_api`

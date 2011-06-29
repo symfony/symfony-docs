@@ -459,7 +459,7 @@ regardless of how your project is developed. To name a few:
 * `Form`_ - A full-featured and flexible framework for creating forms and
   handing form submissions;
 
-* `Validation`_ A system for creating rules about data and then validating
+* `Validator`_ A system for creating rules about data and then validating
   whether or not user-submitted data follows those rules;
 
 * `ClassLoader`_ An autoloading library that allows PHP classes to be used
@@ -509,7 +509,7 @@ sensible defaults. For more advanced users, the sky is the limit.
 .. _`HttpFoundation`: https://github.com/symfony/HttpFoundation
 .. _`Routing`: https://github.com/symfony/Routing
 .. _`Form`: https://github.com/symfony/Form
-.. _`Validation`: https://github.com/symfony/Validation
+.. _`Validator`: https://github.com/symfony/Validator
 .. _`ClassLoader`: https://github.com/symfony/ClassLoader
 .. _`Templating`: https://github.com/symfony/Templating
 .. _`Security`: https://github.com/symfony/Security

@@ -100,7 +100,7 @@ by default. You can even `add your own extensions`_ to Twig as needed.
 
 As you'll see throughout the documentation, Twig also supports functions
 and new functions can be easily added. For example, the following uses a
-standard ``if`` tag and the ``cycle`` function to print ten div tags, with
+standard ``for`` tag and the ``cycle`` function to print ten div tags, with
 alternating ``odd``, ``even`` classes:
 
 .. code-block:: html+jinja
@@ -212,12 +212,12 @@ First, build a base layout file:
         <html>
             <head>
                 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-                <title><?php echo $view['slots']->output('title', 'Test Application') ?></title>
+                <title><?php $view['slots']->output('title', 'Test Application') ?></title>
             </head>
             <body>
                 <div id="sidebar">
                     <?php if ($view['slots']->has('sidebar'): ?>
-                        <?php echo $view['slots']->output('sidebar') ?>
+                        <?php $view['slots']->output('sidebar') ?>
                     <?php else: ?>
                         <ul>
                             <li><a href="/">Home</a></li>
@@ -227,7 +227,7 @@ First, build a base layout file:
                 </div>
 
                 <div id="content">
-                    <?php echo $view['slots']->output('body') ?>
+                    <?php $view['slots']->output('body') ?>
                 </div>
             </body>
         </html>
@@ -364,7 +364,7 @@ By default, templates can live in two different locations:
 * ``app/Resources/views/`` The applications ``views`` directory can contain
   application-wide base templates (i.e. your application's layouts) as well as
   templates that override bundle templates (see
-  :ref:`overiding-bundle-templates`);
+  :ref:`overriding-bundle-templates`);
 
 * ``path/to/bundle/Resources/views/`` Each bundle houses its templates in its
   ``Resources/views`` directory (and subdirectories). The majority of templates
@@ -401,9 +401,9 @@ lives in a specific location:
   that the template is not located in any bundle, but instead in the root
   ``app/Resources/views/`` directory.
 
-In the :ref:`overiding-bundle-templates` section, you'll find out how each
+In the :ref:`overriding-bundle-templates` section, you'll find out how each
 template living inside the ``AcmeBlogBundle``, for example, can be overridden
-by placing a template of the same name in the ``app/Resources/AcmeBlog/views/``
+by placing a template of the same name in the ``app/Resources/AcmeBlogBundle/views/``
 directory. This gives the power to override templates from any vendor bundle.
 
 .. tip::
@@ -415,7 +415,7 @@ Template Suffix
 ~~~~~~~~~~~~~~~
 
 The **bundle**:**controller**:**template** format of each template specifies
-*where*  the template file is located. Every template name also has two extensions
+*where* the template file is located. Every template name also has two extensions
 that specify the *format* and *engine* for that template.
 
 * **AcmeBlogBundle:Blog:index.html.twig** - HTML format, Twig engine
@@ -650,21 +650,21 @@ configuration:
 
     .. code-block:: yaml
 
-        homepage:
+        _welcome:
             pattern:  /
-            defaults: { _controller: FrameworkBundle:Default:index }
+            defaults: { _controller: AcmeDemoBundle:Welcome:index }
 
     .. code-block:: xml
 
-        <route id="homepage" pattern="/">
-            <default key="_controller">FrameworkBundle:Default:index</default>
+        <route id="_welcome" pattern="/">
+            <default key="_controller">AcmeDemoBundle:Welcome:index</default>
         </route>
 
     .. code-block:: php
 
         $collection = new RouteCollection();
-        $collection->add('homepage', new Route('/', array(
-            '_controller' => 'FrameworkBundle:Default:index',
+        $collection->add('_welcome', new Route('/', array(
+            '_controller' => 'AcmeDemoBundle:Welcome:index',
         )));
 
         return $collection;
@@ -797,14 +797,16 @@ advantage of Symfony's template inheritance.
     This section will teach you the philosophy behind including stylesheet
     and Javascript assets in Symfony. Symfony also packages another library,
     called assetic, which follows this philosophy but allows you to do much
-    more interesting things with those assets.
+    more interesting things with those assets. For more information on 
+    using assetic see :doc:`/cookbook/assetic/asset_management`.
+
 
 Start by adding two blocks to your base template that will hold your assets:
 one called ``stylesheets`` inside the ``head`` tag and another called ``javascripts``
 just above the closing ``body`` tag. These blocks will contain all of the
-stylesheets and Javascripts that you'll need throughout your site::
+stylesheets and Javascripts that you'll need throughout your site:
 
-.. code-block:: html+twig
+.. code-block:: html+jinja
 
     {# 'app/Resources/views/base.html.twig' #}
     <html>
@@ -829,7 +831,7 @@ Javascript from a child template? For example, suppose you have a contact
 page and you need to include a ``contact.css`` stylesheet *just* on that
 page. From inside that contact page's template, do the following:
 
-.. code-block:: html+twig
+.. code-block:: html+jinja
 
     {# src/Acme/DemoBundle/Resources/views/Contact/contact.html.twig #}
     {# extends '::base.html.twig' #}
@@ -918,28 +920,21 @@ Several configuration options are available and are covered in the
 .. index::
     single; Template; Overriding templates
 
-.. _overiding-bundle-templates:
+.. _overriding-bundle-templates:
 
 Overriding Bundle Templates
 ---------------------------
 
-One of the best features of Symfony2 is a bundle system that encourages the
-organization of components in a way that makes them easy to reuse in other
-projects or distribute as open source libraries. In fact, the Symfony2 community
-prides itself on creating and maintaining high quality bundles for a large
-number of different features. To find out more about the open source bundles
-that are available, visit `Symfony2Bundles.org`_
-
-In Symfony2, almost every part of a bundle can be overridden so that you can
-use and customize it for your specific application. Templates are no exception.
+The Symfony2 community prides itself on creating and maintaining high quality
+bundles (see `Symfony2Bundles.org`_) for a large number of different features.
+Once you use a bundle a third-party bundle, you'll likely need to override
+and customize one or more of its templates.
 
 Suppose you've included the imaginary open-source ``AcmeBlogBundle`` in your
 project (e.g. in the ``src/Acme/BlogBundle`` directory). And while you're
 really happy with everything, you want to override the blog "list" page to
 customize the markup specifically for your application. By digging into the
-``Blog`` controller of the ``AcmeBlogBundle``, you find the following:
-
-.. code-block:: php
+``Blog`` controller of the ``AcmeBlogBundle``, you find the following::
 
     public function indexAction()
     {
@@ -948,25 +943,31 @@ customize the markup specifically for your application. By digging into the
         $this->render('AcmeBlogBundle:Blog:index.html.twig', array('blogs' => $blogs));
     }
 
-We learned in the :ref:`template-naming-locations` section that the template
-in question lives at ``Resources/views/Blog/index.html.twig`` inside the
-``AcmeBlogBundle`` bundle. To override the bundle template, copy the ``index.html.twig``
-template to ``app/Resources/AcmeBlogBundle/views/Blog/index.html.twig`` (the
-``AcmeBlogBundle`` directory might not exist). Now, when the
-``AcmeBlogBundle:Blog:index.html.twig`` template is rendered, Symfony2 will look
-first for the template at
-``app/Resources/AcmeBlogBundle/views/Blog/index.html.twig`` before looking
-at  ``src/Acme/BlogBundle/Resources/views/Blog/index.html.twig``. You're
-now free to customize the template for your application.
+When the ``AcmeBlogBundle:Blog:index.html.twig`` is rendered, Symfony2 actually
+looks in two different locations for the template:
 
-Suppose also that each template in ``AcmeBlogBundle`` inherits from a base
-template specific to the ``AcmeBlogBundle`` called
-``AcmeBlogBundle::layout.html.twig``. By default, this template lives at
-``Resources/views/layout.html.twig`` inside ``AcmeBlogBundle``. To override
-it, just copy it to ``app/Resources/AcmeBlogBundle/views/layout.html.twig``.
+#. ``app/Resources/AcmeBlogBundle/views/Blog/index.html.twig``
+#. ``src/Acme/BlogBundle/Resources/views/Blog/index.html.twig``
+
+To override the bundle template, just copy the ``index.html.twig`` template
+from the bundle to ``app/Resources/AcmeBlogBundle/views/Blog/index.html.twig``
+(the ``app/Resources/AcmeBlogBundle`` directory won't exist, so you'll need
+to create it). You're now free to customize the template.
+
+This logic also applies to base bundle templates. Suppose also that each
+template in ``AcmeBlogBundle`` inherits from a base template called
+``AcmeBlogBundle::layout.html.twig``. Just as before, Symfony2 will look in
+the following two places for the template:
+
+#. ``app/Resources/AcmeBlogBundle/views/layout.html.twig``
+#. ``src/Acme/BlogBundle/Resources/views/layout.html.twig``
+
+Once again, to override the template, just copy it from the bundle to
+``app/Resources/AcmeBlogBundle/views/layout.html.twig``. You're now free to
+customize this copy as you see fit.
 
 If you take a step back, you'll see that Symfony2 always starts by looking in
-the ``app/Resources/BUNDLE_NAME/views/`` directory for a template. If the
+the ``app/Resources/{BUNDLE_NAME}/views/`` directory for a template. If the
 template doesn't exist there, it continues by checking inside the
 ``Resources/views`` directory of the bundle itself. This means that all bundle
 templates can be overridden by placing them in the correct ``app/Resources``

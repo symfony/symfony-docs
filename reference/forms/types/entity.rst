@@ -27,7 +27,7 @@ objects from the database.
 +----------------------+------------------------------------------------------------------+
 | Parent type          | :doc:`choice</reference/forms/types/choice>`                     |
 +----------------------+------------------------------------------------------------------+
-| Class                | :class:`Symfony\Bridge\Doctrine\Form\Type\\EntityType`           |
+| Class                | :class:`Symfony\\Bridge\\Doctrine\\Form\\Type\\EntityType`       |
 +----------------------+------------------------------------------------------------------+
 
 Basic Usage
@@ -62,18 +62,22 @@ option. The easiest way to use the option is as follows::
         },
     ));
 
+.. include:: /reference/forms/types/options/select_how_rendered.rst.inc
+
+.. include:: /reference/forms/types/options/empty_value.rst.inc
+
 Options
 -------
 
-* ``class`` **required** [type: string]
+*   ``class`` **required** [type: string]
     The class of your entity (e.g. ``Acme\StoreBundle\Entity\Category``).
 
-* ``property`` [type: string]
+*   ``property`` [type: string]
     This is the property that should be used for displaying the entities
     as text in the HTML element. If left blank, the entity object will be
     cast into a string and so must have a ``__toString()`` method.
 
-* ``query_builder`` [type: ``Doctrine\ORM\QueryBuilder`` or a Closure]
+*   ``query_builder`` [type: ``Doctrine\ORM\QueryBuilder`` or a Closure]
     If specified, this is used to query the subset of options (and their
     order) that should be used for the field. The value of this option can
     either be a ``QueryBuilder`` object or a Closure. If using a Closure,

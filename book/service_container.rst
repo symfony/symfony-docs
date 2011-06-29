@@ -132,7 +132,7 @@ be specified in YAML, XML or PHP:
 
     When Symfony2 initializes, it builds the service container using the
     application configuration (``app/config/config.yml`` by default). The
-    exact file that's loaded is dictated by the ``AppKernel::loadConfig()``
+    exact file that's loaded is dictated by the ``AppKernel::registerContainerConfiguration()``
     method, which loads an environment-specific configuration file (e.g.
     ``config_dev.yml`` for the ``dev`` environment or ``config_prod.yml``
     for ``prod``).
@@ -651,7 +651,7 @@ Injecting the dependency by the setter method just needs a change of syntax:
         ));
 
 .. note::
-  
+
     The approaches presented in this section are called "constructor injection"
     and "setter injection". The Symfony2 service container also supports
     "property injection".
@@ -927,7 +927,7 @@ the service itself gets loaded. To do so, you can use the ``file`` directive.
     .. code-block:: xml
 
         <service id="foo" class="Acme\HelloBundle\Foo\Bar">
-            <file name="%kernel.root_dir%/src/path/to/file/foo.php" />
+            <file>%kernel.root_dir%/src/path/to/file/foo.php</file>
         </service>
 
     .. code-block:: php
@@ -989,7 +989,8 @@ additional arguments (beyond just the ``name`` parameter).
 * data_collector
 * form.field_factory.guesser
 * kernel.cache_warmer
-* kernel.listener
+* kernel.event_listener
+* monolog.logger
 * routing.loader
 * security.listener.factory
 * security.voter
@@ -997,7 +998,6 @@ additional arguments (beyond just the ``name`` parameter).
 * twig.extension
 * translation.loader
 * validator.constraint_validator
-* zend.logger.writer
 
 Learn more from the Cookbook
 ----------------------------

@@ -113,7 +113,7 @@ simple functional test for ``DemoController`` that reads as follows::
     {
         public function testIndex()
         {
-            $client = $this->createClient();
+            $client = static::createClient();
 
             $crawler = $client->request('GET', '/demo/hello/Fabien');
 
@@ -351,23 +351,29 @@ current request like this::
 
     $profile = $client->getProfile();
 
-Redirections
-~~~~~~~~~~~~
+Redirecting
+~~~~~~~~~~~
 
-By default, the Client follows HTTP redirects. But if you want to get the
-Response before the redirection and redirect yourself, calls the
+By default, the Client doesn't follow HTTP redirects, so that you can get
+and examine the Response before redirecting. Once you do want the client
+to redirect, call the ``followRedirect()`` method::
+
+    // do something that would cause a redirect to be issued (e.g. fill out a form)
+
+    // follow the redirect
+    $crawler = $client->followRedirect();
+
+If you want the Client to always automatically redirect, you can call the
 ``followRedirects()`` method::
 
-    $client->followRedirects(false);
+    $client->followRedirects();
 
     $crawler = $client->request('GET', '/');
 
-    // do something with the redirect response
+    // all redirects are followed
 
-    // follow the redirection manually
-    $crawler = $client->followRedirect();
-
-    $client->followRedirects(true);
+    // set Client back to manual redirection
+    $client->followRedirects(false);
 
 .. index::
    single: Tests; Crawler
@@ -722,7 +728,7 @@ You can also change the default environment (``test``) and override the
 default debug mode (``true``) by passing them as options to the
 ``createClient()`` method::
 
-    $client = $this->createClient(array(
+    $client = static::createClient(array(
         'environment' => 'my_test_env',
         'debug'       => false,
     ));
@@ -730,7 +736,7 @@ default debug mode (``true``) by passing them as options to the
 If your application behaves according to some HTTP headers, pass them as the
 second argument of ``createClient()``::
 
-    $client = $this->createClient(array(), array(
+    $client = static::createClient(array(), array(
         'HTTP_HOST'       => 'en.example.com',
         'HTTP_USER_AGENT' => 'MySuperBrowser/1.0',
     ));

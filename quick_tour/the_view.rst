@@ -21,15 +21,16 @@ Getting familiar with Twig
     `documentation`_. This section is just a quick overview of the main
     concepts.
 
-A Twig template is a text file that can generate any text-based format (HTML,
+A Twig template is a text file that can generate any type of content (HTML,
 XML, CSV, LaTeX, ...). Twig defines two kinds of delimiters:
 
-* ``{{ ... }}``: Outputs a variable or the result of an expression;
+* ``{{ ... }}``: Prints a variable or the result of an expression;
 
-* ``{% ... %}``: A tag that controls the logic of the template; it is used to
-  execute ``for`` loops or ``if`` statements for instance.
+* ``{% ... %}``: Controls the logic of the template; it is used to execute
+  ``for`` loops and ``if`` statements, for example.
 
-Below is a minimal template that illustrates a few basics:
+Below is a minimal template that illustrates a few basics, using two variables
+``page_title`` and ``navigation``, which would be passed into the template:
 
 .. code-block:: html+jinja
 
@@ -54,7 +55,7 @@ Below is a minimal template that illustrates a few basics:
 
    Comments can be included inside templates using the ``{# ... #}`` delimiter.
 
-To render a template, use the ``render`` method from within a controller
+To render a template in Symfony, use the ``render`` method from within a controller
 and pass it any variables needed in the template::
 
     $this->render('AcmeDemoBundle:Demo:hello.html.twig', array(
@@ -120,7 +121,7 @@ the ``extends`` tag:
 The ``AcmeDemoBundle::layout.html.twig`` notation sounds familiar, doesn't it?
 It is the same notation used to reference a regular template. The ``::`` part
 simply means that the controller element is empty, so the corresponding file
-is directly stored under ``views/``.
+is directly stored under the ``Resources/views/`` directory.
 
 Now, let's have a look at a simplified ``layout.html.twig``:
 
@@ -134,8 +135,11 @@ Now, let's have a look at a simplified ``layout.html.twig``:
 
 The ``{% block %}`` tags define blocks that child templates can fill in. All
 the block tag does is to tell the template engine that a child template may
-override those portions of the template. The ``hello.html.twig`` template
-overrides the ``content`` block.
+override those portions of the template.
+
+In this example, the ``hello.html.twig`` template overrides the ``content``
+block, meaning that the "Hello Fabien" text is rendered inside the ``div.symfony-content``
+element.
 
 Using Tags, Filters, and Functions
 ----------------------------------
@@ -268,7 +272,8 @@ Final Thoughts
 
 Twig is simple yet powerful. Thanks to layouts, blocks, templates and action
 inclusions, it is very easy to organize your templates in a logical and
-extensible way.
+extensible way. However, if you're not comfortable with Twig, you can always
+use PHP templates inside Symfony without any issues.
 
 You have only been working with Symfony2 for about 20 minutes, but you can
 already do pretty amazing stuff with it. That's the power of Symfony2. Learning
@@ -276,8 +281,8 @@ the basics is easy, and you will soon learn that this simplicity is hidden
 under a very flexible architecture.
 
 But I'm getting ahead of myself. First, you need to learn more about the controller
-and that's exactly the topic of the next part of this tutorial. Ready for
-another 10 minutes with Symfony2?
+and that's exactly the topic of the :doc:`next part of this tutorial<the_controller>`.
+Ready for another 10 minutes with Symfony2?
 
 .. _Twig:          http://www.twig-project.org/
 .. _documentation: http://www.twig-project.org/documentation

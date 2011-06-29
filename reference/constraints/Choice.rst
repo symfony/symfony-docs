@@ -24,12 +24,12 @@ a list of given choices.
 Available Options
 -----------------
 
-* ``choices`` (**default**) [type: array]
+*   ``choices`` (**default**) [type: array]
     A required option (unless ``callback`` is specified) - this is the array
     of options that should be considered in the valid set. The input value
     will be matched against this array.
 
-* ``callback``: [type: string|array]
+*   ``callback``: [type: string|array]
     This is a static callback method that can be used instead of the ``choices``
     option to return the choices array.
     
@@ -40,33 +40,33 @@ Available Options
     the normal callable syntax where the first argument is the class name
     and the second argument is the method name.
 
-* ``multiple``: [type: Boolean, default: false]
+*   ``multiple``: [type: Boolean, default: false]
     If this option is true, the input value is expected to be an array instead
     of a single, scalar value. The constraint will check that each value of
     the input array can be found in the array of valid choices. If even one
     of the input values cannot be found, the validation will fail.
 
-* ``min``: [type: integer]
+*   ``min``: [type: integer]
     If the ``multiple`` option is true, then you can use the ``min`` option
     to force at least XX number of values to be selected. For example, if
     ``min`` is 3, but the input array only contains 2 valid items, the
     validation will fail.
 
-* ``max``: [type: integer]
+*   ``max``: [type: integer]
     If the ``multiple`` option is true, then you can use the ``max`` option
     to force no more than XX number of values to be selected. For example, if
     ``max`` is 3, but the input array contains 4 valid items, the validation
     will fail.
 
-* ``message``: [type: string, default: `This value should be one of the given choices`]
+*   ``message``: [type: string, default: `This value should be one of the given choices`]
     This is the validation error message that's displayed when the input
     value is invalid.
 
-* ``minMessage``: [type: string, default: `You should select at least {{ limit }} choices`]
+*   ``minMessage``: [type: string, default: `You should select at least {{ limit }} choices`]
     This is the validation error message that's displayed when the user chooses
     too few options per the ``min`` option.
 
-* ``maxMessage``: [type: string, default: `You should select at most {{ limit }} choices`]
+*   ``maxMessage``: [type: string, default: `You should select at most {{ limit }} choices`]
     This is the validation error message that's displayed when the user chooses
     too many options per the ``max`` option.
 

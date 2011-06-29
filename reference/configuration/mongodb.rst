@@ -221,3 +221,59 @@ connection services::
 
     $dm1 = $container->get('doctrine.odm.mongodb.dm1_document_manager');
     $dm2 = $container->get('doctrine.odm.mongodb.dm2_document_manager');
+
+Full Default Configuration
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        doctrine_mongodb:
+            document_managers:
+
+                # Prototype
+                id:
+                    connection:           ~
+                    database:             ~
+                    logging:              true
+                    auto_mapping:         false
+                    metadata_cache_driver:
+                        type:                 ~
+                        class:                ~
+                        host:                 ~
+                        port:                 ~
+                        instance_class:       ~
+                    mappings:
+
+                        # Prototype
+                        name:
+                            mapping:              true
+                            type:                 ~
+                            dir:                  ~
+                            prefix:               ~
+                            alias:                ~
+                            is_bundle:            ~
+            connections:
+
+                # Prototype
+                id:
+                    server:               ~
+                    options:
+                        connect:              ~
+                        persist:              ~
+                        timeout:              ~
+                        replicaSet:           ~
+                        username:             ~
+                        password:             ~
+            proxy_namespace:      Proxies
+            proxy_dir:            %kernel.cache_dir%/doctrine/odm/mongodb/Proxies
+            auto_generate_proxy_classes:  false
+            hydrator_namespace:   Hydrators
+            hydrator_dir:         %kernel.cache_dir%/doctrine/odm/mongodb/Hydrators
+            auto_generate_hydrator_classes:  false
+            default_document_manager:  ~
+            default_connection:   ~
+            default_database:     default
+
+

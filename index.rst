@@ -26,7 +26,7 @@ Dive into Symfony2 with the topical guides:
 
     book/index
 
-.. include:: book/map.rst.inc
+.. include:: /book/map.rst.inc
 
 Cookbook
 --------
@@ -48,7 +48,19 @@ Get answers quickly with reference documents:
 
     reference/index
 
-.. include:: reference/map.rst.inc
+.. include:: /reference/map.rst.inc
+
+Bundles
+-------
+
+The Symfony Standard Edition comes with some bundles. Learn more about them:
+
+.. toctree::
+    :hidden:
+
+    bundles/index
+
+.. include:: /bundles/map.rst.inc
 
 Contributing
 ------------
@@ -60,4 +72,4 @@ Contribute to Symfony2:
 
     contributing/index
 
-.. include:: contributing/map.rst.inc
+.. include:: /contributing/map.rst.inc

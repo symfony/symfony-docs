@@ -6,11 +6,12 @@ Cookbook
 
     controller/error_pages
     controller/service
-    
+
     routing/scheme
-    
+    routing/slash_in_parameter
+
+    assetic/asset_management
     assetic/yuicompressor
-    templating/PHP
 
     doctrine/doctrine_fixtures
     doctrine/mongodb
@@ -24,6 +25,8 @@ Cookbook
     doctrine/custom_dql_functions
 
     form/twig_form_customization
+    form/simple_signup_form_with_mongodb
+    form/form_customization
     form/create_custom_field_type
     validation/custom_constraint
 
@@ -32,6 +35,9 @@ Cookbook
     service_container/factories
     service_container/parentservices
     configuration/pdo_session_storage
+
+    bundles/best_practices
+    bundles/inheritance
     bundles/extension
 
     email
@@ -50,15 +56,22 @@ Cookbook
     security/securing_services
     security/entity_provider
     security/custom_provider
+    security/custom_authentication_provider
 
     cache/varnish
+
+    templating/PHP
 
     tools/autoloader
     tools/finder
     console
     debugging
     logging/monolog
-    
+
+    performance/autoloader
+    performance/bootstrap_files
+    performance/bytecodecache
+
     event_dispatcher/class_extension
     event_dispatcher/method_behavior
     request/mime_type
@@ -66,4 +79,4 @@ Cookbook
 
     symfony1
 
-.. include:: map.rst.inc
+.. include:: /cookbook/map.rst.inc

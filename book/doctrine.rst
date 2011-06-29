@@ -37,19 +37,7 @@ persist it to the database and fetch it back out.
     
     .. code-block:: bash
     
-        php app/console init:bundle "Acme\StoreBundle" src/
-
-    Next, be sure that the new bundle is enabled in the kernel::
-    
-        // app/AppKernel.php
-        
-        public function registerBundles()
-        {
-            $bundles = array(
-                // ...
-                new Acme\StoreBundle\AcmeStoreBundle(),
-            );
-        }
+        php app/console generate:bundle --namespace=Acme/StoreBundle
 
 Configuring the Database
 ~~~~~~~~~~~~~~~~~~~~~~~~
@@ -117,8 +105,8 @@ inside the ``Entity`` directory of your ``AcmeStoreBundle``::
         protected $description;
     }
 
-The class - often called an "entity", meaning *a basic class that holds data*
-- is simple and helps fulfill the business requirement of needing products
+The class - often called an "entity", meaning *a basic class that holds data* -
+is simple and helps fulfill the business requirement of needing products
 in your application. This class can't be persisted to a database yet - it's
 just a simple PHP class.
 

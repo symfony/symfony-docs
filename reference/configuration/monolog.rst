@@ -10,23 +10,50 @@ Configuration Reference
 
         monolog:
             handlers:
+
+                # Examples:
                 syslog:
-                    type: stream
-                    path: /var/log/symfony.log
-                    level: error
-                    bubble: false
-                    formatter: my_formatter
+                    type:                stream
+                    path:                /var/log/symfony.log
+                    level:               ERROR
+                    bubble:              false
+                    formatter:           my_formatter
                     processors:
                         - some_callable
                 main:
-                    type: fingerscrossed
-                    action_level: warning
-                    buffer_size: 30
-                    handler: custom
+                    type:                fingerscrossed
+                    action_level:        WARNING
+                    buffer_size:         30
+                    handler:             custom
                 custom:
-                    type: service
-                    id: my_handler
+                    type:                service
+                    id:                  my_handler
+
+                # Prototype
+                name:
+                    type:                 ~ # Required
+                    id:                   ~
+                    priority:             0
+                    level:                DEBUG
+                    bubble:               true
+                    path:                 %kernel.logs_dir%/%kernel.environment%.log
+                    ident:                false
+                    facility:             user
+                    max_files:            0
+                    action_level:         WARNING
+                    stop_buffering:       true
+                    buffer_size:          0
+                    handler:              ~
+                    members:              []
+                    from_email:           ~
+                    to_email:             ~
+                    subject:              ~
+                    email_prototype:      ~
+                    formatter:            ~
+                    processors:           []
             processors:
+
+                # Example:
                 - @my_processor
 
     .. code-block:: xml
@@ -47,7 +74,7 @@ Configuration Reference
                     formatter="my_formatter"
                 >
                     <monolog:processor callback="some_callable" />
-                </monolog:handler />
+                </monolog:handler>
                 <monolog:handler
                     name="main"
                     type="fingerscrossed"

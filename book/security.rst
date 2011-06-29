@@ -247,6 +247,8 @@ the request flow is always the same:
     You'll also learn later how *anything* can be secured in Symfony2, including
     specific controllers, objects, or even PHP methods.
 
+.. _book-security-form-login:
+
 Using a Traditional Login Form
 ------------------------------
 
@@ -704,7 +706,7 @@ For each incoming request, Symfony2 tries to find a matching access control
 rule (the first one wins). If the user isn't authenticated yet, the authentication
 process is initiated (i.e. the user is given a chance to login). However,
 if the user *is* authenticated but doesn't have the required role, an
-:class:`Symfony\\Component\Security\\Core\\Exception\\AccessDeniedException`
+:class:`Symfony\\Component\\Security\\Core\\Exception\\AccessDeniedException`
 exception is thrown, which you can handle and turn into a nice "access denied"
 error page for the user. See :doc:`/cookbook/controller/error_pages` for
 more information.
@@ -876,6 +878,8 @@ by Symfony (:class:`Symfony\\Component\\Security\\Core\\User\\User`).
 
 For smaller sites, this method is quick and easy to setup. For more complex
 systems, you'll want to load your users from the database.
+
+.. _book-security-user-entity:
 
 Loading Users from the Database
 ...............................
@@ -1145,7 +1149,7 @@ a new provider that chains the two together:
 
         <!-- app/config/config.xml -->
         <config>
-            <provider name=="chain_provider">
+            <provider name="chain_provider">
                 <provider>in_memory</provider>
                 <provider>user_db</provider>
             </provider>

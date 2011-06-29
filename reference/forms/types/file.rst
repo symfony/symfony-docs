@@ -30,9 +30,9 @@ Let's say you have this form definition:
     Don't forget to add the ``enctype`` attribute in the form tag: ``<form
     action="#" method="post" {{ form_enctype(form) }}>``.
 
-When the form is submitted, the document element will be an instance of
+When the form is submitted, the ``attachment`` field will be an instance of
 :class:`Symfony\\Component\\HttpFoundation\\File\\UploadedFile`. It can be
-used to move the `attachment` file to a permanent location:
+used to move the ``attachment`` file to a permanent location:
 
 .. code-block:: php
 
@@ -51,10 +51,10 @@ used to move the `attachment` file to a permanent location:
         // ...
     }
 
-The ``move()`` method takes a directory and a file name as arguments::
+The ``move()`` method takes a directory and a file name as its arguments::
 
     // use the original file name
-    $file->move($dir, $this->getOriginalName());
+    $file->move($dir, $file->getClientOriginalName());
 
     // compute a random name and try to guess the extension (more secure)
     $extension = $file->guessExtension();
@@ -64,10 +64,10 @@ The ``move()`` method takes a directory and a file name as arguments::
     }
     $file->move($dir, rand(1, 99999).'.'.$extension);
 
-Using the original name via ``getOriginalName()`` is not safe as it can have
-been manipulated by the end-user. Moreover, it can contain characters that are
-not allowed in file names. You should sanitize the name before using it
-directly.
+Using the original name via ``getClientOriginalName()`` is not safe as it
+could have been manipulated by the end-user. Moreover, it can contain
+characters that are not allowed in file names. You should sanitize the name
+before using it directly.
 
 Read the :doc:`cookbook </cookbook/doctrine/file_uploads>` for an example of
 how to manage a file upload associated with a Doctrine entity.

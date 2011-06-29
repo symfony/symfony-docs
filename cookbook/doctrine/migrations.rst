@@ -26,8 +26,12 @@ and the doctrine-migrations library as dependencies in your application:
 
 .. code-block:: text
 
-    doctrine-migrations      /                       https://github.com/doctrine/migrations.git
-    DoctrineMigrationsBundle /bundles/Symfony/Bundle https://github.com/symfony/DoctrineMigrationsBundle.git
+    [doctrine-migrations]
+        git=http://github.com/doctrine/migrations.git
+
+    [DoctrineMigrationsBundle]
+        git=http://github.com/symfony/DoctrineMigrationsBundle.git
+        target=/bundles/Symfony/Bundle/DoctrineMigrationsBundle
 
 Update the vendor libraries:
 
@@ -83,7 +87,7 @@ the ``status`` command:
 
 .. code-block:: bash
 
-    $ php app/console doctrine:migrations:status
+    php app/console doctrine:migrations:status
 
      == Configuration
 
@@ -104,7 +108,7 @@ for you.
 
 .. code-block:: bash
 
-    $ php app/console doctrine:migrations:generate
+    php app/console doctrine:migrations:generate
     Generated new migration class to "/path/to/project/app/DoctrineMigrations/Version20100621140655.php"
 
 Have a look at the newly generated migration class and you will see something
@@ -133,7 +137,7 @@ migration to execute:
 
 .. code-block:: bash
 
-    $ php app/console doctrine:migrations:status
+    php app/console doctrine:migrations:status
 
      == Configuration
 
@@ -157,7 +161,7 @@ finally migrate when you're ready:
 
 .. code-block:: bash
 
-    $ php app/console doctrine:migrations:migrate
+    php app/console doctrine:migrations:migrate
 
 For more information on how to write the migrations themselves (i.e. how to
 fill in the ``up()`` and ``down()`` methods), see the official Doctrine Migrations
@@ -260,7 +264,7 @@ running the following command:
 
 .. code-block:: bash
 
-    $ php app/console doctrine:migrations:diff
+    php app/console doctrine:migrations:diff
 
 You should see a message that a new migration class was generated based on
 the schema differences. If you open this file, you'll find that it has the
@@ -269,7 +273,7 @@ to add the table to your database:
 
 .. code-block:: bash
 
-    $ php app/console doctrine:migrations:migrate
+    php app/console doctrine:migrations:migrate
 
 The moral of the story is this: after each change you make to your Doctrine
 mapping information, run the ``doctrine:migrations:diff`` command to automatically
