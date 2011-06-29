@@ -440,7 +440,7 @@ Once you have your repository, you have access to all sorts of helpful methods::
     // find *all* products
     $products = $repository->findAll();
 
-    // find a group of products based on an abitrary column value
+    // find a group of products based on an arbitrary column value
     $products = $repository->findByPrice(19.99);
 
 .. note::
@@ -454,7 +454,7 @@ to easily fetch objects based on multiple conditions::
     // query for one product matching be name and price
     $product = $repository->findOneBy(array('name' => 'foo', 'price' => 19.99));
 
-    // query for all prdocuts matching the name, ordered by price
+    // query for all products matching the name, ordered by price
     $product = $repository->findBy(
         array('name' => 'foo'),
         array('price', 'ASC')
