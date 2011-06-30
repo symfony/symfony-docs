@@ -21,7 +21,7 @@ Make sure you have both the ``doctrine-migrations`` and ``DoctrineMigrationsBund
 libraries configured in your project. Follow these steps to install the
 libraries in the Symfony Standard distribution.
 
-Add the following to ``bin/deps``. This will register the Migrations Bundle
+Add the following to ``deps``. This will register the Migrations Bundle
 and the doctrine-migrations library as dependencies in your application:
 
 .. code-block:: text
