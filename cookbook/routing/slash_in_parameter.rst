@@ -52,7 +52,7 @@ a more permissive regex pattern.
         use Symfony\Component\Routing\Route;
 
         $collection = new RouteCollection();
-        $collection->add('secure', new Route('/hello/{name}', array(
+        $collection->add('_hello', new Route('/hello/{name}', array(
             '_controller' => 'AcmeDemoBundle:Demo:hello',
         ), array(
             'name' => '.+',
