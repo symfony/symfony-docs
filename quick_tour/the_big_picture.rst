@@ -181,7 +181,7 @@ controller might create the response by hand, based on the request::
 .. note::
 
     Symfony2 embraces the HTTP Specification, which are the rules that govern
-    all communication on the We. Read the ":doc:`/book/http_fundamentals`"
+    all communication on the Web. Read the ":doc:`/book/http_fundamentals`"
     chapter of the book to learn more about this and the added power that
     this brings.
 
