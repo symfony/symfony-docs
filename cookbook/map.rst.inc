@@ -53,6 +53,7 @@
 
   * :doc:`/cookbook/email`
   * :doc:`/cookbook/gmail`
+  * :doc:`/cookbook/email/spool`
 
 * **Testing**
 

@@ -42,6 +42,7 @@ Cookbook
 
     email
     gmail
+    email/spool
 
     testing/http_authentication
     testing/insulating_clients
