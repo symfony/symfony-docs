@@ -385,7 +385,7 @@ login form submission (i.e. ``/login_check``):
     can use it to generate the form submission URL in the login template below.
 
 Notice that the name of the ``login`` route isn't important. What's important
-is that the URL of the route (``/login``) matches the ``check_path`` config
+is that the URL of the route (``/login``) matches the ``login_path`` config
 value, as that's where the security system will redirect users that need
 to login.
 
