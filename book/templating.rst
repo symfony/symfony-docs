@@ -484,7 +484,7 @@ template. First, create the template that you'll need to reuse.
 
     .. code-block:: html+jinja
 
-        {# src/Acme/ArticleBundle/Resources/Article/articleDetails.html.twig #}
+        {# src/Acme/ArticleBundle/Resources/views/Article/articleDetails.html.twig #}
         <h1>{{ article.title }}</h1>
         <h3 class="byline">by {{ article.authorName }}</h3>
 
@@ -494,7 +494,7 @@ template. First, create the template that you'll need to reuse.
 
     .. code-block:: php
 
-        <!-- src/Acme/ArticleBundle/Resources/Article/articleDetails.html.php -->
+        <!-- src/Acme/ArticleBundle/Resources/views/Article/articleDetails.html.php -->
         <h2><?php echo $article->getTitle() ?></h2>
         <h3 class="byline">by <?php echo $article->getAuthorName() ?></h3>
 
