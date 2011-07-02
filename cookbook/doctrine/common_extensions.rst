@@ -11,7 +11,7 @@ with an extensions library that offers `Sluggable`_, `Translatable`_, `Timestamp
 
 See the bundle for more details.
 
-.. _`DoctrineExtensionsBundle`: https://github.com/stof/DoctrineExtensionsBundle
+.. _`DoctrineExtensionsBundle`: https://github.com/stof/StofDoctrineExtensionsBundle
 .. _`Sluggable`: https://github.com/l3pp4rd/DoctrineExtensions/blob/master/doc/sluggable.md
 .. _`Translatable`: https://github.com/l3pp4rd/DoctrineExtensions/blob/master/doc/translatable.md
 .. _`Timestampable`: https://github.com/l3pp4rd/DoctrineExtensions/blob/master/doc/timestampable.md
