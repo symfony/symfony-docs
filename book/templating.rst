@@ -643,7 +643,7 @@ the routing configuration. Later, if you want to modify the URL of a particular
 page, all you'll need to do is change the routing configuration; the templates
 will automatically generate the new URL.
 
-First, link to the "homepage", which is accessible via the following routing
+First, link to the "_welcome" page, which is accessible via the following routing
 configuration:
 
 .. configuration-block::
@@ -675,11 +675,11 @@ To link to the page, just use the ``path`` Twig function and refer to the route:
 
     .. code-block:: html+jinja
 
-        <a href="{{ path('homepage') }}">Home</a>
+        <a href="{{ path('_welcome') }}">Home</a>
 
     .. code-block:: php
 
-        <a href="<?php echo $view['router']->generate('homepage') ?>">Home</a>
+        <a href="<?php echo $view['router']->generate('_welcome') ?>">Home</a>
 
 As expected, this will generate the URL ``/``. Let's see how this works with
 a more complicated route:
@@ -738,14 +738,14 @@ correctly:
 
     .. code-block:: html+jinja
 
-        <a href="{{ url('homepage') }}">Home</a>
+        <a href="{{ url('_welcome') }}">Home</a>
 
     The same can be done in PHP templates by passing a third argument to
     the ``generate()`` method:
 
     .. code-block:: php
 
-        <a href="<?php echo $view['router']->generate('homepage', array(), true) ?>">Home</a>
+        <a href="<?php echo $view['router']->generate('_welcome', array(), true) ?>">Home</a>
 
 .. index::
    single: Templating; Linking to assets
@@ -754,9 +754,8 @@ Linking to Assets
 ~~~~~~~~~~~~~~~~~
 
 Templates also commonly refer to images, Javascript, stylesheets and other
-assets. Of course you could hard-coded these the path to these assets
-(e.g. ``/images/logo.png``), but Symfony2 provides a more dynamic option
-via the ``assets`` Twig function:
+assets. Of course you could hard-code the path to these assets (e.g. ``/images/logo.png``),
+but Symfony2 provides a more dynamic option via the ``assets`` Twig function:
 
 .. configuration-block::
 
@@ -927,8 +926,8 @@ Overriding Bundle Templates
 
 The Symfony2 community prides itself on creating and maintaining high quality
 bundles (see `Symfony2Bundles.org`_) for a large number of different features.
-Once you use a bundle a third-party bundle, you'll likely need to override
-and customize one or more of its templates.
+Once you use a third-party bundle, you'll likely need to override and customize
+one or more of its templates.
 
 Suppose you've included the imaginary open-source ``AcmeBlogBundle`` in your
 project (e.g. in the ``src/Acme/BlogBundle`` directory). And while you're
