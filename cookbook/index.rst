@@ -12,6 +12,7 @@ Cookbook
 
     assetic/asset_management
     assetic/yuicompressor
+    assetic/jpeg_optimize
 
     doctrine/doctrine_fixtures
     doctrine/mongodb

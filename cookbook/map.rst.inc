@@ -12,6 +12,7 @@
 
   * :doc:`/cookbook/assetic/asset_management`
   * :doc:`/cookbook/assetic/yuicompressor`
+  * :doc:`/cookbook/assetic/jpeg_optimize`
 
 * **Database Interaction (Doctrine)**
 

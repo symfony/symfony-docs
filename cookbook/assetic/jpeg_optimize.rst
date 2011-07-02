@@ -1,14 +1,17 @@
-How to Use Assetic For Image Optimisation with Twig Functions
+How to Use Assetic For Image Optimization with Twig Functions
 =============================================================
 
-Amongst its many filters, Assetic has four which can be used for on-the-fly
-image optimisation. This way you can get the benefits of smaller file sizes
+Amongst its many filters, Assetic has four filters which can be used for on-the-fly
+image optimization. This allows you to get the benefits of smaller file sizes
 without having to use an image editor to process each image. The results
-are cached and can be dumped for production so there is no performance
-hit for your end users.
+are cached and can be dumped for production so there is no performance hit
+for your end users.
 
-To use Jpegoptim to optimise JPEG images it needs adding to the Assetic
-config:
+Using Jpegoptim
+---------------
+
+`Jpegoptim`_ is a utility for optimizing JPEG files. To use it with assetic,
+add the following to the assetic config:
 
 .. configuration-block::
 
@@ -40,8 +43,12 @@ config:
             ),
         ));
 
+.. note::
 
-It can then be used from templates:
+    Notice that to use jpegoptim, you must have it already installed on your
+    system. The ``bin`` option points to the location of the compiled binary.
+
+It can now be used from a template:
 
 .. configuration-block::
 
@@ -61,9 +68,12 @@ It can then be used from templates:
         <img src="<?php echo $view->escape($url) ?>" alt="Example"/>
         <?php endforeach; ?>
 
-By default running this filter only removes some of the meta information
-stored in the file. Any EXIF data and comments are not removed, you can
-removed these by using as well by specifying the ``strip_all` option:
+Removing all EXIF Data
+~~~~~~~~~~~~~~~~~~~~~~
+
+By default, running this filter only removes some of the meta information
+stored in the file. Any EXIF data and comments are not removed, but you can
+remove these by using the ``strip_all` option:
 
 .. configuration-block::
 
@@ -98,11 +108,13 @@ removed these by using as well by specifying the ``strip_all` option:
             ),
         ));
 
+Lowering Maximum Quality
+~~~~~~~~~~~~~~~~~~~~~~~~
 
 The quality level of the JPEG is not affected by default. You can gain
 further file size reductions by setting the max quality setting lower than
-the current level of the images. This will of course be at the expense
-of image quality:
+the current level of the images. This will of course be at the expense of
+image quality:
 
 .. configuration-block::
 
@@ -137,12 +149,12 @@ of image quality:
             ),
         ));
 
+Shorter syntax: Twig Function
+-----------------------------
 
-Twig Functions
---------------
-
-It is possible to achieve this with a much simpler Twig template by setting
-up a Twig function from the Assetic config. By adding the following config:
+If you're using Twig, it's possible to achieve all of this with a shorter
+syntax by enabling and using a special Twig function. Start by adding the
+following config:
 
 .. configuration-block::
 
@@ -185,14 +197,12 @@ up a Twig function from the Assetic config. By adding the following config:
             ),
         ));
 
-
-The Twig template can be changed to the following:
+The Twig template can now be changed to the following:
 
 .. code-block:: html+jinja
 
     <img src="{{ jpegoptim('@AcmeFooBundle/Resources/public/images/example.jpg') }}"
          alt="Example"/>
-
 
 You can specify the output directory in the config in the following way:
 
@@ -241,6 +251,4 @@ You can specify the output directory in the config in the following way:
             ),
         ));
 
-
-The function name maps directly to the filter name so these must be the
-same for this to work.
+.. _`Jpegoptim`: http://www.kokkonen.net/tjko/projects.html
