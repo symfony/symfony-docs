@@ -18,13 +18,13 @@ add the following to it::
     // src/Acme/DemoBundle/Command/GreetCommand.php
     namespace Acme\DemoBundle\Command;
 
-    use Symfony\Bundle\FrameworkBundle\Command\Command;
+    use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
     use Symfony\Component\Console\Input\InputArgument;
     use Symfony\Component\Console\Input\InputInterface;
     use Symfony\Component\Console\Input\InputOption;
     use Symfony\Component\Console\Output\OutputInterface;
 
-    class GreetCommand extends Command
+    class GreetCommand extends ContainerAwareCommand
     {
         protected function configure()
         {
@@ -204,7 +204,7 @@ example, you could easily extend the task to be translatable::
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $name = $input->getArgument('name');
-        $translator = $this->container->get('translator');
+        $translator = $this->getContainer()->get('translator');
         if ($name) {
             $output->writeln($translator->trans('Hello %name%!', array('%name%' => $name)));
         } else {
