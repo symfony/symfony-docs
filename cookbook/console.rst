@@ -155,6 +155,30 @@ will work:
     app/console demo:greet Fabien --iterations=5 --yell
     app/console demo:greet Fabien --yell --iterations=5
 
+Asking the User for Information
+-------------------------------
+
+When creating commands, you have the ability to collect more information
+from the user by asking him/her questions. For example, suppose you want
+to confirm an action before actually executing it. Add the following to your
+command::
+
+    $dialog = $this->getHelperSet()->get('dialog');
+    if (!$dialog->askConfirmation($output, 'Continue with this action?', false)) {
+        return;
+    }
+
+In this case, the user will be asked "Continue with this action", and unless
+they answer with ``y``, the task will stop running. The third argument to
+``askConfirmation`` is the default value to return if the user doesn't enter
+any input.
+
+You can also ask questions with more than a simple yes/no answer. For example,
+if you needed to know the name of something, you might do the following::
+
+    $dialog = $this->getHelperSet()->get('dialog');
+    $name = $dialog->ask($output, 'Please enter the name of the widget', 'foo');
+
 Testing Commands
 ----------------
 
