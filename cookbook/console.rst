@@ -75,6 +75,24 @@ This prints::
 
     HELLO FABIEN
 
+Coloring the Output
+~~~~~~~~~~~~~~~~~~~
+
+Whenever you output text, you can surround the text with tags to color its
+output. For example::
+
+    // green text
+    $output->writeln('<info>foo</info>');
+
+    // yellow text
+    $output->writeln('<comment>foo</comment>');
+
+    // black text on a cyan background
+    $output->writeln('<question>foo</question>');
+
+    // white text on a red background
+    $output->writeln('<error>foo</error>');
+
 Using Command Arguments
 -----------------------
 
@@ -164,7 +182,7 @@ to confirm an action before actually executing it. Add the following to your
 command::
 
     $dialog = $this->getHelperSet()->get('dialog');
-    if (!$dialog->askConfirmation($output, 'Continue with this action?', false)) {
+    if (!$dialog->askConfirmation($output, '<question>Continue with this action?</question>', false)) {
         return;
     }
 
