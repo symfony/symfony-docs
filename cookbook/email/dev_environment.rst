@@ -13,21 +13,22 @@ Disabling Sending
 -----------------
 
 You can disable sending emails by setting the ``disable_delivery`` option
-to ``true``. If you do this in the ``dev`` specific config then emails will
-not be sent when you are in the ``dev`` environment and will continue to be
-sent in the ``prod`` environment:
+to ``true``. This is the default in the ``test`` environment in the Standard
+distribution. If you do this in the ``test`` specific config then emails
+will not be sent when you run tets and will continue to be sent in the
+``prod`` and ``dev`` environments:
 
 .. configuration-block::
 
     .. code-block:: yaml
 
-        # app/config/config_dev.yml
+        # app/config/config_test.yml
         swiftmailer:
             disable_delivery:  true
 
     .. code-block:: xml
 
-        <!-- app/config/config_dev.xml -->
+        <!-- app/config/config_test.xml -->
 
         <!--
         xmlns:swiftmailer="http://symfony.com/schema/dic/swiftmailer"
@@ -39,7 +40,7 @@ sent in the ``prod`` environment:
 
     .. code-block:: php
 
-        // app/config/config_dev.php
+        // app/config/config_test.php
         $container->loadFromExtension('swiftmailer', array(
             'disable_delivery'  => "true",
         ));
