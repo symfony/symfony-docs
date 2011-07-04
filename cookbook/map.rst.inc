@@ -29,7 +29,6 @@
 
 * **Forms and Validation**
 
-  * :doc:`/cookbook/form/twig_form_customization`
   * :doc:`/cookbook/form/simple_signup_form_with_mongodb`
   * :doc:`/cookbook/form/form_customization`
   * :doc:`/cookbook/form/create_custom_field_type`
