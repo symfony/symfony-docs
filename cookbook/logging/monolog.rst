@@ -117,7 +117,7 @@ The handler uses a ``Formatter`` to format the record before logging
 it. All Monolog handlers use an instance of
 ``Monolog\Formatter\LineFormatter`` by default but you can replace it
 easily. Your formatter must implement
-``Monolog\Formatter\LineFormatterInterface``.
+``Monolog\Formatter\FormatterInterface``.
 
 .. configuration-block::
 
