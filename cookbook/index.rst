@@ -25,7 +25,6 @@ Cookbook
     doctrine/multiple_entity_managers
     doctrine/custom_dql_functions
 
-    form/twig_form_customization
     form/simple_signup_form_with_mongodb
     form/form_customization
     form/create_custom_field_type
