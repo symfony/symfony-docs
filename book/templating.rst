@@ -46,7 +46,7 @@ template - a text file parsed by PHP that contains a mix of text and PHP code::
 
 .. index:: Twig; Introduction
 
-But Symfony2 packages an even more powerful templating language called `Twig`_
+But Symfony2 packages an even more powerful templating language called `Twig`_.
 Twig allows you to write concise, readable templates that are more friendly
 to web designers and, in several ways, more powerful than PHP templates:
 
@@ -68,7 +68,7 @@ to web designers and, in several ways, more powerful than PHP templates:
         </body>
     </html>
 
-Twig contains defines two types of special syntax:
+Twig defines two types of special syntax:
 
 * ``{{ ... }}``: "Says something": prints a variable or the result of an
   expression to the template;
@@ -151,7 +151,7 @@ environment, such as ``dev`` or ``prod``) and in some cases can be useful
 while debugging. See :ref:`environments-summary` for more information on
 environments.
 
-When ``debug`` mode is enabled (common in the ``dev`` environment) a Twig
+When ``debug`` mode is enabled (common in the ``dev`` environment), a Twig
 template will be automatically recompiled when changes are made to it. This
 means that during development you can happily make changes to a Twig template
 and instantly see the changes without needing to worry about clearing any
@@ -361,12 +361,12 @@ Template Naming and Locations
 
 By default, templates can live in two different locations:
 
-* ``app/Resources/views/`` The applications ``views`` directory can contain
+* ``app/Resources/views/``: The applications ``views`` directory can contain
   application-wide base templates (i.e. your application's layouts) as well as
   templates that override bundle templates (see
   :ref:`overriding-bundle-templates`);
 
-* ``path/to/bundle/Resources/views/`` Each bundle houses its templates in its
+* ``path/to/bundle/Resources/views/``: Each bundle houses its templates in its
   ``Resources/views`` directory (and subdirectories). The majority of templates
   will live inside a bundle.
 
@@ -754,7 +754,7 @@ Linking to Assets
 ~~~~~~~~~~~~~~~~~
 
 Templates also commonly refer to images, Javascript, stylesheets and other
-assets. Of course you could hard-coded these the path to these assets
+assets. Of course you could hard-code the path to these assets
 (e.g. ``/images/logo.png``), but Symfony2 provides a more dynamic option
 via the ``assets`` Twig function:
 
@@ -927,7 +927,7 @@ Overriding Bundle Templates
 
 The Symfony2 community prides itself on creating and maintaining high quality
 bundles (see `Symfony2Bundles.org`_) for a large number of different features.
-Once you use a bundle a third-party bundle, you'll likely need to override
+Once you use a third-party bundle, you'll likely need to override
 and customize one or more of its templates.
 
 Suppose you've included the imaginary open-source ``AcmeBlogBundle`` in your
@@ -1104,7 +1104,7 @@ Suppose that administrative users are able to write articles that contain
 HTML code. By default, Twig will escape the article body. To render it normally,
 add the ``raw`` filter: ``{{ article.body | raw }}``.
 
-You can also to disable output escaping inside a ``{% block %}`` area or
+You can also disable output escaping inside a ``{% block %}`` area or
 for an entire template. For more information, see `Output Escaping`_ in
 the Twig documentation.
 
