@@ -120,6 +120,9 @@ Naming Conventions
 
 * Use alphanumeric characters and underscores for file names;
 
+* Don't forget to look at the more verbose :doc:`conventions` document for
+  more subjective naming considerations.
+
 Documentation
 -------------
 
