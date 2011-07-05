@@ -743,7 +743,7 @@ authorization from inside a controller:
 
 .. _book-security-securing-controller-annotations:
 
-You can also choose to install and use the optional ``SecurityExtraBundle``,
+You can also choose to install and use the optional ``JMSSecurityExtraBundle``,
 which can secure your controller using annotations:
 
 .. code-block:: php
@@ -758,7 +758,7 @@ which can secure your controller using annotations:
         // ...
     }
 
-For more information, see the `SecurityExtraBundle`_ documentation. If you're
+For more information, see the `JMSSecurityExtraBundle`_ documentation. If you're
 using Symfony's Standard Distribution, this bundle is available by default.
 If not, you can easily download and install it.
 
@@ -1658,7 +1658,7 @@ Learn more from the Cookbook
 * :doc:`/cookbook/security/remember_me`
 
 .. _`security component`: https://github.com/symfony/Security
-.. _`SecurityExtraBundle`: https://github.com/schmittjoh/SecurityExtraBundle
+.. _`JMSSecurityExtraBundle`: https://github.com/schmittjoh/JMSSecurityExtraBundle
 .. _`FOSUserBundle`: https://github.com/FriendsOfSymfony/FOSUserBundle
 .. _`implement the \Serializable interface`: http://php.net/manual/en/class.serializable.php
 .. _`functions-online.com`: http://www.functions-online.com/sha1.html
