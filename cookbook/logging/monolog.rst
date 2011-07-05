@@ -117,7 +117,7 @@ The handler uses a ``Formatter`` to format the record before logging
 it. All Monolog handlers use an instance of
 ``Monolog\Formatter\LineFormatter`` by default but you can replace it
 easily. Your formatter must implement
-``Monolog\Formatter\LineFormatterInterface``.
+``Monolog\Formatter\FormatterInterface``.
 
 .. configuration-block::
 
@@ -161,9 +161,12 @@ Monolog allows to process the record before logging it to add some
 extra data. A processor can be applied for the whole handler stack or
 only for a specific handler.
 
-A processor is simply a callable receiving the record as first argument
-and a second argument which is either the logger or the handler
-depending of the level where the processor is called.
+A processor is simply a callable receiving the record as it's first argument.
+
+This example configuration shows you how to define a processor as a service,
+as a callback, or how you can simply use one of the core processors, which
+are called ``monolog.processor.<processor_name>``. At the moment, the ``web``
+and ``introspection`` processors are available in core.
 
 .. configuration-block::
 
@@ -171,16 +174,17 @@ depending of the level where the processor is called.
 
         services:
             my_processor:
-                class: Monolog\Processor\WebProcessor
+                class: Acme\MyBundle\MyFirstProcessor
         monolog:
             handlers:
                 file:
                     type: stream
                     level: debug
                     processors:
-                        - Acme\MyBundle\MyProcessor::process
+                        - Acme\MyBundle\MySecondProcessor::process
             processors:
                 - @my_processor
+                - @monolog.processor.web
 
     .. code-block:: xml
 
@@ -191,7 +195,7 @@ depending of the level where the processor is called.
                                 http://symfony.com/schema/dic/monolog http://symfony.com/schema/dic/monolog/monolog-1.0.xsd">
 
             <services>
-                <service id="my_processor" class="Monolog\Processor\WebProcessor" />
+                <service id="my_processor" class="Acme\MyBundle\MyFirstProcessor" />
             </services>
             <monolog:config>
                 <monolog:handler
@@ -200,9 +204,10 @@ depending of the level where the processor is called.
                     level="debug"
                     formatter="my_formatter"
                 >
-                    <monolog:processor callback="Acme\MyBundle\MyProcessor::process" />
+                    <monolog:processor callback="Acme\MyBundle\MySecondProcessor::process" />
                 </monolog:handler />
                 <monolog:processor callback="@my_processor" />
+                <monolog:processor callback="@monolog.processor.web" />
             </monolog:config>
         </container>
 
