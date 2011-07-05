@@ -13,6 +13,7 @@ Cookbook
     assetic/asset_management
     assetic/yuicompressor
     assetic/jpeg_optimize
+    assetic/apply_to_option
 
     doctrine/doctrine_fixtures
     doctrine/mongodb
