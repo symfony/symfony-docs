@@ -514,12 +514,11 @@ To do this, add the name of the repository class to your mapping definition.
 
         </doctrine-mong-mapping>
 
-Doctrine can generate the repository class for you by running the same command
-used earlier to generate the missing getter and setter methods:
+Doctrine can generate the repository class for you by running :
 
 .. code-block:: bash
 
-    php app/console doctrine:mongodb:generate:documents AcmeStoreBundle
+    php app/console doctrine:mongodb:generate:repositories AcmeStoreBundle
 
 Next, add a new method - ``findAllOrderedByName()`` - to the newly generated
 repository class. This method will query for all of the ``Product`` documents,
