@@ -188,7 +188,7 @@ object, which is what's returned after a ``file`` field is submitted::
     public function upload()
     {
         // the file property can be empty if the field is not required
-        if (!$this->file) {
+        if (empty($this->file)) {
             return;
         }
 
@@ -245,7 +245,7 @@ Next, refactor the ``Document`` class to take advantage of these callbacks::
          */
         public function preUpload()
         {
-            if ($this->file) {
+            if (!empty($this->file)) {
                 // do whatever you want to generate a unique name
                 $this->setPath(uniq().'.'.$this->file->guessExtension());
             }
@@ -256,7 +256,7 @@ Next, refactor the ``Document`` class to take advantage of these callbacks::
          */
         public function upload()
         {
-            if (!$this->file) {
+            if (empty($this->file)) {
                 return;
             }
 
@@ -303,7 +303,7 @@ property, instead of the actual filename::
          */
         public function preUpload()
         {
-            if ($this->file) {
+            if (!empty($this->file)) {
                 $this->setPath($this->file->guessExtension());
             }
         }
@@ -313,7 +313,7 @@ property, instead of the actual filename::
          */
         public function upload()
         {
-            if (!$this->file) {
+            if (empty($this->file)) {
                 return;
             }
 
