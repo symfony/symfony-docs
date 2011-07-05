@@ -121,7 +121,7 @@ corresponding to the ``name`` and ``price`` properties of the ``Product`` class.
 The ``name`` field has a type of ``text``, meaning the user will submit simple
 text for this field. The ``price`` field has the type ``money``, which is
 special ``text`` field where money can be displayed and submitted in a localized
-format. Symfony2 comes with many build-in types that will be discussed shortly
+format. Symfony2 comes with many built-in types that will be discussed shortly
 (see :ref:`book-forms-type-reference`).
 
 Now that the form has been created, the next step is to render it. This can
