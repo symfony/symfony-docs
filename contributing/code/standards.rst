@@ -29,24 +29,31 @@ example containing most features described below:
 
     class Foo
     {
-        private $foo;
-
         const SOME_CONST = 42;
 
+        private $foo;
+
+        /**
+         * @param string $dummy Some argument description
+         */
         public function __construct($dummy)
         {
-            $this->foo = $this->init($dummy);
+            $this->foo = $this->transform($dummy);
         }
 
-        private function init($dummy)
+        /**
+         * @param string $dummy Some argument description
+         * @return string|null Transformed input
+         */
+        private function transform($dummy)
         {
             if (true === $dummy) {
                 return;
             } elseif ('string' === $dummy) {
-                $var = substr($dummy, 0, 5);
+                $dummy = substr($dummy, 0, 5);
             }
 
-            return $var;
+            return $dummy;
         }
     }
 
