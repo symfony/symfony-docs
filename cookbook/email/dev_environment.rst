@@ -118,7 +118,7 @@ Viewing from the Web Debug Toolbar
 
 You can view any emails sent by a page when you are in the ``dev`` environment
 using the Web Debug Toolbar. The email icon in the toolbar will show how
-many emails were sent. If you click, it a report showing the details of the
+many emails were sent. If you click it, a report showing the details of the
 emails will open.
 
 If you're sending an email and then redirecting immediately after, you'll
