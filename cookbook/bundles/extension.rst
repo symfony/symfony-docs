@@ -97,7 +97,7 @@ Creating an Extension Class
 
 If you do choose to expose a semantic configuration for your bundle, you'll
 first need to create a new "Extension" class, which will handle the process.
-This class should live in the ``DependenyInjection`` directory of your bundle
+This class should live in the ``DependencyInjection`` directory of your bundle
 and its name should be constructed by replacing the ``Bundle`` postfix of the
 Bundle class name with ``Extension``. For example, the Extension class of
 ``AcmeHelloBundle`` would be called ``AcmeHelloExtension``::
