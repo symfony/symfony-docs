@@ -43,6 +43,7 @@ Cookbook
 
     email
     gmail
+    email/dev_environment
     email/spool
 
     testing/http_authentication

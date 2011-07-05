@@ -1,13 +1,14 @@
 How to Work with Emails During Development
 ==========================================
 
-When you are creating an application which sends emails you will often
-not want to actually send the emails to the specified recipient during
-development. If you are using the ``SwiftmailerBundle`` with Symfony2 you
+When you are creating an application which sends emails, you will often
+not want to actually send the emails to the specified recipient while
+development. If you are using the ``SwiftmailerBundle`` with Symfony2, you
 can easily achieve this through configuration settings without having to
 make any changes to your application's code at all. There are two main
-choices to disable sending emails altogether and to send them all to a
-specified address.
+choices when it comes to handling emails during development: (a) disabling the
+sending of emails altogether or (b) sending all the emails to a specified
+address.
 
 Disabling Sending
 -----------------
@@ -15,7 +16,7 @@ Disabling Sending
 You can disable sending emails by setting the ``disable_delivery`` option
 to ``true``. This is the default in the ``test`` environment in the Standard
 distribution. If you do this in the ``test`` specific config then emails
-will not be sent when you run tets and will continue to be sent in the
+will not be sent when you run tests, but will continue to be sent in the
 ``prod`` and ``dev`` environments:
 
 .. configuration-block::
@@ -45,13 +46,15 @@ will not be sent when you run tets and will continue to be sent in the
             'disable_delivery'  => "true",
         ));
 
+If you'd also like to disable deliver in the ``dev`` environment, simply
+add this configuration to the ``config_dev.yml`` file.
 
-Sending to a Specifed Address
------------------------------
+Sending to a Specified Address
+------------------------------
 
-You can also choose to have all emails sent to an address set in the config,
-instead of the address they are set to be sent to, with the ``delivery_address``
-option:
+You can also choose to have all emails sent to a specific address, instead
+of the address actually specified when sending the message. This can be done
+via the ``delivery_address`` option:
 
 .. configuration-block::
 
@@ -80,7 +83,7 @@ option:
             'delivery_address'  => "dev@example.com",
         ));
 
-So if an email is sent from your app:
+Now, suppose you're sending an email to ``recipient@example.com``.
 
 .. code-block:: php
 
@@ -97,15 +100,15 @@ So if an email is sent from your app:
         return $this->render(...);
     }
 
-Then instead of being sent to ``recipient@example.com`` it will be sent
-to ``dev@example.com``. Swiftmailer will add an extra header to the email,
-``X-Swift-To`` containing the replaced address, so you will still be able
-to see who it would have been sent to.
+In the ``dev`` environment, the email will instead be sent to ``dev@example.com``.
+Swiftmailer will add an extra header to the email, ``X-Swift-To`` containing
+the replaced address, so you will still be able to see who it would have been
+sent to.
 
 .. note::
 
-    As well as ``to`` addresses, this will also stop the email being sent
-    to any ``CC`` and ``BCC`` addresses set for it. Swiftmailer will add
+    In addition to the ``to`` addresses, this will also stop the email being
+    sent to any ``CC`` and ``BCC`` addresses set for it. Swiftmailer will add
     additional headers to the email with the overridden addresses in them.
     These are ``X-Swift-Cc`` and ``X-Swift-Bcc`` for the ``CC`` and ``BCC``
     addresses respectively.
@@ -115,5 +118,9 @@ Viewing from the Web Debug Toolbar
 
 You can view any emails sent by a page when you are in the ``dev`` environment
 using the Web Debug Toolbar. The email icon in the toolbar will show how
-many emails were sent. If you click it a report showing the details of the
+many emails were sent. If you click, it a report showing the details of the
 emails will open.
+
+If you're sending an email and then redirecting immediately after, you'll
+need to set the ``intercept_redirects`` option to ``true`` in the ``config_dev.yml``
+file so that you can see the email in the web debug toolbar before being redirected. 
