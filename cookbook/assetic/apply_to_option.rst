@@ -35,7 +35,7 @@ respectively to ``/usr/bin/coffee`` and ``/usr/bin/node``:
         // app/config/config.php
         $container->loadFromExtension('assetic', array(
             'filters' => array(
-                'jpegoptim' => array(
+                'coffee' => array(
                     'bin' => '/usr/bin/coffee',
                     'node' => '/usr/bin/node',
                 ),
@@ -140,7 +140,7 @@ applied to all ``.coffee`` files:
         // app/config/config.php
         $container->loadFromExtension('assetic', array(
             'filters' => array(
-                'jpegoptim' => array(
+                'coffee' => array(
                     'bin' => '/usr/bin/coffee',
                     'node' => '/usr/bin/node',
                     'apply_to' => '\.coffee$',
