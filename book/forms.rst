@@ -629,9 +629,9 @@ that will house the logic for building the product form:
 
 .. code-block:: php
 
-    // src/Acme/StoreBundle/Form/ProductType.php
+    // src/Acme/StoreBundle/Form/Type/ProductType.php
 
-    namespace Acme\StoreBundle\Form;
+    namespace Acme\StoreBundle\Form\Type;
 
     use Symfony\Component\Form\AbstractType;
     use Symfony\Component\Form\FormBuilder;
@@ -653,7 +653,7 @@ It can be used to quickly build a form object in the controller:
     // src/Acme/StoreBundle/Controller/DefaultController.php
 
     // add this new use statement at the top of the class
-    use Acme\StoreBundle\Form\ProductType;
+    use Acme\StoreBundle\Form\Type\ProductType;
 
     public function indexAction()
     {
@@ -796,8 +796,8 @@ create a form class so that a ``Category`` object can be modified by the user:
 
 .. code-block:: php
 
-    // src/Acme/StoreBundle/Form/CategoryType.php
-    namespace Acme\StoreBundle\Form;
+    // src/Acme/StoreBundle/Form/Type/CategoryType.php
+    namespace Acme\StoreBundle\Form\Type;
 
     use Symfony\Component\Form\AbstractType;
     use Symfony\Component\Form\FormBuilder;
