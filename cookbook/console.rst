@@ -237,11 +237,11 @@ console.
 Getting Services from the Service Container
 -------------------------------------------
 
-By using ``Symfony\Bundle\FrameworkBundle\Command\Command`` as the base class
-for the command (instead of the more basic
-``Symfony\Component\Console\Command\Command``), you have access to the service
-container. In other words, you have access to any configured service. For
-example, you could easily extend the task to be translatable::
+By using :class:`Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand` 
+as the base class for the command (instead of the more basic 
+:class:`Symfony\Component\Console\Command\Command`), you have access to the 
+service container. In other words, you have access to any configured service.
+For example, you could easily extend the task to be translatable::
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
