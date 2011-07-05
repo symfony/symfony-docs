@@ -840,7 +840,7 @@ form, modify the ``use`` tag and add the following:
         {{ block('base_field_widget') }}
 
         {% if help is defined %}
-            <span class="help">{{ help }}</div>
+            <span class="help">{{ help }}</span>
         {% endif %}
     {% endblock %}
 
@@ -855,7 +855,7 @@ the following:
         {{ parent() }}
 
         {% if help is defined %}
-            <span class="help">{{ help }}</div>
+            <span class="help">{{ help }}</span>
         {% endif %}
     {% endblock %}
 
@@ -875,7 +875,7 @@ original template:
 
     <!-- Customization -->
     <?php if (isset($help)) : ?>
-        <span class="help"><?php echo $view->escape($help) ?></div>
+        <span class="help"><?php echo $view->escape($help) ?></span>
     <?php endif ?>
 
 To render a help message below a field, pass in a ``help`` variable:
