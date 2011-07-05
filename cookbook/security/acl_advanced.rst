@@ -162,7 +162,7 @@ before it is returned.
 
 Due to current limitations of the PHP language, there are no
 post-authorization capabilities build into the core Security component.
-However, there is an experimental SecurityExtraBundle_ which adds these
+However, there is an experimental JMSSecurityExtraBundle_ which adds these
 capabilities. See its documentation for further information on how this is
 accomplished.
 
@@ -181,4 +181,4 @@ is applicable, the class-scope ACEs will be checked, if none is applicable,
 then the process will be repeated with the ACEs of the parent ACL. If no
 parent ACL exists, an exception will be thrown.
 
-.. _SecurityExtraBundle: https://github.com/schmittjoh/SecurityExtraBundle
+.. _JMSSecurityExtraBundle: https://github.com/schmittjoh/JMSSecurityExtraBundle
