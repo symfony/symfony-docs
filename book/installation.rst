@@ -45,7 +45,7 @@ one of the following commands (replacing ``###`` with your actual filename):
     tar zxvf Symfony_Standard_Vendors_2.0.###.tgz
 
     # for a .zip file
-    unzip Symfony_Standard_Vendors_2.0.###.tgz
+    unzip Symfony_Standard_Vendors_2.0.###.zip
 
 When you're finished, you should have a ``Symfony/`` directory that looks
 something like this:
