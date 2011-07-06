@@ -113,6 +113,11 @@ Next, create the form for the ``User`` model::
         {
             return array('data_class' => 'Acme\AccountBundle\Document\User');
         }
+
+        public function getName()
+        {
+            return 'user';
+        }
     }
 
 We just added two fields: email and password (repeated to confirm the entered
@@ -191,6 +196,11 @@ Next, create the form for this ``Registration`` model::
         {
             $builder->add('user', new UserType());
             $builder->add('terms', 'checkbox', array('property_path' => 'termsAccepted'));
+        }
+
+        public function getName()
+        {
+            return 'registration';
         }
     }
 

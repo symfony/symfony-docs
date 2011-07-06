@@ -643,10 +643,16 @@ that will house the logic for building the product form:
             $builder->add('name');
             $builder->add('price', 'money', array('currency' => 'USD'));
         }
+
+        public function getName()
+        {
+            return 'product';
+        }
     }
 
 This new class contains all the directions needed to create the product form.
-It can be used to quickly build a form object in the controller:
+The ``getName()`` method must return a unique identifier for the type. It can
+be used to quickly build a form object in the controller:
 
 .. code-block:: php
 
@@ -814,6 +820,11 @@ create a form class so that a ``Category`` object can be modified by the user:
             return array(
                 'data_class' => 'Acme\StoreBundle\Entity\Category',
             );
+        }
+
+        public function getName()
+        {
+            return 'category';
         }
     }
 
@@ -1229,6 +1240,11 @@ The CSRF token can be customized on a form-by-form basis. For example:
                 'csrf_field_name' => '_token',
                 'intention'  => 'product_creation',
             );
+        }
+
+        public function getName()
+        {
+            return 'product';
         }
     }
 
