@@ -98,6 +98,10 @@
   * :doc:`/cookbook/performance/bootstrap_files`
   * :doc:`/cookbook/performance/bytecodecache`
 
+* **Web Services**
+
+  * :doc:`/cookbook/web_services/php_soap_extension`
+
 * **Extending Symfony**
 
   * :doc:`/cookbook/event_dispatcher/class_extension`

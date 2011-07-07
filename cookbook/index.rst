@@ -80,6 +80,8 @@ Cookbook
     request/mime_type
     profiler/data_collector
 
+    web_services/php_soap_extension
+
     symfony1
 
 .. include:: /cookbook/map.rst.inc
