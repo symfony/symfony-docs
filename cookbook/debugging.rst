@@ -1,3 +1,6 @@
+.. index::
+   single: Debugging
+
 How to optimize your development Environment for debugging
 ==========================================================
 
@@ -10,6 +13,11 @@ configuration is optimized for two main purposes:
 
  * Be as similar as possible as the production environment to avoid problems
    when deploying the project.
+
+.. _cookbook-debugging-disable-bootstrap:
+
+Disabling the Bootstrap File and Class Caching
+----------------------------------------------
 
 And to make the production environment as fast as possible, Symfony creates
 big PHP files in your cache containing the aggregation of PHP classes your

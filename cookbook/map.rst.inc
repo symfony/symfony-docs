@@ -92,12 +92,6 @@
   * :doc:`/cookbook/debugging`
   * :doc:`/cookbook/logging/monolog`
 
-* **Performance**
-
-  * :doc:`/cookbook/performance/autoloader`
-  * :doc:`/cookbook/performance/bootstrap_files`
-  * :doc:`/cookbook/performance/bytecodecache`
-
 * **Extending Symfony**
 
   * :doc:`/cookbook/event_dispatcher/class_extension`
