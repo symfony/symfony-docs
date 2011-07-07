@@ -55,7 +55,8 @@ First, create a simple Doctrine Entity class to work with::
 
         protected function getUploadRootDir()
         {
-            return '/path/to/uploaded/documents';
+            // the absolute directory path where uploaded documents should be saved
+            return __DIR__.'/../../../../web/uploads/documents';
         }
     }
 
