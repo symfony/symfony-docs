@@ -64,10 +64,11 @@ Be sure to add them anywhere *above* the ``Doctrine`` namespace (shown here)::
     ));
 
 Register ODM Annotations::
-    // app/autoload.php
-AnnotationRegistry::registerFile(__DIR__.'/../vendor/doctrine-mongodb-odm/lib/Doctrine/ODM/MongoDB/Mapping/Annotations/DoctrineAnnotations.php');
 
+    // app/autoload.php
+    AnnotationRegistry::registerFile(__DIR__.'/../vendor/doctrine-mongodb-odm/lib/Doctrine/ODM/MongoDB/Mapping/Annotations/DoctrineAnnotations.php');
 Finally, enable the new bundle in the kernel::
+
 
     // app/AppKernel.php
     public function registerBundles()
