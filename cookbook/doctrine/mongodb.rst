@@ -63,7 +63,7 @@ Be sure to add them anywhere *above* the ``Doctrine`` namespace (shown here)::
         // ...
     ));
 
-Finally, enable the new bundle in the kernel::
+Enable the new bundle in the kernel::
 
     // app/AppKernel.php
     public function registerBundles()
@@ -75,6 +75,10 @@ Finally, enable the new bundle in the kernel::
 
         // ...
     }
+
+Register ODM Annotations::
+    // app/AppKernel.php
+AnnotationRegistry::registerFile(__DIR__.'/../vendor/doctrine-mongodb-odm/lib/Doctrine/ODM/MongoDB/Mapping/Annotations/DoctrineAnnotations.php');
 
 Congratulations! You're ready to get to work.
 
