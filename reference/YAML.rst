@@ -48,13 +48,13 @@ occurred::
     different YAML strings.
 
 When loading a YAML file, it is sometimes better to use the
-:method:`Symfony\\Component\\Yaml\\Yaml::load` wrapper method::
+:method:`Symfony\\Component\\Yaml\\Yaml::parse` wrapper method::
 
     use Symfony\Component\Yaml\Yaml;
 
-    $loader = Yaml::load('/path/to/file.yml');
+    $loader = Yaml::parse('/path/to/file.yml');
 
-The ``Yaml::load()`` static method takes a YAML string or a file containing
+The ``Yaml::parse()`` static method takes a YAML string or a file containing
 YAML. Internally, it calls the ``Parser::parse()`` method, but with some added
 bonuses:
 
