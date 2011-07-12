@@ -67,10 +67,25 @@ If you're using an IDE like TextMate or Mac Vim, then Symfony can turn all
 of the file paths in an exception message into a link, which will open that
 file in your IDE.
 
-Currently, the following options are supported:
+If you use TextMate or Mac Vim, you can simply use one of the following built-in
+values:
 
 * ``textmate``
 * ``macvim``
+
+You can also specify a custom file link string. If you do this, all percentage
+signs (``%``) must be doubled to escape that character. For example, the
+full TextMate string would look like this:
+
+.. code-block:: yaml
+
+    framework:
+        ide:  "txmt://open?url=file://%%f&line=%%l"
+
+Of course, since every developer uses a different IDE, it's better to set
+this on a system level. This can be done by setting the ``xdebug.file_link_format``
+PHP.ini value to the file link string. If this configuration value is set, then
+the ``ide`` option does not need to be specified.
 
 test
 ....
