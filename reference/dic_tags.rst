@@ -279,7 +279,7 @@ attribute:
         $definition->addTag('monolog.processor', array('handler' => 'firephp');
         $container->register('my_service', $definition);
 
-You can add also a processor for a specific logging by using the ``channel``
+You can add also a processor for a specific logging channel by using the ``channel``
 attribute. This will register the processor only for the ``security`` logging
 channel used in the Security component:
 
