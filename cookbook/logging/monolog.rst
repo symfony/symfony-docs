@@ -33,7 +33,7 @@ To log a message simply get the logger service from the container in
 your controller::
 
     $logger = $this->get('logger');
-    $logger->info('We just go the logger');
+    $logger->info('We just got the logger');
     $logger->err('An error occurred');
 
 .. tip::
