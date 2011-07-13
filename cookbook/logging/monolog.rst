@@ -163,65 +163,15 @@ only for a specific handler.
 
 A processor is simply a callable receiving the record as it's first argument.
 
-This example configuration shows you how to define a processor as a service,
-as a callback, or how you can simply use one of the core processors, which
-are called ``monolog.processor.<processor_name>``. At the moment, the ``web``
-and ``introspection`` processors are available in core.
-
-.. configuration-block::
-
-    .. code-block:: yaml
-
-        services:
-            my_processor:
-                class: Acme\MyBundle\MyFirstProcessor
-        monolog:
-            handlers:
-                file:
-                    type: stream
-                    level: debug
-                    processors:
-                        - Acme\MyBundle\MySecondProcessor::process
-            processors:
-                - @my_processor
-                - @monolog.processor.web
-
-    .. code-block:: xml
-
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xmlns:monolog="http://symfony.com/schema/dic/monolog"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd
-                                http://symfony.com/schema/dic/monolog http://symfony.com/schema/dic/monolog/monolog-1.0.xsd">
-
-            <services>
-                <service id="my_processor" class="Acme\MyBundle\MyFirstProcessor" />
-            </services>
-            <monolog:config>
-                <monolog:handler
-                    name="file"
-                    type="stream"
-                    level="debug"
-                    formatter="my_formatter"
-                >
-                    <monolog:processor callback="Acme\MyBundle\MySecondProcessor::process" />
-                </monolog:handler />
-                <monolog:processor callback="@my_processor" />
-                <monolog:processor callback="@monolog.processor.web" />
-            </monolog:config>
-        </container>
-
-.. tip::
-
-    If you need some dependencies in your processor you can define a
-    service and implement the ``__invoke`` method on the class to make
-    it callable. You can then add it in the processor stack.
+Processors are configured using the ``monolog.processor`` DIC tag. See the
+:ref:`reference about it<dic_tags-monolog-processor>`.
 
 Adding a Session/Request Token
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Sometimes it is hard to tell which entries in the log belong to which session
-and/or request. The following example will add a unique token for each request.
+and/or request. The following example will add a unique token for each request
+using a processor.
 
 .. code-block:: php
 
@@ -239,7 +189,7 @@ and/or request. The following example will add a unique token for each request.
             $this->session = $session;
         }
 
-        public function __invoke(array $record)
+        public function processRecord(array $record)
         {
             if (null === $this->token) {
                 try {
@@ -268,6 +218,8 @@ and/or request. The following example will add a unique token for each request.
             monolog.processor.session_request:
                 class: Acme\MyBundle\SessionRequestProcessor
                 arguments:  [ @session ]
+                tags:
+                    - { name: monolog.processor, method: processRecord }
 
         monolog:
             handlers:
@@ -276,7 +228,6 @@ and/or request. The following example will add a unique token for each request.
                     path: %kernel.logs_dir%/%kernel.environment%.log
                     level: debug
                     formatter: monolog.formatter.session_request
-            processors: [ @monolog.processor.session_request ]
 
 .. note::
 
