@@ -15,6 +15,7 @@ a list of given choices.
 |                | - ``message``                                                         |
 |                | - ``minMessage``                                                      |
 |                | - ``maxMessage``                                                      |
+|                | - ``strict``                                                          |
 +----------------+-----------------------------------------------------------------------+
 | Default Option | ``choices``                                                           |
 +----------------+-----------------------------------------------------------------------+
@@ -69,6 +70,9 @@ Available Options
 *   ``maxMessage``: [type: string, default: `You should select at most {{ limit }} choices`]
     This is the validation error message that's displayed when the user chooses
     too many options per the ``max`` option.
+
+*   ``strict``: [type: bool, default: ``false``]
+    If true, the validator will also check the type of the input value.
 
 Basic Usage
 -----------
