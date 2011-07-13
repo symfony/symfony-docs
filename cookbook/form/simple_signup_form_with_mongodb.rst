@@ -234,7 +234,7 @@ controller for displaying the registration form::
         }
     }
 
-and it's template:
+and its template:
 
 .. code-block:: html+jinja
 
