@@ -138,7 +138,7 @@ All classes and files must follow the Symfony2 coding :doc:`standards
 Some classes should be seen as facades and should be as short as possible, like
 Commands, Helpers, Listeners, and Controllers.
 
-Classes that connects to the Event Dispatcher should be suffixed with
+Classes that connect to the Event Dispatcher should be suffixed with
 ``Listener``.
 
 Exceptions classes should be stored in an ``Exception`` sub-namespace.

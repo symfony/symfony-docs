@@ -318,7 +318,7 @@ configuration based on some of the input values. For example, suppose you
 have a service who's first argument is some string "type" that it will use
 internally. You'd like this to be easily configured by the bundle user, so
 in your service configuration file (e.g. ``services.xml``), you define this
-service and use a blank parameter - ``acme_hello.my_service_options`` - as
+service and use a blank parameter - ``acme_hello.my_service_type`` - as
 its first argument:
 
 .. code-block:: xml
