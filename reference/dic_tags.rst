@@ -179,7 +179,7 @@ of your configuration, and tag it with ``routing.loader``:
 Using a custom logging channel with Monolog
 -------------------------------------------
 
-Monolog allows to share the handlers between several logging channels.
+Monolog allows you to share its handlers between several logging channels.
 The logger service uses the channel ``app`` but you can change the
 channel when injecting the logger in a service.
 
@@ -217,13 +217,13 @@ channel when injecting the logger in a service.
 Adding a processor for Monolog
 ------------------------------
 
-Monolog allows to add processors in the logger or in the handlers to add
-extra data in the records. A processor receives the record as argument and
-must return it after adding eventually some extra data in the ``extra``
-attribute of the record.
+Monolog allows you to add processors in the logger or in the handlers to add
+extra data in the records. A processor receives the record as an argument and
+must return it after adding some extra data in the ``extra`` attribute of
+the record.
 
-Let's see how you can use the built-in IntrospectionProcessor to add the file,
-the line, the class and the method where the logger was triggered.
+Let's see how you can use the built-in ``IntrospectionProcessor`` to add
+the file, the line, the class and the method where the logger was triggered.
 
 You can add a processor globally:
 
@@ -279,7 +279,7 @@ attribute:
         $definition->addTag('monolog.processor', array('handler' => 'firephp');
         $container->register('my_service', $definition);
 
-You can add also a processor for a specific logging channel by using the ``channel``
+You can also add a processor for a specific logging channel by using the ``channel``
 attribute. This will register the processor only for the ``security`` logging
 channel used in the Security component:
 
