@@ -459,6 +459,12 @@ This example is pretty trivial, but field guessing can be a major time saver.
 As you'll see later, adding Doctrine metadata can further improve the system's
 ability to guess field types.
 
+.. caution::
+
+    The guesser based on validation constraints does not take into account the
+    validation groups. If the guessed options are not correct, you can always
+    override them as you see fit.
+
 .. index::
    single: Forms; Rendering in a Template
 
