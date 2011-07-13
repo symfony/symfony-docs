@@ -136,7 +136,7 @@ set an authenticated token in the security context if successful.
                     if ($returnValue instanceof TokenInterface) {
                         return $this->securityContext->setToken($returnValue);
                     } else if ($returnValue instanceof Response) {
-                        return $event->setResponse($response);
+                        return $event->setResponse($returnValue);
                     }
                 } catch (AuthenticationException $e) {
                     // you might log something here
