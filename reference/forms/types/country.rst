@@ -22,13 +22,13 @@ you should just use the ``choice`` type directly.
 +-------------+-----------------------------------------------------------------------+
 | Rendered as | can be various tags (see :ref:`forms-reference-choice-tags`)          |
 +-------------+-----------------------------------------------------------------------+
-| Inherited   | - ``multiple``                                                        |
-| options     | - ``expanded``                                                        |
-|             | - ``preferred_choices``                                               |
-|             | - ``error_bubbling``                                                  |
-|             | - ``required``                                                        |
-|             | - ``label``                                                           |
-|             | - ``read_only``                                                       |
+| Inherited   | - `multiple`_                                                         |
+| options     | - `expanded`_                                                         |
+|             | - `preferred_choices`_                                                |
+|             | - `error_bubbling`_                                                   |
+|             | - `required`_                                                         |
+|             | - `label`_                                                            |
+|             | - `read_only`_                                                        |
 +-------------+-----------------------------------------------------------------------+
 | Parent type | :doc:`choice</reference/forms/types/choice>`                          |
 +-------------+-----------------------------------------------------------------------+

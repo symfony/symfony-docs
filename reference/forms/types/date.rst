@@ -8,26 +8,26 @@ A field that allows the user to modify date information via a variety of
 different HTML elements.
 
 The underlying data used for this field type can be a ``DateTime`` object,
-a string, a timestamp or an array. As long as the ``input`` option is set
-correctly, the field will take care of all of the details (see the ``input`` option).
+a string, a timestamp or an array. As long as the ``input`_ option is set
+correctly, the field will take care of all of the details.
 
-The field can be rendered as a single text box or three select boxes (month,
-day, and year).
+The field can be rendered as a single text box, three text boxes (month,
+day, and year) or three select boxes (see the `widget_` option).
 
 +----------------------+-----------------------------------------------------------------------------+
 | Underlying Data Type | can be ``DateTime``, string, timestamp, or array (see the ``input`` option) |
 +----------------------+-----------------------------------------------------------------------------+
 | Rendered as          | single text box or three select fields                                      |
 +----------------------+-----------------------------------------------------------------------------+
-| Options              | - ``widget``                                                                |
-|                      | - ``input``                                                                 |
-|                      | - ``years``                                                                 |
-|                      | - ``months``                                                                |
-|                      | - ``days``                                                                  |
-|                      | - ``format``                                                                |
-|                      | - ``pattern``                                                               |
-|                      | - ``data_timezone``                                                         |
-|                      | - ``user_timezone``                                                         |
+| Options              | - `widget`_                                                                 |
+|                      | - `input`_                                                                  |
+|                      | - `years`_                                                                  |
+|                      | - `months`_                                                                 |
+|                      | - `days`_                                                                   |
+|                      | - `format`_                                                                 |
+|                      | - `pattern`_                                                                |
+|                      | - `data_timezone`_                                                          |
+|                      | - `user_timezone`_                                                          |
 +----------------------+-----------------------------------------------------------------------------+
 | Parent type          | ``field`` (if text), ``form`` otherwise                                     |
 +----------------------+-----------------------------------------------------------------------------+
@@ -65,8 +65,8 @@ you'd need to set ``input`` to ``timestamp``:
 The field also supports an ``array`` and ``string`` as valid ``input`` option
 values.
 
-Options
--------
+Field Options
+-------------
 
 .. include:: /reference/forms/types/options/date_widget.rst.inc
 

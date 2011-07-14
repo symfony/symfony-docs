@@ -9,26 +9,26 @@ entity. For example, if you have a ``Category`` entity, you could use this
 field to display a ``select`` field of all, or some, of the ``Category``
 objects from the database.
 
-+----------------------+------------------------------------------------------------------+
-| Underlying Data Type | An array of entity "identifiers" (e.g. an array of selected ids) |
-+----------------------+------------------------------------------------------------------+
-| Rendered as          | can be various tags (see :ref:`forms-reference-choice-tags`)     |
-+----------------------+------------------------------------------------------------------+
-| Options              | - ``class``                                                      |
-|                      | - ``property``                                                   |
-|                      | - ``query_builder``                                              |
-|                      | - ``multiple``                                                   |
-|                      | - ``expanded``                                                   |
-|                      | - ``preferred_choices``                                          |
-|                      | - ``required``                                                   |
-|                      | - ``label``                                                      |
-|                      | - ``read_only``                                                  |
-|                      | - ``error_bubbling``                                             |
-+----------------------+------------------------------------------------------------------+
-| Parent type          | :doc:`choice</reference/forms/types/choice>`                     |
-+----------------------+------------------------------------------------------------------+
-| Class                | :class:`Symfony\\Bridge\\Doctrine\\Form\\Type\\EntityType`       |
-+----------------------+------------------------------------------------------------------+
++-------------+------------------------------------------------------------------+
+| Rendered as | can be various tags (see :ref:`forms-reference-choice-tags`)     |
++-------------+------------------------------------------------------------------+
+| Options     | - `class`_                                                       |
+|             | - `property`_                                                    |
+|             | - `query_builder`_                                               |
+|             | - `em`_                                                          |
++-------------+------------------------------------------------------------------+
+| Inherited   | - `required`_                                                    |
+| options     | - `label`_                                                       |
+|             | - `multiple`_                                                    |
+|             | - `expanded`_                                                    |
+|             | - `preferred_choices`_                                           |
+|             | - `read_only`_                                                   |
+|             | - `error_bubbling`_                                              |
++-------------+------------------------------------------------------------------+
+| Parent type | :doc:`choice</reference/forms/types/choice>`                     |
++-------------+------------------------------------------------------------------+
+| Class       | :class:`Symfony\\Bridge\\Doctrine\\Form\\Type\\EntityType`       |
++-------------+------------------------------------------------------------------+
 
 Basic Usage
 -----------
@@ -66,29 +66,56 @@ option. The easiest way to use the option is as follows::
 
 .. include:: /reference/forms/types/options/empty_value.rst.inc
 
-Options
--------
+Field Options
+-------------
 
-*   ``class`` **required** [type: string]
-    The class of your entity (e.g. ``Acme\StoreBundle\Entity\Category``).
+class
+~~~~~
 
-*   ``property`` [type: string]
-    This is the property that should be used for displaying the entities
-    as text in the HTML element. If left blank, the entity object will be
-    cast into a string and so must have a ``__toString()`` method.
+**type**: ``string`` **required**
 
-*   ``query_builder`` [type: ``Doctrine\ORM\QueryBuilder`` or a Closure]
-    If specified, this is used to query the subset of options (and their
-    order) that should be used for the field. The value of this option can
-    either be a ``QueryBuilder`` object or a Closure. If using a Closure,
-    it should take a single argument, which is the ``EntityRepository`` of
-    the entity.
+The class of your entity (e.g. ``Acme\StoreBundle\Entity\Category``).
+
+property
+~~~~~~~~
+
+**type**: ``string``
+
+This is the property that should be used for displaying the entities
+as text in the HTML element. If left blank, the entity object will be
+cast into a string and so must have a ``__toString()`` method.
+
+query_builder
+~~~~~~~~~~~~~
+
+**type**: ``Doctrine\ORM\QueryBuilder`` or a Closure
+
+If specified, this is used to query the subset of options (and their
+order) that should be used for the field. The value of this option can
+either be a ``QueryBuilder`` object or a Closure. If using a Closure,
+it should take a single argument, which is the ``EntityRepository`` of
+the entity.
+
+em
+~~
+
+**type**: ``string`` **default**: the default entity manager
+
+If specified, the specified entity manager will be used to load the choices
+instead of the default entity manager.
+
+Inherited options
+-----------------
+
+These options inherit from the :doc:`choice</reference/forms/types/choice>` type:
 
 .. include:: /reference/forms/types/options/multiple.rst.inc
 
 .. include:: /reference/forms/types/options/expanded.rst.inc
 
 .. include:: /reference/forms/types/options/preferred_choices.rst.inc
+
+These options inherit from the :doc:`field</reference/forms/types/field>` type:
 
 .. include:: /reference/forms/types/options/required.rst.inc
 

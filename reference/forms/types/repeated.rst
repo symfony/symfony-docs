@@ -17,9 +17,9 @@ accuracy.
 |             | - `first_name`_                                                        |
 |             | - `second_name`_                                                       |
 +-------------+------------------------------------------------------------------------+
-| Inherited   | - ``invalid_message_template``                                         |
-| options     | - ``invalid_message_parameters``                                       |
-|             | - ``error_bubbling``                                                   |
+| Inherited   | - `invalid_message_template`_                                          |
+| options     | - `invalid_message_parameters`_                                        |
+|             | - `error_bubbling`_                                                    |
 +-------------+------------------------------------------------------------------------+
 | Parent type | :doc:`field</reference/forms/types/form>`                              |
 +-------------+------------------------------------------------------------------------+

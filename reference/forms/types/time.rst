@@ -6,23 +6,23 @@ time Field Type
 
 A field to capture time input.
 
-This can be rendered as a text field or a series of choice fields. The underlying
-data can be stored as a ``DateTime`` object, a string, a timestamp or an
-array.
+This can be rendered as a text field, a series of text fields (e.g. hour,
+minute, second) or a series of select fields. The underlying data can be stored
+as a ``DateTime`` object, a string, a timestamp or an array.
 
 +----------------------+-----------------------------------------------------------------------------+
 | Underlying Data Type | can be ``DateTime``, string, timestamp, or array (see the ``input`` option) |
 +----------------------+-----------------------------------------------------------------------------+
 | Rendered as          | can be various tags (see below)                                             |
 +----------------------+-----------------------------------------------------------------------------+
-| Options              | - ``widget``                                                                |
-|                      | - ``input``                                                                 |
-|                      | - ``with_seconds``                                                          |
-|                      | - ``hours``                                                                 |
-|                      | - ``minutes``                                                               |
-|                      | - ``seconds``                                                               |
-|                      | - ``data_timezone``                                                         |
-|                      | - ``user_timezone``                                                         |
+| Options              | - `widget`_                                                                 |
+|                      | - `input`_                                                                  |
+|                      | - `with_seconds`_                                                           |
+|                      | - `hours`_                                                                  |
+|                      | - `minutes`_                                                                |
+|                      | - `seconds`_                                                                |
+|                      | - `data_timezone`_                                                          |
+|                      | - `user_timezone`_                                                          |
 +----------------------+-----------------------------------------------------------------------------+
 | Parent type          | form                                                                        |
 +----------------------+-----------------------------------------------------------------------------+
@@ -60,22 +60,38 @@ you'd need to set ``input`` to ``timestamp``:
 The field also supports an ``array`` and ``string`` as valid ``input`` option
 values.
 
-Options
--------
+Field Options
+-------------
 
-*   ``widget`` [type: string, default: ``choice``]
-    Type of widget used for this form type.  Can be ``text`` or ``choice``.  
-    
-      * ``text``: renders a single input of type text.  User's input is validated based on the ``format`` option.
-      * ``choice``: renders two select inputs (three select inputs if ``with_seconds`` is set to ``true``).
+widget
+~~~~~~
 
-*   ``input`` [type: string, default: ``datetime``]
-    The value of the input for the widget.  Can be ``string``, ``datetime`` or ``array``.  The form type input value will be returned 
-    in the format specified.  The value "12:30" with the ``input`` option set to ``array`` would return:
-    
-    .. code-block:: php
+**type**: ``string`` **default**: ``choice``
 
-        array('hour' => '12', 'minute' => '30' )
+The basic way in which this field should be rendered. Can be one of the following:
+
+* ``choice``: renders two (or three if `with_seconds`_ is true) select inputs.
+
+* ``text``: renders a two or three text inputs (hour, minute, second).
+
+* ``single_text``: renders a single input of type text. User's input is validated
+based on the `format`_ option.
+
+input
+~~~~~
+
+**type**: ``string`` **default**: ``datetime``
+
+The format of the *input* data - i.e. the format that the date is stored on
+your underlying object. Valid values are:
+
+* ``string`` (e.g. ``12:17:26``)
+* ``datetime`` (a ``DateTime`` object)
+* ``array`` (e.g. ``array(12, 17, 26)``)
+* ``timestamp`` (e.g. ``1307232000``)
+
+The value that comes back from the form will also be normalized back into
+this format.
 
 .. include:: /reference/forms/types/options/with_seconds.rst.inc
 

@@ -15,51 +15,70 @@ data can be a ``DateTime`` object, a string, a timestamp or an array.
 +----------------------+-----------------------------------------------------------------------------+
 | Rendered as          | single text box or three select fields                                      |
 +----------------------+-----------------------------------------------------------------------------+
-| Options              | - ``date_widget``                                                           |
-|                      | - ``time_widget``                                                           |
-|                      | - ``input``                                                                 |
-|                      | - ``years``                                                                 |
-|                      | - ``months``                                                                |
-|                      | - ``days``                                                                  |
-|                      | - ``format``                                                                |
-|                      | - ``pattern``                                                               |
-|                      | - ``data_timezone``                                                         |
-|                      | - ``user_timezone``                                                         |
+| Options              | - `date_widget`_                                                            |
+|                      | - `time_widget`_                                                            |
+|                      | - `input`_                                                                  |
+|                      | - `date_format`_                                                            |
+|                      | - `years`_                                                                  |
+|                      | - `months`_                                                                 |
+|                      | - `days`_                                                                   |
 +----------------------+-----------------------------------------------------------------------------+
 | Parent type          | :doc:`form</reference/forms/types/form>`                                    |
 +----------------------+-----------------------------------------------------------------------------+
 | Class                | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\DateTimeType`      |
 +----------------------+-----------------------------------------------------------------------------+
 
-Options
+Field Options
 -------
 
-*   ``date_widget`` [type: string, default: choice]
-    Defines the ``widget`` option for the :doc:`date</reference/forms/types/date>` type
+date_widget
+~~~~~~~~~~~
 
-*   ``time_widget`` [type: string, default: choice]
-    Defines the ``widget`` option for the :doc:`time</reference/forms/types/time>` type
+**type**: ``string`` **default**: ``choice``
 
-*   ``input`` [type: string, default: ``datetime``]
-    The value of the input for the widget.  Can be ``string``, ``datetime``
-    or ``array``.  The form type input value will be returned in the format
-    specified.  The input of ``April 21th, 2011 18:15:30`` as an array would return:
+Defines the ``widget`` option for the :doc:`date</reference/forms/types/date>` type
 
-    .. code-block:: php
+time_widget
+~~~~~~~~~~~
 
-        array('month' => 4, 'day' => 21, 'year' => 2011, 'hour' => 18, 'minute' => 15, 'second' => 30)
+**type**: ``string`` **default**: ``choice``
 
-.. include:: /reference/forms/types/options/years.rst.inc
+Defines the ``widget`` option for the :doc:`time</reference/forms/types/time>` type
 
-.. include:: /reference/forms/types/options/months.rst.inc
+input
+~~~~~
 
-.. include:: /reference/forms/types/options/days.rst.inc
+**type**: ``string`` **default**: ``datetime``
+
+The format of the *input* data - i.e. the format that the date is stored on
+your underlying object. Valid values are:
+
+* ``string`` (e.g. ``2011-06-05 12:15:00``)
+* ``datetime`` (a ``DateTime`` object)
+* ``array`` (e.g. ``array(2011, 06, 05, 12, 15, 0)``)
+* ``timestamp`` (e.g. ``1307276100``)
+
+The value that comes back from the form will also be normalized back into
+this format.
+
+date_format
+~~~~~~~~~~~
+
+**type**: ``integer`` or ``string`` **default**: ``IntlDateFormatter::MEDIUM``
+
+Defines the ``format`` option that will be passed down to the date field.
 
 .. include:: /reference/forms/types/options/hours.rst.inc
 
 .. include:: /reference/forms/types/options/minutes.rst.inc
 
 .. include:: /reference/forms/types/options/seconds.rst.inc
+
+.. include:: /reference/forms/types/options/years.rst.inc
+
+.. include:: /reference/forms/types/options/months.rst.inc
+
+.. include:: /reference/forms/types/options/days.rst.inc
 
 .. include:: /reference/forms/types/options/with_seconds.rst.inc
 
