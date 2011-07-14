@@ -1,3 +1,6 @@
+.. index::
+   single: Forms; Twig form function reference
+
 Twig Template Form Function Reference
 =====================================
 

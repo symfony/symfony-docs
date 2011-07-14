@@ -122,8 +122,11 @@ of `Creating Messages`_ in great detail in its documentation.
 
 .. tip::
 
-    Read the ":doc:`gmail`" recipe if you want to use Gmail as a transport in
-    the development environment.
+    Several other cookbook articles are available related to sending emails
+    in Symfony2:
+
+    * :doc:`gmail`
+    * :doc:`email/dev_environment`
 
 .. _`Swiftmailer`: http://www.swiftmailer.org/
 .. _`Creating Messages`: http://swiftmailer.org/docs/messages

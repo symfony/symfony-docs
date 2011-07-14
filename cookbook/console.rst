@@ -18,13 +18,13 @@ add the following to it::
     // src/Acme/DemoBundle/Command/GreetCommand.php
     namespace Acme\DemoBundle\Command;
 
-    use Symfony\Bundle\FrameworkBundle\Command\Command;
+    use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
     use Symfony\Component\Console\Input\InputArgument;
     use Symfony\Component\Console\Input\InputInterface;
     use Symfony\Component\Console\Input\InputOption;
     use Symfony\Component\Console\Output\OutputInterface;
 
-    class GreetCommand extends Command
+    class GreetCommand extends ContainerAwareCommand
     {
         protected function configure()
         {
@@ -74,6 +74,24 @@ You can also use the ``--yell`` option to make everything uppercase:
 This prints::
 
     HELLO FABIEN
+
+Coloring the Output
+~~~~~~~~~~~~~~~~~~~
+
+Whenever you output text, you can surround the text with tags to color its
+output. For example::
+
+    // green text
+    $output->writeln('<info>foo</info>');
+
+    // yellow text
+    $output->writeln('<comment>foo</comment>');
+
+    // black text on a cyan background
+    $output->writeln('<question>foo</question>');
+
+    // white text on a red background
+    $output->writeln('<error>foo</error>');
 
 Using Command Arguments
 -----------------------
@@ -155,6 +173,30 @@ will work:
     app/console demo:greet Fabien --iterations=5 --yell
     app/console demo:greet Fabien --yell --iterations=5
 
+Asking the User for Information
+-------------------------------
+
+When creating commands, you have the ability to collect more information
+from the user by asking him/her questions. For example, suppose you want
+to confirm an action before actually executing it. Add the following to your
+command::
+
+    $dialog = $this->getHelperSet()->get('dialog');
+    if (!$dialog->askConfirmation($output, '<question>Continue with this action?</question>', false)) {
+        return;
+    }
+
+In this case, the user will be asked "Continue with this action", and unless
+they answer with ``y``, the task will stop running. The third argument to
+``askConfirmation`` is the default value to return if the user doesn't enter
+any input.
+
+You can also ask questions with more than a simple yes/no answer. For example,
+if you needed to know the name of something, you might do the following::
+
+    $dialog = $this->getHelperSet()->get('dialog');
+    $name = $dialog->ask($output, 'Please enter the name of the widget', 'foo');
+
 Testing Commands
 ----------------
 
@@ -195,16 +237,16 @@ console.
 Getting Services from the Service Container
 -------------------------------------------
 
-By using ``Symfony\Bundle\FrameworkBundle\Command\Command`` as the base class
-for the command (instead of the more basic
-``Symfony\Component\Console\Command\Command``), you have access to the service
-container. In other words, you have access to any configured service. For
-example, you could easily extend the task to be translatable::
+By using :class:`Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand` 
+as the base class for the command (instead of the more basic 
+:class:`Symfony\Component\Console\Command\Command`), you have access to the 
+service container. In other words, you have access to any configured service.
+For example, you could easily extend the task to be translatable::
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $name = $input->getArgument('name');
-        $translator = $this->container->get('translator');
+        $translator = $this->getContainer()->get('translator');
         if ($name) {
             $output->writeln($translator->trans('Hello %name%!', array('%name%' => $name)));
         } else {

@@ -18,8 +18,6 @@ Configuration Reference
                     level:               ERROR
                     bubble:              false
                     formatter:           my_formatter
-                    processors:
-                        - some_callable
                 main:
                     type:                fingerscrossed
                     action_level:        WARNING
@@ -48,13 +46,10 @@ Configuration Reference
                     from_email:           ~
                     to_email:             ~
                     subject:              ~
-                    email_prototype:      ~
+                    email_prototype:
+                        id:     ~ # Required (when the email_prototype is used)
+                        method: ~
                     formatter:            ~
-                    processors:           []
-            processors:
-
-                # Example:
-                - @my_processor
 
     .. code-block:: xml
 
@@ -72,9 +67,7 @@ Configuration Reference
                     level="error"
                     bubble="false"
                     formatter="my_formatter"
-                >
-                    <monolog:processor callback="some_callable" />
-                </monolog:handler>
+                />
                 <monolog:handler
                     name="main"
                     type="fingerscrossed"
@@ -86,7 +79,6 @@ Configuration Reference
                     type="service"
                     id="my_handler"
                 />
-                <monolog:processor callback="@my_processor" />
             </monolog:config>
         </container>
 

@@ -57,7 +57,7 @@ authentication (i.e. the old-school username/password box):
 
             encoders:
                 Symfony\Component\Security\Core\User\User: plaintext
-    
+
     .. code-block:: xml
 
         <!-- app/config/config.xml -->
@@ -83,10 +83,10 @@ authentication (i.e. the old-school username/password box):
 
                 <encoder class="Symfony\Component\Security\Core\User\User" algorithm="plaintext" />
             </config>
-        </srv:container>    
+        </srv:container>
 
     .. code-block:: php
-    
+
         // app/config/config.php
         $container->loadFromExtension('security', array(
             'firewalls' => array(
@@ -147,14 +147,14 @@ Firewalls (Authentication)
 When a user makes a request to a URL that's protected by a firewall, the
 security system is activated. The job of the firewall is to determine whether
 or not the user needs to be authenticated, and if he does, to send a response
-back to the user initiating the authentication process. 
+back to the user initiating the authentication process.
 
 A firewall is activated when the URL of an incoming request matches the configured
 firewall's regular expression ``pattern`` config value. In this example, the
 ``pattern`` (``^/``) will match *every* incoming request. The fact that the
 firewall is activated does *not* mean, however, that the HTTP authentication
 username and password box is displayed for every URL. For example, any user
-can access ``/foo`` without being prompted to authenticate. 
+can access ``/foo`` without being prompted to authenticate.
 
 .. image:: /images/book/security_anonymous_user_access.png
    :align: center
@@ -238,7 +238,7 @@ the request flow is always the same:
     But with HTTP authentication, the user submits its credentials directly
     to the original URL (e.g. ``/admin/foo``) and then the page is returned
     to the user in that same request (i.e. no redirect).
-    
+
     These types of idiosyncrasies shouldn't cause you any problems, but they're
     good to keep in mind.
 
@@ -277,7 +277,7 @@ First, enable form login under your firewall:
                     form_login:
                         login_path:  /login
                         check_path:  /login_check
-    
+
     .. code-block:: xml
 
         <!-- app/config/config.xml -->
@@ -292,10 +292,10 @@ First, enable form login under your firewall:
                     <form-login login_path="/login" check_path="/login_check" />
                 </firewall>
             </config>
-        </srv:container>    
+        </srv:container>
 
     .. code-block:: php
-    
+
         // app/config/config.php
         $container->loadFromExtension('security', array(
             'firewalls' => array(
@@ -315,19 +315,19 @@ First, enable form login under your firewall:
     If you don't need to customize your ``login_path`` or ``check_path``
     values (the values used here are the default values), you can shorten
     your configuration:
-    
+
     .. configuration-block::
-    
+
         .. code-block:: yaml
-        
+
             form_login: ~
-        
+
         .. code-block:: xml
-        
+
             <form-login />
-        
+
         .. code-block:: php
-        
+
             'form_login' => array(),
 
 Now, when the security system initiates the authentication process, it will
@@ -385,7 +385,7 @@ login form submission (i.e. ``/login_check``):
     can use it to generate the form submission URL in the login template below.
 
 Notice that the name of the ``login`` route isn't important. What's important
-is that the URL of the route (``/login``) matches the ``check_path`` config
+is that the URL of the route (``/login``) matches the ``login_path`` config
 value, as that's where the security system will redirect users that need
 to login.
 
@@ -519,7 +519,7 @@ see :doc:`/cookbook/security/form_login`.
 .. sidebar:: Avoid Common Pitfalls
 
     When setting up your login form, watch out for a few common pitfalls.
-    
+
     **1. Create the correct routes**
 
     First, be sure that you've defined the ``/login`` and ``/login_check``
@@ -582,7 +582,7 @@ see :doc:`/cookbook/security/form_login`.
     Also, if your firewall does *not* allow for anonymous users, you'll need
     to create a special firewall that allows anonymous users for the login
     page:
-    
+
     .. configuration-block::
 
         .. code-block:: yaml
@@ -593,16 +593,16 @@ see :doc:`/cookbook/security/form_login`.
                     anonymous:  ~
                 secured_area:
                     pattern:    ^/
-                    login_form: ~
+                    form_login: ~
 
         .. code-block:: xml
 
             <firewall name="login_firewall" pattern="^/login$">
                 <anonymous />
-            </firewall>            
+            </firewall>
             <firewall name="secured_area" pattern="^/">
-                <login_form />
-            </firewall> 
+                <form_login />
+            </firewall>
 
         .. code-block:: php
 
@@ -618,7 +618,7 @@ see :doc:`/cookbook/security/form_login`.
             ),
 
     **3. Be sure ``/login_check`` is behind a firewall**
-    
+
     Next, make sure that your ``check_path`` URL (e.g. ``/login_check``)
     is behind the firewall you're using for your form login (in this example,
     the single firewall matches *all* URLs, including ``/login_check``). If
@@ -673,7 +673,7 @@ You can define as many URL patterns as you need - each is a regular expression.
             access_control:
                 - { path: ^/admin/users, roles: ROLE_SUPER_ADMIN }
                 - { path: ^/admin, roles: ROLE_ADMIN }
-    
+
     .. code-block:: xml
 
         <!-- app/config/config.xml -->
@@ -683,10 +683,10 @@ You can define as many URL patterns as you need - each is a regular expression.
                 <rule path="^/admin/users" role="ROLE_SUPER_ADMIN" />
                 <rule path="^/admin" role="ROLE_ADMIN" />
             </access-control>
-        </config> 
+        </config>
 
     .. code-block:: php
-    
+
         // app/config/config.php
         $container->loadFromExtension('security', array(
             // ...
@@ -743,7 +743,7 @@ authorization from inside a controller:
 
 .. _book-security-securing-controller-annotations:
 
-You can also choose to install and use the optional ``SecurityExtraBundle``,
+You can also choose to install and use the optional ``JMSSecurityExtraBundle``,
 which can secure your controller using annotations:
 
 .. code-block:: php
@@ -758,7 +758,7 @@ which can secure your controller using annotations:
         // ...
     }
 
-For more information, see the `SecurityExtraBundle`_ documentation. If you're
+For more information, see the `JMSSecurityExtraBundle`_ documentation. If you're
 using Symfony's Standard Distribution, this bundle is available by default.
 If not, you can easily download and install it.
 
@@ -829,7 +829,7 @@ In fact, you've seen this already in the example in this chapter.
                     users:
                         ryan:  { password: ryanpass, roles: 'ROLE_USER' }
                         admin: { password: kitten, roles: 'ROLE_ADMIN' }
-    
+
     .. code-block:: xml
 
         <!-- app/config/config.xml -->
@@ -842,7 +842,7 @@ In fact, you've seen this already in the example in this chapter.
         </config>
 
     .. code-block:: php
-    
+
         // app/config/config.php
         $container->loadFromExtension('security', array(
             // ...
@@ -869,9 +869,9 @@ by Symfony (:class:`Symfony\\Component\\Security\\Core\\User\\User`).
     If your username is completely numeric (e.g. ``77``) or contains a dash
     (e.g. ``user-name``), you should use that alternative syntax when specifying
     users in YAML:
-    
+
     .. code-block:: yaml
-    
+
         users:
             - { name: 77, password: pass, roles: 'ROLE_USER' }
             - { name: user-name, password: pass, roles: 'ROLE_USER' }
@@ -913,7 +913,7 @@ be stored in the database.
          * @ORM\Column(type="string", length="255")
          */
         protected $username;
-        
+
         // ...
     }
 
@@ -926,7 +926,8 @@ as it implements this interface.
 
     The user object will be serialized and saved in the session during requests,
     therefore it is recommended that you `implement the \Serializable interface`_
-    in your user object.
+    in your user object. This is especially important if your ``User`` class
+    has a parent class with private properties.
 
 Next, configure an ``entity`` user provider, and point it to your ``User``
 class:
@@ -1001,7 +1002,7 @@ do the following:
                     algorithm:   sha1
                     iterations: 1
                     encode_as_base64: false
-    
+
     .. code-block:: xml
 
         <!-- app/config/config.xml -->
@@ -1016,7 +1017,7 @@ do the following:
         </config>
 
     .. code-block:: php
-    
+
         // app/config/config.php
         $container->loadFromExtension('security', array(
             // ...
@@ -1058,7 +1059,7 @@ configure the encoder for that user:
 
             encoders:
                 Acme\UserBundle\Entity\User: sha512
-    
+
     .. code-block:: xml
 
         <!-- app/config/config.xml -->
@@ -1069,7 +1070,7 @@ configure the encoder for that user:
         </config>
 
     .. code-block:: php
-    
+
         // app/config/config.php
         $container->loadFromExtension('security', array(
             // ...
@@ -1119,7 +1120,7 @@ look like:
     Anonymous users are technically authenticated, meaning that the ``isAuthenticated()``
     method of an anonymous user object will return true. To check if your
     user is actually authenticated, check for the ``IS_AUTHENTICATED_FULLY``
-    role. 
+    role.
 
 Using Multiple User Providers
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -1189,7 +1190,7 @@ the user from both the ``in_memory`` and ``user_db`` providers.
     If you have no reasons to separate your ``in_memory`` users from your
     ``user_db`` users, you can accomplish this even more easily by combining
     the two sources into a single provider:
-    
+
     .. configuration-block::
 
         .. code-block:: yaml
@@ -1244,7 +1245,7 @@ the first provider is always used:
                         realm: "Secured Demo Area"
                         provider: in_memory
                     form_login: ~
-    
+
     .. code-block:: xml
 
         <!-- app/config/config.xml -->
@@ -1257,7 +1258,7 @@ the first provider is always used:
         </config>
 
     .. code-block:: php
-    
+
         // app/config/config.php
         $container->loadFromExtension('security', array(
             'firewalls' => array(
@@ -1360,7 +1361,7 @@ the firewall can handle this automatically for you when you activate the
                         path:   /logout
                         target: /
             # ...
-    
+
     .. code-block:: xml
 
         <!-- app/config/config.xml -->
@@ -1373,7 +1374,7 @@ the firewall can handle this automatically for you when you activate the
         </config>
 
     .. code-block:: php
-    
+
         // app/config/config.php
         $container->loadFromExtension('security', array(
             'firewalls' => array(
@@ -1395,15 +1396,15 @@ them, you can omit them entirely and shorten your configuration:
 .. configuration-block::
 
     .. code-block:: yaml
-    
+
         logout: ~
-    
+
     .. code-block:: xml
-    
+
         <logout />
-    
+
     .. code-block:: php
-    
+
         'logout' => array(),
 
 Note that you will *not* need to implement a controller for the ``/logout``
@@ -1456,13 +1457,13 @@ the built-in helper function:
 .. configuration-block::
 
     .. code-block:: html+jinja
-    
+
         {% if is_granted('ROLE_ADMIN') %}
             <a href="...">Delete</a>
         {% endif %}
 
     .. code-block:: html+php
-        
+
         <?php if ($view['security']->isGranted('ROLE_ADMIN')): ?>
             <a href="...">Delete</a>
         <?php endif; ?>
@@ -1658,7 +1659,7 @@ Learn more from the Cookbook
 * :doc:`/cookbook/security/remember_me`
 
 .. _`security component`: https://github.com/symfony/Security
-.. _`SecurityExtraBundle`: https://github.com/schmittjoh/SecurityExtraBundle
-.. _`FOSUserBundle`: https://github.com/FriendsOfSymfony/UserBundle
+.. _`JMSSecurityExtraBundle`: https://github.com/schmittjoh/JMSSecurityExtraBundle
+.. _`FOSUserBundle`: https://github.com/FriendsOfSymfony/FOSUserBundle
 .. _`implement the \Serializable interface`: http://php.net/manual/en/class.serializable.php
 .. _`functions-online.com`: http://www.functions-online.com/sha1.html

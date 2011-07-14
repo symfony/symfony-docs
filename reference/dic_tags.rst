@@ -4,11 +4,18 @@ The Dependency Injection Tags
 Tags:
 
 * ``data_collector``
+* ``form.type``
+* ``form.type_extension``
+* ``form.type_guesser``
+* ``kernel.cache_warmer``
 * ``kernel.event_listener``
+* ``monolog.logger``
+* ``monolog.processor``
 * ``templating.helper``
-* ``templating.renderer``
 * ``routing.loader``
+* ``translation.loader``
 * ``twig.extension``
+* ``validator.initializer``
 
 Enabling Custom PHP Template Helpers
 ------------------------------------
@@ -172,7 +179,7 @@ of your configuration, and tag it with ``routing.loader``:
 Using a custom logging channel with Monolog
 -------------------------------------------
 
-Monolog allows to share the handlers between several logging channels.
+Monolog allows you to share its handlers between several logging channels.
 The logger service uses the channel ``app`` but you can change the
 channel when injecting the logger in a service.
 
@@ -204,3 +211,101 @@ channel when injecting the logger in a service.
 
     This works only when the logger service is a constructor argument,
     not when it is injected through a setter.
+
+.. _dic_tags-monolog-processor:
+
+Adding a processor for Monolog
+------------------------------
+
+Monolog allows you to add processors in the logger or in the handlers to add
+extra data in the records. A processor receives the record as an argument and
+must return it after adding some extra data in the ``extra`` attribute of
+the record.
+
+Let's see how you can use the built-in ``IntrospectionProcessor`` to add
+the file, the line, the class and the method where the logger was triggered.
+
+You can add a processor globally:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        services:
+            my_service:
+                class: Monolog\Processor\IntrospectionProcessor
+                tags:
+                    - { name: monolog.processor }
+
+    .. code-block:: xml
+
+        <service id="my_service" class="Monolog\Processor\IntrospectionProcessor">
+            <tag name="monolog.processor" />
+        </service>
+
+    .. code-block:: php
+
+        $definition = new Definition('Monolog\Processor\IntrospectionProcessor');
+        $definition->addTag('monolog.processor');
+        $container->register('my_service', $definition);
+
+.. tip::
+
+    If your service is not a callable (using ``__invoke``) you can add the
+    ``method`` attribute in the tag to use a specific method.
+
+You can add also a processor for a specific handler by using the ``handler``
+attribute:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        services:
+            my_service:
+                class: Monolog\Processor\IntrospectionProcessor
+                tags:
+                    - { name: monolog.processor, handler: firephp }
+
+    .. code-block:: xml
+
+        <service id="my_service" class="Monolog\Processor\IntrospectionProcessor">
+            <tag name="monolog.processor" handler="firephp" />
+        </service>
+
+    .. code-block:: php
+
+        $definition = new Definition('Monolog\Processor\IntrospectionProcessor');
+        $definition->addTag('monolog.processor', array('handler' => 'firephp');
+        $container->register('my_service', $definition);
+
+You can also add a processor for a specific logging channel by using the ``channel``
+attribute. This will register the processor only for the ``security`` logging
+channel used in the Security component:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        services:
+            my_service:
+                class: Monolog\Processor\IntrospectionProcessor
+                tags:
+                    - { name: monolog.processor, channel: security }
+
+    .. code-block:: xml
+
+        <service id="my_service" class="Monolog\Processor\IntrospectionProcessor">
+            <tag name="monolog.processor" channel="security" />
+        </service>
+
+    .. code-block:: php
+
+        $definition = new Definition('Monolog\Processor\IntrospectionProcessor');
+        $definition->addTag('monolog.processor', array('channel' => 'security');
+        $container->register('my_service', $definition);
+
+.. note::
+
+    You cannot use both the ``handler`` and ``channel`` attributes for the
+    same tag as handlers are shared between all channels.

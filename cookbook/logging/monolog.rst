@@ -33,7 +33,7 @@ To log a message simply get the logger service from the container in
 your controller::
 
     $logger = $this->get('logger');
-    $logger->info('We just go the logger');
+    $logger->info('We just got the logger');
     $logger->err('An error occurred');
 
 .. tip::
@@ -117,7 +117,7 @@ The handler uses a ``Formatter`` to format the record before logging
 it. All Monolog handlers use an instance of
 ``Monolog\Formatter\LineFormatter`` by default but you can replace it
 easily. Your formatter must implement
-``Monolog\Formatter\LineFormatterInterface``.
+``Monolog\Formatter\FormatterInterface``.
 
 .. configuration-block::
 
@@ -161,62 +161,17 @@ Monolog allows to process the record before logging it to add some
 extra data. A processor can be applied for the whole handler stack or
 only for a specific handler.
 
-A processor is simply a callable receiving the record as first argument
-and a second argument which is either the logger or the handler
-depending of the level where the processor is called.
+A processor is simply a callable receiving the record as it's first argument.
 
-.. configuration-block::
-
-    .. code-block:: yaml
-
-        services:
-            my_processor:
-                class: Monolog\Processor\WebProcessor
-        monolog:
-            handlers:
-                file:
-                    type: stream
-                    level: debug
-                    processors:
-                        - Acme\MyBundle\MyProcessor::process
-            processors:
-                - @my_processor
-
-    .. code-block:: xml
-
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xmlns:monolog="http://symfony.com/schema/dic/monolog"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd
-                                http://symfony.com/schema/dic/monolog http://symfony.com/schema/dic/monolog/monolog-1.0.xsd">
-
-            <services>
-                <service id="my_processor" class="Monolog\Processor\WebProcessor" />
-            </services>
-            <monolog:config>
-                <monolog:handler
-                    name="file"
-                    type="stream"
-                    level="debug"
-                    formatter="my_formatter"
-                >
-                    <monolog:processor callback="Acme\MyBundle\MyProcessor::process" />
-                </monolog:handler />
-                <monolog:processor callback="@my_processor" />
-            </monolog:config>
-        </container>
-
-.. tip::
-
-    If you need some dependencies in your processor you can define a
-    service and implement the ``__invoke`` method on the class to make
-    it callable. You can then add it in the processor stack.
+Processors are configured using the ``monolog.processor`` DIC tag. See the
+:ref:`reference about it<dic_tags-monolog-processor>`.
 
 Adding a Session/Request Token
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Sometimes it is hard to tell which entries in the log belong to which session
-and/or request. The following example will add a unique token for each request.
+and/or request. The following example will add a unique token for each request
+using a processor.
 
 .. code-block:: php
 
@@ -234,7 +189,7 @@ and/or request. The following example will add a unique token for each request.
             $this->session = $session;
         }
 
-        public function __invoke(array $record)
+        public function processRecord(array $record)
         {
             if (null === $this->token) {
                 try {
@@ -263,6 +218,8 @@ and/or request. The following example will add a unique token for each request.
             monolog.processor.session_request:
                 class: Acme\MyBundle\SessionRequestProcessor
                 arguments:  [ @session ]
+                tags:
+                    - { name: monolog.processor, method: processRecord }
 
         monolog:
             handlers:
@@ -271,7 +228,6 @@ and/or request. The following example will add a unique token for each request.
                     path: %kernel.logs_dir%/%kernel.environment%.log
                     level: debug
                     formatter: monolog.formatter.session_request
-            processors: [ @monolog.processor.session_request ]
 
 .. note::
 

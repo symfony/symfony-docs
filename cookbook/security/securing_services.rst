@@ -39,15 +39,15 @@ role. Before you add security, the class looks something like this:
         // ...
     }
 
-Your goal is to check the user's role when the ``sendNewsletter()`` method is 
-called. The first step towards this is to inject the ``security.context`` 
+Your goal is to check the user's role when the ``sendNewsletter()`` method is
+called. The first step towards this is to inject the ``security.context``
 service into the object. Since it won't make sense *not* to perform the security
 check, this is an ideal candidate for constructor injection, which guarantees
 that the security context object will be available inside the ``NewsletterManager``
 class::
 
     namespace Acme\HelloBundle\Newsletter;
-    
+
     use Symfony\Component\Security\Core\SecurityContextInterface;
 
     class NewsletterManager
@@ -126,7 +126,7 @@ The injected service can then be used to perform the security check when the
             if (false === $this->securityContext->isGranted('ROLE_NEWSLETTER_ADMIN')) {
                 throw new AccessDeniedException();
             }
-            
+
             //--
         }
 
@@ -139,9 +139,9 @@ be prompted to log in.
 Securing Methods Using Annotations
 ----------------------------------
 
-You can also secure method calls in any service with annotations by using the 
-optional `SecurityExtraBundle`_ bundle. This bundle is included in the Symfony2
-Standard Distribution.
+You can also secure method calls in any service with annotations by using the
+optional `JMSSecurityExtraBundle`_ bundle. This bundle is included in the
+Symfony2 Standard Distribution.
 
 To enable the annotations functionality, :ref:`tag<book-service-container-tags>`
 the service you want to secure with the ``security.secure_service`` tag
@@ -184,7 +184,7 @@ the :ref:`sidebar<securing-services-annotations-sidebar>` below):
             array(new Reference('security.context'))
         ));
         $definition->addTag('security.secure_service');
-        $container->setDefinition('newsletter_manager', $definition);        
+        $container->setDefinition('newsletter_manager', $definition);
 
 You can then achieve the same results as above using an annotation::
 
@@ -195,12 +195,12 @@ You can then achieve the same results as above using an annotation::
 
     class NewsletterManager
     {
-    
+
         /**
          * @Secure(roles="ROLE_NEWSLETTER_ADMIN")
          */
         public function sendNewsletter()
-        {        
+        {
             //--
         }
 
@@ -210,12 +210,12 @@ You can then achieve the same results as above using an annotation::
 .. note::
 
     The annotations work because a proxy class is created for your class
-    which performs the security checks. This means that, whilst you can use 
+    which performs the security checks. This means that, whilst you can use
     annotations on public and protected methods, you cannot use them with
     private methods or methods marked final.
 
-The ``SecurityExtraBundle`` also allows you to secure the parameters and return
-values of methods. For more information, see the `SecurityExtraBundle`_ 
+The ``JMSSecurityExtraBundle`` also allows you to secure the parameters and return
+values of methods. For more information, see the `JMSSecurityExtraBundle`_
 documentation.
 
 .. _securing-services-annotations-sidebar:
@@ -235,7 +235,7 @@ documentation.
             jms_security_extra:
                 # ...
                 secure_all_services: true
-    
+
         .. code-block:: xml
 
             <!-- app/config/config.xml -->
@@ -245,13 +245,13 @@ documentation.
                 xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
                 <jms_security_extra secure_controllers="true" secure_all_services="true" />
-                
-            </srv:container>    
+
+            </srv:container>
 
         .. code-block:: php
-    
+
             // app/config/config.php
-            $container->loadFromExtension('jms_security_extra', array(            
+            $container->loadFromExtension('jms_security_extra', array(
                 // ...
                 'secure_all_services' => true,
             ));
@@ -259,4 +259,4 @@ documentation.
     The disadvantage of this method is that, if activated, the initial page
     load may be very slow depending on how many services you have defined.
 
-.. _`SecurityExtraBundle`: https://github.com/schmittjoh/SecurityExtraBundle
+.. _`JMSSecurityExtraBundle`: https://github.com/schmittjoh/JMSSecurityExtraBundle

@@ -4,8 +4,8 @@ Conventions
 The :doc:`standards` document describes the coding standards for the Symfony2
 projects and the internal and third-party bundles. This document describes
 coding standards and conventions used in the core framework to make it more
-consistent and predictable. You can follow them in your own code, but you
-don't need to.
+consistent and predictable. You are encouraged to follow them in your own
+code, but you don't need to.
 
 Method Names
 ------------

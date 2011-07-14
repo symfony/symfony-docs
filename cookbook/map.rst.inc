@@ -12,6 +12,8 @@
 
   * :doc:`/cookbook/assetic/asset_management`
   * :doc:`/cookbook/assetic/yuicompressor`
+  * :doc:`/cookbook/assetic/jpeg_optimize`
+  * :doc:`/cookbook/assetic/apply_to_option`
 
 * **Database Interaction (Doctrine)**
 
@@ -28,7 +30,6 @@
 
 * **Forms and Validation**
 
-  * :doc:`/cookbook/form/twig_form_customization`
   * :doc:`/cookbook/form/simple_signup_form_with_mongodb`
   * :doc:`/cookbook/form/form_customization`
   * :doc:`/cookbook/form/create_custom_field_type`
@@ -53,6 +54,8 @@
 
   * :doc:`/cookbook/email`
   * :doc:`/cookbook/gmail`
+  * :doc:`/cookbook/email/dev_environment`
+  * :doc:`/cookbook/email/spool`
 
 * **Testing**
 
@@ -88,12 +91,6 @@
   * :doc:`/cookbook/console`
   * :doc:`/cookbook/debugging`
   * :doc:`/cookbook/logging/monolog`
-
-* **Performance**
-
-  * :doc:`/cookbook/performance/autoloader`
-  * :doc:`/cookbook/performance/bootstrap_files`
-  * :doc:`/cookbook/performance/bytecodecache`
 
 * **Extending Symfony**
 

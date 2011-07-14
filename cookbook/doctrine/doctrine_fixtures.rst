@@ -139,7 +139,7 @@ the ``FixtureInterface``.
 Both commands come with a few options:
 
 * ``--fixtures=/path/to/fixture`` - Use this option to manually specify the
-  directory or file where the fixtures classes should be loaded;
+  directory where the fixtures classes should be loaded;
 
 * ``--append`` - Use this flag to append data instead of deleting data before
   loading it (deleting first is the default behavior);

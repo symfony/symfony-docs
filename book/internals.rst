@@ -797,7 +797,7 @@ subscribes to the ``kernel.response`` and ``store.order`` events:
 This is very similar to a listener class, except that the class itself can
 tell the dispatcher which events it should listen to. To register a subscriber
 with the dispatcher, use the
-:method:``Symfony\\Component\\EventDispatcher\\EventDispatcher::addSubscriber``
+:method:`Symfony\\Component\\EventDispatcher\\EventDispatcher::addSubscriber`
 method:
 
 .. code-block:: php

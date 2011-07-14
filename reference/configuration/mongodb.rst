@@ -116,7 +116,7 @@ follow these conventions:
    into the ``Resources/config/doctrine/`` directory
    suffixed with mongodb.xml, mongodb.yml or mongodb.php respectively.
 
-3. Annotations is assumed if an ``Document/`` but no
+3. Annotations is assumed if a ``Document/`` but no
    ``Resources/config/doctrine/`` directory is found.
 
 The following configuration shows a bunch of mapping examples:
