@@ -926,7 +926,8 @@ as it implements this interface.
 
     The user object will be serialized and saved in the session during requests,
     therefore it is recommended that you `implement the \Serializable interface`_
-    in your user object.
+    in your user object. This is especially important if your ``User`` class
+    has a parent class with private properties.
 
 Next, configure an ``entity`` user provider, and point it to your ``User``
 class:
