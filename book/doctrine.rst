@@ -166,12 +166,12 @@ in a number of different formats including YAML, XML or directly inside the
             protected $id;
 
             /**
-             * @ORM\Column(type="string", length="100")
+             * @ORM\Column(type="string", length=100)
              */
             protected $name;
 
             /**
-             * @ORM\Column(type="decimal", scale="2")
+             * @ORM\Column(type="decimal", scale=2)
              */
             protected $price;
 
