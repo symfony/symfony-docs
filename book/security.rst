@@ -593,7 +593,7 @@ see :doc:`/cookbook/security/form_login`.
                     anonymous:  ~
                 secured_area:
                     pattern:    ^/
-                    login_form: ~
+                    form_login: ~
 
         .. code-block:: xml
 
@@ -601,7 +601,7 @@ see :doc:`/cookbook/security/form_login`.
                 <anonymous />
             </firewall>
             <firewall name="secured_area" pattern="^/">
-                <login_form />
+                <form_login />
             </firewall>
 
         .. code-block:: php
