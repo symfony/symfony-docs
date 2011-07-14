@@ -29,7 +29,7 @@ data can be a ``DateTime`` object, a string, a timestamp or an array.
 +----------------------+-----------------------------------------------------------------------------+
 
 Field Options
--------
+-------------
 
 date_widget
 ~~~~~~~~~~~

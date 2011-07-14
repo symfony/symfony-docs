@@ -8,7 +8,7 @@ A field that allows the user to modify date information via a variety of
 different HTML elements.
 
 The underlying data used for this field type can be a ``DateTime`` object,
-a string, a timestamp or an array. As long as the ``input`_ option is set
+a string, a timestamp or an array. As long as the `input`_ option is set
 correctly, the field will take care of all of the details.
 
 The field can be rendered as a single text box, three text boxes (month,

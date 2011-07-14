@@ -74,8 +74,8 @@ The basic way in which this field should be rendered. Can be one of the followin
 
 * ``text``: renders a two or three text inputs (hour, minute, second).
 
-* ``single_text``: renders a single input of type text. User's input is validated
-based on the `format`_ option.
+* ``single_text``: renders a single input of type text. User's input will
+  be validated against the form ``hh:mm`` (or ``hh:mm:ss`` if using seconds).
 
 input
 ~~~~~

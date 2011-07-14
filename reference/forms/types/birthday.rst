@@ -11,7 +11,7 @@ Can be rendered as a single text box, three text boxes (month, day, and year),
 or three select boxes.
 
 This type is essentially the same as the :doc:`date</reference/forms/types/date>`
-type, but with a more appropriate default for the ``years`_ option. The ``years`_
+type, but with a more appropriate default for the `years`_ option. The `years`_
 option defaults to 120 years ago to the current year.
 
 +----------------------+------------------------------------------------------------------------------------------------------------------------+
