@@ -1173,7 +1173,7 @@ When using PHP, you've seen how you can use the ``setTheme`` helper method in a
 template to import form customizations that will be used inside that template.
 You can also tell Symfony to automatically use certain form customizations for all
 templates in your application. To automatically include the customized templates
-from the `Acme/StoreBundle/Resources/views/Form` directroy created earlier, modify
+from the `Acme/StoreBundle/Resources/views/Form` directory created earlier, modify
 your application configuration file:
 
 .. configuration-block::
@@ -1215,7 +1215,7 @@ your application configuration file:
             // ...
         ));
 
-Any framgents inside the `Acme/StoreBundle/Resources/views/Form` folder are now
+Any fragments inside the `Acme/StoreBundle/Resources/views/Form` directory are now
 used globally to define form output.
 
 .. index::
