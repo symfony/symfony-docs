@@ -251,7 +251,7 @@ In Symfony2, the bundles are activated inside the application kernel::
         return $bundles;
     }
 
-Routing (``routing.yml``) and Configration (``config.yml``)
+Routing (``routing.yml``) and Configuration (``config.yml``)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 In symfony1, the ``routing.yml`` and ``app.yml`` configuration files were
