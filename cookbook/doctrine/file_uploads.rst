@@ -50,19 +50,19 @@ First, create a simple Doctrine Entity class to work with::
 
         public function getFullPath()
         {
-            return null === $this->path ? null : $this->getRealLocation().'/'.$this->path;
+            return null === $this->path ? null : $this->getWebLocation().'/'.$this->path;
         }
 
         protected function getUploadRootDir()
         {
             // the absolute directory path where uploaded documents should be saved
-            return __DIR__.'/../../../../web'.$this->getRealLocation();
+            return __DIR__.'/../../../../web/'.$this->getWebLocation();
         }
 
-        protected function getRealLocation()
+        protected function getWebLocation()
         {
             // get rid of the __DIR__ so it doesn't screw when displaying uploaded doc/image in the view.
-            return '/uploads/documents';
+            return 'uploads/documents';
         }
     }
 
