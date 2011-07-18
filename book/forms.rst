@@ -665,9 +665,9 @@ that will house the logic for building the product form:
         }
     }
 
-This new class contains all the directions needed to create the product form.
-The ``getName()`` method must return a unique identifier for the type. It can
-be used to quickly build a form object in the controller:
+This new class contains all the directions needed to create the product form
+(note that the ``getName()`` method must return a unique identifier for the
+type). It can be used to quickly build a form object in the controller:
 
 .. code-block:: php
 
