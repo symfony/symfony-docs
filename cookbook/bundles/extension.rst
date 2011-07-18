@@ -97,7 +97,7 @@ Creating an Extension Class
 
 If you do choose to expose a semantic configuration for your bundle, you'll
 first need to create a new "Extension" class, which will handle the process.
-This class should live in the ``DependenyInjection`` directory of your bundle
+This class should live in the ``DependencyInjection`` directory of your bundle
 and its name should be constructed by replacing the ``Bundle`` postfix of the
 Bundle class name with ``Extension``. For example, the Extension class of
 ``AcmeHelloBundle`` would be called ``AcmeHelloExtension``::
@@ -318,7 +318,7 @@ configuration based on some of the input values. For example, suppose you
 have a service who's first argument is some string "type" that it will use
 internally. You'd like this to be easily configured by the bundle user, so
 in your service configuration file (e.g. ``services.xml``), you define this
-service and use a blank parameter - ``acme_hello.my_service_options`` - as
+service and use a blank parameter - ``acme_hello.my_service_type`` - as
 its first argument:
 
 .. code-block:: xml

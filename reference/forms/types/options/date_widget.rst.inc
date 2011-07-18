@@ -1,10 +1,14 @@
-*   ``widget`` [type: string, default: ``choice``]
-    Type of widget used for this form type.  Can be ``text`` or ``single_text`` or ``choice``.
+widget
+~~~~~~
 
-      * ``text``: renders a three field input of type text (month, day, year).
+**type**: ``string`` **default**: ``choice``
 
-      * ``single_text``: renders a single input of type text. User's input is validated
-        based on the ``format`` option.
+The basic way in which this field should be rendered. Can be one of the following:
 
-      * ``choice``: renders three select inputs.  The order of the selects
-        is defined in the ``pattern`` option.
+* ``choice``: renders three select inputs.  The order of the selects is defined
+  in the `pattern`_ option.
+
+* ``text``: renders a three field input of type text (month, day, year).
+
+* ``single_text``: renders a single input of type text. User's input is validated
+  based on the `format`_ option.

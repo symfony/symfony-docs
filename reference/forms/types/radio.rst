@@ -15,24 +15,28 @@ If you want to have a Boolean field, use :doc:`checkbox</reference/forms/types/c
 +-------------+---------------------------------------------------------------------+
 | Rendered as | ``input`` ``text`` field                                            |
 +-------------+---------------------------------------------------------------------+
-| Options     | - ``value``                                                         |
+| Options     | - `value`_                                                          |
 +-------------+---------------------------------------------------------------------+
-| Inherited   | - ``required``                                                      |
-| options     | - ``label``                                                         |
-|             | - ``read_only``                                                     |
-|             | - ``error_bubbling``                                                |
+| Inherited   | - `required`_                                                       |
+| options     | - `label`_                                                          |
+|             | - `read_only`_                                                      |
+|             | - `error_bubbling`_                                                 |
 +-------------+---------------------------------------------------------------------+
 | Parent type | :doc:`field</reference/forms/types/field>`                          |
 +-------------+---------------------------------------------------------------------+
 | Class       | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\RadioType` |
 +-------------+---------------------------------------------------------------------+
 
-Options
--------
+Field Options
+-------------
 
-*   ``value`` [type: mixed, default: 1]
-    The value that's actually used as the value for the radio button. This does
-    not affect the value that's set on your object.
+value
+~~~~~
+
+**type**: ``mixed`` **default**: ``1``
+
+The value that's actually used as the value for the radio button. This does
+not affect the value that's set on your object.
 
 Inherited Options
 -----------------

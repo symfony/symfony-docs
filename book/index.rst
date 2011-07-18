@@ -19,6 +19,7 @@ Book
     http_cache
     translation
     service_container
+    performance
     internals
     stable_api
 

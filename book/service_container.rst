@@ -1002,6 +1002,8 @@ additional arguments (beyond just the ``name`` parameter).
 Learn more from the Cookbook
 ----------------------------
 
+* :doc:`/cookbook/service_container/factories`
+* :doc:`/cookbook/service_container/parentservices`
 * :doc:`/cookbook/controller/service`
 
 .. _`service-oriented architecture`: http://wikipedia.org/wiki/Service-oriented_architecture

@@ -300,6 +300,8 @@ The full list of constraints with details is available in the
 .. index::
    single: Validation; Constraints configuration
 
+.. _book-validation-constraint-configuration:
+
 Constraint Configuration
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -634,7 +636,7 @@ user registers and when a user updates his/her contact information later::
 
 With this configuration, there are two validation groups:
 
-* ``Default`` - contains *all* of the constraints;
+* ``Default`` - contains the constraints not assigned to any other group;
 
 * ``registration`` - contains the constraints on the ``email`` and ``password``
   fields only.

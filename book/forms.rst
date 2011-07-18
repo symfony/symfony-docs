@@ -70,6 +70,9 @@ created a PHP class that will help you solve a problem in *your* application.
 The goal of the form built in this chapter will be to allow your users to
 interact with the data of a ``Product`` object.
 
+.. index::
+   single: Forms; Create a form in a controller
+
 Building the Form
 ~~~~~~~~~~~~~~~~~
 
@@ -85,10 +88,11 @@ a controller:
 
     use Symfony\Bundle\FrameworkBundle\Controller\Controller;
     use Acme\StoreBundle\Entity\Product;
+    use Symfony\Component\HttpFoundation\Request;
 
     class DefaultController extends Controller
     {
-        public function indexAction()
+        public function indexAction(Request $request)
         {
             // create a product and give it some dummy data for this example
             $product = new Product();
@@ -108,9 +112,10 @@ a controller:
 
 .. tip::
 
-   Later, when you add validation to the ``Product`` object, you'll learn
-   that there is an even shorter way to configure the fields of the form. This
-   is covered later in the :ref:`book-forms-field-guessing` section.
+   This examples shows you how to build your form directly in the controller.
+   Later, in the ":ref:`book-form-creating-form-classes`" section, you'll learn
+   how to build your form in a standalone class, which is recommended as
+   your form becomes reusable.
 
 Creating a form is short and easy in Symfony2 because form objects are built
 via a "form builder". A form builder is an object you can interact with to
@@ -121,12 +126,12 @@ corresponding to the ``name`` and ``price`` properties of the ``Product`` class.
 The ``name`` field has a type of ``text``, meaning the user will submit simple
 text for this field. The ``price`` field has the type ``money``, which is
 special ``text`` field where money can be displayed and submitted in a localized
-format. Symfony2 comes with many build-in types that will be discussed shortly
+format. Symfony2 comes with many built-in types that will be discussed shortly
 (see :ref:`book-forms-type-reference`).
 
 Now that the form has been created, the next step is to render it. This can
-be easily done by passing a special form "view" object to your template (see
-the ``$form->createView()`` in the controller above) and using a set of form
+be done by passing a special form "view" object to your template (see the
+``$form->createView()`` in the controller above) and using a set of form
 helper functions:
 
 .. configuration-block::
@@ -154,12 +159,19 @@ helper functions:
 .. image:: /book/images/forms-simple.png
     :align: center
 
+.. note::
+
+    This example assumes that you've created a route called ``store_product``
+    that points to the ``AcmeStoreBundle:Default:index`` controller that
+    was created earlier.
+
 That's it! By printing ``form_widget(form)``, each field in the form is
 rendered, along with a label and eventual error messages. As easy as this is,
-it's not very flexible (yet). Later, you'll learn how to customize the form
-output.
+it's not very flexible (yet). Usually, you'll want to render each form field
+individually so can control how the form looks. You'll learn how to do that
+in the ":ref:`form-rendering-template`" section.
 
-Before moving on, notice how the rendered name input field has the value
+Before moving on, notice how the rendered ``name`` input field has the value
 of the ``name`` property from the ``$product`` object (i.e. "Test product").
 This is the first job of a form: to take data from an object and translate
 it into a format that's suitable for being rendered in an HTML form.
@@ -173,6 +185,9 @@ it into a format that's suitable for being rendered in an HTML form.
    property. For a Boolean property, you can use an "isser" method (e.g.
    ``isPublished()``) instead of a getter (e.g. ``getPublished()``).
 
+.. index::
+  single: Forms; Handling form submission
+
 Handling Form Submissions
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -183,7 +198,10 @@ controller:
 
 .. code-block:: php
 
-    public function indexAction()
+    use Symfony\Component\HttpFoundation\Request;
+    // ...
+
+    public function indexAction(Request $request)
     {
         // just setup a fresh $product object (no dummy data)
         $product = new Product();
@@ -193,12 +211,11 @@ controller:
             ->add('price', 'money', array('currency' => 'USD'))
             ->getForm();
 
-        $request = $this->get('request');
         if ($request->getMethod() == 'POST') {
             $form->bindRequest($request);
 
             if ($form->isValid()) {
-                // perform some action, such as save the object to the database
+                // perform some action, such as saving the object to the database
 
                 return $this->redirect($this->generateUrl('store_product_success'));
             }
@@ -214,30 +231,19 @@ of the ``$product`` object. This all happens via the ``bindRequest()`` method.
 .. note::
 
     As soon as ``bindRequest()`` is called, the submitted data is transferred
-    to the underlying object immediately. For example, imagine that ``Foo``
-    is submitted for the ``name`` field:
-
-    .. code-block:: php
-
-        $product = new Product();
-        $product->name = 'Test product';
-
-        $form->bindRequest($this->get('request'));
-        echo $product->name;
-
-    The above statement will echo ``Foo``, because ``bindRequest`` ultimately
-    moves the submitted data back to the ``$product`` object.
+    to the underlying object immediately. This happens regardless of whether
+    or not the underlying data is actually valid.
 
 This controller follows a common pattern for handling forms, and has three
 possible paths:
 
-#. When initially loading the form in a browser, the request method is ``GET``,
-   meaning that the form is simply created and rendered (but not bound);
+#. When initially loading the page in a browser, the request method is ``GET``,
+   meaning that the controller simply creates and renders the form (but does
+   not bind it);
 
-#. When the user submits the form (i.e. the method is ``POST``), but that
-   submitted data is invalid (validation is covered in the next section),
-   the form is bound and then rendered, this time displaying all validation
-   errors;
+#. When the user submits the form (i.e. the method is ``POST``) with invalid
+   data (validation is covered in the next section), the form is bound and
+   then rendered, this time displaying all validation errors;
 
 #. When the user submits the form with valid data, the form is bound and
    you have the opportunity to perform some actions using the ``$product``
@@ -347,6 +353,9 @@ corresponding errors printed out with the form.
 
 Validation is a very powerful feature of Symfony2 and has its own
 :doc:`dedicated chapter</book/validation>`.
+
+.. index::
+   single: Forms; Validation Groups
 
 .. _book-forms-validation-groups:
 
@@ -458,6 +467,12 @@ guess (``text``).
 This example is pretty trivial, but field guessing can be a major time saver.
 As you'll see later, adding Doctrine metadata can further improve the system's
 ability to guess field types.
+
+.. caution::
+
+    The guesser based on validation constraints does not take into account the
+    validation groups. If the guessed options are not correct, you can always
+    override them as you see fit.
 
 .. index::
    single: Forms; Rendering in a Template
@@ -629,9 +644,9 @@ that will house the logic for building the product form:
 
 .. code-block:: php
 
-    // src/Acme/StoreBundle/Form/ProductType.php
+    // src/Acme/StoreBundle/Form/Type/ProductType.php
 
-    namespace Acme\StoreBundle\Form;
+    namespace Acme\StoreBundle\Form\Type;
 
     use Symfony\Component\Form\AbstractType;
     use Symfony\Component\Form\FormBuilder;
@@ -643,17 +658,23 @@ that will house the logic for building the product form:
             $builder->add('name');
             $builder->add('price', 'money', array('currency' => 'USD'));
         }
+
+        public function getName()
+        {
+            return 'product';
+        }
     }
 
 This new class contains all the directions needed to create the product form.
-It can be used to quickly build a form object in the controller:
+The ``getName()`` method must return a unique identifier for the type. It can
+be used to quickly build a form object in the controller:
 
 .. code-block:: php
 
     // src/Acme/StoreBundle/Controller/DefaultController.php
 
     // add this new use statement at the top of the class
-    use Acme\StoreBundle\Form\ProductType;
+    use Acme\StoreBundle\Form\Type\ProductType;
 
     public function indexAction()
     {
@@ -691,7 +712,7 @@ reused elsewhere in your project. This is the best way to create forms, but
 the choice is ultimately up to you.
 
 .. index::
-   single: Forms; Doctrine
+   pair: Forms; Doctrine
 
 Forms and Doctrine
 ------------------
@@ -796,8 +817,8 @@ create a form class so that a ``Category`` object can be modified by the user:
 
 .. code-block:: php
 
-    // src/Acme/StoreBundle/Form/CategoryType.php
-    namespace Acme\StoreBundle\Form;
+    // src/Acme/StoreBundle/Form/Type/CategoryType.php
+    namespace Acme\StoreBundle\Form\Type;
 
     use Symfony\Component\Form\AbstractType;
     use Symfony\Component\Form\FormBuilder;
@@ -814,6 +835,11 @@ create a form class so that a ``Category`` object can be modified by the user:
             return array(
                 'data_class' => 'Acme\StoreBundle\Entity\Category',
             );
+        }
+
+        public function getName()
+        {
+            return 'category';
         }
     }
 
@@ -890,6 +916,10 @@ the following inside ``ProductType``:
            'type' => new ProductReviewType(),
         ));
     }
+
+.. index::
+   single: Forms; Theming
+   single: Forms; Customizing fields
 
 .. _form-theming:
 
@@ -1143,7 +1173,7 @@ When using PHP, you've seen how you can use the ``setTheme`` helper method in a
 template to import form customizations that will be used inside that template.
 You can also tell Symfony to automatically use certain form customizations for all
 templates in your application. To automatically include the customized templates
-from the `Acme/StoreBundle/Resources/views/Form` directroy created earlier, modify
+from the `Acme/StoreBundle/Resources/views/Form` directory created earlier, modify
 your application configuration file:
 
 .. configuration-block::
@@ -1185,7 +1215,7 @@ your application configuration file:
             // ...
         ));
 
-Any framgents inside the `Acme/StoreBundle/Resources/views/Form` folder are now
+Any fragments inside the `Acme/StoreBundle/Resources/views/Form` directory are now
 used globally to define form output.
 
 .. index::
@@ -1229,6 +1259,11 @@ The CSRF token can be customized on a form-by-form basis. For example:
                 'csrf_field_name' => '_token',
                 'intention'  => 'product_creation',
             );
+        }
+
+        public function getName()
+        {
+            return 'product';
         }
     }
 

@@ -12,6 +12,8 @@ Cookbook
 
     assetic/asset_management
     assetic/yuicompressor
+    assetic/jpeg_optimize
+    assetic/apply_to_option
 
     doctrine/doctrine_fixtures
     doctrine/mongodb
@@ -24,7 +26,6 @@ Cookbook
     doctrine/multiple_entity_managers
     doctrine/custom_dql_functions
 
-    form/twig_form_customization
     form/simple_signup_form_with_mongodb
     form/form_customization
     form/create_custom_field_type
@@ -42,6 +43,8 @@ Cookbook
 
     email
     gmail
+    email/dev_environment
+    email/spool
 
     testing/http_authentication
     testing/insulating_clients
@@ -67,10 +70,6 @@ Cookbook
     console
     debugging
     logging/monolog
-
-    performance/autoloader
-    performance/bootstrap_files
-    performance/bytecodecache
 
     event_dispatcher/class_extension
     event_dispatcher/method_behavior

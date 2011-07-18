@@ -785,8 +785,8 @@ The translator service is accessible in PHP templates through the
         array('%count%' => 10)
     ) ?>
 
-Forcing Translation Locale
---------------------------
+Forcing the Translator Locale
+-----------------------------
 
 When translating a message, Symfony2 uses the locale from the user's session
 or the ``fallback`` locale if necessary. You can also manually specify the
@@ -794,14 +794,14 @@ locale to use for translation:
 
 .. code-block:: php
 
-    $this->get('translation')->trans(
+    $this->get('translator')->trans(
         'Symfony2 is great',
         array(),
         'messages',
         'fr_FR',
     );
 
-    $this->get('translation')->trans(
+    $this->get('translator')->trans(
         '{0} There is no apples|{1} There is one apple|]1,Inf[ There are %count% apples',
         10,
         array('%count%' => 10),

@@ -3,11 +3,21 @@ Type
 
 Validates that a value has a specific data type
 
-.. code-block:: yaml
+.. configuration-block::
 
-    properties:
-        age:
-            - Type: integer
+    .. code-block:: yaml
+
+        properties:
+            age:
+                - Type: integer
+
+    .. code-block:: php-annotations
+
+        /**
+         * @Assert\Type(type="integer")
+         */
+       protected $age;
+
 
 Options
 -------

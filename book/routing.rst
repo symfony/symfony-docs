@@ -136,8 +136,8 @@ which controller should be executed. The whole process looks like this:
    :align: center
    :alt: Symfony2 request flow
 
-   The routing is a tool that translates the incoming URL into a specific
-   controller to execute;
+   The routing layer is a tool that translates the incoming URL into a specific
+   controller to execute.
 
 .. index::
    single: Routing; Creating routes

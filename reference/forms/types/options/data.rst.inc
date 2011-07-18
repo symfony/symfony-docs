@@ -1,17 +1,15 @@
-*   ``data`` [type: any, default: the field's initial value]
-    When you create a form, each field initially displays the value of the 
-    corresponding property of the form's domain object. If you want to override 
-    this initial value, you can set it in the data option.
-  
-    .. code-block:: php
+data
+~~~~
 
-        use Symfony\Component\Form\HiddenField
+**type**: mixed **default**: Defaults to field of the underlying object (if there is one)
 
-        $field = new HiddenField('token', array(
-            'data' => 'abcdef',
-        ));
+When you create a form, each field initially displays the value of the 
+corresponding property of the form's domain object (if an object is bound
+to the form). If you want to override the initial value for the form or just
+and individual field, you can set it in the data option::
 
-        // renders abcdef
-        echo $field->getData();
+    $builder->add('token', 'hidden', array(
+        'data' => 'abcdef',
+    ));
 
 

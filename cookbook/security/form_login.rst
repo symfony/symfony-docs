@@ -238,8 +238,8 @@ this by setting ``use_referer`` to true (it defaults to false):
             ),
         ));
 
-Controller the Redirect URL via the Form
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Control the Redirect URL from inside the Form
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 You can also override where the user is redirected to via the form itself by 
 including a hidden field with the name ``_target_path``. For example, to
