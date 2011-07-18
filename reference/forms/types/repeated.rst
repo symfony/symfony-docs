@@ -17,7 +17,7 @@ accuracy.
 |             | - `first_name`_                                                        |
 |             | - `second_name`_                                                       |
 +-------------+------------------------------------------------------------------------+
-| Inherited   | - `invalid_message_template`_                                          |
+| Inherited   | - `invalid_message`_                                          |
 | options     | - `invalid_message_parameters`_                                        |
 |             | - `error_bubbling`_                                                    |
 +-------------+------------------------------------------------------------------------+
@@ -33,7 +33,7 @@ Example Usage
 
     $builder->add('password', 'repeated', array(
         'type' => 'password',
-        'invalid_message_template' => 'The password fields must match.',
+        'invalid_message' => 'The password fields must match.',
         'options' => array('label' => 'Password'),
     ));
 
@@ -55,7 +55,7 @@ One of the key features of the ``repeated`` field is internal validation
 to have a matching value. If the two fields don't match, an error will be
 shown to the user.
 
-The ``invalid_message_template`` is used to customize the error that will
+The ``invalid_message`` is used to customize the error that will
 be displayed when the two fields do not match each other.
 
 Field Options
@@ -103,7 +103,7 @@ Inherited options
 
 These options inherit from the :doc:`field</reference/forms/types/field>` type:
 
-.. include:: /reference/forms/types/options/invalid_message_template.rst.inc
+.. include:: /reference/forms/types/options/invalid_message.rst.inc
 
 .. include:: /reference/forms/types/options/invalid_message_parameters.rst.inc
 

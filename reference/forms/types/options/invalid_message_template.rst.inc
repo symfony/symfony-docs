@@ -1,5 +1,5 @@
-invalid_message_template
-~~~~~~~~~~~~~~~~~~~~~~~~
+invalid_message
+~~~~~~~~~~~~~~~
 
 **type**: ``string`` **default**: ``This value is not valid``
 
