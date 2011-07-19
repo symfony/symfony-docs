@@ -255,7 +255,7 @@ the validation and saves the data into MongoDB::
 
         $form = $this->createForm(new RegistrationType(), new Registration());
 
-        $form->bindRequest($this->get('request'));
+        $form->bindRequest($this->getRequest());
 
         if ($form->isValid()) {
             $registration = $form->getData();
