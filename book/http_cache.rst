@@ -545,7 +545,7 @@ md5 of the content::
 
     public function indexAction()
     {
-        $response = $this->renderView('MyBundle:Main:index.html.twig');
+        $response = $this->render('MyBundle:Main:index.html.twig');
         $response->setETag(md5($response->getContent()));
         $response->isNotModified($this->getRequest());
 
@@ -835,7 +835,7 @@ independent of the rest of the page.
 
     public function indexAction()
     {
-        $response = $this->renderView('MyBundle:MyController:index.html.twig');
+        $response = $this->render('MyBundle:MyController:index.html.twig');
         $response->setSharedMaxAge(600);
 
         return $response;
