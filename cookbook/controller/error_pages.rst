@@ -27,14 +27,14 @@ end-user, create a new template located at
 
     <!DOCTYPE html>
     <html>
-        <head>
-            <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-            <title>An Error Occurred: {{ status_text }}</title>
-        </head>
-        <body>
-            <h1>Oops! An Error Occurred</h1>
-            <h2>The server returned a "{{ exception.statuscode }} {{ exception.statustext }}".</h2>
-        </body>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <title>An Error Occurred: {{ status_text }}</title>
+    </head>
+    <body>
+        <h1>Oops! An Error Occurred</h1>
+        <h2>The server returned a "{{ status_code }} {{ status_text }}".</h2>
+    </body>
     </html>
 
 .. tip::
