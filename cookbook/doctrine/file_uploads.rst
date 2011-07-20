@@ -285,7 +285,7 @@ Next, refactor the ``Document`` class to take advantage of these callbacks::
          */
         public function removeUpload()
         {
-            if ($file = $this->getFullPath()) {
+            if ($file = $this->getAbsolutePath()) {
                 unlink($file);
             }
         }
@@ -342,7 +342,7 @@ property, instead of the actual filename::
          */
         public function removeUpload()
         {
-            if ($file = $this->getFullPath()) {
+            if ($file = $this->getAbsolutePath()) {
                 unlink($file);
             }
         }
