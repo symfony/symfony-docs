@@ -1155,7 +1155,7 @@ pattern is to do the following:
 
     public function indexAction()
     {
-        $format = $this->get('request')->getRequestFormat();
+        $format = $this->getRequest()->getRequestFormat();
     
         return $this->render('AcmeBlogBundle:Blog:index.'.$format.'.twig');
     }
