@@ -1,8 +1,9 @@
 Create a Web Service with the PHP SOAP Extension in a Symfony2 Controller
 =========================================================================
 
-Setting up a controller to act as a SOAP server is simple with a couple tools.  You must, of course, have the 
-`PHP SOAP`_ extension installed.  As the PHP SOAP extension can not currently generate a WSDL, you must either 
+Setting up a controller to act as a SOAP server is simple with a couple 
+tools.  You must, of course, have the `PHP SOAP`_ extension installed.  
+As the PHP SOAP extension can not currently generate a WSDL, you must either 
 create one from scratch or use a 3rd party generator.
 
 Here is an example o
@@ -24,10 +25,8 @@ Here is an example o
             
             $server->handle();
             
-            $response->setContent(ob_get_contents());
+            $response->setContent(ob_get_clean());
             
-            ob_clean();
- 
             return $response;
         }
  
@@ -37,13 +36,18 @@ Here is an example o
         }
     }
 
-Take note of the calls to ob_start, ob_get_contents, and ob_clean.  These methods control `output buffering`_ which allows us to "trap" the echoed output of $server->handle().  
-This is necessary because Symfony expects our controller to return a Response object with our output as it's "content".  
-You must also remember to set the "Content-Type" header to "text/xml", as this is what the client will expect.
-So, we use ob_start to start buffering the STDOUT and use ob_get_contents to dump the echoed output into the content of our Response.
-Finally, we must call ob_clean to clear our output buffer and return our Response.
+Take note of the calls to ob_start, ob_get_contents, and ob_clean.  These 
+methods control `output buffering`_ which allows us to "trap" the echoed 
+output of $server->handle().  
+This is necessary because Symfony expects our controller to return a 
+Response object with our output as it's "content".  You must also remember 
+to set the "Content-Type" header to "text/xml", as this is what the client 
+will expect.  So, we use ob_start to start buffering the STDOUT and use 
+ob_get_clean to dump the echoed output into the content of our Response
+and clear our output buffer.  Finally, we're ready to return our Response.
 
-Below is an example calling our service using `NuSOAP`_ client.  This example assumes indexAction in our controller above is accessible via the route "/soap".
+Below is an example calling our service using `NuSOAP`_ client.  This example 
+assumes indexAction in our controller above is accessible via the route "/soap".
 
 .. code-block:: php
     $client = new soapclient('http://example.com/app.php/soap?wsdl', true);
@@ -54,7 +58,15 @@ An example WSDL is below.
 
 .. code-block:: xml
     <?xml version="1.0" encoding="ISO-8859-1"?>
-     <definitions xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/" xmlns:tns="urn:arnleadservicewsdl" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns="http://schemas.xmlsoap.org/wsdl/" targetNamespace="urn:arnleadservicewsdl">
+     <definitions xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" 
+         xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+         xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/" 
+         xmlns:tns="urn:arnleadservicewsdl" 
+         xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" 
+         xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" 
+         xmlns="http://schemas.xmlsoap.org/wsdl/" 
+         targetNamespace="urn:arnleadservicewsdl">
       <types>
        <xsd:schema targetNamespace="urn:hellowsdl">
         <xsd:import namespace="http://schemas.xmlsoap.org/soap/encoding/" />
@@ -78,8 +90,14 @@ An example WSDL is below.
       <soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
       <operation name="hello">
        <soap:operation soapAction="urn:arnleadservicewsdl#hello" style="rpc"/>
-       <input><soap:body use="encoded" namespace="urn:hellowsdl" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/></input>
-       <output><soap:body use="encoded" namespace="urn:hellowsdl" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/></output>
+       <input>
+        <soap:body use="encoded" namespace="urn:hellowsdl" 
+            encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+       </input>
+       <output>
+        <soap:body use="encoded" namespace="urn:hellowsdl" 
+            encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+       </output>
       </operation>
      </binding>
      <service name="hellowsdl">
