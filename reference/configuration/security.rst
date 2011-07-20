@@ -25,12 +25,12 @@ Each part will be explained in the next section.
 
             # strategy can be: none, migrate, invalidate
             session_fixation_strategy: migrate
-            
+
             access_decision_manager:
                 strategy: affirmative
                 allow_if_all_abstain: false
                 allow_if_equal_granted_denied: true
-            
+
             acl:
                 connection: default # any name configured in doctrine.dbal section
                 tables:
@@ -78,6 +78,7 @@ Each part will be explained in the next section.
                     entry_point: some.service.id
                     provider: name
                     context: name
+                    stateless: false
                     x509:
                         provider: name
                     http_basic:
