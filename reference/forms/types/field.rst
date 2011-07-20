@@ -7,7 +7,7 @@ The Abstract "field" Type
 The ``field`` form type is not an actual field type you use, but rather
 functions as the parent field type for many other fields.
 
-The ``field`` type predefines a couple of options :
+The ``field`` type predefines a couple of options:
 
 .. include:: /reference/forms/types/options/data.rst.inc
 

@@ -13,16 +13,16 @@ option.
 +-------------+-----------------------------------------------------------------------------+
 | Rendered as | can be various tags (see below)                                             |
 +-------------+-----------------------------------------------------------------------------+
-| Options     | - ``choices``                                                               |
-|             | - ``choice_list``                                                           |
-|             | - ``multiple``                                                              |
-|             | - ``expanded``                                                              |
-|             | - ``preferred_choices``                                                     |
-|             | - ``error_bubbling``                                                        |
+| Options     | - `choices`_                                                                |
+|             | - `choice_list`_                                                            |
+|             | - `multiple`_                                                               |
+|             | - `expanded`_                                                               |
+|             | - `preferred_choices`_                                                      |
 +-------------+-----------------------------------------------------------------------------+
-| Inherited   | - ``required``                                                              |
-| options     | - ``label``                                                                 |
-|             | - ``read_only``                                                             |
+| Inherited   | - `required`_                                                               |
+| options     | - `label`_                                                                  |
+|             | - `read_only`_                                                              |
+|             | - `error_bubbling`_                                                         |
 +-------------+-----------------------------------------------------------------------------+
 | Parent type | :doc:`form</reference/forms/types/form>` (if expanded), ``field`` otherwise |
 +-------------+-----------------------------------------------------------------------------+
@@ -68,33 +68,37 @@ specify the choices for your widget.
 
 .. include:: /reference/forms/types/options/empty_value.rst.inc
 
-Options
--------
+Field Options
+-------------
 
-*   ``choices`` [type: array]
-    This is the most basic way to specify the choices that should be used
-    by this field. The ``choices`` option is an array, where the array key
-    is the item value and the array value is the item's label:
-    
-    .. code-block:: php
-    
-        $builder->add('gender', 'choice', array(
-            'choices' => array('m' => 'Male', 'f' => 'Female')
-        ));
+choices
+~~~~~~~
 
-*   ``choice_list`` [type: ``Symfony\Component\Form\ChoiceList\ChoiceListInterface``]
-    This is one way of specifying the options to be used for this field.
-    The ``choice_list`` option must be an instance of the ``ChoiceListInterface``.
-    For more advanced cases, a custom class that implements the interface
-    can be created to supply the choices.
+**type**: ``array`` **default**: ``array()``
+
+This is the most basic way to specify the choices that should be used
+by this field. The ``choices`` option is an array, where the array key
+is the item value and the array value is the item's label::
+
+    $builder->add('gender', 'choice', array(
+        'choices' => array('m' => 'Male', 'f' => 'Female')
+    ));
+
+choice_list
+~~~~~~~~~~~
+
+**type**: ``Symfony\Component\Form\ChoiceList\ChoiceListInterface``
+
+This is one way of specifying the options to be used for this field.
+The ``choice_list`` option must be an instance of the ``ChoiceListInterface``.
+For more advanced cases, a custom class that implements the interface
+can be created to supply the choices.
 
 .. include:: /reference/forms/types/options/multiple.rst.inc
 
 .. include:: /reference/forms/types/options/expanded.rst.inc
 
 .. include:: /reference/forms/types/options/preferred_choices.rst.inc
-
-.. include:: /reference/forms/types/options/error_bubbling.rst.inc
 
 Inherited options
 -----------------
@@ -106,3 +110,5 @@ These options inherit from the :doc:`field</reference/forms/types/field>` type:
 .. include:: /reference/forms/types/options/label.rst.inc
 
 .. include:: /reference/forms/types/options/read_only.rst.inc
+
+.. include:: /reference/forms/types/options/error_bubbling.rst.inc

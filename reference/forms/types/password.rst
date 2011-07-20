@@ -9,43 +9,47 @@ The ``password`` field renders an input password text box.
 +-------------+------------------------------------------------------------------------+
 | Rendered as | ``input`` ``password`` field                                           |
 +-------------+------------------------------------------------------------------------+
-| Options     | - ``always_empty``                                                     |
-|             | - ``max_length``                                                       |
-|             | - ``trim``                                                             |
+| Options     | - `always_empty`_                                                      |
 +-------------+------------------------------------------------------------------------+
-| Inherited   | - ``required``                                                         |
-| options     | - ``label``                                                            |
-|             | - ``read_only``                                                        |
-|             | - ``error_bubbling``                                                   |
+| Inherited   | - `max_length`_                                                        |
+| options     | - `required`_                                                          |
+|             | - `label`_                                                             |
+|             | - `trim`_                                                              |
+|             | - `read_only`_                                                         |
+|             | - `error_bubbling`_                                                    |
 +-------------+------------------------------------------------------------------------+
 | Parent type | :doc:`text</reference/forms/types/text>`                               |
 +-------------+------------------------------------------------------------------------+
 | Class       | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\PasswordType` |
 +-------------+------------------------------------------------------------------------+
 
-Options
--------
+Field Options
+-------------
 
-*   ``always_empty`` [type: Boolean, default: true]
-    If set to true, the field will *always* render blank, even if the corresponding
-    field has a value. When set to false, the password field will be rendered
-    with the ``value`` attribute set to its true value.
-    
-    Put simply, if for some reason you want to render your password field
-    *with* the password value already entered into the box, set this to false.
+always_empty
+~~~~~~~~~~~~
 
-.. include:: /reference/forms/types/options/max_length.rst.inc
+**type**: ``Boolean`` **default**: ``true``
 
-.. include:: /reference/forms/types/options/trim.rst.inc
+If set to true, the field will *always* render blank, even if the corresponding
+field has a value. When set to false, the password field will be rendered
+with the ``value`` attribute set to its true value.
+
+Put simply, if for some reason you want to render your password field
+*with* the password value already entered into the box, set this to false.
 
 Inherited Options
 -----------------
 
 These options inherit from the :doc:`field</reference/forms/types/field>` type:
 
+.. include:: /reference/forms/types/options/max_length.rst.inc
+
 .. include:: /reference/forms/types/options/required.rst.inc
 
 .. include:: /reference/forms/types/options/label.rst.inc
+
+.. include:: /reference/forms/types/options/trim.rst.inc
 
 .. include:: /reference/forms/types/options/read_only.rst.inc
 

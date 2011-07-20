@@ -358,17 +358,17 @@ of the bundle:
 
 Let's walk through this example:
 
-* **lines 7-10** In this section, you instantiate and work with the ``$product``
+* **lines 8-11** In this section, you instantiate and work with the ``$product``
   object like any other, normal PHP object;
 
-* **line 12** This line fetches Doctrine's *entity manager* object, which is
+* **line 13** This line fetches Doctrine's *entity manager* object, which is
   responsible for handling the process of persisting and fetching objects
   to and from the database;
 
-* **line 13** The ``persist()`` method tells Doctrine to "manage" the ``$product``
+* **line 14** The ``persist()`` method tells Doctrine to "manage" the ``$product``
   object. This does not actually cause a query to be made to the database (yet).
 
-* **line 14** When the ``flush()`` method is called, Doctrine looks through
+* **line 15** When the ``flush()`` method is called, Doctrine looks through
   all of the objects that it's managing to see if they need to be persisted
   to the database. In this example, the ``$product`` object has not been
   persisted yet, so the entity manager executes an ``INSERT`` query and a

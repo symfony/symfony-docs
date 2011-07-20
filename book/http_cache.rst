@@ -545,9 +545,9 @@ md5 of the content::
 
     public function indexAction()
     {
-        $response = $this->renderView('MyBundle:Main:index.html.twig');
+        $response = $this->render('MyBundle:Main:index.html.twig');
         $response->setETag(md5($response->getContent()));
-        $response->isNotModified($this->get('request'));
+        $response->isNotModified($this->getRequest());
 
         return $response;
     }
@@ -598,7 +598,7 @@ header value::
         $date = $authorDate > $articleDate ? $authorDate : $articleDate;
 
         $response->setLastModified($date);
-        $response->isNotModified($this->get('request'));
+        $response->isNotModified($this->getRequest());
 
         return $response;
     }
@@ -643,7 +643,7 @@ exposing a simple and efficient pattern::
         $response->setLastModified($article->getPublishedAt());
 
         // Check that the Response is not modified for the given Request
-        if ($response->isNotModified($this->get('request'))) {
+        if ($response->isNotModified($this->getRequest())) {
             // return the 304 Response immediately
             return $response;
         } else {
@@ -835,7 +835,7 @@ independent of the rest of the page.
 
     public function indexAction()
     {
-        $response = $this->renderView('MyBundle:MyController:index.html.twig');
+        $response = $this->render('MyBundle:MyController:index.html.twig');
         $response->setSharedMaxAge(600);
 
         return $response;

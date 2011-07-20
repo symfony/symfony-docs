@@ -300,6 +300,8 @@ The full list of constraints with details is available in the
 .. index::
    single: Validation; Constraints configuration
 
+.. _book-validation-constraint-configuration:
+
 Constraint Configuration
 ~~~~~~~~~~~~~~~~~~~~~~~~
 

@@ -1,6 +1,9 @@
-*   ``data_timezone`` [type: string, default: system default timezone]
-    Timezone for the data being stored.  This must be one of the `PHP supported timezones`__
+data_timezone
+~~~~~~~~~~~~~
 
-.. _PhpTimezones: http://php.net/manual/en/timezones.php
+**type**: ``string`` **default**: system default timezone
 
-__ PhpTimezones_
+Timezone that the input data is stored in. This must be one of the
+`PHP supported timezones`_
+
+.. _`PHP supported timezones`: http://php.net/manual/en/timezones.php

@@ -1155,7 +1155,7 @@ pattern is to do the following:
 
     public function indexAction()
     {
-        $format = $this->get('request')->getRequestFormat();
+        $format = $this->getRequest()->getRequestFormat();
     
         return $this->render('AcmeBlogBundle:Blog:index.'.$format.'.twig');
     }
@@ -1221,6 +1221,6 @@ Learn more from the Cookbook
 .. _`Symfony2Bundles.org`: http://symfony2bundles.org
 .. _`Cross Site Scripting`: http://en.wikipedia.org/wiki/Cross-site_scripting
 .. _`Output Escaping`: http://www.twig-project.org
-.. _`tags`: http://www.twig-project.org/doc/templates.html#comments
+.. _`tags`: http://www.twig-project.org/doc/templates.html#list-of-control-structures
 .. _`filters`: http://www.twig-project.org/doc/templates.html#list-of-built-in-filters
 .. _`add your own extensions`: http://www.twig-project.org/doc/advanced.html

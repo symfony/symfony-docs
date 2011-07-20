@@ -9,7 +9,10 @@ The ``file`` type represents a file input in your form.
 +-------------+---------------------------------------------------------------------+
 | Rendered as | ``input`` ``file`` field                                            |
 +-------------+---------------------------------------------------------------------+
-| Options     | none                                                                |
+| Inherited   | - `required`_                                                       |
+| options     | - `label`_                                                          |
+|             | - `read_only`_                                                      |
+|             | - `error_bubbling`_                                                 |
 +-------------+---------------------------------------------------------------------+
 | Parent type | :doc:`form</reference/forms/types/field>`                           |
 +-------------+---------------------------------------------------------------------+
@@ -43,7 +46,9 @@ used to move the ``attachment`` file to a permanent location:
         // ...
 
         if ($form->isValid()) {
-            $form['attachment']->move($dir, $file);
+            $someNewFilename = ...
+        
+            $form['attachment']->move($dir, $someNewFilename);
 
             // ...
         }
@@ -51,7 +56,8 @@ used to move the ``attachment`` file to a permanent location:
         // ...
     }
 
-The ``move()`` method takes a directory and a file name as its arguments::
+The ``move()`` method takes a directory and a file name as its arguments.
+You might calculate the filename in one of the following ways::
 
     // use the original file name
     $file->move($dir, $file->getClientOriginalName());
@@ -71,3 +77,16 @@ before using it directly.
 
 Read the :doc:`cookbook </cookbook/doctrine/file_uploads>` for an example of
 how to manage a file upload associated with a Doctrine entity.
+
+Inherited options
+-----------------
+
+These options inherit from the :doc:`field</reference/forms/types/field>` type:
+
+.. include:: /reference/forms/types/options/required.rst.inc
+
+.. include:: /reference/forms/types/options/label.rst.inc
+
+.. include:: /reference/forms/types/options/read_only.rst.inc
+
+.. include:: /reference/forms/types/options/error_bubbling.rst.inc

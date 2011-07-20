@@ -73,7 +73,7 @@ Removing all EXIF Data
 
 By default, running this filter only removes some of the meta information
 stored in the file. Any EXIF data and comments are not removed, but you can
-remove these by using the ``strip_all` option:
+remove these by using the ``strip_all`` option:
 
 .. configuration-block::
 

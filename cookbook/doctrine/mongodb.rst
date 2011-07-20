@@ -63,12 +63,15 @@ Be sure to add them anywhere *above* the ``Doctrine`` namespace (shown here)::
         // ...
     ));
 
-Register ODM Annotations::
+Next, register the annotations library by adding the following to the autoloader
+(below the existing ``AnnotationRegistry::registerFile`` line)::
 
     // app/autoload.php
-    AnnotationRegistry::registerFile(__DIR__.'/../vendor/doctrine-mongodb-odm/lib/Doctrine/ODM/MongoDB/Mapping/Annotations/DoctrineAnnotations.php');
-Finally, enable the new bundle in the kernel::
+    AnnotationRegistry::registerFile(
+        __DIR__.'/../vendor/doctrine-mongodb-odm/lib/Doctrine/ODM/MongoDB/Mapping/Annotations/DoctrineAnnotations.php'
+    );
 
+Finally, enable the new bundle in the kernel::
 
     // app/AppKernel.php
     public function registerBundles()
@@ -80,8 +83,6 @@ Finally, enable the new bundle in the kernel::
 
         // ...
     }
-
-
 
 Congratulations! You're ready to get to work.
 
