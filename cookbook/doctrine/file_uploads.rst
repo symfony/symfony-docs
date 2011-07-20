@@ -55,7 +55,7 @@ First, create a simple Doctrine Entity class to work with::
 
         public function getWebPath()
         {
-            return null === $this->path ? null : $this->getWebPath().'/'.$this->path;
+            return null === $this->path ? null : $this->getUploadDir().'/'.$this->path;
         }
 
         protected function getUploadRootDir()
