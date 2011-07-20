@@ -6,9 +6,12 @@ tools.  You must, of course, have the `PHP SOAP`_ extension installed.
 As the PHP SOAP extension can not currently generate a WSDL, you must either 
 create one from scratch or use a 3rd party generator.
 
-Here is an example o
+Below is an example of a controller that is capable of handling a SOAP 
+request.  If ``indexAction()`` is accessible via the route /soap, then the 
+WSDL document can be retrieved via /soap?wsdl.
 
 .. code-block:: php
+
     class MySoapController extends Controller 
     {
         public function indexAction()
@@ -36,20 +39,21 @@ Here is an example o
         }
     }
 
-Take note of the calls to ob_start, ob_get_contents, and ob_clean.  These 
+Take note of the calls to ``ob_start()`` and ``ob_get_clean()``.  These
 methods control `output buffering`_ which allows us to "trap" the echoed 
-output of $server->handle().  
+output of ``$server->handle()``.  
 This is necessary because Symfony expects our controller to return a 
 Response object with our output as it's "content".  You must also remember 
 to set the "Content-Type" header to "text/xml", as this is what the client 
 will expect.  So, we use ob_start to start buffering the STDOUT and use 
-ob_get_clean to dump the echoed output into the content of our Response
+``ob_get_clean()`` to dump the echoed output into the content of our Response
 and clear our output buffer.  Finally, we're ready to return our Response.
 
 Below is an example calling our service using `NuSOAP`_ client.  This example 
 assumes indexAction in our controller above is accessible via the route "/soap".
 
 .. code-block:: php
+
     $client = new soapclient('http://example.com/app.php/soap?wsdl', true);
     
     $result = $client->call('hello', array('name' => 'Scott'));
@@ -57,6 +61,7 @@ assumes indexAction in our controller above is accessible via the route "/soap".
 An example WSDL is below.
 
 .. code-block:: xml
+
     <?xml version="1.0" encoding="ISO-8859-1"?>
      <definitions xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" 
          xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
