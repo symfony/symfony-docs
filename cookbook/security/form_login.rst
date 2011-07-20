@@ -261,7 +261,7 @@ redirect to the URL defined by some ``acount`` route, use the following:
             <label for="password">Password:</label>
             <input type="password" id="password" name="_password" />
 
-            <input type="hidden" name="_target_path" value="{{ path('account') }}" />
+            <input type="hidden" name="_target_path" value="account" />
 
             <input type="submit" name="login" />
         </form>
@@ -280,13 +280,14 @@ redirect to the URL defined by some ``acount`` route, use the following:
             <label for="password">Password:</label>
             <input type="password" id="password" name="_password" />
 
-            <input type="hidden" name="_target_path" value="<?php echo $view['router']->generate('account') ?>" />
+            <input type="hidden" name="_target_path" value="account" />
             
             <input type="submit" name="login" />
         </form>
 
-Now, the user will be redirected to the value of the hidden form field. You
-can even change the name of the hidden form field by changing the ``target_path_parameter``
+Now, the user will be redirected to the value of the hidden form field. The
+value attribute can be a relative path, absolute URL, or a route name. You 
+can even change the name of the hidden form field by changing the ``target_path_parameter`` 
 option to another value.
 
 .. configuration-block::
