@@ -231,7 +231,7 @@ add the following code at the beginning of your listener method::
 .. tip::
 
     If you are not yet familiar with the Symfony2 Event Dispatcher, read the
-    :doc:`dedicated chapter </book/internals/event_dispatcher>` first.
+    :ref:`event_dispatcher` section first.
 
 .. index::
    single: Event; kernel.request
@@ -418,6 +418,8 @@ used. To make this possible, the Symfony2 kernel throws an event -
 
 .. index::
    single: Event Dispatcher; Events
+
+.. _event_dispatcher:
 
 Events
 ~~~~~~
