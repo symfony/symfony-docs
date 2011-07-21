@@ -215,7 +215,9 @@ Symfony provides an alternative to the raw PHP approach via two classes that
 allow you to interact with the HTTP request and response in an easier way.
 The :class:`Symfony\\Component\\HttpFoundation\\Request` class is a simple
 object-oriented representation of the HTTP request message. With it, you
-have all the request information at your fingertips::
+have all the request information at your fingertips:
+
+.. code-block:: php
 
     use Symfony\Component\HttpFoundation\Request;
 
@@ -241,7 +243,9 @@ the user is connecting via a secured connection (i.e. ``https``).
 
 Symfony also provides a ``Response`` class: a simple PHP representation of
 an HTTP response message. This allows your application to use an object-oriented
-interface to construct the response that needs to be returned to the client::
+interface to construct the response that needs to be returned to the client:
+
+.. code-block:: php
 
     use Symfony\Component\HttpFoundation\Response;
     $response = new Response();

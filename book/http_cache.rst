@@ -141,7 +141,9 @@ wraps the default one (``AppKernel``). The caching Kernel *is* the reverse
 proxy.
 
 To enabling caching, modify the code of a front controller to use the caching
-kernel::
+kernel:
+
+.. code-block:: php
 
     // web/app.php
 
@@ -161,7 +163,9 @@ from your application and returning them to the client.
 
     The cache kernel has a special ``getLog()`` method that returns a string
     representation of what happened in the cache layer. In the development
-    environment, use it to debug and validate your cache strategy::
+    environment, use it to debug and validate your cache strategy:
+
+.. code-block:: php
 
         error_log($kernel->getLog());
 
@@ -445,7 +449,9 @@ Expiration with the ``Expires`` Header
 According to the HTTP specification, "the ``Expires`` header field gives
 the date/time after which the response is considered stale." The ``Expires``
 header can be set with the ``setExpires()`` ``Response`` method. It takes a
-``DateTime`` instance as an argument::
+``DateTime`` instance as an argument:
+
+.. code-block:: php
 
     $date = new DateTime();
     $date->modify('+600 seconds');
@@ -478,7 +484,9 @@ use the ``Cache-Control`` header instead. Recall that the ``Cache-Control``
 header is used to specify many different cache directives. For expiration,
 there are two directives, ``max-age`` and ``s-maxage``. The first one is
 used by all caches, whereas the second one is only taken into account by
-shared caches::
+shared caches:
+
+.. code-block:: php
 
     // Sets the number of seconds after which the response
     // should no longer be considered fresh
@@ -488,7 +496,9 @@ shared caches::
     $response->setSharedMaxAge(600);
 
 The ``Cache-Control`` header would take on the following format (it may have
-additional directives)::
+additional directives):
+
+.. code-block:: text
 
     Cache-Control: max-age=600, s-maxage=600
 
@@ -541,7 +551,9 @@ if two different versions of a resource are equivalent. Like fingerprints,
 each ``ETag`` must be unique across all representations of the same resource.
 
 Let's walk through a simple implementation that generates the ETag as the
-md5 of the content::
+md5 of the content:
+
+.. code-block:: php
 
     public function indexAction()
     {
@@ -586,7 +598,9 @@ since the response was cached.
 
 For instance, you can use the latest update date for all the objects needed to
 compute the resource representation as the value for the ``Last-Modified``
-header value::
+header value:
+
+.. code-block:: php
 
     public function showAction($articleSlug)
     {
@@ -627,7 +641,9 @@ Optimizing your Code with Validation
 The main goal of any caching strategy is to lighten the load on the application.
 Put another way, the less you do in your application to return a 304 response,
 the better. The ``Response::isNotModified()`` method does exactly that by
-exposing a simple and efficient pattern::
+exposing a simple and efficient pattern:
+
+.. code-block:: php
 
     public function showAction($articleSlug)
     {
@@ -686,7 +702,9 @@ In this case, we need the cache to store both a compressed and uncompressed
 version of the response for the particular URI and return them based on the
 request's ``Accept-Encoding`` value. This is done by using the ``Vary`` response
 header, which is a comma-separated list of different headers whose values
-trigger a different representation of the requested resource::
+trigger a different representation of the requested resource:
+
+.. code-block:: text
 
     Vary: Accept-Encoding, User-Agent
 
@@ -724,7 +742,9 @@ More Response Methods
 ~~~~~~~~~~~~~~~~~~~~~
 
 The Response class provides many more methods related to the cache. Here are
-the most useful ones::
+the most useful ones:
+
+.. code-block:: php
 
     // Marks the Response stale
     $response->expire();
@@ -733,7 +753,9 @@ the most useful ones::
     $response->setNotModified();
 
 Additionally, most cache-related HTTP headers can be set via the single
-``setCache()`` method::
+``setCache()`` method:
+
+.. code-block:: php
 
     // Set cache settings in one call
     $response->setCache(array(
@@ -986,7 +1008,9 @@ should avoid them as much as possible. The most standard way is to purge the
 cache for a given URL by requesting it with the special ``PURGE`` HTTP method.
 
 Here is how you can configure the Symfony2 reverse proxy to support the
-``PURGE`` HTTP method::
+``PURGE`` HTTP method:
+
+.. code-block:: php
 
     // app/AppCache.php
     class AppCache extends Cache

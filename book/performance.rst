@@ -100,7 +100,9 @@ If you're using the Symfony2 Standard Edition, then you're probably already
 using the bootstrap file. To be sure, open your front controller (usually
 ``app.php``) and check to make sure that one of the following lines exists
 and is uncommented (exactly which you need depends on if you're using Symfony's
-:doc:`HTTP Caching layer</book/http_cache>`)::
+:doc:`HTTP Caching layer</book/http_cache>`):
+
+.. code-block:: php
 
     require_once __DIR__.'/../app/bootstrap.php.cache';
     require_once __DIR__.'/../app/bootstrap_cache.php.cache';

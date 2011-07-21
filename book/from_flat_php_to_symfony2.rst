@@ -256,7 +256,9 @@ and reusable. To prove it, add a blog "show" page, which displays an individual
 blog post identified by an ``id`` query parameter.
 
 To begin, create a new function in the ``model.php`` file that retrieves
-an individual blog result based on a given id::
+an individual blog result based on a given id:
+
+.. code-block:: php
 
     // model.php
     function get_post_by_id($id)
@@ -618,7 +620,9 @@ The layout is nearly identical:
 
 When Symfony2's engine (called the ``Kernel``) boots up, it needs a map so
 that it knows which controllers to execute based on the request information.
-A routing configuration map provides this information in a readable format::
+A routing configuration map provides this information in a readable format:
+
+.. code-block:: yaml
 
     # app/config/routing.yml
     blog_list:

@@ -12,7 +12,9 @@ you can dream up. The controller contains whatever arbitrary logic *your
 application* needs to render the content of a page.
 
 To see how simple this is, let's look at a Symfony2 controller in action.
-The following controller would render a page that simply prints ``Hello world!``::
+The following controller would render a page that simply prints ``Hello world!``:
+
+.. code-block:: php
 
     use Symfony\Component\HttpFoundation\Response;
 
@@ -251,7 +253,9 @@ example:
             'color'       => 'green',
         )));
 
-The controller for this can take several arguments::
+The controller for this can take several arguments:
+
+.. code-block:: php
 
     public function indexAction($first_name, $last_name, $color)
     {
@@ -272,7 +276,9 @@ the following guidelines in mind while you develop.
     names in the controller method's signature. In other words, it realizes that
     the ``{last_name}`` parameter matches up with the ``$last_name`` argument.
     The arguments of the controller could be totally reordered and still work
-    perfectly::
+    perfectly:
+
+    .. code-block:: php
 
         public function indexAction($last_name, $color, $first_name)
         {
@@ -282,7 +288,9 @@ the following guidelines in mind while you develop.
 * **Each required controller argument must match up with a routing parameter**
 
     The following would throw a ``RuntimeException`` because there is no ``foo``
-    parameter defined in the route::
+    parameter defined in the route:
+    
+    .. code-block:: php
 
         public function indexAction($first_name, $last_name, $color, $foo)
         {
@@ -290,7 +298,9 @@ the following guidelines in mind while you develop.
         }
 
     Making the argument optional, however, is perfectly ok. The following
-    example would not throw an exception::
+    example would not throw an exception:
+ 
+    .. code-block:: php
 
         public function indexAction($first_name, $last_name, $color, $foo = 'bar')
         {
@@ -300,7 +310,9 @@ the following guidelines in mind while you develop.
 * **Not all routing parameters need to be arguments on your controller**
 
     If, for example, the ``last_name`` weren't important for your controller,
-    you could omit it entirely::
+    you could omit it entirely:
+
+    .. code-block:: php
 
         public function indexAction($first_name, $color)
         {
@@ -318,7 +330,9 @@ The ``Request`` as a Controller Argument
 
 For convenience, you can also have Symfony pass you the ``Request`` object
 as an argument to your controller. This is especially convenient when you're
-working with forms, for example::
+working with forms, for example:
+
+.. code-block:: php
 
     use Symfony\Component\HttpFoundation\Request;
 
@@ -398,7 +412,9 @@ to manage in Symfony2.
 Redirecting
 ~~~~~~~~~~~
 
-If you want to redirect the user to another page, use the ``redirect()`` method::
+If you want to redirect the user to another page, use the ``redirect()`` method:
+
+.. code-block:: php
 
     public function indexAction()
     {
@@ -410,7 +426,9 @@ for a given route. For more information, see the :doc:`Routing </book/routing>`
 chapter.
 
 By default, the ``redirect()`` method performs a 302 (temporary) redirect. To
-perform a 301 (permanent) redirect, modify the second argument::
+perform a 301 (permanent) redirect, modify the second argument:
+
+.. code-block:: php
 
     public function indexAction()
     {
@@ -437,7 +455,9 @@ Forwarding
 You can also easily forward to another controller internally with the ``forward()``
 method. Instead of redirecting the user's browser, it makes an internal sub-request,
 and calls the specified controller. The ``forward()`` method returns the ``Response``
-object that's returned from that controller::
+object that's returned from that controller:
+
+.. code-block:: php
 
     public function indexAction($name)
     {
@@ -457,7 +477,9 @@ controller class will be ``HelloController`` inside some ``AcmeHelloBundle``.
 The array passed to the method becomes the arguments on the resulting controller.
 This same interface is used when embedding controllers into templates (see
 :ref:`templating-embedding-controller`). The target controller method should
-look something like the following::
+look something like the following:
+
+.. code-block:: php
 
     public function fancyAction($name, $color)
     {
@@ -475,7 +497,9 @@ value to each variable.
     Like other base ``Controller`` methods, the ``forward`` method is just
     a shortcut for core Symfony2 functionality. A forward can be accomplished
     directly via the ``http_kernel`` service. A forward returns a ``Response``
-    object::
+    object:
+
+    .. code-block:: php
     
         $httpKernel = $this->container->get('http_kernel');
         $response = $httpKernel->forward('AcmeHelloBundle:Hello:fancy', array(
@@ -494,14 +518,18 @@ Rendering Templates
 Though not a requirement, most controllers will ultimately render a template
 that's responsible for generating the HTML (or other format) for the controller.
 The ``renderView()`` method renders a template and returns its content. The
-content from the template can be used to create a ``Response`` object::
+content from the template can be used to create a ``Response`` object:
+
+.. code-block:: php
 
     $content = $this->renderView('AcmeHelloBundle:Hello:index.html.twig', array('name' => $name));
 
     return new Response($content);
 
 This can even be done in just one step with the ``render()`` method, which
-returns a ``Response`` object containing the content from the template::
+returns a ``Response`` object containing the content from the template:
+
+.. code-block:: php
 
     return $this->render('AcmeHelloBundle:Hello:index.html.twig', array('name' => $name));
 
@@ -514,7 +542,9 @@ The Symfony templating engine is explained in great detail in the
 .. tip::
 
     The ``renderView`` method is a shortcut to direct use of the ``templating``
-    service. The ``templating`` service can also be used directly::
+    service. The ``templating`` service can also be used directly:
+
+    .. code-block:: php
     
         $templating = $this->get('templating');
         $content = $templating->render('AcmeHelloBundle:Hello:index.html.twig', array('name' => $name));
@@ -526,7 +556,9 @@ Accessing other Services
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
 When extending the base controller class, you can access any Symfony2 service
-via the ``get()`` method. Here are several common services you might need::
+via the ``get()`` method. Here are several common services you might need:
+
+.. code-block:: php
 
     $request = $this->getRequest();
 
@@ -557,7 +589,9 @@ Managing Errors and 404 Pages
 
 When things are not found, you should play well with the HTTP protocol and
 return a 404 response. To do this, you'll throw a special type of exception.
-If you're extending the base controller class, do the following::
+If you're extending the base controller class, do the following:
+
+.. code-block:: php
 
     public function indexAction()
     {
@@ -597,7 +631,9 @@ between requests. By default, Symfony2 stores the attributes in a cookie
 by using the native PHP sessions.
 
 Storing and retrieving information from the session can be easily achieved
-from any controller::
+from any controller:
+
+.. code-block:: php
 
     $session = $this->getRequest()->getSession();
 
@@ -624,7 +660,9 @@ for exactly one additional request. This is useful when processing a form:
 you want to redirect and have a special message shown on the *next* request.
 These types of messages are called "flash" messages.
 
-For example, imagine you're processing a form submit::
+For example, imagine you're processing a form submit:
+
+.. code-block:: php
 
     public function updateAction()
     {
@@ -680,7 +718,9 @@ The Response Object
 The only requirement for a controller is to return a ``Response`` object. The
 :class:`Symfony\\Component\\HttpFoundation\\Response` class is a PHP
 abstraction around the HTTP response - the text-based message filled with HTTP
-headers and content that's sent back to the client::
+headers and content that's sent back to the client:
+
+.. code-block:: php
 
     // create a simple Response with a 200 status code (the default)
     $response = new Response('Hello '.$name, 200);
@@ -704,7 +744,9 @@ The Request Object
 ------------------
 
 Besides the values of the routing placeholders, the controller also has access
-to the ``Request`` object when extending the base ``Controller`` class::
+to the ``Request`` object when extending the base ``Controller`` class:
+
+.. code-block:: php
 
     $request = $this->getRequest();
 

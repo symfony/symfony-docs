@@ -363,7 +363,9 @@ Validation Groups
 ~~~~~~~~~~~~~~~~~
 
 If your object takes advantage of :ref:`validation groups <book-validation-validation-groups>`,
-you'll need to specify which validation group(s) your form should use::
+you'll need to specify which validation group(s) your form should use:
+
+.. code-block:: php
 
     $form = $this->createFormBuilder($users, array(
             'validation_groups' => array('registration')
@@ -372,7 +374,9 @@ you'll need to specify which validation group(s) your form should use::
     ;
 
 If you're creating :ref:`form classes<book-form-creating-form-classes>` (a good
-practice), then you'll need to add the following to the ``getDefaultOptions()`` method::
+practice), then you'll need to add the following to the ``getDefaultOptions()`` method:
+
+.. code-block:: php
 
     public function getDefaultOptions(array $options) {
         return array(

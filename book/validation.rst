@@ -206,7 +206,9 @@ when working with forms. Symfony's form library uses the ``validator`` service
 internally to validate the underlying object after values have been submitted
 and bound. The constraint violations on the object are converted into ``FieldError``
 objects that can easily be displayed with your form. The typical form submission
-workflow looks like the following from inside a controller::
+workflow looks like the following from inside a controller:
+
+.. code-block:: php
 
     use Acme\BlogBundle\Entity\Author;
     use Acme\BlogBundle\Form\AuthorType;
@@ -580,7 +582,9 @@ this method must return ``true``:
             }
         }
 
-Now, create the ``isPasswordLegal()`` method, and include the logic you need::
+Now, create the ``isPasswordLegal()`` method, and include the logic you need:
+
+.. code-block:: php
 
     public function isPasswordLegal()
     {
@@ -607,7 +611,9 @@ on that class. To do this, you can organize each constraint into one or more
 constraints.
 
 For example, suppose you have a ``User`` class, which is used both when a
-user registers and when a user updates his/her contact information later::
+user registers and when a user updates his/her contact information later:
+
+.. code-block:: php
 
     // src/Acme/BlogBundle/Entity/User.php
     namespace Acme\BlogBundle\Entity;
@@ -642,7 +648,9 @@ With this configuration, there are two validation groups:
   fields only.
 
 To tell the validator to use a specific group, pass one or more group names
-as the second argument to the ``validate()`` method::
+as the second argument to the ``validate()`` method:
+
+.. code-block:: php
 
     $errorList = $validator->validate($author, array('registration'));
 

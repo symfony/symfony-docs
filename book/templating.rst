@@ -22,7 +22,9 @@ Templates
 
 A template is simply a text file that can generate any text-based format
 (HTML, XML, CSV, LaTeX ...). The most familiar type of template is a *PHP*
-template - a text file parsed by PHP that contains a mix of text and PHP code::
+template - a text file parsed by PHP that contains a mix of text and PHP code:
+
+.. code-block:: html+php
 
     <!DOCTYPE html>
     <html>
@@ -288,7 +290,9 @@ the templating engine to first evaluate the base template, which sets up
 the layout and defines several blocks. The child template is then rendered,
 at which point the ``title`` and ``body`` blocks of the parent are replaced
 by those from the child. Depending on the value of ``blog_entries``, the
-output might look like this::
+output might look like this:
+
+.. code-block:: html
 
     <!DOCTYPE html>
     <html>
@@ -933,7 +937,9 @@ Suppose you've included the imaginary open-source ``AcmeBlogBundle`` in your
 project (e.g. in the ``src/Acme/BlogBundle`` directory). And while you're
 really happy with everything, you want to override the blog "list" page to
 customize the markup specifically for your application. By digging into the
-``Blog`` controller of the ``AcmeBlogBundle``, you find the following::
+``Blog`` controller of the ``AcmeBlogBundle``, you find the following:
+
+.. code-block:: php
 
     public function indexAction()
     {
@@ -1065,12 +1071,16 @@ this classic example:
 
         Hello <?php echo $name ?>
 
-Imagine that the user enters the following code as his/her name::
+Imagine that the user enters the following code as his/her name:
+
+.. code-block:: text
 
     <script>alert('hello!')</script>
 
 Without any output escaping, the resulting template will cause a JavaScript
-alert box to pop up::
+alert box to pop up:
+
+.. code-block:: text
 
     Hello <script>alert('hello!')</script>
 
@@ -1080,7 +1090,9 @@ inside the secure area of an unknowing, legitimate user.
 
 The answer to the problem is output escaping. With output escaping on, the
 same template will render harmlessly, and literally print the ``script``
-tag to the screen::
+tag to the screen:
+
+.. code-block:: text
 
     Hello &lt;script&gt;alert(&#39;helloe&#39;)&lt;/script&gt;
 
@@ -1112,7 +1124,9 @@ Output Escaping in PHP
 
 Output escaping is not automatic when using PHP templates. This means that
 unless you explicitly choose to escape a variable, you're not protected. To
-use output escaping, use the special ``escape()`` view method::
+use output escaping, use the special ``escape()`` view method:
+
+.. code-block:: html+php
 
     Hello <?php echo $view->escape($name) ?>
 

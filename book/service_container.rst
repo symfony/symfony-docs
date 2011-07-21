@@ -140,7 +140,9 @@ be specified in YAML, XML or PHP:
 An instance of the ``Acme\HelloBundle\Mailer`` object is now available via
 the service container. The container is available in any traditional Symfony2
 controller where you can access the services of the container via the ``get()``
-shortcut method::
+shortcut method:
+
+.. code-block:: php
 
     class HelloController extends Controller
     {
@@ -477,7 +479,9 @@ that helps to manage the preparation and delivery of an email message to
 a collection of addresses. Of course the ``my_mailer`` service is already
 really good at delivering email messages, so we'll use it inside ``NewsletterManager``
 to handle the actual delivery of the messages. This pretend class might look
-something like this::
+something like this:
+
+.. code-block:: php
 
     namespace Acme\HelloBundle\Newsletter;
 
@@ -496,7 +500,9 @@ something like this::
     }
 
 Without using the service container, we can create a new ``NewsletterManager``
-fairly easily from inside a controller::
+fairly easily from inside a controller:
+
+.. code-block:: php
 
     public function sendNewsletterAction()
     {
@@ -578,7 +584,9 @@ Injecting dependencies into the constructor in this manner is an excellent
 way of ensuring that the dependency is available to use. If you have optional
 dependencies for a class, then "setter injection" may be a better option. This
 means injecting the dependency using a method call rather than through the
-constructor. The class would look like this::
+constructor. The class would look like this:
+
+.. code-block:: php
 
     namespace Acme\HelloBundle\Newsletter;
 
@@ -728,7 +736,9 @@ services. To keep things simple, Symfony2 by defaults does not require that
 controllers be defined as services. Furthermore Symfony2 injects the entire
 service container into your controller. For example, to handle the storage of
 information on a user's session, Symfony2 provides a ``session`` service,
-which you can access inside a standard controller as follows::
+which you can access inside a standard controller as follows:
+
+.. code-block:: php
 
     public function indexAction($bar)
     {
@@ -746,7 +756,9 @@ We can take this a step further by using these services inside services that
 you've created for your application. Let's modify the ``NewsletterManager``
 to use the real Symfony2 ``mailer`` service (instead of the pretend ``my_mailer``).
 Let's also pass the templating engine service to the ``NewsletterManager``
-so that it can generate the email content via a template::
+so that it can generate the email content via a template:
+
+.. code-block:: php
 
     namespace Acme\HelloBundle\Newsletter;
 
@@ -825,7 +837,9 @@ Marking Services as public / private
 When defining services, you'll usually want to be able to access these definitions
 within your application code. These services are called ``public``. For example,
 the ``doctrine`` service registered with the container when using the DoctrineBundle
-is a public service as you can access it via::
+is a public service as you can access it via:
+
+.. code-block:: php
 
    $doctrine = $container->get('doctrine');
 
@@ -863,7 +877,9 @@ Here is an example:
         $definition->setPublic(false);
         $container->setDefinition('foo', $definition);
 
-Now that the service is private, you *cannot* call::
+Now that the service is private, you *cannot* call:
+
+.. code-block:: php
 
     $container->get('foo');
 
@@ -905,7 +921,9 @@ furthermore, you can even alias non-public services.
         $containerBuilder->setAlias('bar', 'foo');
 
 This means that when using the container directly, you can access the ``foo``
-service by asking for the ``bar`` service like this::
+service by asking for the ``bar`` service like this:
+
+.. code-block:: php
 
     $container->get('bar'); // Would return the foo service
 

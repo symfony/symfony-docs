@@ -8,7 +8,9 @@ The term "internationalization" refers to the process of abstracting strings
 and other locale-specific pieces out of your application and into a layer
 where they can be translated and converted based on the user's locale (i.e.
 language and country). For text, this means wrapping each with a function
-capable of translating the text (or "message") into the language of the user::
+capable of translating the text (or "message") into the language of the user:
+
+.. code-block:: php
 
     // text will *always* print out in English
     echo 'Hello World';
@@ -598,7 +600,9 @@ given an index of 0, 1 or 2. For each form, the plural is different, and
 so the translation is also different.
 
 When a translation has different forms due to pluralization, you can provide
-all the forms as a string separated by a pipe (``|``)::
+all the forms as a string separated by a pipe (``|``):
+
+.. code-block:: text
 
     'There is one apple|There are %count% apples'
 
@@ -623,7 +627,9 @@ and a plural form for all other numbers (0, 2, 3...). So, if ``count`` is
 ``1``, the translator will use the first string (``There is one apple``)
 as the translation. Otherwise it will use ``There are %count% apples``.
 
-Here is the French translation::
+Here is the French translation:
+
+.. code-block:: text
 
     'Il y a %count% pomme|Il y a %count% pommes'
 
@@ -636,7 +642,9 @@ Each locale has its own set of rules, with some having as many as six different
 plural forms with complex rules behind which numbers map to which plural form.
 The rules are quite simple for English and French, but for Russian, you'd
 may want a hint to know which rule matches which string. To help translators,
-you can optionally "tag" each string::
+you can optionally "tag" each string:
+
+.. code-block:: text
 
     'one: There is one apple|some: There are %count% apples'
 
@@ -659,7 +667,9 @@ The easiest way to pluralize a message is to let Symfony2 use internal logic
 to choose which string to use based on a given number. Sometimes, you'll
 need more control or want a different translation for specific cases (for
 ``0``, or when the count is negative, for example). For such cases, you can
-use explicit math intervals::
+use explicit math intervals:
+
+.. code-block:: text
 
     '{0} There is no apples|{1} There is one apple|]1,19] There are %count% apples|[20,Inf] There are many apples'
 
@@ -669,7 +679,9 @@ and higher.
 
 You can also mix explicit math rules and standard rules. In this case, if
 the count is not matched by a specific interval, the standard rules take
-effect after removing the explicit rules::
+effect after removing the explicit rules:
+
+.. code-block:: text
 
     '{0} There is no apples|[20,Inf] There are many apples|There is one apple|a_few: There are %count% apples'
 
@@ -678,11 +690,15 @@ be used. For ``2-19`` apples, the second standard rule ``There are %count%
 apples`` will be selected.
 
 An :class:`Symfony\\Component\\Translation\\Interval` can represent a finite set
-of numbers::
+of numbers:
+
+.. code-block:: text
 
     {1,2,3,4}
 
-Or numbers between two other numbers::
+Or numbers between two other numbers:
+
+.. code-block:: text
 
     [1, +Inf[
     ]-1,2[

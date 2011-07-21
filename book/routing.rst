@@ -1041,7 +1041,9 @@ is a bi-directional system: mapping the URL to a controller+parameters and
 a route+parameters back to a URL. The
 :method:`Symfony\\Component\\Routing\\Router::match` and
 :method:`Symfony\\Component\\Routing\\Router::generate` methods form this bi-directional
-system. Take the ``blog_show`` example route from earlier::
+system. Take the ``blog_show`` example route from earlier:
+
+.. code-block:: php
 
     $params = $router->match('/blog/my-blog-post');
     // array('slug' => 'my-blog-post', '_controller' => 'AcmeBlogBundle:Blog:show')
@@ -1101,7 +1103,9 @@ Generating URLs with Query Strings
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The ``generate`` method takes an array of wildcard values to generate the URI.
-But if you pass extra ones, they will be added to the URI as a query string::
+But if you pass extra ones, they will be added to the URI as a query string:
+
+.. code-block:: php
 
     $router->generate('blog', array('page' => 2, 'category' => 'Symfony'));
     // /blog/2?category=Symfony

@@ -102,7 +102,9 @@ tests as far as PHPUnit is concerned, but they have a very specific workflow:
 Requests, clicks, and submissions are done by a client that knows how to talk
 to the application. To access such a client, your tests need to extend the
 Symfony2 ``WebTestCase`` class. The Symfony2 Standard Edition provides a
-simple functional test for ``DemoController`` that reads as follows::
+simple functional test for ``DemoController`` that reads as follows:
+
+.. code-block:: php
 
     // src/Acme/DemoBundle/Tests/Controller/DemoControllerTest.php
     namespace Acme\DemoBundle\Tests\Controller;
@@ -121,7 +123,9 @@ simple functional test for ``DemoController`` that reads as follows::
         }
     }
 
-The ``createClient()`` method returns a client tied to the current application::
+The ``createClient()`` method returns a client tied to the current application:
+
+.. code-block:: php
 
     $crawler = $client->request('GET', 'hello/Fabien');
 
@@ -135,14 +139,18 @@ select elements in the Response, to click on links, and to submit forms.
     ``$client->getResponse()->getContent()``.
 
 Click on a link by first selecting it with the Crawler using either a XPath
-expression or a CSS selector, then use the Client to click on it::
+expression or a CSS selector, then use the Client to click on it:
+
+.. code-block:: php
 
     $link = $crawler->filter('a:contains("Greet")')->eq(1)->link();
 
     $crawler = $client->click($link);
 
 Submitting a form is very similar; select a form button, optionally override
-some form values, and submit the corresponding form::
+some form values, and submit the corresponding form:
+
+.. code-block:: php
 
     $form = $crawler->selectButton('submit')->form();
 
@@ -152,7 +160,9 @@ some form values, and submit the corresponding form::
     // submit the form
     $crawler = $client->submit($form);
 
-Each ``Form`` field has specialized methods depending on its type::
+Each ``Form`` field has specialized methods depending on its type:
+
+.. code-block:: php
 
     // fill an input field
     $form['name'] = 'Lucas';
@@ -167,7 +177,9 @@ Each ``Form`` field has specialized methods depending on its type::
     $form['photo']->upload('/path/to/lucas.jpg');
 
 Instead of changing one field at a time, you can also pass an array of values
-to the ``submit()`` method::
+to the ``submit()`` method:
+
+.. code-block:: php
 
     $crawler = $client->submit($form, array(
         'name'         => 'Lucas',
@@ -178,14 +190,18 @@ to the ``submit()`` method::
 
 Now that you can easily navigate through an application, use assertions to test
 that it actually does what you expect it to. Use the Crawler to make assertions
-on the DOM::
+on the DOM:
+
+.. code-block:: php
 
     // Assert that the response matches a given CSS selector.
     $this->assertTrue($crawler->filter('h1')->count() > 0);
 
 Or, test against the Response content directly if you just want to assert that
 the content contains some text, or if the Response is not an XML/HTML
-document::
+document:
+
+.. code-block:: php
 
     $this->assertRegExp('/Hello Fabien/', $client->getResponse()->getContent());
 
@@ -197,7 +213,9 @@ Useful Assertions
 
 After some time, you will notice that you always write the same kind of
 assertions. To get you started faster, here is a list of the most common and
-useful assertions::
+useful assertions:
+
+.. code-block:: php
 
     // Assert that the response matches a given CSS selector.
     $this->assertTrue($crawler->filter($selector)->count() > 0);
@@ -237,7 +255,9 @@ The test Client simulates an HTTP client like a browser.
 Making Requests
 ~~~~~~~~~~~~~~~
 
-The client knows how to make requests to a Symfony2 application::
+The client knows how to make requests to a Symfony2 application:
+
+.. code-block:: php
 
     $crawler = $client->request('GET', '/hello/Fabien');
 
@@ -245,7 +265,9 @@ The ``request()`` method takes the HTTP method and a URL as arguments and
 returns a ``Crawler`` instance.
 
 Use the Crawler to find DOM elements in the Response. These elements can then
-be used to click on links and submit forms::
+be used to click on links and submit forms:
+
+.. code-block:: php
 
     $link = $crawler->selectLink('Go elsewhere...')->link();
     $crawler = $client->click($link);
@@ -265,7 +287,9 @@ merges the submitted values with the form default ones, and more.
     section below.
 
 But you can also simulate form submissions and complex requests with the
-additional arguments of the ``request()`` method::
+additional arguments of the ``request()`` method:
+
+.. code-block:: php
 
     // Form submission
     $client->request('POST', '/submit', array('name' => 'Fabien'));
@@ -277,25 +301,33 @@ additional arguments of the ``request()`` method::
     $client->request('DELETE', '/post/12', array(), array(), array('PHP_AUTH_USER' => 'username', 'PHP_AUTH_PW' => 'pa$$word'));
 
 When a request returns a redirect response, the client automatically follows
-it. This behavior can be changed with the ``followRedirects()`` method::
+it. This behavior can be changed with the ``followRedirects()`` method:
+
+.. code-block:: php
 
     $client->followRedirects(false);
 
 When the client does not follow redirects, you can force the redirection with
-the ``followRedirect()`` method::
+the ``followRedirect()`` method:
+
+.. code-block:: php
 
     $crawler = $client->followRedirect();
 
 Last but not least, you can force each request to be executed in its own PHP
 process to avoid any side-effects when working with several clients in the same
-script::
+script:
+
+.. code-block:: php
 
     $client->insulate();
 
 Browsing
 ~~~~~~~~
 
-The Client supports many operations that can be done in a real browser::
+The Client supports many operations that can be done in a real browser:
+
+.. code-block:: php
 
     $client->back();
     $client->forward();
@@ -308,19 +340,25 @@ Accessing Internal Objects
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 If you use the client to test your application, you might want to access the
-client's internal objects::
+client's internal objects:
+
+.. code-block:: php
 
     $history   = $client->getHistory();
     $cookieJar = $client->getCookieJar();
 
-You can also get the objects related to the latest request::
+You can also get the objects related to the latest request:
+
+.. code-block:: php
 
     $request  = $client->getRequest();
     $response = $client->getResponse();
     $crawler  = $client->getCrawler();
 
 If your requests are not insulated, you can also access the ``Container`` and
-the ``Kernel``::
+the ``Kernel``:
+
+.. code-block:: php
 
     $container = $client->getContainer();
     $kernel    = $client->getKernel();
@@ -331,7 +369,9 @@ Accessing the Container
 It's highly recommended that a functional test only tests the Response. But
 under certain very rare circumstances, you might want to access some internal
 objects to write assertions. In such cases, you can access the dependency
-injection container::
+injection container:
+
+.. code-block:: php
 
     $container = $client->getContainer();
 
@@ -347,7 +387,9 @@ Accessing the Profiler Data
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 To assert data collected by the profiler, you can get the profile for the
-current request like this::
+current request like this:
+
+.. code-block:: php
 
     $profile = $client->getProfile();
 
@@ -356,7 +398,9 @@ Redirecting
 
 By default, the Client doesn't follow HTTP redirects, so that you can get
 and examine the Response before redirecting. Once you do want the client
-to redirect, call the ``followRedirect()`` method::
+to redirect, call the ``followRedirect()`` method:
+
+.. code-block:: php
 
     // do something that would cause a redirect to be issued (e.g. fill out a form)
 
@@ -364,7 +408,9 @@ to redirect, call the ``followRedirect()`` method::
     $crawler = $client->followRedirect();
 
 If you want the Client to always automatically redirect, you can call the
-``followRedirects()`` method::
+``followRedirects()`` method:
+
+.. code-block:: php
 
     $client->followRedirects();
 
@@ -388,7 +434,9 @@ Creating a Crawler Instance
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 A Crawler instance is automatically created for you when you make a request
-with a Client. But you can create your own easily::
+with a Client. But you can create your own easily:
+
+.. code-block:: php
 
     use Symfony\Component\DomCrawler\Crawler;
 
@@ -458,7 +506,9 @@ document:
 +-----------------------+----------------------------------------------------+
 
 You can iteratively narrow your node selection by chaining method calls as
-each method returns a new Crawler instance for the matching nodes::
+each method returns a new Crawler instance for the matching nodes:
+
+.. code-block:: php
 
     $crawler
         ->filter('h1')
@@ -478,7 +528,9 @@ each method returns a new Crawler instance for the matching nodes::
 Extracting Information
 ~~~~~~~~~~~~~~~~~~~~~~
 
-The Crawler can extract information from the nodes::
+The Crawler can extract information from the nodes:
+
+.. code-block:: php
 
     // Returns the attribute value for the first node
     $crawler->attr('class');
@@ -499,7 +551,9 @@ Links
 ~~~~~
 
 You can select links with the traversing methods, but the ``selectLink()``
-shortcut is often more convenient::
+shortcut is often more convenient:
+
+.. code-block:: php
 
     $crawler->selectLink('Click here');
 
@@ -507,7 +561,9 @@ It selects links that contain the given text, or clickable images for which
 the ``alt`` attribute contains the given text.
 
 The Client ``click()`` method takes a ``Link`` instance as returned by the
-``link()`` method::
+``link()`` method:
+
+.. code-block:: php
 
     $link = $crawler->link();
 
@@ -520,7 +576,9 @@ The Client ``click()`` method takes a ``Link`` instance as returned by the
 Forms
 ~~~~~
 
-As for links, you select forms with the ``selectButton()`` method::
+As for links, you select forms with the ``selectButton()`` method:
+
+.. code-block:: php
 
     $crawler->selectButton('submit');
 
@@ -538,12 +596,16 @@ tags; it has several heuristics to find them:
 * The ``id`` or ``name`` attribute value for ``button`` tags.
 
 When you have a node representing a button, call the ``form()`` method to get a
-``Form`` instance for the form wrapping the button node::
+``Form`` instance for the form wrapping the button node:
+
+.. code-block:: php
 
     $form = $crawler->form();
 
 When calling the ``form()`` method, you can also pass an array of field values
-that overrides the default ones::
+that overrides the default ones:
+
+.. code-block:: php
 
     $form = $crawler->form(array(
         'name'         => 'Fabien',
@@ -551,16 +613,22 @@ that overrides the default ones::
     ));
 
 And if you want to simulate a specific HTTP method for the form, pass it as a
-second argument::
+second argument:
+
+.. code-block:: php
 
     $form = $crawler->form(array(), 'DELETE');
 
-The Client can submit ``Form`` instances::
+The Client can submit ``Form`` instances:
+
+.. code-block:: php
 
     $client->submit($form);
 
 The field values can also be passed as a second argument of the ``submit()``
-method::
+method:
+
+.. code-block:: php
 
     $client->submit($form, array(
         'name'         => 'Fabien',
@@ -568,13 +636,17 @@ method::
     ));
 
 For more complex situations, use the ``Form`` instance as an array to set the
-value of each field individually::
+value of each field individually:
+
+.. code-block:: php
 
     // Change the value of a field
     $form['name'] = 'Fabien';
 
 There is also a nice API to manipulate the values of the fields according to
-their type::
+their type:
+
+.. code-block:: php
 
     // Select an option or a radio
     $form['country']->select('France');
@@ -726,7 +798,9 @@ The Client used by functional tests creates a Kernel that runs in a special
 
 You can also change the default environment (``test``) and override the
 default debug mode (``true``) by passing them as options to the
-``createClient()`` method::
+``createClient()`` method:
+
+.. code-block:: php
 
     $client = static::createClient(array(
         'environment' => 'my_test_env',
@@ -734,14 +808,18 @@ default debug mode (``true``) by passing them as options to the
     ));
 
 If your application behaves according to some HTTP headers, pass them as the
-second argument of ``createClient()``::
+second argument of ``createClient()``:
+
+.. code-block:: php
 
     $client = static::createClient(array(), array(
         'HTTP_HOST'       => 'en.example.com',
         'HTTP_USER_AGENT' => 'MySuperBrowser/1.0',
     ));
 
-You can also override HTTP headers on a per request basis::
+You can also override HTTP headers on a per request basis:
+
+.. code-block:: php
 
     $client->request('GET', '/', array(), array(
         'HTTP_HOST'       => 'en.example.com',

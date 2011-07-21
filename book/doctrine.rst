@@ -91,7 +91,9 @@ Creating an Entity Class
 Suppose you're building an application where products need to be displayed.
 Without even thinking about Doctrine or databases, you already know that
 you need a ``Product`` object to represent those products. Create this class
-inside the ``Entity`` directory of your ``AcmeStoreBundle``::
+inside the ``Entity`` directory of your ``AcmeStoreBundle``:
+
+.. code-block:: php
 
     // src/Acme/StoreBundle/Entity/Product.php    
     namespace Acme\StoreBundle\Entity;
@@ -233,7 +235,9 @@ in a number of different formats including YAML, XML or directly inside the
     in an exception being thrown.
     
     For example, to prevent the ``@fn`` annotation from throwing an exception,
-    add the following::
+    add the following:
+
+    .. code-block:: php
     
         /**
          * @IgnoreAnnotation("fn")
@@ -398,7 +402,9 @@ Fetching Objects from the Database
 
 Fetching an object back out of the database is even easier. For example,
 suppose you've configured a route to display a specific ``Product`` based
-on its ``id`` value::
+on its ``id`` value:
+
+.. code-block:: php
 
     public function showAction($id)
     {
@@ -416,7 +422,9 @@ on its ``id`` value::
 When you query for a particular type of object, you always use what's known
 as its "repository". You can think of a repository as a PHP class whose only
 job is to help you fetch entities of a certain class. You can access the
-repository object for an entity class via::
+repository object for an entity class via:
+
+.. code-block:: php
 
     $repository = $this->getDoctrine()
         ->getRepository('AcmeStoreBundle:Product');
@@ -428,7 +436,9 @@ repository object for an entity class via::
     As long as your entity lives under the ``Entity`` namespace of your bundle,
     this will work.
 
-Once you have your repository, you have access to all sorts of helpful methods::
+Once you have your repository, you have access to all sorts of helpful methods:
+
+.. code-block:: php
 
     // query by the primary key (usually "id")
     $product = $repository->find($id);
@@ -449,7 +459,9 @@ Once you have your repository, you have access to all sorts of helpful methods::
     about in the :ref:`book-doctrine-queries` section.
 
 You can also take advantage of the useful ``findBy`` and ``findOneBy`` methods
-to easily fetch objects based on multiple conditions::
+to easily fetch objects based on multiple conditions:
+
+.. code-block:: php
 
     // query for one product matching be name and price
     $product = $repository->findOneBy(array('name' => 'foo', 'price' => 19.99));
@@ -477,7 +489,9 @@ Updating an Object
 ~~~~~~~~~~~~~~~~~~
 
 Once you've fetched an object from Doctrine, updating it is easy. Suppose
-you have a route that maps a product id to an update action in a controller::
+you have a route that maps a product id to an update action in a controller:
+
+.. code-block:: php
 
     public function updateAction($id)
     {
@@ -509,7 +523,9 @@ Deleting an Object
 ~~~~~~~~~~~~~~~~~~
 
 Deleting an object is very similar, but requires a call to the ``remove()``
-method of the entity manager::
+method of the entity manager:
+
+.. code-block:: php
 
     $em->remove($product);
     $em->flush();
@@ -524,7 +540,9 @@ Querying for Objects
 --------------------
 
 You've already seen how the repository object allows you to run basic queries
-without any work::
+without any work:
+
+.. code-block:: php
 
     $repository->find($id);
     
@@ -543,7 +561,9 @@ Querying for Objects with DQL
 
 Imaging that you want to query for products, but only return products that
 cost more than ``19.99``, ordered from cheapest to most expensive. From inside
-a controller, do the following::
+a controller, do the following:
+
+.. code-block:: php
 
     $em = $this->getDoctrine()->getEntityManager();
     $query = $em->createQuery(
@@ -558,7 +578,9 @@ in a database. For this reason, you select *from* ``AcmeStoreBundle:Product``
 and then alias it as ``p``.
 
 The ``getResult()`` method returns an array of results. If you're querying
-for just one object, you can use the ``getSingleResult()`` method instead::
+for just one object, you can use the ``getSingleResult()`` method instead:
+
+.. code-block:: php
 
     $product = $query->getSingleResult();
 
@@ -569,7 +591,9 @@ for just one object, you can use the ``getSingleResult()`` method instead::
     if *more* than one result is returned. If you use this method, you may
     need to wrap it in a try-catch block and ensure that only one result is
     returned (if you're querying on something that could feasibly return
-    more than one result)::
+    more than one result):
+
+    .. code-block:: php
     
         $query = $em->createQuery('SELECT ....')
             ->setMaxResults(1);
@@ -604,7 +628,9 @@ covered later), group, etc. For more information, see the official Doctrine
     Using parameters instead of placing values directly in the query string
     is done to prevent SQL injection attacks and should *always* be done.
     If you're using multiple parameters, you can set their values at once
-    using the ``setParameters()`` method::
+    using the ``setParameters()`` method:
+
+    .. code-block:: php
 
         ->setParameters(array(
             'price' => '19.99',
@@ -617,7 +643,9 @@ Using Doctrine's Query Builder
 Instead of writing the queries directly, you can alternatively use Doctrine's
 ``QueryBuilder`` to do the same job using a nice, object-oriented interface.
 If you use an IDE, you can also take advantage of auto-completion as you
-type the method names. From inside a controller::
+type the method names. From inside a controller:
+
+.. code-block:: php
 
     $repository = $this->getDoctrine()
         ->getRepository('AcmeStoreBundle:Product');
@@ -718,7 +746,9 @@ ordered alphabetically.
     The entity manager can be accessed via ``$this->getEntityManager()``
     from inside the repository.
 
-You can use this new method just like the default finder methods of the repository::
+You can use this new method just like the default finder methods of the repository:
+
+.. code-block:: php
 
     $em = $this->getDoctrine()->getEntityManager();
     $products = $em->getRepository('AcmeStoreBundle:Product')
@@ -751,7 +781,9 @@ Relationship Mapping Metadata
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 To relate the ``Category`` and ``Product`` entities, start by creating a
-``products`` property on the ``Category`` class::
+``products`` property on the ``Category`` class:
+
+.. code-block:: php
 
     // src/Acme/StoreBundle/Entity/Category.php
     // ...
@@ -787,7 +819,9 @@ makes sense in the application for each ``Category`` to hold an array of
     imagine that it's an ``array`` and you'll be in good shape.
 
 Next, since each ``Product`` class can relate to exactly one ``Category``
-object, you'll want to add a ``$category`` property to the ``Product`` class::
+object, you'll want to add a ``$category`` property to the ``Product`` class:
+
+.. code-block:: php
 
     // src/Acme/StoreBundle/Entity/Product.php
     // ...
@@ -849,7 +883,9 @@ table, and ``product.category_id`` column, and new foreign key:
 Saving Related Entities
 ~~~~~~~~~~~~~~~~~~~~~~~
 
-Now, let's see the code in action. Imagine you're inside a controller::
+Now, let's see the code in action. Imagine you're inside a controller:
+
+.. code-block:: php
 
     // ...
     use Acme\StoreBundle\Entity\Category;
@@ -891,7 +927,9 @@ Fetching Related Objects
 
 When you need to fetch associated objects, your workflow looks just like it
 did before. First, fetch a ``$product`` object and then access its related
-``Category``::
+``Category``:
+
+.. code-block:: php
 
     public function showAction($id)
     {
@@ -918,7 +956,9 @@ What's important is the fact that you have easy access to the product's related
 category, but the category data isn't actually retrieved until you ask for
 the category (i.e. it's "lazily loaded").
 
-You can also query in the other direction::
+You can also query in the other direction:
+
+.. code-block:: php
 
     public function showProductAction($id)
     {
@@ -941,7 +981,9 @@ to the given ``Category`` object via their ``category_id`` value.
 
     This "lazy loading" is possible because, when necessary, Doctrine returns
     a "proxy" object in place of the true object. Look again at the above
-    example::
+    example:
+
+    .. code-block:: php
     
         $product = $this->getDoctrine()
             ->getRepository('AcmeStoreBundle:Product')
@@ -979,7 +1021,9 @@ objects).
 
 Of course, if you know up front that you'll need to access both objects, you
 can avoid the second query by issuing a join in the original query. Add the
-following method to the ``ProductRepository`` class::
+following method to the ``ProductRepository`` class:
+
+.. code-block:: php
 
     // src/Acme/StoreBundle/Repository/ProductRepository.php
     
@@ -1000,7 +1044,9 @@ following method to the ``ProductRepository`` class::
     }
 
 Now, you can use this method in your controller to query for a ``Product``
-object and its related ``Category`` with just one query::
+object and its related ``Category`` with just one query:
+
+.. code-block:: php
 
     public function showAction($id)
     {

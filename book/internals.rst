@@ -84,7 +84,9 @@ goal is to "convert" a :class:`Symfony\\Component\\HttpFoundation\\Request`
 object to a :class:`Symfony\\Component\\HttpFoundation\\Response` object.
 
 Every Symfony2 Kernel implements
-:class:`Symfony\\Component\\HttpKernel\\HttpKernelInterface`::
+:class:`Symfony\\Component\\HttpKernel\\HttpKernelInterface`:
+
+.. code-block:: php
 
     function handle(Request $request, $type = self::MASTER_REQUEST, $catch = true)
 
@@ -99,7 +101,9 @@ Controller can be any valid PHP callable.
 
 The Kernel delegates the selection of what Controller should be executed
 to an implementation of
-:class:`Symfony\\Component\\HttpKernel\\Controller\\ControllerResolverInterface`::
+:class:`Symfony\\Component\\HttpKernel\\Controller\\ControllerResolverInterface`:
+
+.. code-block:: php
 
     public function getController(Request $request);
 
@@ -219,7 +223,9 @@ each event has access to the same basic information:
 
 The ``getRequestType()`` method allows listeners to know the type of the
 request. For instance, if a listener must only be active for master requests,
-add the following code at the beginning of your listener method::
+add the following code at the beginning of your listener method:
+
+.. code-block:: php
 
     use Symfony\Component\HttpKernel\HttpKernelInterface;
 
@@ -293,7 +299,9 @@ return a ``Response`` object. The purpose of the event is to allow some other
 return value to be converted into a ``Response``.
 
 The value returned by the Controller is accessible via the
-``getControllerResult`` method::
+``getControllerResult`` method:
+
+.. code-block:: php
 
     use Symfony\Component\HttpKernel\Event\GetResponseForControllerResultEvent;
     use Symfony\Component\HttpFoundation\Response;
@@ -715,7 +723,9 @@ pass the dispatcher to the objects that need to connect or notify events.
 The best practice is to inject the event dispatcher object into your objects,
 aka dependency injection.
 
-You can use constructor injection::
+You can use constructor injection:
+
+.. code-block:: php
 
     class Foo
     {
@@ -727,7 +737,9 @@ You can use constructor injection::
         }
     }
 
-Or setter injection::
+Or setter injection:
+
+.. code-block:: php
 
     class Foo
     {
@@ -908,7 +920,9 @@ You don't need to use the default visualizer to access the profiling
 information. But how can you retrieve profiling information for a specific
 request after the fact? When the profiler stores data about a Request, it also
 associates a token with it; this token is available in the ``X-Debug-Token``
-HTTP header of the Response::
+HTTP header of the Response:
+
+.. code-block:: php
 
     $profile = $container->get('profiler')->loadProfileFromResponse($response);
 
@@ -920,7 +934,9 @@ HTTP header of the Response::
     want to get the token for an Ajax request, use a tool like Firebug to get
     the value of the ``X-Debug-Token`` HTTP header.
 
-Use the ``find()`` method to access tokens based on some criteria::
+Use the ``find()`` method to access tokens based on some criteria:
+
+.. code-block:: php
 
     // get the latest 10 tokens
     $tokens = $container->get('profiler')->find('', '', 10);

@@ -69,7 +69,9 @@ instructions (use all of the default options):
 
 Behind the scenes, a directory is created for the bundle at ``src/Acme/HelloBundle``.
 A line is also automatically added to the ``app/AppKernel.php`` file so that
-the bundle is registered with the kernel::
+the bundle is registered with the kernel:
+
+.. code-block:: php
 
     // app/AppKernel.php
     public function registerBundles()
@@ -200,7 +202,9 @@ that controller.
 The controller - ``AcmeHelloBundle:Hello:index`` is the *logical* name of
 the controller, and it maps to the ``indexAction`` method of a PHP class
 called ``Acme\HelloBundle\Controller\Hello``. Start by creating this file
-inside your ``AcmeHelloBundle``::
+inside your ``AcmeHelloBundle``:
+
+.. code-block:: php
 
     // src/Acme/HelloBundle/Controller/HelloController.php
     namespace Acme\HelloBundle\Controller;
@@ -218,7 +222,9 @@ cases, the end product of a controller is always the same: a Symfony2 ``Response
 object.
 
 Create the ``indexAction`` method that Symfony will execute when the ``hello``
-route is matched::
+route is matched:
+
+.. code-block:: php
 
     // src/Acme/HelloBundle/Controller/HelloController.php
 
@@ -414,7 +420,9 @@ The Web Directory
 
 The web root directory is the home of all public and static files including
 images, stylesheets, and JavaScript files. It is also where each
-:term:`front controller` lives::
+:term:`front controller` lives:
+
+.. code-block:: php
 
     // web/app.php
     require_once __DIR__.'/../app/bootstrap.php.cache';
@@ -545,7 +553,9 @@ Every aspect of a feature exists in a bundle and every feature lives in a
 bundle.
 
 An application is made up of bundles as defined in the ``registerBundles()``
-method of the ``AppKernel`` class::
+method of the ``AppKernel`` class:
+
+.. code-block:: php
 
     // app/AppKernel.php
     public function registerBundles()
@@ -596,7 +606,9 @@ To show you how simple the bundle system is, create a new bundle called
     for some company named ``ABC``).
 
 Start by creating a ``src/Acme/TestBundle/`` directory and adding a new file
-called ``AcmeTestBundle.php``::
+called ``AcmeTestBundle.php``:
+
+.. code-block:: php
 
     // src/Acme/TestBundle/AcmeTestBundle.php
     namespace Acme\TestBundle;
@@ -617,7 +629,9 @@ This empty class is the only piece you need to create the new bundle. Though
 commonly empty, this class is powerful and can be used to customize the behavior
 of the bundle.
 
-Now that you've created the bundle, enable it via the ``AppKernel`` class::
+Now that you've created the bundle, enable it via the ``AppKernel`` class:
+
+.. code-block:: php
 
     // app/AppKernel.php
     public function registerBundles()
@@ -838,7 +852,9 @@ call the ``prod`` front controller instead:
 .. note::
 
    If you open the ``web/app.php`` file, you'll find that it's configured explicitly
-   to use the ``prod`` environment::
+   to use the ``prod`` environment:
+
+.. code-block:: php
 
        $kernel = new AppKernel('prod', false);
 
@@ -848,7 +864,9 @@ call the ``prod`` front controller instead:
 Since the ``prod`` environment is optimized for speed; the configuration,
 routing and Twig templates are compiled into flat PHP classes and cached.
 When viewing changes in the ``prod`` environment, you'll need to clear these
-cached files and allow them to rebuild::
+cached files and allow them to rebuild:
+
+.. code-block:: bash
 
     php app/console cache:clear --env=prod
 
@@ -865,7 +883,9 @@ Environment Configuration
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The ``AppKernel`` class is responsible for actually loading the configuration
-file of your choice::
+file of your choice:
+
+.. code-block:: php
 
     // app/AppKernel.php
     public function registerContainerConfiguration(LoaderInterface $loader)
