@@ -34,7 +34,7 @@ Creating a custom data collector is as simple as implementing the
     }
 
 The ``getName()`` method must return a unique name. This is used to access the
-information later on (see the section about functional tests above for
+information later on (see :doc:`/cookbook/testing/profiling` for
 instance).
 
 The ``collect()`` method is responsible for storing the data it wants to give

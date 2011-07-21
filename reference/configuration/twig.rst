@@ -35,6 +35,7 @@ TwigBundle Configuration Reference
             debug:                %kernel.debug%
             strict_variables:     ~
             auto_reload:          ~
+            exception_controller:  Symfony\Bundle\TwigBundle\Controller\ExceptionController::showAction
 
     .. code-block:: xml
 
@@ -73,3 +74,20 @@ TwigBundle Configuration Reference
              'debug'               => '%kernel.debug%',
              'strict_variables'    => false,
         ));
+
+Configuration
+-------------
+
+exception_controller
+....................
+
+**type**: ``string`` **default**: ``Symfony\\Bundle\\TwigBundle\\Controller\\ExceptionController::showAction``
+
+This is the controller that is activated after an exception is thrown anywhere
+in your application. The default controller
+(:class:`Symfony\\Bundle\\TwigBundle\\Controller\\ExceptionController`)
+is what's responsible for rendering specific templates under different error
+conditions (see :doc:`/cookbook/controller/error_pages`). Modifying this
+option is advanced. If you need to customize an error page you should use
+the previous link. If you need to perform some behavior on an exception,
+you should add a listener to the ``kernel.exception`` event (see :ref:`dic-tags-kernel-event-listener`).
