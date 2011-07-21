@@ -5,7 +5,9 @@ invalid_message_parameters
 
 When setting the ``invalid_message`` option, you may need to
 include some variables in the string. This can be done by adding placeholders
-to that option and including the variables in this option::
+to that option and including the variables in this option:
+
+.. code-block:: php
 
     $builder->add('some_field', 'some_type', array(
         // ...

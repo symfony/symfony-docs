@@ -51,7 +51,9 @@ divisor
 
 If, for some reason, you need to divide your starting value by a number
 before rendering it to the user, you can use the ``divisor`` option.
-For example::
+For example:
+
+.. code-block:: php
 
     $builder->add('price', 'money', array(
         'divisor' => 100,

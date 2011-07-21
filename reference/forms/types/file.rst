@@ -57,7 +57,9 @@ used to move the ``attachment`` file to a permanent location:
     }
 
 The ``move()`` method takes a directory and a file name as its arguments.
-You might calculate the filename in one of the following ways::
+You might calculate the filename in one of the following ways:
+
+.. code-block:: php
 
     // use the original file name
     $file->move($dir, $file->getClientOriginalName());

@@ -78,7 +78,9 @@ choices
 
 This is the most basic way to specify the choices that should be used
 by this field. The ``choices`` option is an array, where the array key
-is the item value and the array value is the item's label::
+is the item value and the array value is the item's label:
+
+.. code-block:: php
 
     $builder->add('gender', 'choice', array(
         'choices' => array('m' => 'Male', 'f' => 'Female')

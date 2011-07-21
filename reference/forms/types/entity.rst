@@ -34,7 +34,9 @@ Basic Usage
 -----------
 
 The ``entity`` type has just one required option: the entity which should
-be listed inside the choice field::
+be listed inside the choice field:
+
+.. code-block:: php
 
     $builder->add('users', 'entity', array(
         'class' => 'Acme\\HelloBundle\\Entity\\User',
@@ -49,7 +51,9 @@ Using a Custom Query for the Entities
 
 If you need to specify a custom query to use when fetching the entities (e.g.
 you only want to return some entities, or need to order them), use the ``query_builder``
-option. The easiest way to use the option is as follows::
+option. The easiest way to use the option is as follows:
+
+.. code-block:: php
 
     use Doctrine\ORM\EntityRepository;
     // ...

@@ -14,7 +14,9 @@ any type of validation and assign errors where needed:
 Usage
 -----
 
-The callback method is passed a special ``ExecutionContext`` object::
+The callback method is passed a special ``ExecutionContext`` object:
+
+.. code-block:: php
 
     use Symfony\Component\Validator\ExecutionContext;
     

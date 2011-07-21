@@ -33,7 +33,9 @@ string and converts it to a PHP array::
 
 If an error occurs during parsing, the parser throws an exception indicating
 the error type and the line in the original YAML string where the error
-occurred::
+occurred:
+
+.. code-block:: php
 
     try {
         $value = $yaml->parse(file_get_contents('/path/to/file.yaml'));
@@ -48,7 +50,9 @@ occurred::
     different YAML strings.
 
 When loading a YAML file, it is sometimes better to use the
-:method:`Symfony\\Component\\Yaml\\Yaml::parse` wrapper method::
+:method:`Symfony\\Component\\Yaml\\Yaml::parse` wrapper method:
+
+.. code-block:: php
 
     use Symfony\Component\Yaml\Yaml;
 
@@ -69,7 +73,9 @@ Writing YAML Files
 ------------------
 
 The :method:`Symfony\\Component\\Yaml\\Dumper::dump` method dumps any PHP array
-to its YAML representation::
+to its YAML representation:
+
+.. code-block:: php
 
     use Symfony\Component\Yaml\Dumper;
 
@@ -85,7 +91,9 @@ to its YAML representation::
     dumping PHP objects is considered an alpha feature.
 
 If you only need to dump one array, you can use the
-:method:`Symfony\\Component\\Yaml\\Yaml::dump` static method shortcut::
+:method:`Symfony\\Component\\Yaml\\Yaml::dump` static method shortcut:
+
+.. code-block:: php
 
     $yaml = Yaml::dump($array, $inline);
 
@@ -97,7 +105,9 @@ dumper uses the inline representation:
     { foo: bar, bar: { foo: bar, bar: baz } }
 
 But the second argument of the ``dump()`` method customizes the level at which
-the output switches from the expanded representation to the inline one::
+the output switches from the expanded representation to the inline one:
+
+.. code-block:: php
 
     echo $dumper->dump($array, 1);
 
@@ -249,7 +259,9 @@ Sequences use a dash followed by a space (``-`` ):
     - Perl
     - Python
 
-The previous YAML file is equivalent to the following PHP code::
+The previous YAML file is equivalent to the following PHP code:
+
+.. code-block:: php
 
     array('PHP', 'Perl', 'Python');
 
@@ -261,7 +273,9 @@ Mappings use a colon followed by a space (``:`` ) to mark each key/value pair:
     MySQL: 5.1
     Apache: 2.2.20
 
-which is equivalent to this PHP code::
+which is equivalent to this PHP code:
+
+.. code-block:: php
 
     array('PHP' => 5.2, 'MySQL' => 5.1, 'Apache' => '2.2.20');
 
@@ -288,7 +302,9 @@ YAML uses indentation with one or more spaces to describe nested collections:
         PHP:      5.3
         Doctrine: 2.0
 
-The following YAML is equivalent to the following PHP code::
+The following YAML is equivalent to the following PHP code:
+
+.. code-block:: php
 
     array(
         'symfony 1.4' => array(
