@@ -46,7 +46,9 @@ your application configuration file:
 
 You can now render a PHP template instead of a Twig one simply by using the
 ``.php`` extension in the template name instead of ``.twig``. The controller
-below renders the ``index.html.php`` template::
+below renders the ``index.html.php`` template:
+
+.. code-block:: php
 
     // src/Acme/HelloBundle/Controller/HelloController.php
 
@@ -209,7 +211,9 @@ If you create a ``fancy`` action, and want to include it into the
     <?php echo $view['actions']->render('HelloBundle:Hello:fancy', array('name' => $name, 'color' => 'green')) ?>
 
 Here, the ``HelloBundle:Hello:fancy`` string refers to the ``fancy`` action of the
-``Hello`` controller::
+``Hello`` controller:
+
+.. code-block:: php
 
     // src/Acme/HelloBundle/Controller/HelloController.php
 
@@ -287,12 +291,16 @@ Output Escaping
 ---------------
 
 When using PHP templates, escape variables whenever they are displayed to the
-user::
+user:
+
+.. code-block:: php
 
     <?php echo $view->escape($var) ?>
 
 By default, the ``escape()`` method assumes that the variable is outputted
 within an HTML context. The second argument lets you change the context. For
-instance, to output something in a JavaScript script, use the ``js`` context::
+instance, to output something in a JavaScript script, use the ``js`` context:
+
+.. code-block:: php
 
     <?php echo $view->escape($var, 'js') ?>

@@ -11,7 +11,9 @@ Usage
 -----
 
 The :class:`Symfony\\Component\\Finder\\Finder` class finds files and/or
-directories::
+directories:
+
+.. code-block:: php
 
     use Symfony\Component\Finder\Finder;
 
@@ -42,26 +44,36 @@ Location
 ~~~~~~~~
 
 The location is the only mandatory criteria. It tells the finder which
-directory to use for the search::
+directory to use for the search:
+
+.. code-block:: php
 
     $finder->in(__DIR__);
 
 Search in several locations by chaining calls to
-:method:`Symfony\\Component\\Finder\\Finder::in`::
+:method:`Symfony\\Component\\Finder\\Finder::in`:
+
+.. code-block:: php
 
     $finder->files()->in(__DIR__)->in('/elsewhere');
 
 Exclude directories from matching with the
-:method:`Symfony\\Component\\Finder\\Finder::exclude` method::
+:method:`Symfony\\Component\\Finder\\Finder::exclude` method:
+
+.. code-block:: php
 
     $finder->in(__DIR__)->exclude('ruby');
 
 As the Finder uses PHP iterators, you can pass any URL with a supported
-`protocol`_::
+`protocol`_:
+
+.. code-block:: php
 
     $finder->in('ftp://example.com/pub/');
 
-And it also works with user-defined streams::
+And it also works with user-defined streams:
+
+.. code-block:: php
 
     use Symfony\Component\Finder\Finder;
 
@@ -91,19 +103,25 @@ By default, the Finder returns files and directories; but the
 
     $finder->directories();
 
-If you want to follow links, use the ``followLinks()`` method::
+If you want to follow links, use the ``followLinks()`` method:
+
+.. code-block:: php
 
     $finder->files()->followLinks();
 
 By default, the iterator ignores popular VCS files. This can be changed with
-the ``ignoreVCS()`` method::
+the ``ignoreVCS()`` method:
+
+.. code-block:: php
 
     $finder->ignoreVCS(false);
 
 Sorting
 ~~~~~~~
 
-Sort the result by name or by type (directories first, then files)::
+Sort the result by name or by type (directories first, then files):
+
+.. code-block:: php
 
     $finder->sortByName();
 
@@ -114,7 +132,9 @@ Sort the result by name or by type (directories first, then files)::
     Notice that the ``sort*`` methods need to get all matching elements to do
     their jobs. For large iterators, it is slow.
 
-You can also define your own sorting algorithm with ``sort()`` method::
+You can also define your own sorting algorithm with ``sort()`` method:
+
+.. code-block:: php
 
     $sort = function (\SplFileInfo $a, \SplFileInfo $b)
     {
@@ -127,15 +147,21 @@ File Name
 ~~~~~~~~~
 
 Restrict files by name with the
-:method:`Symfony\\Component\\Finder\\Finder::name` method::
+:method:`Symfony\\Component\\Finder\\Finder::name` method:
+
+.. code-block:: php
 
     $finder->files()->name('*.php');
 
-The ``name()`` method accepts globs, strings, or regexes::
+The ``name()`` method accepts globs, strings, or regexes:
+
+.. code-block:: php
 
     $finder->files()->name('/\.php$/');
 
-The ``notNames()`` method excludes files matching a pattern::
+The ``notNames()`` method excludes files matching a pattern:
+
+.. code-block:: php
 
     $finder->files()->notName('*.rb');
 
@@ -143,11 +169,15 @@ File Size
 ~~~~~~~~~
 
 Restrict files by size with the
-:method:`Symfony\\Component\\Finder\\Finder::size` method::
+:method:`Symfony\\Component\\Finder\\Finder::size` method:
+
+.. code-block:: php
 
     $finder->files()->size('< 1.5K');
 
-Restrict by a size range by chaining calls::
+Restrict by a size range by chaining calls:
+
+.. code-block:: php
 
     $finder->files()->size('>= 1K')->size('<= 2K');
 
@@ -162,7 +192,9 @@ File Date
 ~~~~~~~~~
 
 Restrict files by last modified dates with the
-:method:`Symfony\\Component\\Finder\\Finder::date` method::
+:method:`Symfony\\Component\\Finder\\Finder::date` method:
+
+.. code-block:: php
 
     $finder->date('since yesterday');
 
@@ -176,7 +208,9 @@ Directory Depth
 ~~~~~~~~~~~~~~~
 
 By default, the Finder recursively traverse directories. Restrict the depth of
-traversing with :method:`Symfony\\Component\\Finder\\Finder::depth`::
+traversing with :method:`Symfony\\Component\\Finder\\Finder::depth`:
+
+.. code-block:: php
 
     $finder->depth('== 0');
     $finder->depth('< 3');
@@ -185,7 +219,9 @@ Custom Filtering
 ~~~~~~~~~~~~~~~~
 
 To restrict the matching file with your own strategy, use
-:method:`Symfony\\Component\\Finder\\Finder::filter`::
+:method:`Symfony\\Component\\Finder\\Finder::filter`:
+
+.. code-block:: php
 
     $filter = function (\SplFileInfo $file)
     {

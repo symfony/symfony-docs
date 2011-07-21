@@ -24,7 +24,9 @@ the ``kernel.request`` event dispatched by the Symfony kernel. The
 process and allows you to modify the request object.
 
 Create the following class, replacing the path with a path to a bundle in your
-project::
+project:
+
+.. code-block:: php
 
     // src/Acme/DemoBundle/RequestListener.php
     namespace Acme\DemoBundle;

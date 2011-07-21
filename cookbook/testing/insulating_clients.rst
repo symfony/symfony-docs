@@ -5,7 +5,9 @@ How to test the Interaction of several Clients
 ==============================================
 
 If you need to simulate an interaction between different Clients (think of a
-chat for instance), create several Clients::
+chat for instance), create several Clients:
+
+.. code-block:: php
 
     $harry = static::createClient();
     $sally = static::createClient();
@@ -18,7 +20,9 @@ chat for instance), create several Clients::
 
 This works except when your code maintains a global state or if it depends on
 third-party libraries that has some kind of global state. In such a case, you
-can insulate your clients::
+can insulate your clients:
+
+.. code-block:: php
 
     $harry = static::createClient();
     $sally = static::createClient();

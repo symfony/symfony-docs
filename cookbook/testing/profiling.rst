@@ -13,7 +13,9 @@ The Symfony2 :doc:`Profiler </book/internals/profiler>` gathers a lot of
 data for each request. Use this data to check the number of database calls,
 the time spent in the framework, ... But before writing assertions, always
 check that the profiler is indeed available (it is enabled by default in the
-``test`` environment)::
+``test`` environment):
+
+.. code-block:: php
 
     class HelloControllerTest extends WebTestCase
     {
@@ -38,7 +40,9 @@ check that the profiler is indeed available (it is enabled by default in the
 
 If a test fails because of profiling data (too many DB queries for instance),
 you might want to use the Web Profiler to analyze the request after the tests
-finish. It's easy to achieve if you embed the token in the error message::
+finish. It's easy to achieve if you embed the token in the error message:
+
+.. code-block:: php
 
     $this->assertTrue(
         $profile->get('db')->getQueryCount() < 30,

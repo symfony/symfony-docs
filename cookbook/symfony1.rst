@@ -87,7 +87,9 @@ a bundle. With the help of a console command, the ``Resources/public/``
 directory of each bundle is copied or symbolically-linked to the ``web/bundles/``
 directory. This allows you to keep assets organized inside your bundle, but
 still make them available to the public. To make sure that all bundles are
-available, run the following command::
+available, run the following command:
+
+.. code-block:: bash
 
     php app/console assets:install web
 
@@ -115,7 +117,9 @@ In Symfony2, a new class - ``UniversalClassLoader`` - handles this process.
 The idea behind the autoloader is simple: the name of your class (including
 the namespace) must match up with the path to the file containing that class.
 Take the ``FrameworkExtraBundle`` from the Symfony2 Standard Edition as an
-example::
+example:
+
+.. code-block:: php
 
     namespace Sensio\Bundle\FrameworkExtraBundle;
 
@@ -228,7 +232,9 @@ of bundles. In Symfony2, bundles are first-class citizens that are so flexible
 that even core code itself is a bundle.
 
 In symfony1, a plugin must be enabled inside the ``ProjectConfiguration``
-class::
+class:
+
+.. code-block:: php
 
     // config/ProjectConfiguration.class.php
     public function setup()
@@ -236,7 +242,9 @@ class::
         $this->enableAllPluginsExcept(array(/* some plugins here */));
     }
 
-In Symfony2, the bundles are activated inside the application kernel::
+In Symfony2, the bundles are activated inside the application kernel:
+
+.. code-block:: php
 
     // app/AppKernel.php
     public function registerBundles()
@@ -258,7 +266,9 @@ In symfony1, the ``routing.yml`` and ``app.yml`` configuration files were
 automatically loaded inside any plugin. In Symfony2, routing and application
 configuration inside a bundle must be included manually. For example, to
 include a routing resource from a bundle called ``AcmeDemoBundle``, you can
-do the following::
+do the following:
+
+.. code-block:: yaml
 
     # app/config/routing.yml
     _hello:
@@ -296,7 +306,9 @@ key of your configuration:
     parameters:
         email.from_address: foo.bar@example.com
 
-You can now access this from a controller, for example::
+You can now access this from a controller, for example:
+
+.. code-block:: php
 
     public function helloAction($name)
     {

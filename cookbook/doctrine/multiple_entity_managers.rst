@@ -40,7 +40,9 @@ manager manages any bundle in the ``AcmeCustomerBundle``.
 
 When working with your entity managers, you should now be explicit about which
 entity manager you want. If you *do* omit the entity manager's name when
-asking for it, the default entity manager (i.e. ``default``) is returned::
+asking for it, the default entity manager (i.e. ``default``) is returned:
+
+.. code-block:: php
 
     class UserController extends Controller
     {

@@ -9,7 +9,9 @@ Doing something before or after a Method Call
 
 If you want to do something just before, or just after a method is called, you
 can dispatch an event respectively at the beginning or at the end of the
-method::
+method:
+
+.. code-block:: php
 
     class Foo
     {

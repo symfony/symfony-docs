@@ -18,7 +18,9 @@ will be covered in this cookbook entry.
 Basic Setup
 -----------
 
-First, create a simple Doctrine Entity class to work with::
+First, create a simple Doctrine Entity class to work with:
+
+.. code-block:: php
 
     // src/Acme/DemoBundle/Entity/Document.php
     namespace Acme\DemoBundle\Entity;
@@ -79,7 +81,9 @@ method to return the absolute path to the file.
 
 To handle the actual file upload in the form, use a "virtual" ``file`` field.
 For example, if you're building your form directly in a controller, it might
-look like this::
+look like this:
+
+.. code-block:: php
 
     public function uploadAction()
     {
@@ -95,7 +99,9 @@ look like this::
     }
 
 Next, create this property on your ``Document`` class and add some validation
-rules::
+rules:
+
+.. code-block:: php
 
     // src/Acme/DemoBundle/Entity/Document.php
 
@@ -116,7 +122,9 @@ rules::
     that the form field is a file upload input. That's why you did not have
     to set it explicitly when creating the form above (``->add('file')``).
 
-The following controller shows you how to handle the entire process::
+The following controller shows you how to handle the entire process:
+
+.. code-block:: php
 
     use Acme\DemoBundle\Entity\Document;
     use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -170,7 +178,9 @@ property will be blank.
 An easy way to handle the file upload is to move it just before the entity is
 persisted and then set the ``path`` property accordingly. Start by calling
 a new ``upload()`` method on the ``Document`` class, which you'll create
-in a moment to handle the file upload::
+in a moment to handle the file upload:
+
+.. code-block:: php
 
     if ($form->isValid()) {
         $em = $this->getDoctrine()->getEntityManager();
@@ -184,7 +194,9 @@ in a moment to handle the file upload::
     }
 
 The ``upload()`` method will take advantage of the :class:`Symfony\\Component\\HttpFoundation\\File\\UploadedFile`
-object, which is what's returned after a ``file`` field is submitted::
+object, which is what's returned after a ``file`` field is submitted:
+
+.. code-block:: php
 
     public function upload()
     {
@@ -221,7 +233,9 @@ happen.
 
 To do this, you need to move the file right as Doctrine persists the entity
 to the database. This can be accomplished by hooking into an entity lifecycle
-callback::
+callback:
+
+.. code-block:: php
 
     /**
      * @ORM\Entity
@@ -231,7 +245,9 @@ callback::
     {
     }
 
-Next, refactor the ``Document`` class to take advantage of these callbacks::
+Next, refactor the ``Document`` class to take advantage of these callbacks:
+
+.. code-block:: php
 
     use Symfony\Component\HttpFoundation\File\UploadedFile;
 
@@ -289,7 +305,9 @@ Using the ``id`` as the filename
 
 If you want to use the ``id`` as the name of the file, the implementation is
 slightly different as you need to save the extension under the ``path``
-property, instead of the actual filename::
+property, instead of the actual filename:
+
+.. code-block:: php
 
     use Symfony\Component\HttpFoundation\File\UploadedFile;
 

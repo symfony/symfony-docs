@@ -54,7 +54,9 @@ ready to return the ``Response``.
 
 Below is an example calling the service using `NuSOAP`_ client.  This example 
 assumes the ``indexAction`` in the controller above is accessible via the
-route ``/soap``::
+route ``/soap``:
+
+.. code-block:: php
 
     $client = new soapclient('http://example.com/app.php/soap?wsdl', true);
     

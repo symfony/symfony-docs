@@ -11,7 +11,9 @@ the power of the `Swiftmailer`_ library.
 
 .. note::
 
-    Don't forget to enable the bundle in your kernel before using it::
+    Don't forget to enable the bundle in your kernel before using it:
+
+    .. code-block:: php
 
         public function registerBundles()
         {
@@ -98,7 +100,9 @@ Sending Emails
 The Swiftmailer library works by creating, configuring and then sending
 ``Swift_Message`` objects. The "mailer" is responsible for the actual delivery
 of the message and is accessible via the ``mailer`` service. Overall, sending
-an email is pretty straightforward::
+an email is pretty straightforward:
+
+.. code-block:: php
 
     public function indexAction($name)
     {

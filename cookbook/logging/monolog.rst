@@ -30,7 +30,9 @@ action level (ERROR in the configuration provided in the standard
 edition) by forwarding the messages to another handler.
 
 To log a message simply get the logger service from the container in
-your controller::
+your controller:
+
+.. code-block:: php
 
     $logger = $this->get('logger');
     $logger->info('We just got the logger');

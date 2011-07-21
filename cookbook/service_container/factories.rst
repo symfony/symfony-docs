@@ -10,7 +10,9 @@ service container to call a method on the factory rather than directly instantia
 the object.
 
 Suppose you have a factory that configures and returns a new NewsletterManager
-object::
+object:
+
+.. code-block:: php
 
     namespace Acme\HelloBundle\Newletter;
 

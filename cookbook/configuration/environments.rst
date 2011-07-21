@@ -289,7 +289,9 @@ to ``web/app_benchmark.php`` and edit the environment to be ``benchmark``:
     $kernel = new AppKernel('benchmark', false);
     $kernel->handle(Request::createFromGlobals())->send();
 
-The new environment is now accessible via::
+The new environment is now accessible via:
+
+.. code-block:: text
 
     http://localhost/app_benchmark.php
 

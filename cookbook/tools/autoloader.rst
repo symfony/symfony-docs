@@ -22,7 +22,9 @@ Usage
 -----
 
 Registering the :class:`Symfony\\Component\\ClassLoader\\UniversalClassLoader`
-autoloader is straightforward::
+autoloader is straightforward:
+
+.. code-block:: php
 
     require_once '/path/to/src/Symfony/Component/ClassLoader/UniversalClassLoader.php';
 
@@ -32,7 +34,9 @@ autoloader is straightforward::
     $loader->register();
 
 For minor performance gains class paths can be cached in memory using APC by
-registering the :class:`Symfony\\Component\\ClassLoader\\ApcUniversalClassLoader`::
+registering the :class:`Symfony\\Component\\ClassLoader\\ApcUniversalClassLoader`:
+
+.. code-block:: php
 
     require_once '/path/to/src/Symfony/Component/ClassLoader/UniversalClassLoader.php';
     require_once '/path/to/src/Symfony/Component/ClassLoader/ApcUniversalClassLoader.php';
@@ -53,7 +57,9 @@ If the classes to autoload use namespaces, use the
 :method:`Symfony\\Component\\ClassLoader\\UniversalClassLoader::registerNamespace`
 or
 :method:`Symfony\\Component\\ClassLoader\\UniversalClassLoader::registerNamespaces`
-methods::
+methods:
+
+.. code-block:: php
 
     $loader->registerNamespace('Symfony', __DIR__.'/vendor/symfony/src');
 
@@ -66,7 +72,9 @@ For classes that follow the PEAR naming convention, use the
 :method:`Symfony\\Component\\ClassLoader\\UniversalClassLoader::registerPrefix`
 or
 :method:`Symfony\\Component\\ClassLoader\\UniversalClassLoader::registerPrefixes`
-methods::
+methods:
+
+.. code-block:: php
 
     $loader->registerPrefix('Twig_', __DIR__.'/vendor/twig/lib');
 
@@ -82,7 +90,9 @@ methods::
 
 Classes from a sub-namespace or a sub-hierarchy of PEAR classes can be looked
 for in a location list to ease the vendoring of a sub-set of classes for large
-projects::
+projects:
+
+.. code-block:: php
 
     $loader->registerNamespaces(array(
         'Doctrine\\Common'           => __DIR__.'/vendor/doctrine-common/lib',

@@ -100,7 +100,9 @@ first need to create a new "Extension" class, which will handle the process.
 This class should live in the ``DependencyInjection`` directory of your bundle
 and its name should be constructed by replacing the ``Bundle`` postfix of the
 Bundle class name with ``Extension``. For example, the Extension class of
-``AcmeHelloBundle`` would be called ``AcmeHelloExtension``::
+``AcmeHelloBundle`` would be called ``AcmeHelloExtension``:
+
+.. code-block:: php
 
     // Acme/HelloBundle/DependencyInjection/HelloExtension.php
     use Symfony\Component\HttpKernel\DependencyInjection\Extension;
@@ -217,7 +219,9 @@ Take the following configuration:
             'bar' => 'barValue',
         ));
 
-The array passed to your ``load()`` method will look like this::
+The array passed to your ``load()`` method will look like this:
+
+.. code-block:: php
 
     array(
         array(
@@ -229,7 +233,9 @@ The array passed to your ``load()`` method will look like this::
 Notice that this is an *array of arrays*, not just a single flat array of the
 configuration values. This is intentional. For example, if ``acme_hello``
 appears in another configuration file - say ``config_dev.yml`` - with different
-values beneath it, then the incoming array might look like this::
+values beneath it, then the incoming array might look like this:
+
+.. code-block:: php
 
     array(
         array(
@@ -250,7 +256,9 @@ or somehow merge them together.
 
 Later, in the :ref:`Configuration Class<cookbook-bundles-extension-config-class>`
 section, you'll learn of a truly robust way to handle this. But for now,
-you might just merge them manually::
+you might just merge them manually:
+
+.. code-block:: php
 
     public function load(array $configs, ContainerBuilder $container)
     {
@@ -282,7 +290,9 @@ Loading External Configuration Resources
 One common thing to do is to load an external configuration file that may
 contain the bulk of the services needed by your bundle. For example, suppose
 you have a ``services.xml`` file that holds much of your bundle's service
-configuration::
+configuration:
+
+.. code-block:: php
 
     use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
     use Symfony\Component\Config\FileLocator;
@@ -297,7 +307,9 @@ configuration::
 
 You might even do this conditionally, based on one of the configuration values.
 For example, suppose you only want to load a set of services if an ``enabled``
-option is passed and set to true::
+option is passed and set to true:
+
+.. code-block:: php
 
     public function load(array $configs, ContainerBuilder $container)
     {
@@ -343,7 +355,9 @@ But why would you define an empty parameter and then pass it to your service?
 The answer is that you'll set this parameter in your extension class, based
 on the incoming configuration values. Suppose, for example, that you want
 to allow the user to define this *type* option under a key called ``my_type``.
-Add the following to the ``load()`` method to do this::
+Add the following to the ``load()`` method to do this:
+
+.. code-block:: php
 
     public function load(array $configs, ContainerBuilder $container)
     {
@@ -433,7 +447,9 @@ can help with merging, validation, default values, and format normalization.
     need to be "normalized" to match everything else.
 
 To take advantage of this system, you'll create a ``Configuration`` class
-and build a tree that defines your configuration in that class::
+and build a tree that defines your configuration in that class:
+
+.. code-block:: php
 
     // src/Acme/HelloBundle/DependencyExtension/Configuration.php
     namespace Acme\HelloBundle\DependencyInjection;
@@ -460,7 +476,9 @@ and build a tree that defines your configuration in that class::
 This is a *very* simple example, but you can now use this class in your ``load()``
 method to merge your configuration and force validation. If any options other
 than ``my_type`` are passed, the user will be notified with an exception
-that an unsupported option was passed::
+that an unsupported option was passed:
+
+.. code-block:: php
 
     use Symfony\Component\Config\Definition\Processor;
     // ...
@@ -502,7 +520,9 @@ When creating an extension, follow these simple conventions:
 If you follow these simple conventions, your extensions will be registered
 automatically by Symfony2. If not, override the Bundle
 :method:`Symfony\\Component\\HttpKernel\\Bundle\\Bundle::build` method in
-your bundle::
+your bundle:
+
+.. code-block:: php
 
     use Acme\HelloBundle\DependencyInjection\ExtensionHello;
 

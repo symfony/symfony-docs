@@ -13,7 +13,9 @@ To make the console commands available automatically with Symfony2, create a
 ``Command.php`` for each command that you want to provide. For example, if you
 want to extend the ``AcmeDemoBundle`` (available in the Symfony Standard
 Edition) to greet us from the command line, create ``GreetCommand.php`` and
-add the following to it::
+add the following to it:
+
+.. code-block:: php
 
     // src/Acme/DemoBundle/Command/GreetCommand.php
     namespace Acme\DemoBundle\Command;
@@ -79,7 +81,9 @@ Coloring the Output
 ~~~~~~~~~~~~~~~~~~~
 
 Whenever you output text, you can surround the text with tags to color its
-output. For example::
+output. For example:
+
+.. code-block:: php
 
     // green text
     $output->writeln('<info>foo</info>');
@@ -100,7 +104,9 @@ The most interesting part of the commands are the arguments and options that
 you can make available. Arguments are the strings - separated by spaces - that
 come after the command name itself. They are ordered, and can be optional
 or required. For example, add an optional ``last_name`` argument to the command
-and make the ``name`` argument required::
+and make the ``name`` argument required:
+
+.. code-block:: php
 
     $this
         // ...
@@ -108,7 +114,9 @@ and make the ``name`` argument required::
         ->addArgument('last_name', InputArgument::OPTIONAL, 'Your last name?')
         // ...
 
-You now have access to a ``last_name`` argument in your command::
+You now have access to a ``last_name`` argument in your command:
+
+.. code-block:: php
 
     if ($lastName = $input->getArgument('last_name')) {
         $text .= ' '.$lastName;
@@ -138,7 +146,9 @@ declare a one-letter shortcut that you can call with a single dash like
     accept an array of values.
 
 For example, add a new option to the command that can be used to specify
-how many times in a row the message should be printed::
+how many times in a row the message should be printed:
+
+.. code-block:: php
 
     $this
         // ...
@@ -179,7 +189,9 @@ Asking the User for Information
 When creating commands, you have the ability to collect more information
 from the user by asking him/her questions. For example, suppose you want
 to confirm an action before actually executing it. Add the following to your
-command::
+command:
+
+.. code-block:: php
 
     $dialog = $this->getHelperSet()->get('dialog');
     if (!$dialog->askConfirmation($output, '<question>Continue with this action?</question>', false)) {
@@ -192,7 +204,9 @@ they answer with ``y``, the task will stop running. The third argument to
 any input.
 
 You can also ask questions with more than a simple yes/no answer. For example,
-if you needed to know the name of something, you might do the following::
+if you needed to know the name of something, you might do the following:
+
+.. code-block:: php
 
     $dialog = $this->getHelperSet()->get('dialog');
     $name = $dialog->ask($output, 'Please enter the name of the widget', 'foo');
@@ -203,7 +217,9 @@ Testing Commands
 Symfony2 provides several tools to help you test your commands. The most
 useful one is the :class:`Symfony\\Component\\Console\\Tester\\CommandTester`
 class. It uses special input and output classes to ease testing without a real
-console::
+console:
+
+.. code-block:: php
 
     use Symfony\Component\Console\Tester\CommandTester;
     use Symfony\Bundle\FrameworkBundle\Console\Application;
@@ -241,7 +257,9 @@ By using :class:`Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand`
 as the base class for the command (instead of the more basic 
 :class:`Symfony\Component\Console\Command\Command`), you have access to the 
 service container. In other words, you have access to any configured service.
-For example, you could easily extend the task to be translatable::
+For example, you could easily extend the task to be translatable:
+
+.. code-block:: php
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
@@ -264,7 +282,9 @@ bunch of other commands (for instance, all commands that need to be run when
 the project's code has changed on the production servers: clearing the cache,
 generating Doctrine2 proxies, dumping Assetic assets, ...).
 
-Calling a command from another one is straightforward::
+Calling a command from another one is straightforward:
+
+.. code-block:: php
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {

@@ -12,7 +12,9 @@ Creating a Custom Data Collector
 --------------------------------
 
 Creating a custom data collector is as simple as implementing the
-:class:`Symfony\\Component\\HttpKernel\\DataCollector\\DataCollectorInterface`::
+:class:`Symfony\\Component\\HttpKernel\\DataCollector\\DataCollectorInterface`:
+
+.. code-block:: php
 
     interface DataCollectorInterface
     {
@@ -49,7 +51,9 @@ access to in local properties.
 Most of the time, it is convenient to extend
 :class:`Symfony\\Component\\HttpKernel\\DataCollector\\DataCollector` and
 populate the ``$this->data`` property (it takes care of serializing the
-``$this->data`` property)::
+``$this->data`` property):
+
+.. code-block:: php
 
     class MemoryDataCollector extends DataCollector
     {

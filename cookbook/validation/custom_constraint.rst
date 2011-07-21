@@ -89,7 +89,9 @@ tag and an ``alias`` attribute:
         ;
 
 Your constraint class may now use this alias to reference the appropriate
-validator::
+validator:
+
+.. code-block:: php
 
     public function validatedBy()
     {

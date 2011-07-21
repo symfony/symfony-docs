@@ -3,7 +3,9 @@ How to Manage Common Dependencies with Parent Services
 
 As you add more functionality to your application, you may well start to have
 related classes that share some of the same dependencies. For example you
-may have a Newsletter Manager which uses setter injection to set its dependencies::
+may have a Newsletter Manager which uses setter injection to set its dependencies:
+
+.. code-block:: php
 
     namespace Acme\HelloBundle\Mail;
 
@@ -27,7 +29,9 @@ may have a Newsletter Manager which uses setter injection to set its dependencie
         // ...
     }
 
-and also a Greeting Card class which shares the same dependencies::
+and also a Greeting Card class which shares the same dependencies:
+
+.. code-block:: php
 
     namespace Acme\HelloBundle\Mail;
 
@@ -145,7 +149,9 @@ means that if you changed, for example, the ``Mailer`` of ``EmailFormatter``
 classes to be injected via the constructor, you would need to update the config
 in two places. Likewise if you needed to make changes to the setter methods
 you would need to do this in both classes. The typical way to deal with the
-common methods of these related classes would be to extract them to a super class::
+common methods of these related classes would be to extract them to a super class:
+
+.. code-block:: php
 
     namespace Acme\HelloBundle\Mail;
 
@@ -170,7 +176,9 @@ common methods of these related classes would be to extract them to a super clas
     }
 
 The ``NewsletterManager`` and ``GreetingCardManager`` can then extend this
-super class::
+super class:
+
+.. code-block:: php
 
     namespace Acme\HelloBundle\Mail;
 
@@ -179,7 +187,9 @@ super class::
         // ...
     }
 
-and::
+and:
+
+.. code-block:: php
 
     namespace Acme\HelloBundle\Mail;
 
@@ -433,7 +443,9 @@ child definition. In the previous example, that was fine, since the second
 In some cases, however, this can be a problem. For example, if the overridden
 method call involves adding something to a collection, then two objects will
 be added to that collection. The following shows such a case, if the parent
-class looks like this::
+class looks like this:
+
+.. code-block:: php
 
     namespace Acme\HelloBundle\Mail;
 

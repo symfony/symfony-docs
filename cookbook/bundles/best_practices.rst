@@ -250,7 +250,9 @@ The end user can provide values in any configuration file:
         [parameters]
         acme_hello.email.from = fabien@example.com
 
-Retrieve the configuration parameters in your code from the container::
+Retrieve the configuration parameters in your code from the container:
+
+.. code-block:: php
 
     $container->getParameter('acme_hello.email.from');
 

@@ -3,7 +3,9 @@ How to secure any Service or Method in your Application
 
 In the security chapter, you can see how to :ref:`secure a controller<book-security-securing-controller>`
 by requesting the ``security.context`` service from the Service Container
-and checking the current user's role::
+and checking the current user's role:
+
+.. code-block:: php
 
     use Symfony\Component\Security\Core\Exception\AccessDeniedException
     // ...
@@ -44,7 +46,9 @@ called. The first step towards this is to inject the ``security.context``
 service into the object. Since it won't make sense *not* to perform the security
 check, this is an ideal candidate for constructor injection, which guarantees
 that the security context object will be available inside the ``NewsletterManager``
-class::
+class:
+
+.. code-block:: php
 
     namespace Acme\HelloBundle\Newsletter;
 
@@ -104,7 +108,9 @@ Then in your service configuration, you can inject the service:
         ));
 
 The injected service can then be used to perform the security check when the
-``sendNewsletter()`` method is called::
+``sendNewsletter()`` method is called:
+
+.. code-block:: php
 
     namespace Acme\HelloBundle\Newsletter;
 
@@ -186,7 +192,9 @@ the :ref:`sidebar<securing-services-annotations-sidebar>` below):
         $definition->addTag('security.secure_service');
         $container->setDefinition('newsletter_manager', $definition);
 
-You can then achieve the same results as above using an annotation::
+You can then achieve the same results as above using an annotation:
+
+.. code-block:: php
 
     namespace Acme\HelloBundle\Newsletter;
 
