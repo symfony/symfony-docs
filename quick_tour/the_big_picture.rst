@@ -170,7 +170,9 @@ A controller is a fancy name for a PHP function or method that handles incoming
 PHP global variables and functions (like ``$_GET`` or ``header()``) to manage
 these HTTP messages, Symfony uses objects: :class:`Symfony\\Component\\HttpFoundation\\Request`
 and :class:`Symfony\\Component\\HttpFoundation\\Response`. The simplest possible
-controller might create the response by hand, based on the request::
+controller might create the response by hand, based on the request:
+
+.. code-block:: php
 
     use Symfony\Component\HttpFoundation\Response;
 
@@ -188,7 +190,9 @@ controller might create the response by hand, based on the request::
 Symfony2 chooses the controller based on the ``_controller`` value from the
 routing configuration: ``AcmeDemoBundle:Welcome:index``. This string is the
 controller *logical name*, and it references the ``indexAction`` method from
-the ``Acme\DemoBundle\Controller\WelcomeController`` class::
+the ``Acme\DemoBundle\Controller\WelcomeController`` class:
+
+.. code-block:: php
 
     // src/Acme/DemoBundle/Controller/WelcomeController.php
     namespace Acme\DemoBundle\Controller;
@@ -216,7 +220,9 @@ which provides useful shortcut methods, like the
 method that loads and renders a template
 (``AcmeDemoBundle:Welcome:index.html.twig``). The returned value is a Response
 object populated with the rendered content. So, if the needs arise, the
-Response can be tweaked before it is sent to the browser::
+Response can be tweaked before it is sent to the browser:
+
+.. code-block:: php
 
     public function indexAction()
     {
@@ -259,7 +265,9 @@ Symfony2 can read/import the routing information from different files written
 in YAML, XML, PHP, or even embedded in PHP annotations. Here, the file's
 *logical name* is ``@AcmeDemoBundle/Controller/DemoController.php`` and refers
 to the ``src/Acme/DemoBundle/Controller/DemoController.php`` file. In this
-file, routes are defined as annotations on action methods::
+file, routes are defined as annotations on action methods:
+
+.. code-block:: php
 
     // src/Acme/DemoBundle/Controller/DemoController.php
     use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;

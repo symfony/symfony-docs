@@ -24,7 +24,9 @@ The ``web/`` Directory
 
 The web root directory is the home of all public and static files like images,
 stylesheets, and JavaScript files. It is also where each :term:`front controller`
-lives::
+lives:
+
+.. code-block:: php
 
     // web/app.php
     require_once __DIR__.'/../app/bootstrap.php.cache';
@@ -58,7 +60,9 @@ This class must implement two methods:
 * ``registerContainerConfiguration()`` loads the application configuration
   (more on this later).
 
-PHP autoloading can be configured via ``app/autoload.php``::
+PHP autoloading can be configured via ``app/autoload.php``:
+
+.. code-block:: php
 
     // app/autoload.php
     use Symfony\Component\ClassLoader\UniversalClassLoader;
@@ -121,7 +125,9 @@ Registering a Bundle
 
 An application is made up of bundles as defined in the ``registerBundles()``
 method of the ``AppKernel`` class. Each bundle is a directory that contains
-a single ``Bundle`` class that describes it::
+a single ``Bundle`` class that describes it:
+
+.. code-block:: php
 
     // app/AppKernel.php
     public function registerBundles()

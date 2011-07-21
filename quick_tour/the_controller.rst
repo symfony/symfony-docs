@@ -11,7 +11,9 @@ Nowadays, a web application should be able to deliver more than just HTML
 pages. From XML for RSS feeds or Web Services, to JSON for Ajax requests,
 there are plenty of different formats to choose from. Supporting those formats
 in Symfony2 is straightforward. Tweak the route by adding a default value of
-``xml`` for the ``_format`` variable::
+``xml`` for the ``_format`` variable:
+
+.. code-block:: php
 
     // src/Acme/DemoBundle/Controller/DemoController.php
     use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -39,7 +41,9 @@ automatically selects the right template, here ``hello.xml.twig``:
 That's all there is to it. For standard formats, Symfony2 will also
 automatically choose the best ``Content-Type`` header for the response. If
 you want to support different formats for a single action, use the ``{_format}``
-placeholder in the route pattern instead::
+placeholder in the route pattern instead:
+
+.. code-block:: php
 
     // src/Acme/DemoBundle/Controller/DemoController.php
     use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -66,7 +70,9 @@ Redirecting and Forwarding
 --------------------------
 
 If you want to redirect the user to another page, use the ``redirect()``
-method::
+method:
+
+.. code-block:: php
 
     return $this->redirect($this->generateUrl('_demo_hello', array('name' => 'Lucas')));
 
@@ -76,7 +82,9 @@ returns the associated friendly URL.
 
 You can also easily forward the action to another one with the ``forward()``
 method. Internally, Symfony makes a "sub-request", and returns the ``Response``
-object from that sub-request::
+object from that sub-request:
+
+.. code-block:: php
 
     $response = $this->forward('AcmeDemoBundle:Hello:fancy', array('name' => $name, 'color' => 'green'));
 
@@ -86,7 +94,9 @@ Getting information from the Request
 ------------------------------------
 
 Besides the values of the routing placeholders, the controller also has access
-to the ``Request`` object::
+to the ``Request`` object:
+
+.. code-block:: php
 
     $request = $this->getRequest();
 
@@ -116,7 +126,9 @@ web service). Between two requests, Symfony2 stores the attributes in a cookie
 by using native PHP sessions.
 
 Storing and retrieving information from the session can be easily achieved
-from any controller::
+from any controller:
+
+.. code-block:: php
 
     $session = $this->getRequest()->getSession();
 
@@ -130,7 +142,9 @@ from any controller::
     $session->setLocale('fr');
 
 You can also store small messages that will only be available for the very
-next request::
+next request:
+
+.. code-block:: php
 
     // store a message for the very next request (in a controller)
     $session->setFlash('notice', 'Congratulations, your action succeeded!');
@@ -198,7 +212,9 @@ URL will automatically redirect you to the login form because this resource is
 protected by a ``firewall``.
 
 You can also force the action to require a given role by using the ``@Secure``
-annotation on the controller::
+annotation on the controller:
+
+.. code-block:: php
 
     use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
     use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -233,7 +249,9 @@ Caching Resources
 As soon as your website starts to generate more traffic, you will want to
 avoid generating the same resource again and again. Symfony2 uses HTTP cache
 headers to manage resources cache. For simple caching strategies, use the
-convenient ``@Cache()`` annotation::
+convenient ``@Cache()`` annotation:
+
+.. code-block:: php
 
     use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
     use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;

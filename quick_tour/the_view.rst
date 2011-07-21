@@ -56,7 +56,9 @@ Below is a minimal template that illustrates a few basics, using two variables
    Comments can be included inside templates using the ``{# ... #}`` delimiter.
 
 To render a template in Symfony, use the ``render`` method from within a controller
-and pass it any variables needed in the template::
+and pass it any variables needed in the template:
+
+.. code-block:: php
 
     $this->render('AcmeDemoBundle:Demo:hello.html.twig', array(
         'name' => $name,
@@ -191,7 +193,9 @@ the ``index`` template. To do this, use the ``render`` tag:
 Here, the ``AcmeDemoBundle:Demo:fancy`` string refers to the ``fancy`` action
 of the ``Demo`` controller. The arguments (``name`` and ``color``) act like
 simulated request variables (as if the ``fancyAction`` were handling a whole
-new request) and are made available to the controller::
+new request) and are made available to the controller:
+
+.. code-block:: php
 
     // src/Acme/DemoBundle/Controller/DemoController.php
 
@@ -223,7 +227,9 @@ updated by just changing the configuration:
 The ``path`` function takes the route name and an array of parameters as
 arguments. The route name is the main key under which routes are referenced
 and the parameters are the values of the placeholders defined in the route
-pattern::
+pattern:
+
+.. code-block:: php
 
     // src/Acme/DemoBundle/Controller/DemoController.php
     use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
