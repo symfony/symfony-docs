@@ -949,7 +949,7 @@ to the given ``Category`` object via their ``category_id`` value.
 
         $category = $product->getCategory();
 
-        prints "Proxies\AcmeStoreBundleEntityCategoryProxy"
+        // prints "Proxies\AcmeStoreBundleEntityCategoryProxy"
         echo get_class($category);
 
     This proxy object extends the true ``Category`` object, and looks and
