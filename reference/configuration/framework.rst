@@ -17,7 +17,6 @@ Configuration
 
 * `charset`_
 * `secret`_
-* `exception_controller`_
 * `ide`_
 * `test`_
 * `form`_
@@ -43,20 +42,6 @@ This is a string that should be unique to your application. In practice,
 it's used for generating the CSRF tokens, but it could be used in any other
 context where having a unique string is useful. It becomes the service container
 parameter named ``kernel.secret``.
-
-exception_controller
-....................
-
-**type**: ``string`` **default**: ``Symfony\\Bundle\\FrameworkBundle\\Controller\\ExceptionController::showAction``
-
-This is the controller that is activated after an exception is thrown anywhere
-in your application. The default controller
-(:class:`Symfony\\Bundle\\FrameworkBundle\\Controller\\ExceptionController`)
-is what's responsible for rendering specific templates under different error
-conditions (see :doc:`/cookbook/controller/error_pages`). Modifying this
-option is advanced. If you need to customize an error page you should use
-the previous link. If you need to perform some behavior on an exception,
-you should add a listener to the ``kernel.exception`` event (see :ref:`dic-tags-kernel-event-listener`).
 
 ide
 ...
@@ -116,7 +101,6 @@ Full Default Configuration
             # general configuration
             charset:              ~
             secret:               ~ # Required
-            exception_controller:  Symfony\Bundle\FrameworkBundle\Controller\ExceptionController::showAction
             ide:                  ~
             test:                 ~
 
