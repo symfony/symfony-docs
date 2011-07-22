@@ -931,14 +931,15 @@ and insert it in the form. Here is a sample that you will have to adapt.
 .. code-block:: javascript
     <script type="text/javascript">
         jQuery('#add-element').click(function() {
-            var prototype = $('form#my_form #my_collection').attr('data-prototype');
+            var prototype = jQuery('form#my_form #my_collection').attr('data-prototype');
 
             // the level of the prototype is replaced by $$name$$
-            // you have to change this to the number of items + 1
+            // you might have have to change this to be coherent
+            // with your row ordering.
             prototype = prototype.replace(/\$\$name\$\$/g, '00');
 
             // Append the prototype to the DOM
-            $('#my_prototype').append(prototype);
+            jQuery('#my_prototype').append(prototype);
         });
     </script>
 
