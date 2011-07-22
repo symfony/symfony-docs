@@ -917,6 +917,31 @@ the following inside ``ProductType``:
         ));
     }
 
+The collection type also give you the ability to embed a prototype of
+the collection form in your view. The prototype is a row of the collection
+without any data in it that serves as a template to add more items.
+To do so, you must set the ``prototype`` and ``allow_add`` options to ``true``.
+
+When your collection will be rendered, the html element containing your
+collection (div or table) will have a ``data-prototype`` attribute containing
+the rendered prototype, as a string. In order for you to display the
+prototype, you'll have to write a small JS to capture the attribute
+and insert it in the form. Here is a sample that you will have to adapt.
+
+.. code-block:: javascript
+    <script type="text/javascript">
+        jQuery('#add-element').click(function() {
+            var prototype = $('form#my_form #my_collection').attr('data-prototype');
+
+            // the level of the prototype is replaced by $$name$$
+            // you have to change this to the number of items + 1
+            prototype = prototype.replace(/\$\$name\$\$/g, '00');
+
+            // Append the prototype to the DOM
+            $('#my_prototype').append(prototype);
+        });
+    </script>
+
 .. index::
    single: Forms; Theming
    single: Forms; Customizing fields
