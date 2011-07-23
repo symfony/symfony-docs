@@ -88,7 +88,7 @@ Getting information from the Request
 Besides the values of the routing placeholders, the controller also has access
 to the ``Request`` object::
 
-    $request = $this->get('request');
+    $request = $this->getRequest();
 
     $request->isXmlHttpRequest(); // is it an Ajax request?
 
@@ -118,7 +118,7 @@ by using native PHP sessions.
 Storing and retrieving information from the session can be easily achieved
 from any controller::
 
-    $session = $this->get('request')->getSession();
+    $session = $this->getRequest()->getSession();
 
     // store an attribute for reuse during a later user request
     $session->set('foo', 'bar');

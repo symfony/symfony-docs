@@ -17,7 +17,7 @@ accuracy.
 |             | - `first_name`_                                                        |
 |             | - `second_name`_                                                       |
 +-------------+------------------------------------------------------------------------+
-| Inherited   | - `invalid_message`_                                          |
+| Inherited   | - `invalid_message`_                                                   |
 | options     | - `invalid_message_parameters`_                                        |
 |             | - `error_bubbling`_                                                    |
 +-------------+------------------------------------------------------------------------+
