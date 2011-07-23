@@ -341,3 +341,7 @@ property, instead of the actual filename::
             return null === $this->path ? null : $this->getUploadRootDir().'/'.$this->id.'.'.$this->path;
         }
     }
+
+Other Lifecycle events and callbacks, such as ``preUpdate`` and ``postUpdate`` may be relevant to this discussion as well. To see the full list of Lifecycle events and callbacks as well as an explanation as to what they do, see Doctrine's `Lifecycle Events documentation`_
+
+.. _`Lifecycle Events documentation`: http://www.doctrine-project.org/docs/orm/2.0/en/reference/events.html#lifecycle-events
