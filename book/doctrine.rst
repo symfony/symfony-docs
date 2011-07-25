@@ -119,6 +119,11 @@ just a simple PHP class.
     
         php app/console doctrine:generate:entity AcmeStoreBundle:Product "name:string(255) price:float description:text"
 
+.. index::
+    single: Doctrine; Adding mapping metadata
+
+.. _book-doctrine-adding-mapping:
+
 Add Mapping Information
 ~~~~~~~~~~~~~~~~~~~~~~~
 

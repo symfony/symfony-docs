@@ -21,6 +21,7 @@ day, and year) or three select boxes (see the `widget_` option).
 +----------------------+-----------------------------------------------------------------------------+
 | Options              | - `widget`_                                                                 |
 |                      | - `input`_                                                                  |
+|                      | - `empty_value`_                                                            |
 |                      | - `years`_                                                                  |
 |                      | - `months`_                                                                 |
 |                      | - `days`_                                                                   |
@@ -73,6 +74,25 @@ Field Options
 .. _form-reference-date-input:
 
 .. include:: /reference/forms/types/options/date_input.rst.inc
+
+empty_value
+~~~~~~~~~~~
+
+**type**: ``string``|``array``
+
+If your widget option is set to ``choice``, then this field will be represented
+as a series of ``select`` boxes. The ``empty_value`` option can be used to
+add a "blank" entry to the top of each select box::
+
+    $builder->add('dueDate', 'date', array(
+        'empty_value' => '',
+    ));
+
+Alternatively, you can specify a string to be displayed for the "blank" value::
+
+    $builder->add('dueDate', 'date', array(
+        'empty_value' => array('year' => 'Year', 'month' => 'Month', 'day' => 'Day')
+    ));
 
 .. include:: /reference/forms/types/options/years.rst.inc
 

@@ -107,10 +107,10 @@ If there are any issues, correct them now before moving on.
 
     **1. Using ACL on a system that supports chmod +a**
 
-    .. code-block:: bash
+    Many systems allow you to use the ``chmod +a`` command. Try this first,
+    and if you get an error - try the next method:
 
-        Many systems allow you to use the ``chmod +a`` command. Try this first,
-        and if you get an error - try the next method:
+    .. code-block:: bash
 
         rm -rf app/cache/*
         rm -rf app/logs/*
