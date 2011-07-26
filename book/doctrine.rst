@@ -21,7 +21,7 @@ be.
 
 
     Doctrine doesn't auto-escape reserved SQL keywords, for further reference
-    check Doctrine manual.
+    check Doctrine manual, `Reserved SQL keywords documentation`_.
 
 
     You can also persist data to `MongoDB`_ using Doctrine ODM library. For
