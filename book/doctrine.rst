@@ -462,7 +462,7 @@ to easily fetch objects based on multiple conditions::
     // query for all products matching the name, ordered by price
     $product = $repository->findBy(
         array('name' => 'foo'),
-        array('price', 'ASC')
+        array('price' => 'ASC')
     );
 
 .. tip::
