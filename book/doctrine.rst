@@ -19,6 +19,11 @@ be.
     If you prefer to use raw database queries, this is easy, and explained
     in the ":doc:`/cookbook/doctrine/dbal`" cookbook entry.
 
+
+    Doctrine doesn't auto-escape reserved SQL keywords, for further reference
+    check Doctrine manual, `Reserved SQL keywords documentation`_.
+
+
     You can also persist data to `MongoDB`_ using Doctrine ODM library. For
     more information, read the ":doc:`/cookbook/doctrine/mongodb`" cookbook
     entry.
@@ -1296,3 +1301,4 @@ For more information about Doctrine, see the *Doctrine* section of the
 .. _`Mapping Types Documentation`: http://www.doctrine-project.org/docs/orm/2.0/en/reference/basic-mapping.html#doctrine-mapping-types
 .. _`Property Mapping documentation`: http://www.doctrine-project.org/docs/orm/2.0/en/reference/basic-mapping.html#property-mapping
 .. _`Lifecycle Events documentation`: http://www.doctrine-project.org/docs/orm/2.0/en/reference/events.html#lifecycle-events
+.. _`Reserved SQL keywords documentation`: http://www.doctrine-project.org/docs/orm/2.0/en/reference/basic-mapping.html#quoting-reserved-words
