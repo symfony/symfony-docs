@@ -32,7 +32,8 @@ First, create a simple Doctrine Entity class to work with::
     class Document
     {
         /**
-         * @ORM\Id @ORM\Column(type="integer")
+         * @ORM\Id
+         * @ORM\Column(type="integer")
          * @ORM\GeneratedValue(strategy="AUTO")
          */
         public $id;
