@@ -609,30 +609,106 @@ constraints.
 For example, suppose you have a ``User`` class, which is used both when a
 user registers and when a user updates his/her contact information later::
 
-    // src/Acme/BlogBundle/Entity/User.php
-    namespace Acme\BlogBundle\Entity;
-    
-    use Symfony\Component\Security\Core\User\UserInterface
-    use Symfony\Component\Validator\Constraints as Assert;
-    
-    class User implements UserInterface
-    {
-        /**
-        * @Assert\Email(groups={"registration"})
-        */
-        private $email;
+.. configuration-block::
 
-        /**
-        * @Assert\NotBlank(groups={"registration"})
-        * @Assert\MinLength(limit=7, groups={"registration"})
-        */
-        private $password;
+    .. code-block:: yaml
 
-        /**
-        * @Assert\MinLength(2)
-        */
-        private $city;
-    }
+        # src/Acme/BlogBundle/Resources/config/validation.yml
+        Acme\BlogBundle\Entity\User:
+            properties:
+                email:
+                    - Email: { groups: [registration] }
+                password:
+                    - NotBlank: { groups: [registration] }
+                    - MinLength: { limit: 7, groups: [registration] }
+                city:
+                    - MinLength: 2
+
+    .. code-block:: xml
+
+        <!-- src/Acme/BlogBundle/Resources/config/validation.xml -->
+        <class name="Acme\BlogBundle\Entity\User">
+            <property name="email">
+                <constraint name="Email">
+                    <option name="groups">
+                        <value>registration</value>
+                    </option>
+                </constraint>
+            </property>
+            <property name="password">
+                <constraint name="NotBlank">
+                    <option name="groups">
+                        <value>registration</value>
+                    </option>
+                </constraint>
+                <constraint name="MinLength">
+                    <option name="limit">7</option>
+                    <option name="groups">
+                        <value>registration</value>
+                    </option>
+                </constraint>
+            </property>
+            <property name="city">
+                <constraint name="MinLength">7</constraint>
+            </property>
+        </class>
+
+    .. code-block:: php-annotations
+
+        // src/Acme/BlogBundle/Entity/User.php
+        namespace Acme\BlogBundle\Entity;
+
+        use Symfony\Component\Security\Core\User\UserInterface
+        use Symfony\Component\Validator\Constraints as Assert;
+
+        class User implements UserInterface
+        {
+            /**
+            * @Assert\Email(groups={"registration"})
+            */
+            private $email;
+
+            /**
+            * @Assert\NotBlank(groups={"registration"})
+            * @Assert\MinLength(limit=7, groups={"registration"})
+            */
+            private $password;
+
+            /**
+            * @Assert\MinLength(2)
+            */
+            private $city;
+        }
+
+    .. code-block:: php
+
+        // src/Acme/BlogBundle/Entity/User.php
+        namespace Acme\BlogBundle\Entity;
+
+        use Symfony\Component\Validator\Mapping\ClassMetadata;
+        use Symfony\Component\Validator\Constraints\Email;
+        use Symfony\Component\Validator\Constraints\NotBlank;
+        use Symfony\Component\Validator\Constraints\MinLength;
+
+        class User
+        {
+            public static function loadValidatorMetadata(ClassMetadata $metadata)
+            {
+                $metadata->addPropertyConstraint('email', new Email(array(
+                    'groups' => array('registration')
+                )));
+
+                $metadata->addPropertyConstraint('password', new NotBlank(array(
+                    'groups' => array('registration')
+                )));
+                $metadata->addPropertyConstraint('password', new MinLength(array(
+                    'limit'  => 7,
+                    'groups' => array('registration')
+                )));
+
+                $metadata->addPropertyConstraint('city', new MinLength(3));
+            }
+        }
 
 With this configuration, there are two validation groups:
 
