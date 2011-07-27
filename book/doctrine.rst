@@ -19,11 +19,6 @@ be.
     If you prefer to use raw database queries, this is easy, and explained
     in the ":doc:`/cookbook/doctrine/dbal`" cookbook entry.
 
-
-    Doctrine doesn't auto-escape reserved SQL keywords, for further reference
-    check Doctrine manual, `Reserved SQL keywords documentation`_.
-
-
     You can also persist data to `MongoDB`_ using Doctrine ODM library. For
     more information, read the ":doc:`/cookbook/doctrine/mongodb`" cookbook
     entry.
@@ -234,23 +229,6 @@ in a number of different formats including YAML, XML or directly inside the
     The table name is optional and if omitted, will be determined automatically
     based on the name of the entity class.
 
-.. tip::
-
-    When using another library or program (ie. Doxygen) that uses annotations,
-    you must use the ``@IgnoreAnnotation`` annotation to indicate which annotations
-    Symfony and Doctrine should ignore.  This annotation should be placed in the
-    comment block of the class it applies to.  Failing to do so may result
-    in an exception being thrown.
-    
-    For example, to prevent the ``@fn`` annotation from throwing an exception,
-    add the following::
-    
-        /**
-         * @IgnoreAnnotation("fn")
-         * 
-         */
-        class Product
-
 Doctrine allows you to choose from a wide variety of different field types,
 each with their own options. For information on the available field types,
 see the :ref:`book-doctrine-field-types` section.
@@ -263,6 +241,29 @@ see the :ref:`book-doctrine-field-types` section.
     which is not shown in Doctrine's documentation. You'll also need to include
     the ``use Doctrine\ORM\Mapping as ORM;`` statement, which *imports* the
     ``ORM`` annotations prefix.
+
+.. caution::
+
+    Be careful that your class name and properties aren't mapped to a protected
+    SQL keyword (such as ``group`` or ``user``). For example, if your entity
+    class name is ``Group``, then, by default, your table name will be ``group``,
+    which will cause an SQL error in some engines. See Doctrine's
+    `Reserved SQL keywords documentation`_ on how to properly escape these
+    names.
+
+.. note::
+
+    When using another library or program (ie. Doxygen) that uses annotations,
+    you should place the ``@IgnoreAnnotation`` annotation on the class to
+    indicate which annotations Symfony should ignore.
+
+    For example, to prevent the ``@fn`` annotation from throwing an exception,
+    add the following::
+
+        /**
+         * @IgnoreAnnotation("fn")
+         */
+        class Product
 
 Generating Getters and Setters
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
