@@ -305,7 +305,7 @@ entity is ever deleted.
     The ``@ORM\PrePersist()`` and ``@ORM\PostPersist()`` event callbacks are
     triggered before and after the entity is persisted to the database. On the
     other hand, the ``@ORM\PreUpdate()`` and ``@ORM\PostUpdate()`` event
-    callbacks are called when the entity is udpated.
+    callbacks are called when the entity is updated.
 
 Using the ``id`` as the filename
 --------------------------------
