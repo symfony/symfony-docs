@@ -74,8 +74,10 @@ First, create a simple Doctrine Entity class to work with::
 
 The ``Document`` entity has a name and it is associated with a file. The ``path``
 property stores the relative path to the file and is persisted to the database.
-The ``getFullPath()`` is a convenience method that uses the ``getUploadRootDir()``
-method to return the absolute path to the file.
+The ``getAbsolutePath()`` is a convenience method that returns the absolute
+path to the file while the ``getWebPath()`` is a convenience method that
+returns the web path, which can be used in a template to link to the uploaded
+file.
 
 .. tip::
 
@@ -348,7 +350,7 @@ property, instead of the actual filename::
             }
         }
 
-        public function getFullPath()
+        public function getAbsolutePath()
         {
             return null === $this->path ? null : $this->getUploadRootDir().'/'.$this->id.'.'.$this->path;
         }
