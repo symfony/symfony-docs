@@ -270,7 +270,7 @@ annotations if you're using the annotation method to specify your constraints:
         // app/config/config.php
         $container->loadFromExtension('framework', array('validation' => array(
             'enable_annotations' => true,
-        ));
+        )));
 
 .. index::
    single: Validation; Constraints
@@ -367,7 +367,7 @@ constraint, have several configuration options available. Suppose that the
                 $metadata->addPropertyConstraint('gender', new Choice(array(
                     'choices' => array('male', 'female'),
                     'message' => 'Choose a valid gender.',
-                ));
+                )));
             }
         }
 
