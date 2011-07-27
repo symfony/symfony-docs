@@ -488,9 +488,10 @@ the guessed field.
 
 .. caution::
 
-    The guesser based on validation constraints does not take into account the
-    validation groups. If the guessed options are not correct, you can always
-    override them as you see fit.
+    If your form uses a specific validation group, the field type guesser
+    will still consider *all* validation constraints when guessing your
+    field types (including constraints that are not part of the validation
+    group(s) being used).
 
 .. index::
    single: Forms; Field type guessing
