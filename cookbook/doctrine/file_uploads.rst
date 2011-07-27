@@ -49,15 +49,26 @@ First, create a simple Doctrine Entity class to work with::
          */
         public $path;
 
-        public function getFullPath()
+        public function getAbsolutePath()
         {
             return null === $this->path ? null : $this->getUploadRootDir().'/'.$this->path;
+        }
+
+        public function getWebPath()
+        {
+            return null === $this->path ? null : $this->getUploadDir().'/'.$this->path;
         }
 
         protected function getUploadRootDir()
         {
             // the absolute directory path where uploaded documents should be saved
-            return __DIR__.'/../../../../web/uploads/documents';
+            return __DIR__.'/../../../../web/'.$this->getUploadDir();
+        }
+
+        protected function getUploadDir()
+        {
+            // get rid of the __DIR__ so it doesn't screw when displaying uploaded doc/image in the view.
+            return 'uploads/documents';
         }
     }
 
@@ -275,7 +286,7 @@ Next, refactor the ``Document`` class to take advantage of these callbacks::
          */
         public function removeUpload()
         {
-            if ($file = $this->getFullPath()) {
+            if ($file = $this->getAbsolutePath()) {
                 unlink($file);
             }
         }
@@ -332,7 +343,7 @@ property, instead of the actual filename::
          */
         public function removeUpload()
         {
-            if ($file = $this->getFullPath()) {
+            if ($file = $this->getAbsolutePath()) {
                 unlink($file);
             }
         }
