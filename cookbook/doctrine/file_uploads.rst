@@ -262,7 +262,7 @@ Next, refactor the ``Document`` class to take advantage of these callbacks::
         {
             if (null !== $this->file) {
                 // do whatever you want to generate a unique name
-                $this->setPath(uniq().'.'.$this->file->guessExtension());
+                $this->setPath(uniqid().'.'.$this->file->guessExtension());
             }
         }
 
