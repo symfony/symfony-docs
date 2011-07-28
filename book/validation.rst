@@ -607,7 +607,7 @@ on that class. To do this, you can organize each constraint into one or more
 constraints.
 
 For example, suppose you have a ``User`` class, which is used both when a
-user registers and when a user updates his/her contact information later::
+user registers and when a user updates his/her contact information later:
 
 .. configuration-block::
 
