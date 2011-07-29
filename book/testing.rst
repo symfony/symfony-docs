@@ -217,7 +217,7 @@ useful assertions::
     $this->assertEquals(200, $client->getResponse()->getStatusCode());
 
     // Assert that the response status code is a redirect.
-    $this->assertTrue($client->getResponse()->isRedirected('google.com'));
+    $this->assertTrue($client->getResponse()->isRedirect('google.com'));
 
 .. _documentation: http://www.phpunit.de/manual/3.5/en/
 
