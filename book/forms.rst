@@ -102,8 +102,9 @@ from inside a controller::
 
             $form = $this->createFormBuilder($task)
                 ->add('task', 'text')
-                ->add('dueDate', 'date');
-                ->getForm();
+                ->add('dueDate', 'date')
+                ->getForm()
+            ;
 
             return $this->render('AcmeTaskBundle:Default:new.html.twig', array(
                 'form' => $form->createView(),
