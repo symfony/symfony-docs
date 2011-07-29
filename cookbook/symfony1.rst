@@ -146,7 +146,7 @@ namespace in the ``vendor/bundle`` directory:
     ));
 
 If the file did *not* live at this exact location, you'd receive a
-``Class "Acme\DemoBundle\Controller\DemoController" does not exist.``
+``Class "Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle" does not exist.``
 error. In Symfony2, a "class does not exist" means that the suspect class
 namespace and physical location do not match. Basically, Symfony2 is looking
 in one exact location for that class, but that location doesn't exist (or
