@@ -21,6 +21,7 @@ Validation Constraints Reference
    constraints/MinLength
    constraints/NotBlank
    constraints/NotNull
+   constraints/UniqueEntity
    constraints/Regex
    constraints/Time
    constraints/Url
@@ -52,6 +53,7 @@ The following constraints are natively available in Symfony2:
 * :doc:`MinLength <constraints/MinLength>`
 * :doc:`NotBlank <constraints/NotBlank>`
 * :doc:`NotNull <constraints/NotNull>`
+* :doc:`UniqueEntity <constraints/UniqueEntity>`
 * :doc:`Regex <constraints/Regex>`
 * :doc:`Time <constraints/Time>`
 * :doc:`Url <constraints/Url>`
