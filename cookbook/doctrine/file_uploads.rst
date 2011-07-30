@@ -307,6 +307,15 @@ entity is ever deleted.
     other hand, the ``@ORM\PreUpdate()`` and ``@ORM\PostUpdate()`` event
     callbacks are called when the entity is updated.
 
+.. caution::
+
+    The ``PreUpdate`` and ``PostUpdate`` callbacks are only triggered if there
+    is a change in one of the entity's field that are persisted. This means
+    that, by default, if you modify only the ``$file`` property, these events
+    will not be triggered, as the property itself is not directly persisted
+    via Doctrine. One solution would be to use an ``updated`` field that's
+    persisted to Doctrine, and to modify it manually when changing the file.
+
 Using the ``id`` as the filename
 --------------------------------
 
