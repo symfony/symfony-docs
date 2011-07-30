@@ -13,31 +13,35 @@ Recall that the label, error and HTML widget of a form field can easily
 be rendered by using the ``form_row`` Twig function or the ``row`` PHP helper
 method:
 
-.. code-block:: jinja
+.. configuration-block::
 
-    {{ form_row(form.age) }}
+    .. code-block:: jinja
 
-.. code-block:: php
+        {{ form_row(form.age) }}
 
-    <?php echo $view['form']->row($form['age']) }} ?>
+    .. code-block:: php
+
+        <?php echo $view['form']->row($form['age']) }} ?>
 
 You can also render each of the three parts of the field individually:
 
-.. code-block:: jinja
+.. configuration-block::
 
-    <div>
-        {{ form_label(form.age) }}
-        {{ form_errors(form.age) }}
-        {{ form_widget(form.age) }}
-    </div>
+    .. code-block:: jinja
 
-.. code-block:: php
+        <div>
+            {{ form_label(form.age) }}
+            {{ form_errors(form.age) }}
+            {{ form_widget(form.age) }}
+        </div>
 
-    <div>
-        <?php echo $view['form']->label($form['age']) }} ?>
-        <?php echo $view['form']->errors($form['age']) }} ?>
-        <?php echo $view['form']->widget($form['age']) }} ?>
-    </div>
+    .. code-block:: php
+
+        <div>
+            <?php echo $view['form']->label($form['age']) }} ?>
+            <?php echo $view['form']->errors($form['age']) }} ?>
+            <?php echo $view['form']->widget($form['age']) }} ?>
+        </div>
 
 In both cases, the form label, errors and HTML widget are rendered by using
 a set of markup that ships standard with Symfony. For example, both of the
@@ -56,13 +60,15 @@ above templates would render:
 To quickly prototype and test a form, you can render the entire form with
 just one line:
 
-.. code-block:: jinja
+.. configuration-block::
 
-    {{ form_widget(form) }}
+    .. code-block:: jinja
 
-.. code-block:: php
+        {{ form_widget(form) }}
 
-    <?php echo $view['form']->widget($form) }} ?>
+    .. code-block:: php
+
+        <?php echo $view['form']->widget($form) }} ?>
 
 The remainder of this recipe will explain how every part of the form's markup
 can be modified at several different levels. For more information about form
@@ -92,13 +98,15 @@ some or all of its fragments.
 For example, when the widget of a ``integer`` type field is rendered, an ``input``
 ``number`` field is generated
 
-.. code-block:: html+jinja
+.. configuration-block::
 
-    {{ form_widget(form.age) }}
+    .. code-block:: html+jinja
 
-.. code-block:: php
+        {{ form_widget(form.age) }}
 
-    <?php echo $view['form']->widget($form['age']) ?>
+    .. code-block:: php
+
+        <?php echo $view['form']->widget($form['age']) ?>
 
 renders:
 
@@ -118,37 +126,41 @@ folder.
 
 The default implementation of the ``integer_widget`` fragment looks like this:
 
-.. code-block:: jinja
+.. configuration-block::
 
-    {% block integer_widget %}
-        {% set type = type|default('number') %}
-        {{ block('field_widget') }}
-    {% endblock integer_widget %}
+    .. code-block:: jinja
 
-.. code-block:: html+php
+        {% block integer_widget %}
+            {% set type = type|default('number') %}
+            {{ block('field_widget') }}
+        {% endblock integer_widget %}
 
-    <!-- integer_widget.html.php -->
+    .. code-block:: html+php
 
-    <?php echo $view['form']->renderBlock('field_widget', array('type' => isset($type) ? $type : "number")) ?>
+        <!-- integer_widget.html.php -->
+
+        <?php echo $view['form']->renderBlock('field_widget', array('type' => isset($type) ? $type : "number")) ?>
 
 As you can see, this fragment itself renders another fragment - ``field_widget``:
 
-.. code-block:: html+jinja
+.. configuration-block::
 
-    {% block field_widget %}
-        {% set type = type|default('text') %}
-        <input type="{{ type }}" {{ block('widget_attributes') }} value="{{ value }}" />
-    {% endblock field_widget %}
+    .. code-block:: html+jinja
 
-.. code-block:: html+php
+        {% block field_widget %}
+            {% set type = type|default('text') %}
+            <input type="{{ type }}" {{ block('widget_attributes') }} value="{{ value }}" />
+        {% endblock field_widget %}
 
-    <!-- FrameworkBundle/Resources/views/Form/field_widget.html.php -->
+    .. code-block:: html+php
 
-    <input
-        type="<?php echo isset($type) ? $view->escape($type) : "text" ?>"
-        value="<?php echo $view->escape($value) ?>"
-        <?php echo $view['form']->renderBlock('attributes') ?>
-    />
+        <!-- FrameworkBundle/Resources/views/Form/field_widget.html.php -->
+
+        <input
+            type="<?php echo isset($type) ? $view->escape($type) : "text" ?>"
+            value="<?php echo $view->escape($value) ?>"
+            <?php echo $view['form']->renderBlock('attributes') ?>
+        />
 
 The point is, the fragments dictate the HTML output of each part of a form. To
 customize the form output, you just need to identify and override the correct
@@ -584,31 +596,33 @@ you only want to customize one of the fields. This can be accomplished by
 customizing a fragment whose name is a combination of the field id attribute and
 which part of the field is being customized. For example:
 
-.. code-block:: html+jinja
+.. configuration-block::
 
-    {% form_theme form _self %}
+    .. code-block:: html+jinja
 
-    {% block _product_name_widget %}
+        {% form_theme form _self %}
+
+        {% block _product_name_widget %}
+            <div class="text_widget">
+                {{ block('field_widget' }}
+            </div>
+        {% endblock %}
+
+        {{ form_widget(form.name) }}
+
+    .. code-block:: html+php
+
+        <!-- Main template -->
+
+        <?php echo $view['form']->setTheme($form, array('AcmeDemoBundle:Form')); ?>
+
+        <?php echo $view['form']->widget($form['name']); ?>
+
+        <!-- src/Acme/DemoBundle/Resources/views/Form/_product_name_widget.html.php -->
+
         <div class="text_widget">
-            {{ block('field_widget' }}
+              echo $view['form']->renderBlock('field_widget') ?>
         </div>
-    {% endblock %}
-
-    {{ form_widget(form.name) }}
-
-.. code-block:: html+php
-
-    <!-- Main template -->
-
-    <?php echo $view['form']->setTheme($form, array('AcmeDemoBundle:Form')); ?>
-
-    <?php echo $view['form']->widget($form['name']); ?>
-
-    <!-- src/Acme/DemoBundle/Resources/views/Form/_product_name_widget.html.php -->
-
-    <div class="text_widget">
-          echo $view['form']->renderBlock('field_widget') ?>
-    </div>
 
 Here, the ``_product_name_widget`` fragment defines the template to use for the
 field whose *id* is ``product_name`` (and name is ``product[name]``).
@@ -622,27 +636,29 @@ field whose *id* is ``product_name`` (and name is ``product[name]``).
 
 You can also override the markup for an entire field row using the same method:
 
-.. code-block:: html+jinja
+.. configuration-block::
 
-    {% form_theme form _self %}
+    .. code-block:: html+jinja
 
-    {% block _product_name_row %}
+        {% form_theme form _self %}
+
+        {% block _product_name_row %}
+            <div class="name_row">
+                {{ form_label(form) }}
+                {{ form_errors(form) }}
+                {{ form_widget(form) }}
+            </div>
+        {% endblock %}
+
+    .. code-block:: html+php
+
+        <!-- _product_name_row.html.php -->
+
         <div class="name_row">
-            {{ form_label(form) }}
-            {{ form_errors(form) }}
-            {{ form_widget(form) }}
+            <?php echo $view['form']->label($form) ?>
+            <?php echo $view['form']->errors($form) ?>
+            <?php echo $view['form']->widget($form) ?>
         </div>
-    {% endblock %}
-
-.. code-block:: html+php
-
-    <!-- _product_name_row.html.php -->
-
-    <div class="name_row">
-        <?php echo $view['form']->label($form) ?>
-        <?php echo $view['form']->errors($form) ?>
-        <?php echo $view['form']->widget($form) ?>
-    </div>
 
 Other Common Customizations
 ---------------------------
@@ -669,13 +685,15 @@ There are many different ways to customize how errors are rendered when a
 form is submitted with errors. The error messages for a field are rendered
 when you use the ``form_errors`` helper:
 
-.. code-block:: jinja
+.. configuration-block::
 
-    {{ form_errors(form.age) }}
+    .. code-block:: jinja
 
-.. code-block:: php
+        {{ form_errors(form.age) }}
 
-    <?php echo $view['form']->errors($form['age']); ?>
+    .. code-block:: php
+
+        <?php echo $view['form']->errors($form['age']); ?>
 
 By default, the errors are rendered inside an unordered list:
 
@@ -688,35 +706,37 @@ By default, the errors are rendered inside an unordered list:
 To override how errors are rendered for *all* fields, simply copy, paste
 and customize the ``field_errors`` fragment.
 
-.. code-block:: html+jinja
+.. configuration-block::
 
-    {% block field_errors %}
-    {% spaceless %}
-        {% if errors|length > 0 %}
-        <ul class="error_list">
-            {% for error in errors %}
-                <li>{{ error.messageTemplate|trans(error.messageParameters, 'validators') }}</li>
-            {% endfor %}
-        </ul>
-        {% endif %}
-    {% endspaceless %}
-    {% endblock field_errors %}
+    .. code-block:: html+jinja
 
-.. code-block:: html+php
+        {% block field_errors %}
+        {% spaceless %}
+            {% if errors|length > 0 %}
+            <ul class="error_list">
+                {% for error in errors %}
+                    <li>{{ error.messageTemplate|trans(error.messageParameters, 'validators') }}</li>
+                {% endfor %}
+            </ul>
+            {% endif %}
+        {% endspaceless %}
+        {% endblock field_errors %}
 
-    <!-- fields_errors.html.php -->
+    .. code-block:: html+php
 
-    <?php if ($errors): ?>
-        <ul class="error_list">
-            <?php foreach ($errors as $error): ?>
-                <li><?php echo $view['translator']->trans(
-                    $error->getMessageTemplate(),
-                    $error->getMessageParameters(),
-                    'validators'
-                ) ?></li>
-            <?php endforeach; ?>
-        </ul>
-    <?php endif ?>
+        <!-- fields_errors.html.php -->
+
+        <?php if ($errors): ?>
+            <ul class="error_list">
+                <?php foreach ($errors as $error): ?>
+                    <li><?php echo $view['translator']->trans(
+                        $error->getMessageTemplate(),
+                        $error->getMessageParameters(),
+                        'validators'
+                    ) ?></li>
+                <?php endforeach; ?>
+            </ul>
+        <?php endif ?>
 
 .. tip::
     See :ref:`cookbook-form-theming-methods` for how to apply this customization.
@@ -725,13 +745,15 @@ You can also customize the error output for just one specific field type.
 For example, certain errors that are more global to your form (i.e. not specific
 to just one field) are rendered separately, usually at the top of your form:
 
-.. code-block:: jinja
+.. configuration-block::
 
-    {{ form_errors(form) }}
+    .. code-block:: jinja
 
-.. code-block:: php
+        {{ form_errors(form) }}
 
-    <?php echo $view['form']->render($form); ?>
+    .. code-block:: php
+
+        <?php echo $view['form']->render($form); ?>
 
 To customize *only* the markup used for these errors, follow the same directions
 as above, but now call the block ``form_errors`` (Twig) / the file ``form_errors.html.php``
@@ -747,25 +769,27 @@ a field. To customize the markup used for rendering *all* form field rows,
 override the ``field_row`` fragment. For example, suppose you want to add a
 class to the ``div`` element around each row:
 
-.. code-block:: html+jinja
+.. configuration-block::
 
-    {% block field_row %}
+    .. code-block:: html+jinja
+
+        {% block field_row %}
+            <div class="form_row">
+                {{ form_label(form) }}
+                {{ form_errors(form) }}
+                {{ form_widget(form) }}
+            </div>
+        {% endblock field_row %}
+
+    .. code-block:: html+php
+
+        <!-- field_row.html.php -->
+
         <div class="form_row">
-            {{ form_label(form) }}
-            {{ form_errors(form) }}
-            {{ form_widget(form) }}
+            <?php echo $view['form']->label($form) ?>
+            <?php echo $view['form']->errors($form) ?>
+            <?php echo $view['form']->widget($form) ?>
         </div>
-    {% endblock field_row %}
-
-.. code-block:: html+php
-
-    <!-- field_row.html.php -->
-
-    <div class="form_row">
-        <?php echo $view['form']->label($form) ?>
-        <?php echo $view['form']->errors($form) ?>
-        <?php echo $view['form']->widget($form) ?>
-    </div>
 
 .. tip::
     See :ref:`cookbook-form-theming-methods` for how to apply this customization.
@@ -880,13 +904,15 @@ original template:
 
 To render a help message below a field, pass in a ``help`` variable:
 
-.. code-block:: jinja
+.. configuration-block::
 
-    {{ form_widget(form.title, { 'help': 'foobar' }) }}
+    .. code-block:: jinja
 
-.. code-block:: php
+        {{ form_widget(form.title, { 'help': 'foobar' }) }}
 
-    <?php echo $view['form']->widget($form['title'], array('help' => 'foobar')) ?>
+    .. code-block:: php
+
+        <?php echo $view['form']->widget($form['title'], array('help' => 'foobar')) ?>
 
 .. tip::
     See :ref:`cookbook-form-theming-methods` for how to apply this customization.
