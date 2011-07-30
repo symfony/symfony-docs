@@ -54,12 +54,18 @@ environment as explained in the dedicated :doc:`document <tests>`.
 Working on a Patch
 ------------------
 
-Each time you want to work on a patch for a bug or on an enhancement, create a
-topic branch:
+Each time you want to work on a patch for a bug or on an enhancement, you need
+to create a topic branch.
+
+The branch should be based on the `master` branch if you want to add a new
+feature. But if you want to fix a bug, use the oldest but still maintained
+version of Symfony where the bug happens (like `2.0`).
+
+Create the topic branch with the following command:
 
 .. code-block:: bash
 
-    $ git checkout -b BRANCH_NAME
+    $ git checkout -b BRANCH_NAME master
 
 .. tip::
 
@@ -148,6 +154,11 @@ with master, don't merge; and force the push to the origin:
 
     All patches you are going to submit must be released under the MIT
     license, unless explicitly specified in the code.
+
+All bug fixes merged into maintenance branches are also merged into more
+recent branches on a regular basis. For instance, if you submit a patch for
+the `2.0` branch, the patch will also be applied by the core team on the
+`master` branch.
 
 .. _ProGit:              http://progit.org/
 .. _GitHub:              https://github.com/signup/free
