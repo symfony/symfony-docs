@@ -257,6 +257,7 @@ Next, refactor the ``Document`` class to take advantage of these callbacks::
     {
         /**
          * @ORM\PrePersist()
+         * @ORM\PreUpdate()
          */
         public function preUpload()
         {
@@ -268,6 +269,7 @@ Next, refactor the ``Document`` class to take advantage of these callbacks::
 
         /**
          * @ORM\PostPersist()
+         * @ORM\PostUpdate()
          */
         public function upload()
         {
@@ -298,6 +300,13 @@ The class now does everything you need: it generates a unique filename before
 persisting, moves the file after persisting, and removes the file if the
 entity is ever deleted.
 
+.. note::
+
+    The ``@ORM\PrePersist()`` and ``@ORM\PostPersist()`` event callbacks are
+    triggered before and after the entity is persisted to the database. On the
+    other hand, the ``@ORM\PreUpdate()`` and ``@ORM\PostUpdate()`` event
+    callbacks are called when the entity is updated.
+
 Using the ``id`` as the filename
 --------------------------------
 
@@ -315,6 +324,7 @@ property, instead of the actual filename::
     {
         /**
          * @ORM\PrePersist()
+         * @ORM\PreUpdate()
          */
         public function preUpload()
         {
@@ -325,6 +335,7 @@ property, instead of the actual filename::
 
         /**
          * @ORM\PostPersist()
+         * @ORM\PostUpdate()
          */
         public function upload()
         {
