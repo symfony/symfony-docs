@@ -98,12 +98,9 @@ containing those classes. This will reduce disc IO quite a bit.
 
 If you're using the Symfony2 Standard Edition, then you're probably already
 using the bootstrap file. To be sure, open your front controller (usually
-``app.php``) and check to make sure that one of the following lines exists
-and is uncommented (exactly which you need depends on if you're using Symfony's
-:doc:`HTTP Caching layer</book/http_cache>`)::
+``app.php``) and check to make sure that the following line exists::
 
     require_once __DIR__.'/../app/bootstrap.php.cache';
-    require_once __DIR__.'/../app/bootstrap_cache.php.cache';
 
 Note that there are two disadvantages when using a bootstrap file:
 
@@ -112,7 +109,7 @@ Note that there are two disadvantages when using a bootstrap file:
 
 * when debugging, one will need to place break points inside the bootstrap file.
 
-If you're using Symfony2 Standard Edition, the bootstrap files are automatically
+If you're using Symfony2 Standard Edition, the bootstrap file is automatically
 rebuilt after updating the vendor libraries via the ``php bin/vendors install``
 command.
 
