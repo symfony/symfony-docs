@@ -9,19 +9,62 @@ tools.  You must, of course, have the `PHP SOAP`_ extension installed.
 As the PHP SOAP extension can not currently generate a WSDL, you must either 
 create one from scratch or use a 3rd party generator.
 
+First, let's create a class to service our requests.  
+
+.. code-block:: php
+
+    class HelloService
+    {
+
+        private $mailer;
+
+        public function __construct(Swift_Mailer $mailer)
+        {
+            $this->mailer = $mailer;
+        }
+
+        public function hello($name)
+        {
+            
+            $message = Swift_Message::newInstance()
+                                    ->setTo('me@example.com')
+                                    ->setSubject('Hello Service')
+                                    ->setBody($name . ' says hi!');
+
+            $this->mailer->send($message);
+
+
+            return 'Hello, ' . $name;
+        }
+
+    }
+
+Next, we train Symfony to be able to create an instance of our service.  Since 
+our service sends an e-mail, our service will need a Swift_Mailer, and using 
+the Service Container, we can let Symfony set this up for us.
+
+This example would be placed in app/config/config.yml.  Services can also be 
+defined in the bundle's Resources/config/services.yml file.
+
+.. code-block:: yaml
+    services:
+        hello_service:
+            class: Acme\DemoBundle\Services\HelloService
+            arguments: [mailer]
+
 Below is an example of a controller that is capable of handling a SOAP 
 request.  If ``indexAction()`` is accessible via the route ``/soap``, then the 
 WSDL document can be retrieved via ``/soap?wsdl``.
 
 .. code-block:: php
 
-    class MySoapController extends Controller 
+    class HelloServiceController extends Controller 
     {
         public function indexAction()
         {
             $server = new \SoapServer('/path/to/hello.wsdl');
             
-            $server->setObject($this);
+            $server->setObject($this->get('hello_service'));
             
             $response = new Response();
             
@@ -36,11 +79,8 @@ WSDL document can be retrieved via ``/soap?wsdl``.
             return $response;
         }
  
-        public function hello($name)
-        {
-            return 'Hello, ' . $name . '!';
-        }
     }
+
 
 Take note of the calls to ``ob_start()`` and ``ob_get_clean()``.  These
 methods control `output buffering`_ which allows you to "trap" the echoed 
@@ -73,7 +113,7 @@ An example WSDL is below.
          xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" 
          xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" 
          xmlns="http://schemas.xmlsoap.org/wsdl/" 
-         targetNamespace="urn:arnleadservicewsdl">
+         targetNamespace="urn:helloservicewsdl">
       <types>
        <xsd:schema targetNamespace="urn:hellowsdl">
         <xsd:import namespace="http://schemas.xmlsoap.org/soap/encoding/" />
