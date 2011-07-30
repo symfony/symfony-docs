@@ -87,7 +87,7 @@ is the item value and the array value is the item's label::
 choice_list
 ~~~~~~~~~~~
 
-**type**: ``Symfony\Component\Form\ChoiceList\ChoiceListInterface``
+**type**: ``Symfony\Component\Form\Extension\Core\ChoiceList\ChoiceListInterface``
 
 This is one way of specifying the options to be used for this field.
 The ``choice_list`` option must be an instance of the ``ChoiceListInterface``.
