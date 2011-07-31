@@ -166,7 +166,7 @@ In the following example, the action is only allowed if the user has the
         // ...
     }
 
-You can also choose to install and use the optional ``SecurityExtraBundle``,
+You can also choose to install and use the optional JMSSecurityExtraBundle_,
 which can secure your controller using annotations:
 
 .. code-block:: php
@@ -203,3 +203,5 @@ which can secure your controller using annotations:
 
 For more information on securing services or methods in this way,
 see :doc:`/cookbook/security/securing_services`.
+
+.. _JMSSecurityExtraBundle: https://github.com/schmittjoh/JMSSecurityExtraBundle
