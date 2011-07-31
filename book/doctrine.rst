@@ -116,8 +116,8 @@ just a simple PHP class.
     this entity class for you:
     
     .. code-block:: bash
-    
-        php app/console doctrine:generate:entity AcmeStoreBundle:Product "name:string(255) price:float description:text"
+        
+        php app/console doctrine:generate:entity --entity="AcmeStoreBundle:Product" --fields="name:string(255) price:float description:text"
 
 .. index::
     single: Doctrine; Adding mapping metadata
@@ -749,11 +749,11 @@ Suppose that the products in your application all belong to exactly one "categor
 In this case, you'll need a ``Category`` object and a way to relate a ``Product``
 object to a ``Category`` object. Start by creating the ``Category`` entity.
 Since you know that you'll eventually need to persist the class through Doctrine,
-you can let Doctrine create the class for you:
+you can let Doctrine create the class for you.
 
 .. code-block:: bash
 
-    php app/console doctrine:generate:entity AcmeStoreBundle:Category "name:string(255)" --mapping-type=yml
+    php app/console doctrine:generate:entity --entity="AcmeStoreBundle:Category" --fields="name:string(255)"
 
 This task generates the ``Category`` entity for you, with an ``id`` field,
 a ``name`` field and the associated getter and setter functions.
