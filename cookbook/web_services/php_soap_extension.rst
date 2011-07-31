@@ -9,6 +9,13 @@ tools.  You must, of course, have the `PHP SOAP`_ extension installed.
 As the PHP SOAP extension can not currently generate a WSDL, you must either 
 create one from scratch or use a 3rd party generator.
 
+.. note::
+
+    There are several SOAP server implementations available for use with 
+    PHP.  `Zend SOAP`_ and `NuSOAP`_ are two examples.  Although we use 
+    the PHP SOAP extension in our examples, the general idea should still 
+    be applicable to other implementations.
+
 First, let's create a class to service our requests.  
 
 .. code-block:: php
@@ -43,14 +50,24 @@ Next, we train Symfony to be able to create an instance of our service.  Since
 our service sends an e-mail, our service will need a Swift_Mailer, and using 
 the Service Container, we can let Symfony set this up for us.
 
-This example would be placed in app/config/config.yml.  Services can also be 
-defined in the bundle's Resources/config/services.yml file.
+.. configuration-block::
 
-.. code-block:: yaml
-    services:
-        hello_service:
-            class: Acme\DemoBundle\Services\HelloService
-            arguments: [mailer]
+    .. code-block:: yaml
+
+        # app/config/config.yml    
+        services:
+            hello_service:
+                class: Acme\DemoBundle\Services\HelloService
+                arguments: [mailer]
+
+    .. code-block:: xml
+
+        <!-- app/config/config.xml -->
+        <services>
+         <service id="hello_service" class="Acme\DemoBundle\Services\HelloService">
+          <argument>mailer</argument>
+         </service>
+        </services>
 
 Below is an example of a controller that is capable of handling a SOAP 
 request.  If ``indexAction()`` is accessible via the route ``/soap``, then the 
@@ -158,3 +175,5 @@ An example WSDL is below.
 .. _`PHP SOAP`:          http://php.net/manual/en/book.soap.php
 .. _`NuSOAP`:            http://sourceforge.net/projects/nusoap
 .. _`output buffering`:  http://php.net/manual/en/book.outcontrol.php
+.. _`Zend SOAP`:         http://framework.zend.com/manual/en/zend.soap.server.html
+.. _`NuSOAP`:            http://sourceforge.net/projects/nusoap/
