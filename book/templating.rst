@@ -981,11 +981,11 @@ Overriding Core Templates
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Since the Symfony2 framework itself is just a bundle, core templates can be
-overridden in the same way. For example, the core ``FrameworkBundle`` contains
+overridden in the same way. For example, the core ``TwigBundle`` contains
 a number of different "exception" and "error" templates that can be overridden
 by copying each from the ``Resources/views/Exception`` directory of the
-``FrameworkBundle`` to, you guessed it, the
-``app/Resources/FrameworkBundle/views/Exception`` directory.
+``TwigBundle`` to, you guessed it, the
+``app/Resources/TwigBundle/views/Exception`` directory.
 
 .. index::
    single: Templating; Three-level inheritance pattern
