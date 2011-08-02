@@ -55,9 +55,9 @@ have a ``Symfony/`` directory that looks like this:
 
     If you downloaded the Standard Edition *without vendors*, simply run the
     following command to download all of the vendor libraries:
-    
+
     .. code-block:: bash
-    
+
         php bin/vendors install
 
 Checking the Configuration

@@ -12,28 +12,29 @@ The Symfony2 stable API is a subset of all Symfony2 published public methods
 The implementation itself can change though. The only valid case for a change
 in the stable API is in order to fix a security issue.
 
-.. note::
-
-    The stable API is based on a whitelist. Therefore, everything not listed
-    explicitly in this document is not part of the stable API.
-
-.. note::
-
-    This is a work in progress and the definitive list will be published when
-    Symfony2 final will be released. In the meantime, if you think that some
-    methods deserve to be in this list, please start a discussion on the
-    Symfony developer mailing-list.
-
-.. tip::
-
-    Any method part of the stable API is marked as such on the Symfony2 API
-    website (has the ``@stable`` annotation).
+The stable API is based on a whitelist, tagged with `@api`. Therefore,
+everything not tagged explicitly is not part of the stable API.
 
 .. tip::
 
     Any third party bundle should also publish its own stable API.
 
-HttpKernel Component
---------------------
+As of Symfony 2.0, the following components have a public tagged API:
 
-* HttpKernelInterface:::method:`Symfony\\Component\\HttpKernel\\HttpKernelInterface::handle`
+* BrowserKit
+* ClassLoader
+* Console
+* CssSelector
+* DependencyInjection
+* DomCrawler
+* EventDispatcher
+* Finder
+* HttpFoundation
+* HttpKernel
+* Locale
+* Process
+* Routing
+* Templating
+* Translation
+* Validator
+* Yaml

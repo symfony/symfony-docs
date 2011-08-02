@@ -314,7 +314,7 @@ controller, and ``index.html.twig`` the template:
        :linenos:
 
         {# src/Acme/HelloBundle/Resources/views/Hello/index.html.twig #}
-        {% extends '::layout.html.twig' %}
+        {% extends '::base.html.twig' %}
 
         {% block body %}
             Hello {{ name }}!
@@ -323,7 +323,7 @@ controller, and ``index.html.twig`` the template:
     .. code-block:: php
 
         <!-- src/Acme/HelloBundle/Resources/views/Hello/index.html.php -->
-        <?php $view->extend('::layout.html.php') ?>
+        <?php $view->extend('::base.html.php') ?>
 
         Hello <?php echo $view->escape($name) ?>!
 
@@ -334,10 +334,10 @@ Let's step through the Twig template line-by-line:
 
 * *line 4*: The ``block`` token says that everything inside should be placed
   inside a block called ``body``. As you'll see, it's the responsibility
-  of the parent template (``layout.html.twig``) to ultimately render the
+  of the parent template (``base.html.twig``) to ultimately render the
   block called ``body``.
 
-The parent template, ``::layout.html.twig``, is missing both the **BundleName**
+The parent template, ``::base.html.twig``, is missing both the **BundleName**
 and **ControllerName** portions of its name (hence the double colon (``::``)
 at the beginning). This means that the template lives outside of the bundles
 and in the ``app`` directory:
@@ -346,29 +346,35 @@ and in the ``app`` directory:
 
     .. code-block:: html+jinja
 
-        {# app/Resources/views/layout.html.twig #}
+        {# app/Resources/views/base.html.twig #}
         <!DOCTYPE html>
         <html>
             <head>
                 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-                <title>{% block title %}Hello Application{% endblock %}</title>
+                <title>{% block title %}Welcome!{% endblock %}</title>
+                {% block stylesheets %}{% endblock %}
+                <link rel="shortcut icon" href="{{ asset('favicon.ico') }}" />
             </head>
             <body>
                 {% block body %}{% endblock %}
+                {% block javascripts %}{% endblock %}
             </body>
         </html>
 
     .. code-block:: php
 
-        <!-- app/Resources/views/layout.html.php -->
+        <!-- app/Resources/views/base.html.php -->
         <!DOCTYPE html>
         <html>
             <head>
                 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-                <title><?php $view['slots']->output('title', 'Hello Application') ?></title>
+                <title><?php $view['slots']->output('title', 'Welcome!') ?></title>
+                <?php $view['slots']->output('stylesheets') ?>
+                <link rel="shortcut icon" href="<?php echo $view['assets']->getUrl('favicon.ico') ?>" />
             </head>
             <body>
                 <?php $view['slots']->output('_content') ?>
+                <?php $view['slots']->output('stylesheets') ?>
             </body>
         </html>
 

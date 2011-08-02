@@ -229,23 +229,6 @@ in a number of different formats including YAML, XML or directly inside the
     The table name is optional and if omitted, will be determined automatically
     based on the name of the entity class.
 
-.. tip::
-
-    When using another library or program (ie. Doxygen) that uses annotations,
-    you must use the ``@IgnoreAnnotation`` annotation to indicate which annotations
-    Symfony and Doctrine should ignore.  This annotation should be placed in the
-    comment block of the class it applies to.  Failing to do so may result
-    in an exception being thrown.
-    
-    For example, to prevent the ``@fn`` annotation from throwing an exception,
-    add the following::
-    
-        /**
-         * @IgnoreAnnotation("fn")
-         * 
-         */
-        class Product
-
 Doctrine allows you to choose from a wide variety of different field types,
 each with their own options. For information on the available field types,
 see the :ref:`book-doctrine-field-types` section.
@@ -258,6 +241,29 @@ see the :ref:`book-doctrine-field-types` section.
     which is not shown in Doctrine's documentation. You'll also need to include
     the ``use Doctrine\ORM\Mapping as ORM;`` statement, which *imports* the
     ``ORM`` annotations prefix.
+
+.. caution::
+
+    Be careful that your class name and properties aren't mapped to a protected
+    SQL keyword (such as ``group`` or ``user``). For example, if your entity
+    class name is ``Group``, then, by default, your table name will be ``group``,
+    which will cause an SQL error in some engines. See Doctrine's
+    `Reserved SQL keywords documentation`_ on how to properly escape these
+    names.
+
+.. note::
+
+    When using another library or program (ie. Doxygen) that uses annotations,
+    you should place the ``@IgnoreAnnotation`` annotation on the class to
+    indicate which annotations Symfony should ignore.
+
+    For example, to prevent the ``@fn`` annotation from throwing an exception,
+    add the following::
+
+        /**
+         * @IgnoreAnnotation("fn")
+         */
+        class Product
 
 Generating Getters and Setters
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -462,7 +468,7 @@ to easily fetch objects based on multiple conditions::
     // query for all products matching the name, ordered by price
     $product = $repository->findBy(
         array('name' => 'foo'),
-        array('price', 'ASC')
+        array('price' => 'ASC')
     );
 
 .. tip::
@@ -1296,3 +1302,4 @@ For more information about Doctrine, see the *Doctrine* section of the
 .. _`Mapping Types Documentation`: http://www.doctrine-project.org/docs/orm/2.0/en/reference/basic-mapping.html#doctrine-mapping-types
 .. _`Property Mapping documentation`: http://www.doctrine-project.org/docs/orm/2.0/en/reference/basic-mapping.html#property-mapping
 .. _`Lifecycle Events documentation`: http://www.doctrine-project.org/docs/orm/2.0/en/reference/events.html#lifecycle-events
+.. _`Reserved SQL keywords documentation`: http://www.doctrine-project.org/docs/orm/2.0/en/reference/basic-mapping.html#quoting-reserved-words

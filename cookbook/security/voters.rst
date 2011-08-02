@@ -61,15 +61,15 @@ and compare the IP address against a set of blacklisted IP addresses:
 
     namespace Acme\DemoBundle\Security\Authorization\Voter;
 
-    use Symfony\Component\HttpFoundation\Request;
+    use Symfony\Component\DependencyInjection\ContainerInterface;
     use Symfony\Component\Security\Core\Authorization\Voter\VoterInterface;
     use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 
     class ClientIpVoter implements VoterInterface
     {
-        public function __construct(Request $request, array $blacklistedIp = array())
+        public function __construct(ContainerInterface $container, array $blacklistedIp = array())
         {
-            $this->request       = $request;
+            $this->container     = $container;
             $this->blacklistedIp = $blacklistedIp;
         }
 
@@ -87,6 +87,7 @@ and compare the IP address against a set of blacklisted IP addresses:
 
         function vote(TokenInterface $token, $object, array $attributes)
         {
+            $request = $this->container->get('request');
             if (in_array($this->request->getClientIp(), $this->blacklistedIp)) {
                 return VoterInterface::ACCESS_DENIED;
             }
@@ -113,7 +114,7 @@ and tag it as a "security.voter":
         services:
             security.access.blacklist_voter:
                 class:      Acme\DemoBundle\Security\Authorization\Voter\ClientIpVoter
-                arguments:  [@request, [123.123.123.123, 171.171.171.171]]
+                arguments:  [@service_container, [123.123.123.123, 171.171.171.171]]
                 public:     false
                 tags:
                     -       { name: security.voter }
@@ -124,7 +125,7 @@ and tag it as a "security.voter":
 
         <service id="security.access.blacklist_voter"
                  class="Acme\DemoBundle\Security\Authorization\Voter\ClientIpVoter" public="false">
-            <argument type="service" id="request" strict="false" />
+            <argument type="service" id="service_container" strict="false" />
             <argument type="collection">
                 <argument>123.123.123.123</argument>
                 <argument>171.171.171.171</argument>
@@ -142,7 +143,7 @@ and tag it as a "security.voter":
         $definition = new Definition(
             'Acme\DemoBundle\Security\Authorization\Voter\ClientIpVoter',
             array(
-                new Reference('request'),
+                new Reference('service_container'),
                 array('123.123.123.123', '171.171.171.171'),
             ),
         );
