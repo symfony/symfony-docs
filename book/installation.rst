@@ -120,9 +120,10 @@ If there are any issues, correct them now before moving on.
 
     **2. Using Acl on a system that does not support chmod +a**
 
-    Some systems, like Ubuntu, don't support ``chmod +a``, but do support
-    another utility called ``setfacl``. On some systems, this will need to
-    be installed before using it:
+    Some systems don't support ``chmod +a``, but do support another utility 
+    called ``setfacl``. You may need to `enable ACL support`_ on your partition
+    and install setfacl before using it (as is the case with Ubuntu), like 
+    so:
 
     .. code-block:: bash
 
@@ -204,6 +205,7 @@ Now, the vendor directory won't be committed to source control. This is fine
 project, he/she can simply run the ``php bin/vendors install`` script to
 download all the necessary vendor libraries.
 
+.. _`enable ACL support`: https://help.ubuntu.com/community/FilePermissions#ACLs
 .. _`http://symfony.com/download`: http://symfony.com/download
 .. _`Git`: http://git-scm.com/
 .. _`GitHub Bootcamp`: http://help.github.com/set-up-git-redirect
