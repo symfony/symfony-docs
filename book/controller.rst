@@ -724,12 +724,12 @@ Final Thoughts
 
 Whenever you create a page, you'll ultimately need to write some code that
 contains the logic for that page. In Symfony, this is called a controller,
-and it's a PHP function that can do anything it needs to to in order to return
+and it's a PHP function that can do anything it needs in order to return
 the final ``Response`` object that will be returned to the user.
 
 To make life easier, you can choose to extend a base ``Controller`` class,
 which contains shortcut methods for many common controller tasks. For example,
-since you don't want to put put HTML code in your controller, you can use
+since you don't want to put HTML code in your controller, you can use
 the ``render()`` method to render and return the content from a template.
 
 In other chapters, you'll see how the controller can be used to persist and
