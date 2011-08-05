@@ -178,4 +178,3 @@ An example WSDL is below.
 .. _`NuSOAP`:            http://sourceforge.net/projects/nusoap
 .. _`output buffering`:  http://php.net/manual/en/book.outcontrol.php
 .. _`Zend SOAP`:         http://framework.zend.com/manual/en/zend.soap.server.html
-.. _`NuSOAP`:            http://sourceforge.net/projects/nusoap/
