@@ -16,16 +16,19 @@ create one from scratch or use a 3rd party generator.
     the PHP SOAP extension in our examples, the general idea should still 
     be applicable to other implementations.
 
-First, let's create a class to service our requests.  
+SOAP works by exposing the methods of a PHP object to an external entity
+(i.e. the person using the SOAP service). To start, create a class - ``HelloService`` -
+which represents the functionality that you'll expose in your SOAP service.
+In this case, the SOAP service will allow the client to call a method called
+``hello``, which happens to send an email address::
 
-.. code-block:: php
+    namespace Acme\SoapBundle;
 
     class HelloService
     {
-
         private $mailer;
 
-        public function __construct(Swift_Mailer $mailer)
+        public function __construct(\Swift_Mailer $mailer)
         {
             $this->mailer = $mailer;
         }
@@ -33,7 +36,7 @@ First, let's create a class to service our requests.
         public function hello($name)
         {
             
-            $message = Swift_Message::newInstance()
+            $message = \Swift_Message::newInstance()
                                     ->setTo('me@example.com')
                                     ->setSubject('Hello Service')
                                     ->setBody($name . ' says hi!');
@@ -46,9 +49,10 @@ First, let's create a class to service our requests.
 
     }
 
-Next, we train Symfony to be able to create an instance of our service.  Since 
-our service sends an e-mail, our service will need a Swift_Mailer, and using 
-the Service Container, we can let Symfony set this up for us.
+Next, you can train Symfony to be able to create an instance of this class.
+Since the class sends an e-mail, it's been designed to accept a ``Swift_Mailer``
+instance. Using the Service Container, we can configure Symfony to construct
+a ``HelloService`` object properly:
 
 .. configuration-block::
 
@@ -75,29 +79,27 @@ WSDL document can be retrieved via ``/soap?wsdl``.
 
 .. code-block:: php
 
+    namespace Acme\SoapBundle\Controller;
+    
+    use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+
     class HelloServiceController extends Controller 
     {
         public function indexAction()
         {
             $server = new \SoapServer('/path/to/hello.wsdl');
-            
             $server->setObject($this->get('hello_service'));
             
             $response = new Response();
-            
             $response->headers->set('Content-Type', 'text/xml; charset=ISO-8859-1');
             
             ob_start();
-            
             $server->handle();
-            
             $response->setContent(ob_get_clean());
             
             return $response;
         }
- 
     }
-
 
 Take note of the calls to ``ob_start()`` and ``ob_get_clean()``.  These
 methods control `output buffering`_ which allows you to "trap" the echoed 
