@@ -9,19 +9,79 @@ tools.  You must, of course, have the `PHP SOAP`_ extension installed.
 As the PHP SOAP extension can not currently generate a WSDL, you must either 
 create one from scratch or use a 3rd party generator.
 
+.. note::
+
+    There are several SOAP server implementations available for use with 
+    PHP.  `Zend SOAP`_ and `NuSOAP`_ are two examples.  Although we use 
+    the PHP SOAP extension in our examples, the general idea should still 
+    be applicable to other implementations.
+
+First, let's create a class to service our requests.  
+
+.. code-block:: php
+
+    class HelloService
+    {
+
+        private $mailer;
+
+        public function __construct(Swift_Mailer $mailer)
+        {
+            $this->mailer = $mailer;
+        }
+
+        public function hello($name)
+        {
+            
+            $message = Swift_Message::newInstance()
+                                    ->setTo('me@example.com')
+                                    ->setSubject('Hello Service')
+                                    ->setBody($name . ' says hi!');
+
+            $this->mailer->send($message);
+
+
+            return 'Hello, ' . $name;
+        }
+
+    }
+
+Next, we train Symfony to be able to create an instance of our service.  Since 
+our service sends an e-mail, our service will need a Swift_Mailer, and using 
+the Service Container, we can let Symfony set this up for us.
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # app/config/config.yml    
+        services:
+            hello_service:
+                class: Acme\DemoBundle\Services\HelloService
+                arguments: [mailer]
+
+    .. code-block:: xml
+
+        <!-- app/config/config.xml -->
+        <services>
+         <service id="hello_service" class="Acme\DemoBundle\Services\HelloService">
+          <argument>mailer</argument>
+         </service>
+        </services>
+
 Below is an example of a controller that is capable of handling a SOAP 
 request.  If ``indexAction()`` is accessible via the route ``/soap``, then the 
 WSDL document can be retrieved via ``/soap?wsdl``.
 
 .. code-block:: php
 
-    class MySoapController extends Controller 
+    class HelloServiceController extends Controller 
     {
         public function indexAction()
         {
             $server = new \SoapServer('/path/to/hello.wsdl');
             
-            $server->setObject($this);
+            $server->setObject($this->get('hello_service'));
             
             $response = new Response();
             
@@ -36,11 +96,8 @@ WSDL document can be retrieved via ``/soap?wsdl``.
             return $response;
         }
  
-        public function hello($name)
-        {
-            return 'Hello, ' . $name . '!';
-        }
     }
+
 
 Take note of the calls to ``ob_start()`` and ``ob_get_clean()``.  These
 methods control `output buffering`_ which allows you to "trap" the echoed 
@@ -73,7 +130,7 @@ An example WSDL is below.
          xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" 
          xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" 
          xmlns="http://schemas.xmlsoap.org/wsdl/" 
-         targetNamespace="urn:arnleadservicewsdl">
+         targetNamespace="urn:helloservicewsdl">
       <types>
        <xsd:schema targetNamespace="urn:hellowsdl">
         <xsd:import namespace="http://schemas.xmlsoap.org/soap/encoding/" />
@@ -118,3 +175,5 @@ An example WSDL is below.
 .. _`PHP SOAP`:          http://php.net/manual/en/book.soap.php
 .. _`NuSOAP`:            http://sourceforge.net/projects/nusoap
 .. _`output buffering`:  http://php.net/manual/en/book.outcontrol.php
+.. _`Zend SOAP`:         http://framework.zend.com/manual/en/zend.soap.server.html
+.. _`NuSOAP`:            http://sourceforge.net/projects/nusoap/
