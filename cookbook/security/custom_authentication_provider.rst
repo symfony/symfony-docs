@@ -205,7 +205,7 @@ the ``PasswordDigest`` header value matches with the user's password.
                 $authenticatedToken = new WsseUserToken($user->getRoles());
                 $authenticatedToken->setUser($user);
 
-                return $token;
+                return $authenticatedToken;
             }
 
             throw new AuthenticationException('The WSSE authentication failed.');
