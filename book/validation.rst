@@ -27,7 +27,7 @@ your application:
 
     // src/Acme/BlogBundle/Entity/Author.php
     namespace Acme\BlogBundle\Entity;
-    
+
     class Author
     {
         public $name;
@@ -128,10 +128,10 @@ simple example from inside a controller:
         // ... do something to the $author object
 
         $validator = $this->get('validator');
-        $errorList = $validator->validate($author);
+        $errors = $validator->validate($author);
 
-        if (count($errorList) > 0) {
-            return new Response(print_r($errorList, true));
+        if (count($errors) > 0) {
+            return new Response(print_r($errors, true));
         } else {
             return new Response('The author is valid! Yes!');
         }
@@ -159,9 +159,9 @@ You could also pass the collection of errors into a template.
 
 .. code-block:: php
 
-    if (count($errorList) > 0) {
+    if (count($errors) > 0) {
         return $this->render('AcmeBlogBundle:Author:validate.html.twig', array(
-            'errorList' => $errorList,
+            'errors' => $errors,
         ));
     } else {
         // ...
@@ -177,7 +177,7 @@ Inside the template, you can output the list of errors exactly as needed:
 
         <h3>The author has the following errors</h3>
         <ul>
-        {% for error in errorList %}
+        {% for error in errors %}
             <li>{{ error.message }}</li>
         {% endfor %}
         </ul>
@@ -188,7 +188,7 @@ Inside the template, you can output the list of errors exactly as needed:
 
         <h3>The author has the following errors</h3>
         <ul>
-        <?php foreach ($errorList as $error): ?>
+        <?php foreach ($errors as $error): ?>
             <li><?php echo $error->getMessage() ?></li>
         <?php endforeach; ?>
         </ul>
@@ -223,17 +223,17 @@ workflow looks like the following from inside a controller::
     {
         $author = new Acme\BlogBundle\Entity\Author();
         $form = $this->createForm(new AuthorType(), $author);
-        
+
         if ($request->getMethod() == 'POST') {
             $form->bindRequest($request);
-            
+
             if ($form->isValid()) {
                 // the validation passed, do something with the $author object
-                
+
                 $this->redirect($this->generateUrl('...'));
             }
         }
-        
+
         return $this->render('BlogBundle:Author:form.html.twig', array(
             'form' => $form->createView(),
         ));
@@ -738,7 +738,7 @@ With this configuration, there are two validation groups:
 To tell the validator to use a specific group, pass one or more group names
 as the second argument to the ``validate()`` method::
 
-    $errorList = $validator->validate($author, array('registration'));
+    $errors = $validator->validate($author, array('registration'));
 
 Of course, you'll usually work with validation indirectly through the form
 library. For information on how to use validation groups inside forms, see
