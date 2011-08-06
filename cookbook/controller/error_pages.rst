@@ -7,6 +7,15 @@ When any exception is thrown in Symfony2, the exception is caught inside the
 inside the core ``TwigBundle``, determines which error template to display and
 the status code that should be set for the given exception.
 
+Error pages can be customized in two different ways, depending on how much
+control you need:
+
+1. Customize the error templates of the different error pages (explained below);
+
+2. Replace the default exception controller ``TwigBundle::Exception:show``
+   with your own controller and handle it however you want (see
+   :ref:`exception_controller in the Twig reference<config-twig-exception-controller>`);
+
 .. tip::
 
     The customization of exception handling is actually much more powerful
