@@ -283,22 +283,27 @@ for the ``Product`` class. This is a safe command - you can run it over and
 over again: it only generates getters and setters that don't exist (i.e. it
 doesn't replace your existing methods).
 
+.. caution::
+
+    The ``doctrine:generate:entities`` command saves a backup of the original
+    ``Product.php`` named ``Product.php~``. In some cases, the presence of
+    this file can cause a "Cannot redeclare class" error. It can be safely
+    removed.
+
+You can also generate all known entities (i.e. any PHP class with Doctrine
+mapping information) of a bundle or an entire namespace:
+
+.. code-block:: bash
+
+    php app/console doctrine:generate:entities AcmeStoreBundle
+    php app/console doctrine:generate:entities Acme
+
 .. note::
 
     Doctrine doesn't care whether your properties are ``protected`` or ``private``,
     or whether or not you have a getter or setter function for a property.
     The getters and setters are generated here only because you'll need them
     to interact with your PHP object.
-
-.. tip::
-
-    You can also generate all known entities (i.e. any PHP class with Doctrine
-    mapping information) of a bundle or an entire namespace:
-
-    .. code-block:: bash
-
-        php app/console doctrine:generate:entities AcmeStoreBundle
-        php app/console doctrine:generate:entities Acme
 
 Creating the Database Tables/Schema
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
