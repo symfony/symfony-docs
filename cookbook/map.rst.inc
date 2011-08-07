@@ -1,3 +1,7 @@
+* **Workflow**
+
+  * :doc:`/cookbook/workflow/new_project_git`
+
 * **Controllers**
 
   * :doc:`/cookbook/controller/error_pages`
