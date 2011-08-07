@@ -4,6 +4,8 @@ Cookbook
 .. toctree::
     :hidden:
 
+    workflow/new_project_git
+
     controller/error_pages
     controller/service
 

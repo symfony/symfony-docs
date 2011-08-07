@@ -9,6 +9,11 @@ built on top of Symfony. Fortunately, Symfony offers "distributions", which
 are functional Symfony "starter" projects that you can download and begin
 developing in immediately.
 
+.. tip::
+
+    If you're looking for instructions on how best to create a new project
+    and store it via source control, see `Using Source Control`_.
+
 Downloading a Symfony2 Distribution
 -----------------------------------
 
@@ -179,14 +184,11 @@ Using Source Control
 
 If you're using a version control system like ``Git`` or ``Subversion``, you
 can setup your version control system and begin committing your project to
-it as normal. For ``Git``, this can be done easily with the following command:
+it as normal. The Symfony Standard edition *is* the starting point for your
+new project.
 
-.. code-block:: bash
-
-    git init
-
-For more information on setting up and using Git, check out the `GitHub Bootcamp`_
-tutorials.
+For specific instructions on how best to setup your project to be stored
+in git, see :doc:`/cookbook/workflow/new_project_git`.
 
 Ignoring the ``vendor/`` Directory
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
