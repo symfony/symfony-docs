@@ -51,7 +51,7 @@ git repository:
 
     .. code-block:: bash
     
-        $ git add *
+        $ git add .
 
 7. Create an initial commit with your started project:
 
@@ -85,7 +85,7 @@ Every Symfony project uses a large group of third-party "vendor" libraries.
 By default, these libraries are downloaded by running the ``php bin/vendors install``
 script. This script reads from the ``deps`` file, and downloads the given
 libraries into the ``vendor/`` directory. It also reads ``deps.lock`` file,
-pinning each library listed their to the exact git commit hash.
+pinning each library listed there to the exact git commit hash.
 
 In this setup, the vendors libraries aren't part of your git repository,
 not even as submodules. Instead, we rely on the ``deps`` and ``deps.lock``
