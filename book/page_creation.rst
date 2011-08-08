@@ -382,7 +382,7 @@ The base template file defines the HTML layout and renders the ``body`` block
 that you defined in the ``index.html.twig`` template. It also renders a ``title``
 block, which you could choose to define in the ``index.html.twig`` template.
 Since you did not define the ``title`` block in the child template, it defaults
-to "Hello Application".
+to "Welcome!".
 
 Templates are a powerful way to render and organize the content for your
 page. A template can render anything, from HTML markup, to CSS code, or anything
