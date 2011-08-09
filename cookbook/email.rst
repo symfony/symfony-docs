@@ -127,6 +127,7 @@ of `Creating Messages`_ in great detail in its documentation.
 
     * :doc:`gmail`
     * :doc:`email/dev_environment`
+    * :doc:`email/spool`
 
 .. _`Swiftmailer`: http://www.swiftmailer.org/
 .. _`Creating Messages`: http://swiftmailer.org/docs/messages
