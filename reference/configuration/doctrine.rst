@@ -37,7 +37,7 @@ Configuration Reference
                 types:
                     custom: Acme\HelloBundle\MyCustomType
             orm:
-                auto_generate_proxy_classes:    true
+                auto_generate_proxy_classes:    false
                 proxy_namespace:                Proxies
                 proxy_dir:                      %kernel.cache_dir%/doctrine/orm/Proxies
                 default_entity_manager:         default # The first defined is used if not set
