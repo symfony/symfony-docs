@@ -604,7 +604,7 @@ which part of the field is being customized. For example:
 
         {% block _product_name_widget %}
             <div class="text_widget">
-                {{ block('field_widget' }}
+                {{ block('field_widget') }}
             </div>
         {% endblock %}
 
