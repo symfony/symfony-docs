@@ -111,7 +111,7 @@ assumes indexAction in our controller above is accessible via the route "/soap".
 
 .. code-block:: php
 
-    $client = new soapclient('http://example.com/app.php/soap?wsdl', true);
+    $client = new \soapclient('http://example.com/app.php/soap?wsdl', true);
     
     $result = $client->call('hello', array('name' => 'Scott'));
 
