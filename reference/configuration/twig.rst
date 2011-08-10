@@ -78,6 +78,8 @@ TwigBundle Configuration Reference
 Configuration
 -------------
 
+.. _config-twig-exception-controller:
+
 exception_controller
 ....................
 
