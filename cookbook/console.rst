@@ -217,7 +217,7 @@ console::
 
             $command = $application->find('demo:greet');
             $commandTester = new CommandTester($command);
-            $commandTester->execute(array('command' => $command->getFullName()));
+            $commandTester->execute(array('command' => $command->getName()));
 
             $this->assertRegExp('/.../', $commandTester->getDisplay());
 
