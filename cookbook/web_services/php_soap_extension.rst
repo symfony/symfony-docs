@@ -115,7 +115,7 @@ Below is an example calling the service using `NuSOAP`_ client.  This example
 assumes the ``indexAction`` in the controller above is accessible via the
 route ``/soap``::
 
-    $client = new soapclient('http://example.com/app.php/soap?wsdl', true);
+    $client = new \soapclient('http://example.com/app.php/soap?wsdl', true);
     
     $result = $client->call('hello', array('name' => 'Scott'));
 
