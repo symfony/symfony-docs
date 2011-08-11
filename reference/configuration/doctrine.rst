@@ -101,7 +101,7 @@ Configuration Reference
                     <doctrine:type name="custom">Acme\HelloBundle\MyCustomType</doctrine:type>
                 </doctrine:dbal>
 
-                <doctrine:orm default-entity-manager="default" auto-generate-proxy-classes="true" proxy-namespace="Proxies" proxy-dir="%kernel.cache_dir%/doctrine/orm/Proxies">
+                <doctrine:orm default-entity-manager="default" auto-generate-proxy-classes="false" proxy-namespace="Proxies" proxy-dir="%kernel.cache_dir%/doctrine/orm/Proxies">
                     <doctrine:entity-manager name="default" query-cache-driver="array" result-cache-driver="array" connection="conn1" class-metadata-factory-name="Doctrine\ORM\Mapping\ClassMetadataFactory">
                         <doctrine:metadata-cache-driver type="memcache" host="localhost" port="11211" instance-class="Memcache" class="Doctrine\Common\Cache\MemcacheCache" />
                         <doctrine:mapping name="AcmeHelloBundle" />
@@ -135,7 +135,8 @@ the ORM resolves to:
     doctrine:
         orm:
             auto_mapping: true
-            auto_generate_proxy_classes: true
+            # the standard distribution overrides this to be true in debug, false otherwise
+            auto_generate_proxy_classes: false
             proxy_namespace: Proxies
             proxy_dir: %kernel.cache_dir%/doctrine/orm/Proxies
             default_entity_manager: default
