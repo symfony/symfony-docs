@@ -1,11 +1,17 @@
 .. index::
    single: Tests; Doctrine
 
-How to unit test your Doctrine entities
-=======================================
+How to unit test Doctrine repositories
+======================================
+
+Testing Doctrine repositories in a Symfony project is not a straightforward
+task. Indeed, to load a repository you need to load your entities, an entity 
+manager, and some other stuff like a connection.
 
 As Symfony and Doctrine share the same testing framework, it's quite easy to 
-implement unit tests in your Symfony project. We will simply use the testing
+implement unit tests in your Symfony project. The ORM comes with its own set
+of tools to ease the unit testing and mock on the fly everything you need,
+like a connection, an entity manager, etc. So, we will simply use the testing
 components brought by Doctrine. All you need is to setup the autoloading and
 the annotation driver, and extends your testing class by the one provided by 
 Doctrine.
@@ -66,14 +72,17 @@ to be able to parse and load the entities.
 
 If you look at the code, you can notice:
 
-- We extends from `\Doctrine\Tests\OrmTestCase`, which provide useful methods
+- We extend from `\Doctrine\Tests\OrmTestCase`, which provide useful methods
   for unit testing
 - We need to setup the AnnotationReader to be able to parse and load our 
   entities
+- We create the entity manager by calling `_getTestEntityManager`: provided
+  by Doctrine, this method returns a mocked entity manager which embed a
+  mocked connection.
 
 That's it, your are almost ready to write your units tests for your Doctrine
 classes.
- 
+
 
 Unit testing
 ------------
