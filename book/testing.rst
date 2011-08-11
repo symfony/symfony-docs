@@ -137,15 +137,17 @@ select elements in the Response, to click on links, and to submit forms.
     You can set the content-type of the request to JSON by adding 'HTTP_CONTENT_TYPE' => 'application/json'.
 
 .. tip::
-    The full signature of the ``request()`` method is:
-    request($method, $uri, 
+
+    The full signature of the ``request()`` method is::
+
+        request($method,
+            $uri, 
             array $parameters = array(), 
             array $files = array(), 
             array $server = array(), 
             $content = null, 
             $changeHistory = true
-          )
-   
+        )   
 
 Click on a link by first selecting it with the Crawler using either a XPath
 expression or a CSS selector, then use the Client to click on it::
