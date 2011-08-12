@@ -21,6 +21,8 @@ Validation Constraints Reference
    constraints/MinLength
    constraints/NotBlank
    constraints/NotNull
+   constraints/Blank
+   constraints/Null
    constraints/UniqueEntity
    constraints/Regex
    constraints/Time
