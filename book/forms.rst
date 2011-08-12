@@ -290,21 +290,6 @@ object.
                     - NotBlank: ~
                     - Type: \DateTime
 
-    .. code-block:: xml
-
-        <!-- Acme/TaskBundle/Resources/config/validation.xml -->
-        <class name="Acme\TaskBundle\Entity\Task">
-            <property name="task">
-                <constraint name="NotBlank" />
-            </property>
-            <property name="dueDate">
-                <constraint name="NotBlank" />
-                <constraint name="Type">
-                    <value>\DateTime</value>
-                </constraint>
-            </property>
-        </class>
-
     .. code-block:: php-annotations
 
         // Acme/TaskBundle/Entity/Task.php
@@ -323,6 +308,21 @@ object.
              */
             protected $dueDate;
         }
+
+    .. code-block:: xml
+
+        <!-- Acme/TaskBundle/Resources/config/validation.xml -->
+        <class name="Acme\TaskBundle\Entity\Task">
+            <property name="task">
+                <constraint name="NotBlank" />
+            </property>
+            <property name="dueDate">
+                <constraint name="NotBlank" />
+                <constraint name="Type">
+                    <value>\DateTime</value>
+                </constraint>
+            </property>
+        </class>
 
     .. code-block:: php
 
