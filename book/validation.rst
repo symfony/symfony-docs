@@ -469,6 +469,8 @@ to use, but the second allows you to specify more complex validation rules.
 .. index::
    single: Validation; Property constraints
 
+.. _validation-property-target:
+
 Properties
 ~~~~~~~~~~
 

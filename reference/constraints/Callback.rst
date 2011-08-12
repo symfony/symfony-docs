@@ -11,13 +11,15 @@ This process works by specifying one or more *callback* methods, each of
 which will be called during the validation process. Each of those methods
 can do anything, including creating and assigning validation errors.
 
-+----------------+----------------------------------------------------------------+
-| Applies to     | :ref:`class<validation-class-target>`                          |
-+----------------+----------------------------------------------------------------+
-| Options        | - `methods`_                                                   |
-+----------------+----------------------------------------------------------------+
-| Class          | :class:`Symfony\\Component\\Validator\\Constraints\\MinLength` |
-+----------------+----------------------------------------------------------------+
++----------------+------------------------------------------------------------------------+
+| Applies to     | :ref:`class<validation-class-target>`                                  |
++----------------+------------------------------------------------------------------------+
+| Options        | - `methods`_                                                           |
++----------------+------------------------------------------------------------------------+
+| Class          | :class:`Symfony\\Component\\Validator\\Constraints\\Callback`          |
++----------------+------------------------------------------------------------------------+
+| Validator      | :class:`Symfony\\Component\\Validator\\Constraints\\CallbackValidator` |
++----------------+------------------------------------------------------------------------+
 
 Setup
 -----
@@ -78,7 +80,7 @@ Options
 methods
 ~~~~~~~
 
-**type**: ``array`` **default**: ``array()`` :ref:`default option<validation-default-option>`
+**type**: ``array`` **default**: ``array()`` [:ref:`default option<validation-default-option>`]
 
 This is an array of the methods that should be executed during the validation
 process. Each method can be one of the following formats:
