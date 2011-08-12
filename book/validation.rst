@@ -383,6 +383,8 @@ constraint, have several configuration options available. Suppose that the
             }
         }
 
+.. _validation-default-option:
+
 The options of a constraint can always be passed in as an array. Some constraints,
 however, also allow you to pass the value of one, "*default*", option in place
 of the array. In the case of the ``Choice`` constraint, the ``choices``
@@ -611,6 +613,17 @@ Now, create the ``isPasswordLegal()`` method, and include the logic you need::
     ("get" or "is") is omitted in the mapping. This allows you to move the
     constraint to a property with the same name later (or vice versa) without
     changing your validation logic.
+
+.. _validation-class-target:
+
+Classes
+~~~~~~~
+
+Some constraints apply to the entire class being validated. For example,
+the :doc:`Callback</reference/constraints/Callback>` constraint is a generic
+constraint that's applied to the class itself. When that class is validated,
+methods specified by that constraint are simply executed so that each can
+provide more custom validation.
 
 .. _book-validation-validation-groups:
 
