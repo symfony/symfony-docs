@@ -43,9 +43,6 @@ Basic Constraints
 These are the basic constraints: use them to assert very basic things about
 the value of properties or the return value of methods on your object.
 
-Basic Constraints
-~~~~~~~~~~~~~~~~~
-
 * :doc:`NotBlank <constraints/NotBlank>`
 * :doc:`Blank <constraints/Blank>`
 * :doc:`NotNull <constraints/NotNull>`
