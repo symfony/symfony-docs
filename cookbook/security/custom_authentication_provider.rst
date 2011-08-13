@@ -201,9 +201,11 @@ the ``PasswordDigest`` header value matches with the user's password.
         {
             $user = $this->userProvider->loadUserByUsername($token->getUsername());
 
-            if ($user && $this->validateDigest($token->digest, $token->nonce, $token->created, $user->getPassword())) {
-                $token->setUser($user);
-                return $token;
+            if ($user && $this->validateDigest($token->digest, $token->nonce, $token->created, $user->getPassword())) {            
+                $authenticatedToken = new WsseUserToken($user->getRoles());
+                $authenticatedToken->setUser($user);
+
+                return $authenticatedToken;
             }
 
             throw new AuthenticationException('The WSSE authentication failed.');

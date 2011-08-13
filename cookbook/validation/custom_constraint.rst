@@ -13,12 +13,22 @@ the ``message`` and ``protocols`` properties:
 .. code-block:: php
 
     namespace Symfony\Component\Validator\Constraints;
+    
+    use Symfony\Component\Validator\Constraint;
 
-    class Url extends \Symfony\Component\Validator\Constraint
+    /**
+     * @Annotation
+     */
+    class Url extends Constraint
     {
         public $message = 'This value is not a valid URL';
         public $protocols = array('http', 'https', 'ftp', 'ftps');
     }
+
+.. note::
+
+    The ``@Annotation`` annotation is necessary for this new constraint in
+    order to make it available for use in classes via annotations.
 
 As you can see, a constraint class is fairly minimal. The actual validation is
 performed by a another "constraint validator" class. The constraint validator
