@@ -43,4 +43,5 @@ Options
 -------
 
 * ``fields``: The field (or list of fields) on which this entity should be
-  unique. For example, 
+  unique. For example, you could specify that both the email and name fields in
+  the User example above should be unique.
