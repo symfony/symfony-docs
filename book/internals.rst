@@ -151,7 +151,7 @@ chain of Event notifications (see the next section for more information about
 each Event):
 
 1. Before doing anything else, the ``kernel.request`` event is notified -- if
-   one of the listener returns a ``Response``, it jumps to step 8 directly;
+   one of the listeners returns a ``Response``, it jumps to step 8 directly;
 
 2. The Resolver is called to determine the Controller to execute;
 
