@@ -553,7 +553,7 @@ this method must return ``true``:
         Acme\BlogBundle\Entity\Author:
             getters:
                 passwordLegal:
-                    - True: { message: "The password cannot match your first name" }
+                    - "True": { message: "The password cannot match your first name" }
 
     .. code-block:: xml
 
