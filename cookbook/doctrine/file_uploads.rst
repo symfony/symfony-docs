@@ -217,7 +217,7 @@ object, which is what's returned after a ``file`` field is submitted::
         $this->setPath($this->file->getClientOriginalName());
 
         // clean up the file property as you won't need it anymore
-        unset($this->file);
+        $this->file = null;
     }
 
 Using Lifecycle Callbacks
