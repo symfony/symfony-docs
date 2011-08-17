@@ -7,7 +7,7 @@ Validates that a value is ``true``.
 
     properties:
         termsAccepted:
-            - True: ~
+            - "True": ~
 
 Options
 -------
@@ -43,7 +43,7 @@ Then you can constrain this method with ``True``.
         Acme\HelloBundle\Author:
             getters:
                 tokenValid:
-                    - True: { message: "The token is invalid" }
+                    - "True": { message: "The token is invalid" }
 
     .. code-block:: xml
 
