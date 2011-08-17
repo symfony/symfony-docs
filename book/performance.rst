@@ -75,8 +75,8 @@ To use this class loader, simply adapt your ``autoloader.php`` as follows:
 .. note::
 
     When using the APC autoloader, if you add new classes, they will be found
-    and automatically and everything will work the same as before (i.e. no
-    reason to "clear" the cach). However, if you change the location of a
+    automatically and everything will work the same as before (i.e. no
+    reason to "clear" the cache). However, if you change the location of a
     particular namespace or prefix, you'll need to flush your APC cache. Otherwise,
     the autoloader will still be looking at the old location for all classes
     inside that namespace.
