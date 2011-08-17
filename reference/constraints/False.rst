@@ -7,7 +7,7 @@ Validates that a value is ``false``.
 
     properties:
         deleted:
-            - False: ~
+            - "False": ~
 
 Options
 -------
