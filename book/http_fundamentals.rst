@@ -270,7 +270,7 @@ The Journey from the Request to the Response
 --------------------------------------------
 
 Like HTTP itself, the ``Request`` and ``Response`` objects are pretty simple.
-The hard part of building an application is writing what's comes in between.
+The hard part of building an application is writing what comes in between.
 In other words, the real work comes in writing the code that interprets the
 request information and creates the response.
 
