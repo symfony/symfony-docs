@@ -21,6 +21,5 @@ Reference Documents
     dic_tags
     YAML
     requirements
-    model
 
 .. include:: /reference/map.rst.inc
