@@ -47,7 +47,7 @@ Symfony2 adds automatically:
     sub vcl_fetch {
         if (beresp.http.Surrogate-Control ~ "ESI/1.0") {
             unset beresp.http.Surrogate-Control;
-            esi;
+            set beresp.do_esi = true;
         }
     }
 
