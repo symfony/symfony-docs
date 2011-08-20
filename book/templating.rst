@@ -1141,8 +1141,8 @@ For example, the same "resource" is often rendered in several different formats.
 To render an article index page in XML, simply include the format in the
 template name:
 
-*XML template name*: ``AcmeArticleBundle:Article:index.xml.twig``
-*XML template filename*: ``index.xml.twig``
+* *XML template name*: ``AcmeArticleBundle:Article:index.xml.twig``
+* *XML template filename*: ``index.xml.twig``
 
 In reality, this is nothing more than a naming convention and the template
 isn't actually rendered differently based on its format.
@@ -1175,8 +1175,8 @@ key in the parameter hash:
     .. code-block:: html+jinja
 
         <a href="{{ path('article_show', {'id': 123, '_format': 'pdf'}) }}">
-	        PDF Version
-	    </a>
+            PDF Version
+        </a>
 
     .. code-block:: html+php
 

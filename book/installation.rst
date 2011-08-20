@@ -196,7 +196,7 @@ Ignoring the ``vendor/`` Directory
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 If you've downloaded the archive *without vendors*, you can safely ignore
-the entire ``vendors/`` directory and not commit it to source control. With
+the entire ``vendor/`` directory and not commit it to source control. With
 ``Git``, this is done by creating and adding the following to a ``.gitignore``
 file:
 
