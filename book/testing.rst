@@ -123,7 +123,7 @@ simple functional test for ``DemoController`` that reads as follows::
 
 The ``createClient()`` method returns a client tied to the current application::
 
-    $crawler = $client->request('GET', 'hello/Fabien');
+    $crawler = $client->request('GET', '/demo/hello/Fabien');
 
 The ``request()`` method returns a ``Crawler`` object which can be used to
 select elements in the Response, to click on links, and to submit forms.
