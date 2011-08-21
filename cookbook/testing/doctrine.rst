@@ -11,12 +11,13 @@ manager, and some other stuff like a connection.
 To test your repository, you have two different options:
 
 1) **Functional test**: This includes using a real database connection with
-   real database objects. It's easy to setup, but slower to execute. See
-   :ref:`cookbook-doctrine-repo-functional-test`.
+   real database objects. It's easy to setup and can test anything, but is
+   slower to execute. See :ref:`cookbook-doctrine-repo-functional-test`.
 
 2) **Unit test**: Unit testing is faster to run and more precise in how you
    test. It does require a little bit more setup, which is covered in this
-   document.
+   document. It can also only test methods that, for example, build queries,
+   not methods that actually execute them.
 
 Unit Testing
 ------------
@@ -28,9 +29,9 @@ a connection, an entity manager, etc. By using the testing components provided
 by Doctrine - along with some basic setup - you can leverage Doctrine's tools
 to unit test your repositories.
 
-Keep in mind than if you want to test the queries created in your repository
-against a real database, it's no longer a unit test, but rather a functional
-test (see :ref:`cookbook-doctrine-repo-functional-test`).
+Keep in mind that if you want to test the actual execution of your queries,
+you'll need a functional test (see :ref:`cookbook-doctrine-repo-functional-test`).
+Unit testing is only possible when testing a method that builds a query.
 
 Setup
 ~~~~~
@@ -91,7 +92,7 @@ If you look at the code, you can notice:
   for unit testing;
 * We need to setup the ``AnnotationReader`` to be able to parse and load the
   entities;
-- We create the entity manager by calling ``_getTestEntityManager``, which
+* We create the entity manager by calling ``_getTestEntityManager``, which
   returns a mocked entity manager with a mocked connection.
 
 That's it! You're ready to write units tests for your Doctrine repositories.
@@ -99,39 +100,79 @@ That's it! You're ready to write units tests for your Doctrine repositories.
 Writing your Unit Test
 ~~~~~~~~~~~~~~~~~~~~~~
 
-Now that the autoloader and the annotation reader are successfully loaded, we 
-can test the methods of your repository.
+Remember that Doctrine repository methods can only be tested if they are
+building and returning a query (but not actually executing a query). Take
+the following example::
 
-In this example, we are asserting that the SQL of a custom repository method
-is correct.
+    // src/Acme/StoreBundle/Entity/ProductRepository
+    namespace Acme\StoreBundle\Entity;
+
+    use Doctrine\ORM\EntityRepository;
+
+    class ProductRepository extends EntityRepository
+    {
+        public function createSearchByNameQueryBuilder($name)
+        {
+            return $this->createQueryBuilder('p')
+                ->where('p.name LIKE :name', $name)
+        }
+    }
+
+In this example, the method is returning a ``QueryBuilder`` instance. You
+can test the result of this method in a variety of ways:
 
     class ProductRepositoryTest extends \Doctrine\Tests\OrmTestCase
     {
         /* ... */
 
-        public function testProductByCategoryName()
+        public function createSearchByNameQueryBuilder()
         {
-            $query = $this->_em->getRepository('AcmeProductBundle:Product')
-                ->searchProductsByNameQuery('foo');
+            $queryBuilder = $this->_em->getRepository('AcmeProductBundle:Product')
+                ->createSearchByNameQueryBuilder('foo');
 
-            $this->assertEquals(
-                $query->getSql(), 
-                'SELECT p0_.id AS id0, p0_.name AS name2 FROM product p0_'.
-                ' WHERE s0_.name LIKE ?');
+            $this->assertEquals('p.name LIKE :name', (string) $queryBuilder->getDqlPart('where'));
+            $this->assertEquals(array('name' => 'foo'), $queryBuilder->getParameters());
         }
      }
 
-If asserting that the query string is exactly correct doesn't suit you, that's
-ok! Using functional tests for your repositories (covered next) is also a
-great way to test your repositories.
+In this test, you dissect the ``QueryBuilder`` object, looking that each
+part is as you'd expect. If you were adding other things to the query builder,
+you might check the dql parts: ``select``, ``from``, ``join``, ``set``, ``groupBy``,
+``having``, or ``orderBy``.
+
+If you only have a raw ``Query`` object or prefer to test the actual query,
+you can test the DQL or SQL query strings directly::
+
+    public function createSearchByNameQueryBuilder()
+    {
+        $queryBuilder = $this->_em->getRepository('AcmeProductBundle:Product')
+            ->createSearchByNameQueryBuilder('foo');
+
+        $query = $queryBuilder->getQuery();
+
+        // test DQL
+        $this->assertEquals(
+            'SELECT p FROM Acme\ProductBundle\Entity\Product p WHERE p.name LIKE :name',
+            $query->getDql()
+        );
+
+        // test SQL
+        $this->assertEquals(
+            'SELECT p0_.id AS id0, p0_.name AS name1, p0_.price AS price2, '
+            .'p0_.description AS description3, p0_.created AS created4, '
+            .'p0_.updated AS updated5, p0_.slug AS slug6, p0_.category_id AS category_id7 '
+            .'FROM product p0_ WHERE p0_.name LIKE ?',
+            $query->getSql()
+        );
+    }
 
 .. _cookbook-doctrine-repo-functional-test:
 
 Functional Testing
 ------------------
 
-If you need to test against a database (i.e. that an executed query returns the
-expected result) you will need to boot the kernel to get a valid connection.
+If you need to actually execute a query, you will need to boot the kernel
+to get a valid connection.
 
     // src/Acme/ProductBundle/Tests/Entity/ProductRepositoryFunctionalTest.php
     namespace Acme\ProductBundle\Tests\Entity;
@@ -144,7 +185,7 @@ expected result) you will need to boot the kernel to get a valid connection.
          * @var \Doctrine\ORM\EntityManager
          */
         private $_em;
-    
+
         public function setUp()
         {
         	$kernel = static::createKernel();
