@@ -11,6 +11,12 @@ This process works by specifying one or more *callback* methods, each of
 which will be called during the validation process. Each of those methods
 can do anything, including creating and assigning validation errors.
 
+.. note::
+
+    A callback method itself doesn't *fail* or return any value. Instead,
+    as you'll see in the example, a callback method has the ability to directly
+    add validator "violations".
+
 +----------------+------------------------------------------------------------------------+
 | Applies to     | :ref:`class<validation-class-target>`                                  |
 +----------------+------------------------------------------------------------------------+
