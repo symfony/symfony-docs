@@ -9,36 +9,95 @@ tools.  You must, of course, have the `PHP SOAP`_ extension installed.
 As the PHP SOAP extension can not currently generate a WSDL, you must either 
 create one from scratch or use a 3rd party generator.
 
+.. note::
+
+    There are several SOAP server implementations available for use with 
+    PHP.  `Zend SOAP`_ and `NuSOAP`_ are two examples.  Although we use 
+    the PHP SOAP extension in our examples, the general idea should still 
+    be applicable to other implementations.
+
+SOAP works by exposing the methods of a PHP object to an external entity
+(i.e. the person using the SOAP service). To start, create a class - ``HelloService`` -
+which represents the functionality that you'll expose in your SOAP service.
+In this case, the SOAP service will allow the client to call a method called
+``hello``, which happens to send an email address::
+
+    namespace Acme\SoapBundle;
+
+    class HelloService
+    {
+        private $mailer;
+
+        public function __construct(\Swift_Mailer $mailer)
+        {
+            $this->mailer = $mailer;
+        }
+
+        public function hello($name)
+        {
+            
+            $message = \Swift_Message::newInstance()
+                                    ->setTo('me@example.com')
+                                    ->setSubject('Hello Service')
+                                    ->setBody($name . ' says hi!');
+
+            $this->mailer->send($message);
+
+
+            return 'Hello, ' . $name;
+        }
+
+    }
+
+Next, you can train Symfony to be able to create an instance of this class.
+Since the class sends an e-mail, it's been designed to accept a ``Swift_Mailer``
+instance. Using the Service Container, we can configure Symfony to construct
+a ``HelloService`` object properly:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # app/config/config.yml    
+        services:
+            hello_service:
+                class: Acme\DemoBundle\Services\HelloService
+                arguments: [mailer]
+
+    .. code-block:: xml
+
+        <!-- app/config/config.xml -->
+        <services>
+         <service id="hello_service" class="Acme\DemoBundle\Services\HelloService">
+          <argument>mailer</argument>
+         </service>
+        </services>
+
 Below is an example of a controller that is capable of handling a SOAP 
 request.  If ``indexAction()`` is accessible via the route ``/soap``, then the 
 WSDL document can be retrieved via ``/soap?wsdl``.
 
 .. code-block:: php
 
-    class MySoapController extends Controller 
+    namespace Acme\SoapBundle\Controller;
+    
+    use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+
+    class HelloServiceController extends Controller 
     {
         public function indexAction()
         {
             $server = new \SoapServer('/path/to/hello.wsdl');
-            
-            $server->setObject($this);
+            $server->setObject($this->get('hello_service'));
             
             $response = new Response();
-            
             $response->headers->set('Content-Type', 'text/xml; charset=ISO-8859-1');
             
             ob_start();
-            
             $server->handle();
-            
             $response->setContent(ob_get_clean());
             
             return $response;
-        }
- 
-        public function hello($name)
-        {
-            return 'Hello, ' . $name . '!';
         }
     }
 
@@ -56,7 +115,7 @@ Below is an example calling the service using `NuSOAP`_ client.  This example
 assumes the ``indexAction`` in the controller above is accessible via the
 route ``/soap``::
 
-    $client = new soapclient('http://example.com/app.php/soap?wsdl', true);
+    $client = new \soapclient('http://example.com/app.php/soap?wsdl', true);
     
     $result = $client->call('hello', array('name' => 'Scott'));
 
@@ -73,7 +132,7 @@ An example WSDL is below.
          xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" 
          xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" 
          xmlns="http://schemas.xmlsoap.org/wsdl/" 
-         targetNamespace="urn:arnleadservicewsdl">
+         targetNamespace="urn:helloservicewsdl">
       <types>
        <xsd:schema targetNamespace="urn:hellowsdl">
         <xsd:import namespace="http://schemas.xmlsoap.org/soap/encoding/" />
@@ -118,3 +177,4 @@ An example WSDL is below.
 .. _`PHP SOAP`:          http://php.net/manual/en/book.soap.php
 .. _`NuSOAP`:            http://sourceforge.net/projects/nusoap
 .. _`output buffering`:  http://php.net/manual/en/book.outcontrol.php
+.. _`Zend SOAP`:         http://framework.zend.com/manual/en/zend.soap.server.html

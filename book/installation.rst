@@ -9,6 +9,11 @@ built on top of Symfony. Fortunately, Symfony offers "distributions", which
 are functional Symfony "starter" projects that you can download and begin
 developing in immediately.
 
+.. tip::
+
+    If you're looking for instructions on how best to create a new project
+    and store it via source control, see `Using Source Control`_.
+
 Downloading a Symfony2 Distribution
 -----------------------------------
 
@@ -77,7 +82,9 @@ by running the following command from the command line:
     php bin/vendors install
 
 This command downloads all of the necessary vendor libraries - including
-Symfony itself - into the ``vendor/`` directory.
+Symfony itself - into the ``vendor/`` directory. For more information on
+how third-party vendor libraries are managed inside Symfony2, see
+":ref:`cookbook-managing-vendor-libraries`".
 
 Configuration and Setup
 ~~~~~~~~~~~~~~~~~~~~~~~
@@ -120,9 +127,10 @@ If there are any issues, correct them now before moving on.
 
     **2. Using Acl on a system that does not support chmod +a**
 
-    Some systems, like Ubuntu, don't support ``chmod +a``, but do support
-    another utility called ``setfacl``. On some systems, this will need to
-    be installed before using it:
+    Some systems don't support ``chmod +a``, but do support another utility 
+    called ``setfacl``. You may need to `enable ACL support`_ on your partition
+    and install setfacl before using it (as is the case with Ubuntu), like 
+    so:
 
     .. code-block:: bash
 
@@ -178,20 +186,17 @@ Using Source Control
 
 If you're using a version control system like ``Git`` or ``Subversion``, you
 can setup your version control system and begin committing your project to
-it as normal. For ``Git``, this can be done easily with the following command:
+it as normal. The Symfony Standard edition *is* the starting point for your
+new project.
 
-.. code-block:: bash
-
-    git init
-
-For more information on setting up and using Git, check out the `GitHub Bootcamp`_
-tutorials.
+For specific instructions on how best to setup your project to be stored
+in git, see :doc:`/cookbook/workflow/new_project_git`.
 
 Ignoring the ``vendor/`` Directory
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 If you've downloaded the archive *without vendors*, you can safely ignore
-the entire ``vendors/`` directory and not commit it to source control. With
+the entire ``vendor/`` directory and not commit it to source control. With
 ``Git``, this is done by creating and adding the following to a ``.gitignore``
 file:
 
@@ -204,6 +209,7 @@ Now, the vendor directory won't be committed to source control. This is fine
 project, he/she can simply run the ``php bin/vendors install`` script to
 download all the necessary vendor libraries.
 
+.. _`enable ACL support`: https://help.ubuntu.com/community/FilePermissions#ACLs
 .. _`http://symfony.com/download`: http://symfony.com/download
 .. _`Git`: http://git-scm.com/
 .. _`GitHub Bootcamp`: http://help.github.com/set-up-git-redirect

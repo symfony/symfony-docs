@@ -22,7 +22,7 @@ may have a Newsletter Manager which uses setter injection to set its dependencie
 
         public function setEmailFormatter(EmailFormatter $emailFormatter)
         {
-            $this->mailer = $mailer;
+            $this->emailFormatter = $emailFormatter;
         }
         // ...
     }
@@ -46,7 +46,7 @@ and also a Greeting Card class which shares the same dependencies::
 
         public function setEmailFormatter(EmailFormatter $emailFormatter)
         {
-            $this->mailer = $mailer;
+            $this->emailFormatter = $emailFormatter;
         }
         // ...
     }
@@ -164,7 +164,7 @@ common methods of these related classes would be to extract them to a super clas
 
         public function setEmailFormatter(EmailFormatter $emailFormatter)
         {
-            $this->mailer = $mailer;
+            $this->emailFormatter = $emailFormatter;
         }
         // ...
     }

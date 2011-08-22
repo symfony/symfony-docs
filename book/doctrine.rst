@@ -116,8 +116,8 @@ just a simple PHP class.
     this entity class for you:
     
     .. code-block:: bash
-    
-        php app/console doctrine:generate:entity AcmeStoreBundle:Product "name:string(255) price:float description:text"
+        
+        php app/console doctrine:generate:entity --entity="AcmeStoreBundle:Product" --fields="name:string(255) price:float description:text"
 
 .. index::
     single: Doctrine; Adding mapping metadata
@@ -283,22 +283,27 @@ for the ``Product`` class. This is a safe command - you can run it over and
 over again: it only generates getters and setters that don't exist (i.e. it
 doesn't replace your existing methods).
 
+.. caution::
+
+    The ``doctrine:generate:entities`` command saves a backup of the original
+    ``Product.php`` named ``Product.php~``. In some cases, the presence of
+    this file can cause a "Cannot redeclare class" error. It can be safely
+    removed.
+
+You can also generate all known entities (i.e. any PHP class with Doctrine
+mapping information) of a bundle or an entire namespace:
+
+.. code-block:: bash
+
+    php app/console doctrine:generate:entities AcmeStoreBundle
+    php app/console doctrine:generate:entities Acme
+
 .. note::
 
     Doctrine doesn't care whether your properties are ``protected`` or ``private``,
     or whether or not you have a getter or setter function for a property.
     The getters and setters are generated here only because you'll need them
     to interact with your PHP object.
-
-.. tip::
-
-    You can also generate all known entities (i.e. any PHP class with Doctrine
-    mapping information) of a bundle or an entire namespace:
-
-    .. code-block:: bash
-
-        php app/console doctrine:generate:entities AcmeStoreBundle
-        php app/console doctrine:generate:entities Acme
 
 Creating the Database Tables/Schema
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -389,10 +394,11 @@ Let's walk through this example:
 
   In fact, since Doctrine is aware of all your managed entities, when you
   call the ``flush()`` method, it calculates an overall changeset and executes
-  the most efficient query/queries possible. For example, if you're persist
-  100 ``Product`` objects and then call ``persist()``, Doctrine will create
-  a *single* prepared statement and re-use it for each insert. This pattern
-  is called *Unit of Work*, and it's used because it's fast and efficient.
+  the most efficient query/queries possible. For example, if you persist a
+  total of 100 ``Product`` objects and then subsequently call ``flush()``, 
+  Doctrine will create a *single* prepared statement and re-use it for each 
+  insert. This pattern is called *Unit of Work*, and it's used because it's 
+  fast and efficient.
 
 When creating or updating objects, the workflow is always the same. In the
 next section, you'll see how Doctrine is smart enough to automatically issue
@@ -749,11 +755,11 @@ Suppose that the products in your application all belong to exactly one "categor
 In this case, you'll need a ``Category`` object and a way to relate a ``Product``
 object to a ``Category`` object. Start by creating the ``Category`` entity.
 Since you know that you'll eventually need to persist the class through Doctrine,
-you can let Doctrine create the class for you:
+you can let Doctrine create the class for you.
 
 .. code-block:: bash
 
-    php app/console doctrine:generate:entity AcmeStoreBundle:Category "name:string(255)" --mapping-type=yml
+    php app/console doctrine:generate:entity --entity="AcmeStoreBundle:Category" --fields="name:string(255)"
 
 This task generates the ``Category`` entity for you, with an ``id`` field,
 a ``name`` field and the associated getter and setter functions.

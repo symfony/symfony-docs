@@ -123,7 +123,7 @@ simple functional test for ``DemoController`` that reads as follows::
 
 The ``createClient()`` method returns a client tied to the current application::
 
-    $crawler = $client->request('GET', 'hello/Fabien');
+    $crawler = $client->request('GET', '/demo/hello/Fabien');
 
 The ``request()`` method returns a ``Crawler`` object which can be used to
 select elements in the Response, to click on links, and to submit forms.
@@ -133,6 +133,21 @@ select elements in the Response, to click on links, and to submit forms.
     The Crawler can only be used if the Response content is an XML or an HTML
     document. For other content types, get the content of the Response with
     ``$client->getResponse()->getContent()``.
+
+    You can set the content-type of the request to JSON by adding 'HTTP_CONTENT_TYPE' => 'application/json'.
+
+.. tip::
+
+    The full signature of the ``request()`` method is::
+
+        request($method,
+            $uri, 
+            array $parameters = array(), 
+            array $files = array(), 
+            array $server = array(), 
+            $content = null, 
+            $changeHistory = true
+        )   
 
 Click on a link by first selecting it with the Crawler using either a XPath
 expression or a CSS selector, then use the Client to click on it::
