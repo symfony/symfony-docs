@@ -47,15 +47,19 @@ Symfony2 adds automatically:
     sub vcl_fetch {
         if (beresp.http.Surrogate-Control ~ "ESI/1.0") {
             unset beresp.http.Surrogate-Control;
+
+            // for Varnish >= 3.0
             set beresp.do_esi = true;
+            // for Varnish < 3.0
+            // esi;
         }
     }
 
 .. caution::
 
-    Don't use compression with ESI as Varnish won't be able to parse the
-    response content. If you want to use compression, put a web server in
-    front of Varnish to do the job.
+    Compression with ESI was not supported in Varnish until version 3.0. If
+    you're not using Varnish 3.0, put a web server in front of Varnish to
+    perform the compression.
 
 .. index::
     single: Varnish; Invalidation
