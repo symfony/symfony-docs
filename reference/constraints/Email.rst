@@ -61,3 +61,5 @@ checkMX
 
 If true, then the `checkdnsrr`_ PHP function will be used to check the validity
 of the MX record of the host of the given email.
+
+.. _`checkdnsrr`: http://www.php.net/manual/en/function.checkdnsrr.php

@@ -281,3 +281,5 @@ strict
 If true, the validator will also check the type of the input value. Specifically,
 this value is passed to as the third argument to the PHP `in_array`_ method
 when checking to see if a value is in the valid choices array.
+
+.. _`in_array`: http://php.net/manual/en/function.in-array.php
