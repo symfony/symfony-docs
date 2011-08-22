@@ -243,6 +243,22 @@ application should greet you:
 
     http://localhost/app_dev.php/hello/Ryan
 
+.. tip::
+
+    You can also view your app in the "prod" :ref:`environment<environments-summary>`
+    by visiting:
+
+    .. code-block:: text
+
+        http://localhost/app.php/hello/Ryan
+    
+    If you get an error, it's likely because you need to clear your cache
+    by running:
+    
+    .. code-block:: bash
+
+        php app/console cache:clear --env=prod
+
 An optional, but common, third step in the process is to create a template.
 
 .. note::
@@ -841,6 +857,13 @@ call the ``prod`` front controller instead:
 
     http://localhost/app.php/hello/Ryan
 
+Since the ``prod`` environment is optimized for speed; the configuration,
+routing and Twig templates are compiled into flat PHP classes and cached.
+When viewing changes in the ``prod`` environment, you'll need to clear these
+cached files and allow them to rebuild::
+
+    php app/console cache:clear --env=prod
+
 .. note::
 
    If you open the ``web/app.php`` file, you'll find that it's configured explicitly
@@ -850,13 +873,6 @@ call the ``prod`` front controller instead:
 
    You can create a new front controller for a new environment by copying
    this file and changing ``prod`` to some other value.
-
-Since the ``prod`` environment is optimized for speed; the configuration,
-routing and Twig templates are compiled into flat PHP classes and cached.
-When viewing changes in the ``prod`` environment, you'll need to clear these
-cached files and allow them to rebuild::
-
-    php app/console cache:clear --env=prod
 
 .. note::
 
