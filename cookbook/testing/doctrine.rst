@@ -36,7 +36,7 @@ Unit testing is only possible when testing a method that builds a query.
 Setup
 ~~~~~
 
-First at all, you need to add the Doctrine\Tests namespace to your autoloader::
+First, you need to add the Doctrine\Tests namespace to your autoloader::
 
     // app/autoload.php
     $loader->registerNamespaces(array(
@@ -80,6 +80,7 @@ and load the entities::
             $this->_em->getConfiguration()
             	->setMetadataDriverImpl($metadataDriver);
 
+            // allows you to use the AcmeProductBundle:Product syntax
             $this->_em->getConfiguration()->setEntityNamespaces(array(
                 'AcmeProductBundle' => 'Acme\\ProductBundle\\Entity'
             ));
@@ -88,11 +89,13 @@ and load the entities::
 
 If you look at the code, you can notice:
 
-* We extend from ``\Doctrine\Tests\OrmTestCase``, which provide useful methods
+* You extend from ``\Doctrine\Tests\OrmTestCase``, which provide useful methods
   for unit testing;
-* We need to setup the ``AnnotationReader`` to be able to parse and load the
+
+* You need to setup the ``AnnotationReader`` to be able to parse and load the
   entities;
-* We create the entity manager by calling ``_getTestEntityManager``, which
+
+* You create the entity manager by calling ``_getTestEntityManager``, which
   returns a mocked entity manager with a mocked connection.
 
 That's it! You're ready to write units tests for your Doctrine repositories.
@@ -125,7 +128,7 @@ can test the result of this method in a variety of ways:
     {
         /* ... */
 
-        public function createSearchByNameQueryBuilder()
+        public function testCreateSearchByNameQueryBuilder()
         {
             $queryBuilder = $this->_em->getRepository('AcmeProductBundle:Product')
                 ->createSearchByNameQueryBuilder('foo');
@@ -143,7 +146,7 @@ you might check the dql parts: ``select``, ``from``, ``join``, ``set``, ``groupB
 If you only have a raw ``Query`` object or prefer to test the actual query,
 you can test the DQL or SQL query strings directly::
 
-    public function createSearchByNameQueryBuilder()
+    public function testCreateSearchByNameQueryBuilder()
     {
         $queryBuilder = $this->_em->getRepository('AcmeProductBundle:Product')
             ->createSearchByNameQueryBuilder('foo');
@@ -172,7 +175,8 @@ Functional Testing
 ------------------
 
 If you need to actually execute a query, you will need to boot the kernel
-to get a valid connection.
+to get a valid connection. In this case, you'll extend the ``WebTestCase``,
+which makes all of this quite easy::
 
     // src/Acme/ProductBundle/Tests/Entity/ProductRepositoryFunctionalTest.php
     namespace Acme\ProductBundle\Tests\Entity;
