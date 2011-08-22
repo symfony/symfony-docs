@@ -125,17 +125,6 @@ constraint.
                 gender:
                     - Choice: { callback: getGenders }
 
-    .. code-block:: xml
-
-        <!-- src/Acme/BlogBundle/Resources/config/validation.xml -->
-        <class name="Acme\BlogBundle\Entity\Author">
-            <property name="gender">
-                <constraint name="Choice">
-                    <option name="callback">getGenders</option>
-                </constraint>
-            </property>
-        </class>
-
     .. code-block:: php-annotations
 
         // src/Acme/BlogBundle/Entity/Author.php
@@ -148,6 +137,17 @@ constraint.
              */
             protected $gender;
         }
+
+    .. code-block:: xml
+
+        <!-- src/Acme/BlogBundle/Resources/config/validation.xml -->
+        <class name="Acme\BlogBundle\Entity\Author">
+            <property name="gender">
+                <constraint name="Choice">
+                    <option name="callback">getGenders</option>
+                </constraint>
+            </property>
+        </class>
 
 If the static callback is stored in a different class, for example ``Util``,
 you can pass the class name and the method as an array.
