@@ -122,7 +122,7 @@ the following example::
     }
 
 In this example, the method is returning a ``QueryBuilder`` instance. You
-can test the result of this method in a variety of ways:
+can test the result of this method in a variety of ways::
 
     class ProductRepositoryTest extends \Doctrine\Tests\OrmTestCase
     {

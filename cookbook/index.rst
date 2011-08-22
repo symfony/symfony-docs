@@ -51,6 +51,7 @@ Cookbook
     testing/http_authentication
     testing/insulating_clients
     testing/profiling
+    testing/doctrine
 
     security/remember_me
     security/voters
