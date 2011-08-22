@@ -22,9 +22,11 @@ Basic Usage
 
     .. code-block:: yaml
 
-        properties:
-            birthday:
-                - Date: ~
+        # src/Acme/BlogBundle/Resources/config/validation.yml
+        Acme\BlogBundle\Entity\Author:
+            properties:
+                birthday:
+                    - Date: ~
 
     .. code-block:: php-annotations
 
