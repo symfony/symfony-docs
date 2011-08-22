@@ -1,25 +1,29 @@
-Adding an "empty value"
------------------------
+empty_value
+~~~~~~~~~~~
 
-If you're using the non-expanded version of the type (i.e. a ``select`` tag)
-element and you'd like to have a blank entry (e.g. "Choose an option") at
-the top of the select box, you can easily do so by doing the following:
+**type**: ``string`` or ``Boolean``
 
-* Set the ``multiple`` option to false;
+This option determines whether or not a special "empty" option (e.g. "Choose an option")
+will appear at the top of a select widget. This option only applies if both
+the ``expanded`` and ``multiple`` options are set to false.
 
-* Set the ``required`` option to false or explicitly pass in the ``empty_value``
-  option in the template (as shown below).
+* Add an empty value with "Choose an option" as the text::
 
-If ``required`` is false, a blank choice will display at the top of the select
-box. To customize what that entry says (or if you have ``required`` set to
-``true``), add the following when rendering the field:
+    $builder->add('states', 'choice', array(
+        'empty_value' => 'Choose an option',
+    ));
 
-.. configuration-block::
+* Guarantee that no "empty" value option is displayed::
 
-    .. code-block:: jinja
+    $builder->add('states', 'choice', array(
+        'empty_value' => false,
+    ));
 
-        {{ form_widget(form.foo_choices, { 'empty_value': 'Choose an option' }) }}
+If you leave the ``empty_value`` option unset, then a blank (with no text)
+option will automatically be added if and only if the ``required`` option
+is false::
 
-    .. code-block:: php
-    
-        <?php echo $view['form']->widget($form['foo_choices'], array('empty_value' => 'Choose an option')) ?>
+    // a blank (with no text) option will be added
+    $builder->add('states', 'choice', array(
+        'required' => false,
+    ));

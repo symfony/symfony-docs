@@ -22,6 +22,7 @@ objects from the database.
 |             | - `multiple`_                                                    |
 |             | - `expanded`_                                                    |
 |             | - `preferred_choices`_                                           |
+|             | - `empty_value`_                                                 |
 |             | - `read_only`_                                                   |
 |             | - `error_bubbling`_                                              |
 +-------------+------------------------------------------------------------------+
@@ -63,8 +64,6 @@ option. The easiest way to use the option is as follows::
     ));
 
 .. include:: /reference/forms/types/options/select_how_rendered.rst.inc
-
-.. include:: /reference/forms/types/options/empty_value.rst.inc
 
 Field Options
 -------------
@@ -114,6 +113,8 @@ These options inherit from the :doc:`choice</reference/forms/types/choice>` type
 .. include:: /reference/forms/types/options/expanded.rst.inc
 
 .. include:: /reference/forms/types/options/preferred_choices.rst.inc
+
+.. include:: /reference/forms/types/options/empty_value.rst.inc
 
 These options inherit from the :doc:`field</reference/forms/types/field>` type:
 
