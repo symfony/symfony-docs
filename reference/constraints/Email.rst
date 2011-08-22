@@ -5,7 +5,7 @@ Validates that a value is a valid email address. The underlying value is
 cast to a string before being validated.
 
 +----------------+---------------------------------------------------------------------+
-| Applies to     | :ref:`property<validation-property-target>`                         |
+| Applies to     | :ref:`property or method<validation-property-target>`               |
 +----------------+---------------------------------------------------------------------+
 | Options        | - `message`_                                                        |
 |                | - `checkMX`_                                                        |

@@ -7,7 +7,7 @@ to ``null``. To force that a value strictly be equal to ``null``, see the
 blank, see :doc:`/reference/constraints/NotBlank`.
 
 +----------------+-----------------------------------------------------------------------+
-| Applies to     | :ref:`property<validation-property-target>`                           |
+| Applies to     | :ref:`property or method<validation-property-target>`                 |
 +----------------+-----------------------------------------------------------------------+
 | Options        | - `message`_                                                          |
 +----------------+-----------------------------------------------------------------------+

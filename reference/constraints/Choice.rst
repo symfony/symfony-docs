@@ -6,7 +6,7 @@ set of *valid* choices. It can also be used to validate that each item in
 an array of items is one of those valid choices.
 
 +----------------+-----------------------------------------------------------------------+
-| Applies to     | :ref:`property<validation-property-target>`                           |
+| Applies to     | :ref:`property or method<validation-property-target>`                 |
 +----------------+-----------------------------------------------------------------------+
 | Options        | - `choices`_                                                          |
 |                | - `callback`_                                                         |

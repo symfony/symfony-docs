@@ -11,7 +11,7 @@ This constraint can also make sure that certain collection keys are present
 and that extra keys are not present.
 
 +----------------+--------------------------------------------------------------------------+
-| Applies to     | :ref:`property<validation-property-target>`                              |
+| Applies to     | :ref:`property or method<validation-property-target>`                    |
 +----------------+--------------------------------------------------------------------------+
 | Options        | - `fields`_                                                              |
 |                | - `allowExtraFields`_                                                    |
