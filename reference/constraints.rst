@@ -5,29 +5,41 @@ Validation Constraints Reference
    :maxdepth: 1
    :hidden:
 
-   constraints/False
+   constraints/NotBlank
+   constraints/Blank
+   constraints/NotNull
+   constraints/Null
    constraints/True
+   constraints/False
    constraints/Type
-   constraints/Callback
-   constraints/Choice
-   constraints/Collection
+
+   constraints/Email
+   constraints/MinLength
+   constraints/MaxLength
+   constraints/Url
+   constraints/Regex
+   constraints/Ip
+
+   constraints/Max
+   constraints/Min
+
    constraints/Date
    constraints/DateTime
-   constraints/Email
-   constraints/File
-   constraints/Max
-   constraints/MaxLength
-   constraints/Min
-   constraints/MinLength
-   constraints/NotBlank
-   constraints/NotNull
-   constraints/Blank
-   constraints/Null
-   constraints/UniqueEntity
-   constraints/Regex
    constraints/Time
-   constraints/Url
+
+   constraints/Choice
+   constraints/Collection
+   constraints/UniqueEntity
+   constraints/Language
+   constraints/Locale
+   constraints/Country
+
+   constraints/File
+   constraints/Image
+
+   constraints/Callback
    constraints/Valid
+   constraints/All
 
 The Validator is designed to validate objects against *constraints*.
 In real life, a constraint could be: "The cake must not be burned". In
