@@ -144,7 +144,7 @@ you might check the dql parts: ``select``, ``from``, ``join``, ``set``, ``groupB
 ``having``, or ``orderBy``.
 
 If you only have a raw ``Query`` object or prefer to test the actual query,
-you can test the DQL or SQL query strings directly::
+you can test the DQL query string directly::
 
     public function testCreateSearchByNameQueryBuilder()
     {
@@ -157,15 +157,6 @@ you can test the DQL or SQL query strings directly::
         $this->assertEquals(
             'SELECT p FROM Acme\ProductBundle\Entity\Product p WHERE p.name LIKE :name',
             $query->getDql()
-        );
-
-        // test SQL
-        $this->assertEquals(
-            'SELECT p0_.id AS id0, p0_.name AS name1, p0_.price AS price2, '
-            .'p0_.description AS description3, p0_.created AS created4, '
-            .'p0_.updated AS updated5, p0_.slug AS slug6, p0_.category_id AS category_id7 '
-            .'FROM product p0_ WHERE p0_.name LIKE ?',
-            $query->getSql()
         );
     }
 
