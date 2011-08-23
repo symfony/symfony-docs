@@ -30,12 +30,12 @@ the process has several common steps:
 
 1. Enable and configure Symfony's ``Translation`` component;
 
-1. Abstract strings (i.e. "messages") by wrapping them in calls to the ``Translator``;
+2. Abstract strings (i.e. "messages") by wrapping them in calls to the ``Translator``;
 
-1. Create translation resources for each supported locale that translate
+3. Create translation resources for each supported locale that translate
    each message in the application;
 
-1. Determine, set and manage the user's locale in the session.
+4. Determine, set and manage the user's locale in the session.
 
 .. index::
    single: Translations; Configuration
@@ -237,7 +237,7 @@ As we've seen, creating a translation is a two-step process:
 1. Abstract the message that needs to be translated by processing it through
    the ``Translator``.
 
-1. Create a translation for the message in each locale that you choose to
+2. Create a translation for the message in each locale that you choose to
    support.
 
 The second step is done by creating message catalogues that define the translations
