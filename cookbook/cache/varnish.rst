@@ -57,9 +57,9 @@ Symfony2 adds automatically:
 
 .. caution::
 
-    Compression with ESI was not supported in Varnish until version 3.0. If
-    you're not using Varnish 3.0, put a web server in front of Varnish to
-    perform the compression.
+    Compression with ESI was not supported in Varnish until version 3.0
+    (read `GZIP and Varnish`_). If you're not using Varnish 3.0, put a web
+    server in front of Varnish to perform the compression.
 
 .. index::
     single: Varnish; Invalidation
@@ -94,3 +94,4 @@ that will invalidate the cache for a given resource:
     purging your cached data.
 
 .. _`Edge Architecture`: http://www.w3.org/TR/edge-arch
+.. _`GZIP and Varnish`: https://www.varnish-cache.org/docs/3.0/phk/gzip.html
