@@ -526,6 +526,8 @@ by defining a ``default_locale`` for the session service:
             'session' => array('default_locale' => 'en'),
         ));
 
+.. _book-translation-locale-url:
+
 The Locale and the URL
 ~~~~~~~~~~~~~~~~~~~~~~
 
