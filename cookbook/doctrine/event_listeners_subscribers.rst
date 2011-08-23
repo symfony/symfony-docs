@@ -3,17 +3,25 @@
 Registering Event Listeners and Subscribers
 ===========================================
 
-Doctrine uses the lightweight ``Doctrine\Common\EventManager`` class to
-trigger a number of different events which you can hook into. You can register
-Event Listeners or Subscribers by tagging the respective services with
-``doctrine.event_listener`` or ``doctrine.event_subscriber`` using the service
-container.
+Doctrine packages a rich event system that fires events when almost anything
+happens inside the system. For you, this means that you can create arbitrary
+:doc:`services</book/service_container>` and tell Doctrine to notify those
+objects whenever a certain action (e.g. ``preSave``) happens within Doctrine.
+This could be useful, for example, to create an independent search index
+whenever an object in your database is saved.
 
-To register services to act as event listeners or subscribers (listeners from
-here) you have to tag them with the appropriate names. Depending on your
-use-case you can hook a listener into every DBAL Connection and ORM Entity
-Manager or just into one specific DBAL connection and all the EntityManagers
-that use this connection.
+Doctrine defines two types of objects that can listen to Doctrine events:
+listeners and subscribers. Both are very similar, but listeners are a bit
+more straightforward. For more, see `The Event System`_ on Doctrine's website.
+
+Configuring the Listener/Subscriber
+-----------------------------------
+
+To register a service to act as an event listener or subscriber you just have
+to :ref:`tag<book-service-container-tags>` it with the appropriate name. Depending
+on your use-case, you can hook a listener into every DBAL connection and ORM
+entity manager or just into one specific DBAL connection and all the entity
+managers that use this connection.
 
 .. configuration-block::
 
@@ -29,15 +37,15 @@ that use this connection.
 
         services:
             my.listener:
-                class: MyEventListener
+                class: Acme\SearchBundle\Listener\SearchIndexer
                 tags:
-                    - { name: doctrine.event_listener, event: postLoad }
+                    - { name: doctrine.event_listener, event: postSave }
             my.listener2:
-                class: MyEventListener2
+                class: Acme\SearchBundle\Listener\SearchIndexer2
                 tags:
-                    - { name: doctrine.event_listener, event: postLoad, connection: default }
+                    - { name: doctrine.event_listener, event: postSave, connection: default }
             my.subscriber:
-                class: MyEventSubscriber
+                class: Acme\SearchBundle\Listener\SearchIndexerSubsriber
                 tags:
                     - { name: doctrine.event_subscriber, connection: default }
 
@@ -54,14 +62,52 @@ that use this connection.
             </doctrine:config>
 
             <services>
-                <service id="my.listener" class="MyEventListener">
-                    <tag name="doctrine.event_listener" event="postLoad" />
+                <service id="my.listener" class="Acme\SearchBundle\Listener\SearchIndexer">
+                    <tag name="doctrine.event_listener" event="postSave" />
                 </service>
-                <service id="my.listener2" class="MyEventListener2">
-                    <tag name="doctrine.event_listener" event="postLoad" connection="default" />
+                <service id="my.listener2" class="Acme\SearchBundle\Listener\SearchIndexer2">
+                    <tag name="doctrine.event_listener" event="postSave" connection="default" />
                 </service>
-                <service id="my.subscriber" class="MyEventSubscriber">
+                <service id="my.subscriber" class="Acme\SearchBundle\Listener\SearchIndexerSubsriber">
                     <tag name="doctrine.event_subscriber" connection="default" />
                 </service>
             </services>
         </container>
+
+Creating the Listener Class
+---------------------------
+
+In the previous example, a service ``my.listener`` was configured as a Doctrine
+listener on the event ``postSave``. That class behind that service must have
+a ``postSave`` method, which will be called when the event is thrown:
+
+    // src/Acme/SearchBundle/Listener/SearchIndexer.php
+    namespace Acme\SearchBundle\Listener;
+    
+    use Doctrine\ORM\Event\LifecycleEventArgs;
+    
+    class SearchIndexer
+    {
+        public function postSave(LifecycleEventArgs $args)
+        {
+            $entity = $args->getEntity();
+            $entityManager = $args->getEntityManager();
+            
+            // perhaps you only want to act on some "Product" entity
+            if ($entity instanceof Acme\StoreBundle\Entity\Product) {
+                // do something with the Product
+            }
+        }
+    }
+
+In each event, you have access to a ``LifecycleEventArgs`` object, which
+gives you access to both the entity object of the event and the entity manager
+itself.
+
+One important thing to notice is that a listener will be listening for *all*
+entities in your application. So, if you're interested in only handling a
+specific type of entity (e.g. a ``Product`` entity but not a ``BlogPost``
+entity), you should check for the class name of the entity in your method
+(as shown above).
+
+.. _`The Event System`: http://www.doctrine-project.org/docs/orm/2.0/en/reference/events.html
