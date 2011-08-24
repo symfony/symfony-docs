@@ -257,7 +257,7 @@ application should greet you:
     
     .. code-block:: bash
 
-        php app/console cache:clear --env=prod
+        php app/console cache:clear --env=prod --no-debug
 
 An optional, but common, third step in the process is to create a template.
 
@@ -862,7 +862,7 @@ routing and Twig templates are compiled into flat PHP classes and cached.
 When viewing changes in the ``prod`` environment, you'll need to clear these
 cached files and allow them to rebuild::
 
-    php app/console cache:clear --env=prod
+    php app/console cache:clear --env=prod --no-debug
 
 .. note::
 
