@@ -775,7 +775,7 @@ Special Routing Parameters
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 As you've seen, each routing parameter or default value is eventually available
-as an argument in the controller method. Additionally, there are 4 parameters
+as an argument in the controller method. Additionally, there are three parameters
 that are special: each adds a unique piece of functionality inside your application:
 
 * ``_controller``: As you've seen, this parameter is used to determine which
