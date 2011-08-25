@@ -326,7 +326,7 @@ they already exist in MongoDB.
 
     Doctrine provides a library that allows you to programmatically load testing
     data into your project (i.e. "fixture data"). For information, see
-    :doc:`/cookbook/doctrine/doctrine_fixtures`.
+    :doc:`/bundles/DoctrineFixturesBundle/index`.
 
 Fetching Objects from MongoDB
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -619,8 +619,9 @@ For example, to get details about the ``doctrine:mongodb:query`` task, run:
 .. note::
 
    To be able to load data fixtures into MongoDB, you will need to have the
-   ``DoctrineFixturesBundle`` bundle installed. To learn how to do it,
-   read the ":doc:`/cookbook/doctrine/doctrine_fixtures`" entry of the Cookbook.
+   ``DoctrineFixturesBundle`` bundle installed. To learn how to do it, read
+   the ":doc:`/bundles/DoctrineFixturesBundle/index`" entry of the
+   documentation.
 
 .. index::
    single: Configuration; Doctrine MongoDB ODM
