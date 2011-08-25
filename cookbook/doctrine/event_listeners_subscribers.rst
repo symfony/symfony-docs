@@ -79,7 +79,7 @@ Creating the Listener Class
 
 In the previous example, a service ``my.listener`` was configured as a Doctrine
 listener on the event ``postSave``. That class behind that service must have
-a ``postSave`` method, which will be called when the event is thrown:
+a ``postSave`` method, which will be called when the event is thrown::
 
     // src/Acme/SearchBundle/Listener/SearchIndexer.php
     namespace Acme\SearchBundle\Listener;

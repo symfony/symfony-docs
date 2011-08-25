@@ -408,7 +408,7 @@ an ``UPDATE`` query if the record already exists in the database.
 
     Doctrine provides a library that allows you to programmatically load testing
     data into your project (i.e. "fixture data"). For information, see
-    :doc:`/cookbook/doctrine/doctrine_fixtures`.
+    :doc:`/bundles/DoctrineFixturesBundle/index`.
 
 Fetching Objects from the Database
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -1272,9 +1272,10 @@ Some notable or interesting tasks include:
 
 .. note::
 
-   To be able to load data fixtures to your database, you will need to have the
-   ``DoctrineFixturesBundle`` bundle installed. To learn how to do it,
-   read the ":doc:`/cookbook/doctrine/doctrine_fixtures`" entry of the Cookbook.
+   To be able to load data fixtures to your database, you will need to have
+   the ``DoctrineFixturesBundle`` bundle installed. To learn how to do it,
+   read the ":doc:`/bundles/DoctrineFixturesBundle/index`" entry of the
+   documentation.
 
 Summary
 -------
@@ -1293,7 +1294,7 @@ lifecycle.
 For more information about Doctrine, see the *Doctrine* section of the
 :doc:`cookbook</cookbook/index>`, which includes the following articles:
 
-* :doc:`/cookbook/doctrine/doctrine_fixtures`
+* :doc:`/bundles/DoctrineFixturesBundle/index`
 * :doc:`/cookbook/doctrine/migrations`
 * :doc:`/cookbook/doctrine/mongodb`
 * :doc:`/cookbook/doctrine/common_extensions`
