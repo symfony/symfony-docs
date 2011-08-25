@@ -20,8 +20,8 @@ be.
     in the ":doc:`/cookbook/doctrine/dbal`" cookbook entry.
 
     You can also persist data to `MongoDB`_ using Doctrine ODM library. For
-    more information, read the ":doc:`/cookbook/doctrine/mongodb`" cookbook
-    entry.
+    more information, read the ":doc:`/bundles/DoctrineMongoDBBundle/index`"
+    documentation.
 
 A Simple Example: A Product
 ---------------------------
@@ -1296,7 +1296,6 @@ For more information about Doctrine, see the *Doctrine* section of the
 
 * :doc:`/bundles/DoctrineFixturesBundle/index`
 * :doc:`/cookbook/doctrine/migrations`
-* :doc:`/cookbook/doctrine/mongodb`
 * :doc:`/cookbook/doctrine/common_extensions`
 
 .. _`Doctrine`: http://www.doctrine-project.org/

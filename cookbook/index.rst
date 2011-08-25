@@ -17,7 +17,6 @@ Cookbook
     assetic/jpeg_optimize
     assetic/apply_to_option
 
-    doctrine/mongodb
     doctrine/migrations
     doctrine/file_uploads
     doctrine/common_extensions
@@ -27,7 +26,6 @@ Cookbook
     doctrine/multiple_entity_managers
     doctrine/custom_dql_functions
 
-    form/simple_signup_form_with_mongodb
     form/form_customization
     form/create_custom_field_type
     validation/custom_constraint
