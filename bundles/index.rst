@@ -8,5 +8,6 @@ Symfony SE Bundles
     SensioGeneratorBundle/index
     JMSSecurityExtraBundle/index
     DoctrineFixturesBundle/index
+    DoctrineMongoDBBundle/index
 
 .. include:: /bundles/map.rst.inc
