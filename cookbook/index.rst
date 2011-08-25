@@ -17,7 +17,6 @@ Cookbook
     assetic/jpeg_optimize
     assetic/apply_to_option
 
-    doctrine/doctrine_fixtures
     doctrine/mongodb
     doctrine/migrations
     doctrine/file_uploads

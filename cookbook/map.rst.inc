@@ -21,7 +21,6 @@
 
 * **Database Interaction (Doctrine)**
 
-  * :doc:`/cookbook/doctrine/doctrine_fixtures`
   * :doc:`/cookbook/doctrine/mongodb`
   * :doc:`/cookbook/doctrine/migrations`
   * :doc:`/cookbook/doctrine/file_uploads`
