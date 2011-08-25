@@ -17,7 +17,6 @@ Cookbook
     assetic/jpeg_optimize
     assetic/apply_to_option
 
-    doctrine/migrations
     doctrine/file_uploads
     doctrine/common_extensions
     doctrine/event_listeners_subscribers

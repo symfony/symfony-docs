@@ -329,7 +329,7 @@ in your application. To do this, run:
     new column to the existing ``products`` table.
 
     An even better way to take advantage of this functionality is via
-    :doc:`migrations</cookbook/doctrine/migrations>`, which allow you to
+    :doc:`migrations</bundles/DoctrineMigrationsBundle/index>`, which allow you to
     generate these SQL statements and store them in migration classes that
     can be run systematically on your production server in order to track
     and migrate your database schema safely and reliably.
@@ -861,7 +861,7 @@ table, and ``product.category_id`` column, and new foreign key:
 
     This task should only be really used during development. For a more robust
     method of systematically updating your production database, read about
-    :doc:`Doctrine migrations</cookbook/doctrine/migrations>`.
+    :doc:`Doctrine migrations</bundles/DoctrineFixturesBundle/index>`.
 
 Saving Related Entities
 ~~~~~~~~~~~~~~~~~~~~~~~
@@ -1295,7 +1295,7 @@ For more information about Doctrine, see the *Doctrine* section of the
 :doc:`cookbook</cookbook/index>`, which includes the following articles:
 
 * :doc:`/bundles/DoctrineFixturesBundle/index`
-* :doc:`/cookbook/doctrine/migrations`
+* :doc:`/bundles/DoctrineFixturesBundle/index`
 * :doc:`/cookbook/doctrine/common_extensions`
 
 .. _`Doctrine`: http://www.doctrine-project.org/
