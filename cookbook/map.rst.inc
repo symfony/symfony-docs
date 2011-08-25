@@ -21,7 +21,6 @@
 
 * **Database Interaction (Doctrine)**
 
-  * :doc:`/cookbook/doctrine/migrations`
   * :doc:`/cookbook/doctrine/file_uploads`
   * :doc:`/cookbook/doctrine/common_extensions`
   * :doc:`/cookbook/doctrine/event_listeners_subscribers`
