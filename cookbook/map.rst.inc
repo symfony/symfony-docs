@@ -21,7 +21,6 @@
 
 * **Database Interaction (Doctrine)**
 
-  * :doc:`/cookbook/doctrine/mongodb`
   * :doc:`/cookbook/doctrine/migrations`
   * :doc:`/cookbook/doctrine/file_uploads`
   * :doc:`/cookbook/doctrine/common_extensions`
@@ -33,7 +32,6 @@
 
 * **Forms and Validation**
 
-  * :doc:`/cookbook/form/simple_signup_form_with_mongodb`
   * :doc:`/cookbook/form/form_customization`
   * :doc:`/cookbook/form/create_custom_field_type`
   * :doc:`/cookbook/validation/custom_constraint`

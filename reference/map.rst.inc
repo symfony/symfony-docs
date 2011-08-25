@@ -13,7 +13,6 @@
   * :doc:`twig </reference/configuration/twig>`
   * :doc:`monolog </reference/configuration/monolog>`
   * :doc:`web_profiler </reference/configuration/web_profiler>`
-  * :doc:`doctrine_mongodb </reference/configuration/mongodb>`
 
 * **Forms and Validation**
 
