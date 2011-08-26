@@ -6,7 +6,7 @@ is simply blank (blank string or ``null``), see the  :doc:`/reference/constraint
 constraint. To ensure that a property is not null, see :doc:`/reference/constraints/NotNull`.
 
 +----------------+-----------------------------------------------------------------------+
-| Applies to     | :ref:`property<validation-property-target>`                           |
+| Applies to     | :ref:`property or method<validation-property-target>`                 |
 +----------------+-----------------------------------------------------------------------+
 | Options        | - `message`_                                                          |
 +----------------+-----------------------------------------------------------------------+
@@ -25,13 +25,17 @@ of an ``Author`` class exactly equal to ``null``, you could do the following:
 
     .. code-block:: yaml
 
-        properties:
-            firstName:
-                - Null: ~
+        # src/Acme/BlogBundle/Resources/config/validation.yml
+        Acme\BlogBundle\Entity\Author:
+            properties:
+                firstName:
+                    - Null: ~
 
     .. code-block:: php-annotations
 
         // src/Acme/BlogBundle/Entity/Author.php
+        namespace Acme\BlogBundle\Entity;
+        
         use Symfony\Component\Validator\Constraints as Assert;
 
         class Author
