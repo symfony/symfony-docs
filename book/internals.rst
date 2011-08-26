@@ -814,6 +814,12 @@ returned by the ``getSubscribedEvents`` method. This method returns an array
 indexed by event names and whose values are either the method name to call or
 an array composed of the method name to call and a priority.
 
+.. tip::
+
+    If you use the Symfony2 MVC framework, subscribers can be registered via
+    your :ref:`configuration <dic-tags-kernel-event-subscriber>`. As an added
+    bonus, the subscriber objects are instantiated only when needed.
+
 .. index::
    single: Event Dispatcher; Stopping event flow
 
