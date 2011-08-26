@@ -27,9 +27,9 @@ autoloaded from `vendor/` under the main root directory (see
 The test suite need the following third-party libraries:
 
 * Doctrine
-* Doctrine Migrations
 * Swiftmailer
 * Twig
+* Monolog
 
 To install them all, run the `vendors` script:
 
