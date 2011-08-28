@@ -41,7 +41,7 @@ field as three different choice fields:
 
 .. code-block:: php
 
-    $builder->add('startTime', 'date', array(
+    $builder->add('startTime', 'time', array(
         'input'  => 'datetime',
         'widget' => 'choice',
     ));
@@ -52,8 +52,8 @@ you'd need to set ``input`` to ``timestamp``:
 
 .. code-block:: php
 
-    $builder->add('startTime', 'date', array(
-        'input'  => 'datetime',
+    $builder->add('startTime', 'time', array(
+        'input'  => 'timestamp',
         'widget' => 'choice',
     ));
 
