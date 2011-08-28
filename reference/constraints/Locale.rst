@@ -24,7 +24,7 @@ Basic Usage
 
     .. code-block:: yaml
 
-        # src/UserBundleBundle/Resources/config/validation.yml
+        # src/UserBundle/Resources/config/validation.yml
         Acme\UserBundle\Entity\User:
             properties:
                 locale:
