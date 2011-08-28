@@ -22,15 +22,19 @@ Basic Usage
 
     .. code-block:: yaml
 
-        properties:
-            email:
-                - Email:
-                    message: The email "{{ value }}" is not a valid email.
-                    checkMX: true
+        # src/BlogBundle/Resources/config/validation.yml
+        Acme\BlogBundle\Entity\Author:
+            properties:
+                email:
+                    - Email:
+                        message: The email "{{ value }}" is not a valid email.
+                        checkMX: true
 
     .. code-block:: php-annotations
 
         // src/Acme/BlogBundle/Entity/Author.php
+        namespace Acme\BlogBundle\Entity;
+        
         use Symfony\Component\Validator\Constraints as Assert;
 
         class Author

@@ -23,19 +23,28 @@ Basic Usage
 
     .. code-block:: yaml
 
-        properties:
-            age:
-                - Type:
-                    type: integer
-                    message: The value {{ value }} is not a valid {{ type }}.
+        # src/BlogBundle/Resources/config/validation.yml
+        Acme\BlogBundle\Entity\Author:
+            properties:
+                age:
+                    - Type:
+                        type: integer
+                        message: The value {{ value }} is not a valid {{ type }}.
 
     .. code-block:: php-annotations
 
-        /**
-         * @Assert\Type(type="integer", message="The value {{ value }} is not a valid {{ type }}.")
-         */
-       protected $age;
+       // src/Acme/BlogBundle/Entity/Author.php
+       namespace Acme\BlogBundle\Entity;
+       
+       use Symfony\Component\Validator\Constraints as Assert;
 
+       class Author
+       {
+           /**
+            * @Assert\Type(type="integer", message="The value {{ value }} is not a valid {{ type }}.")
+            */
+            protected $age;
+       }
 
 Options
 -------

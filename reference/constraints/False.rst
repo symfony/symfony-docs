@@ -41,6 +41,7 @@ method returns **false**:
 
     .. code-block:: yaml
 
+        # src/BlogBundle/Resources/config/validation.yml
         Acme\BlogBundle\Entity\Author
             getters:
                 stateInvalid:
