@@ -8,7 +8,7 @@ to validate this.
 +----------------+---------------------------------------------------------------------+
 | Applies to     | :ref:`property or method<validation-property-target>`               |
 +----------------+---------------------------------------------------------------------+
-| Options        | - `type`_                                                           |
+| Options        | - :ref:`type<reference-constraint-type-type>`                       |
 |                | - `message`_                                                        |
 +----------------+---------------------------------------------------------------------+
 | Class          | :class:`Symfony\\Component\\Validator\\Constraints\\Type`           |
@@ -48,6 +48,8 @@ Basic Usage
 
 Options
 -------
+
+.. _reference-constraint-type-type:
 
 type
 ~~~~
