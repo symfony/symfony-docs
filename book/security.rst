@@ -703,7 +703,8 @@ You can define as many URL patterns as you need - each is a regular expression.
 
     Prepending the path with ``^`` ensures that only URLs *beginning* with
     the pattern are matched. For example, a path of simply ``/admin`` would
-    match ``/admin/foo`` but not ``/foo/admin``.
+    match ``/admin/foo`` but also ``/foo/admin``. Instead using ``^/admin``
+    would not match the latter.
 
 For each incoming request, Symfony2 tries to find a matching access control
 rule (the first one wins). If the user isn't authenticated yet, the authentication
