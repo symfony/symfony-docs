@@ -1,21 +1,24 @@
 Valid
 =====
 
-Marks an associated object to be validated itself.
+This constraint is used to enable validation on objects that are embedded
+as properties on an object being validated. This allows you to validate an
+object and all sub-objects associated with it.
 
-.. code-block:: yaml
++----------------+---------------------------------------------------------------------+
+| Applies to     | :ref:`property or method<validation-property-target>`               |
++----------------+---------------------------------------------------------------------+
+| Options        | - `traverse`_                                                       |
++----------------+---------------------------------------------------------------------+
+| Class          | :class:`Symfony\\Component\\Validator\\Constraints\\Type`           |
++----------------+---------------------------------------------------------------------+
 
-    properties:
-        address:
-            - Valid: ~
+Basic Usage
+-----------
 
-Example: Validate object graphs
--------------------------------
-
-This constraint helps to validate whole object graphs. In the following example,
-we create two classes ``Author`` and ``Address`` that both have constraints on
-their properties. Furthermore, ``Author`` stores an ``Address`` instance in the
-``$address`` property.
+In the following example, we create two classes ``Author`` and ``Address``
+that both have constraints on their properties. Furthermore, ``Author`` stores
+an ``Address`` instance in the ``$address`` property.
 
 .. code-block:: php
 
@@ -158,9 +161,9 @@ their properties. Furthermore, ``Author`` stores an ``Address`` instance in the
             }
         }
 
-With this mapping it is possible to successfully validate an author with an
-invalid address. To prevent that, we add the ``Valid`` constraint to the
-``$address`` property.
+With this mapping, it is possible to successfully validate an author with an
+invalid address. To prevent that, add the ``Valid`` constraint to the ``$address``
+property.
 
 .. configuration-block::
 
@@ -217,3 +220,15 @@ validation of the ``Address`` fields failed.
 
     Acme\HelloBundle\Author.address.zipCode:
     This value is too long. It should have 5 characters or less
+
+Options
+-------
+
+traverse
+~~~~~~~~
+
+**type**: ``string`` **default**: ``true``
+
+If this constraint is applied to a property that holds an array of objects,
+then each object in that array will be validated only if this option is set
+to ``true``.
