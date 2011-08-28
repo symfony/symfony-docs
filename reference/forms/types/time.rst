@@ -87,7 +87,7 @@ your underlying object. Valid values are:
 
 * ``string`` (e.g. ``12:17:26``)
 * ``datetime`` (a ``DateTime`` object)
-* ``array`` (e.g. ``array(12, 17, 26)``)
+* ``array`` (e.g. ``array('hour' => 12, 'minute' => 17, 'second' => 26)``)
 * ``timestamp`` (e.g. ``1307232000``)
 
 The value that comes back from the form will also be normalized back into
