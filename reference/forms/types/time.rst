@@ -41,7 +41,7 @@ field as three different choice fields:
 
 .. code-block:: php
 
-    $builder->add('startTime', 'date', array(
+    $builder->add('startTime', 'time', array(
         'input'  => 'datetime',
         'widget' => 'choice',
     ));
@@ -52,8 +52,8 @@ you'd need to set ``input`` to ``timestamp``:
 
 .. code-block:: php
 
-    $builder->add('startTime', 'date', array(
-        'input'  => 'datetime',
+    $builder->add('startTime', 'time', array(
+        'input'  => 'timestamp',
         'widget' => 'choice',
     ));
 
@@ -87,7 +87,7 @@ your underlying object. Valid values are:
 
 * ``string`` (e.g. ``12:17:26``)
 * ``datetime`` (a ``DateTime`` object)
-* ``array`` (e.g. ``array(12, 17, 26)``)
+* ``array`` (e.g. ``array('hour' => 12, 'minute' => 17, 'second' => 26)``)
 * ``timestamp`` (e.g. ``1307232000``)
 
 The value that comes back from the form will also be normalized back into
