@@ -682,10 +682,8 @@ You can define as many URL patterns as you need - each is a regular expression.
         <!-- app/config/config.xml -->
         <config>
             <!-- ... -->
-            <access-control>
-                <rule path="^/admin/users" role="ROLE_SUPER_ADMIN" />
-                <rule path="^/admin" role="ROLE_ADMIN" />
-            </access-control>
+            <rule path="^/admin/users" role="ROLE_SUPER_ADMIN" />
+            <rule path="^/admin" role="ROLE_ADMIN" />
         </config>
 
     .. code-block:: php
@@ -1325,10 +1323,8 @@ rules by creating a role hierarchy:
 
         <!-- app/config/security.xml -->
         <config>
-            <role-hierarchy>
-                <role id="ROLE_ADMIN">ROLE_USER</role>
-                <role id="ROLE_SUPER_ADMIN">ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH</role>
-            </role-hierarchy>
+            <role id="ROLE_ADMIN">ROLE_USER</role>
+            <role id="ROLE_SUPER_ADMIN">ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH</role>
         </config>
 
     .. code-block:: php
