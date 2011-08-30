@@ -59,7 +59,7 @@ label, errors and widget.
 
 .. code-block:: jinja
 
-    {# render a field row, but add a "foo" class to it #}
+    {# render a field row, but display a label with text "foo" #}
     {{ form_row(form.name, { 'label': 'foo' }) }}
 
 The second argument to ``form_row`` is an array of variables. The templates
