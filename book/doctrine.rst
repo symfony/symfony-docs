@@ -1295,7 +1295,6 @@ For more information about Doctrine, see the *Doctrine* section of the
 :doc:`cookbook</cookbook/index>`, which includes the following articles:
 
 * :doc:`/bundles/DoctrineFixturesBundle/index`
-* :doc:`/bundles/DoctrineFixturesBundle/index`
 * :doc:`/cookbook/doctrine/common_extensions`
 
 .. _`Doctrine`: http://www.doctrine-project.org/
