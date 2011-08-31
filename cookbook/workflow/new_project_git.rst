@@ -112,7 +112,7 @@ script to ensure that all of the needed vendor libraries are downloaded.
 
 .. caution::
 
-    There is also a ``php bin/vendors upgrade`` command, but this has nothing
+    There is also a ``php bin/vendors update`` command, but this has nothing
     to do with upgrading your project and you will normally not need to use
     it. This command is used to freeze the versions of all of your vendor libraries
     by reading their current state and recording it into the ``deps.lock`` file.
