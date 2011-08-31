@@ -810,9 +810,9 @@ method:
     $dispatcher->addSubscriber($subscriber);
 
 The dispatcher will automatically register the subscriber for each event
-returned by the ``getSubscribedEvents`` method. Like with listeners, the
-``addSubscriber`` method has an optional second argument, which is the
-priority that should be given to each event.
+returned by the ``getSubscribedEvents`` method. This method returns an array
+indexed by event names and whose values are either the method name to call or
+an array composed of the method name to call and a priority.
 
 .. index::
    single: Event Dispatcher; Stopping event flow
