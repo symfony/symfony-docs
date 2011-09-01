@@ -1217,10 +1217,10 @@ Learn more from the Cookbook
 * :doc:`/cookbook/templating/PHP`
 * :doc:`/cookbook/controller/error_pages`
 
-.. _`Twig`: http://www.twig-project.org
+.. _`Twig`: http://twig.sensiolabs.org
 .. _`Symfony2Bundles.org`: http://symfony2bundles.org
 .. _`Cross Site Scripting`: http://en.wikipedia.org/wiki/Cross-site_scripting
-.. _`Output Escaping`: http://www.twig-project.org
-.. _`tags`: http://www.twig-project.org/doc/templates.html#list-of-control-structures
-.. _`filters`: http://www.twig-project.org/doc/templates.html#list-of-built-in-filters
-.. _`add your own extensions`: http://www.twig-project.org/doc/advanced.html
+.. _`Output Escaping`: http://twig.sensiolabs.org
+.. _`tags`: http://twig.sensiolabs.org/doc/templates.html#list-of-control-structures
+.. _`filters`: http://twig.sensiolabs.org/doc/templates.html#list-of-built-in-filters
+.. _`add your own extensions`: http://twig.sensiolabs.org/doc/advanced.html

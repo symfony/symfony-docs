@@ -419,4 +419,4 @@ are eager to learn more about Symfony2, dive into the next section:
 .. _Separation of Concerns:         http://en.wikipedia.org/wiki/Separation_of_concerns
 .. _YAML:                           http://www.yaml.org/
 .. _annotations in controllers:     http://symfony.com/doc/current/bundles/SensioFrameworkExtraBundle/index.html#annotations-for-controllers
-.. _Twig:                           http://www.twig-project.org/
+.. _Twig:                           http://twig.sensiolabs.org/
