@@ -981,6 +981,6 @@ and advanced concepts. The more you know about Symfony2, the more you'll
 appreciate the flexibility of its architecture and the power it gives you
 to rapidly develop applications.
 
-.. _`Twig`: http://www.twig-project.org
+.. _`Twig`: http://twig.sensiolabs.org
 .. _`third-party bundles`: http://symfony2bundles.org/
 .. _`Symfony Standard Edition`: http://symfony.com/download
