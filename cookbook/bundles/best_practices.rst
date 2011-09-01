@@ -59,6 +59,12 @@ class name.
     and always add a ``Bundle`` subnamespace; for example:
     :class:`Symfony\\Bundle\\FrameworkBundle\\FrameworkBundle`.
 
+Each bundle has an alias, which is the lower-cased short version of the bundle
+name using underscores (``acme_hello`` for ``AcmeHelloBundle``, or
+``acme_social_blog`` for ``Acme\Social\BlogBundle`` for instance). This alias
+is used to enforce uniqueness within a bundle (see below for some usage
+examples).
+
 Directory Structure
 -------------------
 
@@ -109,21 +115,23 @@ The following classes and files have specific emplacements:
 +------------------------------+-----------------------------+
 | Type                         | Directory                   |
 +==============================+=============================+
+| Commands                     | ``Command/``                |
++------------------------------+-----------------------------+
 | Controllers                  | ``Controller/``             |
++------------------------------+-----------------------------+
+| Service Container Extensions | ``DependencyInjection/``    |
++------------------------------+-----------------------------+
+| Event Listeners              | ``EventListener/``          |
++------------------------------+-----------------------------+
+| Configuration                | ``Resources/config/``       |
++------------------------------+-----------------------------+
+| Web Resources                | ``Resources/public/``       |
 +------------------------------+-----------------------------+
 | Translation files            | ``Resources/translations/`` |
 +------------------------------+-----------------------------+
 | Templates                    | ``Resources/views/``        |
 +------------------------------+-----------------------------+
 | Unit and Functional Tests    | ``Tests/``                  |
-+------------------------------+-----------------------------+
-| Web Resources                | ``Resources/public/``       |
-+------------------------------+-----------------------------+
-| Configuration                | ``Resources/config/``       |
-+------------------------------+-----------------------------+
-| Commands                     | ``Command/``                |
-+------------------------------+-----------------------------+
-| Service Container Extensions | ``DependencyInjection/``    |
 +------------------------------+-----------------------------+
 
 Classes
@@ -177,7 +185,8 @@ All classes and functions must come with full PHPDoc.
 
 Extensive documentation should also be provided in the :doc:`reStructuredText
 </contributing/documentation/format>` format, under the ``Resources/doc/``
-directory; the ``Resources/doc/index.rst`` file is the only mandatory file.
+directory; the ``Resources/doc/index.rst`` file is the only mandatory file and
+must be the entry point for the documentation.
 
 Controllers
 -----------
@@ -195,6 +204,13 @@ instead.
     If you have a look at
     :class:`Symfony\\Bundle\\FrameworkBundle\\Controller\\Controller` methods,
     you will see that they are only nice shortcuts to ease the learning curve.
+
+Routing
+-------
+
+If the bundle provides routes, they must be prefixed with the bundle alias.
+For an AcmeBlogBundle for instance, all routes must be prefixed with
+``acme_blog_``.
 
 Templates
 ---------
@@ -218,12 +234,10 @@ using the Symfony2 built-in mechanisms.
 
 For simple configuration settings, rely on the default ``parameters`` entry of
 the Symfony2 configuration. Symfony2 parameters are simple key/value pairs; a
-value being any valid PHP value. Each parameter name should start with a
-lower-cased short version of the bundle name using underscores (``acme_hello``
-for ``AcmeHelloBundle``, or ``acme_social_blog`` for ``Acme\Social\BlogBundle``
-for instance), though this is just a best-practice suggestion. The rest of
-the parameter name will use a period (``.``) to separate different parts
-(e.g. ``acme_hello.email.from``).
+value being any valid PHP value. Each parameter name should start with the
+bundle alias, though this is just a best-practice suggestion. The rest of the
+parameter name will use a period (``.``) to separate different parts (e.g.
+``acme_hello.email.from``).
 
 The end user can provide values in any configuration file:
 
@@ -258,6 +272,11 @@ Retrieve the configuration parameters in your code from the container::
 
 Even if this mechanism is simple enough, you are highly encouraged to use the
 semantic configuration described in the cookbook.
+
+.. note::
+
+    If you are defining services, they should also be prefixed with the bundle
+    alias.
 
 Learn more from the Cookbook
 ----------------------------
