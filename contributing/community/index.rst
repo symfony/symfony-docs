@@ -1,4 +1,4 @@
-Contributing Code
+Community
 =================
 
 .. toctree::
