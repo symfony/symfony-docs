@@ -28,10 +28,10 @@ check that the profiler is indeed available (it is enabled by default in the
             // Check that the profiler is enabled
             if ($profile = $client->getProfile()) {
                 // check the number of requests
-                $this->assertTrue($profile->get('db')->getQueryCount() < 10);
+                $this->assertTrue($profile->getCollector('db')->getQueryCount() < 10);
 
                 // check the time spent in the framework
-                $this->assertTrue( $profile->get('timer')->getTime() < 0.5);
+                $this->assertTrue( $profile->getCollector('timer')->getTime() < 0.5);
             }
         }
     }
