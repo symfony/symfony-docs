@@ -24,9 +24,11 @@ Configuration
 * `csrf_protection`_
     * :ref:`enabled<config-framework-csrf-enabled>`
     * `field_name`
+* `session`_
+    * `lifetime`_
 
 charset
-.......
+~~~~~~~
 
 **type**: ``string`` **default**: ``UTF-8``
 
@@ -34,7 +36,7 @@ The character set that's used throughout the framework. It becomes the service
 container parameter named ``kernel.charset``.
 
 secret
-......
+~~~~~~
 
 **type**: ``string`` **required**
 
@@ -44,7 +46,7 @@ context where having a unique string is useful. It becomes the service container
 parameter named ``kernel.secret``.
 
 ide
-...
+~~~
 
 **type**: ``string`` **default**: ``null``
 
@@ -73,7 +75,7 @@ PHP.ini value to the file link string. If this configuration value is set, then
 the ``ide`` option does not need to be specified.
 
 test
-....
+~~~~
 
 **type**: ``Boolean``
 
@@ -83,11 +85,20 @@ testing your application are loaded. This setting should be present in your
 information, see :doc:`/book/testing`.
 
 form
-....
+~~~~
 
 csrf_protection
 ...............
 
+session
+~~~~~~~
+
+lifetime
+........
+
+**type**: ``integer`` **default**: ``86400``
+
+This determines the lifetime of the session - in seconds.
 
 Full Default Configuration
 --------------------------
@@ -141,7 +152,7 @@ Full Default Configuration
                 default_locale:       en
                 storage_id:           session.storage.native
                 name:                 ~
-                lifetime:             ~
+                lifetime:             86400
                 path:                 ~
                 domain:               ~
                 secure:               ~
