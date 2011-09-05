@@ -84,7 +84,7 @@ Along the way, the cache will store each response that is deemed "cacheable"
 the cache sends the cached response to the client, ignoring your application
 entirely.
 
-This type of cache is knows as an HTTP gateway cache and many exist such
+This type of cache is known as a HTTP gateway cache and many exist such
 as `Varnish`_, `Squid in reverse proxy mode`_, and the Symfony2 reverse proxy.
 
 .. index::
@@ -140,7 +140,7 @@ application comes with a pre-configured caching kernel (``AppCache``) that
 wraps the default one (``AppKernel``). The caching Kernel *is* the reverse
 proxy.
 
-To enabling caching, modify the code of a front controller to use the caching
+To enable caching, modify the code of a front controller to use the caching
 kernel::
 
     // web/app.php
@@ -636,7 +636,7 @@ exposing a simple and efficient pattern::
     {
         // Get the minimum information to compute
         // the ETag or the Last-Modified value
-        // (based on the Request, data are retrieved from
+        // (based on the Request, data is retrieved from
         // a database or a key-value store for instance)
         $article = // ...
 
@@ -717,7 +717,7 @@ Expiration and Validation
 You can of course use both validation and expiration within the same ``Response``.
 As expiration wins over validation, you can easily benefit from the best of
 both worlds. In other words, by using both expiration and validation, you
-can instruct the cache to server the cached content, while checking back
+can instruct the cache to serve the cached content, while checking back
 at some interval (the expiration) to verify that the content is still valid.
 
 .. index::
