@@ -939,7 +939,9 @@ the ``_internal`` route:
 
     Since this route allows all actions to be accessed via a URL, you might
     want to protect it by using the Symfony2 firewall feature (by allowing
-    access to your reverse proxy's IP range).
+    access to your reverse proxy's IP range). See the 
+    :doc:`Security Configuration Reference </reference/configuration/security>` 
+    for more information on how to do this.
 
 One great advantage of this caching strategy is that you can make your
 application as dynamic as needed and at the same time, hit the application as
