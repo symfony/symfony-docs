@@ -21,12 +21,18 @@ need.
 Usage
 -----
 
+.. versionadded:: 2.1
+   The ``useIncludePath`` method was added in Symfony 2.1.
+
 Registering the :class:`Symfony\\Component\\ClassLoader\\UniversalClassLoader`
 autoloader is straightforward::
 
     require_once '/path/to/src/Symfony/Component/ClassLoader/UniversalClassLoader.php';
 
     use Symfony\Component\ClassLoader\UniversalClassLoader;
+
+    // Search the include_path as a last resort.
+    $loader->useIncludePath(true);
 
     $loader = new UniversalClassLoader();
     $loader->register();

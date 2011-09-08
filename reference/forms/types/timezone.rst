@@ -21,6 +21,7 @@ you should just use the ``choice`` type directly.
 | Inherited   | - `multiple`_                                                          |
 | options     | - `expanded`_                                                          |
 |             | - `preferred_choices`_                                                 |
+|             | - `empty_value`_                                                       |
 |             | - `error_bubbling`_                                                    |
 |             | - `required`_                                                          |
 |             | - `label`_                                                             |
@@ -41,6 +42,8 @@ These options inherit from the :doc:`choice</reference/forms/types/choice>` type
 .. include:: /reference/forms/types/options/expanded.rst.inc
 
 .. include:: /reference/forms/types/options/preferred_choices.rst.inc
+
+.. include:: /reference/forms/types/options/empty_value.rst.inc
 
 These options inherit from the :doc:`field</reference/forms/types/field>` type:
 

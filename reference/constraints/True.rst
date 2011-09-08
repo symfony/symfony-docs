@@ -1,28 +1,35 @@
 True
 ====
 
-Validates that a value is ``true``.
+Validates that a value is ``true``. Specifically, this checks to see if
+the value is exactly ``true``, exactly the integer ``1``, or exactly the
+string "``1``".
 
-.. code-block:: yaml
+Also see :doc:`False <False>`.
 
-    properties:
-        termsAccepted:
-            - "True": ~
++----------------+---------------------------------------------------------------------+
+| Applies to     | :ref:`property or method<validation-property-target>`               |
++----------------+---------------------------------------------------------------------+
+| Options        | - `message`_                                                        |
++----------------+---------------------------------------------------------------------+
+| Class          | :class:`Symfony\\Component\\Validator\\Constraints\\True`           |
++----------------+---------------------------------------------------------------------+
+| Validator      | :class:`Symfony\\Component\\Validator\\Constraints\\TrueValidator`  |
++----------------+---------------------------------------------------------------------+
 
-Options
--------
+Basic Usage
+-----------
 
-* ``message``: The error message if validation fails
-
-Example
--------
-
-This constraint is very useful to execute custom validation logic. You can
-put the logic in a method which returns either ``true`` or ``false``.
+This constraint can be applied to properties (e.g. a ``termsAccepted`` property
+on a registration model) or to a "getter" method. It's most powerful in the
+latter case, where you can assert that a method returns a true value. For
+example, suppose you have the following method:
 
 .. code-block:: php
 
-    // Acme/HelloBundle/Author.php
+    // src/Acme/BlogBundle/Entity/Author.php
+    namespace Acme\BlogBundle\Entity;
+
     class Author
     {
         protected $token;
@@ -39,26 +46,15 @@ Then you can constrain this method with ``True``.
 
     .. code-block:: yaml
 
-        # src/Acme/HelloBundle/Resources/config/validation.yml
-        Acme\HelloBundle\Author:
+        # src/Acme/BlogBundle/Resources/config/validation.yml
+        Acme\BlogBundle\Entity\Author:
             getters:
                 tokenValid:
                     - "True": { message: "The token is invalid" }
 
-    .. code-block:: xml
-
-        <!-- src/Acme/HelloBundle/Resources/config/validation.xml -->
-        <class name="Acme\HelloBundle\Author">
-            <getter name="tokenValid">
-                <constraint name="True">
-                    <option name="message">The token is invalid</option>
-                </constraint>
-            </getter>
-        </class>
-
     .. code-block:: php-annotations
 
-        // src/Acme/HelloBundle/Author.php
+        // src/Acme/BlogBundle/Entity/Author.php
         use Symfony\Component\Validator\Constraints as Assert;
 
         class Author
@@ -74,9 +70,27 @@ Then you can constrain this method with ``True``.
             }
         }
 
+    .. code-block:: xml
+
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <!-- src/Acme/Blogbundle/Resources/config/validation.xml -->
+
+        <constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
+
+            <class name="Acme\BlogBundle\Entity\Author">
+                <getter property="tokenValid">
+                    <constraint name="True">
+                        <option name="message">The token is invalid...</option>
+                    </constraint>
+                </getter>
+            </class>
+        </constraint-mapping>
+
     .. code-block:: php
 
-        // src/Acme/HelloBundle/Author.php
+        // src/Acme/BlogBundle/Entity/Author.php
         use Symfony\Component\Validator\Mapping\ClassMetadata;
         use Symfony\Component\Validator\Constraints\True;
         
@@ -97,10 +111,14 @@ Then you can constrain this method with ``True``.
             }
         }
 
-If the validation of this method fails, you will see a message similar to
-this:
+If the ``isTokenValid()`` returns false, the validation will fail.
 
-.. code-block:: text
+Options
+-------
 
-    Acme\HelloBundle\Author.tokenValid:
-        This value should not be null
+message
+~~~~~~~
+
+**type**: ``string`` **default**: ``This value should be true``
+
+This message is shown if the underlying data is not true.

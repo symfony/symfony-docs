@@ -1,15 +1,54 @@
 DateTime
 ========
 
-Validates that a value is a valid datetime string with format "YYYY-MM-DD HH:MM:SS".
+Validates that a value is a valid "datetime", meaning either a ``DateTime``
+object or a string (or an object that can be cast into a string) that follows
+a valid YYYY-MM-DD HH:MM:SS format.
 
-.. code-block:: yaml
++----------------+------------------------------------------------------------------------+
+| Applies to     | :ref:`property or method<validation-property-target>`                  |
++----------------+------------------------------------------------------------------------+
+| Options        | - `message`_                                                           |
++----------------+------------------------------------------------------------------------+
+| Class          | :class:`Symfony\\Component\\Validator\\Constraints\\DateTime`          |
++----------------+------------------------------------------------------------------------+
+| Validator      | :class:`Symfony\\Component\\Validator\\Constraints\\DateTimeValidator` |
++----------------+------------------------------------------------------------------------+
 
-    properties:
-        createdAt:
-            - DateTime: ~
+Basic Usage
+-----------
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # src/Acme/EventBundle/Resources/config/validation.yml
+        Acme\BlobBundle\Entity\Author:
+            properties:
+                createdAt:
+                    - DateTime: ~
+
+    .. code-block:: php-annotations
+
+        // src/Acme/BlogBundle/Entity/Author.php
+        namespace Acme\BlogBundle\Entity;
+        
+        use Symfony\Component\Validator\Constraints as Assert;
+
+        class Author
+        {
+            /**
+             * @Assert\DateTime()
+             */
+             protected $createdAt;
+        }
 
 Options
 -------
 
-* ``message``: The error message if the validation fails
+message
+~~~~~~~
+
+**type**: ``string`` **default**: ``This value is not a valid datetime``
+
+This message is shown if the underlying data is not a valid datetime.

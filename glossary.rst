@@ -100,7 +100,7 @@ Glossary
         The *Kernel* is the core of Symfony2. The Kernel object handles HTTP
         requests using all the bundles and libraries registered to it. See
         :ref:`The Architecture: The Application Directory <the-app-dir>` and the
-        :doc:`/book/internals/kernel` chapter.
+        :doc:`/book/internals` chapter.
 
    Firewall
         In Symfony2, a *Firewall* doesn't have to do with networking. Instead,
@@ -114,8 +114,6 @@ Glossary
         lightweight, humane data serialization language used extensively in
         Symfony2's configuration files.  See the :doc:`/reference/YAML` reference
         chapter.
-
-
 
 
 .. _`service-oriented architecture`: http://wikipedia.org/wiki/Service-oriented_architecture

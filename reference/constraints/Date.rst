@@ -6,7 +6,7 @@ or a string (or an object that can be cast into a string) that follows a
 valid YYYY-MM-DD format.
 
 +----------------+--------------------------------------------------------------------+
-| Applies to     | :ref:`property<validation-property-target>`                        |
+| Applies to     | :ref:`property or method<validation-property-target>`              |
 +----------------+--------------------------------------------------------------------+
 | Options        | - `message`_                                                       |
 +----------------+--------------------------------------------------------------------+
@@ -22,9 +22,11 @@ Basic Usage
 
     .. code-block:: yaml
 
-        properties:
-            birthday:
-                - Date: ~
+        # src/Acme/BlogBundle/Resources/config/validation.yml
+        Acme\BlogBundle\Entity\Author:
+            properties:
+                birthday:
+                    - Date: ~
 
     .. code-block:: php-annotations
 

@@ -500,7 +500,15 @@ Field Type Options Guessing
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 In addition to guessing the "type" for a field, Symfony can also try to guess
-the correct values of a number of field options:
+the correct values of a number of field options.
+
+.. tip::
+
+    When these options are set, the field will be rendered with special HTML
+    attributes that provide for HTML5 client-side validation. However, it
+    doesn't generate the equivalent server-side constraints (e.g. ``Assert\MaxLength``).
+    And though you'll need to manually add your server-side validation, these
+    field type options can then be guessed from that information.
 
 * ``required``: The ``required`` option can be guessed based off of the validation
   rules (i.e. is the field ``NotBlank`` or ``NotNull``) or the Doctrine metadata

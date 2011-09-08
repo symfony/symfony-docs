@@ -47,15 +47,19 @@ Symfony2 adds automatically:
     sub vcl_fetch {
         if (beresp.http.Surrogate-Control ~ "ESI/1.0") {
             unset beresp.http.Surrogate-Control;
-            esi;
+
+            // for Varnish >= 3.0
+            set beresp.do_esi = true;
+            // for Varnish < 3.0
+            // esi;
         }
     }
 
 .. caution::
 
-    Don't use compression with ESI as Varnish won't be able to parse the
-    response content. If you want to use compression, put a web server in
-    front of Varnish to do the job.
+    Compression with ESI was not supported in Varnish until version 3.0
+    (read `GZIP and Varnish`_). If you're not using Varnish 3.0, put a web
+    server in front of Varnish to perform the compression.
 
 .. index::
     single: Varnish; Invalidation
@@ -90,3 +94,4 @@ that will invalidate the cache for a given resource:
     purging your cached data.
 
 .. _`Edge Architecture`: http://www.w3.org/TR/edge-arch
+.. _`GZIP and Varnish`: https://www.varnish-cache.org/docs/3.0/phk/gzip.html

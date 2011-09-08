@@ -1,5 +1,5 @@
-Contributing Code
-=================
+Community
+=========
 
 .. toctree::
     :maxdepth: 2

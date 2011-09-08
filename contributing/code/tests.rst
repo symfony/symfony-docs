@@ -24,12 +24,12 @@ dependencies, Symfony2 needs to be able to autoload them. By default, they are
 autoloaded from `vendor/` under the main root directory (see
 `autoload.php.dist`).
 
-The test suite need the following third-party libraries:
+The test suite needs the following third-party libraries:
 
 * Doctrine
-* Doctrine Migrations
 * Swiftmailer
 * Twig
+* Monolog
 
 To install them all, run the `vendors` script:
 

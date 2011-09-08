@@ -286,10 +286,20 @@ additional arguments of the ``request()`` method::
     $client->request('POST', '/submit', array('name' => 'Fabien'));
 
     // Form submission with a file upload
-    $client->request('POST', '/submit', array('name' => 'Fabien'), array('photo' => '/path/to/photo'));
+    use Symfony\Component\HttpFoundation\File\UploadedFile;
+
+    $photo = new UploadedFile('/path/to/photo.jpg', 'photo.jpg', 'image/jpeg', 123);
+    // or
+    $photo = array('tmp_name' => '/path/to/photo.jpg', 'name' => 'photo.jpg', 'type' => 'image/jpeg', 'size' => 123, 'error' => UPLOAD_ERR_OK);
+
+    $client->request('POST', '/submit', array('name' => 'Fabien'), array('photo' => $photo));
 
     // Specify HTTP headers
     $client->request('DELETE', '/post/12', array(), array(), array('PHP_AUTH_USER' => 'username', 'PHP_AUTH_PW' => 'pa$$word'));
+
+.. tip::
+
+    Form submissions are greatly simplified by using a crawler object (see below).
 
 When a request returns a redirect response, the client automatically follows
 it. This behavior can be changed with the ``followRedirects()`` method::
