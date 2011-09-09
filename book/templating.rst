@@ -779,6 +779,12 @@ should render with the subdirectory (e.g. ``/my_app/images/logo.png``). The
 ``asset`` function takes care of this by determining how your application is
 being used and generating the correct paths accordingly.
 
+Additionally, if you use the ``asset`` function, Symfony can automatically
+append a query string to your asset, in order to guarantee that updated static
+assets won't be cached when deployed. For example, ``/images/logo.png`` might
+look like ``/images/logo.png?v2``. For more information, see the :ref:`ref-framework-assets-version`
+configuration option.
+
 .. index::
    single: Templating; Including stylesheets and Javascripts
    single: Stylesheets; Including stylesheets
