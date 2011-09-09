@@ -1,4 +1,4 @@
-.. index::
+phpunit.. index::
    single: Tests; Doctrine
 
 How to test Doctrine Repositories
@@ -195,6 +195,6 @@ which makes all of this quite easy::
                 ->searchProductsByNameQuery('foo')
                 ->getResult();
 
-            $this->assertEquals(count($results), 1);
+            $this->assertEquals(1, count($results));
         }
     }
