@@ -32,6 +32,10 @@ autoloader is straightforward::
     use Symfony\Component\ClassLoader\UniversalClassLoader;
 
     $loader = new UniversalClassLoader();
+
+    // You can search the include_path as a last resort.
+    $loader->useIncludePath(true);
+
     $loader->register();
 
 For minor performance gains class paths can be cached in memory using APC by
