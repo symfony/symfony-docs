@@ -504,7 +504,7 @@ automatically by Symfony2. If not, override the Bundle
 :method:`Symfony\\Component\\HttpKernel\\Bundle\\Bundle::build` method in
 your bundle::
 
-    use Acme\HelloBundle\DependencyInjection\ExtensionHello;
+    use Acme\HelloBundle\DependencyInjection\HelloExtension;
 
     class AcmeHelloBundle extends Bundle
     {
@@ -513,7 +513,7 @@ your bundle::
             parent::build($container);
 
             // register extensions that do not follow the conventions manually
-            $container->registerExtension(new ExtensionHello());
+            $container->registerExtension(new HelloExtension());
         }
     }
 
