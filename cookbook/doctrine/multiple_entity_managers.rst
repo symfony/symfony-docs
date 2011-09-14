@@ -34,7 +34,7 @@ The following configuration code shows how you can configure two entity managers
                             AcmeCustomerBundle: ~
 
 In this case, you've defined two entity managers and called them ``default``
-and ``customer``. The ``default`` entity manager manages entities of in the
+and ``customer``. The ``default`` entity manager manages entities in the
 ``AcmeDemoBundle`` and ``AcmeStoreBundle``, while the ``customer`` entity
 manager manages entities in the ``AcmeCustomerBundle``.
 
