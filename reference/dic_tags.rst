@@ -112,9 +112,9 @@ will be called:
 
 .. note::
 
-    You can also specify a priority as a positive or negative integer, which
-    allows you to make sure your listener will always be called before or after
-    another one.
+    You can also specify a priority tag as a positive or negative integer, 
+    which allows you to make sure your listener will always be called before
+    or after another one.
 
 Enabling Custom Template Engines
 --------------------------------
