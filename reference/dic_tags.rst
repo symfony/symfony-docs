@@ -112,9 +112,10 @@ will be called:
 
 .. note::
 
-    You can also specify a priority as a positive or negative integer, which
-    allows you to make sure your listener will always be called before or after
-    another one.
+    You can also specify priority as an attribute of the kernel.event_listener 
+    tag (much like the method or event attributes), with either a positive 
+    or negative integer. This allows you to make sure your listener will always 
+    be called before or after another listener listening for the same event.
 
 Enabling Custom Template Engines
 --------------------------------
