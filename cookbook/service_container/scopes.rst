@@ -1,42 +1,70 @@
-How to Work with scopes
+How to work with Scopes
 =======================
 
-Understanding the Scopes
-------------------------
+This entry is all about scopes, a somewhat advanced topic related to the
+:doc:`/book/service_container`. If you've ever gotten an error mentioning
+"scopes" when creating services, or need to create a service that depends
+on the `request` service, then this entry is for you.
+
+Understanding Scopes
+--------------------
 
 The scope of a service controls how long an instance of a service is used
-by the container. the Dependency Injection component provides the two generic
+by the container. the Dependency Injection component provides two generic
 scopes:
 
 - `container` (the default one): The same instance is used each time you
   request it from this container.
+
 - `prototype`: A new instance is created each time you request the service.
 
-FrameworkBundle defines the `request` scope between them. This scopes is
-tied to the request, so a new instance will be created for each subrequest
+The FrameworkBundle also defines a third scope: `request`. This scopes is
+tied to the request, meaning a new instance is created for each subrequest
 and is unavailable outside the request (for instance in the CLI).
 
-The scope adds a constraint on the dependencies of a service: a service cannot
-depend on services from a narrower scope. Using such a pattern will lead
-to a :class:Symfony\\Component\\DependencyInjection\\Exception\\ScopeWideningInjectionException`
-when compiling the container.
+Scopes add a constraint on the dependencies of a service: a service cannot
+depend on services from a narrower scope. For example, if you create a generic
+`my_foo` service, but try to inject the `request` component, you'll receive
+a :class:`Symfony\\Component\\DependencyInjection\\Exception\\ScopeWideningInjectionException`
+when compiling the container. Read the sidebar below for more details.
 
-.. sidebar:: Understanding the constraint on the scope of dependencies
+.. sidebar:: Scopes and Dependencies
 
-    Let's imagine that your service A has a dependency to a service B from
-    a narrower scope. Here is what occurs:
+    Imagine you've configured a `my_mailer` service. You haven't configured
+    the scope of the service, so it defaults to `container`. In other words,
+    everytime you ask the container for the `my_mailer` service, you get
+    the same object back. This is usually how you want your services to work.
+    
+    Imagine, however, that you need the `request` service in your `my_mailer`
+    service, maybe because you're reading the URL of the current request.
+    So, you add it as a constructor argument. Let's look at why this presents
+    a problem:
 
-    - When requesting A, an instance B1 is created for B and injected in A1.
-    - When entering the new narrow scope (doing a subrequest for the `request`
-      scope for instance), the container will need to create a B2 instance
-      for the service B as B1 is now obsolete.
-    - When requesting A, the container will reuse A1 (as it is still the
-      good scope) which still contains the obsolete B1 instance.
+    * When requesting `my_mailer`, an instance of `my_mailer` (let's call
+      it *MailerA*) is created and the `request` service is (let's call it
+      *RequestA* is passed to it). Life is good!
+
+    * You've now made a subrequest in Symfony, which is a fancy way of saying
+      that you've called, for example, the `{% render ... %}` Twig function,
+      which executes another controller. Internally, the old `request` service
+      (*RequestA*) is actually replaced by a new request instance (*RequestB*).
+      This happens in the background, and it's totally normal.
+
+    * In your embedded controller, you once again ask for the `my_mailer`
+      service. Since your service is in the `container` scope, the same
+      instance (*MailerA*) is just re-used. But here's the problem: the
+      *MailerA* instance still contains the old *RequestA* object, which
+      is now **not** the correct request object to have (*RequestB* is now
+      the current `request` service). This is subtle, but the mis-match could
+      cause major problems, which is why it's not allowed.
+
+      So, that's the reason *why* scopes exists, and how they can cause
+      problems. Keep reading to find out the common solutions.
 
 .. note::
 
     A service can of course depend on a service from a wider scope without
-    any issue.
+    any issue. 
 
 Setting the Scope in the Definition
 -----------------------------------
@@ -70,16 +98,23 @@ The scope of a service is defined in the definition of the service:
             new Definition('Acme\HelloBundle\Mail\GreetingCardManager')
         )->setScope('request');
 
+If you don't specify the scope, it defaults to `container`, which is what
+you want most of the time. Unless your service depends on another service
+that's scoped to a narrower scope (most commonly, the `request` service),
+you probably don't need to set the scope.
+
 Using a Service from a narrower Scope
 -------------------------------------
 
-If your service depends of a scoped service, the best solution is to put
-it in the same scope (or a narrower one). But this is not always possible
-(for instance, a twig extension must be in the `container` scope as the Twig
-environment needs it as a dependency).
+If your service depends on a scoped service, the best solution is to put
+it in the same scope (or a narrower one). Usually, this means putting your
+new service in the `request` service.
 
-Using a service from a narrower scope requires retrieving it from the container
-each time we need it to be sure to have the good instance.
+But this is not always possible (for instance, a twig extension must be in
+the `container` scope as the Twig environment needs it as a dependency).
+In these cases, you should pass the entire container into your service and
+retrieve your dependency from the container each time we need it to be sure
+you have the right instance::
 
     namespace Acme\HelloBundle\Mail;
 
@@ -104,7 +139,7 @@ each time we need it to be sure to have the good instance.
 .. warning::
 
     Take care not to store the request in a property of the object for a
-    future call of the service as it would be the same issue than described
+    future call of the service as it would be the same issue described
     in the first section (except that symfony cannot detect that you are
     wrong).
 
@@ -155,5 +190,6 @@ The service config for this class would look something like this:
 
 .. note::
 
-    Injecting the whole container in a service is generally a sign of an
-    issue in the design but this is a valid use case.
+    Injecting the whole container into a service is generally not a good
+    idea (only inject what you need). In some rare cases, like when working
+    with Twig extensions, its necessary to due a shortcoming in Twig itself.
