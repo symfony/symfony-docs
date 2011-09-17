@@ -21,6 +21,7 @@ for. Here is the list of the official *master* repositories:
 * *Romanian*: http://github.com/sebio/symfony-docs-ro
 * *Japanese*: https://github.com/symfony-japan/symfony-docs-ja
 * *Italian*:  https://github.com/garak/symfony-docs-it
+* *Polish*: http://github.com/ampluso/symfony-docs-pl
 
 .. note::
 
