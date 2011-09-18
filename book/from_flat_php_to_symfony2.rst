@@ -620,6 +620,8 @@ When Symfony2's engine (called the ``Kernel``) boots up, it needs a map so
 that it knows which controllers to execute based on the request information.
 A routing configuration map provides this information in a readable format::
 
+.. code-block:: yaml
+
     # app/config/routing.yml
     blog_list:
         pattern:  /blog
