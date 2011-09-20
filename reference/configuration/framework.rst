@@ -263,7 +263,7 @@ Full Default Configuration
             # templating configuration
             templating:
                 assets_version:       ~
-                assets_version_format:  "%s?%s"
+                assets_version_format:  "%%s?%%s"
                 assets_base_urls:
                     http:                 []
                     ssl:                  []
