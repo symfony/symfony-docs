@@ -20,6 +20,7 @@ Required
 --------
 
 * PHP needs to be a minimum version of PHP 5.3.2
+* Sqlite3 needs to be enabled
 * JSON needs to be enabled
 * ctype needs to be enabled
 * Your PHP.ini needs to have the date.timezone setting
