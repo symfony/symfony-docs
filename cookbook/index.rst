@@ -33,6 +33,7 @@ Cookbook
     configuration/external_parameters
     service_container/factories
     service_container/parentservices
+    service_container/scopes
     configuration/pdo_session_storage
 
     bundles/best_practices

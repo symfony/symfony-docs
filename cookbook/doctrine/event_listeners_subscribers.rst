@@ -85,6 +85,7 @@ a ``postSave`` method, which will be called when the event is thrown::
     namespace Acme\SearchBundle\Listener;
     
     use Doctrine\ORM\Event\LifecycleEventArgs;
+    use Acme\StoreBundle\Entity\Product;
     
     class SearchIndexer
     {
@@ -94,7 +95,7 @@ a ``postSave`` method, which will be called when the event is thrown::
             $entityManager = $args->getEntityManager();
             
             // perhaps you only want to act on some "Product" entity
-            if ($entity instanceof Acme\StoreBundle\Entity\Product) {
+            if ($entity instanceof Product) {
                 // do something with the Product
             }
         }

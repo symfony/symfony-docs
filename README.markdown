@@ -3,8 +3,8 @@ Symfony Documentation
 
 This documentation is rendered online at http://symfony.com/doc/current/
 
-Contibuting
------------
+Contributing
+------------
 
 >**Note** 
 >Unless you're documenting a feature that's new to Symfony 2.1, all pull

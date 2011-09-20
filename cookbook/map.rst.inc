@@ -42,6 +42,7 @@
   * :doc:`/cookbook/configuration/external_parameters`
   * :doc:`/cookbook/service_container/factories`
   * :doc:`/cookbook/service_container/parentservices`
+  * :doc:`/cookbook/service_container/scopes`
   * :doc:`/cookbook/configuration/pdo_session_storage`
 
 * **Bundles**
