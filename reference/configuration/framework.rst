@@ -27,6 +27,7 @@ Configuration
 * `session`_
     * `lifetime`_
 * `templating`_
+    * `assets_base_urls`_
     * `assets_version`_
     * `assets_version_format`_
 
@@ -105,6 +106,23 @@ This determines the lifetime of the session - in seconds.
 
 templating
 ~~~~~~~~~~
+
+assets_base_urls
+................
+
+**default**: ``{ http: [], https: [] }``
+
+This option allows you to define base URL's to be used for assets referenced
+from ``http`` and ``https`` pages. A string value may be provided in lieu of a
+single-element array. If multiple base URL's are provided, Symfony2 will select
+one from the collection each time it generates an asset's path.
+
+For your convenience, ``assets_base_urls`` can be set directly with a string or
+array of strings, which will be automatically organized into collections of base
+URL's for ``http`` and ``https`` requests. If a URL starts with ``https://`` or
+is `protocol-relative`_ (i.e. starts with `//`) it will be added to both
+collections. URL's starting with ``http://`` will only be added to the
+``http`` collection.
 
 .. _ref-framework-assets-version:
 
@@ -302,4 +320,5 @@ Full Default Configuration
                 file_cache_dir:       %kernel.cache_dir%/annotations
                 debug:                true
 
+.. _`protocol-relative`: http://tools.ietf.org/html/rfc3986#section-4.2
 .. _`sprintf()`: http://php.net/manual/en/function.sprintf.php
