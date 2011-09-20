@@ -302,4 +302,4 @@ Full Default Configuration
                 file_cache_dir:       %kernel.cache_dir%/annotations
                 debug:                true
 
-.. _sprintf(): http://php.net/manual/en/function.sprintf.php
+.. _`sprintf()`: http://php.net/manual/en/function.sprintf.php
