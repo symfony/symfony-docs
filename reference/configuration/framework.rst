@@ -104,6 +104,7 @@ lifetime
 This determines the lifetime of the session - in seconds.
 
 templating
+~~~~~~~~~~
 
 .. _ref-framework-assets-version:
 
