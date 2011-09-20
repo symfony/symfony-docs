@@ -170,12 +170,37 @@ option.
 assets_version_format
 .....................
 
-**type**: ``string`` **default**: ``%s?%s``
+**type**: ``string`` **default**: ``%%s?%%s``
 
-This option relates to the `assets_version`_ option and controls exactly
-how the query string is constructed. For example, if ``assets_version_format``
-is set to ``%s?version=%s`` and ``assets_version`` is set to ``5``, rendered
-assets would look like ``/images/logo.png?version=5``.
+This specifies a `sprintf()`_ pattern that will be used with the `assets_version`_
+option to construct an asset's path. By default, the pattern adds the asset's
+version as a query string. For example, if ``assets_version_format`` is set to
+``%%s?version=%%s`` and ``assets_version`` is set to ``5``, the asset's path
+would be ``/images/logo.png?version=5``.
+
+.. note::
+
+    All percentage signs (``%``) in the format string must be doubled to escape
+    the character. Without escaping, values might inadvertently be interpretted
+    as :ref:`_book-service-container-parameters`.
+
+.. tip::
+
+    Some CDN's do not support cache-busting via query strings, so injecting the
+    version into the actual file path is necessary. Thankfully, ``assets_version_format``
+    is not limited to producing versioned query strings.
+
+    The pattern receives the asset's original path and version as its first and
+    second parameters, respectively. Since the asset's path is one parameter, we
+    cannot modify it in-place (e.g. ``/images/logo-v5.png``); however, we can
+    prefix the asset's path using a pattern of ``version-%%2$s/%%1$s``, which
+    would result in the path ``version-5/images/logo.png``.
+
+    URL rewrite rules could then be used to disregard the version prefix before
+    serving the asset. Alternatively, you could copy assets to the appropriate
+    version path as part of your deployment process and forgo any URL rewriting.
+    The latter option is useful if you would like older asset versions to remain
+    accessible at their original URL.
 
 Full Default Configuration
 --------------------------
@@ -277,5 +302,4 @@ Full Default Configuration
                 file_cache_dir:       %kernel.cache_dir%/annotations
                 debug:                true
 
-
-
+.. _sprintf(): http://php.net/manual/en/function.sprintf.php
