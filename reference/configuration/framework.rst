@@ -124,6 +124,16 @@ is `protocol-relative`_ (i.e. starts with `//`) it will be added to both
 collections. URL's starting with ``http://`` will only be added to the
 ``http`` collection.
 
+.. versionadded:: 2.1
+
+    Unlike most configuration blocks, successive values for ``assets_base_urls``
+    will overwrite each other instead of being merged. This behavior was chosen
+    because developers will typically define base URL's for each environment.
+    Given that most projects tend to inherit configurations
+    (e.g. ``config_test.yml`` imports ``config_dev.yml``) and/or share a common
+    base configuration (i.e. ``config.yml``), merging could yield a set of base
+    URL's for multiple environments.
+
 .. _ref-framework-assets-version:
 
 assets_version
