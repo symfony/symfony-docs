@@ -351,7 +351,7 @@ The ``FrameworkBundle`` registers several listeners:
 
 *Event Class*: :class:`Symfony\\Component\\HttpKernel\\Event\\GetResponseForExceptionEvent`
 
-``FrameworkBundle`` registers a
+``FrameworkBundle`` registers an
 :class:`Symfony\\Component\\HttpKernel\\EventListener\\ExceptionListener` that
 forwards the ``Request`` to a given Controller (the value of the
 ``exception_listener.controller`` parameter -- must be in the
@@ -413,7 +413,7 @@ used. To make this possible, the Symfony2 kernel throws an event -
   access to the ``Response`` object;
 
 * The dispatcher notifies (i.e. calls a method on) all listeners of the
-  ``kernel.response`` event, allowing each of them to make any modification to
+  ``kernel.response`` event, allowing each of them to make modifications to
   the ``Response`` object.
 
 .. index::
