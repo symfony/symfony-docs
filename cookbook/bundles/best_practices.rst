@@ -86,6 +86,7 @@ follows:
                 translations/
                 views/
                 public/
+                fixtures/
             Tests/
 
 The ``XXX`` directory(ies) reflects the namespace structure of the bundle.
@@ -133,6 +134,8 @@ The following classes and files have specific emplacements:
 +------------------------------+-----------------------------+
 | Unit and Functional Tests    | ``Tests/``                  |
 +------------------------------+-----------------------------+
+| Test fixtures                | ``Resources/fixtures/``     |
++------------------------------+-----------------------------+
 
 Classes
 -------
@@ -173,6 +176,8 @@ the ``Tests/`` directory. Tests should follow the following principles:
 * The functional tests should only be used to test the response output and
   some profiling information if you have some;
 * The code coverage should at least covers 95% of the code base.
+* Any fixtures needed for the tests should be placed in the ``Resources/fixtures``.
+
 
 .. note::
    A test suite must not contain ``AllTests.php`` scripts, but must rely on the
