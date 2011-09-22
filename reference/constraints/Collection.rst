@@ -1,69 +1,114 @@
 Collection
 ==========
 
-Validates array entries against different constraints.
+This constraint is used when the underlying data is a collection (i.e. an
+array or an object that implements ``Traversable`` and ``ArrayAccess``),
+but you'd like to validate different keys of that collection in different
+ways. For example, you might validate the ``email`` key using the ``Email``
+constraint and the ``inventory`` key of the collection with the ``Min`` constraint.
 
-.. code-block:: yaml
+This constraint can also make sure that certain collection keys are present
+and that extra keys are not present.
 
-    - Collection:
-        fields:
-            key1:
-                - NotNull: ~
-            key2:
-                - MinLength: 10
++----------------+--------------------------------------------------------------------------+
+| Applies to     | :ref:`property or method<validation-property-target>`                    |
++----------------+--------------------------------------------------------------------------+
+| Options        | - `fields`_                                                              |
+|                | - `allowExtraFields`_                                                    |
+|                | - `extraFieldsMessage`_                                                  |
+|                | - `allowMissingFields`_                                                  |
+|                | - `missingFieldsMessage`_                                                |
++----------------+--------------------------------------------------------------------------+
+| Class          | :class:`Symfony\\Component\\Validator\\Constraints\\Collection`          |
++----------------+--------------------------------------------------------------------------+
+| Validator      | :class:`Symfony\\Component\\Validator\\Constraints\\CollectionValidator` |
++----------------+--------------------------------------------------------------------------+
 
-Options
--------
+Basic Usage
+-----------
 
-* ``fields`` (required): An associative array of array keys and one or more
-  constraints
-* ``allowMissingFields``: Whether some of the keys may not be present in the
-  array. Default: ``false``
-* ``allowExtraFields``: Whether the array may contain keys not present in the
-  ``fields`` option. Default: ``false``
-* ``missingFieldsMessage``: The error message if the ``allowMissingFields``
-  validation fails
-* ``allowExtraFields``: The error message if the ``allowExtraFields`` validation
-  fails
+The ``Collection`` constraint allows you to validate the different keys of
+a collection individually. Take the following example::
 
-Example:
---------
+    namespace Acme\BlogBundle\Entity;
+    
+    class Author
+    {
+        protected $profileData = array(
+            'personal_email',
+            'short_bio',
+        );
 
-Let's validate an array with two indexes ``firstName`` and ``lastName``. The 
-value of ``firstName`` must not be blank, while the value of ``lastName`` must 
-not be blank with a minimum length of four characters. Furthermore, both keys
-may not exist in the array.
+        public function setProfileData($key, $value)
+        {
+            $this->profileData[$key] = $value;
+        }
+    }
+
+To validate that the ``personal_email`` element of the ``profileData`` array
+property is a valid email address and that the ``short_bio`` element is not
+blank but is no longer than 100 characters in length, you would do the following:
 
 .. configuration-block::
 
     .. code-block:: yaml
 
-        # src/Acme/HelloBundle/Resources/config/validation.yml
-        Acme\HelloBundle\Author:
-            properties:
-                options:
-                    - Collection:
-                        fields:
-                            firstName:
-                                - NotBlank: ~
-                            lastName:
-                                - NotBlank: ~
-                                - MinLength: 4
-                        allowMissingFields: true
+        properties:
+            profileData:
+                - Collection:
+                    fields:
+                        personal_email: Email
+                        short_bio:
+                            - NotBlank
+                            - MaxLength:
+                                limit:   100
+                                message: Your short bio is too long!
+                    allowMissingfields: true
+
+    .. code-block:: php-annotations
+
+        // src/Acme/BlogBundle/Entity/Author.php
+        use Symfony\Component\Validator\Constraints as Assert;
+
+        class Author
+        {
+            /**
+             * @Assert\Collection(
+             *     fields = {
+             *         "personal_email" = @Assert\Email,
+             *         "short_bio" = {
+             *             @Assert\NotBlank(),
+             *             @Assert\MaxLength(
+             *                 limit = 100,
+             *                 message = "Your bio is too long!"
+             *             )
+             *         }
+             *     },
+             *     allowMissingfields = true
+             * )
+             */
+             protected $profileData = array(
+                 'personal_email',
+                 'short_bio',
+             );
+        }
 
     .. code-block:: xml
 
-        <!-- src/Acme/HelloBundle/Resources/config/validation.xml -->
-        <class name="Acme\HelloBundle\Author">
-            <property name="options">
+        <!-- src/Acme/BlogBundle/Resources/config/validation.xml -->
+        <class name="Acme\BlogBundle\Entity\Author">
+            <property name="profileData">
                 <constraint name="Collection">
                     <option name="fields">
-                        <value key="firstName">
-                            <constraint name="NotNull" />
+                        <value key="personal_email">
+                            <constraint name="Email" />
                         </value>
-                        <value key="lastName">
-                            <constraint name="NotNull" />
-                            <constraint name="MinLength">4</constraint>
+                        <value key="short_bio">
+                            <constraint name="NotBlank" />
+                            <constraint name="MaxLength">
+                                <option name="limit">100</option>
+                                <option name="message">Your bio is too long!</option>
+                            </constraint>
                         </value>
                     </option>
                     <option name="allowMissingFields">true</option>
@@ -71,65 +116,87 @@ may not exist in the array.
             </property>
         </class>
 
-    .. code-block:: php-annotations
-
-        // src/Acme/HelloBundle/Author.php
-        use Symfony\Component\Validator\Constraints as Assert;
-
-        class Author
-        {
-            /**
-             * @Assert\Collection(
-             *   fields = {
-             *     "firstName" = @Assert\NotNull(),
-             *     "lastName" = { @Assert\NotBlank(), @Assert\MinLength(4) }
-             *   },
-             *   allowMissingFields = true
-             * )
-             */
-            private $options = array();
-        }
-
     .. code-block:: php
 
-        // src/Acme/HelloBundle/Author.php
+        // src/Acme/BlogBundle/Entity/Author.php
         use Symfony\Component\Validator\Mapping\ClassMetadata;
         use Symfony\Component\Validator\Constraints\Collection;
-        use Symfony\Component\Validator\Constraints\NotNull;
-        use Symfony\Component\Validator\Constraints\NotBlank;
-        use Symfony\Component\Validator\Constraints\MinLength;
-        
+        use Symfony\Component\Validator\Constraints\Email;
+        use Symfony\Component\Validator\Constraints\MaxLength;
+
         class Author
         {
             private $options = array();
-            
+
             public static function loadValidatorMetadata(ClassMetadata $metadata)
             {
-                $metadata->addPropertyConstraint('options', new Collection(array(
+                $metadata->addPropertyConstraint('profileData', new Collection(array(
                     'fields' => array(
-                        'firstName' => new NotNull(),
-                        'lastName' => array(new NotBlank(), new MinLength(4)),
+                        'personal_email' => arraynew Email(),
+                        'lastName' => array(new NotBlank(), new MaxLength(100)),
                     ),
                     'allowMissingFields' => true,
                 )));
             }
         }
 
-The following object would fail the validation.
+Presence and Absence of Fields
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-.. code-block:: php
+By default, this constraint validates more than simply whether or not the
+individual fields in the collection pass their assigned constraints. In fact,
+if any keys of a collection are missing or if there are any unrecognized
+keys in the collection, validation errors will be thrown.
 
-    $author = new Author();
-    $author->options['firstName'] = null;
-    $author->options['lastName'] = 'foo';
+If you would like to allow for keys to be absent from the collection or if
+you would like "extra" keys to be allowed in the collection, you can modify
+the `allowMissingFields`_ and `allowExtraFields`_ options respectively. In
+the above example, the ``allowMissingFields`` option was set to true, meaning
+that if either of the ``personal_email`` or ``short_bio`` elements were missing
+from the ``$personalData`` property, no validation error would occur.
 
-    print $validator->validate($author);
+Options
+-------
 
-You should see the following error messages:
+fields
+~~~~~~
 
-.. code-block:: text
+**type**: ``array`` [:ref:`default option<validation-default-option>`]
 
-    Acme\HelloBundle\Author.options[firstName]:
-        This value should not be null
-    Acme\HelloBundle\Author.options[lastName]:
-        This value is too short. It should have 4 characters or more
+This option is required, and is an associative array defining all of the
+keys in the collection and, for each key, exactly which validator(s) should
+be executed against that element of the collection.
+
+allowExtraFields
+~~~~~~~~~~~~~~~~
+
+**type**: ``Boolean`` **default**: false
+
+If this option is set to ``false`` and the underlying collection contains
+one or more elements that are not included in the `fields`_ option, a validation
+error will be returned. If set to ``true``, extra fields are ok.
+
+extraFieldsMessage
+~~~~~~~~~~~~~~~~~~
+
+**type**: ``Boolean`` **default**: ``The fields {{ fields }} were not expected``
+
+The message shown if `allowExtraFields`_ is false and an extra field is detected.
+
+allowMissingFields
+~~~~~~~~~~~~~~~~~~
+
+**type**: ``Boolean`` **default**: false
+
+If this option is set to ``false`` and one or more fields from the `fields`_
+option are not present in the underlying collection, a validation error will
+be returned. If set to ``true``, it's ok if some fields in the `fields_`
+option are not present in the underlying collection.
+
+missingFieldsMessage
+~~~~~~~~~~~~~~~~~~~~
+
+**type**: ``Boolean`` **default**: ``The fields {{ fields }} are missing``
+
+The message shown if `allowMissingFields`_ is false and one or more fields
+are missing from the underlying collection.

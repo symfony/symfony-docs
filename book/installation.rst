@@ -82,7 +82,9 @@ by running the following command from the command line:
     php bin/vendors install
 
 This command downloads all of the necessary vendor libraries - including
-Symfony itself - into the ``vendor/`` directory.
+Symfony itself - into the ``vendor/`` directory. For more information on
+how third-party vendor libraries are managed inside Symfony2, see
+":ref:`cookbook-managing-vendor-libraries`".
 
 Configuration and Setup
 ~~~~~~~~~~~~~~~~~~~~~~~
@@ -194,7 +196,7 @@ Ignoring the ``vendor/`` Directory
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 If you've downloaded the archive *without vendors*, you can safely ignore
-the entire ``vendors/`` directory and not commit it to source control. With
+the entire ``vendor/`` directory and not commit it to source control. With
 ``Git``, this is done by creating and adding the following to a ``.gitignore``
 file:
 

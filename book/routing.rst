@@ -758,6 +758,8 @@ a slash. URLs matching this route might look like:
  * ``/articles/en/2010/my-post``
  * ``/articles/fr/2010/my-post.rss``
 
+.. _book-routing-format-param:
+
 .. sidebar:: The Special ``_format`` Routing Parameter
 
     This example also highlights the special ``_format`` routing parameter.
@@ -768,6 +770,20 @@ a slash. URLs matching this route might look like:
     It can also be used in the controller to render a different template for
     each value of ``_format``. The ``_format`` parameter is a very powerful way
     to render the same content in different formats.
+
+Special Routing Parameters
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+As you've seen, each routing parameter or default value is eventually available
+as an argument in the controller method. Additionally, there are three parameters
+that are special: each adds a unique piece of functionality inside your application:
+
+* ``_controller``: As you've seen, this parameter is used to determine which
+  controller is executed when the route is matched;
+
+* ``_format``: Used to set the request format (:ref:`read more<book-routing-format-param>`);
+
+* ``_locale``: Used to set the locale on the session (:ref:`read more<book-translation-locale-url>`);
 
 .. index::
    single: Routing; Controllers

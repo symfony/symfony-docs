@@ -32,16 +32,16 @@ configuration format of your choice):
                 db_time_col: session_time
 
         services:
-            session.storage.pdo:
-                class:     Symfony\Component\HttpFoundation\SessionStorage\PdoSessionStorage
-                arguments: [@pdo, %session.storage.options%, %pdo.db_options%]
-
             pdo:
                 class: PDO
                 arguments:
                     dsn:      "mysql:dbname=mydatabase"
                     user:     myuser
                     password: mypassword
+
+            session.storage.pdo:
+                class:     Symfony\Component\HttpFoundation\SessionStorage\PdoSessionStorage
+                arguments: [@pdo, %session.storage.options%, %pdo.db_options%]
 
     .. code-block:: xml
 
@@ -57,22 +57,56 @@ configuration format of your choice):
                 <parameter key="db_data_col">session_value</parameter>
                 <parameter key="db_time_col">session_time</parameter>
             </parameter>
-            <parameter key="pdo.options" />
         </parameters>
 
         <services>
             <service id="pdo" class="PDO">
-                <argument id="dsn">mysql:dbname=sf2demo</argument>
-                <argument id="user">root</argument>
-                <argument id="password">password</argument>
+                <argument>mysql:dbname=mydatabase</argument>
+                <argument>myuser</argument>
+                <argument>mypassword</argument>
             </service>
 
             <service id="session.storage.pdo" class="Symfony\Component\HttpFoundation\SessionStorage\PdoSessionStorage">
                 <argument type="service" id="pdo" />
+                <argument>%session.storage.options%</argument>
                 <argument>%pdo.db_options%</argument>
-                <argument>%pdo.options%</argument>
             </service>
         </services>
+
+    .. code-block:: php
+
+        // app/config/config.yml
+        use Symfony\Component\DependencyInjection\Definition;
+        use Symfony\Component\DependencyInjection\Reference;
+
+        $container->loadFromExtension('framework', array(
+            // ...
+            'session' => array(
+                // ...
+                'storage_id' => 'session.storage.pdo',
+            ),
+        ));
+
+        $container->setParameter('pdo.db_options', array(
+            'db_table'      => 'session',
+            'db_id_col'     => 'session_id',
+            'db_data_col'   => 'session_value',
+            'db_time_col'   => 'session_time',
+        ));
+
+        $pdoDefinition = new Definition('PDO', array(
+            'mysql:dbname=mydatabase',
+            'myuser',
+            'mypassword',
+        ));
+        $container->setDefinition('pdo', $pdoDefinition);
+
+        $storageDefinition = new Definition('Symfony\Component\HttpFoundation\SessionStorage\PdoSessionStorage', array(
+            new Reference('pdo'),
+            '%session.storage.options%',
+            '%pdo.db_options%',
+        ));
+        $container->setDefinition('session.storage.pdo', $storageDefinition);
 
 * ``db_table``: The name of the session table in your database
 * ``db_id_col``: The name of the id column in your session table (VARCHAR(255) or larger)
@@ -97,17 +131,25 @@ parameter.ini by referencing the database-related parameters defined there:
         pdo:
             class: PDO
             arguments:
-                dsn:      "mysql:dbname=%database_name%"
-                user:     %database_user%
-                password: %database_password%
+                - "mysql:dbname=%database_name%"
+                - %database_user%
+                - %database_password%
 
     .. code-block:: xml
 
         <service id="pdo" class="PDO">
-            <argument id="dsn">mysql:dbname=%database_name%</argument>
-            <argument id="user">%database_user%</argument>
-            <argument id="password">%database_password%</argument>
+            <argument>mysql:dbname=%database_name%</argument>
+            <argument>%database_user%</argument>
+            <argument>%database_password%</argument>
         </service>
+
+    .. code-block:: xml
+
+        $pdoDefinition = new Definition('PDO', array(
+            'mysql:dbname=%database_name%',
+            '%database_user%',
+            '%database_password%',
+        ));
 
 Example MySQL Statement
 -----------------------

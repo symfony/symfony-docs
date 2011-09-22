@@ -151,7 +151,7 @@ chain of Event notifications (see the next section for more information about
 each Event):
 
 1. Before doing anything else, the ``kernel.request`` event is notified -- if
-   one of the listener returns a ``Response``, it jumps to step 8 directly;
+   one of the listeners returns a ``Response``, it jumps to step 8 directly;
 
 2. The Resolver is called to determine the Controller to execute;
 
@@ -173,8 +173,8 @@ each Event):
 9. The Response is returned.
 
 If an Exception is thrown during processing, the ``kernel.exception`` is
-notified and listeners are given a change to convert the Exception to a
-Response. If that works, the ``kernel.response`` event is notified; if not the
+notified and listeners are given a chance to convert the Exception to a
+Response. If that works, the ``kernel.response`` event is notified; if not, the
 Exception is re-thrown.
 
 If you don't want Exceptions to be caught (for embedded requests for
@@ -351,7 +351,7 @@ The ``FrameworkBundle`` registers several listeners:
 
 *Event Class*: :class:`Symfony\\Component\\HttpKernel\\Event\\GetResponseForExceptionEvent`
 
-``FrameworkBundle`` registers a
+``FrameworkBundle`` registers an
 :class:`Symfony\\Component\\HttpKernel\\EventListener\\ExceptionListener` that
 forwards the ``Request`` to a given Controller (the value of the
 ``exception_listener.controller`` parameter -- must be in the
@@ -413,7 +413,7 @@ used. To make this possible, the Symfony2 kernel throws an event -
   access to the ``Response`` object;
 
 * The dispatcher notifies (i.e. calls a method on) all listeners of the
-  ``kernel.response`` event, allowing each of them to make any modification to
+  ``kernel.response`` event, allowing each of them to make modifications to
   the ``Response`` object.
 
 .. index::
@@ -425,7 +425,7 @@ Events
 ~~~~~~
 
 When an event is dispatched, it's identified by a unique name (e.g.
-``kernel.response``), which any number of listeners might be listening to. A
+``kernel.response``), which any number of listeners might be listening to. An
 :class:`Symfony\\Component\\EventDispatcher\\Event` instance is also created
 and passed to all of the listeners. As you'll see later, the ``Event`` object
 itself often contains data about the event being dispatched.
@@ -662,7 +662,7 @@ object. Create an ``Event`` class that makes this possible:
         }
     }
 
-Each listener now has access to to ``Order`` object via the ``getOrder``
+Each listener now has access to the ``Order`` object via the ``getOrder`` 
 method.
 
 Dispatch the Event
@@ -810,9 +810,9 @@ method:
     $dispatcher->addSubscriber($subscriber);
 
 The dispatcher will automatically register the subscriber for each event
-returned by the ``getSubscribedEvents`` method. Like with listeners, the
-``addSubscriber`` method has an optional second argument, which is the
-priority that should be given to each event.
+returned by the ``getSubscribedEvents`` method. This method returns an array
+indexed by event names and whose values are either the method name to call or
+an array composed of the method name to call and a priority.
 
 .. index::
    single: Event Dispatcher; Stopping event flow

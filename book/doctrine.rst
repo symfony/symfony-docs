@@ -20,8 +20,8 @@ be.
     in the ":doc:`/cookbook/doctrine/dbal`" cookbook entry.
 
     You can also persist data to `MongoDB`_ using Doctrine ODM library. For
-    more information, read the ":doc:`/cookbook/doctrine/mongodb`" cookbook
-    entry.
+    more information, read the ":doc:`/bundles/DoctrineMongoDBBundle/index`"
+    documentation.
 
 A Simple Example: A Product
 ---------------------------
@@ -329,7 +329,7 @@ in your application. To do this, run:
     new column to the existing ``products`` table.
 
     An even better way to take advantage of this functionality is via
-    :doc:`migrations</cookbook/doctrine/migrations>`, which allow you to
+    :doc:`migrations</bundles/DoctrineMigrationsBundle/index>`, which allow you to
     generate these SQL statements and store them in migration classes that
     can be run systematically on your production server in order to track
     and migrate your database schema safely and reliably.
@@ -394,10 +394,11 @@ Let's walk through this example:
 
   In fact, since Doctrine is aware of all your managed entities, when you
   call the ``flush()`` method, it calculates an overall changeset and executes
-  the most efficient query/queries possible. For example, if you're persist
-  100 ``Product`` objects and then call ``persist()``, Doctrine will create
-  a *single* prepared statement and re-use it for each insert. This pattern
-  is called *Unit of Work*, and it's used because it's fast and efficient.
+  the most efficient query/queries possible. For example, if you persist a
+  total of 100 ``Product`` objects and then subsequently call ``flush()``, 
+  Doctrine will create a *single* prepared statement and re-use it for each 
+  insert. This pattern is called *Unit of Work*, and it's used because it's 
+  fast and efficient.
 
 When creating or updating objects, the workflow is always the same. In the
 next section, you'll see how Doctrine is smart enough to automatically issue
@@ -407,7 +408,7 @@ an ``UPDATE`` query if the record already exists in the database.
 
     Doctrine provides a library that allows you to programmatically load testing
     data into your project (i.e. "fixture data"). For information, see
-    :doc:`/cookbook/doctrine/doctrine_fixtures`.
+    :doc:`/bundles/DoctrineFixturesBundle/index`.
 
 Fetching Objects from the Database
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -860,7 +861,7 @@ table, and ``product.category_id`` column, and new foreign key:
 
     This task should only be really used during development. For a more robust
     method of systematically updating your production database, read about
-    :doc:`Doctrine migrations</cookbook/doctrine/migrations>`.
+    :doc:`Doctrine migrations</bundles/DoctrineFixturesBundle/index>`.
 
 Saving Related Entities
 ~~~~~~~~~~~~~~~~~~~~~~~
@@ -1271,9 +1272,10 @@ Some notable or interesting tasks include:
 
 .. note::
 
-   To be able to load data fixtures to your database, you will need to have the
-   ``DoctrineFixturesBundle`` bundle installed. To learn how to do it,
-   read the ":doc:`/cookbook/doctrine/doctrine_fixtures`" entry of the Cookbook.
+   To be able to load data fixtures to your database, you will need to have
+   the ``DoctrineFixturesBundle`` bundle installed. To learn how to do it,
+   read the ":doc:`/bundles/DoctrineFixturesBundle/index`" entry of the
+   documentation.
 
 Summary
 -------
@@ -1292,9 +1294,7 @@ lifecycle.
 For more information about Doctrine, see the *Doctrine* section of the
 :doc:`cookbook</cookbook/index>`, which includes the following articles:
 
-* :doc:`/cookbook/doctrine/doctrine_fixtures`
-* :doc:`/cookbook/doctrine/migrations`
-* :doc:`/cookbook/doctrine/mongodb`
+* :doc:`/bundles/DoctrineFixturesBundle/index`
 * :doc:`/cookbook/doctrine/common_extensions`
 
 .. _`Doctrine`: http://www.doctrine-project.org/

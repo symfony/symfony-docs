@@ -18,6 +18,7 @@ option.
 |             | - `multiple`_                                                               |
 |             | - `expanded`_                                                               |
 |             | - `preferred_choices`_                                                      |
+|             | - `empty_value`_                                                            |
 +-------------+-----------------------------------------------------------------------------+
 | Inherited   | - `required`_                                                               |
 | options     | - `label`_                                                                  |
@@ -66,8 +67,6 @@ specify the choices for your widget.
 
 .. include:: /reference/forms/types/options/select_how_rendered.rst.inc
 
-.. include:: /reference/forms/types/options/empty_value.rst.inc
-
 Field Options
 -------------
 
@@ -99,6 +98,8 @@ can be created to supply the choices.
 .. include:: /reference/forms/types/options/expanded.rst.inc
 
 .. include:: /reference/forms/types/options/preferred_choices.rst.inc
+
+.. include:: /reference/forms/types/options/empty_value.rst.inc
 
 Inherited options
 -----------------

@@ -17,9 +17,6 @@ Cookbook
     assetic/jpeg_optimize
     assetic/apply_to_option
 
-    doctrine/doctrine_fixtures
-    doctrine/mongodb
-    doctrine/migrations
     doctrine/file_uploads
     doctrine/common_extensions
     doctrine/event_listeners_subscribers
@@ -28,7 +25,6 @@ Cookbook
     doctrine/multiple_entity_managers
     doctrine/custom_dql_functions
 
-    form/simple_signup_form_with_mongodb
     form/form_customization
     form/create_custom_field_type
     validation/custom_constraint
@@ -37,6 +33,7 @@ Cookbook
     configuration/external_parameters
     service_container/factories
     service_container/parentservices
+    service_container/scopes
     configuration/pdo_session_storage
 
     bundles/best_practices
@@ -51,6 +48,7 @@ Cookbook
     testing/http_authentication
     testing/insulating_clients
     testing/profiling
+    testing/doctrine
 
     security/remember_me
     security/voters

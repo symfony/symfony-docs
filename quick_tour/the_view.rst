@@ -284,5 +284,5 @@ But I'm getting ahead of myself. First, you need to learn more about the control
 and that's exactly the topic of the :doc:`next part of this tutorial<the_controller>`.
 Ready for another 10 minutes with Symfony2?
 
-.. _Twig:          http://www.twig-project.org/
-.. _documentation: http://www.twig-project.org/documentation
+.. _Twig:          http://twig.sensiolabs.org/
+.. _documentation: http://twig.sensiolabs.org/documentation

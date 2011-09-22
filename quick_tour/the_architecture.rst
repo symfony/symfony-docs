@@ -295,10 +295,12 @@ Extending Bundles
 .................
 
 If you follow these conventions, then you can use :doc:`bundle inheritance</cookbook/bundles/inheritance>`
-to "override" files, controllers or templates. For example, if a new bundle
-called ``AcmeNewBundle`` extended the ``AcmeDemoBundle``, then Symfony would
-try to load the ``AcmeDemoBundle:Welcome:index`` controller from ``AcmeNewBundle``
-first, and then look inside ``AcmeDemoBundle`` second.
+to "override" files, controllers or templates. For example, you can create
+a bundle - ``AcmeNewBundle`` - and specify that its parent is ``AcmeDemoBundle``.
+When Symfony loads the ``AcmeDemoBundle:Welcome:index`` controller, it will
+first look for the ``WelcomeController`` class in ``AcmeNewBundle`` and then
+look inside ``AcmeDemoBundle``. This means that one bundle can override almost
+any part of another bundle!
 
 Do you understand now why Symfony2 is so flexible? Share your bundles between
 applications, store them locally or globally, your choice.

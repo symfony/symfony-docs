@@ -12,7 +12,6 @@ Reference Documents
     configuration/twig
     configuration/monolog
     configuration/web_profiler
-    configuration/mongodb
 
     forms/types
     forms/twig_reference
@@ -21,6 +20,5 @@ Reference Documents
     dic_tags
     YAML
     requirements
-    model
 
 .. include:: /reference/map.rst.inc

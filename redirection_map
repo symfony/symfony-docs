@@ -1,0 +1,6 @@
+/cookbook/doctrine/migrations /bundles/DoctrineFixturesBundle/index
+/cookbook/doctrine/doctrine_fixtures /bundles/DoctrineFixturesBundle/index
+/cookbook/doctrine/mongodb /bundles/DoctrineMongoDBBundle/index
+/cookbook/form/simple_signup_form_with_mongodb /bundles/DoctrineMongoDBBundle/form
+/reference/configuration/mongodb /bundles/DoctrineMongoDBBundle/config
+

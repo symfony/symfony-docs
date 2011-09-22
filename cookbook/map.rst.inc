@@ -21,9 +21,6 @@
 
 * **Database Interaction (Doctrine)**
 
-  * :doc:`/cookbook/doctrine/doctrine_fixtures`
-  * :doc:`/cookbook/doctrine/mongodb`
-  * :doc:`/cookbook/doctrine/migrations`
   * :doc:`/cookbook/doctrine/file_uploads`
   * :doc:`/cookbook/doctrine/common_extensions`
   * :doc:`/cookbook/doctrine/event_listeners_subscribers`
@@ -34,7 +31,6 @@
 
 * **Forms and Validation**
 
-  * :doc:`/cookbook/form/simple_signup_form_with_mongodb`
   * :doc:`/cookbook/form/form_customization`
   * :doc:`/cookbook/form/create_custom_field_type`
   * :doc:`/cookbook/validation/custom_constraint`
@@ -46,6 +42,7 @@
   * :doc:`/cookbook/configuration/external_parameters`
   * :doc:`/cookbook/service_container/factories`
   * :doc:`/cookbook/service_container/parentservices`
+  * :doc:`/cookbook/service_container/scopes`
   * :doc:`/cookbook/configuration/pdo_session_storage`
 
 * **Bundles**
@@ -66,6 +63,7 @@
   * :doc:`/cookbook/testing/http_authentication`
   * :doc:`/cookbook/testing/insulating_clients`
   * :doc:`/cookbook/testing/profiling`
+  * :doc:`/cookbook/testing/doctrine`
 
 * **Security**
 

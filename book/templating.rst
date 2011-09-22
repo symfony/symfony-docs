@@ -779,6 +779,12 @@ should render with the subdirectory (e.g. ``/my_app/images/logo.png``). The
 ``asset`` function takes care of this by determining how your application is
 being used and generating the correct paths accordingly.
 
+Additionally, if you use the ``asset`` function, Symfony can automatically
+append a query string to your asset, in order to guarantee that updated static
+assets won't be cached when deployed. For example, ``/images/logo.png`` might
+look like ``/images/logo.png?v2``. For more information, see the :ref:`ref-framework-assets-version`
+configuration option.
+
 .. index::
    single: Templating; Including stylesheets and Javascripts
    single: Stylesheets; Including stylesheets
@@ -795,9 +801,9 @@ advantage of Symfony's template inheritance.
 
     This section will teach you the philosophy behind including stylesheet
     and Javascript assets in Symfony. Symfony also packages another library,
-    called assetic, which follows this philosophy but allows you to do much
+    called Assetic, which follows this philosophy but allows you to do much
     more interesting things with those assets. For more information on 
-    using assetic see :doc:`/cookbook/assetic/asset_management`.
+    using Assetic see :doc:`/cookbook/assetic/asset_management`.
 
 
 Start by adding two blocks to your base template that will hold your assets:
@@ -1141,8 +1147,8 @@ For example, the same "resource" is often rendered in several different formats.
 To render an article index page in XML, simply include the format in the
 template name:
 
-*XML template name*: ``AcmeArticleBundle:Article:index.xml.twig``
-*XML template filename*: ``index.xml.twig``
+* *XML template name*: ``AcmeArticleBundle:Article:index.xml.twig``
+* *XML template filename*: ``index.xml.twig``
 
 In reality, this is nothing more than a naming convention and the template
 isn't actually rendered differently based on its format.
@@ -1175,8 +1181,8 @@ key in the parameter hash:
     .. code-block:: html+jinja
 
         <a href="{{ path('article_show', {'id': 123, '_format': 'pdf'}) }}">
-	        PDF Version
-	    </a>
+            PDF Version
+        </a>
 
     .. code-block:: html+php
 
@@ -1217,10 +1223,10 @@ Learn more from the Cookbook
 * :doc:`/cookbook/templating/PHP`
 * :doc:`/cookbook/controller/error_pages`
 
-.. _`Twig`: http://www.twig-project.org
+.. _`Twig`: http://twig.sensiolabs.org
 .. _`Symfony2Bundles.org`: http://symfony2bundles.org
 .. _`Cross Site Scripting`: http://en.wikipedia.org/wiki/Cross-site_scripting
-.. _`Output Escaping`: http://www.twig-project.org
-.. _`tags`: http://www.twig-project.org/doc/templates.html#list-of-control-structures
-.. _`filters`: http://www.twig-project.org/doc/templates.html#list-of-built-in-filters
-.. _`add your own extensions`: http://www.twig-project.org/doc/advanced.html
+.. _`Output Escaping`: http://twig.sensiolabs.org
+.. _`tags`: http://twig.sensiolabs.org/doc/templates.html#list-of-control-structures
+.. _`filters`: http://twig.sensiolabs.org/doc/templates.html#list-of-built-in-filters
+.. _`add your own extensions`: http://twig.sensiolabs.org/doc/advanced.html

@@ -271,8 +271,9 @@ Calling a command from another one is straightforward::
         $command = $this->getApplication()->find('demo:greet');
 
         $arguments = array(
-            'name'   => 'Fabien',
-            '--yell' => true,
+            'command' => 'demo:greet',
+            'name'    => 'Fabien',
+            '--yell'  => true,
         );
 
         $input = new ArrayInput($arguments);

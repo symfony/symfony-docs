@@ -682,10 +682,8 @@ You can define as many URL patterns as you need - each is a regular expression.
         <!-- app/config/config.xml -->
         <config>
             <!-- ... -->
-            <access-control>
-                <rule path="^/admin/users" role="ROLE_SUPER_ADMIN" />
-                <rule path="^/admin" role="ROLE_ADMIN" />
-            </access-control>
+            <rule path="^/admin/users" role="ROLE_SUPER_ADMIN" />
+            <rule path="^/admin" role="ROLE_ADMIN" />
         </config>
 
     .. code-block:: php
@@ -702,8 +700,9 @@ You can define as many URL patterns as you need - each is a regular expression.
 .. tip::
 
     Prepending the path with ``^`` ensures that only URLs *beginning* with
-    the pattern are matched. For example, a path of simply ``/admin`` would
-    match ``/admin/foo`` but also ``/foo/admin``.
+    the pattern are matched. For example, a path of simply ``/admin`` (without
+    the ``^``) would correctly match ``/admin/foo`` but would also match URLs
+    like ``/foo/admin``.
 
 For each incoming request, Symfony2 tries to find a matching access control
 rule (the first one wins). If the user isn't authenticated yet, the authentication
@@ -1324,10 +1323,8 @@ rules by creating a role hierarchy:
 
         <!-- app/config/security.xml -->
         <config>
-            <role-hierarchy>
-                <role id="ROLE_ADMIN">ROLE_USER</role>
-                <role id="ROLE_SUPER_ADMIN">ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH</role>
-            </role-hierarchy>
+            <role id="ROLE_ADMIN">ROLE_USER</role>
+            <role id="ROLE_SUPER_ADMIN">ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH</role>
         </config>
 
     .. code-block:: php

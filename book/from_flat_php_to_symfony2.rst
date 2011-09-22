@@ -618,7 +618,9 @@ The layout is nearly identical:
 
 When Symfony2's engine (called the ``Kernel``) boots up, it needs a map so
 that it knows which controllers to execute based on the request information.
-A routing configuration map provides this information in a readable format::
+A routing configuration map provides this information in a readable format:
+
+.. code-block:: yaml
 
     # app/config/routing.yml
     blog_list:
@@ -744,6 +746,6 @@ Learn more from the Cookbook
 .. _`Routing`: https://github.com/symfony/Routing
 .. _`Templating`: https://github.com/symfony/Templating
 .. _`Symfony2Bundles.org`: http://symfony2bundles.org
-.. _`Twig`: http://www.twig-project.org
+.. _`Twig`: http://twig.sensiolabs.org
 .. _`Varnish`: http://www.varnish-cache.org
 .. _`PHPUnit`: http://www.phpunit.de

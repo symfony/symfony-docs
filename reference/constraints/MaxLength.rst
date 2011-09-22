@@ -1,29 +1,19 @@
 MaxLength
 =========
 
-Validates that the string length of a value is not larger than the given limit.
+Validates that the length of a string is not larger than the given limit.
 
-+----------------+----------------------------------------------------------------+
-| Validates      | a string                                                       |
-+----------------+----------------------------------------------------------------+
-| Options        | - ``limit``                                                    |
-|                | - ``message``                                                  |
-|                | - ``charset``                                                  |
-+----------------+----------------------------------------------------------------+
-| Default Option | ``limit``                                                      |
-+----------------+----------------------------------------------------------------+
-| Class          | :class:`Symfony\\Component\\Validator\\Constraints\\MaxLength` |
-+----------------+----------------------------------------------------------------+
-
-Options
--------
-
-*   ``limit`` (**default**, required) [type: integer]
-    This is the maximum length of the string. If set to 10, the string must
-    be no more than 10 characters in length.
-
-*   ``message`` [type: string, default: ``This value is too long. It should have {{ limit }} characters or less``]
-    This is the validation error message when the validation fails.
++----------------+-------------------------------------------------------------------------+
+| Applies to     | :ref:`property or method<validation-property-target>`                   |
++----------------+-------------------------------------------------------------------------+
+| Options        | - `limit`_                                                              |
+|                | - `message`_                                                            |
+|                | - `charset`_                                                            |
++----------------+-------------------------------------------------------------------------+
+| Class          | :class:`Symfony\\Component\\Validator\\Constraints\\MaxLength`          |
++----------------+-------------------------------------------------------------------------+
+| Validator      | :class:`Symfony\\Component\\Validator\\Constraints\\MaxLengthValidator` |
++----------------+-------------------------------------------------------------------------+
 
 Basic Usage
 -----------
@@ -32,26 +22,15 @@ Basic Usage
 
     .. code-block:: yaml
 
-        # src/Acme/HelloBundle/Resources/config/validation.yml
-        Acme\HelloBundle\Blog:
+        # src/Acme/BlogBundle/Resources/config/validation.yml
+        Acme\BlogBundle\Entity\Blog:
             properties:
                 summary:
                     - MaxLength: 100
     
-    .. code-block:: xml
-
-        <!-- src/Acme/HelloBundle/Resources/config/validation.xml -->
-        <class name="Acme\HelloBundle\Blog">
-            <property name="summary">
-                <constraint name="MaxLength">
-                    <value>100</value>
-                </constraint>
-            </property>
-        </class>
-
     .. code-block:: php-annotations
 
-        // src/Acme/HelloBundle/Blog.php
+        // src/Acme/BlogBundle/Entity/Blog.php
         use Symfony\Component\Validator\Constraints as Assert;
 
         class Blog
@@ -61,3 +40,44 @@ Basic Usage
              */
             protected $summary;
         }
+    
+    .. code-block:: xml
+
+        <!-- src/Acme/BlogBundle/Resources/config/validation.xml -->
+        <class name="Acme\BlogBundle\Entity\Blog">
+            <property name="summary">
+                <constraint name="MaxLength">
+                    <value>100</value>
+                </constraint>
+            </property>
+        </class>
+
+Options
+-------
+
+limit
+~~~~~
+
+**type**: ``integer`` [:ref:`default option<validation-default-option>`]
+
+This required option is the "max" value. Validation will fail if the length
+of the give string is **greater** than this number.
+
+message
+~~~~~~~
+
+**type**: ``string`` **default**: ``This value is too long. It should have {{ limit }} characters or less``
+
+The message that will be shown if the underlying string has a length that
+is longer than the `limit`_ option.
+
+charset
+~~~~~~~
+
+**type**: ``charset`` **default**: ``UTF-8``
+
+If the PHP extension "mbstring" is installed, then the PHP function `mb_strlen`_
+will be used to calculate the length of the string. The value of the ``charset``
+option is passed as the second argument to that function.
+
+.. _`mb_strlen`: http://php.net/manual/en/function.mb-strlen.php
