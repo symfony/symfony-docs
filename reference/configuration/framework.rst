@@ -20,16 +20,16 @@ Configuration
 * `ide`_
 * `test`_
 * `form`_
-    * :ref:`enabled<config-framework-form-enabled>`
+* :ref:`enabled<config-framework-form-enabled>`
 * `csrf_protection`_
-    * :ref:`enabled<config-framework-csrf-enabled>`
-    * `field_name`
+* :ref:`enabled<config-framework-csrf-enabled>`
+* `field_name`
 * `session`_
-    * `lifetime`_
+* `lifetime`_
 * `templating`_
-    * `assets_base_urls`_
-    * `assets_version`_
-    * `assets_version_format`_
+* `assets_base_urls`_
+* `assets_version`_
+* `assets_version_format`_
 
 charset
 ~~~~~~~
@@ -70,8 +70,8 @@ full TextMate string would look like this:
 
 .. code-block:: yaml
 
-    framework:
-        ide:  "txmt://open?url=file://%%f&line=%%l"
+framework:
+ide:  "txmt://open?url=file://%%f&line=%%l"
 
 Of course, since every developer uses a different IDE, it's better to set
 this on a system level. This can be done by setting the ``xdebug.file_link_format``
