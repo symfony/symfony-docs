@@ -103,10 +103,10 @@ Bundle class name with ``Extension``. For example, the Extension class of
 ``AcmeHelloBundle`` would be called ``AcmeHelloExtension``::
 
     // Acme/HelloBundle/DependencyInjection/HelloExtension.php
-    use Symfony\Component\HttpKernel\DependencyInjection\Extension;
+    use Symfony\Component\HttpKernel\DependencyInjection\ExtensionInterface;
     use Symfony\Component\DependencyInjection\ContainerBuilder;
 
-    class AcmeHelloExtension extends Extension
+    class AcmeHelloExtension implements ExtensionInterface
     {
         public function load(array $configs, ContainerBuilder $container)
         {
