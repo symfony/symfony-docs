@@ -27,6 +27,7 @@ Configuration
 * `session`_
     * `lifetime`_
 * `templating`_
+    * `assets_base_urls`_
     * `assets_version`_
     * `assets_version_format`_
 
@@ -104,6 +105,24 @@ lifetime
 This determines the lifetime of the session - in seconds.
 
 templating
+~~~~~~~~~~
+
+assets_base_urls
+................
+
+**default**: ``{ http: [], https: [] }``
+
+This option allows you to define base URL's to be used for assets referenced
+from ``http`` and ``https`` pages. A string value may be provided in lieu of a
+single-element array. If multiple base URL's are provided, Symfony2 will select
+one from the collection each time it generates an asset's path.
+
+For your convenience, ``assets_base_urls`` can be set directly with a string or
+array of strings, which will be automatically organized into collections of base
+URL's for ``http`` and ``https`` requests. If a URL starts with ``https://`` or
+is `protocol-relative`_ (i.e. starts with `//`) it will be added to both
+collections. URL's starting with ``http://`` will only be added to the
+``http`` collection.
 
 .. _ref-framework-assets-version:
 
@@ -115,7 +134,7 @@ assets_version
 This option is used to *bust* the cache on assets by globally adding a query
 parameter to all rendered asset paths (e.g. ``/images/logo.png?v2``). This
 applies only to assets rendered via the Twig ``asset`` function (or PHP equivalent)
-as well as assets rendered with assetic.
+as well as assets rendered with Assetic.
 
 For example, suppose you have the following:
 
@@ -169,12 +188,37 @@ option.
 assets_version_format
 .....................
 
-**type**: ``string`` **default**: ``%s?%s``
+**type**: ``string`` **default**: ``%%s?%%s``
 
-This option relates to the `assets_version`_ option and controls exactly
-how the query string is constructed. For example, if ``assets_version_format``
-is set to ``%s?version=%s`` and ``assets_version`` is set to ``5``, rendered
-assets would look like ``/images/logo.png?version=5``.
+This specifies a `sprintf()`_ pattern that will be used with the `assets_version`_
+option to construct an asset's path. By default, the pattern adds the asset's
+version as a query string. For example, if ``assets_version_format`` is set to
+``%%s?version=%%s`` and ``assets_version`` is set to ``5``, the asset's path
+would be ``/images/logo.png?version=5``.
+
+.. note::
+
+    All percentage signs (``%``) in the format string must be doubled to escape
+    the character. Without escaping, values might inadvertently be interpretted
+    as :ref:`_book-service-container-parameters`.
+
+.. tip::
+
+    Some CDN's do not support cache-busting via query strings, so injecting the
+    version into the actual file path is necessary. Thankfully, ``assets_version_format``
+    is not limited to producing versioned query strings.
+
+    The pattern receives the asset's original path and version as its first and
+    second parameters, respectively. Since the asset's path is one parameter, we
+    cannot modify it in-place (e.g. ``/images/logo-v5.png``); however, we can
+    prefix the asset's path using a pattern of ``version-%%2$s/%%1$s``, which
+    would result in the path ``version-5/images/logo.png``.
+
+    URL rewrite rules could then be used to disregard the version prefix before
+    serving the asset. Alternatively, you could copy assets to the appropriate
+    version path as part of your deployment process and forgo any URL rewriting.
+    The latter option is useful if you would like older asset versions to remain
+    accessible at their original URL.
 
 Full Default Configuration
 --------------------------
@@ -237,7 +281,7 @@ Full Default Configuration
             # templating configuration
             templating:
                 assets_version:       ~
-                assets_version_format:  "%s?%s"
+                assets_version_format:  "%%s?%%s"
                 assets_base_urls:
                     http:                 []
                     ssl:                  []
@@ -276,5 +320,5 @@ Full Default Configuration
                 file_cache_dir:       %kernel.cache_dir%/annotations
                 debug:                true
 
-
-
+.. _`protocol-relative`: http://tools.ietf.org/html/rfc3986#section-4.2
+.. _`sprintf()`: http://php.net/manual/en/function.sprintf.php
