@@ -32,7 +32,7 @@ Optional
 * PHP tokenizer needs to be enabled
 * mbstring functions need to be enabled
 * iconv needs to be enabled
-* POSIX needs to be enabled (only on *nix)
+* POSIX needs to be enabled (only on \*nix)
 * Intl needs to be installed with ICU 4+
 * APC 3.0.17+ (or another opcode cache needs to be installed)
 * PHP.ini recommended settings
