@@ -530,8 +530,6 @@ via the ``get()`` method. Here are several common services you might need::
 
     $request = $this->getRequest();
 
-    $response = $this->get('response');
-
     $templating = $this->get('templating');
 
     $router = $this->get('router');
