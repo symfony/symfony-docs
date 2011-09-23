@@ -77,6 +77,7 @@
   * :doc:`/cookbook/security/entity_provider`
   * :doc:`/cookbook/security/custom_provider`
   * :doc:`/cookbook/security/custom_authentication_provider`
+  * :doc:`/cookbook/security/target_path`
 
 * **Caching**
 

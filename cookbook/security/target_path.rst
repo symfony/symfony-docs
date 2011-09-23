@@ -1,18 +1,24 @@
-How to change the default target path behaviour
-===============================================
+.. index::
+   single: Security; Target redirect path
 
-The security component retains the information of the last request URI in a session variable
-named ``_security.target_path``. Upon a successful login, the user is redirected to this path,
-as to help her continue from the last known page she visited.
+How to change the Default Target Path Behavior
+==============================================
 
-On some occasions, this is unexpected. For example when the last request URI was a HTTP POST
-against a route which is configured to allow only POST method, the user is redirected to this route
-only to get a 404 error, since no handler exists for a GET method.
+By default, the security component retains the information of the last request
+URI in a session variable named ``_security.target_path``. Upon a successful
+login, the user is redirected to this path, as to help her continue from
+the last known page she visited.
 
-To get around this behaviour, you would simple need to extend the ``ExceptionListener`` class and
-override the default method named ``setTargetPath()``.
+On some occasions, this is unexpected. For example when the last request
+URI was an HTTP POST against a route which is configured to allow only a POST
+method, the user is redirected to this route only to get a 404 error.
 
-First, override the ``security.exception_listener.class`` parameter in your configuration file:
+To get around this behavior, you would simply need to extend the ``ExceptionListener``
+class and override the default method named ``setTargetPath()``.
+
+First, override the ``security.exception_listener.class`` parameter in your
+configuration file. This can be done from your main configuration file (in
+`app/config`) or from a configuration file being imported from a bundle:
 
 .. configuration-block::
 
@@ -39,8 +45,7 @@ First, override the ``security.exception_listener.class`` parameter in your conf
 
 Next, create your own ``ExceptionListener``::
 
-    <?php
-
+    // src/Acme/HelloBundle/Security/Firewall/ExceptionListener.php
     namespace Acme\HelloBundle\Security\Firewall;
 
     use Symfony\Component\HttpFoundation\Request;
@@ -51,6 +56,7 @@ Next, create your own ``ExceptionListener``::
         protected function setTargetPath(Request $request)
         {
             // Do not save target path for XHR and non-GET requests
+            // You can add any more logic here you want
             if ($request->isXmlHttpRequest() || 'GET' !== $request->getMethod()) {
                 return;
             }
