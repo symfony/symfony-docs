@@ -16,7 +16,7 @@ into Symfony2 as quickly as possible.
     All pull requests should include the following template in the request
     description:
 
-.. code-block:: plain
+.. code-block:: text
 
     Bug fix: [yes|no]
     Feature addition: [yes|no]
@@ -26,7 +26,7 @@ into Symfony2 as quickly as possible.
 
 An example submission could now look as follows:
 
-.. code-block:: plain
+.. code-block:: text
 
     Bug fix: no
     Feature addition: yes
