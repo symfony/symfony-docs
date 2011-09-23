@@ -23,7 +23,6 @@ into Symfony2 as quickly as possible.
     Backwards compatibility break: [yes|no]
     Symfony2 tests pass: [yes|no]
     Fixes the following tickets: [comma separated list of tickets fixed by the PR]
-    Description: [description of the change]
 
 An example submission could now look as follows:
 
@@ -34,7 +33,6 @@ An example submission could now look as follows:
     Backwards compatibility break: no
     Symfony2 tests pass: yes
     Fixes the following tickets: -
-    Description: Add X to Y to make the world a brighter place
 
 Thank you for including the filled out template in your submission!
 
