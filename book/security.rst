@@ -722,6 +722,15 @@ For more information, see :doc:`/cookbook/security/force_https`.
 
 .. _book-security-securing-controller:
 
+Securing by IP or by Channel
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Certain situations may arise when you may need to restrict access to a given
+route based on IP. This is particularly relevant in the case of Edge Side
+Includes (ESI), for example, which utilize a route named "_internal". When 
+ESI is used, the _internal route is required by the gateway cache to enable 
+caching of subsections of a page different from each other.
+
 Securing a Controller
 ~~~~~~~~~~~~~~~~~~~~~
 
