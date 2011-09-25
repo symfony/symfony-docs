@@ -726,7 +726,9 @@ Certain situations may arise when you may need to restrict access to a given
 route based on IP. This is particularly relevant in the case of :ref:`Edge Side Includes<edge-side-includes>` 
 (ESI), for example, which utilize a route named "_internal". When 
 ESI is used, the _internal route is required by the gateway cache to enable 
-different caching options for subsections within a given page.
+different caching options for subsections within a given page. This route 
+comes with the ^/_internal prefix by default in the standard edition (assuming 
+you've uncommented those lines from the routing file).
 
 Here is an example of how you might secure this route from outside access: 
 
@@ -768,18 +770,18 @@ adding a new access_control entry:
         security:
             # ...
             access_control:
-                - { path: ^/_internal, roles: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: https }
+                - { path: ^/cart/checkout, roles: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: https }
 
     .. code-block:: xml
 
             <access-control>
-                <rule path="^/_internal" role="IS_AUTHENTICATED_ANONYMOUSLY" requires_channel: https />
+                <rule path="^/cart/checkout" role="IS_AUTHENTICATED_ANONYMOUSLY" requires_channel: https />
             </access-control>
 
     .. code-block:: php
 
             'access_control' => array(
-                array('path' => '^/_internal', 'role' => 'IS_AUTHENTICATED_ANONYMOUSLY', 'requires_channel' => 'https'),
+                array('path' => '^/cart/checkout', 'role' => 'IS_AUTHENTICATED_ANONYMOUSLY', 'requires_channel' => 'https'),
             ),
           
 .. _book-security-securing-controller:
