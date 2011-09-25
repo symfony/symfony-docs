@@ -722,14 +722,66 @@ For more information, see :doc:`/cookbook/security/force_https`.
 
 .. _book-security-securing-controller:
 
-Securing by IP or by Channel
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Securing by IP
+~~~~~~~~~~~~~~
 
 Certain situations may arise when you may need to restrict access to a given
 route based on IP. This is particularly relevant in the case of Edge Side
 Includes (ESI), for example, which utilize a route named "_internal". When 
 ESI is used, the _internal route is required by the gateway cache to enable 
-caching of subsections of a page different from each other.
+different caching options for subsections within a given page.
+
+Here is an example of how you might secure this route from outside access: 
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # app/config/security.yml
+        security:
+            # ...
+            access_control:
+                - { path: ^/_internal, roles: IS_AUTHENTICATED_ANONYMOUSLY, ip: 127.0.0.1 }
+
+    .. code-block:: xml
+
+            <access-control>
+                <rule path="^/_internal" role="IS_AUTHENTICATED_ANONYMOUSLY" ip="127.0.0.1" />
+            </access-control>
+
+    .. code-block:: php
+
+            'access_control' => array(
+                array('path' => '^/_internal', 'role' => 'IS_AUTHENTICATED_ANONYMOUSLY', 'ip' => '127.0.0.1'),
+            ),
+
+Securing by Channel
+~~~~~~~~~~~~~~~~~~~
+
+Much like securing based on IP, requiring the use of SSL is as simple as 
+adding a new access_control entry:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # app/config/security.yml
+        security:
+            # ...
+            access_control:
+                - { path: ^/_internal, roles: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: https }
+
+    .. code-block:: xml
+
+            <access-control>
+                <rule path="^/_internal" role="IS_AUTHENTICATED_ANONYMOUSLY" requires_channel: https />
+            </access-control>
+
+    .. code-block:: php
+
+            'access_control' => array(
+                array('path' => '^/_internal', 'role' => 'IS_AUTHENTICATED_ANONYMOUSLY', 'requires_channel' => 'https'),
+            ),
 
 Securing a Controller
 ~~~~~~~~~~~~~~~~~~~~~
