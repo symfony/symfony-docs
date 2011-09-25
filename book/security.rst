@@ -717,14 +717,14 @@ Since Symfony uses the first access control rule it matches, a URL like ``/admin
 will match the first rule and require only the ``ROLE_SUPER_ADMIN`` role.
 Any URL like ``/admin/blog`` will match the second rule and require ``ROLE_ADMIN``.
 
-.. _book-security-securing-controller:
+.. _book-security-securing-ip:
 
 Securing by IP
 ~~~~~~~~~~~~~~
 
 Certain situations may arise when you may need to restrict access to a given
-route based on IP. This is particularly relevant in the case of Edge Side
-Includes (ESI), for example, which utilize a route named "_internal". When 
+route based on IP. This is particularly relevant in the case of :ref:`Edge Side Includes<edge-side-includes>` 
+(ESI), for example, which utilize a route named "_internal". When 
 ESI is used, the _internal route is required by the gateway cache to enable 
 different caching options for subsections within a given page.
 
@@ -751,6 +751,8 @@ Here is an example of how you might secure this route from outside access:
             'access_control' => array(
                 array('path' => '^/_internal', 'role' => 'IS_AUTHENTICATED_ANONYMOUSLY', 'ip' => '127.0.0.1'),
             ),
+
+.. _book-security-securing-channel:
 
 Securing by Channel
 ~~~~~~~~~~~~~~~~~~~
@@ -779,6 +781,8 @@ adding a new access_control entry:
             'access_control' => array(
                 array('path' => '^/_internal', 'role' => 'IS_AUTHENTICATED_ANONYMOUSLY', 'requires_channel' => 'https'),
             ),
+          
+.. _book-security-securing-controller:
 
 Securing a Controller
 ~~~~~~~~~~~~~~~~~~~~~
