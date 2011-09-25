@@ -717,9 +717,6 @@ Since Symfony uses the first access control rule it matches, a URL like ``/admin
 will match the first rule and require only the ``ROLE_SUPER_ADMIN`` role.
 Any URL like ``/admin/blog`` will match the second rule and require ``ROLE_ADMIN``.
 
-You can also force ``HTTP`` or ``HTTPS`` via an ``access_control`` entry.
-For more information, see :doc:`/cookbook/security/force_https`.
-
 .. _book-security-securing-controller:
 
 Securing by IP
