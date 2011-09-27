@@ -11,10 +11,8 @@ The purpose of the check list is to ensure that contributions may be reviewed
 with needless feedback loops to ensure that your contributions can be included
 into Symfony2 as quickly as possible.
 
-.. warning::
-
-    All pull requests should include the following template in the request
-    description:
+All pull requests should include the following template in the request
+description:
 
 .. code-block:: text
 
