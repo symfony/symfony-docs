@@ -140,7 +140,7 @@ to host private repositories.
 
 Alternatively, you can store your git repository on any server by creating
 a `barebones repository`_ and then pushing to it. One library that helps
-manage this is `Gitosis`_.
+manage this is `Gitolite`_.
 
 .. _`git`: http://git-scm.com/
 .. _`Symfony2 Standard Edition`: http://symfony.com/download
@@ -148,4 +148,4 @@ manage this is `Gitosis`_.
 .. _`git submodules`: http://book.git-scm.com/5_submodules.html
 .. _`GitHub`: https://github.com/
 .. _`barebones repository`: http://progit.org/book/ch4-4.html
-.. _`Gitosis`: https://github.com/res0nat0r/gitosis
+.. _`Gitolite`: https://github.com/sitaramc/gitolite

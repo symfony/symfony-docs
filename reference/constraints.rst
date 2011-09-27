@@ -38,8 +38,9 @@ Validation Constraints Reference
    constraints/Image
 
    constraints/Callback
-   constraints/Valid
    constraints/All
+   constraints/UserPassword
+   constraints/Valid
 
 The Validator is designed to validate objects against *constraints*.
 In real life, a constraint could be: "The cake must not be burned". In
@@ -109,4 +110,5 @@ Other Constraints
 
 * :doc:`Callback <constraints/Callback>`
 * :doc:`All <constraints/All>`
+* :doc:`UserPassword <constraints/UserPassword>`
 * :doc:`Valid <constraints/Valid>`

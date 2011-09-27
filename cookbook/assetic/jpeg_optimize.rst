@@ -10,8 +10,8 @@ for your end users.
 Using Jpegoptim
 ---------------
 
-`Jpegoptim`_ is a utility for optimizing JPEG files. To use it with assetic,
-add the following to the assetic config:
+`Jpegoptim`_ is a utility for optimizing JPEG files. To use it with Assetic,
+add the following to the Assetic config:
 
 .. configuration-block::
 

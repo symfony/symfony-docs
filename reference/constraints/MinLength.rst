@@ -27,7 +27,7 @@ Basic Usage
             properties:
                 firstName:
                     - MinLength: { limit: 3, message: Your name must have at least {{ limit}} characters. }
-    
+
     .. code-block:: php-annotations
 
         // src/Acme/BlogBundle/Entity/Blog.php
@@ -37,13 +37,13 @@ Basic Usage
         {
             /**
              * @Assert\MinLength(
-             *     limit: 3,
-             *     message: "Your name must have at least {{ limit}} characters."
+             *     limit=3,
+             *     message="Your name must have at least {{ limit}} characters."
              * )
              */
             protected $summary;
         }
-    
+
     .. code-block:: xml
 
         <!-- src/Acme/BlogBundle/Resources/config/validation.xml -->
