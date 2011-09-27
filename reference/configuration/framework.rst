@@ -70,8 +70,8 @@ full TextMate string would look like this:
 
 .. code-block:: yaml
 
-framework:
-ide:  "txmt://open?url=file://%%f&line=%%l"
+   framework:
+      ide:  "txmt://open?url=file://%%f&line=%%l"
 
 Of course, since every developer uses a different IDE, it's better to set
 this on a system level. This can be done by setting the ``xdebug.file_link_format``
