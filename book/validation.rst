@@ -299,9 +299,12 @@ adheres to the rules of the constraint.
 Supported Constraints
 ~~~~~~~~~~~~~~~~~~~~~
 
-Symfony2 packages a large number of the most commonly-needed constraints.
-The full list of constraints with details is available in the
-:doc:`constraints reference section</reference/constraints>`.
+Symfony2 packages a large number of the most commonly-needed constraints:
+
+.. include:: /reference/constraints/map.rst.inc
+
+You can also create your own custom constraints. This topic is covered in
+the ":doc:`/cookbook/validation/custom_constraint`" article of the cookbook.
 
 .. index::
    single: Validation; Constraints configuration
