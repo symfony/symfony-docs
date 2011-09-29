@@ -185,6 +185,15 @@ You can then specify using the filter in the template:
 A more detail guide to configuring and using Assetic filters as well as
 details of Assetic's debug mode can be found in :doc:`/cookbook/assetic/yuicompressor`.
 
+
+.. note::
+    
+    To find out what configuration options are needed for a given filter, take a look into
+    the AsseticBundle/Resources/config/filters directory. There you will find one file for each
+    filter.
+
+
+
 Controlling the URL used
 ------------------------
 
