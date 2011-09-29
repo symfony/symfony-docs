@@ -33,13 +33,13 @@ git repository:
         /app/cache/*
         /app/logs/*
         /vendor/  
-        /app/config/parameters.ini
+        /app/config/parameters.yml
 
-4. Copy ``app/config/parameters.ini`` to ``app/config/parameters.ini.dist``.
-   The ``parameters.ini`` file is ignored by git (see above) so that machine-specific
-   settings like database passwords aren't committed. By creating the ``parameters.ini.dist``
+4. Copy ``app/config/parameters.yml`` to ``app/config/parameters.yml.dist``.
+   The ``parameters.yml`` file is ignored by git (see above) so that machine-specific
+   settings like database passwords aren't committed. By creating the ``parameters.yml.dist``
    file, new developers can quickly clone the project, copy this file to
-   ``parameters.ini``, customize it, and start developing.
+   ``parameters.yml``, customize it, and start developing.
 
 5. Initialize your git repository:
 

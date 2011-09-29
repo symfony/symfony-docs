@@ -163,7 +163,7 @@ PHP. Have a look at the default configuration:
 
     # app/config/config.yml
     imports:
-        - { resource: parameters.ini }
+        - { resource: parameters.yml }
         - { resource: security.yml }
 
     framework:
