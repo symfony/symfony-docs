@@ -299,9 +299,12 @@ adheres to the rules of the constraint.
 Supported Constraints
 ~~~~~~~~~~~~~~~~~~~~~
 
-Symfony2 packages a large number of the most commonly-needed constraints.
-The full list of constraints with details is available in the
-:doc:`constraints reference section</reference/constraints>`.
+Symfony2 packages a large number of the most commonly-needed constraints:
+
+.. include:: /reference/constraints/map.rst.inc
+
+You can also create your own custom constraints. This topic is covered in
+the ":doc:`/cookbook/validation/custom_constraint`" article of the cookbook.
 
 .. index::
    single: Validation; Constraints configuration
@@ -758,6 +761,54 @@ as the second argument to the ``validate()`` method::
 Of course, you'll usually work with validation indirectly through the form
 library. For information on how to use validation groups inside forms, see
 :ref:`book-forms-validation-groups`.
+
+.. index::
+   single: Validation; Validating raw values
+
+.. _book-validation-raw-values:
+
+Validating Values and Arrays
+----------------------------
+
+So far, you've seen how you can validate entire objects. But sometimes, you
+just want to validate a simple value - like to verify that a string is a valid
+email address. This is actually pretty easy to do. From inside a controller,
+it looks like this::
+
+    // add this to the top of your class
+    use Symfony\Component\Validator\Constraints\Email;
+    
+    public function addEmailAction($email)
+    {
+        $emailConstraint = new Email();
+        // all constraint "options" can be set this way
+        $emailConstraint->message = 'Invalid email address';
+
+        // use the validator to validate the value
+        $errorList = $this->get('validator')->validateValue($email, $emailConstraint);
+
+        if (count($errorList) == 0) {
+            // this IS a valid email address, do something
+        } else {
+            // this is *not* a valid email address
+            $errorMessage = $errorList[0]->getMessage()
+            
+            // do somethign with the error
+        }
+        
+        // ...
+    }
+
+By calling ``validateValue`` on the validator, you can pass in a raw value and
+the constraint object that you want to validate that value against. A full
+list of the available constraints - as well as the full class name for each
+constraint - is available in the :doc:`constraints reference</reference/constraints>`
+section .
+
+The ``validateValule`` method returns a :class:`Symfony\\Component\\Validator\\ConstraintViolationList`
+object, which acts just like an array of errors. Each error in the collection
+is a :class:`Symfony\\Component\\Validator\\ConstraintViolation` object,
+which holds the error message on its `getMessage` method.
 
 Final Thoughts
 --------------

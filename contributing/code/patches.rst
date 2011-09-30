@@ -36,9 +36,9 @@ Thank you for including the filled out template in your submission!
 
 .. tip::
 
-    All feature addition's should be send to the "master" branch, while all
-    bug fixes should be send to the oldest still active branch. Furthermore
-    submissions should as a rule of thumb not break backwards compatibility.
+    All feature addition's should be sent to the "master" branch, while all
+    bug fixes should be sent to the oldest still active branch. Furthermore
+    submissions should, as a rule of thumb, not break backwards compatibility.
     Please mark any submissions as "[WIP]" in the title in case the submission
     is not yet complete (for example if the tests do not yet pass).
 
