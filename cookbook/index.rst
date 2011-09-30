@@ -38,6 +38,7 @@ Cookbook
 
     bundles/best_practices
     bundles/inheritance
+    bundles/override
     bundles/extension
 
     email
