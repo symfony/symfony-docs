@@ -598,6 +598,20 @@ the label, errors and HTML form widget of each field inside a ``div`` tag
 by default. In the :ref:`form-theming` section, you'll learn how the ``form_row``
 output can be customized on many different levels.
 
+.. tip::
+
+    You can access the current data of your form via ``form.vars.value``:
+    
+    .. configuration-block::
+
+        .. code-block:: jinja
+        
+            {{ form.vars.value.task }}
+
+        .. code-block:: html+php
+
+            <?php echo $view['form']->get('value')->getTask() ?>
+
 .. index::
    single: Forms; Rendering each field by hand
 
