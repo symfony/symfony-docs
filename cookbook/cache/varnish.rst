@@ -1,8 +1,8 @@
 .. index::
     single: Cache; Varnish
 
-How to use Varnish to speedup my Website
-========================================
+How to use Varnish to speed up my Website
+=========================================
 
 Because Symfony2's cache uses the standard HTTP cache headers, the
 :ref:`symfony-gateway-cache` can easily be replaced with any other reverse
