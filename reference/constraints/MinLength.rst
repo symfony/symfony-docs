@@ -26,7 +26,7 @@ Basic Usage
         Acme\BlogBundle\Entity\Blog:
             properties:
                 firstName:
-                    - MinLength: { limit: 3, message: Your name must have at least {{ limit}} characters. }
+                    - MinLength: { limit: 3, message: "Your name must have at least {{ limit}} characters." }
 
     .. code-block:: php-annotations
 
