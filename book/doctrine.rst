@@ -46,9 +46,9 @@ Before you really begin, you'll need to configure your database connection
 information. By convention, this information is usually configured in an
 ``app/config/parameters.yml`` file:
 
-.. code-block:: ini
+.. code-block:: yaml
 
-    ;app/config/parameters.yml
+    # app/config/parameters.yml
     parameters:
         database_driver:   pdo_mysql
         database_host:     localhost
