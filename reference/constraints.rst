@@ -52,4 +52,4 @@ Supported Constraints
 
 The following constraints are natively available in Symfony2:
 
-.. include:: /reference/forms/types/map.rst.inc
+.. include:: /reference/constraints/map.rst.inc
