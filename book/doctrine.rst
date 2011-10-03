@@ -326,7 +326,7 @@ in your application. To do this, run:
     needed to *update* the database to where it should be. In other words, if you add
     a new property with mapping metadata to ``Product`` and run this task
     again, it will generate the "alter table" statement needed to add that
-    new column to the existing ``products`` table.
+    new column to the existing ``product`` table.
 
     An even better way to take advantage of this functionality is via
     :doc:`migrations</bundles/DoctrineMigrationsBundle/index>`, which allow you to
