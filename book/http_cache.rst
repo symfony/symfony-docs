@@ -846,7 +846,7 @@ independent of the rest of the page.
 
 In this example, we've given the full-page cache a lifetime of ten minutes.
 Next, let's include the news ticker in the template by embedding an action.
-This is done via the ``render`` helper (See `templating-embedding-controller`
+This is done via the ``render`` helper (See :ref:`templating-embedding-controller`
 for more details).
 
 As the embedded content comes from another page (or controller for that
