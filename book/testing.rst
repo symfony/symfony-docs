@@ -26,7 +26,7 @@ sub-directory of your bundles:
 
     <!-- app/phpunit.xml.dist -->
 
-    <phpunit bootstrap="../src/autoload.php">
+    <phpunit bootstrap="bootstrap.php.cache">
         <testsuites>
             <testsuite name="Project Test Suite">
                 <directory>../src/*/*Bundle/Tests</directory>
@@ -64,7 +64,7 @@ structure under its ``Tests/`` sub-directory. So, write tests for the
 ``Acme/HelloBundle/Tests/Model/ArticleTest.php`` file.
 
 In a unit test, autoloading is automatically enabled via the
-``src/autoload.php`` file (as configured by default in the ``phpunit.xml.dist``
+``bootstrap.php.cache`` file (as configured by default in the ``phpunit.xml.dist``
 file).
 
 Running tests for a given file or directory is also very easy:
