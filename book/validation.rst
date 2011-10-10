@@ -665,7 +665,7 @@ user registers and when a user updates his/her contact information later:
         // src/Acme/BlogBundle/Entity/User.php
         namespace Acme\BlogBundle\Entity;
 
-        use Symfony\Component\Security\Core\User\UserInterface
+        use Symfony\Component\Security\Core\User\UserInterface;
         use Symfony\Component\Validator\Constraints as Assert;
 
         class User implements UserInterface
