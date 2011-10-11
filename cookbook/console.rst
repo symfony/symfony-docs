@@ -207,6 +207,7 @@ console::
 
     use Symfony\Component\Console\Tester\CommandTester;
     use Symfony\Bundle\FrameworkBundle\Console\Application;
+    use Acme\DemoBundle\Command\GreetCommand.php;
 
     class ListCommandTest extends \PHPUnit_Framework_TestCase
     {
@@ -214,6 +215,7 @@ console::
         {
             // mock the Kernel or create one depending on your needs
             $application = new Application($kernel);
+            $application->add(new GreetCommand());
 
             $command = $application->find('demo:greet');
             $commandTester = new CommandTester($command);
