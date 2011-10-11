@@ -151,10 +151,13 @@ parameter.ini by referencing the database-related parameters defined there:
             '%database_password%',
         ));
 
-Example MySQL Statement
------------------------
+Example SQL Statements
+----------------------
 
-The SQL-Statement for creating the needed Database-Table could look like the
+MySQL
+~~~~~
+
+The SQL statement for creating the needed database table might look like the
 following (MySQL):
 
 .. code-block:: sql
@@ -167,11 +170,10 @@ following (MySQL):
         UNIQUE KEY `session_id_idx` (`session_id`)
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-Example PostgreSQL Statement
-----------------------------
+PostgreSQL
+~~~~~~~~~~
 
-The SQL-Statement for creating the needed Database-Table could look like the
-following (PostgreSQL):
+For PostgreSQL, the statement should look like this:
 
 .. code-block:: sql
 
