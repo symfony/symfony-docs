@@ -77,7 +77,8 @@ Structure
 * Add a single space before the opening parenthesis of a control keyword
   (`if`, `else`, `for`, `while`, ...);
 
-* Add a blank line before `return` statements unless return is alone inside a statement-group;
+* Add a blank line before `return` statements, unless the return is alone
+  inside a statement-group (like an `if` statement);
 
 * Don't add trailing spaces at the end of lines;
 
@@ -128,7 +129,7 @@ Documentation
 
 * Add PHPDoc blocks for all classes, methods, and functions;
 
-* Omit `@return` tag in case method does not return anything;
+* Omit the `@return` tag if the method does not return anything;
 
 * The `@package` and `@subpackage` annotations are not used.
 
