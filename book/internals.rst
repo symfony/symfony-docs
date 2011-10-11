@@ -748,8 +748,16 @@ can be the way to go, especially for optional dependencies.
 
     If you use dependency injection like we did in the two examples above, you
     can then use the `Symfony2 Dependency Injection component`_ to elegantly
-    manage these objects.
+    manage the injection of the event_dispatcher service for these objects.
 
+        .. code-block:: yml
+
+            # src/Acme/HelloBundle/Resources/config/services.yml
+            services:
+                foo_service:
+                    class: Acme/HelloBundle/Foo/FooService
+                    arguments: [@event_dispatcher]
+            
 .. index::
    single: Event Dispatcher; Event subscribers
 
