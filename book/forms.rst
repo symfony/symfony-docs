@@ -1379,7 +1379,7 @@ but here's a short example::
     use Symfony\Component\Validator\Constraints\Collection;
 
     $collectionConstraint = new Collection(array(
-        'name' => new MinLength(5)
+        'name' => new MinLength(5),
         'email' => new Email(array('message' => 'Invalid email address')),
     ));
 
@@ -1409,7 +1409,7 @@ method to specify the option::
         public function getDefaultOptions(array $options)
         {
             $collectionConstraint = new Collection(array(
-                'name' => new MinLength(5)
+                'name' => new MinLength(5),
                 'email' => new Email(array('message' => 'Invalid email address')),
             ));
         
