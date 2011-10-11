@@ -750,7 +750,7 @@ can be the way to go, especially for optional dependencies.
     can then use the `Symfony2 Dependency Injection component`_ to elegantly
     manage the injection of the ``event_dispatcher`` service for these objects.
 
-        .. code-block:: yml
+        .. code-block:: yaml
 
             # src/Acme/HelloBundle/Resources/config/services.yml
             services:
