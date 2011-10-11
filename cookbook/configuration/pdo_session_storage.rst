@@ -166,3 +166,19 @@ following (MySQL):
         PRIMARY KEY (`session_id`),
         UNIQUE KEY `session_id_idx` (`session_id`)
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+Example PostgreSQL Statement
+----------------------------
+
+The SQL-Statement for creating the needed Database-Table could look like the
+following (PostgreSQL):
+
+.. code-block:: sql
+
+    CREATE TABLE session (
+        session_id character varying(255) NOT NULL,
+        session_value text NOT NULL,
+        session_time integer NOT NULL,
+        CONSTRAINT session_pkey PRIMARY KEY (session_id),
+        CONSTRAINT session_session_id_key UNIQUE (session_id)
+    );
