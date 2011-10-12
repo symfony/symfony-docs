@@ -4,6 +4,44 @@ Submitting a Patch
 Patches are the best way to provide a bug fix or to propose enhancements to
 Symfony2.
 
+Check List
+----------
+
+The purpose of the check list is to ensure that contributions may be reviewed
+with needless feedback loops to ensure that your contributions can be included
+into Symfony2 as quickly as possible.
+
+All pull requests should include the following template in the request
+description:
+
+.. code-block:: text
+
+    Bug fix: [yes|no]
+    Feature addition: [yes|no]
+    Backwards compatibility break: [yes|no]
+    Symfony2 tests pass: [yes|no]
+    Fixes the following tickets: [comma separated list of tickets fixed by the PR]
+
+An example submission could now look as follows:
+
+.. code-block:: text
+
+    Bug fix: no
+    Feature addition: yes
+    Backwards compatibility break: no
+    Symfony2 tests pass: yes
+    Fixes the following tickets: -
+
+Thank you for including the filled out template in your submission!
+
+.. tip::
+
+    All feature addition's should be sent to the "master" branch, while all
+    bug fixes should be sent to the oldest still active branch. Furthermore
+    submissions should, as a rule of thumb, not break backwards compatibility.
+    Please mark any submissions as "[WIP]" in the title in case the submission
+    is not yet complete (for example if the tests do not yet pass).
+
 Initial Setup
 -------------
 
@@ -54,12 +92,18 @@ environment as explained in the dedicated :doc:`document <tests>`.
 Working on a Patch
 ------------------
 
-Each time you want to work on a patch for a bug or on an enhancement, create a
-topic branch:
+Each time you want to work on a patch for a bug or on an enhancement, you need
+to create a topic branch.
+
+The branch should be based on the `master` branch if you want to add a new
+feature. But if you want to fix a bug, use the oldest but still maintained
+version of Symfony where the bug happens (like `2.0`).
+
+Create the topic branch with the following command:
 
 .. code-block:: bash
 
-    $ git checkout -b BRANCH_NAME
+    $ git checkout -b BRANCH_NAME master
 
 .. tip::
 
@@ -106,9 +150,9 @@ while to finish your changes):
     $ git checkout BRANCH_NAME
     $ git rebase master
 
-When doing the `rebase` command, you might have to fix merge conflicts. `git
-st` gives you the *unmerged* files. Resolve all conflicts, then continue the
-rebase:
+When doing the ``rebase`` command, you might have to fix merge conflicts.
+``git status`` will show you the *unmerged* files. Resolve all the conflicts,
+then continue the rebase:
 
 .. code-block:: bash
 
@@ -148,6 +192,11 @@ with master, don't merge; and force the push to the origin:
 
     All patches you are going to submit must be released under the MIT
     license, unless explicitly specified in the code.
+
+All bug fixes merged into maintenance branches are also merged into more
+recent branches on a regular basis. For instance, if you submit a patch for
+the `2.0` branch, the patch will also be applied by the core team on the
+`master` branch.
 
 .. _ProGit:              http://progit.org/
 .. _GitHub:              https://github.com/signup/free

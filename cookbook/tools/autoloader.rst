@@ -21,6 +21,9 @@ need.
 Usage
 -----
 
+.. versionadded:: 2.1
+   The ``useIncludePath`` method was added in Symfony 2.1.
+
 Registering the :class:`Symfony\\Component\\ClassLoader\\UniversalClassLoader`
 autoloader is straightforward::
 
@@ -29,6 +32,21 @@ autoloader is straightforward::
     use Symfony\Component\ClassLoader\UniversalClassLoader;
 
     $loader = new UniversalClassLoader();
+
+    // You can search the include_path as a last resort.
+    $loader->useIncludePath(true);
+
+    $loader->register();
+
+For minor performance gains class paths can be cached in memory using APC by
+registering the :class:`Symfony\\Component\\ClassLoader\\ApcUniversalClassLoader`::
+
+    require_once '/path/to/src/Symfony/Component/ClassLoader/UniversalClassLoader.php';
+    require_once '/path/to/src/Symfony/Component/ClassLoader/ApcUniversalClassLoader.php';
+
+    use Symfony\Component\ClassLoader\ApcUniversalClassLoader;
+
+    $loader = new ApcUniversalClassLoader('apc.prefix.');
     $loader->register();
 
 The autoloader is useful only if you add some libraries to autoload.
@@ -47,8 +65,8 @@ methods::
     $loader->registerNamespace('Symfony', __DIR__.'/vendor/symfony/src');
 
     $loader->registerNamespaces(array(
-        'Symfony' => __DIR__.'/vendor/symfony/src',
-        'Zend'    => __DIR__.'/vendor/zend/library',
+        'Symfony' => __DIR__.'/../vendor/symfony/src',
+        'Monolog' => __DIR__.'/../vendor/monolog/src',
     ));
 
 For classes that follow the PEAR naming convention, use the
@@ -66,7 +84,7 @@ methods::
 
 .. note::
 
-    Some libraries also need that their root path be registered in the PHP
+    Some libraries also require their root path be registered in the PHP
     include path (``set_include_path()``).
 
 Classes from a sub-namespace or a sub-hierarchy of PEAR classes can be looked

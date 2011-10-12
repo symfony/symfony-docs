@@ -4,8 +4,8 @@ Conventions
 The :doc:`standards` document describes the coding standards for the Symfony2
 projects and the internal and third-party bundles. This document describes
 coding standards and conventions used in the core framework to make it more
-consistent and predictable. You can follow them in your own code, but you
-don't need to.
+consistent and predictable. You are encouraged to follow them in your own
+code, but you don't need to.
 
 Method Names
 ------------
@@ -40,19 +40,39 @@ is a main relation:
 For many relations where the convention does not apply, the following methods
 must be used instead (where ``XXX`` is the name of the related thing):
 
-============== =================
-Main Relation  Other Relations
-============== =================
-``get()``      ``getXXX()``
-``set()``      ``setXXX()``
-``has()``      ``hasXXX()``
-``all()``      ``getXXXs()``
-``replace()``  ``setXXXs()``
-``remove()``   ``removeXXX()``
-``clear()``    ``clearXXX()``
-``isEmpty()``  ``isEmptyXXX()``
-``add()``      ``addXXX()``
-``register()`` ``registerXXX()``
-``count()``    ``countXXX()``
-``keys()``     n/a
-============== =================
++----------------+-------------------+
+| Main Relation  | Other Relations   |
++================+===================+
+| ``get()``      | ``getXXX()``      |
++----------------+-------------------+
+| ``set()``      | ``setXXX()``      |
++----------------+-------------------+
+| n/a            | ``replaceXXX()``  |
++----------------+-------------------+
+| ``has()``      | ``hasXXX()``      |
++----------------+-------------------+
+| ``all()``      | ``getXXXs()``     |
++----------------+-------------------+
+| ``replace()``  | ``setXXXs()``     |
++----------------+-------------------+
+| ``remove()``   | ``removeXXX()``   |
++----------------+-------------------+
+| ``clear()``    | ``clearXXX()``    |
++----------------+-------------------+
+| ``isEmpty()``  | ``isEmptyXXX()``  |
++----------------+-------------------+
+| ``add()``      | ``addXXX()``      |
++----------------+-------------------+
+| ``register()`` | ``registerXXX()`` |
++----------------+-------------------+
+| ``count()``    | ``countXXX()``    |
++----------------+-------------------+
+| ``keys()``     | n/a               |
++----------------+-------------------+
+
+.. note::
+
+    While "setXXX" and "replaceXXX" are very similar, there is one notable 
+    difference: "setXXX" may replace, or add new elements to the relation. 
+    "replaceXXX" on the other hand is specifically forbidden to add new 
+    elements, but most throw an exception in these cases.

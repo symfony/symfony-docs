@@ -2,14 +2,15 @@ The Architecture
 ================
 
 You are my hero! Who would have thought that you would still be here after the
-first three parts? Your efforts will be well-rewarded soon. The first three
-parts didn't look too deeply at the architecture of the framework. As it makes
-Symfony2 stand apart from the framework crowd, let's dive into it now.
+first three parts? Your efforts will be well rewarded soon. The first three
+parts didn't look too deeply at the architecture of the framework. Because it
+makes Symfony2 stand apart from the framework crowd, let's dive into the
+architecture now.
 
 Understanding the Directory Structure
 -------------------------------------
 
-The directory structure of a Symfony2 :term:`application` is rather flexible
+The directory structure of a Symfony2 :term:`application` is rather flexible,
 but the directory structure of the *Standard Edition* distribution reflects
 the typical and recommended structure of a Symfony2 application:
 
@@ -18,30 +19,33 @@ the typical and recommended structure of a Symfony2 application:
 * ``vendor/``: The third-party dependencies;
 * ``web/``:    The web root directory.
 
-The Web Directory
-~~~~~~~~~~~~~~~~~
+The ``web/`` Directory
+~~~~~~~~~~~~~~~~~~~~~~
 
 The web root directory is the home of all public and static files like images,
 stylesheets, and JavaScript files. It is also where each :term:`front controller`
 lives::
 
     // web/app.php
-    require_once __DIR__.'/../app/bootstrap.php';
+    require_once __DIR__.'/../app/bootstrap.php.cache';
     require_once __DIR__.'/../app/AppKernel.php';
 
     use Symfony\Component\HttpFoundation\Request;
 
     $kernel = new AppKernel('prod', false);
+    $kernel->loadClassCache();
     $kernel->handle(Request::createFromGlobals())->send();
 
-The kernel first requires the ``bootstrap.php`` file, which bootstraps the
-framework and registers the autoloader (see below).
+The kernel first requires the ``bootstrap.php.cache`` file, which bootstraps
+the framework and registers the autoloader (see below).
 
 Like any front controller, ``app.php`` uses a Kernel Class, ``AppKernel``, to
 bootstrap the application.
 
-The Application Directory
-~~~~~~~~~~~~~~~~~~~~~~~~~
+.. _the-app-dir:
+
+The ``app/`` Directory
+~~~~~~~~~~~~~~~~~~~~~~
 
 The ``AppKernel`` class is the main entry point of the application
 configuration and as such, it is stored in the ``app/`` directory.
@@ -67,18 +71,23 @@ PHP autoloading can be configured via ``app/autoload.php``::
         'Doctrine\\Common' => __DIR__.'/../vendor/doctrine-common/lib',
         'Doctrine\\DBAL'   => __DIR__.'/../vendor/doctrine-dbal/lib',
         'Doctrine'         => __DIR__.'/../vendor/doctrine/lib',
-        'Zend\\Log'        => __DIR__.'/../vendor/zend-log',
+        'Monolog'          => __DIR__.'/../vendor/monolog/src',
         'Assetic'          => __DIR__.'/../vendor/assetic/src',
-        'Acme'             => __DIR__.'/../src',
+        'Metadata'         => __DIR__.'/../vendor/metadata/src',
     ));
     $loader->registerPrefixes(array(
         'Twig_Extensions_' => __DIR__.'/../vendor/twig-extensions/lib',
         'Twig_'            => __DIR__.'/../vendor/twig/lib',
-        'Swift_'           => __DIR__.'/../vendor/swiftmailer/lib/classes',
+    ));
+
+    // ...
+
+    $loader->registerNamespaceFallbacks(array(
+        __DIR__.'/../src',
     ));
     $loader->register();
 
-:class:`Symfony\\Component\\ClassLoader\\UniversalClassLoader` is used to
+The :class:`Symfony\\Component\\ClassLoader\\UniversalClassLoader` is used to
 autoload files that respect either the technical interoperability `standards`_
 for PHP 5.3 namespaces or the PEAR naming `convention`_ for classes. As you
 can see here, all dependencies are stored under the ``vendor/`` directory, but
@@ -88,7 +97,8 @@ your server or locally in your projects.
 .. note::
 
     If you want to learn more about the flexibility of the Symfony2
-    autoloader, read the "`How to autoload Classes`_" recipe in the cookbook.
+    autoloader, read the ":doc:`/cookbook/tools/autoloader`" recipe in the
+    cookbook.
 
 Understanding the Bundle System
 -------------------------------
@@ -96,19 +106,22 @@ Understanding the Bundle System
 This section introduces one of the greatest and most powerful features of
 Symfony2, the :term:`bundle` system.
 
-A bundle is kind of like a plugin in other software. So why is it called
-*bundle* and not *plugin*? Because *everything* is a bundle in Symfony2, from
-the core framework features to the code you write for your application.
-Bundles are first-class citizens in Symfony2. This gives you the flexibility
-to use pre-built features packaged in third-party bundles or to distribute
-your own bundles. It makes it easy to pick and choose which features to enable
-in your application and optimize them the way you want.
+A bundle is kind of like a plugin in other software. So why is it called a
+*bundle* and not a *plugin*? This is because *everything* is a bundle in
+Symfony2, from the core framework features to the code you write for your
+application. Bundles are first-class citizens in Symfony2. This gives you
+the flexibility to use pre-built features packaged in third-party bundles
+or to distribute your own bundles. It makes it easy to pick and choose which
+features to enable in your application and optimize them the way you want.
+And at the end of the day, your application code is just as *important* as
+the core framework itself.
 
 Registering a Bundle
 ~~~~~~~~~~~~~~~~~~~~
 
 An application is made up of bundles as defined in the ``registerBundles()``
-method of the ``AppKernel`` class::
+method of the ``AppKernel`` class. Each bundle is a directory that contains
+a single ``Bundle`` class that describes it::
 
     // app/AppKernel.php
     public function registerBundles()
@@ -117,27 +130,28 @@ method of the ``AppKernel`` class::
             new Symfony\Bundle\FrameworkBundle\FrameworkBundle(),
             new Symfony\Bundle\SecurityBundle\SecurityBundle(),
             new Symfony\Bundle\TwigBundle\TwigBundle(),
-            new Symfony\Bundle\ZendBundle\ZendBundle(),
+            new Symfony\Bundle\MonologBundle\MonologBundle(),
             new Symfony\Bundle\SwiftmailerBundle\SwiftmailerBundle(),
             new Symfony\Bundle\DoctrineBundle\DoctrineBundle(),
             new Symfony\Bundle\AsseticBundle\AsseticBundle(),
             new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
             new JMS\SecurityExtraBundle\JMSSecurityExtraBundle(),
-            new Acme\DemoBundle\AcmeDemoBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {
+            $bundles[] = new Acme\DemoBundle\AcmeDemoBundle();
             $bundles[] = new Symfony\Bundle\WebProfilerBundle\WebProfilerBundle();
-            $bundles[] = new Symfony\Bundle\WebConfiguratorBundle\SymfonyWebConfiguratorBundle();
+            $bundles[] = new Sensio\Bundle\DistributionBundle\SensioDistributionBundle();
+            $bundles[] = new Sensio\Bundle\GeneratorBundle\SensioGeneratorBundle();
         }
 
         return $bundles;
     }
 
-In addition to ``AcmeDemoBundle`` that we have already talked about, notice
-that the kernel also enables ``FrameworkBundle``, ``DoctrineBundle``,
-``SwiftmailerBundle``, and ``AsseticBundle``. They are all part of the core
-framework.
+In addition to the ``AcmeDemoBundle`` that we have already talked about, notice
+that the kernel also enables other bundles such as the ``FrameworkBundle``,
+``DoctrineBundle``, ``SwiftmailerBundle``, and ``AsseticBundle`` bundle.
+They are all part of the core framework.
 
 Configuring a Bundle
 ~~~~~~~~~~~~~~~~~~~~
@@ -149,21 +163,19 @@ PHP. Have a look at the default configuration:
 
     # app/config/config.yml
     imports:
-        - { resource: parameters.ini }
+        - { resource: parameters.yml }
         - { resource: security.yml }
 
     framework:
-        charset:       UTF-8
-        error_handler: null
-        csrf_protection:
-            enabled: true
-            secret: %csrf_secret%
-        router:        { resource: "%kernel.root_dir%/config/routing.yml" }
-        validation:    { enabled: true, annotations: true }
-        templating:    { engines: ['twig'] } #assets_version: SomeVersionScheme
+        secret:          %secret%
+        charset:         UTF-8
+        router:          { resource: "%kernel.root_dir%/config/routing.yml" }
+        form:            true
+        csrf_protection: true
+        validation:      { enable_annotations: true }
+        templating:      { engines: ['twig'] } #assets_version: SomeVersionScheme
         session:
             default_locale: %locale%
-            lifetime:       3600
             auto_start:     true
 
     # Twig Configuration
@@ -175,26 +187,26 @@ PHP. Have a look at the default configuration:
     assetic:
         debug:          %kernel.debug%
         use_controller: false
+        filters:
+            cssrewrite: ~
+            # closure:
+            #     jar: %kernel.root_dir%/java/compiler.jar
+            # yui_css:
+            #     jar: %kernel.root_dir%/java/yuicompressor-2.4.2.jar
 
     # Doctrine Configuration
     doctrine:
         dbal:
-            default_connection: default
-            connections:
-                default:
-                    driver:   %database_driver%
-                    host:     %database_host%
-                    dbname:   %database_name%
-                    user:     %database_user%
-                    password: %database_password%
+            driver:   %database_driver%
+            host:     %database_host%
+            dbname:   %database_name%
+            user:     %database_user%
+            password: %database_password%
+            charset:  UTF8
 
         orm:
             auto_generate_proxy_classes: %kernel.debug%
-            default_entity_manager: default
-            entity_managers:
-                default:
-                    mappings:
-                        AcmeDemo: ~
+            auto_mapping: true
 
     # Swiftmailer Configuration
     swiftmailer:
@@ -207,10 +219,14 @@ PHP. Have a look at the default configuration:
         secure_controllers:  true
         secure_all_services: false
 
-Each entry like ``framework`` defines the configuration for a bundle.
+Each entry like ``framework`` defines the configuration for a specific bundle.
+For example, ``framework`` configures the ``FrameworkBundle`` while ``swiftmailer``
+configures the ``SwiftmailerBundle``.
 
 Each :term:`environment` can override the default configuration by providing a
-specific configuration file:
+specific configuration file. For example, the ``dev`` environment loads the
+``config_dev.yml`` file, which loads the main configuration (i.e. ``config.yml``)
+and then modifies it to add some debugging tools:
 
 .. code-block:: yaml
 
@@ -226,10 +242,15 @@ specific configuration file:
         toolbar: true
         intercept_redirects: false
 
-    zend:
-        logger:
-            priority: debug
-            path:     %kernel.logs_dir%/%kernel.environment%.log
+    monolog:
+        handlers:
+            main:
+                type:  stream
+                path:  %kernel.logs_dir%/%kernel.environment%.log
+                level: debug
+            firephp:
+                type:  firephp
+                level: info
 
     assetic:
         use_controller: true
@@ -237,33 +258,54 @@ specific configuration file:
 Extending a Bundle
 ~~~~~~~~~~~~~~~~~~
 
-In addition to be a nice way to organize and configure your code, a bundle can
-extend another one (bundles support inheritance). It allows you to override
-any existing bundle to customize its controllers, templates, and any file it
-contains. This is where the logical names come in handy as they abstract where
-the resource is actually stored.
+In addition to being a nice way to organize and configure your code, a bundle
+can extend another bundle. Bundle inheritance allows you to override any existing
+bundle in order to customize its controllers, templates, or any of its files.
+This is where the logical names (e.g. ``@AcmeDemoBundle/Controller/SecuredController.php``)
+come in handy: they abstract where the resource is actually stored.
 
-For controllers, Symfony2 will automatically choose the right file according
-to the bundle inheritance tree.
+Logical File Names
+..................
 
 When you want to reference a file from a bundle, use this notation:
-``@BUNDLE_NAME/PATH_TO_FILE``; Symfony2 will expand ``@BUNDLE_NAME`` to the
-path to the bundle. For instance, it converts
-``@AcmeDemo/Controller/DemoController.php`` to
-``src/Acme/DemoBundle/Controller/DemoController.php``.
+``@BUNDLE_NAME/path/to/file``; Symfony2 will resolve ``@BUNDLE_NAME``
+to the real path to the bundle. For instance, the logical path
+``@AcmeDemoBundle/Controller/DemoController.php`` would be converted to
+``src/Acme/DemoBundle/Controller/DemoController.php``, because Symfony knows
+the location of the ``AcmeDemoBundle``.
 
-For controllers, you need to reference method names:
+Logical Controller Names
+........................
+
+For controllers, you need to reference method names using the format
 ``BUNDLE_NAME:CONTROLLER_NAME:ACTION_NAME``. For instance,
-``AcmeDemo:Welcome:index`` means the ``indexAction`` method from the
+``AcmeDemoBundle:Welcome:index`` maps to the ``indexAction`` method from the
 ``Acme\DemoBundle\Controller\WelcomeController`` class.
 
-For templates, it is even more interesting as templates do not need to be
+Logical Template Names
+......................
+
+For templates, the logical name ``AcmeDemoBundle:Welcome:index.html.twig`` is
+converted to the file path ``src/Acme/DemoBundle/Resources/views/Welcome/index.html.twig``.
+Templates become even more interesting when you realize they don't need to be
 stored on the filesystem. You can easily store them in a database table for
-instance. For instance, ``AcmeDemo:Welcome:index.html.twig`` is
-converted to ``src/Acme/DemoBundle/Resources/views/Welcome/index.html.twig``.
+instance.
+
+Extending Bundles
+.................
+
+If you follow these conventions, then you can use :doc:`bundle inheritance</cookbook/bundles/inheritance>`
+to "override" files, controllers or templates. For example, you can create
+a bundle - ``AcmeNewBundle`` - and specify that its parent is ``AcmeDemoBundle``.
+When Symfony loads the ``AcmeDemoBundle:Welcome:index`` controller, it will
+first look for the ``WelcomeController`` class in ``AcmeNewBundle`` and then
+look inside ``AcmeDemoBundle``. This means that one bundle can override almost
+any part of another bundle!
 
 Do you understand now why Symfony2 is so flexible? Share your bundles between
 applications, store them locally or globally, your choice.
+
+.. _using-vendors:
 
 Using Vendors
 -------------
@@ -278,7 +320,7 @@ Understanding the Cache and Logs
 
 Symfony2 is probably one of the fastest full-stack frameworks around. But how
 can it be so fast if it parses and interprets tens of YAML and XML files for
-each request? This is partly due to its cache system. The application
+each request? The speed is partly due to its cache system. The application
 configuration is only parsed for the very first request and then compiled down
 to plain PHP code stored in the ``app/cache/`` directory. In the development
 environment, Symfony2 is smart enough to flush the cache when you change a
@@ -300,28 +342,26 @@ Run it without any arguments to learn more about its capabilities:
 
 .. code-block:: bash
 
-    $ php app/console
+    php app/console
 
 The ``--help`` option helps you discover the usage of a command:
 
 .. code-block:: bash
 
-    $ php app/console router:debug --help
+    php app/console router:debug --help
 
 Final Thoughts
 --------------
 
 Call me crazy, but after reading this part, you should be comfortable with
-moving things around and making Symfony2 work for you. Everything is done in
-Symfony2 to get out of your way. So, feel free to rename and move directories
+moving things around and making Symfony2 work for you. Everything in Symfony2
+is designed to get out of your way. So, feel free to rename and move directories
 around as you see fit.
 
 And that's all for the quick tour. From testing to sending emails, you still
 need to learn a lot to become a Symfony2 master. Ready to dig into these
-topics now? Look no further - go to the official `book`_ and pick any topic
-you want.
+topics now? Look no further - go to the official :doc:`/book/index` and pick
+any topic you want.
 
 .. _standards:               http://groups.google.com/group/php-standards/web/psr-0-final-proposal
 .. _convention:              http://pear.php.net/
-.. _book:                    http://symfony.com/doc/2.0/book/
-.. _How to autoload Classes: http://symfony.com/doc/2.0/cookbook/tools/autoloader.html

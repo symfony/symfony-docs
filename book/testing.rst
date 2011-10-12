@@ -101,21 +101,21 @@ tests as far as PHPUnit is concerned, but they have a very specific workflow:
 
 Requests, clicks, and submissions are done by a client that knows how to talk
 to the application. To access such a client, your tests need to extend the
-Symfony2 ``WebTestCase`` class. The sandbox provides a simple functional test
-for ``HelloController`` that reads as follows::
+Symfony2 ``WebTestCase`` class. The Symfony2 Standard Edition provides a
+simple functional test for ``DemoController`` that reads as follows::
 
-    // src/Acme/HelloBundle/Tests/Controller/HelloControllerTest.php
-    namespace Acme\HelloBundle\Tests\Controller;
+    // src/Acme/DemoBundle/Tests/Controller/DemoControllerTest.php
+    namespace Acme\DemoBundle\Tests\Controller;
 
     use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
-    class HelloControllerTest extends WebTestCase
+    class DemoControllerTest extends WebTestCase
     {
         public function testIndex()
         {
-            $client = $this->createClient();
+            $client = static::createClient();
 
-            $crawler = $client->request('GET', '/hello/Fabien');
+            $crawler = $client->request('GET', '/demo/hello/Fabien');
 
             $this->assertTrue($crawler->filter('html:contains("Hello Fabien")')->count() > 0);
         }
@@ -123,7 +123,7 @@ for ``HelloController`` that reads as follows::
 
 The ``createClient()`` method returns a client tied to the current application::
 
-    $crawler = $client->request('GET', 'hello/Fabien');
+    $crawler = $client->request('GET', '/demo/hello/Fabien');
 
 The ``request()`` method returns a ``Crawler`` object which can be used to
 select elements in the Response, to click on links, and to submit forms.
@@ -133,6 +133,21 @@ select elements in the Response, to click on links, and to submit forms.
     The Crawler can only be used if the Response content is an XML or an HTML
     document. For other content types, get the content of the Response with
     ``$client->getResponse()->getContent()``.
+
+    You can set the content-type of the request to JSON by adding 'HTTP_CONTENT_TYPE' => 'application/json'.
+
+.. tip::
+
+    The full signature of the ``request()`` method is::
+
+        request($method,
+            $uri, 
+            array $parameters = array(), 
+            array $files = array(), 
+            array $server = array(), 
+            $content = null, 
+            $changeHistory = true
+        )   
 
 Click on a link by first selecting it with the Crawler using either a XPath
 expression or a CSS selector, then use the Client to click on it::
@@ -181,7 +196,7 @@ that it actually does what you expect it to. Use the Crawler to make assertions
 on the DOM::
 
     // Assert that the response matches a given CSS selector.
-    $this->assertTrue(count($crawler->filter('h1')) > 0);
+    $this->assertTrue($crawler->filter('h1')->count() > 0);
 
 Or, test against the Response content directly if you just want to assert that
 the content contains some text, or if the Response is not an XML/HTML
@@ -200,7 +215,7 @@ assertions. To get you started faster, here is a list of the most common and
 useful assertions::
 
     // Assert that the response matches a given CSS selector.
-    $this->assertTrue(count($crawler->filter($selector)) > 0);
+    $this->assertTrue($crawler->filter($selector)->count() > 0);
 
     // Assert that the response matches a given CSS selector n times.
     $this->assertEquals($count, $crawler->filter($selector)->count());
@@ -217,7 +232,7 @@ useful assertions::
     $this->assertEquals(200, $client->getResponse()->getStatusCode());
 
     // Assert that the response status code is a redirect.
-    $this->assertTrue($client->getResponse()->isRedirected('google.com'));
+    $this->assertTrue($client->getResponse()->isRedirect('google.com'));
 
 .. _documentation: http://www.phpunit.de/manual/3.5/en/
 
@@ -271,10 +286,20 @@ additional arguments of the ``request()`` method::
     $client->request('POST', '/submit', array('name' => 'Fabien'));
 
     // Form submission with a file upload
-    $client->request('POST', '/submit', array('name' => 'Fabien'), array('photo' => '/path/to/photo'));
+    use Symfony\Component\HttpFoundation\File\UploadedFile;
+
+    $photo = new UploadedFile('/path/to/photo.jpg', 'photo.jpg', 'image/jpeg', 123);
+    // or
+    $photo = array('tmp_name' => '/path/to/photo.jpg', 'name' => 'photo.jpg', 'type' => 'image/jpeg', 'size' => 123, 'error' => UPLOAD_ERR_OK);
+
+    $client->request('POST', '/submit', array('name' => 'Fabien'), array('photo' => $photo));
 
     // Specify HTTP headers
     $client->request('DELETE', '/post/12', array(), array(), array('PHP_AUTH_USER' => 'username', 'PHP_AUTH_PW' => 'pa$$word'));
+
+.. tip::
+
+    Form submissions are greatly simplified by using a crawler object (see below).
 
 When a request returns a redirect response, the client automatically follows
 it. This behavior can be changed with the ``followRedirects()`` method::
@@ -318,7 +343,6 @@ You can also get the objects related to the latest request::
     $request  = $client->getRequest();
     $response = $client->getResponse();
     $crawler  = $client->getCrawler();
-    $profiler = $client->getProfiler();
 
 If your requests are not insulated, you can also access the ``Container`` and
 the ``Kernel``::
@@ -344,23 +368,37 @@ HTTP layer.
     If the information you need to check are available from the profiler, use
     them instead.
 
-Redirections
-~~~~~~~~~~~~
+Accessing the Profiler Data
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-By default, the Client follows HTTP redirects. But if you want to get the
-Response before the redirection and redirect yourself, calls the
+To assert data collected by the profiler, you can get the profile for the
+current request like this::
+
+    $profile = $client->getProfile();
+
+Redirecting
+~~~~~~~~~~~
+
+By default, the Client doesn't follow HTTP redirects, so that you can get
+and examine the Response before redirecting. Once you do want the client
+to redirect, call the ``followRedirect()`` method::
+
+    // do something that would cause a redirect to be issued (e.g. fill out a form)
+
+    // follow the redirect
+    $crawler = $client->followRedirect();
+
+If you want the Client to always automatically redirect, you can call the
 ``followRedirects()`` method::
 
-    $client->followRedirects(false);
+    $client->followRedirects();
 
     $crawler = $client->request('GET', '/');
 
-    // do something with the redirect response
+    // all redirects are followed
 
-    // follow the redirection manually
-    $crawler = $client->followRedirect();
-
-    $client->followRedirects(true);
+    // set Client back to manual redirection
+    $client->followRedirects(false);
 
 .. index::
    single: Tests; Crawler
@@ -394,17 +432,23 @@ following:
 
 After creation, you can add more nodes:
 
-===================== ================================
-Method                Description                     
-===================== ================================
-``addHTMLDocument()`` An HTML document                
-``addXMLDocument()``  An XML document                 
-``addDOMDocument()``  A ``DOMDocument`` instance      
-``addDOMNodeList()``  A ``DOMNodeList`` instance      
-``addDOMNode()``      A ``DOMNode`` instance          
-``addNodes()``        An array of the above elements  
-``add()``             Accept any of the above elements
-===================== ================================
++-----------------------+----------------------------------+
+| Method                | Description                      |
++=======================+==================================+
+| ``addHTMLDocument()`` | An HTML document                 |
++-----------------------+----------------------------------+
+| ``addXMLDocument()``  | An XML document                  |
++-----------------------+----------------------------------+
+| ``addDOMDocument()``  | A ``DOMDocument`` instance       |
++-----------------------+----------------------------------+
+| ``addDOMNodeList()``  | A ``DOMNodeList`` instance       |
++-----------------------+----------------------------------+
+| ``addDOMNode()``      | A ``DOMNode`` instance           |
++-----------------------+----------------------------------+
+| ``addNodes()``        | An array of the above elements   |
++-----------------------+----------------------------------+
+| ``add()``             | Accept any of the above elements |
++-----------------------+----------------------------------+
 
 Traversing
 ~~~~~~~~~~
@@ -412,21 +456,31 @@ Traversing
 Like jQuery, the Crawler has methods to traverse the DOM of an HTML/XML
 document:
 
-===================== =========================================
-Method                Description
-===================== =========================================
-``filter('h1')``      Nodes that match the CSS selector
-``filterXpath('h1')`` Nodes that match the XPath expression
-``eq(1)``             Node for the specified index
-``first()``           First node
-``last()``            Last node
-``siblings()``        Siblings
-``nextAll()``         All following siblings
-``previousAll()``     All preceding siblings
-``parents()``         Parent nodes
-``children()``        Children
-``reduce($lambda)``   Nodes for which the callable returns true
-===================== =========================================
++-----------------------+----------------------------------------------------+
+| Method                | Description                                        |
++=======================+====================================================+
+| ``filter('h1')``      | Nodes that match the CSS selector                  |
++-----------------------+----------------------------------------------------+
+| ``filterXpath('h1')`` | Nodes that match the XPath expression              |
++-----------------------+----------------------------------------------------+
+| ``eq(1)``             | Node for the specified index                       |
++-----------------------+----------------------------------------------------+
+| ``first()``           | First node                                         |
++-----------------------+----------------------------------------------------+
+| ``last()``            | Last node                                          |
++-----------------------+----------------------------------------------------+
+| ``siblings()``        | Siblings                                           |
++-----------------------+----------------------------------------------------+
+| ``nextAll()``         | All following siblings                             |
++-----------------------+----------------------------------------------------+
+| ``previousAll()``     | All preceding siblings                             |
++-----------------------+----------------------------------------------------+
+| ``parents()``         | Parent nodes                                       |
++-----------------------+----------------------------------------------------+
+| ``children()``        | Children                                           |
++-----------------------+----------------------------------------------------+
+| ``reduce($lambda)``   | Nodes for which the callable does not return false |
++-----------------------+----------------------------------------------------+
 
 You can iteratively narrow your node selection by chaining method calls as
 each method returns a new Crawler instance for the matching nodes::
@@ -639,9 +693,12 @@ The Client used by functional tests creates a Kernel that runs in a special
             toolbar: false
             intercept_redirects: false
 
-        zend:
-            logger:
-                priority: debug
+        monolog:
+            handlers:
+                main:
+                    type:  stream
+                    path:  %kernel.logs_dir%/%kernel.environment%.log
+                    level: debug
 
     .. code-block:: xml
 
@@ -660,9 +717,13 @@ The Client used by functional tests creates a Kernel that runs in a special
                 <framework:test />
             </framework:config>
 
-            <zend:config>
-                <zend:logger priority="debug" />
-            </zend:config>
+            <monolog:config>
+                <monolog:main
+                    type="stream"
+                    path="%kernel.logs_dir%/%kernel.environment%.log"
+                    level="debug"
+                 />               
+            </monolog:config>
         </container>
 
     .. code-block:: php
@@ -680,15 +741,19 @@ The Client used by functional tests creates a Kernel that runs in a special
             'intercept-redirects' => false,
         ));
 
-        $container->loadFromExtension('zend', array(
-            'logger' => array('priority' => 'debug'),
-        ));
+        $container->loadFromExtension('monolog', array(
+            'handlers' => array(
+                'main' => array('type' => 'stream',
+                                'path' => '%kernel.logs_dir%/%kernel.environment%.log'
+                                'level' => 'debug')
+           
+        )));
 
 You can also change the default environment (``test``) and override the
 default debug mode (``true``) by passing them as options to the
 ``createClient()`` method::
 
-    $client = $this->createClient(array(
+    $client = static::createClient(array(
         'environment' => 'my_test_env',
         'debug'       => false,
     ));
@@ -696,7 +761,7 @@ default debug mode (``true``) by passing them as options to the
 If your application behaves according to some HTTP headers, pass them as the
 second argument of ``createClient()``::
 
-    $client = $this->createClient(array(), array(
+    $client = static::createClient(array(), array(
         'HTTP_HOST'       => 'en.example.com',
         'HTTP_USER_AGENT' => 'MySuperBrowser/1.0',
     ));

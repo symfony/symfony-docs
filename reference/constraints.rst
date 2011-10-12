@@ -5,24 +5,41 @@ Validation Constraints Reference
    :maxdepth: 1
    :hidden:
 
-   constraints/AssertFalse
-   constraints/AssertTrue
-   constraints/AssertType
-   constraints/Choice
-   constraints/Collection
+   constraints/NotBlank
+   constraints/Blank
+   constraints/NotNull
+   constraints/Null
+   constraints/True
+   constraints/False
+   constraints/Type
+
+   constraints/Email
+   constraints/MinLength
+   constraints/MaxLength
+   constraints/Url
+   constraints/Regex
+   constraints/Ip
+
+   constraints/Max
+   constraints/Min
+
    constraints/Date
    constraints/DateTime
-   constraints/Email
-   constraints/File
-   constraints/Max
-   constraints/MaxLength
-   constraints/Min
-   constraints/MinLength
-   constraints/NotBlank
-   constraints/NotNull
-   constraints/Regex
    constraints/Time
-   constraints/Url
+
+   constraints/Choice
+   constraints/Collection
+   constraints/UniqueEntity
+   constraints/Language
+   constraints/Locale
+   constraints/Country
+
+   constraints/File
+   constraints/Image
+
+   constraints/Callback
+   constraints/All
+   constraints/UserPassword
    constraints/Valid
 
 The Validator is designed to validate objects against *constraints*.
@@ -35,22 +52,4 @@ Supported Constraints
 
 The following constraints are natively available in Symfony2:
 
-* :doc:`AssertFalse <constraints/AssertFalse>`
-* :doc:`AssertTrue <constraints/AssertTrue>`
-* :doc:`AssertType <constraints/AssertType>`
-* :doc:`Choice <constraints/Choice>`
-* :doc:`Collection <constraints/Collection>`
-* :doc:`Date <constraints/Date>`
-* :doc:`DateTime <constraints/DateTime>`
-* :doc:`Email <constraints/Email>`
-* :doc:`File <constraints/File>`
-* :doc:`Max <constraints/Max>`
-* :doc:`MaxLength <constraints/MaxLength>`
-* :doc:`Min <constraints/Min>`
-* :doc:`MinLength <constraints/MinLength>`
-* :doc:`NotBlank <constraints/NotBlank>`
-* :doc:`NotNull <constraints/NotNull>`
-* :doc:`Regex <constraints/Regex>`
-* :doc:`Time <constraints/Time>`
-* :doc:`Url <constraints/Url>`
-* :doc:`Valid <constraints/Valid>`
+.. include:: /reference/constraints/map.rst.inc

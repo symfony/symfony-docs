@@ -1,21 +1,34 @@
 .. index::
    single: Controller
 
-The Controller
-==============
+Controller
+==========
 
 A controller is a PHP function you create that takes information from the
 HTTP request and constructs and returns an HTTP response (as a Symfony2
 ``Response`` object). The response could be an HTML page, an XML document,
 a serialized JSON array, an image, a redirect, a 404 error or anything else
 you can dream up. The controller contains whatever arbitrary logic *your
-application* needs to create that response.
+application* needs to render the content of a page.
 
-Along the way, your controller might read information from the request, load
-a database resource, send an email, or set information on the user's session.
-But in all cases, the controller's final job is to return the ``Response``
-object that will be delivered back to the client. There's no magic and no
-other requirements to worry about. Here are a few common examples:
+To see how simple this is, let's look at a Symfony2 controller in action.
+The following controller would render a page that simply prints ``Hello world!``::
+
+    use Symfony\Component\HttpFoundation\Response;
+
+    public function helloAction()
+    {
+        return new Response('Hello world!');
+    }
+
+The goal of a controller is always the same: create and return a ``Response``
+object. Along the way, it might read information from the request, load a
+database resource, send an email, or set information on the user's session.
+But in all cases, the controller will eventually return the ``Response`` object
+that will be delivered back to the client.
+
+There's no magic and no other requirements to worry about! Here are a few
+common examples:
 
 * *Controller A* prepares a ``Response`` object representing the content
   for the homepage of the site.
@@ -37,25 +50,25 @@ other requirements to worry about. Here are a few common examples:
 Requests, Controller, Response Lifecycle
 ----------------------------------------
 
-Every request handled by a Symfony2 project goes through the same basic lifecycle.
+Every request handled by a Symfony2 project goes through the same simple lifecycle.
 The framework takes care of the repetitive tasks and ultimately executes a
 controller, which houses your custom application code:
 
-* Each request is handled by a single front controller file (e.g. ``app.php``
-  or ``index.php``) that's responsible for bootstrapping the framework;
+#. Each request is handled by a single front controller file (e.g. ``app.php``
+   or ``app_dev.php``) that bootstraps the application;
 
-* The ``Router`` reads the request information, matches that information to
-  a specific route, and determines from that route which controller should
-  be called;
+#. The ``Router`` reads information from the request (e.g. the URI), finds
+   a route that matches that information, and reads the ``_controller`` parameter
+   from the route;
 
-* The controller is executed and the code inside the controller creates and
-  returns a ``Response`` object;
+#. The controller from the matched route is executed and the code inside the
+   controller creates and returns a ``Response`` object;
 
-* The HTTP headers and content of the ``Response`` object are sent back to
-  the client.
+#. The HTTP headers and content of the ``Response`` object are sent back to
+   the client.
 
-Creating a page is as easy as creating a controller and making a route that
-maps a URI to that controller.
+Creating a page is as easy as creating a controller (#3) and making a route that
+maps a URL to that controller (#2).
 
 .. note::
 
@@ -73,13 +86,12 @@ maps a URI to that controller.
 A Simple Controller
 -------------------
 
-The controller is a PHP callable responsible for returning a representation
-of the resource (most of the time an HTML representation). Though a controller
-can be any PHP callable (a function, a method on an object, or a ``Closure``),
-in Symfony2, a controller is usually a single method inside a controller
-object. Controllers are also called *actions*.
+While a controller can be any PHP callable (a function, method on an object,
+or a ``Closure``), in Symfony2, a controller is usually a single method inside
+a controller object. Controllers are also called *actions*.
 
 .. code-block:: php
+    :linenos:
 
     // src/Acme/HelloBundle/Controller/HelloController.php
 
@@ -99,9 +111,9 @@ object. Controllers are also called *actions*.
     Note that the *controller* is the ``indexAction`` method, which lives
     inside a *controller class* (``HelloController``). Don't be confused
     by the naming: a *controller class* is simply a convenient way to group
-    several controllers together. Typically, the controller class will house
-    several controllers (e.g. ``updateAction``, ``deleteAction``, etc). A
-    controller is also sometimes referred to as an *action*.
+    several controllers/actions together. Typically, the controller class
+    will house several controllers/actions (e.g. ``updateAction``, ``deleteAction``,
+    etc).
 
 This controller is pretty straightforward, but let's walk through it:
 
@@ -110,86 +122,86 @@ This controller is pretty straightforward, but let's walk through it:
   ``Response`` class, which our controller must return.
 
 * *line 6*: The class name is the concatenation of a name for the controller
-  class and the word ``Controller``. This is a convention that provides consistency
-  to controllers and allows them to be referenced only by the first part of
-  the name (i.e. ``Hello``) in the routing configuration.
+  class (i.e. ``Hello``) and the word ``Controller``. This is a convention
+  that provides consistency to controllers and allows them to be referenced
+  only by the first part of the name (i.e. ``Hello``) in the routing configuration.
 
 * *line 8*: Each action in a controller class is suffixed with ``Action``
   and is referenced in the routing configuration by the action's name (``index``).
-  In the next section, we'll use a route to map a URI to this action and
-  show how the route's placeholders (``{name}``) become arguments on the
-  action (``$name``).
+  In the next section, you'll create a route that maps a URI to this action.
+  You'll learn how the route's placeholders (``{name}``) become arguments
+  to the action method (``$name``).
 
 * *line 10*: The controller creates and returns a ``Response`` object.
 
 .. index::
    single: Controller; Routes and controllers
 
-Mapping a URI to a Controller
+Mapping a URL to a Controller
 -----------------------------
 
-Our new controller returns a simple HTML page. To render this controller
-at a specific URL, we need to create a route to it.
-
-We'll talk about the ``Routing`` component in detail in the :doc:`Routing chapter</book/routing>`,
-but let's create a simple route to our controller:
+The new controller returns a simple HTML page. To actually view this page
+in your browser, you need to create a route, which maps a specific URL pattern
+to the controller:
 
 .. configuration-block::
 
     .. code-block:: yaml
 
-        # src/Acme/HelloBundle/Resources/config/routing.yml
+        # app/config/routing.yml
         hello:
             pattern:      /hello/{name}
-            defaults:     { _controller: AcmeHello:Hello:index }
+            defaults:     { _controller: AcmeHelloBundle:Hello:index }
 
     .. code-block:: xml
 
-        <!-- src/Acme/HelloBundle/Resources/config/routing.xml -->
+        <!-- app/config/routing.xml -->
         <route id="hello" pattern="/hello/{name}">
-            <default key="_controller">AcmeHello:Hello:index</default>
+            <default key="_controller">AcmeHelloBundle:Hello:index</default>
         </route>
 
     .. code-block:: php
 
-        // src/Acme/HelloBundle/Resources/config/routing.php
+        // app/config/routing.php
         $collection->add('hello', new Route('/hello/{name}', array(
-            '_controller' => 'AcmeHello:Hello:index',
+            '_controller' => 'AcmeHelloBundle:Hello:index',
         )));
 
 Going to ``/hello/ryan`` now executes the ``HelloController::indexAction()``
 controller and passes in ``ryan`` for the ``$name`` variable. Creating a
-"page" means simply creating a controller method and associated route. There's
-no hidden layers or behind-the-scenes magic.
+"page" means simply creating a controller method and associated route.
 
-Notice the syntax used to refer to the controller: ``AcmeHello:Hello:index``.
+Notice the syntax used to refer to the controller: ``AcmeHelloBundle:Hello:index``.
 Symfony2 uses a flexible string notation to refer to different controllers.
 This is the most common syntax and tells Symfony2 to look for a controller
-class called ``HelloController`` inside a bundle named ``HelloBundle``. The
+class called ``HelloController`` inside a bundle named ``AcmeHelloBundle``. The
 method ``indexAction()`` is then executed.
 
 For more details on the string format used to reference different controllers,
 see :ref:`controller-string-syntax`.
 
+.. note::
+
+    This example places the routing configuration directly in the ``app/config/``
+    directory. A better way to organize your routes is to place each route
+    in the bundle it belongs to. For more information on this, see
+    :ref:`routing-include-external-resources`.
+
 .. tip::
 
-    Notice that since our controller lives in the ``HelloBundle``, we've
-    placed the routing configuration inside the ``HelloBundle`` to stay
-    organized. To load routing configuration that lives inside a bundle, it
-    must be imported from your application's main routing resource. See
-    :ref:`routing-include-external-resources` for more information.
+    You can learn much more about the routing system in the :doc:`Routing chapter</book/routing>`.
 
 .. index::
-   single: Controller; Route parameters as controller arguments
+   single: Controller; Controller arguments
 
 .. _route-parameters-controller-arguments:
 
 Route Parameters as Controller Arguments
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-We already know now that the ``_controller`` parameter ``AcmeHello:Hello:index``
+You already know that the ``_controller`` parameter ``AcmeHelloBundle:Hello:index``
 refers to a ``HelloController::indexAction()`` method that lives inside the
-``HelloBundle`` bundle. What's more interesting is the arguments that are
+``AcmeHelloBundle`` bundle. What's more interesting is the arguments that are
 passed to that method:
 
 .. code-block:: php
@@ -218,24 +230,24 @@ example:
 
     .. code-block:: yaml
 
-        # src/Acme/HelloBundle/Resources/config/routing.yml
+        # app/config/routing.yml
         hello:
             pattern:      /hello/{first_name}/{last_name}
-            defaults:     { _controller: AcmeHello:Hello:index, color: green }
+            defaults:     { _controller: AcmeHelloBundle:Hello:index, color: green }
 
     .. code-block:: xml
 
-        <!-- src/Acme/HelloBundle/Resources/config/routing.xml -->
+        <!-- app/config/routing.xml -->
         <route id="hello" pattern="/hello/{first_name}/{last_name}">
-            <default key="_controller">AcmeHello:Hello:index</default>
+            <default key="_controller">AcmeHelloBundle:Hello:index</default>
             <default key="color">green</default>
         </route>
 
     .. code-block:: php
 
-        // src/Acme/HelloBundle/Resources/config/routing.php
+        // app/config/routing.php
         $collection->add('hello', new Route('/hello/{first_name}/{last_name}', array(
-            '_controller' => 'AcmeHello:Hello:index',
+            '_controller' => 'AcmeHelloBundle:Hello:index',
             'color'       => 'green',
         )));
 
@@ -246,7 +258,7 @@ The controller for this can take several arguments::
         // ...
     }
 
-Notice that both placeholder variables (``{{first_name}}``, ``{{last_name}}``)
+Notice that both placeholder variables (``{first_name}``, ``{last_name}``)
 as well as the default ``color`` variable are available as arguments in the
 controller. When a route is matched, the placeholder variables are merged
 with the ``defaults`` to make one array that's available to your controller.
@@ -254,58 +266,72 @@ with the ``defaults`` to make one array that's available to your controller.
 Mapping route parameters to controller arguments is easy and flexible. Keep
 the following guidelines in mind while you develop.
 
-The order of the controller arguments does not matter.
-......................................................
+* **The order of the controller arguments does not matter**
 
-Symfony2 is able to matches the parameter names from the route to the variable
-names in the controller method's signature. In other words, it realizes that
-the ``last_name`` parameter matches up with the ``$last_name`` argument.
-The arguments of the controller could be totally reordered and still work
-perfectly::
+    Symfony is able to match the parameter names from the route to the variable
+    names in the controller method's signature. In other words, it realizes that
+    the ``{last_name}`` parameter matches up with the ``$last_name`` argument.
+    The arguments of the controller could be totally reordered and still work
+    perfectly::
 
-    public function indexAction($last_name, $color, $first_name)
-    {
-        // ..
-    }
+        public function indexAction($last_name, $color, $first_name)
+        {
+            // ..
+        }
 
-Each required controller argument must match up with a routing parameter.
-.........................................................................
+* **Each required controller argument must match up with a routing parameter**
 
-The following would throw a ``RuntimeException`` because there is no ``foo``
-parameter defined in the route::
+    The following would throw a ``RuntimeException`` because there is no ``foo``
+    parameter defined in the route::
 
-    public function indexAction($first_name, $last_name, $color, $foo)
-    {
-        // ..
-    }
+        public function indexAction($first_name, $last_name, $color, $foo)
+        {
+            // ..
+        }
 
-Making the argument optional, however, is perfectly ok. The following
-example would not throw an exception::
+    Making the argument optional, however, is perfectly ok. The following
+    example would not throw an exception::
 
-    public function indexAction($first_name, $last_name, $color, $foo = 'bar')
-    {
-        // ..
-    }
+        public function indexAction($first_name, $last_name, $color, $foo = 'bar')
+        {
+            // ..
+        }
 
-Not all routing parameters need to be arguments on your controller.
-...................................................................
+* **Not all routing parameters need to be arguments on your controller**
 
-If, for example, the ``last_name`` weren't important for your controller,
-you could omit it entirely::
+    If, for example, the ``last_name`` weren't important for your controller,
+    you could omit it entirely::
 
-    public function indexAction($first_name, $color)
-    {
-        // ..
-    }
-
-In fact, the ``_controller`` route parameter itself is technically available
-as a controller argument since it's in the ``defaults`` of the route. Of
-course, it's generally not very useful, so it's omitted from our controller.
+        public function indexAction($first_name, $color)
+        {
+            // ..
+        }
 
 .. tip::
+
     Every route also has a special ``_route`` parameter, which is equal to
     the name of the route that was matched (e.g. ``hello``). Though not usually
     useful, this is equally available as a controller argument.
+
+The ``Request`` as a Controller Argument
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+For convenience, you can also have Symfony pass you the ``Request`` object
+as an argument to your controller. This is especially convenient when you're
+working with forms, for example::
+
+    use Symfony\Component\HttpFoundation\Request;
+
+    public function updateAction(Request $request)
+    {
+        $form = $this->createForm(...);
+        
+        $form->bindRequest($request);
+        // ...
+    }
+
+.. index::
+   single: Controller; Base controller class
 
 The Base Controller Class
 -------------------------
@@ -316,7 +342,7 @@ access to any resource it might need. By extending this ``Controller`` class,
 you can take advantage of several helper methods.
 
 Add the ``use`` statement atop the ``Controller`` class and then modify the
-``HelloController`` to extend it. That's all there is to it.
+``HelloController`` to extend it:
 
 .. code-block:: php
 
@@ -334,22 +360,21 @@ Add the ``use`` statement atop the ``Controller`` class and then modify the
         }
     }
 
-So far, extending the base ``Controller`` class hasn't changed anything. In
-the next section, we'll walk through several helper methods that the base
-controller class makes available. These methods are just shortcuts to using
-core Symfony2 functionality that's available to you with or without the use of
-the base ``Controller`` class. A great way to see the core functionality in
-action is to look in the
+This doesn't actually change anything about how your controller works. In
+the next section, you'll learn about the helper methods that the base controller
+class makes available. These methods are just shortcuts to using core Symfony2
+functionality that's available to you with or without the use of the base
+``Controller`` class. A great way to see the core functionality in action
+is to look in the
 :class:`Symfony\\Bundle\\FrameworkBundle\\Controller\\Controller` class
 itself.
 
 .. tip::
 
-    Extending the base class is a *choice* in Symfony; it contains useful
+    Extending the base class is *optional* in Symfony; it contains useful
     shortcuts but nothing mandatory. You can also extend
-    :class:`Symfony\\Component\\DependencyInjection\\ContainerAware`. The
-    service container object will then be accessible via the ``container``
-    property and this is the only object you need to create any controller.
+    ``Symfony\Component\DependencyInjection\ContainerAware``. The service
+    container object will then be accessible via the ``container`` property.
 
 .. note::
 
@@ -373,32 +398,35 @@ to manage in Symfony2.
 Redirecting
 ~~~~~~~~~~~
 
-If you want to redirect the user to another page, use a special ``RedirectResponse``
-class, which is designed specifically to redirect the user to another URL::
-
-    // ...
-    use Symfony\Component\HttpFoundation\RedirectResponse;
-
-    class HelloController extends Controller
-    {
-      public function indexAction()
-      {
-          return new RedirectResponse($this->generateUrl('hello', array('name' => 'Lucas')));
-      }
-    }
-
-The ``generateUrl()`` method is just a shortcut that calls ``generate()``
-on the ``router`` service. It takes the route name and an array of parameters
-as arguments and returns the associated friendly URL. See the :doc:`Routing </book/routing>`
-chapter for more information.
-
-By default, the ``redirect`` method does a 302 (temporary) redirect. To perform
-a 301 (permanent) redirect, modify the second argument::
+If you want to redirect the user to another page, use the ``redirect()`` method::
 
     public function indexAction()
     {
-        return new RedirectResponse($this->generateUrl('hello', array('name' => 'Lucas')), 301);
+        return $this->redirect($this->generateUrl('homepage'));
     }
+
+The ``generateUrl()`` method is just a helper function that generates the URL
+for a given route. For more information, see the :doc:`Routing </book/routing>`
+chapter.
+
+By default, the ``redirect()`` method performs a 302 (temporary) redirect. To
+perform a 301 (permanent) redirect, modify the second argument::
+
+    public function indexAction()
+    {
+        return $this->redirect($this->generateUrl('homepage'), 301);
+    }
+
+.. tip::
+
+    The ``redirect()`` method is simply a shortcut that creates a ``Response``
+    object that specializes in redirecting the user. It's equivalent to:
+
+    .. code-block:: php
+
+        use Symfony\Component\HttpFoundation\RedirectResponse;
+
+        return new RedirectResponse($this->generateUrl('homepage'));
 
 .. index::
    single: Controller; Forwarding
@@ -406,15 +434,14 @@ a 301 (permanent) redirect, modify the second argument::
 Forwarding
 ~~~~~~~~~~
 
-You can also easily forward to another action internally with the ``forward()``
+You can also easily forward to another controller internally with the ``forward()``
 method. Instead of redirecting the user's browser, it makes an internal sub-request,
 and calls the specified controller. The ``forward()`` method returns the ``Response``
-object to allow for further modification if the need arises. That ``Response``
-object is the end-product of the internal sub-request::
+object that's returned from that controller::
 
     public function indexAction($name)
     {
-        $response = $this->forward('AcmeHello:Hello:fancy', array(
+        $response = $this->forward('AcmeHelloBundle:Hello:fancy', array(
             'name'  => $name,
             'color' => 'green'
         ));
@@ -451,7 +478,7 @@ value to each variable.
     object::
     
         $httpKernel = $this->container->get('http_kernel');
-        $response = $httpKernel->forward('AcmeHello:Hello:fancy', array(
+        $response = $httpKernel->forward('AcmeHelloBundle:Hello:fancy', array(
             'name'  => $name,
             'color' => 'green',
         ));
@@ -469,14 +496,14 @@ that's responsible for generating the HTML (or other format) for the controller.
 The ``renderView()`` method renders a template and returns its content. The
 content from the template can be used to create a ``Response`` object::
 
-    $content = $this->renderView('AcmeHello:Hello:index.html.twig', array('name' => $name));
+    $content = $this->renderView('AcmeHelloBundle:Hello:index.html.twig', array('name' => $name));
 
     return new Response($content);
 
 This can even be done in just one step with the ``render()`` method, which
-returns a ``Response`` object with the content from the template::
+returns a ``Response`` object containing the content from the template::
 
-    return $this->render('AcmeHello:Hello:index.html.twig', array('name' => $name));
+    return $this->render('AcmeHelloBundle:Hello:index.html.twig', array('name' => $name));
 
 In both cases, the ``Resources/views/Hello/index.html.twig`` template inside
 the ``AcmeHelloBundle`` will be rendered.
@@ -490,7 +517,7 @@ The Symfony templating engine is explained in great detail in the
     service. The ``templating`` service can also be used directly::
     
         $templating = $this->get('templating');
-        $content = $templating->render('AcmeHello:Hello:index.html.twig', array('name' => $name));
+        $content = $templating->render('AcmeHelloBundle:Hello:index.html.twig', array('name' => $name));
 
 .. index::
    single: Controller; Accessing services
@@ -501,9 +528,7 @@ Accessing other Services
 When extending the base controller class, you can access any Symfony2 service
 via the ``get()`` method. Here are several common services you might need::
 
-    $request = $this->get('request');
-
-    $response = $this->get('response');
+    $request = $this->getRequest();
 
     $templating = $this->get('templating');
 
@@ -512,39 +537,41 @@ via the ``get()`` method. Here are several common services you might need::
     $mailer = $this->get('mailer');
 
 There are countless other services available and you are encouraged to define
-your own. For more information, see the :doc:`/book/service_container`
-chapter.
+your own. To list all available services, use the ``container:debug`` console
+command:
+
+.. code-block:: bash
+
+    php app/console container:debug
+
+For more information, see the :doc:`/book/service_container` chapter.
 
 .. index::
    single: Controller; Managing errors
+   single: Controller; 404 pages
 
-Managing Errors
----------------
+Managing Errors and 404 Pages
+-----------------------------
 
 When things are not found, you should play well with the HTTP protocol and
-return a 404 response. This is easily done by throwing a built-in HTTP
-exception:
-
-.. code-block:: php
-
-    use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+return a 404 response. To do this, you'll throw a special type of exception.
+If you're extending the base controller class, do the following::
 
     public function indexAction()
     {
         $product = // retrieve the object from database
         if (!$product) {
-            throw new NotFoundHttpException('The product does not exist.');
+            throw $this->createNotFoundException('The product does not exist');
         }
 
         return $this->render(...);
     }
 
-The ``NotFoundHttpException`` will return a 404 HTTP response back to the
-browser. When viewing a page in debug mode, a full exception with stacktrace
-is displayed so that the cause of the exception can be easily tracked down.
+The ``createNotFoundException()`` method creates a special ``NotFoundHttpException``
+object, which ultimately triggers a 404 HTTP response inside Symfony.
 
-Of course, you're free to throw any ``Exception`` class in your controller
-- Symfony2 will automatically return a 500 HTTP response code.
+Of course, you're free to throw any ``Exception`` class in your controller -
+Symfony2 will automatically return a 500 HTTP response code.
 
 .. code-block:: php
 
@@ -552,11 +579,8 @@ Of course, you're free to throw any ``Exception`` class in your controller
 
 In every case, a styled error page is shown to the end user and a full debug
 error page is shown to the developer (when viewing the page in debug mode).
-Both of these error pages can be customized.
-
-.. note::
-
-    Read the ":doc:`/cookbook/controller/error_pages`" recipe to learn more.
+Both of these error pages can be customized. For details, read the
+":doc:`/cookbook/controller/error_pages`" cookbook recipe.
 
 .. index::
    single: Controller; The session
@@ -565,15 +589,15 @@ Both of these error pages can be customized.
 Managing the Session
 --------------------
 
-Even if the HTTP protocol is stateless, Symfony2 provides a nice session object
-that represents the client (be it a real person using a browser, a bot, or a
-web service). Between two requests, Symfony2 stores the attributes in a cookie
+Symfony2 provides a nice session object that you can use to store information
+about the user (be it a real person using a browser, a bot, or a web service)
+between requests. By default, Symfony2 stores the attributes in a cookie
 by using the native PHP sessions.
 
 Storing and retrieving information from the session can be easily achieved
 from any controller::
 
-    $session = $this->get('request')->getSession();
+    $session = $this->getRequest()->getSession();
 
     // store an attribute for reuse during a later user request
     $session->set('foo', 'bar');
@@ -598,24 +622,30 @@ for exactly one additional request. This is useful when processing a form:
 you want to redirect and have a special message shown on the *next* request.
 These types of messages are called "flash" messages.
 
-Let's show an example where we're processing a form submit::
+For example, imagine you're processing a form submit::
 
     public function updateAction()
     {
-        if ('POST' === $this->get('request')->getMethod()) {
+        $form = $this->createForm(...);
+
+        $form->bindRequest($this->getRequest());
+        if ($form->isValid()) {
             // do some sort of processing
-            
+
             $this->get('session')->setFlash('notice', 'Your changes were saved!');
 
-            return new RedirectResponse($this->generateUrl(...));
+            return $this->redirect($this->generateUrl(...));
         }
-        
+
         return $this->render(...);
     }
 
 After processing the request, the controller sets a ``notice`` flash message
-and then redirects. In the template of the next action, the following code
-could be used to render the message:
+and then redirects. The name (``notice``) isn't significant - it's just what
+you're using to identify the type of the message.
+
+In the template of the next action, the following code could be used to render
+the ``notice`` message:
 
 .. configuration-block::
 
@@ -629,18 +659,18 @@ could be used to render the message:
 
     .. code-block:: php
     
-        <?php if ($view['session']->hasFlash('notice') ?>
+        <?php if ($view['session']->hasFlash('notice')): ?>
             <div class="flash-notice">
                 <?php echo $view['session']->getFlash('notice') ?>
             </div>
         <?php endif; ?>
 
-By design, flash messages are meant to only live for exactly one request
-(they're "gone in a flash"). They're designed to be used across redirects
-exactly as we've done in this example.
+By design, flash messages are meant to live for exactly one request (they're
+"gone in a flash"). They're designed to be used across redirects exactly as
+you've done in this example.
 
 .. index::
-   single: Controller; Response
+   single: Controller; Response object
 
 The Response Object
 -------------------
@@ -666,7 +696,7 @@ headers and content that's sent back to the client::
     to ``content-type`` or even ``content_type``.
 
 .. index::
-   single: Controller; Request
+   single: Controller; Request object
 
 The Request Object
 ------------------
@@ -674,7 +704,7 @@ The Request Object
 Besides the values of the routing placeholders, the controller also has access
 to the ``Request`` object when extending the base ``Controller`` class::
 
-    $request = $this->get('request');
+    $request = $this->getRequest();
 
     $request->isXmlHttpRequest(); // is it an Ajax request?
 
@@ -687,31 +717,25 @@ to the ``Request`` object when extending the base ``Controller`` class::
 Like the ``Response`` object, the request headers are stored in a ``HeaderBag``
 object and are easily accessible.
 
-.. index::
-   single: Controller; Overview
+Final Thoughts
+--------------
 
-Overview
---------
+Whenever you create a page, you'll ultimately need to write some code that
+contains the logic for that page. In Symfony, this is called a controller,
+and it's a PHP function that can do anything it needs in order to return
+the final ``Response`` object that will be returned to the user.
 
-In Symfony, a controller is nothing more than a PHP function that contains
-whatever arbitrary logic is needed to create and return a ``Response`` object.
-The controller allows us to have an application with many pages while keeping
-the logic for each page organized into different controller classes and action
-methods.
+To make life easier, you can choose to extend a base ``Controller`` class,
+which contains shortcut methods for many common controller tasks. For example,
+since you don't want to put HTML code in your controller, you can use
+the ``render()`` method to render and return the content from a template.
 
-Symfony2 decides which controller should handle each request by matching
-a route and resolving the string format of its ``_controller`` parameter
-to a real Symfony2 controller. The arguments on that controller correspond
-to the parameters on the route, allowing your controller access to the information
-form the request.
-
-The controller can do anything and contain any logic, as long as it returns
-a ``Response`` object. If you extend the base ``Controller`` class, you
-instantly have access to all of the Symfony2 core service objects as well
-as shortcut methods to performing the most common tasks.
+In other chapters, you'll see how the controller can be used to persist and
+fetch objects from a database, process form submissions, handle caching and
+more.
 
 Learn more from the Cookbook
 ----------------------------
 
-* :doc:`/cookbook/controller/service`
 * :doc:`/cookbook/controller/error_pages`
+* :doc:`/cookbook/controller/service`

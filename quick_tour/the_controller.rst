@@ -14,17 +14,20 @@ in Symfony2 is straightforward. Tweak the route by adding a default value of
 ``xml`` for the ``_format`` variable::
 
     // src/Acme/DemoBundle/Controller/DemoController.php
+    use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+    use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+
     /**
-     * @extra:Route("/hello/{name}", defaults={"_format"="xml"}, name="_demo_hello")
-     * @extra:Template()
+     * @Route("/hello/{name}", defaults={"_format"="xml"}, name="_demo_hello")
+     * @Template()
      */
     public function helloAction($name)
     {
         return array('name' => $name);
     }
 
-According to the request format (as defined by the ``_format`` value),
-Symfony2 automatically selects the right template, here ``hello.xml.twig``:
+By using the request format (as defined by the ``_format`` value), Symfony2
+automatically selects the right template, here ``hello.xml.twig``:
 
 .. code-block:: xml+php
 
@@ -34,14 +37,17 @@ Symfony2 automatically selects the right template, here ``hello.xml.twig``:
     </hello>
 
 That's all there is to it. For standard formats, Symfony2 will also
-automatically choose the best ``Content-Type`` header for the response. If you
-want to support different formats for a single action, use the ``{_format}``
+automatically choose the best ``Content-Type`` header for the response. If
+you want to support different formats for a single action, use the ``{_format}``
 placeholder in the route pattern instead::
 
     // src/Acme/DemoBundle/Controller/DemoController.php
+    use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+    use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+
     /**
-     * @extra:Route("/hello/{name}.{_format}", defaults={"_format"="html"}, requirements={"_format"="html|xml|json"}, name="_demo_hello")
-     * @extra:Template()
+     * @Route("/hello/{name}.{_format}", defaults={"_format"="html"}, requirements={"_format"="html|xml|json"}, name="_demo_hello")
+     * @Template()
      */
     public function helloAction($name)
     {
@@ -59,20 +65,20 @@ requirement.
 Redirecting and Forwarding
 --------------------------
 
-If you want to redirect the user to another page, use the ``RedirectResponse``
-class::
+If you want to redirect the user to another page, use the ``redirect()``
+method::
 
-    return new RedirectResponse($this->generateUrl('_demo_hello', array('name' => 'Lucas')));
+    return $this->redirect($this->generateUrl('_demo_hello', array('name' => 'Lucas')));
 
 The ``generateUrl()`` is the same method as the ``path()`` function we used in
 templates. It takes the route name and an array of parameters as arguments and
 returns the associated friendly URL.
 
 You can also easily forward the action to another one with the ``forward()``
-method. As for the ``actions`` helper, it makes an internal sub-request, but
-it returns the ``Response`` object to allow for further modification::
+method. Internally, Symfony makes a "sub-request", and returns the ``Response``
+object from that sub-request::
 
-    $response = $this->forward('AcmeDemo:Hello:fancy', array('name' => $name, 'color' => 'green'));
+    $response = $this->forward('AcmeDemoBundle:Hello:fancy', array('name' => $name, 'color' => 'green'));
 
     // do something with the response or return it directly
 
@@ -82,7 +88,7 @@ Getting information from the Request
 Besides the values of the routing placeholders, the controller also has access
 to the ``Request`` object::
 
-    $request = $this->get('request');
+    $request = $this->getRequest();
 
     $request->isXmlHttpRequest(); // is it an Ajax request?
 
@@ -95,7 +101,7 @@ to the ``Request`` object::
 In a template, you can also access the ``Request`` object via the
 ``app.request`` variable:
 
-.. code-block:: html+php
+.. code-block:: html+jinja
 
     {{ app.request.query.get('page') }}
 
@@ -112,7 +118,7 @@ by using native PHP sessions.
 Storing and retrieving information from the session can be easily achieved
 from any controller::
 
-    $session = $this->get('request')->getSession();
+    $session = $this->getRequest()->getSession();
 
     // store an attribute for reuse during a later user request
     $session->set('foo', 'bar');
@@ -132,11 +138,14 @@ next request::
     // display the message back in the next request (in a template)
     {{ app.session.flash('notice') }}
 
+This is useful when you need to set a success message before redirecting
+the user to another page (which will then show the message).
+
 Securing Resources
 ------------------
 
-Symfony Standard Edition comes with a simple security configuration that fits
-most common needs:
+The Symfony Standard Edition comes with a simple security configuration that
+fits most common needs:
 
 .. code-block:: yaml
 
@@ -156,12 +165,16 @@ most common needs:
                     admin: { password: adminpass, roles: [ 'ROLE_ADMIN' ] }
 
         firewalls:
+            dev:
+                pattern:  ^/(_(profiler|wdt)|css|images|js)/
+                security: false
+
             login:
-                pattern:  /demo/secured/login
+                pattern:  ^/demo/secured/login$
                 security: false
 
             secured_area:
-                pattern:    /demo/secured/.*
+                pattern:    ^/demo/secured/
                 form_login:
                     check_path: /demo/secured/login_check
                     login_path: /demo/secured/login
@@ -176,37 +189,43 @@ Moreover, the ``admin`` user has a ``ROLE_ADMIN`` role, which includes the
 
 .. tip::
 
-    For readability, passwords are stored in clear in this simple
-    configuration, but using any hashing algorithm is a matter of tweaking the
+    For readability, passwords are stored in clear text in this simple
+    configuration, but you can use any hashing algorithm by tweaking the
     ``encoders`` section.
 
 Going to the ``http://localhost/Symfony/web/app_dev.php/demo/secured/hello``
-URL will automatically redirect you to the login form as this resource is
-protected by a firewall via a login form.
+URL will automatically redirect you to the login form because this resource is
+protected by a ``firewall``.
 
-You can also force a given role to be required by using the ``@extra:Secure``
+You can also force the action to require a given role by using the ``@Secure``
 annotation on the controller::
 
+    use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+    use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+    use JMS\SecurityExtraBundle\Annotation\Secure;
+
     /**
-     * @extra:Route("/hello/admin/{name}", name="_demo_secured_hello_admin")
-     * @extra:Secure(roles="ROLE_ADMIN")
-     * @extra:Template()
+     * @Route("/hello/admin/{name}", name="_demo_secured_hello_admin")
+     * @Secure(roles="ROLE_ADMIN")
+     * @Template()
      */
     public function helloAdminAction($name)
     {
         return array('name' => $name);
     }
 
-Log in as ``user`` and from the secured hello page, click on the "Hello
-resource secured" link; Symfony2 should return a 403 HTTP status code.
+Now, log in as ``user`` (who does *not* have the ``ROLE_ADMIN`` role) and
+from the secured hello page, click on the "Hello resource secured" link.
+Symfony2 should return a 403 HTTP status code, indicating that the user
+is "forbidden" from accessing that resource.
 
 .. note::
 
     The Symfony2 security layer is very flexible and comes with many different
-    user provides (like one for the Doctrine ORM) and authentication providers
+    user providers (like one for the Doctrine ORM) and authentication providers
     (like HTTP basic, HTTP digest, or X509 certificates). Read the
-    "`Security`_" chapter of the book for more information on how to use and
-    configure them.
+    ":doc:`/book/security`" chapter of the book for more information
+    on how to use and configure them.
 
 Caching Resources
 -----------------
@@ -214,12 +233,16 @@ Caching Resources
 As soon as your website starts to generate more traffic, you will want to
 avoid generating the same resource again and again. Symfony2 uses HTTP cache
 headers to manage resources cache. For simple caching strategies, use the
-convenient ``@extra:Cache()`` annotation::
+convenient ``@Cache()`` annotation::
+
+    use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+    use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+    use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
 
     /**
-     * @extra:Route("/hello/{name}", name="_demo_hello")
-     * @extra:Template()
-     * @extra:Cache(maxage="86400")
+     * @Route("/hello/{name}", name="_demo_hello")
+     * @Template()
+     * @Cache(maxage="86400")
      */
     public function helloAction($name)
     {
@@ -230,24 +253,21 @@ In this example, the resource will be cached for a day. But you can also use
 validation instead of expiration or a combination of both if that fits your
 needs better.
 
-Resource caching is managed by the Symfony2 built-in reverse. But as caching
-is only managed by regular HTTP cache headers, you can also replace it with
-Varnish or Squid and easily scale your application.
+Resource caching is managed by the Symfony2 built-in reverse proxy. But because 
+caching is managed using regular HTTP cache headers, you can replace the 
+built-in reverse proxy with Varnish or Squid and easily scale your application.
 
 .. note::
 
     But what if you cannot cache whole pages? Symfony2 still has the solution
-    via Edge Side Includes (ESI) that are supported natively. Learn more by
-    reading the "`HTTP Cache`_" chapter of the book.
+    via Edge Side Includes (ESI), which are supported natively. Learn more by
+    reading the ":doc:`/book/http_cache`" chapter of the book.
 
 Final Thoughts
 --------------
 
-That's all there is to it, and I'm not even sure we have spent the allocated
-10 minutes. We briefly introduced bundles in the first part; and all the
-features we've learned about until now are part of the core framework bundle.
-But thanks to bundles, everything can be extended or replaced in Symfony2.
-That's the topic of the next part of this tutorial.
-
-.. _Security:   http://symfony.com/doc/2.0/book/security/index.html
-.. _HTTP Cache: http://symfony.com/doc/2.0/book/http_cache.html
+That's all there is to it, and I'm not even sure we have spent the full
+10 minutes. We briefly introduced bundles in the first part, and all the
+features we've learned about so far are part of the core framework bundle.
+But thanks to bundles, everything in Symfony2 can be extended or replaced.
+That's the topic of the :doc:`next part of this tutorial<the_architecture>`.

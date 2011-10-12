@@ -30,12 +30,12 @@ the process has several common steps:
 
 1. Enable and configure Symfony's ``Translation`` component;
 
-1. Abstract strings (i.e. "messages") by wrapping them in calls to the ``Translator``;
+2. Abstract strings (i.e. "messages") by wrapping them in calls to the ``Translator``;
 
-1. Create translation resources for each supported locale that translate
+3. Create translation resources for each supported locale that translate
    each message in the application;
 
-1. Determine, set and manage the user's locale in the session.
+4. Determine, set and manage the user's locale in the session.
 
 .. index::
    single: Translations; Configuration
@@ -237,7 +237,7 @@ As we've seen, creating a translation is a two-step process:
 1. Abstract the message that needs to be translated by processing it through
    the ``Translator``.
 
-1. Create a translation for the message in each locale that you choose to
+2. Create a translation for the message in each locale that you choose to
    support.
 
 The second step is done by creating message catalogues that define the translations
@@ -261,6 +261,16 @@ It's the responsibility of the developer (or translator) of an internationalized
 application to create these translations. Translations are stored on the
 filesystem and discovered by Symfony, thanks to some conventions.
 
+.. tip::
+
+    Each time you create a *new* translation resource (or install a bundle
+    that includes a translation resource), be sure to clear your cache so
+    that Symfony can discover the new translation resource:
+    
+    .. code-block:: bash
+    
+        php app/console cache:clear
+
 .. index::
    single: Translations; Translation resource locations
 
@@ -273,7 +283,7 @@ Symfony2 looks for message files (i.e. translations) in two locations:
   live in the ``Resources/translations/`` directory of the bundle;
 
 * To override any bundle translations, place message files in the
-  ``app/translations`` directory.
+  ``app/Resources/translations`` directory.
 
 The filename of the translations is also important as Symfony2 uses a convention
 to determine details about the translations. Each message file must be named
@@ -516,6 +526,8 @@ by defining a ``default_locale`` for the session service:
             'session' => array('default_locale' => 'en'),
         ));
 
+.. _book-translation-locale-url:
+
 The Locale and the URL
 ~~~~~~~~~~~~~~~~~~~~~~
 
@@ -536,14 +548,14 @@ by the routing system using the special ``_locale`` parameter:
 
         contact:
             pattern:   /{_locale}/contact
-            defaults:  { _controller: AcmeDemo:Contact:index, _locale: en }
+            defaults:  { _controller: AcmeDemoBundle:Contact:index, _locale: en }
             requirements:
                 _locale: en|fr|de
 
     .. code-block:: xml
 
         <route id="contact" pattern="/{_locale}/contact">
-            <default key="_controller">AcmeDemo:Contact:index</default>
+            <default key="_controller">AcmeDemoBundle:Contact:index</default>
             <default key="_locale">en</default>
             <requirement key="_locale">en|fr|de</requirement>
         </route>
@@ -555,7 +567,7 @@ by the routing system using the special ``_locale`` parameter:
 
         $collection = new RouteCollection();
         $collection->add('contact', new Route('/{_locale}/contact', array(
-            '_controller' => 'AcmeDemo:Contact:index',
+            '_controller' => 'AcmeDemoBundle:Contact:index',
             '_locale'     => 'en',
         ), array(
             '_locale'     => 'en|fr|de'
@@ -693,42 +705,71 @@ support for both Twig and PHP templates.
 Twig Templates
 ~~~~~~~~~~~~~~
 
-Symfony2 provides specialized Twig tags (``trans`` and ``transChoice``) to help
-with message translation:
+Symfony2 provides specialized Twig tags (``trans`` and ``transchoice``) to
+help with message translation of *static blocks of text*:
 
 .. code-block:: jinja
 
-    {{ "Symfony2 is great" | trans }}
-    
-    {% trans "Symfony2 is great" %}
-
-    {% trans %}
-        Foo %name%
-    {% endtrans %}
+    {% trans %}Hello %name%{% endtrans %}
 
     {% transchoice count %}
         {0} There is no apples|{1} There is one apple|]1,Inf] There are %count% apples
     {% endtranschoice %}
 
-The ``transChoice`` tag automatically gets the ``%count%`` variable from
+The ``transchoice`` tag automatically gets the ``%count%`` variable from
 the current context and passes it to the translator. This mechanism only
 works when you use a placeholder following the ``%var%`` pattern.
 
-You can also specify the message domain:
+.. tip::
+
+    If you need to use the percent character (``%``) in a string, escape it by
+    doubling it: ``{% trans %}Percent: %percent%%%{% endtrans %}``
+
+You can also specify the message domain and pass some additional variables:
 
 .. code-block:: jinja
 
-    {{ "Symfony2 is great" | trans([], "app") }}
+    {% trans with {'%name%': 'Fabien'} from "app" %}Hello %name%{% endtrans %}
 
-    {% trans "Symfony2 is great" from "app" %}
-
-    {% trans from "app" %}
-        Foo %name%
-    {% endtrans %}
-
-    {% transchoice count from "app" %}
+    {% transchoice count with {'%name%': 'Fabien'} from "app" %}
         {0} There is no apples|{1} There is one apple|]1,Inf] There are %count% apples
     {% endtranschoice %}
+
+The ``trans`` and ``transchoice`` filters can be used to translate *variable
+texts* and complex expressions:
+
+.. code-block:: jinja
+
+    {{ message | trans }}
+
+    {{ message | transchoice(5) }}
+
+    {{ message | trans({'%name%': 'Fabien'}, "app") }}
+
+    {{ message | transchoice(5, {'%name%': 'Fabien'}, 'app') }}
+
+.. tip::
+
+    Using the translation tags or filters have the same effect, but with
+    one subtle difference: automatic output escaping is only applied to
+    variables translated using a filter. In other words, if you need to
+    be sure that your translated variable is *not* output escaped, you must
+    apply the raw filter after the translation filter:
+
+    .. code-block:: jinja
+
+            {# text translated between tags is never escaped #}
+            {% trans %}
+                <h3>foo</h3>
+            {% endtrans %}
+
+            {% set message = '<h3>foo</h3>' %}
+
+            {# a variable translated via a filter is escaped by default #}
+            {{ message | trans | raw }}
+
+            {# but static strings are never escaped #}
+            {{ '<h3>foo</h3>' | trans }}
 
 PHP Templates
 ~~~~~~~~~~~~~
@@ -746,8 +787,8 @@ The translator service is accessible in PHP templates through the
         array('%count%' => 10)
     ) ?>
 
-Forcing Translation Locale
---------------------------
+Forcing the Translator Locale
+-----------------------------
 
 When translating a message, Symfony2 uses the locale from the user's session
 or the ``fallback`` locale if necessary. You can also manually specify the
@@ -755,14 +796,14 @@ locale to use for translation:
 
 .. code-block:: php
 
-    $this->get('translation')->trans(
+    $this->get('translator')->trans(
         'Symfony2 is great',
         array(),
         'messages',
         'fr_FR',
     );
 
-    $this->get('translation')->trans(
+    $this->get('translator')->trans(
         '{0} There is no apples|{1} There is one apple|]1,Inf[ There are %count% apples',
         10,
         array('%count%' => 10),

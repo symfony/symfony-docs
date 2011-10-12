@@ -102,16 +102,13 @@ an email is pretty straightforward::
 
     public function indexAction($name)
     {
-        // get the mailer first (mandatory to initialize Swift Mailer)
-        $mailer = $this->get('mailer');
-
         $message = \Swift_Message::newInstance()
             ->setSubject('Hello Email')
             ->setFrom('send@example.com')
             ->setTo('recipient@example.com')
-            ->setBody($this->renderView('Hello:Hello:email', array('name' => $name)))
+            ->setBody($this->renderView('HelloBundle:Hello:email.txt.twig', array('name' => $name)))
         ;
-        $mailer->send($message);
+        $this->get('mailer')->send($message);
 
         return $this->render(...);
     }
@@ -125,8 +122,12 @@ of `Creating Messages`_ in great detail in its documentation.
 
 .. tip::
 
-    Read the ":doc:`gmail`" recipe if you want to use Gmail as a transport in
-    the development environment.
+    Several other cookbook articles are available related to sending emails
+    in Symfony2:
+
+    * :doc:`gmail`
+    * :doc:`email/dev_environment`
+    * :doc:`email/spool`
 
 .. _`Swiftmailer`: http://www.swiftmailer.org/
 .. _`Creating Messages`: http://swiftmailer.org/docs/messages

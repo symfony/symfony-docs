@@ -19,19 +19,19 @@ check that the profiler is indeed available (it is enabled by default in the
     {
         public function testIndex()
         {
-            $client = $this->createClient();
+            $client = static::createClient();
             $crawler = $client->request('GET', '/hello/Fabien');
 
             // Write some assertions about the Response
             // ...
 
             // Check that the profiler is enabled
-            if ($profiler = $client->getProfiler()) {
+            if ($profile = $client->getProfile()) {
                 // check the number of requests
-                $this->assertTrue($profiler->get('db')->getQueryCount() < 10);
+                $this->assertTrue($profile->getCollector('db')->getQueryCount() < 10);
 
                 // check the time spent in the framework
-                $this->assertTrue( $profiler->get('timer')->getTime() < 0.5);
+                $this->assertTrue( $profile->getCollector('timer')->getTime() < 0.5);
             }
         }
     }
@@ -41,8 +41,8 @@ you might want to use the Web Profiler to analyze the request after the tests
 finish. It's easy to achieve if you embed the token in the error message::
 
     $this->assertTrue(
-        $profiler->get('db')->getQueryCount() < 30,
-        sprintf('Checks that query count is less than 30 (token %s)', $profiler->getToken())
+        $profile->get('db')->getQueryCount() < 30,
+        sprintf('Checks that query count is less than 30 (token %s)', $profile->getToken())
     );
 
 .. caution::

@@ -1,8 +1,8 @@
 .. index::
    single: Security, Voters
 
-How to implement your own Voter
-===============================
+How to implement your own Voter to blacklist IP Addresses
+=========================================================
 
 The Symfony2 security component provides several layers to authenticate users.
 One of the layers is called a `voter`. A voter is a dedicated class that checks
@@ -46,8 +46,10 @@ values:
 * ``VoterInterface::ACCESS_DENIED``: The user is not allowed to access the application
 
 In this example, we will check if the user's IP address matches against a list of
-blacklisted addresses. We will return ``VoterInterface::ACCESS_DENIED`` or
-``VoterInterface::ACCESS_GRANTED`` depending on this criteria.
+blacklisted addresses. If the user's IP is blacklisted, we will return 
+``VoterInterface::ACCESS_DENIED``, otherwise we will return 
+``VoterInterface::ACCESS_ABSTAIN`` as this voter's purpose is only to deny
+access, not to grant access.
 
 Creating a Custom Voter
 -----------------------
@@ -59,15 +61,15 @@ and compare the IP address against a set of blacklisted IP addresses:
 
     namespace Acme\DemoBundle\Security\Authorization\Voter;
 
-    use Symfony\Component\HttpFoundation\Request;
+    use Symfony\Component\DependencyInjection\ContainerInterface;
     use Symfony\Component\Security\Core\Authorization\Voter\VoterInterface;
     use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 
     class ClientIpVoter implements VoterInterface
     {
-        public function __construct(Request $request, array $blacklistedIp = array())
+        public function __construct(ContainerInterface $container, array $blacklistedIp = array())
         {
-            $this->request       = $request;
+            $this->container     = $container;
             $this->blacklistedIp = $blacklistedIp;
         }
 
@@ -85,11 +87,12 @@ and compare the IP address against a set of blacklisted IP addresses:
 
         function vote(TokenInterface $token, $object, array $attributes)
         {
+            $request = $this->container->get('request');
             if (in_array($this->request->getClientIp(), $this->blacklistedIp)) {
                 return VoterInterface::ACCESS_DENIED;
             }
 
-            return VoterInterface::ACCESS_GRANTED;
+            return VoterInterface::ACCESS_ABSTAIN;
         }
     }
 
@@ -110,8 +113,8 @@ and tag it as a "security.voter":
 
         services:
             security.access.blacklist_voter:
-                class:      Acme\DemoBundle\Security\Authorization\Voter
-                arguments:  [@request, [123.123.123.123, 171.171.171.171]]
+                class:      Acme\DemoBundle\Security\Authorization\Voter\ClientIpVoter
+                arguments:  [@service_container, [123.123.123.123, 171.171.171.171]]
                 public:     false
                 tags:
                     -       { name: security.voter }
@@ -121,8 +124,8 @@ and tag it as a "security.voter":
         <!-- src/Acme/AcmeBundle/Resources/config/services.xml -->
 
         <service id="security.access.blacklist_voter"
-                 class="Acme\DemoBundle\Security\Authorization\Voter" public="false">
-            <argument type="service" id="request" strict="false" />
+                 class="Acme\DemoBundle\Security\Authorization\Voter\ClientIpVoter" public="false">
+            <argument type="service" id="service_container" strict="false" />
             <argument type="collection">
                 <argument>123.123.123.123</argument>
                 <argument>171.171.171.171</argument>
@@ -138,9 +141,9 @@ and tag it as a "security.voter":
         use Symfony\Component\DependencyInjection\Reference;
 
         $definition = new Definition(
-            'Acme\DemoBundle\Security\Authorization\Voter',
+            'Acme\DemoBundle\Security\Authorization\Voter\ClientIpVoter',
             array(
-                new Reference('request'),
+                new Reference('service_container'),
                 array('123.123.123.123', '171.171.171.171'),
             ),
         );
@@ -156,28 +159,30 @@ and tag it as a "security.voter":
    see :ref:`service-container-imports-directive`. To read more about defining
    services in general, see the :doc:`/book/service_container` chapter.
 
-Finally, we need to change the authentication strategy. By default, the
-security component calls each voter until one of them grants access to the
-user. In our case, we want to force *all* voters to grant the user access
-before deciding that the user should actually have access to the application.
-To do that, we need to change the strategy by overriding the
-``security.access.decision_manager.strategy`` parameter:
+Changing the Access Decision Strategy
+-------------------------------------
+
+In order for the new voter to take effect, we need to change the default access
+decision strategy, which, by default, grants access if *any* voter grants
+access.
+
+In our case, we will choose the ``unanimous`` strategy. Unlike the ``affirmative``
+strategy (the default), with the ``unanimous`` strategy, if only one voter
+denies access (e.g. the ``ClientIpVoter``), access is not granted to the
+end user.
+
+To do that, override the default ``access_decision_manager`` section of your
+application configuration file with the following code.
 
 .. configuration-block::
 
     .. code-block:: yaml
 
-        # src/Acme/AcmeBundle/Resources/config/services.yml
-        parameters:
-            security.access.decision_manager.strategy: unanimous
+        # app/config/security.yml
+        security:
+            access_decision_manager:
+                # Strategy can be: affirmative, unanimous or consensus
+                strategy: unanimous
 
-    .. code-block:: xml
-
-        <!-- src/Acme/AcmeBundle/Resources/config/services.xml -->
-        <parameter key="security.access.decision_manager.strategy">unanimous</parameter>
-
-    .. code-block:: php
-
-        // src/Acme/AcmeBundle/Resources/config/services.php
-
-        $container->setParameter('security.access.decision_manager.strategy', 'unanimous');
+That's it! Now, when deciding whether or not a user should have access,
+the new voter will deny access to any user in the list of blacklisted IPs.

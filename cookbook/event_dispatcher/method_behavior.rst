@@ -19,7 +19,7 @@ method::
         {
             // do something before the method
             $event = new FilterBeforeSendEvent($foo, $bar);
-            $this->dispatcher->dispatch('onFooPreSend', $event);
+            $this->dispatcher->dispatch('foo.pre_send', $event);
 
             // get $foo and $bar from the event, they may have been modified
             $foo = $event->getFoo();
@@ -29,15 +29,15 @@ method::
 
             // do something after the method
             $event = new FilterSendReturnValue($ret);
-            $this->dispatcher->dispatch('onFooPostSend', $event);
+            $this->dispatcher->dispatch('foo.post_send', $event);
 
             return $event->getReturnValue();
         }
     }
 
-In this example, two events are thrown: ``onFooPreSend``, before the method
-is executed, and ``onFooPostSend`` after the method is executed. Each uses
-a custom Event class to communicate information to the listeners of the two
+In this example, two events are thrown: ``foo.pre_send``, before the method is
+executed, and ``foo.post_send`` after the method is executed. Each uses a
+custom Event class to communicate information to the listeners of the two
 events. These event classes would need to be created by you and should allow,
 in this example, the variables ``$foo``, ``$bar`` and ``$ret`` to be retrieved
 and set by the listeners.

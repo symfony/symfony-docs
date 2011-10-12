@@ -14,7 +14,7 @@ Before submitting a bug:
  * Double-check the official `documentation`_ to see if you're not misusing the
    framework;
 
- * Ask assistance on the `users mailing-list`_, the `forum`_, or on the
+ * Ask for assistance on the `users mailing-list`_, the `forum`_, or on the
    #symfony `IRC channel`_ if you're not sure if your issue is really a bug.
 
 If your problem definitely looks like a bug, report it using the official bug
@@ -23,7 +23,7 @@ If your problem definitely looks like a bug, report it using the official bug
  * Use the title field to clearly describe the issue;
 
  * Describe the steps needed to reproduce the bug with short code examples
-   (providing a unit test that illustrates the bug is better);
+   (providing a unit test that illustrates the bug is best);
 
  * Give as much details as possible about your environment (OS, PHP version,
    Symfony version, enabled extensions, ...);
@@ -34,4 +34,4 @@ If your problem definitely looks like a bug, report it using the official bug
 .. _users mailing-list: http://groups.google.com/group/symfony-users
 .. _forum: http://forum.symfony-project.org/
 .. _IRC channel: irc://irc.freenode.net/symfony
-.. _tracker: http://trac.symfony-project.org/
+.. _tracker: https://github.com/symfony/symfony/issues

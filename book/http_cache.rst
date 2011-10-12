@@ -84,7 +84,7 @@ Along the way, the cache will store each response that is deemed "cacheable"
 the cache sends the cached response to the client, ignoring your application
 entirely.
 
-This type of cache is knows as an HTTP gateway cache and many exist such
+This type of cache is known as a HTTP gateway cache and many exist such
 as `Varnish`_, `Squid in reverse proxy mode`_, and the Symfony2 reverse proxy.
 
 .. index::
@@ -140,18 +140,21 @@ application comes with a pre-configured caching kernel (``AppCache``) that
 wraps the default one (``AppKernel``). The caching Kernel *is* the reverse
 proxy.
 
-To enabling caching, modify the code of a front controller to use the caching
+To enable caching, modify the code of a front controller to use the caching
 kernel::
 
     // web/app.php
 
-    require_once __DIR__.'/../app/bootstrap_cache.php.cache';
+    require_once __DIR__.'/../app/bootstrap.php.cache';
+    require_once __DIR__.'/../app/AppKernel.php';
     require_once __DIR__.'/../app/AppCache.php';
 
     use Symfony\Component\HttpFoundation\Request;
 
+    $kernel = new AppKernel('prod', false);
+    $kernel->loadClassCache();
     // wrap the default AppKernel with the AppCache one
-    $kernel = new AppCache(new AppKernel('prod', false));
+    $kernel = new AppCache($kernel);
     $kernel->handle(Request::createFromGlobals())->send();
 
 The caching kernel will immediately act as a reverse proxy - caching responses
@@ -374,7 +377,7 @@ header when none is set by the developer by following these rules:
   that the response will not be cached;
 
 * If ``Cache-Control`` is empty (but one of the other cache headers is present),
-  its value is set to ``private, max-age=0, must-revalidate``;
+  its value is set to ``private, must-revalidate``;
 
 * But if at least one ``Cache-Control`` directive is set, and no 'public' or
   ``private`` directives have been explicitly added, Symfony2 adds the
@@ -545,9 +548,9 @@ md5 of the content::
 
     public function indexAction()
     {
-        $response = $this->renderView('My:Main:index.html.twig');
+        $response = $this->render('MyBundle:Main:index.html.twig');
         $response->setETag(md5($response->getContent()));
-        $response->isNotModified($this->get('request'));
+        $response->isNotModified($this->getRequest());
 
         return $response;
     }
@@ -598,7 +601,7 @@ header value::
         $date = $authorDate > $articleDate ? $authorDate : $articleDate;
 
         $response->setLastModified($date);
-        $response->isNotModified($this->get('request'));
+        $response->isNotModified($this->getRequest());
 
         return $response;
     }
@@ -633,7 +636,7 @@ exposing a simple and efficient pattern::
     {
         // Get the minimum information to compute
         // the ETag or the Last-Modified value
-        // (based on the Request, data are retrieved from
+        // (based on the Request, data is retrieved from
         // a database or a key-value store for instance)
         $article = // ...
 
@@ -643,13 +646,19 @@ exposing a simple and efficient pattern::
         $response->setLastModified($article->getPublishedAt());
 
         // Check that the Response is not modified for the given Request
-        if ($response->isNotModified($request)) {
+        if ($response->isNotModified($this->getRequest())) {
             // return the 304 Response immediately
             return $response;
         } else {
-            // do some more heavy stuff here
-            // like getting more stuff from the DB
-            // and rendering a template
+            // do more work here - like retrieving more data
+            $comments = // ...
+            
+            // or render a template with the $response you've already started
+            return $this->render(
+                'MyBundle:MyController:article.html.twig',
+                array('article' => $article, 'comments' => $comments),
+                $response
+            );
         }
     }
 
@@ -708,7 +717,7 @@ Expiration and Validation
 You can of course use both validation and expiration within the same ``Response``.
 As expiration wins over validation, you can easily benefit from the best of
 both worlds. In other words, by using both expiration and validation, you
-can instruct the cache to server the cached content, while checking back
+can instruct the cache to serve the cached content, while checking back
 at some interval (the expiration) to verify that the content is still valid.
 
 .. index::
@@ -829,7 +838,7 @@ independent of the rest of the page.
 
     public function indexAction()
     {
-        $response = $this->renderView('My:MyController:index.html.twig');
+        $response = $this->render('MyBundle:MyController:index.html.twig');
         $response->setSharedMaxAge(600);
 
         return $response;
@@ -901,7 +910,7 @@ the ``_internal`` route:
 
         # app/config/routing.yml
         _internal:
-            resource: "@Framework/Resources/config/routing/internal.xml"
+            resource: "@FrameworkBundle/Resources/config/routing/internal.xml"
             prefix:   /_internal
 
     .. code-block:: xml
@@ -913,7 +922,7 @@ the ``_internal`` route:
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/routing http://symfony.com/schema/routing/routing-1.0.xsd">
 
-            <import resource="@Framework/Resources/config/routing/internal.xml" prefix="/_internal" />
+            <import resource="@FrameworkBundle/Resources/config/routing/internal.xml" prefix="/_internal" />
         </routes>
 
     .. code-block:: php
@@ -922,7 +931,7 @@ the ``_internal`` route:
         use Symfony\Component\Routing\RouteCollection;
         use Symfony\Component\Routing\Route;
 
-        $collection->addCollection($loader->import('@Framework/Resources/config/routing/internal.xml', '/_internal'));
+        $collection->addCollection($loader->import('@FrameworkBundle/Resources/config/routing/internal.xml', '/_internal'));
 
         return $collection;
 
@@ -930,7 +939,9 @@ the ``_internal`` route:
 
     Since this route allows all actions to be accessed via a URL, you might
     want to protect it by using the Symfony2 firewall feature (by allowing
-    access to your reverse proxy's IP range).
+    access to your reverse proxy's IP range). See the :ref:`Securing by IP<book-security-securing-ip>` 
+    section of the :doc:`Security Chapter </book/security>` for more information 
+    on how to do this.
 
 One great advantage of this caching strategy is that you can make your
 application as dynamic as needed and at the same time, hit the application as

@@ -46,7 +46,7 @@ template - a text file parsed by PHP that contains a mix of text and PHP code::
 
 .. index:: Twig; Introduction
 
-But Symfony2 packages an even more powerful templating language called `Twig`_
+But Symfony2 packages an even more powerful templating language called `Twig`_.
 Twig allows you to write concise, readable templates that are more friendly
 to web designers and, in several ways, more powerful than PHP templates:
 
@@ -68,7 +68,7 @@ to web designers and, in several ways, more powerful than PHP templates:
         </body>
     </html>
 
-Twig contains defines two types of special syntax:
+Twig defines two types of special syntax:
 
 * ``{{ ... }}``: "Says something": prints a variable or the result of an
   expression to the template;
@@ -93,9 +93,14 @@ it:
 Twig comes with a long list of `tags`_ and `filters`_ that are available
 by default. You can even `add your own extensions`_ to Twig as needed.
 
+.. tip::
+
+    Registering a Twig extension is as easy as creating a new service and tagging
+    it with ``twig.extension`` :ref:`tag<book-service-container-tags>`.
+
 As you'll see throughout the documentation, Twig also supports functions
 and new functions can be easily added. For example, the following uses a
-standard ``if`` tag and the ``cycle`` function to print ten div tags, with
+standard ``for`` tag and the ``cycle`` function to print ten div tags, with
 alternating ``odd``, ``even`` classes:
 
 .. code-block:: html+jinja
@@ -146,7 +151,7 @@ environment, such as ``dev`` or ``prod``) and in some cases can be useful
 while debugging. See :ref:`environments-summary` for more information on
 environments.
 
-When ``debug`` mode is enabled (common in the ``dev`` environment) a Twig
+When ``debug`` mode is enabled (common in the ``dev`` environment), a Twig
 template will be automatically recompiled when changes are made to it. This
 means that during development you can happily make changes to a Twig template
 and instantly see the changes without needing to worry about clearing any
@@ -207,12 +212,12 @@ First, build a base layout file:
         <html>
             <head>
                 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-                <title><?php echo $view['slots']->output('title', 'Test Application') ?></title>
+                <title><?php $view['slots']->output('title', 'Test Application') ?></title>
             </head>
             <body>
                 <div id="sidebar">
                     <?php if ($view['slots']->has('sidebar'): ?>
-                        <?php echo $view['slots']->output('sidebar') ?>
+                        <?php $view['slots']->output('sidebar') ?>
                     <?php else: ?>
                         <ul>
                             <li><a href="/">Home</a></li>
@@ -222,7 +227,7 @@ First, build a base layout file:
                 </div>
 
                 <div id="content">
-                    <?php echo $view['slots']->output('body') ?>
+                    <?php $view['slots']->output('body') ?>
                 </div>
             </body>
         </html>
@@ -356,12 +361,12 @@ Template Naming and Locations
 
 By default, templates can live in two different locations:
 
-* ``app/Resources/views/`` The applications ``views`` directory can contain
+* ``app/Resources/views/``: The applications ``views`` directory can contain
   application-wide base templates (i.e. your application's layouts) as well as
   templates that override bundle templates (see
-  :ref:`overiding-bundle-templates`);
+  :ref:`overriding-bundle-templates`);
 
-* ``path/to/bundle/Resources/views/`` Each bundle houses its templates in its
+* ``path/to/bundle/Resources/views/``: Each bundle houses its templates in its
   ``Resources/views`` directory (and subdirectories). The majority of templates
   will live inside a bundle.
 
@@ -369,23 +374,23 @@ Symfony2 uses a **bundle**:**controller**:**template** string syntax for
 templates. This allows for several different types of templates, each which
 lives in a specific location:
 
-* ``AcmeBlogBlog:index.html.twig``: This syntax is used to specify a template
-  for a specific page. The three parts of the string, each separated by
-  a colon (``:``), mean the following:
-  
-    * ``AcmeBlog``: (*bundle*) the template lives inside the ``AcmeBlogBundle``
-      (e.g. ``src/Acme/BlogBundle``);
+* ``AcmeBlogBundle:Blog:index.html.twig``: This syntax is used to specify a
+  template for a specific page. The three parts of the string, each separated
+  by a colon (``:``), mean the following:
+
+    * ``AcmeBlogBundle``: (*bundle*) the template lives inside the
+      ``AcmeBlogBundle`` (e.g. ``src/Acme/BlogBundle``);
 
     * ``Blog``: (*controller*) indicates that the template lives inside the
       ``Blog`` subdirectory of ``Resources/views``;
 
     * ``index.html.twig``: (*template*) the actual name of the file is
       ``index.html.twig``.
-  
+
   Assuming that the ``AcmeBlogBundle`` lives at ``src/Acme/BlogBundle``, the
   final path to the layout would be ``src/Acme/BlogBundle/Resources/views/Blog/index.html.twig``.
 
-* ``AcmeBlog::layout.html.twig``: This syntax refers to a base template
+* ``AcmeBlogBundle::layout.html.twig``: This syntax refers to a base template
   that's specific to the ``AcmeBlogBundle``. Since the middle, "controller",
   portion is missing (e.g. ``Blog``), the template lives at
   ``Resources/views/layout.html.twig`` inside ``AcmeBlogBundle``.
@@ -396,9 +401,9 @@ lives in a specific location:
   that the template is not located in any bundle, but instead in the root
   ``app/Resources/views/`` directory.
 
-In the :ref:`overiding-bundle-templates` section, you'll find out how each
+In the :ref:`overriding-bundle-templates` section, you'll find out how each
 template living inside the ``AcmeBlogBundle``, for example, can be overridden
-by placing a template of the same name in the ``app/Resources/AcmeBlog/views/``
+by placing a template of the same name in the ``app/Resources/AcmeBlogBundle/views/``
 directory. This gives the power to override templates from any vendor bundle.
 
 .. tip::
@@ -410,14 +415,14 @@ Template Suffix
 ~~~~~~~~~~~~~~~
 
 The **bundle**:**controller**:**template** format of each template specifies
-*where*  the template file is located. Every template name also has two extensions
+*where* the template file is located. Every template name also has two extensions
 that specify the *format* and *engine* for that template.
 
-* **AcmeBlog:Blog:index.html.twig** - HTML format, Twig engine
+* **AcmeBlogBundle:Blog:index.html.twig** - HTML format, Twig engine
 
-* **AcmeBlog:Blog:index.html.php** - HTML format, PHP engine
+* **AcmeBlogBundle:Blog:index.html.php** - HTML format, PHP engine
 
-* **AcmeBlog:Blog:index.css.twig** - CSS format, Twig engine
+* **AcmeBlogBundle:Blog:index.css.twig** - CSS format, Twig engine
 
 By default, any Symfony2 template can be written in either Twig or PHP, and
 the last part of the extension (e.g. ``.twig`` or ``.php``) specifies which
@@ -479,7 +484,7 @@ template. First, create the template that you'll need to reuse.
 
     .. code-block:: html+jinja
 
-        {# src/Acme/ArticleBundle/Resources/Article/articleDetails.html.twig #}
+        {# src/Acme/ArticleBundle/Resources/views/Article/articleDetails.html.twig #}
         <h1>{{ article.title }}</h1>
         <h3 class="byline">by {{ article.authorName }}</h3>
 
@@ -489,7 +494,7 @@ template. First, create the template that you'll need to reuse.
 
     .. code-block:: php
 
-        <!-- src/Acme/ArticleBundle/Resources/Article/articleDetails.html.php -->
+        <!-- src/Acme/ArticleBundle/Resources/views/Article/articleDetails.html.php -->
         <h2><?php echo $article->getTitle() ?></h2>
         <h3 class="byline">by <?php echo $article->getAuthorName() ?></h3>
 
@@ -504,26 +509,26 @@ Including this template from any other template is simple:
     .. code-block:: html+jinja
 
         {# src/Acme/ArticleBundle/Resources/Article/list.html.twig #}
-        {% extends 'AcmeArticle::layout.html.twig' %}
+        {% extends 'AcmeArticleBundle::layout.html.twig' %}
 
         {% block body %}
             <h1>Recent Articles<h1>
 
             {% for article in articles %}
-                {% include 'AcmeArticle:Article:articleDetails.html.twig' with {'article': article} %}
+                {% include 'AcmeArticleBundle:Article:articleDetails.html.twig' with {'article': article} %}
             {% endfor %}
         {% endblock %}
 
     .. code-block:: php
 
         <!-- src/Acme/ArticleBundle/Resources/Article/list.html.php -->
-        <?php $view->extend('AcmeArticle::layout.html.php') ?>
+        <?php $view->extend('AcmeArticleBundle::layout.html.php') ?>
 
         <?php $view['slots']->start('body') ?>
             <h1>Recent Articles</h1>
 
             <?php foreach ($articles as $article): ?>
-                <?php echo $view->render('AcmeArticle:Article:articleDetails.html.php', array('article' => $article)) ?>
+                <?php echo $view->render('AcmeArticleBundle:Article:articleDetails.html.php', array('article' => $article)) ?>
             <?php endforeach; ?>
         <?php $view['slots']->stop() ?>
 
@@ -566,7 +571,7 @@ articles:
             // make a database call or other logic to get the "$max" most recent articles
             $articles = ...;
 
-            return $this->render('AcmeArticle:Article:recentList.html.twig', array('articles' => $articles));
+            return $this->render('AcmeArticleBundle:Article:recentList.html.twig', array('articles' => $articles));
         }
     }
 
@@ -609,7 +614,7 @@ syntax for controllers (i.e. **bundle**:**controller**:**action**):
         ...
 
         <div id="sidebar">
-            {% render "AcmeArticle:Article:recentArticles" with {'max': 3} %}
+            {% render "AcmeArticleBundle:Article:recentArticles" with {'max': 3} %}
         </div>
 
     .. code-block:: php
@@ -618,7 +623,7 @@ syntax for controllers (i.e. **bundle**:**controller**:**action**):
         ...
 
         <div id="sidebar">
-            <?php echo $view['actions']->render('AcmeArticle:Article:recentArticles', array('max' => 3)) ?>
+            <?php echo $view['actions']->render('AcmeArticleBundle:Article:recentArticles', array('max' => 3)) ?>
         </div>
 
 Whenever you find that you need a variable or a piece of information that
@@ -638,28 +643,28 @@ the routing configuration. Later, if you want to modify the URL of a particular
 page, all you'll need to do is change the routing configuration; the templates
 will automatically generate the new URL.
 
-First, link to the "homepage", which is accessible via the following routing
+First, link to the "_welcome" page, which is accessible via the following routing
 configuration:
 
 .. configuration-block::
 
     .. code-block:: yaml
 
-        homepage:
+        _welcome:
             pattern:  /
-            defaults: { _controller: Framework:Default:index }
+            defaults: { _controller: AcmeDemoBundle:Welcome:index }
 
     .. code-block:: xml
 
-        <route id="homepage" pattern="/">
-            <default key="_controller">Framework:Default:index</default>
+        <route id="_welcome" pattern="/">
+            <default key="_controller">AcmeDemoBundle:Welcome:index</default>
         </route>
 
     .. code-block:: php
 
         $collection = new RouteCollection();
-        $collection->add('homepage', new Route('/', array(
-            '_controller' => 'Framework:Default:index',
+        $collection->add('_welcome', new Route('/', array(
+            '_controller' => 'AcmeDemoBundle:Welcome:index',
         )));
 
         return $collection;
@@ -670,11 +675,11 @@ To link to the page, just use the ``path`` Twig function and refer to the route:
 
     .. code-block:: html+jinja
 
-        <a href="{{ path('homepage') }}">Home</a>
+        <a href="{{ path('_welcome') }}">Home</a>
 
     .. code-block:: php
 
-        <a href="<?php echo $view['router']->generate('homepage') ?>">Home</a>
+        <a href="<?php echo $view['router']->generate('_welcome') ?>">Home</a>
 
 As expected, this will generate the URL ``/``. Let's see how this works with
 a more complicated route:
@@ -685,19 +690,19 @@ a more complicated route:
 
         article_show:
             pattern:  /article/{slug}
-            defaults: { _controller: AcmeArticle:Article:show }
+            defaults: { _controller: AcmeArticleBundle:Article:show }
 
     .. code-block:: xml
 
         <route id="article_show" pattern="/article/{slug}">
-            <default key="_controller">AcmeArticle:Article:show</default>
+            <default key="_controller">AcmeArticleBundle:Article:show</default>
         </route>
 
     .. code-block:: php
 
         $collection = new RouteCollection();
         $collection->add('article_show', new Route('/article/{slug}', array(
-            '_controller' => 'AcmeArticle:Article:show',
+            '_controller' => 'AcmeArticleBundle:Article:show',
         )));
 
         return $collection;
@@ -733,14 +738,14 @@ correctly:
 
     .. code-block:: html+jinja
 
-        <a href="{{ url('homepage') }}">Home</a>
+        <a href="{{ url('_welcome') }}">Home</a>
 
     The same can be done in PHP templates by passing a third argument to
     the ``generate()`` method:
 
     .. code-block:: php
 
-        <a href="<?php echo $view['router']->generate('homepage', array(), true) ?>">Home</a>
+        <a href="<?php echo $view['router']->generate('_welcome', array(), true) ?>">Home</a>
 
 .. index::
    single: Templating; Linking to assets
@@ -749,9 +754,8 @@ Linking to Assets
 ~~~~~~~~~~~~~~~~~
 
 Templates also commonly refer to images, Javascript, stylesheets and other
-assets. Of course you could hard-coded these the path to these assets
-(e.g. ``/images/logo.png``), but Symfony2 provides a more dynamic option
-via the ``assets`` Twig function:
+assets. Of course you could hard-code the path to these assets (e.g. ``/images/logo.png``),
+but Symfony2 provides a more dynamic option via the ``assets`` Twig function:
 
 .. configuration-block::
 
@@ -775,6 +779,85 @@ should render with the subdirectory (e.g. ``/my_app/images/logo.png``). The
 ``asset`` function takes care of this by determining how your application is
 being used and generating the correct paths accordingly.
 
+Additionally, if you use the ``asset`` function, Symfony can automatically
+append a query string to your asset, in order to guarantee that updated static
+assets won't be cached when deployed. For example, ``/images/logo.png`` might
+look like ``/images/logo.png?v2``. For more information, see the :ref:`ref-framework-assets-version`
+configuration option.
+
+.. index::
+   single: Templating; Including stylesheets and Javascripts
+   single: Stylesheets; Including stylesheets
+   single: Javascripts; Including Javascripts
+
+Including Stylesheets and Javascripts in Twig
+---------------------------------------------
+
+No site would be complete without including Javascript files and stylesheets.
+In Symfony, the inclusion of these assets is handled elegantly by taking
+advantage of Symfony's template inheritance.
+
+.. tip::
+
+    This section will teach you the philosophy behind including stylesheet
+    and Javascript assets in Symfony. Symfony also packages another library,
+    called Assetic, which follows this philosophy but allows you to do much
+    more interesting things with those assets. For more information on 
+    using Assetic see :doc:`/cookbook/assetic/asset_management`.
+
+
+Start by adding two blocks to your base template that will hold your assets:
+one called ``stylesheets`` inside the ``head`` tag and another called ``javascripts``
+just above the closing ``body`` tag. These blocks will contain all of the
+stylesheets and Javascripts that you'll need throughout your site:
+
+.. code-block:: html+jinja
+
+    {# 'app/Resources/views/base.html.twig' #}
+    <html>
+        <head>
+            {# ... #}
+
+            {% block stylesheets %}
+                <link href="{{ asset('/css/main.css') }}" type="text/css" rel="stylesheet" />
+            {% endblock %}
+        </head>
+        <body>
+            {# ... #}
+
+            {% block javascripts %}
+                <script src="{{ asset('/js/main.js') }}" type="text/javascript"></script>
+            {% endblock %}
+        </body>
+    </html>
+
+That's easy enough! But what if you need to include an extra stylesheet or
+Javascript from a child template? For example, suppose you have a contact
+page and you need to include a ``contact.css`` stylesheet *just* on that
+page. From inside that contact page's template, do the following:
+
+.. code-block:: html+jinja
+
+    {# src/Acme/DemoBundle/Resources/views/Contact/contact.html.twig #}
+    {# extends '::base.html.twig' #}
+
+    {% block stylesheets %}
+        {{ parent() }}
+        
+        <link href="{{ asset('/css/contact.css') }}" type="text/css" rel="stylesheet" />
+    {% endblock %}
+    
+    {# ... #}
+
+In the child template, you simply override the ``stylesheets`` block and 
+put your new stylesheet tag inside of that block. Of course, since you want
+to add to the parent block's content (and not actually *replace* it), you
+should use the ``parent()`` Twig function to include everything from the ``stylesheets``
+block of the base template.
+
+The end result is a page that includes both the ``main.css`` and ``contact.css``
+stylesheets.
+
 .. index::
    single: Templating; The templating service
 
@@ -788,14 +871,14 @@ you're actually using the templating engine service. For example:
 
 .. code-block:: php
 
-    return $this->render('AcmeArticle:Article:index.html.twig');
+    return $this->render('AcmeArticleBundle:Article:index.html.twig');
 
 is equivalent to
 
 .. code-block:: php
 
     $engine = $this->container->get('templating');
-    $content = $engine->render('AcmeArticle:Article:index.html.twig');
+    $content = $engine->render('AcmeArticleBundle:Article:index.html.twig');
 
     return $response = new Response($content);
 
@@ -817,7 +900,7 @@ configuration file:
     .. code-block:: xml
 
         <!-- app/config/config.xml -->
-        <framework:templating cache-warmer="true">
+        <framework:templating>
             <framework:engine id="twig" />
         </framework:templating>
 
@@ -832,7 +915,7 @@ configuration file:
         ));
 
 Several configuration options are available and are covered in the
-:doc:`Configuration Appendix</reference/bundle_configuration/FrameworkBundle>`.
+:doc:`Configuration Appendix</reference/configuration/framework>`.
 
 .. note::
 
@@ -842,55 +925,54 @@ Several configuration options are available and are covered in the
 .. index::
     single; Template; Overriding templates
 
-.. _overiding-bundle-templates:
+.. _overriding-bundle-templates:
 
 Overriding Bundle Templates
 ---------------------------
 
-One of the best features of Symfony2 is a bundle system that encourages the
-organization of components in a way that makes them easy to reuse in other
-projects or distribute as open source libraries. In fact, the Symfony2 community
-prides itself on creating and maintaining high quality bundles for a large
-number of different features. To find out more about the open source bundles
-that are available, visit `Symfony2Bundles.org`_
-
-In Symfony2, almost every part of a bundle can be overridden so that you can
-use and customize it for your specific application. Templates are no exception.
+The Symfony2 community prides itself on creating and maintaining high quality
+bundles (see `Symfony2Bundles.org`_) for a large number of different features.
+Once you use a third-party bundle, you'll likely need to override and customize
+one or more of its templates.
 
 Suppose you've included the imaginary open-source ``AcmeBlogBundle`` in your
 project (e.g. in the ``src/Acme/BlogBundle`` directory). And while you're
 really happy with everything, you want to override the blog "list" page to
 customize the markup specifically for your application. By digging into the
-``Blog`` controller of the ``AcmeBlogBundle``, you find the following:
-
-.. code-block:: php
+``Blog`` controller of the ``AcmeBlogBundle``, you find the following::
 
     public function indexAction()
     {
         $blogs = // some logic to retrieve the blogs
 
-        $this->render('AcmeBlog:Blog:index.html.twig', array('blogs' => $blogs));
+        $this->render('AcmeBlogBundle:Blog:index.html.twig', array('blogs' => $blogs));
     }
 
-We learned in the :ref:`template-naming-locations` section that the template
-in question lives at ``Resources/views/Blog/index.html.twig`` inside the
-``AcmeBlogBundle`` bundle. To override the bundle template, copy the ``index.html.twig``
-template to ``app/Resources/AcmeBlogBundle/views/Blog/index.html.twig`` (the
-``AcmeBlogBundle`` directory might not exist). Now, when the
-``AcmeBlog:Blog:index.html.twig`` template is rendered, Symfony2 will look
-first for the template at
-``app/Resources/AcmeBlogBundle/views/Blog/index.html.twig`` before looking
-at  ``src/Acme/BlogBundle/Resources/views/Blog/index.html.twig``. You're
-now free to customize the template for your application.
+When the ``AcmeBlogBundle:Blog:index.html.twig`` is rendered, Symfony2 actually
+looks in two different locations for the template:
 
-Suppose also that each template in ``AcmeBlogBundle`` inherits from a base
-template specific to the ``AcmeBlogBundle`` called
-``AcmeBlog::layout.html.twig``. By default, this template lives at
-``Resources/views/layout.html.twig`` inside ``AcmeBlogBundle``. To override
-it, just copy it to ``app/Resources/AcmeBlogBundle/views/layout.html.twig``.
+#. ``app/Resources/AcmeBlogBundle/views/Blog/index.html.twig``
+#. ``src/Acme/BlogBundle/Resources/views/Blog/index.html.twig``
+
+To override the bundle template, just copy the ``index.html.twig`` template
+from the bundle to ``app/Resources/AcmeBlogBundle/views/Blog/index.html.twig``
+(the ``app/Resources/AcmeBlogBundle`` directory won't exist, so you'll need
+to create it). You're now free to customize the template.
+
+This logic also applies to base bundle templates. Suppose also that each
+template in ``AcmeBlogBundle`` inherits from a base template called
+``AcmeBlogBundle::layout.html.twig``. Just as before, Symfony2 will look in
+the following two places for the template:
+
+#. ``app/Resources/AcmeBlogBundle/views/layout.html.twig``
+#. ``src/Acme/BlogBundle/Resources/views/layout.html.twig``
+
+Once again, to override the template, just copy it from the bundle to
+``app/Resources/AcmeBlogBundle/views/layout.html.twig``. You're now free to
+customize this copy as you see fit.
 
 If you take a step back, you'll see that Symfony2 always starts by looking in
-the ``app/Resources/BUNDLE_NAME/views/`` directory for a template. If the
+the ``app/Resources/{BUNDLE_NAME}/views/`` directory for a template. If the
 template doesn't exist there, it continues by checking inside the
 ``Resources/views`` directory of the bundle itself. This means that all bundle
 templates can be overridden by placing them in the correct ``app/Resources``
@@ -905,11 +987,11 @@ Overriding Core Templates
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Since the Symfony2 framework itself is just a bundle, core templates can be
-overridden in the same way. For example, the core ``FrameworkBundle`` contains
+overridden in the same way. For example, the core ``TwigBundle`` contains
 a number of different "exception" and "error" templates that can be overridden
 by copying each from the ``Resources/views/Exception`` directory of the
-``FrameworkBundle`` to, you guessed it, the
-``app/Resources/FrameworkBundle/views/Exception`` directory.
+``TwigBundle`` to, you guessed it, the
+``app/Resources/TwigBundle/views/Exception`` directory.
 
 .. index::
    single: Templating; Three-level inheritance pattern
@@ -926,7 +1008,7 @@ covered:
   template is called ``::base.html.twig``;
 
 * Create a template for each "section" of your site. For example, an ``AcmeBlogBundle``,
-  would have a template called ``AcmeBlog::layout.html.twig`` that contains
+  would have a template called ``AcmeBlogBundle::layout.html.twig`` that contains
   only blog section-specific elements;
 
     .. code-block:: html+jinja
@@ -942,12 +1024,12 @@ covered:
 
 * Create individual templates for each page and make each extend the appropriate
   section template. For example, the "index" page would be called something
-  close to ``AcmeBlog:Blog:index.html.twig`` and list the actual blog posts.
+  close to ``AcmeBlogBundle:Blog:index.html.twig`` and list the actual blog posts.
 
     .. code-block:: html+jinja
 
         {# src/Acme/BlogBundle/Resources/views/Blog/index.html.twig #}
-        {% extends 'AcmeBlog::layout.html.twig' %}
+        {% extends 'AcmeBlogBundle::layout.html.twig' %}
 
         {% block content %}
             {% for entry in blog_entries %}
@@ -956,7 +1038,7 @@ covered:
             {% endfor %}
         {% endblock %}
 
-Notice that this template extends the section template -(``AcmeBlog::layout.html.twig``)
+Notice that this template extends the section template -(``AcmeBlogBundle::layout.html.twig``)
 which in-turn extends the base application layout (``::base.html.twig``).
 This is the common three-level inheritance model.
 
@@ -1027,7 +1109,7 @@ Suppose that administrative users are able to write articles that contain
 HTML code. By default, Twig will escape the article body. To render it normally,
 add the ``raw`` filter: ``{{ article.body | raw }}``.
 
-You can also to disable output escaping inside a ``{% block %}`` area or
+You can also disable output escaping inside a ``{% block %}`` area or
 for an entire template. For more information, see `Output Escaping`_ in
 the Twig documentation.
 
@@ -1065,8 +1147,8 @@ For example, the same "resource" is often rendered in several different formats.
 To render an article index page in XML, simply include the format in the
 template name:
 
-*XML template name*: ``AcmeArticle:Article:index.xml.twig``
-*XML template filename*: ``index.xml.twig``
+* *XML template name*: ``AcmeArticleBundle:Article:index.xml.twig``
+* *XML template filename*: ``index.xml.twig``
 
 In reality, this is nothing more than a naming convention and the template
 isn't actually rendered differently based on its format.
@@ -1079,9 +1161,9 @@ pattern is to do the following:
 
     public function indexAction()
     {
-        $format = $this->get('request')->getRequestFormat();
+        $format = $this->getRequest()->getRequestFormat();
     
-        return $this->render('AcmeBlog:Blog:index.'.$format.'.twig');
+        return $this->render('AcmeBlogBundle:Blog:index.'.$format.'.twig');
     }
 
 The ``getRequestFormat`` on the ``Request`` object defaults to ``html``,
@@ -1089,7 +1171,24 @@ but can return any other format based on the format requested by the user.
 The request format is most often managed by the routing, where a route can
 be configured so that ``/contact`` sets the request format to ``html`` while
 ``/contact.xml`` sets the format to ``xml``. For more information, see the
-:doc:`Routing</book/routing>` chapter.
+:ref:`Advanced Example in the Routing chapter <advanced-routing-example>`.
+
+To create links that include the format parameter, include a ``_format``
+key in the parameter hash:
+
+.. configuration-block::
+
+    .. code-block:: html+jinja
+
+        <a href="{{ path('article_show', {'id': 123, '_format': 'pdf'}) }}">
+            PDF Version
+        </a>
+
+    .. code-block:: html+php
+
+        <a href="<?php echo $view['router']->generate('article_show', array('id' => 123, '_format' => 'pdf')) ?>">
+            PDF Version
+        </a>
 
 Final Thoughts
 --------------
@@ -1103,7 +1202,7 @@ can be created with our without the use of a template:
 .. code-block:: php
 
     // creates a Response object whose content is the rendered template
-    $response = $this->render('AcmeArticle:Article:index.html.twig');
+    $response = $this->render('AcmeArticleBundle:Article:index.html.twig');
 
     // creates a Response object whose content is simple text
     $response = new Response('response content');
@@ -1121,13 +1220,13 @@ and in Symfony2, that's absolutely fine.
 Learn more from the Cookbook
 ----------------------------
 
-* :doc:`/cookbook/controller/PHP`
+* :doc:`/cookbook/templating/PHP`
 * :doc:`/cookbook/controller/error_pages`
 
-.. _`Twig`: http://www.twig-project.org
+.. _`Twig`: http://twig.sensiolabs.org
 .. _`Symfony2Bundles.org`: http://symfony2bundles.org
 .. _`Cross Site Scripting`: http://en.wikipedia.org/wiki/Cross-site_scripting
-.. _`Output Escaping`: http://www.twig-project.org
-.. _`tags`: http://www.twig-project.org/doc/templates.html#comments
-.. _`filters`: http://www.twig-project.org/doc/templates.html#list-of-built-in-filters
-.. _`add your own extensions`: http://www.twig-project.org/doc/advanced.html
+.. _`Output Escaping`: http://twig.sensiolabs.org
+.. _`tags`: http://twig.sensiolabs.org/doc/templates.html#list-of-control-structures
+.. _`filters`: http://twig.sensiolabs.org/doc/templates.html#list-of-built-in-filters
+.. _`add your own extensions`: http://twig.sensiolabs.org/doc/advanced.html

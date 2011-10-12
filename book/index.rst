@@ -6,20 +6,21 @@ Book
 
     http_fundamentals
     from_flat_php_to_symfony2
+    installation
     page_creation
-    doctrine/index
     controller
     routing
     templating
+    doctrine
     testing
     validation
-    forms/index
-    security/index
+    forms
+    security
     http_cache
     translation
-    bundles
     service_container
-    internals/index
+    performance
+    internals
     stable_api
 
-.. include:: map.rst.inc
+.. include:: /book/map.rst.inc
