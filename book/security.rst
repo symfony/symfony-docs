@@ -268,7 +268,7 @@ First, enable form login under your firewall:
 
     .. code-block:: yaml
 
-        # app/config/config.yml
+        # app/config/security.yml
         security:
             firewalls:
                 secured_area:
@@ -280,7 +280,7 @@ First, enable form login under your firewall:
 
     .. code-block:: xml
 
-        <!-- app/config/config.xml -->
+        <!-- app/config/security.xml -->
         <srv:container xmlns="http://symfony.com/schema/dic/security"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xmlns:srv="http://symfony.com/schema/dic/services"
@@ -296,7 +296,7 @@ First, enable form login under your firewall:
 
     .. code-block:: php
 
-        // app/config/config.php
+        // app/config/security.php
         $container->loadFromExtension('security', array(
             'firewalls' => array(
                 'secured_area' => array(
@@ -717,9 +717,73 @@ Since Symfony uses the first access control rule it matches, a URL like ``/admin
 will match the first rule and require only the ``ROLE_SUPER_ADMIN`` role.
 Any URL like ``/admin/blog`` will match the second rule and require ``ROLE_ADMIN``.
 
-You can also force ``HTTP`` or ``HTTPS`` via an ``access_control`` entry.
-For more information, see :doc:`/cookbook/security/force_https`.
+.. _book-security-securing-ip:
 
+Securing by IP
+~~~~~~~~~~~~~~
+
+Certain situations may arise when you may need to restrict access to a given
+route based on IP. This is particularly relevant in the case of :ref:`Edge Side Includes<edge-side-includes>` 
+(ESI), for example, which utilize a route named "_internal". When 
+ESI is used, the _internal route is required by the gateway cache to enable 
+different caching options for subsections within a given page. This route 
+comes with the ^/_internal prefix by default in the standard edition (assuming 
+you've uncommented those lines from the routing file).
+
+Here is an example of how you might secure this route from outside access: 
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # app/config/security.yml
+        security:
+            # ...
+            access_control:
+                - { path: ^/_internal, roles: IS_AUTHENTICATED_ANONYMOUSLY, ip: 127.0.0.1 }
+
+    .. code-block:: xml
+
+            <access-control>
+                <rule path="^/_internal" role="IS_AUTHENTICATED_ANONYMOUSLY" ip="127.0.0.1" />
+            </access-control>
+
+    .. code-block:: php
+
+            'access_control' => array(
+                array('path' => '^/_internal', 'role' => 'IS_AUTHENTICATED_ANONYMOUSLY', 'ip' => '127.0.0.1'),
+            ),
+
+.. _book-security-securing-channel:
+
+Securing by Channel
+~~~~~~~~~~~~~~~~~~~
+
+Much like securing based on IP, requiring the use of SSL is as simple as 
+adding a new access_control entry:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # app/config/security.yml
+        security:
+            # ...
+            access_control:
+                - { path: ^/cart/checkout, roles: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: https }
+
+    .. code-block:: xml
+
+            <access-control>
+                <rule path="^/cart/checkout" role="IS_AUTHENTICATED_ANONYMOUSLY" requires_channel: https />
+            </access-control>
+
+    .. code-block:: php
+
+            'access_control' => array(
+                array('path' => '^/cart/checkout', 'role' => 'IS_AUTHENTICATED_ANONYMOUSLY', 'requires_channel' => 'https'),
+            ),
+          
 .. _book-security-securing-controller:
 
 Securing a Controller

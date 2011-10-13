@@ -351,7 +351,7 @@ The ``FrameworkBundle`` registers several listeners:
 
 *Event Class*: :class:`Symfony\\Component\\HttpKernel\\Event\\GetResponseForExceptionEvent`
 
-``FrameworkBundle`` registers a
+``FrameworkBundle`` registers an
 :class:`Symfony\\Component\\HttpKernel\\EventListener\\ExceptionListener` that
 forwards the ``Request`` to a given Controller (the value of the
 ``exception_listener.controller`` parameter -- must be in the
@@ -413,7 +413,7 @@ used. To make this possible, the Symfony2 kernel throws an event -
   access to the ``Response`` object;
 
 * The dispatcher notifies (i.e. calls a method on) all listeners of the
-  ``kernel.response`` event, allowing each of them to make any modification to
+  ``kernel.response`` event, allowing each of them to make modifications to
   the ``Response`` object.
 
 .. index::
@@ -425,7 +425,7 @@ Events
 ~~~~~~
 
 When an event is dispatched, it's identified by a unique name (e.g.
-``kernel.response``), which any number of listeners might be listening to. A
+``kernel.response``), which any number of listeners might be listening to. An
 :class:`Symfony\\Component\\EventDispatcher\\Event` instance is also created
 and passed to all of the listeners. As you'll see later, the ``Event`` object
 itself often contains data about the event being dispatched.
@@ -662,7 +662,7 @@ object. Create an ``Event`` class that makes this possible:
         }
     }
 
-Each listener now has access to to ``Order`` object via the ``getOrder``
+Each listener now has access to the ``Order`` object via the ``getOrder`` 
 method.
 
 Dispatch the Event

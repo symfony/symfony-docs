@@ -26,7 +26,7 @@ you want to guarantee that some ``state`` property is *not* in a dynamic
 ``invalidStates`` array. First, you'd create a "getter" method::
 
     protected $state;
-    
+
     protectd $invalidStates = array();
 
     public function isStateInvalid()
@@ -55,10 +55,10 @@ method returns **false**:
 
         class Author
         {
-            /** 
+            /**
              * @Assert\False()
              */
-             public function isStateInvalid($messsage = "You've entered an invalid state.")
+             public function isStateInvalid($message = "You've entered an invalid state.")
              {
                 // ...
              }

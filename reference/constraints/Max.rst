@@ -39,7 +39,7 @@ add the following:
         class Participant
         {
             /**
-             * @Assert\Max(limit = "50", message = "You must be 50 or under to enter.")
+             * @Assert\Max(limit = 50, message = "You must be 50 or under to enter.")
              */
              protected $age;
         }

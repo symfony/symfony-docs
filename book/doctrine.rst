@@ -44,21 +44,21 @@ Configuring the Database
 
 Before you really begin, you'll need to configure your database connection
 information. By convention, this information is usually configured in an
-``app/config/parameters.ini`` file:
+``app/config/parameters.yml`` file:
 
-.. code-block:: ini
+.. code-block:: yaml
 
-    ;app/config/parameters.ini
-    [parameters]
-        database_driver   = pdo_mysql
-        database_host     = localhost
-        database_name     = test_project
-        database_user     = root
-        database_password = password
+    # app/config/parameters.yml
+    parameters:
+        database_driver:   pdo_mysql
+        database_host:     localhost
+        database_name:     test_project
+        database_user:     root
+        database_password: password
 
 .. note::
 
-    Defining the configuration via ``parameters.ini`` is just a convention.
+    Defining the configuration via ``parameters.yml`` is just a convention.
     The parameters defined in that file are referenced by the main configuration
     file when setting up Doctrine:
     
@@ -326,7 +326,7 @@ in your application. To do this, run:
     needed to *update* the database to where it should be. In other words, if you add
     a new property with mapping metadata to ``Product`` and run this task
     again, it will generate the "alter table" statement needed to add that
-    new column to the existing ``products`` table.
+    new column to the existing ``product`` table.
 
     An even better way to take advantage of this functionality is via
     :doc:`migrations</bundles/DoctrineMigrationsBundle/index>`, which allow you to

@@ -721,7 +721,7 @@ format you prefer:
 
         # app/config/config.yml
         imports:
-            - { resource: parameters.ini }
+            - { resource: parameters.yml }
             - { resource: security.yml }
         
         framework:
@@ -747,7 +747,7 @@ format you prefer:
 
         <!-- app/config/config.xml -->
         <imports>
-            <import resource="parameters.ini" />
+            <import resource="parameters.yml" />
             <import resource="security.yml" />
         </imports>
         
@@ -769,7 +769,7 @@ format you prefer:
 
     .. code-block:: php
 
-        $this->import('parameters.ini');
+        $this->import('parameters.yml');
         $this->import('security.yml');
 
         $container->loadFromExtension('framework', array(

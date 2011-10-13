@@ -20,6 +20,8 @@ Required
 --------
 
 * PHP needs to be a minimum version of PHP 5.3.2
+* JSON needs to be enabled
+* ctype needs to be enabled
 * Your PHP.ini needs to have the date.timezone setting
 
 Optional
@@ -30,9 +32,9 @@ Optional
 * PHP tokenizer needs to be enabled
 * mbstring functions need to be enabled
 * iconv needs to be enabled
-* POSIX needs to be enabled
-* Intl needs to be installed
-* APC (or another opcode cache needs to be installed)
+* POSIX needs to be enabled (only on \*nix)
+* Intl needs to be installed with ICU 4+
+* APC 3.0.17+ (or another opcode cache needs to be installed)
 * PHP.ini recommended settings
 
     * short_open_tags: off

@@ -42,12 +42,14 @@
   * :doc:`/cookbook/configuration/external_parameters`
   * :doc:`/cookbook/service_container/factories`
   * :doc:`/cookbook/service_container/parentservices`
+  * :doc:`/cookbook/service_container/scopes`
   * :doc:`/cookbook/configuration/pdo_session_storage`
 
 * **Bundles**
 
   * :doc:`/cookbook/bundles/best_practices`
   * :doc:`/cookbook/bundles/inheritance`
+  * :doc:`/cookbook/bundles/override`
   * :doc:`/cookbook/bundles/extension`
 
 * **Emailing**
@@ -76,6 +78,7 @@
   * :doc:`/cookbook/security/entity_provider`
   * :doc:`/cookbook/security/custom_provider`
   * :doc:`/cookbook/security/custom_authentication_provider`
+  * :doc:`/cookbook/security/target_path`
 
 * **Caching**
 

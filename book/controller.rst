@@ -55,7 +55,7 @@ The framework takes care of the repetitive tasks and ultimately executes a
 controller, which houses your custom application code:
 
 #. Each request is handled by a single front controller file (e.g. ``app.php``
-   or ``app_dev.php``) that's bootstraps the application;
+   or ``app_dev.php``) that bootstraps the application;
 
 #. The ``Router`` reads information from the request (e.g. the URI), finds
    a route that matches that information, and reads the ``_controller`` parameter
@@ -529,8 +529,6 @@ When extending the base controller class, you can access any Symfony2 service
 via the ``get()`` method. Here are several common services you might need::
 
     $request = $this->getRequest();
-
-    $response = $this->get('response');
 
     $templating = $this->get('templating');
 

@@ -38,7 +38,7 @@ The ``entity`` type has just one required option: the entity which should
 be listed inside the choice field::
 
     $builder->add('users', 'entity', array(
-        'class' => 'Acme\\HelloBundle\\Entity\\User',
+        'class' => 'AcmeHelloBundle:User',
     ));
 
 In this case, all ``User`` objects will be loaded from the database and rendered
@@ -56,7 +56,7 @@ option. The easiest way to use the option is as follows::
     // ...
 
     $builder->add('users', 'entity', array(
-        'class' => 'Acme\\HelloBundle\\Entity\\User',
+        'class' => 'AcmeHelloBundle:User',
         'query_builder' => function(EntityRepository $er) {
             return $er->createQueryBuilder('u')
                 ->orderBy('u.username', 'ASC');
@@ -73,7 +73,9 @@ class
 
 **type**: ``string`` **required**
 
-The class of your entity (e.g. ``Acme\StoreBundle\Entity\Category``).
+The class of your entity (e.g. ``AcmeStoreBundle:Category``). This can be
+a fully-qualified class name (e.g. ``Acme\StoreBundle\Entity\Category``)
+or the short alias name (as shown prior).
 
 property
 ~~~~~~~~

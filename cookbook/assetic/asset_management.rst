@@ -1,12 +1,8 @@
 How to Use Assetic for Asset Management
 =======================================
 
-Assetic is a powerful asset management library which is packaged with the
-Symfony2 Standard Edition and can be easily used in Symfony2 directly from
-Twig or PHP templates.
-
 Assetic combines two major ideas: assets and filters. The assets are files
-such as CSS, JavaScript and images files. The filters are things that can
+such as CSS, JavaScript and image files. The filters are things that can
 be applied to these files before they are served to the browser. This allows
 a separation between the asset files stored in the application and the files
 actually presented to the user.
@@ -46,7 +42,8 @@ drawn from various sources such as from within a bundle:
 
     .. code-block:: html+jinja
 
-        {% javascripts '@AcmeFooBundle/Resources/public/js/*'
+        {% javascripts
+            '@AcmeFooBundle/Resources/public/js/*'
         %}
         <script type="text/javascript" src="{{ asset_url }}"></script>
         {% endjavascripts %}
@@ -58,27 +55,62 @@ drawn from various sources such as from within a bundle:
         <script type="text/javascript" src="<?php echo $view->escape($url) ?>"></script>
         <?php endforeach; ?>
 
+.. tip::
+
+    To bring in CSS stylesheets, you can use the same methodologies seen
+    in this entry, except with the `stylesheets` tag:
+
+    .. configuration-block::
+
+        .. code-block:: html+jinja
+
+            {% stylesheets
+                '@AcmeFooBundle/Resources/public/css/*'
+            %}
+            <link rel="stylesheet" href="{{ asset_url }}" />
+            {% endstylesheets %}
+
+        .. code-block:: html+php
+
+            <?php foreach ($view['assetic']->stylesheets(
+                array('@AcmeFooBundle/Resources/public/css/*')) as $url): ?>
+            <link rel="stylesheet" href="<?php echo $view->escape($url) ?>" />
+            <?php endforeach; ?>
+
 In this example, all of the files in the ``Resources/public/js/`` directory
 of the ``AcmeFooBundle`` will be loaded and served from a different location.
 The actual rendered tag might simply look like:
 
-    <script src="/js/abcd123.js"></script>
+.. code-block:: html
+
+    <script src="/app_dev.php/js/abcd123.js"></script>
+
+.. note::
+
+    This is a key point: once you let Assetic handle your assets, the files are
+    served from a different location. This *can* cause problems with CSS files
+    that reference images by their relative path. However, this can be fixed
+    by using the ``cssrewrite`` filter, which updates paths in CSS files
+    to reflect their new location.
+
+Combining Assets
+~~~~~~~~~~~~~~~~
 
 You can also combine several files into one. This helps to reduce the number
-of HTTP requests which is good for front end performance, as most browsers
-will only process a limited number at a time slowing down page load times.
-It also allows you to maintain the files more easily by splitting them into
-manageable parts. This can also help with re-usability as you can easily
-split project specific files from those which can be used in other applications
-but still serve them as a single file:
+of HTTP requests, which is great for front end performance. It also allows
+you to maintain the files more easily by splitting them into manageable parts.
+This can help with re-usability as you can easily split project-specific
+files from those which can be used in other applications, but still serve
+them as a single file:
 
 .. configuration-block::
 
     .. code-block:: html+jinja
 
-        {% javascripts '@AcmeFooBundle/Resources/public/js/*'
-                       '@AcmeBarBundle/Resources/public/js/form.js'
-                       '@AcmeBarBundle/Resources/public/js/calendar.js'
+        {% javascripts
+            '@AcmeFooBundle/Resources/public/js/*'
+            '@AcmeBarBundle/Resources/public/js/form.js'
+            '@AcmeBarBundle/Resources/public/js/calendar.js'
         %}
         <script src="{{ asset_url }}"></script>
         {% endjavascripts %}
@@ -92,15 +124,27 @@ but still serve them as a single file:
         <script src="<?php echo $view->escape($url) ?>"></script>
         <?php endforeach; ?>
 
-This does not only apply to your own files you can also use Assetic to
-combine third party assets, such as jQuery with your own into a single file:
+In the `dev` environment, each file is still served individually, so that
+you can debug problems more easily. However, in the `prod` environment, this
+will be rendered as a single `script` tag.
+
+.. tip::
+
+    If you're new to Assetic and try to use your application in the ``prod``
+    environment (by using the ``app.php`` controller), you'll likely see
+    that all of your CSS and JS breaks. Don't worry! This is on purpose.
+    For details on using Assetic in the `prod` environment, see :ref:`cookbook-assetic-dumping`.
+
+And combining files doesn't only apply to *your* files. You can also use Assetic to
+combine third party assets, such as jQuery, with your own into a single file:
 
 .. configuration-block::
 
     .. code-block:: html+jinja
 
-        {% javascripts '@AcmeFooBundle/Resources/public/js/thirdparty/jquery.js'
-                       '@AcmeFooBundle/Resources/public/js/*'
+        {% javascripts
+            '@AcmeFooBundle/Resources/public/js/thirdparty/jquery.js'
+            '@AcmeFooBundle/Resources/public/js/*'
         %}
         <script src="{{ asset_url }}"></script>
         {% endjavascripts %}
@@ -116,21 +160,26 @@ combine third party assets, such as jQuery with your own into a single file:
 Filters
 -------
 
-Additionally to this Assetic can apply filters to the assets before they
-are served. This includes tasks such as compressing the output for smaller
-file sizes which is another valuable front end optimisation. Other filters
-include compiling JavaScript file from CoffeeScript files and SASS to CSS.
+Once they're managed by Assetic, you can apply filters to your assets before
+they are served. This includes filters that compress the output of your assets
+for smaller file sizes (and better front-end optimization). Other filters
+can compile JavaScript file from CoffeeScript files and process SASS into CSS.
+In fact, Assetic has a long list of available filters.
 
-Many of the filters do not do the work directly but use other libraries
-to do it, this so you will often have to install that software as well.
-The great advantage of using Assetic to invoke these libraries is that
-instead of having to run them manually when you have worked on the files,
-Assetic will take care of this for you and remove this step altogether
-from your development and deployment processes.
+Many of the filters do not do the work directly, but use existing third-party
+libraries to do the heavy-lifting. This means that you'll often need to install
+a third-party library to use a filter.  The great advantage of using Assetic
+to invoke these libraries (as opposed to using them directly) is that instead
+of having to run them manually after you work on the files, Assetic will
+take care of this for you and remove this step altogether from your development
+and deployment processes.
 
-To use a filter you must specify it in the Assetic configuration
-as they are not enabled by default. For example to use the JavaScript YUI
-Compressor the following config needs to be added:
+To use a filter, you first need to specify it in the Assetic configuration.
+Adding a filter here doesn't mean it's being used - it just means that it's
+available to use (we'll use the filter below).
+
+For example to use the JavaScript YUI Compressor the following config should
+be added:
 
 .. configuration-block::
 
@@ -162,14 +211,17 @@ Compressor the following config needs to be added:
             ),
         ));
 
-
-You can then specify using the filter in the template:
+Now, to actually *use* the filter on a group of JavaScript files, add it
+into your template:
 
 .. configuration-block::
 
     .. code-block:: html+jinja
 
-        {% javascripts '@AcmeFooBundle/Resources/public/js/*' filter='yui_js' %}
+        {% javascripts
+            '@AcmeFooBundle/Resources/public/js/*'
+            filter='yui_js'
+        %}
         <script src="{{ asset_url }}"></script>
         {% endjavascripts %}
 
@@ -181,22 +233,22 @@ You can then specify using the filter in the template:
         <script src="<?php echo $view->escape($url) ?>"></script>
         <?php endforeach; ?>
 
-
-A more detail guide to configuring and using Assetic filters as well as
+A more detailed guide abour configuring and using Assetic filters as well as
 details of Assetic's debug mode can be found in :doc:`/cookbook/assetic/yuicompressor`.
 
 Controlling the URL used
 ------------------------
 
-If you wish to you can control the URLs which Assetic produces. This is
+If you wish to you can control the URLs that Assetic produces. This is
 done from the template and is relative to the public document root:
 
 .. configuration-block::
 
     .. code-block:: html+jinja
 
-        {% javascripts '@AcmeFooBundle/Resources/public/js/*'
-           output='js/combined.js'
+        {% javascripts
+            '@AcmeFooBundle/Resources/public/js/*'
+            output='js/compiled/main.js'
         %}
         <script src="{{ asset_url }}"></script>
         {% endjavascripts %}
@@ -206,40 +258,131 @@ done from the template and is relative to the public document root:
         <?php foreach ($view['assetic']->javascripts(
             array('@AcmeFooBundle/Resources/public/js/*'),
             array(),
-            array('output' => 'js/combined.js')
+            array('output' => 'js/compiled/main.js')
         ) as $url): ?>
         <script src="<?php echo $view->escape($url) ?>"></script>
         <?php endforeach; ?>
 
-Caching the output
-------------------
+.. note::
 
-The process of creating the files served up can be quite slow especially
-when using some of the filters which invoke third party software to the
-actual work. Even when working in the development environment the slow
-down in the page loads if this was to be done each time would quickly get
-frustrating. Fortunately in the dev environment Assetic caches the output
-so this will not happen, rather than having to clear the cache manually
-though, it monitors for changes to the assets and regenerates the files
-as needed. This means you can work on the asset files and see the results
-on page load but without having to suffer continual slow page loads.
+    Symfony also contains a method for cache *busting*, where the final URL
+    generated by Assetic contains a query parameter that can be incremented
+    via configuration on each deployment. For more information, see the
+    :ref:`ref-framework-assets-version` configuration option.
 
-For production, where you will not be making changes to the asset files,
-performance can be increased by avoiding the step of checking for changes.
-Assetic allows you to go further than this and avoid touching Symfony2
-and even PHP at all when serving the files. This is done by dumping all
-of the output files using a console command. These can then be served directly
-by the web server as static files, increasing performance and allowing the
-web server to deal with caching headers. The console command to dump the files
-is:
+.. _cookbook-assetic-dumping:
+
+Dumping Asset Files
+-------------------
+
+In the ``dev`` environment, Assetic generates paths to CSS and JavaScript
+files that don't physically exist on your computer. But they render nonetheless
+because an internal Symfony controller opens the files and serves back the
+content (after running any filters).
+
+This kind of dynamic serving of processed assets is great because it means
+that you can immediately see the new state of any asset files you change.
+It's also bad, because it can be quite slow. If you're using a lot of filters,
+it might be downright frustrating.
+
+Fortunately, Assetic provides a way to dump your assets to real files, instead
+of being generated dynamically.
+
+Dumping Asset Files in the ``prod`` environment
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+In the ``prod`` environment, your JS and CSS files are represented by a single
+tag each. In other words, instead of seeing each JavaScript file you're including
+in your source, you'll likely just see something like this:
+
+.. code-block:: html
+
+    <script src="/app_dev.php/js/abcd123.js"></script>
+
+Moreover, that file does **not** actually exist, nor is it dynamically rendered
+by Symfony (as the asset files are in the ``dev`` environment). This is on
+purpose - letting Symfony generate these files dynamically in a production
+environment is just too slow.
+
+Instead, each time you use your app in the ``prod`` environment (and therefore,
+each time you deploy), you should run the following task:
+
+.. code-block:: bash
+
+    php app/console assetic:dump --env=prod --no-debug
+
+This will physically generate and write each file that you need (e.g. ``/js/abcd123.js``).
+If you update any of your assets, you'll need to run this again to regenerate
+the file.
+
+Dumping Asset Files in the ``dev`` environment
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+By default, each asset path generated in the ``dev`` environment is handled
+dynamically by Symfony. This has no disadvantage (you can see your changes
+immediately), except that assets can load noticeably slow. If you feel like
+your assets are loading too slowly, follow this guide.
+
+First, tell Symfony to stop trying to process these files dynamically. Make
+the following change in your ``config_dev.yml`` file:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # app/config/config_dev.yml
+        assetic:
+            use_controler: false
+
+    .. code-block:: xml
+
+        <!-- app/config/config_dev.xml -->
+        <assetic:config use-controller="false" />
+
+    .. code-block:: php
+
+        // app/config/config_dev.php
+        $container->loadFromExtension('assetic', array(
+            'use_controller' => false,
+        ));
+
+Next, since Symfony is no longer generating these assets for you, you'll
+need to dump them manually. To do so, run the following:
 
 .. code-block:: bash
 
     php app/console assetic:dump
 
-.. note::
+This physically writes all of the asset files you need for your ``dev``
+environment. The big disadvantage is that you need to run this each time
+you update an asset. Fortunately, by passing the ``--watch`` option, the
+command will automatically regenerate assets *as they change*:
 
-    Once you have dumped the output you will need to run the console
-    command again to see any new changes. If you run it on your development
-    server you will need to remove the files in order to start letting Assetic
-    process the assets on the fly again.
+.. code-block:: bash
+
+    php app/console assetic:dump --watch
+
+Since running this command in the ``dev`` environment may generate a bunch
+of files, it's usually a good idea to point your generated assets files to
+some isolated directory (e.g. ``/js/compiled``), to keep things organized:
+
+.. configuration-block::
+
+    .. code-block:: html+jinja
+
+        {% javascripts
+            '@AcmeFooBundle/Resources/public/js/*'
+            output='js/compiled/main.js'
+        %}
+        <script src="{{ asset_url }}"></script>
+        {% endjavascripts %}
+
+    .. code-block:: html+php
+
+        <?php foreach ($view['assetic']->javascripts(
+            array('@AcmeFooBundle/Resources/public/js/*'),
+            array(),
+            array('output' => 'js/compiled/main.js')
+        ) as $url): ?>
+        <script src="<?php echo $view->escape($url) ?>"></script>
+        <?php endforeach; ?>

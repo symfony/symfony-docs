@@ -115,3 +115,5 @@ message
 **type**: ``string`` **default**: ``This value is not valid``
 
 This is the message that will be shown if this validator fails.
+
+.. _`preg_match`: http://php.net/manual/en/function.preg-match.php
