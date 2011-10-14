@@ -49,7 +49,8 @@ example containing most features described below:
         {
             if (true === $dummy) {
                 return;
-            } elseif ('string' === $dummy) {
+            }
+            if ('string' === $dummy) {
                 $dummy = substr($dummy, 0, 5);
             }
 
