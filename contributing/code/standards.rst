@@ -116,8 +116,6 @@ Naming Conventions
 
 * Use namespaces for all classes;
 
-* Use `Symfony` as the first namespace level;
-
 * Suffix interfaces with `Interface`;
 
 * Use alphanumeric characters and underscores for file names;
