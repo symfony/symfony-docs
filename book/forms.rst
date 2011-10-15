@@ -1361,6 +1361,18 @@ an array. In this example, since ``$defaultData`` is not an object (and
 no ``data_class`` option is set), ``$form->getData()`` ultimately returns
 an array.
 
+.. tip::
+    You can also access POST values (in this case "name") directly through 
+    the request object, like so:
+
+    .. code-block:: php
+        $this->get('request')->request->get('name');
+
+    Be advised, however, that in most cases using the getData() method is 
+    a better choice, because it reduces the confusion inherent with having 
+    to sort out the form's characteristically unique namespace in order access 
+    the form's data array.
+
 Adding Validation
 ~~~~~~~~~~~~~~~~~
 
