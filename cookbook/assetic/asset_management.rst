@@ -332,7 +332,7 @@ the following change in your ``config_dev.yml`` file:
 
         # app/config/config_dev.yml
         assetic:
-            use_controler: false
+            use_controller: false
 
     .. code-block:: xml
 
