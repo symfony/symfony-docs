@@ -1395,7 +1395,7 @@ but here's a short example::
     ));
 
     // create a form, no default values, pass in the constraint option
-    $form = $this->createFormBuilder(null, , array(
+    $form = $this->createFormBuilder(null, array(
         'validation_constraint' => $collectionConstraint,
     ))->add('email', 'email')
         // ...
