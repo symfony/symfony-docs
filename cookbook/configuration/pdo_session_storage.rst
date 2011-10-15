@@ -167,7 +167,6 @@ following (MySQL):
         `session_value` text NOT NULL,
         `session_time` int(11) NOT NULL,
         PRIMARY KEY (`session_id`),
-        UNIQUE KEY `session_id_idx` (`session_id`)
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 PostgreSQL
@@ -182,5 +181,4 @@ For PostgreSQL, the statement should look like this:
         session_value text NOT NULL,
         session_time integer NOT NULL,
         CONSTRAINT session_pkey PRIMARY KEY (session_id),
-        CONSTRAINT session_session_id_key UNIQUE (session_id)
     );
