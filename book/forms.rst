@@ -1361,6 +1361,17 @@ an array. In this example, since ``$defaultData`` is not an object (and
 no ``data_class`` option is set), ``$form->getData()`` ultimately returns
 an array.
 
+.. tip::
+    You can also access POST values (in this case "name") directly through 
+    the request object, like so:
+
+    .. code-block:: php
+        $this->get('request')->request->get('name');
+
+    Be advised, however, that in most cases using the getData() method is 
+    a better choice, since it returns the data (usually an object) after
+    it's been transformed by the form framework.
+
 Adding Validation
 ~~~~~~~~~~~~~~~~~
 
@@ -1379,12 +1390,12 @@ but here's a short example::
     use Symfony\Component\Validator\Constraints\Collection;
 
     $collectionConstraint = new Collection(array(
-        'name' => new MinLength(5)
+        'name' => new MinLength(5),
         'email' => new Email(array('message' => 'Invalid email address')),
     ));
 
     // create a form, no default values, pass in the constraint option
-    $form = $this->createFormBuilder(null, , array(
+    $form = $this->createFormBuilder(null, array(
         'validation_constraint' => $collectionConstraint,
     ))->add('email', 'email')
         // ...
@@ -1409,7 +1420,7 @@ method to specify the option::
         public function getDefaultOptions(array $options)
         {
             $collectionConstraint = new Collection(array(
-                'name' => new MinLength(5)
+                'name' => new MinLength(5),
                 'email' => new Email(array('message' => 'Invalid email address')),
             ));
         

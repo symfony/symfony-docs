@@ -396,7 +396,7 @@ The HTTP specification defines two caching models:
   until the cached version reaches its expiration time and becomes "stale".
 
 * When pages are really dynamic (i.e. their representation changes often),
-  the `validation model`_ model is often necessary. With this model, the
+  the `validation model`_ is often necessary. With this model, the
   cache stores the response, but asks the server on each request whether
   or not the cached response is still valid. The application uses a unique
   response identifier (the ``Etag`` header) and/or a timestamp (the ``Last-Modified``
@@ -846,7 +846,7 @@ independent of the rest of the page.
 
 In this example, we've given the full-page cache a lifetime of ten minutes.
 Next, let's include the news ticker in the template by embedding an action.
-This is done via the ``render`` helper (See `templating-embedding-controller`
+This is done via the ``render`` helper (See :ref:`templating-embedding-controller`
 for more details).
 
 As the embedded content comes from another page (or controller for that
