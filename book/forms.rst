@@ -1369,9 +1369,8 @@ an array.
         $this->get('request')->request->get('name');
 
     Be advised, however, that in most cases using the getData() method is 
-    a better choice, because it reduces the confusion inherent with having 
-    to sort out the form's characteristically unique namespace in order access 
-    the form's data array.
+    a better choice, since it returns the data (usually an object) after
+    it's been transformed by the form framework.
 
 Adding Validation
 ~~~~~~~~~~~~~~~~~
