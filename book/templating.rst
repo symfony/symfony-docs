@@ -1227,6 +1227,6 @@ Learn more from the Cookbook
 .. _`Symfony2Bundles.org`: http://symfony2bundles.org
 .. _`Cross Site Scripting`: http://en.wikipedia.org/wiki/Cross-site_scripting
 .. _`Output Escaping`: http://twig.sensiolabs.org
-.. _`tags`: http://twig.sensiolabs.org/doc/templates.html#list-of-control-structures
-.. _`filters`: http://twig.sensiolabs.org/doc/templates.html#list-of-built-in-filters
+.. _`tags`: http://twig.sensiolabs.org/doc/tags/index.html
+.. _`filters`: http://twig.sensiolabs.org/doc/templates.html#filters
 .. _`add your own extensions`: http://twig.sensiolabs.org/doc/advanced.html
