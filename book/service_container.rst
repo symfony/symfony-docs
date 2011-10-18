@@ -239,6 +239,61 @@ third-party bundles will *always* use parameters as they make the service
 stored in the container more configurable. For the services in your application,
 however, you may not need the flexibility of parameters.
 
+Parameters do not need to be flat strings, they can also be arrays. For the XML
+format, you need to use the type="collection" attribute for all parameters that are
+arrays.
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # app/config/config.yml
+        parameters:
+            my_mailer.gateways:
+                - mail1
+                - mail2
+                - mail3
+            my_multilang.language_fallback:
+                en:
+                    - en
+                    - fr
+                fr:
+                    - fr
+                    - en
+
+    .. code-block:: xml
+
+        <!-- app/config/config.xml -->
+        <parameters>
+            <parameter key="my_mailer.gateways" type="collection">
+                <parameter>mail1</parameter>
+                <parameter>mail2</parameter>
+                <parameter>mail3</parameter>
+            </parameter>
+            <parameter key="my_multilang.language_fallback" type="collection">
+                <parameter key="en" type="collection">
+                    <parameter>en</parameter>
+                    <parameter>fr</parameter>
+                </parameter>
+                <parameter key="fr" type="collection">
+                    <parameter>fr</parameter>
+                    <parameter>en</parameter>
+                </parameter>
+            </parameter>
+        </parameters>
+
+    .. code-block:: php
+
+        // app/config/config.php
+        use Symfony\Component\DependencyInjection\Definition;
+
+        $container->setParameter('my_mailer.gateways', array('mail1', 'mail2', 'mail3'));
+        $container->setParameter('my_multilang.language_fallback',
+                                 array('en' => array('en', 'fr'),
+                                       'fr' => array('fr', 'en'),
+                                ));
+
+
 Importing other Container Configuration Resources
 -------------------------------------------------
 
