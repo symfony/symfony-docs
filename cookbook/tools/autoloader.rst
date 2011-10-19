@@ -69,6 +69,8 @@ methods::
         'Monolog' => __DIR__.'/../vendor/monolog/src',
     ));
 
+    $loader->register();
+
 For classes that follow the PEAR naming convention, use the
 :method:`Symfony\\Component\\ClassLoader\\UniversalClassLoader::registerPrefix`
 or
@@ -81,6 +83,8 @@ methods::
         'Swift_' => __DIR__.'/vendor/swiftmailer/lib/classes',
         'Twig_'  => __DIR__.'/vendor/twig/lib',
     ));
+
+    $loader->register();
 
 .. note::
 
@@ -97,6 +101,8 @@ projects::
         'Doctrine\\DBAL'             => __DIR__.'/vendor/doctrine-dbal/lib',
         'Doctrine'                   => __DIR__.'/vendor/doctrine/lib',
     ));
+
+    $loader->register();
 
 In this example, if you try to use a class in the ``Doctrine\Common`` namespace
 or one of its children, the autoloader will first look for the class under the
