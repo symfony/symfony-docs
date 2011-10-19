@@ -858,6 +858,31 @@ block of the base template.
 The end result is a page that includes both the ``main.css`` and ``contact.css``
 stylesheets.
 
+When assets are located in ``src/Acme/DemoBundle/Resources/public/``,
+then you will want to prepend the ``/css``, ``/js``, or ``/images`` with
+``/bundles/acmedemo`` so your full path is ``/bundles/acmedemo/css/contact.css``.
+
+Lets use the above to exemplify this. Lets say the ``contact.css`` is in your bundle 
+instead of the ``app/Resources/public/css`` folder.
+
+.. code-block:: html+jinja
+
+    {# src/Acme/DemoBundle/Resources/views/Contact/contact.html.twig #}
+    {# extends '::base.html.twig' #}
+
+    {% block stylesheets %}
+        {{ parent() }}
+        
+        <link href="{{ asset('/bundles/acmedemo/css/contact.css') }}" type="text/css" rel="stylesheet" />
+    {% endblock %}
+    
+    {# ... #}
+
+.. note::
+
+    You must run the asset install command to copy or symlink your assets into the web directoy of your project.
+    ``php app/console assets:install [--symlink] target`` (target is usually "web")
+
 .. index::
    single: Templating; The templating service
 
