@@ -63,7 +63,7 @@ label, errors and widget.
     {{ form_row(form.name, { 'label': 'foo' }) }}
 
 The second argument to ``form_row`` is an array of variables. The templates
-provided in symfony only allow to override the label as shown in the example
+provided in Symfony only allow to override the label as shown in the example
 above.
 
 form_rest(form, variables)
