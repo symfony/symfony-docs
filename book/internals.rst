@@ -403,7 +403,7 @@ Take a simple example from the `Symfony2 HttpKernel component`_. Once a
 ``Response`` object has been created, it may be useful to allow other elements
 in the system to modify it (e.g. add some cache headers) before it's actually
 used. To make this possible, the Symfony2 kernel throws an event -
-``kernel.response``. Here's how it work:
+``kernel.response``. Here's how it works:
 
 * A *listener* (PHP object) tells a central *dispatcher* object that it wants
   to listen to the ``kernel.response`` event;
