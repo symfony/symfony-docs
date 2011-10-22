@@ -27,7 +27,8 @@ Now the namespace ``Symfony`` is registered and the classes are usable without
 explicitly including them.
 This can be used for own code too, just add another entry to the array. The values
 (the array with the path) is an array because you can split the same namespace
-over several locations. This is especellay usefull for tests.
+over several locations. This is especellay usefull for separating tests and the 
+real businesscode.
 
 .. code-block:: php
 
@@ -40,3 +41,20 @@ over several locations. This is especellay usefull for tests.
   );
   
   ...
+  
+If classes with the PEAR Naming style should be included its as easy as the
+following lines.
+
+.. code-block:: php
+
+  // auoload.php
+  ...
+  
+  $prefixes = array(
+    'HTTP' => array('/usr/share/php'),
+    'Net' => array('/usr/share/php'),
+  );
+  
+  $loader->registerPrefixes($prefixes);
+  ...
+
