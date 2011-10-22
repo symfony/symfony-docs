@@ -78,7 +78,10 @@ Cookbook
     profiler/data_collector
 
     web_services/php_soap_extension
-
+    
+    components/class_loader
+    components/service_container
+    
     symfony1
 
 .. include:: /cookbook/map.rst.inc
