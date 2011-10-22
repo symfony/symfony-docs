@@ -185,7 +185,7 @@ And change the ``index.html.php`` template to include it:
     <!-- src/Acme/HelloBundle/Resources/views/Hello/index.html.php -->
     <?php $view->extend('AcmeHelloBundle::layout.html.php') ?>
 
-    <?php echo $view->render('AcmeHello:Hello:hello.html.php', array('name' => $name)) ?>
+    <?php echo $view->render('AcmeHelloBundle:Hello:hello.html.php', array('name' => $name)) ?>
 
 The ``render()`` method evaluates and returns the content of another template
 (this is the exact same method as the one used in the controller).
