@@ -52,7 +52,7 @@ below renders the ``index.html.php`` template::
 
     public function indexAction($name)
     {
-        return $this->render('HelloBundle:Hello:index.html.php', array('name' => $name));
+        return $this->render('AcmeHelloBundle:Hello:index.html.php', array('name' => $name));
     }
 
 .. index::
@@ -76,7 +76,7 @@ the ``extend()`` call:
 
     Hello <?php echo $name ?>!
 
-The ``HelloBundle::layout.html.php`` notation sounds familiar, doesn't it? It
+The ``AcmeHelloBundle::layout.html.php`` notation sounds familiar, doesn't it? It
 is the same notation used to reference a template. The ``::`` part simply
 means that the controller element is empty, so the corresponding file is
 directly stored under ``views/``.
@@ -144,7 +144,7 @@ The base layout already has the code to output the title in the header:
 
 .. code-block:: html+php
 
-    <!-- app/Resources/views/layout.html.php -->
+    <!-- app/Resources/views/base.html.php -->
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <title><?php $view['slots']->output('title', 'Hello Application') ?></title>
@@ -185,7 +185,7 @@ And change the ``index.html.php`` template to include it:
     <!-- src/Acme/HelloBundle/Resources/views/Hello/index.html.php -->
     <?php $view->extend('AcmeHelloBundle::layout.html.php') ?>
 
-    <?php echo $view->render('AcmeHello:Hello:hello.html.php', array('name' => $name)) ?>
+    <?php echo $view->render('AcmeHelloBundle:Hello:hello.html.php', array('name' => $name)) ?>
 
 The ``render()`` method evaluates and returns the content of another template
 (this is the exact same method as the one used in the controller).
@@ -206,9 +206,9 @@ If you create a ``fancy`` action, and want to include it into the
 .. code-block:: html+php
 
     <!-- src/Acme/HelloBundle/Resources/views/Hello/index.html.php -->
-    <?php echo $view['actions']->render('HelloBundle:Hello:fancy', array('name' => $name, 'color' => 'green')) ?>
+    <?php echo $view['actions']->render('AcmeHelloBundle:Hello:fancy', array('name' => $name, 'color' => 'green')) ?>
 
-Here, the ``HelloBundle:Hello:fancy`` string refers to the ``fancy`` action of the
+Here, the ``AcmeHelloBundle:Hello:fancy`` string refers to the ``fancy`` action of the
 ``Hello`` controller::
 
     // src/Acme/HelloBundle/Controller/HelloController.php
@@ -220,7 +220,7 @@ Here, the ``HelloBundle:Hello:fancy`` string refers to the ``fancy`` action of t
             // create some object, based on the $color variable
             $object = ...;
 
-            return $this->render('HelloBundle:Hello:fancy.html.php', array('name' => $name, 'object' => $object));
+            return $this->render('AcmeHelloBundle:Hello:fancy.html.php', array('name' => $name, 'object' => $object));
         }
 
         // ...
