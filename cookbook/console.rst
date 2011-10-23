@@ -207,7 +207,7 @@ console::
 
     use Symfony\Component\Console\Tester\CommandTester;
     use Symfony\Bundle\FrameworkBundle\Console\Application;
-    use Acme\DemoBundle\Command\GreetCommand.php;
+    use Acme\DemoBundle\Command\GreetCommand;
 
     class ListCommandTest extends \PHPUnit_Framework_TestCase
     {
