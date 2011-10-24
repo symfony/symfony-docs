@@ -132,7 +132,7 @@ blank but is no longer than 100 characters in length, you would do the following
             {
                 $metadata->addPropertyConstraint('profileData', new Collection(array(
                     'fields' => array(
-                        'personal_email' => arraynew Email(),
+                        'personal_email' => new Email(),
                         'lastName' => array(new NotBlank(), new MaxLength(100)),
                     ),
                     'allowMissingFields' => true,
