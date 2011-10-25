@@ -5,7 +5,7 @@ In the security chapter, you can see how to :ref:`secure a controller<book-secur
 by requesting the ``security.context`` service from the Service Container
 and checking the current user's role::
 
-    use Symfony\Component\Security\Core\Exception\AccessDeniedException
+    use Symfony\Component\Security\Core\Exception\AccessDeniedException;
     // ...
 
     public function helloAction($name)
@@ -108,7 +108,7 @@ The injected service can then be used to perform the security check when the
 
     namespace Acme\HelloBundle\Newsletter;
 
-    use Symfony\Component\Security\Core\Exception\AccessDeniedException
+    use Symfony\Component\Security\Core\Exception\AccessDeniedException;
     use Symfony\Component\Security\Core\SecurityContextInterface;
     // ...
 
