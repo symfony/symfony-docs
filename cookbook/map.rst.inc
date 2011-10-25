@@ -108,7 +108,6 @@
   
 * **Using Components standalone**
 
-  * :doc:`/cookbook/components/class_loader`
   * :doc:`/cookbook/components/service_container`
   
 * **Symfony2 for symfony1 Users**

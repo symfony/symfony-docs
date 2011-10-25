@@ -5,14 +5,13 @@ How to use the Service Container standalone
 ===========================================
 
 To use the service container you first have to setup the classloading. 
-Take a look into ":doc:`/cookbook/components/class_loader`"
+Take a look into ":doc:`/cookbook/tools/autoloader`"
 
 Configure the Service Container directly
 ----------------------------------------
 
-This creates an instance of the ContainerBuilder and adds a Service with a 
-Reference to a Service which is created later. my.other_service is only 
-created when my.service is consumed.
+The following example creates an instance of the ContainerBuilder and adds a Service with a 
+Reference to another Service. The Referenced Service is created later as my.other_service.
 
 .. code-block:: php
 
@@ -56,7 +55,7 @@ example.
   $xmlLoader = new XmlFileLoader($container, $locator);
   $xmlLoader->load('service.xml');
 
-Now a configuration like this one can be used. The topic about how to use the
+Now a configuration like this can be used. The topic about how to use the
 service container is covered in ":doc:`/book/service_container`".
 
 .. code-block:: xml
@@ -80,8 +79,9 @@ service container is covered in ":doc:`/book/service_container`".
   </container>
 
 With this set up its now possible to load several configurations.
-For example one with the general setup stuff und in the second file only 
-services used in tests.
+For example one with the general setup stuff and in the second file only 
+services used in tests. Each Configurationfile can override Parameters and Services
+defined by previous Configurations.
 
 .. code-block:: php
 
