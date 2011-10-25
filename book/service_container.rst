@@ -239,6 +239,9 @@ third-party bundles will *always* use parameters as they make the service
 stored in the container more configurable. For the services in your application,
 however, you may not need the flexibility of parameters.
 
+Array Parameters
+~~~~~~~~~~~~~~~~
+
 Parameters do not need to be flat strings, they can also be arrays. For the XML
 format, you need to use the type="collection" attribute for all parameters that are
 arrays.
