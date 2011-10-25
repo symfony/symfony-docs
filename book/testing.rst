@@ -128,12 +128,14 @@ simple functional test for ``DemoController`` that reads as follows::
     need to run the application. For a symfony application to run, it must be
     bootstrapped correctly, but this is quite simple:
 
-    The phpunit file needs to load app/bootstrap.php.cache which will do the boostrap.
+    The phpunit.xml file needs to load app/bootstrap.php.cache which will do the boostrap.
     Then your test has to load the kernel. When using the ``WebTestCase``, all you need to
     do is make sure it can locate the kernel php file and the test will instantiate the kernel
-    with the ``test`` environment. Unless your phpunit file is located in
-    the same directory as the kernel, you need to specify the php environment variable
-    ``KERNEL_DIR`` to point to the directory containing the kernel.
+    with the ``test`` environment. If your phpunit.xml file is located in the same directory
+    as your AppKernel.php, this will work automatically. However, if you want to run tests
+    for a bundle or use a non-standard directory structure, you need to specify the location
+    of the kernel directory by defining the php environment variable ``KERNEL_DIR`` to point
+    to the directory containing the kernel.
 
     The relevant parts of phpunit.xml.dist look like this::
 
@@ -141,9 +143,11 @@ simple functional test for ``DemoController`` that reads as follows::
             ...
             bootstrap = "bootstrap.php.cache" >
             ...
+            <!-- if the kernel is not automatically found, enable and set to kernel path
             <php>
                 <server name="KERNEL_DIR" value="/path/to/your/app/" />
             </php>
+            -->
             ...
         </phpunit>
 
