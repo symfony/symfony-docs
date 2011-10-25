@@ -106,7 +106,11 @@
   * :doc:`/cookbook/event_dispatcher/method_behavior`
   * :doc:`/cookbook/request/mime_type`
   * :doc:`/cookbook/profiler/data_collector`
+  
+* **Using Components standalone**
 
+  * :doc:`/cookbook/components/service_container`
+  
 * **Symfony2 for symfony1 Users**
 
   * :doc:`/cookbook/symfony1`
