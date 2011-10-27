@@ -313,6 +313,8 @@ the following guidelines in mind while you develop.
     the name of the route that was matched (e.g. ``hello``). Though not usually
     useful, this is equally available as a controller argument.
 
+.. _book-controller-request-argument:
+
 The ``Request`` as a Controller Argument
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 

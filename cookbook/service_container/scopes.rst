@@ -196,11 +196,4 @@ The service config for this class would look something like this:
 
 If you define a controller as a service then you can get a `Request` object
 without injecting the container by having it passed in as an argument of your
-action method::
-
-    use Symfony\Component\HttpFoundation\Request;
-
-    public function updateAction(Request $request)
-    {
-        // ...
-    }
+action method see :ref:`book-controller-request-argument`
