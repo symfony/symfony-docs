@@ -156,7 +156,7 @@ the symfony service container.
 
     // app/config/parameters.php
 
-    include_once('/path/to/drupal/sites/all/default/settings.php');
+    include_once('/path/to/drupal/sites/default/settings.php');
     $container->setParameter('drupal.database.url', $db_url);
 
 .. _`SetEnv`: http://httpd.apache.org/docs/current/env.html

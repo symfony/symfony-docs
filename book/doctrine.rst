@@ -861,7 +861,7 @@ table, and ``product.category_id`` column, and new foreign key:
 
     This task should only be really used during development. For a more robust
     method of systematically updating your production database, read about
-    :doc:`Doctrine migrations</bundles/DoctrineFixturesBundle/index>`.
+    :doc:`Doctrine migrations</bundles/DoctrineMigrationsBundle/index>`.
 
 Saving Related Entities
 ~~~~~~~~~~~~~~~~~~~~~~~

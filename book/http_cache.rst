@@ -983,8 +983,9 @@ too far away in the future.
 
 .. note::
 
-    It's also because there is no invalidation mechanism that you can use any
-    reverse proxy without changing anything in your application code.
+    Since invalidation is a topic specific to each type of reverse proxy,
+    if you don't worry about invalidation, you can switch between reverse
+    proxies without changing anything in your application code.
 
 Actually, all reverse proxies provide ways to purge cached data, but you
 should avoid them as much as possible. The most standard way is to purge the
