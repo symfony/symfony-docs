@@ -12,7 +12,7 @@ the object.
 Suppose you have a factory that configures and returns a new NewsletterManager
 object::
 
-    namespace Acme\HelloBundle\Newletter;
+    namespace Acme\HelloBundle\Newsletter;
 
     class NewsletterFactory
     {

@@ -49,7 +49,8 @@ example containing most features described below:
         {
             if (true === $dummy) {
                 return;
-            } elseif ('string' === $dummy) {
+            }
+            if ('string' === $dummy) {
                 $dummy = substr($dummy, 0, 5);
             }
 
@@ -77,7 +78,8 @@ Structure
 * Add a single space before the opening parenthesis of a control keyword
   (`if`, `else`, `for`, `while`, ...);
 
-* Add a blank line before `return` statements;
+* Add a blank line before `return` statements, unless the return is alone
+  inside a statement-group (like an `if` statement);
 
 * Don't add trailing spaces at the end of lines;
 
@@ -114,8 +116,6 @@ Naming Conventions
 
 * Use namespaces for all classes;
 
-* Use `Symfony` as the first namespace level;
-
 * Suffix interfaces with `Interface`;
 
 * Use alphanumeric characters and underscores for file names;
@@ -127,6 +127,8 @@ Documentation
 -------------
 
 * Add PHPDoc blocks for all classes, methods, and functions;
+
+* Omit the `@return` tag if the method does not return anything;
 
 * The `@package` and `@subpackage` annotations are not used.
 

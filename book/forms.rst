@@ -598,6 +598,20 @@ the label, errors and HTML form widget of each field inside a ``div`` tag
 by default. In the :ref:`form-theming` section, you'll learn how the ``form_row``
 output can be customized on many different levels.
 
+.. tip::
+
+    You can access the current data of your form via ``form.vars.value``:
+    
+    .. configuration-block::
+
+        .. code-block:: jinja
+        
+            {{ form.vars.value.task }}
+
+        .. code-block:: html+php
+
+            <?php echo $view['form']->get('value')->getTask() ?>
+
 .. index::
    single: Forms; Rendering each field by hand
 
@@ -745,6 +759,8 @@ form "type"). It can be used to quickly build a form object in the controller:
 Placing the form logic into its own class means that the form can be easily
 reused elsewhere in your project. This is the best way to create forms, but
 the choice is ultimately up to you.
+
+.. _book-forms-data-class:
 
 .. sidebar:: Setting the ``data_class``
 
@@ -1294,6 +1310,128 @@ section.
 
     The ``intention`` option is optional but greatly enhances the security of
     the generated token by making it different for each form.
+
+.. index:
+   single: Forms; With no class
+
+Using a Form without a Class
+----------------------------
+
+In most cases, a form is tied to an object, and the fields of the form get
+and store their data on the properties of that object. This is exactly what
+you've seen so far in this chapter with the `Task` class.
+
+But sometimes, you may just want to use a form without a class, and get back
+an array of the submitted data. This is actually really easy::
+
+    // make sure you've imported the Request namespace above the class
+    use Symfony\Component\HttpFoundation\Request
+    // ...
+
+    public function contactAction(Request $request)
+    {
+        $defaultData = array('message' => 'Type your message here');
+        $form = $this->createFormBuilder($defaultData)
+            ->add('name', 'text')
+            ->add('email', 'email')
+            ->add('message', 'textarea')
+            ->getForm();
+        
+            if ($request->getMethod() == 'POST') {
+                $form->bindRequest($request);
+
+                // data is an array with "name", "email", and "message" keys
+                $data = $form->getData();
+            }
+        
+        // ... render the form
+    }
+
+By default, a form actually assumes that you want to work with arrays of
+data, instead of an object. There are exactly two ways that you can change
+this behavior and tie the form to an object instead:
+
+1. Pass an object when creating the form (as the first argument to ``createFormBuilder``
+   or the second argument to ``createForm``);
+
+2. Declare the ``data_class`` option on your form.
+
+If you *don't* do either of these, then the form will return the data as
+an array. In this example, since ``$defaultData`` is not an object (and
+no ``data_class`` option is set), ``$form->getData()`` ultimately returns
+an array.
+
+.. tip::
+    You can also access POST values (in this case "name") directly through 
+    the request object, like so:
+
+    .. code-block:: php
+        $this->get('request')->request->get('name');
+
+    Be advised, however, that in most cases using the getData() method is 
+    a better choice, since it returns the data (usually an object) after
+    it's been transformed by the form framework.
+
+Adding Validation
+~~~~~~~~~~~~~~~~~
+
+The only missing piece is validation. Usually, when you call ``$form->isValid()``,
+the object is validated by reading the constraints that you applied to that
+class. But without a class, how can you add constraints to the data of your
+form?
+
+The answer is to setup the constraints yourself, and pass them into your
+form. The overall approach is covered a bit more in the :ref:`validation chapter<book-validation-raw-values>`,
+but here's a short example::
+
+    // import the namespaces above your controller class
+    use Symfony\Component\Validator\Constraints\Email;
+    use Symfony\Component\Validator\Constraints\MinLength;
+    use Symfony\Component\Validator\Constraints\Collection;
+
+    $collectionConstraint = new Collection(array(
+        'name' => new MinLength(5),
+        'email' => new Email(array('message' => 'Invalid email address')),
+    ));
+
+    // create a form, no default values, pass in the constraint option
+    $form = $this->createFormBuilder(null, array(
+        'validation_constraint' => $collectionConstraint,
+    ))->add('email', 'email')
+        // ...
+    ;
+
+Now, when you call `$form->isValid()`, the constraints setup here are run
+against your form's data. If you're using a form class, override the ``getDefaultOptions``
+method to specify the option::
+
+    namespace Acme\TaskBundle\Form\Type;
+
+    use Symfony\Component\Form\AbstractType;
+    use Symfony\Component\Form\FormBuilder;
+    use Symfony\Component\Validator\Constraints\Email;
+    use Symfony\Component\Validator\Constraints\MinLength;
+    use Symfony\Component\Validator\Constraints\Collection;
+
+    class ContactType extends AbstractType
+    {
+        // ...
+
+        public function getDefaultOptions(array $options)
+        {
+            $collectionConstraint = new Collection(array(
+                'name' => new MinLength(5),
+                'email' => new Email(array('message' => 'Invalid email address')),
+            ));
+        
+            $options['validation_constraint'] = $collectionConstraint;
+        }
+    }
+
+Now, you have the flexibility to create forms - with validation - that return
+an array of data, instead of an object. In most cases, it's better - and
+certainly more robust - to bind your form to an object. But for simple forms,
+this is a great approach. 
 
 Final Thoughts
 --------------
