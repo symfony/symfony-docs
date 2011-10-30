@@ -121,6 +121,37 @@ simple functional test for ``DemoController`` that reads as follows::
         }
     }
 
+
+.. tip::
+
+    While unit tests are built to test each class separately, functional tests
+    need to run the application. For a symfony application to run, it must be
+    bootstrapped correctly, but this is quite simple:
+
+    The phpunit.xml file needs to load app/bootstrap.php.cache which will do the boostrap.
+    Then your test has to load the kernel. When using the ``WebTestCase``, all you need to
+    do is make sure it can locate the kernel php file and the test will instantiate the kernel
+    with the ``test`` environment. If your phpunit.xml file is located in the same directory
+    as your AppKernel.php, this will work automatically. However, if you want to run tests
+    for a bundle or use a non-standard directory structure, you need to specify the location
+    of the kernel directory by defining the php environment variable ``KERNEL_DIR`` to point
+    to the directory containing the kernel.
+
+    The relevant parts of phpunit.xml.dist look like this::
+
+        <phpunit
+            ...
+            bootstrap = "bootstrap.php.cache" >
+            ...
+            <!-- if the kernel is not automatically found, enable and set to kernel path
+            <php>
+                <server name="KERNEL_DIR" value="/path/to/your/app/" />
+            </php>
+            -->
+            ...
+        </phpunit>
+
+
 The ``createClient()`` method returns a client tied to the current application::
 
     $crawler = $client->request('GET', '/demo/hello/Fabien');
@@ -141,13 +172,13 @@ select elements in the Response, to click on links, and to submit forms.
     The full signature of the ``request()`` method is::
 
         request($method,
-            $uri, 
-            array $parameters = array(), 
-            array $files = array(), 
-            array $server = array(), 
-            $content = null, 
+            $uri,
+            array $parameters = array(),
+            array $files = array(),
+            array $server = array(),
+            $content = null,
             $changeHistory = true
-        )   
+        )
 
 Click on a link by first selecting it with the Crawler using either a XPath
 expression or a CSS selector, then use the Client to click on it::
@@ -722,7 +753,7 @@ The Client used by functional tests creates a Kernel that runs in a special
                     type="stream"
                     path="%kernel.logs_dir%/%kernel.environment%.log"
                     level="debug"
-                 />               
+                 />
             </monolog:config>
         </container>
 
@@ -746,7 +777,7 @@ The Client used by functional tests creates a Kernel that runs in a special
                 'main' => array('type' => 'stream',
                                 'path' => '%kernel.logs_dir%/%kernel.environment%.log'
                                 'level' => 'debug')
-           
+
         )));
 
 You can also change the default environment (``test``) and override the
