@@ -96,7 +96,7 @@ by default. You can even `add your own extensions`_ to Twig as needed.
 .. tip::
 
     Registering a Twig extension is as easy as creating a new service and tagging
-    it with ``twig.extension`` :ref:`tag<book-service-container-tags>`.
+    it with ``twig.extension`` :ref:`tag<reference-dic-tags-twig-extension>`.
 
 As you'll see throughout the documentation, Twig also supports functions
 and new functions can be easily added. For example, the following uses a

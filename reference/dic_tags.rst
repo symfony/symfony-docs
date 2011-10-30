@@ -48,6 +48,8 @@ templates):
             ->addTag('templating.helper', array('alias' => 'alias_name'))
         ;
 
+.. _reference-dic-tags-twig-extension:
+
 Enabling Custom Twig Extensions
 -------------------------------
 
