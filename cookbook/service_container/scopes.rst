@@ -194,6 +194,6 @@ The service config for this class would look something like this:
     idea (only inject what you need). In some rare cases, like when working
     with Twig extensions, its necessary to due a shortcoming in Twig itself.
 
-If you define a controller as a service then you can get a `Request` object
+If you define a controller as a service then you can get the ``Request`` object
 without injecting the container by having it passed in as an argument of your
-action method see :ref:`book-controller-request-argument`
+action method. See :ref:`book-controller-request-argument` for details.
