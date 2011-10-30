@@ -35,7 +35,7 @@ To install them all, run the `vendors` script:
 
 .. code-block:: bash
 
-    $ php vendors install
+    $ php vendors.php install
 
 .. note::
 
@@ -46,7 +46,7 @@ the follow command:
 
 .. code-block:: bash
 
-    $ php vendors update
+    $ php vendors.php update
 
 Running
 -------
