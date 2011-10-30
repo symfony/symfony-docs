@@ -7,7 +7,7 @@ search Field Type
 This renders an ``<input type="search" />`` field, which is a text box with
 special functionality supported by some browsers.
 
-Read about the input search field at `DiveIntoHTML5.org`_
+Read about the input search field at `DiveIntoHTML5.info`_
 
 +-------------+----------------------------------------------------------------------+
 | Rendered as | ``input search`` field                                               |
@@ -41,4 +41,4 @@ These options inherit from the :doc:`field</reference/forms/types/field>` type:
 
 .. include:: /reference/forms/types/options/error_bubbling.rst.inc
 
-.. _`DiveIntoHTML5.org`: http://diveintohtml5.org/forms.html#type-search
+.. _`DiveIntoHTML5.info`: http://diveintohtml5.info/forms.html#type-search

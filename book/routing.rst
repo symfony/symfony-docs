@@ -1083,6 +1083,18 @@ that route. With this information, any URL can easily be generated:
 
 In an upcoming section, you'll learn how to generate URLs from inside templates.
 
+.. tip::
+
+    If the frontend of your application uses AJAX requests, you might want
+    to be able to generate URLs in JavaScript based on your routing configuration.
+    By using the `FOSJsRoutingBundle`_, you can do exactly that:
+    
+    .. code-block:: javascript
+    
+        var url = Routing.generate('blog_show', { "slug": 'my-blog-post});
+
+    For more information, see the documentation for that bundle.
+
 .. index::
    single: Routing; Absolute URLs
 
@@ -1172,3 +1184,5 @@ Learn more from the Cookbook
 ----------------------------
 
 * :doc:`/cookbook/routing/scheme`
+
+.. _`FOSJsRoutingBundle`: https://github.com/FriendsOfSymfony/FOSJsRoutingBundle
