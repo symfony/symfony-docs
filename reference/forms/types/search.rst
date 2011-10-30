@@ -41,4 +41,4 @@ These options inherit from the :doc:`field</reference/forms/types/field>` type:
 
 .. include:: /reference/forms/types/options/error_bubbling.rst.inc
 
-.. _`DiveIntoHTML5.org`: http://diveintohtml5.info/forms.html#type-search
+.. _`DiveIntoHTML5.info`: http://diveintohtml5.info/forms.html#type-search
