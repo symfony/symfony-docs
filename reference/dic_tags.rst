@@ -118,10 +118,16 @@ will be called:
     or negative integer. This allows you to make sure your listener will always 
     be called before or after another listener listening for the same event.
 
+
+
 .. _dic-tags-kernel-event-subscriber:
 
 Enabling Custom Subscribers
 ---------------------------
+
+.. versionadded:: 2.1
+
+   The ability to add kernel event subscribers is new to 2.1.
 
 To enable a custom subscriber, add it as a regular service in one of your
 configuration, and tag it with ``kernel.event_subscriber``:
