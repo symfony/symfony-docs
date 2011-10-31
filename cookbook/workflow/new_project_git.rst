@@ -117,6 +117,10 @@ script to ensure that all of the needed vendor libraries are downloaded.
     it. This command is used to freeze the versions of all of your vendor libraries
     by reading their current state and recording it into the ``deps.lock`` file.
 
+    Additionally, if you would simply like to update the ``deps.lock`` file
+    to what you already have installed, then you can simply run ``php bin/vendors lock``
+    to store the appropriate git SHA identifiers in the deps.lock file.
+
 Vendors and Submodules
 ~~~~~~~~~~~~~~~~~~~~~~
 
