@@ -861,7 +861,7 @@ location. (target is by default "web")
 
 .. code-block:: html+jinja
 
-   <link href="{{ asset('/bundles/AcmeDemoBundle/css/contact.css') }}" type="text/css" rel="stylesheet" />
+   <link href="{{ asset('bundles/acmedemo/css/contact.css') }}" type="text/css" rel="stylesheet" />
 
 The end result is a page that includes both the ``main.css`` and ``contact.css``
 stylesheets.
