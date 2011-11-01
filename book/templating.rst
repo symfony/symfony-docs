@@ -855,9 +855,10 @@ to add to the parent block's content (and not actually *replace* it), you
 should use the ``parent()`` Twig function to include everything from the ``stylesheets``
 block of the base template.
 
-You can also include assets located in your bundles ``Resources/public`` folder. You will need to
-run the ``php app/console assets:install target [--symlink]`` command to have the files in the correct
-location. (target is by default "web")
+You can also include assets located in your bundles' ``Resources/public`` folder.
+You will need to run the ``php app/console assets:install target [--symlink]``
+command, which moves (or symlinks) files into the correct location. (target
+is by default "web").
 
 .. code-block:: html+jinja
 
