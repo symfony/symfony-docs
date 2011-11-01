@@ -64,6 +64,7 @@ Cookbook
 
     cache/varnish
 
+    templating/global_variables
     templating/PHP
 
     tools/autoloader

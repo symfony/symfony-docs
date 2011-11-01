@@ -85,6 +85,7 @@
 
 * **Templating**
 
+  * :doc:`/cookbook/templating/global_variables`
   * :doc:`/cookbook/templating/PHP`
 
 * **Tools, Logging and Internals**
