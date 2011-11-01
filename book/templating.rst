@@ -855,6 +855,14 @@ to add to the parent block's content (and not actually *replace* it), you
 should use the ``parent()`` Twig function to include everything from the ``stylesheets``
 block of the base template.
 
+You can also include assets located in your bundles ``Resources/public`` folder. You will need to
+run the ``php app/console assets:install target [--symlink]`` command to have the files in the correct
+location. (target is by default "web")
+
+.. code-block:: html+jinja
+
+   <link href="{{ asset('bundles/acmedemo/css/contact.css') }}" type="text/css" rel="stylesheet" />
+
 The end result is a page that includes both the ``main.css`` and ``contact.css``
 stylesheets.
 
