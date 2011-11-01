@@ -80,6 +80,10 @@ configuration, and tag it with ``twig.extension``:
             ->addTag('twig.extension')
         ;
 
+For information on how to create the actual Twig Extension class, see
+`Twig's documentation`_ on the topic.
+
+
 .. _dic-tags-kernel-event-listener:
 
 Enabling Custom Listeners
@@ -360,3 +364,5 @@ channel used in the Security component:
 
     You cannot use both the ``handler`` and ``channel`` attributes for the
     same tag as handlers are shared between all channels.
+
+..  _`Twig's documentation`: http://twig.sensiolabs.org/doc/extensions.html

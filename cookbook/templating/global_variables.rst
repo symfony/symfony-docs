@@ -1,36 +1,48 @@
-Injecting variables into all templates
-======================================
+.. index::
+   single: Templating; Global variables
 
-Sometimes you want a variable to be accessable to all the templates you use, here's how.
+Injecting variables into all templates (i.e. Global Variables)
+==============================================================
 
-If you set a parameter in parameters.ini then you will have to make it accessable by 
-defining it as a global in the twig section of config.yml.
+Sometimes you want a variable to be accessible to all the templates you use.
+This is possible inside your ``app/config/config.yml`` file:
 
-.. code-block: ini
-    [parameters]
-        ga_tracking: UA-xxxxx-x
+.. code-block:: yaml
 
-.. code-block: yaml
+    # app/config/config.yml
     twig:
-        debug:            %kernel.debug%
-        strict_variables: %kernel.debug%
-        globals:
-            ga_tracking: %ga_tracking%
-
-.. code-block: twig
-    <p>Our google tracking code is: {{ga_tracking}} </p>
-
-Of course, you can also define the parameter directly in twig:
-
-
-.. code-block: yaml
-    twig:
-        debug:            %kernel.debug%
-        strict_variables: %kernel.debug%
+        # ...
         globals:
             ga_tracking: UA-xxxxx-x
 
+Now, the variable ``ga_tracking`` is available in all Twig templates:
 
+.. code-block:: html+jinja
 
+    <p>Our google tracking code is: {{ ga_tracking }} </p>
 
+It's that easy! You can also take advantage of the built-in :ref:`book-service-container-parameters`
+system, which lets you isolate or reuse the value:
 
+.. code-block:: ini
+
+    ; app/config/parameters.ini
+    [parameters]
+        ga_tracking: UA-xxxxx-x
+
+.. code-block:: yaml
+
+    # app/config/config.yml
+    twig:
+        globals:
+            ga_tracking: %ga_tracking%
+
+The same variable is available exactly as before.
+
+More Complex Global Variables
+-----------------------------
+
+If the global variable you want to set is more complicated - say an object -
+then you won't be able to use the above method. Instead, you'll need to create
+a :ref:`Twig Extension<reference-dic-tags-twig-extension>` and return the
+global variable as one of the entries in the ``getGlobals`` method.
