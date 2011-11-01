@@ -956,6 +956,32 @@ You can also embed a collection of forms into one form. This is done by
 using the ``collection`` field type. For more information, see the
 :doc:`collection field type reference</reference/forms/types/collection>`.
 
+The collection type also give you the ability to embed a prototype of
+the collection form in your view. The prototype is a row of the collection
+without any data in it that serves as a template to add more items.
+To do so, you must set the ``prototype`` and ``allow_add`` options to ``true``.
+
+When your collection will be rendered, the html element containing your
+collection (div or table) will have a ``data-prototype`` attribute containing
+the rendered prototype, as a string. In order for you to display the
+prototype, you'll have to write a small JS to capture the attribute
+and insert it in the form. Here is a sample that you will have to adapt.
+
+.. code-block:: javascript
+    <script type="text/javascript">
+        jQuery('#add-element').click(function() {
+            var prototype = jQuery('form#my_form #my_collection').attr('data-prototype');
+
+            // the level of the prototype is replaced by $$name$$
+            // you might have have to change this to be coherent
+            // with your row ordering.
+            prototype = prototype.replace(/\$\$name\$\$/g, '00');
+
+            // Append the prototype to the DOM
+            jQuery('#my_prototype').append(prototype);
+        });
+    </script>
+
 .. index::
    single: Forms; Theming
    single: Forms; Customizing fields
