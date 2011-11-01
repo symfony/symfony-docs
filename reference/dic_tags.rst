@@ -49,6 +49,8 @@ templates):
             ->addTag('templating.helper', array('alias' => 'alias_name'))
         ;
 
+.. _reference-dic-tags-twig-extension:
+
 Enabling Custom Twig Extensions
 -------------------------------
 
@@ -77,6 +79,10 @@ configuration, and tag it with ``twig.extension``:
             ->register('twig.extension.your_extension_name', 'Fully\Qualified\Extension\Class\Name')
             ->addTag('twig.extension')
         ;
+
+For information on how to create the actual Twig Extension class, see
+`Twig's documentation`_ on the topic.
+
 
 .. _dic-tags-kernel-event-listener:
 
@@ -358,3 +364,5 @@ channel used in the Security component:
 
     You cannot use both the ``handler`` and ``channel`` attributes for the
     same tag as handlers are shared between all channels.
+
+..  _`Twig's documentation`: http://twig.sensiolabs.org/doc/extensions.html

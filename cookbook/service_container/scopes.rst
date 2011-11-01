@@ -191,8 +191,9 @@ The service config for this class would look something like this:
 .. note::
 
     Injecting the whole container into a service is generally not a good
-    idea (only inject what you need). In some rare cases, like when working
-    with Twig extensions, its necessary to due a shortcoming in Twig itself.
+    idea (only inject what you need). In some rare cases, it's necessary
+    when you have a service in the ``container`` scope that needs a service
+    in the ``request`` scope.
 
 If you define a controller as a service then you can get the ``Request`` object
 without injecting the container by having it passed in as an argument of your
