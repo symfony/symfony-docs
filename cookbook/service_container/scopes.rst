@@ -108,7 +108,7 @@ Using a Service from a narrower Scope
 
 If your service depends on a scoped service, the best solution is to put
 it in the same scope (or a narrower one). Usually, this means putting your
-new service in the `request` service.
+new service in the `request` scope.
 
 But this is not always possible (for instance, a twig extension must be in
 the `container` scope as the Twig environment needs it as a dependency).
