@@ -30,6 +30,7 @@ Cookbook
     form/dynamic_form_generation
     form/form_collections
     validation/custom_constraint
+    form/data_transformers
 
     configuration/environments
     configuration/external_parameters
