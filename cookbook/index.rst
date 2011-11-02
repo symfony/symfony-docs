@@ -28,6 +28,7 @@ Cookbook
     form/form_customization
     form/create_custom_field_type
     validation/custom_constraint
+    form/data_transformers
 
     configuration/environments
     configuration/external_parameters
