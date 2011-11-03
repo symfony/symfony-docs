@@ -482,17 +482,24 @@ locale.
 Handling the User's Locale
 --------------------------
 
-The locale of the current user is stored in the session and is accessible
-via the ``session`` service:
+The locale of the current user is stored in the request and is accessible
+via the ``request`` object:
 
 .. code-block:: php
 
-    $locale = $this->get('session')->getLocale();
+    $locale = $this->get('request')->getLocale();
 
-    $this->get('session')->setLocale('en_US');
+    $this->get('request')->setLocale('en_US');
 
 .. index::
    single: Translations; Fallback and default locale
+
+It is also possible to store the locale in the session instead of on a per 
+request basis:
+
+.. code-block:: php
+
+    $this->get('session')->set('_locale', 'en_US');
 
 Fallback and Default Locale
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -501,8 +508,8 @@ If the locale hasn't been set explicitly in the session, the ``fallback_locale``
 configuration parameter will be used by the ``Translator``. The parameter
 defaults to ``en`` (see `Configuration`_).
 
-Alternatively, you can guarantee that a locale is set on the user's session
-by defining a ``default_locale`` for the session service:
+Alternatively, you can guarantee that a locale is set on each user's request
+by defining a ``default_locale`` for the framework:
 
 .. configuration-block::
 
@@ -510,21 +517,27 @@ by defining a ``default_locale`` for the session service:
 
         # app/config/config.yml
         framework:
-            session: { default_locale: en }
+            default_locale: en
 
     .. code-block:: xml
 
         <!-- app/config/config.xml -->
         <framework:config>
-            <framework:session default-locale="en" />
+            <framework:default-locale>en</framework:default-locale>
         </framework:config>
 
     .. code-block:: php
 
         // app/config/config.php
         $container->loadFromExtension('framework', array(
-            'session' => array('default_locale' => 'en'),
+            'default_locale' => 'en',
         ));
+
+.. versionadded:: 2.1
+
+     The ``default_locale`` parameter was defined under the session key
+     originally, however, as of 2.1 this has been moved. This is because the 
+     locale is now set on the request instead of the session.
 
 .. _book-translation-locale-url:
 
