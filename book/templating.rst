@@ -591,7 +591,7 @@ The ``recentList`` template is perfectly straightforward:
     .. code-block:: php
 
         <!-- src/Acme/ArticleBundle/Resources/views/Article/recentList.html.php -->
-        <?php foreach ($articles in $article): ?>
+        <?php foreach ($articles as $article): ?>
             <a href="/article/<?php echo $article->getSlug() ?>">
                 <?php echo $article->getTitle() ?>
             </a>
@@ -854,6 +854,15 @@ put your new stylesheet tag inside of that block. Of course, since you want
 to add to the parent block's content (and not actually *replace* it), you
 should use the ``parent()`` Twig function to include everything from the ``stylesheets``
 block of the base template.
+
+You can also include assets located in your bundles' ``Resources/public`` folder.
+You will need to run the ``php app/console assets:install target [--symlink]``
+command, which moves (or symlinks) files into the correct location. (target
+is by default "web").
+
+.. code-block:: html+jinja
+
+   <link href="{{ asset('bundles/acmedemo/css/contact.css') }}" type="text/css" rel="stylesheet" />
 
 The end result is a page that includes both the ``main.css`` and ``contact.css``
 stylesheets.
