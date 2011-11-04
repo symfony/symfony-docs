@@ -380,6 +380,8 @@ and set a new ``Exception`` object, or do nothing:
 .. index::
    single: Event Dispatcher
 
+.. _`book-internals-event-dispatcher`:
+
 The Event Dispatcher
 --------------------
 

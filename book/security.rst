@@ -775,7 +775,7 @@ adding a new access_control entry:
     .. code-block:: xml
 
             <access-control>
-                <rule path="^/cart/checkout" role="IS_AUTHENTICATED_ANONYMOUSLY" requires_channel: https />
+                <rule path="^/cart/checkout" role="IS_AUTHENTICATED_ANONYMOUSLY" requires_channel="https" />
             </access-control>
 
     .. code-block:: php
