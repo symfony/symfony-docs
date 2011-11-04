@@ -1,3 +1,6 @@
+.. index::
+   single: Form; Events
+
 How to Dynamically Generate Forms Using Form Events
 ===================================================
 
