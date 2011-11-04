@@ -2,9 +2,7 @@ How to Dynamically Generate Forms Using Form Events
 ===================================================
 
 Before jumping right into dynamic form generation, let's have a quick review 
-of what a form class boiled down to its most bare essentials looks like:
-
-.. code-block:: php
+of what a bare form class looks like::
 
     //src/Acme/DemoBundle/Form/ProductType.php
     namespace Acme\DemoBundle\Form
@@ -32,12 +30,10 @@ of what a form class boiled down to its most bare essentials looks like:
     probably need to take a step back and first review the :doc:`Forms chapter </book/forms>` 
     before proceeding.
 
-Let's assume for a moment that this form utilizes an imaginary "Product" entity 
+Let's assume for a moment that this form utilizes an imaginary "Product" class
 that has only two relevant properties ("name" and "price"). The form generated 
-from this class will look the exact same if it is holding a Product object 
-that is brand new, and has not had any of its properties set, as when it 
-is being used to alter or update an existing record in the database that has 
-been fetched with Doctrine.
+from this class will look the exact same regardless of a new Product is being created
+or if an existing product is being edited (e.g. a product fetched from the database).
 
 Suppose now, that you don't want the user to be able to change the `name` value 
 once the object has been created. To do this, you can rely on Symfony's :ref:`Event Dispatcher <book-internals-event-dispatcher>` 
@@ -51,10 +47,8 @@ Adding An Event Subscriber To A Form Class
 ------------------------------------------
 
 So, instead of directly adding that "name" widget via our ProductType form 
-class, let's delegate the responsibility of creating that particular widget 
-to an Event Subscriber
-
-.. code-block:: php
+class, let's delegate the responsibility of creating that particular field 
+to an Event Subscriber::
 
     //src/Acme/DemoBundle/Form/ProductType.php
     namespace Acme\DemoBundle\Form
@@ -84,15 +78,12 @@ of the dispatched event during form creation.
 
 .. _`cookbook-forms-listener-class`:
 
-Inside of The Listener Class
-----------------------------
+Inside the Listener Class
+-------------------------
 
-Based on our previous scenario where our form creates a widget for the "name" 
-property if and only if it is passed an object that has never been persisted 
-to the database (and thus has a blank "id" property) our listener might look 
-look like the following:
-
-.. code-block:: php
+The goal is to create a "name" field *only* if the underlying Product object
+is new (e.g. hasn't been persisted to the database). Based on that, the listener
+might look like the following::
 
     // src/Acme/DemoBundle/Form/EventListener/MyFormListener.php
     namespace Acme\DemoBundle\Form\EventListener;
@@ -113,8 +104,8 @@ look like the following:
         
         public static function getSubscribedEvents()
         {
-            // Tells the dispatcher to pass form.pre_set_data's event object 
-            // to our event subscriber via the preSetData() method.
+            // Tells the dispatcher that we want to listen on the form.pre_set_data
+            // event and that the preSetData method should be called.
             return array(FormEvents::PRE_SET_DATA => 'preSetData');
         }
 
@@ -132,11 +123,11 @@ look like the following:
                 return;
             }
 
-            if ($data->getId()) {
+            // check if the product object is "new"
+            if (!$data->getId()) {
                 $form->add($this->factory->createNamed('text', 'name'));
             }
         }
-
     }
 
 .. caution::
@@ -147,11 +138,11 @@ look like the following:
     where setData() is called at the end of the constructor, as well as the 
     setData() method itself.
 
-The ``FormEvents::PRE_SET_DATA`` line actually resolves to ``form.pre_set_data``. 
-The FormEvents class serves an organizational purpose. It is a centralized 
-location in which you can find all of the various form events available.
+The ``FormEvents::PRE_SET_DATA`` line actually resolves to the string ``form.pre_set_data``. 
+The `FormEvents class`_ serves an organizational purpose. It is a centralized  location
+in which you can find all of the various form events available.
 
-While this example could have used the ``form.set_data`` or even the ``form.post_set_data`` 
+While this example could have used the ``form.set_data`` event or even the ``form.post_set_data`` 
 events just as effectively, by using ``form.pre_set_data`` we guarantee that 
 the data being retrieved from the ``Event`` object has in no way been modified 
 by any other subscribers or listeners. This is because ``form.pre_set_data`` 
