@@ -6,7 +6,7 @@ SwiftmailerBundle Configuration ("swiftmailer")
 
 This reference document is a work in progress. It should be accurate, but
 all options are not yet fully covered. For a full list of the default configuration
-options, see `Configuration`_
+options, see `Full Default Configuration`_
 
 The ``swiftmailer`` key configures Symfony's integration with Swiftmailer,
 which is responsible for creating and delivering email messages.
