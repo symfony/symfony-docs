@@ -591,7 +591,7 @@ The ``recentList`` template is perfectly straightforward:
     .. code-block:: php
 
         <!-- src/Acme/ArticleBundle/Resources/views/Article/recentList.html.php -->
-        <?php foreach ($articles in $article): ?>
+        <?php foreach ($articles as $article): ?>
             <a href="/article/<?php echo $article->getSlug() ?>">
                 <?php echo $article->getTitle() ?>
             </a>
