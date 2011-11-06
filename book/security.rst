@@ -1181,6 +1181,16 @@ look like:
         $user = $this->get('security.context')->getToken()->getUser();
     }
 
+In a controller this can be shortcut to:
+
+.. code-block:: php
+
+    public function indexAction()
+    {
+        $user = $this->getUser();
+    }
+
+
 .. note::
 
     Anonymous users are technically authenticated, meaning that the ``isAuthenticated()``
