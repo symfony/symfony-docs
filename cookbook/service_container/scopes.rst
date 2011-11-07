@@ -136,7 +136,7 @@ you have the right instance::
         }
     }
 
-.. warning::
+.. caution::
 
     Take care not to store the request in a property of the object for a
     future call of the service as it would be the same issue described

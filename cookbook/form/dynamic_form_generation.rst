@@ -58,14 +58,14 @@ to an Event Subscriber::
 
     use Symfony\Component\Form\AbstractType
     use Symfony\Component\Form\FormBuilder;
-    use Acme\DemoBundle\Form\EventListener\MyFormListener;
+    use Acme\DemoBundle\Form\EventListener\AddNameFieldSubscriber;
 
     class ProductType extends AbstractType
     {
         public function buildForm(FormBuilder $builder, array $options)
         {
-            $listener = new MyFormListener($builder->getFormFactory());
-            $builder->addEventSubscriber($listener);
+            $subscriber = new AddNameFieldSubscriber($builder->getFormFactory());
+            $builder->addEventSubscriber($subscriber);
             $builder->add('price');
         }
 
@@ -75,28 +75,28 @@ to an Event Subscriber::
         }
     }
 
-The listener is passed the FormFactory object in its constructor so that our 
-new listener class is capable of creating the form widget once it is notified 
-of the dispatched event during form creation.
+The event subscriber is passed the FormFactory object in its constructor so 
+that our new subscriber is capable of creating the form widget once it is 
+notified of the dispatched event during form creation.
 
-.. _`cookbook-forms-listener-class`:
+.. _`cookbook-forms-inside-subscriber-class`:
 
-Inside the Listener Class
--------------------------
+Inside the Event Subscriber Class
+---------------------------------
 
 The goal is to create a "name" field *only* if the underlying Product object
-is new (e.g. hasn't been persisted to the database). Based on that, the listener
+is new (e.g. hasn't been persisted to the database). Based on that, the subscriber
 might look like the following::
 
-    // src/Acme/DemoBundle/Form/EventListener/MyFormListener.php
-    namespace Acme\DemoBundle\Form\EventListener;
+    // src/Acme/DemoBundle/Form/EventSubscriber/AddNameFieldSubscriber.php
+    namespace Acme\DemoBundle\Form\EventSubscriber;
 
     use Symfony\Component\Form\Event\DataEvent;
     use Symfony\Component\Form\FormFactoryInterface;
     use Symfony\Component\EventDispatcher\EventSubscriberInterface;
     use Symfony\Component\Form\FormEvents;
 
-    class MyFormListener implements EventSubscriberInterface
+    class AddNameFieldSubscriber implements EventSubscriberInterface
     {
         private $factory;
         
@@ -135,7 +135,7 @@ might look like the following::
 
 .. caution::
 
-    It is easy to misunderstand the purpose of the ``if ($data == null)`` segment 
+    It is easy to misunderstand the purpose of the ``if (null === $data)`` segment 
     of this event subscriber. To fully understand its role, you might consider 
     also taking a look at the `Form class`_ and paying special attention to 
     where setData() is called at the end of the constructor, as well as the 
