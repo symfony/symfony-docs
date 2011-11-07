@@ -1463,6 +1463,7 @@ Learn more from the Cookbook
 * :doc:`File Field Reference </reference/forms/types/file>`
 * :doc:`Creating Custom Field Types </cookbook/form/create_custom_field_type>`
 * :doc:`/cookbook/form/form_customization`
+* :doc:`/cookbook/form/data_transformers`
 * :doc:`/cookbook/form/dynamic_form_generation`
 
 .. _`Symfony2 Form Component`: https://github.com/symfony/Form

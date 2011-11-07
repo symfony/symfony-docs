@@ -1,0 +1,148 @@
+Using data transformers
+=======================
+
+You'll often find the need to transform the data the user entered in a form into
+something else for use in your program. You could easily do this manually in your
+controller, but what if you want to use this specific form in different places?
+
+Say you have a one-to-one relation of Task to Issue, e.g. a Task optionally has an
+issue linked to it. Adding a listbox with all possible tags can eventually lead to
+a really long listbox in which it is impossible to find something. You'll rather want
+to add a textbox, in which the user can simply enter the number of the issue. In the
+controller you can convert this issue number to an actual task, and eventually add
+errors to the form if it was not found, but of course this is not really clean.
+
+It would be better if this issue was automatically looked up and converted to an
+Issue object, for use in your action. This is where Data Transformers come into play:
+
+First, create a custom form type which has a Data Transformer attached to it, which
+returns the Issue by number: the issue selector type. Eventually this will simply be 
+a text field, as we configure the fields' parent to be a "text" field, in which you
+will enter the issue number. The field will display an error if a non existing number
+was entered::
+
+    // src/Acme/TaskBundle/Form/IssueSelectorType.php
+    namespace Acme\TaskBundle\Form;
+    
+    use Symfony\Component\Form\AbstractType;
+    use Symfony\Component\Form\FormBuilder;
+    use Acme\TaskBundle\Form\DataTransformer\IssueToNumberTransformer;
+    use Doctrine\ORM\EntityManager;
+
+    class IssueSelectorType extends AbstractType
+    {
+        private $em;
+    
+        public function __construct(EntityManager $em)
+        {
+            $this->em = $em;
+        }
+    
+        public function buildForm(FormBuilder $builder, array $options)
+        {
+            $transformer = new IssueToNumberTransformer($this->em);
+            $builder->appendClientTransformer($transformer);
+        }
+    
+        public function getDefaultOptions(array $options)
+        {
+            return array(
+                'invalid_message'=>'The selected issue does not exist'
+            );
+        }
+    
+        public function getParent(array $options)
+        {
+            return 'text';
+        }
+    
+        public function getName()
+        {
+            return 'issue_selector';
+        }
+    }
+
+Next, we create the data transformer, which does the actual convertion::
+
+    // src/Acme/TaskBundle/Form/IssueSelectorType.php
+    namespace Acme\TaskBundle\Form\DataTransformer;
+    
+    use Symfony\Component\Form\Exception\TransformationFailedException;
+    use Symfony\Component\Form\DataTransformerInterface;
+    use Doctrine\ORM\EntityManager;
+    
+    class IssueToNumberTransformer implements DataTransformerInterface
+    {
+        private $em;
+
+        public function __construct(EntityManager $em)
+        {
+            $this->em = $em;
+        }
+    
+        public function transform($val)
+        {
+            if (null === $val) {
+                return '';
+            }
+            return $val->getNumber();
+        }
+    
+        public function reverseTransform($val)
+        {
+            if (!$val)
+            {
+                return null;
+            }
+            $issue = $this->em->getRepository('AcmeTaskBundle:Issue')->findOneBy(array('number' => $val));
+            if (null === $issue)
+            {
+                throw new TransformationFailedException('An issue with serial '.$val.' does not exist!');
+            }
+            return $issue;
+        }
+    }
+    
+Finally, register the Type in the service container, so that the entity manager can be automatically injected::
+
+    // ...
+    
+        <service id="issue_selector" class="Acme\TaskBundle\Form\IssueSelectorType">
+            <argument type="service" id="doctrine.orm.default_entity_manager"/>
+            <tag name="form.type" alias="issue_selector" />
+        </service>
+    
+    // ...
+
+You can now add the type to your form by it's alias as follows::
+
+    // src/Acme/TaskBundle/Form/Type/TaskType.php
+    
+    namespace Acme\TaskBundle\Form\Type;
+    
+    use Symfony\Component\Form\AbstractType;
+    use Symfony\Component\Form\FormBuilder;
+    
+    class TaskType extends AbstractType
+    {
+        public function buildForm(FormBuilder $builder, array $options)
+        {
+            $builder->add('task');
+            $builder->add('dueDate', null, array('widget' => 'single_text'));
+            $builder->add('issue', 'issue_selector');
+        }
+    
+        public function getName()
+        {
+            return 'task';
+        }
+    }
+
+Now it will be very easy at any random place in your application to use this
+selector type to select an issue by number. No logic has to be added to your 
+Controller at all.
+
+If you want a new issue to be created when an unknown number is entered, you
+can instantiate it rather than throwing the TransformationFailedException, and
+even persist it to your entity manager if the task has no cascading options
+for the issue.
