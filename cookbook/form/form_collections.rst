@@ -22,9 +22,9 @@ Let's start there: suppose that each ``Task`` belongs to multiple ``Tags``
 objects. Start by creating a simple ``Task`` class::
 
     // src/Acme/TaskBundle/Entity/Task.php
-    namespace Acme\TaskBundle\Entity\Task
+    namespace Acme\TaskBundle\Entity;
     
-    use Doctrine\Common\Collections\ArrayCollection
+    use Doctrine\Common\Collections\ArrayCollection;
 
     class Task
     {
