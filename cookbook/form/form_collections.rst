@@ -234,11 +234,15 @@ So far, this works great, but this doesn't allow you to dynamically add new
 todos or delete existing todos. So, while editing existing todos will work
 great, your user can't actually add any new todos yet.
 
+.. _cookbook-form-collections-new-prototype:
+
 Allowing "new" todos with the "prototype"
 -----------------------------------------
 
 This section has not been written yet, but will soon. If you're interested
 in writing this entry, see :doc:`/contributing/documentation/overview`.
+
+.. _cookbook-form-collections-remove:
 
 Allowing todos to be removed
 ----------------------------
