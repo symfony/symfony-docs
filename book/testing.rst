@@ -146,7 +146,7 @@ for its ``DemoController`` (`DemoControllerTest`_) that reads as follows::
 
             $this->assertTrue($crawler->filter('html:contains("Hello Fabien")')->count() > 0);
         }
-    }            <!-- ... -->
+    }
 
 .. tip::
 

@@ -952,9 +952,12 @@ and can be persisted to the database or used however you need.
 Embedding a Collection of Forms
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-You can also embed a collection of forms into one form. This is done by
-using the ``collection`` field type. For more information, see the
-:doc:`collection field type reference</reference/forms/types/collection>`.
+You can also embed a collection of forms into one form (imagine a ``Category``
+form with many ``Product`` sub-forms). This is done by using the ``collection``
+field type.
+
+For more information see the ":doc:`/cookbook/form/form_collections`" cookbook
+entry and  the :ref:`collection</reference/forms/types/collection>` field type reference.
 
 .. index::
    single: Forms; Theming
@@ -1461,6 +1464,7 @@ Learn more from the Cookbook
 * :doc:`Creating Custom Field Types </cookbook/form/create_custom_field_type>`
 * :doc:`/cookbook/form/form_customization`
 * :doc:`/cookbook/form/data_transformers`
+* :doc:`/cookbook/form/dynamic_form_generation`
 
 .. _`Symfony2 Form Component`: https://github.com/symfony/Form
 .. _`DateTime`: http://php.net/manual/en/class.datetime.php

@@ -45,7 +45,7 @@ managers that use this connection.
                 tags:
                     - { name: doctrine.event_listener, event: postSave, connection: default }
             my.subscriber:
-                class: Acme\SearchBundle\Listener\SearchIndexerSubsriber
+                class: Acme\SearchBundle\Listener\SearchIndexerSubscriber
                 tags:
                     - { name: doctrine.event_subscriber, connection: default }
 
@@ -68,7 +68,7 @@ managers that use this connection.
                 <service id="my.listener2" class="Acme\SearchBundle\Listener\SearchIndexer2">
                     <tag name="doctrine.event_listener" event="postSave" connection="default" />
                 </service>
-                <service id="my.subscriber" class="Acme\SearchBundle\Listener\SearchIndexerSubsriber">
+                <service id="my.subscriber" class="Acme\SearchBundle\Listener\SearchIndexerSubscriber">
                     <tag name="doctrine.event_subscriber" connection="default" />
                 </service>
             </services>

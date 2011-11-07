@@ -775,7 +775,7 @@ adding a new access_control entry:
     .. code-block:: xml
 
             <access-control>
-                <rule path="^/cart/checkout" role="IS_AUTHENTICATED_ANONYMOUSLY" requires_channel: https />
+                <rule path="^/cart/checkout" role="IS_AUTHENTICATED_ANONYMOUSLY" requires_channel="https" />
             </access-control>
 
     .. code-block:: php
@@ -1180,6 +1180,16 @@ look like:
     {
         $user = $this->get('security.context')->getToken()->getUser();
     }
+
+In a controller this can be shortcut to:
+
+.. code-block:: php
+
+    public function indexAction()
+    {
+        $user = $this->getUser();
+    }
+
 
 .. note::
 

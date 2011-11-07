@@ -27,6 +27,8 @@ Cookbook
 
     form/form_customization
     form/create_custom_field_type
+    form/dynamic_form_generation
+    form/form_collections
     validation/custom_constraint
     form/data_transformers
 
