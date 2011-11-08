@@ -499,7 +499,7 @@ narrow down your node selection by chaining the method calls::
         ->filter('h1')
         ->reduce(function ($node, $i)
         {
-            if (!$node->attr('class')) {
+            if (!$node->getAttribute('class')) {
                 return false;
             }
         })
