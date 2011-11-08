@@ -1464,6 +1464,7 @@ Learn more from the Cookbook
 * :doc:`Creating Custom Field Types </cookbook/form/create_custom_field_type>`
 * :doc:`/cookbook/form/form_customization`
 * :doc:`/cookbook/form/dynamic_form_generation`
+* :doc:`/cookbook/form/data_transformers`
 
 .. _`Symfony2 Form Component`: https://github.com/symfony/Form
 .. _`DateTime`: http://php.net/manual/en/class.datetime.php
