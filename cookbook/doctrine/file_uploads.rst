@@ -213,7 +213,7 @@ object, which is what's returned after a ``file`` field is submitted::
         // move takes the target directory and then the target filename to move to
         $this->file->move($this->getUploadRootDir(), $this->file->getClientOriginalName());
 
-        // set the path property to the filename where you'ved saved the file
+        // set the path property to the filename where you've saved the file
         $this->setPath($this->file->getClientOriginalName());
 
         // clean up the file property as you won't need it anymore
