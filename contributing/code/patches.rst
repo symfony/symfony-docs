@@ -11,6 +11,23 @@ The purpose of the check list is to ensure that contributions may be reviewed
 without needless feedback loops to ensure that your contributions can be included
 into Symfony2 as quickly as possible.
 
+The pull request title should be prefixed with the component name it relates to.
+
+.. code-block:: text
+
+    [Component] Short title description here.
+
+An example title might look like this:
+
+.. code-block:: text
+
+    [Form] Add selectbox field type.
+
+.. tip::
+
+    Please the title with "[WIP]" if the submission is not yet completed, for example
+    for example if the test are incomplete or do not yet pass.
+
 All pull requests should include the following template in the request
 description:
 
@@ -21,7 +38,8 @@ description:
     Backwards compatibility break: [yes|no]
     Symfony2 tests pass: [yes|no]
     Fixes the following tickets: [comma separated list of tickets fixed by the PR]
-
+    Todo: [list of todos pending]
+    
 An example submission could now look as follows:
 
 .. code-block:: text
@@ -31,6 +49,7 @@ An example submission could now look as follows:
     Backwards compatibility break: no
     Symfony2 tests pass: yes
     Fixes the following tickets: -
+    Todo: -
 
 Thank you for including the filled out template in your submission!
 
@@ -39,8 +58,7 @@ Thank you for including the filled out template in your submission!
     All feature addition's should be sent to the "master" branch, while all
     bug fixes should be sent to the oldest still active branch. Furthermore
     submissions should, as a rule of thumb, not break backwards compatibility.
-    Please mark any submissions as "[WIP]" in the title in case the submission
-    is not yet complete (for example if the tests do not yet pass).
+
 
 Initial Setup
 -------------
