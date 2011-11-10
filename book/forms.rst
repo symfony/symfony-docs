@@ -1037,7 +1037,7 @@ renders the form:
         <form ...>
 
 The ``form_theme`` tag (in Twig) "imports" the fragments defined in the given
-template and uses them when rendering the form. `In other words, when the
+template and uses them when rendering the form. In other words, when the
 ``form_row`` function is called later in this template, it will use the ``field_row``
 block from your custom theme (instead of the default ``field_row`` block
 that ships with Symfony).
