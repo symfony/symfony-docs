@@ -11,7 +11,8 @@ The purpose of the check list is to ensure that contributions may be reviewed
 without needless feedback loops to ensure that your contributions can be included
 into Symfony2 as quickly as possible.
 
-The pull request title should be prefixed with the component name it relates to.
+The pull request title should be prefixed with the component name or bundle
+it relates to.
 
 .. code-block:: text
 
@@ -25,8 +26,8 @@ An example title might look like this:
 
 .. tip::
 
-    Please the title with "[WIP]" if the submission is not yet completed, for example
-    for example if the test are incomplete or do not yet pass.
+    Please use the title with "[WIP]" if the submission is not yet completed
+    or the tests are incomplete or not yet passing.
 
 All pull requests should include the following template in the request
 description:
