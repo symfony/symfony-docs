@@ -58,7 +58,7 @@ to an Event Subscriber::
 
     use Symfony\Component\Form\AbstractType
     use Symfony\Component\Form\FormBuilder;
-    use Acme\DemoBundle\Form\EventSubscriber\AddNameFieldSubscriber;
+    use Acme\DemoBundle\Form\EventListener\AddNameFieldSubscriber;
 
     class ProductType extends AbstractType
     {
@@ -88,8 +88,8 @@ The goal is to create a "name" field *only* if the underlying Product object
 is new (e.g. hasn't been persisted to the database). Based on that, the subscriber
 might look like the following::
 
-    // src/Acme/DemoBundle/Form/EventSubscriber/AddNameFieldSubscriber.php
-    namespace Acme\DemoBundle\Form\EventSubscriber;
+    // src/Acme/DemoBundle/Form/EventListener/AddNameFieldSubscriber.php
+    namespace Acme\DemoBundle\Form\EventListener;
 
     use Symfony\Component\Form\Event\DataEvent;
     use Symfony\Component\Form\FormFactoryInterface;
