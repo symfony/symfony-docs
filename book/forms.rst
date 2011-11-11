@@ -1037,7 +1037,7 @@ renders the form:
         <form ...>
 
 The ``form_theme`` tag (in Twig) "imports" the fragments defined in the given
-template and uses them when rendering the form. `In other words, when the
+template and uses them when rendering the form. In other words, when the
 ``form_row`` function is called later in this template, it will use the ``field_row``
 block from your custom theme (instead of the default ``field_row`` block
 that ships with Symfony).
@@ -1056,7 +1056,7 @@ For a more extensive discussion, see :doc:`/cookbook/form/form_customization`.
 Form Fragment Naming
 ~~~~~~~~~~~~~~~~~~~~
 
-In Symfony, every part a form that is rendered - HTML form elements, errors,
+In Symfony, every part of a form that is rendered - HTML form elements, errors,
 labels, etc - is defined in a base theme, which is a collection of blocks
 in Twig and a collection of template files in PHP.
 
