@@ -86,10 +86,10 @@ If your valid choice list is simple, you can pass them in directly via the
             
             public static function loadValidatorMetadata(ClassMetadata $metadata)
             {
-                $metadata->addPropertyConstraint('gender', new Choice(
+                $metadata->addPropertyConstraint('gender', new Choice(array(
                     'choices' => array('male', 'female'),
                     'message' => 'Choose a valid gender',
-                ));
+                )));
             }
         }
 
