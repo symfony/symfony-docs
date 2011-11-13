@@ -32,9 +32,10 @@
 * **Forms and Validation**
 
   * :doc:`/cookbook/form/form_customization`
-  * :doc:`/cookbook/form/create_custom_field_type`
+  * :doc:`/cookbook/form/data_transformers`
   * :doc:`/cookbook/form/dynamic_form_generation`
   * :doc:`/cookbook/form/form_collections`
+  * :doc:`/cookbook/form/create_custom_field_type`
   * :doc:`/cookbook/validation/custom_constraint`
   * (doctrine) :doc:`/cookbook/doctrine/file_uploads`
 

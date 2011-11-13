@@ -26,11 +26,11 @@ Cookbook
     doctrine/custom_dql_functions
 
     form/form_customization
-    form/create_custom_field_type
+    form/data_transformers
     form/dynamic_form_generation
     form/form_collections
+    form/create_custom_field_type
     validation/custom_constraint
-    form/data_transformers
 
     configuration/environments
     configuration/external_parameters
