@@ -145,6 +145,7 @@ manager can be automatically injected::
         services:
             acme_demo.type.issue_selector:
                 class: Acme\TaskBundle\Form\IssueSelectorType
+                arguments: ["@doctrine.orm.entity_manager"]
                 tags:
                     - { name: form.type, alias: issue_selector }
 
