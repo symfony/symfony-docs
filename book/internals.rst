@@ -380,6 +380,8 @@ and set a new ``Exception`` object, or do nothing:
 .. index::
    single: Event Dispatcher
 
+.. _`book-internals-event-dispatcher`:
+
 The Event Dispatcher
 --------------------
 
@@ -403,7 +405,7 @@ Take a simple example from the `Symfony2 HttpKernel component`_. Once a
 ``Response`` object has been created, it may be useful to allow other elements
 in the system to modify it (e.g. add some cache headers) before it's actually
 used. To make this possible, the Symfony2 kernel throws an event -
-``kernel.response``. Here's how it work:
+``kernel.response``. Here's how it works:
 
 * A *listener* (PHP object) tells a central *dispatcher* object that it wants
   to listen to the ``kernel.response`` event;
@@ -748,8 +750,16 @@ can be the way to go, especially for optional dependencies.
 
     If you use dependency injection like we did in the two examples above, you
     can then use the `Symfony2 Dependency Injection component`_ to elegantly
-    manage these objects.
+    manage the injection of the ``event_dispatcher`` service for these objects.
 
+        .. code-block:: yaml
+
+            # src/Acme/HelloBundle/Resources/config/services.yml
+            services:
+                foo_service:
+                    class: Acme/HelloBundle/Foo/FooService
+                    arguments: [@event_dispatcher]
+            
 .. index::
    single: Event Dispatcher; Event subscribers
 
@@ -813,6 +823,12 @@ The dispatcher will automatically register the subscriber for each event
 returned by the ``getSubscribedEvents`` method. This method returns an array
 indexed by event names and whose values are either the method name to call or
 an array composed of the method name to call and a priority.
+
+.. tip::
+
+    If you use the Symfony2 MVC framework, subscribers can be registered via
+    your :ref:`configuration <dic-tags-kernel-event-subscriber>`. As an added
+    bonus, the subscriber objects are instantiated only when needed.
 
 .. index::
    single: Event Dispatcher; Stopping event flow

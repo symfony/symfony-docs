@@ -1,12 +1,12 @@
 .. index::
    single: Routing; Scheme requirement
 
-How to force routes to always use HTTPS
-=======================================
+How to force routes to always use HTTPS or HTTP
+===============================================
 
 Sometimes, you want to secure some routes and be sure that they are always
 accessed via the HTTPS protocol. The Routing component allows you to enforce
-the HTTP scheme via the ``_scheme`` requirement:
+the URI scheme via the ``_scheme`` requirement:
 
 .. configuration-block::
 
@@ -70,7 +70,7 @@ URL to always use ``http``.
 
 .. note::
 
-    The Security component provides another way to enforce the HTTP scheme via
+    The Security component provides another way to enforce HTTP or HTTPs via
     the ``requires_channel`` setting. This alternative method is better suited
     to secure an "area" of your website (all URLs under ``/admin``) or when
     you want to secure URLs defined in a third party bundle.

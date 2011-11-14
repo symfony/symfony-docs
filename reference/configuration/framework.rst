@@ -78,15 +78,17 @@ this on a system level. This can be done by setting the ``xdebug.file_link_forma
 PHP.ini value to the file link string. If this configuration value is set, then
 the ``ide`` option does not need to be specified.
 
+.. _reference-framework-test:
+
 test
 ~~~~
 
 **type**: ``Boolean``
 
-If this configuration parameter is present, then the services related to
-testing your application are loaded. This setting should be present in your
-``test`` environment (usually via ``app/config/config_test.yml``). For more
-information, see :doc:`/book/testing`.
+If this configuration parameter is present (and not ``false``), then the
+services related to testing your application (e.g. ``test.client``) are loaded.
+This setting should be present in your ``test`` environment (usually via
+``app/config/config_test.yml``). For more information, see :doc:`/book/testing`.
 
 form
 ~~~~

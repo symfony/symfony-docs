@@ -396,7 +396,7 @@ The HTTP specification defines two caching models:
   until the cached version reaches its expiration time and becomes "stale".
 
 * When pages are really dynamic (i.e. their representation changes often),
-  the `validation model`_ model is often necessary. With this model, the
+  the `validation model`_ is often necessary. With this model, the
   cache stores the response, but asks the server on each request whether
   or not the cached response is still valid. The application uses a unique
   response identifier (the ``Etag`` header) and/or a timestamp (the ``Last-Modified``
@@ -846,7 +846,7 @@ independent of the rest of the page.
 
 In this example, we've given the full-page cache a lifetime of ten minutes.
 Next, let's include the news ticker in the template by embedding an action.
-This is done via the ``render`` helper (See `templating-embedding-controller`
+This is done via the ``render`` helper (See :ref:`templating-embedding-controller`
 for more details).
 
 As the embedded content comes from another page (or controller for that
@@ -983,8 +983,9 @@ too far away in the future.
 
 .. note::
 
-    It's also because there is no invalidation mechanism that you can use any
-    reverse proxy without changing anything in your application code.
+    Since invalidation is a topic specific to each type of reverse proxy,
+    if you don't worry about invalidation, you can switch between reverse
+    proxies without changing anything in your application code.
 
 Actually, all reverse proxies provide ways to purge cached data, but you
 should avoid them as much as possible. The most standard way is to purge the
@@ -1003,7 +1004,7 @@ Here is how you can configure the Symfony2 reverse proxy to support the
             }
 
             $response = new Response();
-            if (!$this->store->purge($request->getUri())) {
+            if (!$this->getStore()->purge($request->getUri())) {
                 $response->setStatusCode(404, 'Not purged');
             } else {
                 $response->setStatusCode(200, 'Purged');

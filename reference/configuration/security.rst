@@ -185,7 +185,7 @@ The Login Form and Process
 
 *   ``post_only`` (type: ``Boolean``, default: ``true``)
     By default, you must submit your login form to the ``check_path`` URL
-    as a POST request. By setting this option to ``true``, you can send a
+    as a POST request. By setting this option to ``false``, you can send a
     GET request to the ``check_path`` URL.
 
 Redirecting after Login

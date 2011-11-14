@@ -96,7 +96,7 @@ by default. You can even `add your own extensions`_ to Twig as needed.
 .. tip::
 
     Registering a Twig extension is as easy as creating a new service and tagging
-    it with ``twig.extension`` :ref:`tag<book-service-container-tags>`.
+    it with ``twig.extension`` :ref:`tag<reference-dic-tags-twig-extension>`.
 
 As you'll see throughout the documentation, Twig also supports functions
 and new functions can be easily added. For example, the following uses a
@@ -485,7 +485,7 @@ template. First, create the template that you'll need to reuse.
     .. code-block:: html+jinja
 
         {# src/Acme/ArticleBundle/Resources/views/Article/articleDetails.html.twig #}
-        <h1>{{ article.title }}</h1>
+        <h2>{{ article.title }}</h2>
         <h3 class="byline">by {{ article.authorName }}</h3>
 
         <p>
@@ -591,7 +591,7 @@ The ``recentList`` template is perfectly straightforward:
     .. code-block:: php
 
         <!-- src/Acme/ArticleBundle/Resources/views/Article/recentList.html.php -->
-        <?php foreach ($articles in $article): ?>
+        <?php foreach ($articles as $article): ?>
             <a href="/article/<?php echo $article->getSlug() ?>">
                 <?php echo $article->getTitle() ?>
             </a>
@@ -854,6 +854,15 @@ put your new stylesheet tag inside of that block. Of course, since you want
 to add to the parent block's content (and not actually *replace* it), you
 should use the ``parent()`` Twig function to include everything from the ``stylesheets``
 block of the base template.
+
+You can also include assets located in your bundles' ``Resources/public`` folder.
+You will need to run the ``php app/console assets:install target [--symlink]``
+command, which moves (or symlinks) files into the correct location. (target
+is by default "web").
+
+.. code-block:: html+jinja
+
+   <link href="{{ asset('bundles/acmedemo/css/contact.css') }}" type="text/css" rel="stylesheet" />
 
 The end result is a page that includes both the ``main.css`` and ``contact.css``
 stylesheets.
@@ -1227,6 +1236,6 @@ Learn more from the Cookbook
 .. _`Symfony2Bundles.org`: http://symfony2bundles.org
 .. _`Cross Site Scripting`: http://en.wikipedia.org/wiki/Cross-site_scripting
 .. _`Output Escaping`: http://twig.sensiolabs.org
-.. _`tags`: http://twig.sensiolabs.org/doc/templates.html#list-of-control-structures
-.. _`filters`: http://twig.sensiolabs.org/doc/templates.html#list-of-built-in-filters
+.. _`tags`: http://twig.sensiolabs.org/doc/tags/index.html
+.. _`filters`: http://twig.sensiolabs.org/doc/templates.html#filters
 .. _`add your own extensions`: http://twig.sensiolabs.org/doc/advanced.html

@@ -233,7 +233,7 @@ into your template:
         <script src="<?php echo $view->escape($url) ?>"></script>
         <?php endforeach; ?>
 
-A more detailed guide abour configuring and using Assetic filters as well as
+A more detailed guide about configuring and using Assetic filters as well as
 details of Assetic's debug mode can be found in :doc:`/cookbook/assetic/yuicompressor`.
 
 Controlling the URL used
@@ -332,7 +332,7 @@ the following change in your ``config_dev.yml`` file:
 
         # app/config/config_dev.yml
         assetic:
-            use_controler: false
+            use_controller: false
 
     .. code-block:: xml
 

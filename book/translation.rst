@@ -663,7 +663,7 @@ need more control or want a different translation for specific cases (for
 ``0``, or when the count is negative, for example). For such cases, you can
 use explicit math intervals::
 
-    '{0} There is no apples|{1} There is one apple|]1,19] There are %count% apples|[20,Inf] There are many apples'
+    '{0} There are no apples|{1} There is one apple|]1,19] There are %count% apples|[20,Inf] There are many apples'
 
 The intervals follow the `ISO 31-11`_ notation. The above string specifies
 four different intervals: exactly ``0``, exactly ``1``, ``2-19``, and ``20``
@@ -673,7 +673,7 @@ You can also mix explicit math rules and standard rules. In this case, if
 the count is not matched by a specific interval, the standard rules take
 effect after removing the explicit rules::
 
-    '{0} There is no apples|[20,Inf] There are many apples|There is one apple|a_few: There are %count% apples'
+    '{0} There are no apples|[20,Inf] There are many apples|There is one apple|a_few: There are %count% apples'
 
 For example, for ``1`` apple, the standard rule ``There is one apple`` will
 be used. For ``2-19`` apples, the second standard rule ``There are %count%
@@ -713,7 +713,7 @@ help with message translation of *static blocks of text*:
     {% trans %}Hello %name%{% endtrans %}
 
     {% transchoice count %}
-        {0} There is no apples|{1} There is one apple|]1,Inf] There are %count% apples
+        {0} There are no apples|{1} There is one apple|]1,Inf] There are %count% apples
     {% endtranschoice %}
 
 The ``transchoice`` tag automatically gets the ``%count%`` variable from
@@ -730,6 +730,8 @@ You can also specify the message domain and pass some additional variables:
 .. code-block:: jinja
 
     {% trans with {'%name%': 'Fabien'} from "app" %}Hello %name%{% endtrans %}
+
+    {% trans with {'%name%': 'Fabien'} from "app" into "fr" %}Hello %name%{% endtrans %}
 
     {% transchoice count with {'%name%': 'Fabien'} from "app" %}
         {0} There is no apples|{1} There is one apple|]1,Inf] There are %count% apples
@@ -804,7 +806,7 @@ locale to use for translation:
     );
 
     $this->get('translator')->trans(
-        '{0} There is no apples|{1} There is one apple|]1,Inf[ There are %count% apples',
+        '{0} There are no apples|{1} There is one apple|]1,Inf[ There are %count% apples',
         10,
         array('%count%' => 10),
         'messages',

@@ -26,6 +26,9 @@ Cookbook
     doctrine/custom_dql_functions
 
     form/form_customization
+    form/data_transformers
+    form/dynamic_form_generation
+    form/form_collections
     form/create_custom_field_type
     validation/custom_constraint
 
@@ -65,6 +68,7 @@ Cookbook
 
     cache/varnish
 
+    templating/global_variables
     templating/PHP
 
     tools/autoloader

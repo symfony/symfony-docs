@@ -723,14 +723,14 @@ Securing by IP
 ~~~~~~~~~~~~~~
 
 Certain situations may arise when you may need to restrict access to a given
-route based on IP. This is particularly relevant in the case of :ref:`Edge Side Includes<edge-side-includes>` 
-(ESI), for example, which utilize a route named "_internal". When 
-ESI is used, the _internal route is required by the gateway cache to enable 
-different caching options for subsections within a given page. This route 
-comes with the ^/_internal prefix by default in the standard edition (assuming 
+route based on IP. This is particularly relevant in the case of :ref:`Edge Side Includes<edge-side-includes>`
+(ESI), for example, which utilize a route named "_internal". When
+ESI is used, the _internal route is required by the gateway cache to enable
+different caching options for subsections within a given page. This route
+comes with the ^/_internal prefix by default in the standard edition (assuming
 you've uncommented those lines from the routing file).
 
-Here is an example of how you might secure this route from outside access: 
+Here is an example of how you might secure this route from outside access:
 
 .. configuration-block::
 
@@ -759,7 +759,7 @@ Here is an example of how you might secure this route from outside access:
 Securing by Channel
 ~~~~~~~~~~~~~~~~~~~
 
-Much like securing based on IP, requiring the use of SSL is as simple as 
+Much like securing based on IP, requiring the use of SSL is as simple as
 adding a new access_control entry:
 
 .. configuration-block::
@@ -775,7 +775,7 @@ adding a new access_control entry:
     .. code-block:: xml
 
             <access-control>
-                <rule path="^/cart/checkout" role="IS_AUTHENTICATED_ANONYMOUSLY" requires_channel: https />
+                <rule path="^/cart/checkout" role="IS_AUTHENTICATED_ANONYMOUSLY" requires_channel="https" />
             </access-control>
 
     .. code-block:: php
@@ -783,7 +783,7 @@ adding a new access_control entry:
             'access_control' => array(
                 array('path' => '^/cart/checkout', 'role' => 'IS_AUTHENTICATED_ANONYMOUSLY', 'requires_channel' => 'https'),
             ),
-          
+
 .. _book-security-securing-controller:
 
 Securing a Controller
@@ -795,7 +795,7 @@ authorization from inside a controller:
 
 .. code-block:: php
 
-    use Symfony\Component\Security\Core\Exception\AccessDeniedException
+    use Symfony\Component\Security\Core\Exception\AccessDeniedException;
     // ...
 
     public function helloAction($name)
@@ -1181,6 +1181,16 @@ look like:
         $user = $this->get('security.context')->getToken()->getUser();
     }
 
+In a controller this can be shortcut to:
+
+.. code-block:: php
+
+    public function indexAction()
+    {
+        $user = $this->getUser();
+    }
+
+
 .. note::
 
     Anonymous users are technically authenticated, meaning that the ``isAuthenticated()``
@@ -1550,7 +1560,7 @@ the ``isGranted`` method of the security context:
     public function indexAction()
     {
         // show different content to admin users
-        if($this->get('security.context')->isGranted('ADMIN')) {
+        if ($this->get('security.context')->isGranted('ADMIN')) {
             // Load admin content here
         }
         // load other regular content here

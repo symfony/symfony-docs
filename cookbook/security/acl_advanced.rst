@@ -102,8 +102,12 @@ Built-in Permission Map
 +------------------+----------------------------+-----------------------------+
 | Attribute        | Intended Meaning           | Integer Bitmasks            |
 +==================+============================+=============================+
-| VIEW             | Whether someone is allowed | VIEW, EDIT, OPERATOR,       |
-|                  | to view the domain object. | MASTER, or OWNER            |
+| VIEW             | Whether someone is allowed | VIEW, CREATE, EDIT,         |
+|                  | to view the domain object. | OPERATOR, MASTER, or OWNER  |
++------------------+----------------------------+-----------------------------+
+| CREATE           | Whether someone is allowed | EDIT, OPERATOR, MASTER,     |
+|                  | to create the domain       | or OWNER                    |
+|                  | object.                    |                             |
 +------------------+----------------------------+-----------------------------+
 | EDIT             | Whether someone is allowed | EDIT, OPERATOR, MASTER,     |
 |                  | to make changes to the     | or OWNER                    |
@@ -131,7 +135,8 @@ Built-in Permission Map
 | OWNER            | Whether someone owns the   | OWNER                       |
 |                  | domain object. An owner can|                             |
 |                  | perform any of the above   |                             |
-|                  | actions.                   |                             |
+|                  | actions *and* grant master |                             |
+|                  | and owner permissions.     |                             |
 +------------------+----------------------------+-----------------------------+
 
 Permission Attributes vs. Permission Bitmasks

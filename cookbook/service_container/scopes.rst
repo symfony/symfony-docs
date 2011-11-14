@@ -108,7 +108,7 @@ Using a Service from a narrower Scope
 
 If your service depends on a scoped service, the best solution is to put
 it in the same scope (or a narrower one). Usually, this means putting your
-new service in the `request` service.
+new service in the `request` scope.
 
 But this is not always possible (for instance, a twig extension must be in
 the `container` scope as the Twig environment needs it as a dependency).
@@ -136,7 +136,7 @@ you have the right instance::
         }
     }
 
-.. warning::
+.. caution::
 
     Take care not to store the request in a property of the object for a
     future call of the service as it would be the same issue described
@@ -191,5 +191,10 @@ The service config for this class would look something like this:
 .. note::
 
     Injecting the whole container into a service is generally not a good
-    idea (only inject what you need). In some rare cases, like when working
-    with Twig extensions, its necessary to due a shortcoming in Twig itself.
+    idea (only inject what you need). In some rare cases, it's necessary
+    when you have a service in the ``container`` scope that needs a service
+    in the ``request`` scope.
+
+If you define a controller as a service then you can get the ``Request`` object
+without injecting the container by having it passed in as an argument of your
+action method. See :ref:`book-controller-request-argument` for details.
