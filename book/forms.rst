@@ -403,6 +403,34 @@ method::
 In both of these cases, *only* the ``registration`` validation group will
 be used to validate the underlying object.
 
+If you need some advanced logic to determine validation groups, eg: based on user
+submitted data, you can set validation groups option to array callback, or ``Closure``.
+
+    public function getDefaultOptions(array $options)
+    {
+        return array(
+            'validation_groups' => array('Acme\\AcmeBundle\\Entity\\Client', 'determineValidationGroups'),
+        );
+    }
+
+This will call static method ``determineValidationGroups()`` with current form object,
+as a parameter, on Client entity, after the data was bind to form, but before validation
+is actually ran. You can also define whole logic inside the type definition, using ``Closure``, eg:
+
+    public function getDefaultOptions(array $options)
+    {
+        return array(
+            'validation_groups' => function(FormInterface $form) {
+                $data = $form->getData();
+                if (Entity\Client::TYPE_PERSON == $data->getType()) {
+                    return array('person')
+                } else {
+                    return array('company');
+                }
+            },
+        );
+    }
+
 .. index::
    single: Forms; Built-in Field Types
 
