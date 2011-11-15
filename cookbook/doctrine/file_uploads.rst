@@ -213,8 +213,8 @@ object, which is what's returned after a ``file`` field is submitted::
         // move takes the target directory and then the target filename to move to
         $this->file->move($this->getUploadRootDir(), $this->file->getClientOriginalName());
 
-        // set the path property to the filename where you've saved the file
-        $this->setPath($this->file->getClientOriginalName());
+        // set the path property to the filename where you'ved saved the file
+        $this->path = $this->file->getClientOriginalName();
 
         // clean up the file property as you won't need it anymore
         $this->file = null;
@@ -263,7 +263,7 @@ Next, refactor the ``Document`` class to take advantage of these callbacks::
         {
             if (null !== $this->file) {
                 // do whatever you want to generate a unique name
-                $this->setPath(uniqid().'.'.$this->file->guessExtension());
+                $this->path = uniqid().'.'.$this->file->guessExtension();
             }
         }
 
@@ -338,7 +338,7 @@ property, instead of the actual filename::
         public function preUpload()
         {
             if (null !== $this->file) {
-                $this->setPath($this->file->guessExtension());
+                $this->path = $this->file->guessExtension();
             }
         }
 
