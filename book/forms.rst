@@ -403,8 +403,16 @@ method::
 In both of these cases, *only* the ``registration`` validation group will
 be used to validate the underlying object.
 
-If you need some advanced logic to determine validation groups, eg: based on user
-submitted data, you can set validation groups option to array callback, or ``Closure``.
+Groups based on Submitted Data
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 2.1
+   The ability to specify a callback or Closure in ``validation_groups``
+   is new to version 2.1
+
+If you need some advanced logic to determine the validation groups (e.g.
+based on submitted data), you can set the ``validation_groups`` option
+to an array callback, or a ``Closure``::
 
     public function getDefaultOptions(array $options)
     {
@@ -413,9 +421,10 @@ submitted data, you can set validation groups option to array callback, or ``Clo
         );
     }
 
-This will call static method ``determineValidationGroups()`` with current form object,
-as a parameter, on Client entity, after the data was bind to form, but before validation
-is actually ran. You can also define whole logic inside the type definition, using ``Closure``, eg:
+This will call the static method ``determineValidationGroups()`` on the
+``Client``class after the form is bound, but before validation is executed.
+The Form object is passed as an argument to that method (see next example).
+You can also define whole logic inline by using a Closure::
 
     public function getDefaultOptions(array $options)
     {
