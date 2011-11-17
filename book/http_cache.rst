@@ -464,9 +464,10 @@ The resulting HTTP header will look like this::
     The ``setExpires()`` method automatically converts the date to the GMT
     timezone as required by the specification.
 
-The ``Expires`` header suffers from two limitations. First, the clocks on the
-Web server and the cache (e.g. the browser) must be synchronized. Then, the
-specification states that "HTTP/1.1 servers should not send ``Expires`` dates
+Note that the ``Expires`` header is not vulnerable to clock skew, since the
+lifetime is calculated using the ``Date`` header which comes from the
+origin server as well instead of using the local clock.
+The specification states that "HTTP/1.1 servers should not send ``Expires`` dates
 more than one year in the future."
 
 .. index::
