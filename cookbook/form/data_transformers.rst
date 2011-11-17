@@ -136,7 +136,7 @@ Next, we create the data transformer, which does the actual conversion::
 
 Finally, since we've decided to create a custom form type that uses the data
 transformer, register the Type in the service container, so that the entity
-manager can be automatically injected::
+manager can be automatically injected:
 
 .. configuration-block::
 
