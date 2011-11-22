@@ -60,6 +60,15 @@ Thank you for including the filled out template in your submission!
     bug fixes should be sent to the oldest still active branch. Furthermore
     submissions should, as a rule of thumb, not break backwards compatibility.
 
+.. tip::
+
+    To automatically get your feature branch tested, you can add your fork to
+    (``http://travis-ci.org/ travis-ci.org``). Just login using your github.com
+    account and then simply flip a single switch to enable automated testing. Instead
+    of answering ``[yes]|no]`` to if ``Symfony2 tests pass`` you can then link to the
+    (``http://about.travis-ci.org/docs/user/status-images/ travis-ci.org status icon``).
+    You can find more details in the
+    (``http://about.travis-ci.org/docs/user/getting-started/ travis-ci.org docs``).
 
 Initial Setup
 -------------
