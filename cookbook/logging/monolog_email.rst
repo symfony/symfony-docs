@@ -83,19 +83,18 @@ get logged on the server as well as the emails being sent:
             handlers:
                 main:
                     type:         fingers_crossed
-                    action_level: error
-                    handler:      nested
-                nested:
-                    type:  stream
-                    path:  %kernel.logs_dir%/%kernel.environment%.log
-                    level: debug
-                mail:
-                    type:         fingers_crossed
                     action_level: critical
                     handler:      buffered
                 buffered:
                     type:    buffer
-                    handler: swift
+                    handler: grouped
+                grouped:
+                    type:    group
+                    members: [streamed, swift]
+                streamed:
+                    type:  stream
+                    path:  %kernel.logs_dir%/%kernel.environment%.log
+                    level: debug
                 swift:
                     type:       swift_mailer
                     from_email: error@example.com
@@ -115,23 +114,24 @@ get logged on the server as well as the emails being sent:
                 <monolog:handler
                     name="main"
                     type="fingers_crossed"
-                    action_level="error"
-                    handler="nested"
-                <monolog:handler
-                    name="nested"
-                    type="stream"
-                    path="%kernel.logs_dir%/%kernel.environment%.log"
-                    level="debug"
-                <monolog:handler
-                    name="mail"
-                    type="fingerscrossed"
-                    action-level="critical"
+                    action_level="critical"
                     handler="buffered"
                 />
                 <monolog:handler
                     name="buffered"
                     type="buffer"
-                    handler="swift"
+                    handler="grouped"
+                />
+                 <monolog:handler
+                    name="grouped"
+                    type="group"
+                    <member type="stream"/>
+                    <member type="swift"/>
+                />
+                <monolog:handler
+                    name="stream"
+                    path="%kernel.logs_dir%/%kernel.environment%.log"
+                    level="debug"
                 />
                 <monolog:handler
                     name="swift"
@@ -142,5 +142,9 @@ get logged on the server as well as the emails being sent:
                 />
             </monolog:config>
         </container>
+
+This uses the ```group`` handler to send the buffered messages to the two
+group members, the ``swift`` and the ``stream`` handlers. The messages will
+now be both written to the log file and emailed.
 
 .. _Monolog: https://github.com/Seldaek/monolog
