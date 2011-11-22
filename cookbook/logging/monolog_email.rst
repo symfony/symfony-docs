@@ -15,7 +15,7 @@ it is broken down.
             handlers:
                 mail:
                     type:         fingers_crossed
-                    action_level: error
+                    action_level: critical
                     handler:      buffered
                 buffered:
                     type:    buffer
@@ -39,7 +39,7 @@ it is broken down.
                 <monolog:handler
                     name="mail"
                     type="fingerscrossed"
-                    action-level="error"
+                    action-level="critical"
                     handler="buffered"
                 />
                 <monolog:handler
@@ -58,10 +58,12 @@ it is broken down.
         </container>
 
 The ``mail`` handler is a ``fingerscrossed`` handler which means that
-it is only triggered when the action level, in this case ``error`` is reached.
-It then logs everything including messages below the action level. The
-``handler`` setting means that the output is then passed onto the ``buffered``
-handler.
+it is only triggered when the action level, in this case ``critical`` is reached.
+It then logs everything including messages below the action level.  The
+``critical`` level is only triggered for 5xx HTTP code errors, if you only
+set it to ``error`` then you will also receive emails for any 4xx code
+errors as well. The ``handler`` setting means that the output is then passed
+onto the ``buffered``handler.
 
 The ``buffered`` handler simply keeps all the messages for a request and
 then passes them onto the nested handler in one go. If you do not use this
@@ -89,7 +91,7 @@ get logged on the server as well as the emails being sent:
                     level: debug
                 mail:
                     type:         fingers_crossed
-                    action_level: error
+                    action_level: critical
                     handler:      buffered
                 buffered:
                     type:    buffer
@@ -123,7 +125,7 @@ get logged on the server as well as the emails being sent:
                 <monolog:handler
                     name="mail"
                     type="fingerscrossed"
-                    action-level="error"
+                    action-level="critical"
                     handler="buffered"
                 />
                 <monolog:handler
