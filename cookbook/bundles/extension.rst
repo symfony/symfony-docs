@@ -178,7 +178,7 @@ Parsing the ``$configs`` Array
 ------------------------------
 
 Whenever a user includes the ``acme_hello`` namespace in a configuration file,
-the configuration under it it is added to an array of configurations and
+the configuration under it is added to an array of configurations and
 passed to the ``load()`` method of your extension (Symfony2 automatically
 converts XML and YAML to an array).
 
@@ -315,7 +315,7 @@ Configuring Services and Setting Parameters
 
 Once you've loaded some service configuration, you may need to modify the
 configuration based on some of the input values. For example, suppose you
-have a service who's first argument is some string "type" that it will use
+have a service whose first argument is some string "type" that it will use
 internally. You'd like this to be easily configured by the bundle user, so
 in your service configuration file (e.g. ``services.xml``), you define this
 service and use a blank parameter - ``acme_hello.my_service_type`` - as
@@ -475,8 +475,8 @@ that an unsupported option was passed::
     }
 
 The ``processConfiguration()`` method uses the configuration tree you've defined
-in the ``Configuration`` class and uses it to validate, normalize and merge
-all of the configuration arrays together.
+in the ``Configuration`` class to validate, normalize and merge all of the
+configuration arrays together.
 
 The ``Configuration`` class can be much more complicated than shown here,
 supporting array nodes, "prototype" nodes, advanced validation, XML-specific
