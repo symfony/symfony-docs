@@ -555,7 +555,7 @@ them for you. Here's the same sample application, now built in Symfony2:
                 ->createQuery('SELECT p FROM AcmeBlogBundle:Post p')
                 ->execute();
 
-            return $this->render('AcmeBlogBundle:Post:list.html.php', array('posts' => $posts));
+            return $this->render('AcmeBlogBundle:Blog:list.html.php', array('posts' => $posts));
         }
 
         public function showAction($id)
@@ -570,7 +570,7 @@ them for you. Here's the same sample application, now built in Symfony2:
                 throw $this->createNotFoundException();
             }
 
-            return $this->render('AcmeBlogBundle:Post:show.html.php', array('post' => $post));
+            return $this->render('AcmeBlogBundle:Blog:show.html.php', array('post' => $post));
         }
     }
 
