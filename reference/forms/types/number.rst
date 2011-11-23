@@ -41,7 +41,7 @@ for example, ``20.12`` (depending on your ``rounding_mode``).
 rounding_mode
 ~~~~~~~~~~~~~
 
-**type**: ``integer`` **default**: ``IntegerToLocalizedStringTransformer::ROUND_DOWN``
+**type**: ``integer`` **default**: ``IntegerToLocalizedStringTransformer::ROUND_HALFUP``
 
 If a submitted number needs to be rounded (based on the ``precision``
 option), you have several configurable options for that rounding. Each
