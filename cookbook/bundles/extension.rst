@@ -102,7 +102,7 @@ and its name should be constructed by replacing the ``Bundle`` postfix of the
 Bundle class name with ``Extension``. For example, the Extension class of
 ``AcmeHelloBundle`` would be called ``AcmeHelloExtension``::
 
-    // Acme/HelloBundle/DependencyInjection/HelloExtension.php
+    // Acme/HelloBundle/DependencyInjection/AcmeHelloExtension.php
     use Symfony\Component\HttpKernel\DependencyInjection\Extension;
     use Symfony\Component\DependencyInjection\ContainerBuilder;
 
