@@ -1,8 +1,6 @@
 Time
 ====
 
-Validates that a value is a valid time string with format "HH:MM:SS".
-
 Validates that a value is a valid time, meaning either a ``DateTime`` object
 or a string (or an object that can be cast into a string) that follows
 a valid "HH:MM:SS" format.
