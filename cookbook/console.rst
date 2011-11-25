@@ -179,14 +179,14 @@ will work:
 
 There are 4 option variants you can use:
 
-===========================  ===================================
+===========================  ==============================================================================
 Option                       Value
-===========================  ===================================
+===========================  ==============================================================================
 InputOption::VALUE_IS_ARRAY  This option accepts multiple values
 InputOption::VALUE_NONE      Do not accept input for this option
-InputOption::VALUE_REQUIRED  This option is required
+InputOption::VALUE_REQUIRED  The value for the option is required. The option itself will still be optional. 
 InputOption::VALUE_OPTIONAL  This option is optional
-===========================  ===================================
+===========================  ==============================================================================
 
 You can combine VALUE_IS_ARRAY with VALUE_REQUIRED or VALUE_OPTIONAL like this:
 
