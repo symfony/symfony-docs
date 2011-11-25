@@ -1,3 +1,7 @@
+.. index::
+    single: Console; CLI
+
+
 How to create Console/Command-Line Commands
 ===========================================
 
