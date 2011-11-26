@@ -23,6 +23,8 @@ Each part will be explained in the next section.
 
             always_authenticate_before_granting: false
 
+            erase_credentials: true
+
             # strategy can be: none, migrate, invalidate
             session_fixation_strategy: migrate
 
