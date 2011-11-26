@@ -98,7 +98,7 @@ Running tests for a given file or directory is also very easy:
     # run all tests in the Utility directory
     $ phpunit -c app src/Acme/DemoBundle/Tests/Utility/
 
-    # run tests for the Article class
+    # run tests for the Calculator class
     $ phpunit -c app src/Acme/DemoBundle/Tests/Utility/CalculatorTest.php
 
     # run all tests for the entire Bundle

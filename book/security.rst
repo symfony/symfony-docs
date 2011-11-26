@@ -28,7 +28,7 @@ Basic Example: HTTP Authentication
 ----------------------------------
 
 The security component can be configured via your application configuration.
-In fact, most standard security setups are just matter of using the right
+In fact, most standard security setups are just a matter of using the right
 configuration. The following configuration tells Symfony to secure any URL
 matching ``/admin/*`` and to ask the user for credentials using basic HTTP
 authentication (i.e. the old-school username/password box):
