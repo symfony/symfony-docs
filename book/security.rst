@@ -386,8 +386,11 @@ login form submission (i.e. ``/login_check``):
 
     You will *not* need to implement a controller for the ``/login_check``
     URL as the firewall will automatically catch and process any form submitted
-    to this URL. It's optional, but helpful, to create a route so that you
-    can use it to generate the form submission URL in the login template below.
+    to this URL.
+
+.. versionadded:: 2.1
+    As of Symfony 2.1, you *must* have routes configured for your ``login_path``
+    (e.g. ``/login``) and ``check_path`` (e.g. ``/login_check``) URLs.
 
 Notice that the name of the ``login`` route isn't important. What's important
 is that the URL of the route (``/login``) matches the ``login_path`` config
