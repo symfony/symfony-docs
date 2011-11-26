@@ -897,9 +897,10 @@ In fact, you've seen this already in the example in this chapter.
             # ...
             providers:
                 default_provider:
-                    users:
-                        ryan:  { password: ryanpass, roles: 'ROLE_USER' }
-                        admin: { password: kitten, roles: 'ROLE_ADMIN' }
+                    memory:
+                        users:
+                            ryan:  { password: ryanpass, roles: 'ROLE_USER' }
+                            admin: { password: kitten, roles: 'ROLE_ADMIN' }
 
     .. code-block:: xml
 
@@ -907,8 +908,10 @@ In fact, you've seen this already in the example in this chapter.
         <config>
             <!-- ... -->
             <provider name="default_provider">
-                <user name="ryan" password="ryanpass" roles="ROLE_USER" />
-                <user name="admin" password="kitten" roles="ROLE_ADMIN" />
+                <memory>
+                    <user name="ryan" password="ryanpass" roles="ROLE_USER" />
+                    <user name="admin" password="kitten" roles="ROLE_ADMIN" />
+                </memory>
             </provider>
         </config>
 
@@ -919,9 +922,11 @@ In fact, you've seen this already in the example in this chapter.
             // ...
             'providers' => array(
                 'default_provider' => array(
-                    'users' => array(
-                        'ryan' => array('password' => 'ryanpass', 'roles' => 'ROLE_USER'),
-                        'admin' => array('password' => 'kitten', 'roles' => 'ROLE_ADMIN'),
+                    'memory' => array(
+                        'users' => array(
+                            'ryan' => array('password' => 'ryanpass', 'roles' => 'ROLE_USER'),
+                            'admin' => array('password' => 'kitten', 'roles' => 'ROLE_ADMIN'),
+                        ),
                     ),
                 ),
             ),
@@ -1064,9 +1069,10 @@ do the following:
             # ...
             providers:
                 in_memory:
-                    users:
-                        ryan:  { password: bb87a29949f3a1ee0559f8a57357487151281386, roles: 'ROLE_USER' }
-                        admin: { password: 74913f5cd5f61ec0bcfdb775414c2fb3d161b620, roles: 'ROLE_ADMIN' }
+                    memory:
+                        users:
+                            ryan:  { password: bb87a29949f3a1ee0559f8a57357487151281386, roles: 'ROLE_USER' }
+                            admin: { password: 74913f5cd5f61ec0bcfdb775414c2fb3d161b620, roles: 'ROLE_ADMIN' }
 
             encoders:
                 Symfony\Component\Security\Core\User\User:
@@ -1080,8 +1086,10 @@ do the following:
         <config>
             <!-- ... -->
             <provider name="in_memory">
-                <user name="ryan" password="bb87a29949f3a1ee0559f8a57357487151281386" roles="ROLE_USER" />
-                <user name="admin" password="74913f5cd5f61ec0bcfdb775414c2fb3d161b620" roles="ROLE_ADMIN" />
+                <memory>
+                    <user name="ryan" password="bb87a29949f3a1ee0559f8a57357487151281386" roles="ROLE_USER" />
+                    <user name="admin" password="74913f5cd5f61ec0bcfdb775414c2fb3d161b620" roles="ROLE_ADMIN" />
+                </memory>
             </provider>
 
             <encoder class="Symfony\Component\Security\Core\User\User" algorithm="sha1" iterations="1" encode_as_base64="false" />
@@ -1094,9 +1102,11 @@ do the following:
             // ...
             'providers' => array(
                 'in_memory' => array(
-                    'users' => array(
-                        'ryan' => array('password' => 'bb87a29949f3a1ee0559f8a57357487151281386', 'roles' => 'ROLE_USER'),
-                        'admin' => array('password' => '74913f5cd5f61ec0bcfdb775414c2fb3d161b620', 'roles' => 'ROLE_ADMIN'),
+                    'memory' => array(
+                        'users' => array(
+                            'ryan' => array('password' => 'bb87a29949f3a1ee0559f8a57357487151281386', 'roles' => 'ROLE_USER'),
+                            'admin' => array('password' => '74913f5cd5f61ec0bcfdb775414c2fb3d161b620', 'roles' => 'ROLE_ADMIN'),
+                        ),
                     ),
                 ),
             ),
@@ -1220,7 +1230,8 @@ a new provider that chains the two together:
         security:
             providers:
                 chain_provider:
-                    providers: [in_memory, user_db]
+                    chain:
+                        providers: [in_memory, user_db]
                 in_memory:
                     users:
                         foo: { password: test }
@@ -1232,8 +1243,10 @@ a new provider that chains the two together:
         <!-- app/config/config.xml -->
         <config>
             <provider name="chain_provider">
-                <provider>in_memory</provider>
-                <provider>user_db</provider>
+                <chain>
+                    <provider>in_memory</provider>
+                    <provider>user_db</provider>
+                </chain>
             </provider>
             <provider name="in_memory">
                 <user name="foo" password="test" />
@@ -1249,7 +1262,9 @@ a new provider that chains the two together:
         $container->loadFromExtension('security', array(
             'providers' => array(
                 'chain_provider' => array(
-                    'providers' => array('in_memory', 'user_db'),
+                    'chain' => array(
+                        'providers' => array('in_memory', 'user_db'),
+                    ),
                 ),
                 'in_memory' => array(
                     'users' => array(
@@ -1280,16 +1295,21 @@ the user from both the ``in_memory`` and ``user_db`` providers.
             security:
                 providers:
                     main_provider:
-                        users:
-                            foo: { password: test }
-                        entity: { class: Acme\UserBundle\Entity\User, property: username }
+                        memory:
+                            users:
+                                foo: { password: test }
+                        entity:
+                            class: Acme\UserBundle\Entity\User,
+                            property: username
 
         .. code-block:: xml
 
             <!-- app/config/config.xml -->
             <config>
                 <provider name=="main_provider">
-                    <user name="foo" password="test" />
+                    <memory>
+                        <user name="foo" password="test" />
+                    </memory>
                     <entity class="Acme\UserBundle\Entity\User" property="username" />
                 </provider>
             </config>
@@ -1300,8 +1320,10 @@ the user from both the ``in_memory`` and ``user_db`` providers.
             $container->loadFromExtension('security', array(
                 'providers' => array(
                     'main_provider' => array(
-                        'users' => array(
-                            'foo' => array('password' => 'test'),
+                        'memory' => array(
+                            'users' => array(
+                                'foo' => array('password' => 'test'),
+                            ),
                         ),
                         'entity' => array('class' => 'Acme\UserBundle\Entity\User', 'property' => 'username'),
                     ),
