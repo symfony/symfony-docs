@@ -63,12 +63,11 @@ Thank you for including the filled out template in your submission!
 .. tip::
 
     To automatically get your feature branch tested, you can add your fork to
-    (``http://travis-ci.org/ travis-ci.org``). Just login using your github.com
-    account and then simply flip a single switch to enable automated testing. Instead
-    of answering ``[yes]|no]`` to if ``Symfony2 tests pass`` you can then link to the
-    (``http://about.travis-ci.org/docs/user/status-images/ travis-ci.org status icon``).
-    You can find more details in the
-    (``http://about.travis-ci.org/docs/user/getting-started/ travis-ci.org docs``).
+    `travis-ci.org`_. Just login using your github.com account and then simply
+    flip a single switch to enable automated testing. In your pull request,
+    instead of specifying "*Symfony2 tests pass: [yes|no]*", you can link to
+    the `travis-ci.org status icon`_. For more details, see the
+    `travis-ci.org Getting Started Guide`_.
 
 Initial Setup
 -------------
@@ -230,3 +229,6 @@ the `2.0` branch, the patch will also be applied by the core team on the
 .. _GitHub:              https://github.com/signup/free
 .. _Symfony2 repository: https://github.com/symfony/symfony
 .. _dev mailing-list:    http://groups.google.com/group/symfony-devs
+.. _travis-ci.org:       http://travis-ci.org
+.. _`travis-ci.org status icon`: http://about.travis-ci.org/docs/user/status-images/
+.. _`travis-ci.org Getting Started Guide`: http://about.travis-ci.org/docs/user/getting-started/
