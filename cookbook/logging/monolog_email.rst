@@ -11,6 +11,7 @@ it is broken down.
 
     .. code-block:: yaml
 
+        # app/config/config.yml
         monolog:
             handlers:
                 mail:
@@ -60,10 +61,13 @@ it is broken down.
 The ``mail`` handler is a ``fingerscrossed`` handler which means that
 it is only triggered when the action level, in this case ``critical`` is reached.
 It then logs everything including messages below the action level.  The
-``critical`` level is only triggered for 5xx HTTP code errors, if you only
-set it to ``error`` then you will also receive emails for any 4xx code
-errors as well. The ``handler`` setting means that the output is then passed
-onto the ``buffered``handler.
+``critical`` level is only triggered for 5xx HTTP code errors. The ``handler``
+setting means that the output is then passed onto the ``buffered`` handler.
+
+.. tip::
+
+    If you want both 400 level and 500 level errors to trigger an email,
+    set the ``action_level`` to ``error`` instead of ``critical``.
 
 The ``buffered`` handler simply keeps all the messages for a request and
 then passes them onto the nested handler in one go. If you do not use this
@@ -79,6 +83,7 @@ get logged on the server as well as the emails being sent:
 
     .. code-block:: yaml
 
+        # app/config/config.yml
         monolog:
             handlers:
                 main:

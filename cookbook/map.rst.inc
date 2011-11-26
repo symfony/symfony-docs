@@ -91,13 +91,17 @@
   * :doc:`/cookbook/templating/global_variables`
   * :doc:`/cookbook/templating/PHP`
 
-* **Tools, Logging and Internals**
+* **Logging**
+
+  * :doc:`/cookbook/logging/monolog`
+  * :doc:`/cookbook/logging/monolog_email`
+
+* **Tools and Internals**
 
   * :doc:`/cookbook/tools/autoloader`
   * :doc:`/cookbook/tools/finder`
   * :doc:`/cookbook/console`
   * :doc:`/cookbook/debugging`
-  * :doc:`/cookbook/logging/monolog`
 
 * **Web Services**
 

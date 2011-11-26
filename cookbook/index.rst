@@ -70,11 +70,13 @@ Cookbook
     templating/global_variables
     templating/PHP
 
+    logging/monolog
+    logging/monolog_email
+
     tools/autoloader
     tools/finder
     console
     debugging
-    logging/monolog
 
     event_dispatcher/class_extension
     event_dispatcher/method_behavior
