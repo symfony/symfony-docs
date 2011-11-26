@@ -51,9 +51,10 @@ authentication (i.e. the old-school username/password box):
 
             providers:
                 in_memory:
-                    users:
-                        ryan:  { password: ryanpass, roles: 'ROLE_USER' }
-                        admin: { password: kitten, roles: 'ROLE_ADMIN' }
+                    memory:
+                        users:
+                            ryan:  { password: ryanpass, roles: 'ROLE_USER' }
+                            admin: { password: kitten, roles: 'ROLE_ADMIN' }
 
             encoders:
                 Symfony\Component\Security\Core\User\User: plaintext
@@ -77,8 +78,10 @@ authentication (i.e. the old-school username/password box):
                 </access-control>
 
                 <provider name="in_memory">
-                    <user name="ryan" password="ryanpass" roles="ROLE_USER" />
-                    <user name="admin" password="kitten" roles="ROLE_ADMIN" />
+                    <memory>
+                        <user name="ryan" password="ryanpass" roles="ROLE_USER" />
+                        <user name="admin" password="kitten" roles="ROLE_ADMIN" />
+                    </memory>
                 </provider>
 
                 <encoder class="Symfony\Component\Security\Core\User\User" algorithm="plaintext" />
@@ -103,9 +106,11 @@ authentication (i.e. the old-school username/password box):
             ),
             'providers' => array(
                 'in_memory' => array(
-                    'users' => array(
-                        'ryan' => array('password' => 'ryanpass', 'roles' => 'ROLE_USER'),
-                        'admin' => array('password' => 'kitten', 'roles' => 'ROLE_ADMIN'),
+                    'memory' => array(
+                        'users' => array(
+                            'ryan' => array('password' => 'ryanpass', 'roles' => 'ROLE_USER'),
+                            'admin' => array('password' => 'kitten', 'roles' => 'ROLE_ADMIN'),
+                        ),
                     ),
                 ),
             ),
