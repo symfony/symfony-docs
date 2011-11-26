@@ -99,4 +99,6 @@ em
 **type**: ``string``
 
 The name of the entity manager to use for making the query to determine the
-uniqueness. If left blank, the default entity manager will be used.
+uniqueness. If left blank, the correct entity manager will determined for
+this class. For that reason, this option should probably not need to be
+used.
