@@ -394,9 +394,8 @@ to service ids that do not exist yet: ``wsse.security.authentication.provider`` 
 
 Now that your services are defined, tell your security context about your
 factory. Factories must be included in an individual configuration file,
-at the time of this writing. You need to create a file with your factory
-service in it, and then use the ``factories`` key in your configuration
-to import it.
+at the time of this writing. So, start first by creating the file with the
+factory service, tagged as ``security.listener.factory``:
 
 .. configuration-block::
 
@@ -424,6 +423,9 @@ to import it.
             </services>
         </container>
 
+Now, import the factory configuration via the the ``factories`` key in your
+security configuration:
+
 .. configuration-block::
 
     .. code-block:: yaml
@@ -431,7 +433,7 @@ to import it.
         # app/config/security.yml
         security:
           factories:
-            - "%kernel.root_dir%/../src/Acme/DemoBundle/Resources/config/security_factories.xml"
+            - "%kernel.root_dir%/../src/Acme/DemoBundle/Resources/config/security_factories.yml"
 
     .. code-block:: xml
 
@@ -447,7 +449,7 @@ to import it.
         // app/config/security.php
         $container->loadFromExtension('security', array(
             'factories' => array(
-              "%kernel.root_dir%/../src/Acme/DemoBundle/Resources/config/security_factories.xml"
+              "%kernel.root_dir%/../src/Acme/DemoBundle/Resources/config/security_factories.php"
             ),
         ));
 
