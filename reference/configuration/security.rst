@@ -100,7 +100,7 @@ Each part will be explained in the next section.
                         username_parameter: _username
                         password_parameter: _password
                         csrf_parameter: _csrf_token
-                        csrf_page_id: form_login
+                        intention: authenticate
                         csrf_provider: my.csrf_provider.id
                         post_only: true
                         remember_me: false
