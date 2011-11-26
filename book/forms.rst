@@ -422,7 +422,7 @@ to an array callback, or a ``Closure``::
     }
 
 This will call the static method ``determineValidationGroups()`` on the
-``Client``class after the form is bound, but before validation is executed.
+``Client`` class after the form is bound, but before validation is executed.
 The Form object is passed as an argument to that method (see next example).
 You can also define whole logic inline by using a Closure::
 
