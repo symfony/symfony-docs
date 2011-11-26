@@ -398,20 +398,31 @@ at the time of this writing. You need to create a file with your factory
 service in it, and then use the ``factories`` key in your configuration
 to import it.
 
-.. code-block:: xml
+.. configuration-block::
 
-    <!-- src/Acme/DemoBundle/Resources/config/security_factories.xml -->
-    <container xmlns="http://symfony.com/schema/dic/services"
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+    .. code-block:: yaml
 
-        <services>
-            <service id="security.authentication.factory.wsse"
-              class="Acme\DemoBundle\DependencyInjection\Security\Factory\WsseFactory" public="false">
-                <tag name="security.listener.factory" />
-            </service>
-        </services>
-    </container>
+        # src/Acme/DemoBundle/Resources/config/security_factories.yml
+        services:
+            security.authentication.factory.wsse:
+                class:  Acme\DemoBundle\DependencyInjection\Security\Factory\WsseFactory
+                tags:
+                    - { name: security.listener.factory }
+
+    .. code-block:: xml
+
+        <!-- src/Acme/DemoBundle/Resources/config/security_factories.xml -->
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+            <services>
+                <service id="security.authentication.factory.wsse"
+                  class="Acme\DemoBundle\DependencyInjection\Security\Factory\WsseFactory" public="false">
+                    <tag name="security.listener.factory" />
+                </service>
+            </services>
+        </container>
 
 .. configuration-block::
 
