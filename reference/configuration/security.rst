@@ -23,6 +23,7 @@ Each part will be explained in the next section.
 
             always_authenticate_before_granting: false
 
+            # whether or not to call eraseCredentials on the token
             erase_credentials: true
 
             # strategy can be: none, migrate, invalidate
