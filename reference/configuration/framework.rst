@@ -246,6 +246,7 @@ Full Default Configuration
             secret:               ~ # Required
             ide:                  ~
             test:                 ~
+            default_locale:       en
 
             # form configuration
             form:
@@ -281,7 +282,6 @@ Full Default Configuration
             # session configuration
             session:
                 auto_start:           ~
-                default_locale:       en
                 storage_id:           session.storage.native
                 name:                 ~
                 lifetime:             86400

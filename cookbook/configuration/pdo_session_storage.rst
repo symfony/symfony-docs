@@ -47,7 +47,7 @@ configuration format of your choice):
 
         <!-- app/config/config.xml -->
         <framework:config>
-            <framework:session storage-id="session.storage.pdo" default-locale="en" lifetime="3600" auto-start="true"/>
+            <framework:session storage-id="session.storage.pdo" lifetime="3600" auto-start="true"/>
         </framework:config>
 
         <parameters>
