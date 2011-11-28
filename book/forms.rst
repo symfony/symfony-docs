@@ -113,7 +113,7 @@ from inside a controller::
 
 .. tip::
 
-   This examples shows you how to build your form directly in the controller.
+   This example shows you how to build your form directly in the controller.
    Later, in the ":ref:`book-form-creating-form-classes`" section, you'll learn
    how to build your form in a standalone class, which is recommended as
    your form becomes reusable.
