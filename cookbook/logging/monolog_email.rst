@@ -149,7 +149,7 @@ get logged on the server as well as the emails being sent:
             </monolog:config>
         </container>
 
-This uses the ```group`` handler to send the messages to the two
+This uses the ``group`` handler to send the messages to the two
 group members, the ``buffered`` and the ``stream`` handlers. The messages will
 now be both written to the log file and emailed.
 
