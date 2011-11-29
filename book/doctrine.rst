@@ -803,6 +803,13 @@ makes sense in the application for each ``Category`` to hold an array of
     added flexibility. If this makes you uncomfortable, don't worry. Just
     imagine that it's an ``array`` and you'll be in good shape.
 
+.. tip::
+
+   The targetEntity value in the decorator used above can reference any entity
+   with a valid namespace, not just entities defined in the same class. To 
+   relate to an entity defined in a differen't class or bundle, enter a full
+   namespace or shortcut as the targetEntity.
+
 Next, since each ``Product`` class can relate to exactly one ``Category``
 object, you'll want to add a ``$category`` property to the ``Product`` class::
 
