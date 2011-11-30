@@ -55,7 +55,7 @@ templates:
         {% javascripts '@AcmeFooBundle/Resources/public/js/example.coffee'
             filter='coffee'
         %}
-        <script src="{{ asset_url }} type="text/javascript"></script>
+        <script src="{{ asset_url }}" type="text/javascript"></script>
         {% endjavascripts %}
 
     .. code-block:: html+php
@@ -82,7 +82,7 @@ You can also combine multiple CoffeeScript files into a single output file:
                        '@AcmeFooBundle/Resources/public/js/another.coffee'
             filter='coffee'
         %}
-        <script src="{{ asset_url }} type="text/javascript"></script>
+        <script src="{{ asset_url }}" type="text/javascript"></script>
         {% endjavascripts %}
 
     .. code-block:: html+php
@@ -161,7 +161,7 @@ being run through the CoffeeScript filter):
                        '@AcmeFooBundle/Resources/public/js/another.coffee'
                        '@AcmeFooBundle/Resources/public/js/regular.js'
         %}
-        <script src="{{ asset_url }} type="text/javascript"></script>
+        <script src="{{ asset_url }}" type="text/javascript"></script>
         {% endjavascripts %}
 
     .. code-block:: html+php
