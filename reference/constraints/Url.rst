@@ -37,7 +37,7 @@ Basic Usage
        class Author
        {
            /**
-            * @Assert\Url
+            * @Assert\Url()
             */
             protected $bioUrl;
        }
