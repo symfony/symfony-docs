@@ -807,7 +807,7 @@ makes sense in the application for each ``Category`` to hold an array of
 
    The targetEntity value in the decorator used above can reference any entity
    with a valid namespace, not just entities defined in the same class. To 
-   relate to an entity defined in a differen't class or bundle, enter a full
+   relate to an entity defined in a different class or bundle, enter a full
    namespace or shortcut as the targetEntity.
 
 Next, since each ``Product`` class can relate to exactly one ``Category``
