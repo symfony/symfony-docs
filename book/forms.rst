@@ -1466,7 +1466,7 @@ method to specify the option::
                 'email' => new Email(array('message' => 'Invalid email address')),
             ));
         
-            $options['validation_constraint'] = $collectionConstraint;
+            return array('validation_constraint' => $collectionConstraint);
         }
     }
 
