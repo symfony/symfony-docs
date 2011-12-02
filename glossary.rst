@@ -33,7 +33,7 @@ Glossary
         application.
 
    Controller
-        A *controller* is a PHP function that houses all the logic necessary
+        A *controller* is a PHP class that houses all the logic necessary
         to return a ``Response`` object that represents a particular page.
         Typically, a route is mapped to a controller, which then uses information
         from the request to process information, perform actions, and ultimately
