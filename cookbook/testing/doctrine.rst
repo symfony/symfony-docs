@@ -117,7 +117,8 @@ the following example::
         public function createSearchByNameQueryBuilder($name)
         {
             return $this->createQueryBuilder('p')
-                ->where('p.name LIKE :name', $name)
+                ->where('p.name LIKE :name')
+                ->setParameter('name', $name);
         }
     }
 
