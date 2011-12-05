@@ -113,7 +113,7 @@ from inside a controller::
 
 .. tip::
 
-   This examples shows you how to build your form directly in the controller.
+   This example shows you how to build your form directly in the controller.
    Later, in the ":ref:`book-form-creating-form-classes`" section, you'll learn
    how to build your form in a standalone class, which is recommended as
    your form becomes reusable.
@@ -402,6 +402,43 @@ method::
 
 In both of these cases, *only* the ``registration`` validation group will
 be used to validate the underlying object.
+
+Groups based on Submitted Data
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 2.1
+   The ability to specify a callback or Closure in ``validation_groups``
+   is new to version 2.1
+
+If you need some advanced logic to determine the validation groups (e.g.
+based on submitted data), you can set the ``validation_groups`` option
+to an array callback, or a ``Closure``::
+
+    public function getDefaultOptions(array $options)
+    {
+        return array(
+            'validation_groups' => array('Acme\\AcmeBundle\\Entity\\Client', 'determineValidationGroups'),
+        );
+    }
+
+This will call the static method ``determineValidationGroups()`` on the
+``Client`` class after the form is bound, but before validation is executed.
+The Form object is passed as an argument to that method (see next example).
+You can also define whole logic inline by using a Closure::
+
+    public function getDefaultOptions(array $options)
+    {
+        return array(
+            'validation_groups' => function(FormInterface $form) {
+                $data = $form->getData();
+                if (Entity\Client::TYPE_PERSON == $data->getType()) {
+                    return array('person')
+                } else {
+                    return array('company');
+                }
+            },
+        );
+    }
 
 .. index::
    single: Forms; Built-in Field Types
@@ -1429,7 +1466,7 @@ method to specify the option::
                 'email' => new Email(array('message' => 'Invalid email address')),
             ));
         
-            $options['validation_constraint'] = $collectionConstraint;
+            return array('validation_constraint' => $collectionConstraint);
         }
     }
 

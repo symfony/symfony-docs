@@ -30,12 +30,14 @@ Suppose you have an ``AcmeUserBundle`` with a ``User`` entity that has an
 
         // Acme/UserBundle/Entity/User.php
         use Symfony\Component\Validator\Constraints as Assert;
-        use Symfony\Bridge\Doctrine\Validator\Constraints as DoctrineAssert;
         use Doctrine\ORM\Mapping as ORM;
+
+        // DON'T forget this use statement!!!
+        use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
         /**
          * @ORM\Entity
-         * @DoctrineAssert\UniqueEntity("email")
+         * @UniqueEntity("email")
          */
         class Author
         {
@@ -53,8 +55,24 @@ Suppose you have an ``AcmeUserBundle`` with a ``User`` entity that has an
     .. code-block:: yaml
 
         # src/Acme/UserBundle/Resources/config/validation.yml
-        constraints:
-            - UniqueEntity: email
+        Acme\UserBundle\Entity\Author:
+            constraints:
+                - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity: email
+            properties:
+                email:
+                    - Email: ~
+
+    .. code-block:: xml
+
+        <class name="Acme\UserBundle\Entity\Author">
+            <constraint name="Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity">
+                <option name="fields">email</option>
+                <option name="message">This email already exists.</option>
+            </constraint>
+             <property name="email">
+                <constraint name="Email" />
+            </property>
+        </class>
 
 Options
 -------
@@ -81,4 +99,6 @@ em
 **type**: ``string``
 
 The name of the entity manager to use for making the query to determine the
-uniqueness. If left blank, the default entity manager will be used.
+uniqueness. If left blank, the correct entity manager will determined for
+this class. For that reason, this option should probably not need to be
+used.

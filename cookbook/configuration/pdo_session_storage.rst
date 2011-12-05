@@ -47,7 +47,7 @@ configuration format of your choice):
 
         <!-- app/config/config.xml -->
         <framework:config>
-            <framework:session storage-id="session.storage.pdo" default-locale="en" lifetime="3600" auto-start="true"/>
+            <framework:session storage-id="session.storage.pdo" lifetime="3600" auto-start="true"/>
         </framework:config>
 
         <parameters>
@@ -165,7 +165,7 @@ following (MySQL):
     CREATE TABLE `session` (
         `session_id` varchar(255) NOT NULL,
         `session_value` text NOT NULL,
-        `session_time` int(11) NOT NULL,
+        `session_time` int(11) NOT NULL
         PRIMARY KEY (`session_id`),
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 

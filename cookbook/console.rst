@@ -1,3 +1,7 @@
+.. index::
+    single: Console; CLI
+
+
 How to create Console/Command-Line Commands
 ===========================================
 
@@ -172,6 +176,25 @@ will work:
 
     app/console demo:greet Fabien --iterations=5 --yell
     app/console demo:greet Fabien --yell --iterations=5
+
+There are 4 option variants you can use:
+
+===========================  =====================================================
+Option                       Value
+===========================  =====================================================
+InputOption::VALUE_IS_ARRAY  This option accepts multiple values
+InputOption::VALUE_NONE      Do not accept input for this option (e.g. ``--yell``)
+InputOption::VALUE_REQUIRED  This value is required (e.g. ``iterations=5``)
+InputOption::VALUE_OPTIONAL  This value is optional
+===========================  =====================================================
+
+You can combine VALUE_IS_ARRAY with VALUE_REQUIRED or VALUE_OPTIONAL like this:
+
+.. code-block:: php
+
+    $this
+        // ...
+        ->addOption('iterations', null, InputOption::VALUE_REQUIRED | InputOption::VALUE_IS_ARRAY, 'How many times should the message be printed?', 1)
 
 Asking the User for Information
 -------------------------------

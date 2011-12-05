@@ -607,8 +607,8 @@ from any controller::
     // in another controller for another request
     $foo = $session->get('foo');
 
-    // set the user locale
-    $session->setLocale('fr');
+    // use a default value of the key doesn't exist
+    $filters = $session->set('filters', array());
 
 These attributes will remain on the user for the remainder of that user's
 session.

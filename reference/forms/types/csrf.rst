@@ -10,7 +10,7 @@ The ``csrf`` type is a hidden input field containing a CSRF token.
 | Rendered as | ``input`` ``hidden`` field                                         |
 +-------------+--------------------------------------------------------------------+
 | Options     | - ``csrf_provider``                                                |
-|             | - ``page_id``                                                      |
+|             | - ``intention``                                                    |
 |             | - ``property_path``                                                |
 +-------------+--------------------------------------------------------------------+
 | Parent type | ``hidden``                                                         |

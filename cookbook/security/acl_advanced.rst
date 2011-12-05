@@ -102,16 +102,16 @@ Built-in Permission Map
 +------------------+----------------------------+-----------------------------+
 | Attribute        | Intended Meaning           | Integer Bitmasks            |
 +==================+============================+=============================+
-| VIEW             | Whether someone is allowed | VIEW, CREATE, EDIT,         |
-|                  | to view the domain object. | OPERATOR, MASTER, or OWNER  |
-+------------------+----------------------------+-----------------------------+
-| CREATE           | Whether someone is allowed | EDIT, OPERATOR, MASTER,     |
-|                  | to create the domain       | or OWNER                    |
-|                  | object.                    |                             |
+| VIEW             | Whether someone is allowed | VIEW, EDIT, OPERATOR,       |
+|                  | to view the domain object. | MASTER, or OWNER            |
 +------------------+----------------------------+-----------------------------+
 | EDIT             | Whether someone is allowed | EDIT, OPERATOR, MASTER,     |
 |                  | to make changes to the     | or OWNER                    |
 |                  | domain object.             |                             |
++------------------+----------------------------+-----------------------------+
+| CREATE           | Whether someone is allowed | CREATE, OPERATOR, MASTER,   |
+|                  | to create the domain       | or OWNER                    |
+|                  | object.                    |                             |
 +------------------+----------------------------+-----------------------------+
 | DELETE           | Whether someone is allowed | DELETE, OPERATOR, MASTER,   |
 |                  | to delete the domain       | or OWNER                    |

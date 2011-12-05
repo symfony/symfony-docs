@@ -41,6 +41,15 @@ the following ``VirtualHost`` configuration:
     The example above is for an Apache configuration, using the `SetEnv`_ 
     directive.  However, this will work for any web server which supports
     the setting of environment variables.
+    
+    Also, in order for your console to work (which does not use Apache),
+    you must export these as shell variables. On a Unix system, you can run
+    the following:
+    
+    .. code-block:: bash
+    
+        export SYMFONY__DATABASE__USER=user
+        export SYMFONY__DATABASE__PASSWORD=secret
 
 Now that you have declared an environment variable, it will be present
 in the PHP ``$_SERVER`` global variable. Symfony then automatically sets all
