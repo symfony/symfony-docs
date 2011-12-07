@@ -41,8 +41,8 @@ when compiling the container. Read the sidebar below for more details.
     a problem:
 
     * When requesting `my_mailer`, an instance of `my_mailer` (let's call
-      it *MailerA*) is created and the `request` service is (let's call it
-      *RequestA* is passed to it). Life is good!
+      it *MailerA*) is created and the `request` service (let's call it
+      *RequestA*) is passed to it. Life is good!
 
     * You've now made a subrequest in Symfony, which is a fancy way of saying
       that you've called, for example, the `{% render ... %}` Twig function,
