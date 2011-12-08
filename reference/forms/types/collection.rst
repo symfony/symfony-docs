@@ -322,6 +322,11 @@ Not all options are listed here - only the most applicable to this type:
 
 .. include:: /reference/forms/types/options/label.rst.inc
 
-.. include:: /reference/forms/types/options/error_bubbling.rst.inc
+error_bubbling
+~~~~~~~~~~~~~~
+
+**type**: ``Boolean`` **default**: ``true``
+
+.. include:: /reference/forms/types/options/_error_bubbling_body.rst.inc
 
 .. include:: /reference/forms/types/options/by_reference.rst.inc
