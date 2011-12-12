@@ -19,6 +19,7 @@ option.
 |             | - `expanded`_                                                               |
 |             | - `preferred_choices`_                                                      |
 |             | - `empty_value`_                                                            |
+|             | - `empty_data`_                                                             |
 +-------------+-----------------------------------------------------------------------------+
 | Inherited   | - `required`_                                                               |
 | options     | - `label`_                                                                  |
@@ -100,6 +101,8 @@ can be created to supply the choices.
 .. include:: /reference/forms/types/options/preferred_choices.rst.inc
 
 .. include:: /reference/forms/types/options/empty_value.rst.inc
+
+.. include:: /reference/forms/types/options/empty_data.rst.inc
 
 Inherited options
 -----------------
