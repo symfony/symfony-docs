@@ -74,8 +74,8 @@ those errors should be attributed::
         
             // check if the name is actually a fake name
             if (in_array($this->getFirstName(), $fakeNames)) {
-                $property_path = $context->getPropertyPath() . '.firstName';
-                $context->setPropertyPath($property_path);
+                $propertyPath = $context->getPropertyPath() . '.firstName';
+                $context->setPropertyPath($propertyPath);
                 $context->addViolation('This name sounds totally fake!', array(), null);
             }
         }
