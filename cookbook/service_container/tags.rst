@@ -14,7 +14,7 @@ This post focuses mainly on the dependency injection part of the story.
 
 To begin with, define the ``TransportChain`` class.
 
-    namespace Acme\TransportBundle;
+    namespace Acme\MailerBundle;
     
     class TransportChain
     {
@@ -37,34 +37,34 @@ Then, define the chain as a service:
 
     .. code-block:: yaml
 
-        # src/Acme/TransportBundle/Resources/config/services.yml
+        # src/Acme/MailerBundle/Resources/config/services.yml
         parameters:
-            transport_chain.class: Acme\TransportBundle\TransportChain
+            acme_mailer.transport_chain.class: Acme\MailerBundle\TransportChain
         
         services:
-            transport_chain:
-                class: %transport_chain.class%
+            acme_mailer.transport_chain:
+                class: %acme_mailer.transport_chain.class%
 
     .. code-block:: xml
 
-        <!-- src/Acme/TransportBundle/Resources/config/services.xml -->
+        <!-- src/Acme/MailerBundle/Resources/config/services.xml -->
 
         <parameters>
-            <parameter key="transport_chain.class">Acme\TransportBundle\TransportChain</parameter>
+            <parameter key="acme_mailer.transport_chain.class">Acme\MailerBundle\TransportChain</parameter>
         </parameters>
     
         <services>
-            <service id="transport_chain" class="%transport_chain.class%" />
+            <service id="acme_mailer.transport_chain" class="%acme_mailer.transport_chain.class%" />
         </services>
         
     .. code-block:: php
     
-        // src/Acme/TransportBundle/Resources/config/services.php
+        // src/Acme/MailerBundle/Resources/config/services.php
         use Symfony\Component\DependencyInjection\Definition;
         
-        $container->setParameter('transport_chain.class', 'Acme\TransportBundle\TransportChain');
+        $container->setParameter('acme_mailer.transport_chain.class', 'Acme\MailerBundle\TransportChain');
         
-        $container->setDefinition('transport_chain', new Definition('%transport_chain.class'));
+        $container->setDefinition('acme_mailer.transport_chain', new Definition('%acme_mailer.transport_chain.class%'));
 
 Define Services with a Custom Tag
 ---------------------------------
@@ -76,55 +76,57 @@ as services:
 .. configuration-block::
 
     .. code-block:: yaml
-    
+
+        # src/Acme/MailerBundle/Resources/config/services.yml
         services:
-            transport.smtp:
+            acme_mailer.transport.smtp:
                 class: \Swift_SmtpTransport
                 arguments:
                     - %mailer_host%
                 tags:
-                    -  { name: mailer.transport }
-            transport.sendmail:
+                    -  { name: acme_mailer.transport }
+            acme_mailer.transport.sendmail:
                 class: \Swift_SendmailTransport
                 tags:
-                    -  { name: mailer.transport }
+                    -  { name: acme_mailer.transport }
     
     .. code-block:: xml
 
-        <service id="transport.smtp" class="\Swift_SmtpTransport">
+        <!-- src/Acme/MailerBundle/Resources/config/services.xml -->
+        <service id="acme_mailer.transport.smtp" class="\Swift_SmtpTransport">
             <argument>%mailer_host%</argument>
-            <tag name="mailer.transport" />
+            <tag name="acme_mailer.transport" />
         </service>
     
-        <service id="transport.sendmail" class="\Swift_SendmailTransport">
-            <tag name="mailer.transport" />
+        <service id="acme_mailer.transport.sendmail" class="\Swift_SendmailTransport">
+            <tag name="acme_mailer.transport" />
         </service>
         
     .. code-block:: php
     
-        // src/Acme/TransportBundle/Resources/config/services.php
+        // src/Acme/MailerBundle/Resources/config/services.php
         use Symfony\Component\DependencyInjection\Definition;
         
         $definitionSmtp = new Definition('\Swift_SmtpTransport', array('%mailer_host%'));
-        $definitionSmtp->addTag('mailer.transport');
-        $container->setDefinition('transport.smtp', $definitionSmtp);
+        $definitionSmtp->addTag('acme_mailer.transport');
+        $container->setDefinition('acme_mailer.transport.smtp', $definitionSmtp);
         
         $definitionSendmail = new Definition('\Swift_SendmailTransport');
-        $definitionSendmail->addTag('mailer.transport');
-        $container->setDefinition('transport.sendmail', $definitionSendmail);
+        $definitionSendmail->addTag('acme_mailer.transport');
+        $container->setDefinition('acme_mailer.transport.sendmail', $definitionSendmail);
 
-Notice the tags named "mailer.transport". We want the bundle to recognize these transports 
+Notice the tags named "acme_mailer.transport". We want the bundle to recognize these transports 
 and add them to the chain all by itself. In order to achieve this, we need to 
-add a ``build()`` method to the ``AcmeTransportBundle`` class:
+add a ``build()`` method to the ``AcmeMailerBundle`` class:
 
-    namespace Acme\TransportBundle;
+    namespace Acme\MailerBundle;
     
     use Symfony\Component\HttpKernel\Bundle\Bundle;
     use Symfony\Component\DependencyInjection\ContainerBuilder;
     
-    use Acme\TransportBundle\DependencyInjection\Compiler\TransportCompilerPass;
+    use Acme\MailerBundle\DependencyInjection\Compiler\TransportCompilerPass;
     
-    class AcmeTransportBundle extends Bundle
+    class AcmeMailerBundleBundle extends Bundle
     {
         public function build(ContainerBuilder $container)
         {
@@ -138,11 +140,11 @@ Create a ``CompilerPass``
 -------------------------
 
 You will have spotted a reference to the not yet existing ``TransportCompilerPass`` class. 
-This class will make sure that all services with a tag "mailer.transport" will be added to 
+This class will make sure that all services with a tag "acme_mailer.transport" will be added to 
 the ``TransportChain`` class by calling the ``addTransport()`` method. 
 The ``TransportCompilerPass`` should look like this:
 
-    namespace Acme\TransportBundle\DependencyInjection\Compiler;
+    namespace Acme\MailerBundle\DependencyInjection\Compiler;
     
     use Symfony\Component\DependencyInjection\ContainerBuilder;
     use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
@@ -152,22 +154,28 @@ The ``TransportCompilerPass`` should look like this:
     {
         public function process(ContainerBuilder $container)
         {
-            if (false === $container->hasDefinition('transport_chain')) {
+            if (false === $container->hasDefinition('acme_mailer.transport_chain')) {
                 return;
             }
     
-            $definition = $container->getDefinition('transport_chain');
+            $definition = $container->getDefinition('acme_mailer.transport_chain');
     
-            foreach ($container->findTaggedServiceIds('mailer.transport') as $id => $attributes) {
+            foreach ($container->findTaggedServiceIds('acme_mailer.transport') as $id => $attributes) {
                 $definition->addMethodCall('addTransport', array(new Reference($id)));
             }
         }
     }
 
-The ``process()`` method checks for the existence of the ``transport_chain`` service, 
-then looks for all services tagged "mailer.transport". It adds to the definition of the 
-``transport_chain`` service a call to ``addTransport()`` for each "mailer.transport" service 
+The ``process()`` method checks for the existence of the ``acme_mailer.transport_chain`` service, 
+then looks for all services tagged "acme_mailer.transport". It adds to the definition of the 
+``acme_mailer.transport_chain`` service a call to ``addTransport()`` for each "acme_mailer.transport" service 
 it has found. The first argument of each of these calls will be the mailer transport service itself.
+
+.. note::
+
+    By convention, tag names consist of the name of the bundle (lowercase, underscores as separators), 
+    followed by a dot, and finally the "real" name, so the tag "transport" in the AcmeMailerBundle should be: 
+    "acme_mailer.transport".
 
 The Compiled Service Definition
 -------------------------------
@@ -177,12 +185,12 @@ in the compiled service container. In case you are working in the "dev" environm
 ``/cache/dev/appDevDebugProjectContainer.php`` and look for the method ``getTransportChainService()``.
 It should look like this:
 
-    protected function getTransportChainService()
+    protected function getAcmeMailer_TransportChainService()
     {
-        $this->services['transport_chain'] = $instance = new \Acme\TransportBundle\TransportChain();
+        $this->services['acme_mailer.transport_chain'] = $instance = new \Acme\MailerBundle\TransportChain();
 
-        $instance->addTransport($this->get('transport.smtp'));
-        $instance->addTransport($this->get('transport.sendmail'));
+        $instance->addTransport($this->get('acme_mailer.transport.smtp'));
+        $instance->addTransport($this->get('acme_mailer.transport.sendmail'));
 
         return $instance;
     }
