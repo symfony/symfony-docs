@@ -242,6 +242,29 @@ with master, don't merge; and force the push to the origin:
     $ git rebase -f upstream/master
     $ git push -f origin BRANCH_NAME
 
+Often, moderators will ask you to "squash" your commits. This means you will
+convert many commits to one commit. To do this, use the rebase command:
+
+.. code-block:: bash
+
+    $ git rebase -i head~3
+    $ git push -f origin BRANCH_NAME
+
+The number 3 here must equal the amount of commits in your branch. After you
+type this command, an editor will popup showing a list of commits:
+
+.. code-block:: text
+
+    pick 1a31be6 first commit
+    pick 7fc64b4 second commit
+    pick 7d33018 third commit
+
+To squash all commits into the first one, remove the word "pick" before the
+second and the last commits, and replace it by the word "squash" or just "s".
+When you save, git will start rebasing, and if succesful, will ask you to edit
+the commit message, which by default is a listing of the commit messages of all
+the commits. When you finish, execute the push command.
+
 .. note::
 
     All patches you are going to submit must be released under the MIT
