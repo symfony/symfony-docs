@@ -464,11 +464,12 @@ The resulting HTTP header will look like this::
     The ``setExpires()`` method automatically converts the date to the GMT
     timezone as required by the specification.
 
-Note that the ``Expires`` header is not vulnerable to clock skew, since the
-lifetime is calculated using the ``Date`` header which comes from the
-origin server as well instead of using the local clock.
-The specification states that "HTTP/1.1 servers should not send ``Expires`` dates
-more than one year in the future."
+Note that in HTTP versions before 1.1 the origin server wasn't required to
+send the ``Date`` header. Consequently the cache (e.g. the browser) might
+need to rely onto his local clock to evaluate the ``Expires`` header making
+the lifetime calculation vulnerable to clock skew. Another limitation
+of the ``Expires`` header is that the specification states that "HTTP/1.1
+servers should not send ``Expires`` dates more than one year in the future."
 
 .. index::
    single: Cache; Cache-Control header
