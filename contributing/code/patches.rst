@@ -93,6 +93,28 @@ Set up your user information with your real name and a working email address:
     If you are new to Git, we highly recommend you to read the excellent and
     free `ProGit`_ book.
 
+.. tip::
+
+    Windows users: when installing Git, the installer will ask what to do with
+    line endings and suggests to replace all Lf by CrLf. This is the wrong
+    setting if you wish to contribute to Symfony! Either select the as-is method
+    or the Lf method. If you have already installed Git, you can check the value
+    of this setting by typing:
+
+    .. code-block:: bash
+
+        $ git config core.autocrlf
+
+    This will return either "false", "input" or "true", "true" being the wrong
+    value. Set it to another value by typing:
+
+    .. code-block:: bash
+
+        $ git config --global core.autocrlf false
+
+    Replace --global by --local if you want to set it only for the active
+    repository
+
 Get the Symfony2 source code:
 
 * Create a `GitHub`_ account and sign in;
