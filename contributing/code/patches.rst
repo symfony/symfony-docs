@@ -156,6 +156,11 @@ Create the topic branch with the following command:
 
 .. tip::
 
+    Replace "master" by, for example, 2.0, if you wish to submit a patch to the
+    2.0 branch.
+
+.. tip::
+
     Use a descriptive name for your branch (`ticket_XXX` where `XXX` is the
     ticket number is a good convention for bug fixes).
 
