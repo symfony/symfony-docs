@@ -96,21 +96,22 @@ Set up your user information with your real name and a working email address:
 .. tip::
 
     Windows users: when installing Git, the installer will ask what to do with
-    line endings and suggests to replace all Lf by CrLf. This is the wrong
-    setting if you wish to contribute to Symfony! Either select the as-is method
-    or the Lf method. If you have already installed Git, you can check the value
-    of this setting by typing:
+    line endings and suggests to replace all Lf by CRLF. This is the wrong
+    setting if you wish to contribute to Symfony! Selecting the as-is method is
+    your best choice, as git will convert your line feeds to the ones in the
+    repository. If you have already installed Git, you can check the value of
+    this setting by typing:
 
     .. code-block:: bash
 
         $ git config core.autocrlf
 
-    This will return either "false", "input" or "true", "true" being the wrong
-    value. Set it to another value by typing:
+    This will return either "false", "input" or "true", "true" and "false" being
+    the wrong values. Set it to another value by typing:
 
     .. code-block:: bash
 
-        $ git config --global core.autocrlf false
+        $ git config --global core.autocrlf input
 
     Replace --global by --local if you want to set it only for the active
     repository
