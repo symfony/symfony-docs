@@ -243,6 +243,12 @@ with master, don't merge; and force the push to the origin:
     $ git rebase -f upstream/master
     $ git push -f origin BRANCH_NAME
 
+.. note::
+
+    when doing a push -f (or --force), always specify the branch name explicitly
+    to avoid messing other branches in the repo (--force tells git that you
+    really want to mess with things so do it carefully).
+
 Often, moderators will ask you to "squash" your commits. This means you will
 convert many commits to one commit. To do this, use the rebase command:
 
