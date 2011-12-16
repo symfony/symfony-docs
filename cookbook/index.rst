@@ -37,6 +37,7 @@ Cookbook
     service_container/factories
     service_container/parentservices
     service_container/scopes
+    service_container/tags
     configuration/pdo_session_storage
 
     bundles/best_practices
