@@ -4,11 +4,12 @@
 Translations
 ============
 
-The term "internationalization" refers to the process of abstracting strings
-and other locale-specific pieces out of your application and into a layer
-where they can be translated and converted based on the user's locale (i.e.
-language and country). For text, this means wrapping each with a function
-capable of translating the text (or "message") into the language of the user::
+The term "internationalization" (often abbreviated `i18n`_) refers to the process
+of abstracting strings and other locale-specific pieces out of your application
+and into a layer where they can be translated and converted based on the user's
+locale (i.e. language and country). For text, this means wrapping each with a
+function capable of translating the text (or "message") into the language of
+the user::
 
     // text will *always* print out in English
     echo 'Hello World';
@@ -324,10 +325,12 @@ taste.
 Creating Translations
 ~~~~~~~~~~~~~~~~~~~~~
 
-Each file consists of a series of id-translation pairs for the given domain and
-locale. The id is the identifier for the individual translation, and can
-be the message in the main locale (e.g. "Symfony is great") of your application
-or a unique identifier (e.g. "symfony2.great" - see the sidebar below):
+The act of creating translation files is an important part of "localization"
+(often abbreviated `L10n`_). Translation files consist of a series of
+id-translation pairs for the given domain and locale. The id is the identifier
+for the individual translation, and can be the message in the main locale (e.g.
+"Symfony is great") of your application or a unique identifier (e.g.
+"symfony2.great" - see the sidebar below):
 
 .. configuration-block::
 
@@ -860,6 +863,8 @@ steps:
 * Manage the user's locale, which is stored on the request, but can also
   be set once the user's session.
 
+.. _`i18n`: http://en.wikipedia.org/wiki/Internationalization_and_localization
+.. _`L10n`: http://en.wikipedia.org/wiki/Internationalization_and_localization
 .. _`strtr function`: http://www.php.net/manual/en/function.strtr.php
 .. _`ISO 31-11`: http://en.wikipedia.org/wiki/Interval_%28mathematics%29#The_ISO_notation
 .. _`Translatable Extension`: https://github.com/l3pp4rd/DoctrineExtensions
