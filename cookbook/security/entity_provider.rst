@@ -305,8 +305,8 @@ The code below shows the implementation of the `UserProviderInterface`_ in the
 To finish the implementation, the configuration of the security layer must be
 changed to tell Symfony to use the new custom entity provider instead of the
 generic Doctrine entity provider. It's trival to achieve by removing the
-``property`` variable in the ``security.providers.administrators.entity`` in the
-``security.yml`` file.
+``property`` field in the ``security.providers.administrators.entity`` section
+of the ``security.yml`` file.
 
 .. code-block::yaml
 
