@@ -4,9 +4,9 @@
 How to load Security Users from the Database (the Entity Provider)
 ==================================================================
 
-The security layer is one of the most smart tools of Symfony. It handles two
+The security layer is one of the smartest tools of Symfony. It handles two
 things: the authentication and the authorization processes. Although it seems
-a bit quiet complex to understand how everything works internally, this security
+quiet complex to understand how everything works internally, this security
 system is very flexible and allows you to plug your application to any
 authentication backends like an Active Directory, an OAuth server or a database.
 
@@ -35,7 +35,7 @@ For the purpose of this cookbook, the ``AcmeUserBundle`` bundle contains a
 string assigned to the user and the ``isActive`` value tells whether or not the
 user account is active.
 
-To make it shorter, the getter and setter method for each have been removed to
+To make it shorter, the getter and setter methods for each have been removed to
 focus on the most important methods that come from the `UserInterface`_.
 
 .. code-block:: php
@@ -157,7 +157,7 @@ Below is an export of my ``User`` table from MySQL.
     4 rows in set (0.00 sec)
 
 The database now contains four users with different roles and statuses. The next
-part will focus on how to authenticate one these users thanks to the Doctrine
+part will focus on how to authenticate one of these users thanks to the Doctrine
 entity user provider and a couple of lines of configuration.
 
 Authenticating Someone Against a Database
@@ -165,7 +165,7 @@ Authenticating Someone Against a Database
 
 Authenticating a Doctrine user against the database with the Symfony security
 layer is a piece of cake. Everything resides in the configuration of the
-``app/config/security.yml`` file.
+`SecurityBundle`_ stored in the ``app/config/security.yml`` file.
 
 Below is an example of configuration to authenticate the user with an HTTP basic
 authentication connected to the database.
@@ -327,3 +327,4 @@ from the database.
 .. _`UserProviderInterface`: http://api.symfony.com/2.0/Symfony/Component/Security/Core/User/UserProviderInterface.html
 .. _`UsernameNotFoundException`: http://api.symfony.com/2.0/Symfony/Component/Security/Core/Exception/UsernameNotFoundException.html
 .. _`UnsupportedUserException`: http://api.symfony.com/2.0/Symfony/Component/Security/Core/Exception/UnsupportedUserException.html
+.. _`SecurityBundle`: http://symfony.com/doc/current/reference/configuration/security.html
