@@ -359,19 +359,24 @@ to service ids that do not exist yet: ``wsse.security.authentication.provider`` 
     .. code-block:: xml
 
         <!-- src/Acme/DemoBundle/Resources/config/services.xml -->
-        <services>
-            <service id="wsse.security.authentication.provider"
-              class="Acme\DemoBundle\Security\Authentication\Provider\WsseProvider" public="false">
-                <argument /> <!-- User Provider -->
-                <argument>%kernel.cache_dir%/security/nonces</argument>
-            </service>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
-            <service id="wsse.security.authentication.listener"
-              class="Acme\DemoBundle\Security\Firewall\WsseListener" public="false">
-                <argument type="service" id="security.context"/>
-                <argument type="service" id="security.authentication.manager" />
-            </service>
-        </services>
+           <services>
+               <service id="wsse.security.authentication.provider"
+                 class="Acme\DemoBundle\Security\Authentication\Provider\WsseProvider" public="false">
+                   <argument /> <!-- User Provider -->
+                   <argument>%kernel.cache_dir%/security/nonces</argument>
+               </service>
+
+               <service id="wsse.security.authentication.listener"
+                 class="Acme\DemoBundle\Security\Firewall\WsseListener" public="false">
+                   <argument type="service" id="security.context"/>
+                   <argument type="service" id="security.authentication.manager" />
+               </service>
+           </services>
+        </container>
 
     .. code-block:: php
 

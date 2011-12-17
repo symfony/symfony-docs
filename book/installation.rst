@@ -110,7 +110,7 @@ If there are any issues, correct them now before moving on.
     a UNIX system, if your web server user is different from your command
     line user, you can run the following commands just once in your project
     to ensure that permissions will be setup properly. Change ``www-data``
-    to the web server user and ``yourname`` to your command line user:
+    to your web server user:
 
     **1. Using ACL on a system that supports chmod +a**
 
@@ -123,7 +123,7 @@ If there are any issues, correct them now before moving on.
         rm -rf app/logs/*
 
         sudo chmod +a "www-data allow delete,write,append,file_inherit,directory_inherit" app/cache app/logs
-        sudo chmod +a "yourname allow delete,write,append,file_inherit,directory_inherit" app/cache app/logs
+        sudo chmod +a "`whoami` allow delete,write,append,file_inherit,directory_inherit" app/cache app/logs
 
     **2. Using Acl on a system that does not support chmod +a**
 
@@ -134,8 +134,8 @@ If there are any issues, correct them now before moving on.
 
     .. code-block:: bash
 
-        sudo setfacl -R -m u:www-data:rwx -m u:yourname:rwx app/cache app/logs
-        sudo setfacl -dR -m u:www-data:rwx -m u:yourname:rwx app/cache app/logs
+        sudo setfacl -R -m u:www-data:rwx -m u:`whoami`:rwx app/cache app/logs
+        sudo setfacl -dR -m u:www-data:rwx -m u:`whoami`:rwx app/cache app/logs
 
     **3. Without using ACL**
 
