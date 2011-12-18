@@ -116,6 +116,8 @@ Naming Conventions
 
 * Use namespaces for all classes;
 
+* Prefix abstract classes with `Abstract`;
+
 * Suffix interfaces with `Interface`;
 
 * Use alphanumeric characters and underscores for file names;
