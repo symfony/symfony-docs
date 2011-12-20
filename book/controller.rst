@@ -313,6 +313,8 @@ the following guidelines in mind while you develop.
     the name of the route that was matched (e.g. ``hello``). Though not usually
     useful, this is equally available as a controller argument.
 
+.. _book-controller-request-argument:
+
 The ``Request`` as a Controller Argument
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -605,8 +607,8 @@ from any controller::
     // in another controller for another request
     $foo = $session->get('foo');
 
-    // set the user locale
-    $session->setLocale('fr');
+    // use a default value of the key doesn't exist
+    $filters = $session->set('filters', array());
 
 These attributes will remain on the user for the remainder of that user's
 session.

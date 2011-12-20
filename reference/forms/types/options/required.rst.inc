@@ -10,4 +10,4 @@ This is superficial and independent from validation. At best, if you let Symfony
 guess your field type, then the value of this option will be guessed from
 your validation information.
 
-.. _`HTML5 required attribute`: http://diveintohtml5.org/forms.html
+.. _`HTML5 required attribute`: http://diveintohtml5.info/forms.html

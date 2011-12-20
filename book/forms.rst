@@ -113,7 +113,7 @@ from inside a controller::
 
 .. tip::
 
-   This examples shows you how to build your form directly in the controller.
+   This example shows you how to build your form directly in the controller.
    Later, in the ":ref:`book-form-creating-form-classes`" section, you'll learn
    how to build your form in a standalone class, which is recommended as
    your form becomes reusable.
@@ -402,6 +402,43 @@ method::
 
 In both of these cases, *only* the ``registration`` validation group will
 be used to validate the underlying object.
+
+Groups based on Submitted Data
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 2.1
+   The ability to specify a callback or Closure in ``validation_groups``
+   is new to version 2.1
+
+If you need some advanced logic to determine the validation groups (e.g.
+based on submitted data), you can set the ``validation_groups`` option
+to an array callback, or a ``Closure``::
+
+    public function getDefaultOptions(array $options)
+    {
+        return array(
+            'validation_groups' => array('Acme\\AcmeBundle\\Entity\\Client', 'determineValidationGroups'),
+        );
+    }
+
+This will call the static method ``determineValidationGroups()`` on the
+``Client`` class after the form is bound, but before validation is executed.
+The Form object is passed as an argument to that method (see next example).
+You can also define whole logic inline by using a Closure::
+
+    public function getDefaultOptions(array $options)
+    {
+        return array(
+            'validation_groups' => function(FormInterface $form) {
+                $data = $form->getData();
+                if (Entity\Client::TYPE_PERSON == $data->getType()) {
+                    return array('person')
+                } else {
+                    return array('company');
+                }
+            },
+        );
+    }
 
 .. index::
    single: Forms; Built-in Field Types
@@ -952,9 +989,12 @@ and can be persisted to the database or used however you need.
 Embedding a Collection of Forms
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-You can also embed a collection of forms into one form. This is done by
-using the ``collection`` field type. For more information, see the
-:doc:`collection field type reference</reference/forms/types/collection>`.
+You can also embed a collection of forms into one form (imagine a ``Category``
+form with many ``Product`` sub-forms). This is done by using the ``collection``
+field type.
+
+For more information see the ":doc:`/cookbook/form/form_collections`" cookbook
+entry and  the :ref:`collection</reference/forms/types/collection>` field type reference.
 
 .. index::
    single: Forms; Theming
@@ -1034,7 +1074,7 @@ renders the form:
         <form ...>
 
 The ``form_theme`` tag (in Twig) "imports" the fragments defined in the given
-template and uses them when rendering the form. `In other words, when the
+template and uses them when rendering the form. In other words, when the
 ``form_row`` function is called later in this template, it will use the ``field_row``
 block from your custom theme (instead of the default ``field_row`` block
 that ships with Symfony).
@@ -1053,7 +1093,7 @@ For a more extensive discussion, see :doc:`/cookbook/form/form_customization`.
 Form Fragment Naming
 ~~~~~~~~~~~~~~~~~~~~
 
-In Symfony, every part a form that is rendered - HTML form elements, errors,
+In Symfony, every part of a form that is rendered - HTML form elements, errors,
 labels, etc - is defined in a base theme, which is a collection of blocks
 in Twig and a collection of template files in PHP.
 
@@ -1362,10 +1402,12 @@ no ``data_class`` option is set), ``$form->getData()`` ultimately returns
 an array.
 
 .. tip::
+
     You can also access POST values (in this case "name") directly through 
     the request object, like so:
 
     .. code-block:: php
+
         $this->get('request')->request->get('name');
 
     Be advised, however, that in most cases using the getData() method is 
@@ -1424,7 +1466,7 @@ method to specify the option::
                 'email' => new Email(array('message' => 'Invalid email address')),
             ));
         
-            $options['validation_constraint'] = $collectionConstraint;
+            return array('validation_constraint' => $collectionConstraint);
         }
     }
 
@@ -1458,6 +1500,8 @@ Learn more from the Cookbook
 * :doc:`File Field Reference </reference/forms/types/file>`
 * :doc:`Creating Custom Field Types </cookbook/form/create_custom_field_type>`
 * :doc:`/cookbook/form/form_customization`
+* :doc:`/cookbook/form/dynamic_form_generation`
+* :doc:`/cookbook/form/data_transformers`
 
 .. _`Symfony2 Form Component`: https://github.com/symfony/Form
 .. _`DateTime`: http://php.net/manual/en/class.datetime.php

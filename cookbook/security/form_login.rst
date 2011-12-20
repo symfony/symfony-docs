@@ -208,7 +208,7 @@ Using the Referring URL
 ~~~~~~~~~~~~~~~~~~~~~~~
 
 In case no previous URL was stored in the session, you may wish to try using
-the ``HTTP_REFERER`` instead, as this will often be the same. You can  do
+the ``HTTP_REFERER`` instead, as this will often be the same. You can do
 this by setting ``use_referer`` to true (it defaults to false): 
 
 .. configuration-block::
@@ -245,6 +245,10 @@ this by setting ``use_referer`` to true (it defaults to false):
                 )),
             ),
         ));
+
+.. versionadded:: 2.1
+    As of 2.1, if the referer is equal to the ``login_path`` option, the
+    user will be redirected to the ``default_target_path``.
 
 Control the Redirect URL from inside the Form
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

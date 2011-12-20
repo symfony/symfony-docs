@@ -219,7 +219,7 @@ the ``PasswordDigest`` header value matches with the user's password.
             }
 
             // Validate nonce is unique within 5 minutes
-            if (file_exists($this->cacheDir.'/'.$nonce) && file_get_contents($this->cacheDir.'/'.$nonce) + 300 >= time()) {
+            if (file_exists($this->cacheDir.'/'.$nonce) && file_get_contents($this->cacheDir.'/'.$nonce) + 300 < time()) {
                 throw new NonceExpiredException('Previously used nonce detected');
             }
             file_put_contents($this->cacheDir.'/'.$nonce, time());
@@ -359,19 +359,24 @@ to service ids that do not exist yet: ``wsse.security.authentication.provider`` 
     .. code-block:: xml
 
         <!-- src/Acme/DemoBundle/Resources/config/services.xml -->
-        <services>
-            <service id="wsse.security.authentication.provider"
-              class="Acme\DemoBundle\Security\Authentication\Provider\WsseProvider" public="false">
-                <argument /> <!-- User Provider -->
-                <argument>%kernel.cache_dir%/security/nonces</argument>
-            </service>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
-            <service id="wsse.security.authentication.listener"
-              class="Acme\DemoBundle\Security\Firewall\WsseListener" public="false">
-                <argument type="service" id="security.context"/>
-                <argument type="service" id="security.authentication.manager" />
-            </service>
-        </services>
+           <services>
+               <service id="wsse.security.authentication.provider"
+                 class="Acme\DemoBundle\Security\Authentication\Provider\WsseProvider" public="false">
+                   <argument /> <!-- User Provider -->
+                   <argument>%kernel.cache_dir%/security/nonces</argument>
+               </service>
+
+               <service id="wsse.security.authentication.listener"
+                 class="Acme\DemoBundle\Security\Firewall\WsseListener" public="false">
+                   <argument type="service" id="security.context"/>
+                   <argument type="service" id="security.authentication.manager" />
+               </service>
+           </services>
+        </container>
 
     .. code-block:: php
 
@@ -394,24 +399,37 @@ to service ids that do not exist yet: ``wsse.security.authentication.provider`` 
 
 Now that your services are defined, tell your security context about your
 factory. Factories must be included in an individual configuration file,
-at the time of this writing. You need to create a file with your factory
-service in it, and then use the ``factories`` key in your configuration
-to import it.
+at the time of this writing. So, start first by creating the file with the
+factory service, tagged as ``security.listener.factory``:
 
-.. code-block:: xml
+.. configuration-block::
 
-    <!-- src/Acme/DemoBundle/Resources/config/security_factories.xml -->
-    <container xmlns="http://symfony.com/schema/dic/services"
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+    .. code-block:: yaml
 
-        <services>
-            <service id="security.authentication.factory.wsse"
-              class="Acme\DemoBundle\DependencyInjection\Security\Factory\WsseFactory" public="false">
-                <tag name="security.listener.factory" />
-            </service>
-        </services>
-    </container>
+        # src/Acme/DemoBundle/Resources/config/security_factories.yml
+        services:
+            security.authentication.factory.wsse:
+                class:  Acme\DemoBundle\DependencyInjection\Security\Factory\WsseFactory
+                tags:
+                    - { name: security.listener.factory }
+
+    .. code-block:: xml
+
+        <!-- src/Acme/DemoBundle/Resources/config/security_factories.xml -->
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+            <services>
+                <service id="security.authentication.factory.wsse"
+                  class="Acme\DemoBundle\DependencyInjection\Security\Factory\WsseFactory" public="false">
+                    <tag name="security.listener.factory" />
+                </service>
+            </services>
+        </container>
+
+Now, import the factory configuration via the the ``factories`` key in your
+security configuration:
 
 .. configuration-block::
 
@@ -420,7 +438,7 @@ to import it.
         # app/config/security.yml
         security:
           factories:
-            - "%kernel.root_dir%/../src/Acme/DemoBundle/Resources/config/security_factories.xml"
+            - "%kernel.root_dir%/../src/Acme/DemoBundle/Resources/config/security_factories.yml"
 
     .. code-block:: xml
 
@@ -436,7 +454,7 @@ to import it.
         // app/config/security.php
         $container->loadFromExtension('security', array(
             'factories' => array(
-              "%kernel.root_dir%/../src/Acme/DemoBundle/Resources/config/security_factories.xml"
+              "%kernel.root_dir%/../src/Acme/DemoBundle/Resources/config/security_factories.php"
             ),
         ));
 

@@ -4,11 +4,12 @@
 Translations
 ============
 
-The term "internationalization" refers to the process of abstracting strings
-and other locale-specific pieces out of your application and into a layer
-where they can be translated and converted based on the user's locale (i.e.
-language and country). For text, this means wrapping each with a function
-capable of translating the text (or "message") into the language of the user::
+The term "internationalization" (often abbreviated `i18n`_) refers to the process
+of abstracting strings and other locale-specific pieces out of your application
+and into a layer where they can be translated and converted based on the user's
+locale (i.e. language and country). For text, this means wrapping each with a
+function capable of translating the text (or "message") into the language of
+the user::
 
     // text will *always* print out in English
     echo 'Hello World';
@@ -35,7 +36,8 @@ the process has several common steps:
 3. Create translation resources for each supported locale that translate
    each message in the application;
 
-4. Determine, set and manage the user's locale in the session.
+4. Determine, set and manage the user's locale for the request and optionally
+   on the user's entire session.
 
 .. index::
    single: Translations; Configuration
@@ -79,7 +81,8 @@ not exist in the user's locale.
     ``fr_FR`` for instance). If this also fails, it looks for a translation
     using the fallback locale.
 
-The locale used in translations is the one stored in the user session.
+The locale used in translations is the one stored on the request. This is
+typically set via a ``_locale`` attribute on your routes (see :ref:`book-translation-locale-url`).
 
 .. index::
    single: Translations; Basic translation
@@ -146,7 +149,8 @@ The Translation Process
 
 To actually translate the message, Symfony2 uses a simple process:
 
-* The ``locale`` of the current user, which is stored in the session, is determined;
+* The ``locale`` of the current user, which is stored on the request (or
+  stored as ``_locale`` on the session), is determined;
 
 * A catalog of translated messages is loaded from translation resources defined
   for the ``locale`` (e.g. ``fr_FR``). Messages from the fallback locale are
@@ -321,10 +325,12 @@ taste.
 Creating Translations
 ~~~~~~~~~~~~~~~~~~~~~
 
-Each file consists of a series of id-translation pairs for the given domain and
-locale. The id is the identifier for the individual translation, and can
-be the message in the main locale (e.g. "Symfony is great") of your application
-or a unique identifier (e.g. "symfony2.great" - see the sidebar below):
+The act of creating translation files is an important part of "localization"
+(often abbreviated `L10n`_). Translation files consist of a series of
+id-translation pairs for the given domain and locale. The id is the identifier
+for the individual translation, and can be the message in the main locale (e.g.
+"Symfony is great") of your application or a unique identifier (e.g.
+"symfony2.great" - see the sidebar below):
 
 .. configuration-block::
 
@@ -482,17 +488,30 @@ locale.
 Handling the User's Locale
 --------------------------
 
-The locale of the current user is stored in the session and is accessible
-via the ``session`` service:
+The locale of the current user is stored in the request and is accessible
+via the ``request`` object:
 
 .. code-block:: php
 
-    $locale = $this->get('session')->getLocale();
+    // access the reqest object in a standard controller
+    $request = $this->getRequest();
 
-    $this->get('session')->setLocale('en_US');
+    $locale = $request->getLocale();
+
+    $request->setLocale('en_US');
 
 .. index::
    single: Translations; Fallback and default locale
+
+It is also possible to store the locale in the session instead of on a per 
+request basis. If you do this, each subsequent request will have this locale.
+
+.. code-block:: php
+
+    $this->get('session')->set('_locale', 'en_US');
+
+See the :ref:`.. _book-translation-locale-url:` section below about setting
+the locale via routing.
 
 Fallback and Default Locale
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -501,8 +520,8 @@ If the locale hasn't been set explicitly in the session, the ``fallback_locale``
 configuration parameter will be used by the ``Translator``. The parameter
 defaults to ``en`` (see `Configuration`_).
 
-Alternatively, you can guarantee that a locale is set on the user's session
-by defining a ``default_locale`` for the session service:
+Alternatively, you can guarantee that a locale is set on each user's request
+by defining a ``default_locale`` for the framework:
 
 .. configuration-block::
 
@@ -510,28 +529,34 @@ by defining a ``default_locale`` for the session service:
 
         # app/config/config.yml
         framework:
-            session: { default_locale: en }
+            default_locale: en
 
     .. code-block:: xml
 
         <!-- app/config/config.xml -->
         <framework:config>
-            <framework:session default-locale="en" />
+            <framework:default-locale>en</framework:default-locale>
         </framework:config>
 
     .. code-block:: php
 
         // app/config/config.php
         $container->loadFromExtension('framework', array(
-            'session' => array('default_locale' => 'en'),
+            'default_locale' => 'en',
         ));
+
+.. versionadded:: 2.1
+
+     The ``default_locale`` parameter was defined under the session key
+     originally, however, as of 2.1 this has been moved. This is because the 
+     locale is now set on the request instead of the session.
 
 .. _book-translation-locale-url:
 
 The Locale and the URL
 ~~~~~~~~~~~~~~~~~~~~~~
 
-Since the locale of the user is stored in the session, it may be tempting
+Since you can store the locale of the user is in the session, it may be tempting
 to use the same URL to display a resource in many different languages based
 on the user's locale. For example, ``http://www.example.com/contact`` could
 show content in English for one user and French for another user. Unfortunately,
@@ -663,7 +688,7 @@ need more control or want a different translation for specific cases (for
 ``0``, or when the count is negative, for example). For such cases, you can
 use explicit math intervals::
 
-    '{0} There is no apples|{1} There is one apple|]1,19] There are %count% apples|[20,Inf] There are many apples'
+    '{0} There are no apples|{1} There is one apple|]1,19] There are %count% apples|[20,Inf] There are many apples'
 
 The intervals follow the `ISO 31-11`_ notation. The above string specifies
 four different intervals: exactly ``0``, exactly ``1``, ``2-19``, and ``20``
@@ -673,7 +698,7 @@ You can also mix explicit math rules and standard rules. In this case, if
 the count is not matched by a specific interval, the standard rules take
 effect after removing the explicit rules::
 
-    '{0} There is no apples|[20,Inf] There are many apples|There is one apple|a_few: There are %count% apples'
+    '{0} There are no apples|[20,Inf] There are many apples|There is one apple|a_few: There are %count% apples'
 
 For example, for ``1`` apple, the standard rule ``There is one apple`` will
 be used. For ``2-19`` apples, the second standard rule ``There are %count%
@@ -713,7 +738,7 @@ help with message translation of *static blocks of text*:
     {% trans %}Hello %name%{% endtrans %}
 
     {% transchoice count %}
-        {0} There is no apples|{1} There is one apple|]1,Inf] There are %count% apples
+        {0} There are no apples|{1} There is one apple|]1,Inf] There are %count% apples
     {% endtranschoice %}
 
 The ``transchoice`` tag automatically gets the ``%count%`` variable from
@@ -792,7 +817,7 @@ The translator service is accessible in PHP templates through the
 Forcing the Translator Locale
 -----------------------------
 
-When translating a message, Symfony2 uses the locale from the user's session
+When translating a message, Symfony2 uses the locale from the current request
 or the ``fallback`` locale if necessary. You can also manually specify the
 locale to use for translation:
 
@@ -806,7 +831,7 @@ locale to use for translation:
     );
 
     $this->get('translator')->trans(
-        '{0} There is no apples|{1} There is one apple|]1,Inf[ There are %count% apples',
+        '{0} There are no apples|{1} There is one apple|]1,Inf[ There are %count% apples',
         10,
         array('%count%' => 10),
         'messages',
@@ -835,8 +860,11 @@ steps:
   files. Symfony2 discovers and processes each file because its name follows
   a specific convention;
 
-* Manage the user's locale, which is stored in the session.
+* Manage the user's locale, which is stored on the request, but can also
+  be set once the user's session.
 
+.. _`i18n`: http://en.wikipedia.org/wiki/Internationalization_and_localization
+.. _`L10n`: http://en.wikipedia.org/wiki/Internationalization_and_localization
 .. _`strtr function`: http://www.php.net/manual/en/function.strtr.php
 .. _`ISO 31-11`: http://en.wikipedia.org/wiki/Interval_%28mathematics%29#The_ISO_notation
 .. _`Translatable Extension`: https://github.com/l3pp4rd/DoctrineExtensions

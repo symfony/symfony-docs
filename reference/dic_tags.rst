@@ -9,6 +9,7 @@ Tags:
 * ``form.type_guesser``
 * ``kernel.cache_warmer``
 * ``kernel.event_listener``
+* ``kernel.event_subscriber``
 * ``monolog.logger``
 * ``monolog.processor``
 * ``templating.helper``
@@ -48,6 +49,8 @@ templates):
             ->addTag('templating.helper', array('alias' => 'alias_name'))
         ;
 
+.. _reference-dic-tags-twig-extension:
+
 Enabling Custom Twig Extensions
 -------------------------------
 
@@ -76,6 +79,10 @@ configuration, and tag it with ``twig.extension``:
             ->register('twig.extension.your_extension_name', 'Fully\Qualified\Extension\Class\Name')
             ->addTag('twig.extension')
         ;
+
+For information on how to create the actual Twig Extension class, see
+`Twig's documentation`_ on the topic.
+
 
 .. _dic-tags-kernel-event-listener:
 
@@ -116,6 +123,53 @@ will be called:
     tag (much like the method or event attributes), with either a positive 
     or negative integer. This allows you to make sure your listener will always 
     be called before or after another listener listening for the same event.
+
+
+
+.. _dic-tags-kernel-event-subscriber:
+
+Enabling Custom Subscribers
+---------------------------
+
+.. versionadded:: 2.1
+
+   The ability to add kernel event subscribers is new to 2.1.
+
+To enable a custom subscriber, add it as a regular service in one of your
+configuration, and tag it with ``kernel.event_subscriber``:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        services:
+            kernel.subscriber.your_subscriber_name:
+                class: Fully\Qualified\Subscriber\Class\Name
+                tags:
+                    - { name: kernel.event_subscriber }
+
+    .. code-block:: xml
+
+        <service id="kernel.subscriber.your_subscriber_name" class="Fully\Qualified\Subscriber\Class\Name">
+            <tag name="kernel.event_subscriber" />
+        </service>
+
+    .. code-block:: php
+
+        $container
+            ->register('kernel.subscriber.your_subscriber_name', 'Fully\Qualified\Subscriber\Class\Name')
+            ->addTag('kernel.event_subscriber')
+        ;
+
+.. note::
+
+    Your service must implement the :class:`Symfony\Component\EventDispatcher\EventSubscriberInterface`
+    interface.
+
+.. note::
+
+    If your service is created by a factory, you **MUST** correctly set the ``class``
+    parameter for this tag to work correctly.
 
 Enabling Custom Template Engines
 --------------------------------
@@ -310,3 +364,5 @@ channel used in the Security component:
 
     You cannot use both the ``handler`` and ``channel`` attributes for the
     same tag as handlers are shared between all channels.
+
+..  _`Twig's documentation`: http://twig.sensiolabs.org/doc/extensions.html

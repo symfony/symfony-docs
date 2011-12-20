@@ -109,6 +109,10 @@ Built-in Permission Map
 |                  | to make changes to the     | or OWNER                    |
 |                  | domain object.             |                             |
 +------------------+----------------------------+-----------------------------+
+| CREATE           | Whether someone is allowed | CREATE, OPERATOR, MASTER,   |
+|                  | to create the domain       | or OWNER                    |
+|                  | object.                    |                             |
++------------------+----------------------------+-----------------------------+
 | DELETE           | Whether someone is allowed | DELETE, OPERATOR, MASTER,   |
 |                  | to delete the domain       | or OWNER                    |
 |                  | object.                    |                             |
@@ -131,7 +135,8 @@ Built-in Permission Map
 | OWNER            | Whether someone owns the   | OWNER                       |
 |                  | domain object. An owner can|                             |
 |                  | perform any of the above   |                             |
-|                  | actions.                   |                             |
+|                  | actions *and* grant master |                             |
+|                  | and owner permissions.     |                             |
 +------------------+----------------------------+-----------------------------+
 
 Permission Attributes vs. Permission Bitmasks

@@ -4,4 +4,329 @@
 collection Field Type
 =====================
 
-See :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\CollectionType`.
+This field type is used to render a "collection" of some field or form. In
+the easiest sense, it could be an array of ``text`` fields that populate
+an array ``emails`` field. In more complex examples, you can embed entire
+forms, which is useful when creating forms that expose one-to-many relationships
+(e.g. a product from where you can manage many related product photos).
+
++-------------+-----------------------------------------------------------------------------+
+| Rendered as | depends on the `type`_ option                                               |
++-------------+-----------------------------------------------------------------------------+
+| Options     | - `type`_                                                                   |
+|             | - `options`_                                                                |
+|             | - `allow_add`_                                                              |
+|             | - `allow_delete`_                                                           |
+|             | - `prototype`_                                                              |
++-------------+-----------------------------------------------------------------------------+
+| Inherited   | - `label`_                                                                  |
+| options     | - `error_bubbling`_                                                         |
+|             | - `by_reference`_                                                           |
++-------------+-----------------------------------------------------------------------------+
+| Parent type | :doc:`form</reference/forms/types/form>`                                    |
++-------------+-----------------------------------------------------------------------------+
+| Class       | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\CollectionType`    |
++-------------+-----------------------------------------------------------------------------+
+
+Basic Usage
+-----------
+
+This type is used when you want to manage a collection of similar items in
+a form. For example, suppose you have an ``emails`` field that corresponds
+to an array of email addresses. In the form, you want to expose each email
+address as its own input text box::
+
+    $builder->add('emails', 'collection', array(
+        // each item in the array will be an "email" field
+        'type'   => 'email',
+        // these options are passed to each "email" type
+        'options'  => array(
+            'required'  => false,
+            'attr'      => array('class' => 'email-box')
+        ),
+    ));
+
+The simplest way to render this is all at once:
+
+.. configuration-block::
+
+    .. code-block:: jinja
+    
+        {{ form_row(form.emails) }}
+
+    .. code-block:: php
+    
+        <?php echo $view['form']->row($form['emails]) ?>
+
+A much more flexible method would look like this:
+
+.. configuration-block::
+
+    .. code-block:: html+jinja
+    
+        {{ form_label(form.emails) }}
+        {{ form_errors(form.emails) }}
+
+        <ul>
+        {% for emailField in form.emails %}
+            <li>
+                {{ form_errors(emailField) }}
+                {{ form_widget(emailField) }}
+            </li>
+        {% endfor %}
+        </ul>
+
+    .. code-block:: html+php
+
+        <?php echo $view['form']->label($form['emails']) ?>
+        <?php echo $view['form']->errors($form['emails']) ?>
+        
+        <ul>
+        {% for emailField in form.emails %}
+        <?php foreach ($form['emails'] as $emailField): ?>
+            <li>
+                <?php echo $view['form']->errors($emailField) ?>
+                <?php echo $view['form']->widget($emailField) ?>
+            </li>
+        <?php endforeach; ?>
+        </ul>
+
+In both cases, no input fields would render unless your ``emails`` data array
+already contained some emails.
+
+In this simple example, it's still impossible to add new addresses or remove
+existing addresses. Adding new addresses is possible by using the `allow_add`_
+option (and optionally the `prototype`_ option) (see example below). Removing
+emails from the ``emails`` array is possible with the `allow_delete`_ option.
+
+Adding and Removing items
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+If `allow_add`_ is set to ``true``, then if any unrecognized items are submitted,
+they'll be added seamlessly to the array of items. This is great in theory,
+but takes a little bit more effort in practice to get the client-side JavaScript
+correct.
+
+Following along with the previous example, suppose that you start with two
+emails in the ``emails`` data array. In that case, two input fields will
+be rendered that will look something like this (depending on the name of
+your form):
+
+.. code-block:: html
+
+    <input type="email" id="form_emails_1" name="form[emails][0]" value="foo@foo.com" />
+    <input type="email" id="form_emails_1" name="form[emails][1]" value="bar@bar.com" />
+
+To allow your user to add another email, just set `allow_add`_ to ``true``
+and - via JavaScript - render another field with the name ``form[emails][2]``
+(and so on for more and more fields).
+
+To help make this easier, setting the `prototype`_ option to ``true`` allows
+you to render a "template" field, which you can then use in your JavaScript
+to help you dynamically create these new fields. A rendered prototype field
+will look something like this:
+
+.. code-block:: html
+
+    <input type="email" id="form_emails_$$name$$" name="form[emails][$$name$$]" value="" />
+
+By replacing replacing ``$$name$$`` with some unique value (e.g. ``2``),
+you can build and insert new HTML fields into your form.
+
+Using jQuery, a simple example might look like this. If you're rendering
+your collection field all at once (e.g. ``form_row(form.emails)``), then
+things are even easier because the ``data-prototype`` attribute is rendered
+automatically for your (with a slight difference - see note below) and all
+you need is the JavaScript:
+
+.. configuration-block::
+
+    .. code-block:: html+jinja
+    
+        <form action="..." method="POST" {{ form_enctype(form) }}>
+            {# ... #}
+
+            {# store the prototype on the data-prototype attribute #}
+            <ul id="email-fields-list" data-prototype="{{ form_widget(form.emails.get('prototype')) | e }}">
+            {% for emailField in form.emails %}
+                <li>
+                    {{ form_errors(emailField) }}
+                    {{ form_widget(emailField) }}
+                </li>
+            {% endfor %}
+            </ul>
+        
+            <a href="#" id="add-another-email">Add another email</a>
+        
+            {# ... #}
+        </form>
+
+        <script type="text/javascript">
+            // keep track of how many email fields ahve been rendered
+            var emailCount = '{{ form.emails | length }}';
+
+            jQuery(document).ready(function() {
+                jQuery('#add-another-email').click(function() {
+                    var emailList = jQuery('#email-fields-list');
+
+                    // grab the prototype template
+                    var newWidget = emailList.attr('data-prototype');
+                    // replace the "$$name$$" used in the id and name of the prototype
+                    // with a number that's unique to our emails
+                    // end name attribute looks like name="contact[emails][2]"
+                    newWidget = newWidget.replace(/\$\$name\$\$/g, emailCount);
+                    emailCount++;
+
+                    // create a new list element and add it to our list
+                    var newLi = jQuery('<li></li>').html(newWidget);
+                    newLi.appendTo(jQuery('#email-fields-list'));
+
+                    return false;
+                });
+            })
+        </script>
+
+.. tip::
+
+    If you're rendering the entire collection at once, then the prototype
+    is automatically available on the ``data-prototype`` attribute of the
+    element (e.g. ``div`` or ``table``) that surrounds your collection. The
+    only difference is that the entire "form row" is rendered for you, meaning
+    you wouldn't have to wrap it in any container element like we've done
+    above.
+
+Field Options
+-------------
+
+type
+~~~~
+
+**type**: ``string`` or :class:`Symfony\\Component\\Form\\FormTypeInterface` **required**
+
+This is the field type for each item in this collection (e.g. ``text``, ``choice``,
+etc). For example, if you have an array of email addresses, you'd use the
+:doc`email</reference/forms/types/email>` type. If you want to embed
+a collection of some other form, create a new instance of your form type
+and pass it as this option.
+
+options
+~~~~~~~
+
+**type**: ``array`` **default**: ``array()``
+
+This is the array that's passed to the form type specified in the `type`_
+option. For example, if you used the :doc`choice</reference/forms/types/choice>`
+type as your `type`_ option (e.g. for a collection of drop-down menus), then
+you'd need to at least pass the ``choices`` option to the underlying type::
+
+    $builder->add('favorite_cities', 'collection', array(
+        'type'   => 'choice',
+        'options'  => array(
+            'choices'  => array(
+                'nashville' => 'Nashville',
+                'paris'     => 'Paris',
+                'berlin'    => 'Berlin',
+                'london'    => 'London',
+            ),
+        ),
+    ));
+
+allow_add
+~~~~~~~~~
+
+**type**: ``Boolean`` **default**: ``false``
+
+If set to ``true``, then if unrecognized items are submitted to the collection,
+they will be added as new items. The ending array will contain the existing
+items as well as the new item that was in the submitted data. See the above
+example for more details.
+
+The `prototype`_ option can be used to help render a prototype item that
+can be used - with JavaScript - to create new form items dynamically on the
+client side. For more information, see the above example and :ref:`cookbook-form-collections-new-prototype`.
+
+.. caution::
+
+    If you're embedding entire other forms to reflect a one-to-many database
+    relationship, you may need to manually ensure that the foreign key of
+    these new objects is set correctly. If you're using Doctrine, this won't
+    happen automatically. See the above link for more details.
+
+allow_delete
+~~~~~~~~~~~~
+
+**type**: ``Boolean`` **default**: ``false``
+
+If set to ``true``, then if an existing item is not contained in the submitted
+data, it will be correctly absent from the final array of items. This means
+that you can implement a "delete" button via JavaScript which simply removes
+a form element from the DOM. When the user submits the form, its absence
+from the submitted data will mean that it's removed from the final array.
+
+For more information, see :ref:`cookbook-form-collections-remove`.
+
+.. caution::
+
+    Be careful when using this option when you're embedding a collection
+    of objects. In this case, if any embedded forms are removed, they *will*
+    correctly be missing from the final array of objects. However, depending on
+    your application logic, when one of those objects is removed, you may want
+    to delete it or at least remove its foreign key reference to the main object.
+    None of this is handled automatically. For more information, see
+    :ref:`cookbook-form-collections-remove`.
+
+prototype
+~~~~~~~~~
+
+**type**: ``Boolean`` **default**: ``true``
+
+This option is useful when using the `allow_add`_ option. If ``true`` (and
+if `allow_add`_ is also ``true``), a special "prototype" attribute will be
+available so that you can render a "template" example on your page of what
+a new element should look like. The ``name`` attribute given to this element
+is ``$$name$$``. This allows you to add a "add another" button via JavaScript
+which reads the prototype, replaces ``$$name$$`` with some unique name or
+number, and render it inside your form. When submitted, it will be added
+to your underlying array due to the `allow_add`_ option.
+
+The prototype field can be rendered via the ``prototype`` variable in the
+collection field:
+
+.. configuration-block::
+
+    .. code-block:: jinja
+    
+        {{ form_row(form.emails.get('prototype')) }}
+
+    .. code-block:: php
+    
+        <?php echo $view['form']->row($form['emails']->get('prototype')) ?>
+
+Note that all you really need is the "widget", but depending on how you're
+rendering your form, having the entire "form row" may be easier for you.
+
+.. tip::
+
+    If you're rendering the entire collection field at once, then the prototype
+    form row is automatically available on the ``data-prototype`` attribute
+    of the element (e.g. ``div`` or ``table``) that surrounds your collection.
+
+For details on how to actually use this option, see the above example as well
+as :ref:`cookbook-form-collections-new-prototype`.
+
+Inherited options
+-----------------
+
+These options inherit from the :doc:`field</reference/forms/types/form>` type.
+Not all options are listed here - only the most applicable to this type:
+
+.. include:: /reference/forms/types/options/label.rst.inc
+
+error_bubbling
+~~~~~~~~~~~~~~
+
+**type**: ``Boolean`` **default**: ``true``
+
+.. include:: /reference/forms/types/options/_error_bubbling_body.rst.inc
+
+.. include:: /reference/forms/types/options/by_reference.rst.inc

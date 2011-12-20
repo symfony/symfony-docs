@@ -1,3 +1,6 @@
+.. index::
+   single: Form; Custom form rendering
+
 How to customize Form Rendering
 ===============================
 

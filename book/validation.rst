@@ -805,7 +805,7 @@ list of the available constraints - as well as the full class name for each
 constraint - is available in the :doc:`constraints reference</reference/constraints>`
 section .
 
-The ``validateValule`` method returns a :class:`Symfony\\Component\\Validator\\ConstraintViolationList`
+The ``validateValue`` method returns a :class:`Symfony\\Component\\Validator\\ConstraintViolationList`
 object, which acts just like an array of errors. Each error in the collection
 is a :class:`Symfony\\Component\\Validator\\ConstraintViolation` object,
 which holds the error message on its `getMessage` method.

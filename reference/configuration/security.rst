@@ -23,6 +23,9 @@ Each part will be explained in the next section.
 
             always_authenticate_before_granting: false
 
+            # whether or not to call eraseCredentials on the token
+            erase_credentials: true
+
             # strategy can be: none, migrate, invalidate
             session_fixation_strategy: migrate
 
@@ -58,12 +61,12 @@ Each part will be explained in the next section.
                     id: my.custom.encoder.service.id
 
             providers:
-                memory:
-                    name: memory
-                    users:
-                        foo: { password: foo, roles: ROLE_USER }
-                        bar: { password: bar, roles: [ROLE_USER, ROLE_ADMIN] }
-                entity:
+                memory_provider_name:
+                    memory:
+                        users:
+                            foo: { password: foo, roles: ROLE_USER }
+                            bar: { password: bar, roles: [ROLE_USER, ROLE_ADMIN] }
+                entity_provider_name:
                     entity: { class: SecurityBundle:User, property: username }
 
             factories:
@@ -76,15 +79,15 @@ Each part will be explained in the next section.
                     access_denied_url: /foo/error403
                     access_denied_handler: some.service.id
                     entry_point: some.service.id
-                    provider: name
+                    provider: some_provider_key_from_above
                     context: name
                     stateless: false
                     x509:
-                        provider: name
+                        provider: some_provider_key_from_above
                     http_basic:
-                        provider: name
+                        provider: some_provider_key_from_above
                     http_digest:
-                        provider: name
+                        provider: some_provider_key_from_above
                     form_login:
                         check_path: /login_check
                         login_path: /login
@@ -100,7 +103,7 @@ Each part will be explained in the next section.
                         username_parameter: _username
                         password_parameter: _password
                         csrf_parameter: _csrf_token
-                        csrf_page_id: form_login
+                        intention: authenticate
                         csrf_provider: my.csrf_provider.id
                         post_only: true
                         remember_me: false
@@ -185,7 +188,7 @@ The Login Form and Process
 
 *   ``post_only`` (type: ``Boolean``, default: ``true``)
     By default, you must submit your login form to the ``check_path`` URL
-    as a POST request. By setting this option to ``true``, you can send a
+    as a POST request. By setting this option to ``false``, you can send a
     GET request to the ``check_path`` URL.
 
 Redirecting after Login

@@ -783,7 +783,12 @@ that are special: each adds a unique piece of functionality inside your applicat
 
 * ``_format``: Used to set the request format (:ref:`read more<book-routing-format-param>`);
 
-* ``_locale``: Used to set the locale on the session (:ref:`read more<book-translation-locale-url>`);
+* ``_locale``: Used to set the locale on the request (:ref:`read more<book-translation-locale-url>`);
+
+.. tip::
+
+    If you use the ``_locale`` parameter in a route, that value will also
+    be stored on the session so that subsequent requests keep this same locale.
 
 .. index::
    single: Routing; Controllers
@@ -1083,6 +1088,18 @@ that route. With this information, any URL can easily be generated:
 
 In an upcoming section, you'll learn how to generate URLs from inside templates.
 
+.. tip::
+
+    If the frontend of your application uses AJAX requests, you might want
+    to be able to generate URLs in JavaScript based on your routing configuration.
+    By using the `FOSJsRoutingBundle`_, you can do exactly that:
+    
+    .. code-block:: javascript
+    
+        var url = Routing.generate('blog_show', { "slug": 'my-blog-post});
+
+    For more information, see the documentation for that bundle.
+
 .. index::
    single: Routing; Absolute URLs
 
@@ -1172,3 +1189,5 @@ Learn more from the Cookbook
 ----------------------------
 
 * :doc:`/cookbook/routing/scheme`
+
+.. _`FOSJsRoutingBundle`: https://github.com/FriendsOfSymfony/FOSJsRoutingBundle

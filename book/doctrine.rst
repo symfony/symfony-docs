@@ -73,7 +73,7 @@ information. By convention, this information is usually configured in an
                 password: %database_password%
     
     By separating the database information into a separate file, you can
-    easily keep different version of the file on each server. You can also
+    easily keep different versions of the file on each server. You can also
     easily store database configuration (or any sensitive information) outside
     of your project, like inside your Apache configuration, for example. For
     more information, see :doc:`/cookbook/configuration/external_parameters`.
@@ -128,7 +128,7 @@ Add Mapping Information
 ~~~~~~~~~~~~~~~~~~~~~~~
 
 Doctrine allows you to work with databases in a much more interesting way
-than just fetching rows of column-based table into an array. Instead, Doctrine
+than just fetching rows of a column-based table into an array. Instead, Doctrine
 allows you to persist entire *objects* to the database and fetch entire objects
 out of the database. This works by mapping a PHP class to a database table,
 and the properties of that PHP class to columns on the table:
@@ -370,7 +370,7 @@ of the bundle:
 .. note::
 
     If you're following along with this example, you'll need to create a
-    route that points to this action to see it in work.
+    route that points to this action to see it work.
 
 Let's walk through this example:
 
@@ -558,7 +558,7 @@ or using Doctrine's Query Builder.
 Querying for Objects with DQL
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Imaging that you want to query for products, but only return products that
+Imagine that you want to query for products, but only return products that
 cost more than ``19.99``, ordered from cheapest to most expensive. From inside
 a controller, do the following::
 
@@ -803,6 +803,13 @@ makes sense in the application for each ``Category`` to hold an array of
     added flexibility. If this makes you uncomfortable, don't worry. Just
     imagine that it's an ``array`` and you'll be in good shape.
 
+.. tip::
+
+   The targetEntity value in the decorator used above can reference any entity
+   with a valid namespace, not just entities defined in the same class. To 
+   relate to an entity defined in a different class or bundle, enter a full
+   namespace as the targetEntity.
+
 Next, since each ``Product`` class can relate to exactly one ``Category``
 object, you'll want to add a ``$category`` property to the ``Product`` class::
 
@@ -861,7 +868,7 @@ table, and ``product.category_id`` column, and new foreign key:
 
     This task should only be really used during development. For a more robust
     method of systematically updating your production database, read about
-    :doc:`Doctrine migrations</bundles/DoctrineFixturesBundle/index>`.
+    :doc:`Doctrine migrations</bundles/DoctrineMigrationsBundle/index>`.
 
 Saving Related Entities
 ~~~~~~~~~~~~~~~~~~~~~~~

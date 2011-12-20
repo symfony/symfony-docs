@@ -464,10 +464,12 @@ The resulting HTTP header will look like this::
     The ``setExpires()`` method automatically converts the date to the GMT
     timezone as required by the specification.
 
-The ``Expires`` header suffers from two limitations. First, the clocks on the
-Web server and the cache (e.g. the browser) must be synchronized. Then, the
-specification states that "HTTP/1.1 servers should not send ``Expires`` dates
-more than one year in the future."
+Note that in HTTP versions before 1.1 the origin server wasn't required to
+send the ``Date`` header. Consequently the cache (e.g. the browser) might
+need to rely onto his local clock to evaluate the ``Expires`` header making
+the lifetime calculation vulnerable to clock skew. Another limitation
+of the ``Expires`` header is that the specification states that "HTTP/1.1
+servers should not send ``Expires`` dates more than one year in the future."
 
 .. index::
    single: Cache; Cache-Control header
@@ -983,8 +985,9 @@ too far away in the future.
 
 .. note::
 
-    It's also because there is no invalidation mechanism that you can use any
-    reverse proxy without changing anything in your application code.
+    Since invalidation is a topic specific to each type of reverse proxy,
+    if you don't worry about invalidation, you can switch between reverse
+    proxies without changing anything in your application code.
 
 Actually, all reverse proxies provide ways to purge cached data, but you
 should avoid them as much as possible. The most standard way is to purge the
@@ -1003,7 +1006,7 @@ Here is how you can configure the Symfony2 reverse proxy to support the
             }
 
             $response = new Response();
-            if (!$this->store->purge($request->getUri())) {
+            if (!$this->getStore()->purge($request->getUri())) {
                 $response->setStatusCode(404, 'Not purged');
             } else {
                 $response->setStatusCode(200, 'Purged');
