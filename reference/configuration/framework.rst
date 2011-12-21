@@ -236,6 +236,7 @@ Full Default Configuration
             secret:               ~ # Required
             ide:                  ~
             test:                 ~
+            trust_proxy_headers:  true
 
             # form configuration
             form:
