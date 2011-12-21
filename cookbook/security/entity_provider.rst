@@ -319,6 +319,8 @@ The code below shows the implementation of the
 
     class UserRepository extends EntityRepository implements UserProviderInterface
     {
+        const ENTITY_CLASS = 'Acme\Bundle\UserBundle\Entity\User';
+
         public function loadUserByUsername($username)
         {
             $q = $this
@@ -355,7 +357,7 @@ The code below shows the implementation of the
 
         public function supportsClass($class)
         {
-            return is_subclass_of($class, 'Acme\Bundle\UserBundle\Entity\User');
+            return self::ENTITY_CLASS === $class || is_subclass_of($class, self::ENTITY_CLASS);
         }
     }
 
