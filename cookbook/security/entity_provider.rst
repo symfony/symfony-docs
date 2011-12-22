@@ -18,10 +18,11 @@ managed by a Doctrine entity class. The content of this cookbook entry is split
 in three parts. The first part is about designing a Doctrine ``User`` entity
 class and make it usable in the security layer of Symfony. The second part
 describes how to easily authenticate a user with the Doctrine
-`EntityUserProvider`_ object bundled with the framework and some configuration.
+:class:`Symfony\\Bridge\\Doctrine\\Security\\User\\EntityUserProvider` object
+bundled with the framework and some configuration.
 Finally, the tutorial will demonstrate how to create a custom
-`EntityUserProvider`_ object to retrieve users from a database with custom
-conditions.
+:class:`Symfony\\Bridge\\Doctrine\\Security\\User\\EntityUserProvider` object to
+retrieve users from a database with custom conditions.
 
 This tutorial assumes there is a bootstrapped and loaded
 ``Acme\Bundle\UserBundle`` bundle in the application kernel.
@@ -31,12 +32,12 @@ The Data Model
 
 For the purpose of this cookbook, the ``AcmeUserBundle`` bundle contains a
 ``User`` entity class with the following fields: ``id``, ``username``, ``salt``,
-``password``, ``role`` and ``isActive``. The ``role`` field stores the role
-string assigned to the user and the ``isActive`` value tells whether or not the
-user account is active.
+``password``, ``email`` and ``isActive``. The ``isActive`` field tells whether
+or not the user account is active.
 
 To make it shorter, the getter and setter methods for each have been removed to
-focus on the most important methods that come from the `UserInterface`_.
+focus on the most important methods that come from the
+:class:`Symfony\\Component\\Security\\Core\\User\\UserInterface`.
 
 .. code-block:: php
 
@@ -50,7 +51,7 @@ focus on the most important methods that come from the `UserInterface`_.
     /**
      * Acme\Bundle\UserBundle\Entity\User
      *
-     * @ORM\Table()
+     * @ORM\Table(name="acme_users")
      * @ORM\Entity(repositoryClass="Acme\Bundle\UserBundle\Entity\UserRepository")
      */
     class User implements UserInterface
@@ -78,9 +79,9 @@ focus on the most important methods that come from the `UserInterface`_.
         private $password;
 
         /**
-         * @ORM\Column(name="role", type="string", length=20)
+         * @ORM\Column(name="email", type="string", length=60, unique=true)
          */
-        private $role;
+        private $email;
 
         /**
          * @ORM\Column(name="is_active", type="boolean")
@@ -89,13 +90,12 @@ focus on the most important methods that come from the `UserInterface`_.
 
         public function __construct()
         {
-            $this->role = 'ROLE_USER';
             $this->isActive = true;
         }
 
         public function getRoles()
         {
-            return array($this->role);
+            return array('ROLE_USER');
         }
 
         public function equals(UserInterface $user)
@@ -124,48 +124,52 @@ focus on the most important methods that come from the `UserInterface`_.
     }
 
 In order to use an instance of the ``AcmeUserBundle:User`` class in the Symfony
-security layer, the entity class must implement the `UserInterface`_. This
+security layer, the entity class must implement the
+:class:`Symfony\\Component\\Security\\Core\\User\\UserInterface`. This
 interface forces the class to implement the six following methods:
 
 * ``getUsername()`` returns the unique username,
 * ``getSalt()`` returns the unique salt,
 * ``getPassword()`` returns the encoded password,
 * ``getRoles()`` returns an array of associated roles,
-* ``equals()`` compares the current object with an other `UserInterface`_
+* ``equals()`` compares the current object with an other
+  :class:`Symfony\\Component\\Security\\Core\\User\\UserInterface`
   instance,
 * ``eraseCredentials()`` removes sensible information stored in the
-  `UserInterface`_ object.
+  :class:`Symfony\\Component\\Security\\Core\\User\\UserInterface` object.
 
 To keep it simple, the ``equals()`` method just compares the ``username`` field
 but it's also possible to make more checks depending on the complexity of your
 data model. In the other hand, the ``eraseCredentials()`` method remains empty
 as we don't care about it in this tutorial.
 
-Below is an export of my ``User`` table from MySQL.
+Below is an export of my ``user`` table from MySQL.
 
 .. code-block::text
 
     mysql> select * from user;
-    +----+----------+------------------------------------------+------------------------------------------+-----------------+-----------+
-    | id | username | salt                                     | password                                 | role            | is_active |
-    +----+----------+------------------------------------------+------------------------------------------+-----------------+-----------+
-    |  1 | hhamon   | 7308e59b97f6957fb42d66f894793079c366d7c2 | 09610f61637408828a35d7debee5b38a8350eebe | ROLE_SUPERADMIN |         1 |
-    |  2 | jsmith   | ce617a6cca9126bf4036ca0c02e82deea081e564 | 8390105917f3a3d533815250ed7c64b4594d7ebf | ROLE_ADMIN      |         1 |
-    |  3 | maxime   | cd01749bb995dc658fa56ed45458d807b523e4cf | 9764731e5f7fb944de5fd8efad4949b995b72a3c | ROLE_ADMIN      |         0 |
-    |  4 | donald   | 6683c2bfd90c0426088402930cadd0f84901f2f4 | 5c3bcec385f59edcc04490d1db95fdb8673bf612 | ROLE_USER       |         1 |
-    +----+----------+------------------------------------------+------------------------------------------+-----------------+-----------+
+    +----+----------+------------------------------------------+------------------------------------------+--------------------+-----------+
+    | id | username | salt                                     | password                                 | email              | is_active |
+    +----+----------+------------------------------------------+------------------------------------------+--------------------+-----------+
+    |  1 | hhamon   | 7308e59b97f6957fb42d66f894793079c366d7c2 | 09610f61637408828a35d7debee5b38a8350eebe | hhamon@example.com |         1 |
+    |  2 | jsmith   | ce617a6cca9126bf4036ca0c02e82deea081e564 | 8390105917f3a3d533815250ed7c64b4594d7ebf | jsmith@example.com |         1 |
+    |  3 | maxime   | cd01749bb995dc658fa56ed45458d807b523e4cf | 9764731e5f7fb944de5fd8efad4949b995b72a3c | maxime@example.com |         0 |
+    |  4 | donald   | 6683c2bfd90c0426088402930cadd0f84901f2f4 | 5c3bcec385f59edcc04490d1db95fdb8673bf612 | donald@example.com |         1 |
+    +----+----------+------------------------------------------+------------------------------------------+--------------------+-----------+
     4 rows in set (0.00 sec)
 
-The database now contains four users with different roles and statuses. The next
-part will focus on how to authenticate one of these users thanks to the Doctrine
-entity user provider and a couple of lines of configuration.
+The database now contains four users with different usernames, emails and
+statuses. The next part will focus on how to authenticate one of these users
+thanks to the Doctrine entity user provider and a couple of lines of
+configuration.
 
 Authenticating Someone Against a Database
 -----------------------------------------
 
 Authenticating a Doctrine user against the database with the Symfony security
 layer is a piece of cake. Everything resides in the configuration of the
-`SecurityBundle`_ stored in the ``app/config/security.yml`` file.
+:doc:`SecurityBundle</reference/configuration/security>` stored in the
+``app/config/security.yml`` file.
 
 Below is an example of configuration to authenticate the user with an HTTP basic
 authentication connected to the database.
@@ -179,10 +183,6 @@ authentication connected to the database.
                 algorithm: sha1
                 encode_as_base64: false
                 iterations: 1
-
-        role_hierarchy:
-            ROLE_ADMIN:       ROLE_USER
-            ROLE_SUPERADMIN:  [ROLE_USER, ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH]
 
         providers:
             administrators:
@@ -208,32 +208,102 @@ configuration tells Symfony how to fetch the user from the
 database before checking the password validity.
 
 This code and configuration works but it's not enough to secure the application
-for **active** users, who **own** ``ROLE_ADMIN`` or ``ROLE_SUPERADMIN`` role.
-As of now, we still can authenticate with both users ``maxime`` and
-``donald``...
+for **active** users. As of now, we still can authenticate with ``maxime``. The
+next section explains how to forbid non active users.
+
+Forbid non Active Users
+-----------------------
+
+The easiest way to exclude non active users is to implement the
+:class:`Symfony\\Component\\Security\\Core\\User\\AdvancedUserInterface`
+interface that takes care of the user's account status.
+The :class:`Symfony\\Component\\Security\\Core\\User\\AdvancedUserInterface`
+extends the :class:`Symfony\\Component\\Security\\Core\\User\\UserInterface`
+interface, so that we just need to switch to it in the ``AcmeUserBundle:User``
+entity class to take benefit from simple and advanced authentication behaviors.
+
+The :class:`Symfony\\Component\\Security\\Core\\User\\AdvancedUserInterface`
+interface adds four extra methods to validate the account status:
+
+* ``isAccountNonExpired()`` checks whether the user's account has expired,
+* ``isAccountNonLocked()`` checks whether the user is locked,
+* ``isCredentialsNonExpired()`` checks whether the user's credentials (password)
+has expired,
+* ``isEnabled()`` checks whether the user is enabled.
+
+For this example, the first three methods will return ``true`` whereas the
+``isEnabled()`` method will return the boolean value in the ``isActive`` field.
+
+.. code-block:: php
+
+    // src/Acme/Bundle/UserBundle/Entity/User.php
+
+    namespace Acme\Bundle\UserBundle\Entity;
+
+    // ...
+    use Symfony\Component\Security\Core\User\AdvancedUserInterface;
+
+    // ...
+    class User implements AdvancedUserInterface
+    {
+        // ...
+        public function isAccountNonExpired()
+        {
+            return true;
+        }
+
+        public function isAccountNonLocked()
+        {
+            return true;
+        }
+
+        public function isCredentialsNonExpired()
+        {
+            return true;
+        }
+
+        public function isEnabled()
+        {
+            return $this->isActive;
+        }
+    }
+
+If we try to authenticate with ``maxime``'s username, the access is now
+forbidden as this user does not have an enabled account. The next session will
+focus on how to write a custom entity provider to authenticate a user with his
+username or his email address.
 
 Authenticating Someone with a Custom Entity Provider
 ----------------------------------------------------
 
-To limit access to the administration area to active people with ``ROLE_ADMIN``
-or ``ROLE_SUPERADMIN``, the best way is to write a custom entity provider that
-fetches a user with a custom SQL query.
+The next step is to allow a user to authenticate with his username or his email
+address as they are both unique in the database. Unfortunatelly, the native
+entity provider is only able to handle a single property to fetch the user from
+the database.
 
-The good news is that a Doctrine repository object can act as an entity user
-provider if it implements the `UserProviderInterface`_. This interface comes
-with three methods to implement:
+The best way to get this behavior is to write a custom entity provider that
+fetches a user with a custom SQL query with a logical ``OR`` condition on both
+``username`` and ``email`` table fields. The good news is that a Doctrine
+repository object can act as an entity user provider if it implements the
+:class:`Symfony\\Component\\Security\\Core\\User\\UserProviderInterface`. This
+interface comes with three methods to implement:
 
-* ``loadUserByUsername()`` that fetches and returns a `UserInterface`_
+* ``loadUserByUsername()`` that fetches and returns a
+  :class:`Symfony\\Component\\Security\\Core\\User\\UserInterface`
   instance by its unique username. Otherwise, it must throw a
-  `UsernameNotFoundException`_ exception to indicate the security layer
+    :class:`Symfony\\Component\\Security\\Core\\Exception\\UsernameNotFoundException`
+  exception to indicate the security layer
   there is no user matching the credentials.
-* ``refreshUser()`` that refreshes and returns a `UserInterface`_ instance.
-  Otherwise it must throw a `UnsupportedUserException`_ exception to
-  indicate the security layer we are unable to refresh the user.
+* ``refreshUser()`` that refreshes and returns a
+  :class:`Symfony\\Component\\Security\\Core\\User\\UserInterface` instance.
+  Otherwise it must throw a
+  :class:`Symfony\\Component\\Security\\Core\\Exception\\UnsupportedUserException`
+  exception to indicate the security layer we are unable to refresh the user.
 * ``supportsClass()`` must return ``true`` if the fully qualified class name
   passed as its sole argument is supported by the entity provider.
 
-The code below shows the implementation of the `UserProviderInterface`_ in the
+The code below shows the implementation of the
+:class:`Symfony\\Component\\Security\\Core\\User\\UserProviderInterface` in the
 ``UserRepository`` class.
 
 .. code-block::php
@@ -253,9 +323,10 @@ The code below shows the implementation of the `UserProviderInterface`_ in the
         public function loadUserByUsername($username)
         {
             $q = $this
-                ->getAdministratorQueryBuilder()
-                ->where('u.username = :username')
+                ->createQueryBuilder('u')
+                ->where('u.username = :username OR u.email = :email')
                 ->setParameter('username', $username)
+                ->setParameter('email', $username)
                 ->getQuery()
             ;
 
@@ -272,33 +343,17 @@ The code below shows the implementation of the `UserProviderInterface`_ in the
 
         public function refreshUser(UserInterface $user)
         {
-            $username = $user->getUsername();
-
-            try {
-                $user = $this->loadUserByUsername($username);
-            } catch (UsernameNotFoundException $e) {
-                throw new UnsupportedUserException(sprintf('Unable to refresh active admin AcmeUserBundle:User object identified by "%s".', $username), null, 0, $e);
+            $class = get_class($user);
+            if (!$this->supportsClass($class)) {
+                throw new UnsupportedUserException(sprintf('Instances of "%s" are not supported.', $class));
             }
 
-            return $user;
+            return $this->loadUserByUsername($user->getUsername());
         }
 
         public function supportsClass($class)
         {
-            return 'Acme\Bundle\UserBundle\Entity\User' === $class;
-        }
-
-        private function getAdministratorQueryBuilder()
-        {
-            $qb = $this
-                ->createQueryBuilder('u')
-                ->where('u.isActive = :status')
-                ->andWhere('u.role IN (:role)')
-                ->setParameter('status', true)
-                ->setParameter('role', array('ROLE_ADMIN', 'ROLE_SUPERADMIN'))
-            ;
-
-            return $qb;
+            return $this->getEntityName() === $class || is_subclass_of($class, $this->getEntityName());
         }
     }
 
@@ -319,12 +374,133 @@ of the ``security.yml`` file.
         # ...
 
 By doing this, the security layer will use an instance of ``UserRepository`` and
-call its ``loadUserByUsername()`` method to fetch an active administrator user
-from the database.
+call its ``loadUserByUsername()`` method to fetch a user from the database
+whether he filled his username or email address.
 
-.. _`EntityUserProvider`: http://api.symfony.com/2.0/Symfony/Bridge/Doctrine/Security/User/EntityUserProvider.html
-.. _`UserInterface`: http://api.symfony.com/2.0/Symfony/Component/Security/Core/User/UserInterface.html
-.. _`UserProviderInterface`: http://api.symfony.com/2.0/Symfony/Component/Security/Core/User/UserProviderInterface.html
-.. _`UsernameNotFoundException`: http://api.symfony.com/2.0/Symfony/Component/Security/Core/Exception/UsernameNotFoundException.html
-.. _`UnsupportedUserException`: http://api.symfony.com/2.0/Symfony/Component/Security/Core/Exception/UnsupportedUserException.html
-.. _`SecurityBundle`: http://symfony.com/doc/current/reference/configuration/security.html
+Managing Roles in the Database
+------------------------------
+
+The end of this tutorial focuses on how to store and retrieve a list of roles
+from the database. The ``AcmeUserBundle:User`` entity class defines a
+many-to-many relationship with a ``AcmeUserBundle:Group`` entity class. A user
+can be affected to zero or several groups and a group can be composed of one or
+more users. As a group is also a role, the previous ``getRoles()`` method now
+returns the list of related groups.
+
+.. code-block::php
+
+    // src/Acme/Bundle/UserBundle/Entity/User.php
+
+    namespace Acme\Bundle\UserBundle\Entity;
+
+    use Doctrine\Common\Collections\ArrayCollection;
+
+    // ...
+    class User implements AdvancedUserInterface
+    {
+        /**
+         * @ORM\ManyToMany(targetEntity="Group", inversedBy="users")
+         *
+         */
+        private $groups;
+
+        public function __construct()
+        {
+            $this->groups = new ArrayCollection();
+        }
+
+        // ...
+
+        public function getRoles()
+        {
+            return $this->groups->toArray();
+        }
+    }
+
+The ``AcmeUserBundle:Group`` entity class defines three table fields (``id``,
+``name`` and ``role``). The unique ``role`` field contains the role name used by
+the Symfony security layer to secure parts of the application. The most
+important thing to notice is that the ``AcmeUserBundle:Group`` entity class
+implements the :class:`Symfony\\Component\\Security\\Core\\Role\\RoleInterface`
+that forces it to have a ``getRole()`` method.
+
+.. code-block::php
+
+    namespace Acme\Bundle\UserBundle\Entity;
+
+    use Symfony\Component\Security\Core\Role\RoleInterface;
+    use Doctrine\Common\Collections\ArrayCollection;
+    use Doctrine\ORM\Mapping as ORM;
+
+    /**
+     * @ORM\Table(name="acme_groups")
+     * @ORM\Entity()
+     */
+    class Group implements RoleInterface
+    {
+        /**
+         * @ORM\Column(name="id", type="integer")
+         * @ORM\Id()
+         * @ORM\GeneratedValue(strategy="AUTO")
+         */
+        private $id;
+
+        /** @ORM\Column(name="name", type="string", length=30) */
+        private $name;
+
+        /** @ORM\Column(name="role", type="string", length=20, unique=true) */
+        private $role;
+
+        /** @ORM\ManyToMany(targetEntity="User", mappedBy="groups") */
+        private $users;
+
+        public function __construct()
+        {
+            $this->users = new ArrayCollection();
+        }
+
+        // ... getters and setters for each property
+
+        /** @see RoleInterface */
+        public function getRole()
+        {
+            return $this->role;
+        }
+    }
+
+To improve performances and avoid lazy loading of groups when retrieving a user
+from the custom entity provider, the best solution is to join the groups
+relationship in the ``UserRepository::loadUserByUsername()`` method. This will
+fetch the user and his associated roles / groups with one single query.
+
+.. code-block::php
+
+    // src/Acme/Bundle/UserBundle/Entity/UserRepository.php
+
+    namespace Acme\Bundle\UserBundle\Entity;
+
+    // ...
+
+    class UserRepository extends EntityRepository implements UserProviderInterface
+    {
+        public function loadUserByUsername($username)
+        {
+            $q = $this
+                ->createQueryBuilder('u')
+                ->select('u, g')
+                ->leftJoin('u.groups', 'g')
+                ->where('u.username = :username OR u.email = :email')
+                ->setParameter('username', $username)
+                ->setParameter('email', $username)
+                ->getQuery()
+            ;
+
+            // ...
+        }
+
+        // ...
+    }
+
+The ``QueryBuilder::leftJoin()`` method joins and fetches related groups from
+the ``AcmeUserBundle:User`` model class when a user is retrieved with his email
+address or username.
