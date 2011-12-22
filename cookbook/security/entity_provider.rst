@@ -51,7 +51,7 @@ focus on the most important methods that come from the
     /**
      * Acme\Bundle\UserBundle\Entity\User
      *
-     * @ORM\Table()
+     * @ORM\Table(name="acme_users")
      * @ORM\Entity(repositoryClass="Acme\Bundle\UserBundle\Entity\UserRepository")
      */
     class User implements UserInterface
@@ -168,7 +168,8 @@ Authenticating Someone Against a Database
 
 Authenticating a Doctrine user against the database with the Symfony security
 layer is a piece of cake. Everything resides in the configuration of the
-`SecurityBundle`_ stored in the ``app/config/security.yml`` file.
+:doc:`SecurityBundle</reference/configuration/security>` stored in the
+``app/config/security.yml`` file.
 
 Below is an example of configuration to authenticate the user with an HTTP basic
 authentication connected to the database.
@@ -319,8 +320,6 @@ The code below shows the implementation of the
 
     class UserRepository extends EntityRepository implements UserProviderInterface
     {
-        const ENTITY_CLASS = 'Acme\Bundle\UserBundle\Entity\User';
-
         public function loadUserByUsername($username)
         {
             $q = $this
@@ -354,7 +353,7 @@ The code below shows the implementation of the
 
         public function supportsClass($class)
         {
-            return self::ENTITY_CLASS === $class || is_subclass_of($class, self::ENTITY_CLASS);
+            return $this->getEntityName() === $class || is_subclass_of($class, $this->getEntityName());
         }
     }
 
@@ -376,7 +375,7 @@ of the ``security.yml`` file.
 
 By doing this, the security layer will use an instance of ``UserRepository`` and
 call its ``loadUserByUsername()`` method to fetch a user from the database
-wether he filled his username or email address.
+whether he filled his username or email address.
 
 Managing Roles in the Database
 ------------------------------
@@ -394,6 +393,8 @@ returns the list of related groups.
 
     namespace Acme\Bundle\UserBundle\Entity;
 
+    use Doctrine\Common\Collections\ArrayCollection;
+
     // ...
     class User implements AdvancedUserInterface
     {
@@ -403,11 +404,16 @@ returns the list of related groups.
          */
         private $groups;
 
+        public function __construct()
+        {
+            $this->groups = new ArrayCollection();
+        }
+
         // ...
 
         public function getRoles()
         {
-            return $this->groups;
+            return $this->groups->toArray();
         }
     }
 
@@ -426,7 +432,10 @@ that forces it to have a ``getRole()`` method.
     use Doctrine\Common\Collections\ArrayCollection;
     use Doctrine\ORM\Mapping as ORM;
 
-    /** @ORM\Entity() */
+    /**
+     * @ORM\Table(name="acme_groups")
+     * @ORM\Entity()
+     */
     class Group implements RoleInterface
     {
         /**
@@ -452,6 +461,7 @@ that forces it to have a ``getRole()`` method.
 
         // ... getters and setters for each property
 
+        /** @see RoleInterface */
         public function getRole()
         {
             return $this->role;
@@ -477,6 +487,7 @@ fetch the user and his associated roles / groups with one single query.
         {
             $q = $this
                 ->createQueryBuilder('u')
+                ->select('u, g')
                 ->leftJoin('u.groups', 'g')
                 ->where('u.username = :username OR u.email = :email')
                 ->setParameter('username', $username)
@@ -493,5 +504,3 @@ fetch the user and his associated roles / groups with one single query.
 The ``QueryBuilder::leftJoin()`` method joins and fetches related groups from
 the ``AcmeUserBundle:User`` model class when a user is retrieved with his email
 address or username.
-
-.. _`SecurityBundle`: http://symfony.com/doc/current/reference/configuration/security.html
