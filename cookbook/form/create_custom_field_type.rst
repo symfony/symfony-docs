@@ -44,7 +44,8 @@ AbstractType.
                     'attr' => array(
                         'class' => 'lastName'
                     )
-                ));
+                ))
+            ;
         }
 
         /**
