@@ -344,15 +344,12 @@ The code below shows the implementation of the
 
         public function refreshUser(UserInterface $user)
         {
-            $username = $user->getUsername();
-
-            try {
-                $user = $this->loadUserByUsername($username);
-            } catch (UsernameNotFoundException $e) {
-                throw new UnsupportedUserException(sprintf('Unable to refresh active admin AcmeUserBundle:User object identified by "%s".', $username), null, 0, $e);
+            $class = get_class($user);
+            if (!$this->supportsClass($class)) {
+                throw new UnsupportedUserException(sprintf('Instances of "%s" are not supported.', $class));
             }
 
-            return $user;
+            return $this->loadUserByUsername($user->getUsername());
         }
 
         public function supportsClass($class)
