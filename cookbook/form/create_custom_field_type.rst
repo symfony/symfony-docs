@@ -34,16 +34,17 @@ AbstractType.
          */
         public function buildForm(FormBuilder $builder, array $options)
         {
-            $builder->add('firstName', 'text', array(
-                'attr' => array(
-                    'class' => 'firstName'
-                )
-            ));
-            $builder->add('lastName', 'text', array(
-                'attr' => array(
-                    'class' => 'lastName'
-                )
-            ));
+            $builder
+                ->add('firstName', 'text', array(
+                    'attr' => array(
+                        'class' => 'firstName'
+                    )
+                ))
+                ->add('lastName', 'text', array(
+                    'attr' => array(
+                        'class' => 'lastName'
+                    )
+                ));
         }
 
         /**
