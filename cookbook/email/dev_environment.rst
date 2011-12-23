@@ -127,3 +127,29 @@ page.
 Instead, you'll need to set the ``intercept_redirects`` option to ``true`` in
 the ``config_dev.yml`` file, which will cause the redirect to stop and allow
 you to open the report with details of the sent emails.
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # app/config/config_dev.yml
+        web_profiler:
+            intercept_redirects: true
+
+    .. code-block:: xml
+
+        <!-- app/config/config_dev.xml -->
+
+        <!-- xmlns:webprofiler="http://symfony.com/schema/dic/webprofiler" -->
+        <!-- xsi:schemaLocation="http://symfony.com/schema/dic/webprofiler http://symfony.com/schema/dic/webprofiler/webprofiler-1.0.xsd"> -->
+
+        <webprofiler:config
+            intercept-redirects="true"
+        />
+
+    .. code-block:: php
+
+        // app/config/config_dev.php
+        $container->loadFromExtension('web_profiler', array(
+            'intercept_redirects' => 'true',
+        ));
