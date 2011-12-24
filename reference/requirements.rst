@@ -38,10 +38,10 @@ Optional
 * APC 3.0.17+ (or another opcode cache needs to be installed)
 * PHP.ini recommended settings
 
-    * short_open_tags: off
-    * magic_quotes_gpc: off
-    * register_globals: off
-    * session.autostart: off
+    * ``short_open_tag = Off``
+    * ``magic_quotes_gpc = Off``
+    * ``register_globals = Off``
+    * ``session.autostart = Off``
     
 Doctrine
 --------
