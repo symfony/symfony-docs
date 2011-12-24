@@ -124,9 +124,16 @@ If you're sending an email and then immediately redirecting to another page,
 the web debug toolbar will not display an email icon or a report on the next
 page.
 
-Instead, you'll need to set the ``intercept_redirects`` option to ``true`` in
-the ``config_dev.yml`` file, which will cause the redirect to stop and allow
+Instead, you can set the ``intercept_redirects`` option to ``true`` in the
+``config_dev.yml`` file, which will cause the redirect to stop and allow
 you to open the report with details of the sent emails.
+
+.. tip::
+
+    Alternatively, you can open the profiler after the redirect and search
+    by the submit URL used on previous request (e.g. ``/contact/handle``).
+    The profiler's search feature allows you to load the profiler information
+    for any past requests.
 
 .. configuration-block::
 
