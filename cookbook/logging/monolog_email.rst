@@ -39,7 +39,7 @@ it is broken down.
             <monolog:config>
                 <monolog:handler
                     name="mail"
-                    type="fingerscrossed"
+                    type="fingers_crossed"
                     action-level="critical"
                     handler="buffered"
                 />
@@ -58,7 +58,7 @@ it is broken down.
             </monolog:config>
         </container>
 
-The ``mail`` handler is a ``fingerscrossed`` handler which means that
+The ``mail`` handler is a ``fingers_crossed`` handler which means that
 it is only triggered when the action level, in this case ``critical`` is reached.
 It then logs everything including messages below the action level.  The
 ``critical`` level is only triggered for 5xx HTTP code errors. The ``handler``

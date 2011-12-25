@@ -277,9 +277,9 @@ Next, refactor the ``Document`` class to take advantage of these callbacks::
                 return;
             }
 
-            // you must throw an exception here if the file cannot be moved
-            // so that the entity is not persisted to the database
-            // which the UploadedFile move() method does automatically
+            // if there is an error when moving the file, an exception will
+            // be automatically thrown by move(). This will properly prevent
+            // the entity from being persisted to the database on error
             $this->file->move($this->getUploadRootDir(), $this->path);
 
             unset($this->file);
