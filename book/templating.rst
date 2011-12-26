@@ -940,7 +940,7 @@ Overriding Bundle Templates
 ---------------------------
 
 The Symfony2 community prides itself on creating and maintaining high quality
-bundles (see `Symfony2Bundles.org`_) for a large number of different features.
+bundles (see `KnpBundles.com`_) for a large number of different features.
 Once you use a third-party bundle, you'll likely need to override and customize
 one or more of its templates.
 
@@ -1233,9 +1233,9 @@ Learn more from the Cookbook
 * :doc:`/cookbook/controller/error_pages`
 
 .. _`Twig`: http://twig.sensiolabs.org
-.. _`Symfony2Bundles.org`: http://symfony2bundles.org
+.. _`KnpBundles.com`: http://knpbundles.com
 .. _`Cross Site Scripting`: http://en.wikipedia.org/wiki/Cross-site_scripting
-.. _`Output Escaping`: http://twig.sensiolabs.org
+.. _`Output Escaping`: http://twig.sensiolabs.org/doc/api.html#escaper-extension
 .. _`tags`: http://twig.sensiolabs.org/doc/tags/index.html
-.. _`filters`: http://twig.sensiolabs.org/doc/templates.html#filters
-.. _`add your own extensions`: http://twig.sensiolabs.org/doc/advanced.html
+.. _`filters`: http://twig.sensiolabs.org/doc/filters/index.html
+.. _`add your own extensions`: http://twig.sensiolabs.org/doc/extensions.html
