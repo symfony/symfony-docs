@@ -136,7 +136,7 @@ interface forces the class to implement the six following methods:
 * ``equals()`` compares the current object with another
   :class:`Symfony\\Component\\Security\\Core\\User\\UserInterface`
   instance,
-* ``eraseCredentials()`` removes sensible information stored in the
+* ``eraseCredentials()`` removes sensitive information stored in the
   :class:`Symfony\\Component\\Security\\Core\\User\\UserInterface` object.
 
 To keep it simple, the ``equals()`` method just compares the ``username`` field

@@ -226,10 +226,20 @@ have all the request information at your fingertips::
 
     // retrieve GET and POST variables respectively
     $request->query->get('foo');
-    $request->request->get('bar');
+    $request->request->get('bar', 'default value if bar does not exist');
+
+    // retrieve SERVER variables
+    $request->server->get('HTTP_HOST');
 
     // retrieves an instance of UploadedFile identified by foo
     $request->files->get('foo');
+
+    // retrieve a COOKIE value
+    $request->cookies->get('PHPSESSID');
+
+    // retrieve an HTTP request header, with normalized, lowercase keys
+    $request->headers->get('host');
+    $request->headers->get('content_type');
 
     $request->getMethod();          // GET, POST, PUT, DELETE, HEAD
     $request->getLanguages();       // an array of languages the client accepts
@@ -238,6 +248,27 @@ As a bonus, the ``Request`` class does a lot of work in the background that
 you'll never need to worry about. For example, the ``isSecure()`` method
 checks the *three* different values in PHP that can indicate whether or not
 the user is connecting via a secured connection (i.e. ``https``).
+
+.. sidebar:: ParameterBags and Request attributes
+
+    As seen above, the ``$_GET`` and ``$_POST`` variables are accessible via
+    the public ``query`` and ``request`` properties respectively. Each of
+    these objects is a :class:`Symfony\\Component\\HttpFoundation\\ParameterBag`
+    object, which has methods like
+    :method:`Symfony\\Component\\HttpFoundation\\ParameterBag::get`,
+    :method:`Symfony\\Component\\HttpFoundation\\ParameterBag::has`,
+    :method:`Symfony\\Component\\HttpFoundation\\ParameterBag::all` and more.
+    In fact, every public property used in the previous example is some instance
+    of the ParameterBag.
+    
+    The Request class also has a public ``attributes`` property, which holds
+    special data related to how the application works internally. For the
+    Symfony2 framework, the ``attributes`` holds the values returned by the
+    matched route, like ``_controller``, ``id`` (if you have an ``{id}``
+    wildcard), and even the name of the matched route (``_route``). The
+    ``attributes`` property exists entirely to be a place where you can
+    prepare and store context-specific information about the request.
+    
 
 Symfony also provides a ``Response`` class: a simple PHP representation of
 an HTTP response message. This allows your application to use an object-oriented
