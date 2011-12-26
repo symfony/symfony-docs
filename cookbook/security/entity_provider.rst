@@ -327,6 +327,7 @@ The code below shows the implementation of the
     use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
     use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
     use Doctrine\ORM\EntityRepository;
+    use Doctrine\ORM\NoResultException;
 
     class UserRepository extends EntityRepository implements UserProviderInterface
     {
@@ -344,7 +345,7 @@ The code below shows the implementation of the
                 // The Query::getSingleResult() method throws an exception
                 // if there is no record matching the criteria.
                 $user = $q->getSingleResult();
-            } catch (\Exception $e) {
+            } catch (NoResultException $e) {
                 throw new UsernameNotFoundException(sprintf('Unable to find an active admin AcmeUserBundle:User object identified by "%s".', $username), null, 0, $e);
             }
 
