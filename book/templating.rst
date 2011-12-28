@@ -22,7 +22,9 @@ Templates
 
 A template is simply a text file that can generate any text-based format
 (HTML, XML, CSV, LaTeX ...). The most familiar type of template is a *PHP*
-template - a text file parsed by PHP that contains a mix of text and PHP code::
+template - a text file parsed by PHP that contains a mix of text and PHP code:
+
+.. code-block:: html+php
 
     <!DOCTYPE html>
     <html>
@@ -205,7 +207,7 @@ First, build a base layout file:
             </body>
         </html>
 
-    .. code-block:: php
+    .. code-block:: html+php
 
         <!-- app/Resources/views/base.html.php -->
         <!DOCTYPE html>
@@ -262,7 +264,7 @@ A child template might look like this:
             {% endfor %}
         {% endblock %}
 
-    .. code-block:: php
+    .. code-block:: html+php
 
         <!-- src/Acme/BlogBundle/Resources/views/Blog/index.html.php -->
         <?php $view->extend('::base.html.php') ?>
@@ -288,7 +290,9 @@ the templating engine to first evaluate the base template, which sets up
 the layout and defines several blocks. The child template is then rendered,
 at which point the ``title`` and ``body`` blocks of the parent are replaced
 by those from the child. Depending on the value of ``blog_entries``, the
-output might look like this::
+output might look like this:
+
+.. code-block:: html
 
     <!DOCTYPE html>
     <html>
@@ -492,7 +496,7 @@ template. First, create the template that you'll need to reuse.
           {{ article.body }}
         </p>
 
-    .. code-block:: php
+    .. code-block:: html+php
 
         <!-- src/Acme/ArticleBundle/Resources/views/Article/articleDetails.html.php -->
         <h2><?php echo $article->getTitle() ?></h2>
@@ -519,7 +523,7 @@ Including this template from any other template is simple:
             {% endfor %}
         {% endblock %}
 
-    .. code-block:: php
+    .. code-block:: html+php
 
         <!-- src/Acme/ArticleBundle/Resources/Article/list.html.php -->
         <?php $view->extend('AcmeArticleBundle::layout.html.php') ?>
@@ -588,7 +592,7 @@ The ``recentList`` template is perfectly straightforward:
           </a>
         {% endfor %}
 
-    .. code-block:: php
+    .. code-block:: html+php
 
         <!-- src/Acme/ArticleBundle/Resources/views/Article/recentList.html.php -->
         <?php foreach ($articles as $article): ?>
@@ -617,7 +621,7 @@ syntax for controllers (i.e. **bundle**:**controller**:**action**):
             {% render "AcmeArticleBundle:Article:recentArticles" with {'max': 3} %}
         </div>
 
-    .. code-block:: php
+    .. code-block:: html+php
 
         <!-- app/Resources/views/base.html.php -->
         ...
@@ -677,7 +681,7 @@ To link to the page, just use the ``path`` Twig function and refer to the route:
 
         <a href="{{ path('_welcome') }}">Home</a>
 
-    .. code-block:: php
+    .. code-block:: html+php
 
         <a href="<?php echo $view['router']->generate('_welcome') ?>">Home</a>
 
@@ -723,7 +727,7 @@ correctly:
           </a>
         {% endfor %}
 
-    .. code-block:: php
+    .. code-block:: html+php
 
         <!-- src/Acme/ArticleBundle/Resources/views/Article/recentList.html.php -->
         <?php foreach ($articles in $article): ?>
@@ -743,7 +747,7 @@ correctly:
     The same can be done in PHP templates by passing a third argument to
     the ``generate()`` method:
 
-    .. code-block:: php
+    .. code-block:: html+php
 
         <a href="<?php echo $view['router']->generate('_welcome', array(), true) ?>">Home</a>
 
@@ -765,7 +769,7 @@ but Symfony2 provides a more dynamic option via the ``assets`` Twig function:
 
         <link href="{{ asset('css/blog.css') }}" rel="stylesheet" type="text/css" />
 
-    .. code-block:: php
+    .. code-block:: html+php
 
         <img src="<?php echo $view['assets']->getUrl('images/logo.png') ?>" alt="Symfony!" />
 
@@ -1076,7 +1080,7 @@ this classic example:
 
         Hello {{ name }}
 
-    .. code-block:: php
+    .. code-block:: html+php
 
         Hello <?php echo $name ?>
 
