@@ -770,24 +770,41 @@ Relationship Mapping Metadata
 To relate the ``Category`` and ``Product`` entities, start by creating a
 ``products`` property on the ``Category`` class::
 
-    // src/Acme/StoreBundle/Entity/Category.php
-    // ...
-    use Doctrine\Common\Collections\ArrayCollection;
-    
-    class Category
-    {
-        // ...
-        
-        /**
-         * @ORM\OneToMany(targetEntity="Product", mappedBy="category")
-         */
-        protected $products;
+.. configuration-block::
 
-        public function __construct()
+    .. code-block:: php-annotations
+
+        // src/Acme/StoreBundle/Entity/Category.php
+        // ...
+        use Doctrine\Common\Collections\ArrayCollection;
+        
+        class Category
         {
-            $this->products = new ArrayCollection();
-        }
+            // ...
+            
+            /**
+             * @ORM\OneToMany(targetEntity="Product", mappedBy="category")
+             */
+            protected $products;
+    
+            public function __construct()
+            {
+                $this->products = new ArrayCollection();
+            }
     }
+
+    .. code-block:: yaml
+
+        # src/Acme/StoreBundle/Resources/config/doctrine/Category.orm.yml
+        Acme\StoreBundle\Entity\Category:
+            type: entity
+            # ...
+            oneToMany:
+                products:
+                    targetEntity: Product
+                    mappedBy: category
+            # don't forget to init the collection in entity __construct() method
+
 
 First, since a ``Category`` object will relate to many ``Product`` objects,
 a ``products`` array property is added to hold those ``Product`` objects.
@@ -813,19 +830,37 @@ makes sense in the application for each ``Category`` to hold an array of
 Next, since each ``Product`` class can relate to exactly one ``Category``
 object, you'll want to add a ``$category`` property to the ``Product`` class::
 
-    // src/Acme/StoreBundle/Entity/Product.php
-    // ...
+.. configuration-block::
 
-    class Product
-    {
+    .. code-block:: php-annotations
+
+        // src/Acme/StoreBundle/Entity/Product.php
         // ...
     
-        /**
-         * @ORM\ManyToOne(targetEntity="Category", inversedBy="products")
-         * @ORM\JoinColumn(name="category_id", referencedColumnName="id")
-         */
-        protected $category;
-    }
+        class Product
+        {
+            // ...
+        
+            /**
+             * @ORM\ManyToOne(targetEntity="Category", inversedBy="products")
+             * @ORM\JoinColumn(name="category_id", referencedColumnName="id")
+             */
+            protected $category;
+        }
+
+    .. code-block:: yaml
+
+        # src/Acme/StoreBundle/Resources/config/doctrine/Product.orm.yml
+        Acme\StoreBundle\Entity\Product:
+            type: entity
+            # ...
+            manyToOne:
+                category:
+                    targetEntity: Category
+                    inversedBy: products
+                    joinColumn:
+                        name: category_id
+                        referencedColumnName: id
 
 Finally, now that you've added a new property to both the ``Category`` and
 ``Product`` classes, tell Doctrine to generate the missing getter and setter
