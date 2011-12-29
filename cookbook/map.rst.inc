@@ -46,6 +46,7 @@
   * :doc:`/cookbook/service_container/factories`
   * :doc:`/cookbook/service_container/parentservices`
   * :doc:`/cookbook/service_container/scopes`
+  * :doc:`/cookbook/service_container/tags`
   * :doc:`/cookbook/configuration/pdo_session_storage`
 
 * **Bundles**
@@ -71,6 +72,7 @@
 
 * **Security**
 
+  * :doc:`/cookbook/security/entity_provider`
   * :doc:`/cookbook/security/remember_me`
   * :doc:`/cookbook/security/voters`
   * :doc:`/cookbook/security/acl`

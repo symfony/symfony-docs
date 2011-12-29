@@ -1052,6 +1052,8 @@ field of that class.
 For more information on creating your own custom provider (e.g. if you needed
 to load users via a web service), see :doc:`/cookbook/security/custom_provider`.
 
+.. _book-security-encoding-user-password:
+
 Encoding the User's Password
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 

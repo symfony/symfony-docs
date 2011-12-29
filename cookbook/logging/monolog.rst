@@ -59,7 +59,7 @@ allows you to log the messages in several ways easily.
                     path: /var/log/symfony.log
                     level: error
                 main:
-                    type: fingerscrossed
+                    type: fingers_crossed
                     action_level: warning
                     handler: file
                 file:
@@ -83,7 +83,7 @@ allows you to log the messages in several ways easily.
                 />
                 <monolog:handler
                     name="main"
-                    type="fingerscrossed"
+                    type="fingers_crossed"
                     action-level="warning"
                     handler="file"
                 />
@@ -101,7 +101,7 @@ in the order where they are defined.
 .. tip::
 
     The handler named "file" will not be included in the stack itself as
-    it is used as a nested handler of the fingerscrossed handler.
+    it is used as a nested handler of the ``fingers_crossed`` handler.
 
 .. note::
 

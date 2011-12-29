@@ -1,21 +1,21 @@
 How to Work with Emails During Development
 ==========================================
 
-When you are creating an application which sends emails, you will often
-not want to actually send the emails to the specified recipient while
+When developing an application which sends email, you will often
+not want to actually send the email to the specified recipient during
 development. If you are using the ``SwiftmailerBundle`` with Symfony2, you
 can easily achieve this through configuration settings without having to
 make any changes to your application's code at all. There are two main
-choices when it comes to handling emails during development: (a) disabling the
-sending of emails altogether or (b) sending all the emails to a specified
+choices when it comes to handling email during development: (a) disabling the
+sending of email altogether or (b) sending all email to a specific
 address.
 
 Disabling Sending
 -----------------
 
-You can disable sending emails by setting the ``disable_delivery`` option
+You can disable sending email by setting the ``disable_delivery`` option
 to ``true``. This is the default in the ``test`` environment in the Standard
-distribution. If you do this in the ``test`` specific config then emails
+distribution. If you do this in the ``test`` specific config then email
 will not be sent when you run tests, but will continue to be sent in the
 ``prod`` and ``dev`` environments:
 
@@ -47,12 +47,12 @@ will not be sent when you run tests, but will continue to be sent in the
         ));
 
 If you'd also like to disable deliver in the ``dev`` environment, simply
-add this configuration to the ``config_dev.yml`` file.
+add this same configuration to the ``config_dev.yml`` file.
 
 Sending to a Specified Address
 ------------------------------
 
-You can also choose to have all emails sent to a specific address, instead
+You can also choose to have all email sent to a specific address, instead
 of the address actually specified when sending the message. This can be done
 via the ``delivery_address`` option:
 
@@ -101,9 +101,8 @@ Now, suppose you're sending an email to ``recipient@example.com``.
     }
 
 In the ``dev`` environment, the email will instead be sent to ``dev@example.com``.
-Swiftmailer will add an extra header to the email, ``X-Swift-To`` containing
-the replaced address, so you will still be able to see who it would have been
-sent to.
+Swiftmailer will add an extra header to the email, ``X-Swift-To``, containing
+the replaced address, so you can still see who it would have been sent to.
 
 .. note::
 
@@ -116,11 +115,48 @@ sent to.
 Viewing from the Web Debug Toolbar
 ----------------------------------
 
-You can view any emails sent by a page when you are in the ``dev`` environment
-using the Web Debug Toolbar. The email icon in the toolbar will show how
-many emails were sent. If you click it, a report showing the details of the
-emails will open.
+You can view any email sent during a single response when you are in the
+``dev`` environment using the Web Debug Toolbar. The email icon in the toolbar
+will show how many emails were sent. If you click it, a report will open
+showing the details of the sent emails.
 
-If you're sending an email and then redirecting immediately after, you'll
-need to set the ``intercept_redirects`` option to ``true`` in the ``config_dev.yml``
-file so that you can see the email in the web debug toolbar before being redirected. 
+If you're sending an email and then immediately redirecting to another page,
+the web debug toolbar will not display an email icon or a report on the next
+page.
+
+Instead, you can set the ``intercept_redirects`` option to ``true`` in the
+``config_dev.yml`` file, which will cause the redirect to stop and allow
+you to open the report with details of the sent emails.
+
+.. tip::
+
+    Alternatively, you can open the profiler after the redirect and search
+    by the submit URL used on previous request (e.g. ``/contact/handle``).
+    The profiler's search feature allows you to load the profiler information
+    for any past requests.
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # app/config/config_dev.yml
+        web_profiler:
+            intercept_redirects: true
+
+    .. code-block:: xml
+
+        <!-- app/config/config_dev.xml -->
+
+        <!-- xmlns:webprofiler="http://symfony.com/schema/dic/webprofiler" -->
+        <!-- xsi:schemaLocation="http://symfony.com/schema/dic/webprofiler http://symfony.com/schema/dic/webprofiler/webprofiler-1.0.xsd"> -->
+
+        <webprofiler:config
+            intercept-redirects="true"
+        />
+
+    .. code-block:: php
+
+        // app/config/config_dev.php
+        $container->loadFromExtension('web_profiler', array(
+            'intercept_redirects' => 'true',
+        ));

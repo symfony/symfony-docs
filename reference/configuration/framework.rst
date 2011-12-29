@@ -247,6 +247,7 @@ Full Default Configuration
             ide:                  ~
             test:                 ~
             default_locale:       en
+            trust_proxy_headers:  false
 
             # form configuration
             form:
