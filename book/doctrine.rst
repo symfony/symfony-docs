@@ -1245,23 +1245,42 @@ Each field can have a set of options applied to it. The available options
 include ``type`` (defaults to ``string``), ``name``, ``length``, ``unique``
 and ``nullable``. Take a few annotations examples:
 
-.. code-block:: php-annotations
+.. configuration-block::
 
-    /**
-     * A string field with length 255 that cannot be null
-     * (reflecting the default values for the "type", "length" and *nullable* options)
-     * 
-     * @ORM\Column()
-     */
-    protected $name;
+    .. code-block:: php-annotations
 
-    /**
-     * A string field of length 150 that persists to an "email_address" column
-     * and has a unique index.
-     *
-     * @ORM\Column(name="email_address", unique="true", length="150")
-     */
-    protected $email;
+        /**
+         * A string field with length 255 that cannot be null
+         * (reflecting the default values for the "type", "length" and *nullable* options)
+         * 
+         * @ORM\Column()
+         */
+        protected $name;
+    
+        /**
+         * A string field of length 150 that persists to an "email_address" column
+         * and has a unique index.
+         *
+         * @ORM\Column(name="email_address", unique="true", length="150")
+         */
+        protected $email;
+
+    .. code-block:: yaml
+
+        fields:
+            # A string field length 255 that cannot be null
+            # (reflecting the default values for the "length" and *nullable* options)
+            # type attribute is necessary in yaml definitions
+            name:
+                type: string
+
+            # A string field of length 150 that persists to an "email_address" column
+            # and has a unique index.
+            email:
+                type: string
+                column: email_address
+                length: 150
+                unique: true
 
 .. note::
 
