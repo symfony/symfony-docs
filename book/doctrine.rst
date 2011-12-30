@@ -791,7 +791,7 @@ To relate the ``Category`` and ``Product`` entities, start by creating a
             {
                 $this->products = new ArrayCollection();
             }
-    }
+        }
 
     .. code-block:: yaml
 
