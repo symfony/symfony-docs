@@ -678,7 +678,7 @@ You can define as many URL patterns as you need - each is a regular expression.
 
     .. code-block:: yaml
 
-        # app/config/config.yml
+        # app/config/security.yml
         security:
             # ...
             access_control:
@@ -687,7 +687,7 @@ You can define as many URL patterns as you need - each is a regular expression.
 
     .. code-block:: xml
 
-        <!-- app/config/config.xml -->
+        <!-- app/config/security.xml -->
         <config>
             <!-- ... -->
             <rule path="^/admin/users" role="ROLE_SUPER_ADMIN" />
@@ -696,7 +696,7 @@ You can define as many URL patterns as you need - each is a regular expression.
 
     .. code-block:: php
 
-        // app/config/config.php
+        // app/config/security.php
         $container->loadFromExtension('security', array(
             // ...
             'access_control' => array(
@@ -895,7 +895,7 @@ In fact, you've seen this already in the example in this chapter.
 
     .. code-block:: yaml
 
-        # app/config/config.yml
+        # app/config/security.yml
         security:
             # ...
             providers:
@@ -907,7 +907,7 @@ In fact, you've seen this already in the example in this chapter.
 
     .. code-block:: xml
 
-        <!-- app/config/config.xml -->
+        <!-- app/config/security.xml -->
         <config>
             <!-- ... -->
             <provider name="default_provider">
@@ -920,7 +920,7 @@ In fact, you've seen this already in the example in this chapter.
 
     .. code-block:: php
 
-        // app/config/config.php
+        // app/config/security.php
         $container->loadFromExtension('security', array(
             // ...
             'providers' => array(
@@ -1069,7 +1069,7 @@ do the following:
 
     .. code-block:: yaml
 
-        # app/config/config.yml
+        # app/config/security.yml
         security:
             # ...
             providers:
@@ -1087,7 +1087,7 @@ do the following:
 
     .. code-block:: xml
 
-        <!-- app/config/config.xml -->
+        <!-- app/config/security.xml -->
         <config>
             <!-- ... -->
             <provider name="in_memory">
@@ -1102,7 +1102,7 @@ do the following:
 
     .. code-block:: php
 
-        // app/config/config.php
+        // app/config/security.php
         $container->loadFromExtension('security', array(
             // ...
             'providers' => array(
@@ -1139,7 +1139,7 @@ configure the encoder for that user:
 
     .. code-block:: yaml
 
-        # app/config/config.yml
+        # app/config/security.yml
         security:
             # ...
 
@@ -1148,7 +1148,7 @@ configure the encoder for that user:
 
     .. code-block:: xml
 
-        <!-- app/config/config.xml -->
+        <!-- app/config/security.xml -->
         <config>
             <!-- ... -->
 
@@ -1157,7 +1157,7 @@ configure the encoder for that user:
 
     .. code-block:: php
 
-        // app/config/config.php
+        // app/config/security.php
         $container->loadFromExtension('security', array(
             // ...
 
@@ -1245,7 +1245,7 @@ a new provider that chains the two together:
 
     .. code-block:: xml
 
-        <!-- app/config/config.xml -->
+        <!-- app/config/security.xml -->
         <config>
             <provider name="chain_provider">
                 <chain>
@@ -1263,7 +1263,7 @@ a new provider that chains the two together:
 
     .. code-block:: php
 
-        // app/config/config.php
+        // app/config/security.php
         $container->loadFromExtension('security', array(
             'providers' => array(
                 'chain_provider' => array(
@@ -1309,7 +1309,7 @@ the user from both the ``in_memory`` and ``user_db`` providers.
 
         .. code-block:: xml
 
-            <!-- app/config/config.xml -->
+            <!-- app/config/security.xml -->
             <config>
                 <provider name=="main_provider">
                     <memory>
@@ -1321,7 +1321,7 @@ the user from both the ``in_memory`` and ``user_db`` providers.
 
         .. code-block:: php
 
-            // app/config/config.php
+            // app/config/security.php
             $container->loadFromExtension('security', array(
                 'providers' => array(
                     'main_provider' => array(
@@ -1343,7 +1343,7 @@ the first provider is always used:
 
     .. code-block:: yaml
 
-        # app/config/config.yml
+        # app/config/security.yml
         security:
             firewalls:
                 secured_area:
@@ -1356,7 +1356,7 @@ the first provider is always used:
 
     .. code-block:: xml
 
-        <!-- app/config/config.xml -->
+        <!-- app/config/security.xml -->
         <config>
             <firewall name="secured_area" pattern="^/" provider="user_db">
                 <!-- ... -->
@@ -1367,7 +1367,7 @@ the first provider is always used:
 
     .. code-block:: php
 
-        // app/config/config.php
+        // app/config/security.php
         $container->loadFromExtension('security', array(
             'firewalls' => array(
                 'secured_area' => array(
@@ -1458,7 +1458,7 @@ the firewall can handle this automatically for you when you activate the
 
     .. code-block:: yaml
 
-        # app/config/config.yml
+        # app/config/security.yml
         security:
             firewalls:
                 secured_area:
@@ -1470,7 +1470,7 @@ the firewall can handle this automatically for you when you activate the
 
     .. code-block:: xml
 
-        <!-- app/config/config.xml -->
+        <!-- app/config/security.xml -->
         <config>
             <firewall name="secured_area" pattern="^/">
                 <!-- ... -->
@@ -1481,7 +1481,7 @@ the firewall can handle this automatically for you when you activate the
 
     .. code-block:: php
 
-        // app/config/config.php
+        // app/config/security.php
         $container->loadFromExtension('security', array(
             'firewalls' => array(
                 'secured_area' => array(
