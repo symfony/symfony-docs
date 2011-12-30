@@ -184,7 +184,7 @@ Below is an example of configuration where the user will enter his/her
 username and password via HTTP basic authentication. That information will
 then be checked against our User entity records in the database:
 
-.. code-block::yaml
+.. code-block:: yaml
 
     # app/config/security.yml
     security:
