@@ -1243,7 +1243,7 @@ Field Options
 
 Each field can have a set of options applied to it. The available options
 include ``type`` (defaults to ``string``), ``name``, ``length``, ``unique``
-and ``nullable``. Take a few annotations examples:
+and ``nullable``. Take a few examples:
 
 .. configuration-block::
 
