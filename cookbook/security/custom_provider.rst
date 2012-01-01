@@ -1,21 +1,15 @@
 How to create a custom User Provider
 ====================================
 
-Symfony2 firewalls depend for their authentication on user providers. 
+Symfony firewalls depend for their authentication on user providers. 
 These providers are requested by the authentication layer to provide a 
 user object for a given username. Symfony will check whether the 
 password of this user is correct and will then generate a security token, 
 so the user may stay authenticated during the current session. Out of 
-the box, Symfony has a "in_memory" user provider and an "entity" user 
-provider. In this entry we'll see how you can create your own user 
-provider. The user provider in this example tries to load a Yaml file 
-containing information about users in the following format:
-
-.. code-block:: yaml
-
-    username:
-        password: secret
-        roles: [ROLE_USER]
+the box, Symfony has an "in_memory" and an "entity" user provider. 
+In this entry we'll see how you can create your own user provider.
+This may be a custom type of database, file or, in this example,
+a webservice.  
 
 Create a user class
 -------------------
@@ -52,19 +46,22 @@ class:
 
 .. code-block:: php    
 
-    namespace Acme\YamlUserBundle\Security\User;
+    namespace Acme\WebserviceUserBundle\Security\User;
     
     use Symfony\Component\Security\Core\User\UserInterface;
      
-    class YamlUser implements UserInterface
+    class WebserviceUser implements UserInterface
     {
-        protected $username;
-        protected $password;
+        private $username;
+        private $password;
+        private $salt;
+        private $roles;
      
-        public function __construct($username, $password, array $roles)
+        public function __construct($username, $password, $salt, array $roles)
         {
             $this->username = $username;
             $this->password = $password;
+            $this->salt = $salt;
             $this->roles = $roles;
         }
      
@@ -80,6 +77,7 @@ class:
      
         public function getSalt()
         {
+            return $this->salt;
         }
      
         public function getUsername()
@@ -93,7 +91,7 @@ class:
      
         public function equals(UserInterface $user)
         {
-            if (!$user instanceof YamlUser) {
+            if (!$user instanceof WebserviceUser) {
                 return false;
             }
      
@@ -116,15 +114,16 @@ class:
 Create a user provider
 ----------------------
 
-Next we will create a user provider, in this case a ``YamlUserProvider``. 
-This provides the firewall with instances of ``YamlUser``. It has to implement 
-the :class:`Symfony\\Component\\Security\\Core\\User\\UserProviderInterface`, 
-which requires three methods: 
+Next we will create a user provider, in this case a ``WebserviceUserProvider``. 
+It provides the firewall with instances of ``WebserviceUser``. The user provider
+ has to implement the 
+ :class:`Symfony\\Component\\Security\\Core\\User\\UserProviderInterface`, 
+which requires three methods to be defined: 
 
 ``loadUserByUsername($username)``
   Does the actual loading of the user: it looks for a user with the given username 
   in any way that seems appropriate to it and returns a user object (in our example 
-  a ``YamlUser``). If the user was not found, this method must throw a 
+  a ``WebserviceUser``). If the user was not found, this method must throw a 
   ``UsernameNotFoundException``.
 
 ``refreshUser(UserInterface $user)``
@@ -135,12 +134,10 @@ which requires three methods:
 ``supportsClass($class)``
   Should return ``true`` if this user provider can handle users of the given class, 
   ``false`` if not.
-
-The implementation for ``YamlUserProvider`` would be something like this:
     
 .. code-block:: php    
 
-    namespace Acme\YamlUserBundle\Security\User;
+    namespace Acme\WebserviceUserBundle\Security\User;
      
     use Symfony\Component\Security\Core\User\UserProviderInterface;
     use Symfony\Component\Security\Core\User\UserInterface;
@@ -148,41 +145,25 @@ The implementation for ``YamlUserProvider`` would be something like this:
     use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
     use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
      
-    use Symfony\Component\Yaml\Yaml;
-     
-    class YamlUserProvider implements UserProviderInterface
+    class WebserviceUserProvider implements UserProviderInterface
     {
-        protected $users;
-     
-        public function __construct($yml_path)
-        {
-            $userDefinitions = Yaml::parse($yml_path);
-     
-            $this->users = array();
-     
-            // load all user data from the given file
-            foreach ($userDefinitions as $username => $attributes) {
-                $password = isset($attributes['password']) ? $attributes['password'] : null;
-                $roles = isset($attributes['roles']) ? $attributes['roles'] : array();
-     
-                $this->users[$username] = new YamlUser($username, $password, $roles);
-            }
-        }
-     
         public function loadUserByUsername($username)
         {
-            if (!isset($this->users[$username])) {
+            try {
+                // make a call to your webservice here:
+                // throw an exception if you did not find the requested user
+                // $user = ...;
+                
+                return new WebserviceUser($user->getUsername(), $user->getPassword(), $user->getSalt(), $user->getRoles())
+            }
+            catch(\Exception $e) {
                 throw new UsernameNotFoundException(sprintf('Username "%s" does not exist.', $username));
             }
-     
-            $user = $this->users[$username];
-     
-            return new YamlUser($user->getUsername(), $user->getPassword(), $user->getRoles());
         }
      
         public function refreshUser(UserInterface $user)
         {
-            if (!$user instanceof YamlUser) {
+            if (!$user instanceof WebserviceUser) {
                 throw new UnsupportedUserException(sprintf('Instances of "%s" are not supported.', get_class($user)));
             }
      
@@ -191,16 +172,14 @@ The implementation for ``YamlUserProvider`` would be something like this:
      
         public function supportsClass($class)
         {
-            return $class === 'Acme\YamlUserBundle\Security\User\YamlUser';
+            return $class === 'Acme\WebserviceUserBundle\Security\User\WebserviceUser';
         }
     }
 
-As you can see, the constructor depends on one argument, the path to the Yaml file that 
-contains the information about the users. We will add this argument in the next step
-when we create a service for the ``YamlUserProvider``.
-
 Create a service for the user provider
 --------------------------------------
+
+Now we make the user provider available as service.
 
 .. configuration-block::
 
@@ -208,74 +187,58 @@ Create a service for the user provider
 
         # src/Acme/MailerBundle/Resources/config/services.yml
         parameters:
-            yaml_user_provider.class: Acme\YamlUserBundle\Security\User\YamlUserProvider
+            webservice_user_provider.class: Acme\WebserviceUserBundle\Security\User\WebserviceUserProvider
             
         services:
-            yaml_user_provider:
-                class: %yaml_user_provider.class%
-                arguments:
-                    - %kernel.root_dir%/Resources/users.yml
+            webservice_user_provider:
+                class: %webservice_user_provider.class%
     
     .. code-block:: xml
 
-        <!-- src/Acme/YamlUserBundle/Resources/config/services.xml -->
+        <!-- src/Acme/WebserviceUserBundle/Resources/config/services.xml -->
         <parameters>
-            <parameter key="yaml_user_provider.class">Acme\YamlUserBundle\Security\User\YamlUserProvider</parameter>
+            <parameter key="webservice_user_provider.class">Acme\WebserviceUserBundle\Security\User\WebserviceUserProvider</parameter>
         </parameters>
  
         <services>
-            <service id="yaml_user_provider" class="%yaml_user_provider.class%">
-                <argument>%kernel.root_dir%/Resources/users.yml</argument>
-            </service>
+            <service id="webservice_user_provider" class="%webservice_user_provider.class%"></service>
         </services>
         
     .. code-block:: php
     
-        // src/Acme/YamlUserBundle/Resources/config/services.php
+        // src/Acme/WebserviceUserBundle/Resources/config/services.php
         use Symfony\Component\DependencyInjection\Definition;
         
-        $container->setParameter('yaml_user_provider.class', 'Acme\YamlUserBundle\Security\User\YamlUserProvider');
+        $container->setParameter('webservice_user_provider.class', 'Acme\WebserviceUserBundle\Security\User\WebserviceUserProvider');
         
-        $container->setDefinition('yaml_user_provider', new Definition('yaml_user_provider.class', array('%kernel.root_dir%/Resources/users.yml');
+        $container->setDefinition('webservice_user_provider', new Definition('%webservice_user_provider.class%');
 
-As you can see, the user provider will look in ``/app/Resources/users.yml`` for user data.
-This file should look something like this:
+.. note::
 
-.. code-block:: yaml
-
-    matthias:
-        password: 'kd98d7gl'
-        roles: [ROLE_USER]
-    lies:
-        password: '97dnlo9d'
-        roles: [ROLE_ADMIN]
+    The real implementation of the user provider will probably have some
+    depencies or configuration options. Add these as arguments in the 
+    service definition.
 
 Modify `security.yml`
 ---------------------
 
-In ``app/config/security.yml`` everything comes together. Add the Yaml user provider
+In ``app/config/security.yml`` everything comes together. Add the user provider
 to the list of providers in the "security" section. Choose a name for the user provider 
-(e.g. “yaml”) and mention the id of the service you just defined.
+(e.g. "webservice") and mention the id of the service you just defined.
 
 .. code-block:: yaml
 
     security:
         providers:
-            yaml:
-                id: yaml_user_provider
+            webservice:
+                id: webservice_user_provider
 
-Symfony also needs to know how to encode passwords that are supplied by users, e.g. 
-in a login form. In our case, the ``YamlUser``'s password is not encoded; it is 
-stored in plain text. You should therefore add a line to the "encoders" section in 
-``/app/config/security.yml`` which tells Symfony to use the "plaintext encoder".
+Symfony also needs to know how to encode passwords that are supplied by website
+users, e.g. by filling in a login form. You can do this by adding a line to the 
+"encoders" section in ``/app/config/security.yml``. 
 
 .. code-block:: yaml
 
     security:
         encoders:
-            Acme\YamlUserBundle\Security\User\YamlUser: plaintext
-
-.. note::
-
-    It it very insecure to store passwords in plain text. Please take a moment
-    to set this up in a more secure way (see the :doc:`Security</book/security>` chapter)
+            Acme\WebserviceUserBundle\Security\User\WebserviceUser: sha512
