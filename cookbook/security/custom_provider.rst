@@ -151,12 +151,12 @@ which requires three methods to be defined:
         {
             try {
                 // make a call to your webservice here:
-                // throw an exception if you did not find the requested user
+                // throw a WebserviceUserNotFoundException (or something alike) if you did not find the requested user
                 // $user = ...;
                 
                 return new WebserviceUser($user->getUsername(), $user->getPassword(), $user->getSalt(), $user->getRoles())
             }
-            catch(\Exception $e) {
+            catch(WebserviceUserNotFoundException $e) {
                 throw new UsernameNotFoundException(sprintf('Username "%s" does not exist.', $username));
             }
         }
@@ -216,7 +216,7 @@ Now we make the user provider available as service.
 .. note::
 
     The real implementation of the user provider will probably have some
-    depencies or configuration options. Add these as arguments in the 
+    dependencies or configuration options. Add these as arguments in the 
     service definition.
 
 Modify `security.yml`
