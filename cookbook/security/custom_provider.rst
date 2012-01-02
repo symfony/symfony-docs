@@ -155,8 +155,7 @@ which requires three methods to be defined:
                 // $user = ...;
                 
                 return new WebserviceUser($user->getUsername(), $user->getPassword(), $user->getSalt(), $user->getRoles())
-            }
-            catch(WebserviceUserNotFoundException $e) {
+            } catch(WebserviceUserNotFoundException $e) {
                 throw new UsernameNotFoundException(sprintf('Username "%s" does not exist.', $username));
             }
         }
