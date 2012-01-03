@@ -82,6 +82,34 @@ configuration, and tag it with ``twig.extension``:
 For information on how to create the actual Twig Extension class, see
 `Twig's documentation`_ on the topic.
 
+Before writing your own extensions, have a look at the
+`Twig official extension repository`_ which already includes several
+useful extensions. For example ``Intl`` and its ``localizeddate`` filter
+that formats a date according to user's locale. These official Twig extensions
+also have to be added as regular services:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        services:
+            twig.extension.intl:
+                class: Twig_Extensions_Extension_Intl
+                tags:
+                    - { name: twig.extension }
+
+    .. code-block:: xml
+
+        <service id="twig.extension.intl" class="Twig_Extensions_Extension_Intl">
+            <tag name="twig.extension" />
+        </service>
+
+    .. code-block:: php
+
+        $container
+            ->register('twig.extension.intl', 'Twig_Extensions_Extension_Intl')
+            ->addTag('twig.extension')
+        ;
 
 .. _dic-tags-kernel-event-listener:
 
@@ -318,3 +346,4 @@ channel used in the Security component:
     same tag as handlers are shared between all channels.
 
 ..  _`Twig's documentation`: http://twig.sensiolabs.org/doc/extensions.html
+..  _`Twig official extension repository`: http://github.com/fabpot/Twig-extensions
