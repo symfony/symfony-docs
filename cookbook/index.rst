@@ -45,8 +45,8 @@ Cookbook
     bundles/override
     bundles/extension
 
-    email
-    gmail
+    email/email
+    email/gmail
     email/dev_environment
     email/spool
 
