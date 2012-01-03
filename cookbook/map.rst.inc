@@ -100,9 +100,6 @@
 
 * **Tools and Internals**
 
-  * :doc:`/cookbook/tools/autoloader`
-  * :doc:`/cookbook/tools/finder`
-  * :doc:`/cookbook/console`
   * :doc:`/cookbook/debugging`
 
 * **Web Services**

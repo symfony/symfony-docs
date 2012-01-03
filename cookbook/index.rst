@@ -74,9 +74,6 @@ Cookbook
     logging/monolog
     logging/monolog_email
 
-    tools/autoloader
-    tools/finder
-    console
     debugging
 
     event_dispatcher/class_extension
