@@ -1,5 +1,5 @@
-The Symfony2 Components
-=======================
+The Components
+==============
 
 .. toctree::
    :maxdepth: 1
