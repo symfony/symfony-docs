@@ -427,7 +427,7 @@ by adding an entry for ``/contact`` to your routing configuration file:
 
 .. note::
 
-   This example uses :doc:`YAML</components/YAML>` to define the routing
+   This example uses :doc:`YAML</components/yaml>` to define the routing
    configuration. Routing configuration can also be written in other formats
    such as XML or PHP.
 

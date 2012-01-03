@@ -528,7 +528,7 @@ You'll learn more about each of these directories in later chapters.
     Typically, the only time you'll need to worry about the ``app/autoload.php``
     file is when you're including a new third-party library in the ``vendor/``
     directory. For more information on autoloading, see
-    :doc:`How to autoload Classes</components/autoloader>`.
+    :doc:`How to autoload Classes</components/class_loader>`.
 
 The Source (``src``) Directory
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

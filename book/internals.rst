@@ -25,7 +25,7 @@ on top of the previous one.
     independently with the help of the
     :class:`Symfony\\Component\\ClassLoader\\UniversalClassLoader` class
     and the ``src/autoload.php`` file. Read the :doc:`dedicated chapter
-    </components/autoloader>` for more information.
+    </components/class_loader>` for more information.
 
 ``HttpFoundation`` Component
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~

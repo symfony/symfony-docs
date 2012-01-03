@@ -97,7 +97,7 @@ your server or locally in your projects.
 .. note::
 
     If you want to learn more about the flexibility of the Symfony2
-    autoloader, read the ":doc:`/components/autoloader`" chapter.
+    autoloader, read the ":doc:`/components/class_loader`" chapter.
 
 Understanding the Bundle System
 -------------------------------
