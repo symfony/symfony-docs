@@ -6,5 +6,6 @@ The Symfony2 Components
 
    class_loader
    console
+   css_selector
    finder
    yaml
