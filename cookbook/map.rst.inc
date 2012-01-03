@@ -58,8 +58,8 @@
 
 * **Emailing**
 
-  * :doc:`/cookbook/email`
-  * :doc:`/cookbook/gmail`
+  * :doc:`/cookbook/email/email`
+  * :doc:`/cookbook/email/gmail`
   * :doc:`/cookbook/email/dev_environment`
   * :doc:`/cookbook/email/spool`
 
@@ -101,9 +101,6 @@
 
 * **Tools and Internals**
 
-  * :doc:`/cookbook/tools/autoloader`
-  * :doc:`/cookbook/tools/finder`
-  * :doc:`/cookbook/console`
   * :doc:`/cookbook/debugging`
 
 * **Web Services**

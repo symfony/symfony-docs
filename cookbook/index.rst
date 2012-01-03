@@ -45,8 +45,8 @@ Cookbook
     bundles/override
     bundles/extension
 
-    email
-    gmail
+    email/email
+    email/gmail
     email/dev_environment
     email/spool
 
@@ -55,7 +55,6 @@ Cookbook
     testing/profiling
     testing/doctrine
 
-    security/entity_provider
     security/remember_me
     security/voters
     security/acl
@@ -76,9 +75,6 @@ Cookbook
     logging/monolog
     logging/monolog_email
 
-    tools/autoloader
-    tools/finder
-    console
     debugging
 
     event_dispatcher/class_extension

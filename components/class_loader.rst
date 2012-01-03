@@ -1,13 +1,16 @@
 .. index::
    pair: Autoloader; Configuration
 
-How to autoload Classes
-=======================
+The ClassLoader Component
+=========================
+
+    The Symfony2 ClassLoader Component loads your project classes
+    automatically if they follow some standard PHP conventions.
 
 Whenever you use an undefined class, PHP uses the autoloading mechanism to
 delegate the loading of a file defining the class. Symfony2 provides a
-"universal" autoloader, which is able to load classes from files that implement
-one of the following conventions:
+"universal" autoloader, which is able to load classes from files that
+implement one of the following conventions:
 
 * The technical interoperability `standards`_ for PHP 5.3 namespaces and class
   names;

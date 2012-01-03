@@ -184,27 +184,29 @@ Below is an example of configuration where the user will enter his/her
 username and password via HTTP basic authentication. That information will
 then be checked against our User entity records in the database:
 
-.. code-block:: yaml
+.. configuration-block::
 
-    # app/config/security.yml
-    security:
-        encoders:
-            Acme\UserBundle\Entity\User:
-                algorithm: sha1
-                encode_as_base64: false
-                iterations: 1
+    .. code-block:: yaml
 
-        providers:
-            administrators:
-                entity: { class: AcmeUserBundle:User, property: username }
+        # app/config/security.yml
+        security:
+            encoders:
+                Acme\UserBundle\Entity\User:
+                    algorithm: sha1
+                    encode_as_base64: false
+                    iterations: 1
 
-        firewalls:
-            admin_area:
-                pattern:    ^/admin
-                http_basic: ~
+            providers:
+                administrators:
+                    entity: { class: AcmeUserBundle:User, property: username }
 
-        access_control:
-            - { path: ^/admin, roles: ROLE_ADMIN }
+            firewalls:
+                admin_area:
+                    pattern:    ^/admin
+                    http_basic: ~
+
+            access_control:
+                - { path: ^/admin, roles: ROLE_ADMIN }
 
 The ``encoders`` section associates the ``sha1`` password encoder to the entity
 class. This means that Symfony will expect the password that's encoded in
@@ -374,15 +376,17 @@ generic Doctrine entity provider. It's trival to achieve by removing the
 ``property`` field in the ``security.providers.administrators.entity`` section
 of the ``security.yml`` file.
 
-.. code-block:: yaml
+.. configuration-block::
 
-    # app/config/security.yml
-    security:
-        # ...
-        providers:
-            administrators:
-                entity: { class: AcmeUserBundle:User }
-        # ...
+    .. code-block:: yaml
+
+        # app/config/security.yml
+        security:
+            # ...
+            providers:
+                administrators:
+                    entity: { class: AcmeUserBundle:User }
+            # ...
 
 By doing this, the security layer will use an instance of ``UserRepository`` and
 call its ``loadUserByUsername()`` method to fetch a user from the database

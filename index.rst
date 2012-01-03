@@ -38,6 +38,16 @@ Cookbook
 
 Read the :doc:`Cookbook </cookbook/index>`.
 
+Components
+----------
+
+.. toctree::
+    :hidden:
+
+    components/index
+
+Read the :doc:`Components </components/index>` documentation.
+
 Reference Documents
 -------------------
 
