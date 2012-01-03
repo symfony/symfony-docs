@@ -40,7 +40,7 @@ transport
 The exact transport method to use to deliver emails. Valid values are:
 
 * smtp
-* gmail (see :doc:`/cookbook/gmail`)
+* gmail (see :doc:`/cookbook/email/gmail`)
 * mail
 * sendmail
 * null (same as setting `disable_delivery`_ to ``true``)

@@ -1,7 +1,7 @@
-The Symfony2 YAML Component
-===========================
+The YAML Component
+==================
 
-    The Symfony2 YAML Component loads and dumps YAML files.
+    The YAML Component loads and dumps YAML files.
 
 What is it?
 -----------

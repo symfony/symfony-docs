@@ -1,11 +1,11 @@
 .. index::
    single: Finder
 
-The Symfony2 Finder Component
-=============================
+The Finder Component
+====================
 
-   The Symfony2 Finder Component finds files and directories via an intuitive
-   fluent interface.
+   The Finder Component finds files and directories via an intuitive fluent
+   interface.
 
 Usage
 -----

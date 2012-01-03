@@ -4,8 +4,8 @@
 The ClassLoader Component
 =========================
 
-    The Symfony2 ClassLoader Component loads your project classes
-    automatically if they follow some standard PHP conventions.
+    The ClassLoader Component loads your project classes automatically if they
+    follow some standard PHP conventions.
 
 Whenever you use an undefined class, PHP uses the autoloading mechanism to
 delegate the loading of a file defining the class. Symfony2 provides a
