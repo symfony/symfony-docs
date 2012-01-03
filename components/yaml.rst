@@ -1,7 +1,7 @@
-The Symfony2 YAML Component
-===========================
+The YAML Component
+==================
 
-    The Symfony2 YAML Component loads and dumps YAML files.
+    The YAML Component loads and dumps YAML files.
 
 What is it?
 -----------
@@ -16,6 +16,15 @@ as INI files.
 
 The Symfony2 YAML Component implements the YAML 1.2 version of the
 specification.
+
+Installation
+------------
+
+You can install the component in many different ways:
+
+* Use the official Git repository (https://github.com/symfony/Yaml);
+* Install it via PEAR ( `pear.symfony.com/Yaml`);
+* Install it via Composer (`symfony/yaml` on Packagist).
 
 Why?
 ----

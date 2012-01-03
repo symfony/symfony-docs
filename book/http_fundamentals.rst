@@ -427,9 +427,9 @@ by adding an entry for ``/contact`` to your routing configuration file:
 
 .. note::
 
-   This example uses :doc:`YAML</reference/YAML>` to define the routing configuration.
-   Routing configuration can also be written in other formats such as XML
-   or PHP.
+   This example uses :doc:`YAML</components/yaml>` to define the routing
+   configuration. Routing configuration can also be written in other formats
+   such as XML or PHP.
 
 When someone visits the ``/contact`` page, this route is matched, and the
 specified controller is executed. As you'll learn in the :doc:`routing chapter</book/routing>`,

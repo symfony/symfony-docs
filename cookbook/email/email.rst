@@ -126,8 +126,8 @@ of `Creating Messages`_ in great detail in its documentation.
     in Symfony2:
 
     * :doc:`gmail`
-    * :doc:`email/dev_environment`
-    * :doc:`email/spool`
+    * :doc:`dev_environment`
+    * :doc:`spool`
 
 .. _`Swiftmailer`: http://www.swiftmailer.org/
 .. _`Creating Messages`: http://swiftmailer.org/docs/messages
