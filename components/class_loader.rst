@@ -21,6 +21,15 @@ If your classes and the third-party libraries you use for your project follow
 these standards, the Symfony2 autoloader is the only autoloader you will ever
 need.
 
+Installation
+------------
+
+You can install the component in many different ways:
+
+* Use the official Git repository (https://github.com/symfony/ClassLoader);
+* Install it via PEAR ( `pear.symfony.com/ClassLoader`);
+* Install it via Composer (`symfony/class-loader` on Packagist).
+
 Usage
 -----
 

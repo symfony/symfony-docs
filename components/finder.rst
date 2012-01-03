@@ -7,6 +7,15 @@ The Finder Component
    The Finder Component finds files and directories via an intuitive fluent
    interface.
 
+Installation
+------------
+
+You can install the component in many different ways:
+
+* Use the official Git repository (https://github.com/symfony/Finder);
+* Install it via PEAR ( `pear.symfony.com/Finder`);
+* Install it via Composer (`symfony/finder` on Packagist).
+
 Usage
 -----
 

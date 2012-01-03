@@ -11,6 +11,15 @@ Symfony2 ships with a Console component, which allows you to create
 command-line commands. Your console commands can be used for any recurring
 task, such as cronjobs, imports, or other batch jobs.
 
+Installation
+------------
+
+You can install the component in many different ways:
+
+* Use the official Git repository (https://github.com/symfony/Console);
+* Install it via PEAR ( `pear.symfony.com/Console`);
+* Install it via Composer (`symfony/console` on Packagist).
+
 Creating a basic Command
 ------------------------
 
