@@ -55,7 +55,6 @@ Cookbook
     testing/profiling
     testing/doctrine
 
-    security/entity_provider
     security/remember_me
     security/voters
     security/acl
