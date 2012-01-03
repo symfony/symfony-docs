@@ -19,7 +19,7 @@ Usage
 -----
 
 The component only goal is to convert CSS selectors to their XPath
-equivalents:
+equivalents::
 
     use Symfony\Component\CssSelector\CssSelector;
 
