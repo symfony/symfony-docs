@@ -6,7 +6,6 @@ The CssSelector Component
 
     The CssSelector Component converts CSS selectors to XPath expressions.
 
-
 Installation
 ------------
 

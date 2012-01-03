@@ -8,4 +8,5 @@ The Symfony2 Components
    console
    css_selector
    finder
+   process
    yaml
