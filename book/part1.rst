@@ -150,7 +150,7 @@ autoloading. The Symfony2 ClassLoader Component provides an autoloader that
 implements this PSR-0 standard and most of the time, the Symfony2 ClassLoader
 is all you need to autoload all your project classes.
 
-Create and empty autoloader in a new ``autoload.php`` file:
+Create an empty autoloader in a new ``autoload.php`` file:
 
 .. code-block:: php
 
