@@ -29,6 +29,8 @@ git repository:
     .. code-block:: text
 
         /web/bundles/
+        /web/css/
+        /web/js/
         /app/bootstrap*
         /app/cache/*
         /app/logs/*
