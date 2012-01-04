@@ -188,7 +188,7 @@ start with the simplest web application we can think of in PHP::
 
     $input = $_GET['name'];
 
-    printf('Hello %s', $_GET['name']);
+    printf('Hello %s', $input);
 
 That's all for the first part of this series. Next time, we will introduce the
 HttpFoundation Component and see what it will brings us.
