@@ -177,6 +177,12 @@ should not throw any error:
     The Symfony website has more information about the `ClassLoader`_
     component.
 
+.. note::
+
+    Composer automatically creates an autoloader for all your installed
+    dependencies; instead of using the ClassLoader component, you can also
+    just require ``vendor/.composer/autoload.php``.
+
 Our Project
 -----------
 
