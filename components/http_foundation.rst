@@ -20,14 +20,14 @@ Request
 
 The most common way to create request is to base it on the current PHP global
 variables with
-:method:`Symfony\\Component\\HttpFoundation\\Request::createFromGlobals()`::
+:method:`Symfony\\Component\\HttpFoundation\\Request::createFromGlobals`::
 
     use Symfony\Component\HttpFoundation\Request;
 
     $request = Request::createFromGlobals();
 
 which is almost equivalent to the more verbose, but also more flexible,
-:method:`Symfony\\Component\\HttpFoundation\\Request::__construct()` call::
+:method:`Symfony\\Component\\HttpFoundation\\Request::__construct` call::
 
     $request = new Request($_GET, $_POST, array(), $_COOKIE, $_FILES, $_SERVER);
 
@@ -68,46 +68,46 @@ instance (or a sub-class of), which is a data holder class:
 All :class:`Symfony\\Component\\HttpFoundation\\ParameterBag` instances have
 methods to retrieve and update its data:
 
-* :method:`Symfony\\Component\\HttpFoundation\\ParameterBag::all()`: Returns
+* :method:`Symfony\\Component\\HttpFoundation\\ParameterBag::all`: Returns
   the parameters;
 
-* :method:`Symfony\\Component\\HttpFoundation\\ParameterBagkeys()`: Returns
+* :method:`Symfony\\Component\\HttpFoundation\\ParameterBagkeys`: Returns
   the parameter keys;
 
-* :method:`Symfony\\Component\\HttpFoundation\\ParameterBagreplace()`:
+* :method:`Symfony\\Component\\HttpFoundation\\ParameterBagreplace`:
   Replaces the current parameters by a new set;
 
-* :method:`Symfony\\Component\\HttpFoundation\\ParameterBagadd()`: Adds
+* :method:`Symfony\\Component\\HttpFoundation\\ParameterBagadd`: Adds
   parameters;
 
-* :method:`Symfony\\Component\\HttpFoundation\\ParameterBagget()`: Returns a
+* :method:`Symfony\\Component\\HttpFoundation\\ParameterBagget`: Returns a
   parameter by name;
 
-* :method:`Symfony\\Component\\HttpFoundation\\ParameterBagset()`: Sets a
+* :method:`Symfony\\Component\\HttpFoundation\\ParameterBagset`: Sets a
   parameter by name;
 
-* :method:`Symfony\\Component\\HttpFoundation\\ParameterBaghas()`: Returns
+* :method:`Symfony\\Component\\HttpFoundation\\ParameterBaghas`: Returns
   true if the parameter is defined;
 
-* :method:`Symfony\\Component\\HttpFoundation\\ParameterBagremove()`: Removes
+* :method:`Symfony\\Component\\HttpFoundation\\ParameterBagremove`: Removes
   a parameter.
 
 The :class:`Symfony\\Component\\HttpFoundation\\ParameterBag` instance also
 has some methods to filter the input values:
 
-* :method:`Symfony\\Component\\HttpFoundation\\Request::getAlpha()`: Returns
+* :method:`Symfony\\Component\\HttpFoundation\\Request::getAlpha`: Returns
   the alphabetic characters of the parameter value;
 
-* :method:`Symfony\\Component\\HttpFoundation\\Request::getAlnum()`: Returns
+* :method:`Symfony\\Component\\HttpFoundation\\Request::getAlnum`: Returns
   the alphabetic characters and digits of the parameter value;
 
-* :method:`Symfony\\Component\\HttpFoundation\\Request::getDigits()`: Returns
+* :method:`Symfony\\Component\\HttpFoundation\\Request::getDigits`: Returns
   the digits of the parameter value;
 
-* :method:`Symfony\\Component\\HttpFoundation\\Request::getInt()`: Returns the
+* :method:`Symfony\\Component\\HttpFoundation\\Request::getInt`: Returns the
   parameter value converted to integer;
 
-* :method:`Symfony\\Component\\HttpFoundation\\Request::filter()`: Filters the
+* :method:`Symfony\\Component\\HttpFoundation\\Request::filter`: Filters the
   parameter by using the PHP ``filter_var()`` function.
 
 All getters takes up to three arguments: the first one is the parameter name
@@ -131,7 +131,7 @@ When PHP imports the request query, it handles request parameters like
 ``foo`` parameter and you will get back an array with a ``bar`` element. But
 sometimes, you might want to get the value for the "original" parameter name:
 ``foo[bar]``. This is possible with all the `ParameterBag` getters like
-:method:`Symfony\\Component\\HttpFoundation\\Request::get()` via the third
+:method:`Symfony\\Component\\HttpFoundation\\Request::get` via the third
 argument::
 
         // the query string is '?foo[bar]=bar'
@@ -156,7 +156,7 @@ Identifying a Request
 
 In your application, you need a way to identify a request; most of the time,
 this is done via the "path info" of the request, which can be accessed via the
-:method:`Symfony\\Component\\HttpFoundation\\Request::getPathInfo()` method:
+:method:`Symfony\\Component\\HttpFoundation\\Request::getPathInfo` method:
 
     // for a request to http://example.com/blog/index.php/post/hello-world
     // the path info is "/post/hello-world"
@@ -170,31 +170,31 @@ a Request::
 
     $request = Request::create('/hello-world', 'GET', array('name' => 'Fabien'));
 
-The :method:`Symfony\\Component\\HttpFoundation\\Request::create()` method
+The :method:`Symfony\\Component\\HttpFoundation\\Request::create` method
 creates a request based on a path info, a method and some parameters (the
 query parameters or the request ones depending on the HTTP method); and of
 course, you an also override all other variables as well (by default, Symfony
 creates sensible defaults for all the PHP global variables).
 
 Based on such a request, you can override the PHP global variables via
-:method:`Symfony\\Component\\HttpFoundation\\Request::overrideGlobals()`::
+:method:`Symfony\\Component\\HttpFoundation\\Request::overrideGlobals`::
 
     $request->overrideGlobals();
 
 .. tip::
 
     You can also duplicate an existing query via
-    :method:`Symfony\\Component\\HttpFoundation\\Request::duplicate()` or
+    :method:`Symfony\\Component\\HttpFoundation\\Request::duplicate` or
     change a bunch of parameters with a single call to
-    :method:`Symfony\\Component\\HttpFoundation\\Request::initialize()`.
+    :method:`Symfony\\Component\\HttpFoundation\\Request::initialize`.
 
 Accessing the Session
 ~~~~~~~~~~~~~~~~~~~~~
 
 If you have a session attached to the Request, you can access it via the
-:method:`Symfony\\Component\\HttpFoundation\\Request::getSession()` method;
+:method:`Symfony\\Component\\HttpFoundation\\Request::getSession` method;
 the
-:method:`Symfony\\Component\\HttpFoundation\\Request::hasPreviousSession()`
+:method:`Symfony\\Component\\HttpFoundation\\Request::hasPreviousSession`
 method tells you if the request contains a Session which was started in one of
 the previous requests.
 
@@ -227,7 +227,7 @@ These information can also be manipulated after the Response object creation::
 
 When setting the ``Content-Type`` of the Response, you can set the charset,
 but it is better to set it via the
-:method:`Symfony\\Component\\HttpFoundation\\Response::setCharset()` method::
+:method:`Symfony\\Component\\HttpFoundation\\Response::setCharset` method::
 
     $response->setCharset('ISO-8859-1');
 
@@ -239,12 +239,12 @@ Sending the Response
 
 Before sending the Response, you can ensure that it is compliant with the HTTP
 specification by calling the
-:method:`Symfony\\Component\\HttpFoundation\\Response::prepare()` method::
+:method:`Symfony\\Component\\HttpFoundation\\Response::prepare` method::
 
     $response->prepare($request);
 
 Sending the response to the client is then as simple as calling
-:method:`Symfony\\Component\\HttpFoundation\\Response::send()`:
+:method:`Symfony\\Component\\HttpFoundation\\Response::send`:
 
     $response->send();
 
@@ -259,12 +259,12 @@ attribute::
     $response->headers->setCookie(new Cookie('foo', 'bar'));
 
 The
-:method:`Symfony\\Component\\HttpFoundation\\ResponseHeaderBag::setCookie()`
+:method:`Symfony\\Component\\HttpFoundation\\ResponseHeaderBag::setCookie`
 method takes an instance of
 :class:`Symfony\\Component\\HttpFoundation\\Cookie` as an argument.
 
 You can clear a cookie via the
-:method:`Symfony\\Component\\HttpFoundation\\Response::clearCookie()` method.
+:method:`Symfony\\Component\\HttpFoundation\\Response::clearCookie` method.
 
 Managing the HTTP Cache
 ~~~~~~~~~~~~~~~~~~~~~~~
@@ -272,19 +272,19 @@ Managing the HTTP Cache
 The :class:`Symfony\\Component\\HttpFoundation\\Response` class has a rich set
 of methods to manipulate the HTTP headers related to the cache:
 
-* :method:`Symfony\\Component\\HttpFoundation\\Response::setPublic()`;
-* :method:`Symfony\\Component\\HttpFoundation\\Response::setPrivate()`;
-* :method:`Symfony\\Component\\HttpFoundation\\Response::expire()`;
-* :method:`Symfony\\Component\\HttpFoundation\\Response::setExpires()`;
-* :method:`Symfony\\Component\\HttpFoundation\\Response::setMaxAge()`;
-* :method:`Symfony\\Component\\HttpFoundation\\Response::setSharedMaxAge()`;
-* :method:`Symfony\\Component\\HttpFoundation\\Response::setTtl()`;
-* :method:`Symfony\\Component\\HttpFoundation\\Response::setClientTtl()`;
-* :method:`Symfony\\Component\\HttpFoundation\\Response::setLastModified()`;
-* :method:`Symfony\\Component\\HttpFoundation\\Response::setEtag()`;
-* :method:`Symfony\\Component\\HttpFoundation\\Response::setVary()`;
+* :method:`Symfony\\Component\\HttpFoundation\\Response::setPublic`;
+* :method:`Symfony\\Component\\HttpFoundation\\Response::setPrivate`;
+* :method:`Symfony\\Component\\HttpFoundation\\Response::expire`;
+* :method:`Symfony\\Component\\HttpFoundation\\Response::setExpires`;
+* :method:`Symfony\\Component\\HttpFoundation\\Response::setMaxAge`;
+* :method:`Symfony\\Component\\HttpFoundation\\Response::setSharedMaxAge`;
+* :method:`Symfony\\Component\\HttpFoundation\\Response::setTtl`;
+* :method:`Symfony\\Component\\HttpFoundation\\Response::setClientTtl`;
+* :method:`Symfony\\Component\\HttpFoundation\\Response::setLastModified`;
+* :method:`Symfony\\Component\\HttpFoundation\\Response::setEtag`;
+* :method:`Symfony\\Component\\HttpFoundation\\Response::setVary`;
 
-The :method:`Symfony\\Component\\HttpFoundation\\Response::setCache()` method
+The :method:`Symfony\\Component\\HttpFoundation\\Response::setCache` method
 can be used to set the most commonly used cache information in one method
 call::
 
@@ -299,7 +299,7 @@ call::
 
 To check if the Response validators (``ETag``, ``Last-Modified``) match a
 conditional value specified in the client Request, use the
-:method:`Symfony\\Component\\HttpFoundation\\Response::isNotModified()`
+:method:`Symfony\\Component\\HttpFoundation\\Response::isNotModified`
 method::
 
     if ($response->isNotModified($request)) {
@@ -350,7 +350,7 @@ Downloading Files
 When uploading a file, you must add a ``Content-Disposition`` header to your
 response. While creating this header for basic file downloads is easy, using
 non-ASCII filenames is more involving. The
-:method:`:Symfony\\Component\\HttpFoundation\\Response:makeDisposition()`
+:method:`:Symfony\\Component\\HttpFoundation\\Response:makeDisposition`
 abstracts the hard work behind a simple API::
 
     use Symfony\\Component\\HttpFoundation\\ResponseHeaderBag;
