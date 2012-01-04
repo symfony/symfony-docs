@@ -31,7 +31,9 @@ directories::
         print $file->getRealpath()."\n";
     }
 
-The ``$file`` is an instance of :phpclass:`SplFileInfo`.
+The ``$file`` is an instance of :class:`Symfony\\Component\\Finder\\SplFileInfo`
+which extends :phpclass:`SplFileInfo` to provide methods to work with relative
+paths.
 
 The above code prints the names of all the files in the current directory
 recursively. The Finder class uses a fluent interface, so all methods return
