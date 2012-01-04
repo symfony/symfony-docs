@@ -71,25 +71,25 @@ methods to retrieve and update its data:
 * :method:`Symfony\\Component\\HttpFoundation\\ParameterBag::all`: Returns
   the parameters;
 
-* :method:`Symfony\\Component\\HttpFoundation\\ParameterBagkeys`: Returns
+* :method:`Symfony\\Component\\HttpFoundation\\ParameterBag::keys`: Returns
   the parameter keys;
 
-* :method:`Symfony\\Component\\HttpFoundation\\ParameterBagreplace`:
+* :method:`Symfony\\Component\\HttpFoundation\\ParameterBag::replace`:
   Replaces the current parameters by a new set;
 
-* :method:`Symfony\\Component\\HttpFoundation\\ParameterBagadd`: Adds
+* :method:`Symfony\\Component\\HttpFoundation\\ParameterBag::add`: Adds
   parameters;
 
-* :method:`Symfony\\Component\\HttpFoundation\\ParameterBagget`: Returns a
+* :method:`Symfony\\Component\\HttpFoundation\\ParameterBag::get`: Returns a
   parameter by name;
 
-* :method:`Symfony\\Component\\HttpFoundation\\ParameterBagset`: Sets a
+* :method:`Symfony\\Component\\HttpFoundation\\ParameterBag::set`: Sets a
   parameter by name;
 
-* :method:`Symfony\\Component\\HttpFoundation\\ParameterBaghas`: Returns
+* :method:`Symfony\\Component\\HttpFoundation\\ParameterBag::has`: Returns
   true if the parameter is defined;
 
-* :method:`Symfony\\Component\\HttpFoundation\\ParameterBagremove`: Removes
+* :method:`Symfony\\Component\\HttpFoundation\\ParameterBag::remove`: Removes
   a parameter.
 
 The :class:`Symfony\\Component\\HttpFoundation\\ParameterBag` instance also
@@ -156,7 +156,7 @@ Identifying a Request
 
 In your application, you need a way to identify a request; most of the time,
 this is done via the "path info" of the request, which can be accessed via the
-:method:`Symfony\\Component\\HttpFoundation\\Request::getPathInfo` method:
+:method:`Symfony\\Component\\HttpFoundation\\Request::getPathInfo` method::
 
     // for a request to http://example.com/blog/index.php/post/hello-world
     // the path info is "/post/hello-world"
@@ -244,7 +244,7 @@ specification by calling the
     $response->prepare($request);
 
 Sending the response to the client is then as simple as calling
-:method:`Symfony\\Component\\HttpFoundation\\Response::send`:
+:method:`Symfony\\Component\\HttpFoundation\\Response::send`::
 
     $response->send();
 
