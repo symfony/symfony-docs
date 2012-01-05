@@ -197,7 +197,7 @@ start with the simplest web application we can think of in PHP::
     printf('Hello %s', $input);
 
 That's all for the first part of this series. Next time, we will introduce the
-HttpFoundation Component and see what it will brings us.
+HttpFoundation Component and see what it brings us.
 
 .. _`documentation`:             http://symfony.com/doc
 .. _`Silex`:                     http://silex.sensiolabs.org/
