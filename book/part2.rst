@@ -272,7 +272,7 @@ your servers::
     }
 
 Using the ``Request::getClientIp()`` method would have given you the right
-behavior from day one (and it would have covered the case where where you have
+behavior from day one (and it would have covered the case where you have
 chained proxies)::
 
     <?php
