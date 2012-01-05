@@ -72,7 +72,6 @@
 
 * **Security**
 
-  * :doc:`/cookbook/security/entity_provider`
   * :doc:`/cookbook/security/remember_me`
   * :doc:`/cookbook/security/voters`
   * :doc:`/cookbook/security/acl`
