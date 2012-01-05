@@ -176,7 +176,7 @@ central repository to work. You then have several solutions :
   with Subversion`_.
 
 - Third party hosting: there are a lot of serious free hosting solutions
-  available like `Google code`_, `SourceForge`_ or `Gna`_. Some of them offer
+  available like `GitHub`_, `Google code`_, `SourceForge`_ or `Gna`_. Some of them offer
   git hosting as well.
 
 .. _`git`: http://git-scm.com/
@@ -185,6 +185,7 @@ central repository to work. You then have several solutions :
 .. _`Symfony2 Standard Edition`: http://symfony.com/download
 .. _`Standard Edition Readme`: https://github.com/symfony/symfony-standard/blob/master/README.md
 .. _`Version Control with Subversion`: http://svnbook.red-bean.com/
+.. _`GitHub`: http://github.com/
 .. _`Google code`: http://code.google.com/hosting/
 .. _`SourceForge`: http://sourceforge.net/
 .. _`Gna`: http://gna.org/
