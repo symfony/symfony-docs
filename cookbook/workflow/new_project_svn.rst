@@ -169,7 +169,7 @@ Subversion hosting solutions
 ----------------------------
 
 The biggest difference between `git`_ and `svn`_ is that Subversion *needs* a
-ventral repository to work. You then have several solutions :
+central repository to work. You then have several solutions :
 
 - Self hosting: create your own repository and access it either through the
   filesystem or the network. To help in this task you can read `Version Control
