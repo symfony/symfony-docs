@@ -134,6 +134,11 @@ script. This script reads from the ``deps`` file, and downloads the given
 libraries into the ``vendor/`` directory. It also reads ``deps.lock`` file,
 pinning each library listed there to the exact git commit hash.
 
+.. tip::
+
+    `git`_ has to be installed to run ``bin/vendors``, this is the protocol
+    used to fetch vendor libraries.
+
 In this setup, the vendors libraries aren't part of your repository,
 not even as submodules. Instead, we rely on the ``deps`` and ``deps.lock``
 files and the ``bin/vendors`` script to manage everything. Those files are
