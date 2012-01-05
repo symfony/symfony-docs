@@ -1,63 +1,108 @@
-How to Create and store a Symfony2 Project in git
-=================================================
+How to Create and store a Symfony2 Project in Subversion
+========================================================
 
 .. tip::
 
-    Though this entry is specifically about git, the same generic principles
-    will apply if you're storing your project in Subversion.
+    This entry is specifically about Subversion, and based on principles found
+    in :doc:`/cookbook/workflow/new_project_git`.
 
 Once you've read through :doc:`/book/page_creation` and become familiar with
-using Symfony, you'll no-doubt be ready to start your own project. In this
-cookbook article, you'll learn the best way to start a new Symfony2 project
-that's stored using the `git`_ source control management system.
+using Symfony, you'll no-doubt be ready to start your own project. The
+preferred method to manage Symfony2 projects is using `git`_ but some people
+are stuck with `Subversion`_ and don't have a choice. In this cookbook article,
+you'll learn how to manage your project using `svn`_ in a similar manner you
+would do with `git`_.
+
+.. caution::
+
+    This is **a** method to import your Symfony2 project in a Subversion
+    repository. There are several ways to do and this one is simply one that
+    works. Furthermore, it is quite complex to do so you should probably
+    consider using `git`_ anyway.
+
+Subversion repository
+---------------------
+
+For this article we will suppose that your repository layout follows the
+widespread standard structure :
+
+.. code-block:: text
+
+    myproject/
+        branches/
+        tags/
+        trunk/
+
+.. tip::
+
+    Most of the subversion hosting should follow this standard practice. This
+    is the recommended layout in `Version Control with Subversion`_ and the
+    layout used by most free hosting (see :ref:`svn-hosting`).
 
 Initial Project Setup
 ---------------------
 
-To get started, you'll need to download Symfony and initialize your local
-git repository:
+To get started, you'll need to download Symfony2 and get the basic Subversion setup :
 
 1. Download the `Symfony2 Standard Edition`_ without vendors.
 
 2. Unzip/untar the distribution. It will create a folder called Symfony with
-   your new project structure, config files, etc. Rename it to whatever you like.
+   your new project structure, config files, etc. Rename it to whatever you
+   like.
 
-3. Create a new file called ``.gitignore`` at the root of your new project
-   (e.g. next to the ``deps`` file) and paste the following into it. Files
-   matching these patterns will be ignored by git:
-
-    .. code-block:: text
-
-        /web/bundles/
-        /app/bootstrap*
-        /app/cache/*
-        /app/logs/*
-        /vendor/  
-        /app/config/parameters.ini
-
-4. Copy ``app/config/parameters.ini`` to ``app/config/parameters.ini.dist``.
-   The ``parameters.ini`` file is ignored by git (see above) so that machine-specific
-   settings like database passwords aren't committed. By creating the ``parameters.ini.dist``
-   file, new developers can quickly clone the project, copy this file to
-   ``parameters.ini``, customize it, and start developing.
-
-5. Initialize your git repository:
+3. Checkout the Subversion repository that will host this project. Let's say it
+   is hosted on `Google code`_ and called ``myproject``:
 
     .. code-block:: bash
     
-        $ git init
+        $ svn checkout http://myproject.googlecode.com/svn/trunk myproject
 
-6. Add all of the initial files to git:
-
-    .. code-block:: bash
-    
-        $ git add .
-
-7. Create an initial commit with your started project:
+4. Copy the Symfony2 project files in the subversion folder:
 
     .. code-block:: bash
-    
-        $ git commit -m "Initial commit"
+
+        $ mv Symfony/* myproject/
+
+5. Let's now set the ignore rules, this is the complex part compared to `git`_.
+   You need to add some specific files/folders to the subversion repository and
+   edit ``svn:ignore`` properties:
+
+    .. code-block:: bash
+
+        $ cd myproject/
+        $ svn add --depth=empty app app/cache app/logs app/config web
+        $ svn propedit svn:ignore .
+        vendor
+        $ svn propedit svn:ignore app/
+        bootstrap*
+        $ svn propedit svn:ignore app/config/
+        parameters.ini
+        $ svn propedit svn:ignore app/cache/
+        *
+        $ svn propedit svn:ignore app/logs/
+        *
+        $ svn propedit svn:ignore web
+        bundles
+        $ svn ci -m "commit basic symfony ignore list (vendor, app/bootstrap*, app/config/parameters.ini, app/cache/*, app/logs/*, web/bundles)"
+
+.. tip::
+
+    This part is a bit painful but this is the only way to make sure that those
+    files and folders will **never** appear in your project repository.
+
+6. The rest of the files can now be added and commited to the project:
+
+    .. code-block:: bash
+
+        $ svn add --force .
+        $ svn ci -m "add basic Symfony Standard 2.X.Y"
+
+7. Copy ``app/config/parameters.ini`` to ``app/config/parameters.ini.dist``.
+   The ``parameters.ini`` file is ignored by svn (see above) so that
+   machine-specific settings like database passwords aren't committed. By
+   creating the ``parameters.ini.dist`` file, new developers can quickly clone
+   the project, copy this file to ``parameters.ini``, customize it, and start
+   developing.
 
 8. Finally, download all of the third-party vendor libraries:
 
@@ -65,9 +110,9 @@ git repository:
     
         $ php bin/vendors install
 
-At this point, you have a fully-functional Symfony2 project that's correctly
-committed to git. You can immediately begin development, committing the new
-changes to your git repository.
+At this point, you have a fully-functional Symfony2 project, followed in your
+Subversion repository. The development can start with commits in the Subversion
+repository.
 
 You can continue to follow along with the :doc:`/book/page_creation` chapter
 to learn more about how to configure and develop inside your application.
@@ -89,11 +134,11 @@ script. This script reads from the ``deps`` file, and downloads the given
 libraries into the ``vendor/`` directory. It also reads ``deps.lock`` file,
 pinning each library listed there to the exact git commit hash.
 
-In this setup, the vendors libraries aren't part of your git repository,
+In this setup, the vendors libraries aren't part of your repository,
 not even as submodules. Instead, we rely on the ``deps`` and ``deps.lock``
 files and the ``bin/vendors`` script to manage everything. Those files are
 part of your repository, so the necessary versions of each third-party library
-are version-controlled in git, and you can use the vendors script to bring
+are version-controlled, and you can use the vendors script to bring
 your project up to date.
 
 Whenever a developer clones a project, he/she should run the ``php bin/vendors install``
@@ -118,35 +163,28 @@ script to ensure that all of the needed vendor libraries are downloaded.
     by updating them to the version specified in ``deps`` and recording it
     into the ``deps.lock`` file.
 
-Vendors and Submodules
-~~~~~~~~~~~~~~~~~~~~~~
+.. _svn-hosting:
 
-Instead of using the ``deps``, ``bin/vendors`` system for managing your vendor
-libraries, you may instead choose to use native `git submodules`_. There
-is nothing wrong with this approach, though the ``deps`` system is the official
-way to solve this problem and git submodules can be difficult to work with
-at times.
+Subversion hosting solutions
+----------------------------
 
-Storing your Project on a Remote Server
----------------------------------------
+The biggest difference between `git`_ and `svn`_ is that Subversion *needs* a
+ventral repository to work. You then have several solutions :
 
-You now have a fully-functional Symfony2 project stored in git. However,
-in most cases, you'll also want to store your project on a remote server
-both for backup purposes, and so that other developers can collaborate on
-the project.
+- Self hosting: create your own repository and access it either through the
+  filesystem or the network. To help in this task you can read `Version Control
+  with Subversion`_.
 
-The easiest way to store your project on a remote server is via `GitHub`_.
-Public repositories are free, however you will need to pay a monthly fee
-to host private repositories.
-
-Alternatively, you can store your git repository on any server by creating
-a `barebones repository`_ and then pushing to it. One library that helps
-manage this is `Gitolite`_.
+- Third party hosting: there are a lot of serious free hosting solutions
+  available like `Google code`_, `SourceForge`_ or `Gna`_. Some of them offer
+  git hosting as well.
 
 .. _`git`: http://git-scm.com/
+.. _`svn`: http://subversion.apache.org/
+.. _`Subversion`: http://subversion.apache.org/
 .. _`Symfony2 Standard Edition`: http://symfony.com/download
 .. _`Standard Edition Readme`: https://github.com/symfony/symfony-standard/blob/master/README.md
-.. _`git submodules`: http://book.git-scm.com/5_submodules.html
-.. _`GitHub`: https://github.com/
-.. _`barebones repository`: http://progit.org/book/ch4-4.html
-.. _`Gitolite`: https://github.com/sitaramc/gitolite
+.. _`Version Control with Subversion`: http://svnbook.red-bean.com/
+.. _`Google code`: http://code.google.com/hosting/
+.. _`SourceForge`: http://sourceforge.net/
+.. _`Gna`: http://gna.org/
