@@ -438,7 +438,7 @@ files in the application and to configure the autoloader:
 
     $loader = new Symfony\Component\ClassLoader\UniversalClassLoader();
     $loader->registerNamespaces(array(
-        'Symfony' => __DIR__.'/vendor/symfony/src',
+        'Symfony' => __DIR__.'/../vendor/symfony/src',
     ));
 
     $loader->register();
