@@ -321,8 +321,8 @@ probably work for you. Don't reinvent the wheel.
 
 I've almost forgot to talk about one added benefit: using the HttpFoundation
 component is the start of better interoperability between all frameworks and
-applications using it (as of today Symfony2, Drupal 8, phpBB 4, Silex,
-Midguard CMS, ...).
+applications using it (as of today `Symfony2`_, `Drupal 8`_, phpBB 4, Silex,
+Midgard CMS, `Zikula`_ ...).
 
 .. _`Twig`:                     http://twig.sensiolabs.com/
 .. _`Symfony2 versus Flat PHP`: http://symfony.com/doc/current/book/from_flat_php_to_symfony2.html
@@ -330,3 +330,9 @@ Midguard CMS, ...).
 .. _`API`:                      http://api.symfony.com/2.0/Symfony/Component/HttpFoundation.html
 .. _`documentation`:            http://symfony.com/doc/current/components/http_foundation.html
 .. _`audited`:                  http://symfony.com/blog/symfony2-security-audit
+.. _`Symfony2`:                 http://symfony.com/
+.. _`Drupal 8`:                 http://drupal.org/
+.. _`phpBB 4`:                  http://www.phpbb.com/
+.. _`Silex`:                    http://silex.sensiolabs.org/
+.. _`Midgard CMS`:              http://www.midgard-project.org/
+.. _`Zikula`:                   http://zikula.org/
