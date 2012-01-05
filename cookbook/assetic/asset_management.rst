@@ -239,7 +239,7 @@ details of Assetic's debug mode can be found in :doc:`/cookbook/assetic/yuicompr
 Controlling the URL used
 ------------------------
 
-If you wish to you can control the URLs that Assetic produces. This is
+If you wish to, you can control the URLs that Assetic produces. This is
 done from the template and is relative to the public document root:
 
 .. configuration-block::
