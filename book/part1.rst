@@ -88,7 +88,7 @@ classes, how we will reference external dependencies, etc.
 
 To store our framework, create a directory somewhere on your machine:
 
-.. code-block: sh
+.. code-block:: sh
 
     $ mkdir framework
     $ cd framework
