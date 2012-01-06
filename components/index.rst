@@ -8,5 +8,6 @@ The Components
    console
    css_selector
    finder
+   http_foundation
    process
    yaml
