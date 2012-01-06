@@ -639,3 +639,4 @@ Test the application
 
     Enjoy!
 
+2. Comlete sourse code of described in this tutorial is available at `git://github.com/gajdaw/symfony2-example-movies.git`_.
