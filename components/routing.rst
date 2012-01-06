@@ -21,9 +21,9 @@ Usage
 
 In order to set up a basic routing system you need three parts:
 
-* A `:class:Symfony\\Component\\Routing\\RouteCollection`, which contains the route definitions (instances of the class `:class:Symfony\\Component\\Routing\\Route`)
-* A `:class:Symfony\\Component\\Routing\\RequestContext`, which has information about the request
-* A `:class:Symfony\\Component\\Routing\\Matcher\\UrlMatcher`, which performs the mapping of the request to a single route
+* A :class:`Symfony\\Component\\Routing\\RouteCollection`, which contains the route definitions (instances of the class :class:`Symfony\\Component\\Routing\\Route`)
+* A :class:`Symfony\\Component\\Routing\\RequestContext`, which has information about the request
+* A :class:`Symfony\\Component\\Routing\\Matcher\\UrlMatcher`, which performs the mapping of the request to a single route
 
 .. code-block:: php
     
@@ -43,20 +43,20 @@ In order to set up a basic routing system you need three parts:
     // array('controller' => 'MyController', '_route' => 'route_name')
 
 You can add as many routes as you like to a 
-`:class:Symfony\\Component\\Routing\\RouteCollection`. The first argument you have to
-provide to the `:method:Symfony\\Component\\Routing\\RouteCollection::add` method is 
-the name of the Route. The constructor of the `:class:Symfony\\Component\\Routing\\Route` 
+:class:`Symfony\\Component\\Routing\\RouteCollection`. The first argument you have to
+provide to the :method:`Symfony\\Component\\Routing\\RouteCollection::add` method is 
+the name of the Route. The constructor of the :class:`Symfony\\Component\\Routing\\Route` 
 class expects an url path and an array of custom variables. These are returned by the 
 Matcher if the route matches the request.
 
 If no matching route can be found a 
-`:class:Symfony\\Component\\Routing\\Exception\\ResourceNotFoundException` will be thrown.
+:class:`Symfony\\Component\\Routing\\Exception\\ResourceNotFoundException` will be thrown.
 
 Additionally to the custom variables the name of the route is added with the 
 key "_route".
 
 Defining routes
-~~~~~~~~
+~~~~~~~~~~~~~~~
 
 A route contains:
 
@@ -79,14 +79,14 @@ A route contains:
    $parameters = $matcher->match('/archive/2012-01');
    // array('controller' => 'showArchive', 'month' => 2012-01'', '_route' => '...')
    
-   $parameters = $matcher->match( '/archive/foo' );
+   $parameters = $matcher->match('/archive/foo');
    // throws ResourceNotFoundException
 
 Besides the regular expression constraints there are two special requirements 
 you can define:
 
 * ``_method`` enforces a certain HTTP request method (``HEAD``, ``GET``, ``POST``, ...)
-* ``_scheme`` enforces a certian HTTP scheme (``http``, ``https``) 
+* ``_scheme`` enforces a certain HTTP scheme (``http``, ``https``) 
 
 .. code-block:: php
     
@@ -94,10 +94,10 @@ you can define:
    $route = new Route('/foo', array('_method' => 'post', '_scheme' => 'https' ));
 
 Using prefixes
-~~~~~~~~
+~~~~~~~~~~~~~~
 
 You can add routes or other instances of 
-`:class:Symfony\\Component\\Routing\\RouteCollection` to a collection. This way 
+:class:`Symfony\\Component\\Routing\\RouteCollection` to a collection. This way 
 you can build a tree of routes. Additionally you can define a prefix, default 
 requirements and default options to all routes of a subtree:
 
@@ -112,9 +112,9 @@ requirements and default options to all routes of a subtree:
     $rootCollection->addCollection($subCollection, '/prefix', array('_scheme' => 'https'));
 
 Set the request parameters
-~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The `:class:Symfony\\Component\\Routing\\RequestContext` provides information 
+The :class:`Symfony\\Component\\Routing\\RequestContext` provides information 
 about a request. You can define all parameters of a HTTP request with this class:
 
 .. code-block:: php
@@ -122,9 +122,10 @@ about a request. You can define all parameters of a HTTP request with this class
     public function __construct($baseUrl = '', $method = 'GET', $host = 'localhost', $scheme = 'http', $httpPort = 80, $httpsPort = 443)
 
 Normally you can pass the values from the ``$_SERVER`` variable variable to the 
-`:class:Symfony\\Component\\Routing\\RequestContext`. If you use Symfony you can 
-use it's `:class:Symfony\\Component\\HttpFoundation\\Request` object to feed the 
-`:class:Symfony\\Component\\Routing\\RequestContext` in a shortcut:
+:class:`Symfony\\Component\\Routing\\RequestContext`. If you use the
+:doc:`HttpFoundation<http_foundation>` component you can use it's 
+:class:`Symfony\\Component\\HttpFoundation\\Request` class to feed the 
+:class:`Symfony\\Component\\Routing\\RequestContext` in a shortcut:
   
 .. code-block:: php
     
@@ -134,9 +135,9 @@ use it's `:class:Symfony\\Component\\HttpFoundation\\Request` object to feed the
     $context->fromRequest(Request::createFromGlobals());
 
 Generate a URL
-~~~~~~~~
+~~~~~~~~~~~~~~
 
-While the `:class:Symfony\\Component\\Routing\\Matcher\\UrlMatcher` tries to find 
+While the :class:`Symfony\\Component\\Routing\\Matcher\\UrlMatcher` tries to find 
 a route that fits the given request you can also build an URL from a certain route:
 
 .. code-block:: php
@@ -155,21 +156,19 @@ a route that fits the given request you can also build an URL from a certain rou
 
 .. note::
     
-    An absolute URL is generated if you have defined a ``_scheme`` requirement for 
-    the matched route.
+    If you have defined the ``_scheme`` requirement an absolute URL is generated
+    if the scheme of the current :class:`Symfony\\Component\\Routing\\RequestContext`
+    isn't the same.
 
 Load routes from a file
-~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~
 
-There is a number of loader classes. They give you the abbility to load a collection
-of route definitions from external files. There are:
-
-* `:class:Symfony\\Component\\Routing\\Loader\\XmlFileLoader`
-* `:class:Symfony\\Component\\Routing\\Loader\\YamlFileLoader`
-* `:class:Symfony\\Component\\Routing\\Loader\\PhpFileLoader`
-* and others
-
-Here is an example with `:class:Symfony\\Component\\Routing\\Loader\\YamlFileLoader`:
+There is a number of loader classes. They give you the ability to load a collection
+of route definitions from external files. 
+The loaders expect a :class:`Symfony\\Component\\Config\\FileLocator` as the 
+constructor argument. You can use the :class:`Symfony\\Component\\Config\\FileLocator`
+to define an array of paths in which the loader will look for the requested files.
+If the file could be found the loader returns a :class:`Symfony\\Component\\Routing\\RouteCollection`.
 
 .. code-block:: yaml
 
@@ -184,13 +183,57 @@ Here is an example with `:class:Symfony\\Component\\Routing\\Loader\\YamlFileLoa
 
 .. code-block:: php
     
-    $loader = new YamlFileLoader();
+    use Symfony\Component\Config\FileLocator;
+    use Symfony\Component\Routing\Loader\YamlFileLoader;
+
+    $locator = new FileLocator(array(__DIR__));
+    $loader = new YamlFileLoader($locator);
     $collection = $loader->load('routes.yml');
 
-The all-in-one Router
-~~~~~~~~
+Besides :class:`Symfony\\Component\\Routing\\Loader\\YamlFileLoader` there are two
+other loaders that work the same way:
 
-The `:class:Symfony\\Component\\Routing\\Router` class is a all-in-one package of 
+* :class:`Symfony\\Component\\Routing\\Loader\\XmlFileLoader`
+* :class:`Symfony\\Component\\Routing\\Loader\\PhpFileLoader`
+
+If you use the :class:`Symfony\\Component\\Routing\\Loader\\PhpFileLoader` you
+have to provide the name of a php file which returns a :class:`Symfony\\Component\\Routing\\RouteCollection`:
+
+.. code-block:: php
+    
+    // RouteProvider.php
+    use Symfony\Component\Routing\RouteCollection;
+    use Symfony\Component\Routing\Route;
+
+    $collection = new RouteCollection();
+    $collection->add('route_name', new Route('/foo', array('controller' => 'ExampleController')));
+    // ...
+    
+    return $collection;
+
+There is also the :class:`Symfony\\Component\\Routing\\Loader\\ClosureLoader`, which 
+calls a closure and uses the result as a :class:`Symfony\\Component\\Routing\\RouteCollection`:
+
+.. code-block:: php
+    
+    use Symfony\Component\Routing\Loader\ClosureLoader;
+    
+    $closure = function() {
+        return new RouteCollection();
+    };
+
+    $loader = new ClosureLoader();
+    $collection = $loader->load($closure);
+
+Last but not least there are
+:class:`Symfony\\Component\\Routing\\Loader\\AnnotationDirectoryLoader` and
+:class:`Symfony\\Component\\Routing\\Loader\\AnnotationFileLoader` to load
+route definitions from class annotations.
+
+The all-in-one Router
+~~~~~~~~~~~~~~~~~~~~~
+
+The :class:`Symfony\\Component\\Routing\\Router` class is a all-in-one package of 
 the routing algorithm. The constructor expects a loader instance, a path to the 
 main route definition and some other settings:
 
@@ -201,11 +244,12 @@ main route definition and some other settings:
 With the ``cache_dir`` option you can enable route caching (if you provide a 
 path) or disable caching (if it's set to ``null``). The caching is done 
 automatically in the background if you want to use it. A basic example of the 
-`:class:Symfony\\Component\\Routing\\Router` class would look like:
+:class:`Symfony\\Component\\Routing\\Router` class would look like:
 
 .. code-block:: php
     
-    $router = new Router(new YamlFileLoader(), "routes.yml");
+    $locator = new FileLocator(array(__DIR__));
+    $router = new Router(new YamlFileLoader($locator), "routes.yml");
     $router->match('/foo/bar');
 
 .. note::
