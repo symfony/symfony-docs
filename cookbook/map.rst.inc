@@ -72,6 +72,7 @@
 
 * **Security**
 
+  * :doc:`/cookbook/security/entity_provider`
   * :doc:`/cookbook/security/remember_me`
   * :doc:`/cookbook/security/voters`
   * :doc:`/cookbook/security/acl`
@@ -79,7 +80,6 @@
   * :doc:`/cookbook/security/force_https`
   * :doc:`/cookbook/security/form_login`
   * :doc:`/cookbook/security/securing_services`
-  * :doc:`/cookbook/security/entity_provider`
   * :doc:`/cookbook/security/custom_provider`
   * :doc:`/cookbook/security/custom_authentication_provider`
 
