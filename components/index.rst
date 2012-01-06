@@ -10,4 +10,5 @@ The Components
    finder
    http_foundation
    process
+   routing
    yaml
