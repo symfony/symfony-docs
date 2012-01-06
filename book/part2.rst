@@ -193,7 +193,7 @@ charge of sending the response whenever you see fit.
 .. note::
 
     We haven't explicitly set the ``Content-Type`` header in the rewritten
-    code as the Response object defaults to ``UTF-8`` by default.
+    code as the charset of the Response object defaults to ``UTF-8``.
 
 With the ``Request`` class, you have all the request information at your
 fingertips thanks to a nice and simple API::
