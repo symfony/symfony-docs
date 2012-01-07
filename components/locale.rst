@@ -18,7 +18,7 @@ Replacement for the following functions and classes is provided:
 
 .. note::
 
-     At the moment stub implementation only supports the ``en`` locale.
+     Stub implementation only supports the ``en`` locale.
 
 Installation
 ------------
