@@ -1,62 +1,44 @@
+.. index::
+   single: Security; User Provider
+
 How to create a custom User Provider
 ====================================
 
-Symfony firewalls depend for their authentication on user providers. 
-These providers are requested by the authentication layer to provide a 
-user object for a given username. Symfony will check whether the 
-password of this user is correct and will then generate a security token, 
-so the user may stay authenticated during the current session. Out of 
-the box, Symfony has an "in_memory" and an "entity" user provider. 
-In this entry we'll see how you can create your own user provider.
-This may be a custom type of database, file or, in this example,
-a webservice.  
+Part of Symfony's standard authentication process depends on "user providers".
+When a user submits a username and password, the authentication layer asks
+the configured user provider to return a user object for a given username.
+Symfony then checks whether the password of this user is correct and generates
+a security token so the user stays authenticated during the current session.
+Out of the box, Symfony has an "in_memory" and an "entity" user provider.
+In this entry we'll see how you can create your own user provider, which
+could be useful if your users are accessed via a custom database, a file,
+or - as we show in this example - a web service.
 
-Create a user class
+Create a User Class
 -------------------
 
-First create the user class for your specific type of user. The class should 
-implement :class:`Symfony\\Component\\Security\\Core\\User\\UserInterface`.
+First, regardless of *where* your user data is coming from, you'll need to
+create a ``User`` class that represents that data. The ``User`` can look
+however you want and contain any data. The only requirement is that the
+class implements :class:`Symfony\\Component\\Security\\Core\\User\\UserInterface`.
 The methods in this interface should therefore be defined in the custom user 
-class:
+class: ``getRoles()``, ``getPassword()``, ``getSalt()``, ``getUsername()``,
+``eraseCredentials()``, ``equals()``.
 
-``getRoles()``
-  Return an array with the role(s) for this user, e.g. ``array('ROLE_USER')``.
+Let's see this in action::
 
-``getPassword()``
-  Return the password of the user (this would better be an encrypted password, 
-  see below).
-   
-``getSalt()``
-  Return the "salt" that should be used for encrypting the password. Return 
-  nothing (i.e. ``null``) when the password needs no salt.
-  
-``getUsername()``
-  Return the username of this user, i.e. the name by which it can authenticate.
-  
-``eraseCredentials()``
-  Return nothing, but erase sensitive data from the user object. Don't erase
-  credentials.
-  
-``equals(UserInterface $user)``
-  The first argument of this method is an object which implements ``UserInterface``. 
-  When called upon a user, this method returns ``true`` when the given user is the same
-  as itself, or ``false`` if it is not. This means you should compare several 
-  crucial properties like username, password and salt. Symfony uses this method to 
-  find out if the user should reauthenticate.
-
-.. code-block:: php    
-
+    // src/Acme/WebserviceUserBundle/Security/User.php
     namespace Acme\WebserviceUserBundle\Security\User;
-    
+
     use Symfony\Component\Security\Core\User\UserInterface;
-     
+
     class WebserviceUser implements UserInterface
     {
         private $username;
         private $password;
         private $salt;
         private $roles;
-     
+
         public function __construct($username, $password, $salt, array $roles)
         {
             $this->username = $username;
@@ -64,118 +46,115 @@ class:
             $this->salt = $salt;
             $this->roles = $roles;
         }
-     
+
         public function getRoles()
         {
             return $this->roles;
         }
-     
+
         public function getPassword()
         {
             return $this->password;
         }
-     
+
         public function getSalt()
         {
             return $this->salt;
         }
-     
+
         public function getUsername()
         {
             return $this->username;
         }   
-     
+
         public function eraseCredentials()
         {
         }
-     
+
         public function equals(UserInterface $user)
         {
             if (!$user instanceof WebserviceUser) {
                 return false;
             }
-     
+
             if ($this->password !== $user->getPassword()) {
                 return false;
             }
-     
+
             if ($this->getSalt() !== $user->getSalt()) {
                 return false;
             }
-     
+
             if ($this->username !== $user->getUsername()) {
                 return false;
             }
-     
+
             return true;
         }
     }
 
-Create a user provider
+If you have more information about your users - like a "first name" - then
+you can add a ``firstName`` field to hold that data.
+
+For more details on each of the methods, see :class:`Symfony\\Component\\Security\\Core\\User\\UserInterface`.
+
+Create a User Provider
 ----------------------
 
-Next we will create a user provider, in this case a ``WebserviceUserProvider``. 
-It provides the firewall with instances of ``WebserviceUser``. The user provider
- has to implement the 
- :class:`Symfony\\Component\\Security\\Core\\User\\UserProviderInterface`, 
-which requires three methods to be defined: 
+Now that we have a ``User`` class, we'll create a user provider, which will
+grab user information from some web service, create a ``WebserviceUser`` object,
+and populate it with data.
 
-``loadUserByUsername($username)``
-  Does the actual loading of the user: it looks for a user with the given username 
-  in any way that seems appropriate to it and returns a user object (in our example 
-  a ``WebserviceUser``). If the user was not found, this method must throw a 
-  ``UsernameNotFoundException``.
+The user provider is just a plain PHP class that has to implement the 
+:class:`Symfony\\Component\\Security\\Core\\User\\UserProviderInterface`, 
+which requires three methods to be defined: ``loadUserByUsername($username)``,
+``refreshUser(UserInterface $user)``, and ``supportsClass($class)``. For
+more details, see :class:`Symfony\\Component\\Security\\Core\\User\\UserProviderInterface`.
 
-``refreshUser(UserInterface $user)``
-  Refreshes the information of the given user. It must check if the given user object
-  is an instance of the user class that is supported by this specific user provider. 
-  If not, an ``UnsupportedUserException`` should be thrown.
+Here's an example of how this might look::
 
-``supportsClass($class)``
-  Should return ``true`` if this user provider can handle users of the given class, 
-  ``false`` if not.
-    
-.. code-block:: php    
-
+    // src/Acme/WebserviceUserBundle/Security/User/WebserviceUserProvider.php
     namespace Acme\WebserviceUserBundle\Security\User;
-     
+
     use Symfony\Component\Security\Core\User\UserProviderInterface;
     use Symfony\Component\Security\Core\User\UserInterface;
-     
     use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
     use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
-     
+
     class WebserviceUserProvider implements UserProviderInterface
     {
         public function loadUserByUsername($username)
         {
-            try {
-                // make a call to your webservice here:
-                // throw a WebserviceUserNotFoundException (or something alike) if you did not find the requested user
-                // $user = ...;
-                
-                return new WebserviceUser($user->getUsername(), $user->getPassword(), $user->getSalt(), $user->getRoles())
-            } catch(WebserviceUserNotFoundException $e) {
+            // make a call to your webservice here
+            // $userData = ...
+            // pretend it returns an array on success, false if there is no user
+
+            if ($userData) {
+                // $password = '...';
+                // ...
+
+                return new WebserviceUser($username, $password, $salt, $roles)
+            } else {
                 throw new UsernameNotFoundException(sprintf('Username "%s" does not exist.', $username));
             }
         }
-     
+
         public function refreshUser(UserInterface $user)
         {
             if (!$user instanceof WebserviceUser) {
                 throw new UnsupportedUserException(sprintf('Instances of "%s" are not supported.', get_class($user)));
             }
-     
+
             return $this->loadUserByUsername($user->getUsername());
         }
-     
+
         public function supportsClass($class)
         {
             return $class === 'Acme\WebserviceUserBundle\Security\User\WebserviceUser';
         }
     }
 
-Create a service for the user provider
+Create a Service for the User Provider
 --------------------------------------
 
 Now we make the user provider available as service.
@@ -212,16 +191,21 @@ Now we make the user provider available as service.
         
         $container->setDefinition('webservice_user_provider', new Definition('%webservice_user_provider.class%');
 
-.. note::
+.. tip::
 
     The real implementation of the user provider will probably have some
-    dependencies or configuration options. Add these as arguments in the 
-    service definition.
+    dependencies or configuration options or other services. Add these as
+    arguments in the service definition.
 
-Modify `security.yml`
----------------------
+.. note::
 
-In ``app/config/security.yml`` everything comes together. Add the user provider
+    Make sure the services file is being imported. See :ref:`service-container-imports-directive`
+    for details.
+
+Modify ``security.yml``
+-----------------------
+
+In ``/app/config/security.yml`` everything comes together. Add the user provider
 to the list of providers in the "security" section. Choose a name for the user provider 
 (e.g. "webservice") and mention the id of the service you just defined.
 
@@ -241,3 +225,25 @@ users, e.g. by filling in a login form. You can do this by adding a line to the
     security:
         encoders:
             Acme\WebserviceUserBundle\Security\User\WebserviceUser: sha512
+
+The value here should correspond with however the passwords were originally
+encoded when creating your users (however those users were created). When
+a user submits her password, the password is appended to the salt value and
+then encoded using this algorithm before being compared to the hashed password
+returned by your ``getPassword()`` method.
+
+.. sidebar:: Specifics on how passwords are encoded
+
+    Symfony uses a specific method to combine the salt and encode the password
+    before comparing it to your encoded password. If ``getSalt()`` returns
+    nothing, then the submitted password is simply encoded using the algorithm
+    you specify in ``security.yml``. If a salt *is* specified, then the following
+    value is created and *then* hashed via the algorithm:
+    
+        ``$password.'{'.$salt.'}';``
+
+    If your external users have their passwords salted via a different method,
+    then you'll need to do a bit more work so that Symfony properly encodes
+    the password. That is beyond the scope of this entry, but would include
+    sub-classing ``MessageDigestPasswordEncoder`` and overriding the ``mergePasswordAndSalt``
+    method.
