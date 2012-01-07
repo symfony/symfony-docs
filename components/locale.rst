@@ -16,6 +16,10 @@ Replacement for the following functions and classes is provided:
 * :phpclass:`Locale`
 * :phpclass:`NumberFormatter`
 
+.. note::
+
+     At the moment stub implementation only supports the ``en`` locale.
+
 Installation
 ------------
 
