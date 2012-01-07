@@ -112,7 +112,7 @@ your dependencies in a ``composer.json`` file:
 
     {
         "require": {
-            "symfony/class-loader": "2.1.*"
+            "symfony/class-loader": "master-dev"
         }
     }
 
