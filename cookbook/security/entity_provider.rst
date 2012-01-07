@@ -1,5 +1,6 @@
 .. index::
    single: Security; User Provider
+   single: Security; Entity Provider
 
 How to load Security Users from the Database (the Entity Provider)
 ==================================================================
@@ -127,29 +128,14 @@ focus on the most important methods that come from the
 In order to use an instance of the ``AcmeUserBundle:User`` class in the Symfony
 security layer, the entity class must implement the
 :class:`Symfony\\Component\\Security\\Core\\User\\UserInterface`. This
-interface forces the class to implement the six following methods:
-
-* ``getUsername()`` returns the unique username,
-* ``getSalt()`` returns the unique salt,
-* ``getPassword()`` returns the encoded password,
-* ``getRoles()`` returns an array of associated roles,
-* ``equals()`` compares the current object with another
-  :class:`Symfony\\Component\\Security\\Core\\User\\UserInterface`
-  instance,
-* ``eraseCredentials()`` removes sensitive information stored in the
-  :class:`Symfony\\Component\\Security\\Core\\User\\UserInterface` object.
+interface forces the class to implement the six following methods: ``getRoles()``,
+``getPassword()``, ``getSalt()``, ``getUsername()``, ``eraseCredentials()``,
+``equals()``. For more details on each of these, see :class:`Symfony\\Component\\Security\\Core\\User\\UserInterface`.
 
 To keep it simple, the ``equals()`` method just compares the ``username`` field
 but it's also possible to do more checks depending on the complexity of your
 data model. On the other hand, the ``eraseCredentials()`` method remains empty
 as we don't care about it in this tutorial.
-
-.. note::
-
-    The ``eraseCredentials()`` method is important if, during your authentication
-    process, you store some sort of sensitive information on the user (e.g.
-    the raw password of the user). This is called after authentication, and
-    allows you to remove any of that information.
 
 Below is an export of my ``User`` table from MySQL. For details on how to
 create user records and encode their password, see :ref:`book-security-encoding-user-password`.
@@ -300,21 +286,9 @@ whose username *or* email field matches the submitted login username.
 The good news is that a Doctrine repository object can act as an entity user
 provider if it implements the
 :class:`Symfony\\Component\\Security\\Core\\User\\UserProviderInterface`. This
-interface comes with three methods to implement:
-
-* ``loadUserByUsername()`` that fetches and returns a
-  :class:`Symfony\\Component\\Security\\Core\\User\\UserInterface`
-  instance by its unique username. Otherwise, it must throw a
-  :class:`Symfony\\Component\\Security\\Core\\Exception\\UsernameNotFoundException`
-  exception to indicate the security layer
-  there is no user matching the credentials.
-* ``refreshUser()`` that refreshes and returns a
-  :class:`Symfony\\Component\\Security\\Core\\User\\UserInterface` instance.
-  Otherwise it must throw a
-  :class:`Symfony\\Component\\Security\\Core\\Exception\\UnsupportedUserException`
-  exception to indicate that we are unable to refresh the user.
-* ``supportsClass()`` must return ``true`` if the fully qualified class name
-  passed as its sole argument is supported by the entity provider.
+interface comes with three methods to implement: ``loadUserByUsername($username)``,
+``refreshUser(UserInterface $user)``, and ``supportsClass($class)``. For
+more details, see :class:`Symfony\\Component\\Security\\Core\\User\\UserProviderInterface`.
 
 The code below shows the implementation of the
 :class:`Symfony\\Component\\Security\\Core\\User\\UserProviderInterface` in the

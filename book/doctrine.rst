@@ -768,7 +768,7 @@ Relationship Mapping Metadata
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 To relate the ``Category`` and ``Product`` entities, start by creating a
-``products`` property on the ``Category`` class::
+``products`` property on the ``Category`` class:
 
 .. configuration-block::
 
@@ -828,7 +828,7 @@ makes sense in the application for each ``Category`` to hold an array of
    namespace as the targetEntity.
 
 Next, since each ``Product`` class can relate to exactly one ``Category``
-object, you'll want to add a ``$category`` property to the ``Product`` class::
+object, you'll want to add a ``$category`` property to the ``Product`` class:
 
 .. configuration-block::
 
