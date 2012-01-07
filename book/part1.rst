@@ -110,7 +110,6 @@ your dependencies in a ``composer.json`` file:
 
 .. code-block:: json
 
-    # framework/composer.json
     {
         "require": {
             "symfony/class-loader": "2.1.*"

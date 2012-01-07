@@ -129,7 +129,6 @@ dependency for the project:
 
 .. code-block:: json
 
-    # framework/composer.json
     {
         "require": {
             "symfony/class-loader": "2.1.*",
