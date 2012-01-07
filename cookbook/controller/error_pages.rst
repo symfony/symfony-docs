@@ -14,7 +14,7 @@ control you need:
 
 2. Replace the default exception controller ``TwigBundle::Exception:show``
    with your own controller and handle it however you want (see
-   :ref:`exception_controller in the Twig reference<config-twig-exception-controller>`);
+   :ref:`exception_controller in the Twig reference<exception-controller>`);
 
 .. tip::
 
