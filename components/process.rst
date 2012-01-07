@@ -18,7 +18,7 @@ You can install the component in many different ways:
 Usage
 -----
 
-The `:class:Symfony\\Component\\Process\\Process` class allows you to execute
+The :class:`Symfony\\Component\\Process\\Process` class allows you to execute
 a command in a sub-process::
 
     use Symfony\Component\Process\Process;
@@ -32,14 +32,14 @@ a command in a sub-process::
 
     print $process->getOutput();
 
-The ``:method::Symfony\\Component\\Process\\Process:run()`` method takes care
+The :method:`Symfony\\Component\\Process\\Process::run()` method takes care
 of the subtle differences between the different platforms when executing the
 command.
 
 When executing a long running command (like rsync-ing files to a remote
 server), you can give feedback to the end user in real-time by passing an
 anonymous function to the
-``:method::Symfony\\Component\\Process\\Process:run()`` method::
+:method:`Symfony\\Component\\Process\\Process::run()` method::
 
     use Symfony\Component\Process\Process;
 
@@ -66,7 +66,7 @@ instead::
     The ``ProcessBuilder`` class has been as of 2.1.
 
 To make your code work better on all platforms, you might want to use the
-``:class:Symfony\Component\Process\ProcessBuilder`` class instead::
+:class:`Symfony\Component\Process\ProcessBuilder` class instead::
 
     use Symfony\Component\Process\ProcessBuilder;
 
