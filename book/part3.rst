@@ -70,7 +70,7 @@ and we are still not able to test this code properly.
 
 Moreover, adding a new page means that we need to create a new PHP script,
 which name is exposed to the end user via the URL
-(``http://example.com/goodbye.php``): there is a direct mapping between the PHP
+(``http://example.com/bye.php``): there is a direct mapping between the PHP
 script name and the client URL. This is because the dispatching of the request
 is done by the web server directly. It might be a good idea to move this
 dispatching to our code for better flexibility. This can be easily achieved by
@@ -122,7 +122,7 @@ And here is for instance the new ``hello.php`` script::
 In the ``front.php`` script, ``$map`` associates URL paths with their
 corresponding PHP script paths.
 
-As a bonus, if the client ask for a path that is not defined in the URL map,
+As a bonus, if the client asks for a path that is not defined in the URL map,
 we return a custom 404 page; you are now in control of your website.
 
 To access a page, you must now use the ``front.php`` script:
