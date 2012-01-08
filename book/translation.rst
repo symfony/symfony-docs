@@ -745,13 +745,13 @@ texts* and complex expressions:
 
 .. code-block:: jinja
 
-    {{ message | trans }}
+    {{ message|trans }}
 
-    {{ message | transchoice(5) }}
+    {{ message|transchoice(5) }}
 
-    {{ message | trans({'%name%': 'Fabien'}, "app") }}
+    {{ message|trans({'%name%': 'Fabien'}, "app") }}
 
-    {{ message | transchoice(5, {'%name%': 'Fabien'}, 'app') }}
+    {{ message|transchoice(5, {'%name%': 'Fabien'}, 'app') }}
 
 .. tip::
 
@@ -771,10 +771,10 @@ texts* and complex expressions:
             {% set message = '<h3>foo</h3>' %}
 
             {# a variable translated via a filter is escaped by default #}
-            {{ message | trans | raw }}
+            {{ message|trans|raw }}
 
             {# but static strings are never escaped #}
-            {{ '<h3>foo</h3>' | trans }}
+            {{ '<h3>foo</h3>'|trans }}
 
 PHP Templates
 ~~~~~~~~~~~~~
