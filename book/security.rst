@@ -1217,6 +1217,15 @@ In a controller this can be shortcut to:
     method of an anonymous user object will return true. To check if your
     user is actually authenticated, check for the ``IS_AUTHENTICATED_FULLY``
     role.
+    
+In a Twig Template this object can be accessed via :class:`Symfony\\Bundle\\FrameworkBundle\\Templating\\GlobalVariables`
+
+.. configuration-block::
+
+    .. code-block:: html+jinja
+
+        <p>Username: {{ app.user.username }}</p>
+
 
 Using Multiple User Providers
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
