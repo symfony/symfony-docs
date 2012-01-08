@@ -7,6 +7,7 @@ The Components
    class_loader
    console
    css_selector
+   dom_crawler
    finder
    http_foundation
    process
