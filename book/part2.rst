@@ -131,8 +131,8 @@ dependency for the project:
 
     {
         "require": {
-            "symfony/class-loader": "master-dev",
-            "symfony/http-foundation": "master-dev"
+            "symfony/class-loader": "2.1.*",
+            "symfony/http-foundation": "2.1.*"
         }
     }
 
