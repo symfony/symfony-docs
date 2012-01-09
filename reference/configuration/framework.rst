@@ -102,9 +102,10 @@ session
 lifetime
 ........
 
-**type**: ``integer`` **default**: ``86400``
+**type**: ``integer`` **default**: ``0``
 
-This determines the lifetime of the session - in seconds.
+This determines the lifetime of the session - in seconds. By default it will use
+``0``, which means the cookie is valid for the length of the browser session.
 
 templating
 ~~~~~~~~~~
