@@ -224,13 +224,13 @@ impact. Want to know how to use the generator? Insanely easy::
 
     $generator = new Routing\Generator\UrlGenerator($routes, $context);
 
-    echo $generator->generate('hello', array('name' => 'Fabien));
+    echo $generator->generate('hello', array('name' => 'Fabien'));
     // outputs /hello/Fabien
 
 The code should be self-explanatory; and thanks to the context, you can even
 generate absolute URLs::
 
-    echo $generator->generate('hello', array('name' => 'Fabien), true);
+    echo $generator->generate('hello', array('name' => 'Fabien'), true);
     // outputs something like http://example.com/somewhere/hello/Fabien
 
 .. tip::
