@@ -23,7 +23,7 @@ a little to make templates even more readable::
     $path = $request->getPathInfo();
     if (isset($map[$path])) {
         ob_start();
-        extract($request->query->all());
+        extract($request->query->all(), EXTR_SKIP);
         include sprintf(__DIR__.'/../src/pages/%s.php', $map[$path]);
         $response = new Response(ob_get_clean());
     } else {
@@ -169,7 +169,7 @@ With this knowledge in mind, let's write the new version of our framework::
     $matcher = new Routing\Matcher\UrlMatcher($routes, $context);
 
     try {
-        extract($matcher->match($request->getPathInfo()));
+        extract($matcher->match($request->getPathInfo()), EXTR_SKIP);
         ob_start();
         include sprintf(__DIR__.'/../src/pages/%s.php', $_route);
 
