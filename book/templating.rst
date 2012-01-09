@@ -108,9 +108,9 @@ alternating ``odd``, ``even`` classes:
 .. code-block:: html+jinja
 
     {% for i in 0..10 %}
-      <div class="{{ cycle(['odd', 'even'], i) }}">
-        <!-- some HTML here -->
-      </div>
+        <div class="{{ cycle(['odd', 'even'], i) }}">
+          <!-- some HTML here -->
+        </div>
     {% endfor %}
 
 Throughout this chapter, template examples will be shown in both Twig and PHP.
@@ -493,7 +493,7 @@ template. First, create the template that you'll need to reuse.
         <h3 class="byline">by {{ article.authorName }}</h3>
 
         <p>
-          {{ article.body }}
+            {{ article.body }}
         </p>
 
     .. code-block:: html+php
@@ -503,7 +503,7 @@ template. First, create the template that you'll need to reuse.
         <h3 class="byline">by <?php echo $article->getAuthorName() ?></h3>
 
         <p>
-          <?php echo $article->getBody() ?>
+            <?php echo $article->getBody() ?>
         </p>
 
 Including this template from any other template is simple:
@@ -587,9 +587,9 @@ The ``recentList`` template is perfectly straightforward:
 
         {# src/Acme/ArticleBundle/Resources/views/Article/recentList.html.twig #}
         {% for article in articles %}
-          <a href="/article/{{ article.slug }}">
-              {{ article.title }}
-          </a>
+            <a href="/article/{{ article.slug }}">
+                {{ article.title }}
+            </a>
         {% endfor %}
 
     .. code-block:: html+php
@@ -722,9 +722,9 @@ correctly:
 
         {# src/Acme/ArticleBundle/Resources/views/Article/recentList.html.twig #}
         {% for article in articles %}
-          <a href="{{ path('article_show', { 'slug': article.slug }) }}">
-              {{ article.title }}
-          </a>
+            <a href="{{ path('article_show', { 'slug': article.slug }) }}">
+                {{ article.title }}
+            </a>
         {% endfor %}
 
     .. code-block:: html+php

@@ -230,7 +230,8 @@ The value here should correspond with however the passwords were originally
 encoded when creating your users (however those users were created). When
 a user submits her password, the password is appended to the salt value and
 then encoded using this algorithm before being compared to the hashed password
-returned by your ``getPassword()`` method.
+returned by your ``getPassword()`` method. Additionally, depending on your
+options, the password may be encoded multiple times and encoded to base64.
 
 .. sidebar:: Specifics on how passwords are encoded
 
@@ -247,3 +248,18 @@ returned by your ``getPassword()`` method.
     the password. That is beyond the scope of this entry, but would include
     sub-classing ``MessageDigestPasswordEncoder`` and overriding the ``mergePasswordAndSalt``
     method.
+    
+    Additionally, the hash, by default, is encoded multiple times and encoded
+    to base64. For specific details, see `MessageDigestPasswordEncoder`_.
+    To prevent this, configure it in ``security.yml``:
+    
+    .. code-block:: yaml
+    
+        security:
+            encoders:
+                Acme\WebserviceUserBundle\Security\User\WebserviceUser:
+                    algorithm: sha512
+                    encode_as_base64: false
+                    iterations: 1
+
+.. _MessageDigestPasswordEncoder: https://github.com/symfony/symfony/blob/master/src/Symfony/Component/Security/Core/Encoder/MessageDigestPasswordEncoder.php

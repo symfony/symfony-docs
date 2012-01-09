@@ -18,7 +18,7 @@ In order to create the custom field type, first we have to create the class
 representing the field. In our situation the class holding the field type
 will be called `GenderType` and the file will be stored in the default location
 for form fields, which is ``<BundleName>\Form\Type``. Make sure the field extends
-``AbstractType``::
+:class:`Symfony\\Component\\Form\\AbstractType`::
 
     # src/Acme/DemoBundle/Form/Type/GenderType.php
     namespace Acme\DemoBundle\Form\Type;
@@ -65,7 +65,7 @@ important:
   you use to setup *your* forms, and it works the same here.
 
 * ``buildView()`` - This method is used to set any extra variables you'll
-  need when rendering your field in a template. For example, in ``ChoiceType``,
+  need when rendering your field in a template. For example, in `ChoiceType`_,
   a ``multiple`` variable is set and used in the template to set (or not
   set) the ``multiple`` attribute on the ``select`` field. See `Creating a Template for the Field`_
   for more details.
@@ -82,9 +82,9 @@ important:
     Also, if you need to modify the "view" of any of your child types from
     your parent type, use the ``buildViewBottomUp()`` method.
 
-The ``getName()`` method returns an identifier which is used to prevent conflicts
-with other types. Other than needing to be unique, this method isn't very
-important.
+The ``getName()`` method returns an identifier which should be unique in
+your application. This is used in various places, such as when customizing
+how your form type will be rendered.
 
 The goal of our field was to extend the choice type to enable selection of
 a gender. This is achieved by fixing the ``choices`` to a list of possible
@@ -107,7 +107,6 @@ we want to always render it in a ``ul`` element. In your form theme template
 .. code-block:: html+jinja
 
     {# src/Acme/DemoBundle/Resources/Form/fields.html.twig #}
-    {% use 'form_div_layout.html.twig' with choice_widget %}
 
     {% block gender_widget %}
     {% spaceless %}
@@ -227,9 +226,9 @@ the ``genders`` parameter value as the first argument to its to-be-created
     Make sure the services file is being imported. See :ref:`service-container-imports-directive`
     for details.
 
-Be sure that the ``alias`` tag corresponds with the value returned by the
-``getName`` method defined earlier. We'll see the importance of this in a
-moment when we use the custom field type. But first, add a ``__construct``
+Be sure that the ``alias`` attribute of the tag corresponds with the value
+returned by the ``getName`` method defined earlier. We'll see the importance
+of this in a moment when we use the custom field type. But first, add a ``__construct``
 argument to ``GenderType``, which receives the gender configuration::
 
     # src/Acme/DemoBundle/Form/Type/GenderType.php
