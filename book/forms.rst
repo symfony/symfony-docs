@@ -457,6 +457,19 @@ the documentation for each type.
     In other words, the ``required`` option is "nice", but true server-side
     validation should *always* be used.
 
+.. sidebar:: The ``label`` option
+
+    The label for the form field can be set using the ``label`` option,
+    which can be applied to any field::
+
+        ->add('dueDate', 'date', array(
+            'widget' => 'single_text',
+            'label'  => 'Due Date',
+        ))
+
+    The label for a field can also be set in the template rendering the
+    form, see below.
+
 .. index::
    single: Forms; Field type guessing
 
