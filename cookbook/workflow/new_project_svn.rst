@@ -110,6 +110,11 @@ To get started, you'll need to download Symfony2 and get the basic Subversion se
     
         $ php bin/vendors install
 
+.. tip::
+
+    `git`_ has to be installed to run ``bin/vendors``, this is the protocol
+    used to fetch vendor libraries.
+
 At this point, you have a fully-functional Symfony2 project, followed in your
 Subversion repository. The development can start with commits in the Subversion
 repository.
@@ -133,11 +138,6 @@ By default, these libraries are downloaded by running the ``php bin/vendors inst
 script. This script reads from the ``deps`` file, and downloads the given
 libraries into the ``vendor/`` directory. It also reads ``deps.lock`` file,
 pinning each library listed there to the exact git commit hash.
-
-.. tip::
-
-    `git`_ has to be installed to run ``bin/vendors``, this is the protocol
-    used to fetch vendor libraries.
 
 In this setup, the vendors libraries aren't part of your repository,
 not even as submodules. Instead, we rely on the ``deps`` and ``deps.lock``
