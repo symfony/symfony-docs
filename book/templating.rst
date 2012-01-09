@@ -1163,7 +1163,7 @@ needs to be enabled in the config:
 
         # app/config/config.yml
         services:
-            twig.extension.debug:
+            acme_hello.twig.extension.debug:
                 class:        Twig_Extensions_Extension_Debug
                 tags:
                      - { name: 'twig.extension' }
@@ -1172,7 +1172,7 @@ needs to be enabled in the config:
 
         <!-- app/config/config.xml -->
         <services>
-            <service id="twig.extension.debug" class="Twig_Extensions_Extension_Debug">
+            <service id="acme_hello.twig.extension.debug" class="Twig_Extensions_Extension_Debug">
                 <tag name="twig.extension" />
             </service>
         </services>
@@ -1184,7 +1184,7 @@ needs to be enabled in the config:
 
         $definition = new Definition('Twig_Extensions_Extension_Debug');
         $definition->addTag('twig.extension');
-        $container->setDefinition('twig.extension.debug', $definition);
+        $container->setDefinition('acme_hello.twig.extension.debug', $definition);
 
 
 Template parameters can then be dumped using the ``debug`` tag:
