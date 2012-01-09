@@ -18,9 +18,11 @@ You can install the component in many different ways:
 Usage
 -----
 
-The :class:`Symfony\\Component\\DomCrawler\\Crawler` class provides methods to query and manipulate HTML and XML documents.
+The :class:`Symfony\\Component\\DomCrawler\\Crawler` class provides methods
+to query and manipulate HTML and XML documents.
 
-Instance of the Crawler represents a set (:phpclass:`SplObjectStorage`) of :phpclass:`DOMElement` objects:
+Instance of the Crawler represents a set (:phpclass:`SplObjectStorage`)
+of :phpclass:`DOMElement` objects:
 
 .. code-block:: php
 
@@ -41,7 +43,9 @@ Instance of the Crawler represents a set (:phpclass:`SplObjectStorage`) of :phpc
         print $domElement->nodeName;
     }
 
-More specialized :class:`Symfony\\Component\\DomCrawler\\Link` and :class:`Symfony\\Component\\DomCrawler\\Form` classes are useful for interacting with html links and forms.
+More specialized :class:`Symfony\\Component\\DomCrawler\\Link` and
+:class:`Symfony\\Component\\DomCrawler\\Form` classes are useful for
+interacting with html links and forms.
 
 Node Filtering
 ~~~~~~~~~~~~~~
@@ -52,7 +56,10 @@ Using XPath expressions is really simplified:
 
     $crawler = $crawler->filterXPath('descendant-or-self::body/p');
 
-.. tip:: :phpmethod:`DOMXPath::query` is used internally to actually perform an XPath query.
+.. tip::
+
+    :phpmethod:`DOMXPath::query` is used internally to actually perform
+    an XPath query.
 
 Filtering is even easier if you have CssSelector Component installed:
 
@@ -71,7 +78,10 @@ Anonymous function can be used to filter with more complex criteria:
 
 To remove a node the anonymous function must return false.
 
-.. note:: All filter methods return a new :class:`Symfony\\Component\\DomCrawler\\Crawler` instance with filtered content.
+.. note::
+
+    All filter methods return a new :class:`Symfony\\Component\\DomCrawler\\Crawler`
+    instance with filtered content.
 
 Node Traversing
 ~~~~~~~~~~~~~~~
@@ -109,7 +119,10 @@ Get all the child or parent nodes:
     $crawler->filter('body')->children();
     $crawler->filter('body > p')->parents();
 
-.. note:: All the traversal methods return a new :class:`Symfony\\Component\\DomCrawler\\Crawler` instance.
+.. note::
+
+    All the traversal methods return a new :class:`Symfony\\Component\\DomCrawler\\Crawler`
+    instance.
 
 Accessing Node Values
 ~~~~~~~~~~~~~~~~~~~~~
@@ -142,7 +155,8 @@ Call an anonymous function on each node of the list:
         return $node->nodeValue;
     });
 
-The anonymous function receives the position and the node as arguments. Result is an array of values returned by anonymous function calls.
+The anonymous function receives the position and the node as arguments.
+Result is an array of values returned by anonymous function calls.
 
 Adding the Content
 ~~~~~~~~~~~~~~~~~~
@@ -162,7 +176,9 @@ Crawler supports multiple ways of adding the content:
     $crawler->add('<html><body /></html>');
     $crawler->add('<root><node /></root>');
 
-As Crawler's implementation is based on the DOM extension it is also able to interact with native :phpclass:`DOMDocument`, :phpclass:`DOMNodeList` and :phpclass:`DOMNode` objects:
+As Crawler's implementation is based on the DOM extension it is also able
+to interact with native :phpclass:`DOMDocument`, :phpclass:`DOMNodeList`
+and :phpclass:`DOMNode` objects:
 
 .. code-block:: php
 
