@@ -208,6 +208,8 @@ There are a few new things in the code::
       $routes->add('hello', new Routing\Route('/hello/{name}', array('name' => 'World')));
       $routes->add('bye', new Routing\Route('/bye'));
 
+      return $routes;
+
   We now have a clear separation between the configuration (everything
   specific to our application in ``app.php``) and the framework (the generic
   code that powers our application in ``front.php``).
