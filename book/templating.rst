@@ -1149,6 +1149,63 @@ in a JavaScript string, use the ``js`` context:
 
 .. _template-formats:
 
+Debugging
+---------
+
+When using PHP and the templating engine you can use ``var_dump()`` if you
+need to quickly find the value of a variable passed to the template. The
+same can be achieved when using Twig by using the debug extension. This
+needs to be enabled in the config:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # app/config/config.yml
+        services:
+            twig.extension.debug:
+                class:        Twig_Extensions_Extension_Debug
+                tags:
+                     - { name: 'twig.extension' }
+
+    .. code-block:: xml
+
+        <!-- app/config/config.xml -->
+        <services>
+            <service id="twig.extension.debug" class="Twig_Extensions_Extension_Debug">
+                <tag name="twig.extension" />
+            </service>
+        </services>
+
+    .. code-block:: php
+
+        // app/config/config.php
+        use Symfony\Component\DependencyInjection\Definition;
+
+        $definition = new Definition('Twig_Extensions_Extension_Debug');
+        $definition->addTag('twig.extension');
+        $container->setDefinition('twig.extension.debug', $definition);
+
+
+Template parameters can then be dumped using the ``debug`` tag:
+
+.. code-block:: html+jinja
+
+    {# src/Acme/ArticleBundle/Resources/views/Article/recentList.html.twig #}
+
+    {% debug articles %}
+
+    {% for article in articles %}
+        <a href="/article/{{ article.slug }}">
+            {{ article.title }}
+        </a>
+    {% endfor %}
+
+
+The variables will only be dumped if Twig's debug setting is set to true.
+By default this means that the variables will be dumped in the ``dev`` environment
+but not the ``prod`` environment.
+
 Template Formats
 ----------------
 
