@@ -1190,7 +1190,9 @@ look like:
     user is actually authenticated, check for the ``IS_AUTHENTICATED_FULLY``
     role.
     
-In a Twig Template this object can be accessed via :class:`Symfony\\Bundle\\FrameworkBundle\\Templating\\GlobalVariables`
+In a Twig Template this object can be accessed via the ``app.user`` key,
+which calls the :method:`GlobalVariables::getUser()<Symfony\\Bundle\\FrameworkBundle\\Templating\\GlobalVariables::getUser>`
+method:
 
 .. configuration-block::
 
