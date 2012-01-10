@@ -257,7 +257,7 @@ The first thing we need to do is to let our form collection know that it will
 receive an unknown number of tags. So far we added two and the form type 
 expects to receive two as well otherwise an error will be thrown: 
 ``This form should not contain extra fields``. For this we add the ``'allow_add'``
-option to our collection field.
+option to our collection field::
 
     // src/Acme/TaskBundle/Form/Type/TaskType.php
     namespace Acme\TaskBundle\Form\Type;
@@ -297,7 +297,7 @@ a new tag at the time we save the todo and its tags together.
 
 The ``allow_add`` option also does one more thing. It will add a ``data-prototype``
 property to the ``div`` containing the tag collection. This property
-contains html to add a Tag form element to our page like this:
+contains html to add a Tag form element to our page like this::
 
     <div data-prototype="&lt;div&gt;&lt;label class=&quot; required&quot;&gt;$$name$$&lt;/label&gt;&lt;div id=&quot;khepin_productbundle_producttype_tags_$$name$$&quot;&gt;&lt;div&gt;&lt;label for=&quot;khepin_productbundle_producttype_tags_$$name$$_name&quot; class=&quot; required&quot;&gt;Name&lt;/label&gt;&lt;input type=&quot;text&quot; id=&quot;khepin_productbundle_producttype_tags_$$name$$_name&quot; name=&quot;khepin_productbundle_producttype[tags][$$name$$][name]&quot; required=&quot;required&quot; maxlength=&quot;255&quot; /&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;" id="khepin_productbundle_producttype_tags">
     </div>
@@ -307,7 +307,7 @@ new Tag forms. To make things simple, we will embed jQuery in our page
 as it allows for more simple cross-browser manipulation of the page.
 
 First let's add a link on the ``new`` form with a class ``add_tag_link``.
-Everytime this is clicked by the user, we will add an empty tag for him.
+Everytime this is clicked by the user, we will add an empty tag for him::
 
     {% extends "::base.html.twig" %}
     {% block body %}
@@ -343,7 +343,7 @@ the form elements when the link is clicked.
     It is better to separate your javascript in real js files than
     to write it inside the HTML as we are doing here.
 
-Our script can be as simple as this:
+Our script can be as simple as this::
 
     <script>
         function addTagForm() {
