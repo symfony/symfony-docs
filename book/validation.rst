@@ -793,7 +793,7 @@ it looks like this::
             // this is *not* a valid email address
             $errorMessage = $errorList[0]->getMessage()
             
-            // do somethign with the error
+            // do something with the error
         }
         
         // ...
