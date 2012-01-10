@@ -1164,7 +1164,7 @@ needs to be enabled in the config:
         # app/config/config.yml
         services:
             acme_hello.twig.extension.debug:
-                class:        Twig_Extensions_Extension_Debug
+                class:        Twig_Extension_Debug
                 tags:
                      - { name: 'twig.extension' }
 
@@ -1172,7 +1172,7 @@ needs to be enabled in the config:
 
         <!-- app/config/config.xml -->
         <services>
-            <service id="acme_hello.twig.extension.debug" class="Twig_Extensions_Extension_Debug">
+            <service id="acme_hello.twig.extension.debug" class="Twig_Extension_Debug">
                 <tag name="twig.extension" />
             </service>
         </services>
@@ -1182,18 +1182,18 @@ needs to be enabled in the config:
         // app/config/config.php
         use Symfony\Component\DependencyInjection\Definition;
 
-        $definition = new Definition('Twig_Extensions_Extension_Debug');
+        $definition = new Definition('Twig_Extension_Debug');
         $definition->addTag('twig.extension');
         $container->setDefinition('acme_hello.twig.extension.debug', $definition);
 
 
-Template parameters can then be dumped using the ``debug`` tag:
+Template parameters can then be dumped using the ``dump`` function:
 
 .. code-block:: html+jinja
 
     {# src/Acme/ArticleBundle/Resources/views/Article/recentList.html.twig #}
 
-    {% debug articles %}
+    {{ dump(articles) }}
 
     {% for article in articles %}
         <a href="/article/{{ article.slug }}">
