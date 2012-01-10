@@ -309,31 +309,7 @@ as it allows for more simple cross-browser manipulation of the page.
 First let's add a link on the ``new`` form with a class ``add_tag_link``.
 Everytime this is clicked by the user, we will add an empty tag for him::
 
-    {% extends "::base.html.twig" %}
-    {% block body %}
-    <h1>Product creation</h1>
-
-    <form action="{{ path('product_create') }}" method="post" {{ form_enctype(form) }}>
-        {{ form_widget(form) }}
-        <p>
-            <button type="submit">Create</button>
-        </p>
-    </form>
-
-    <ul class="record_actions">
-        <li>
-            <a href="{{ path('product') }}">
-                Back to the list
-            </a>
-        </li>
-        <li>
-            <a href="#" class="add_tag_link">
-                Add a tag
-            </a>
-        </li>
-    </ul>
-    {% include "AcmeTodoBundle:Todo:js.html.twig" %}
-    {% endblock %}
+    $('.record_action').append('<li><a href="#" class="add_tag_link">Add a tag</a></li>');
 
 We also include a template containing the javascript needed to add
 the form elements when the link is clicked.
@@ -357,7 +333,9 @@ Our script can be as simple as this::
             // Display the form in the page
             collectionHolder.append(form);
         }
-        
+        // Add the link to add tags
+        $('.record_action').append('<li><a href="#" class="add_tag_link">Add a tag</a></li>');
+        // When the link is clicked we add the field to input another tag
         $('a.jslink').click(function(event){
             addTagForm();
         });
