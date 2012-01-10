@@ -72,17 +72,18 @@ Defining routes
 
 A full route definition can contain up to four parts:
 
-1) The URL pattern route. This is matched against the URL passed to the `RequestContext`,
-    and can contain named wildcard placeholders (e.g. ``{placeholders}``)
-    to match dynamic parts in the URL.
+1. The URL pattern route. This is matched against the URL passed to the `RequestContext`,
+and can contain named wildcard placeholders (e.g. ``{placeholders}``)
+to match dynamic parts in the URL.
 
-2) An array of default values. This contains an array of arbitrary values
-    that will be returned when the request matches the route.
+2. An array of default values. This contains an array of arbitrary values
+that will be returned when the request matches the route.
 
-3) An array of requirements. These define constraints for the values of the
-    placeholders as regular expressions.
+3. An array of requirements. These define constraints for the values of the
+placeholders as regular expressions.
 
-4) An array of options. These contain internal settings for the route
+4. An array of options. These contain internal settings for the route and
+are the least commonly needed.
 
 Take the following route, which combines several of these ideas::
 
@@ -141,7 +142,7 @@ with this class via its constructor::
 
     public function __construct($baseUrl = '', $method = 'GET', $host = 'localhost', $scheme = 'http', $httpPort = 80, $httpsPort = 443)
 
-.._components-routing-http-foundation:
+.. _components-routing-http-foundation:
 
 Normally you can pass the values from the ``$_SERVER`` variable to populate the 
 :class:`Symfony\\Component\\Routing\\RequestContext`. But If you use the
