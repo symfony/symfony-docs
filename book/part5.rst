@@ -9,8 +9,8 @@ idea, especially if you still have the separation of concerns principle in
 mind.
 
 Let's separate the template code from the logic by adding a new layer: the
-controller: *The controller mission is to generate a Response based on the
-information conveyed by the client Request.*
+controller: *The controller's mission is to generate a Response based on the
+information conveyed by the client's Request.*
 
 Change the template rendering part of the framework to read as follows::
 
@@ -142,7 +142,7 @@ Here is the updated and improved version of our framework::
 To celebrate the birth of our new framework, let's create a brand new
 application that needs some simple logic. Our application has one page that
 says whether a given year is a leap year or not. When calling
-``/is_leap_year``, you get the answer for the current year, but the you can
+``/is_leap_year``, you get the answer for the current year, but you can
 also specify a year like in ``/is_leap_year/2009``. Being generic, the
 framework does not need to be modified in any way, just create a new
 ``app.php`` file::
