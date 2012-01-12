@@ -1235,8 +1235,7 @@ a new provider that chains the two together:
         security:
             providers:
                 chain_provider:
-                    chain:
-                        providers: [in_memory, user_db]
+                    providers: [in_memory, user_db]
                 in_memory:
                     users:
                         foo: { password: test }
