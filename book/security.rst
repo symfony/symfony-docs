@@ -1001,6 +1001,13 @@ custom user class is that it implements the :class:`Symfony\\Component\\Security
 interface. This means that your concept of a "user" can be anything, as long
 as it implements this interface.
 
+.. versionadded:: 2.1
+
+   In Symfony 2.1 the ``Symfony\\Component\\Security\\Core\\User\\EquatableInterface``
+   was introduced, it contains single method ``isEqualTo(UserInterface $user)``.
+   You can implement this interface if you need to override default implementation
+   of comparsion logic in authentication mechanism.
+
 .. note::
 
     The user object will be serialized and saved in the session during requests,
