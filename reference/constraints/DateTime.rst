@@ -22,8 +22,8 @@ Basic Usage
 
     .. code-block:: yaml
 
-        # src/Acme/EventBundle/Resources/config/validation.yml
-        Acme\BlobBundle\Entity\Author:
+        # src/Acme/BlogBundle/Resources/config/validation.yml
+        Acme\BlogBundle\Entity\Author:
             properties:
                 createdAt:
                     - DateTime: ~
@@ -32,7 +32,7 @@ Basic Usage
 
         // src/Acme/BlogBundle/Entity/Author.php
         namespace Acme\BlogBundle\Entity;
-        
+
         use Symfony\Component\Validator\Constraints as Assert;
 
         class Author
