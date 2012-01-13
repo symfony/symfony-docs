@@ -1592,7 +1592,7 @@ the ``isGranted`` method of the security context:
     public function indexAction()
     {
         // show different content to admin users
-        if ($this->get('security.context')->isGranted('ADMIN')) {
+        if ($this->get('security.context')->isGranted('ROLE_ADMIN')) {
             // Load admin content here
         }
         // load other regular content here
