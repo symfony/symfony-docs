@@ -1152,9 +1152,13 @@ in a JavaScript string, use the ``js`` context:
 Debugging
 ---------
 
-When using PHP and the templating engine you can use ``var_dump()`` if you
-need to quickly find the value of a variable passed to the template. The
-same can be achieved when using Twig by using the debug extension. This
+.. versionadded:: 2.0.9
+    This feature is available as of Twig ``1.5.x``, which was first shipped
+    with Symfony 2.0.9.
+
+When using PHP, you can use ``var_dump()`` if you need to quickly find the
+value of a variable passed. This is useful, for example, inside your controller.
+The same can be achieved when using Twig by using the debug extension. This
 needs to be enabled in the config:
 
 .. configuration-block::
@@ -1186,7 +1190,6 @@ needs to be enabled in the config:
         $definition->addTag('twig.extension');
         $container->setDefinition('acme_hello.twig.extension.debug', $definition);
 
-
 Template parameters can then be dumped using the ``dump`` function:
 
 .. code-block:: html+jinja
@@ -1202,9 +1205,9 @@ Template parameters can then be dumped using the ``dump`` function:
     {% endfor %}
 
 
-The variables will only be dumped if Twig's debug setting is set to true.
-By default this means that the variables will be dumped in the ``dev`` environment
-but not the ``prod`` environment.
+The variables will only be dumped if Twig's ``debug`` setting (in ``config.yml``)
+is ``true``. By default this means that the variables will be dumped in the
+``dev`` environment but not the ``prod`` environment.
 
 Template Formats
 ----------------
