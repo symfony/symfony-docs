@@ -79,44 +79,7 @@ to learn more about how to configure and develop inside your application.
 
 .. _cookbook-managing-vendor-libraries:
 
-Managing Vendor Libraries with bin/vendors and deps
----------------------------------------------------
-
-Every Symfony project uses a large group of third-party "vendor" libraries.
-
-By default, these libraries are downloaded by running the ``php bin/vendors install``
-script. This script reads from the ``deps`` file, and downloads the given
-libraries into the ``vendor/`` directory. It also reads ``deps.lock`` file,
-pinning each library listed there to the exact git commit hash.
-
-In this setup, the vendors libraries aren't part of your git repository,
-not even as submodules. Instead, we rely on the ``deps`` and ``deps.lock``
-files and the ``bin/vendors`` script to manage everything. Those files are
-part of your repository, so the necessary versions of each third-party library
-are version-controlled in git, and you can use the vendors script to bring
-your project up to date.
-
-Whenever a developer clones a project, he/she should run the ``php bin/vendors install``
-script to ensure that all of the needed vendor libraries are downloaded.
-
-.. sidebar:: Upgrading Symfony
-
-    Since Symfony is just a group of third-party libraries and third-party
-    libraries are entirely controlled through ``deps`` and ``deps.lock``,
-    upgrading Symfony means simply upgrading each of these files to match
-    their state in the latest Symfony Standard Edition.
-
-    Of course, if you've added new entries to ``deps`` or ``deps.lock``, be sure
-    to replace only the original parts (i.e. be sure not to also delete any of
-    your custom entries).
-
-.. caution::
-
-    There is also a ``php bin/vendors update`` command, but this has nothing
-    to do with upgrading your project and you will normally not need to use
-    it. This command is used to freeze the versions of all of your vendor libraries
-    by updating them to the version specified in ``deps`` and recording it
-    into the ``deps.lock`` file.
+.. include:: _vendor_deps.rst.inc
 
 Vendors and Submodules
 ~~~~~~~~~~~~~~~~~~~~~~
