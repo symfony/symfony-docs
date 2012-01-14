@@ -90,7 +90,7 @@ it:
 
 .. code-block:: jinja
 
-    {{ title | upper }}
+    {{ title|upper }}
 
 Twig comes with a long list of `tags`_ and `filters`_ that are available
 by default. You can even `add your own extensions`_ to Twig as needed.
@@ -108,9 +108,9 @@ alternating ``odd``, ``even`` classes:
 .. code-block:: html+jinja
 
     {% for i in 0..10 %}
-      <div class="{{ cycle(['odd', 'even'], i) }}">
-        <!-- some HTML here -->
-      </div>
+        <div class="{{ cycle(['odd', 'even'], i) }}">
+          <!-- some HTML here -->
+        </div>
     {% endfor %}
 
 Throughout this chapter, template examples will be shown in both Twig and PHP.
@@ -493,7 +493,7 @@ template. First, create the template that you'll need to reuse.
         <h3 class="byline">by {{ article.authorName }}</h3>
 
         <p>
-          {{ article.body }}
+            {{ article.body }}
         </p>
 
     .. code-block:: html+php
@@ -503,7 +503,7 @@ template. First, create the template that you'll need to reuse.
         <h3 class="byline">by <?php echo $article->getAuthorName() ?></h3>
 
         <p>
-          <?php echo $article->getBody() ?>
+            <?php echo $article->getBody() ?>
         </p>
 
 Including this template from any other template is simple:
@@ -587,9 +587,9 @@ The ``recentList`` template is perfectly straightforward:
 
         {# src/Acme/ArticleBundle/Resources/views/Article/recentList.html.twig #}
         {% for article in articles %}
-          <a href="/article/{{ article.slug }}">
-              {{ article.title }}
-          </a>
+            <a href="/article/{{ article.slug }}">
+                {{ article.title }}
+            </a>
         {% endfor %}
 
     .. code-block:: html+php
@@ -722,9 +722,9 @@ correctly:
 
         {# src/Acme/ArticleBundle/Resources/views/Article/recentList.html.twig #}
         {% for article in articles %}
-          <a href="{{ path('article_show', { 'slug': article.slug }) }}">
-              {{ article.title }}
-          </a>
+            <a href="{{ path('article_show', { 'slug': article.slug }) }}">
+                {{ article.title }}
+            </a>
         {% endfor %}
 
     .. code-block:: html+php
@@ -1120,7 +1120,7 @@ In some cases, you'll need to disable output escaping when you're rendering
 a variable that is trusted and contains markup that should not be escaped.
 Suppose that administrative users are able to write articles that contain
 HTML code. By default, Twig will escape the article body. To render it normally,
-add the ``raw`` filter: ``{{ article.body | raw }}``.
+add the ``raw`` filter: ``{{ article.body|raw }}``.
 
 You can also disable output escaping inside a ``{% block %}`` area or
 for an entire template. For more information, see `Output Escaping`_ in
@@ -1148,6 +1148,66 @@ in a JavaScript string, use the ``js`` context:
    single: Templating; Formats
 
 .. _template-formats:
+
+Debugging
+---------
+
+.. versionadded:: 2.0.9
+    This feature is available as of Twig ``1.5.x``, which was first shipped
+    with Symfony 2.0.9.
+
+When using PHP, you can use ``var_dump()`` if you need to quickly find the
+value of a variable passed. This is useful, for example, inside your controller.
+The same can be achieved when using Twig by using the debug extension. This
+needs to be enabled in the config:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # app/config/config.yml
+        services:
+            acme_hello.twig.extension.debug:
+                class:        Twig_Extension_Debug
+                tags:
+                     - { name: 'twig.extension' }
+
+    .. code-block:: xml
+
+        <!-- app/config/config.xml -->
+        <services>
+            <service id="acme_hello.twig.extension.debug" class="Twig_Extension_Debug">
+                <tag name="twig.extension" />
+            </service>
+        </services>
+
+    .. code-block:: php
+
+        // app/config/config.php
+        use Symfony\Component\DependencyInjection\Definition;
+
+        $definition = new Definition('Twig_Extension_Debug');
+        $definition->addTag('twig.extension');
+        $container->setDefinition('acme_hello.twig.extension.debug', $definition);
+
+Template parameters can then be dumped using the ``dump`` function:
+
+.. code-block:: html+jinja
+
+    {# src/Acme/ArticleBundle/Resources/views/Article/recentList.html.twig #}
+
+    {{ dump(articles) }}
+
+    {% for article in articles %}
+        <a href="/article/{{ article.slug }}">
+            {{ article.title }}
+        </a>
+    {% endfor %}
+
+
+The variables will only be dumped if Twig's ``debug`` setting (in ``config.yml``)
+is ``true``. By default this means that the variables will be dumped in the
+``dev`` environment but not the ``prod`` environment.
 
 Template Formats
 ----------------

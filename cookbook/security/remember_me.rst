@@ -43,7 +43,7 @@ are shown here:
         $container->loadFromExtension('security', array(
             'firewalls' => array(
                 'main' => array('remember_me' => array(
-                    'key'                     => '/login_check',
+                    'key'                     => 'aSecretKey',
                     'lifetime'                => 3600,
                     'path'                    => '/',
                     'domain'                  => '', // Defaults to the current domain from $_SERVER

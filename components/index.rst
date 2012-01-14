@@ -9,5 +9,7 @@ The Components
    css_selector
    finder
    http_foundation
+   locale
    process
+   routing
    yaml

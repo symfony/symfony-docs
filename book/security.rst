@@ -1,3 +1,6 @@
+.. index::
+   single: Security
+
 Security
 ========
 
@@ -1217,6 +1220,17 @@ In a controller this can be shortcut to:
     method of an anonymous user object will return true. To check if your
     user is actually authenticated, check for the ``IS_AUTHENTICATED_FULLY``
     role.
+    
+In a Twig Template this object can be accessed via the ``app.user`` key,
+which calls the :method:`GlobalVariables::getUser()<Symfony\\Bundle\\FrameworkBundle\\Templating\\GlobalVariables::getUser>`
+method:
+
+.. configuration-block::
+
+    .. code-block:: html+jinja
+
+        <p>Username: {{ app.user.username }}</p>
+
 
 Using Multiple User Providers
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -1592,7 +1606,7 @@ the ``isGranted`` method of the security context:
     public function indexAction()
     {
         // show different content to admin users
-        if ($this->get('security.context')->isGranted('ADMIN')) {
+        if ($this->get('security.context')->isGranted('ROLE_ADMIN')) {
             // Load admin content here
         }
         // load other regular content here
