@@ -239,8 +239,114 @@ great, your user can't actually add any new todos yet.
 Allowing "new" todos with the "prototype"
 -----------------------------------------
 
-This section has not been written yet, but will soon. If you're interested
-in writing this entry, see :doc:`/contributing/documentation/overview`.
+.. note::
+
+    Allowing the user to dynamically add new todos means that we'll need to 
+    use some javascript. Previously we added two tags to our form in the 
+    controller. Now we need to let the user add as many tag forms as he 
+    needs to directly in the browser. This will be done through a bit of 
+    javascripting.
+
+.. tip::
+    
+    If you want to see a working example of how this can be done, you can 
+    check khepin/ProductBundle on github. The basic idea is similar although 
+    it's products and their tags instead of todos.
+
+The first thing we need to do is to let our form collection know that it will 
+receive an unknown number of tags. So far we added two and the form type 
+expects to receive two as well otherwise an error will be thrown: 
+``This form should not contain extra fields``. For this we add the ``'allow_add'``
+option to our collection field::
+
+    // src/Acme/TaskBundle/Form/Type/TaskType.php
+    namespace Acme\TaskBundle\Form\Type;
+
+    use Symfony\Component\Form\AbstractType;
+    use Symfony\Component\Form\FormBuilder;
+
+    class TaskType extends AbstractType
+    {
+        public function buildForm(FormBuilder $builder, array $options)
+        {
+            $builder->add('description');
+
+            $builder->add('tags', 'collection', array(
+                'type' => new TagType(),
+                'allow_add' => true,
+                'by_reference' => false,
+            ));
+        }
+
+        public function getDefaultOptions(array $options)
+        {
+            return array(
+                'data_class' => 'Acme\TaskBundle\Entity\Task',
+            );
+        }
+
+        public function getName()
+        {
+            return 'task';
+        }
+    }
+
+Note that we also added ``'by_reference' => false``. This is because
+we are not sending a reference to an existing tag but rather creating
+a new tag at the time we save the todo and its tags together.
+
+The ``allow_add`` option also does one more thing. It will add a ``data-prototype``
+property to the ``div`` containing the tag collection. This property
+contains html to add a Tag form element to our page like this::
+
+    <div data-prototype="&lt;div&gt;&lt;label class=&quot; required&quot;&gt;$$name$$&lt;/label&gt;&lt;div id=&quot;khepin_productbundle_producttype_tags_$$name$$&quot;&gt;&lt;div&gt;&lt;label for=&quot;khepin_productbundle_producttype_tags_$$name$$_name&quot; class=&quot; required&quot;&gt;Name&lt;/label&gt;&lt;input type=&quot;text&quot; id=&quot;khepin_productbundle_producttype_tags_$$name$$_name&quot; name=&quot;khepin_productbundle_producttype[tags][$$name$$][name]&quot; required=&quot;required&quot; maxlength=&quot;255&quot; /&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;" id="khepin_productbundle_producttype_tags">
+    </div>
+
+We will get this property from our javascript and use it to display
+new Tag forms. To make things simple, we will embed jQuery in our page
+as it allows for more simple cross-browser manipulation of the page.
+
+First let's add a link on the ``new`` form with a class ``add_tag_link``.
+Everytime this is clicked by the user, we will add an empty tag for him::
+
+    $('.record_action').append('<li><a href="#" class="add_tag_link">Add a tag</a></li>');
+
+We also include a template containing the javascript needed to add
+the form elements when the link is clicked.
+
+.. note:
+
+    It is better to separate your javascript in real js files than
+    to write it inside the HTML as we are doing here.
+
+Our script can be as simple as this::
+
+    <script>
+        function addTagForm() {
+            // Get the div that holds the collection of tags
+            var collectionHolder = $('#task_tags');
+            // Get the data-prototype we explained earlier
+            var prototype = collectionHolder.attr('data-prototype');
+            // Replace '$$name$$' in the prototype's HTML to
+            // instead be a number based on the current collection's length.
+            form = prototype.replace(/\$\$name\$\$/g, collectionHolder.children().length);
+            // Display the form in the page
+            collectionHolder.append(form);
+        }
+        // Add the link to add tags
+        $('.record_action').append('<li><a href="#" class="add_tag_link">Add a tag</a></li>');
+        // When the link is clicked we add the field to input another tag
+        $('a.jslink').click(function(event){
+            addTagForm();
+        });
+    </script>
+
+Now everytime a user clicks the ``Add a tag`` link, a new sub form
+will appear on the page. The server side form component is aware 
+it should not expect any specific size for the ``Tag`` collection.
+And all the tags we add while creating the new ``Todo`` will be
+saved together with it.
+
 
 .. _cookbook-form-collections-remove:
 
