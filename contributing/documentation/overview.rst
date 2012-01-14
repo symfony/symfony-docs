@@ -25,6 +25,15 @@ then clone your fork:
 
     $ git clone git://github.com/YOURUSERNAME/symfony-docs.git
 
+Unless you're documenting a feature that's new to Symfony 2.1, you changes
+should be based on the 2.0 branch instead of the master branch. To do this
+checkout the 2.0 branch before the next step:
+
+.. code-block:: bash
+
+    $ git checkout 2.0
+
+
 Next, create a dedicated branch for your changes (for organization):
 
 .. code-block:: bash
@@ -37,6 +46,13 @@ The pull request will be between your ``improving_foo_and_bar`` branch and
 the ``symfony-docs`` ``master`` branch.
 
 .. image:: /images/docs-pull-request.png
+   :align: center
+
+If you have made your changes based
+on the 2.0 branch then you need to follow the change commit link and change
+the base branch to be @2.0:
+
+.. image:: /images/docs-pull-request-change-base.png
    :align: center
 
 GitHub covers the topic of `pull requests`_ in detail.
