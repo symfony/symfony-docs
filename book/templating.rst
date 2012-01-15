@@ -871,18 +871,20 @@ is by default "web").
 The end result is a page that includes both the ``main.css`` and ``contact.css``
 stylesheets.
 
-The ``app`` Global Variable
----------------------------
+Global Template Variables
+-------------------------
 
-Symfony2 will set a global template variable ``app`` on every request in
-both Twig and PHP template engines by default.  The ``app`` variable will
-give you access to some application specific variables automatically:
+During each request, Symfony2 will set a global template variable ``app``
+in both Twig and PHP template engines by default.  The ``app`` variable
+is a :class:`<Symfony\\Bundle\\FrameworkBundle\\Templating\\GlobalVariables>`
+object which will give you access to some application specific variables
+automatically:
 
 * ``app.security`` - The security context service.
-* ``app.user`` - The current user object. Equivalent to ``app.security.token.user``.
+* ``app.user`` - The current user object.
 * ``app.request`` - The request object.
 * ``app.session`` - The session object. Equivalent to ``app.request.session``.
-* ``app.environment`` - The current environment (dev, prod, etc)
+* ``app.environment`` - The current environment (dev, prod, etc).
 * ``app.debug`` - True if in debug mode. False otherwise.
 
 .. configuration-block::
@@ -902,6 +904,11 @@ give you access to some application specific variables automatically:
             <p>Request method: <?php echo $app->getRequest()->getMethod() ?></p>
             <p>Application Environment: <?php echo $app->getEnvironment() ?></p>
         <?php endif; ?>
+
+.. tip::
+
+    You can set your own global template variables. See the cookbook example
+    on :doc:`Global Variables</cookbook/templating/global_variables>`.
 
 .. index::
    single: Templating; The templating service
