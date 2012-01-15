@@ -889,17 +889,18 @@ give you access to some application specific variables automatically:
 
     .. code-block:: html+jinja
 
+        <p>Username: {{ app.user.username }}</p>
         {% if app.debug %}
-            <p>Username: {{ app.user.username }}</p>
             <p>Request method: {{ app.request.method }}</p>
             <p>Application Environment: {{ app.environment }}</p>
         {% endif %}
 
     .. code-block:: html+php
+
+        <p>Username: <?php echo $app->getUser()->getUsername() ?></p>
         <?php if ($app->getDebug()): ?>
-            <p>Username: <?php echo $app->getUser()->getUsername() ?></p>
             <p>Request method: <?php echo $app->getRequest()->getMethod() ?></p>
-        <p>Application Environment: <?php echo $app->getEnvironment() ?></p>
+            <p>Application Environment: <?php echo $app->getEnvironment() ?></p>
         <?php endif; ?>
 
 .. index::
