@@ -876,14 +876,14 @@ Global Template Variables
 
 During each request, Symfony2 will set a global template variable ``app``
 in both Twig and PHP template engines by default.  The ``app`` variable
-is a :class:`<Symfony\\Bundle\\FrameworkBundle\\Templating\\GlobalVariables>`
-object which will give you access to some application specific variables
+is a :class:`Symfony\\Bundle\\FrameworkBundle\\Templating\\GlobalVariables`
+instance which will give you access to some application specific variables
 automatically:
 
-* ``app.security`` - The security context service.
+* ``app.security`` - The security context.
 * ``app.user`` - The current user object.
 * ``app.request`` - The request object.
-* ``app.session`` - The session object. Equivalent to ``app.request.session``.
+* ``app.session`` - The session object.
 * ``app.environment`` - The current environment (dev, prod, etc).
 * ``app.debug`` - True if in debug mode. False otherwise.
 
@@ -907,7 +907,7 @@ automatically:
 
 .. tip::
 
-    You can set your own global template variables. See the cookbook example
+    You can add your own global template variables. See the cookbook example
     on :doc:`Global Variables</cookbook/templating/global_variables>`.
 
 .. index::
