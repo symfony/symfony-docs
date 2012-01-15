@@ -15,7 +15,7 @@ Request.
 As the Symfony2 components requires PHP 5.3, let's create our very own
 namespace for our framework: ``Simplex``.
 
-Move the request handling logic into its own ``Simple\\Framework`` class::
+Move the request handling logic into its own ``Simplex\\Framework`` class::
 
     <?php
 
