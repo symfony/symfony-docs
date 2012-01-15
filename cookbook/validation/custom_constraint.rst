@@ -98,10 +98,17 @@ tag and an ``alias`` attribute:
             ->addTag('validator.constraint_validator', array('alias' => 'alias_name'))
         ;
 
-Your constraint class may now use this alias to reference the appropriate
+Your constraint class should now use this alias to reference the appropriate
 validator::
 
     public function validatedBy()
     {
         return 'alias_name';
     }
+
+As mentioned above, Symfony2 will automatically look for a class named after
+the constraint, with ``Validator`` appended.  If your constraint validator
+is defined as a service, it's important that you override the
+``validatedBy()`` method to return the alias used when defining your service,
+otherwise Symfony2 won't use the constraint validator service, and will
+instantiate the class instead, without any dependencies injected.
