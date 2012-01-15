@@ -26,6 +26,7 @@ Move the request handling logic into its own ``Simplex\\Framework`` class::
     use Symfony\Component\HttpFoundation\Request;
     use Symfony\Component\HttpFoundation\Response;
     use Symfony\Component\Routing\Matcher\UrlMatcher;
+    use Symfony\Component\Routing\Exception\ResourceNotFoundException;
     use Symfony\Component\HttpKernel\Controller\ControllerResolver;
 
     class Framework
@@ -48,9 +49,9 @@ Move the request handling logic into its own ``Simplex\\Framework`` class::
                 $arguments = $this->resolver->getArguments($request, $controller);
 
                 return call_user_func_array($controller, $arguments);
-            } catch (Routing\Exception\ResourceNotFoundException $e) {
+            } catch (ResourceNotFoundException $e) {
                 return new Response('Not Found', 404);
-            } catch (Exception $e) {
+            } catch (\Exception $e) {
                 return new Response('An error occurred', 500);
             }
         }
