@@ -871,6 +871,37 @@ is by default "web").
 The end result is a page that includes both the ``main.css`` and ``contact.css``
 stylesheets.
 
+The ``app`` Global Variable
+---------------------------
+
+Symfony2 will set a global template variable ``app`` on every request in
+both Twig and PHP template engines by default.  The ``app`` variable will
+give you access to some application specific variables automatically:
+
+* ``app.security`` - The security context service.
+* ``app.user`` - The current user object. Equivalent to ``app.security.token.user``.
+* ``app.request`` - The request object.
+* ``app.session`` - The session object. Equivalent to ``app.request.session``.
+* ``app.environment`` - The current environment (dev, prod, etc)
+* ``app.debug`` - True if in debug mode. False otherwise.
+
+.. configuration-block::
+
+    .. code-block:: html+jinja
+
+        {% if app.debug %}
+            <p>Username: {{ app.user.username }}</p>
+            <p>Request method: {{ app.request.method }}</p>
+            <p>Application Environment: {{ app.environment }}</p>
+        {% endif %}
+
+    .. code-block:: html+php
+        <?php if ($app->getDebug()): ?>
+            <p>Username: <?php echo $app->getUser()->getUsername() ?></p>
+            <p>Request method: <?php echo $app->getRequest()->getMethod() ?></p>
+        <p>Application Environment: <?php echo $app->getEnvironment() ?></p>
+        <?php endif; ?>
+
 .. index::
    single: Templating; The templating service
 
