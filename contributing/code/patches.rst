@@ -155,18 +155,26 @@ Create the topic branch with the following command:
 
     $ git checkout -b BRANCH_NAME master
 
-.. tip::
+Or, if you want to provide a bugfix for the 2.0 branch, you need to first track
+the remote `2.0` branch locally:
 
-    Replace "master" by, for example, 2.0, if you wish to submit a patch to the
-    2.0 branch.
+.. code-block:: bash
+
+    $ git checkout -t origin/2.0
+
+Then you can create a new branch off the 2.0 branch to work on the bugfix:
+
+.. code-block:: bash
+
+    $ git checkout -b BRANCH_NAME 2.0
 
 .. tip::
 
     Use a descriptive name for your branch (`ticket_XXX` where `XXX` is the
     ticket number is a good convention for bug fixes).
 
-The above command automatically switches the code to the newly created branch
-(check the branch you are working on with `git branch`).
+The above checkout commands automatically switch the code to the newly created
+branch (check the branch you are working on with `git branch`).
 
 Work on the code as much as you want and commit as much as you want; but keep
 in mind the following:
@@ -205,6 +213,10 @@ while to finish your changes):
     $ git checkout BRANCH_NAME
     $ git rebase master
 
+.. tip::
+
+    Replace `master` with `2.0` if you are working on a bugfix
+
 When doing the ``rebase`` command, you might have to fix merge conflicts.
 ``git status`` will show you the *unmerged* files. Resolve all the conflicts,
 then continue the rebase:
@@ -236,7 +248,8 @@ BRANCH_NAME``) or the pull request URL.
 
 Based on the feedback from the mailing-list or via the pull request on GitHub,
 you might need to rework your patch. Before re-submitting the patch, rebase
-with master, don't merge; and force the push to the origin:
+with upstream/master or upstream/2.0, don't merge; and force the push to the
+origin:
 
 .. code-block:: bash
 
