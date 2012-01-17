@@ -117,6 +117,12 @@ Executing this test is as simple as running ``phpunit`` from the
 
     $ phpunit
 
+.. note::
+
+    I do not explain how the code works in details as this is not the goal of
+    this series, but if you don't understand what the hell is going on, I
+    highly recommend you to read PHPUnit documentation on `test doubles`_.
+
 After the test ran, you should see a green bar. If not, you have a bug
 either in the test or in the framework code!
 
@@ -170,7 +176,7 @@ coverage feature (you need to enable `XDebug`_ first):
 
 .. code-block:: bash
 
-    phpunit --coverage-html=cov/
+    $ phpunit --coverage-html=cov/
 
 Open ``example.com/cov/src_Simplex_Framework.php.html`` in a browser and check
 that all the lines for the Framework class are green (it means that they have
