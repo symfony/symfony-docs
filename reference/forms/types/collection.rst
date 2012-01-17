@@ -109,7 +109,7 @@ correct.
 
 Following along the previous example, suppose you start with two
 emails in the ``emails`` data array. In that case, two input fields will
-be rendered that will looking like this (depending on the name of
+be rendered that will look like this (depending on the name of
 your form):
 
 .. code-block:: html
