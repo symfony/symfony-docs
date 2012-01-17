@@ -242,6 +242,11 @@ message, like in:
     [Yaml] foo bar
     [Form] [Validator] [FrameworkBundle] foo bar
 
+.. tip::
+
+    Take care to point your pull request towards ``symfony:2.0`` if you want
+    the core team to pull a bugfix based on the 2.0 branch.
+
 If you are going to send an email to the mailing-list, don't forget to
 reference you branch URL (``https://github.com/USERNAME/symfony.git
 BRANCH_NAME``) or the pull request URL.
