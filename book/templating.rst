@@ -843,7 +843,7 @@ page. From inside that contact page's template, do the following:
 .. code-block:: html+jinja
 
     {# src/Acme/DemoBundle/Resources/views/Contact/contact.html.twig #}
-    {# extends '::base.html.twig' #}
+    {% extends '::base.html.twig' %}
 
     {% block stylesheets %}
         {{ parent() }}
