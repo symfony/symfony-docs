@@ -89,6 +89,31 @@ was entered::
             // ...
         }
 
+.. note::
+
+    The value passed to the transformer depends on what object you link the transformer to. Given the type::
+
+        $builder
+            ->add("name", "text")
+            ->add("issue", "text")
+            ->appendClientTransformer($transformer);
+
+    The value passed to the transformer will be::
+            
+            array( 'name' => string, 'issue' => string)
+
+    But if you attach the transformer to a single field like this:
+
+         $builder
+            ->add("name", "text")
+            ->add("issue", "text");
+        $builder->get("issue")
+            ->appendClientTransformer($transformer);
+    
+    The value passed to the transformer will be just the issue string.
+
+
+
 Next, we create the data transformer, which does the actual conversion::
 
     // src/Acme/TaskBundle/Form/DataTransformer/IssueToNumberTransformer.php
