@@ -103,7 +103,7 @@ was entered::
             
             array('name' => string, 'issue' => string)
 
-    But if you attach the transformer to a single field like this:
+    But if you attach the transformer to a single field like this::
 
         $builder
             ->add("name", "text")
