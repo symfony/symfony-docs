@@ -96,19 +96,23 @@ was entered::
         $builder
             ->add("name", "text")
             ->add("issue", "text")
-            ->appendClientTransformer($transformer);
+            ->appendClientTransformer($transformer)
+        ;
 
     The value passed to the transformer will be::
             
-            array( 'name' => string, 'issue' => string)
+            array('name' => string, 'issue' => string)
 
     But if you attach the transformer to a single field like this:
 
-         $builder
+        $builder
             ->add("name", "text")
-            ->add("issue", "text");
+            ->add("issue", "text")
+        ;
+
         $builder->get("issue")
-            ->appendClientTransformer($transformer);
+            ->appendClientTransformer($transformer)
+        ;
     
     The value passed to the transformer will be just the issue string.
 
