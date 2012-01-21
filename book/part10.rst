@@ -50,11 +50,8 @@ PHP; it implements ``HttpKernelInterface`` and wraps another
 
     // example.com/web/front.php
 
-    use Symfony\Component\HttpKernel\HttpCache\HttpCache;
-    use Symfony\Component\HttpKernel\HttpCache\Store;
-
     $framework = new Simplex\Framework($dispatcher, $matcher, $resolver);
-    $framework = new HttpCache($framework, new Store(__DIR__.'/../cache'));
+    $framework = new HttpKernel\HttpCache\HttpCache($framework, new HttpKernel\HttpCache\Store(__DIR__.'/../cache'));
 
     $framework->handle($request)->send();
 
@@ -155,9 +152,11 @@ For ESI tags to be supported by HttpCache, you need to pass it an instance of
 the ``ESI`` class. The ``ESI`` class automatically parses ESI tags and makes
 sub-requests to convert them to their proper content::
 
-    use Symfony\Component\HttpKernel\HttpCache\ESI;
-
-    $framework = new HttpCache($framework, new Store(__DIR__.'/../cache'), new ESI());
+    $framework = new HttpKernel\HttpCache\HttpCache(
+        $framework,
+        new HttpKernel\HttpCache\Store(__DIR__.'/../cache'),
+        new HttpKernel\HttpCache\ESI()
+    );
 
 .. note::
 
