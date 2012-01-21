@@ -72,6 +72,8 @@ the Response instance::
 
         public function handle(Request $request)
         {
+            $this->matcher->getContext()->fromRequest($request);
+
             try {
                 $request->attributes->add($this->matcher->match($request->getPathInfo()));
 

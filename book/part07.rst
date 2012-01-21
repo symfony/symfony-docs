@@ -42,6 +42,8 @@ Move the request handling logic into its own ``Simplex\\Framework`` class::
 
         public function handle(Request $request)
         {
+            $this->matcher->getContext()->fromRequest($request);
+
             try {
                 $request->attributes->add($this->matcher->match($request->getPathInfo()));
 
@@ -69,7 +71,6 @@ And update ``example.com/web/front.php`` accordingly::
     $routes = include __DIR__.'/../src/app.php';
 
     $context = new Routing\RequestContext();
-    $context->fromRequest($request);
     $matcher = new Routing\Matcher\UrlMatcher($routes, $context);
     $resolver = new HttpKernel\Controller\ControllerResolver();
 
