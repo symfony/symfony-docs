@@ -97,12 +97,12 @@ content and check that the number only changes every 10 seconds::
     efficient reverse proxy like `Varnish`_.
 
 Using HTTP cache headers to manage your application cache is very powerful and
-allows you to finely tuned your caching strategy as you can use both the
+allows you to tune finely your caching strategy as you can use both the
 expiration and the validation models of the HTTP specification. If you are not
 comfortable with these concepts, I highly recommend you to read the `HTTP
 caching`_ chapter of the Symfony2 documentation.
 
-The Response class contains many other methods that let's you configure the
+The Response class contains many other methods that let you configure the
 HTTP cache very easily. One of the most powerful is ``setCache()`` as it
 abstracts the most frequently used caching strategies into one simple array::
 
@@ -179,7 +179,7 @@ describes what the cache layer did:
 
     X-Symfony-Cache:  GET /is_leap_year/2012: fresh
 
-HttpCache has many some features like support for the
+HttpCache has many features like support for the
 ``stale-while-revalidate`` and ``stale-if-error`` HTTP Cache-Control
 extensions as defined in RFC 5861.
 
