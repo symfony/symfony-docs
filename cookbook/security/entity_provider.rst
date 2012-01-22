@@ -42,10 +42,10 @@ focus on the most important methods that come from the
 
 .. versionadded:: 2.1
 
-   In Symfony 2.1 the ``Symfony\\Component\\Security\\Core\\User\\EquatableInterface``
-   was introduced, it contains single method ``isEqualTo(UserInterface $user)``.
-   You can implement this interface if you need to override default implementation
-   of comparsion logic in authentication mechanism.
+    In Symfony 2.1, the ``equals`` method was removed from ``UserInterface``.
+    If you need to override the default implementation of comparison logic,
+    implement the new :class:`Symfony\\Component\\Security\\Core\\User\\EquatableInterface`
+    interface.
 
 .. code-block:: php
 
@@ -54,7 +54,6 @@ focus on the most important methods that come from the
     namespace Acme\UserBundle\Entity;
 
     use Symfony\Component\Security\Core\User\UserInterface;
-    use Symfony\Component\Security\Core\User\EquatableInterface;
     use Doctrine\ORM\Mapping as ORM;
 
     /**
@@ -126,14 +125,6 @@ focus on the most important methods that come from the
         {
             return $this->password;
         }
-
-        /**
-         * EquatableInterface
-         */
-        public function isEqualTo(UserInterface $user)
-        {
-            return $user->getUsername() === $this->username;
-        }
     }
 
 In order to use an instance of the ``AcmeUserBundle:User`` class in the Symfony
@@ -142,15 +133,6 @@ security layer, the entity class must implement the
 interface forces the class to implement the five following methods: ``getRoles()``,
 ``getPassword()``, ``getSalt()``, ``getUsername()``, ``eraseCredentials()``.
 For more details on each of these, see :class:`Symfony\\Component\\Security\\Core\\User\\UserInterface`.
-
-To keep it simple, the ``isEqualTo()`` method form ``EquatableInterface``
-just compares the ``username`` field but it's also possible to do more checks
-depending on the complexity of your data model, also in most cases, implementing
-``EquatableInterface`` is not nessesery, because security component has good default
-implementation, see the ``hasUserChanged()`` method of
-:class:`Symfony\\Component\\Security\\Core\\Authentication\\Token\\AbstractToken`.
-On the other hand, the ``eraseCredentials()`` method remains empty
-as we don't care about it in this tutorial.
 
 Below is an export of my ``User`` table from MySQL. For details on how to
 create user records and encode their password, see :ref:`book-security-encoding-user-password`.

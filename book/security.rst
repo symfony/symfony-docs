@@ -1006,10 +1006,10 @@ as it implements this interface.
 
 .. versionadded:: 2.1
 
-   In Symfony 2.1 the ``Symfony\\Component\\Security\\Core\\User\\EquatableInterface``
-   was introduced, it contains single method ``isEqualTo(UserInterface $user)``.
-   You can implement this interface if you need to override default implementation
-   of comparsion logic in authentication mechanism.
+    In Symfony 2.1, the ``equals`` method was removed from ``UserInterface``.
+    If you need to override the default implementation of comparison logic,
+    implement the new :class:`Symfony\\Component\\Security\\Core\\User\\EquatableInterface`
+    interface.
 
 .. note::
 
