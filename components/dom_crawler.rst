@@ -228,7 +228,7 @@ useful methods for working with forms:
 
 The :method:`Symfony\\Component\\DomCrawler\\Form::getUri` method does more
 than just return the ``action`` attribute of the form. If the form method
-is GET, then it mimics the browsers behavior and returns a the ``action``
+is GET, then it mimics the browser's behavior and returns the ``action``
 attribute followed by a query string of all of the form's values.
 
 You can virtually set and get values on the form::
