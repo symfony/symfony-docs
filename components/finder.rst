@@ -28,7 +28,12 @@ directories::
     $finder->files()->in(__DIR__);
 
     foreach ($finder as $file) {
+        // Print the absolute path
         print $file->getRealpath()."\n";
+        // Print the relative path to the file, omitting the filename
+        print $file->getRelativePath()."\n";
+        // Print the relative path to the file
+        print $file->getRelativePathname()."\n";
     }
 
 The ``$file`` is an instance of :class:`Symfony\\Component\\Finder\\SplFileInfo`
@@ -208,8 +213,9 @@ To restrict the matching file with your own strategy, use
     $finder->files()->filter($filter);
 
 The ``filter()`` method takes a Closure as an argument. For each matching file,
-it is called with the file as a :phpclass:`SplFileInfo` instance. The file is
-excluded from the result set if the Closure returns ``false``.
+it is called with the file as a :class:`Symfony\\Component\\Finder\\SplFileInfo`
+instance. The file is excluded from the result set if the Closure returns
+``false``.
 
 .. _strtotime:   http://www.php.net/manual/en/datetime.formats.php
 .. _Iterator:     http://www.php.net/manual/en/spl.iterators.php
