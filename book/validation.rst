@@ -230,7 +230,7 @@ workflow looks like the following from inside a controller::
             if ($form->isValid()) {
                 // the validation passed, do something with the $author object
 
-                $this->redirect($this->generateUrl('...'));
+                return $this->redirect($this->generateUrl('...'));
             }
         }
 
