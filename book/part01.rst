@@ -108,7 +108,7 @@ To install the Symfony2 Components that we need for our framework, we are
 going to use `Composer`_, a project dependency manager for PHP. First, list
 your dependencies in a ``composer.json`` file:
 
-.. code-block:: json
+.. code-block:: javascript
 
     {
         "require": {

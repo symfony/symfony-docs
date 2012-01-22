@@ -85,7 +85,7 @@ To wrap up the refactoring, let's move everything but routes definition from
 For the classes defined under the ``Simplex`` and ``Calendar`` namespaces to
 be autoloaded, update the ``composer.json`` file:
 
-.. code-block:: json
+.. code-block:: javascript
 
     {
         "require": {

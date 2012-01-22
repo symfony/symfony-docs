@@ -17,7 +17,7 @@ pattern, the *Observer*, to allow any kind of behaviors to be attached to our
 framework; the Symfony2 EventDispatcher Component implements a lightweight
 version of this pattern:
 
-.. code-block:: json
+.. code-block:: javascript
 
     {
         "require": {

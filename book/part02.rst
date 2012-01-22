@@ -127,7 +127,7 @@ layer.
 To use this component, open the ``composer.json`` file and add it as a
 dependency for the project:
 
-.. code-block:: json
+.. code-block:: javascript
 
     {
         "require": {
