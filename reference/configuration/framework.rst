@@ -90,6 +90,8 @@ services related to testing your application (e.g. ``test.client``) are loaded.
 This setting should be present in your ``test`` environment (usually via
 ``app/config/config_test.yml``). For more information, see :doc:`/book/testing`.
 
+.. _reference-framework-form:
+
 form
 ~~~~
 

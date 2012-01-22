@@ -55,8 +55,7 @@ Using XPath expressions is really easy::
 
 .. tip::
 
-    :phpmethod:`DOMXPath::query` is used internally to actually perform
-    an XPath query.
+    ``DOMXPath::query`` is used internally to actually perform an XPath query.
 
 Filtering is even easier if you have the ``CssSelector`` Component installed.
 This allows you to use jQuery-like selectors to traverse::
@@ -232,7 +231,7 @@ than just return the ``action`` attribute of the form. If the form method
 is GET, then it mimics the browsers behavior and returns a the ``action``
 attribute followed by a query string of all of the form's values.
 
-You can virtually set and get values on the form
+You can virtually set and get values on the form::
 
     // set values on the form internally
     $form->setValues(array(
