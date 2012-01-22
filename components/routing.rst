@@ -119,10 +119,10 @@ the POST method and a secure connection::
 
 .. tip::
     
-    If you want to match all urls which start with a certain path and end in a
+    If you want to match all urls which start with a certain path and end in an
     arbitrary suffix you can use the following route definition::
         
-        $route = new Route('/start/{suffix}', array('suffix' => '.*'));
+        $route = new Route('/start/{suffix}', array('suffix' => ''), array('suffix' => '.*'));
     
 
 Using Prefixes
