@@ -12,7 +12,7 @@ create one from scratch or use a 3rd party generator.
 .. note::
 
     There are several SOAP server implementations available for use with 
-    PHP.  `Zend SOAP`_ and `NuSOAP`_ are two examples.  Although we use 
+    PHP. `Zend SOAP`_ and `NuSOAP`_ are two examples. Although we use 
     the PHP SOAP extension in our examples, the general idea should still 
     be applicable to other implementations.
 
@@ -20,7 +20,7 @@ SOAP works by exposing the methods of a PHP object to an external entity
 (i.e. the person using the SOAP service). To start, create a class - ``HelloService`` -
 which represents the functionality that you'll expose in your SOAP service.
 In this case, the SOAP service will allow the client to call a method called
-``hello``, which happens to send an email address::
+``hello``, which happens to send an email::
 
     namespace Acme\SoapBundle;
 
@@ -46,7 +46,6 @@ In this case, the SOAP service will allow the client to call a method called
 
             return 'Hello, ' . $name;
         }
-
     }
 
 Next, you can train Symfony to be able to create an instance of this class.
@@ -112,7 +111,7 @@ into the content of the Response and clear the output buffer.  Finally, you're
 ready to return the ``Response``.
 
 Below is an example calling the service using `NuSOAP`_ client.  This example 
-assumes the ``indexAction`` in the controller above is accessible via the
+assumes that the ``indexAction`` in the controller above is accessible via the
 route ``/soap``::
 
     $client = new \soapclient('http://example.com/app.php/soap?wsdl', true);
