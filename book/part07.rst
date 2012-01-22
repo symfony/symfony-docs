@@ -157,6 +157,8 @@ Don't forget to update the ``example.com/src/app.php`` file accordingly::
 
 To sum up, here is the new file layout:
 
+.. code-block:: text
+
     example.com
     ├── composer.json
     │   src

@@ -155,6 +155,8 @@ Now that the web server always access the same script (``front.php``) for all
 our pages, we can secure our code further by moving all other PHP files
 outside the web root directory:
 
+.. code-block:: text
+
     example.com
     ├── composer.json
     │   src
