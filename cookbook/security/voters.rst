@@ -88,7 +88,7 @@ and compare the IP address against a set of blacklisted IP addresses:
         function vote(TokenInterface $token, $object, array $attributes)
         {
             $request = $this->container->get('request');
-            if (in_array($this->request->getClientIp(), $this->blacklistedIp)) {
+            if (in_array($request->getClientIp(), $this->blacklistedIp)) {
                 return VoterInterface::ACCESS_DENIED;
             }
 
