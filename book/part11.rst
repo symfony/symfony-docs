@@ -5,7 +5,7 @@ If you were to use our framework right now, you would probably have to add
 support for custom error messages. Right now, we have 404 and 500 error
 support but the responses are hardcoded in the framework itself. Making them
 customizable is easy enough though: dispatch a new event and listen to it.
-Doing it right means that the listener have to call a regular controller. But
+Doing it right means that the listener has to call a regular controller. But
 what if the error controller throws an exception? You will end up in an
 infinite loop. There should be an easier way, right?
 
@@ -108,7 +108,7 @@ The error controller reads as follows::
     }
 
 Voilà! Clean and customizable error management without efforts. And of course,
-of your controller throws an exception, HttpKernel will handle it nicely.
+if your controller throws an exception, HttpKernel will handle it nicely.
 
 In part 2, we have talked about the ``Response::prepare()`` method, which
 ensures that a Response is compliant with the HTTP specification. It is
@@ -191,12 +191,12 @@ Don't forget to register it in the front controller::
 
 .. note::
 
-    If you forget to register the subscriber, HttpKernel will throws an
+    If you forget to register the subscriber, HttpKernel will throw an
     exception with a nice message: ``The controller must return a response
     (Nope, this is not a leap year. given).``.
 
 At this point, our whole framework code is as compact as possible and it is
-mainly composed of an assembling of existing libraries. Extending is a matter
+mainly composed of an assembly of existing libraries. Extending is a matter
 of registering event listeners/subscribers.
 
 Hopefully, you now have a better understanding of why the simple looking
