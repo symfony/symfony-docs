@@ -278,7 +278,7 @@ address as they are both unique in the database. Unfortunately, the native
 entity provider is only able to handle a single property to fetch the user from
 the database.
 
-To accomplish this, crate a custom entity provider that looks for a user
+To accomplish this, create a custom entity provider that looks for a user
 whose username *or* email field matches the submitted login username.
 The good news is that a Doctrine repository object can act as an entity user
 provider if it implements the
