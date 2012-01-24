@@ -76,7 +76,7 @@ make your error management configurable::
 
         return new Response($msg, $exception->getStatusCode());
     });
-    $dispatcher->addSubscriber(new HttpKernel\EventListener\ExceptionListener($errorHandler);
+    $dispatcher->addSubscriber(new HttpKernel\EventListener\ExceptionListener($errorHandler));
 
 ``ExceptionListener`` gives you a ``FlattenException`` instance instead of the
 thrown ``Exception`` instance to ease exception manipulation and display. It
