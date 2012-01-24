@@ -145,7 +145,7 @@ comes into play.
 How Security Works: Authentication and Authorization
 ----------------------------------------------------
 
-Symfony's security system works by determining who a user is (i.e. authentication)
+Symfony's security system works by determining who an user is (i.e. authentication)
 and then checking to see if that user should have access to a specific resource
 or URL.
 
