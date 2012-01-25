@@ -151,7 +151,7 @@ them. Objects will be created on-demand when you access them from the
 container or when the container needs them to create other objects.
 
 For instance, to create the router listener, we tell Symfony that its class
-name is ``Symfony\Component\HttpKernel\EventListener\RouterListeners``, and
+name is ``Symfony\Component\HttpKernel\EventListener\RouterListener``, and
 that its constructor takes a matcher object (``new Reference('matcher')``). As
 you can see, each object is referenced by a name, a string that uniquely
 identifies each object. The name allows us to get an object and to reference
