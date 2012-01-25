@@ -86,15 +86,11 @@ injection; all dependencies of our objects were injected into their
 constructors (for instance, the event dispatchers were injected into the
 framework so that we had total control of its creation and configuration).
 
-Does it mean that we have to make a choice between flexibility,
-<<<<<<< .merge_file_8XJJxl
-customization, ease of testing and not having to copy and paste the same code
-=======
-customization, ease of testing and not to copy and paste the same code
->>>>>>> .merge_file_kv38Yk
-into each application front controller? As you might expect, there is a
-solution. We can solve all these issues and some more by using the Symfony2
-dependency injection container:
+Does it mean that we have to make a choice between flexibility, customization,
+ease of testing and not to copy and paste the same code into each application
+front controller? As you might expect, there is a solution. We can solve all
+these issues and some more by using the Symfony2 dependency injection
+container:
 
 .. code-block:: json
 
