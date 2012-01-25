@@ -53,8 +53,8 @@ equivalents::
 
 This gives output of ``descendant-or-self::div[contains(concat(' ',
 normalize-space(@class), ' '), ' item ')]/h4/a``. You can use this
-expression with :phpclass:`DOMXPath` or :phpclass:`SimpleXML` to find
-elements in a document..
+expression with, for instance, :phpclass:`DOMXPath` or
+:phpclass:`SimpleXML` to find elements in a document.
 
 .. tip::
 
