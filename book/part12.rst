@@ -3,8 +3,8 @@ Create your own framework... on top of the Symfony2 Components (part 12)
 
 In the last installment of this series, we have emptied the
 ``Simplex\\Framework`` class by extending the ``HttpKernel`` class from
-Symfony. Seeing this empty class, you might be tempted to move some code from
-the front controller to it::
+the eponymous component. Seeing this empty class, you might be tempted to move
+some code from the front controller to it::
 
     <?php
 
@@ -50,7 +50,7 @@ The front controller code would become more concise::
 
     $framework->handle($request)->send();
 
-Having a more concise front controller means that you can have more than one
+Having a concise front controller allows you to have several front controllers
 for a single application. Why would it be useful? To allow having different
 configuration for the development environment and the production one for
 instance. In the development environment, you might want to have error
@@ -78,16 +78,20 @@ issues:
 * Related to the previous point, we cannot test our framework easily anymore
   as it's impossible to mock internal objects;
 
-* We cannot change the charset passed to ResponseListener anymore (a
+* We cannot change the charset passed to ``ResponseListener`` anymore (a
   workaround could be to pass it as a constructor argument).
 
 The previous code did not exhibit the same issues because we used dependency
 injection; all dependencies of our objects were injected into their
-constructors (for instance, the event dispatcher were injected into the
+constructors (for instance, the event dispatchers were injected into the
 framework so that we had total control of its creation and configuration).
 
-Does it means that we have to make a choice between flexibility,
+Does it mean that we have to make a choice between flexibility,
+<<<<<<< .merge_file_8XJJxl
 customization, ease of testing and not having to copy and paste the same code
+=======
+customization, ease of testing and not to copy and paste the same code
+>>>>>>> .merge_file_kv38Yk
 into each application front controller? As you might expect, there is a
 solution. We can solve all these issues and some more by using the Symfony2
 dependency injection container:
@@ -249,7 +253,7 @@ Have fun!
 
 *P.S.:* If there is enough interest (leave a comment on this post), I might
 write some more articles on specific topics (using a configuration file for
-routing, using HttpKernel debugging tools, using the build-in client to
+routing, using HttpKernel debugging tools, using the built-in client to
 simulate a browser are some of the topics that come to my mind for instance).
 
 .. _`Pimple`:      https://github.com/fabpot/Pimple
