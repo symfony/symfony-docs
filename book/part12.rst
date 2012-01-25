@@ -2,7 +2,7 @@ Create your own framework... on top of the Symfony2 Components (part 12)
 ========================================================================
 
 In the last installment of this series, we have emptied the
-``Simplex\\Framework`` class by extending the ``HttpKernel`` class from
+``Simplex\Framework`` class by extending the ``HttpKernel`` class from
 Symfony. Seeing this empty class, you might be tempted to move some code from
 the front controller to it::
 
@@ -229,7 +229,7 @@ We have obviously barely scratched the surface of what you can do with the
 container: from class names as parameters, to overriding existing object
 definitions, from scope support to dumping a container to a plain PHP class,
 and much more. The Symfony dependency injection container is really powerful
-and is able to manage any kind of PHP classes.
+and is able to manage any kind of PHP class.
 
 Don't yell at me if you don't want to have a dependency injection container in
 your framework. If you don't like it, don't use it. It's your framework, not
@@ -249,7 +249,7 @@ Have fun!
 
 *P.S.:* If there is enough interest (leave a comment on this post), I might
 write some more articles on specific topics (using a configuration file for
-routing, using HttpKernel debugging tools, using the build-in client to
+routing, using HttpKernel debugging tools, using the built-in client to
 simulate a browser are some of the topics that come to my mind for instance).
 
 .. _`Pimple`:      https://github.com/fabpot/Pimple
