@@ -278,7 +278,7 @@ address as they are both unique in the database. Unfortunately, the native
 entity provider is only able to handle a single property to fetch the user from
 the database.
 
-To accomplish this, crate a custom entity provider that looks for a user
+To accomplish this, create a custom entity provider that looks for a user
 whose username *or* email field matches the submitted login username.
 The good news is that a Doctrine repository object can act as an entity user
 provider if it implements the
@@ -376,7 +376,7 @@ about in this section.
 
 .. caution::
 
-    In a typical setup, you should always return at least 1 role from he ``getRoles()``
+    In a typical setup, you should always return at least 1 role from the ``getRoles()``
     method. By convention, a role called ``ROLE_USER`` is usually returned.
     If you fail to return any roles, it may appear as if your user isn't
     authenticated at all.
