@@ -57,7 +57,7 @@ To support this feature, we are going to use the Symfony2 Routing component.
 As always, add it to ``composer.json`` and run the ``php composer.phar
 update`` command to install it:
 
-.. code-block:: json
+.. code-block:: javascript
 
     {
         "require": {

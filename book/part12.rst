@@ -92,7 +92,7 @@ front controller? As you might expect, there is a solution. We can solve all
 these issues and some more by using the Symfony2 dependency injection
 container:
 
-.. code-block:: json
+.. code-block:: javascript
 
     {
         "require": {
