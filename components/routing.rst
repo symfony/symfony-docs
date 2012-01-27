@@ -13,7 +13,7 @@ Installation
 
 You can install the component in many different ways:
 
-* Use the official Git repository (https://github.com/symfony/Routing.git);
+* Use the official Git repository (https://github.com/symfony/Routing);
 * Install it via PEAR (`pear.symfony.com/Routing`);
 * Install it via Composer (`symfony/routing` on Packagist)
 
