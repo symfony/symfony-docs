@@ -30,7 +30,7 @@ the following ``VirtualHost`` configuration:
         SetEnv          SYMFONY__DATABASE__USER user
         SetEnv          SYMFONY__DATABASE__PASSWORD secret
 
-        <Directory "/path/to/my_symfony_2_app/web">
+        <Directory "/path/to/symfony_2_app/web">
             AllowOverride All
             Allow from All
         </Directory>
@@ -77,7 +77,7 @@ You can now reference these parameters wherever you need them.
         <doctrine:config>
             <doctrine:dbal
                 driver="pdo_mysql"
-                dbname="symfony2_projet"
+                dbname="symfony2_project"
                 user="%database.user%"
                 password="%database.password%"
             />
