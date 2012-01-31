@@ -283,6 +283,17 @@ for the ``Product`` class. This is a safe command - you can run it over and
 over again: it only generates getters and setters that don't exist (i.e. it
 doesn't replace your existing methods).
 
+.. note::
+
+    Using ``doctrine:generate:entities`` command you can:
+
+    * generate getters and setters,
+
+    * generate repository classes configured with 
+      ``@ORM\Entity(repositoryClass="...")`` annotation,
+
+    * generate appropriate constructor for 1:n and n:m relations.
+
 .. caution::
 
     The ``doctrine:generate:entities`` command saves a backup of the original
