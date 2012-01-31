@@ -247,7 +247,7 @@ argument to ``GenderType``, which receives the gender configuration::
         public function getDefaultOptions(array $options)
         {
             return array(
-                'choices' => $this->genderChoices;
+                'choices' => $this->genderChoices,
             );
         }
         
