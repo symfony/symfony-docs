@@ -91,4 +91,10 @@ The same goes for routing files, validation configuration and other resources.
     If you refer to resources without using the @BundleName shortcut, they
     can't be overridden in this way.
 
+.. note::
+
+   To override translation files, please make sure the child bundle is initialized
+   after the parent bundle in the AppKernel.
+
 .. _`FOSUserBundle`: https://github.com/friendsofsymfony/fosuserbundle
+
