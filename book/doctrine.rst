@@ -279,16 +279,17 @@ a regular PHP class, you need to create getter and setter methods (e.g. ``getNam
     php app/console doctrine:generate:entities Acme/StoreBundle/Entity/Product
 
 This command makes sure that all of the getters and setters are generated
-for the ``Product`` class. This is a safe command - you can run it over and
-over again: it only generates getters and setters that don't exist (i.e. it
-doesn't replace your existing methods).
+for the ``Product`` class. This is a safe command: it only generates getters and 
+setters that don't exist (i.e. it doesn't replace your existing methods).
 
 .. caution::
 
     The ``doctrine:generate:entities`` command saves a backup of the original
     ``Product.php`` named ``Product.php~``. In some cases, the presence of
     this file can cause a "Cannot redeclare class" error. It can be safely
-    removed.
+    removed. It is also to be noted that ``doctrine:generate:entities`` should
+    be used as a kick-starter for your projects. You shouldn't use it to maintain
+    your already existing entities.
 
 You can also generate all known entities (i.e. any PHP class with Doctrine
 mapping information) of a bundle or an entire namespace:
