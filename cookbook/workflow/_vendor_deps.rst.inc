@@ -12,7 +12,7 @@ of your project. This is an ini-formatted script, which holds a list of each
 of the external libraries you need, the directory each should be downloaded to,
 and (optionally) the version to be downloaded. The ``bin/vendors`` script
 uses ``git`` to downloaded these, solely because these external libraries
-themselves tend to be stored via git. The ``vin/vendors`` script also reads
+themselves tend to be stored via git. The ``bin/vendors`` script also reads
 the ``deps.lock`` file, which allows you to pin each library to an exact
 git commit hash.
 
