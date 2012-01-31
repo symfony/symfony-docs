@@ -183,7 +183,7 @@ instance with just the selected link(s). Calling ``link()`` gives us a special
 
     $linksCrawler = $crawler->selectLink('Go elsewhere...');
     $link = $linksCrawler->link();
-    
+
     // or do this all at once
     $link = $crawler->selectLink('Go elsewhere...')->link();
 
@@ -213,7 +213,7 @@ a :class:`Symfony\\Component\\DomCrawler\\Form` object that represents the
 form that the button lives in::
 
     $form = $crawler->selectButton('validate')->form();
-    
+
     // or "fill" the form fields with data
     $form = $crawler->selectButton('validate')->form(array(
         'name' => 'Ryan',
@@ -223,7 +223,7 @@ The :class:`Symfony\\Component\\DomCrawler\\Form` object has lots of very
 useful methods for working with forms:
 
     $uri = $form->getUri();
-    
+
     $method = $form->getMethod();
 
 The :method:`Symfony\\Component\\DomCrawler\\Form::getUri` method does more
@@ -245,12 +245,31 @@ You can virtually set and get values on the form::
     // returns the values like PHP would see them, where "registration" is its own array
     $values = $form->getPhpValues();
 
+To work with multi-dimensional fields::
+
+    <form>
+        <input name="multi[]" />
+        <input name="multi[]" />
+        <input name="multi[dimensional]" />
+    </form>
+
+You must specify the fully qualified name of the field::
+
+    // Set a single field
+    $form->setValue('multi[0]', 'value');
+
+    // Set multiple fields at once
+    $form->setValue('multi', array(
+        1             => 'value',
+        'dimensional' => 'an other value'
+    ));
+
 This is great, but it gets better! The ``Form`` object allows you to interact
 with your form like a browser, selecting radio values, ticking checkboxes,
 and uploading files::
 
     $form['registration[username]']->setValue('symfonyfan');
-    
+
     // check or uncheck a checkbox
     $form['registration[terms]']->tick();
     $form['registration[terms]']->untick();
@@ -278,7 +297,7 @@ of the information you need to create a POST request for the form::
     $method = $form->getMethod();
     $values = $form->getValues();
     $files = $form->getFiles();
-    
+
     // now use some HTTP client and post using this information
 
 One great example of an integrated system that uses all of this is `Goutte`_.
