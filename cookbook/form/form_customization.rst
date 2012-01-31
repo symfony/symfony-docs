@@ -717,7 +717,7 @@ and customize the ``field_errors`` fragment.
 
         {% block field_errors %}
         {% spaceless %}
-            {% if errors|length > 0 %}
+            {% if errors is defined and errors|length > 0 %}
             <ul class="error_list">
                 {% for error in errors %}
                     <li>{{ error.messageTemplate|trans(error.messageParameters, 'validators') }}</li>
