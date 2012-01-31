@@ -428,35 +428,27 @@ factory service, tagged as ``security.listener.factory``:
             </services>
         </container>
 
-Now, import the factory configuration via the the ``factories`` key in your
-security configuration:
+As a final step, add the factory to the security extension in your bundle class.
 
-.. configuration-block::
+.. code-block:: php
 
-    .. code-block:: yaml
+    // src/Acme/DemoBundle/AcmeDemoBundle.php
+    namespace Acme\DemoBundle;
 
-        # app/config/security.yml
-        security:
-          factories:
-            - "%kernel.root_dir%/../src/Acme/DemoBundle/Resources/config/security_factories.yml"
+    use Acme\DemoBundle\DependencyInjection\Security\Factory\WsseFactory;
+    use Symfony\Component\HttpKernel\Bundle\Bundle;
+    use Symfony\Component\DependencyInjection\ContainerBuilder;
 
-    .. code-block:: xml
+    class AcmeDemoBundle extends Bundle
+    {
+        public function build(ContainerBuilder $container)
+        {
+            parent::build($container);
 
-        <!-- app/config/security.xml -->
-        <config>
-            <factories>
-              "%kernel.root_dir%/../src/Acme/DemoBundle/Resources/config/security_factories.xml
-            </factories>
-        </config>
-
-    .. code-block:: php
-
-        // app/config/security.php
-        $container->loadFromExtension('security', array(
-            'factories' => array(
-              "%kernel.root_dir%/../src/Acme/DemoBundle/Resources/config/security_factories.php"
-            ),
-        ));
+            $extension = $container->getExtension('security');
+            $extension->addSecurityListenerFactory(new WsseFactory());
+        }
+    }
 
 You are finished! You can now define parts of your app as under WSSE protection.
 
