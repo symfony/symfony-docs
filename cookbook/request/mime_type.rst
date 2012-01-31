@@ -56,11 +56,11 @@ file and register it as a listener by adding the ``kernel.event_listener`` tag:
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
-
+            <services>
             <service id="acme.demobundle.listener.request" class="Acme\DemoBundle\RequestListener">
                 <tag name="kernel.event_listener" event="kernel.request" method="onKernelRequest" />
             </service>
-
+            </services>
         </container>
 
     .. code-block:: yaml
