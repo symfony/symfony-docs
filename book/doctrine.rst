@@ -283,23 +283,27 @@ for the ``Product`` class. This is a safe command - you can run it over and
 over again: it only generates getters and setters that don't exist (i.e. it
 doesn't replace your existing methods).
 
-.. note::
+.. sidebar:: More about ``doctrine:generate:entities``
 
-    Using ``doctrine:generate:entities`` command you can:
+    With the ``doctrine:generate:entities`` command you can:
 
-    * generate getters and setters,
+        * generate getters and setters,
 
-    * generate repository classes configured with 
-      ``@ORM\Entity(repositoryClass="...")`` annotation,
+        * generate repository classes configured with the
+            ``@ORM\Entity(repositoryClass="...")`` annotation,
 
-    * generate appropriate constructor for 1:n and n:m relations.
-
-.. caution::
+        * generate the appropriate constructor for 1:n and n:m relations.
 
     The ``doctrine:generate:entities`` command saves a backup of the original
     ``Product.php`` named ``Product.php~``. In some cases, the presence of
     this file can cause a "Cannot redeclare class" error. It can be safely
     removed.
+
+    Note that you don't *need* to use this command. Doctrine doesn't rely
+    on code generation. Like with normal PHP classes, you just need to make
+    sure that your protected/private properties have getter and setter methods.
+    Since this is a common thing to do when using Doctrine, this command
+    was created.
 
 You can also generate all known entities (i.e. any PHP class with Doctrine
 mapping information) of a bundle or an entire namespace:
