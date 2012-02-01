@@ -25,8 +25,8 @@ When you're parsing an HTML or an XML document, by far the most powerful
 method is XPath.
 
 XPath expressions are incredibly flexible, so there is almost always an
-XPath expression that will find the element you need, but they quickly
-become very complicated, and the learning curve is steep. Even common
+XPath expression that will find the element you need. Unfortunately, they
+can also become very complicated, and the learning curve is steep. Even common
 operations (such as finding an element with a particular class) can require
 long and unwieldy expressions.
 
@@ -51,16 +51,20 @@ equivalents::
 
     print CssSelector::toXPath('div.item > h4 > a');
 
-This gives output of ``descendant-or-self::div[contains(concat(' ',
-normalize-space(@class), ' '), ' item ')]/h4/a``. You can use this
-expression with, for instance, :phpclass:`DOMXPath` or
-:phpclass:`SimpleXML` to find elements in a document.
+This gives the following output:
+
+.. code-block:: text
+
+    descendant-or-self::div[contains(concat(' ',normalize-space(@class), ' '), ' item ')]/h4/a
+
+You can use this expression with, for instance, :phpclass:`DOMXPath` or
+:phpclass:`SimpleXMLElement` to find elements in a document.
 
 .. tip::
 
-    The :method:`Symfony\\Component\\DomCrawler::filter`` method uses the
-    ``CssSelector`` component to find elements based on a
-    CSS selector string.
+    The :method:`Crawler::filter()<Symfony\\Component\\DomCrawler\\Crawler::filter>` method
+    uses the ``CssSelector`` component to find elements based on a CSS selector
+    string. See the :doc:`/components/dom_crawler` for more details.
 
 Limitations of the CssSelector component
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
