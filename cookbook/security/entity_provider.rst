@@ -376,7 +376,7 @@ about in this section.
 
 .. caution::
 
-    In a typical setup, you should always return at least 1 role from he ``getRoles()``
+    In a typical setup, you should always return at least 1 role from the ``getRoles()``
     method. By convention, a role called ``ROLE_USER`` is usually returned.
     If you fail to return any roles, it may appear as if your user isn't
     authenticated at all.
