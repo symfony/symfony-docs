@@ -7,7 +7,7 @@ How to use Bundle Inheritance to Override parts of a Bundle
 When working with third-party bundles, you'll probably come across a situation
 where you want to override a file in that third-party bundle with a file
 in one of your own bundles. Symfony gives you a very convenient way to override
-things like controllers, templates, translations, and other files in a bundle's
+things like controllers, templates, and other files in a bundle's
 ``Resources/`` directory.
 
 For example, suppose that you're installing the `FOSUserBundle`_, but you
@@ -69,8 +69,8 @@ original method, and change its functionality::
     the controller using the standard ``FOSUserBundle:Registration:register``
     syntax in routes and templates. This is the best practice.
 
-Overriding Resources: Templates, Routing, Translations, Validation, etc
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Overriding Resources: Templates, Routing, Validation, etc
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Most resources can also be overridden, simply by creating a file in the same
 location as your parent bundle.
@@ -91,4 +91,14 @@ The same goes for routing files, validation configuration and other resources.
     If you refer to resources without using the @BundleName shortcut, they
     can't be overridden in this way.
 
+.. caution::
+
+   Translation files do not work in the same way as described above. All
+   translation files are accumulated into a set of "pools" (one for each)
+   domain. Symfony loads translation files from bundles first (in the order
+   that the bundles are initialized) and then from your ``app/Resources``
+   directory. If the same translation is specified in two resources, the
+   translation from the resource that's loaded last will win.
+
 .. _`FOSUserBundle`: https://github.com/friendsofsymfony/fosuserbundle
+
