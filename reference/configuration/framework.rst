@@ -231,7 +231,7 @@ would be ``/images/logo.png?version=5``.
 
     URL rewrite rules could then be used to disregard the version prefix before
     serving the asset. Alternatively, you could copy assets to the appropriate
-    version path as part of your deployment process and forgo any URL rewriting.
+    version path as part of your deployment process and forgot any URL rewriting.
     The latter option is useful if you would like older asset versions to remain
     accessible at their original URL.
 
