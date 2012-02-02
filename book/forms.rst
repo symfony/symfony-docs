@@ -792,6 +792,22 @@ the choice is ultimately up to you.
             );
         }
 
+.. tip::
+	
+	When mapping forms to objects, all fields are mapped, any fields on the 
+	form that do not exist on the mapped object will cause an exception to
+	be thrown.
+	
+	In cases where you need extra fields in the form (for example: a "do you
+	agree with these terms" checkbox) that will not be mapped to the undelying
+	object, you need to set the property_path setting to ``false``.
+	
+        public function buildForm(FormBuilder $builder, array $options)
+        {
+            $builder->add('task');
+            $builder->add('dueDate', null, array('property_path' => false));
+        }
+
 .. index::
    pair: Forms; Doctrine
 
