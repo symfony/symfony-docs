@@ -374,4 +374,9 @@ property, instead of the actual filename::
         {
             return null === $this->path ? null : $this->getUploadRootDir().'/'.$this->id.'.'.$this->path;
         }
+
+        public function getWebPath()
+        {
+            return null === $this->path ? null : $this->getUploadDir().'/'.$this->id.'.'.$this->path;
+        }
     }
