@@ -1,3 +1,6 @@
+.. index::
+   single: Security
+
 Security
 ========
 
@@ -678,7 +681,7 @@ You can define as many URL patterns as you need - each is a regular expression.
 
     .. code-block:: yaml
 
-        # app/config/config.yml
+        # app/config/security.yml
         security:
             # ...
             access_control:
@@ -687,7 +690,7 @@ You can define as many URL patterns as you need - each is a regular expression.
 
     .. code-block:: xml
 
-        <!-- app/config/config.xml -->
+        <!-- app/config/security.xml -->
         <config>
             <!-- ... -->
             <rule path="^/admin/users" role="ROLE_SUPER_ADMIN" />
@@ -696,7 +699,7 @@ You can define as many URL patterns as you need - each is a regular expression.
 
     .. code-block:: php
 
-        // app/config/config.php
+        // app/config/security.php
         $container->loadFromExtension('security', array(
             // ...
             'access_control' => array(
@@ -895,7 +898,7 @@ In fact, you've seen this already in the example in this chapter.
 
     .. code-block:: yaml
 
-        # app/config/config.yml
+        # app/config/security.yml
         security:
             # ...
             providers:
@@ -907,7 +910,7 @@ In fact, you've seen this already in the example in this chapter.
 
     .. code-block:: xml
 
-        <!-- app/config/config.xml -->
+        <!-- app/config/security.xml -->
         <config>
             <!-- ... -->
             <provider name="default_provider">
@@ -920,7 +923,7 @@ In fact, you've seen this already in the example in this chapter.
 
     .. code-block:: php
 
-        // app/config/config.php
+        // app/config/security.php
         $container->loadFromExtension('security', array(
             // ...
             'providers' => array(
@@ -1001,6 +1004,13 @@ custom user class is that it implements the :class:`Symfony\\Component\\Security
 interface. This means that your concept of a "user" can be anything, as long
 as it implements this interface.
 
+.. versionadded:: 2.1
+
+    In Symfony 2.1, the ``equals`` method was removed from ``UserInterface``.
+    If you need to override the default implementation of comparison logic,
+    implement the new :class:`Symfony\\Component\\Security\\Core\\User\\EquatableInterface`
+    interface.
+
 .. note::
 
     The user object will be serialized and saved in the session during requests,
@@ -1069,7 +1079,7 @@ do the following:
 
     .. code-block:: yaml
 
-        # app/config/config.yml
+        # app/config/security.yml
         security:
             # ...
             providers:
@@ -1087,7 +1097,7 @@ do the following:
 
     .. code-block:: xml
 
-        <!-- app/config/config.xml -->
+        <!-- app/config/security.xml -->
         <config>
             <!-- ... -->
             <provider name="in_memory">
@@ -1102,7 +1112,7 @@ do the following:
 
     .. code-block:: php
 
-        // app/config/config.php
+        // app/config/security.php
         $container->loadFromExtension('security', array(
             // ...
             'providers' => array(
@@ -1139,7 +1149,7 @@ configure the encoder for that user:
 
     .. code-block:: yaml
 
-        # app/config/config.yml
+        # app/config/security.yml
         security:
             # ...
 
@@ -1148,7 +1158,7 @@ configure the encoder for that user:
 
     .. code-block:: xml
 
-        <!-- app/config/config.xml -->
+        <!-- app/config/security.xml -->
         <config>
             <!-- ... -->
 
@@ -1157,7 +1167,7 @@ configure the encoder for that user:
 
     .. code-block:: php
 
-        // app/config/config.php
+        // app/config/security.php
         $container->loadFromExtension('security', array(
             // ...
 
@@ -1217,6 +1227,17 @@ In a controller this can be shortcut to:
     method of an anonymous user object will return true. To check if your
     user is actually authenticated, check for the ``IS_AUTHENTICATED_FULLY``
     role.
+    
+In a Twig Template this object can be accessed via the ``app.user`` key,
+which calls the :method:`GlobalVariables::getUser()<Symfony\\Bundle\\FrameworkBundle\\Templating\\GlobalVariables::getUser>`
+method:
+
+.. configuration-block::
+
+    .. code-block:: html+jinja
+
+        <p>Username: {{ app.user.username }}</p>
+
 
 Using Multiple User Providers
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -1245,7 +1266,7 @@ a new provider that chains the two together:
 
     .. code-block:: xml
 
-        <!-- app/config/config.xml -->
+        <!-- app/config/security.xml -->
         <config>
             <provider name="chain_provider">
                 <chain>
@@ -1263,7 +1284,7 @@ a new provider that chains the two together:
 
     .. code-block:: php
 
-        // app/config/config.php
+        // app/config/security.php
         $container->loadFromExtension('security', array(
             'providers' => array(
                 'chain_provider' => array(
@@ -1309,7 +1330,7 @@ the user from both the ``in_memory`` and ``user_db`` providers.
 
         .. code-block:: xml
 
-            <!-- app/config/config.xml -->
+            <!-- app/config/security.xml -->
             <config>
                 <provider name=="main_provider">
                     <memory>
@@ -1321,7 +1342,7 @@ the user from both the ``in_memory`` and ``user_db`` providers.
 
         .. code-block:: php
 
-            // app/config/config.php
+            // app/config/security.php
             $container->loadFromExtension('security', array(
                 'providers' => array(
                     'main_provider' => array(
@@ -1343,7 +1364,7 @@ the first provider is always used:
 
     .. code-block:: yaml
 
-        # app/config/config.yml
+        # app/config/security.yml
         security:
             firewalls:
                 secured_area:
@@ -1356,7 +1377,7 @@ the first provider is always used:
 
     .. code-block:: xml
 
-        <!-- app/config/config.xml -->
+        <!-- app/config/security.xml -->
         <config>
             <firewall name="secured_area" pattern="^/" provider="user_db">
                 <!-- ... -->
@@ -1367,7 +1388,7 @@ the first provider is always used:
 
     .. code-block:: php
 
-        // app/config/config.php
+        // app/config/security.php
         $container->loadFromExtension('security', array(
             'firewalls' => array(
                 'secured_area' => array(
@@ -1458,7 +1479,7 @@ the firewall can handle this automatically for you when you activate the
 
     .. code-block:: yaml
 
-        # app/config/config.yml
+        # app/config/security.yml
         security:
             firewalls:
                 secured_area:
@@ -1470,7 +1491,7 @@ the firewall can handle this automatically for you when you activate the
 
     .. code-block:: xml
 
-        <!-- app/config/config.xml -->
+        <!-- app/config/security.xml -->
         <config>
             <firewall name="secured_area" pattern="^/">
                 <!-- ... -->
@@ -1481,7 +1502,7 @@ the firewall can handle this automatically for you when you activate the
 
     .. code-block:: php
 
-        // app/config/config.php
+        // app/config/security.php
         $container->loadFromExtension('security', array(
             'firewalls' => array(
                 'secured_area' => array(
@@ -1592,7 +1613,7 @@ the ``isGranted`` method of the security context:
     public function indexAction()
     {
         // show different content to admin users
-        if ($this->get('security.context')->isGranted('ADMIN')) {
+        if ($this->get('security.context')->isGranted('ROLE_ADMIN')) {
             // Load admin content here
         }
         // load other regular content here

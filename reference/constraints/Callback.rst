@@ -40,6 +40,17 @@ Setup
                 - Callback:
                     methods:   [isAuthorValid]
 
+    .. code-block:: xml
+
+        <!-- src/Acme/BlogBundle/Resources/config/validation.xml -->
+        <class name="Acme\BlogBundle\Entity\Author">
+            <constraint name="Callback">
+                <option name="methods">
+                    <value>isAuthorValid</value>
+                </option>
+            </constraint>
+        </class>
+
     .. code-block:: php-annotations
 
         // src/Acme/BlogBundle/Entity/Author.php

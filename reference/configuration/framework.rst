@@ -90,6 +90,8 @@ services related to testing your application (e.g. ``test.client``) are loaded.
 This setting should be present in your ``test`` environment (usually via
 ``app/config/config_test.yml``). For more information, see :doc:`/book/testing`.
 
+.. _reference-framework-form:
+
 form
 ~~~~
 
@@ -102,9 +104,10 @@ session
 lifetime
 ........
 
-**type**: ``integer`` **default**: ``86400``
+**type**: ``integer`` **default**: ``0``
 
-This determines the lifetime of the session - in seconds.
+This determines the lifetime of the session - in seconds. By default it will use
+``0``, which means the cookie is valid for the length of the browser session.
 
 templating
 ~~~~~~~~~~

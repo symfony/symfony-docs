@@ -1,5 +1,6 @@
 .. index::
    single: Security; User Provider
+   single: Security; Entity Provider
 
 How to load Security Users from the Database (the Entity Provider)
 ==================================================================
@@ -38,6 +39,13 @@ or not the user account is active.
 To make it shorter, the getter and setter methods for each have been removed to
 focus on the most important methods that come from the
 :class:`Symfony\\Component\\Security\\Core\\User\\UserInterface`.
+
+.. versionadded:: 2.1
+
+    In Symfony 2.1, the ``equals`` method was removed from ``UserInterface``.
+    If you need to override the default implementation of comparison logic,
+    implement the new :class:`Symfony\\Component\\Security\\Core\\User\\EquatableInterface`
+    interface.
 
 .. code-block:: php
 
@@ -99,11 +107,6 @@ focus on the most important methods that come from the
             return array('ROLE_USER');
         }
 
-        public function equals(UserInterface $user)
-        {
-            return $user->getUsername() === $this->username;
-        }
-
         public function eraseCredentials()
         {
         }
@@ -127,29 +130,9 @@ focus on the most important methods that come from the
 In order to use an instance of the ``AcmeUserBundle:User`` class in the Symfony
 security layer, the entity class must implement the
 :class:`Symfony\\Component\\Security\\Core\\User\\UserInterface`. This
-interface forces the class to implement the six following methods:
-
-* ``getUsername()`` returns the unique username,
-* ``getSalt()`` returns the unique salt,
-* ``getPassword()`` returns the encoded password,
-* ``getRoles()`` returns an array of associated roles,
-* ``equals()`` compares the current object with another
-  :class:`Symfony\\Component\\Security\\Core\\User\\UserInterface`
-  instance,
-* ``eraseCredentials()`` removes sensitive information stored in the
-  :class:`Symfony\\Component\\Security\\Core\\User\\UserInterface` object.
-
-To keep it simple, the ``equals()`` method just compares the ``username`` field
-but it's also possible to do more checks depending on the complexity of your
-data model. On the other hand, the ``eraseCredentials()`` method remains empty
-as we don't care about it in this tutorial.
-
-.. note::
-
-    The ``eraseCredentials()`` method is important if, during your authentication
-    process, you store some sort of sensitive information on the user (e.g.
-    the raw password of the user). This is called after authentication, and
-    allows you to remove any of that information.
+interface forces the class to implement the five following methods: ``getRoles()``,
+``getPassword()``, ``getSalt()``, ``getUsername()``, ``eraseCredentials()``.
+For more details on each of these, see :class:`Symfony\\Component\\Security\\Core\\User\\UserInterface`.
 
 Below is an export of my ``User`` table from MySQL. For details on how to
 create user records and encode their password, see :ref:`book-security-encoding-user-password`.
@@ -184,27 +167,29 @@ Below is an example of configuration where the user will enter his/her
 username and password via HTTP basic authentication. That information will
 then be checked against our User entity records in the database:
 
-.. code-block::yaml
+.. configuration-block::
 
-    # app/config/security.yml
-    security:
-        encoders:
-            Acme\UserBundle\Entity\User:
-                algorithm: sha1
-                encode_as_base64: false
-                iterations: 1
+    .. code-block:: yaml
 
-        providers:
-            administrators:
-                entity: { class: AcmeUserBundle:User, property: username }
+        # app/config/security.yml
+        security:
+            encoders:
+                Acme\UserBundle\Entity\User:
+                    algorithm: sha1
+                    encode_as_base64: false
+                    iterations: 1
 
-        firewalls:
-            admin_area:
-                pattern:    ^/admin
-                http_basic: ~
+            providers:
+                administrators:
+                    entity: { class: AcmeUserBundle:User, property: username }
 
-        access_control:
-            - { path: ^/admin, roles: ROLE_ADMIN }
+            firewalls:
+                admin_area:
+                    pattern:    ^/admin
+                    http_basic: ~
+
+            access_control:
+                - { path: ^/admin, roles: ROLE_ADMIN }
 
 The ``encoders`` section associates the ``sha1`` password encoder to the entity
 class. This means that Symfony will expect the password that's encoded in
@@ -293,26 +278,14 @@ address as they are both unique in the database. Unfortunately, the native
 entity provider is only able to handle a single property to fetch the user from
 the database.
 
-To accomplish this, crate a custom entity provider that looks for a user
+To accomplish this, create a custom entity provider that looks for a user
 whose username *or* email field matches the submitted login username.
 The good news is that a Doctrine repository object can act as an entity user
 provider if it implements the
 :class:`Symfony\\Component\\Security\\Core\\User\\UserProviderInterface`. This
-interface comes with three methods to implement:
-
-* ``loadUserByUsername()`` that fetches and returns a
-  :class:`Symfony\\Component\\Security\\Core\\User\\UserInterface`
-  instance by its unique username. Otherwise, it must throw a
-  :class:`Symfony\\Component\\Security\\Core\\Exception\\UsernameNotFoundException`
-  exception to indicate the security layer
-  there is no user matching the credentials.
-* ``refreshUser()`` that refreshes and returns a
-  :class:`Symfony\\Component\\Security\\Core\\User\\UserInterface` instance.
-  Otherwise it must throw a
-  :class:`Symfony\\Component\\Security\\Core\\Exception\\UnsupportedUserException`
-  exception to indicate that we are unable to refresh the user.
-* ``supportsClass()`` must return ``true`` if the fully qualified class name
-  passed as its sole argument is supported by the entity provider.
+interface comes with three methods to implement: ``loadUserByUsername($username)``,
+``refreshUser(UserInterface $user)``, and ``supportsClass($class)``. For
+more details, see :class:`Symfony\\Component\\Security\\Core\\User\\UserProviderInterface`.
 
 The code below shows the implementation of the
 :class:`Symfony\\Component\\Security\\Core\\User\\UserProviderInterface` in the
@@ -327,6 +300,7 @@ The code below shows the implementation of the
     use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
     use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
     use Doctrine\ORM\EntityRepository;
+    use Doctrine\ORM\NoResultException;
 
     class UserRepository extends EntityRepository implements UserProviderInterface
     {
@@ -344,7 +318,7 @@ The code below shows the implementation of the
                 // The Query::getSingleResult() method throws an exception
                 // if there is no record matching the criteria.
                 $user = $q->getSingleResult();
-            } catch (\Exception $e) {
+            } catch (NoResultException $e) {
                 throw new UsernameNotFoundException(sprintf('Unable to find an active admin AcmeUserBundle:User object identified by "%s".', $username), null, 0, $e);
             }
 
@@ -373,15 +347,17 @@ generic Doctrine entity provider. It's trival to achieve by removing the
 ``property`` field in the ``security.providers.administrators.entity`` section
 of the ``security.yml`` file.
 
-.. code-block:: yaml
+.. configuration-block::
 
-    # app/config/security.yml
-    security:
-        # ...
-        providers:
-            administrators:
-                entity: { class: AcmeUserBundle:User }
-        # ...
+    .. code-block:: yaml
+
+        # app/config/security.yml
+        security:
+            # ...
+            providers:
+                administrators:
+                    entity: { class: AcmeUserBundle:User }
+            # ...
 
 By doing this, the security layer will use an instance of ``UserRepository`` and
 call its ``loadUserByUsername()`` method to fetch a user from the database

@@ -6,7 +6,7 @@ Registering Event Listeners and Subscribers
 Doctrine packages a rich event system that fires events when almost anything
 happens inside the system. For you, this means that you can create arbitrary
 :doc:`services</book/service_container>` and tell Doctrine to notify those
-objects whenever a certain action (e.g. ``preSave``) happens within Doctrine.
+objects whenever a certain action (e.g. ``prePersist``) happens within Doctrine.
 This could be useful, for example, to create an independent search index
 whenever an object in your database is saved.
 
@@ -39,11 +39,11 @@ managers that use this connection.
             my.listener:
                 class: Acme\SearchBundle\Listener\SearchIndexer
                 tags:
-                    - { name: doctrine.event_listener, event: postSave }
+                    - { name: doctrine.event_listener, event: postPersist }
             my.listener2:
                 class: Acme\SearchBundle\Listener\SearchIndexer2
                 tags:
-                    - { name: doctrine.event_listener, event: postSave, connection: default }
+                    - { name: doctrine.event_listener, event: postPersist, connection: default }
             my.subscriber:
                 class: Acme\SearchBundle\Listener\SearchIndexerSubscriber
                 tags:
@@ -63,10 +63,10 @@ managers that use this connection.
 
             <services>
                 <service id="my.listener" class="Acme\SearchBundle\Listener\SearchIndexer">
-                    <tag name="doctrine.event_listener" event="postSave" />
+                    <tag name="doctrine.event_listener" event="postPersist" />
                 </service>
                 <service id="my.listener2" class="Acme\SearchBundle\Listener\SearchIndexer2">
-                    <tag name="doctrine.event_listener" event="postSave" connection="default" />
+                    <tag name="doctrine.event_listener" event="postPersist" connection="default" />
                 </service>
                 <service id="my.subscriber" class="Acme\SearchBundle\Listener\SearchIndexerSubscriber">
                     <tag name="doctrine.event_subscriber" connection="default" />
@@ -78,8 +78,8 @@ Creating the Listener Class
 ---------------------------
 
 In the previous example, a service ``my.listener`` was configured as a Doctrine
-listener on the event ``postSave``. That class behind that service must have
-a ``postSave`` method, which will be called when the event is thrown::
+listener on the event ``postPersist``. That class behind that service must have
+a ``postPersist`` method, which will be called when the event is thrown::
 
     // src/Acme/SearchBundle/Listener/SearchIndexer.php
     namespace Acme\SearchBundle\Listener;
@@ -89,7 +89,7 @@ a ``postSave`` method, which will be called when the event is thrown::
     
     class SearchIndexer
     {
-        public function postSave(LifecycleEventArgs $args)
+        public function postPersist(LifecycleEventArgs $args)
         {
             $entity = $args->getEntity();
             $entityManager = $args->getEntityManager();

@@ -1,6 +1,7 @@
 * **Workflow**
 
   * :doc:`/cookbook/workflow/new_project_git`
+  * :doc:`/cookbook/workflow/new_project_svn`
 
 * **Controllers**
 
@@ -58,8 +59,8 @@
 
 * **Emailing**
 
-  * :doc:`/cookbook/email`
-  * :doc:`/cookbook/gmail`
+  * :doc:`/cookbook/email/email`
+  * :doc:`/cookbook/email/gmail`
   * :doc:`/cookbook/email/dev_environment`
   * :doc:`/cookbook/email/spool`
 
@@ -80,7 +81,6 @@
   * :doc:`/cookbook/security/force_https`
   * :doc:`/cookbook/security/form_login`
   * :doc:`/cookbook/security/securing_services`
-  * :doc:`/cookbook/security/entity_provider`
   * :doc:`/cookbook/security/custom_provider`
   * :doc:`/cookbook/security/custom_authentication_provider`
   * :doc:`/cookbook/security/target_path`
@@ -101,9 +101,6 @@
 
 * **Tools and Internals**
 
-  * :doc:`/cookbook/tools/autoloader`
-  * :doc:`/cookbook/tools/finder`
-  * :doc:`/cookbook/console`
   * :doc:`/cookbook/debugging`
 
 * **Web Services**

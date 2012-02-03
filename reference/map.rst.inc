@@ -23,5 +23,4 @@
 * **Other Areas**
 
   * :doc:`/reference/dic_tags`
-  * :doc:`/reference/YAML`
   * :doc:`/reference/requirements`

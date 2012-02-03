@@ -107,7 +107,7 @@ they'll be added seamlessly to the array of items. This is great in theory,
 but takes a little bit more effort in practice to get the client-side JavaScript
 correct.
 
-Following along with the previous example, suppose that you start with two
+Following along with the previous example, suppose you start with two
 emails in the ``emails`` data array. In that case, two input fields will
 be rendered that will look something like this (depending on the name of
 your form):
@@ -124,19 +124,19 @@ and - via JavaScript - render another field with the name ``form[emails][2]``
 To help make this easier, setting the `prototype`_ option to ``true`` allows
 you to render a "template" field, which you can then use in your JavaScript
 to help you dynamically create these new fields. A rendered prototype field
-will look something like this:
+will look like this:
 
 .. code-block:: html
 
     <input type="email" id="form_emails_$$name$$" name="form[emails][$$name$$]" value="" />
 
-By replacing replacing ``$$name$$`` with some unique value (e.g. ``2``),
+By replacing ``$$name$$`` with some unique value (e.g. ``2``),
 you can build and insert new HTML fields into your form.
 
 Using jQuery, a simple example might look like this. If you're rendering
-your collection field all at once (e.g. ``form_row(form.emails)``), then
+your collection fields all at once (e.g. ``form_row(form.emails)``), then
 things are even easier because the ``data-prototype`` attribute is rendered
-automatically for your (with a slight difference - see note below) and all
+automatically for you (with a slight difference - see note below) and all
 you need is the JavaScript:
 
 .. configuration-block::
@@ -162,7 +162,7 @@ you need is the JavaScript:
         </form>
 
         <script type="text/javascript">
-            // keep track of how many email fields ahve been rendered
+            // keep track of how many email fields have been rendered
             var emailCount = '{{ form.emails | length }}';
 
             jQuery(document).ready(function() {

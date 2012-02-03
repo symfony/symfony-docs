@@ -438,7 +438,7 @@ files in the application and to configure the autoloader:
 
     $loader = new Symfony\Component\ClassLoader\UniversalClassLoader();
     $loader->registerNamespaces(array(
-        'Symfony' => __DIR__.'/vendor/symfony/src',
+        'Symfony' => __DIR__.'/../vendor/symfony/src',
     ));
 
     $loader->register();
@@ -686,7 +686,7 @@ migrating the blog from flat PHP to Symfony2 has improved life:
 
 And perhaps best of all, by using Symfony2, you now have access to a whole
 set of **high-quality open source tools developed by the Symfony2 community**!
-For more information, check out `Symfony2Bundles.org`_
+A good selection of Symfony2 community tools can be found on `KnpBundles.com`_.
 
 Better templates
 ----------------
@@ -745,7 +745,7 @@ Learn more from the Cookbook
 .. _`download symfony`: http://symfony.com/download
 .. _`Routing`: https://github.com/symfony/Routing
 .. _`Templating`: https://github.com/symfony/Templating
-.. _`Symfony2Bundles.org`: http://symfony2bundles.org
+.. _`KnpBundles.com`: http://knpbundles.com/
 .. _`Twig`: http://twig.sensiolabs.org
 .. _`Varnish`: http://www.varnish-cache.org
 .. _`PHPUnit`: http://www.phpunit.de

@@ -1,13 +1,24 @@
 .. index::
     single: Console; CLI
 
+The Console Component
+=====================
 
-How to create Console/Command-Line Commands
-===========================================
+    The Console component eases the creation of beautiful and testable command
+    line interfaces.
 
 Symfony2 ships with a Console component, which allows you to create
 command-line commands. Your console commands can be used for any recurring
 task, such as cronjobs, imports, or other batch jobs.
+
+Installation
+------------
+
+You can install the component in many different ways:
+
+* Use the official Git repository (https://github.com/symfony/Console);
+* Install it via PEAR ( `pear.symfony.com/Console`);
+* Install it via Composer (`symfony/console` on Packagist).
 
 Creating a basic Command
 ------------------------
@@ -262,9 +273,9 @@ console.
 Getting Services from the Service Container
 -------------------------------------------
 
-By using :class:`Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand` 
+By using :class:`Symfony\\Bundle\\FrameworkBundle\\Command\\ContainerAwareCommand` 
 as the base class for the command (instead of the more basic 
-:class:`Symfony\Component\Console\Command\Command`), you have access to the 
+:class:`Symfony\\Component\\Console\\Command\\Command`), you have access to the 
 service container. In other words, you have access to any configured service.
 For example, you could easily extend the task to be translatable::
 

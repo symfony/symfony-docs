@@ -494,6 +494,19 @@ the documentation for each type.
     In other words, the ``required`` option is "nice", but true server-side
     validation should *always* be used.
 
+.. sidebar:: The ``label`` option
+
+    The label for the form field can be set using the ``label`` option,
+    which can be applied to any field::
+
+        ->add('dueDate', 'date', array(
+            'widget' => 'single_text',
+            'label'  => 'Due Date',
+        ))
+
+    The label for a field can also be set in the template rendering the
+    form, see below.
+
 .. index::
    single: Forms; Field type guessing
 
@@ -994,7 +1007,7 @@ form with many ``Product`` sub-forms). This is done by using the ``collection``
 field type.
 
 For more information see the ":doc:`/cookbook/form/form_collections`" cookbook
-entry and  the :ref:`collection</reference/forms/types/collection>` field type reference.
+entry and  the :doc:`collection</reference/forms/types/collection>` field type reference.
 
 .. index::
    single: Forms; Theming
@@ -1343,7 +1356,7 @@ The CSRF token can be customized on a form-by-form basis. For example::
 
 To disable CSRF protection, set the ``csrf_protection`` option to false.
 Customizations can also be made globally in your project. For more information,
-see the :ref:`form configuration reference </reference-frameworkbundle-forms>`
+see the :ref:`form configuration reference <reference-framework-form>`
 section.
 
 .. note::

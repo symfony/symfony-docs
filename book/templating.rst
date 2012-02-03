@@ -22,7 +22,9 @@ Templates
 
 A template is simply a text file that can generate any text-based format
 (HTML, XML, CSV, LaTeX ...). The most familiar type of template is a *PHP*
-template - a text file parsed by PHP that contains a mix of text and PHP code::
+template - a text file parsed by PHP that contains a mix of text and PHP code:
+
+.. code-block:: html+php
 
     <!DOCTYPE html>
     <html>
@@ -88,7 +90,7 @@ it:
 
 .. code-block:: jinja
 
-    {{ title | upper }}
+    {{ title|upper }}
 
 Twig comes with a long list of `tags`_ and `filters`_ that are available
 by default. You can even `add your own extensions`_ to Twig as needed.
@@ -106,9 +108,9 @@ alternating ``odd``, ``even`` classes:
 .. code-block:: html+jinja
 
     {% for i in 0..10 %}
-      <div class="{{ cycle(['odd', 'even'], i) }}">
-        <!-- some HTML here -->
-      </div>
+        <div class="{{ cycle(['odd', 'even'], i) }}">
+          <!-- some HTML here -->
+        </div>
     {% endfor %}
 
 Throughout this chapter, template examples will be shown in both Twig and PHP.
@@ -205,7 +207,7 @@ First, build a base layout file:
             </body>
         </html>
 
-    .. code-block:: php
+    .. code-block:: html+php
 
         <!-- app/Resources/views/base.html.php -->
         <!DOCTYPE html>
@@ -262,7 +264,7 @@ A child template might look like this:
             {% endfor %}
         {% endblock %}
 
-    .. code-block:: php
+    .. code-block:: html+php
 
         <!-- src/Acme/BlogBundle/Resources/views/Blog/index.html.php -->
         <?php $view->extend('::base.html.php') ?>
@@ -288,7 +290,9 @@ the templating engine to first evaluate the base template, which sets up
 the layout and defines several blocks. The child template is then rendered,
 at which point the ``title`` and ``body`` blocks of the parent are replaced
 by those from the child. Depending on the value of ``blog_entries``, the
-output might look like this::
+output might look like this:
+
+.. code-block:: html
 
     <!DOCTYPE html>
     <html>
@@ -489,17 +493,17 @@ template. First, create the template that you'll need to reuse.
         <h3 class="byline">by {{ article.authorName }}</h3>
 
         <p>
-          {{ article.body }}
+            {{ article.body }}
         </p>
 
-    .. code-block:: php
+    .. code-block:: html+php
 
         <!-- src/Acme/ArticleBundle/Resources/views/Article/articleDetails.html.php -->
         <h2><?php echo $article->getTitle() ?></h2>
         <h3 class="byline">by <?php echo $article->getAuthorName() ?></h3>
 
         <p>
-          <?php echo $article->getBody() ?>
+            <?php echo $article->getBody() ?>
         </p>
 
 Including this template from any other template is simple:
@@ -519,7 +523,7 @@ Including this template from any other template is simple:
             {% endfor %}
         {% endblock %}
 
-    .. code-block:: php
+    .. code-block:: html+php
 
         <!-- src/Acme/ArticleBundle/Resources/Article/list.html.php -->
         <?php $view->extend('AcmeArticleBundle::layout.html.php') ?>
@@ -583,12 +587,12 @@ The ``recentList`` template is perfectly straightforward:
 
         {# src/Acme/ArticleBundle/Resources/views/Article/recentList.html.twig #}
         {% for article in articles %}
-          <a href="/article/{{ article.slug }}">
-              {{ article.title }}
-          </a>
+            <a href="/article/{{ article.slug }}">
+                {{ article.title }}
+            </a>
         {% endfor %}
 
-    .. code-block:: php
+    .. code-block:: html+php
 
         <!-- src/Acme/ArticleBundle/Resources/views/Article/recentList.html.php -->
         <?php foreach ($articles as $article): ?>
@@ -617,7 +621,7 @@ syntax for controllers (i.e. **bundle**:**controller**:**action**):
             {% render "AcmeArticleBundle:Article:recentArticles" with {'max': 3} %}
         </div>
 
-    .. code-block:: php
+    .. code-block:: html+php
 
         <!-- app/Resources/views/base.html.php -->
         ...
@@ -677,7 +681,7 @@ To link to the page, just use the ``path`` Twig function and refer to the route:
 
         <a href="{{ path('_welcome') }}">Home</a>
 
-    .. code-block:: php
+    .. code-block:: html+php
 
         <a href="<?php echo $view['router']->generate('_welcome') ?>">Home</a>
 
@@ -718,12 +722,12 @@ correctly:
 
         {# src/Acme/ArticleBundle/Resources/views/Article/recentList.html.twig #}
         {% for article in articles %}
-          <a href="{{ path('article_show', { 'slug': article.slug }) }}">
-              {{ article.title }}
-          </a>
+            <a href="{{ path('article_show', { 'slug': article.slug }) }}">
+                {{ article.title }}
+            </a>
         {% endfor %}
 
-    .. code-block:: php
+    .. code-block:: html+php
 
         <!-- src/Acme/ArticleBundle/Resources/views/Article/recentList.html.php -->
         <?php foreach ($articles in $article): ?>
@@ -743,7 +747,7 @@ correctly:
     The same can be done in PHP templates by passing a third argument to
     the ``generate()`` method:
 
-    .. code-block:: php
+    .. code-block:: html+php
 
         <a href="<?php echo $view['router']->generate('_welcome', array(), true) ?>">Home</a>
 
@@ -765,7 +769,7 @@ but Symfony2 provides a more dynamic option via the ``assets`` Twig function:
 
         <link href="{{ asset('css/blog.css') }}" rel="stylesheet" type="text/css" />
 
-    .. code-block:: php
+    .. code-block:: html+php
 
         <img src="<?php echo $view['assets']->getUrl('images/logo.png') ?>" alt="Symfony!" />
 
@@ -839,7 +843,7 @@ page. From inside that contact page's template, do the following:
 .. code-block:: html+jinja
 
     {# src/Acme/DemoBundle/Resources/views/Contact/contact.html.twig #}
-    {# extends '::base.html.twig' #}
+    {% extends '::base.html.twig' %}
 
     {% block stylesheets %}
         {{ parent() }}
@@ -866,6 +870,45 @@ is by default "web").
 
 The end result is a page that includes both the ``main.css`` and ``contact.css``
 stylesheets.
+
+Global Template Variables
+-------------------------
+
+During each request, Symfony2 will set a global template variable ``app``
+in both Twig and PHP template engines by default.  The ``app`` variable
+is a :class:`Symfony\\Bundle\\FrameworkBundle\\Templating\\GlobalVariables`
+instance which will give you access to some application specific variables
+automatically:
+
+* ``app.security`` - The security context.
+* ``app.user`` - The current user object.
+* ``app.request`` - The request object.
+* ``app.session`` - The session object.
+* ``app.environment`` - The current environment (dev, prod, etc).
+* ``app.debug`` - True if in debug mode. False otherwise.
+
+.. configuration-block::
+
+    .. code-block:: html+jinja
+
+        <p>Username: {{ app.user.username }}</p>
+        {% if app.debug %}
+            <p>Request method: {{ app.request.method }}</p>
+            <p>Application Environment: {{ app.environment }}</p>
+        {% endif %}
+
+    .. code-block:: html+php
+
+        <p>Username: <?php echo $app->getUser()->getUsername() ?></p>
+        <?php if ($app->getDebug()): ?>
+            <p>Request method: <?php echo $app->getRequest()->getMethod() ?></p>
+            <p>Application Environment: <?php echo $app->getEnvironment() ?></p>
+        <?php endif; ?>
+
+.. tip::
+
+    You can add your own global template variables. See the cookbook example
+    on :doc:`Global Variables</cookbook/templating/global_variables>`.
 
 .. index::
    single: Templating; The templating service
@@ -1076,7 +1119,7 @@ this classic example:
 
         Hello {{ name }}
 
-    .. code-block:: php
+    .. code-block:: html+php
 
         Hello <?php echo $name ?>
 
@@ -1116,7 +1159,7 @@ In some cases, you'll need to disable output escaping when you're rendering
 a variable that is trusted and contains markup that should not be escaped.
 Suppose that administrative users are able to write articles that contain
 HTML code. By default, Twig will escape the article body. To render it normally,
-add the ``raw`` filter: ``{{ article.body | raw }}``.
+add the ``raw`` filter: ``{{ article.body|raw }}``.
 
 You can also disable output escaping inside a ``{% block %}`` area or
 for an entire template. For more information, see `Output Escaping`_ in
@@ -1144,6 +1187,66 @@ in a JavaScript string, use the ``js`` context:
    single: Templating; Formats
 
 .. _template-formats:
+
+Debugging
+---------
+
+.. versionadded:: 2.0.9
+    This feature is available as of Twig ``1.5.x``, which was first shipped
+    with Symfony 2.0.9.
+
+When using PHP, you can use ``var_dump()`` if you need to quickly find the
+value of a variable passed. This is useful, for example, inside your controller.
+The same can be achieved when using Twig by using the debug extension. This
+needs to be enabled in the config:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # app/config/config.yml
+        services:
+            acme_hello.twig.extension.debug:
+                class:        Twig_Extension_Debug
+                tags:
+                     - { name: 'twig.extension' }
+
+    .. code-block:: xml
+
+        <!-- app/config/config.xml -->
+        <services>
+            <service id="acme_hello.twig.extension.debug" class="Twig_Extension_Debug">
+                <tag name="twig.extension" />
+            </service>
+        </services>
+
+    .. code-block:: php
+
+        // app/config/config.php
+        use Symfony\Component\DependencyInjection\Definition;
+
+        $definition = new Definition('Twig_Extension_Debug');
+        $definition->addTag('twig.extension');
+        $container->setDefinition('acme_hello.twig.extension.debug', $definition);
+
+Template parameters can then be dumped using the ``dump`` function:
+
+.. code-block:: html+jinja
+
+    {# src/Acme/ArticleBundle/Resources/views/Article/recentList.html.twig #}
+
+    {{ dump(articles) }}
+
+    {% for article in articles %}
+        <a href="/article/{{ article.slug }}">
+            {{ article.title }}
+        </a>
+    {% endfor %}
+
+
+The variables will only be dumped if Twig's ``debug`` setting (in ``config.yml``)
+is ``true``. By default this means that the variables will be dumped in the
+``dev`` environment but not the ``prod`` environment.
 
 Template Formats
 ----------------

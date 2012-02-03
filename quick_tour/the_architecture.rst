@@ -97,8 +97,7 @@ your server or locally in your projects.
 .. note::
 
     If you want to learn more about the flexibility of the Symfony2
-    autoloader, read the ":doc:`/cookbook/tools/autoloader`" recipe in the
-    cookbook.
+    autoloader, read the ":doc:`/components/class_loader`" chapter.
 
 Understanding the Bundle System
 -------------------------------
@@ -368,5 +367,5 @@ need to learn a lot to become a Symfony2 master. Ready to dig into these
 topics now? Look no further - go to the official :doc:`/book/index` and pick
 any topic you want.
 
-.. _standards:               http://groups.google.com/group/php-standards/web/psr-0-final-proposal
+.. _standards:               https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-0.md
 .. _convention:              http://pear.php.net/

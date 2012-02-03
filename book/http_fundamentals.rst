@@ -143,8 +143,10 @@ on Wikipedia's `List of HTTP status codes`_ article.
 Like the request, an HTTP response contains additional pieces of information
 known as HTTP headers. For example, one important HTTP response header is
 ``Content-Type``. The body of the same resource could be returned in multiple
-different formats including HTML, XML, or JSON to name a few. The ``Content-Type``
-header tells the client which format is being returned.
+different formats like HTML, XML, or JSON and the ``Content-Type`` header uses
+Internet Media Types like ``text/html`` to tell the client which format is
+being returned. A list of common media types can be found on Wikipedia's 
+`List of common media types`_ article.
 
 Many other headers exist, some of which are very powerful. For example, certain
 headers can be used to create a powerful caching system.
@@ -366,7 +368,7 @@ on that value. This can get ugly quickly:
     // index.php
 
     $request = Request::createFromGlobals();
-    $path = $request->getPathInfo(); // the URL being requested
+    $path = $request->getPathInfo(); // the URI path being requested
 
     if (in_array($path, array('', '/')) {
         $response = new Response('Welcome to the homepage.');
@@ -427,9 +429,9 @@ by adding an entry for ``/contact`` to your routing configuration file:
 
 .. note::
 
-   This example uses :doc:`YAML</reference/YAML>` to define the routing configuration.
-   Routing configuration can also be written in other formats such as XML
-   or PHP.
+   This example uses :doc:`YAML</components/yaml>` to define the routing
+   configuration. Routing configuration can also be written in other formats
+   such as XML or PHP.
 
 When someone visits the ``/contact`` page, this route is matched, and the
 specified controller is executed. As you'll learn in the :doc:`routing chapter</book/routing>`,
@@ -537,6 +539,7 @@ sensible defaults. For more advanced users, the sky is the limit.
 .. _`Live HTTP Headers`: https://addons.mozilla.org/en-US/firefox/addon/3829/
 .. _`List of HTTP status codes`: http://en.wikipedia.org/wiki/List_of_HTTP_status_codes
 .. _`List of HTTP header fields`: http://en.wikipedia.org/wiki/List_of_HTTP_header_fields
+.. _`List of common media types`: http://en.wikipedia.org/wiki/Internet_media_type#List_of_common_media_types
 .. _`HttpFoundation`: https://github.com/symfony/HttpFoundation
 .. _`Routing`: https://github.com/symfony/Routing
 .. _`Form`: https://github.com/symfony/Form

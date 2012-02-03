@@ -230,7 +230,7 @@ workflow looks like the following from inside a controller::
             if ($form->isValid()) {
                 // the validation passed, do something with the $author object
 
-                $this->redirect($this->generateUrl('...'));
+                return $this->redirect($this->generateUrl('...'));
             }
         }
 
@@ -793,7 +793,7 @@ it looks like this::
             // this is *not* a valid email address
             $errorMessage = $errorList[0]->getMessage()
             
-            // do somethign with the error
+            // do something with the error
         }
         
         // ...

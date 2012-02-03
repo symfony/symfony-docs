@@ -1,11 +1,20 @@
 .. index::
    single: Finder
 
-How to locate Files
-===================
+The Finder Component
+====================
 
-The :namespace:`Symfony\\Component\\Finder` component helps you to find files
-and directories quickly and easily.
+   The Finder Component finds files and directories via an intuitive fluent
+   interface.
+
+Installation
+------------
+
+You can install the component in many different ways:
+
+* Use the official Git repository (https://github.com/symfony/Finder);
+* Install it via PEAR ( `pear.symfony.com/Finder`);
+* Install it via Composer (`symfony/finder` on Packagist).
 
 Usage
 -----
@@ -19,10 +28,17 @@ directories::
     $finder->files()->in(__DIR__);
 
     foreach ($finder as $file) {
+        // Print the absolute path
         print $file->getRealpath()."\n";
+        // Print the relative path to the file, omitting the filename
+        print $file->getRelativePath()."\n";
+        // Print the relative path to the file
+        print $file->getRelativePathname()."\n";
     }
 
-The ``$file`` is an instance of :phpclass:`SplFileInfo`.
+The ``$file`` is an instance of :class:`Symfony\\Component\\Finder\\SplFileInfo`
+which extends :phpclass:`SplFileInfo` to provide methods to work with relative
+paths.
 
 The above code prints the names of all the files in the current directory
 recursively. The Finder class uses a fluent interface, so all methods return
@@ -197,8 +213,9 @@ To restrict the matching file with your own strategy, use
     $finder->files()->filter($filter);
 
 The ``filter()`` method takes a Closure as an argument. For each matching file,
-it is called with the file as a :phpclass:`SplFileInfo` instance. The file is
-excluded from the result set if the Closure returns ``false``.
+it is called with the file as a :class:`Symfony\\Component\\Finder\\SplFileInfo`
+instance. The file is excluded from the result set if the Closure returns
+``false``.
 
 .. _strtotime:   http://www.php.net/manual/en/datetime.formats.php
 .. _Iterator:     http://www.php.net/manual/en/spl.iterators.php
