@@ -12,12 +12,11 @@ some code from the front controller to it::
 
     namespace Simplex;
 
-    use Symfony\Component\HttpKernel\HttpKernel;
     use Symfony\Component\Routing;
     use Symfony\Component\HttpKernel;
     use Symfony\Component\EventDispatcher\EventDispatcher;
 
-    class Framework extends HttpKernel
+    class Framework extends HttpKernel\HttpKernel
     {
         public function __construct($routes)
         {
@@ -181,6 +180,20 @@ The front controller is now only about wiring everything together::
     $response = $sc->get('framework')->handle($request);
 
     $response->send();
+
+As all the objects are now created in the dependency injection container, the framework code should be the previous simple version::
+
+    <?php
+
+    // example.com/src/Simplex/Framework.php
+
+    namespace Simplex;
+
+    use Symfony\Component\HttpKernel\HttpKernel;
+
+    class Framework extends HttpKernel
+    {
+    }
 
 .. note::
 
