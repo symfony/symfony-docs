@@ -181,6 +181,20 @@ The front controller is now only about wiring everything together::
 
     $response->send();
 
+As all the objects are now created in the dependency injection container, the framework code should be the previous simple version::
+
+    <?php
+
+    // example.com/src/Simplex/Framework.php
+
+    namespace Simplex;
+
+    use Symfony\Component\HttpKernel\HttpKernel;
+
+    class Framework extends HttpKernel
+    {
+    }
+
 .. note::
 
     If you want a light alternative for your container, consider `Pimple`_, a
