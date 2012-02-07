@@ -181,7 +181,8 @@ The front controller is now only about wiring everything together::
 
     $response->send();
 
-As all the objects are now created in the dependency injection container, the framework code should be the previous simple version::
+As all the objects are now created in the dependency injection container, the
+framework code should be the previous simple version::
 
     <?php
 
