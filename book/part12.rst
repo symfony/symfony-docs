@@ -1,5 +1,5 @@
-Create your own framework... on top of the Symfony2 Components (part 12)
-========================================================================
+The DependencyInjection Component
+=================================
 
 In the last installment of this series, we have emptied the
 ``Simplex\\Framework`` class by extending the ``HttpKernel`` class from

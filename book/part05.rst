@@ -1,5 +1,5 @@
-Create your own framework... on top of the Symfony2 Components (part 5)
-=======================================================================
+Templating
+==========
 
 The astute reader has noticed that our framework hardcodes the way specific
 "code" (the templates) is run. For simple pages like the ones we have created

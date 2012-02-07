@@ -1,5 +1,5 @@
-Create your own framework... on top of the Symfony2 Components (part 1)
-=======================================================================
+Introduction
+============
 
 Symfony2 is a reusable set of standalone, decoupled, and cohesive PHP
 components that solve common web development problems.

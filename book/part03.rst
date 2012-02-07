@@ -1,5 +1,5 @@
-Create your own framework... on top of the Symfony2 Components (part 3)
-=======================================================================
+The Front Controller
+====================
 
 Up until now, our application is simplistic as there is only one page. To
 spice things up a little bit, let's go crazy and add another page that says

@@ -1,5 +1,5 @@
-Create your own framework... on top of the Symfony2 Components (part 2)
-=======================================================================
+The HttpFoundation Component
+============================
 
 Before we dive into the code refactoring, I first want to step back and take a
 look at why you would like to use a framework instead of keeping your

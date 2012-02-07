@@ -1,5 +1,5 @@
-Create your own framework... on top of the Symfony2 Components (part 11)
-========================================================================
+The HttpKernel Component: The HttpKernel Class
+==============================================
 
 If you were to use our framework right now, you would probably have to add
 support for custom error messages. Right now, we have 404 and 500 error

@@ -1,5 +1,5 @@
-Create your own framework... on top of the Symfony2 Components (part 8)
-=======================================================================
+Unit Testing
+============
 
 Some watchful readers pointed out some subtle but nonetheless important bugs
 in the framework we have built yesterday. When creating a framework, you must

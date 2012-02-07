@@ -1,5 +1,5 @@
-Create your own framework... on top of the Symfony2 Components (part 4)
-=======================================================================
+The Routing Component
+=====================
 
 Before we start with today's topic, let's refactor our current framework just
 a little to make templates even more readable::

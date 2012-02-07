@@ -1,5 +1,5 @@
-Create your own framework... on top of the Symfony2 Components (part 10)
-========================================================================
+The HttpKernel Component: HttpKernelInterface
+=============================================
 
 In the conclusion of the second part of this series, I've talked about one
 great benefit of using the Symfony2 components: the *interoperability* between

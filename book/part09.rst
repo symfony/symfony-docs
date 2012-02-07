@@ -1,5 +1,5 @@
-Create your own framework... on top of the Symfony2 Components (part 9)
-=======================================================================
+The EventDispatcher Component
+=============================
 
 Our framework is still missing a major characteristic of any good framework:
 *extensibility*. Being extensible means that the developer should be able to

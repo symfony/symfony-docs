@@ -1,5 +1,5 @@
-Create your own framework... on top of the Symfony2 Components (part 7)
-=======================================================================
+The Separation of Concerns
+==========================
 
 One down-side of our framework right now is that we need to copy and paste the
 code in ``front.php`` each time we create a new website. 40 lines of code is
