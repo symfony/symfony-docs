@@ -590,7 +590,7 @@ that overrides the default ones::
 And if you want to simulate a specific HTTP method for the form, pass it as a
 second argument::
 
-    $form = $crawler->form(array(), 'DELETE');
+    $form = $buttonCrawlerNode->form(array(), 'DELETE');
 
 The Client can submit ``Form`` instances::
 
