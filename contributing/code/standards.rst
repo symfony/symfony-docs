@@ -65,6 +65,9 @@ Structure
 
 * Don't end class files with the usual `?>` closing tag;
 
+* The target line length is 80 characters, longer lines are acceptable.
+  The maximum line length of PHP code is 120 characters.
+
 * Indentation is done by steps of four spaces (tabs are never allowed);
 
 * Use the linefeed character (`0x0A`) to end lines;
