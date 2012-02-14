@@ -427,6 +427,9 @@ factory service, tagged as ``security.listener.factory``:
             </services>
         </container>
 
+.. versionadded:: 2.1
+    Before 2.1, the factory below was added via ``security.yml`` instead.
+
 As a final step, add the factory to the security extension in your bundle class.
 
 .. code-block:: php
