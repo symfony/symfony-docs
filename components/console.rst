@@ -68,6 +68,22 @@ add the following to it::
         }
     }
 
+You also need to create the file to run at the command line which creates
+an ``Application`` and adds commands to it:
+
+.. code-block::php
+
+    #!/usr/bin/env php
+    # app/console
+    <?php 
+
+    use Acme\DemoBundle\Command\GreetCommand;
+    use Symfony\Component\Console\Application;
+
+    $application = new Application();
+    $application->add(new GreetCommand);
+    $application->run();
+
 Test the new console command by running the following
 
 .. code-block:: bash
