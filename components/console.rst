@@ -247,9 +247,12 @@ console::
     {
         public function testExecute()
         {
-            $command = new GreetCommand();
+            $application = new Application();
+            $application->add(new GreetCommand());
+
+            $command = $application->find('demo:greet');
             $commandTester = new CommandTester($command);
-            $commandTester->execute();
+            $commandTester->execute(array('command' => $command->getName()));
 
             $this->assertRegExp('/.../', $commandTester->getDisplay());
 
@@ -276,9 +279,14 @@ method::
 
         public function testNameIsOutput()
         {
-            $command = new GreetCommand();
+            $application = new Application();
+            $application->add(new GreetCommand());
+
+            $command = $application->find('demo:greet');
             $commandTester = new CommandTester($command);
-            $commandTester->execute(array('name' => 'Fabien'));
+            $commandTester->execute(
+                array('command' => $command->getName(), 'name' => 'Fabien')
+            );
 
             $this->assertRegExp('/Fabien/', $commandTester->getDisplay());
         }
