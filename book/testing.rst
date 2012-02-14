@@ -257,10 +257,10 @@ document::
     To get you started faster, here is a list of the most common and
     useful test assertions::
 
-        // Assert that there is exactly one h2 tag with the class "subtitle"
+        // Assert that there is more than one h2 tag with the class "subtitle"
         $this->assertTrue($crawler->filter('h2.subtitle')->count() > 0);
 
-        // Assert that there are 4 h2 tags on the page
+        // Assert that there are exactly 4 h2 tags on the page
         $this->assertEquals(4, $crawler->filter('h2')->count());
 
         // Assert the the "Content-Type" header is "application/json"
