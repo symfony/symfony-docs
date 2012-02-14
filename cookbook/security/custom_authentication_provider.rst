@@ -116,30 +116,29 @@ set an authenticated token in the security context if successful.
         {
             $request = $event->getRequest();
 
-            if (!$request->headers->has('x-wsse')) {
-                return;
-            }
+            if ($request->headers->has('x-wsse')) {
 
-            $wsseRegex = '/UsernameToken Username="([^"]+)", PasswordDigest="([^"]+)", Nonce="([^"]+)", Created="([^"]+)"/';
+                $wsseRegex = '/UsernameToken Username="([^"]+)", PasswordDigest="([^"]+)", Nonce="([^"]+)", Created="([^"]+)"/';
 
-            if (preg_match($wsseRegex, $request->headers->get('x-wsse'), $matches)) {
-                $token = new WsseUserToken();
-                $token->setUser($matches[1]);
+                if (preg_match($wsseRegex, $request->headers->get('x-wsse'), $matches)) {
+                    $token = new WsseUserToken();
+                    $token->setUser($matches[1]);
 
-                $token->digest   = $matches[2];
-                $token->nonce    = $matches[3];
-                $token->created  = $matches[4];
+                    $token->digest   = $matches[2];
+                    $token->nonce    = $matches[3];
+                    $token->created  = $matches[4];
 
-                try {
-                    $returnValue = $this->authenticationManager->authenticate($token);
+                    try {
+                        $returnValue = $this->authenticationManager->authenticate($token);
 
-                    if ($returnValue instanceof TokenInterface) {
-                        return $this->securityContext->setToken($returnValue);
-                    } else if ($returnValue instanceof Response) {
-                        return $event->setResponse($returnValue);
+                        if ($returnValue instanceof TokenInterface) {
+                            return $this->securityContext->setToken($returnValue);
+                        } else if ($returnValue instanceof Response) {
+                            return $event->setResponse($returnValue);
+                        }
+                    } catch (AuthenticationException $e) {
+                        // you might log something here
                     }
-                } catch (AuthenticationException $e) {
-                    // you might log something here
                 }
             }
 
