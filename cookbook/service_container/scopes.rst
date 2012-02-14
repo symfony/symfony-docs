@@ -10,7 +10,7 @@ Understanding Scopes
 --------------------
 
 The scope of a service controls how long an instance of a service is used
-by the container. the Dependency Injection component provides two generic
+by the container. The Dependency Injection component provides two generic
 scopes:
 
 - `container` (the default one): The same instance is used each time you
