@@ -247,13 +247,9 @@ console::
     {
         public function testExecute()
         {
-            // mock the Kernel or create one depending on your needs
-            $application = new Application($kernel);
-            $application->add(new GreetCommand());
-
-            $command = $application->find('demo:greet');
+            $command = new GreetCommand();
             $commandTester = new CommandTester($command);
-            $commandTester->execute(array('command' => $command->getName()));
+            $commandTester->execute();
 
             $this->assertRegExp('/.../', $commandTester->getDisplay());
 
@@ -264,6 +260,29 @@ console::
 The :method:`Symfony\\Component\\Console\\Tester\\CommandTester::getDisplay`
 method returns what would have been displayed during a normal call from the
 console.
+
+You can test sending arguments and options to the command by passing them
+as an array to the :method:`Symfony\\Component\\Console\\Tester\\CommandTester::getDisplay`
+method::
+
+    use Symfony\Component\Console\Tester\CommandTester;
+    use Symfony\Bundle\FrameworkBundle\Console\Application;
+    use Acme\DemoBundle\Command\GreetCommand;
+
+    class ListCommandTest extends \PHPUnit_Framework_TestCase
+    {
+
+        //--
+
+        public function testNameIsOutput()
+        {
+            $command = new GreetCommand();
+            $commandTester = new CommandTester($command);
+            $commandTester->execute(array('name' => 'Fabien'));
+
+            $this->assertRegExp('/Fabien/', $commandTester->getDisplay());
+        }
+    }
 
 .. tip::
 
