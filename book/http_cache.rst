@@ -173,7 +173,10 @@ finely tuned via a set of options you can set by overriding the ``getOptions()``
 method::
 
     // app/AppCache.php
-    class AppCache extends Cache
+
+    use Symfony\Bundle\FrameworkBundle\HttpCache\HttpCache;
+
+    class AppCache extends HttpCache
     {
         protected function getOptions()
         {
@@ -654,7 +657,7 @@ exposing a simple and efficient pattern::
         } else {
             // do more work here - like retrieving more data
             $comments = // ...
-            
+
             // or render a template with the $response you've already started
             return $this->render(
                 'MyBundle:MyController:article.html.twig',
