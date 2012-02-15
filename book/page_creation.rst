@@ -251,10 +251,10 @@ application should greet you:
     .. code-block:: text
 
         http://localhost/app.php/hello/Ryan
-    
+
     If you get an error, it's likely because you need to clear your cache
     by running:
-    
+
     .. code-block:: bash
 
         php app/console cache:clear --env=prod --no-debug
@@ -723,7 +723,7 @@ format you prefer:
         imports:
             - { resource: parameters.yml }
             - { resource: security.yml }
-        
+
         framework:
             secret:          %secret%
             charset:         UTF-8
@@ -744,7 +744,7 @@ format you prefer:
             <import resource="parameters.yml" />
             <import resource="security.yml" />
         </imports>
-        
+
         <framework:config charset="UTF-8" secret="%secret%">
             <framework:router resource="%kernel.root_dir%/config/routing.xml" />
             <!-- ... -->
@@ -802,6 +802,26 @@ options of each feature.
     * *XML*: More powerful than YAML at times and supports IDE autocompletion;
 
     * *PHP*: Very powerful but less readable than standard configuration formats.
+
+Default Configuration Dump
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 2.1
+    The ``config:dump-reference`` command was added in Symfony 2.1
+
+You can dump the default configuration for a bundle in yaml to the console using
+the ``config:dump-reference`` command.  Here is an example of dumping the default
+FrameworkBundle configuration:
+
+.. code-block:: text
+
+    app/console config:dump-reference FrameworkBundle
+
+.. note::
+
+    See the cookbook article: :doc:`How to expose a Semantic Configuration for
+    a Bundle</cookbook/bundles/extension>` for information on adding
+    configuration for your own bundle.
 
 .. index::
    single: Environments; Introduction
