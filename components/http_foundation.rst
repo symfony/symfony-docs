@@ -52,7 +52,7 @@ can be accessed via several public properties:
 
 * ``cookies``: equivalent of ``$_COOKIE``;
 
-* ``attributes``: ``HttpKernel`` uses it to store parameters like routing (``_controller``, ``_route`` and any placeholder used) for example;
+* ``attributes``: information about the Request that is not directly related to the HTTP data. For example, ``HttpKernel`` uses it to store parameters about routing (``_controller``, ``_route`` and any placeholder used);
 
 * ``files``: equivalent of ``$_FILE``;
 
