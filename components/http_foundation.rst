@@ -52,6 +52,8 @@ can be accessed via several public properties:
 
 * ``cookies``: equivalent of ``$_COOKIE``;
 
+* ``attributes``: router parameters (``_controller``, ``_route`` and any placeholder used);
+
 * ``files``: equivalent of ``$_FILE``;
 
 * ``server``: equivalent of ``$_SERVER``;
@@ -67,6 +69,8 @@ instance (or a sub-class of), which is a data holder class:
 * ``query``:   :class:`Symfony\\Component\\HttpFoundation\\ParameterBag`;
 
 * ``cookies``: :class:`Symfony\\Component\\HttpFoundation\\ParameterBag`;
+
+* ``attributes``: :class:`Symfony\\Component\\HttpFoundation\\ParameterBag`;
 
 * ``files``:   :class:`Symfony\\Component\\HttpFoundation\\FileBag`;
 
