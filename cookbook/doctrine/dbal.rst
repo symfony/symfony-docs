@@ -148,7 +148,7 @@ mapping type:
         # app/config/config.yml
         doctrine:
             dbal:
-                connection:
+                connections:
                     default:
                         // Other connections parameters
                         mapping_types:
