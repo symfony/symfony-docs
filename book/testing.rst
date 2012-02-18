@@ -30,7 +30,7 @@ command:
     $ phpunit -c app/
 
 The ``-c`` option tells PHPUnit to look in the ``app/`` directory for a configuration
-file. If you're curious about how the PHPUnit options, check out the ``app/phpunit.xml.dist``
+file. If you're curious about the PHPUnit options, check out the ``app/phpunit.xml.dist``
 file.
 
 .. tip::
@@ -287,7 +287,7 @@ document::
 Working with the Test Client
 -----------------------------
 
-The test Client simulates an HTTP client like a browser and makes requests
+The Test Client simulates an HTTP client like a browser and makes requests
 into your Symfony2 application::
 
     $crawler = $client->request('GET', '/hello/Fabien');
@@ -485,9 +485,9 @@ Many other methods are also available:
 +------------------------+----------------------------------------------------+
 | ``previousAll()``      | All preceding siblings                             |
 +------------------------+----------------------------------------------------+
-| ``parents()``          | Parent nodes                                       |
+| ``parents()``          | Returns the parent nodes                           |
 +------------------------+----------------------------------------------------+
-| ``children()``         | Children                                           |
+| ``children()``         | Returns children nodes                             |
 +------------------------+----------------------------------------------------+
 | ``reduce($lambda)``    | Nodes for which the callable does not return false |
 +------------------------+----------------------------------------------------+
