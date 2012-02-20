@@ -263,6 +263,8 @@ the user is connecting via a secured connection (i.e. ``https``).
     In fact, every public property used in the previous example is some instance
     of the ParameterBag.
     
+    .. _book-fundamentals-attributes:
+    
     The Request class also has a public ``attributes`` property, which holds
     special data related to how the application works internally. For the
     Symfony2 framework, the ``attributes`` holds the values returned by the

@@ -52,7 +52,7 @@ can be accessed via several public properties:
 
 * ``cookies``: equivalent of ``$_COOKIE``;
 
-* ``attributes``: information about the Request that is not directly related to the HTTP data. For example, ``HttpKernel`` uses it to store parameters about routing (``_controller``, ``_route`` and any placeholder used);
+* ``attributes``: no equivalent - used by your app to store other data (see :ref:`below<component-foundation-attributes>`)
 
 * ``files``: equivalent of ``$_FILE``;
 
@@ -158,11 +158,14 @@ argument::
         $request->query->get('foo[bar]', null, true);
         // returns 'bar'
 
+.. _component-foundation-attributes:
+
 Last, but not the least, you can also store additional data in the request,
 thanks to the ``attributes`` public property, which is also an instance of
 :class:`Symfony\\Component\\HttpFoundation\\ParameterBag`. This is mostly used
 to attach information that belongs to the Request and that needs to be
-accessed from many different points in your application.
+accessed from many different points in your application. For information
+on how this is used in the Symfony2 framework, see :ref:`read more<book-fundamentals-attributes>`.
 
 Identifying a Request
 ~~~~~~~~~~~~~~~~~~~~~
