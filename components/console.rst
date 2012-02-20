@@ -68,6 +68,22 @@ add the following to it::
         }
     }
 
+You also need to create the file to run at the command line which creates
+an ``Application`` and adds commands to it:
+
+.. code-block::php
+
+    #!/usr/bin/env php
+    # app/console
+    <?php 
+
+    use Acme\DemoBundle\Command\GreetCommand;
+    use Symfony\Component\Console\Application;
+
+    $application = new Application();
+    $application->add(new GreetCommand);
+    $application->run();
+
 Test the new console command by running the following
 
 .. code-block:: bash
@@ -247,8 +263,7 @@ console::
     {
         public function testExecute()
         {
-            // mock the Kernel or create one depending on your needs
-            $application = new Application($kernel);
+            $application = new Application();
             $application->add(new GreetCommand());
 
             $command = $application->find('demo:greet');
@@ -265,30 +280,38 @@ The :method:`Symfony\\Component\\Console\\Tester\\CommandTester::getDisplay`
 method returns what would have been displayed during a normal call from the
 console.
 
+You can test sending arguments and options to the command by passing them
+as an array to the :method:`Symfony\\Component\\Console\\Tester\\CommandTester::getDisplay`
+method::
+
+    use Symfony\Component\Console\Tester\CommandTester;
+    use Symfony\Bundle\FrameworkBundle\Console\Application;
+    use Acme\DemoBundle\Command\GreetCommand;
+
+    class ListCommandTest extends \PHPUnit_Framework_TestCase
+    {
+
+        //--
+
+        public function testNameIsOutput()
+        {
+            $application = new Application();
+            $application->add(new GreetCommand());
+
+            $command = $application->find('demo:greet');
+            $commandTester = new CommandTester($command);
+            $commandTester->execute(
+                array('command' => $command->getName(), 'name' => 'Fabien')
+            );
+
+            $this->assertRegExp('/Fabien/', $commandTester->getDisplay());
+        }
+    }
+
 .. tip::
 
     You can also test a whole console application by using
     :class:`Symfony\\Component\\Console\\Tester\\ApplicationTester`.
-
-Getting Services from the Service Container
--------------------------------------------
-
-By using :class:`Symfony\\Bundle\\FrameworkBundle\\Command\\ContainerAwareCommand` 
-as the base class for the command (instead of the more basic 
-:class:`Symfony\\Component\\Console\\Command\\Command`), you have access to the 
-service container. In other words, you have access to any configured service.
-For example, you could easily extend the task to be translatable::
-
-    protected function execute(InputInterface $input, OutputInterface $output)
-    {
-        $name = $input->getArgument('name');
-        $translator = $this->getContainer()->get('translator');
-        if ($name) {
-            $output->writeln($translator->trans('Hello %name%!', array('%name%' => $name)));
-        } else {
-            $output->writeln($translator->trans('Hello!'));
-        }
-    }
 
 Calling an existing Command
 ---------------------------
