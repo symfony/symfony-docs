@@ -72,24 +72,24 @@ changes to your git repository.
 .. tip::
 
     After execution of the command:
+    
+    .. code-block:: bash
 
         $ php bin/vendors install
 
-    your project will contain complete git history of all the bundles defined
-    in ``deps`` file. It can be as much as 100 MB! You can remove git history
-    directories with following command:
+    your project will contain complete the git history of all the bundles
+    and libraries defined in the ``deps`` file. It can be as much as 100 MB!
+    You can remove the git history directories with the following command:
 
     .. code-block:: bash
 
         $ find vendor -name .git -type d | xargs rm -rf
 
-    The command removes all ``.git`` directoreis contained inside 
+    The command removes all ``.git`` directories contained inside the
     ``vendor`` directory.
 
-    After this command your project will be similar to 
-    ``Symfony_Standard_Vendors_2.0.x.zip`` archive.
-    If you want to update bundles defined in ``deps`` file you will
-    have to reinstall them:
+    If you want to update bundles defined in ``deps`` file after this, you
+    will have to reinstall them:
 
     .. code-block:: bash
 
