@@ -306,7 +306,7 @@ directly::
 
     use Goutte\Client;
 
-    // make a real reqeust to an external site
+    // make a real request to an external site
     $client = new Client();
     $crawler = $client->request('GET', 'https://github.com/login');
 

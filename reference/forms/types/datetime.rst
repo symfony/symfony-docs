@@ -19,9 +19,15 @@ data can be a ``DateTime`` object, a string, a timestamp or an array.
 |                      | - `time_widget`_                                                            |
 |                      | - `input`_                                                                  |
 |                      | - `date_format`_                                                            |
+|                      | - `hours`_                                                                  |
+|                      | - `minutes`_                                                                |
+|                      | - `seconds`_                                                                |
 |                      | - `years`_                                                                  |
 |                      | - `months`_                                                                 |
 |                      | - `days`_                                                                   |
+|                      | - `with_seconds`_                                                           |
+|                      | - `data_timezone`_                                                          |
+|                      | - `user_timezone`_                                                          |
 +----------------------+-----------------------------------------------------------------------------+
 | Parent type          | :doc:`form</reference/forms/types/form>`                                    |
 +----------------------+-----------------------------------------------------------------------------+

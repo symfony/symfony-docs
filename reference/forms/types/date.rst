@@ -78,7 +78,7 @@ Field Options
 empty_value
 ~~~~~~~~~~~
 
-**type**: ``string``|``array``
+**type**: ``string`` or ``array``
 
 If your widget option is set to ``choice``, then this field will be represented
 as a series of ``select`` boxes. The ``empty_value`` option can be used to

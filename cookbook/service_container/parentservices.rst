@@ -412,7 +412,7 @@ to the ``NewsletterManager`` class, the config would look like this:
         )->addMethodCall('setMailer', array(
             new Reference('my_alternative_mailer')
         ));
-        $container->setDefinition('newsletter_manager', new DefinitionDecorator(
+        $container->setDefinition('greeting_card_manager', new DefinitionDecorator(
             'mail_manager'
         ))->setClass(
             '%greeting_card_manager.class%'

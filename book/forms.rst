@@ -725,7 +725,7 @@ specify it:
 
         <?php echo $view['form']->label($form['task'], 'Task Description') ?>
 
-Finally, some field types have additional rendering options that can be passed
+Some field types have additional rendering options that can be passed
 to the widget. These options are documented with each type, but one common
 options is ``attr``, which allows you to modify attributes on the form element.
 The following would add the ``task_field`` class to the rendered input text
@@ -742,6 +742,33 @@ field:
         <?php echo $view['form']->widget($form['task'], array(
             'attr' => array('class' => 'task_field'),
         )) ?>
+
+If you need to render form fields "by hand" then you can access individual
+values for fields such as the ``id``, ``name`` and ``label``. For example
+to get the ``id``:
+
+.. configuration-block::
+
+    .. code-block:: html+jinja
+
+        {{ form.task.vars.id }}
+
+    .. code-block:: html+php
+
+        <?php echo $form['task']->get('id') ?>
+
+To get the value used for the form field's name attribute you need to use
+the ``full_name`` value:
+
+.. configuration-block::
+
+    .. code-block:: html+jinja
+
+        {{ form.task.vars.full_name }}
+
+    .. code-block:: html+php
+
+        <?php echo $form['task']->get('full_name') ?>
 
 Twig Template Function Reference
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -830,15 +857,15 @@ the choice is ultimately up to you.
         }
 
 .. tip::
-	
-	When mapping forms to objects, all fields are mapped. Any fields on the 
-	form that do not exist on the mapped object will cause an exception to
-	be thrown.
-	
-	In cases where you need extra fields in the form (for example: a "do you
-	agree with these terms" checkbox) that will not be mapped to the underlying
-	object, you need to set the property_path option to ``false``::
-	
+    
+    When mapping forms to objects, all fields are mapped. Any fields on the 
+    form that do not exist on the mapped object will cause an exception to
+    be thrown.
+    
+    In cases where you need extra fields in the form (for example: a "do you
+    agree with these terms" checkbox) that will not be mapped to the underlying
+    object, you need to set the property_path option to ``false``::
+    
         public function buildForm(FormBuilder $builder, array $options)
         {
             $builder->add('task');
