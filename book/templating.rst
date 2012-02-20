@@ -674,9 +674,9 @@ in your application configuration:
     .. code-block:: xml
 
         <!-- app/config/config.xml -->
-        <framework:templating>
-            <framework:hinclude_default_template id="AcmeDemoBundle::hinclude.html.twig" />
-        </framework:templating>
+        <framework:config>
+            <framework:templating hinclude-default-template="AcmeDemoBundle::hinclude.html.twig" />
+        </framework:config>
 
     .. code-block:: php
 
