@@ -163,10 +163,10 @@ In your controller, you'll now initialize a new instance of ``TaskType``::
             
             // dummy code - this is here just so that the Task has some tags
             // otherwise, this isn't an interesting example
-            $tag1 = new Tag()
+            $tag1 = new Tag();
             $tag1->name = 'tag1';
             $task->getTags()->add($tag1);
-            $tag2 = new Tag()
+            $tag2 = new Tag();
             $tag2->name = 'tag2';
             $task->getTags()->add($tag2);
             // end dummy code
