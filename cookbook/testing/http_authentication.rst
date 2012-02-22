@@ -28,7 +28,7 @@ the entity provider::
 
     .. code-block:: yaml
 
-	# app/config/config_test.yml
+        # app/config/config_test.yml
         security:
             firewalls:
                 secured_area:
