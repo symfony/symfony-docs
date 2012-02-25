@@ -75,7 +75,7 @@ make your error management configurable::
         $msg = 'Something went wrong! ('.$exception->getMessage().')';
 
         return new Response($msg, $exception->getStatusCode());
-    });
+    };
     $dispatcher->addSubscriber(new HttpKernel\EventListener\ExceptionListener($errorHandler));
 
 ``ExceptionListener`` gives you a ``FlattenException`` instance instead of the
