@@ -16,9 +16,9 @@ configuration format of your choice):
 
 .. versionadded:: 2.1
     In Symfony2.1 the class and namespace are slightly modified. You can now 
-	find the `PdoStorage` class in the `Session\\Storage` namespace. Full 
-	version below:
-	
+    find the `PdoStorage` class in the `Session\\Storage` namespace. Full 
+    version below:
+    
     :class:`Symfony\\Component\\HttpFoundation\\Session\\Storage\\PdoStorage`.
     Also note that you need to swap `%session.storage.options%` with `%pdo.db_options%`.
 
