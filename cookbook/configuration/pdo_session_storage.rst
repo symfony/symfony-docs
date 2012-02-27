@@ -15,11 +15,12 @@ To use it, you just need to change some parameters in ``config.yml`` (or the
 configuration format of your choice):
 
 .. versionadded:: 2.1
-    In Symfony2.1 we swapped 
-    :class:`Symfony\\Component\\HttpFoundation\\SessionStorage\\PdoSessionStorage` 
-    with 
-    :class:`Symfony\\Component\\HttpFoundation\\Session\\Storage\\PdoStorage` (note that the namespace differs from 2.0).
-    Also be aware that you need to swap `%session.storage.options%` with `%pdo.db_options%`.
+    In Symfony2.1 the class and namespace are slightly modified. You can now 
+	find the `PdoStorage` class in the `Session\\Storage` namespace. Full 
+	version below:
+	
+    :class:`Symfony\\Component\\HttpFoundation\\Session\\Storage\\PdoStorage`.
+    Also note that you need to swap `%session.storage.options%` with `%pdo.db_options%`.
 
 .. configuration-block::
 
