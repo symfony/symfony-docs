@@ -518,6 +518,9 @@ available for the core bundles can be found inside the :doc:`Reference Guide</re
    ``services``, and ``imports`` directives. Any other directives
    are handled by a service container extension.
 
+If you want to expose user friendly configuration in your own bundles, read the
+":doc:`/cookbook/bundles/extensions`" cookbook recipe.
+
 .. index::
    single: Service Container; Referencing services
 
