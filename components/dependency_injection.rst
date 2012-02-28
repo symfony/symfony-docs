@@ -180,7 +180,7 @@ like this:
 
     $newsletterManager = $sc->get('newsletter_manager');
 
-Avoiding Your Code Becoming Dependent on the Conatiner
+Avoiding Your Code Becoming Dependent on the Container
 ------------------------------------------------------
 
 Whilst you can retrieve services from the container directly it is best
