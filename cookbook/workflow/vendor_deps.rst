@@ -64,13 +64,16 @@ or upgraded. You can set that directly to the ``deps`` file :
         git=http://github.com/johndoe/Acme/AwesomeBundle.git
         target=/bundles/Acme/AwesomeBundle
         version=the-awesome-version
-        
+
+
 * The ``git`` option sets the URL of the library. It can use various protocols, like
 ``http://`` as well as ``git://``. 
+
 * The ``target`` option specifies where the repository will live : plain Symfony 
 bundles should go under the ``vendor/bundles/Acme`` directory, other third-party
 libraries usually go to ``vendor/my-awesome-libreary-name``. The target directory 
 defaults to this last option when not specified. 
+
 * The ``version`` option allows you to set a specific revision. You can use a tag 
 (``version=origin/0.42``) or a branch name (``refs/remotes/origin/awesome-branch``).
 It defaults to ``origin/HEAD``.
