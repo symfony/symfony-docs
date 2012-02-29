@@ -1,8 +1,8 @@
 Managing Vendor Libraries with bin/vendors and deps
-===================================================
+---------------------------------------------------
 
-How does it work ?
-------------------
+### How does it work ?
+
 
 Every Symfony project uses a group of third-party "vendor" libraries. One
 way or another the goal is to download these files into your ``vendor/``
@@ -52,8 +52,8 @@ script to ensure that all of the needed vendor libraries are downloaded.
     into the ``deps.lock`` file.
 
     
-Hacking vendor libraries
-------------------------
+### Hacking vendor libraries
+
 
 Sometimes, you want a specific branch, tag, or commit of a library to be downloaded
 or upgraded. You can set that directly to the ``deps`` file :
@@ -73,8 +73,8 @@ or upgraded. You can set that directly to the ``deps`` file :
 * The ``version`` option allows you to set a specific revision. You can use a tag (``version=origin/0.42``) or a branch name (``refs/remotes/origin/awesome-branch``). It defaults to ``origin/HEAD``.
 
     
-Updating workflow
------------------
+### Updating workflow
+
 
 When you execute the ``php bin/vendors install``, for every library, the script first checks if the install directory exists. 
 
