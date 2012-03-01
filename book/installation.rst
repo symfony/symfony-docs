@@ -74,17 +74,23 @@ something like this:
 Updating Vendors
 ~~~~~~~~~~~~~~~~
 
-Finally, if you downloaded the archive "without vendors", install the vendors
-by running the following command from the command line:
+Step 1: Get Composer (The great new PHP packaging system)
 
 .. code-block:: bash
 
-    php bin/vendors install
+    curl -O http://getcomposer.org/composer.phar
+
+Make sure you download composer.phar in a folder where the composer.json file is located (This is your Symfony project root by default)
+
+Step 2: Install vendors
+
+.. code-block:: bash
+
+    php bin/composer.phar install
 
 This command downloads all of the necessary vendor libraries - including
-Symfony itself - into the ``vendor/`` directory. For more information on
-how third-party vendor libraries are managed inside Symfony2, see
-":ref:`cookbook-managing-vendor-libraries`".
+Symfony itself - into the ``vendor/`` directory. If that wasn't good enough, Composer automatically creates an autoloader for all your installed dependencies; instead of using the ClassLoader component, you can also just require vendor/.composer/autoload.php
+
 
 Configuration and Setup
 ~~~~~~~~~~~~~~~~~~~~~~~
