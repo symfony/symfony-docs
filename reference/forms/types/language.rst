@@ -8,7 +8,7 @@ The ``language`` type is a subset of the ``ChoiceType`` that allows the user
 to select from a large list of languages. As an added bonus, the language names
 are displayed in the language of the user.
 
-The "value" for each locale is either the two letter ISO639-1 *language* code
+The "value" for each locale is the two-letter ISO639-1 *language* code
 (e.g. ``fr``).
 
 .. note::
