@@ -200,9 +200,9 @@ zero tags when first created).
         <h3>Tags</h3>
         <ul class="tags">
             {# iterate over each existing tag and render its only field: name #}
-			{% for tag in form.tags %}
-            	<li>{{ form_row(tag.name) }}</li>
-			{% endfor %}
+            {% for tag in form.tags %}
+                <li>{{ form_row(tag.name) }}</li>
+            {% endfor %}
         </ul>
 
         {{ form_rest(form) }}
@@ -215,9 +215,9 @@ zero tags when first created).
 
         <h3>Tags</h3>
         <ul class="tags">
-			<?php foreach($form['tags'] as $tag): ?>
-            	<li><?php echo $view['form']->row($tag['name']) ?></li>
-			<?php endforeach; ?>
+            <?php foreach($form['tags'] as $tag): ?>
+                <li><?php echo $view['form']->row($tag['name']) ?></li>
+            <?php endforeach; ?>
         </ul>
 
         <?php echo $view['form']->rest($form) ?>
@@ -231,15 +231,15 @@ The ``Tags`` collection is accessible naturally via ``$task->getTags()``
 and can be persisted to the database or used however you need.
 
 So far, this works great, but this doesn't allow you to dynamically add new
-todos or delete existing todos. So, while editing existing todos will work
-great, your user can't actually add any new todos yet.
+tags or delete existing tags. So, while editing existing tags will work
+great, your user can't actually add any new tags yet.
 
 .. _cookbook-form-collections-new-prototype:
 
-Allowing "new" todos with the "prototype"
+Allowing "new" tags with the "prototype"
 -----------------------------------------
 
-Allowing the user to dynamically add new todos means that we'll need to
+Allowing the user to dynamically add new tags means that we'll need to
 use some JavaScript. Previously we added two tags to our form in the controller.
 Now we need to let the user add as many tag forms as he needs directly in the browser.
 This will be done through a bit of JavaScript.
@@ -250,7 +250,9 @@ type expects to receive exactly two, otherwise an error will be thrown:
 ``This form should not contain extra fields``. To make this flexible, we
 add the ``allow_add`` option to our collection field::
 
+    // src/Acme/TaskBundle/Form/Type/TaskType.php
     // ...
+    //
     
     public function buildForm(FormBuilder $builder, array $options)
     {
@@ -319,15 +321,151 @@ Our script can be as simple as this:
 
 Now, each time a user clicks the ``Add a tag`` link, a new sub form will
 appear on the page. The server side form component is aware it should not
-expect any specific size for the ``Tag`` collection. And all the tags we
-add while creating the new ``Todo`` will be saved together with it.
+expect any specific size for the ``Tag`` collection. And all the new tags we
+add while creating the ``Todo`` will be saved together with it.
 
-For more details, see the :doc:`collection form type reference</reference/forms/types/collection>`.
 
-.. _cookbook-form-collections-remove:
-
-Allowing todos to be removed
+Allowing tags to be removed
 ----------------------------
 
-This section has not been written yet, but will soon. If you're interested
-in writing this entry, see :doc:`/contributing/documentation/overview`.
+The next step is to allow the deletion of a particuliar item in the collection.
+The solution is the same than for allowing new tags.
+
+To start adding the option ``allow_delete`` in the form Type.
+
+.. code-block:: php
+    
+    // src/Acme/TaskBundle/Form/Type/TaskType.php
+    // ...
+    //
+    
+    public function buildForm(FormBuilder $builder, array $options)
+    {
+        $builder->add('description');
+
+        $builder->add('tags', 'collection', array(
+            'type' => new TagType(),
+            'allow_add' => true,
+            'allow_delete' => true,
+            'by_reference' => false,
+        ));
+    }
+
+Templates modications
+`````````````````````
+    
+The ``allow_delete`` option have one consequence, if a item of a collection 
+isn't send on submission, the dependant data are delete from the database. The
+solution is thus to delete the form element.
+
+All can be made in the template like this :
+
+.. configuration-block::
+
+    .. code-block:: html+jinja
+
+        {# src/Acme/TaskBundle/Resources/views/Task/new.html.twig #}
+        {# ... #}
+
+        {# render the task's only field: description #}
+        {{ form_row(form.description) }}
+
+        <h3>Tags</h3>
+        <ul class="tags">
+            {# iterate over each existing tag and render its only field: name #}
+            {% for tag in form.tags %}
+                <li id="tag_{{loop.index}}">
+                    {{ form_row(tag.name) }}
+                    <a href="#" onclick="$('#tag_{{loop.index}}').remove(); return false">delete this tag</a>
+                </li>
+            {% endfor %}
+        </ul>
+
+        {{ form_rest(form) }}
+        {# ... #}
+
+    .. code-block:: html+php
+
+        <?php // src/Acme/TaskBundle/Resources/views/Task/new.html.php ?>
+        <?php ... ?>
+
+        <h3>Tags</h3>
+        <ul class="tags">
+            <?php foreach($form['tags'] as $key=>$tag): ?>
+                <li id="tag_{{<?php echo $key?>}}">
+                    <?php echo $view['form']->row($tag['name']) ?>
+                    <a href="#" onclick="$('#tag_{{<?php echo $key?>}}').remove(); return false">delete this tag</a>
+                </li>
+            <?php endforeach; ?>
+        </ul>
+
+        <?php echo $view['form']->rest($form) ?>
+        <?php ... ?>
+        
+Adding and delete - Ensure the database persitence
+``````````````````````````````````````````````````
+
+Now the creation is functional, you can copy most of the template in your edit
+form.
+
+If you use Doctrine, you have two side in the relations, the owning side and the
+inverse side. Normally in this case you have chose a ManyToMany relation and the
+deleted tags disappears.
+
+But if you have an OneToMany relation on a transitionnal entity for ordering by
+exemple, or a ManyToMany with a mappedBy on the task entity, this could not save
+the delete or the add.
+
+In this case, you can modificate the controller to really delete the removed tag :
+
+.. code-block:: php
+
+    // The Controller
+    // src/Acme/TaskBundle/Controller/TaskController.php
+    // ...
+    //
+    public function updateAction($id)
+    {
+        $em = $this->getDoctrine()->getEntityManager();
+        $entity = $em->getRepository('AcmeTaskBundle:Task')->find($id);
+        
+        //Find the tags present in the database
+        foreach($entity->getTags() as $tag) $toDelete[] = $tag;
+          
+        $editForm   = $this->createForm(new TaskType(), $entity);
+        $editForm->bindRequest($this->getRequest());
+
+        if ($editForm->isValid()) {
+        
+            //Remove the tags presents in the form
+            foreach($entity->getTags() as $tag){
+                foreach($toDelete as $key=>$toDel){
+                    if ($toDel->getId() === $tag->getId()){
+                        unset($toDelete[$key]);
+                    }
+                }
+            }
+            //Remove them from the entity manager
+            foreach($toDelete as $del){    $em->remove($del);    }        
+            $em->persist($entity);
+            $em->flush();
+            return $this->redirect($this->generateUrl('task_edit', array('id' => $id)));
+        }
+        return array( 'entity' => $entity, 'edit_form'   => $editForm->createView() );
+
+And adding in the entity a little piece of code to update the tags : 
+
+.. code-block:: php
+    
+    // src/Acme/TaskBundle/Entity/Task.php
+    // ...
+    //
+    public function setTags($tags)
+    {
+         foreach($tags as $tag){
+             $tag->setTask($this);
+         }
+        $this->tags = $tags;
+    }
+	
+For more details, see the :doc:`collection form type reference</reference/forms/types/collection>`.
