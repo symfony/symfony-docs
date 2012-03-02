@@ -328,7 +328,7 @@ add while creating the ``Todo`` will be saved together with it.
 Allowing tags to be removed
 ----------------------------
 
-The next step is to allow the deletion of a particuliar item in the collection.
+The next step is to allow the deletion of a particular item in the collection.
 The solution is the same than for allowing new tags.
 
 To start adding the option ``allow_delete`` in the form Type.
@@ -354,9 +354,9 @@ To start adding the option ``allow_delete`` in the form Type.
 Templates modications
 `````````````````````
     
-The ``allow_delete`` option have one consequence, if a item of a collection 
-isn't send on submission, the dependant data are delete from the database. The
-solution is thus to delete the form element.
+The ``allow_delete`` option have one consequence, if an item of a collection 
+isn't send on submission, the dependant data are deleted from the database. The
+solution is thus to remove the form element from the DOM.
 
 All can be made in the template like this :
 
@@ -403,20 +403,20 @@ All can be made in the template like this :
         <?php ... ?>
         
 Adding and delete - Ensure the database persitence
-``````````````````````````````````````````````````
+--------------------------------------------------
 
 Now the creation is functional, you can copy most of the template in your edit
 form.
 
 If you use Doctrine, you have two side in the relations, the owning side and the
-inverse side. Normally in this case you have chose a ManyToMany relation and the
-deleted tags disappears.
+inverse side. Normally in this case you have chose a ManyToMany relation : the
+deleted tags disappears and the new tags appears.
 
-But if you have an OneToMany relation on a transitionnal entity for ordering by
-exemple, or a ManyToMany with a mappedBy on the task entity, this could not save
-the delete or the add.
+But if you have an ``OneToMany`` relation on a transitionnal entity for ordering
+by exemple, or a ``ManyToMany`` with a ``mappedBy`` on the task entity, this
+could not save the delete or the add.
 
-In this case, you can modificate the controller to really delete the removed tag :
+In this case, you can modificate the controller to delete really the removed tag :
 
 .. code-block:: php
 
@@ -453,7 +453,7 @@ In this case, you can modificate the controller to really delete the removed tag
         }
         return array( 'entity' => $entity, 'edit_form'   => $editForm->createView() );
 
-And adding in the entity a little piece of code to update the tags : 
+And adding in the entity a little piece of code to create new tags : 
 
 .. code-block:: php
     
