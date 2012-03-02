@@ -322,7 +322,7 @@ Our script can be as simple as this:
 Now, each time a user clicks the ``Add a tag`` link, a new sub form will
 appear on the page. The server side form component is aware it should not
 expect any specific size for the ``Tag`` collection. And all the new tags we
-add while creating the ``Todo`` will be saved together with it.
+add while creating the new ``Task`` will be saved together with it.
 
 
 Allowing tags to be removed
@@ -467,5 +467,5 @@ And adding in the entity a little piece of code to create new tags :
          }
         $this->tags = $tags;
     }
-	
+    
 For more details, see the :doc:`collection form type reference</reference/forms/types/collection>`.
