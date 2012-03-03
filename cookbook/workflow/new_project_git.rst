@@ -107,10 +107,6 @@ to learn more about how to configure and develop inside your application.
 
 .. include:: _vendor_deps.rst.inc
 
-    Additionally, if you would simply like to update the ``deps.lock`` file
-    to what you already have installed, then you can simply run ``php bin/vendors lock``
-    to store the appropriate git SHA identifiers in the deps.lock file.
-
 Vendors and Submodules
 ~~~~~~~~~~~~~~~~~~~~~~
 
