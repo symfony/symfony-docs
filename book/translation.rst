@@ -313,8 +313,6 @@ taste.
     You can also store translations in a database, or any other storage by
     providing a custom class implementing the
     :class:`Symfony\\Component\\Translation\\Loader\\LoaderInterface` interface.
-    See :doc:`Custom Translation Loaders </cookbook/translation/custom_loader>`
-    below to learn how to register custom loaders.
 
 .. index::
    single: Translations; Creating translation resources
