@@ -437,7 +437,7 @@ In this case, you can modificate the controller to delete really the removed tag
 
         if ($editForm->isValid()) {
         
-            //Remove the tags presents in the form
+            //Search tags not presents in the form
             foreach($entity->getTags() as $tag){
                 foreach($toDelete as $key=>$toDel){
                     if ($toDel->getId() === $tag->getId()){
@@ -446,7 +446,10 @@ In this case, you can modificate the controller to delete really the removed tag
                 }
             }
             //Remove them from the entity manager
-            foreach($toDelete as $del){    $em->remove($del);    }        
+            foreach($toDelete as $del){
+                $toDelete->setTask(null);
+                $tagToRemove->persist();
+            }        
             $em->persist($entity);
             $em->flush();
             return $this->redirect($this->generateUrl('task_edit', array('id' => $id)));
