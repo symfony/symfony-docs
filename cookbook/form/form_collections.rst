@@ -409,7 +409,7 @@ Now the creation is functional, you can copy most of the template in your edit
 form.
 
 If you use Doctrine, you have two side in the relations, the owning side and the
-inverse side. Normally in this case you have chose a ManyToMany relation : the
+inverse side. Normally in this case you have choose a ManyToMany relation : the
 deleted tags disappears and the new tags appears.
 
 But if you have an ``OneToMany`` relation on a transitionnal entity for ordering
