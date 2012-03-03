@@ -508,8 +508,8 @@ request basis. If you do this, each subsequent request will have this locale.
 
     $this->get('session')->set('_locale', 'en_US');
 
-See the :ref:`.. _book-translation-locale-url:` section below about setting
-the locale via routing.
+See the :ref:`book-translation-locale-url` section below about setting the
+locale via routing.
 
 Fallback and Default Locale
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
