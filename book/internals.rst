@@ -856,6 +856,8 @@ be called.
 .. index::
    single: Profiler
 
+.. _internals-profiler:
+
 Profiler
 --------
 
