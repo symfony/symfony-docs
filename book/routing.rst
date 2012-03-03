@@ -755,8 +755,8 @@ the URL is either ``en`` or ``fr`` and if the ``{year}`` is a number. This
 route also shows how you can use a period between placeholders instead of
 a slash. URLs matching this route might look like:
 
- * ``/articles/en/2010/my-post``
- * ``/articles/fr/2010/my-post.rss``
+* ``/articles/en/2010/my-post``
+* ``/articles/fr/2010/my-post.rss``
 
 .. _book-routing-format-param:
 
