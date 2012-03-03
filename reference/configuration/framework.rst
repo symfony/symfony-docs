@@ -20,10 +20,10 @@ Configuration
 * `ide`_
 * `test`_
 * `form`_
-    * :ref:`enabled<config-framework-form-enabled>`
+    * enabled
 * `csrf_protection`_
-    * :ref:`enabled<config-framework-csrf-enabled>`
-    * `field_name`
+    * enabled
+    * field_name
 * `session`_
     * `lifetime`_
 * `templating`_
@@ -96,7 +96,7 @@ form
 ~~~~
 
 csrf_protection
-...............
+~~~~~~~~~~~~~~~
 
 session
 ~~~~~~~

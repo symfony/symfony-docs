@@ -60,9 +60,8 @@ Dependency Injection component and a powerful plugin system (bundles).
 
 .. seealso::
 
-    Read more about the :doc:`HttpKernel <kernel>` component. Read more about
-    :doc:`Dependency Injection </book/service_container>` and :doc:`Bundles
-    </cookbook/bundles/best_practices>`.
+    Read more about :doc:`Dependency Injection </book/service_container>` and
+    :doc:`Bundles </cookbook/bundles/best_practices>`.
 
 ``FrameworkBundle`` Bundle
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -861,6 +860,8 @@ be called.
 
 .. index::
    single: Profiler
+
+.. _internals-profiler:
 
 Profiler
 --------

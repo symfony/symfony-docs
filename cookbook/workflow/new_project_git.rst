@@ -26,7 +26,7 @@ git repository:
    (e.g. next to the ``deps`` file) and paste the following into it. Files
    matching these patterns will be ignored by git:
 
-    .. code-block:: text
+   .. code-block:: text
 
         /web/bundles/
         /app/bootstrap*
@@ -43,26 +43,26 @@ git repository:
 
 5. Initialize your git repository:
 
-    .. code-block:: bash
-    
+   .. code-block:: bash
+
         $ git init
 
 6. Add all of the initial files to git:
 
-    .. code-block:: bash
-    
+   .. code-block:: bash
+
         $ git add .
 
 7. Create an initial commit with your started project:
 
-    .. code-block:: bash
-    
+   .. code-block:: bash
+
         $ git commit -m "Initial commit"
 
 8. Finally, download all of the third-party vendor libraries:
 
-    .. code-block:: bash
-    
+   .. code-block:: bash
+
         $ php bin/vendors install
 
 At this point, you have a fully-functional Symfony2 project that's correctly
@@ -72,7 +72,7 @@ changes to your git repository.
 .. tip::
 
     After execution of the command:
-    
+
     .. code-block:: bash
 
         $ php bin/vendors install

@@ -26,9 +26,9 @@ be no surprise then that each environment loads its own individual configuration
 file. If you're using the YAML configuration format, the following files
 are used:
 
- * for the ``dev`` environment: ``app/config/config_dev.yml``
- * for the ``prod`` environment: ``app/config/config_prod.yml``
- * for the ``test`` environment: ``app/config/config_test.yml``
+* for the ``dev`` environment: ``app/config/config_dev.yml``
+* for the ``prod`` environment: ``app/config/config_prod.yml``
+* for the ``test`` environment: ``app/config/config_test.yml``
 
 This works via a simple standard that's used by default inside the ``AppKernel``
 class:

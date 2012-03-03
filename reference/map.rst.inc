@@ -1,4 +1,4 @@
-* **Configuration Options**:
+* **Configuration Options**
 
   Ever wondered what configuration options you have available to you in files
   such as ``app/config/config.yml``? In this section, all the available configuration

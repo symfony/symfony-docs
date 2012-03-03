@@ -124,23 +124,23 @@ Testing Documentation
 
 To test documentation before a commit:
 
- * Install `Sphinx`_;
+* Install `Sphinx`_;
 
- * Run the `Sphinx quick setup`_;
+* Run the `Sphinx quick setup`_;
 
- * Install the configuration-block Sphinx extension (see below);
+* Install the configuration-block Sphinx extension (see below);
 
- * Run ``make html`` and view the generated HTML in the ``build`` directory.
+* Run ``make html`` and view the generated HTML in the ``build`` directory.
 
 Installing the configuration-block Sphinx extension
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
- * Download the extension from the `configuration-block source`_ repository
-  
- * Copy the ``configurationblock.py`` to the ``_exts`` folder under your
+* Download the extension from the `configuration-block source`_ repository
+
+* Copy the ``configurationblock.py`` to the ``_exts`` folder under your
    source folder (where ``conf.py`` is located)
-   
- * Add the following to the ``conf.py`` file:
+
+* Add the following to the ``conf.py`` file:
 
 .. code-block:: py
     
