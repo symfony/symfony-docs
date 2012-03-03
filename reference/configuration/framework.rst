@@ -20,10 +20,10 @@ Configuration
 * `ide`_
 * `test`_
 * `form`_
-    * :ref:`enabled<config-framework-form-enabled>`
+    * enabled
 * `csrf_protection`_
-    * :ref:`enabled<config-framework-csrf-enabled>`
-    * `field_name`
+    * enabled
+    * field_name
 * `session`_
     * `lifetime`_
 * `templating`_
@@ -90,13 +90,11 @@ services related to testing your application (e.g. ``test.client``) are loaded.
 This setting should be present in your ``test`` environment (usually via
 ``app/config/config_test.yml``). For more information, see :doc:`/book/testing`.
 
-.. _reference-framework-form:
-
 form
 ~~~~
 
 csrf_protection
-...............
+~~~~~~~~~~~~~~~
 
 session
 ~~~~~~~
