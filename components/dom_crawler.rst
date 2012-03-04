@@ -220,7 +220,7 @@ form that the button lives in::
     ));
 
 The :class:`Symfony\\Component\\DomCrawler\\Form` object has lots of very
-useful methods for working with forms:
+useful methods for working with forms::
 
     $uri = $form->getUri();
 
