@@ -369,7 +369,7 @@ non-ASCII filenames is more involving. The
 :method:`:Symfony\\Component\\HttpFoundation\\Response:makeDisposition`
 abstracts the hard work behind a simple API::
 
-    use Symfony\\Component\\HttpFoundation\\ResponseHeaderBag;
+    use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 
     $d = $response->headers->makeDisposition(ResponseHeaderBag::DISPOSITION_ATTACHMENT, 'foo.pdf');
 
