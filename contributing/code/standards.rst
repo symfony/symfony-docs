@@ -111,10 +111,8 @@ Structure
 Naming Conventions
 ------------------
 
-* Use camelCase, not underscores, for variable, function and method
+* Use camelCase, not underscores, for variable, option, argument, parameter names, function and method
   names;
-
-* Use underscores for option, argument, parameter names;
 
 * Use namespaces for all classes;
 
