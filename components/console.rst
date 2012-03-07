@@ -7,9 +7,9 @@ The Console Component
     The Console component eases the creation of beautiful and testable command
     line interfaces.
 
-Symfony2 ships with a Console component, which allows you to create
-command-line commands. Your console commands can be used for any recurring
-task, such as cronjobs, imports, or other batch jobs.
+The Console component allows you to create command-line commands. Your console
+commands can be used for any recurring task, such as cronjobs, imports, or
+other batch jobs.
 
 Installation
 ------------
@@ -23,23 +23,16 @@ You can install the component in many different ways:
 Creating a basic Command
 ------------------------
 
-To make the console commands available automatically with Symfony2, create a
-``Command`` directory inside your bundle and create a php file suffixed with
-``Command.php`` for each command that you want to provide. For example, if you
-want to extend the ``AcmeDemoBundle`` (available in the Symfony Standard
-Edition) to greet us from the command line, create ``GreetCommand.php`` and
-add the following to it::
+To make a console command to greet us from the command line, create ``GreetCommand.php``
+and add the following to it::
 
-    // src/Acme/DemoBundle/Command/GreetCommand.php
-    namespace Acme\DemoBundle\Command;
-
-    use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
+    use Symfony\Component\Console\Command\Command;
     use Symfony\Component\Console\Input\InputArgument;
     use Symfony\Component\Console\Input\InputInterface;
     use Symfony\Component\Console\Input\InputOption;
     use Symfony\Component\Console\Output\OutputInterface;
 
-    class GreetCommand extends ContainerAwareCommand
+    class GreetCommand extends Command
     {
         protected function configure()
         {
@@ -255,9 +248,8 @@ useful one is the :class:`Symfony\\Component\\Console\\Tester\\CommandTester`
 class. It uses special input and output classes to ease testing without a real
 console::
 
+    use Symfony\Component\Console\Application;
     use Symfony\Component\Console\Tester\CommandTester;
-    use Symfony\Bundle\FrameworkBundle\Console\Application;
-    use Acme\DemoBundle\Command\GreetCommand;
 
     class ListCommandTest extends \PHPUnit_Framework_TestCase
     {
@@ -285,7 +277,7 @@ as an array to the :method:`Symfony\\Component\\Console\\Tester\\CommandTester::
 method::
 
     use Symfony\Component\Console\Tester\CommandTester;
-    use Symfony\Bundle\FrameworkBundle\Console\Application;
+    use Symfony\Component\Console\Application;
     use Acme\DemoBundle\Command\GreetCommand;
 
     class ListCommandTest extends \PHPUnit_Framework_TestCase
