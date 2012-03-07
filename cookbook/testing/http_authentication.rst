@@ -19,10 +19,11 @@ You can also override it on a per request basis::
         'PHP_AUTH_PW'   => 'pa$$word',
     ));
 
-When your application is using a form_login with an entity provider, you can
-simplify your tests by allowing your test configuration to make use of HTTP
-authentication. This way you can use the above to authenticate and still use
-the entity provider::
+When your application is using a ``form_login``, you can simplify your tests
+by allowing your test configuration to make use of HTTP authentication. This
+way you can use the above to authenticate in tests, but still have your users
+login via the normal ``form_login``. The trick is to include the ``http_basic``
+key in your firewall, along with the ``form_login`` key:
 
 .. configuration-block::
 
@@ -31,8 +32,5 @@ the entity provider::
         # app/config/config_test.yml
         security:
             firewalls:
-                secured_area:
+                your_firewall_name:
                     http_basic:
-
-You do have to know the password for your users as this stored encrypted in
-the database. You can use fixtures to load test users into your database.
