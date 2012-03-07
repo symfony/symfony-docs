@@ -36,7 +36,7 @@ Unit testing is only possible when testing a method that builds a query.
 Setup
 ~~~~~
 
-First, you need to add the Doctrine\Tests namespace to your autoloader::
+First, you need to add the ``Doctrine\Tests`` namespace to your autoloader::
 
     // app/autoload.php
     $loader->registerNamespaces(array(
