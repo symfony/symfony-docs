@@ -1,6 +1,9 @@
 Managing Vendor Libraries with bin/vendors and deps
 ---------------------------------------------------
 
+### How does it work ?
+
+
 Every Symfony project uses a group of third-party "vendor" libraries. One
 way or another the goal is to download these files into your ``vendor/``
 directory and, ideally, to give you some sane way to manage the exact version
@@ -47,3 +50,36 @@ script to ensure that all of the needed vendor libraries are downloaded.
     it. This command is used to freeze the versions of all of your vendor libraries
     by updating them to the version specified in ``deps`` and recording it
     into the ``deps.lock`` file.
+
+    
+### Hacking vendor libraries
+
+
+Sometimes, you want a specific branch, tag, or commit of a library to be downloaded
+or upgraded. You can set that directly to the ``deps`` file :
+
+.. code-block:: text
+
+    [AcmeAwesomeBundle]
+        git=http://github.com/johndoe/Acme/AwesomeBundle.git
+        target=/bundles/Acme/AwesomeBundle
+        version=the-awesome-version
+
+
+* The ``git`` option sets the URL of the library. It can use various protocols, like ``http://`` as well as ``git://``. 
+
+* The ``target`` option specifies where the repository will live : plain Symfony bundles should go under the ``vendor/bundles/Acme`` directory, other third-party libraries usually go to ``vendor/my-awesome-library-name``. The target directory defaults to this last option when not specified.
+
+* The ``version`` option allows you to set a specific revision. You can use a tag (``version=origin/0.42``) or a branch name (``refs/remotes/origin/awesome-branch``). It defaults to ``origin/HEAD``.
+
+    
+### Updating workflow
+
+
+When you execute the ``php bin/vendors install``, for every library, the script first checks if the install directory exists. 
+
+If it does not (and ONLY if it does not, it runs a ``git clone``. 
+
+Then, it does a ``git fetch origin`` and a ``git reset --hard the-awesome-version``. 
+
+This means that the repository will only be cloned once. If you want to perform any change of the git remote, you MUST delete the entire target directory, not only its content.
