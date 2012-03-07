@@ -92,7 +92,7 @@ it a parameter in the container and then referring to this parameter for the
     $sc = new ContainerBuilder();
     $sc->setParameter('mailer.transport', 'sendmail');
     $sc->register('mailer', 'Mailer')
-        ->addArgument('%sendmail%'));
+        ->addArgument('%mailer.transport%'));
 
 Now that the ``mailer`` service is in the container you can inject it as
 a dependency of other classes. If you have a ``NewsletterManager`` class
@@ -125,7 +125,7 @@ Then you can register this as a service as well and pass the ``mailer`` service 
 
     $sc->setParameter('mailer.transport', 'sendmail');
     $sc->register('mailer', 'Mailer')
-        ->addArgument('%sendmail%'));
+        ->addArgument('%mailer.transport%'));
 
     $sc->register('newsletter_manager', 'NewsletterManager')
         ->addArgument(new Reference('mailer'));
@@ -161,7 +161,7 @@ If you do want to though then the container can call the setter method:
 
     $sc->setParameter('mailer.transport', 'sendmail');
     $sc->register('mailer', 'Mailer')
-        ->addArgument('%sendmail%'));
+        ->addArgument('%mailer.transport%'));
 
     $sc->register('newsletter_manager', 'NewsletterManager')
         ->addMethodCall('setMailer', new Reference('mailer'));
@@ -274,7 +274,7 @@ The ``newsletter_manager`` and `` mailer`` services can be set up using config f
         // ...
         $sc->setParameter('mailer.transport', 'sendmail');
         $sc->register('mailer', 'Mailer')
-           ->addArgument('%sendmail%'));
+           ->addArgument('%mailer.transport%'));
 
         $sc->register('newsletter_manager', 'NewsletterManager')
            ->addMethodCall('setMailer', new Reference('mailer'));
