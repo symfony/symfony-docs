@@ -299,7 +299,7 @@ The value returned by the Controller is accessible via the
 
     public function onKernelView(GetResponseForControllerResultEvent $event)
     {
-        $val = $event->getReturnValue();
+        $val = $event->getControllerResult();
         $response = new Response();
         // some how customize the Response from the return value
 
