@@ -1465,7 +1465,7 @@ but here's a short example::
         // ...
     ;
 
-Now, when you call `$form->isValid()`, the constraints setup here are run
+Now, when you call `$form->bindRequest($request)`, the constraints setup here are run
 against your form's data. If you're using a form class, override the ``getDefaultOptions``
 method to specify the option::
 
