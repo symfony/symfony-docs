@@ -46,7 +46,11 @@ greeted. To create the page, follow the simple two-step process.
     The tutorial assumes that you've already downloaded Symfony2 and configured
     your webserver. The above URL assumes that ``localhost`` points to the
     ``web`` directory of your new Symfony2 project. For detailed information
-    on this process, see the :doc:`Installing Symfony2</book/installation>`.
+    on this process, see the documentation on the web server you are using.
+    Here's the relevant documentation page for some web server you might be using:
+    
+    * For Apache HTTP Server, refer to `Apache's DirectoryIndex documentation`_.
+    * For Nginx, refer to `Nginx HttpCoreModule location documentation`_.
 
 Before you begin: Create the Bundle
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -251,10 +255,10 @@ application should greet you:
     .. code-block:: text
 
         http://localhost/app.php/hello/Ryan
-    
+
     If you get an error, it's likely because you need to clear your cache
     by running:
-    
+
     .. code-block:: bash
 
         php app/console cache:clear --env=prod --no-debug
@@ -721,20 +725,14 @@ format you prefer:
 
         # app/config/config.yml
         imports:
-            - { resource: parameters.ini }
+            - { resource: parameters.yml }
             - { resource: security.yml }
-        
+
         framework:
             secret:          %secret%
             charset:         UTF-8
             router:          { resource: "%kernel.root_dir%/config/routing.yml" }
-            form:            true
-            csrf_protection: true
-            validation:      { enable_annotations: true }
-            templating:      { engines: ['twig'] } #assets_version: SomeVersionScheme
-            session:
-                default_locale: %locale%
-                auto_start:     true
+            # ...
 
         # Twig Configuration
         twig:
@@ -747,19 +745,13 @@ format you prefer:
 
         <!-- app/config/config.xml -->
         <imports>
-            <import resource="parameters.ini" />
+            <import resource="parameters.yml" />
             <import resource="security.yml" />
         </imports>
-        
+
         <framework:config charset="UTF-8" secret="%secret%">
             <framework:router resource="%kernel.root_dir%/config/routing.xml" />
-            <framework:form />
-            <framework:csrf-protection />
-            <framework:validation annotations="true" />
-            <framework:templating assets-version="SomeVersionScheme">
-                <framework:engine id="twig" />
-            </framework:templating>
-            <framework:session default-locale="%locale%" auto-start="true" />
+            <!-- ... -->
         </framework:config>
 
         <!-- Twig Configuration -->
@@ -769,23 +761,14 @@ format you prefer:
 
     .. code-block:: php
 
-        $this->import('parameters.ini');
+        $this->import('parameters.yml');
         $this->import('security.yml');
 
         $container->loadFromExtension('framework', array(
             'secret'          => '%secret%',
             'charset'         => 'UTF-8',
             'router'          => array('resource' => '%kernel.root_dir%/config/routing.php'),
-            'form'            => array(),
-            'csrf-protection' => array(),
-            'validation'      => array('annotations' => true),
-            'templating'      => array(
-                'engines' => array('twig'),
-                #'assets_version' => "SomeVersionScheme",
-            ),
-            'session' => array(
-                'default_locale' => "%locale%",
-                'auto_start'     => true,
+            // ...
             ),
         ));
 
@@ -823,6 +806,32 @@ options of each feature.
     * *XML*: More powerful than YAML at times and supports IDE autocompletion;
 
     * *PHP*: Very powerful but less readable than standard configuration formats.
+
+Default Configuration Dump
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 2.1
+    The ``config:dump-reference`` command was added in Symfony 2.1
+
+You can dump the default configuration for a bundle in yaml to the console using
+the ``config:dump-reference`` command.  Here is an example of dumping the default
+FrameworkBundle configuration:
+
+.. code-block:: text
+
+    app/console config:dump-reference FrameworkBundle
+
+The extension alias (configuration key) can also be used:
+
+.. code-block:: text
+
+    app/console config:dump-reference framework
+
+.. note::
+
+    See the cookbook article: :doc:`How to expose a Semantic Configuration for
+    a Bundle</cookbook/bundles/extension>` for information on adding
+    configuration for your own bundle.
 
 .. index::
    single: Environments; Introduction
@@ -984,3 +993,5 @@ to rapidly develop applications.
 .. _`Twig`: http://twig.sensiolabs.org
 .. _`third-party bundles`: http://symfony2bundles.org/
 .. _`Symfony Standard Edition`: http://symfony.com/download
+.. _`Apache's DirectoryIndex documentation`: http://httpd.apache.org/docs/2.0/mod/mod_dir.html
+.. _`Nginx HttpCoreModule location documentation`: http://wiki.nginx.org/HttpCoreModule#location
