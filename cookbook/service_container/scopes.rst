@@ -18,7 +18,7 @@ scopes:
 
 - `prototype`: A new instance is created each time you request the service.
 
-The FrameworkBundle also defines a third scope: `request`. This scopes is
+The FrameworkBundle also defines a third scope: `request`. This scope is
 tied to the request, meaning a new instance is created for each subrequest
 and is unavailable outside the request (for instance in the CLI).
 

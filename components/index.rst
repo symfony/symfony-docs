@@ -8,6 +8,7 @@ The Components
     console
     css_selector
     dom_crawler
+    dependency_injection
     finder
     http_foundation
     locale

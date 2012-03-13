@@ -492,7 +492,7 @@ regardless of how your project is developed. To name a few:
   should be handled (e.g. execute the ``contactAction()`` method);
 
 * `Form`_ - A full-featured and flexible framework for creating forms and
-  handing form submissions;
+  handling form submissions;
 
 * `Validator`_ A system for creating rules about data and then validating
   whether or not user-submitted data follows those rules;
