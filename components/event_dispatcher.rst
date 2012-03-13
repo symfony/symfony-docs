@@ -45,6 +45,18 @@ used. To make this possible, the Symfony2 kernel throws an event -
 
 .. _event_dispatcher:
 
+Installation
+------------
+
+You can install the component in many different ways:
+
+* Use the official Git repository (https://github.com/symfony/EventDispatcher);
+* Install it via PEAR ( `pear.symfony.com/EventDispatcher`);
+* Install it via Composer (`symfony/event-dispatcher` on Packagist).
+
+Usage
+-----
+
 Events
 ~~~~~~
 
@@ -480,20 +492,3 @@ listener via the
 
 Now, any listeners to ``store.order`` that have not yet been called will *not*
 be called.
-
-Installation
-------------
-
-You can install the component in many different ways:
-
-* Use the official Git repository (https://github.com/symfony/EventDispatcher);
-* Install it via PEAR ( `pear.symfony.com/EventDispatcher`);
-* Install it via Composer (`symfony/event-dispatcher` on Packagist).
-
-Usage
------
-
-
-
-.. code-block:: php
-
