@@ -118,7 +118,7 @@ output. For example::
     $output->writeln('<error>foo</error>');
 
 It is possible to define your own styles using the class 
-:class:`Symfony\\Component\\Console\\Formatter\\OutputFormatterStyle`:
+:class:`Symfony\\Component\\Console\\Formatter\\OutputFormatterStyle`::
 
     $style = new OutputFormatterStyle('red', 'yellow', array('bold', 'blink'));
     $output->getFormatter()->setStyle('fire', $style);
@@ -127,7 +127,7 @@ It is possible to define your own styles using the class
 Available foreground and background colors are: ``black``, ``red``, ``green``, 
 ``yellow``, ``blue``, ``magenta``, ``cyan`` and ``white``.
 
-And available options are: 'bold', 'underscore', 'blink', 'reverse' and 'conceal'.
+And available options are: ``bold``, ``underscore``, ``blink``, ``reverse`` and ``conceal``.
 
 Using Command Arguments
 -----------------------
