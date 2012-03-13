@@ -9,6 +9,7 @@ The Components
     css_selector
     dom_crawler
     dependency_injection
+    event_dispatcher
     finder
     http_foundation
     locale
