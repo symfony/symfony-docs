@@ -158,9 +158,10 @@ The ``addListener()`` method takes up to three arguments:
 
     A `PHP callable`_ is a PHP variable that can be used by the
     ``call_user_func()`` function and returns ``true`` when passed to the
-    ``is_callable()`` function. It can be a ``\Closure`` instance, a string
-    representing a function, or an array representing an object method or a
-    class method.
+    ``is_callable()`` function. It can be a ``\Closure`` instance, an object
+    implementing an __invoke method (which is what closures are in fact),
+    a string representing a function, or an array representing an object
+    method or a class method.
 
     So far, you've seen how PHP objects can be registered as listeners. You
     can also register PHP `Closures`_ as event listeners:
@@ -192,12 +193,6 @@ the dispatcher calls the ``AcmeListener::onFooAction`` method and passes the
         }
     }
 
-.. tip::
-
-    If you use the Symfony2 MVC framework, listeners can be registered via
-    your :ref:`configuration <dic-tags-kernel-event-listener>`. As an added
-    bonus, the listener objects are instantiated only when needed.
-
 In many cases, a special ``Event`` subclass that's specific to the given event
 is passed to the listener. This gives the listener access to special
 information about the event. Check the documentation or implementation of each
@@ -226,9 +221,9 @@ Creating and Dispatching an Event
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 In addition to registering listeners with existing events, you can create and
-throw your own events. This is useful when creating third-party libraries and
-also when you want to keep different components of your own system flexible
-and decoupled.
+dispatch your own events. This is useful when creating third-party libraries
+and also when you want to keep different components of your own system
+flexible and decoupled.
 
 The Static ``Events`` Class
 ...........................
@@ -353,11 +348,13 @@ aka dependency injection.
 
 You can use constructor injection::
 
+    use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+
     class Foo
     {
         protected $dispatcher = null;
 
-        public function __construct(EventDispatcher $dispatcher)
+        public function __construct(EventDispatcherInterface $dispatcher)
         {
             $this->dispatcher = $dispatcher;
         }
@@ -365,11 +362,13 @@ You can use constructor injection::
 
 Or setter injection::
 
+    use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+
     class Foo
     {
         protected $dispatcher = null;
 
-        public function setEventDispatcher(EventDispatcher $dispatcher)
+        public function setEventDispatcher(EventDispatcherInterface $dispatcher)
         {
             $this->dispatcher = $dispatcher;
         }
@@ -379,20 +378,6 @@ Choosing between the two is really a matter of taste. Many tend to prefer the
 constructor injection as the objects are fully initialized at construction
 time. But when you have a long list of dependencies, using setter injection
 can be the way to go, especially for optional dependencies.
-
-.. tip::
-
-    If you use dependency injection like we did in the two examples above, you
-    can then use the `Symfony2 Dependency Injection component`_ to elegantly
-    manage the injection of the ``event_dispatcher`` service for these objects.
-
-        .. code-block:: yaml
-
-            # src/Acme/HelloBundle/Resources/config/services.yml
-            services:
-                foo_service:
-                    class: Acme/HelloBundle/Foo/FooService
-                    arguments: [@event_dispatcher]
 
 .. index::
    single: Event Dispatcher; Event subscribers
@@ -424,12 +409,26 @@ subscribes to the ``kernel.response`` and ``store.order`` events:
         static public function getSubscribedEvents()
         {
             return array(
-                'kernel.response' => 'onKernelResponse',
-                'store.order'     => 'onStoreOrder',
+                'kernel.response' => array(
+                    array('onKernelResponsePre', 10),
+                    array('onKernelResponseMid', 5),
+                    array('onKernelResponsePost', 0),
+                ),
+                'store.order'     => array('onStoreOrder', 0),
             );
         }
 
-        public function onKernelResponse(FilterResponseEvent $event)
+        public function onKernelResponsePre(FilterResponseEvent $event)
+        {
+            // ...
+        }
+
+        public function onKernelResponseMid(FilterResponseEvent $event)
+        {
+            // ...
+        }
+
+        public function onKernelResponsePost(FilterResponseEvent $event)
         {
             // ...
         }
@@ -456,13 +455,9 @@ method:
 The dispatcher will automatically register the subscriber for each event
 returned by the ``getSubscribedEvents`` method. This method returns an array
 indexed by event names and whose values are either the method name to call or
-an array composed of the method name to call and a priority.
-
-.. tip::
-
-    If you use the Symfony2 MVC framework, subscribers can be registered via
-    your :ref:`configuration <dic-tags-kernel-event-subscriber>`. As an added
-    bonus, the subscriber objects are instantiated only when needed.
+an array composed of the method name to call and a priority. The example
+above shows how to register several listener methods for the same event in
+subscriber and also shows how to pass the priority of each listener method.
 
 .. index::
    single: Event Dispatcher; Stopping event flow
