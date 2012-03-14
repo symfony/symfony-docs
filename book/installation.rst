@@ -95,6 +95,17 @@ Step 2: Install vendors
 This command downloads all of the necessary vendor libraries - including
 Symfony itself - into the ``vendor/`` directory.
 
+.. note::
+
+	If you don't have ``curl`` installed, you can also just download the ``installer``
+	file manually at http://getcomposer.org/installer. Place this file into your
+	project and then run:
+
+	.. code-block:: bash
+
+		php installer
+		php composer.phar install
+
 Configuration and Setup
 ~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -215,7 +226,7 @@ file:
 
 Now, the vendor directory won't be committed to source control. This is fine
 (actually, it's great!) because when someone else clones or checks out the
-project, he/she can simply run the ``php bin/vendors install`` script to
+project, he/she can simply run the ``php composer.phar install`` script to
 download all the necessary vendor libraries.
 
 .. _`enable ACL support`: https://help.ubuntu.com/community/FilePermissions#ACLs

@@ -81,11 +81,12 @@ to learn more about how to configure and develop inside your application.
 Vendors and Submodules
 ~~~~~~~~~~~~~~~~~~~~~~
 
-Instead of using the ``deps``, ``bin/vendors`` system for managing your vendor
+Instead of using the ``composer.json`` system for managing your vendor
 libraries, you may instead choose to use native `git submodules`_. There
-is nothing wrong with this approach, though the ``deps`` system is the official
-way to solve this problem and git submodules can be difficult to work with
-at times.
+is nothing wrong with this approach, though the ``composer.json`` system
+is the official way to solve this problem and probably much easier to
+deal with. Unlike git submodules, ``Composer`` is smart enough to calculate
+which libraries depend on which other libraries.
 
 Storing your Project on a Remote Server
 ---------------------------------------
