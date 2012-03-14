@@ -66,25 +66,6 @@ At this point, you have a fully-functional Symfony2 project that's correctly
 committed to git. You can immediately begin development, committing the new
 changes to your git repository.
 
-.. tip::
-
-    After execution of the command:
-
-    .. code-block:: bash
-
-        $ php bin/vendors install
-
-    your project will contain complete the git history of some of the bundles
-    and libraries defined in ``composer.json``. You can remove the git history
-    directories with the following command:
-
-    .. code-block:: bash
-
-        $ find vendor -name .git -type d | xargs rm -rf
-
-    The command removes all ``.git`` directories contained inside the
-    ``vendor`` directory.
-
 You can continue to follow along with the :doc:`/book/page_creation` chapter
 to learn more about how to configure and develop inside your application.
 
