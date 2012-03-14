@@ -59,11 +59,8 @@ git repository:
 
         $ git commit -m "Initial commit"
 
-8. Finally, download all of the third-party vendor libraries:
-
-   .. code-block:: bash
-
-        $ php bin/vendors install
+8. Finally, download all of the third-party vendor libraries by
+   executing composer. For details, see :ref:`installation-updating-vendors`.
 
 At this point, you have a fully-functional Symfony2 project that's correctly
 committed to git. You can immediately begin development, committing the new
@@ -77,9 +74,9 @@ changes to your git repository.
 
         $ php bin/vendors install
 
-    your project will contain complete the git history of all the bundles
-    and libraries defined in the ``deps`` file. It can be as much as 100 MB!
-    You can remove the git history directories with the following command:
+    your project will contain complete the git history of some of the bundles
+    and libraries defined in ``composer.json``. You can remove the git history
+    directories with the following command:
 
     .. code-block:: bash
 
@@ -87,13 +84,6 @@ changes to your git repository.
 
     The command removes all ``.git`` directories contained inside the
     ``vendor`` directory.
-
-    If you want to update bundles defined in ``deps`` file after this, you
-    will have to reinstall them:
-
-    .. code-block:: bash
-
-        $ php bin/vendors install --reinstall
 
 You can continue to follow along with the :doc:`/book/page_creation` chapter
 to learn more about how to configure and develop inside your application.

@@ -71,6 +71,8 @@ something like this:
                 app.php
                 ...
 
+.. _installation-updating-vendors:
+
 Updating Vendors
 ~~~~~~~~~~~~~~~~
 
@@ -88,7 +90,7 @@ Step 2: Install vendors
 
 .. code-block:: bash
 
-    php bin/composer.phar install
+    php composer.phar install
 
 This command downloads all of the necessary vendor libraries - including
 Symfony itself - into the ``vendor/`` directory.
