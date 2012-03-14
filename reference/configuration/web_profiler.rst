@@ -13,7 +13,7 @@ Full Default Configuration
 
         web_profiler:
             
-            # display secondary information to make the toolbar shorter
+            # display secondary information, disable to make the toolbar shorter
             verbose:             true
 
             # display the web debug toolbar at the bottom of pages with a summary of profiler info
