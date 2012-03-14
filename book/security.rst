@@ -466,7 +466,7 @@ Finally, create the corresponding template:
                 <input type="hidden" name="_target_path" value="/account" />
             #}
 
-            <input type="submit" name="login" />
+            <button type="submit">login</button>
         </form>
 
     .. code-block:: html+php
@@ -488,7 +488,7 @@ Finally, create the corresponding template:
                 <input type="hidden" name="_target_path" value="/account" />
             -->
 
-            <input type="submit" name="login" />
+            <button type="submit">login</button>
         </form>
 
 .. tip::
