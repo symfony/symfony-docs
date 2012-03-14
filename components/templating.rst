@@ -4,8 +4,13 @@
 The Templating Component
 ========================
 
-    The Templating Component is a PHP template engine providing template
-    inheritence and object-oriented helper functions.
+    Templating provides all the tools needed to build any kind of template
+    system.
+
+    It provides an infrastructure to load template files and optionally monitor
+    them for changes. It also provides a concrete template engine implementation
+    using PHP with additional tools for escaping and separating templates into
+    blocks and layouts.
 
 Installation
 ------------
