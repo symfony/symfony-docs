@@ -805,7 +805,7 @@ texts* and complex expressions:
 
             {% trans_default_domain "app" %}
 
-     Note that this is only influences the current template, not the any "included"
+     Note that this only influences the current template, not any "included"
      templates (in order to avoid side effects).
 
 PHP Templates
