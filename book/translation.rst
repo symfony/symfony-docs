@@ -798,15 +798,15 @@ texts* and complex expressions:
 
 .. versionadded:: 2.1
 
-     You can now set translation domain for an entire twig template with one
+     You can now set the translation domain for an entire Twig template with a
      single tag:
 
      .. code-block:: jinja
 
             {% trans_default_domain "app" %}
 
-     Note that this is only influencing the current template, not the included
-     ones in order to avoid side effects.
+     Note that this is only influences the current template, not the any "included"
+     templates (in order to avoid side effects).
 
 PHP Templates
 ~~~~~~~~~~~~~
