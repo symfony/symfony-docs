@@ -23,7 +23,7 @@ git repository:
    your new project structure, config files, etc. Rename it to whatever you like.
 
 3. Create a new file called ``.gitignore`` at the root of your new project
-   (e.g. next to the ``deps`` file) and paste the following into it. Files
+   (e.g. next to the ``composer.json`` file) and paste the following into it. Files
    matching these patterns will be ignored by git:
 
    .. code-block:: text
