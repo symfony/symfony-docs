@@ -112,9 +112,9 @@ Naming Conventions
 ------------------
 
 * Use camelCase, not underscores, for variable, function and method
-  names;
+  names, arguments;
 
-* Use underscores for option, argument, parameter names;
+* Use underscores for option, parameter names;
 
 * Use namespaces for all classes;
 
