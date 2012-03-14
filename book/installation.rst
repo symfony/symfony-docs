@@ -74,13 +74,15 @@ something like this:
 Updating Vendors
 ~~~~~~~~~~~~~~~~
 
-Step 1: Get Composer (The great new PHP packaging system)
+Step 1: Get `Composer`_ (The great new PHP packaging system)
 
 .. code-block:: bash
 
-    curl -O http://getcomposer.org/composer.phar
+    curl -s http://getcomposer.org/installer | php
 
-Make sure you download composer.phar in a folder where the composer.json file is located (This is your Symfony project root by default)
+Make sure you download ``composer.phar`` in the same folder where
+the ``composer.json`` file is located (this is your Symfony project
+root by default).
 
 Step 2: Install vendors
 
@@ -89,8 +91,7 @@ Step 2: Install vendors
     php bin/composer.phar install
 
 This command downloads all of the necessary vendor libraries - including
-Symfony itself - into the ``vendor/`` directory. If that wasn't good enough, Composer automatically creates an autoloader for all your installed dependencies; instead of using the ClassLoader component, you can also just require vendor/.composer/autoload.php
-
+Symfony itself - into the ``vendor/`` directory.
 
 Configuration and Setup
 ~~~~~~~~~~~~~~~~~~~~~~~
@@ -219,3 +220,4 @@ download all the necessary vendor libraries.
 .. _`http://symfony.com/download`: http://symfony.com/download
 .. _`Git`: http://git-scm.com/
 .. _`GitHub Bootcamp`: http://help.github.com/set-up-git-redirect
+.. _`Composer`: http://getcomposer.org/
