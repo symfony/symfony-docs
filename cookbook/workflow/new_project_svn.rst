@@ -102,9 +102,8 @@ To get started, you'll need to download Symfony2 and get the basic Subversion se
 
 .. tip::
 
-    At the current time, composer uses git to install certain libraries.
-    This means that ``git`` is used as a tool to basically help download
-    the libraries in the ``vendor/`` directory.
+	If you rely on any "dev" versions, then git may be used to install
+	those libraries, since there is no archive available for download.
 
 At this point, you have a fully-functional Symfony2 project stored in your
 Subversion repository. The development can start with commits in the Subversion
