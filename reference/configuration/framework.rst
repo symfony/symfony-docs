@@ -278,7 +278,7 @@ Full Default Configuration
                 default_locale:       en
                 storage_id:           session.storage.native
                 name:                 ~
-                lifetime:             86400
+                lifetime:             0
                 path:                 ~
                 domain:               ~
                 secure:               ~
