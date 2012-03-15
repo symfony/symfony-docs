@@ -170,4 +170,4 @@ The last command generated all getters and setters for your two ``BlogPost`` and
 ``BlogComment`` entity class properties. The generated entities are now ready to be
 used. Have fun!
 
-.. _`Doctrine tools documentation`: http://www.doctrine-project.org/docs/orm/2.0/en/reference/tools.html#reverse-engineering
+.. _`Doctrine tools documentation`: http://www.doctrine-project.org/docs/orm/2.2/en/reference/tools.html#reverse-engineering

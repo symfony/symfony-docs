@@ -1375,12 +1375,12 @@ For more information about Doctrine, see the *Doctrine* section of the
 
 .. _`Doctrine`: http://www.doctrine-project.org/
 .. _`MongoDB`: http://www.mongodb.org/
-.. _`Basic Mapping Documentation`: http://www.doctrine-project.org/docs/orm/2.0/en/reference/basic-mapping.html
-.. _`Query Builder`: http://www.doctrine-project.org/docs/orm/2.0/en/reference/query-builder.html
-.. _`Doctrine Query Language`: http://www.doctrine-project.org/docs/orm/2.0/en/reference/dql-doctrine-query-language.html
-.. _`Association Mapping Documentation`: http://www.doctrine-project.org/docs/orm/2.0/en/reference/association-mapping.html
+.. _`Basic Mapping Documentation`: http://www.doctrine-project.org/docs/orm/2.2/en/reference/basic-mapping.html
+.. _`Query Builder`: http://www.doctrine-project.org/docs/orm/2.2/en/reference/query-builder.html
+.. _`Doctrine Query Language`: http://www.doctrine-project.org/docs/orm/2.2/en/reference/dql-doctrine-query-language.html
+.. _`Association Mapping Documentation`: http://www.doctrine-project.org/docs/orm/2.2/en/reference/association-mapping.html
 .. _`DateTime`: http://php.net/manual/en/class.datetime.php
-.. _`Mapping Types Documentation`: http://www.doctrine-project.org/docs/orm/2.0/en/reference/basic-mapping.html#doctrine-mapping-types
-.. _`Property Mapping documentation`: http://www.doctrine-project.org/docs/orm/2.0/en/reference/basic-mapping.html#property-mapping
-.. _`Lifecycle Events documentation`: http://www.doctrine-project.org/docs/orm/2.0/en/reference/events.html#lifecycle-events
-.. _`Reserved SQL keywords documentation`: http://www.doctrine-project.org/docs/orm/2.0/en/reference/basic-mapping.html#quoting-reserved-words
+.. _`Mapping Types Documentation`: http://www.doctrine-project.org/docs/orm/2.2/en/reference/basic-mapping.html#doctrine-mapping-types
+.. _`Property Mapping documentation`: http://www.doctrine-project.org/docs/orm/2.2/en/reference/basic-mapping.html#property-mapping
+.. _`Lifecycle Events documentation`: http://www.doctrine-project.org/docs/orm/2.2/en/reference/events.html#lifecycle-events
+.. _`Reserved SQL keywords documentation`: http://www.doctrine-project.org/docs/orm/2.2/en/reference/basic-mapping.html#quoting-reserved-words

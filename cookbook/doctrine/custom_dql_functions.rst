@@ -77,4 +77,4 @@ In Symfony, you can register your custom DQL functions as follows:
             ),
         ));
 
-.. _`DQL User Defined Functions`: http://www.doctrine-project.org/docs/orm/2.0/en/cookbook/dql-user-defined-functions.html
+.. _`DQL User Defined Functions`: http://www.doctrine-project.org/docs/orm/2.2/en/cookbook/dql-user-defined-functions.html
