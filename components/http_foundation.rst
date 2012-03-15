@@ -401,6 +401,80 @@ Quick example::
 
     echo $session->getFlashBag()->get('notice');
 
+Session API
+~~~~~~~~~~~
+
+The :class:`Symfony\\Component\\HttpFoundation\\Session\\Session` implements
+:class:`Symfony\\Component\\HttpFoundation\\Session\\SessionInterface.
+
+The :class:`Symfony\\Component\\HttpFoundation\\Session\\Session` has a simple API
+as follows divided into a couple of groups.
+
+Session workflow
+
+* :method:`Symfony\\Component\\HttpFoundation\\Session\\Session::start`:
+  Starts the session - do not use `session_start()`.
+
+* :method:`Symfony\\Component\\HttpFoundation\\Session\\Session::migrate`:
+  Starts the session - do not use `session_start()`.
+
+* :method:`Symfony\\Component\\HttpFoundation\\Session\\Session::invalidate`:
+  Starts the session - do not use `session_start()`.
+
+* :method:`Symfony\\Component\\HttpFoundation\\Session\\Session::getId`: Gets the
+  session ID.
+
+* :method:`Symfony\\Component\\HttpFoundation\\Session\\Session::setId`: Gets the
+  session ID.
+
+* :method:`Symfony\\Component\\HttpFoundation\\Session\\Session::getName`: Gets the
+  session name.
+
+* :method:`Symfony\\Component\\HttpFoundation\\Session\\Session::setName`: Sets the
+  session name.
+
+Session attributes
+
+* :method:`Symfony\\Component\\HttpFoundation\\Session\\Session::set`:
+  Sets an attribute by key;
+
+* :method:`Symfony\\Component\\HttpFoundation\\Session\\Session::get`:
+  Gets an attribute by key;
+
+* :method:`Symfony\\Component\\HttpFoundation\\Session\\Session::all`:
+  Gets all attributes as an array of key => value;
+
+* :method:`Symfony\\Component\\HttpFoundation\\Session\\Session::has`:
+  Returns true if the attribute exists;
+
+* :method:`Symfony\\Component\\HttpFoundation\\Session\\Session::keys`:
+  Returns an array of stored attribute keys;
+
+* :method:`Symfony\\Component\\HttpFoundation\\Session\\Session::replace`:
+  Sets multiple attributes at once: takes a keyed array and sets each key => value pair.
+
+* :method:`Symfony\\Component\\HttpFoundation\\Session\\Session::remove`:
+  Deletes an attribute by key;
+
+* :method:`Symfony\\Component\\HttpFoundation\\Session\\Session::clear`:
+  Clear the bag;
+
+Bag management
+
+* :method:`Symfony\\Component\\HttpFoundation\\Session\\Session::registerBag`:
+  Registers a `Symfony\\Component\\HttpFoundation\\Session\\SessionBagInterface`
+
+* :method:`Symfony\\Component\\HttpFoundation\\Session\\Session::getBag`:
+  Gets a `Symfony\\Component\\HttpFoundation\\Session\\SessionBagInterface` by
+  bag name.
+
+* :method:`Symfony\\Component\\HttpFoundation\\Session\\Session::getFlashBag`:
+  Gets the `Symfony\\Component\\HttpFoundation\\Session\\Flash\\FlashBagInterface`.
+  This is just a shortcut for convenience.
+
+
+
+
 Save Handlers
 ~~~~~~~~~~~~~
 
@@ -480,6 +554,20 @@ Symfony2 provides 2 kinds of bags, with two separate implementations.
 Everything is written against interfaces so you may extend or create your own
 bag types if necessary.
 
+:class:`Symfony\\Component\\HttpFoundation\\Session\\SessionBagInterface` has
+the following API which is intended mainly for internal purposes:
+
+* :method:`Symfony\\Component\\HttpFoundation\\Session\\SessionBagInterface::getStorageKey`:
+  Returns the key which the bag will ultimately store its array under in `$_SESSION`.
+  Generally this value can be left at its default and is for internal use.
+
+* :method:`Symfony\\Component\\HttpFoundation\\Session\\SessionBagInterface::initialize`:
+  This is called internally by Symfony2 session storage classes to link bag data
+  to the session.
+
+* :method:`Symfony\\Component\\HttpFoundation\\Session\\SessionBagInterface::getName`:
+  Returns the name of the session bag.
+
 Attributes
 ~~~~~~~~~~
 
@@ -518,6 +606,33 @@ structure like this using a namespace character (defaults to `/`)::
 
 This way you can easily access a key within the stored array directly and easily.
 
+:class:`Symfony\\Component\\HttpFoundation\\Session\\Attribute\\AttributeBagInterface`
+has a simple API
+
+* :method:`Symfony\\Component\\HttpFoundation\\Session\\Attribute\\AttributeBagInterface::set`:
+  Sets an attribute by key;
+
+* :method:`Symfony\\Component\\HttpFoundation\\Session\\Attribute\\AttributeBagInterface::get`:
+  Gets an attribute by key;
+
+* :method:`Symfony\\Component\\HttpFoundation\\Session\\Attribute\\AttributeBagInterface::all`:
+  Gets all attributes as an array of key => value;
+
+* :method:`Symfony\\Component\\HttpFoundation\\Session\\Attribute\\AttributeBagInterface::has`:
+  Returns true if the attribute exists;
+
+* :method:`Symfony\\Component\\HttpFoundation\\Session\\Attribute\\AttributeBagInterface::keys`:
+  Returns an array of stored attribute keys;
+
+* :method:`Symfony\\Component\\HttpFoundation\\Session\\Attribute\\AttributeBagInterface::replace`:
+  Sets multiple attributes at once: takes a keyed array and sets each key => value pair.
+
+* :method:`Symfony\\Component\\HttpFoundation\\Session\\Attribute\\AttributeBagInterface::remove`:
+  Deletes an attribute by key;
+
+* :method:`Symfony\\Component\\HttpFoundation\\Session\\Attribute\\AttributeBagInterface::clear`:
+  Clear the bag;
+
 Flash messages
 ~~~~~~~~~~~~~~
 
@@ -539,6 +654,36 @@ This is however just one application for flash messages.
    they are explicitly retrieved or cleared.  This makes it possible to use ESI
    caching.
 
+:class:`Symfony\\Component\\HttpFoundation\\Session\\Flash\\FlashBagInterface`
+has a simple API
+
+* :method:`Symfony\\Component\\HttpFoundation\\Session\\Flash\\FlashBagInterface::set`:
+  Sets a flash by type;
+
+* :method:`Symfony\\Component\\HttpFoundation\\Session\\Flash\\FlashBagInterface::get`:
+  Gets a flash by type and clears the flash from the bag;
+
+* :method:`Symfony\\Component\\HttpFoundation\\Session\\Flash\\FlashBagInterface::setAll`:
+  Sets an array of flashes by type => message;
+
+* :method:`Symfony\\Component\\HttpFoundation\\Session\\Flash\\FlashBagInterface::all`:
+  Gets all flashes and clears the flashes from the bag;
+
+* :method:`Symfony\\Component\\HttpFoundation\\Session\\Flash\\FlashBagInterface::peek`:
+  Gets a flash by type (read only);
+
+* :method:`Symfony\\Component\\HttpFoundation\\Session\\Flash\\FlashBagInterface::peekAll`:
+  Gets all flashes (readoly);
+
+* :method:`Symfony\\Component\\HttpFoundation\\Session\\Flash\\FlashBagInterface::has`:
+  Returns true if the type exists;
+
+* :method:`Symfony\\Component\\HttpFoundation\\Session\\Flash\\FlashBagInterface::keys`:
+  Returns an array of stored types;
+
+* :method:`Symfony\\Component\\HttpFoundation\\Session\\Flash\\FlashBagInterface::clear`:
+  Clear the bag;
+
 Testability
 -----------
 
@@ -554,8 +699,21 @@ The mock storage engines simulate the PHP session workflow without actually
 starting one allowing you to test your code without complications.  You may also
 run multiple instances in the same PHP process.
 
-The only caveat, `session_id()` is global, so the session ID should be read
-using `$session->getId()` but generally this is of no relevance during testing.
+The mock storage drivers do not read or write the system globals
+`session_id()` or `session_name()`.  Methods are provided to simulate this if
+required:
+
+* :method:`Symfony\\Component\\HttpFoundation\\Session\\SessionStorageInterface::getId`: Gets the
+  session ID.
+
+* :method:`Symfony\\Component\\HttpFoundation\\Session\\SessionStorageInterface::setId`: Gets the
+  session ID.
+
+* :method:`Symfony\\Component\\HttpFoundation\\Session\\SessionStorageInterface::getName`: Gets the
+  session name.
+
+* :method:`Symfony\\Component\\HttpFoundation\\Session\\SessionStorageInterface::setName`: Sets the
+  session name.
 
 Unit Testing
 ~~~~~~~~~~~~
@@ -584,9 +742,9 @@ separate PHP processes, simply change the storage engine to
 PHP 5.4 compatibility
 ~~~~~~~~~~~~~~~~~~~~~
 
-Since PHP 5.4.0, :phpclass:`SessionHandler` and :phpclass:`SessionHandlerInterface` are available.
-Symfony 2.1 provides forward compatibility for the :phpclass:`SessionHandlerInterface` so
-it can be used under PHP 5.3. This greatly improves inter-operability with other
+Since PHP 5.4.0, :phpclass:`SessionHandler` and :phpclass:`SessionHandlerInterface`
+are available. Symfony 2.1 provides forward compatibility for the :phpclass:`SessionHandlerInterface`
+so it can be used under PHP 5.3. This greatly improves inter-operability with other
 libraries.
 
 :phpclass:`SessionHandler` is a special PHP internal class which exposes native save
@@ -598,17 +756,27 @@ which under PHP 5.4, extends from `\SessionHandler` and under PHP 5.3 is just a
 empty base class.  This provides some interesting opportunities to leverage
 PHP 5.4 functionality if it is available.
 
-Handler Proxy
-~~~~~~~~~~~~~
+Save Handler Proxy
+~~~~~~~~~~~~~~~~~~
+
+There are two kinds of save handler classes proxy which inherit from
+:class:`Symfony\\Component\\HttpFoundation\\Session\\Storage\\Handler\\AbstractProxy`,
+they are :class:`Symfony\\Component\\HttpFoundation\\Session\\Storage\\Handler\\NativeProxy`
+and :class:`Symfony\\Component\\HttpFoundation\\Session\\Storage\\Handler\\SessionHandlerProxy`.
 
 :class:`Symfony\\Component\\HttpFoundation\\Session\\Storage\\NativeSessionStorage`
-injects storage handlers into a handler proxy.  The reason for this is that
-under PHP 5.4, all handlers implement :phpclass:`SessionHandlerInterface`
-including native handlers (those which activate internal PHP/PHP-extension
-handlers.  Native handlers under PHP 5.4 will be children of
-:phpclass:`SessionHandler` which allows one to intercept and modify even native session
-handlers.
+automatically injects storage handlers into a save handler proxy unless already
+wrapped by one.
 
-In order to manage all of this, Symfony2 uses a proxy handler object.  It means
-that you could write a single adapter, that for example encrypts the session
-data, and it will work regardless of the save handler in use, custom, or native.
+:class:`Symfony\\Component\\HttpFoundation\\Session\\Storage\\Handler\\NativeProxy`
+is used automatically under PHP 5.3 when internal PHP save handlers are specified
+using the `Native*SessionHandler` classes, while
+:class:`Symfony\\Component\\HttpFoundation\\Session\\Storage\\Handler\\SessionHandlerProxy`
+will be used to wrap any custom save handlers, that implement :phpclass:`SessionHandlerInterface`.
+
+Under PHP 5.4 and above, all session handlers implement :phpclass:`SessionHandlerInterface`
+including `Native*SessionHandler` classes which inherit from :phpclass:`SessionHandler`.
+
+The proxy mechanism allow you to get more deeply involved in session save handler
+classes.  A proxy for example could be used to encrypt any session transaction
+without knowledge of the specific save handler.
