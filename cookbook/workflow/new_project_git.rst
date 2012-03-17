@@ -35,6 +35,10 @@ git repository:
         /vendor/  
         /app/config/parameters.yml
 
+   You may also want to create a .gitignore file that can be used system-wide,
+   in which case, you can find more information here: `Github .gitignore`_
+   This way you can exclude files/folders often used by your IDE from all of your projects.
+
 4. Copy ``app/config/parameters.yml`` to ``app/config/parameters.yml.dist``.
    The ``parameters.yml`` file is ignored by git (see above) so that machine-specific
    settings like database passwords aren't committed. By creating the ``parameters.yml.dist``
@@ -111,3 +115,4 @@ manage this is `Gitolite`_.
 .. _`GitHub`: https://github.com/
 .. _`barebones repository`: http://progit.org/book/ch4-4.html
 .. _`Gitolite`: https://github.com/sitaramc/gitolite
+.. _`Github .gitignore`: http://help.github.com/ignore-files/
