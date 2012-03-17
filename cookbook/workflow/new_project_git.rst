@@ -35,6 +35,8 @@ git repository:
         /vendor/  
         /app/config/parameters.yml
 
+.. tip::
+
    You may also want to create a .gitignore file that can be used system-wide,
    in which case, you can find more information here: `Github .gitignore`_
    This way you can exclude files/folders often used by your IDE from all of your projects.
