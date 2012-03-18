@@ -5,7 +5,7 @@ How to test Doctrine Repositories
 =================================
 
 Unit testing Doctrine repositories in a Symfony project is not a straightforward
-task. Indeed, to load a repository you need to load your entities, an entity 
+task. Indeed, to load a repository you need to load your entities, an entity
 manager, and some other stuff like a connection.
 
 To test your repository, you have two different options:
@@ -22,7 +22,7 @@ To test your repository, you have two different options:
 Unit Testing
 ------------
 
-As Symfony and Doctrine share the same testing framework, it's quite easy to 
+As Symfony and Doctrine share the same testing framework, it's quite easy to
 implement unit tests in your Symfony project. The ORM comes with its own set
 of tools to ease the unit testing and mocking of everything you need, such as
 a connection, an entity manager, etc. By using the testing components provided
@@ -41,7 +41,7 @@ First, you need to add the ``Doctrine\Tests`` namespace to your autoloader::
     // app/autoload.php
     $loader->registerNamespaces(array(
         //...
-        'Doctrine\\Tests'                => __DIR__.'/../vendor/doctrine/tests',
+        'Doctrine\\Tests'                => __DIR__.'/../vendor/doctrine/orm/tests',
     ));
 
 Next, you will need to setup an entity manager in each test so that Doctrine
@@ -70,7 +70,7 @@ and load the entities::
             $reader->setEnableParsePhpImports(true);
 
             $metadataDriver = new AnnotationDriver(
-                $reader, 
+                $reader,
                 // provide the namespace of the entities you want to tests
                 'Acme\\ProductBundle\\Entity'
             );
