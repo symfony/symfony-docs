@@ -122,5 +122,5 @@ or one of its children, the autoloader will first look for the class under the
 ``Doctrine`` directory (the last one configured) if not found, before giving up.
 The order of the registrations is significant in this case.
 
-.. _standards: https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-0.md
+.. _standards: http://symfony.com/PSR0
 .. _PEAR:      http://pear.php.net/manual/en/standards.php

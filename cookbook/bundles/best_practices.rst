@@ -283,4 +283,4 @@ Learn more from the Cookbook
 
 * :doc:`/cookbook/bundles/extension`
 
-.. _standards: https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-0.md
+.. _standards: http://symfony.com/PSR0
