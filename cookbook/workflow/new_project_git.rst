@@ -39,7 +39,7 @@ git repository:
 
    You may also want to create a .gitignore file that can be used system-wide,
    in which case, you can find more information here: `Github .gitignore`_
-   This way you can exclude files/folders often used by your IDE from all of your projects.
+   This way you can exclude files/folders often used by your IDE for all of your projects.
 
 4. Copy ``app/config/parameters.yml`` to ``app/config/parameters.yml.dist``.
    The ``parameters.yml`` file is ignored by git (see above) so that machine-specific
