@@ -1,12 +1,12 @@
 .. index::
    single: Installation
 
-Installing and Configuring Symfony
+Installing and Configuring Symfony2
 ==================================
 
 The goal of this chapter is to get you up and running with a working application
-built on top of Symfony. Fortunately, Symfony offers "distributions", which
-are functional Symfony "starter" projects that you can download and begin
+built on top of Symfony2. Fortunately, Symfony2 offers "distributions", which
+are functional Symfony2 "starter" projects that you can download and begin
 developing in immediately.
 
 .. tip::
@@ -82,7 +82,7 @@ by running the following command from the command line:
     php bin/vendors install
 
 This command downloads all of the necessary vendor libraries - including
-Symfony itself - into the ``vendor/`` directory. For more information on
+Symfony2 itself - into the ``vendor/`` directory. For more information on
 how third-party vendor libraries are managed inside Symfony2, see
 ":ref:`cookbook-managing-vendor-libraries`".
 
@@ -94,7 +94,7 @@ directory. You also have a default application setup in ``app/`` and some
 sample code inside the ``src/`` directory.
 
 Symfony2 comes with a visual server configuration tester to help make sure
-your Web server and PHP are configured to use Symfony. Use the following URL
+your Web server and PHP are configured to use Symfony2. Use the following URL
 to check your configuration:
 
 .. code-block:: text
@@ -177,7 +177,7 @@ development! Your distribution may contain some sample code - check the
 to learn about what sample code was included with your distribution and how
 you can remove it later.
 
-If you're new to Symfony, join us in the ":doc:`page_creation`", where you'll
+If you're new to Symfony2, join us in the ":doc:`page_creation`", where you'll
 learn how to create pages, change configuration, and do everything else you'll
 need in your new application.
 
