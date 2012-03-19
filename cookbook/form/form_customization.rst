@@ -919,6 +919,9 @@ To render a help message below a field, pass in a ``help`` variable:
 
         <?php echo $view['form']->widget($form['title'], array('help' => 'foobar')) ?>
 
+If you wants to pass the new option from the formBuilder, you need to use a TypeExtension. For more information follow this tuto:
+http://toni.uebernickel.info/2011/11/25/how-to-extend-form-fields-in-symfony2.html
+
 .. tip::
     See :ref:`cookbook-form-theming-methods` for how to apply this customization.
 
