@@ -11,7 +11,7 @@ learning the most important features of the form library along the way.
 
 .. note::
 
-   The Symfony form component is a standalone library that can be used outside
+   The Symfony2 form component is a standalone library that can be used outside
    of Symfony2 projects. For more information, see the `Symfony2 Form Component`_
    on Github.
 
@@ -67,7 +67,7 @@ going to need to build a form. But before you begin, first focus on the generic
         php app/console generate:bundle --namespace=Acme/TaskBundle
 
 This class is a "plain-old-PHP-object" because, so far, it has nothing
-to do with Symfony or any other library. It's quite simply a normal PHP object
+to do with Symfony2 or any other library. It's quite simply a normal PHP object
 that directly solves a problem inside *your* application (i.e. the need to
 represent a task in your application). Of course, by the end of this chapter,
 you'll be able to submit data to a ``Task`` instance (via an HTML form), validate
@@ -411,7 +411,7 @@ be used to validate the underlying object.
 Built-in Field Types
 --------------------
 
-Symfony comes standard with a large group of field types that cover all of
+Symfony2 comes standard with a large group of field types that cover all of
 the common form fields and data types you'll encounter:
 
 .. include:: /reference/forms/types/map.rst.inc
@@ -452,7 +452,7 @@ the documentation for each type.
     result in server-side validation to be applied. In other words, if a
     user submits a blank value for the field (either with an old browser
     or web service, for example), it will be accepted as a valid value unless
-    you use Symfony's ``NotBlank`` or ``NotNull`` validation constraint.
+    you use Symfony2's ``NotBlank`` or ``NotNull`` validation constraint.
 
     In other words, the ``required`` option is "nice", but true server-side
     validation should *always* be used.
@@ -478,9 +478,9 @@ the documentation for each type.
 Field Type Guessing
 -------------------
 
-Now that you've added validation metadata to the ``Task`` class, Symfony
-already knows a bit about your fields. If you allow it, Symfony can "guess"
-the type of your field and set it up for you. In this example, Symfony can
+Now that you've added validation metadata to the ``Task`` class, Symfony2
+already knows a bit about your fields. If you allow it, Symfony2 can "guess"
+the type of your field and set it up for you. In this example, Symfony2 can
 guess from the validation rules that both the ``task`` field is a normal
 ``text`` field and the ``dueDate`` field is a ``date`` field::
 
@@ -512,7 +512,7 @@ the guessed field.
 Field Type Options Guessing
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-In addition to guessing the "type" for a field, Symfony can also try to guess
+In addition to guessing the "type" for a field, Symfony2 can also try to guess
 the correct values of a number of field options.
 
 .. tip::
@@ -537,7 +537,7 @@ the correct values of a number of field options.
 
 .. note::
 
-  These field options are *only* guessed if you're using Symfony to guess
+  These field options are *only* guessed if you're using Symfony2 to guess
   the field type (i.e. omit or pass ``null`` as the second argument to ``add()``).
 
 If you'd like to change one of the guessed values, you can override it by
@@ -1032,7 +1032,7 @@ how each form "row" renders, change the markup used to render errors, or
 even customize how a ``textarea`` tag should be rendered. Nothing is off-limits,
 and different customizations can be used in different places.
 
-Symfony uses templates to render each and every part of a form, such as
+Symfony2 uses templates to render each and every part of a form, such as
 ``label`` tags, ``input`` tags, error messages and everything else.
 
 In Twig, each form "fragment" is represented by a Twig block. To customize
@@ -1103,7 +1103,7 @@ The ``form_theme`` tag (in Twig) "imports" the fragments defined in the given
 template and uses them when rendering the form. In other words, when the
 ``form_row`` function is called later in this template, it will use the ``field_row``
 block from your custom theme (instead of the default ``field_row`` block
-that ships with Symfony).
+that ships with Symfony2).
 
 Your custom theme does not have to override all the blocks. When rendering a block
 which is not overridden in your custom theme, the theming engine will fall back
@@ -1126,7 +1126,7 @@ For a more extensive discussion, see :doc:`/cookbook/form/form_customization`.
 Form Fragment Naming
 ~~~~~~~~~~~~~~~~~~~~
 
-In Symfony, every part of a form that is rendered - HTML form elements, errors,
+In Symfony2, every part of a form that is rendered - HTML form elements, errors,
 labels, etc - is defined in a base theme, which is a collection of blocks
 in Twig and a collection of template files in PHP.
 
@@ -1178,12 +1178,12 @@ Template Fragment Inheritance
 
 In some cases, the fragment you want to customize will appear to be missing.
 For example, there is no ``textarea_errors`` fragment in the default themes
-provided with Symfony. So how are the errors for a textarea field rendered?
+provided with Symfony2. So how are the errors for a textarea field rendered?
 
-The answer is: via the ``field_errors`` fragment. When Symfony renders the errors
+The answer is: via the ``field_errors`` fragment. When Symfony2 renders the errors
 for a textarea type, it looks first for a ``textarea_errors`` fragment before
 falling back to the ``field_errors`` fragment. Each field type has a *parent*
-type (the parent type of ``textarea`` is ``field``), and Symfony uses the
+type (the parent type of ``textarea`` is ``field``), and Symfony2 uses the
 fragment for the parent type if the base fragment doesn't exist.
 
 So, to override the errors for *only* ``textarea`` fields, copy the
@@ -1203,7 +1203,7 @@ Global Form Theming
 ~~~~~~~~~~~~~~~~~~~
 
 In the above example, you used the ``form_theme`` helper (in Twig) to "import"
-the custom form fragments into *just* that form. You can also tell Symfony
+the custom form fragments into *just* that form. You can also tell Symfony2
 to import form customizations across your entire project.
 
 Twig
@@ -1340,7 +1340,7 @@ user attempts to make your legitimate users unknowingly submit data that
 they don't intend to submit. Fortunately, CSRF attacks can be prevented by
 using a CSRF token inside your forms.
 
-The good news is that, by default, Symfony embeds and validates CSRF tokens
+The good news is that, by default, Symfony2 embeds and validates CSRF tokens
 automatically for you. This means that you can take advantage of the CSRF
 protection without doing anything. In fact, every form in this chapter has
 taken advantage of the CSRF protection!
