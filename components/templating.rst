@@ -49,11 +49,10 @@ the file `views/hello.php` and returns the output text.
     <!-- views/hello.php -->
     Hello, <?php echo $firstname ?>!
 
-
-Template inheritence with slots
+Template Inheritance with Slots
 -------------------------------
 
-The template inheritence is designed to share layouts with many templates.
+The template inheritance is designed to share layouts with many templates.
 
 .. code-block::php
 
@@ -84,7 +83,7 @@ sub-template to set its parent template.
         <?php echo $page->body ?>
     </p>
 
-To use template inheritence, the :class:`Symfony\\Templating\\Helper\\SlotsHelper`
+To use template inheritance, the :class:`Symfony\\Templating\\Helper\\SlotsHelper`
 helper must be registered.
 
     use Symfony\Templating\Helper\SlotsHelper;
@@ -97,6 +96,15 @@ helper must be registered.
 
 .. note::
 
-    Multiple levels of inheritence are possible: a layout can extend an other
+    Multiple levels of inheritance is possible: a layout can extend an other
     layout.
 
+Output Escaping
+---------------
+
+This documentation is still being written.
+
+The Asset Helper
+----------------
+
+This documentation is still being written.

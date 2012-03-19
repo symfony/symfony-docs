@@ -15,6 +15,7 @@ The Components
     locale
     process
     routing
+	templating
     yaml
 
 .. include:: /components/map.rst.inc
