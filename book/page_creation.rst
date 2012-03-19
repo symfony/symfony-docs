@@ -46,7 +46,7 @@ greeted. To create the page, follow the simple two-step process.
     The tutorial assumes that you've already downloaded Symfony2 and configured
     your webserver. The above URL assumes that ``localhost`` points to the
     ``web`` directory of your new Symfony2 project. For detailed information
-    on this process, see the :doc:`Installing Symfony2</book/installation>`.
+    on this process, see :doc:`Installing Symfony2</book/installation>`.
 
 Before you begin: Create the Bundle
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
