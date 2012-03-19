@@ -268,7 +268,7 @@ the following guidelines in mind while you develop.
 
 * **The order of the controller arguments does not matter**
 
-    Symfony is able to match the parameter names from the route to the variable
+    Symfony2 is able to match the parameter names from the route to the variable
     names in the controller method's signature. In other words, it realizes that
     the ``{last_name}`` parameter matches up with the ``$last_name`` argument.
     The arguments of the controller could be totally reordered and still work
@@ -318,7 +318,7 @@ the following guidelines in mind while you develop.
 The ``Request`` as a Controller Argument
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-For convenience, you can also have Symfony pass you the ``Request`` object
+For convenience, you can also have Symfony2 pass you the ``Request`` object
 as an argument to your controller. This is especially convenient when you're
 working with forms, for example::
 
@@ -373,7 +373,7 @@ itself.
 
 .. tip::
 
-    Extending the base class is *optional* in Symfony; it contains useful
+    Extending the base class is *optional* in Symfony2; it contains useful
     shortcuts but nothing mandatory. You can also extend
     ``Symfony\Component\DependencyInjection\ContainerAware``. The service
     container object will then be accessible via the ``container`` property.
@@ -510,7 +510,7 @@ returns a ``Response`` object containing the content from the template::
 In both cases, the ``Resources/views/Hello/index.html.twig`` template inside
 the ``AcmeHelloBundle`` will be rendered.
 
-The Symfony templating engine is explained in great detail in the
+The Symfony2 templating engine is explained in great detail in the
 :doc:`Templating </book/templating>` chapter.
 
 .. tip::
@@ -570,7 +570,7 @@ If you're extending the base controller class, do the following::
     }
 
 The ``createNotFoundException()`` method creates a special ``NotFoundHttpException``
-object, which ultimately triggers a 404 HTTP response inside Symfony.
+object, which ultimately triggers a 404 HTTP response inside Symfony2.
 
 Of course, you're free to throw any ``Exception`` class in your controller -
 Symfony2 will automatically return a 500 HTTP response code.
@@ -723,7 +723,7 @@ Final Thoughts
 --------------
 
 Whenever you create a page, you'll ultimately need to write some code that
-contains the logic for that page. In Symfony, this is called a controller,
+contains the logic for that page. In Symfony2, this is called a controller,
 and it's a PHP function that can do anything it needs in order to return
 the final ``Response`` object that will be returned to the user.
 
