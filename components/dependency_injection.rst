@@ -227,7 +227,7 @@ Loading a yaml config file:
     $loader = new YamlFileLoader($container, new FileLocator(__DIR__));
     $loader->load('services.yml');
 
-The ``newsletter_manager`` and `` mailer`` services can be set up using config files:
+The ``newsletter_manager`` and ``mailer`` services can be set up using config files:
 
 .. configuration-block::
 
