@@ -669,8 +669,4 @@ Learn more from the Cookbook
 * :doc:`/cookbook/event_dispatcher/class_extension`
 * :doc:`/cookbook/event_dispatcher/method_behavior`
 
-.. _Observer: http://en.wikipedia.org/wiki/Observer_pattern
-.. _`Symfony2 HttpKernel component`: https://github.com/symfony/HttpKernel
-.. _Closures: http://php.net/manual/en/functions.anonymous.php
 .. _`Symfony2 Dependency Injection component`: https://github.com/symfony/DependencyInjection
-.. _PHP callable: http://www.php.net/manual/en/language.pseudo-types.php#language.types.callback

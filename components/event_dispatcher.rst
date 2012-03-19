@@ -485,3 +485,8 @@ listener via the
 
 Now, any listeners to ``store.order`` that have not yet been called will *not*
 be called.
+
+.. _Observer: http://en.wikipedia.org/wiki/Observer_pattern
+.. _`Symfony2 HttpKernel component`: https://github.com/symfony/HttpKernel
+.. _Closures: http://php.net/manual/en/functions.anonymous.php
+.. _PHP callable: http://www.php.net/manual/en/language.pseudo-types.php#language.types.callback
