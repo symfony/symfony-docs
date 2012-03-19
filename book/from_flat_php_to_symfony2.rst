@@ -420,7 +420,7 @@ Add a Touch of Symfony2
 
 Symfony2 to the rescue. Before actually using Symfony2, you need to make
 sure PHP knows how to find the Symfony2 classes. This is accomplished via
-an autoloader that Symfony provides. An autoloader is a tool that makes it
+an autoloader that Symfony2 provides. An autoloader is a tool that makes it
 possible to start using PHP classes without explicitly including the file
 containing the class.
 
@@ -444,10 +444,10 @@ files in the application and to configure the autoloader:
     $loader->register();
 
 This tells the autoloader where the ``Symfony`` classes are. With this, you
-can start using Symfony classes without using the ``require`` statement for
+can start using ``Symfony`` classes without using the ``require`` statement for
 the files that contain them.
 
-Core to Symfony's philosophy is the idea that an application's main job is
+Core to Symfony2's philosophy is the idea that an application's main job is
 to interpret each request and return a response. To this end, Symfony2 provides
 both a :class:`Symfony\\Component\\HttpFoundation\\Request` and a
 :class:`Symfony\\Component\\HttpFoundation\\Response` class. These classes are
@@ -533,7 +533,7 @@ The blog has come a *long* way, but it still contains a lot of code for such
 a simple application. Along the way, we've also invented a simple routing
 system and a method using ``ob_start()`` and ``ob_get_clean()`` to render
 templates. If, for some reason, you needed to continue building this "framework"
-from scratch, you could at least use Symfony's standalone `Routing`_ and
+from scratch, you could at least use Symfony2's standalone `Routing`_ and
 `Templating`_ components, which already solve these problems.
 
 Instead of re-solving common problems, you can let Symfony2 take care of
@@ -660,12 +660,12 @@ For a visual representation of how Symfony2 handles each request, see the
 Where Symfony2 Delivers
 ~~~~~~~~~~~~~~~~~~~~~~~
 
-In the upcoming chapters, you'll learn more about how each piece of Symfony
+In the upcoming chapters, you'll learn more about how each piece of Symfony2
 works and the recommended organization of a project. For now, let's see how
 migrating the blog from flat PHP to Symfony2 has improved life:
 
 * Your application now has **clear and consistently organized code** (though
-  Symfony doesn't force you into this). This promotes **reusability** and
+  Symfony2 doesn't force you into this). This promotes **reusability** and
   allows for new developers to be productive in your project more quickly.
 
 * 100% of the code you write is for *your* application. You **don't need
