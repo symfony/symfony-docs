@@ -382,6 +382,10 @@ The Symfony2 HttpFoundation Component has a very powerful and flexible session
 subsystem which is designed to provide session management through a simple
 object-oriented interface using a variety of session storage drivers.
 
+.. versionadded:: 2.1
+    The :class:`Symfony\\Component\\HttpFoundation\\Session\\SessionInterface` interface,
+    as well as a number of other changes, are new as of Symfony 2.1.
+
 Sessions are used via the simple :class:`Symfony\\Component\\HttpFoundation\\Session\\Session`
 implementation of :class:`Symfony\\Component\\HttpFoundation\\Session\\SessionInterface` interface.
 
@@ -404,7 +408,7 @@ Quick example::
 Session API
 ~~~~~~~~~~~
 
-The :class:`Symfony\\Component\\HttpFoundation\\Session\\Session` implements
+The :class:`Symfony\\Component\\HttpFoundation\\Session\\Session` class implements
 :class:`Symfony\\Component\\HttpFoundation\\Session\\SessionInterface.
 
 The :class:`Symfony\\Component\\HttpFoundation\\Session\\Session` has a simple API
@@ -413,18 +417,18 @@ as follows divided into a couple of groups.
 Session workflow
 
 * :method:`Symfony\\Component\\HttpFoundation\\Session\\Session::start`:
-  Starts the session - do not use `session_start()`.
+  Starts the session - do not use ``session_start()``.
 
 * :method:`Symfony\\Component\\HttpFoundation\\Session\\Session::migrate`:
-  Starts the session - do not use `session_start()`.
+  Regenerates the session id - do not use ``session_regenerate_id()``.
 
 * :method:`Symfony\\Component\\HttpFoundation\\Session\\Session::invalidate`:
-  Starts the session - do not use `session_start()`.
+  Clears the session data and regenerates the session id do not use ``session_destroy()``.
 
 * :method:`Symfony\\Component\\HttpFoundation\\Session\\Session::getId`: Gets the
   session ID.
 
-* :method:`Symfony\\Component\\HttpFoundation\\Session\\Session::setId`: Gets the
+* :method:`Symfony\\Component\\HttpFoundation\\Session\\Session::setId`: Sets the
   session ID.
 
 * :method:`Symfony\\Component\\HttpFoundation\\Session\\Session::getName`: Gets the
@@ -457,9 +461,10 @@ Session attributes
   Deletes an attribute by key;
 
 * :method:`Symfony\\Component\\HttpFoundation\\Session\\Session::clear`:
-  Clear the bag;
+  Clear all attributes;
 
-Bag management
+The attributes are stored internally in an "Bag", a PHP object that acts like
+an array. A few methods exist for "Bag" management:
 
 * :method:`Symfony\\Component\\HttpFoundation\\Session\\Session::registerBag`:
   Registers a `Symfony\\Component\\HttpFoundation\\Session\\SessionBagInterface`
@@ -472,9 +477,6 @@ Bag management
   Gets the `Symfony\\Component\\HttpFoundation\\Session\\Flash\\FlashBagInterface`.
   This is just a shortcut for convenience.
 
-
-
-
 Save Handlers
 ~~~~~~~~~~~~~
 
@@ -483,7 +485,7 @@ session follows `open`, `read`, `write` and `close`, with the possibility of
 `destroy` and `gc` (garbage collection which will expire any old sessions: `gc`
 is called randomly according to PHP's configuration and if called, it is invoked
 after the `open` operation).  You can read more about this at
-http://php.net/session.customhandler
+`php.net/session.customhandle`_
 
 
 Native PHP Save Handlers
@@ -519,7 +521,7 @@ Custom handlers are those which completely replace PHP's built in session save
 handlers by providing six callback functions which PHP calls internally at
 various points in the session workflow.
 
-Symfony2 HttpFoudation provides some by default and these can easily serve as
+Symfony2 HttpFoundation provides some by default and these can easily serve as
 examples if you wish to write your own.
 
   * :class:`Symfony\\Component\\HttpFoundation\\Session\\Storage\\Handler\\PdoSessionHandler`;
@@ -541,8 +543,8 @@ Session Bags
 
 PHP's session management requires the use of the `$_SESSION` super-global,
 however, this interferes somewhat with code testability and encapsulation in a
-OOP paradigm.  To help overcome this Symfony2 uses 'session bags' linked to the
-session to encapsulate a specific dataset like 'attributes' or 'flash messages'.
+OOP paradigm. To help overcome this, Symfony2 uses 'session bags' linked to the
+session to encapsulate a specific dataset of 'attributes' or 'flash messages'.
 
 This approach also mitigates namespace pollution within the `$_SESSION`
 super-global because each bag stores all its data under a unique namespace.
@@ -577,15 +579,16 @@ and remember me login settings or other user based state information.
 
 * :class:`Symfony\\Component\\HttpFoundation\\Session\\Attribute\\AttributeBag`
   This is the standard default implementation.
+
 * :class:`Symfony\\Component\\HttpFoundation\\Session\\Attribute\\NamespacedAttributeBag`
   This implementation allows for attributes to be stored in a structured namespace.
 
 Any plain `key => value` storage system is limited in the extent to which
-complex data can be stored since each key must be unique.  You can achieve
+complex data can be stored since each key must be unique. You can achieve
 namespacing by introducing a naming convention to the keys so different parts of
-your application could operate without clashing.  For example, `module1.foo` and
+your application could operate without clashing. For example, `module1.foo` and
 `module2.foo`. However, sometimes this is not very practical when the attributes
-data is an array, for example a set of tokens.  In this case, managing the array
+data is an array, for example a set of tokens. In this case, managing the array
 becomes a burden because you have to retrieve the array then process it and
 store it again.
 
@@ -639,9 +642,9 @@ Flash messages
 The purpose of the :class:`Symfony\\Component\\HttpFoundation\\Session\\Flash\\FlashBagInterface`
 is to provide a way of settings and retrieving messages on a per session basis.
 The usual workflow for flash messages would be set in an request, and displayed
-on page redirect.  For example, a user submits a form which hits an update
+after a page redirect. For example, a user submits a form which hits an update
 controller, and after processing the controller redirects the page to either the
-updated page or a error page.  Flash messages set in the previous page request
+updated page or an error page. Flash messages set in the previous page request
 would be displayed immediately on the subsequent page load for that session.
 This is however just one application for flash messages.
 
@@ -649,9 +652,10 @@ This is however just one application for flash messages.
    This implementation messages set in one page-load will
    be available for display only on the next page load. These messages will auto
    expire regardless of if they are retrieved or not.
+
 * :class:`Symfony\\Component\\HttpFoundation\\Session\\Flash\\FlashBag`
    In this implementation, messages will remain in the session until
-   they are explicitly retrieved or cleared.  This makes it possible to use ESI
+   they are explicitly retrieved or cleared. This makes it possible to use ESI
    caching.
 
 :class:`Symfony\\Component\\HttpFoundation\\Session\\Flash\\FlashBagInterface`
@@ -673,7 +677,7 @@ has a simple API
   Gets a flash by type (read only);
 
 * :method:`Symfony\\Component\\HttpFoundation\\Session\\Flash\\FlashBagInterface::peekAll`:
-  Gets all flashes (readoly);
+  Gets all flashes (read only);
 
 * :method:`Symfony\\Component\\HttpFoundation\\Session\\Flash\\FlashBagInterface::has`:
   Returns true if the type exists;
@@ -687,8 +691,8 @@ has a simple API
 Testability
 -----------
 
-Symfony2 is designed from the ground up with code-testability in mind.  In order
-to make your code which utilises session easily testable we provide two separate
+Symfony2 is designed from the ground up with code-testability in mind. In order
+to make your code which utilizes session easily testable we provide two separate
 mock storage mechanisms for both unit testing and functional testing.
 
 Testing code using real sessions is tricky because PHP's workflow state is global
@@ -696,17 +700,17 @@ and it is not possible to have multiple concurrent sessions in the same PHP
 process.
 
 The mock storage engines simulate the PHP session workflow without actually
-starting one allowing you to test your code without complications.  You may also
+starting one allowing you to test your code without complications. You may also
 run multiple instances in the same PHP process.
 
 The mock storage drivers do not read or write the system globals
-`session_id()` or `session_name()`.  Methods are provided to simulate this if
+`session_id()` or `session_name()`. Methods are provided to simulate this if
 required:
 
 * :method:`Symfony\\Component\\HttpFoundation\\Session\\SessionStorageInterface::getId`: Gets the
   session ID.
 
-* :method:`Symfony\\Component\\HttpFoundation\\Session\\SessionStorageInterface::setId`: Gets the
+* :method:`Symfony\\Component\\HttpFoundation\\Session\\SessionStorageInterface::setId`: Sets the
   session ID.
 
 * :method:`Symfony\\Component\\HttpFoundation\\Session\\SessionStorageInterface::getName`: Gets the
@@ -753,14 +757,14 @@ handlers to PHP user-space.
 In order to provide a solution for those using PHP 5.4, Symfony2 has a special
 class called :class:`Symfony\\Component\\HttpFoundation\\Session\\Storage\\Handler\\NativeSessionHandler`
 which under PHP 5.4, extends from `\SessionHandler` and under PHP 5.3 is just a
-empty base class.  This provides some interesting opportunities to leverage
+empty base class. This provides some interesting opportunities to leverage
 PHP 5.4 functionality if it is available.
 
 Save Handler Proxy
 ~~~~~~~~~~~~~~~~~~
 
-There are two kinds of save handler classes proxy which inherit from
-:class:`Symfony\\Component\\HttpFoundation\\Session\\Storage\\Handler\\AbstractProxy`,
+There are two kinds of save handler class proxies which inherit from
+:class:`Symfony\\Component\\HttpFoundation\\Session\\Storage\\Handler\\AbstractProxy`:
 they are :class:`Symfony\\Component\\HttpFoundation\\Session\\Storage\\Handler\\NativeProxy`
 and :class:`Symfony\\Component\\HttpFoundation\\Session\\Storage\\Handler\\SessionHandlerProxy`.
 
@@ -778,5 +782,8 @@ Under PHP 5.4 and above, all session handlers implement :phpclass:`SessionHandle
 including `Native*SessionHandler` classes which inherit from :phpclass:`SessionHandler`.
 
 The proxy mechanism allow you to get more deeply involved in session save handler
-classes.  A proxy for example could be used to encrypt any session transaction
+classes. A proxy for example could be used to encrypt any session transaction
 without knowledge of the specific save handler.
+
+
+.. _`php.net/session.customhandle`: http://php.net/session.customhandler
