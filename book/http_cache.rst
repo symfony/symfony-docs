@@ -56,7 +56,7 @@ subject in four steps:
   With ESI, you can even cache an entire page for 60 minutes, but an embedded
   sidebar for only 5 minutes.
 
-Since caching with HTTP isn't unique to Symfony, many articles already exist
+Since caching with HTTP isn't unique to Symfony2, many articles already exist
 on the topic. If you're new to HTTP caching, we *highly* recommend Ryan
 Tomayko's article `Things Caches Do`_. Another in-depth resource is Mark
 Nottingham's `Cache Tutorial`_.
@@ -304,7 +304,7 @@ information is separated by a comma:
 
      Cache-Control: max-age=3600, must-revalidate
 
-Symfony provides an abstraction around the ``Cache-Control`` header to make
+Symfony2 provides an abstraction around the ``Cache-Control`` header to make
 its creation more manageable:
 
 .. code-block:: php
@@ -339,7 +339,7 @@ To handle this situation, every response may be set to be public or private:
 * *private*: Indicates that all or part of the response message is intended
   for a single user and must not be cached by a shared cache.
 
-Symfony conservatively defaults each response to be private. To take advantage
+Symfony2 conservatively defaults each response to be private. To take advantage
 of shared caches (like the Symfony2 reverse proxy), the response will need
 to be explicitly set as public.
 
