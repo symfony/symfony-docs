@@ -1348,7 +1348,7 @@ taken advantage of the CSRF protection!
 CSRF protection works by adding a hidden field to your form - called ``_token``
 by default - that contains a value that only you and your user knows. This
 ensures that the user - not some other entity - is submitting the given data.
-Symfony automatically validates the presence and accuracy of this token.
+Symfony2 automatically validates the presence and accuracy of this token.
 
 The ``_token`` field is a hidden field and will be automatically rendered
 if you include the ``form_rest()`` function in your template, which ensures

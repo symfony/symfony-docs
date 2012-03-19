@@ -5,7 +5,7 @@ Performance
 ===========
 
 Symfony2 is fast, right out of the box. Of course, if you really need speed,
-there are many ways that you can make Symfony even faster. In this chapter,
+there are many ways that you can make Symfony2 even faster. In this chapter,
 you'll explore many of the most common and powerful ways to make your Symfony
 application even faster.
 
@@ -55,7 +55,7 @@ namespaces to find a particular file, making ``file_exists`` calls until it
 finally finds the file it's looking for.
 
 The simplest solution is to cache the location of each class after it's located
-the first time. Symfony comes with a class - ``ApcUniversalClassLoader`` -
+the first time. Symfony2 comes with a class - ``ApcUniversalClassLoader`` -
 loader that extends the ``UniversalClassLoader`` and stores the class locations
 in APC.
 
@@ -92,7 +92,7 @@ from separate files on each request can result in some overhead. To reduce
 this overhead, the Symfony2 Standard Edition provides a script to generate
 a so-called `bootstrap file`_, consisting of multiple classes definitions
 in a single file. By including this file (which contains a copy of many of
-the core classes), Symfony no longer needs to include any of the source files
+the core classes), Symfony2 no longer needs to include any of the source files
 containing those classes. This will reduce disc IO quite a bit.
 
 If you're using the Symfony2 Standard Edition, then you're probably already

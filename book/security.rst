@@ -32,7 +32,7 @@ Basic Example: HTTP Authentication
 
 The security component can be configured via your application configuration.
 In fact, most standard security setups are just a matter of using the right
-configuration. The following configuration tells Symfony to secure any URL
+configuration. The following configuration tells Symfony2 to secure any URL
 matching ``/admin/*`` and to ask the user for credentials using basic HTTP
 authentication (i.e. the old-school username/password box):
 
@@ -119,7 +119,7 @@ authentication (i.e. the old-school username/password box):
 
 .. tip::
 
-    A standard Symfony distribution separates the security configuration
+    A standard Symfony2 distribution separates the security configuration
     into a separate file (e.g. ``app/config/security.yml``). If you don't
     have a separate security file, you can put the configuration directly
     into your main config file (e.g. ``app/config/config.yml``).
@@ -207,7 +207,7 @@ sort of message indicating that access has been denied.
 
 .. tip::
 
-    When Symfony denies the user access, the user sees an error screen and
+    When Symfony2 denies the user access, the user sees an error screen and
     receives a 403 HTTP status code (``Forbidden``). You can customize the
     access denied error screen by following the directions in the
     :ref:`Error Pages<cookbook-error-pages-by-status-code>` cookbook entry
@@ -258,7 +258,7 @@ Using a Traditional Login Form
 So far, you've seen how to blanket your application beneath a firewall and
 then protect access to certain areas with roles. By using HTTP Authentication,
 you can effortlessly tap into the native username/password box offered by
-all browsers. However, Symfony supports many authentication mechanisms out
+all browsers. However, Symfony2 supports many authentication mechanisms out
 of the box. For details on all of them, see the
 :doc:`Security Configuration Reference</reference/configuration/security>`.
 
@@ -717,7 +717,7 @@ exception is thrown, which you can handle and turn into a nice "access denied"
 error page for the user. See :doc:`/cookbook/controller/error_pages` for
 more information.
 
-Since Symfony uses the first access control rule it matches, a URL like ``/admin/users/new``
+Since Symfony2 uses the first access control rule it matches, a URL like ``/admin/users/new``
 will match the first rule and require only the ``ROLE_SUPER_ADMIN`` role.
 Any URL like ``/admin/blog`` will match the second rule and require ``ROLE_ADMIN``.
 
@@ -835,7 +835,7 @@ If not, you can easily download and install it.
 Securing other Services
 ~~~~~~~~~~~~~~~~~~~~~~~
 
-In fact, anything in Symfony can be protected using a strategy similar to
+In fact, anything in Symfony2 can be protected using a strategy similar to
 the one seen in the previous section. For example, suppose you have a service
 (i.e. a PHP class) whose job is to send emails from one user to another.
 You can restrict use of this class - no matter where it's being used from -
@@ -928,7 +928,7 @@ In fact, you've seen this already in the example in this chapter.
 
 This user provider is called the "in-memory" user provider, since the users
 aren't stored anywhere in a database. The actual user object is provided
-by Symfony (:class:`Symfony\\Component\\Security\\Core\\User\\User`).
+by Symfony2 (:class:`Symfony\\Component\\Security\\Core\\User\\User`).
 
 .. tip::
     Any user provider can load users directly from configuration by specifying

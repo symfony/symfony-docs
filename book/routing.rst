@@ -72,7 +72,7 @@ the wildcard is given the name ``slug``. For the URL ``/blog/my-blog-post``,
 the ``slug`` variable gets a value of ``my-blog-post``, which is available
 for you to use in your controller (keep reading).
 
-The ``_controller`` parameter is a special key that tells Symfony which controller
+The ``_controller`` parameter is a special key that tells Symfony2 which controller
 should be executed when a URL matches this route. The ``_controller`` string
 is called the :ref:`logical name<controller-string-syntax>`. It follows a
 pattern that points to a specific PHP class and method:
@@ -145,7 +145,7 @@ which controller should be executed. The whole process looks like this:
 Creating Routes
 ---------------
 
-Symfony loads all the routes for your application from a single routing configuration
+Symfony2 loads all the routes for your application from a single routing configuration
 file. The file is usually ``app/config/routing.yml``, but can be configured
 to be anything (including an XML or PHP file) via the application configuration
 file:
@@ -470,7 +470,7 @@ Take a quick look at the routes that have been created so far:
         return $collection;
 
 Can you spot the problem? Notice that both routes have patterns that match
-URL's that look like ``/blog/*``. The Symfony router will always choose the
+URL's that look like ``/blog/*``. The Symfony2 router will always choose the
 **first** matching route it finds. In other words, the ``blog_show`` route
 will *never* be matched. Instead, a URL like ``/blog/my-blog-post`` will match
 the first route (``blog``) and return a nonsense value of ``my-blog-post``
@@ -797,7 +797,7 @@ Controller Naming Pattern
 Every route must have a ``_controller`` parameter, which dictates which
 controller should be executed when that route is matched. This parameter
 uses a simple string pattern called the *logical controller name*, which
-Symfony maps to a specific PHP method and class. The pattern has three parts,
+Symfony2 maps to a specific PHP method and class. The pattern has three parts,
 each separated by a colon:
 
     **bundle**:**controller**:**action**
@@ -827,7 +827,7 @@ The controller might look like this:
         }
     }
 
-Notice that Symfony adds the string ``Controller`` to the class name (``Blog``
+Notice that Symfony2 adds the string ``Controller`` to the class name (``Blog``
 => ``BlogController``) and ``Action`` to the method name (``show`` => ``showAction``).
 
 You could also refer to this controller using its fully-qualified class name
@@ -838,7 +838,7 @@ and allows more flexibility.
 .. note::
 
    In addition to using the logical name or the fully-qualified class name,
-   Symfony supports a third way of referring to a controller. This method
+   Symfony2 supports a third way of referring to a controller. This method
    uses just one colon separator (e.g. ``service_name:indexAction``) and
    refers to the controller as a service (see :doc:`/cookbook/controller/service`).
 
@@ -859,7 +859,7 @@ In reality, the entire ``defaults`` collection is merged with the parameter
 values to form a single array. Each key of that array is available as an
 argument on the controller.
 
-In other words, for each argument of your controller method, Symfony looks
+In other words, for each argument of your controller method, Symfony2 looks
 for a route parameter of that name and assigns its value to that argument.
 In the advanced example above, any combination (in any order) of the following
 variables could be used as arguments to the ``showAction()`` method:

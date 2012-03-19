@@ -266,7 +266,7 @@ filesystem and discovered by Symfony, thanks to some conventions.
 
     Each time you create a *new* translation resource (or install a bundle
     that includes a translation resource), be sure to clear your cache so
-    that Symfony can discover the new translation resource:
+    that Symfony2 can discover the new translation resource:
     
     .. code-block:: bash
     
@@ -324,7 +324,7 @@ The act of creating translation files is an important part of "localization"
 (often abbreviated `L10n`_). Translation files consist of a series of
 id-translation pairs for the given domain and locale. The id is the identifier
 for the individual translation, and can be the message in the main locale (e.g.
-"Symfony is great") of your application or a unique identifier (e.g.
+"Symfony2 is great") of your application or a unique identifier (e.g.
 "symfony2.great" - see the sidebar below):
 
 .. configuration-block::

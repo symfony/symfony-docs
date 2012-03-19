@@ -383,7 +383,7 @@ The Event Dispatcher
 --------------------
 
 The event dispatcher is a standalone component that is responsible for much
-of the underlying logic and flow behind a Symfony request. For more information,
+of the underlying logic and flow behind a Symfony2 request. For more information,
 see the :doc:`Event Dispatcher Component Documentation</components/event_dispatcher>`.
 
 .. index::

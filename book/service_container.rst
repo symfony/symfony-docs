@@ -779,7 +779,7 @@ allow for an optional dependency:
             // ...
         }
 
-Core Symfony and Third-Party Bundle Services
+Core Symfony2 and Third-Party Bundle Services
 --------------------------------------------
 
 Since Symfony2 and all third-party bundles configure and retrieve their services
@@ -798,7 +798,7 @@ which you can access inside a standard controller as follows::
         // ...
     }
 
-In Symfony2, you'll constantly use services provided by the Symfony core or
+In Symfony2, you'll constantly use services provided by the Symfony2 core or
 other third-party bundles to perform tasks such as rendering templates (``templating``),
 sending emails (``mailer``), or accessing information on the request (``request``).
 

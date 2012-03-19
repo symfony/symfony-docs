@@ -414,7 +414,7 @@ HTTP layer. For a list of services available in your application, use the
 Accessing the Profiler Data
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-On each request, the Symfony profiler collects and stores a lot of data about
+On each request, the Symfony2 profiler collects and stores a lot of data about
 the internal handling of that request. For example, the profiler could be
 used to verify that a given page executes less than a certain number of database
 queries when loading.
@@ -584,7 +584,7 @@ that overrides the default ones::
 
     $form = $buttonCrawlerNode->form(array(
         'name'              => 'Fabien',
-        'my_form[subject]'  => 'Symfony rocks!',
+        'my_form[subject]'  => 'Symfony2 rocks!',
     ));
 
 And if you want to simulate a specific HTTP method for the form, pass it as a
@@ -601,7 +601,7 @@ method::
 
     $client->submit($form, array(
         'name'              => 'Fabien',
-        'my_form[subject]'  => 'Symfony rocks!',
+        'my_form[subject]'  => 'Symfony2 rocks!',
     ));
 
 For more complex situations, use the ``Form`` instance as an array to set the
@@ -609,7 +609,7 @@ value of each field individually::
 
     // Change the value of a field
     $form['name'] = 'Fabien';
-    $form['my_form[subject]'] = 'Symfony rocks!';
+    $form['my_form[subject]'] = 'Symfony2 rocks!';
 
 There is also a nice API to manipulate the values of the fields according to
 their type::
@@ -639,7 +639,7 @@ Testing Configuration
 ---------------------
 
 The Client used by functional tests creates a Kernel that runs in a special
-``test`` environment. Since Symfony loads the ``app/config/config_test.yml``
+``test`` environment. Since Symfony2 loads the ``app/config/config_test.yml``
 in the ``test`` environment, you can tweak any of your application's settings
 specifically for testing.
 

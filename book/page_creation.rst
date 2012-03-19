@@ -93,7 +93,7 @@ By default, the routing configuration file in a Symfony2 application is
 located at ``app/config/routing.yml``. Like all configuration in Symfony2,
 you can also choose to use XML or PHP out of the box to configure routes.
 
-If you look at the main routing file, you'll see that Symfony already added
+If you look at the main routing file, you'll see that Symfony2 already added
 an entry when you generated the ``AcmeHelloBundle``:
 
 .. configuration-block::
@@ -131,7 +131,7 @@ an entry when you generated the ``AcmeHelloBundle``:
 
         return $collection;
 
-This entry is pretty basic: it tells Symfony to load routing configuration
+This entry is pretty basic: it tells Symfony2 to load routing configuration
 from the ``Resources/config/routing.yml`` file that lives inside the ``AcmeHelloBundle``.
 This means that you place routing configuration directly in ``app/config/routing.yml``
 or organize your routes throughout your application, and import them from here.
@@ -212,12 +212,12 @@ inside your ``AcmeHelloBundle``::
     }
 
 In reality, the controller is nothing more than a PHP method that you create
-and Symfony executes. This is where your code uses information from the request
+and Symfony2 executes. This is where your code uses information from the request
 to build and prepare the resource being requested. Except in some advanced
 cases, the end product of a controller is always the same: a Symfony2 ``Response``
 object.
 
-Create the ``indexAction`` method that Symfony will execute when the ``hello``
+Create the ``indexAction`` method that Symfony2 will execute when the ``hello``
 route is matched::
 
     // src/Acme/HelloBundle/Controller/HelloController.php
@@ -420,7 +420,7 @@ creating and rendering pages in Symfony2. You've also already begun to see
 how Symfony2 projects are structured and organized. By the end of this section,
 you'll know where to find and put different types of files and why.
 
-Though entirely flexible, by default, each Symfony :term:`application` has
+Though entirely flexible, by default, each Symfony2 :term:`application` has
 the same basic and recommended directory structure:
 
 * ``app/``: This directory contains the application configuration;
@@ -484,7 +484,7 @@ it is stored in the ``app/`` directory.
 
 This class must implement two methods that define everything that Symfony
 needs to know about your application. You don't even need to worry about
-these methods when starting - Symfony fills them in for you with sensible
+these methods when starting - Symfony2 fills them in for you with sensible
 defaults.
 
 * ``registerBundles()``: Returns an array of all bundles needed to run the
@@ -504,7 +504,7 @@ You'll learn more about each of these directories in later chapters.
 
 .. sidebar:: Autoloading
 
-    When Symfony is loading, a special file - ``app/autoload.php`` - is included.
+    When Symfony2 is loading, a special file - ``app/autoload.php`` - is included.
     This file is responsible for configuring the autoloader, which will autoload
     your application files from the ``src/`` directory and third-party libraries
     from the ``vendor/`` directory.
@@ -595,7 +595,7 @@ method of the ``AppKernel`` class::
     }
 
 With the ``registerBundles()`` method, you have total control over which bundles
-are used by your application (including the core Symfony bundles).
+are used by your application (including the core Symfony2 bundles).
 
 .. tip::
 
@@ -658,7 +658,7 @@ Now that you've created the bundle, enable it via the ``AppKernel`` class::
 And while it doesn't do anything yet, ``AcmeTestBundle`` is now ready to
 be used.
 
-And as easy as this is, Symfony also provides a command-line interface for
+And as easy as this is, Symfony2 also provides a command-line interface for
 generating a basic bundle skeleton:
 
 .. code-block:: bash
@@ -804,7 +804,7 @@ format you prefer:
 
 Each top-level entry like ``framework`` or ``twig`` defines the configuration
 for a particular bundle. For example, the ``framework`` key defines the configuration
-for the core Symfony ``FrameworkBundle`` and includes configuration for the
+for the core Symfony2 ``FrameworkBundle`` and includes configuration for the
 routing, templating, and other core systems.
 
 For now, don't worry about the specific configuration options in each section.

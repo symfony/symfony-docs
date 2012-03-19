@@ -783,7 +783,7 @@ should render with the subdirectory (e.g. ``/my_app/images/logo.png``). The
 ``asset`` function takes care of this by determining how your application is
 being used and generating the correct paths accordingly.
 
-Additionally, if you use the ``asset`` function, Symfony can automatically
+Additionally, if you use the ``asset`` function, Symfony2 can automatically
 append a query string to your asset, in order to guarantee that updated static
 assets won't be cached when deployed. For example, ``/images/logo.png`` might
 look like ``/images/logo.png?v2``. For more information, see the :ref:`ref-framework-assets-version`
@@ -804,7 +804,7 @@ advantage of Symfony's template inheritance.
 .. tip::
 
     This section will teach you the philosophy behind including stylesheet
-    and Javascript assets in Symfony. Symfony also packages another library,
+    and Javascript assets in Symfony. Symfony2 also packages another library,
     called Assetic, which follows this philosophy but allows you to do much
     more interesting things with those assets. For more information on 
     using Assetic see :doc:`/cookbook/assetic/asset_management`.
@@ -1305,7 +1305,7 @@ key in the parameter hash:
 Final Thoughts
 --------------
 
-The templating engine in Symfony is a powerful tool that can be used each time
+The templating engine in Symfony2 is a powerful tool that can be used each time
 you need to generate presentational content in HTML, XML or any other format.
 And though templates are a common way to generate content in a controller,
 their use is not mandatory. The ``Response`` object returned by a controller

@@ -8,7 +8,7 @@ Congratulations! By learning about Symfony2, you're well on your way towards
 being a more *productive*, *well-rounded* and *popular* web developer (actually,
 you're on your own for the last part). Symfony2 is built to get back to
 basics: to develop tools that let you develop faster and build more robust
-applications, while staying out of your way. Symfony is built on the best
+applications, while staying out of your way. Symfony2 is built on the best
 ideas from many technologies: the tools and concepts you're about to learn
 represent the efforts of thousands of people, over many years. In other words,
 you're not just learning "Symfony", you're learning the fundamentals of the
@@ -163,7 +163,7 @@ type of application you build (web, mobile, JSON API), or the development
 philosophy you follow, the end goal of an application is **always** to understand
 each request and create and return the appropriate response.
 
-Symfony is architected to match this reality.
+Symfony2 is architected to match this reality.
 
 .. tip::
 
@@ -213,7 +213,7 @@ message. PHP will create a true HTTP response and return it to the client:
 Requests and Responses in Symfony
 ---------------------------------
 
-Symfony provides an alternative to the raw PHP approach via two classes that
+Symfony2 provides an alternative to the raw PHP approach via two classes that
 allow you to interact with the HTTP request and response in an easier way.
 The :class:`Symfony\\Component\\HttpFoundation\\Request` class is a simple
 object-oriented representation of the HTTP request message. With it, you
@@ -274,7 +274,7 @@ the user is connecting via a secured connection (i.e. ``https``).
     prepare and store context-specific information about the request.
     
 
-Symfony also provides a ``Response`` class: a simple PHP representation of
+Symfony2 also provides a ``Response`` class: a simple PHP representation of
 an HTTP response message. This allows your application to use an object-oriented
 interface to construct the response that needs to be returned to the client::
 
@@ -288,7 +288,7 @@ interface to construct the response that needs to be returned to the client::
     // prints the HTTP headers followed by the content
     $response->send();
 
-If Symfony offered nothing else, you would already have a toolkit for easily
+If Symfony2 offered nothing else, you would already have a toolkit for easily
 accessing request information and an object-oriented interface for creating
 the response. Even as you learn the many powerful features in Symfony, keep
 in mind that the goal of your application is always *to interpret a request
@@ -297,8 +297,8 @@ and create the appropriate response based on your application logic*.
 .. tip::
 
     The ``Request`` and ``Response`` classes are part of a standalone component
-    included with Symfony called ``HttpFoundation``. This component can be
-    used entirely independent of Symfony and also provides classes for handling
+    included with Symfony2 called ``HttpFoundation``. This component can be
+    used entirely independent of Symfony2 and also provides classes for handling
     sessions and file uploads.
 
 The Journey from the Request to the Response
@@ -314,7 +314,7 @@ form submissions, saving things to a database, rendering HTML pages and protecti
 content with security. How can you manage all of this and still keep your
 code organized and maintainable?
 
-Symfony was created to solve these problems so that you don't have to.
+Symfony2 was created to solve these problems so that you don't have to.
 
 The Front Controller
 ~~~~~~~~~~~~~~~~~~~~
@@ -384,10 +384,10 @@ on that value. This can get ugly quickly:
 Solving this problem can be difficult. Fortunately it's *exactly* what Symfony
 is designed to do.
 
-The Symfony Application Flow
+The Symfony2 Application Flow
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-When you let Symfony handle each request, life is much easier. Symfony follows
+When you let Symfony2 handle each request, life is much easier. Symfony2 follows
 the same simple pattern for every request:
 
 .. _request-flow-figure:
@@ -402,7 +402,7 @@ the same simple pattern for every request:
 Each "page" of your site is defined in a routing configuration file that
 maps different URLs to different PHP functions. The job of each PHP function,
 called a :term:`controller`, is to use information from the request - along
-with many other tools Symfony makes available - to create and return a ``Response``
+with many other tools Symfony2 makes available - to create and return a ``Response``
 object. In other words, the controller is where *your* code goes: it's where
 you interpret the request and create a response.
 
@@ -416,11 +416,11 @@ It's that easy! Let's review:
 * The correct PHP function is executed, where your code creates and returns
   the appropriate ``Response`` object.
 
-A Symfony Request in Action
+A Symfony2 Request in Action
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Without diving into too much detail, let's see this process in action. Suppose
-you want to add a ``/contact`` page to your Symfony application. First, start
+you want to add a ``/contact`` page to your Symfony2 application. First, start
 by adding an entry for ``/contact`` to your routing configuration file:
 
 .. code-block:: yaml
@@ -468,10 +468,10 @@ complex tasks keep coming up over and over again: persisting things to the
 database, rendering and reusing templates, handling form submissions, sending
 emails, validating user input and handling security.
 
-The good news is that none of these problems is unique. Symfony provides
+The good news is that none of these problems is unique. Symfony2 provides
 a framework full of tools that allow you to build your application, not your
 tools. With Symfony2, nothing is imposed on you: you're free to use the full
-Symfony framework, or just one piece of Symfony all by itself.
+Symfony2 framework, or just one piece of Symfony2 all by itself.
 
 .. index::
    single: Symfony2 Components
