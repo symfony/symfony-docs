@@ -485,7 +485,7 @@ session follows `open`, `read`, `write` and `close`, with the possibility of
 `destroy` and `gc` (garbage collection which will expire any old sessions: `gc`
 is called randomly according to PHP's configuration and if called, it is invoked
 after the `open` operation).  You can read more about this at
-`php.net/session.customhandle`_
+`php.net/session.customhandler`_
 
 
 Native PHP Save Handlers
@@ -786,4 +786,4 @@ classes. A proxy for example could be used to encrypt any session transaction
 without knowledge of the specific save handler.
 
 
-.. _`php.net/session.customhandle`: http://php.net/session.customhandler
+.. _`php.net/session.customhandler`: http://php.net/session.customhandler
