@@ -9,4 +9,5 @@
 * :doc:`/components/locale`
 * :doc:`/components/process`
 * :doc:`/components/routing`
+* :doc:`/components/templating`
 * :doc:`/components/yaml`
