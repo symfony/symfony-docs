@@ -6,14 +6,14 @@ Databases and Doctrine ("The Model")
 
 Let's face it, one of the most common and challenging tasks for any application
 involves persisting and reading information to and from a database. Fortunately,
-Symfony comes integrated with `Doctrine`_, a library whose sole goal is to
+Symfony2 comes integrated with `Doctrine`_, a library whose sole goal is to
 give you powerful tools to make this easy. In this chapter, you'll learn the
 basic philosophy behind Doctrine and see how easy working with a database can
 be.
 
 .. note::
 
-    Doctrine is totally decoupled from Symfony and using it is optional.
+    Doctrine is totally decoupled from Symfony2 and using it is optional.
     This chapter is all about the Doctrine ORM, which aims to let you map
     objects to a relational database (such as *MySQL*, *PostgreSQL* or *Microsoft SQL*).
     If you prefer to use raw database queries, this is easy, and explained
@@ -255,7 +255,7 @@ see the :ref:`book-doctrine-field-types` section.
 
     When using another library or program (ie. Doxygen) that uses annotations,
     you should place the ``@IgnoreAnnotation`` annotation on the class to
-    indicate which annotations Symfony should ignore.
+    indicate which annotations Symfony2 should ignore.
 
     For example, to prevent the ``@fn`` annotation from throwing an exception,
     add the following::
@@ -1319,7 +1319,7 @@ without any arguments:
 
 A list of available command will print out, many of which start with the
 ``doctrine:`` prefix. You can find out more information about any of these
-commands (or any Symfony command) by running the ``help`` command. For example,
+commands (or any Symfony2 command) by running the ``help`` command. For example,
 to get details about the ``doctrine:database:create`` task, run:
 
 .. code-block:: bash
