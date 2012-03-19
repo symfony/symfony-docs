@@ -19,9 +19,9 @@ the ``message`` and ``protocols`` properties:
     /**
      * @Annotation
      */
-    class Url extends Constraint
+    class Protocol extends Constraint
     {
-        public $message = 'This value is not a valid URL';
+        public $message = 'This value is not a valid protocol';
         public $protocols = array('http', 'https', 'ftp', 'ftps');
     }
 
@@ -52,17 +52,16 @@ Take the ``NotBlankValidator`` as an example:
 
 .. code-block:: php
 
-    class NotBlankValidator extends ConstraintValidator
+    class ProtocolValidator extends ConstraintValidator
     {
         public function isValid($value, Constraint $constraint)
         {
-            if (null === $value || '' === $value) {
-                $this->setMessage($constraint->message);
+            if (in_array($value, $constraint->protocols));
 
-                return false;
+                return true;
             }
 
-            return true;
+            return false;
         }
     }
 
