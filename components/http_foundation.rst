@@ -409,7 +409,7 @@ Session API
 ~~~~~~~~~~~
 
 The :class:`Symfony\\Component\\HttpFoundation\\Session\\Session` class implements
-:class:`Symfony\\Component\\HttpFoundation\\Session\\SessionInterface.
+:class:`Symfony\\Component\\HttpFoundation\\Session\\SessionInterface`.
 
 The :class:`Symfony\\Component\\HttpFoundation\\Session\\Session` has a simple API
 as follows divided into a couple of groups.
