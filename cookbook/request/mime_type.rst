@@ -9,7 +9,7 @@ to determine what type of content to return in the ``Response``. In fact,
 the request format, accessible via
 :method:`Symfony\\Component\\HttpFoundation\\Request::getRequestFormat`,
 is used to set the MIME type of the ``Content-Type`` header on the ``Response``
-object. Internally, Symfony contains a map of the most common formats (e.g.
+object. Internally, Symfony2 contains a map of the most common formats (e.g.
 ``html``, ``json``) and their associated MIME types (e.g. ``text/html``,
 ``application/json``). Of course, additional format-MIME type entries can
 easily be added. This document will show how you can add the ``jsonp`` format
@@ -19,7 +19,7 @@ Create an ``kernel.request`` Listener
 -------------------------------------
 
 The key to defining a new MIME type is to create a class that will "listen" to
-the ``kernel.request`` event dispatched by the Symfony kernel. The
+the ``kernel.request`` event dispatched by the Symfony2 kernel. The
 ``kernel.request`` event is dispatched early in Symfony's request handling
 process and allows you to modify the request object.
 
@@ -80,7 +80,7 @@ file and register it as a listener by adding the ``kernel.event_listener`` tag:
         $container->setDefinition('acme.demobundle.listener.request', $definition);
 
 At this point, the ``acme.demobundle.listener.request`` service has been
-configured and will be notified when the Symfony kernel dispatches the
+configured and will be notified when the Symfony2 kernel dispatches the
 ``kernel.request`` event.
 
 .. tip::

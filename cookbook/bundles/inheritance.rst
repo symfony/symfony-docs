@@ -6,7 +6,7 @@ How to use Bundle Inheritance to Override parts of a Bundle
 
 When working with third-party bundles, you'll probably come across a situation
 where you want to override a file in that third-party bundle with a file
-in one of your own bundles. Symfony gives you a very convenient way to override
+in one of your own bundles. Symfony2 gives you a very convenient way to override
 things like controllers, templates, and other files in a bundle's
 ``Resources/`` directory.
 
@@ -79,7 +79,7 @@ For example, it's very common to need to override the ``FOSUserBundle``'s
 ``layout.html.twig`` template so that it uses your application's base layout.
 Since the file lives at ``Resources/views/layout.html.twig`` in the ``FOSUserBundle``,
 you can create your own file in the same location of ``AcmeUserBundle``.
-Symfony will ignore the file that lives inside the ``FOSUserBundle`` entirely,
+Symfony2 will ignore the file that lives inside the ``FOSUserBundle`` entirely,
 and use your file instead.
 
 The same goes for routing files, validation configuration and other resources.
@@ -95,7 +95,7 @@ The same goes for routing files, validation configuration and other resources.
 
    Translation files do not work in the same way as described above. All
    translation files are accumulated into a set of "pools" (one for each)
-   domain. Symfony loads translation files from bundles first (in the order
+   domain. Symfony2 loads translation files from bundles first (in the order
    that the bundles are initialized) and then from your ``app/Resources``
    directory. If the same translation is specified in two resources, the
    translation from the resource that's loaded last will win.

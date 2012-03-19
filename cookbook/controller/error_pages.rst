@@ -52,7 +52,7 @@ end-user, create a new template located at
     and optional templating engine that integrates with ``Symfony2``. For more
     information about Twig see :doc:`/book/templating`.
 
-In addition to the standard HTML error page, Symfony provides a default error
+In addition to the standard HTML error page, Symfony2 provides a default error
 page for many of the most common response formats, including JSON
 (``error.json.twig``), XML, (``error.xml.twig``), and even Javascript
 (``error.js.twig``), to name a few. To override any of these templates, just
@@ -70,7 +70,7 @@ code. For instance, create a
 ``app/Resources/TwigBundle/views/Exception/error404.html.twig`` template to
 display a special page for 404 (page not found) errors.
 
-Symfony uses the following algorithm to determine which template to use:
+Symfony2 uses the following algorithm to determine which template to use:
 
 * First, it looks for a template for the given format and status code (like
   ``error404.json.twig``);

@@ -14,12 +14,12 @@ that's stored using the `git`_ source control management system.
 Initial Project Setup
 ---------------------
 
-To get started, you'll need to download Symfony and initialize your local
+To get started, you'll need to download Symfony2 and initialize your local
 git repository:
 
 1. Download the `Symfony2 Standard Edition`_ without vendors.
 
-2. Unzip/untar the distribution. It will create a folder called Symfony with
+2. Unzip/untar the distribution. It will create a folder called Symfony2 with
    your new project structure, config files, etc. Rename it to whatever you like.
 
 3. Create a new file called ``.gitignore`` at the root of your new project

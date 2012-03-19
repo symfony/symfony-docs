@@ -48,9 +48,9 @@ In this case, the SOAP service will allow the client to call a method called
         }
     }
 
-Next, you can train Symfony to be able to create an instance of this class.
+Next, you can train Symfony2 to be able to create an instance of this class.
 Since the class sends an e-mail, it's been designed to accept a ``Swift_Mailer``
-instance. Using the Service Container, we can configure Symfony to construct
+instance. Using the Service Container, we can configure Symfony2 to construct
 a ``HelloService`` object properly:
 
 .. configuration-block::
@@ -102,7 +102,7 @@ WSDL document can be retrieved via ``/soap?wsdl``.
 
 Take note of the calls to ``ob_start()`` and ``ob_get_clean()``.  These
 methods control `output buffering`_ which allows you to "trap" the echoed 
-output of ``$server->handle()``. This is necessary because Symfony expects
+output of ``$server->handle()``. This is necessary because Symfony2 expects
 your controller to return a ``Response`` object with the output as its "content".
 You must also remember to set the "Content-Type" header to "text/xml", as
 this is what the client  will expect.  So, you use ``ob_start()`` to start

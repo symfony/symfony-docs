@@ -3,7 +3,7 @@ Managing Vendor Libraries with bin/vendors and deps
 
 ### How does it work ?
 
-Every Symfony project uses a group of third-party "vendor" libraries. One
+Every Symfony2 project uses a group of third-party "vendor" libraries. One
 way or another the goal is to download these files into your ``vendor/``
 directory and, ideally, to give you some sane way to manage the exact version
 you need for each.
@@ -33,9 +33,9 @@ script to ensure that all of the needed vendor libraries are downloaded.
 
 .. sidebar:: Upgrading Symfony
 
-    Since Symfony is just a group of third-party libraries and third-party
+    Since Symfony2 is just a group of third-party libraries and third-party
     libraries are entirely controlled through ``deps`` and ``deps.lock``,
-    upgrading Symfony means simply upgrading each of these files to match
+    upgrading Symfony2 means simply upgrading each of these files to match
     their state in the latest Symfony Standard Edition.
 
     Of course, if you've added new entries to ``deps`` or ``deps.lock``, be sure

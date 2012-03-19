@@ -45,7 +45,7 @@ To get started, you'll need to download Symfony2 and get the basic Subversion se
 
 1. Download the `Symfony2 Standard Edition`_ without or without vendors.
 
-2. Unzip/untar the distribution. It will create a folder called Symfony with
+2. Unzip/untar the distribution. It will create a folder called Symfony2 with
    your new project structure, config files, etc. Rename it to whatever you
    like.
 

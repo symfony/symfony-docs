@@ -4,7 +4,7 @@
 How to optimize your development Environment for debugging
 ==========================================================
 
-When you work on a Symfony project on your local machine, you should use the
+When you work on a Symfony2 project on your local machine, you should use the
 ``dev`` environment (``app_dev.php`` front controller). This environment
 configuration is optimized for two main purposes:
 
@@ -19,12 +19,12 @@ configuration is optimized for two main purposes:
 Disabling the Bootstrap File and Class Caching
 ----------------------------------------------
 
-And to make the production environment as fast as possible, Symfony creates
+And to make the production environment as fast as possible, Symfony2 creates
 big PHP files in your cache containing the aggregation of PHP classes your
 project needs for every request. However, this behavior can confuse your IDE
 or your debugger. This recipe shows you how you can tweak this caching
 mechanism to make it friendlier when you need to debug code that involves
-Symfony classes.
+Symfony2 classes.
 
 The ``app_dev.php`` front controller reads as follows by default::
 
@@ -63,6 +63,6 @@ below::
 
 Some IDEs do not like the fact that some classes are stored in different
 locations. To avoid problems, you can either tell your IDE to ignore the PHP
-cache files, or you can change the extension used by Symfony for these files::
+cache files, or you can change the extension used by Symfony2 for these files::
 
     $kernel->loadClassCache('classes', '.php.cache');

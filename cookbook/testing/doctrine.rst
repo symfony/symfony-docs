@@ -4,7 +4,7 @@
 How to test Doctrine Repositories
 =================================
 
-Unit testing Doctrine repositories in a Symfony project is not a straightforward
+Unit testing Doctrine repositories in a Symfony2 project is not a straightforward
 task. Indeed, to load a repository you need to load your entities, an entity 
 manager, and some other stuff like a connection.
 
@@ -22,8 +22,8 @@ To test your repository, you have two different options:
 Unit Testing
 ------------
 
-As Symfony and Doctrine share the same testing framework, it's quite easy to 
-implement unit tests in your Symfony project. The ORM comes with its own set
+As Symfony2 and Doctrine share the same testing framework, it's quite easy to 
+implement unit tests in your Symfony2 project. The ORM comes with its own set
 of tools to ease the unit testing and mocking of everything you need, such as
 a connection, an entity manager, etc. By using the testing components provided
 by Doctrine - along with some basic setup - you can leverage Doctrine's tools

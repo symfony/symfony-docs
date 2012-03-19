@@ -161,7 +161,7 @@ configuration.
 Authenticating Someone against a Database
 -----------------------------------------
 
-Authenticating a Doctrine user against the database with the Symfony security
+Authenticating a Doctrine user against the database with the Symfony2 security
 layer is a piece of cake. Everything resides in the configuration of the
 :doc:`SecurityBundle</reference/configuration/security>` stored in the
 ``app/config/security.yml`` file.
@@ -195,16 +195,16 @@ then be checked against our User entity records in the database:
                 - { path: ^/admin, roles: ROLE_ADMIN }
 
 The ``encoders`` section associates the ``sha1`` password encoder to the entity
-class. This means that Symfony will expect the password that's encoded in
+class. This means that Symfony2 will expect the password that's encoded in
 the database to be encoded using this algorithm. For details on how to create
 a new User object with a properly encoded password, see the
 :ref:`book-security-encoding-user-password` section of the security chapter.
 
 The ``providers`` section defines an ``administrators`` user provider. A
 user provider is a "source" of where users are loaded during authentication.
-In this case, the ``entity`` keyword means that Symfony will use the Doctrine
+In this case, the ``entity`` keyword means that Symfony2 will use the Doctrine
 entity user provider to load User entity objects from the database by using
-the ``username`` unique field. In other words, this tells Symfony how to
+the ``username`` unique field. In other words, this tells Symfony2 how to
 fetch the user from the database before checking the password validity.
 
 This code and configuration works but it's not enough to secure the application
@@ -345,7 +345,7 @@ The code below shows the implementation of the
     }
 
 To finish the implementation, the configuration of the security layer must be
-changed to tell Symfony to use the new custom entity provider instead of the
+changed to tell Symfony2 to use the new custom entity provider instead of the
 generic Doctrine entity provider. It's trival to achieve by removing the
 ``property`` field in the ``security.providers.administrators.entity`` section
 of the ``security.yml`` file.
@@ -420,7 +420,7 @@ returns the list of related groups::
 
 The ``AcmeUserBundle:Group`` entity class defines three table fields (``id``,
 ``name`` and ``role``). The unique ``role`` field contains the role name used by
-the Symfony security layer to secure parts of the application. The most
+the Symfony2 security layer to secure parts of the application. The most
 important thing to notice is that the ``AcmeUserBundle:Group`` entity class
 implements the :class:`Symfony\\Component\\Security\\Core\\Role\\RoleInterface`
 that forces it to have a ``getRole()`` method::

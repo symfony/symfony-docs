@@ -132,7 +132,7 @@ As you can see, the location of the file follows the namespace of the class.
 Specifically, the namespace, ``Sensio\Bundle\FrameworkExtraBundle``, spells out
 the directory that the file should live in 
 (``vendor/bundle/Sensio/Bundle/FrameworkExtraBundle``). This is because, in the
-``app/autoload.php`` file, you'll configure Symfony to look for the ``Sensio``
+``app/autoload.php`` file, you'll configure Symfony2 to look for the ``Sensio``
 namespace in the ``vendor/bundle`` directory:
 
 .. code-block:: php

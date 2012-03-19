@@ -7,13 +7,13 @@ How to Set External Parameters in the Service Container
 In the chapter :doc:`/cookbook/configuration/environments`, you learned how 
 to manage your application configuration. At times, it may benefit your application 
 to store certain credentials outside of your project code. Database configuration
-is one such example. The flexibility of the symfony service container allows
+is one such example. The flexibility of the Symfony2 service container allows
 you to easily do this.
 
 Environment Variables
 ---------------------
 
-Symfony will grab any environment variable prefixed with ``SYMFONY__`` and
+Symfony2 will grab any environment variable prefixed with ``SYMFONY__`` and
 set it as a parameter in the service container.  Double underscores are replaced
 with a period, as a period is not a valid character in an environment variable
 name.
@@ -52,7 +52,7 @@ the following ``VirtualHost`` configuration:
         export SYMFONY__DATABASE__PASSWORD=secret
 
 Now that you have declared an environment variable, it will be present
-in the PHP ``$_SERVER`` global variable. Symfony then automatically sets all
+in the PHP ``$_SERVER`` global variable. Symfony2 then automatically sets all
 ``$_SERVER`` variables prefixed with ``SYMFONY__`` as parameters in the service
 container.
 
@@ -159,7 +159,7 @@ in the container. The following imports a file named ``parameters.php``.
 In ``parameters.php``, tell the service container the parameters that you wish
 to set. This is useful when important configuration is in a nonstandard
 format. The example below includes a Drupal database's configuration in
-the symfony service container.
+the Symfony2 service container.
 
 .. code-block:: php
 

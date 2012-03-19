@@ -4,7 +4,7 @@
 How to customize Form Rendering
 ===============================
 
-Symfony gives you a wide variety of ways to customize how a form is rendered.
+Symfony2 gives you a wide variety of ways to customize how a form is rendered.
 In this guide, you'll learn how to customize every possible part of your
 form with as little effort as possible whether you use Twig or PHP as your
 templating engine.
@@ -82,7 +82,7 @@ rendering in general, see :ref:`form-rendering-template`.
 What are Form Themes?
 ---------------------
 
-Symfony uses form fragments - a small piece of a template that renders just
+Symfony2 uses form fragments - a small piece of a template that renders just
 one part of a form - to render every part of a form - - field labels, errors,
 ``input`` text fields, ``select`` tags, etc
 
@@ -93,7 +93,7 @@ rendering a form. In other words, if you want to customize one portion of
 how a form is rendered, you'll import a *theme* which contains a customization
 of the appropriate form fragments.
 
-Symfony comes with a default theme (`form_div_layout.html.twig`_ in Twig and
+Symfony2 comes with a default theme (`form_div_layout.html.twig`_ in Twig and
 ``FrameworkBundle:Form`` in PHP) that defines each and every fragment needed
 to render every part of a form.
 
@@ -119,7 +119,7 @@ renders:
 
     <input type="number" id="form_age" name="form[age]" required="required" value="33" />
 
-Internally, Symfony uses the ``integer_widget`` fragment  to render the field.
+Internally, Symfony2 uses the ``integer_widget`` fragment  to render the field.
 This is because the field type is ``integer`` and you're rendering its ``widget``
 (as opposed to its ``label`` or ``errors``).
 
@@ -285,7 +285,7 @@ can now re-use the form customization across many templates:
 
 Now that you've created the customized form block, you need to tell Symfony
 to use it. Inside the template where you're actually rendering your form,
-tell Symfony to use the template via the ``form_theme`` tag:
+tell Symfony2 to use the template via the ``form_theme`` tag:
 
 .. _cookbook-form-twig-theme-import-template:
 
@@ -295,7 +295,7 @@ tell Symfony to use the template via the ``form_theme`` tag:
 
     {{ form_widget(form.age) }}
 
-When the ``form.age`` widget is rendered, Symfony will use the ``integer_widget``
+When the ``form.age`` widget is rendered, Symfony2 will use the ``integer_widget``
 block from the new template and the ``input`` tag will be wrapped in the
 ``div`` element specified in the customized block.
 
@@ -321,7 +321,7 @@ file in order to customize the ``integer_widget`` fragment.
 
 Now that you've created the customized form template, you need to tell Symfony
 to use it. Inside the template where you're actually rendering your form,
-tell Symfony to use the theme via the ``setTheme`` helper method:
+tell Symfony2 to use the theme via the ``setTheme`` helper method:
 
 .. _cookbook-form-php-theme-import-template:
 
@@ -331,7 +331,7 @@ tell Symfony to use the theme via the ``setTheme`` helper method:
 
     <?php $view['form']->widget($form['age']) ?>
 
-When the ``form.age`` widget is rendered, Symfony will use the customized
+When the ``form.age`` widget is rendered, Symfony2 will use the customized
 ``integer_widget.html.php`` template and the ``input`` tag will be wrapped in
 the ``div`` element.
 

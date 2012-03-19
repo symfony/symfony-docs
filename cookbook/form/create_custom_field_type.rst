@@ -4,7 +4,7 @@
 How to Create a Custom Form Field Type
 ======================================
 
-Symfony comes with a bunch of core field types available for building forms.
+Symfony2 comes with a bunch of core field types available for building forms.
 However there are situations where we want to create a custom form field
 type for a specific purpose. This recipe assumes we need a field definition
 that holds a person's gender, based on the existing choice field. This section

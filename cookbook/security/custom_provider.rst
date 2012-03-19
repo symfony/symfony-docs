@@ -7,9 +7,9 @@ How to create a custom User Provider
 Part of Symfony's standard authentication process depends on "user providers".
 When a user submits a username and password, the authentication layer asks
 the configured user provider to return a user object for a given username.
-Symfony then checks whether the password of this user is correct and generates
+Symfony2 then checks whether the password of this user is correct and generates
 a security token so the user stays authenticated during the current session.
-Out of the box, Symfony has an "in_memory" and an "entity" user provider.
+Out of the box, Symfony2 has an "in_memory" and an "entity" user provider.
 In this entry we'll see how you can create your own user provider, which
 could be useful if your users are accessed via a custom database, a file,
 or - as we show in this example - a web service.
@@ -216,7 +216,7 @@ to the list of providers in the "security" section. Choose a name for the user p
             webservice:
                 id: webservice_user_provider
 
-Symfony also needs to know how to encode passwords that are supplied by website
+Symfony2 also needs to know how to encode passwords that are supplied by website
 users, e.g. by filling in a login form. You can do this by adding a line to the 
 "encoders" section in ``/app/config/security.yml``. 
 
@@ -235,7 +235,7 @@ options, the password may be encoded multiple times and encoded to base64.
 
 .. sidebar:: Specifics on how passwords are encoded
 
-    Symfony uses a specific method to combine the salt and encode the password
+    Symfony2 uses a specific method to combine the salt and encode the password
     before comparing it to your encoded password. If ``getSalt()`` returns
     nothing, then the submitted password is simply encoded using the algorithm
     you specify in ``security.yml``. If a salt *is* specified, then the following
@@ -244,7 +244,7 @@ options, the password may be encoded multiple times and encoded to base64.
         ``$password.'{'.$salt.'}';``
 
     If your external users have their passwords salted via a different method,
-    then you'll need to do a bit more work so that Symfony properly encodes
+    then you'll need to do a bit more work so that Symfony2 properly encodes
     the password. That is beyond the scope of this entry, but would include
     sub-classing ``MessageDigestPasswordEncoder`` and overriding the ``mergePasswordAndSalt``
     method.
