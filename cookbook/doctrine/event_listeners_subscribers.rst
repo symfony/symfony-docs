@@ -111,4 +111,4 @@ specific type of entity (e.g. a ``Product`` entity but not a ``BlogPost``
 entity), you should check for the class name of the entity in your method
 (as shown above).
 
-.. _`The Event System`: http://www.doctrine-project.org/docs/orm/2.0/en/reference/events.html
+.. _`The Event System`: http://docs.doctrine-project.org/projects/doctrine-orm/en/2.1/reference/events.html

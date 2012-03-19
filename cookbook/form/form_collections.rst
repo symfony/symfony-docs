@@ -163,10 +163,10 @@ In your controller, you'll now initialize a new instance of ``TaskType``::
             
             // dummy code - this is here just so that the Task has some tags
             // otherwise, this isn't an interesting example
-            $tag1 = new Tag()
+            $tag1 = new Tag();
             $tag1->name = 'tag1';
             $task->getTags()->add($tag1);
-            $tag2 = new Tag()
+            $tag2 = new Tag();
             $tag2->name = 'tag2';
             $task->getTags()->add($tag2);
             // end dummy code
@@ -244,7 +244,7 @@ use some JavaScript. Previously we added two tags to our form in the controller.
 Now we need to let the user add as many tag forms as he needs directly in the browser.
 This will be done through a bit of JavaScript.
 
-The first thing we need to do is to tell the form collection know that it will
+The first thing we need to do is to let the form collection know that it will
 receive an unknown number of tags. So far we've added two tags and the form
 type expects to receive exactly two, otherwise an error will be thrown:
 ``This form should not contain extra fields``. To make this flexible, we

@@ -263,6 +263,8 @@ the user is connecting via a secured connection (i.e. ``https``).
     In fact, every public property used in the previous example is some instance
     of the ParameterBag.
     
+    .. _book-fundamentals-attributes:
+    
     The Request class also has a public ``attributes`` property, which holds
     special data related to how the application works internally. For the
     Symfony2 framework, the ``attributes`` holds the values returned by the
@@ -490,7 +492,7 @@ regardless of how your project is developed. To name a few:
   should be handled (e.g. execute the ``contactAction()`` method);
 
 * `Form`_ - A full-featured and flexible framework for creating forms and
-  handing form submissions;
+  handling form submissions;
 
 * `Validator`_ A system for creating rules about data and then validating
   whether or not user-submitted data follows those rules;

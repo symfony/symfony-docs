@@ -52,13 +52,13 @@ To get started, you'll need to download Symfony2 and get the basic Subversion se
 3. Checkout the Subversion repository that will host this project. Let's say it
    is hosted on `Google code`_ and called ``myproject``:
 
-    .. code-block:: bash
-    
+   .. code-block:: bash
+
         $ svn checkout http://myproject.googlecode.com/svn/trunk myproject
 
 4. Copy the Symfony2 project files in the subversion folder:
 
-    .. code-block:: bash
+   .. code-block:: bash
 
         $ mv Symfony/* myproject/
 
@@ -68,7 +68,7 @@ To get started, you'll need to download Symfony2 and get the basic Subversion se
    on each machine. This makes use of the ``svn:ignore`` property, so that
    we can ignore specific files.
 
-    .. code-block:: bash
+   .. code-block:: bash
 
         $ cd myproject/
         $ svn add --depth=empty app app/cache app/logs app/config web
@@ -85,7 +85,7 @@ To get started, you'll need to download Symfony2 and get the basic Subversion se
 
 6. The rest of the files can now be added and committed to the project:
 
-    .. code-block:: bash
+   .. code-block:: bash
 
         $ svn add --force .
         $ svn ci -m "add basic Symfony Standard 2.X.Y"
@@ -97,17 +97,13 @@ To get started, you'll need to download Symfony2 and get the basic Subversion se
    the project, copy this file to ``parameters.ini``, customize it, and start
    developing.
 
-8. Finally, download all of the third-party vendor libraries:
-
-    .. code-block:: bash
-    
-        $ php bin/vendors install
+8. Finally, download all of the third-party vendor libraries by
+   executing composer. For details, see :ref:`installation-updating-vendors`.
 
 .. tip::
 
-    `git`_ has to be installed to run ``bin/vendors``, this is the protocol
-    used to fetch vendor libraries. This only means that ``git`` is used as
-    a tool to basically help download the libraries in the ``vendor/`` directory.
+	If you rely on any "dev" versions, then git may be used to install
+	those libraries, since there is no archive available for download.
 
 At this point, you have a fully-functional Symfony2 project stored in your
 Subversion repository. The development can start with commits in the Subversion

@@ -100,7 +100,9 @@ Structure
 
 * Use uppercase strings for constants with words separated with underscores;
 
-* Define one class per file;
+* Define one class per file - this does not apply to private helper classes
+  that are not intended to be instantiated from the outside and thus are not
+  concerned by the PSR-0 standard;
 
 * Declare class properties before methods;
 
@@ -110,9 +112,9 @@ Naming Conventions
 ------------------
 
 * Use camelCase, not underscores, for variable, function and method
-  names;
+  names, arguments;
 
-* Use underscores for option, argument, parameter names;
+* Use underscores for option, parameter names;
 
 * Use namespaces for all classes;
 

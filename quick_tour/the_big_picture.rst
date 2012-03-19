@@ -58,7 +58,18 @@ have a ``Symfony/`` directory that looks like this:
 
     .. code-block:: bash
 
-        php bin/vendors install
+        curl -s http://getcomposer.org/installer | php
+
+    	php composer.phar install
+
+    If you don't have ``curl`` installed, you can also just download the ``installer``
+    file manually at http://getcomposer.org/installer. Place this file into your
+    project and then run:
+
+    .. code-block:: bash
+
+		php installer
+		php composer.phar install
 
 Checking the Configuration
 --------------------------

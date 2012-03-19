@@ -109,7 +109,7 @@ Note that there are two disadvantages when using a bootstrap file:
 * when debugging, one will need to place break points inside the bootstrap file.
 
 If you're using Symfony2 Standard Edition, the bootstrap file is automatically
-rebuilt after updating the vendor libraries via the ``php bin/vendors install``
+rebuilt after updating the vendor libraries via the ``php composer.phar install``
 command.
 
 Bootstrap Files and Byte Code Caches

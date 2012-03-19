@@ -10,9 +10,17 @@ values instead of files, because databases are easier to use and scale in a
 multi-webserver environment.
 
 Symfony2 has a built-in solution for database session storage called
-:class:`Symfony\\Component\\HttpFoundation\\SessionStorage\\PdoSessionStorage`.
+:class:`Symfony\\Component\\HttpFoundation\\Session\\Storage\\PdoSessionStorage`.
 To use it, you just need to change some parameters in ``config.yml`` (or the
 configuration format of your choice):
+
+.. versionadded:: 2.1
+    In Symfony2.1 the class and namespace are slightly modified. You can now 
+    find the `PdoSessionStorage` class in the `Session\\Storage` namespace:
+    ``Symfony\Component\HttpFoundation\Session\Storage\PdoSessionStorage``. Also
+    note the second and third constructor arguments to the class have changed
+    order. Below, you'll notice that ``%session.storage.options%`` and ``%pdo.db_options%``
+    have switched places.
 
 .. configuration-block::
 
@@ -40,8 +48,8 @@ configuration format of your choice):
                     password: mypassword
 
             session.storage.pdo:
-                class:     Symfony\Component\HttpFoundation\SessionStorage\PdoSessionStorage
-                arguments: [@pdo, %session.storage.options%, %pdo.db_options%]
+                class:     Symfony\Component\HttpFoundation\Session\Storage\PdoSessionStorage
+                arguments: [@pdo, %pdo.db_options%, %session.storage.options%]
 
     .. code-block:: xml
 
@@ -66,10 +74,10 @@ configuration format of your choice):
                 <argument>mypassword</argument>
             </service>
 
-            <service id="session.storage.pdo" class="Symfony\Component\HttpFoundation\SessionStorage\PdoSessionStorage">
+            <service id="session.storage.pdo" class="Symfony\Component\HttpFoundation\Session\Storage\PdoSessionStorage">
                 <argument type="service" id="pdo" />
-                <argument>%session.storage.options%</argument>
                 <argument>%pdo.db_options%</argument>
+                <argument>%session.storage.options%</argument>
             </service>
         </services>
 
@@ -101,10 +109,10 @@ configuration format of your choice):
         ));
         $container->setDefinition('pdo', $pdoDefinition);
 
-        $storageDefinition = new Definition('Symfony\Component\HttpFoundation\SessionStorage\PdoSessionStorage', array(
+        $storageDefinition = new Definition('Symfony\Component\HttpFoundation\Session\Storage\PdoSessionStorage', array(
             new Reference('pdo'),
-            '%session.storage.options%',
             '%pdo.db_options%',
+            '%session.storage.options%',
         ));
         $container->setDefinition('session.storage.pdo', $storageDefinition);
 

@@ -10,7 +10,7 @@ Understanding Scopes
 --------------------
 
 The scope of a service controls how long an instance of a service is used
-by the container. the Dependency Injection component provides two generic
+by the container. The Dependency Injection component provides two generic
 scopes:
 
 - `container` (the default one): The same instance is used each time you
@@ -18,7 +18,7 @@ scopes:
 
 - `prototype`: A new instance is created each time you request the service.
 
-The FrameworkBundle also defines a third scope: `request`. This scopes is
+The FrameworkBundle also defines a third scope: `request`. This scope is
 tied to the request, meaning a new instance is created for each subrequest
 and is unavailable outside the request (for instance in the CLI).
 

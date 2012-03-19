@@ -367,5 +367,5 @@ need to learn a lot to become a Symfony2 master. Ready to dig into these
 topics now? Look no further - go to the official :doc:`/book/index` and pick
 any topic you want.
 
-.. _standards:               https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-0.md
-.. _convention:              http://pear.php.net/
+.. _standards:  http://symfony.com/PSR0
+.. _convention: http://pear.php.net/

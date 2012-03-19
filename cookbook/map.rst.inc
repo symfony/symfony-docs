@@ -101,6 +101,7 @@
 
 * **Tools and Internals**
 
+  * :doc:`/cookbook/console/console_command`
   * :doc:`/cookbook/debugging`
 
 * **Web Services**

@@ -55,7 +55,7 @@ You can add as many routes as you like to a
 :class:`Symfony\\Component\\Routing\\RouteCollection`.
 
 The :method:`RouteCollection::add()<Symfony\\Component\\Routing\\RouteCollection::add>`
-method takes two arguments. The first is the name of the route, The second
+method takes two arguments. The first is the name of the route. The second
 is a :class:`Symfony\\Component\\Routing\\Route` object, which expects a
 URL path and some array of custom variables in its constructor. This array
 of custom variables can be *anything* that's significant to your application,
