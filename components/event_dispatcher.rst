@@ -481,9 +481,9 @@ Dispatching another event from within a listener::
     }
 
 While this above is sufficient for most uses, if your application uses multiple
-``EventDispatcher`` instances, you might need to specifically need to inject a
-known instance of the ``EventDispatcher`` into your listeners.  This could be
-done using constructor or setter injection as follows:
+``EventDispatcher`` instances, you might need to specifically inject a known
+instance of the ``EventDispatcher`` into your listeners.  This could be done
+using constructor or setter injection as follows:
 
 Constructor injection::
 
