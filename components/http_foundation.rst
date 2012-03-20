@@ -467,14 +467,14 @@ The attributes are stored internally in an "Bag", a PHP object that acts like
 an array. A few methods exist for "Bag" management:
 
 * :method:`Symfony\\Component\\HttpFoundation\\Session\\Session::registerBag`:
-  Registers a `Symfony\\Component\\HttpFoundation\\Session\\SessionBagInterface`
+  Registers a :class:`Symfony\\Component\\HttpFoundation\\Session\\SessionBagInterface`
 
 * :method:`Symfony\\Component\\HttpFoundation\\Session\\Session::getBag`:
-  Gets a `Symfony\\Component\\HttpFoundation\\Session\\SessionBagInterface` by
+  Gets a :class:`Symfony\\Component\\HttpFoundation\\Session\\SessionBagInterface` by
   bag name.
 
 * :method:`Symfony\\Component\\HttpFoundation\\Session\\Session::getFlashBag`:
-  Gets the `Symfony\\Component\\HttpFoundation\\Session\\Flash\\FlashBagInterface`.
+  Gets the :class:`Symfony\\Component\\HttpFoundation\\Session\\Flash\\FlashBagInterface`.
   This is just a shortcut for convenience.
 
 Save Handlers
@@ -592,8 +592,10 @@ data is an array, for example a set of tokens. In this case, managing the array
 becomes a burden because you have to retrieve the array then process it and
 store it again.
 
+```
     'tokens' => array('a' => 'a6c1e0b6',
                       'b' => 'f4a7b1f3')
+```
 
 So any processing of this might quickly get ugly, even simply adding a token to
 the array::
