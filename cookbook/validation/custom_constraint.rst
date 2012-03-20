@@ -48,9 +48,14 @@ Symfony2 will automatically look for another class, ``MyConstraintValidator``
 when actually performing the validation.
 
 The validator class is also simple, and only has one required method: ``isValid``.
-Take the ``NotBlankValidator`` as an example:
+Furthering our example, take a look at the ``ProtocolValidator`` as an example:
 
 .. code-block:: php
+
+    namespace Symfony\Component\Validator\Constraints;
+    
+    use Symfony\Component\Validator\Constraint;
+    use Symfony\Component\Validator\ConstraintValidator;
 
     class ProtocolValidator extends ConstraintValidator
     {
