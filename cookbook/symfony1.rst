@@ -127,13 +127,13 @@ example::
         // ...
 
 The file itself lives at
-``vendor/bundle/Sensio/Bundle/FrameworkExtraBundle/SensioFrameworkExtraBundle.php``.
+``vendor/sensio/framework-extra-bundle/Sensio/Bundle/FrameworkExtraBundle/SensioFrameworkExtraBundle.php``.
 As you can see, the location of the file follows the namespace of the class.
 Specifically, the namespace, ``Sensio\Bundle\FrameworkExtraBundle``, spells out
-the directory that the file should live in 
-(``vendor/bundle/Sensio/Bundle/FrameworkExtraBundle``). This is because, in the
-``app/autoload.php`` file, you'll configure Symfony to look for the ``Sensio``
-namespace in the ``vendor/bundle`` directory:
+the directory that the file should live in
+(``vendor/sensio/framework-extra-bundle/Sensio/Bundle/FrameworkExtraBundle/``).
+This is because, in the ``app/autoload.php`` file, you'll configure Symfony to
+look for the ``Sensio`` namespace in the ``vendor/sension`` directory:
 
 .. code-block:: php
 
@@ -155,7 +155,7 @@ contains a different class). In order for a class to be autoloaded, you
 
 As mentioned before, for the autoloader to work, it needs to know that the
 ``Sensio`` namespace lives in the ``vendor/bundles`` directory and that, for
-example, the ``Doctrine`` namespace lives in the ``vendor/doctrine/lib/``
+example, the ``Doctrine`` namespace lives in the ``vendor/doctrine/orm/lib/``
 directory. This mapping is entirely controlled by you via the
 ``app/autoload.php`` file.
 
@@ -247,7 +247,7 @@ In Symfony2, the bundles are activated inside the application kernel::
             // ...
             new Acme\DemoBundle\AcmeDemoBundle(),
         );
-        
+
         return $bundles;
     }
 

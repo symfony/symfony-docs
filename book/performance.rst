@@ -64,7 +64,7 @@ To use this class loader, simply adapt your ``autoloader.php`` as follows:
 .. code-block:: php
 
     // app/autoload.php
-    require __DIR__.'/../vendor/symfony/src/Symfony/Component/ClassLoader/ApcUniversalClassLoader.php';
+    require __DIR__.'/../vendor/symfony/symfony/src/Symfony/Component/ClassLoader/ApcUniversalClassLoader.php';
 
     use Symfony\Component\ClassLoader\ApcUniversalClassLoader;
 
