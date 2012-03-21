@@ -32,8 +32,14 @@ git repository:
         /app/bootstrap*
         /app/cache/*
         /app/logs/*
-        /vendor/  
+        /vendor/
         /app/config/parameters.ini
+
+.. tip::
+
+   You may also want to create a .gitignore file that can be used system-wide,
+   in which case, you can find more information here: `Github .gitignore`_
+   This way you can exclude files/folders often used by your IDE for all of your projects.
 
 4. Copy ``app/config/parameters.ini`` to ``app/config/parameters.ini.dist``.
    The ``parameters.ini`` file is ignored by git (see above) so that machine-specific
@@ -139,3 +145,4 @@ manage this is `Gitolite`_.
 .. _`GitHub`: https://github.com/
 .. _`barebones repository`: http://progit.org/book/ch4-4.html
 .. _`Gitolite`: https://github.com/sitaramc/gitolite
+.. _`Github .gitignore`: http://help.github.com/ignore-files/
