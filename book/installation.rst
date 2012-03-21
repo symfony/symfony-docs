@@ -22,6 +22,8 @@ Downloading a Symfony2 Distribution
     First, check that you have installed and configured a Web server (such
     as Apache) with PHP 5.3.2 or higher. For more information on Symfony2
     requirements, see the :doc:`requirements reference</reference/requirements>`.
+    For information on configuring your specific web server document root, see the
+    following documentation: `Apache`_ | `Nginx`_ .
 
 Symfony2 packages "distributions", which are fully-functional applications
 that include the Symfony2 core libraries, a selection of useful bundles, a
@@ -234,3 +236,6 @@ download all the necessary vendor libraries.
 .. _`Git`: http://git-scm.com/
 .. _`GitHub Bootcamp`: http://help.github.com/set-up-git-redirect
 .. _`Composer`: http://getcomposer.org/
+.. _`Apache`: http://httpd.apache.org/docs/current/mod/core.html#documentroot
+.. _`Nginx`: http://wiki.nginx.org/HttpCoreModule#root
+

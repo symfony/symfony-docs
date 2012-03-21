@@ -46,7 +46,11 @@ greeted. To create the page, follow the simple two-step process.
     The tutorial assumes that you've already downloaded Symfony2 and configured
     your webserver. The above URL assumes that ``localhost`` points to the
     ``web`` directory of your new Symfony2 project. For detailed information
-    on this process, see the :doc:`Installing Symfony2</book/installation>`.
+    on this process, see the documentation on the web server you are using.
+    Here's the relevant documentation page for some web server you might be using:
+    
+    * For Apache HTTP Server, refer to `Apache's DirectoryIndex documentation`_.
+    * For Nginx, refer to `Nginx HttpCoreModule location documentation`_.
 
 Before you begin: Create the Bundle
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -989,3 +993,5 @@ to rapidly develop applications.
 .. _`Twig`: http://twig.sensiolabs.org
 .. _`third-party bundles`: http://symfony2bundles.org/
 .. _`Symfony Standard Edition`: http://symfony.com/download
+.. _`Apache's DirectoryIndex documentation`: http://httpd.apache.org/docs/2.0/mod/mod_dir.html
+.. _`Nginx HttpCoreModule location documentation`: http://wiki.nginx.org/HttpCoreModule#location
