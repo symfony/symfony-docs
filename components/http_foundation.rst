@@ -590,12 +590,10 @@ your application could operate without clashing. For example, `module1.foo` and
 `module2.foo`. However, sometimes this is not very practical when the attributes
 data is an array, for example a set of tokens. In this case, managing the array
 becomes a burden because you have to retrieve the array then process it and
-store it again.
+store it again::
 
-```
-    'tokens' => array('a' => 'a6c1e0b6',
-                      'b' => 'f4a7b1f3')
-```
+    $tokens = array('tokens' => array('a' => 'a6c1e0b6',
+                                      'b' => 'f4a7b1f3'));
 
 So any processing of this might quickly get ugly, even simply adding a token to
 the array::
