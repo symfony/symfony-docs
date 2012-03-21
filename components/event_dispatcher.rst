@@ -434,6 +434,9 @@ which returns a boolean value::
 EventDispatcher aware Events and Listeners
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+.. versionadded:: 2.1
+    The ``Event`` object is injected with the invoking dispatcher from Symfony 2.1
+
 The ``EventDispatcher`` always injects a reference to itself in the passed event
 object.  This means that all listeners have direct access to the
 ``EventDispatcher`` object that notified the listener via the passed ``Event``
@@ -526,6 +529,9 @@ can be the way to go, especially for optional dependencies.
 Dispatcher Shortcuts
 ~~~~~~~~~~~~~~~~~~~~
 
+.. versionadded:: 2.1
+    ``EventDispatcher::dispatch()`` method returns the event since Symfony 2.1.
+
 The :method:`Symfony\Component\EventDispatcher\EventDispatcher::dispatch` method
 always returns either an :class:`Symfony\Component\EventDispatcher\Event` object
 or the event passed event.  This allows for various shortcuts, for example
@@ -562,6 +568,9 @@ and so on...
 
 Event Name Introspection
 ~~~~~~~~~~~~~~~~~~~~~~~~
+
+. versionadded:: 2.1
+    Added event name to the ``Event`` object since Symfony 2.1
 
 Since the ``EventDispatcher`` already knows the name of the event when dispatching
 and event, the event name is also injected into the
