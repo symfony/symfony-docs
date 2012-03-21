@@ -824,8 +824,8 @@ for that library.
 Translating Constraint Messages
 -------------------------------
 
-The best way to understand constraint translation is to see it in action. To start, suppose
-you've created a plain-old-PHP object that you need to use somewhere in
+The best way to understand constraint translation is to see it in action. To start,
+suppose you've created a plain-old-PHP object that you need to use somewhere in
 your application:
 
 .. code-block:: php
@@ -838,7 +838,9 @@ your application:
         public $name;
     }
 
-Add constraints though any of the supported methods. Set the message option to the translation source text. For example, to guarantee that the $name property is not empty, add the following:
+Add constraints though any of the supported methods. Set the message option to the
+translation source text. For example, to guarantee that the $name property is not
+empty, add the following:
 
 .. configuration-block::
 
