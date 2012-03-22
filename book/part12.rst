@@ -2,7 +2,7 @@ The DependencyInjection Component
 =================================
 
 In the last installment of this series, we have emptied the
-``Simplex\\Framework`` class by extending the ``HttpKernel`` class from
+``Simplex\Framework`` class by extending the ``HttpKernel`` class from
 the eponymous component. Seeing this empty class, you might be tempted to move
 some code from the front controller to it::
 
@@ -243,7 +243,7 @@ We have obviously barely scratched the surface of what you can do with the
 container: from class names as parameters, to overriding existing object
 definitions, from scope support to dumping a container to a plain PHP class,
 and much more. The Symfony dependency injection container is really powerful
-and is able to manage any kind of PHP classes.
+and is able to manage any kind of PHP class.
 
 Don't yell at me if you don't want to have a dependency injection container in
 your framework. If you don't like it, don't use it. It's your framework, not
