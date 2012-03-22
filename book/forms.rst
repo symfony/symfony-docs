@@ -1153,6 +1153,19 @@ To customize any portion of a form, you just need to override the appropriate
 fragment. Knowing exactly which block or file to override is the subject of
 the next section.
 
+.. versionadded:: 2.1
+   An alternate Twig syntax for ``form_theme`` has been introduced in 2.1. It accepts
+   any valid Twig expression (the most noticeable difference is using an array when
+   using multiple themes).
+
+   .. code-block:: html+jinja
+
+       {# src/Acme/TaskBundle/Resources/views/Default/new.html.twig #}
+
+       {% form_theme form with 'AcmeTaskBundle:Form:fields.html.twig' %}
+
+       {% form_theme form with ['AcmeTaskBundle:Form:fields.html.twig', 'AcmeTaskBundle:Form:fields2.html.twig'] %}
+
 For a more extensive discussion, see :doc:`/cookbook/form/form_customization`.
 
 .. index::
