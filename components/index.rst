@@ -14,6 +14,7 @@ The Components
     http_foundation
     locale
     process
+    resource_watcher
     routing
     templating
     yaml
