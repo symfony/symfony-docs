@@ -5,6 +5,7 @@ The Components
     :hidden:
 
     class_loader
+    config
     console
     css_selector
     dom_crawler
