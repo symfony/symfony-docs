@@ -435,7 +435,7 @@ EventDispatcher aware Events and Listeners
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. versionadded:: 2.1
-    The ``Event`` object is injected with the invoking dispatcher from Symfony 2.1
+    The ``Event`` object contains a reference to the invoking dispatcher since Symfony 2.1
 
 The ``EventDispatcher`` always injects a reference to itself in the passed event
 object.  This means that all listeners have direct access to the
@@ -445,7 +445,7 @@ method.
 
 This can lead to some advanced applications of the ``EventDispatcher`` including
 letting listeners dispatch other events, event chaining or even lazy loading of
-more listeners into the dispatcher object.  Examples follow:
+more listeners into the dispatcher object. Examples follow:
 
 Lazy loading listeners::
 
@@ -532,11 +532,11 @@ Dispatcher Shortcuts
 .. versionadded:: 2.1
     ``EventDispatcher::dispatch()`` method returns the event since Symfony 2.1.
 
-The :method:`Symfony\Component\EventDispatcher\EventDispatcher::dispatch` method
-always returns either an :class:`Symfony\Component\EventDispatcher\Event` object
-or the event passed event.  This allows for various shortcuts, for example
-if one does not need a custom event object, one can simply rely on a plain
-:class:`Symfony\Component\EventDispatcher\Event` object.  You do not even need
+The :method:`EventDispatcher::dispatch<Symfony\\Component\\EventDispatcher\\EventDispatcher::dispatch>`
+method always returns an :class:`Symfony\\Component\\EventDispatcher\\Event`
+object. This allows for various shortcuts. For example if one does not need
+a custom event object, one can simply rely on a plain
+:class:`Symfony\\Component\\EventDispatcher\\Event` object. You do not even need
 to pass this to the dispatcher as it will create one by default unless you
 specifically pass one::
 
@@ -544,7 +544,7 @@ specifically pass one::
 
 Moreover, the EventDispatcher always returns whichever event object that was
 dispatched, i.e. either the event that was passed or the event that was
-created internally by the dispatcher.  This allows for nice shortcuts::
+created internally by the dispatcher. This allows for nice shortcuts::
 
     if (!$dispatcher->dispatch('foo.event')->isStoppedPropagation()) {
         // ...
@@ -573,8 +573,8 @@ Event Name Introspection
     Added event name to the ``Event`` object since Symfony 2.1
 
 Since the ``EventDispatcher`` already knows the name of the event when dispatching
-and event, the event name is also injected into the
-:class:`Symfony\Component\EventDispatcher\Event` objects making it available
+it, the event name is also injected into the
+:class:`Symfony\\Component\\EventDispatcher\\Event` objects, making it available
 to event listeners via the :method:`Symfony\\Component\\EventDispatcher\\Event::getName`
 method.
 
