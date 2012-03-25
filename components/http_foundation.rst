@@ -697,7 +697,7 @@ has a simple API
 
 For simple applications it is usually sufficient to have one flash message per
 type, for example a confirmation notice after a form is submitted. However,
-flash messages are stored in a keyed array by flash `$type` which means your
+flash messages are stored in a keyed array by flash ``$type`` which means your
 application can issue multiple messages for a given type. This allows the API
 to be used for more complex messaging in your application.
 
@@ -713,7 +713,7 @@ Examples of setting multiple flashes::
     $session->getFlashBag()->add('error', 'Failed to update name');
     $session->getFlashBag()->add('error', 'Another error');
 
-Displaying the flash messages as follows:
+Displaying the flash messages might look like this:
 
 Simple, display one type of message::
 
