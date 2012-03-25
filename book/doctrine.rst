@@ -1141,7 +1141,7 @@ the current date, only when the entity is first persisted (i.e. inserted):
     .. code-block:: php-annotations
 
         /**
-         * @ORM\prePersist
+         * @ORM\PrePersist
          */
         public function setCreatedValue()
         {
@@ -1276,7 +1276,7 @@ and ``nullable``. Take a few examples:
          * A string field of length 150 that persists to an "email_address" column
          * and has a unique index.
          *
-         * @ORM\Column(name="email_address", unique="true", length="150")
+         * @ORM\Column(name="email_address", unique=true, length="150")
          */
         protected $email;
 
