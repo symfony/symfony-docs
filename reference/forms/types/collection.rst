@@ -56,7 +56,7 @@ The simplest way to render this is all at once:
 
     .. code-block:: php
     
-        <?php echo $view['form']->row($form['emails]) ?>
+        <?php echo $view['form']->row($form['emails']) ?>
 
 A much more flexible method would look like this:
 
@@ -82,7 +82,6 @@ A much more flexible method would look like this:
         <?php echo $view['form']->errors($form['emails']) ?>
         
         <ul>
-        {% for emailField in form.emails %}
         <?php foreach ($form['emails'] as $emailField): ?>
             <li>
                 <?php echo $view['form']->errors($emailField) ?>
