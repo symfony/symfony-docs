@@ -361,7 +361,7 @@ property, instead of the actual filename::
         }
 
         /**
-         * @ORM\PostRemove()
+         * @ORM\PreRemove()
          */
         public function removeUpload()
         {
