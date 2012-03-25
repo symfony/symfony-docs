@@ -400,10 +400,13 @@ Quick example::
     $session->set('name', 'Drak');
     $session->get('name');
 
-    // set and retrieve flash messages
-    $session->getFlashBag()->set('notice', 'Profile updated');
+    // set flash messages
+    $session->getFlashBag()->add('notice', 'Profile updated');
 
-    echo $session->getFlashBag()->get('notice');
+    // retrieve messages
+    foreach ($session->getFlashBag()->get('notice', array()) as $message) {
+        echo "<div class='flash-notice'>$message</div>";
+    }
 
 Session API
 ~~~~~~~~~~~
@@ -661,32 +664,76 @@ This is however just one application for flash messages.
 :class:`Symfony\\Component\\HttpFoundation\\Session\\Flash\\FlashBagInterface`
 has a simple API
 
+* :method:`Symfony\\Component\\HttpFoundation\\Session\\Flash\\FlashBagInterface::add`:
+  Adds a flash message to the stack of specified type;
+
 * :method:`Symfony\\Component\\HttpFoundation\\Session\\Flash\\FlashBagInterface::set`:
-  Sets a flash by type;
+  Sets flashes by type;  This method conveniently takes both singles messages as
+  a ``string`` or multiple messages in an ``array``.
 
 * :method:`Symfony\\Component\\HttpFoundation\\Session\\Flash\\FlashBagInterface::get`:
-  Gets a flash by type and clears the flash from the bag;
+  Gets flashes by type and clears those flashes from the bag;
 
 * :method:`Symfony\\Component\\HttpFoundation\\Session\\Flash\\FlashBagInterface::setAll`:
-  Sets an array of flashes by type => message;
+  Sets all flashes, accepts a keyed array of arrays ``type => array(messages)``;
 
 * :method:`Symfony\\Component\\HttpFoundation\\Session\\Flash\\FlashBagInterface::all`:
-  Gets all flashes and clears the flashes from the bag;
+  Gets all flashes (as a keyed array of arrays) and clears the flashes from the bag;
 
 * :method:`Symfony\\Component\\HttpFoundation\\Session\\Flash\\FlashBagInterface::peek`:
-  Gets a flash by type (read only);
+  Gets flashes by type (read only);
 
 * :method:`Symfony\\Component\\HttpFoundation\\Session\\Flash\\FlashBagInterface::peekAll`:
-  Gets all flashes (read only);
+  Gets all flashes (read only) as keyed array of arrays;
 
 * :method:`Symfony\\Component\\HttpFoundation\\Session\\Flash\\FlashBagInterface::has`:
-  Returns true if the type exists;
+  Returns true if the type exists, false if not;
 
 * :method:`Symfony\\Component\\HttpFoundation\\Session\\Flash\\FlashBagInterface::keys`:
-  Returns an array of stored types;
+  Returns an array of the stored flash types;
 
 * :method:`Symfony\\Component\\HttpFoundation\\Session\\Flash\\FlashBagInterface::clear`:
-  Clear the bag;
+  Clears the bag;
+
+For simple applications it is usually sufficient to have one flash message per
+type, for example a confirmation notice after a form is submitted. However,
+flash messages are stored in a keyed array by flash `$type` which means your
+application can issue multiple messages for a given type. This allows the API
+to be used for more complex messaging in your application.
+
+Examples of setting multiple flashes::
+
+    use Symfony\\Component\\HttpFoundation\\Session\\Session;
+
+    $session = new Session();
+    $session->start();
+
+    // add flash messages
+    $session->getFlashBag()->add('warning', 'Your config file is writable, it should be set read-only');
+    $session->getFlashBag()->add('error', 'Failed to update name');
+    $session->getFlashBag()->add('error', 'Another error');
+
+Displaying the flash messages as follows:
+
+Simple, display one type of message::
+
+    // display warnings
+    foreach ($session->getFlashBag()->get('warning', array()) as $message) {
+        echo "<div class='flash-warning'>$message</div>";
+    }
+
+    // display errors
+    foreach ($session->getFlashBag()->get('error', array()) as $message) {
+        echo "<div class='flash-error'>$message</div>";
+    }
+
+Compact method to process display all flashes at once::
+
+    foreach ($session->getFlashBag()->all() as $type => $messages) {
+        foreach ($messages as $message) {
+            echo "<div class='flash-$type'>$message</div>\n";
+        }
+    }
 
 Testability
 -----------
