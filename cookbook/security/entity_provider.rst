@@ -95,33 +95,51 @@ focus on the most important methods that come from the
             $this->salt = base_convert(sha1(uniqid(mt_rand(), true)), 16, 36);
         }
 
-        public function getRoles()
-        {
-            return array('ROLE_USER');
-        }
-
-        public function equals(UserInterface $user)
-        {
-            return $user->getUsername() === $this->username;
-        }
-
-        public function eraseCredentials()
-        {
-        }
-
+        /**
+         * @inheritDoc
+         */
         public function getUsername()
         {
             return $this->username;
         }
 
+        /**
+         * @inheritDoc
+         */
         public function getSalt()
         {
             return $this->salt;
         }
 
+        /**
+         * @inheritDoc
+         */
         public function getPassword()
         {
             return $this->password;
+        }
+
+        /**
+         * @inheritDoc
+         */
+        public function getRoles()
+        {
+            return array('ROLE_USER');
+        }
+
+        /**
+         * @inheritDoc
+         */
+        public function eraseCredentials()
+        {
+        }
+
+        /**
+         * @inheritDoc
+         */
+        public function equals(UserInterface $user)
+        {
+            return $this->username === $user->getUsername();
         }
     }
 
