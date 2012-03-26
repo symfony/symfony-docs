@@ -58,29 +58,29 @@ focus on the most important methods that come from the
     class User implements UserInterface
     {
         /**
-         * @ORM\Column(name="id", type="integer")
-         * @ORM\Id()
+         * @ORM\Column(type="integer")
+         * @ORM\Id
          * @ORM\GeneratedValue(strategy="AUTO")
          */
         private $id;
 
         /**
-         * @ORM\Column(name="username", type="string", length=25, unique=true)
+         * @ORM\Column(type="string", length=25, unique=true)
          */
         private $username;
 
         /**
-         * @ORM\Column(name="salt", type="string", length=40)
+         * @ORM\Column(type="string", length=40)
          */
         private $salt;
 
         /**
-         * @ORM\Column(name="password", type="string", length=40)
+         * @ORM\Column(type="string", length=40)
          */
         private $password;
 
         /**
-         * @ORM\Column(name="email", type="string", length=60, unique=true)
+         * @ORM\Column(type="string", length=60, unique=true)
          */
         private $email;
 
