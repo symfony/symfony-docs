@@ -193,6 +193,7 @@ then be checked against our User entity records in the database:
     .. code-block:: yaml
 
         # app/config/security.yml
+
         security:
             encoders:
                 Acme\UserBundle\Entity\User:
@@ -484,7 +485,9 @@ that forces it to have a ``getRole()`` method::
 
         // ... getters and setters for each property
 
-        /** @see RoleInterface */
+        /**
+         * @see RoleInterface
+         */
         public function getRole()
         {
             return $this->role;
