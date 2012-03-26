@@ -980,7 +980,7 @@ be stored in the database.
     class User implements UserInterface
     {
         /**
-         * @ORM\Column(type="string", length="255")
+         * @ORM\Column(type="string", length=255)
          */
         protected $username;
 
