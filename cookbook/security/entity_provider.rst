@@ -462,13 +462,19 @@ that forces it to have a ``getRole()`` method::
          */
         private $id;
 
-        /** @ORM\Column(name="name", type="string", length=30) */
+        /**
+         * @ORM\Column(name="name", type="string", length=30)
+         */
         private $name;
 
-        /** @ORM\Column(name="role", type="string", length=20, unique=true) */
+        /**
+         * @ORM\Column(name="role", type="string", length=20, unique=true)
+         */
         private $role;
 
-        /** @ORM\ManyToMany(targetEntity="User", mappedBy="groups") */
+        /**
+         * @ORM\ManyToMany(targetEntity="User", mappedBy="groups")
+         */
         private $users;
 
         public function __construct()
