@@ -46,8 +46,8 @@ focus on the most important methods that come from the
 
     namespace Acme\UserBundle\Entity;
 
-    use Symfony\Component\Security\Core\User\UserInterface;
     use Doctrine\ORM\Mapping as ORM;
+    use Symfony\Component\Security\Core\User\UserInterface;
 
     /**
      * Acme\UserBundle\Entity\User
