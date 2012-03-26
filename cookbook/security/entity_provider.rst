@@ -201,6 +201,10 @@ then be checked against our User entity records in the database:
                     encode_as_base64: false
                     iterations:       1
 
+            role_hierarchy:
+                ROLE_ADMIN:       ROLE_USER
+                ROLE_SUPER_ADMIN: [ ROLE_USER, ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH ]
+
             providers:
                 administrators:
                     entity: { class: AcmeUserBundle:User, property: username }
