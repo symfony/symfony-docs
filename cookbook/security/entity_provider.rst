@@ -196,9 +196,9 @@ then be checked against our User entity records in the database:
         security:
             encoders:
                 Acme\UserBundle\Entity\User:
-                    algorithm: sha1
+                    algorithm:        sha1
                     encode_as_base64: false
-                    iterations: 1
+                    iterations:       1
 
             providers:
                 administrators:
