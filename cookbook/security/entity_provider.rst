@@ -147,12 +147,14 @@ In order to use an instance of the ``AcmeUserBundle:User`` class in the Symfony
 security layer, the entity class must implement the
 :class:`Symfony\\Component\\Security\\Core\\User\\UserInterface`. This
 interface forces the class to implement the six following methods:
-    - ``getUsername()``
-    - ``getSalt()``
-    - ``getPassword()``
-    - ``getRoles()``
-    - ``eraseCredentials()``
-    - ``equals()``
+
+* ``getUsername()``
+* ``getSalt()``
+* ``getPassword()``
+* ``getRoles()``
+* ``eraseCredentials()``
+* ``equals()``
+
 For more details on each of these, see :class:`Symfony\\Component\\Security\\Core\\User\\UserInterface`.
 
 To keep it simple, the ``equals()`` method just compares the ``username`` field
