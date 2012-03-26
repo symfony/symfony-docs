@@ -29,7 +29,24 @@ Basic Usage
                     - Email:
                         message: The email "{{ value }}" is not a valid email.
                         checkMX: true
+    .. code-block:: xml
 
+        <!-- src/Acme/BlogBundle/Resources/config/validation.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
+
+            <class name="Acme\BlogBundle\Entity\Author">
+                <property name="email">
+                    <constraint name="Email">
+                        <option name="message">The email "{{ value }}" is not a valid email.</option>
+                        <option name="checkMX">true</option>
+                    </constraint>
+                </property>
+            </class>
+        </constraint-mapping>
+        
     .. code-block:: php-annotations
 
         // src/Acme/BlogBundle/Entity/Author.php
