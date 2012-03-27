@@ -3,11 +3,11 @@ How to add "Remember Me" Login Functionality
 
 Once a user is authenticated, their credentials are typically stored in the
 session. This means that when the session ends they will be logged out and
-have to provide their login details again next time they wish to access the 
-application. You can allow users to choose to stay logged in for longer than 
-the session lasts using a cookie with the ``remember_me`` firewall option. 
-The firewall needs to have a secret key configured, which is used to encrypt 
-the cookie's content. It also has several options with default values which 
+have to provide their login details again next time they wish to access the
+application. You can allow users to choose to stay logged in for longer than
+the session lasts using a cookie with the ``remember_me`` firewall option.
+The firewall needs to have a secret key configured, which is used to encrypt
+the cookie's content. It also has several options with default values which
 are shown here:
 
 .. configuration-block::
@@ -15,10 +15,11 @@ are shown here:
     .. code-block:: yaml
 
         # app/config/security.yml
+
         firewalls:
             main:
                 remember_me:
-                    key:      aSecretKey
+                    key:      %secret%
                     lifetime: 3600
                     path:     /
                     domain:   ~ # Defaults to the current domain from $_SERVER
@@ -26,13 +27,14 @@ are shown here:
     .. code-block:: xml
 
         <!-- app/config/security.xml -->
+
         <config>
             <firewall>
                 <remember-me
-                    key="aSecretKey"
-                    lifetime="3600"
-                    path="/"
-                    domain="" <!-- Defaults to the current domain from $_SERVER -->
+                    key      = "%secret%"
+                    lifetime = "3600"
+                    path     = "/"
+                    domain   = "" <!-- Defaults to the current domain from $_SERVER -->
                 />
             </firewall>
         </config>
@@ -40,13 +42,14 @@ are shown here:
     .. code-block:: php
 
         // app/config/security.php
+
         $container->loadFromExtension('security', array(
             'firewalls' => array(
                 'main' => array('remember_me' => array(
-                    'key'                     => 'aSecretKey',
-                    'lifetime'                => 3600,
-                    'path'                    => '/',
-                    'domain'                  => '', // Defaults to the current domain from $_SERVER
+                    'key'      => '%secret%',
+                    'lifetime' => 3600,
+                    'path'     => '/',
+                    'domain'   => '', // Defaults to the current domain from $_SERVER
                 )),
             ),
         ));
@@ -89,7 +92,7 @@ might ultimately look like this:
 
         <form action="<?php echo $view['router']->generate('login_check') ?>" method="post">
             <label for="username">Username:</label>
-            <input type="text" id="username" 
+            <input type="text" id="username"
                    name="_username" value="<?php echo $last_username ?>" />
 
             <label for="password">Password:</label>
@@ -117,12 +120,12 @@ before accessing certain resources. For example, you might allow a "remember me"
 user to see basic account information, but then require them to actually
 re-authenticate before modifying that information.
 
-The security component provides an easy way to do this. In addition to roles 
+The security component provides an easy way to do this. In addition to roles
 explicitly assigned to them, users are automatically given one of the following
 roles depending on how they are authenticated:
 
-* ``IS_AUTHENTICATED_ANONYMOUSLY`` - automatically assigned to a user who is 
-  in a firewall protected part of the site but who has not actually logged in. 
+* ``IS_AUTHENTICATED_ANONYMOUSLY`` - automatically assigned to a user who is
+  in a firewall protected part of the site but who has not actually logged in.
   This is only possible if anonymous access has been allowed.
 
 * ``IS_AUTHENTICATED_REMEMBERED`` - automatically assigned to a user who
@@ -140,14 +143,14 @@ You can use these to control access beyond the explicitly assigned roles.
     role, then you also have the other two roles. In other words, these roles
     represent three levels of increasing "strength" of authentication.
 
-You can use these additional roles for finer grained control over access to 
-parts of a site. For example, you may want you user to be able to view their 
-account at ``/account`` when authenticated by cookie but to have to provide 
+You can use these additional roles for finer grained control over access to
+parts of a site. For example, you may want you user to be able to view their
+account at ``/account`` when authenticated by cookie but to have to provide
 their login details to be able to edit the account details. You can do this
 by securing specific controller actions using these roles. The edit action
-in the controller could be secured using the service context. 
+in the controller could be secured using the service context.
 
-In the following example, the action is only allowed if the user has the 
+In the following example, the action is only allowed if the user has the
 ``IS_AUTHENTICATED_FULLY`` role.
 
 .. code-block:: php
@@ -186,10 +189,10 @@ which can secure your controller using annotations:
     If you also had an access control in your security configuration that
     required the user to have a ``ROLE_USER`` role in order to access any
     of the account area, then you'd have the following situation:
-    
+
     * If a non-authenticated (or anonymously authenticated user) tries to
       access the account area, the user will be asked to authenticate.
-    
+
     * Once the user has entered his username and password, assuming the
       user receives the ``ROLE_USER`` role per your configuration, the user
       will have the ``IS_AUTHENTICATED_FULLY`` role and be able to access
