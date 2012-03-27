@@ -569,7 +569,7 @@ and so on...
 Event Name Introspection
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
-. versionadded:: 2.1
+.. versionadded:: 2.1
     Added event name to the ``Event`` object since Symfony 2.1
 
 Since the ``EventDispatcher`` already knows the name of the event when dispatching
