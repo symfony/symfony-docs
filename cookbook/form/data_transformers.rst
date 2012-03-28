@@ -132,7 +132,7 @@ Next, we create the data transformer, which does the actual conversion::
          * @param  Entity\Issue|null $user
          * @return string
          */
-        public function transform(Entity\Issue $issue = null)
+        public function transform($issue = null)
         {
             if (null === $issue) {
                 return "";
