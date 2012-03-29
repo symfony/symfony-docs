@@ -918,7 +918,7 @@ Session meta-data
 Sessions are decorated with some basic meta-data to enable fine control over the
 security settings. The session object has a getter for the meta-data,
 :method:`Symfony\Component\HttpFoundation\Session\Session::getMeta` which
-exposes an instance of :class:`Symfony\Component\HttpFoundation\Session\MetaBag`::
+exposes an instance of :class:`Symfony\Component\HttpFoundation\Session\Storage\MetaBag`::
 
     $session->getMeta()->getCreated();
     $session->getMeta()->getLastUsed();
