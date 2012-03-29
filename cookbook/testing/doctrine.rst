@@ -117,8 +117,8 @@ the following example::
     class ProductRepository extends EntityRepository
     {
         /**
-         * @param string $name
-         * @return
+         * @param  string $name
+         * @return \Doctrine\DBAL\Query\QueryBuilder
          */
         public function createSearchByNameQueryBuilder($name)
         {
