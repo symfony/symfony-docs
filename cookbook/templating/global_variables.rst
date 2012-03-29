@@ -26,7 +26,7 @@ system, which lets you isolate or reuse the value:
 
 .. code-block:: ini
 
-    ; app/config/parameters.ini
+    ; app/config/parameters.yml
     [parameters]
         ga_tracking: UA-xxxxx-x
 

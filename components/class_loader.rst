@@ -74,11 +74,11 @@ or
 :method:`Symfony\\Component\\ClassLoader\\UniversalClassLoader::registerNamespaces`
 methods::
 
-    $loader->registerNamespace('Symfony', __DIR__.'/vendor/symfony/src');
+    $loader->registerNamespace('Symfony', __DIR__.'/vendor/symfony/symfony/src');
 
     $loader->registerNamespaces(array(
-        'Symfony' => __DIR__.'/../vendor/symfony/src',
-        'Monolog' => __DIR__.'/../vendor/monolog/src',
+        'Symfony' => __DIR__.'/../vendor/symfony/symfony/src',
+        'Monolog' => __DIR__.'/../vendor/monolog/monolog/src',
     ));
 
     $loader->register();
@@ -89,11 +89,11 @@ or
 :method:`Symfony\\Component\\ClassLoader\\UniversalClassLoader::registerPrefixes`
 methods::
 
-    $loader->registerPrefix('Twig_', __DIR__.'/vendor/twig/lib');
+    $loader->registerPrefix('Twig_', __DIR__.'/vendor/twig/twig/lib');
 
     $loader->registerPrefixes(array(
-        'Swift_' => __DIR__.'/vendor/swiftmailer/lib/classes',
-        'Twig_'  => __DIR__.'/vendor/twig/lib',
+        'Swift_' => __DIR__.'/vendor/swiftmailer/swiftmailer/lib/classes',
+        'Twig_'  => __DIR__.'/vendor/twig/twig/lib',
     ));
 
     $loader->register();
@@ -108,10 +108,10 @@ for in a location list to ease the vendoring of a sub-set of classes for large
 projects::
 
     $loader->registerNamespaces(array(
-        'Doctrine\\Common'           => __DIR__.'/vendor/doctrine-common/lib',
-        'Doctrine\\DBAL\\Migrations' => __DIR__.'/vendor/doctrine-migrations/lib',
-        'Doctrine\\DBAL'             => __DIR__.'/vendor/doctrine-dbal/lib',
-        'Doctrine'                   => __DIR__.'/vendor/doctrine/lib',
+        'Doctrine\\Common'           => __DIR__.'/vendor/doctrine/common/lib',
+        'Doctrine\\DBAL\\Migrations' => __DIR__.'/vendor/doctrine/migrations/lib',
+        'Doctrine\\DBAL'             => __DIR__.'/vendor/doctrine/dbal/lib',
+        'Doctrine'                   => __DIR__.'/vendor/doctrine/orm/lib',
     ));
 
     $loader->register();

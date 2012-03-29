@@ -323,7 +323,7 @@ On the rendered page, the result will look something like this:
 
 .. code-block:: html
 
-    <ul class="tags" data-prototype="&lt;div&gt;&lt;label class=&quot; required&quot;&gt;$$name$$&lt;/label&gt;&lt;div id=&quot;task_tags_$$name$$&quot;&gt;&lt;div&gt;&lt;label for=&quot;task_tags_$$name$$_name&quot; class=&quot; required&quot;&gt;Name&lt;/label&gt;&lt;input type=&quot;text&quot; id=&quot;task_tags_$$name$$_name&quot; name=&quot;task[tags][$$name$$][name]&quot; required=&quot;required&quot; maxlength=&quot;255&quot; /&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;">
+    <ul class="tags" data-prototype="&lt;div&gt;&lt;label class=&quot; required&quot;&gt;__name__&lt;/label&gt;&lt;div id=&quot;task_tags___name__&quot;&gt;&lt;div&gt;&lt;label for=&quot;task_tags___name___name&quot; class=&quot; required&quot;&gt;Name&lt;/label&gt;&lt;input type=&quot;text&quot; id=&quot;task_tags___name___name&quot; name=&quot;task[tags][__name__][name]&quot; required=&quot;required&quot; maxlength=&quot;255&quot; /&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;">
 
 The goal of this section will be to use JavaScript to read this attribute
 and dynamically add new tag forms when the user clicks a "Add a tag" link.
@@ -360,9 +360,12 @@ will be show next):
 
 The ``addTagForm`` function's job will be to use the ``data-prototype`` attribute
 to dynamically add a new form when this link is clicked. The ``data-prototype``
-HTML contains the tag ``text`` input element with a name of ``task[tags][$$name$$][name]``
-and id of ``task_tags_$$name$$_name``. The ``$$name`` is a little "placeholder",
+HTML contains the tag ``text`` input element with a name of ``task[tags][__name__][name]``
+and id of ``task_tags___name___name``. The ``__name__`` is a little "placeholder",
 which we'll replace with a unique, incrementing number (e.g. ``task[tags][3][name]``).
+
+.. versionadded:: 2.1
+    The placeholder was changed from ``$$name$$`` to ``__name__`` in Symfony 2.1
 
 The actual code needed to make this all work can vary quite a bit, but here's
 one example:
@@ -373,9 +376,9 @@ one example:
         // Get the data-prototype we explained earlier
         var prototype = collectionHolder.attr('data-prototype');
 
-        // Replace '$$name$$' in the prototype's HTML to
+        // Replace '__name__' in the prototype's HTML to
         // instead be a number based on the current collection's length.
-        var newForm = prototype.replace(/\$\$name\$\$/g, collectionHolder.children().length);
+        var newForm = prototype.replace(/__name__/g, collectionHolder.children().length);
 
         // Display the form in the page in an li, before the "Add a tag" link li
         var $newFormLi = $('<li></li>').append(newForm);

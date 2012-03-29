@@ -403,6 +403,43 @@ method::
 In both of these cases, *only* the ``registration`` validation group will
 be used to validate the underlying object.
 
+Groups based on Submitted Data
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 2.1
+   The ability to specify a callback or Closure in ``validation_groups``
+   is new to version 2.1
+
+If you need some advanced logic to determine the validation groups (e.g.
+based on submitted data), you can set the ``validation_groups`` option
+to an array callback, or a ``Closure``::
+
+    public function getDefaultOptions(array $options)
+    {
+        return array(
+            'validation_groups' => array('Acme\\AcmeBundle\\Entity\\Client', 'determineValidationGroups'),
+        );
+    }
+
+This will call the static method ``determineValidationGroups()`` on the
+``Client`` class after the form is bound, but before validation is executed.
+The Form object is passed as an argument to that method (see next example).
+You can also define whole logic inline by using a Closure::
+
+    public function getDefaultOptions(array $options)
+    {
+        return array(
+            'validation_groups' => function(FormInterface $form) {
+                $data = $form->getData();
+                if (Entity\Client::TYPE_PERSON == $data->getType()) {
+                    return array('person')
+                } else {
+                    return array('company');
+                }
+            },
+        );
+    }
+
 .. index::
    single: Forms; Built-in Field Types
 
@@ -1115,6 +1152,19 @@ before falling back to the global theme.
 To customize any portion of a form, you just need to override the appropriate
 fragment. Knowing exactly which block or file to override is the subject of
 the next section.
+
+.. versionadded:: 2.1
+   An alternate Twig syntax for ``form_theme`` has been introduced in 2.1. It accepts
+   any valid Twig expression (the most noticeable difference is using an array when
+   using multiple themes).
+
+   .. code-block:: html+jinja
+
+       {# src/Acme/TaskBundle/Resources/views/Default/new.html.twig #}
+
+       {% form_theme form with 'AcmeTaskBundle:Form:fields.html.twig' %}
+
+       {% form_theme form with ['AcmeTaskBundle:Form:fields.html.twig', 'AcmeTaskBundle:Form:fields2.html.twig'] %}
 
 For a more extensive discussion, see :doc:`/cookbook/form/form_customization`.
 

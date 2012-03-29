@@ -110,6 +110,14 @@ directly to the login page), then the user is redirected to the default page,
 which is  ``/`` (i.e. the homepage) by default. You can change this behavior
 in several ways.
 
+.. note::
+
+    As mentioned, by default the user is redirected back to the page he originally
+    requested. Sometimes, this can cause problems, like if a background AJAX
+    request "appears" to be the last visited URL, causing the user to be
+    redirected there. For information on controlling this behavior, see
+    :doc:`/cookbook/security/target_path`.
+
 Changing the Default Page
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -200,7 +208,7 @@ Using the Referring URL
 ~~~~~~~~~~~~~~~~~~~~~~~
 
 In case no previous URL was stored in the session, you may wish to try using
-the ``HTTP_REFERER`` instead, as this will often be the same. You can  do
+the ``HTTP_REFERER`` instead, as this will often be the same. You can do
 this by setting ``use_referer`` to true (it defaults to false): 
 
 .. configuration-block::
@@ -237,6 +245,10 @@ this by setting ``use_referer`` to true (it defaults to false):
                 )),
             ),
         ));
+
+.. versionadded:: 2.1
+    As of 2.1, if the referer is equal to the ``login_path`` option, the
+    user will be redirected to the ``default_target_path``.
 
 Control the Redirect URL from inside the Form
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

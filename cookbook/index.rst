@@ -66,6 +66,7 @@ Cookbook
     security/entity_provider
     security/custom_provider
     security/custom_authentication_provider
+    security/target_path
 
     cache/varnish
 

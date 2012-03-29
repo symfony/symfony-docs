@@ -7,7 +7,7 @@ Symfony2 test suite to check that you have not broken anything.
 PHPUnit
 -------
 
-To run the Symfony2 test suite, `install`_ PHPUnit 3.5.11 or later first:
+To run the Symfony2 test suite, `install`_ PHPUnit 3.6.4 or later first:
 
 .. code-block:: bash
 
