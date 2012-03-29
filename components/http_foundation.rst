@@ -851,14 +851,25 @@ Session Cookie Lifetime
 ~~~~~~~~~~~~~~~~~~~~~~~
 
 For security, session tokens are generally recommended sent as session cookies.
-You can configure the lifetime of session cookies by specifying the ``liftime``
-in second using the ``cookie_lifetime`` key in the ``$options`` constructor
-argument of :class:`Symfony\\Component\\HttpFoundation\\Session\\Storage\\NativeSessionStorage`.
+You can configure the lifetime of session cookies by specifying the lifetime
+(in seconds) using the ``cookie_lifetime`` key in the constructor's ``$options``
+argument in :class:`Symfony\\Component\\HttpFoundation\\Session\\Storage\\NativeSessionStorage`.
 
-If the ``cookie_lifetime`` value is set, a cookie will be sent with an expiry
-time of ``now + lifetime`` on each page request. This means that each subsequent
-page request will cause that cookie to be "refreshed" with a new expiry time of
-``now + lifetime`` again.
+Setting a ``cookie_lifetime`` to ``0`` will cause the cookie to live only as
+long as the browser remains open. Generally, ``cookie_lifetime`` would be set to
+a relatively large number of days, weeks or months. It is not uncommon to set
+cookies for a year or more depending on the application.
+
+Since session cookies are just a client-side token, they are less important in
+controlling the fine details of your security settings which ultimately can only
+be securely controlled from the server side.
+
+.. note::
+
+The ``cookie_lifetime`` setting is the number of seconds the cookie should live
+for, it is not a Unix timestamp. The resulting session cookie will be stamped
+with an expiry time of ``time()``+``cookie_lifetime`` where the time is taken
+from the server.
 
 Configuring Garbage Collection
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -893,10 +904,42 @@ which runs reasonably frequently: So the cookie ``lifetime`` would be set to a
 relatively high value, and the garbage collection ``maxlifetime`` would be set
 to destroy sessions at whatever the desired idle period is.
 
-The other option is to specifically expire sessions by saving an expiry time
-in the session data and then destroying the session after it is loaded. This
-method of processing can allow the expiry of sessions to be integrated into the
-user experience, for example, by displaying a message.
+The other option is to specifically checking if a session has expired after the
+session is started. The session can be destroyed as required. This method of
+processing can allow the expiry of sessions to be integrated into the user
+experience, for example, by displaying a message.
+
+Symfony2 records some basic meta-data about each session to give you complete
+freedom in this area.
+
+Session meta-data
+~~~~~~~~~~~~~~~~~
+
+Sessions are decorated with some basic meta-data to enable fine control over the
+security settings. The session object has a getter for the meta-data,
+:method:`Symfony\Component\HttpFoundation\Session\Session::getMeta` which
+exposes an instance of :class:`Symfony\Component\HttpFoundation\Session\MetaBag`::
+
+    $session->getMeta()->getCreated();
+    $session->getMeta()->getLastUsed();
+
+Both methods return a Unix timestamp (relative to the server).
+
+This meta-data can be used to explicitly expire a session on access, e.g.::
+
+    $session->start();
+    if (time() - $session->getMeta()->getLastUpdate() > $maxIdleTime) {
+        $session->invalidate();
+        throw new SessionExpired(); // redirect to expired session page
+    }
+
+It is also possible to tell what the ``cookie_lifetime`` was set to for a
+particular cookie by reading the ``getLifetime()`` method::
+
+    $session->getMeta()->getLifetime();
+
+The expiry time of the cookie can be determined by adding the with the created
+timestamp and the lifetime.
 
 .. _`php.net/session.customhandler`: http://php.net/session.customhandler
 .. _`php.net/session.configuration`: http://php.net/session.configuration
