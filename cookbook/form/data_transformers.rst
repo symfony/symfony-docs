@@ -23,14 +23,12 @@ was entered::
 
     // src/Acme/TaskBundle/Form/IssueSelectorType.php
 
-    namespace Acme\TaskBundle\Form\Type;
+    namespace Acme\TaskBundle\Form;
 
-    use
-        Symfony\Component\Form\AbstractType,
-        Symfony\Component\Form\FormBuilder,
-        Acme\TaskBundle\Form\DataTransformer\IssueToNumberTransformer,
-        Doctrine\Common\Persistence\ObjectManager
-    ;
+    use Symfony\Component\Form\AbstractType;
+    use Symfony\Component\Form\FormBuilder;
+    use Acme\TaskBundle\Form\DataTransformer\IssueToNumberTransformer;
+    use Doctrine\Common\Persistence\ObjectManager;
 
     class IssueSelectorType extends AbstractType
     {
@@ -104,12 +102,10 @@ Next, we create the data transformer, which does the actual conversion::
 
     namespace Acme\TaskBundle\Form\DataTransformer;
 
-    use
-        Symfony\Component\Form\Exception\TransformationFailedException,
-        Symfony\Component\Form\DataTransformerInterface,
-        Doctrine\Common\Persistence\ObjectManager,
-        Acme\TaskBundle\Entity
-    ;
+    use Symfony\Component\Form\Exception\TransformationFailedException;
+    use Symfony\Component\Form\DataTransformerInterface;
+    use Doctrine\Common\Persistence\ObjectManager;
+    use Acme\TaskBundle\Entity;
 
     class IssueToNumberTransformer implements DataTransformerInterface
     {
@@ -194,14 +190,12 @@ manager can be automatically injected:
 
 You can now add the type to your form by its alias as follows::
 
-    // src/Acme/TaskBundle/Form/Type/TaskType.php
+    // src/Acme/TaskBundle/Form/TaskType.php
 
-    namespace Acme\TaskBundle\Form\Type;
+    namespace Acme\TaskBundle\Form;
 
-    use
-        Symfony\Component\Form\AbstractType,
-        Symfony\Component\Form\FormBuilder
-    ;
+    use Symfony\Component\Form\AbstractType;
+    use Symfony\Component\Form\FormBuilder;
 
     class TaskType extends AbstractType
     {
