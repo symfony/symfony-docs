@@ -2,12 +2,16 @@
    single: Twig extensions
    
 How to write a custom Twig extension
-============================================
+====================================
 
-The main motivation for writing an extension is to move often used code into a reusable class like adding support for internationalization. 
-An extension can define tags, filters, tests, operators, global variables, functions, and node visitors.
+The main motivation for writing an extension is to move often used code
+into a reusable class like adding support for internationalization. 
+An extension can define tags, filters, tests, operators, global variables,
+functions, and node visitors.
 
-Creating an extension also makes for a better separation of code that is executed at compilation time and code needed at runtime. As such, it makes your code faster.
+Creating an extension also makes for a better separation of code that is
+executed at compilation time and code needed at runtime. As such, it makes
+your code faster.
 
 .. tip::
 
@@ -17,42 +21,42 @@ Create the extension class
 --------------------------    
 
 To get your custom functionality you must first create a Twig Extension class. 
-As an example we will create a price filter to format a given number into price.
+As an example we will create a price filter to format a given number into price::
 
-   .. code-block:: php
+    // src/Acme/DemoBundle/Twig/AcmeExtension.php
 
-        <?php
-        
-        // src/Acme/DemoBundle/Twig/AcmeExtension.php
+    namespace Acme\DemoBundle\Twig;
 
-        namespace Acme\DemoBundle\Twig;
+    use Twig_Extension;
+    use Twig_Filter_Method;
+    use Twig_Function_Method;
 
-        use Twig_Extension;
-        use Twig_Filter_Method;
-        use Twig_Function_Method;
-
-        class AcmeExtension extends Twig_Extension
+    class AcmeExtension extends Twig_Extension
+    {
+        public function getFilters()
         {
-            public function getFilters()
-            {
-                return array(
-                    'price' => new Twig_Filter_Method($this, 'priceFilter'),
-                );
-            }
-            
-            public function priceFilter($number, $decimals = 0, $decPoint = '.', $thousandsSep = ',')
-            {
-                $price = number_format($number, $decimals, $decPoint, $thousandsSep);
-                $price = '$' . $price;
-
-                return $price;
-            }
-
-            public function getName()
-            {
-                return 'acme_extension';
-            }
+            return array(
+                'price' => new Twig_Filter_Method($this, 'priceFilter'),
+            );
         }
+        
+        public function priceFilter($number, $decimals = 0, $decPoint = '.', $thousandsSep = ',')
+        {
+            $price = number_format($number, $decimals, $decPoint, $thousandsSep);
+            $price = '$' . $price;
+
+            return $price;
+        }
+
+        public function getName()
+        {
+            return 'acme_extension';
+        }
+    }
+    
+.. tip::
+
+    Along with custom filters, you can also add custom `functions` and register `global variables`.    
      
 Register extension as a service
 -------------------------------
@@ -87,10 +91,16 @@ Now you must let Service Container know about your newly created Twig Extension:
         $acmeDefinition = new Definition('\Acme\DemoBundle\Twig\AcmeExtension');
         $acmeDefinition->addTag('twig.extension');
         $container->setDefinition('acme.twig.acme_extension', $acmeDefinition);
-                
+         
+.. note::
+
+   Keep in mind that Twig Extensions are not lazily loaded. This means that 
+   there's a higher chance that you'll get a **CircularReferenceException**
+   or a **ScopeWideningInjectionException** if any services 
+   (or your Twig Extension in this case) are dependent on the request service.
                 
 Using the custom extension
----------------------------
+--------------------------
 
 Using your newly created Twig Extension is no different than any other:
 
@@ -98,5 +108,13 @@ Using your newly created Twig Extension is no different than any other:
 
     {# outputs $5,500.00 #}
     {{ '5500' | price }}
+    
+Learning further
+----------------
+    
+For a more in-depth look into Twig Extensions, please take a look at the `Twig extensions documentation`_.
      
 .. _`Twig official extension repository`: http://github.com/fabpot/Twig-extensions
+.. _`Twig extensions documentation`: http://twig.sensiolabs.org/doc/extensions.html
+.. _`global variables`: http://twig.sensiolabs.org/doc/extensions.html#globals
+.. _`functions`: http://twig.sensiolabs.org/doc/extensions.html#functions
