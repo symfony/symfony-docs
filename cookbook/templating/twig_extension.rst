@@ -109,6 +109,13 @@ Using your newly created Twig Extension is no different than any other:
     {# outputs $5,500.00 #}
     {{ '5500' | price }}
     
+Passing other arguments to your filter:
+
+.. code-block:: html+jinja
+    
+    {# outputs $5500,2516 #}
+    {{ '5500.25155' | price(4, ',', '') }}
+    
 Learning further
 ----------------
     
