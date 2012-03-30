@@ -424,9 +424,12 @@ Session workflow
 
 * :method:`Symfony\\Component\\HttpFoundation\\Session\\Session::migrate`:
   Regenerates the session id - do not use ``session_regenerate_id()``.
+  This method can optionally change the lifetime of the new cookie that will
+  be emitted by calling this method.
 
 * :method:`Symfony\\Component\\HttpFoundation\\Session\\Session::invalidate`:
   Clears the session data and regenerates the session id do not use ``session_destroy()``.
+  This is basically a shortcut for ``clear()`` and ``migrate()``.
 
 * :method:`Symfony\\Component\\HttpFoundation\\Session\\Session::getId`: Gets the
   session ID.
@@ -479,6 +482,12 @@ an array. A few methods exist for "Bag" management:
 * :method:`Symfony\\Component\\HttpFoundation\\Session\\Session::getFlashBag`:
   Gets the :class:`Symfony\\Component\\HttpFoundation\\Session\\Flash\\FlashBagInterface`.
   This is just a shortcut for convenience.
+
+Session meta-data
+
+* :method:`Symfony\\Component\\HttpFoundation\\Session\\Session::getMeta`:
+  Gets the :class:`Symfony\\Component\\HttpFoundation\\Session\\Storage\MetaBag`
+  which contains information about the session.
 
 Save Handlers
 ~~~~~~~~~~~~~
@@ -889,6 +898,28 @@ and ``gc_maxlifetime`` in an array to the constructor of
 :class:`Symfony\\Component\\HttpFoundation\\Session\\Storage\\NativeSessionStorage`
 or to the :method:`Symfony\\Component\\HttpFoundation\\Session\\Storage\\NativeSessionStorage::setOptions()`
 method.
+
+Session Lifetime
+~~~~~~~~~~~~~~~~
+
+When a new session is created, meaning Symfony2 issues a new session cookie
+to the client, the cookie will be stamped with an expiry time. This is
+calculated by adding the PHP runtime configuration value in
+``session.cookie_lifetime`` with the current server time.
+
+.. note::
+
+PHP will only issue a cookie once. The client is expected to store that cookie
+for the entire lifetime. A new cookie will only be issued when the session is
+destroyed, the browser cookie is deleted, or the session ID is regenerated
+using the ``migrate()`` or ``invalidate()`` methods of the ``Session`` class.
+
+The initial cookie lifetime can be set by configuring ``NativeSessionStorage``
+using the ``setOptions(array('cookie_lifetime' => 1234))`` method.
+
+.. note::
+
+Cookie lifetime of ``0`` means the cookie expire when the browser is closed.
 
 Session Idle Time/Keep Alive
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
