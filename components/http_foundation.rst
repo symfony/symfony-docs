@@ -375,8 +375,8 @@ abstracts the hard work behind a simple API::
 
     $response->headers->set('Content-Disposition', $d);
 
-Session
--------
+Sessions
+--------
 
 The Symfony2 HttpFoundation Component has a very powerful and flexible session
 subsystem which is designed to provide session management through a simple
@@ -485,8 +485,8 @@ an array. A few methods exist for "Bag" management:
 
 Session meta-data
 
-* :method:`Symfony\\Component\\HttpFoundation\\Session\\Session::getMeta`:
-  Gets the :class:`Symfony\\Component\\HttpFoundation\\Session\\Storage\MetaBag`
+* :method:`Symfony\\Component\\HttpFoundation\\Session\\Session::getMetadataBag`:
+  Gets the :class:`Symfony\\Component\\HttpFoundation\\Session\\Storage\MetadataBag`
   which contains information about the session.
 
 Save Handlers
@@ -948,18 +948,18 @@ Session meta-data
 
 Sessions are decorated with some basic meta-data to enable fine control over the
 security settings. The session object has a getter for the meta-data,
-:method:`Symfony\Component\HttpFoundation\Session\Session::getMeta` which
-exposes an instance of :class:`Symfony\Component\HttpFoundation\Session\Storage\MetaBag`::
+:method:`Symfony\Component\HttpFoundation\Session\Session::getMetadataBag` which
+exposes an instance of :class:`Symfony\Component\HttpFoundation\Session\Storage\MetadataBag`::
 
-    $session->getMeta()->getCreated();
-    $session->getMeta()->getLastUsed();
+    $session->getMetadataBag()->getCreated();
+    $session->getMetadataBag()->getLastUsed();
 
 Both methods return a Unix timestamp (relative to the server).
 
 This meta-data can be used to explicitly expire a session on access, e.g.::
 
     $session->start();
-    if (time() - $session->getMeta()->getLastUpdate() > $maxIdleTime) {
+    if (time() - $session->getMetadataBag()->getLastUpdate() > $maxIdleTime) {
         $session->invalidate();
         throw new SessionExpired(); // redirect to expired session page
     }
@@ -967,7 +967,7 @@ This meta-data can be used to explicitly expire a session on access, e.g.::
 It is also possible to tell what the ``cookie_lifetime`` was set to for a
 particular cookie by reading the ``getLifetime()`` method::
 
-    $session->getMeta()->getLifetime();
+    $session->getMetadataBag()->getLifetime();
 
 The expiry time of the cookie can be determined by adding the with the created
 timestamp and the lifetime.
