@@ -1,4 +1,5 @@
 * :doc:`/components/class_loader`
+* :doc:`/components/config`
 * :doc:`/components/console`
 * :doc:`/components/css_selector`
 * :doc:`/components/dependency_injection`
