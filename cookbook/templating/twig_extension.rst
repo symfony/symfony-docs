@@ -1,7 +1,7 @@
 .. index::
    single: Twig extensions
    
-How to write a custom Twig extension
+How to write a custom Twig Extension
 ====================================
 
 The main motivation for writing an extension is to move often used code
@@ -17,7 +17,7 @@ your code faster.
 
     Before writing your own extensions, have a look at the `Twig official extension repository`_.
     
-Create the extension class
+Create the Extension Class
 --------------------------    
 
 To get your custom functionality you must first create a Twig Extension class. 
@@ -58,7 +58,7 @@ As an example we will create a price filter to format a given number into price:
 
     Along with custom filters, you can also add custom `functions` and register `global variables`.    
      
-Register extension as a service
+Register an Extension as a Service
 -------------------------------
 
 Now you must let Service Container know about your newly created Twig Extension:
@@ -99,7 +99,7 @@ Now you must let Service Container know about your newly created Twig Extension:
    or a **ScopeWideningInjectionException** if any services 
    (or your Twig Extension in this case) are dependent on the request service.
                 
-Using the custom extension
+Using the custom Extension
 --------------------------
 
 Using your newly created Twig Extension is no different than any other:
