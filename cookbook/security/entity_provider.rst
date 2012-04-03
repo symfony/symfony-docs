@@ -53,8 +53,8 @@ focus on the most important methods that come from the
 
     namespace Acme\UserBundle\Entity;
 
-    use Symfony\Component\Security\Core\User\UserInterface;
     use Doctrine\ORM\Mapping as ORM;
+    use Symfony\Component\Security\Core\User\UserInterface;
 
     /**
      * Acme\UserBundle\Entity\User
@@ -65,29 +65,29 @@ focus on the most important methods that come from the
     class User implements UserInterface
     {
         /**
-         * @ORM\Column(name="id", type="integer")
-         * @ORM\Id()
+         * @ORM\Column(type="integer")
+         * @ORM\Id
          * @ORM\GeneratedValue(strategy="AUTO")
          */
         private $id;
 
         /**
-         * @ORM\Column(name="username", type="string", length=25, unique=true)
+         * @ORM\Column(type="string", length=25, unique=true)
          */
         private $username;
 
         /**
-         * @ORM\Column(name="salt", type="string", length=40)
+         * @ORM\Column(type="string", length=32)
          */
         private $salt;
 
         /**
-         * @ORM\Column(name="password", type="string", length=40)
+         * @ORM\Column(type="string", length=40)
          */
         private $password;
 
         /**
-         * @ORM\Column(name="email", type="string", length=60, unique=true)
+         * @ORM\Column(type="string", length=60, unique=true)
          */
         private $email;
 
@@ -99,39 +99,68 @@ focus on the most important methods that come from the
         public function __construct()
         {
             $this->isActive = true;
-            $this->salt = base_convert(sha1(uniqid(mt_rand(), true)), 16, 36);
+            $this->salt = md5(uniqid(null, true));
         }
 
-        public function getRoles()
-        {
-            return array('ROLE_USER');
-        }
-
-        public function eraseCredentials()
-        {
-        }
-
+        /**
+         * @inheritDoc
+         */
         public function getUsername()
         {
             return $this->username;
         }
 
+        /**
+         * @inheritDoc
+         */
         public function getSalt()
         {
             return $this->salt;
         }
 
+        /**
+         * @inheritDoc
+         */
         public function getPassword()
         {
             return $this->password;
+        }
+
+        /**
+         * @inheritDoc
+         */
+        public function getRoles()
+        {
+            return array('ROLE_USER');
+        }
+
+        /**
+         * @inheritDoc
+         */
+        public function eraseCredentials()
+        {
+        }
+
+        /**
+         * @inheritDoc
+         */
+        public function equals(UserInterface $user)
+        {
+            return $this->username === $user->getUsername();
         }
     }
 
 In order to use an instance of the ``AcmeUserBundle:User`` class in the Symfony
 security layer, the entity class must implement the
 :class:`Symfony\\Component\\Security\\Core\\User\\UserInterface`. This
-interface forces the class to implement the five following methods: ``getRoles()``,
-``getPassword()``, ``getSalt()``, ``getUsername()``, ``eraseCredentials()``.
+interface forces the class to implement the five following methods:
+
+* ``getRoles()``,
+* ``getPassword()``,
+* ``getSalt()``,
+* ``getUsername()``,
+* ``eraseCredentials()``
+
 For more details on each of these, see :class:`Symfony\\Component\\Security\\Core\\User\\UserInterface`.
 
 Below is an export of my ``User`` table from MySQL. For details on how to
@@ -140,14 +169,14 @@ create user records and encode their password, see :ref:`book-security-encoding-
 .. code-block:: text
 
     mysql> select * from user;
-    +----+----------+------------------------------------------+------------------------------------------+--------------------+-----------+
-    | id | username | salt                                     | password                                 | email              | is_active |
-    +----+----------+------------------------------------------+------------------------------------------+--------------------+-----------+
-    |  1 | hhamon   | 7308e59b97f6957fb42d66f894793079c366d7c2 | 09610f61637408828a35d7debee5b38a8350eebe | hhamon@example.com |         1 |
-    |  2 | jsmith   | ce617a6cca9126bf4036ca0c02e82deea081e564 | 8390105917f3a3d533815250ed7c64b4594d7ebf | jsmith@example.com |         1 |
-    |  3 | maxime   | cd01749bb995dc658fa56ed45458d807b523e4cf | 9764731e5f7fb944de5fd8efad4949b995b72a3c | maxime@example.com |         0 |
-    |  4 | donald   | 6683c2bfd90c0426088402930cadd0f84901f2f4 | 5c3bcec385f59edcc04490d1db95fdb8673bf612 | donald@example.com |         1 |
-    +----+----------+------------------------------------------+------------------------------------------+--------------------+-----------+
+    +----+----------+----------------------------------+------------------------------------------+--------------------+-----------+
+    | id | username | salt                             | password                                 | email              | is_active |
+    +----+----------+----------------------------------+------------------------------------------+--------------------+-----------+
+    |  1 | hhamon   | 7308e59b97f6957fb42d66f894793079 | 09610f61637408828a35d7debee5b38a8350eebe | hhamon@example.com |         1 |
+    |  2 | jsmith   | ce617a6cca9126bf4036ca0c02e82dee | 8390105917f3a3d533815250ed7c64b4594d7ebf | jsmith@example.com |         1 |
+    |  3 | maxime   | cd01749bb995dc658fa56ed45458d807 | 9764731e5f7fb944de5fd8efad4949b995b72a3c | maxime@example.com |         0 |
+    |  4 | donald   | 6683c2bfd90c0426088402930cadd0f8 | 5c3bcec385f59edcc04490d1db95fdb8673bf612 | donald@example.com |         1 |
+    +----+----------+----------------------------------+------------------------------------------+--------------------+-----------+
     4 rows in set (0.00 sec)
 
 The database now contains four users with different usernames, emails and
@@ -172,12 +201,17 @@ then be checked against our User entity records in the database:
     .. code-block:: yaml
 
         # app/config/security.yml
+
         security:
             encoders:
                 Acme\UserBundle\Entity\User:
-                    algorithm: sha1
+                    algorithm:        sha1
                     encode_as_base64: false
-                    iterations: 1
+                    iterations:       1
+
+            role_hierarchy:
+                ROLE_ADMIN:       ROLE_USER
+                ROLE_SUPER_ADMIN: [ ROLE_USER, ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH ]
 
             providers:
                 administrators:
@@ -441,13 +475,19 @@ that forces it to have a ``getRole()`` method::
          */
         private $id;
 
-        /** @ORM\Column(name="name", type="string", length=30) */
+        /**
+         * @ORM\Column(name="name", type="string", length=30)
+         */
         private $name;
 
-        /** @ORM\Column(name="role", type="string", length=20, unique=true) */
+        /**
+         * @ORM\Column(name="role", type="string", length=20, unique=true)
+         */
         private $role;
 
-        /** @ORM\ManyToMany(targetEntity="User", mappedBy="groups") */
+        /**
+         * @ORM\ManyToMany(targetEntity="User", mappedBy="groups")
+         */
         private $users;
 
         public function __construct()
@@ -457,7 +497,9 @@ that forces it to have a ``getRole()`` method::
 
         // ... getters and setters for each property
 
-        /** @see RoleInterface */
+        /**
+         * @see RoleInterface
+         */
         public function getRole()
         {
             return $this->role;
