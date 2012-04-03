@@ -211,7 +211,7 @@ Now, the vendor directory won't be committed to source control. This is fine
 project, he/she can simply run the ``php bin/vendors install`` script to
 download all the necessary vendor libraries.
 
-.. _`enable ACL support`: https://help.ubuntu.com/community/FilePermissions#ACLs
+.. _`enable ACL support`: https://help.ubuntu.com/community/FilePermissionsACLs
 .. _`http://symfony.com/download`: http://symfony.com/download
 .. _`Git`: http://git-scm.com/
 .. _`GitHub Bootcamp`: http://help.github.com/set-up-git-redirect
