@@ -98,6 +98,7 @@ Now you must let Service Container know about your newly created Twig Extension:
    there's a higher chance that you'll get a **CircularReferenceException**
    or a **ScopeWideningInjectionException** if any services 
    (or your Twig Extension in this case) are dependent on the request service.
+   For more information take a look at :doc:`/cookbook/service_container/scopes`.
                 
 Using the custom Extension
 --------------------------
