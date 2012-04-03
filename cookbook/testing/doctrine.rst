@@ -41,7 +41,7 @@ First, you need to add the ``Doctrine\Tests`` namespace to your autoloader::
     // app/autoload.php
     $loader->registerNamespaces(array(
         // ...
-        'Doctrine\\Tests'  => __DIR__.'/../vendor/doctrine/tests',
+        'Doctrine\\Tests'                => __DIR__.'/../vendor/doctrine/orm/tests',
         // ...
     ));
 
