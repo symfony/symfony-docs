@@ -847,11 +847,11 @@ Configuring PHP Sessions
 
 The :class:`Symfony\\Component\\HttpFoundation\\Session\\Storage\\NativeSessionStorage`
 can configure most of the PHP ini configuration directives which are documented
-at `php.net/session.ini`_
+at `php.net/session.configuration`_.
 
-To configure these setting pass the keys omitting the initial ``session.`` part
-of the key as key to value pairs in an array to the ``$options`` parameter in
-the constructor, or optionally using the
+To configure these setting, pass the keys (omitting the initial ``session.`` part
+of the key) as a key-value array to the ``$options`` constructor argument.
+Or set them via the
 :method:`Symfony\\Component\\HttpFoundation\\Session\\Storage\\NativeSessionStorage::setOptions`
 method.
 
@@ -860,7 +860,7 @@ For the sake of clarity, some key options are explained in this documentation.
 Session Cookie Lifetime
 ~~~~~~~~~~~~~~~~~~~~~~~
 
-For security, session tokens are generally recommended sent as session cookies.
+For security, session tokens are generally recommended to be sent as session cookies.
 You can configure the lifetime of session cookies by specifying the lifetime
 (in seconds) using the ``cookie_lifetime`` key in the constructor's ``$options``
 argument in :class:`Symfony\\Component\\HttpFoundation\\Session\\Storage\\NativeSessionStorage`.
@@ -876,10 +876,10 @@ be securely controlled from the server side.
 
 .. note::
 
-The ``cookie_lifetime`` setting is the number of seconds the cookie should live
-for, it is not a Unix timestamp. The resulting session cookie will be stamped
-with an expiry time of ``time()``+``cookie_lifetime`` where the time is taken
-from the server.
+    The ``cookie_lifetime`` setting is the number of seconds the cookie should live
+    for, it is not a Unix timestamp. The resulting session cookie will be stamped
+    with an expiry time of ``time()``+``cookie_lifetime`` where the time is taken
+    from the server.
 
 Configuring Garbage Collection
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -887,11 +887,11 @@ Configuring Garbage Collection
 When a session opens, PHP will call the ``gc`` handler randomly according to the
 probability set by ``session.gc_probability`` / ``session.gc_divisor``. For
 example if these were set to ``5/100`` respectively, it would mean a probability
-of 5%. Similarly, ``3/4`` would mean a 3 in 4 chance of being called, ie 75%.
+of 5%. Similarly, ``3/4`` would mean a 3 in 4 chance of being called, i.e. 75%.
 
 If the garbage collection handler is invoked, PHP will pass the value stored in
 the PHP ini directive ``session.gc_maxlifetime`. The meaning in this context is
-that any stored session that was saved more than ``maxlifetime`` should be
+that any stored session that was saved more than ``maxlifetime`` ago should be
 deleted. This allows one to expire records based on idle time.
 
 You can configure these settings by passing ``gc_probability``, ``gc_divisor``
@@ -910,29 +910,29 @@ calculated by adding the PHP runtime configuration value in
 
 .. note::
 
-PHP will only issue a cookie once. The client is expected to store that cookie
-for the entire lifetime. A new cookie will only be issued when the session is
-destroyed, the browser cookie is deleted, or the session ID is regenerated
-using the ``migrate()`` or ``invalidate()`` methods of the ``Session`` class.
+    PHP will only issue a cookie once. The client is expected to store that cookie
+    for the entire lifetime. A new cookie will only be issued when the session is
+    destroyed, the browser cookie is deleted, or the session ID is regenerated
+    using the ``migrate()`` or ``invalidate()`` methods of the ``Session`` class.
 
-The initial cookie lifetime can be set by configuring ``NativeSessionStorage``
-using the ``setOptions(array('cookie_lifetime' => 1234))`` method.
+    The initial cookie lifetime can be set by configuring ``NativeSessionStorage``
+    using the ``setOptions(array('cookie_lifetime' => 1234))`` method.
 
 .. note::
 
-Cookie lifetime of ``0`` means the cookie expire when the browser is closed.
+    A cookie lifetime of ``0`` means the cookie expire when the browser is closed.
 
 Session Idle Time/Keep Alive
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 There are often circumstances where you may want to protect, or minimize
-unauthorized used of a session when a user steps away from their terminal while
+unauthorized use of a session when a user steps away from their terminal while
 logged in by destroying the session after a certain period of idle time. For
 example, it is common for banking applications to log the user out after just
 5 to 10 minutes of inactivity. Setting the cookie lifetime here is not
-appropriate because that can be changed at the client, so we must do the expiry
+appropriate because that can be manipulated by the client, so we must do the expiry
 on the server side. The easiest way is to implement this via garbage collection
-which runs reasonably frequently: So the cookie ``lifetime`` would be set to a
+which runs reasonably frequently. The cookie ``lifetime`` would be set to a
 relatively high value, and the garbage collection ``maxlifetime`` would be set
 to destroy sessions at whatever the desired idle period is.
 
@@ -949,8 +949,8 @@ Session meta-data
 
 Sessions are decorated with some basic meta-data to enable fine control over the
 security settings. The session object has a getter for the meta-data,
-:method:`Symfony\Component\HttpFoundation\Session\Session::getMetadataBag` which
-exposes an instance of :class:`Symfony\Component\HttpFoundation\Session\Storage\MetadataBag`::
+:method:`Symfony\\Component\\HttpFoundation\\Session\\Session::getMetadataBag` which
+exposes an instance of :class:`Symfony\\Component\\HttpFoundation\\Session\\Storage\\MetadataBag`::
 
     $session->getMetadataBag()->getCreated();
     $session->getMetadataBag()->getLastUsed();
@@ -970,7 +970,7 @@ particular cookie by reading the ``getLifetime()`` method::
 
     $session->getMetadataBag()->getLifetime();
 
-The expiry time of the cookie can be determined by adding the with the created
+The expiry time of the cookie can be determined by adding the created
 timestamp and the lifetime.
 
 .. _`php.net/session.customhandler`: http://php.net/session.customhandler
