@@ -58,7 +58,7 @@ when compiling the container. Read the sidebar below for more details.
       the current `request` service). This is subtle, but the mis-match could
       cause major problems, which is why it's not allowed.
 
-      So, that's the reason *why* scopes exists, and how they can cause
+      So, that's the reason *why* scopes exist, and how they can cause
       problems. Keep reading to find out the common solutions.
 
 .. note::
