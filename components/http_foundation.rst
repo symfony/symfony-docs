@@ -375,8 +375,8 @@ abstracts the hard work behind a simple API::
 
     $response->headers->set('Content-Disposition', $d);
 
-Session
--------
+Sessions
+--------
 
 The Symfony2 HttpFoundation Component has a very powerful and flexible session
 subsystem which is designed to provide session management through a simple
@@ -391,7 +391,7 @@ implementation of :class:`Symfony\\Component\\HttpFoundation\\Session\\SessionIn
 
 Quick example::
 
-    use Symfony\\Component\\HttpFoundation\\Session\\Session;
+    use Symfony\Component\HttpFoundation\Session\Session;
 
     $session = new Session();
     $session->start();
@@ -424,9 +424,12 @@ Session workflow
 
 * :method:`Symfony\\Component\\HttpFoundation\\Session\\Session::migrate`:
   Regenerates the session id - do not use ``session_regenerate_id()``.
+  This method can optionally change the lifetime of the new cookie that will
+  be emitted by calling this method.
 
 * :method:`Symfony\\Component\\HttpFoundation\\Session\\Session::invalidate`:
   Clears the session data and regenerates the session id do not use ``session_destroy()``.
+  This is basically a shortcut for ``clear()`` and ``migrate()``.
 
 * :method:`Symfony\\Component\\HttpFoundation\\Session\\Session::getId`: Gets the
   session ID.
@@ -480,6 +483,12 @@ an array. A few methods exist for "Bag" management:
   Gets the :class:`Symfony\\Component\\HttpFoundation\\Session\\Flash\\FlashBagInterface`.
   This is just a shortcut for convenience.
 
+Session meta-data
+
+* :method:`Symfony\\Component\\HttpFoundation\\Session\\Session::getMetadataBag`:
+  Gets the :class:`Symfony\\Component\\HttpFoundation\\Session\\Storage\MetadataBag`
+  which contains information about the session.
+
 Save Handlers
 ~~~~~~~~~~~~~
 
@@ -511,9 +520,9 @@ Symfony2 provides drivers for native handlers which are easy to configure, these
 
 Example of use::
 
-    use Symfony\\Component\\HttpFoundation\\Session\\Session;
-    use Symfony\\Component\\HttpFoundation\\Session\\Storage\\NativeSessionStorage;
-    use Symfony\\Component\\HttpFoundation\\Session\\Storage\\Handler\\NativeMemcachedSessionHandler;
+    use Symfony\Component\HttpFoundation\Session\Session;
+    use Symfony\Component\HttpFoundation\Session\Storage\NativeSessionStorage;
+    use Symfony\Component\HttpFoundation\Session\Storage\Handler\NativeMemcachedSessionHandler;
 
     $storage = new NativeSessionStorage(array(), new NativeMemcachedSessionHandler());
     $session = new Session($storage);
@@ -535,9 +544,9 @@ examples if you wish to write your own.
 
 Example::
 
-    use Symfony\\Component\\HttpFoundation\\Session\\Session;
-    use Symfony\\Component\\HttpFoundation\\Session\\Storage\\SessionStorage;
-    use Symfony\\Component\\HttpFoundation\\Session\\Storage\\Handler\\PdoSessionHandler;
+    use Symfony\Component\HttpFoundation\Session\Session;
+    use Symfony\Component\HttpFoundation\Session\Storage\SessionStorage;
+    use Symfony\Component\HttpFoundation\Session\Storage\Handler\PdoSessionHandler;
 
     $storage = new NativeSessionStorage(array(), new PdoSessionHandler());
     $session = new Session($storage);
@@ -704,7 +713,7 @@ to be used for more complex messaging in your application.
 
 Examples of setting multiple flashes::
 
-    use Symfony\\Component\\HttpFoundation\\Session\\Session;
+    use Symfony\Component\HttpFoundation\Session\Session;
 
     $session = new Session();
     $session->start();
@@ -774,8 +783,8 @@ For unit testing where it is not necessary to persist the session, you should
 simply swap out the default storage engine with
 :class:`Symfony\\Component\\HttpFoundation\\Session\\Storage\\MockArraySessionStorage`::
 
-    use Symfony\\Component\\HttpFoundation\\Session\\Storage\\MockArraySessionStorage;
-    use Symfony\\Component\\HttpFoundation\\Session\\Session;
+    use Symfony\Component\HttpFoundation\Session\Storage\MockArraySessionStorage;
+    use Symfony\Component\HttpFoundation\Session\Session;
 
     $session = new Session(new MockArraySessionStorage());
 
@@ -786,8 +795,8 @@ For functional testing where you may need to persist session data across
 separate PHP processes, simply change the storage engine to
 :class:`Symfony\\Component\\HttpFoundation\\Session\\Storage\\MockFileSessionStorage`::
 
-    use Symfony\\Component\\HttpFoundation\\Session\\Session;
-    use Symfony\\Component\\HttpFoundation\\Session\\Storage\\MockFileSessionStorage;
+    use Symfony\Component\HttpFoundation\Session\Session;
+    use Symfony\Component\HttpFoundation\Session\Storage\MockFileSessionStorage;
 
     $session = new Session(new MockFileSessionStorage());
 
@@ -833,5 +842,136 @@ The proxy mechanism allow you to get more deeply involved in session save handle
 classes. A proxy for example could be used to encrypt any session transaction
 without knowledge of the specific save handler.
 
+Configuring PHP Sessions
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+The :class:`Symfony\\Component\\HttpFoundation\\Session\\Storage\\NativeSessionStorage`
+can configure most of the PHP ini configuration directives which are documented
+at `php.net/session.ini`_
+
+To configure these setting pass the keys omitting the initial ``session.`` part
+of the key as key to value pairs in an array to the ``$options`` parameter in
+the constructor, or optionally using the
+:method:`Symfony\\Component\\HttpFoundation\\Session\\Storage\\NativeSessionStorage::setOptions`
+method.
+
+For the sake of clarity, some key options are explained in this documentation.
+
+Session Cookie Lifetime
+~~~~~~~~~~~~~~~~~~~~~~~
+
+For security, session tokens are generally recommended sent as session cookies.
+You can configure the lifetime of session cookies by specifying the lifetime
+(in seconds) using the ``cookie_lifetime`` key in the constructor's ``$options``
+argument in :class:`Symfony\\Component\\HttpFoundation\\Session\\Storage\\NativeSessionStorage`.
+
+Setting a ``cookie_lifetime`` to ``0`` will cause the cookie to live only as
+long as the browser remains open. Generally, ``cookie_lifetime`` would be set to
+a relatively large number of days, weeks or months. It is not uncommon to set
+cookies for a year or more depending on the application.
+
+Since session cookies are just a client-side token, they are less important in
+controlling the fine details of your security settings which ultimately can only
+be securely controlled from the server side.
+
+.. note::
+
+The ``cookie_lifetime`` setting is the number of seconds the cookie should live
+for, it is not a Unix timestamp. The resulting session cookie will be stamped
+with an expiry time of ``time()``+``cookie_lifetime`` where the time is taken
+from the server.
+
+Configuring Garbage Collection
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+When a session opens, PHP will call the ``gc`` handler randomly according to the
+probability set by ``session.gc_probability`` / ``session.gc_divisor``. For
+example if these were set to ``5/100`` respectively, it would mean a probability
+of 5%. Similarly, ``3/4`` would mean a 3 in 4 chance of being called, ie 75%.
+
+If the garbage collection handler is invoked, PHP will pass the value stored in
+the PHP ini directive ``session.gc_maxlifetime`. The meaning in this context is
+that any stored session that was saved more than ``maxlifetime`` should be
+deleted. This allows one to expire records based on idle time.
+
+You can configure these settings by passing ``gc_probability``, ``gc_divisor``
+and ``gc_maxlifetime`` in an array to the constructor of
+:class:`Symfony\\Component\\HttpFoundation\\Session\\Storage\\NativeSessionStorage`
+or to the :method:`Symfony\\Component\\HttpFoundation\\Session\\Storage\\NativeSessionStorage::setOptions()`
+method.
+
+Session Lifetime
+~~~~~~~~~~~~~~~~
+
+When a new session is created, meaning Symfony2 issues a new session cookie
+to the client, the cookie will be stamped with an expiry time. This is
+calculated by adding the PHP runtime configuration value in
+``session.cookie_lifetime`` with the current server time.
+
+.. note::
+
+PHP will only issue a cookie once. The client is expected to store that cookie
+for the entire lifetime. A new cookie will only be issued when the session is
+destroyed, the browser cookie is deleted, or the session ID is regenerated
+using the ``migrate()`` or ``invalidate()`` methods of the ``Session`` class.
+
+The initial cookie lifetime can be set by configuring ``NativeSessionStorage``
+using the ``setOptions(array('cookie_lifetime' => 1234))`` method.
+
+.. note::
+
+Cookie lifetime of ``0`` means the cookie expire when the browser is closed.
+
+Session Idle Time/Keep Alive
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+There are often circumstances where you may want to protect, or minimize
+unauthorized used of a session when a user steps away from their terminal while
+logged in by destroying the session after a certain period of idle time. For
+example, it is common for banking applications to log the user out after just
+5 to 10 minutes of inactivity. Setting the cookie lifetime here is not
+appropriate because that can be changed at the client, so we must do the expiry
+on the server side. The easiest way is to implement this via garbage collection
+which runs reasonably frequently: So the cookie ``lifetime`` would be set to a
+relatively high value, and the garbage collection ``maxlifetime`` would be set
+to destroy sessions at whatever the desired idle period is.
+
+The other option is to specifically checking if a session has expired after the
+session is started. The session can be destroyed as required. This method of
+processing can allow the expiry of sessions to be integrated into the user
+experience, for example, by displaying a message.
+
+Symfony2 records some basic meta-data about each session to give you complete
+freedom in this area.
+
+Session meta-data
+~~~~~~~~~~~~~~~~~
+
+Sessions are decorated with some basic meta-data to enable fine control over the
+security settings. The session object has a getter for the meta-data,
+:method:`Symfony\Component\HttpFoundation\Session\Session::getMetadataBag` which
+exposes an instance of :class:`Symfony\Component\HttpFoundation\Session\Storage\MetadataBag`::
+
+    $session->getMetadataBag()->getCreated();
+    $session->getMetadataBag()->getLastUsed();
+
+Both methods return a Unix timestamp (relative to the server).
+
+This meta-data can be used to explicitly expire a session on access, e.g.::
+
+    $session->start();
+    if (time() - $session->getMetadataBag()->getLastUpdate() > $maxIdleTime) {
+        $session->invalidate();
+        throw new SessionExpired(); // redirect to expired session page
+    }
+
+It is also possible to tell what the ``cookie_lifetime`` was set to for a
+particular cookie by reading the ``getLifetime()`` method::
+
+    $session->getMetadataBag()->getLifetime();
+
+The expiry time of the cookie can be determined by adding the with the created
+timestamp and the lifetime.
 
 .. _`php.net/session.customhandler`: http://php.net/session.customhandler
+.. _`php.net/session.configuration`: http://php.net/session.configuration
