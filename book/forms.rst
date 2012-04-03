@@ -529,7 +529,7 @@ the correct values of a number of field options.
   validation will automatically match your validation rules.
 
 * ``max_length``: If the field is some sort of text field, then the ``max_length``
-  option can be guessed from the validation constrains (if ``MaxLength``
+  option can be guessed from the validation constraints (if ``MaxLength``
   is used) or from the Doctrine metadata (via the field's length).
   
 .. note::
