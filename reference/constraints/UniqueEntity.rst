@@ -1,9 +1,9 @@
 UniqueEntity
 ============
 
-Validates that a particular field (or fields) in a Doctrine entity are unique.
-This is commonly used, for example, to prevent a new user to register using
-an email address that already exists in the system.
+Validates that a particular field (or fields) in a Doctrine entity is (are)
+unique. This is commonly used, for example, to prevent a new user to register
+using an email address that already exists in the system.
 
 +----------------+-------------------------------------------------------------------------------------+
 | Applies to     | :ref:`class<validation-class-target>`                                               |
@@ -20,9 +20,10 @@ an email address that already exists in the system.
 Basic Usage
 -----------
 
-Suppose you have an ``AcmeUserBundle`` with a ``User`` entity that has an
-``email`` field. You can use the ``Unique`` constraint to guarantee that the
-``email`` field remains unique between all of the constrains in your user table:
+Suppose you have an ``AcmeUserBundle`` bundle with a ``User`` entity that has an
+``email`` field. You can use the ``UniqueEntity`` constraint to guarantee that
+the ``email`` field remains unique between all of the constraints in your user
+table:
 
 .. configuration-block::
 
@@ -84,14 +85,14 @@ fields
 
 This required option is the field (or list of fields) on which this entity
 should be unique. For example, you could specify that both the email and
-name fields in the User example above should be unique.
+name fields in the ``User`` example above should be unique.
 
 message
 ~~~~~~~
 
 **type**: ``string`` **default**: ``This value is already used.``
 
-The message that's displayed with this constraint fails.
+The message that's displayed when this constraint fails.
 
 em
 ~~
@@ -99,4 +100,4 @@ em
 **type**: ``string``
 
 The name of the entity manager to use for making the query to determine the
-uniqueness. If left blank, the default entity manager will be used.
+uniqueness. If it's left blank, the default entity manager will be used.
