@@ -118,7 +118,7 @@ the following example::
     {
         /**
          * @param  string $name
-         * @return \Doctrine\DBAL\Query\QueryBuilder
+         * @return \Doctrine\ORM\QueryBuilder
          */
         public function createSearchByNameQueryBuilder($name)
         {
