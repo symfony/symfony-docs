@@ -212,7 +212,7 @@ Loading an xml config file:
     use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
 
     $sc = new ContainerBuilder();
-    $loader = new XmlFileLoader($container, new FileLocator(__DIR__));
+    $loader = new XmlFileLoader($sc, new FileLocator(__DIR__));
     $loader->load('services.xml');
 
 Loading a yaml config file:
@@ -224,7 +224,7 @@ Loading a yaml config file:
     use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 
     $sc = new ContainerBuilder();
-    $loader = new YamlFileLoader($container, new FileLocator(__DIR__));
+    $loader = new YamlFileLoader($sc, new FileLocator(__DIR__));
     $loader->load('services.yml');
 
 The ``newsletter_manager`` and ``mailer`` services can be set up using config files:
