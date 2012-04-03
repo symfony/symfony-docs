@@ -97,12 +97,12 @@ Take the following route, which combines several of these ideas::
    // ...
 
    $parameters = $matcher->match('/archive/2012-01');
-   // array('controller' => 'showArchive', 'month' => 2012-01'', '_route' => '...')
+   // array('controller' => 'showArchive', 'month' => '2012-01', '_route' => '...')
 
    $parameters = $matcher->match('/archive/foo');
    // throws ResourceNotFoundException
 
-In this case, the route is matched by ``/archive/2012/01``, because the ``{month}``
+In this case, the route is matched by ``/archive/2012-01``, because the ``{month}``
 wildcard matches the regular expression wildcard given. However, ``/archive/foo``
 does *not* match, because "foo" fails the month wildcard.
 
