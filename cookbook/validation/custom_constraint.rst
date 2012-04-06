@@ -122,3 +122,37 @@ is defined as a service, it's important that you override the
 ``validatedBy()`` method to return the alias used when defining your service,
 otherwise Symfony2 won't use the constraint validator service, and will
 instantiate the class instead, without any dependencies injected.
+
+Class Constraint Validator
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Beside validating a class property, constraint can have a class scope by
+providing a target:
+
+.. code-block:: php
+
+    public function getTargets()
+    {
+        return self::CLASS_CONSTRAINT;
+    }
+
+Thus, validator ``isValid()`` method get an object as first argument:
+
+.. code-block:: php
+
+    class ProtocolClassValidator extends ConstraintValidator
+    {
+        public function isValid(Protocol $protocol, Constraint $constraint)
+        {
+            if ($protocol->getFoo() != $protocol->getBar()) {
+
+                //bind error message on foo property
+                $this->context->addViolationAtSubPath('foo', $constraint->getMessage(), array(), null);
+
+                return true;
+            }
+
+            return false;
+        }
+    }
+
