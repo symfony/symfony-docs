@@ -55,7 +55,7 @@ You can add as many routes as you like to a
 :class:`Symfony\\Component\\Routing\\RouteCollection`.
 
 The :method:`RouteCollection::add()<Symfony\\Component\\Routing\\RouteCollection::add>`
-method takes two arguments. The first is the name of the route, The second
+method takes two arguments. The first is the name of the route. The second
 is a :class:`Symfony\\Component\\Routing\\Route` object, which expects a
 URL path and some array of custom variables in its constructor. This array
 of custom variables can be *anything* that's significant to your application,
@@ -97,12 +97,12 @@ Take the following route, which combines several of these ideas::
    // ...
 
    $parameters = $matcher->match('/archive/2012-01');
-   // array('controller' => 'showArchive', 'month' => 2012-01'', '_route' => '...')
+   // array('controller' => 'showArchive', 'month' => '2012-01', '_route' => '...')
 
    $parameters = $matcher->match('/archive/foo');
    // throws ResourceNotFoundException
 
-In this case, the route is matched by ``/archive/2012/01``, because the ``{month}``
+In this case, the route is matched by ``/archive/2012-01``, because the ``{month}``
 wildcard matches the regular expression wildcard given. However, ``/archive/foo``
 does *not* match, because "foo" fails the month wildcard.
 

@@ -356,7 +356,7 @@ corresponding errors printed out with the form.
    a ``required`` attribute on fields that are required. For browsers that
    support HTML5, this will result in a native browser message being displayed
    if the user tries to submit the form with that field blank.
-   
+
    Generated forms take full advantage of this new feature by adding sensible
    HTML attributes that trigger the validation. The client-side validation,
    however, can be disabled by adding the ``novalidate`` attribute to the
@@ -484,13 +484,13 @@ the documentation for each type.
     that HTML5-ready browsers will apply client-side validation if the field
     is left blank. If you don't want this behavior, either set the ``required``
     option on your field to ``false`` or :ref:`disable HTML5 validation<book-forms-html5-validation-disable>`.
-    
+
     Also note that setting the ``required`` option to ``true`` will **not**
     result in server-side validation to be applied. In other words, if a
     user submits a blank value for the field (either with an old browser
     or web service, for example), it will be accepted as a valid value unless
     you use Symfony's ``NotBlank`` or ``NotNull`` validation constraint.
-    
+
     In other words, the ``required`` option is "nice", but true server-side
     validation should *always* be used.
 
@@ -569,7 +569,7 @@ the correct values of a number of field options.
   option can be guessed from the validation constrains (if ``MinLength``
   or ``Min`` is used) or from the Doctrine metadata (via the field's length).
 
-* ``max_length``: Similar to ``min_length``, the maximum length can also 
+* ``max_length``: Similar to ``min_length``, the maximum length can also
   be guessed.
 
 .. note::
@@ -651,11 +651,11 @@ output can be customized on many different levels.
 .. tip::
 
     You can access the current data of your form via ``form.vars.value``:
-    
+
     .. configuration-block::
 
         .. code-block:: jinja
-        
+
             {{ form.vars.value.task }}
 
         .. code-block:: html+php
@@ -725,7 +725,7 @@ specify it:
 
         <?php echo $view['form']->label($form['task'], 'Task Description') ?>
 
-Finally, some field types have additional rendering options that can be passed
+Some field types have additional rendering options that can be passed
 to the widget. These options are documented with each type, but one common
 options is ``attr``, which allows you to modify attributes on the form element.
 The following would add the ``task_field`` class to the rendered input text
@@ -742,6 +742,33 @@ field:
         <?php echo $view['form']->widget($form['task'], array(
             'attr' => array('class' => 'task_field'),
         )) ?>
+
+If you need to render form fields "by hand" then you can access individual
+values for fields such as the ``id``, ``name`` and ``label``. For example
+to get the ``id``:
+
+.. configuration-block::
+
+    .. code-block:: html+jinja
+
+        {{ form.task.vars.id }}
+
+    .. code-block:: html+php
+
+        <?php echo $form['task']->get('id') ?>
+
+To get the value used for the form field's name attribute you need to use
+the ``full_name`` value:
+
+.. configuration-block::
+
+    .. code-block:: html+jinja
+
+        {{ form.task.vars.full_name }}
+
+    .. code-block:: html+php
+
+        <?php echo $form['task']->get('full_name') ?>
 
 Twig Template Function Reference
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -819,7 +846,7 @@ the choice is ultimately up to you.
     based off of the object passed to the second argument to ``createForm``
     (i.e. ``$task``). Later, when you begin embedding forms, this will no
     longer be sufficient. So, while not always necessary, it's generally a
-    good idea to explicitly specify the ``data_class`` option by add the
+    good idea to explicitly specify the ``data_class`` option by adding the
     following to your form type class::
 
         public function getDefaultOptions(array $options)
@@ -828,6 +855,25 @@ the choice is ultimately up to you.
                 'data_class' => 'Acme\TaskBundle\Entity\Task',
             );
         }
+
+.. tip::
+
+    When mapping forms to objects, all fields are mapped. Any fields on the
+    form that do not exist on the mapped object will cause an exception to
+    be thrown.
+
+    In cases where you need extra fields in the form (for example: a "do you
+    agree with these terms" checkbox) that will not be mapped to the underlying
+    object, you need to set the property_path option to ``false``::
+
+        public function buildForm(FormBuilder $builder, array $options)
+        {
+            $builder->add('task');
+            $builder->add('dueDate', null, array('property_path' => false));
+        }
+
+    Additionally, if there are any fields on the form that aren't included in
+    the submitted data, those fields will be explicitly set to ``null``.
 
 .. index::
    pair: Forms; Doctrine
@@ -1076,6 +1122,8 @@ renders the form:
 
         {% form_theme form 'AcmeTaskBundle:Form:fields.html.twig' %}
 
+        {% form_theme form 'AcmeTaskBundle:Form:fields.html.twig' 'AcmeTaskBundle:Form:fields2.html.twig' %}
+
         <form ...>
 
     .. code-block:: html+php
@@ -1083,6 +1131,8 @@ renders the form:
         <!-- src/Acme/TaskBundle/Resources/views/Default/new.html.php -->
 
         <?php $view['form']->setTheme($form, array('AcmeTaskBundle:Form')) ?>
+
+        <?php $view['form']->setTheme($form, array('AcmeTaskBundle:Form', 'AcmeTaskBundle:Form')) ?>
 
         <form ...>
 
@@ -1092,9 +1142,29 @@ template and uses them when rendering the form. In other words, when the
 block from your custom theme (instead of the default ``field_row`` block
 that ships with Symfony).
 
+Your custom theme does not have to override all the blocks. When rendering a block
+which is not overridden in your custom theme, the theming engine will fall back
+to the global theme (defined at the bundle level).
+
+If several custom themes are provided they will be searched in the listed order
+before falling back to the global theme.
+
 To customize any portion of a form, you just need to override the appropriate
 fragment. Knowing exactly which block or file to override is the subject of
 the next section.
+
+.. versionadded:: 2.1
+   An alternate Twig syntax for ``form_theme`` has been introduced in 2.1. It accepts
+   any valid Twig expression (the most noticeable difference is using an array when
+   using multiple themes).
+
+   .. code-block:: html+jinja
+
+       {# src/Acme/TaskBundle/Resources/views/Default/new.html.twig #}
+
+       {% form_theme form with 'AcmeTaskBundle:Form:fields.html.twig' %}
+
+       {% form_theme form with ['AcmeTaskBundle:Form:fields.html.twig', 'AcmeTaskBundle:Form:fields2.html.twig'] %}
 
 For a more extensive discussion, see :doc:`/cookbook/form/form_customization`.
 
@@ -1339,7 +1409,7 @@ The CSRF token can be customized on a form-by-form basis. For example::
     class TaskType extends AbstractType
     {
         // ...
-    
+
         public function getDefaultOptions(array $options)
         {
             return array(
@@ -1350,7 +1420,7 @@ The CSRF token can be customized on a form-by-form basis. For example::
                 'intention'       => 'task_item',
             );
         }
-        
+
         // ...
     }
 
@@ -1389,14 +1459,14 @@ an array of the submitted data. This is actually really easy::
             ->add('email', 'email')
             ->add('message', 'textarea')
             ->getForm();
-        
+
             if ($request->getMethod() == 'POST') {
                 $form->bindRequest($request);
 
                 // data is an array with "name", "email", and "message" keys
                 $data = $form->getData();
             }
-        
+
         // ... render the form
     }
 
@@ -1416,14 +1486,14 @@ an array.
 
 .. tip::
 
-    You can also access POST values (in this case "name") directly through 
+    You can also access POST values (in this case "name") directly through
     the request object, like so:
 
     .. code-block:: php
 
         $this->get('request')->request->get('name');
 
-    Be advised, however, that in most cases using the getData() method is 
+    Be advised, however, that in most cases using the getData() method is
     a better choice, since it returns the data (usually an object) after
     it's been transformed by the form framework.
 
@@ -1456,7 +1526,7 @@ but here's a short example::
         // ...
     ;
 
-Now, when you call `$form->isValid()`, the constraints setup here are run
+Now, when you call `$form->bindRequest($request)`, the constraints setup here are run
 against your form's data. If you're using a form class, override the ``getDefaultOptions``
 method to specify the option::
 
@@ -1478,7 +1548,7 @@ method to specify the option::
                 'name' => new MinLength(5),
                 'email' => new Email(array('message' => 'Invalid email address')),
             ));
-        
+
             return array('validation_constraint' => $collectionConstraint);
         }
     }
@@ -1486,7 +1556,7 @@ method to specify the option::
 Now, you have the flexibility to create forms - with validation - that return
 an array of data, instead of an object. In most cases, it's better - and
 certainly more robust - to bind your form to an object. But for simple forms,
-this is a great approach. 
+this is a great approach.
 
 Final Thoughts
 --------------

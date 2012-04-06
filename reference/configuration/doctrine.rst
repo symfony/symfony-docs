@@ -117,7 +117,7 @@ Configuration Reference
                         <doctrine:mapping
                             name="DoctrineExtensions"
                             type="xml"
-                            dir="%kernel.root_dir%/../src/vendor/DoctrineExtensions/lib/DoctrineExtensions/Entity"
+                            dir="%kernel.root_dir%/../vendor/gedmo/doctrine-extensions/lib/DoctrineExtensions/Entity"
                             prefix="DoctrineExtensions\Entity"
                             alias="DExt"
                         />
@@ -304,4 +304,4 @@ which is the first one defined or the one configured via the
 Each connection is also accessible via the ``doctrine.dbal.[name]_connection``
 service where ``[name]`` if the name of the connection.
 
-.. _DBAL documentation: http://www.doctrine-project.org/docs/dbal/2.0/en
+.. _DBAL documentation: http://docs.doctrine-project.org/projects/doctrine-dbal/en/latest/index.html

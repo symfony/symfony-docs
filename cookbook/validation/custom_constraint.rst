@@ -19,9 +19,9 @@ the ``message`` and ``protocols`` properties:
     /**
      * @Annotation
      */
-    class Url extends Constraint
+    class Protocol extends Constraint
     {
-        public $message = 'This value is not a valid URL';
+        public $message = 'This value is not a valid protocol';
         public $protocols = array('http', 'https', 'ftp', 'ftps');
     }
 
@@ -48,23 +48,33 @@ Symfony2 will automatically look for another class, ``MyConstraintValidator``
 when actually performing the validation.
 
 The validator class is also simple, and only has one required method: ``isValid``.
-Take the ``NotBlankValidator`` as an example:
+Furthering our example, take a look at the ``ProtocolValidator`` as an example:
 
 .. code-block:: php
 
-    class NotBlankValidator extends ConstraintValidator
+    namespace Symfony\Component\Validator\Constraints;
+    
+    use Symfony\Component\Validator\Constraint;
+    use Symfony\Component\Validator\ConstraintValidator;
+
+    class ProtocolValidator extends ConstraintValidator
     {
         public function isValid($value, Constraint $constraint)
         {
-            if (null === $value || '' === $value) {
-                $this->setMessage($constraint->message);
+            if (in_array($value, $constraint->protocols));
+                $this->setMessage($constraint->message, array('%protocols%' => $constraint->protocols));
 
-                return false;
+                return true;
             }
 
-            return true;
+            return false;
         }
     }
+
+.. note::
+
+    Don't forget to call ``setMessage`` to construct an error message when the
+    value is invalid.
 
 Constraint Validators with Dependencies
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

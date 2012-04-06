@@ -65,19 +65,19 @@ PHP autoloading can be configured via ``app/autoload.php``::
 
     $loader = new UniversalClassLoader();
     $loader->registerNamespaces(array(
-        'Symfony'          => array(__DIR__.'/../vendor/symfony/src', __DIR__.'/../vendor/bundles'),
+        'Symfony'          => array(__DIR__.'/../vendor/symfony/symfony/src', __DIR__.'/../vendor/bundles'),
         'Sensio'           => __DIR__.'/../vendor/bundles',
-        'JMS'              => __DIR__.'/../vendor/bundles',
-        'Doctrine\\Common' => __DIR__.'/../vendor/doctrine-common/lib',
-        'Doctrine\\DBAL'   => __DIR__.'/../vendor/doctrine-dbal/lib',
-        'Doctrine'         => __DIR__.'/../vendor/doctrine/lib',
-        'Monolog'          => __DIR__.'/../vendor/monolog/src',
-        'Assetic'          => __DIR__.'/../vendor/assetic/src',
-        'Metadata'         => __DIR__.'/../vendor/metadata/src',
+        'JMS'              => __DIR__.'/../vendor/jms/',
+        'Doctrine\\Common' => __DIR__.'/../vendor/doctrine/common/lib',
+        'Doctrine\\DBAL'   => __DIR__.'/../vendor/doctrine/dbal/lib',
+        'Doctrine'         => __DIR__.'/../vendor/doctrine/orm/lib',
+        'Monolog'          => __DIR__.'/../vendor/monolog/monolog/src',
+        'Assetic'          => __DIR__.'/../vendor/kriswallsmith/assetic/src',
+        'Metadata'         => __DIR__.'/../vendor/jms/metadata/src',
     ));
     $loader->registerPrefixes(array(
-        'Twig_Extensions_' => __DIR__.'/../vendor/twig-extensions/lib',
-        'Twig_'            => __DIR__.'/../vendor/twig/lib',
+        'Twig_Extensions_' => __DIR__.'/../vendor/twig/extensions/lib',
+        'Twig_'            => __DIR__.'/../vendor/twig/twig/lib',
     ));
 
     // ...
@@ -367,5 +367,5 @@ need to learn a lot to become a Symfony2 master. Ready to dig into these
 topics now? Look no further - go to the official :doc:`/book/index` and pick
 any topic you want.
 
-.. _standards:               https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-0.md
-.. _convention:              http://pear.php.net/
+.. _standards:  http://symfony.com/PSR0
+.. _convention: http://pear.php.net/

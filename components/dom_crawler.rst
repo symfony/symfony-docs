@@ -220,7 +220,7 @@ form that the button lives in::
     ));
 
 The :class:`Symfony\\Component\\DomCrawler\\Form` object has lots of very
-useful methods for working with forms:
+useful methods for working with forms::
 
     $uri = $form->getUri();
 
@@ -306,7 +306,7 @@ directly::
 
     use Goutte\Client;
 
-    // make a real reqeust to an external site
+    // make a real request to an external site
     $client = new Client();
     $crawler = $client->request('GET', 'https://github.com/login');
 

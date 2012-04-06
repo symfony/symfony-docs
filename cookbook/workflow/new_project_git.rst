@@ -23,10 +23,10 @@ git repository:
    your new project structure, config files, etc. Rename it to whatever you like.
 
 3. Create a new file called ``.gitignore`` at the root of your new project
-   (e.g. next to the ``deps`` file) and paste the following into it. Files
+   (e.g. next to the ``composer.json`` file) and paste the following into it. Files
    matching these patterns will be ignored by git:
 
-    .. code-block:: text
+   .. code-block:: text
 
         /web/bundles/
         /app/bootstrap*
@@ -34,6 +34,12 @@ git repository:
         /app/logs/*
         /vendor/  
         /app/config/parameters.yml
+
+.. tip::
+
+   You may also want to create a .gitignore file that can be used system-wide,
+   in which case, you can find more information here: `Github .gitignore`_
+   This way you can exclude files/folders often used by your IDE for all of your projects.
 
 4. Copy ``app/config/parameters.yml`` to ``app/config/parameters.yml.dist``.
    The ``parameters.yml`` file is ignored by git (see above) so that machine-specific
@@ -43,27 +49,24 @@ git repository:
 
 5. Initialize your git repository:
 
-    .. code-block:: bash
-    
+   .. code-block:: bash
+
         $ git init
 
 6. Add all of the initial files to git:
 
-    .. code-block:: bash
-    
+   .. code-block:: bash
+
         $ git add .
 
 7. Create an initial commit with your started project:
 
-    .. code-block:: bash
-    
+   .. code-block:: bash
+
         $ git commit -m "Initial commit"
 
-8. Finally, download all of the third-party vendor libraries:
-
-    .. code-block:: bash
-    
-        $ php bin/vendors install
+8. Finally, download all of the third-party vendor libraries by
+   executing composer. For details, see :ref:`installation-updating-vendors`.
 
 At this point, you have a fully-functional Symfony2 project that's correctly
 committed to git. You can immediately begin development, committing the new
@@ -81,18 +84,15 @@ to learn more about how to configure and develop inside your application.
 
 .. include:: _vendor_deps.rst.inc
 
-    Additionally, if you would simply like to update the ``deps.lock`` file
-    to what you already have installed, then you can simply run ``php bin/vendors lock``
-    to store the appropriate git SHA identifiers in the deps.lock file.
-
 Vendors and Submodules
 ~~~~~~~~~~~~~~~~~~~~~~
 
-Instead of using the ``deps``, ``bin/vendors`` system for managing your vendor
+Instead of using the ``composer.json`` system for managing your vendor
 libraries, you may instead choose to use native `git submodules`_. There
-is nothing wrong with this approach, though the ``deps`` system is the official
-way to solve this problem and git submodules can be difficult to work with
-at times.
+is nothing wrong with this approach, though the ``composer.json`` system
+is the official way to solve this problem and probably much easier to
+deal with. Unlike git submodules, ``Composer`` is smart enough to calculate
+which libraries depend on which other libraries.
 
 Storing your Project on a Remote Server
 ---------------------------------------
@@ -117,3 +117,4 @@ manage this is `Gitolite`_.
 .. _`GitHub`: https://github.com/
 .. _`barebones repository`: http://progit.org/book/ch4-4.html
 .. _`Gitolite`: https://github.com/sitaramc/gitolite
+.. _`Github .gitignore`: http://help.github.com/ignore-files/

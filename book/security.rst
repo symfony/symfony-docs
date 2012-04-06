@@ -422,6 +422,7 @@ Next, create the controller that will display the login form:
                 $error = $request->attributes->get(SecurityContext::AUTHENTICATION_ERROR);
             } else {
                 $error = $session->get(SecurityContext::AUTHENTICATION_ERROR);
+                $session->remove(SecurityContext::AUTHENTICATION_ERROR);
             }
 
             return $this->render('AcmeSecurityBundle:Security:login.html.twig', array(
@@ -465,7 +466,7 @@ Finally, create the corresponding template:
                 <input type="hidden" name="_target_path" value="/account" />
             #}
 
-            <input type="submit" name="login" />
+            <button type="submit">login</button>
         </form>
 
     .. code-block:: html+php
@@ -487,7 +488,7 @@ Finally, create the corresponding template:
                 <input type="hidden" name="_target_path" value="/account" />
             -->
 
-            <input type="submit" name="login" />
+            <button type="submit">login</button>
         </form>
 
 .. tip::
@@ -992,7 +993,7 @@ be stored in the database.
     class User implements UserInterface
     {
         /**
-         * @ORM\Column(type="string", length="255")
+         * @ORM\Column(type="string", length=255)
          */
         protected $username;
 

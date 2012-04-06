@@ -116,30 +116,29 @@ set an authenticated token in the security context if successful.
         {
             $request = $event->getRequest();
 
-            if (!$request->headers->has('x-wsse')) {
-                return;
-            }
+            if ($request->headers->has('x-wsse')) {
 
-            $wsseRegex = '/UsernameToken Username="([^"]+)", PasswordDigest="([^"]+)", Nonce="([^"]+)", Created="([^"]+)"/';
+                $wsseRegex = '/UsernameToken Username="([^"]+)", PasswordDigest="([^"]+)", Nonce="([^"]+)", Created="([^"]+)"/';
 
-            if (preg_match($wsseRegex, $request->headers->get('x-wsse'), $matches)) {
-                $token = new WsseUserToken();
-                $token->setUser($matches[1]);
+                if (preg_match($wsseRegex, $request->headers->get('x-wsse'), $matches)) {
+                    $token = new WsseUserToken();
+                    $token->setUser($matches[1]);
 
-                $token->digest   = $matches[2];
-                $token->nonce    = $matches[3];
-                $token->created  = $matches[4];
+                    $token->digest   = $matches[2];
+                    $token->nonce    = $matches[3];
+                    $token->created  = $matches[4];
 
-                try {
-                    $returnValue = $this->authenticationManager->authenticate($token);
+                    try {
+                        $returnValue = $this->authenticationManager->authenticate($token);
 
-                    if ($returnValue instanceof TokenInterface) {
-                        return $this->securityContext->setToken($returnValue);
-                    } else if ($returnValue instanceof Response) {
-                        return $event->setResponse($returnValue);
+                        if ($returnValue instanceof TokenInterface) {
+                            return $this->securityContext->setToken($returnValue);
+                        } else if ($returnValue instanceof Response) {
+                            return $event->setResponse($returnValue);
+                        }
+                    } catch (AuthenticationException $e) {
+                        // you might log something here
                     }
-                } catch (AuthenticationException $e) {
-                    // you might log something here
                 }
             }
 
@@ -428,35 +427,30 @@ factory service, tagged as ``security.listener.factory``:
             </services>
         </container>
 
-Now, import the factory configuration via the the ``factories`` key in your
-security configuration:
+.. versionadded:: 2.1
+    Before 2.1, the factory below was added via ``security.yml`` instead.
 
-.. configuration-block::
+As a final step, add the factory to the security extension in your bundle class.
 
-    .. code-block:: yaml
+.. code-block:: php
 
-        # app/config/security.yml
-        security:
-          factories:
-            - "%kernel.root_dir%/../src/Acme/DemoBundle/Resources/config/security_factories.yml"
+    // src/Acme/DemoBundle/AcmeDemoBundle.php
+    namespace Acme\DemoBundle;
 
-    .. code-block:: xml
+    use Acme\DemoBundle\DependencyInjection\Security\Factory\WsseFactory;
+    use Symfony\Component\HttpKernel\Bundle\Bundle;
+    use Symfony\Component\DependencyInjection\ContainerBuilder;
 
-        <!-- app/config/security.xml -->
-        <config>
-            <factories>
-              "%kernel.root_dir%/../src/Acme/DemoBundle/Resources/config/security_factories.xml
-            </factories>
-        </config>
+    class AcmeDemoBundle extends Bundle
+    {
+        public function build(ContainerBuilder $container)
+        {
+            parent::build($container);
 
-    .. code-block:: php
-
-        // app/config/security.php
-        $container->loadFromExtension('security', array(
-            'factories' => array(
-              "%kernel.root_dir%/../src/Acme/DemoBundle/Resources/config/security_factories.php"
-            ),
-        ));
+            $extension = $container->getExtension('security');
+            $extension->addSecurityListenerFactory(new WsseFactory());
+        }
+    }
 
 You are finished! You can now define parts of your app as under WSSE protection.
 

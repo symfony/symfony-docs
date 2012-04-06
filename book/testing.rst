@@ -31,7 +31,7 @@ command:
     $ phpunit -c app/
 
 The ``-c`` option tells PHPUnit to look in the ``app/`` directory for a configuration
-file. If you're curious about how the PHPUnit options, check out the ``app/phpunit.xml.dist``
+file. If you're curious about the PHPUnit options, check out the ``app/phpunit.xml.dist``
 file.
 
 .. tip::
@@ -258,10 +258,10 @@ document::
     To get you started faster, here is a list of the most common and
     useful test assertions::
 
-        // Assert that there is exactly one h2 tag with the class "subtitle"
+        // Assert that there is more than one h2 tag with the class "subtitle"
         $this->assertTrue($crawler->filter('h2.subtitle')->count() > 0);
 
-        // Assert that there are 4 h2 tags on the page
+        // Assert that there are exactly 4 h2 tags on the page
         $this->assertEquals(4, $crawler->filter('h2')->count());
 
         // Assert the the "Content-Type" header is "application/json"
@@ -288,7 +288,7 @@ document::
 Working with the Test Client
 -----------------------------
 
-The test Client simulates an HTTP client like a browser and makes requests
+The Test Client simulates an HTTP client like a browser and makes requests
 into your Symfony2 application::
 
     $crawler = $client->request('GET', '/hello/Fabien');
@@ -486,9 +486,9 @@ Many other methods are also available:
 +------------------------+----------------------------------------------------+
 | ``previousAll()``      | All preceding siblings                             |
 +------------------------+----------------------------------------------------+
-| ``parents()``          | Parent nodes                                       |
+| ``parents()``          | Returns the parent nodes                           |
 +------------------------+----------------------------------------------------+
-| ``children()``         | Children                                           |
+| ``children()``         | Returns children nodes                             |
 +------------------------+----------------------------------------------------+
 | ``reduce($lambda)``    | Nodes for which the callable does not return false |
 +------------------------+----------------------------------------------------+
@@ -591,7 +591,7 @@ that overrides the default ones::
 And if you want to simulate a specific HTTP method for the form, pass it as a
 second argument::
 
-    $form = $crawler->form(array(), 'DELETE');
+    $form = $buttonCrawlerNode->form(array(), 'DELETE');
 
 The Client can submit ``Form`` instances::
 

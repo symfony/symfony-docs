@@ -20,10 +20,10 @@ Configuration
 * `ide`_
 * `test`_
 * `form`_
-    * :ref:`enabled<config-framework-form-enabled>`
+    * enabled
 * `csrf_protection`_
-    * :ref:`enabled<config-framework-csrf-enabled>`
-    * `field_name`
+    * enabled
+    * field_name
 * `session`_
     * `lifetime`_
 * `templating`_
@@ -96,7 +96,7 @@ form
 ~~~~
 
 csrf_protection
-...............
+~~~~~~~~~~~~~~~
 
 session
 ~~~~~~~
@@ -231,7 +231,7 @@ would be ``/images/logo.png?version=5``.
 
     URL rewrite rules could then be used to disregard the version prefix before
     serving the asset. Alternatively, you could copy assets to the appropriate
-    version path as part of your deployment process and forgo any URL rewriting.
+    version path as part of your deployment process and forgot any URL rewriting.
     The latter option is useful if you would like older asset versions to remain
     accessible at their original URL.
 
@@ -288,7 +288,7 @@ Full Default Configuration
                 auto_start:           ~
                 storage_id:           session.storage.native
                 name:                 ~
-                lifetime:             86400
+                lifetime:             0
                 path:                 ~
                 domain:               ~
                 secure:               ~

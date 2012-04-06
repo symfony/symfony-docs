@@ -76,6 +76,7 @@ Cookbook
     logging/monolog
     logging/monolog_email
 
+    console/console_command
     debugging
 
     event_dispatcher/class_extension

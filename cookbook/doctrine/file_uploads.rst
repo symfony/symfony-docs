@@ -87,7 +87,7 @@ file.
 
 .. note::
 
-    If you're using annotations to specify your annotation rules (as shown
+    If you're using annotations to specify your validation rules (as shown
     in this example), be sure that you've enabled validation by annotation
     (see :ref:`validation configuration<book-validation-configuration>`).
 
@@ -361,7 +361,7 @@ property, instead of the actual filename::
         }
 
         /**
-         * @ORM\PostRemove()
+         * @ORM\PreRemove()
          */
         public function removeUpload()
         {

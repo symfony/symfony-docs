@@ -316,8 +316,6 @@ taste.
     You can also store translations in a database, or any other storage by
     providing a custom class implementing the
     :class:`Symfony\\Component\\Translation\\Loader\\LoaderInterface` interface.
-    See :doc:`Custom Translation Loaders </cookbook/translation/custom_loader>`
-    below to learn how to register custom loaders.
 
 .. index::
    single: Translations; Creating translation resources
@@ -510,8 +508,8 @@ request basis. If you do this, each subsequent request will have this locale.
 
     $this->get('session')->set('_locale', 'en_US');
 
-See the :ref:`.. _book-translation-locale-url:` section below about setting
-the locale via routing.
+See the :ref:`book-translation-locale-url` section below about setting the
+locale via routing.
 
 Fallback and Default Locale
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -798,6 +796,18 @@ texts* and complex expressions:
             {# but static strings are never escaped #}
             {{ '<h3>foo</h3>'|trans }}
 
+.. versionadded:: 2.1
+
+     You can now set the translation domain for an entire Twig template with a
+     single tag:
+
+     .. code-block:: jinja
+
+            {% trans_default_domain "app" %}
+
+     Note that this only influences the current template, not any "included"
+     templates (in order to avoid side effects).
+
 PHP Templates
 ~~~~~~~~~~~~~
 
@@ -844,6 +854,117 @@ Translating Database Content
 The translation of database content should be handled by Doctrine through
 the `Translatable Extension`_. For more information, see the documentation
 for that library.
+
+Translating Constraint Messages
+-------------------------------
+
+The best way to understand constraint translation is to see it in action. To start,
+suppose you've created a plain-old-PHP object that you need to use somewhere in
+your application:
+
+.. code-block:: php
+
+    // src/Acme/BlogBundle/Entity/Author.php
+    namespace Acme\BlogBundle\Entity;
+
+    class Author
+    {
+        public $name;
+    }
+
+Add constraints though any of the supported methods. Set the message option to the
+translation source text. For example, to guarantee that the $name property is not
+empty, add the following:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # src/Acme/BlogBundle/Resources/config/validation.yml
+        Acme\BlogBundle\Entity\Author:
+            properties:
+                name:
+                    - NotBlank: { message: "author.name.not_blank" }
+
+    .. code-block:: php-annotations
+
+        // src/Acme/BlogBundle/Entity/Author.php
+        use Symfony\Component\Validator\Constraints as Assert;
+
+        class Author
+        {
+            /**
+             * @Assert\NotBlank(message = "author.name.not_blank")
+             */
+            public $name;
+        }
+
+    .. code-block:: xml
+
+        <!-- src/Acme/BlogBundle/Resources/config/validation.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
+
+            <class name="Acme\BlogBundle\Entity\Author">
+                <property name="name">
+                    <constraint name="NotBlank">
+                        <option name="message">author.name.not_blank</option>
+                    </constraint>
+                </property>
+            </class>
+        </constraint-mapping>
+
+    .. code-block:: php
+
+        // src/Acme/BlogBundle/Entity/Author.php
+
+        use Symfony\Component\Validator\Mapping\ClassMetadata;
+        use Symfony\Component\Validator\Constraints\NotBlank;
+
+        class Author
+        {
+            public $name;
+
+            public static function loadValidatorMetadata(ClassMetadata $metadata)
+            {
+                $metadata->addPropertyConstraint('name', new NotBlank(array(
+                    'message' => 'author.name.not_blank'
+                )));
+            }
+        }
+
+Create a translation file under the ``validators`` catalog for the constraint messages, typically in the ``Resources/translations/`` directory of the bundle. See `Message Catalogues`_ for more details.
+
+.. configuration-block::
+
+    .. code-block:: xml
+
+        <!-- validators.fr.xliff -->
+        <?xml version="1.0"?>
+        <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+            <file source-language="en" datatype="plaintext" original="file.ext">
+                <body>
+                    <trans-unit id="1">
+                        <source>author.name.not_blank</source>
+                        <target>Please enter an author name.</target>
+                    </trans-unit>
+                </body>
+            </file>
+        </xliff>
+
+    .. code-block:: php
+
+        // validators.fr.php
+        return array(
+            'author.name.not_blank' => 'Please enter an author name.',
+        );
+
+    .. code-block:: yaml
+
+        # validators.fr.yml
+        author.name.not_blank: Please enter an author name.
 
 Summary
 -------
