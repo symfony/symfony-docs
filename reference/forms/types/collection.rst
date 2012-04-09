@@ -204,7 +204,7 @@ type
 
 This is the field type for each item in this collection (e.g. ``text``, ``choice``,
 etc). For example, if you have an array of email addresses, you'd use the
-:doc`email</reference/forms/types/email>` type. If you want to embed
+:doc:`email</reference/forms/types/email>` type. If you want to embed
 a collection of some other form, create a new instance of your form type
 and pass it as this option.
 
@@ -214,7 +214,7 @@ options
 **type**: ``array`` **default**: ``array()``
 
 This is the array that's passed to the form type specified in the `type`_
-option. For example, if you used the :doc`choice</reference/forms/types/choice>`
+option. For example, if you used the :doc:`choice</reference/forms/types/choice>`
 type as your `type`_ option (e.g. for a collection of drop-down menus), then
 you'd need to at least pass the ``choices`` option to the underlying type::
 
