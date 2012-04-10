@@ -155,6 +155,21 @@ For more details on each of these, see :class:`Symfony\\Component\\Security\\Cor
     implement the new :class:`Symfony\\Component\\Security\\Core\\User\\EquatableInterface`
     interface and implement the ``isEqualTo`` method.
 
+.. code-block:: php
+
+    // src/Acme/UserBundle/Entity/User.php
+
+    namespace Acme\UserBundle\Entity;
+
+    use Symfony\Component\Security\Core\User\EquatableInterface;
+
+    // ...
+
+    public function isEqualTo(UserInterface $user)
+    {
+        return $this->username === $user->getUsername();
+    }
+
 Below is an export of my ``User`` table from MySQL. For details on how to
 create user records and encode their password, see :ref:`book-security-encoding-user-password`.
 
