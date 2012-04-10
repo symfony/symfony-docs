@@ -140,14 +140,6 @@ focus on the most important methods that come from the
         public function eraseCredentials()
         {
         }
-
-        /**
-         * @inheritDoc
-         */
-        public function equals(UserInterface $user)
-        {
-            return $this->username === $user->getUsername();
-        }
     }
 
 In order to use an instance of the ``AcmeUserBundle:User`` class in the Symfony
