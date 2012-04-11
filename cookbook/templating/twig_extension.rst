@@ -59,7 +59,7 @@ As an example we will create a price filter to format a given number into price:
     Along with custom filters, you can also add custom `functions` and register `global variables`.    
      
 Register an Extension as a Service
--------------------------------
+----------------------------------
 
 Now you must let Service Container know about your newly created Twig Extension:
 
