@@ -61,7 +61,7 @@ Furthering our example, take a look at the ``ProtocolValidator`` as an example:
     {
         public function isValid($value, Constraint $constraint)
         {
-            if (in_array($value, $constraint->protocols));
+            if (in_array($value, $constraint->protocols)) {
                 $this->setMessage($constraint->message, array('%protocols%' => $constraint->protocols));
 
                 return true;
