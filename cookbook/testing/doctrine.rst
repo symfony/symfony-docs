@@ -40,8 +40,9 @@ First, you need to add the ``Doctrine\Tests`` namespace to your autoloader::
 
     // app/autoload.php
     $loader->registerNamespaces(array(
-        //...
+        // ...
         'Doctrine\\Tests'                => __DIR__.'/../vendor/doctrine/orm/tests',
+        // ...
     ));
 
 Next, you will need to setup an entity manager in each test so that Doctrine
@@ -51,38 +52,38 @@ As Doctrine is not able by default to load annotation metadata from your
 entities, you'll need to configure the annotation reader to be able to parse
 and load the entities::
 
-    // src/Acme/ProductBundle/Tests/Entity/ProductRepositoryTest.php
-    namespace Acme\ProductBundle\Tests\Entity;
+    // src/Acme/StoreBundle/Tests/Entity/ProductRepositoryTest.php
+
+    namespace Acme\StoreBundle\Tests\Entity;
 
     use Doctrine\Tests\OrmTestCase;
     use Doctrine\Common\Annotations\AnnotationReader;
-    use Doctrine\ORM\Mapping\Driver\DriverChain;
     use Doctrine\ORM\Mapping\Driver\AnnotationDriver;
 
     class ProductRepositoryTest extends OrmTestCase
     {
-        private $_em;
+        /**
+         * @var \Doctrine\Tests\Mocks\EntityManagerMock
+         */
+        private $em;
 
+        /**
+         * {@inheritDoc}
+         */
         protected function setUp()
         {
             $reader = new AnnotationReader();
             $reader->setIgnoreNotImportedAnnotations(true);
             $reader->setEnableParsePhpImports(true);
 
-            $metadataDriver = new AnnotationDriver(
-                $reader,
-                // provide the namespace of the entities you want to tests
-                'Acme\\ProductBundle\\Entity'
-            );
+            // provide the namespace of the entities you want to tests
+            $metadataDriver = new AnnotationDriver($reader, 'Acme\\StoreBundle\\Entity');
 
-            $this->_em = $this->_getTestEntityManager();
-
-            $this->_em->getConfiguration()
-            	->setMetadataDriverImpl($metadataDriver);
-
-            // allows you to use the AcmeProductBundle:Product syntax
-            $this->_em->getConfiguration()->setEntityNamespaces(array(
-                'AcmeProductBundle' => 'Acme\\ProductBundle\\Entity'
+            $this->em = $this->_getTestEntityManager();
+            $this->em->getConfiguration()->setMetadataDriverImpl($metadataDriver);
+            // allows you to use the AcmeStoreBundle:Product syntax
+            $this->em->getConfiguration()->setEntityNamespaces(array(
+                'AcmeStoreBundle' => 'Acme\\StoreBundle\\Entity',
             ));
         }
     }
@@ -107,32 +108,45 @@ Remember that Doctrine repository methods can only be tested if they are
 building and returning a query (but not actually executing a query). Take
 the following example::
 
-    // src/Acme/StoreBundle/Entity/ProductRepository
+    // src/Acme/StoreBundle/Entity/ProductRepository.php
+
     namespace Acme\StoreBundle\Entity;
 
     use Doctrine\ORM\EntityRepository;
 
     class ProductRepository extends EntityRepository
     {
+        /**
+         * @param  string $name
+         * @return \Doctrine\ORM\QueryBuilder
+         */
         public function createSearchByNameQueryBuilder($name)
         {
-            return $this->createQueryBuilder('p')
+            return $this
+                ->createQueryBuilder('p')
                 ->where('p.name LIKE :name')
-                ->setParameter('name', $name);
+                ->setParameter('name', $name)
+            ;
         }
     }
 
 In this example, the method is returning a ``QueryBuilder`` instance. You
 can test the result of this method in a variety of ways::
 
-    class ProductRepositoryTest extends \Doctrine\Tests\OrmTestCase
+    // src/Acme/StoreBundle/Tests/Entity/ProductRepositoryTest.php
+
+    /* ... */
+
+    class ProductRepositoryTest extends OrmTestCase
     {
         /* ... */
 
         public function testCreateSearchByNameQueryBuilder()
         {
-            $queryBuilder = $this->_em->getRepository('AcmeProductBundle:Product')
-                ->createSearchByNameQueryBuilder('foo');
+            $queryBuilder = $this->em
+                ->getRepository('AcmeStoreBundle:Product')
+                ->createSearchByNameQueryBuilder('foo')
+            ;
 
             $this->assertEquals('p.name LIKE :name', (string) $queryBuilder->getDqlPart('where'));
             $this->assertEquals(array('name' => 'foo'), $queryBuilder->getParameters());
@@ -149,15 +163,16 @@ you can test the DQL query string directly::
 
     public function testCreateSearchByNameQueryBuilder()
     {
-        $queryBuilder = $this->_em->getRepository('AcmeProductBundle:Product')
-            ->createSearchByNameQueryBuilder('foo');
+        $queryBuilder = $this->em
+            ->getRepository('AcmeStoreBundle:Product')
+            ->createSearchByNameQueryBuilder('foo')
+        ;
 
-        $query = $queryBuilder->getQuery();
+        $dql = $queryBuilder->getQuery()->getDql();
 
-        // test DQL
         $this->assertEquals(
-            'SELECT p FROM Acme\ProductBundle\Entity\Product p WHERE p.name LIKE :name',
-            $query->getDql()
+            'SELECT p FROM Acme\StoreBundle\Entity\Product p WHERE p.name LIKE :name',
+            $dql
         );
     }
 
@@ -170,8 +185,9 @@ If you need to actually execute a query, you will need to boot the kernel
 to get a valid connection. In this case, you'll extend the ``WebTestCase``,
 which makes all of this quite easy::
 
-    // src/Acme/ProductBundle/Tests/Entity/ProductRepositoryFunctionalTest.php
-    namespace Acme\ProductBundle\Tests\Entity;
+    // src/Acme/StoreBundle/Tests/Entity/ProductRepositoryFunctionalTest.php
+
+    namespace Acme\StoreBundle\Tests\Entity;
 
     use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
@@ -180,22 +196,23 @@ which makes all of this quite easy::
         /**
          * @var \Doctrine\ORM\EntityManager
          */
-        private $_em;
+        private $em;
 
         public function setUp()
         {
-        	$kernel = static::createKernel();
-        	$kernel->boot();
-            $this->_em = $kernel->getContainer()
-                ->get('doctrine.orm.entity_manager');
+            $kernel = static::createKernel();
+            $kernel->boot();
+            $this->em = $kernel->getContainer()->get('doctrine.orm.entity_manager');
         }
 
         public function testProductByCategoryName()
         {
-            $results = $this->_em->getRepository('AcmeProductBundle:Product')
+            $results = $this->em
+                ->getRepository('AcmeStoreBundle:Product')
                 ->searchProductsByNameQuery('foo')
-                ->getResult();
+                ->getResult()
+            ;
 
-            $this->assertEquals(count($results), 1);
+            $this->assertCount(1, $results);
         }
     }
