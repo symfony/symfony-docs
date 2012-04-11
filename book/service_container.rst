@@ -222,6 +222,12 @@ The end result is exactly the same as before - the difference is only in
 to look for parameters with those names. When the container is built, it
 looks up the value of each parameter and uses it in the service definition.
 
+.. note::
+
+    The percent sign inside a parameter or argument, as part of the string, must 
+    be escaped with another percent sign::
+        <argument type="string">http://symfony.com/?foo=%%s&bar=%%d</argument>
+
 The purpose of parameters is to feed information into services. Of course
 there was nothing wrong with defining the service without using any parameters.
 Parameters, however, have several advantages:
