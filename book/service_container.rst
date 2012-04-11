@@ -225,7 +225,10 @@ looks up the value of each parameter and uses it in the service definition.
 .. note::
 
     The percent sign inside a parameter or argument, as part of the string, must 
-    be escaped with another percent sign::
+    be escaped with another percent sign:
+    
+    .. code-block:: xml
+
         <argument type="string">http://symfony.com/?foo=%%s&bar=%%d</argument>
 
 The purpose of parameters is to feed information into services. Of course
