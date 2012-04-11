@@ -565,13 +565,10 @@ the correct values of a number of field options.
   (i.e. is the field ``nullable``). This is very useful, as your client-side
   validation will automatically match your validation rules.
 
-* ``min_length``: If the field is some sort of text field, then the ``min_length``
-  option can be guessed from the validation constrains (if ``MinLength``
-  or ``Min`` is used) or from the Doctrine metadata (via the field's length).
-
-* ``max_length``: Similar to ``min_length``, the maximum length can also
-  be guessed.
-
+* ``max_length``: If the field is some sort of text field, then the ``max_length``
+  option can be guessed from the validation constraints (if ``MaxLength`` or ``Max``
+  is used) or from the Doctrine metadata (via the field's length).
+  
 .. note::
 
   These field options are *only* guessed if you're using Symfony to guess
@@ -580,7 +577,7 @@ the correct values of a number of field options.
 If you'd like to change one of the guessed values, you can override it by
 passing the option in the options field array::
 
-    ->add('task', null, array('min_length' => 4))
+    ->add('task', null, array('max_length' => 4))
 
 .. index::
    single: Forms; Rendering in a Template

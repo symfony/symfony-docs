@@ -1196,7 +1196,7 @@ in general, see Doctrine's `Lifecycle Events documentation`_
 .. sidebar:: Lifecycle Callbacks and Event Listeners
 
     Notice that the ``setCreatedValue()`` method receives no arguments. This
-    is always the case for lifecylce callbacks and is intentional: lifecycle
+    is always the case for lifecycle callbacks and is intentional: lifecycle
     callbacks should be simple methods that are concerned with internally
     transforming data in the entity (e.g. setting a created/updated field,
     generating a slug value).

@@ -93,6 +93,7 @@
 
   * :doc:`/cookbook/templating/global_variables`
   * :doc:`/cookbook/templating/PHP`
+  * :doc:`/cookbook/templating/twig_extension`
 
 * **Logging**
 
