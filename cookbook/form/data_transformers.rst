@@ -22,7 +22,8 @@ will enter the issue number. The field will display an error if a non existing n
 was entered::
 
     // src/Acme/TaskBundle/Form/IssueSelectorType.php
-    namespace Acme\TaskBundle\Form\Type;
+
+    namespace Acme\TaskBundle\Form;
 
     use Symfony\Component\Form\AbstractType;
     use Symfony\Component\Form\FormBuilder;
@@ -31,8 +32,14 @@ was entered::
 
     class IssueSelectorType extends AbstractType
     {
+        /**
+         * @var ObjectManager
+         */
         private $om;
 
+        /**
+         * @param ObjectManager $om
+         */
         public function __construct(ObjectManager $om)
         {
             $this->om = $om;
@@ -47,7 +54,7 @@ was entered::
         public function getDefaultOptions(array $options)
         {
             return array(
-                'invalid_message'=>'The selected issue does not exist'
+                'invalid_message' => 'The selected issue does not exist',
             );
         }
 
@@ -98,6 +105,7 @@ Next, we create the data transformer, which does the actual conversion::
     use Symfony\Component\Form\Exception\TransformationFailedException;
     use Symfony\Component\Form\DataTransformerInterface;
     use Doctrine\Common\Persistence\ObjectManager;
+    use Acme\TaskBundle\Entity;
 
     class IssueToNumberTransformer implements DataTransformerInterface
     {
@@ -115,12 +123,12 @@ Next, we create the data transformer, which does the actual conversion::
         }
 
         /**
-         * Transforms an issue object to a string.
+         * Transforms an object (issue) to a string (number).
          *
-         * @param  \Acme\TaskBundle\Entity\Issue|null $issue
+         * @param  Entity\Issue|null $user
          * @return string
          */
-        public function transform($issue)
+        public function transform($issue = null)
         {
             if (null === $issue) {
                 return "";
@@ -130,12 +138,11 @@ Next, we create the data transformer, which does the actual conversion::
         }
 
         /**
-         * Transforms a string to an issue object.
+         * Transforms a string (number) to an object (issue).
          *
          * @param  string $number
-         * @return \Acme\TaskBundle\Entity\Issue|null
-         *
-         * @throws TransformationFailedException if issue object is not found.
+         * @return Entity\Issue|null
+         * @throws TransformationFailedException if object (issue) is not found.
          */
         public function reverseTransform($number)
         {
@@ -183,9 +190,9 @@ manager can be automatically injected:
 
 You can now add the type to your form by its alias as follows::
 
-    // src/Acme/TaskBundle/Form/Type/TaskType.php
+    // src/Acme/TaskBundle/Form/TaskType.php
 
-    namespace Acme\TaskBundle\Form\Type;
+    namespace Acme\TaskBundle\Form;
 
     use Symfony\Component\Form\AbstractType;
     use Symfony\Component\Form\FormBuilder;
@@ -194,9 +201,11 @@ You can now add the type to your form by its alias as follows::
     {
         public function buildForm(FormBuilder $builder, array $options)
         {
-            $builder->add('task');
-            $builder->add('dueDate', null, array('widget' => 'single_text'));
-            $builder->add('issue', 'issue_selector');
+            $builder
+                ->add('task')
+                ->add('dueDate', null, array('widget' => 'single_text'));
+                ->add('issue', 'issue_selector')
+            ;
         }
 
         public function getName()
