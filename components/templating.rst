@@ -44,7 +44,7 @@ template associated to a reference.
 The :method:`Symfony\\Component\\Templating\\PhpEngine::render` method executes
 the file `views/hello.php` and returns the output text.
 
-.. code-block::php
+.. code-block:: php
 
     <!-- views/hello.php -->
     Hello, <?php echo $firstname ?>!
@@ -54,7 +54,7 @@ Template Inheritance with Slots
 
 The template inheritance is designed to share layouts with many templates.
 
-.. code-block::php
+.. code-block:: php
 
     <!-- views/layout.php -->
     <html>
@@ -69,7 +69,7 @@ The template inheritance is designed to share layouts with many templates.
 The :method:`Symfony\\Templating\\PhpEngine::extend` method is called in the
 sub-template to set its parent template.
 
-.. code-block::php
+.. code-block:: php
 
     <!-- views/page.php -->
     <?php $view->extend('layout.php') ?>
