@@ -12,11 +12,11 @@
 
 * **The Dependency Injection Component**
 
-  * :doc:`/components/dependency_injection/dependency_injection`
+  * :doc:`/components/dependency_injection/introduction`
 
 * **The Event Dispatcher Component**
 
-  * :doc:`/components/event_dispatcher/event_dispatcher`
+  * :doc:`/components/event_dispatcher/introduction`
 
 * **The DOM Crawler Component**
 
@@ -28,7 +28,7 @@
 
 * **The HTTP Foundation Component**
 
-  * :doc:`/components/http_foundation/http_foundation`
+  * :doc:`/components/http_foundation/introduction`
 
 * **The Locale Component**
 
