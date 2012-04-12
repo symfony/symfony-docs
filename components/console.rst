@@ -62,9 +62,7 @@ and add the following to it::
     }
 
 You also need to create the file to run at the command line which creates
-an ``Application`` and adds commands to it:
-
-.. code-block::php
+an ``Application`` and adds commands to it::
 
     #!/usr/bin/env php
     # app/console
