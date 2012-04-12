@@ -8,10 +8,10 @@ The Components
     console
     css_selector
     dom_crawler
-    dependency_injection
-    event_dispatcher
+    dependency_injection/dependency_injection
+    event_dispatcher/event_dispatcher
     finder
-    http_foundation
+    http_foundation/http_foundation
     locale
     process
     routing
