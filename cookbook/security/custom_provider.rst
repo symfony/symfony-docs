@@ -163,7 +163,7 @@ Now we make the user provider available as service.
 
     .. code-block:: yaml
 
-        # src/Acme/MailerBundle/Resources/config/services.yml
+        # src/Acme/WebserviceUserBundle/Resources/config/services.yml
         parameters:
             webservice_user_provider.class: Acme\WebserviceUserBundle\Security\User\WebserviceUserProvider
             
