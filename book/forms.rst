@@ -790,9 +790,9 @@ that will house the logic for building the task form:
 
 .. code-block:: php
 
-    // src/Acme/TaskBundle/Form/Type/TaskType.php
+    // src/Acme/TaskBundle/Form/TaskType.php
 
-    namespace Acme\TaskBundle\Form\Type;
+    namespace Acme\TaskBundle\Form;
 
     use Symfony\Component\Form\AbstractType;
     use Symfony\Component\Form\FormBuilder;
@@ -820,7 +820,7 @@ form "type"). It can be used to quickly build a form object in the controller:
     // src/Acme/TaskBundle/Controller/DefaultController.php
 
     // add this new use statement at the top of the class
-    use Acme\TaskBundle\Form\Type\TaskType;
+    use Acme\TaskBundle\Form\TaskType;
 
     public function newAction()
     {
