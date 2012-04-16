@@ -846,7 +846,7 @@ the choice is ultimately up to you.
     good idea to explicitly specify the ``data_class`` option by adding the
     following to your form type class::
 
-        public function getDefaultOptions(array $options)
+        public function getDefaultOptions()
         {
             return array(
                 'data_class' => 'Acme\TaskBundle\Entity\Task',
@@ -978,7 +978,7 @@ create a form class so that a ``Category`` object can be modified by the user::
             $builder->add('name');
         }
 
-        public function getDefaultOptions(array $options)
+        public function getDefaultOptions()
         {
             return array(
                 'data_class' => 'Acme\TaskBundle\Entity\Category',
@@ -1407,7 +1407,7 @@ The CSRF token can be customized on a form-by-form basis. For example::
     {
         // ...
 
-        public function getDefaultOptions(array $options)
+        public function getDefaultOptions()
         {
             return array(
                 'data_class'      => 'Acme\TaskBundle\Entity\Task',
@@ -1539,7 +1539,7 @@ method to specify the option::
     {
         // ...
 
-        public function getDefaultOptions(array $options)
+        public function getDefaultOptions()
         {
             $collectionConstraint = new Collection(array(
                 'name' => new MinLength(5),
