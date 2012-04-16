@@ -6,6 +6,7 @@
 * :doc:`/book/routing`
 * :doc:`/book/templating`
 * :doc:`/book/doctrine`
+* :doc:`/book/propel`
 * :doc:`/book/testing`
 * :doc:`/book/validation`
 * :doc:`/book/forms`
