@@ -61,14 +61,14 @@ a ``HelloService`` object properly:
         services:
             hello_service:
                 class: Acme\DemoBundle\Services\HelloService
-                arguments: [mailer]
+                arguments: [@mailer]
 
     .. code-block:: xml
 
         <!-- app/config/config.xml -->
         <services>
          <service id="hello_service" class="Acme\DemoBundle\Services\HelloService">
-          <argument>mailer</argument>
+          <argument type="service" id="mailer"/>
          </service>
         </services>
 
