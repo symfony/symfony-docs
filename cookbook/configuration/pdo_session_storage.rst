@@ -30,7 +30,7 @@ configuration format of your choice):
         framework:
             session:
                 # ...
-                storage_id:     session.storage.pdo
+                handler_id:     session.storage.pdo
 
         parameters:
             pdo.db_options:
@@ -55,7 +55,7 @@ configuration format of your choice):
 
         <!-- app/config/config.xml -->
         <framework:config>
-            <framework:session storage-id="session.storage.pdo" lifetime="3600" auto-start="true"/>
+            <framework:session handler-id="session.storage.pdo" lifetime="3600" auto-start="true"/>
         </framework:config>
 
         <parameters>
@@ -91,7 +91,7 @@ configuration format of your choice):
             // ...
             'session' => array(
                 // ...
-                'storage_id' => 'session.storage.pdo',
+                'handler_id' => 'session.storage.pdo',
             ),
         ));
 
