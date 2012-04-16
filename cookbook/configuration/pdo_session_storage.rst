@@ -48,7 +48,7 @@ configuration format of your choice):
                     password: mypassword
 
             session.storage.pdo:
-                class:     Symfony\Component\HttpFoundation\Session\Storage\PdoSessionStorage
+                class:     Symfony\Component\HttpFoundation\Session\Storage\Handler\PdoSessionHandler
                 arguments: [@pdo, %pdo.db_options%, %session.storage.options%]
 
     .. code-block:: xml
@@ -74,7 +74,7 @@ configuration format of your choice):
                 <argument>mypassword</argument>
             </service>
 
-            <service id="session.storage.pdo" class="Symfony\Component\HttpFoundation\Session\Storage\PdoSessionStorage">
+            <service id="session.storage.pdo" class="Symfony\Component\HttpFoundation\Session\Storage\Handler\PdoSessionHandler">
                 <argument type="service" id="pdo" />
                 <argument>%pdo.db_options%</argument>
                 <argument>%session.storage.options%</argument>
@@ -109,7 +109,7 @@ configuration format of your choice):
         ));
         $container->setDefinition('pdo', $pdoDefinition);
 
-        $storageDefinition = new Definition('Symfony\Component\HttpFoundation\Session\Storage\PdoSessionStorage', array(
+        $storageDefinition = new Definition('Symfony\Component\HttpFoundation\Session\Storage\Handler\PdoSessionHandler', array(
             new Reference('pdo'),
             '%pdo.db_options%',
             '%session.storage.options%',
