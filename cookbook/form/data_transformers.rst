@@ -44,7 +44,7 @@ was entered::
             $builder->appendClientTransformer($transformer);
         }
 
-        public function getDefaultOptions(array $options)
+        public function getDefaultOptions()
         {
             return array(
                 'invalid_message'=>'The selected issue does not exist'
