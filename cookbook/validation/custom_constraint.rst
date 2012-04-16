@@ -126,27 +126,23 @@ instantiate the class instead, without any dependencies injected.
 Class Constraint Validator
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Beside validating a class property, constraint can have a class scope by
-providing a target:
-
-.. code-block:: php
+Beside validating a class property, a constraint can have a class scope by
+providing a target::
 
     public function getTargets()
     {
         return self::CLASS_CONSTRAINT;
     }
 
-Thus, validator ``isValid()`` method get an object as first argument:
-
-.. code-block:: php
+With this, the validator ``isValid()`` method gets an object as its first argument::
 
     class ProtocolClassValidator extends ConstraintValidator
     {
-        public function isValid(Protocol $protocol, Constraint $constraint)
+        public function isValid($protocol, Constraint $constraint)
         {
             if ($protocol->getFoo() != $protocol->getBar()) {
 
-                //bind error message on foo property
+                // bind error message on foo property
                 $this->context->addViolationAtSubPath('foo', $constraint->getMessage(), array(), null);
 
                 return true;
