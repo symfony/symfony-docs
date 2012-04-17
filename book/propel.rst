@@ -6,7 +6,8 @@ Databases and Propel ("The model")
 
 Let's face it, one of the most common and challenging tasks for any application involves persisting and reading
 information to and from a database. Unfortunately, Symfony2 does not come integrated with Propel but it's really
-easy to integrate Propel into Symfony2. To get started, read [how to set up Propel into Symfony2](working-with-symfony2.html#installation).
+easy to integrate Propel into Symfony2. To get started, read `how to set up Propel into Symfony2 
+<http://www.propelorm.org/cookbook/symfony2/working-with-symfony2.html#installation>`_.
 
 A Simple Example: A Product
 ---------------------------
@@ -200,21 +201,21 @@ Updating an object involves just three steps:
 Deleting an Object
 ~~~~~~~~~~~~~~~~~~
 
-Deleting an object is very similar, but requires a call to the `delete()` method on the object:
+Deleting an object is very similar, but requires a call to the ``delete()`` method on the object:
 
 .. code-block:: php
 
     <?php
     
     $product->delete();
-    {% endhighlight %}
     
     
-    ## Querying for Objects ##
+Querying for Objects
+--------------------
     
-    Propel provides `Query` classes to run both basic and complex queries without any work:
-    
-    {% highlight php %}
+    Propel provides ``Query`` classes to run both basic and complex queries without any work:
+
+.. code-block:: php
     <?php
     
     \Acme\StoreBundle\Model\ProductQuery::create()->findPk($id);
