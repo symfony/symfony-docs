@@ -218,7 +218,7 @@ First, build a base layout file:
             </head>
             <body>
                 <div id="sidebar">
-                    <?php if ($view['slots']->has('sidebar'): ?>
+                    <?php if ($view['slots']->has('sidebar')): ?>
                         <?php $view['slots']->output('sidebar') ?>
                     <?php else: ?>
                         <ul>
