@@ -16,7 +16,8 @@ In this section, you'll configure your database, create a ``Product`` object, pe
 
 .. sidebar:: Code along with the example
 
-    If you want to follow along with the example in this chapter, create an ``AcmeStoreBundle`` via: ``php app/console generate:bundle --namespace=Acme/StoreBundle``.
+    If you want to follow along with the example in this chapter, create an ``AcmeStoreBundle`` via:
+    ``php app/console generate:bundle --namespace=Acme/StoreBundle``.
 
 Configuring the Database
 ~~~~~~~~~~~~~~~~~~~~~~~~
@@ -425,10 +426,3 @@ Commands
 --------
 
 You should read the dedicated section for `Propel commands in Symfony2 <http://www.propelorm.org/cookbook/symfony2/working-with-symfony2#commands>`_.
-
-
-Summary
--------
-
-This documentation is quite similar with the `official Symfony2 Model chapter <http://symfony.com/doc/current/book/doctrine.html>`_.
-It shows you that Propel is well integrated into Symfony2 and it really works. All you can do with Propel is possible in Symfony2.
