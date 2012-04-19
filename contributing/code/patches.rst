@@ -40,7 +40,7 @@ description:
     Symfony2 tests pass: [yes|no]
     Fixes the following tickets: [comma separated list of tickets fixed by the PR]
     Todo: [list of todos pending]
-    
+
 An example submission could now look as follows:
 
 .. code-block:: text
@@ -67,7 +67,9 @@ Thank you for including the filled out template in your submission!
     flip a single switch to enable automated testing. In your pull request,
     instead of specifying "*Symfony2 tests pass: [yes|no]*", you can link to
     the `travis-ci.org status icon`_. For more details, see the
-    `travis-ci.org Getting Started Guide`_.
+    `travis-ci.org Getting Started Guide`_. This could easily be done by clicking
+    on the wrench icon on the build page of Travis. First select your feature
+    branch and then copy the markdown to your PR description.
 
 Initial Setup
 -------------
