@@ -55,14 +55,11 @@ the follow command:
 
     $ php composer.phar update
 
-Tip: to save space on your computer, move composer.phar to a directory that's
-on your PATH and give it execute permissions (``chmod +x composer.phar``).
+.. tip::
 
-You can then run
-
-.. code-block:: bash
-
-    $ composer.phar update
+    To save space on your computer, move composer.phar to a directory that's
+    on your PATH and give it execute permissions (``chmod +x composer.phar``).
+    You can then run ``composer.phar update``.
 
 Running
 -------
