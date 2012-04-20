@@ -29,7 +29,7 @@ files have been already been processed.
 Creating a Compiler Pass
 ------------------------
 
-To create a compiler pass it needs to implements the ``Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface``
+To create a compiler pass it needs to implements the :class:`Symfony\\Component\\DependencyInjection\\Compiler\\CompilerPassInterface`
 interface.
 
 It is standard practice to put the compiler passes in the ``DependencyInjection/Compiler``
@@ -150,7 +150,7 @@ Creating a new definition
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
 If you need to create a new definition rather than manipulate one retrieved
-from then container then the definition class is ``Symfony\Component\DependencyInjection\Definition``.
+from then container then the definition class is :class:`Symfony\\Component\\DependencyInjection\\Definition`.
 
 Class
 ~~~~~
