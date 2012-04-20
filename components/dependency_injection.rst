@@ -302,13 +302,10 @@ configuration. The ``PhpDumper`` makes dumping the compiled container easy:
 
     $file = __DIR__ .'/cache/container.php';
 
-    if (file_exists($file))
-    {
+    if (file_exists($file)) {
         require_once $file;
         $container = new ProjectServiceContiner();
-    }
-    else
-    {
+    } else {
         $container = new ContainerBuilder();
         $loader = new XmlFileLoader($container, new FileLocator(__DIR__));
         $loader->load('services.xml');
@@ -330,13 +327,10 @@ it:
 
     $file = __DIR__ .'/cache/container.php';
 
-    if (file_exists($file))
-    {
+    if (file_exists($file)) {
         require_once $file;
         $container = new MyCachedContainer();
-    }
-    else
-    {
+    } else {
         $container = new ContainerBuilder();
         $loader = new XmlFileLoader($container, new FileLocator(__DIR__));
         $loader->load('services.xml');
@@ -363,13 +357,10 @@ your application:
 
     $file = __DIR__ .'/cache/container.php';
 
-    if (!$isDebug && file_exists($file))
-    {
+    if (!$isDebug && file_exists($file)) {
         require_once $file;
         $container = new MyCachedContainer();
-    }
-    else
-    {
+    } else {
         $container = new ContainerBuilder();
         $loader = new XmlFileLoader($container, new FileLocator(__DIR__));
         $loader->load('services.xml');
