@@ -31,11 +31,18 @@ The test suite needs the following third-party libraries:
 * Twig
 * Monolog
 
-To install them all, run the `vendors` script:
+These dependencies are managed by Composer (http://getcomposer.org/). If you
+don't already have composer.phar installed, you can install it with
 
 .. code-block:: bash
 
-    $ php vendors.php install
+    $ curl -s http://getcomposer.org/installer | php
+
+To install the dependencies run
+
+.. code-block:: bash
+
+    $ php composer.phar install
 
 .. note::
 
@@ -46,7 +53,16 @@ the follow command:
 
 .. code-block:: bash
 
-    $ php vendors.php update
+    $ php composer.phar update
+
+Tip: to save space on your computer, move composer.phar to a directory that's
+on your PATH and give it execute permissions (``chmod +x composer.phar``).
+
+You can then run
+
+.. code-block:: bash
+
+    $ composer.phar update
 
 Running
 -------
