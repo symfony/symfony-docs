@@ -281,13 +281,16 @@ filesystem and discovered by Symfony, thanks to some conventions.
 Translation Locations and Naming Conventions
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Symfony2 looks for message files (i.e. translations) in two locations:
+Symfony2 looks for message files (i.e. translations) in the following locations:
 
-* For messages found in a bundle, the corresponding message files should
-  live in the ``Resources/translations/`` directory of the bundle;
+* the ``<kernel root directory>/Resources/translations`` directory;
 
-* To override any bundle translations, place message files in the
-  ``app/Resources/translations`` directory.
+* the ``<kernel root directory>/Resources/<bundle name>/translations`` directory;
+
+* the ``Resources/translations/`` directory of the bundle.
+
+The locations are listed with the highest priority first. That is you can
+override the translation messages of a bundle in any of the top 2 directories.
 
 The filename of the translations is also important as Symfony2 uses a convention
 to determine details about the translations. Each message file must be named
