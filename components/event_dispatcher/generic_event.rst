@@ -17,12 +17,35 @@ for convenience for those who wish to use just one event object throughout their
 application. It is suitable for most purposes straight out of the box, because
 it follows the standard observer pattern where the event object
 encapsulates an event 'subject', but has the addition of optional extra
-arguments and a convenient way of filtering data via an additional `data`
-property.
+arguments.
 
-The ``GenericEvent`` implements :phpclass:`ArrayAccess` on the event arguments
-which makes it very convenient to pass extra arguments regarding the event
-subject.
+:class:`Symfony\\Component\\EventDispatcher\\GenericEvent` has a simple API in
+addition to the base class :class:`Symfony\\Component\\EventDispatcher\\Event`
+
+* :method:`Symfony\\Component\\EventDispatcher\\GenericEvent::__construct`:
+  Constructor takes the event subject and any arguments;
+
+* :method:`Symfony\\Component\\EventDispatcher\\GenericEvent::getSubject`:
+  Get the subject;
+
+* :method:`Symfony\\Component\\EventDispatcher\\GenericEvent::setArg`:
+  Sets an argument by key;
+
+* :method:`Symfony\\Component\\EventDispatcher\\GenericEvent::setArgs`:
+  Sets arguments array;
+
+* :method:`Symfony\\Component\\EventDispatcher\\GenericEvent::getArg`:
+  Gets an argument by key;
+
+* :method:`Symfony\\Component\\EventDispatcher\\GenericEvent::getArgs`:
+  Gets an array of argument;
+
+* :method:`Symfony\\Component\\EventDispatcher\\GenericEvent::hasArg`:
+  Returns true if the argument key exists;
+
+The ``GenericEvent`` also implements :phpclass:`ArrayAccess` on the event
+arguments which makes it very convenient to pass extra arguments regarding the
+event subject.
 
 The following examples show use-cases to give a general idea of the flexibility.
 The examples assume event listeners have been added to the dispatcher.
@@ -44,7 +67,8 @@ Simply passing a subject::
         }
     }
 
-Passing and processing arguments::
+Passing and processing arguments using the :phpclass:`ArrayAccess` API to access
+the event arguments::
 
     use Symfony\Component\EventDispatcher\GenericEvent;
 
