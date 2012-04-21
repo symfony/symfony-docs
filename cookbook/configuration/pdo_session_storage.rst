@@ -30,7 +30,7 @@ configuration format of your choice):
         framework:
             session:
                 # ...
-                storage_id:     session.storage.pdo
+                handler_id:     session.storage.pdo
 
         parameters:
             pdo.db_options:
@@ -48,14 +48,14 @@ configuration format of your choice):
                     password: mypassword
 
             session.storage.pdo:
-                class:     Symfony\Component\HttpFoundation\Session\Storage\PdoSessionStorage
+                class:     Symfony\Component\HttpFoundation\Session\Storage\Handler\PdoSessionHandler
                 arguments: [@pdo, %pdo.db_options%, %session.storage.options%]
 
     .. code-block:: xml
 
         <!-- app/config/config.xml -->
         <framework:config>
-            <framework:session storage-id="session.storage.pdo" lifetime="3600" auto-start="true"/>
+            <framework:session handler-id="session.storage.pdo" lifetime="3600" auto-start="true"/>
         </framework:config>
 
         <parameters>
@@ -74,7 +74,7 @@ configuration format of your choice):
                 <argument>mypassword</argument>
             </service>
 
-            <service id="session.storage.pdo" class="Symfony\Component\HttpFoundation\Session\Storage\PdoSessionStorage">
+            <service id="session.storage.pdo" class="Symfony\Component\HttpFoundation\Session\Storage\Handler\PdoSessionHandler">
                 <argument type="service" id="pdo" />
                 <argument>%pdo.db_options%</argument>
                 <argument>%session.storage.options%</argument>
@@ -91,7 +91,7 @@ configuration format of your choice):
             // ...
             'session' => array(
                 // ...
-                'storage_id' => 'session.storage.pdo',
+                'handler_id' => 'session.storage.pdo',
             ),
         ));
 
@@ -109,7 +109,7 @@ configuration format of your choice):
         ));
         $container->setDefinition('pdo', $pdoDefinition);
 
-        $storageDefinition = new Definition('Symfony\Component\HttpFoundation\Session\Storage\PdoSessionStorage', array(
+        $storageDefinition = new Definition('Symfony\Component\HttpFoundation\Session\Storage\Handler\PdoSessionHandler', array(
             new Reference('pdo'),
             '%pdo.db_options%',
             '%session.storage.options%',
