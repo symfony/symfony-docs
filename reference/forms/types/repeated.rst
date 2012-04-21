@@ -89,6 +89,9 @@ first_options
 
 **type**: ``array`` **default**: ``array()``
 
+.. versionadded:: 2.1
+    The ``first_options`` option is new in Symfony 2.1.
+
 Additional options (will be merged into `options` above) that should be passed
 *only* to the first field. This is especially useful for customizing the
 label::
@@ -102,6 +105,9 @@ second_options
 ~~~~~~~~~~~~~~
 
 **type**: ``array`` **default**: ``array()``
+
+.. versionadded:: 2.1
+    The ``second_options`` option is new in Symfony 2.1.
 
 Additional options (will be merged into `options` above) that should be passed
 *only* to the second field. This is especially useful for customizing the
