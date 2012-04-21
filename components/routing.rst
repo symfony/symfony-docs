@@ -302,8 +302,7 @@ automatically in the background if you want to use it. A basic example of the
     are saved in the ``cache_dir``. This means your script must have write
     permissions for that location.
 
-
-.. tip::
+.. versionadded:: 2.1
 
     As of Symfony 2.1, the Routing component also accepts Unicode values
     in routes like this::

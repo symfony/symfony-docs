@@ -104,11 +104,10 @@ This is the goal of the Symfony2 router: to map the URL of a request to a
 controller. Along the way, you'll learn all sorts of tricks that make mapping
 even the most complex URLs easy.
 
-.. tip::
+.. versionadded:: 2.1
 
     As of Symfony 2.1, the Routing component also accepts Unicode values
     in routes like: /Жени/
-
 
 .. index::
    single: Routing; Under the hood
