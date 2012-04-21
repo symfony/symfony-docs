@@ -7,12 +7,12 @@ The Generic Event Object
 .. versionadded:: 2.1
     The ``GenericEvent`` event class was added in Symfony 2.1
 
-The base :class:`Symfony\Component\EventDispatcher\Event`` class provided by the
+The base :class:`Symfony\\Component\\EventDispatcher\\Event` class provided by the
 ``Event Dispatcher`` component is deliberately sparse to allow the creation of
 API specific event objects by inheritance using OOP. This allow for elegant and
 readable code in complex applications.
 
-The :class:`Symfony\Component\EventDispatcher\GenericEvent` is available for
+The :class:`Symfony\\Component\\EventDispatcher\\GenericEvent` is available for
 for convenience for those who wish to use just one event object throughout their
 application. It is suitable for most purposes straight out of the box, because
 it follows the standard observer pattern where the event object
