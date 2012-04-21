@@ -42,7 +42,7 @@
 
   * :doc:`/components/routing`
 
-* **The Templatig Component**
+* **The Templating Component**
 
   * :doc:`/components/templating`
 
