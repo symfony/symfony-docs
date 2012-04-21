@@ -21,8 +21,8 @@ Validates that a given string length is *between* some minimum and maximum value
 Basic Usage
 -----------
 
-To verify that the "firstname" field length of a class is between "2" and "50", you might add
-the following:
+To verify that the ``firstName`` field length of a class is between "2" and
+"50", you might add the following:
 
 .. configuration-block::
 
@@ -31,8 +31,12 @@ the following:
         # src/Acme/EventBundle/Resources/config/validation.yml
         Acme\EventBundle\Entity\Height:
             properties:
-                firstname:
-                    - SizeLength: { min: 2, max: 50, minMessage: Firstname must be at least 2 characters length, maxMessage: Firstname cannot be longer than than 50 characters length }
+                firstName:
+                    - SizeLength:
+                        min: 2
+                        max: 50
+                        minMessage: Your first name must be at least 2 characters length
+                        maxMessage: Your first name cannot be longer than than 50 characters length
 
     .. code-block:: php-annotations
 
@@ -42,9 +46,14 @@ the following:
         class Participant
         {
             /**
-             * @Assert\SizeLength(min = "2", max = "50", minMessage = "Firstname must be at least 2 characters length", maxMessage="Firstname cannot be longer than than 50 characters length")
+             * @Assert\SizeLength(
+             *      min = "2",
+             *      max = "50",
+             *      minMessage = "Your first name must be at least 2 characters length",
+             *      maxMessage="Your first name cannot be longer than than 50 characters length"
+             * )
              */
-             protected $firstname;
+             protected $firstName;
         }
 
 Options
@@ -64,14 +73,17 @@ max
 **type**: ``integer`` [:ref:`default option<validation-default-option>`]
 
 This required option is the "max" length value. Validation will fail if the given
-value's length is **less** than this max value.
+value's length is **greater** than this max value.
 
 charset
 ~~~~~~~
 
 **type**: ``string``  **default**: ``UTF-8``
 
-Charset to be used when computing value's length per the `grapheme_strlen`_ PHP function, fallback to the `mb_strlen`_ PHP function, fallback to the `strlen`_ PHP function.
+The charset to be used when computing value's length. The `grapheme_strlen`_ PHP
+function is used if available. If not, the the `mb_strlen`_ PHP function
+is used if available. If neither are available, the `strlen`_ PHP function
+is used.
 
 .. _`grapheme_strlen`: http://www.php.net/manual/en/function.grapheme_strlen.php
 .. _`mb_strlen`: http://www.php.net/manual/en/function.mb_strlen.php
@@ -80,22 +92,23 @@ Charset to be used when computing value's length per the `grapheme_strlen`_ PHP 
 minMessage
 ~~~~~~~~~~
 
-**type**: ``string`` **default**: ``This value is too short. It should have {{ limit }} characters or more``
+**type**: ``string`` **default**: ``This value is too short. It should have {{ limit }} characters or more.``
 
-The message that will be shown if the underlying value's length is less than the `limit`_
+The message that will be shown if the underlying value's length is less than the `min`_
 option.
 
 maxMessage
 ~~~~~~~~~~
 
-**type**: ``string`` **default**: ``This value is too long. It should have {{ limit }} characters or less``
+**type**: ``string`` **default**: ``This value is too long. It should have {{ limit }} characters or less.``
 
-The message that will be shown if the underlying value's length is more than the `limit`_
+The message that will be shown if the underlying value's length is more than the `max`_
 option.
 
 exactMessage
-~~~~~~~~~~~~~~
+~~~~~~~~~~~~
 
-**type**: ``string`` **default**: ``This value should have exactly {{ limit }} characters``
+**type**: ``string`` **default**: ``This value should have exactly {{ limit }} characters.``
 
-The message that will be shown if min and max values equal and the underlying value's length is not exactly this value
+The message that will be shown if min and max values are equal and the underlying
+value's length is not exactly this value.

@@ -28,10 +28,14 @@ the following:
     .. code-block:: yaml
 
         # src/Acme/EventBundle/Resources/config/validation.yml
-        Acme\EventBundle\Entity\Height:
+        Acme\EventBundle\Entity\Participant:
             properties:
                 height:
-                    - Size: { min: 120, max: 180, minMessage: You must be at least 120cm tall to enter, maxMessage: You cannot be taller than 180cm to enter }
+                    - Size:
+                        min: 120
+                        max: 180
+                        minMessage: You must be at least 120cm tall to enter
+                        maxMessage: You cannot be taller than 180cm to enter
 
     .. code-block:: php-annotations
 
@@ -41,7 +45,12 @@ the following:
         class Participant
         {
             /**
-             * @Assert\Size(min = "120", max = "180", minMessage = "You must be at least 120cm tall to enter", maxMessage="You cannot be taller than 180cm to enter")
+             * @Assert\Size(
+             *      min = "120",
+             *      max = "180",
+             *      minMessage = "You must be at least 120cm tall to enter",
+             *      maxMessage="You cannot be taller than 180cm to enter"
+             * )
              */
              protected $height;
         }
@@ -63,28 +72,28 @@ max
 **type**: ``integer`` [:ref:`default option<validation-default-option>`]
 
 This required option is the "max" value. Validation will fail if the given
-value is **more** than this max value.
+value is **greater** than this max value.
 
 minMessage
 ~~~~~~~~~~
 
-**type**: ``string`` **default**: ``This value should be {{ limit }} or more``
+**type**: ``string`` **default**: ``This value should be {{ limit }} or more.``
 
-The message that will be shown if the underlying value is less than the `limit`_
+The message that will be shown if the underlying value is less than the `min`_
 option.
 
 maxMessage
 ~~~~~~~~~~
 
-**type**: ``string`` **default**: ``This value should be {{ limit }} or less``
+**type**: ``string`` **default**: ``This value should be {{ limit }} or less.``
 
-The message that will be shown if the underlying value is more than the `limit`_
+The message that will be shown if the underlying value is more than the `max`_
 option.
 
 invalidMessage
 ~~~~~~~~~~~~~~
 
-**type**: ``string`` **default**: ``This value should be a valid number``
+**type**: ``string`` **default**: ``This value should be a valid number.``
 
 The message that will be shown if the underlying value is not a number (per
 the `is_numeric`_ PHP function).
