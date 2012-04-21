@@ -40,7 +40,7 @@ The following examples assume the DIC has been loaded with the relevant services
 
 .. note::
 
-Services must be marked as public in the DIC.
+    Services must be marked as public in the DIC.
 
 Adding Services
 ~~~~~~~~~~~~~~~
