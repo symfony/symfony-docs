@@ -20,7 +20,7 @@ the user::
 .. note::
 
     The term *locale* refers roughly to the user's language and country. It
-    can be any string that your application then uses to manage translations
+    can be any string that your application uses to manage translations
     and other format differences (e.g. currency format). We recommended the
     `ISO639-1`_ *language* code, an underscore (``_``), then the `ISO3166 Alpha-2`_ *country*
     code (e.g. ``fr_FR`` for French/France).
