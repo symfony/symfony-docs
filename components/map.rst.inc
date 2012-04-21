@@ -31,6 +31,7 @@
 * **The HTTP Foundation Component**
 
   * :doc:`/components/http_foundation/introduction`
+  * :doc:`/components/http_foundation/sessions`
 
 * **The Locale Component**
 
