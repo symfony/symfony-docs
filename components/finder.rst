@@ -217,6 +217,28 @@ it is called with the file as a :class:`Symfony\\Component\\Finder\\SplFileInfo`
 instance. The file is excluded from the result set if the Closure returns
 ``false``.
 
+Restrictions
+------------
+
+Files and directories
+~~~~~~~~~~~~~~~~~~~~~
+
+The ``files()`` method excludes directories completely from other tests.
+Following code will not exclude files from ``Tests`` folders::
+
+    $finder->in('path/to/symfony')
+        ->notName('Tests')
+        ->files();
+
+The call ``notName('Tests')`` means: exclude files named ``Tests``.
+Custom filtering allows exclusion of files from directories:
+
+    $finder->in('path/to/symfony')
+        ->files()
+        ->filter(function(\SplFileInfo $file){
+            return !(preg_match('/Tests/', $file->getRealpath()));
+        });
+
 .. _strtotime:   http://www.php.net/manual/en/datetime.formats.php
 .. _Iterator:     http://www.php.net/manual/en/spl.iterators.php
 .. _protocol:     http://www.php.net/manual/en/wrappers.php
