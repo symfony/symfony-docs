@@ -759,7 +759,7 @@ Linking to Assets
 
 Templates also commonly refer to images, Javascript, stylesheets and other
 assets. Of course you could hard-code the path to these assets (e.g. ``/images/logo.png``),
-but Symfony2 provides a more dynamic option via the ``assets`` Twig function:
+but Symfony2 provides a more dynamic option via the ``asset`` Twig function:
 
 .. configuration-block::
 
