@@ -27,26 +27,27 @@ autoloaded from `vendor/` under the main root directory (see
 The test suite needs the following third-party libraries:
 
 * Doctrine
-* Swiftmailer
-* Twig
 * Monolog
+* Propel1
+* Twig
 
-To install them all, run the `vendors` script:
+To install them all, run those two commands:
 
 .. code-block:: bash
 
-    $ php vendors.php install
+    $ curl -s http://getcomposer.org/installer | php
+    $ php composer.phar --dev install
 
 .. note::
 
-    Note that the script takes some time to finish.
+    Note that the second command takes some time to finish.
 
 After installation, you can update the vendors to their latest version with
 the follow command:
 
 .. code-block:: bash
 
-    $ php vendors.php update
+    $ php composer.phar --dev update
 
 Running
 -------
