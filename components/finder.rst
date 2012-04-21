@@ -155,6 +155,26 @@ The ``notNames()`` method excludes files matching a pattern::
 
     $finder->files()->notName('*.rb');
 
+File Contents
+~~~~~~~~~~~~~
+
+.. versionadded:: 2.1
+   Methods ``contains()`` and ``notContains()`` have been
+   introduced in version 2.1.
+
+Restrict files by contents with the
+:method:`Symfony\\Component\\Finder\\Finder::contains` method::
+
+    $finder->files()->contains('lorem ipsum');
+
+The ``contains()`` method accepts strings or regexes::
+
+    $finder->files()->name('/lorem\s+ipsum$/i');
+
+The ``notContains()`` method excludes files containing given pattern::
+
+    $finder->files()->notContains('dolor sit amet');
+
 File Size
 ~~~~~~~~~
 
