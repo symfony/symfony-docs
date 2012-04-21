@@ -151,7 +151,7 @@ The ``name()`` method accepts globs, strings, or regexes::
 
     $finder->files()->name('/\.php$/');
 
-The ``notNames()`` method excludes files matching a pattern::
+The ``notName()`` method excludes files matching a pattern::
 
     $finder->files()->notName('*.rb');
 
