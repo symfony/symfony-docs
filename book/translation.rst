@@ -20,9 +20,9 @@ the user::
 .. note::
 
     The term *locale* refers roughly to the user's language and country. It
-    can be any string that your application then uses to manage translations
+    can be any string that your application uses to manage translations
     and other format differences (e.g. currency format). We recommended the
-    ISO639-1 *language* code, an underscore (``_``), then the ISO3166 *country*
+    `ISO639-1`_ *language* code, an underscore (``_``), then the `ISO3166 Alpha-2`_ *country*
     code (e.g. ``fr_FR`` for French/France).
 
 In this chapter, we'll learn how to prepare an application to support multiple
@@ -992,3 +992,5 @@ steps:
 .. _`strtr function`: http://www.php.net/manual/en/function.strtr.php
 .. _`ISO 31-11`: http://en.wikipedia.org/wiki/Interval_%28mathematics%29#The_ISO_notation
 .. _`Translatable Extension`: https://github.com/l3pp4rd/DoctrineExtensions
+.. _`ISO3166 Alpha-2`: http://en.wikipedia.org/wiki/ISO_3166-1#Current_codes
+.. _`ISO639-1`: http://en.wikipedia.org/wiki/List_of_ISO_639-1_codes

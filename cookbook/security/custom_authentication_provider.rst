@@ -469,7 +469,7 @@ A Little Extra
 --------------
 
 How about making your WSSE authentication provider a bit more exciting? The
-possibilities are endless. Why don't you start by adding some spackle
+possibilities are endless. Why don't you start by adding some sparkle
 to that shine?
 
 Configuration

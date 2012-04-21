@@ -430,16 +430,16 @@ For specific details on using the profiler inside a test, see the
 Redirecting
 ~~~~~~~~~~~
 
-When a request returns a redirect response, the client automatically follows
-it. If you want to examine the Response before redirecting, you can force
-the client to not follow redirects with the  ``followRedirects()`` method::
-
-    $client->followRedirects(false);
-
-When the client does not follow redirects, you can force the redirection with
-the ``followRedirect()`` method::
+When a request returns a redirect response, the client does not follow
+it automatically. You can examine the response and force a redirection
+afterwards  with the ``followRedirect()`` method::
 
     $crawler = $client->followRedirect();
+    
+If you want the client to automatically follow all redirects, you can 
+force him with the ``followRedirects()`` method::
+
+    $client->followRedirects();
 
 .. index::
    single: Tests; Crawler
