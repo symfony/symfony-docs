@@ -169,14 +169,14 @@ manager can be automatically injected:
 
         services:
             acme_demo.type.issue_selector:
-                class: Acme\TaskBundle\Form\IssueSelectorType
+                class: Acme\TaskBundle\Form\Type\IssueSelectorType
                 arguments: ["@doctrine.orm.entity_manager"]
                 tags:
                     - { name: form.type, alias: issue_selector }
 
     .. code-block:: xml
 
-        <service id="acme_demo.type.issue_selector" class="Acme\TaskBundle\Form\IssueSelectorType">
+        <service id="acme_demo.type.issue_selector" class="Acme\TaskBundle\Form\Type\IssueSelectorType">
             <argument type="service" id="doctrine.orm.entity_manager"/>
             <tag name="form.type" alias="issue_selector" />
         </service>
