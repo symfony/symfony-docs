@@ -151,7 +151,7 @@ The following controller shows you how to handle the entire process::
         if ($this->getRequest()->getMethod() === 'POST') {
             $form->bindRequest($this->getRequest());
             if ($form->isValid()) {
-                $em = $this->getDoctrine()->getEntityManager();
+                $em = $this->getDoctrine()->getManager();
 
                 $em->persist($document);
                 $em->flush();
@@ -187,7 +187,7 @@ a new ``upload()`` method on the ``Document`` class, which you'll create
 in a moment to handle the file upload::
 
     if ($form->isValid()) {
-        $em = $this->getDoctrine()->getEntityManager();
+        $em = $this->getDoctrine()->getManager();
 
         $document->upload();
 

@@ -887,7 +887,7 @@ to be persisted via Doctrine (i.e. you've added
 it after a form submission can be done when the form is valid::
 
     if ($form->isValid()) {
-        $em = $this->getDoctrine()->getEntityManager();
+        $em = $this->getDoctrine()->getManager();
         $em->persist($task);
         $em->flush();
 

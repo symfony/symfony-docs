@@ -564,7 +564,7 @@ the relationship between the removed ``Tag`` and ``Task`` object.
 
         public function editAction($id, Request $request)
         {
-            $em = $this->getDoctrine()->getEntityManager();
+            $em = $this->getDoctrine()->getManager();
             $task = $em->getRepository('AcmeTaskBundle:Task')->find($id);
     
             if (!$task) {
