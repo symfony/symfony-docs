@@ -217,9 +217,9 @@ have a route that maps a product id to an update action in a controller:
 
 Updating an object involves just three steps:
 
-1. fetching the object from Propel;
-2. modifying the object;
-3. saving it.
+#. fetching the object from Propel;
+#. modifying the object;
+#. saving it.
 
 Deleting an Object
 ~~~~~~~~~~~~~~~~~~
@@ -265,7 +265,8 @@ to waste your time with SQL or whatever, Symfony2 is fully object oriented
 programming and Propel respects the same philosophy by providing an awesome
 abstraction layer.
 
-If you want to reuse some queries, you can add your own methods to the ``ProductQuery``:
+If you want to reuse some queries, you can add your own methods to the
+``ProductQuery``:
 
 .. code-block:: php
 
@@ -409,8 +410,7 @@ More information on Associations
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 You will find more information on relations by reading the dedicated chapter on
-`relationships
-<http://www.propelorm.org/documentation/04-relationships.html>`_.
+`Relationships`_.
 
 
 Lifecycle Callbacks
@@ -454,13 +454,15 @@ Behaviors
 ---------
 
 All bundled behaviors in Propel are working with Symfony2. To get more
-information about how to use Propel behaviors, look at the `behaviors reference
-section <http://www.propelorm.org/documentation/#behaviors_reference>`_.
+information about how to use Propel behaviors, look at the `Behaviors reference
+section`_.
 
 Commands
 --------
 
-You should read the dedicated section for `Propel commands in Symfony2
-<http://www.propelorm.org/cookbook/symfony2/working-with-symfony2#commands>`_.
+You should read the dedicated section for `Propel commands in Symfony2`_.
 
 .. _`Working With Symfony2`: http://www.propelorm.org/cookbook/symfony2/working-with-symfony2.html#installation
+.. _`Relationships`: http://www.propelorm.org/documentation/04-relationships.html
+.. _`Behaviors reference section`: http://www.propelorm.org/documentation/#behaviors_reference
+.. _`Propel commands in Symfony2`: http://www.propelorm.org/cookbook/symfony2/working-with-symfony2#commands
