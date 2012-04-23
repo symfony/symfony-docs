@@ -8,9 +8,9 @@ Before jumping right into dynamic form generation, let's have a quick review
 of what a bare form class looks like::
 
     //src/Acme/DemoBundle/Form/ProductType.php
-    namespace Acme\DemoBundle\Form
+    namespace Acme\DemoBundle\Form;
 
-    use Symfony\Component\Form\AbstractType
+    use Symfony\Component\Form\AbstractType;
     use Symfony\Component\Form\FormBuilder;
     
     class ProductType extends AbstractType

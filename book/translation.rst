@@ -20,9 +20,9 @@ the user::
 .. note::
 
     The term *locale* refers roughly to the user's language and country. It
-    can be any string that your application then uses to manage translations
+    can be any string that your application uses to manage translations
     and other format differences (e.g. currency format). We recommended the
-    ISO639-1 *language* code, an underscore (``_``), then the ISO3166 *country*
+    `ISO639-1`_ *language* code, an underscore (``_``), then the `ISO3166 Alpha-2`_ *country*
     code (e.g. ``fr_FR`` for French/France).
 
 In this chapter, we'll learn how to prepare an application to support multiple
@@ -281,13 +281,16 @@ filesystem and discovered by Symfony, thanks to some conventions.
 Translation Locations and Naming Conventions
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Symfony2 looks for message files (i.e. translations) in two locations:
+Symfony2 looks for message files (i.e. translations) in the following locations:
 
-* For messages found in a bundle, the corresponding message files should
-  live in the ``Resources/translations/`` directory of the bundle;
+* the ``<kernel root directory>/Resources/translations`` directory;
 
-* To override any bundle translations, place message files in the
-  ``app/Resources/translations`` directory.
+* the ``<kernel root directory>/Resources/<bundle name>/translations`` directory;
+
+* the ``Resources/translations/`` directory of the bundle.
+
+The locations are listed with the highest priority first. That is you can
+override the translation messages of a bundle in any of the top 2 directories.
 
 The filename of the translations is also important as Symfony2 uses a convention
 to determine details about the translations. Each message file must be named
@@ -989,3 +992,5 @@ steps:
 .. _`strtr function`: http://www.php.net/manual/en/function.strtr.php
 .. _`ISO 31-11`: http://en.wikipedia.org/wiki/Interval_%28mathematics%29#The_ISO_notation
 .. _`Translatable Extension`: https://github.com/l3pp4rd/DoctrineExtensions
+.. _`ISO3166 Alpha-2`: http://en.wikipedia.org/wiki/ISO_3166-1#Current_codes
+.. _`ISO639-1`: http://en.wikipedia.org/wiki/List_of_ISO_639-1_codes

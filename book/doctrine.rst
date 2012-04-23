@@ -375,7 +375,7 @@ of the bundle:
         $product->setPrice('19.99');
         $product->setDescription('Lorem ipsum dolor');
 
-        $em = $this->getDoctrine()->getEntityManager();
+        $em = $this->getDoctrine()->getManager();
         $em->persist($product);
         $em->flush();
 
@@ -513,7 +513,7 @@ you have a route that maps a product id to an update action in a controller::
 
     public function updateAction($id)
     {
-        $em = $this->getDoctrine()->getEntityManager();
+        $em = $this->getDoctrine()->getManager();
         $product = $em->getRepository('AcmeStoreBundle:Product')->find($id);
 
         if (!$product) {
@@ -577,7 +577,7 @@ Imagine that you want to query for products, but only return products that
 cost more than ``19.99``, ordered from cheapest to most expensive. From inside
 a controller, do the following::
 
-    $em = $this->getDoctrine()->getEntityManager();
+    $em = $this->getDoctrine()->getManager();
     $query = $em->createQuery(
         'SELECT p FROM AcmeStoreBundle:Product p WHERE p.price > :price ORDER BY p.price ASC'
     )->setParameter('price', '19.99');
@@ -739,7 +739,7 @@ ordered alphabetically.
     {
         public function findAllOrderedByName()
         {
-            return $this->getEntityManager()
+            return $this->getManager()
                 ->createQuery('SELECT p FROM AcmeStoreBundle:Product p ORDER BY p.name ASC')
                 ->getResult();
         }
@@ -747,12 +747,12 @@ ordered alphabetically.
 
 .. tip::
 
-    The entity manager can be accessed via ``$this->getEntityManager()``
+    The entity manager can be accessed via ``$this->getManager()``
     from inside the repository.
 
 You can use this new method just like the default finder methods of the repository::
 
-    $em = $this->getDoctrine()->getEntityManager();
+    $em = $this->getDoctrine()->getManager();
     $products = $em->getRepository('AcmeStoreBundle:Product')
                 ->findAllOrderedByName();
 
@@ -944,7 +944,7 @@ Now, let's see the code in action. Imagine you're inside a controller::
             // relate this product to the category
             $product->setCategory($category);
             
-            $em = $this->getDoctrine()->getEntityManager();
+            $em = $this->getDoctrine()->getManager();
             $em->persist($category);
             $em->persist($product);
             $em->flush();
@@ -1059,7 +1059,7 @@ following method to the ``ProductRepository`` class::
     
     public function findOneByIdJoinedToCategory($id)
     {
-        $query = $this->getEntityManager()
+        $query = $this->getManager()
             ->createQuery('
                 SELECT p, c FROM AcmeStoreBundle:Product p
                 JOIN p.category c
@@ -1196,7 +1196,7 @@ in general, see Doctrine's `Lifecycle Events documentation`_
 .. sidebar:: Lifecycle Callbacks and Event Listeners
 
     Notice that the ``setCreatedValue()`` method receives no arguments. This
-    is always the case for lifecylce callbacks and is intentional: lifecycle
+    is always the case for lifecycle callbacks and is intentional: lifecycle
     callbacks should be simple methods that are concerned with internally
     transforming data in the entity (e.g. setting a created/updated field,
     generating a slug value).

@@ -397,40 +397,10 @@ to service ids that do not exist yet: ``wsse.security.authentication.provider`` 
         ));
 
 Now that your services are defined, tell your security context about your
-factory. Factories must be included in an individual configuration file,
-at the time of this writing. So, start first by creating the file with the
-factory service, tagged as ``security.listener.factory``:
-
-.. configuration-block::
-
-    .. code-block:: yaml
-
-        # src/Acme/DemoBundle/Resources/config/security_factories.yml
-        services:
-            security.authentication.factory.wsse:
-                class:  Acme\DemoBundle\DependencyInjection\Security\Factory\WsseFactory
-                tags:
-                    - { name: security.listener.factory }
-
-    .. code-block:: xml
-
-        <!-- src/Acme/DemoBundle/Resources/config/security_factories.xml -->
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
-
-            <services>
-                <service id="security.authentication.factory.wsse"
-                  class="Acme\DemoBundle\DependencyInjection\Security\Factory\WsseFactory" public="false">
-                    <tag name="security.listener.factory" />
-                </service>
-            </services>
-        </container>
+factory in your bundle class:
 
 .. versionadded:: 2.1
     Before 2.1, the factory below was added via ``security.yml`` instead.
-
-As a final step, add the factory to the security extension in your bundle class.
 
 .. code-block:: php
 
@@ -469,7 +439,7 @@ A Little Extra
 --------------
 
 How about making your WSSE authentication provider a bit more exciting? The
-possibilities are endless. Why don't you start by adding some spackle
+possibilities are endless. Why don't you start by adding some sparkle
 to that shine?
 
 Configuration

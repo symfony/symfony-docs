@@ -16,12 +16,14 @@ Validation Constraints Reference
    constraints/Email
    constraints/MinLength
    constraints/MaxLength
+   constraints/SizeLength
    constraints/Url
    constraints/Regex
    constraints/Ip
 
    constraints/Max
    constraints/Min
+   constraints/Size
 
    constraints/Date
    constraints/DateTime

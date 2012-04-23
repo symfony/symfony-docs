@@ -97,7 +97,7 @@ can be modified by the user::
             $builder->add('name');
         }
 
-        public function getDefaultOptions(array $options)
+        public function getDefaultOptions()
         {
             return array(
                 'data_class' => 'Acme\TaskBundle\Entity\Tag',
@@ -132,7 +132,7 @@ Notice that we embed a collection of ``TagType`` forms using the
             $builder->add('tags', 'collection', array('type' => new TagType()));
         }
 
-        public function getDefaultOptions(array $options)
+        public function getDefaultOptions()
         {
             return array(
                 'data_class' => 'Acme\TaskBundle\Entity\Task',
@@ -564,7 +564,7 @@ the relationship between the removed ``Tag`` and ``Task`` object.
 
         public function editAction($id, Request $request)
         {
-            $em = $this->getDoctrine()->getEntityManager();
+            $em = $this->getDoctrine()->getManager();
             $task = $em->getRepository('AcmeTaskBundle:Task')->find($id);
     
             if (!$task) {

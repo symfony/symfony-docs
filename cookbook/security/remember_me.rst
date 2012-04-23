@@ -144,7 +144,7 @@ You can use these to control access beyond the explicitly assigned roles.
     represent three levels of increasing "strength" of authentication.
 
 You can use these additional roles for finer grained control over access to
-parts of a site. For example, you may want you user to be able to view their
+parts of a site. For example, you may want your user to be able to view their
 account at ``/account`` when authenticated by cookie but to have to provide
 their login details to be able to edit the account details. You can do this
 by securing specific controller actions using these roles. The edit action

@@ -28,7 +28,7 @@ for form fields, which is ``<BundleName>\Form\Type``. Make sure the field extend
 
     class GenderType extends AbstractType
     {
-        public function getDefaultOptions(array $options)
+        public function getDefaultOptions()
         {
             return array(
                 'choices' => array(
@@ -244,7 +244,7 @@ argument to ``GenderType``, which receives the gender configuration::
             $this->genderChoices = $genderChoices;
         }
     
-        public function getDefaultOptions(array $options)
+        public function getDefaultOptions()
         {
             return array(
                 'choices' => $this->genderChoices,

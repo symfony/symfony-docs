@@ -61,7 +61,7 @@ Furthering our example, take a look at the ``ProtocolValidator`` as an example:
     {
         public function isValid($value, Constraint $constraint)
         {
-            if (in_array($value, $constraint->protocols));
+            if (in_array($value, $constraint->protocols)) {
                 $this->setMessage($constraint->message, array('%protocols%' => $constraint->protocols));
 
                 return true;
@@ -122,3 +122,33 @@ is defined as a service, it's important that you override the
 ``validatedBy()`` method to return the alias used when defining your service,
 otherwise Symfony2 won't use the constraint validator service, and will
 instantiate the class instead, without any dependencies injected.
+
+Class Constraint Validator
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Beside validating a class property, a constraint can have a class scope by
+providing a target::
+
+    public function getTargets()
+    {
+        return self::CLASS_CONSTRAINT;
+    }
+
+With this, the validator ``isValid()`` method gets an object as its first argument::
+
+    class ProtocolClassValidator extends ConstraintValidator
+    {
+        public function isValid($protocol, Constraint $constraint)
+        {
+            if ($protocol->getFoo() != $protocol->getBar()) {
+
+                // bind error message on foo property
+                $this->context->addViolationAtSubPath('foo', $constraint->getMessage(), array(), null);
+
+                return true;
+            }
+
+            return false;
+        }
+    }
+

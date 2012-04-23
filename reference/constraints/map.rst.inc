@@ -18,6 +18,7 @@ String Constraints
 * :doc:`Email </reference/constraints/Email>`
 * :doc:`MinLength </reference/constraints/MinLength>`
 * :doc:`MaxLength </reference/constraints/MaxLength>`
+* :doc:`SizeLength </reference/constraints/SizeLength>`
 * :doc:`Url </reference/constraints/Url>`
 * :doc:`Regex </reference/constraints/Regex>`
 * :doc:`Ip </reference/constraints/Ip>`
@@ -27,6 +28,7 @@ Number Constraints
 
 * :doc:`Max </reference/constraints/Max>`
 * :doc:`Min </reference/constraints/Min>`
+* :doc:`Size </reference/constraints/Size>`
 
 Date Constraints
 ~~~~~~~~~~~~~~~~

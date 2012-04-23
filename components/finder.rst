@@ -151,7 +151,7 @@ The ``name()`` method accepts globs, strings, or regexes::
 
     $finder->files()->name('/\.php$/');
 
-The ``notNames()`` method excludes files matching a pattern::
+The ``notName()`` method excludes files matching a pattern::
 
     $finder->files()->notName('*.rb');
 
@@ -167,8 +167,11 @@ Restrict by a size range by chaining calls::
 
     $finder->files()->size('>= 1K')->size('<= 2K');
 
-The comparison operator can be any of the following: ``>``, ``>=``, ``<``, '<=',
-'=='.
+The comparison operator can be any of the following: ``>``, ``>=``, ``<``, ``<=``,
+``==``, ``!=``.
+
+.. versionadded:: 2.1
+   The operator ``!=`` was added in version 2.1.
 
 The target value may use magnitudes of kilobytes (``k``, ``ki``), megabytes
 (``m``, ``mi``), or gigabytes (``g``, ``gi``). Those suffixed with an ``i`` use

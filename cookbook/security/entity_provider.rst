@@ -40,13 +40,6 @@ To make it shorter, the getter and setter methods for each have been removed to
 focus on the most important methods that come from the
 :class:`Symfony\\Component\\Security\\Core\\User\\UserInterface`.
 
-.. versionadded:: 2.1
-
-    In Symfony 2.1, the ``equals`` method was removed from ``UserInterface``.
-    If you need to override the default implementation of comparison logic,
-    implement the new :class:`Symfony\\Component\\Security\\Core\\User\\EquatableInterface`
-    interface.
-
 .. code-block:: php
 
     // src/Acme/UserBundle/Entity/User.php
@@ -140,14 +133,6 @@ focus on the most important methods that come from the
         public function eraseCredentials()
         {
         }
-
-        /**
-         * @inheritDoc
-         */
-        public function equals(UserInterface $user)
-        {
-            return $this->username === $user->getUsername();
-        }
     }
 
 In order to use an instance of the ``AcmeUserBundle:User`` class in the Symfony
@@ -162,6 +147,28 @@ interface forces the class to implement the five following methods:
 * ``eraseCredentials()``
 
 For more details on each of these, see :class:`Symfony\\Component\\Security\\Core\\User\\UserInterface`.
+
+.. versionadded:: 2.1
+
+    In Symfony 2.1, the ``equals`` method was removed from ``UserInterface``.
+    If you need to override the default implementation of comparison logic,
+    implement the new :class:`Symfony\\Component\\Security\\Core\\User\\EquatableInterface`
+    interface and implement the ``isEqualTo`` method.
+
+.. code-block:: php
+
+    // src/Acme/UserBundle/Entity/User.php
+
+    namespace Acme\UserBundle\Entity;
+
+    use Symfony\Component\Security\Core\User\EquatableInterface;
+
+    // ...
+
+    public function isEqualTo(UserInterface $user)
+    {
+        return $this->username === $user->getUsername();
+    }
 
 Below is an export of my ``User`` table from MySQL. For details on how to
 create user records and encode their password, see :ref:`book-security-encoding-user-password`.

@@ -21,7 +21,7 @@ a text field, as we configure the fields' parent to be a "text" field, in which 
 will enter the issue number. The field will display an error if a non existing number
 was entered::
 
-    // src/Acme/TaskBundle/Form/IssueSelectorType.php
+    // src/Acme/TaskBundle/Form/Type/IssueSelectorType.php
     namespace Acme\TaskBundle\Form\Type;
 
     use Symfony\Component\Form\AbstractType;
@@ -44,7 +44,7 @@ was entered::
             $builder->appendClientTransformer($transformer);
         }
 
-        public function getDefaultOptions(array $options)
+        public function getDefaultOptions()
         {
             return array(
                 'invalid_message'=>'The selected issue does not exist'

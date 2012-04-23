@@ -393,7 +393,7 @@ If you're creating :ref:`form classes<book-form-creating-form-classes>` (a
 good practice), then you'll need to add the following to the ``getDefaultOptions()``
 method::
 
-    public function getDefaultOptions(array $options)
+    public function getDefaultOptions()
     {
         return array(
             'validation_groups' => array('registration')
@@ -414,7 +414,7 @@ If you need some advanced logic to determine the validation groups (e.g.
 based on submitted data), you can set the ``validation_groups`` option
 to an array callback, or a ``Closure``::
 
-    public function getDefaultOptions(array $options)
+    public function getDefaultOptions()
     {
         return array(
             'validation_groups' => array('Acme\\AcmeBundle\\Entity\\Client', 'determineValidationGroups'),
@@ -426,7 +426,7 @@ This will call the static method ``determineValidationGroups()`` on the
 The Form object is passed as an argument to that method (see next example).
 You can also define whole logic inline by using a Closure::
 
-    public function getDefaultOptions(array $options)
+    public function getDefaultOptions()
     {
         return array(
             'validation_groups' => function(FormInterface $form) {
@@ -565,13 +565,10 @@ the correct values of a number of field options.
   (i.e. is the field ``nullable``). This is very useful, as your client-side
   validation will automatically match your validation rules.
 
-* ``min_length``: If the field is some sort of text field, then the ``min_length``
-  option can be guessed from the validation constrains (if ``MinLength``
-  or ``Min`` is used) or from the Doctrine metadata (via the field's length).
-
-* ``max_length``: Similar to ``min_length``, the maximum length can also
-  be guessed.
-
+* ``max_length``: If the field is some sort of text field, then the ``max_length``
+  option can be guessed from the validation constraints (if ``MaxLength`` or ``Max``
+  is used) or from the Doctrine metadata (via the field's length).
+  
 .. note::
 
   These field options are *only* guessed if you're using Symfony to guess
@@ -580,7 +577,7 @@ the correct values of a number of field options.
 If you'd like to change one of the guessed values, you can override it by
 passing the option in the options field array::
 
-    ->add('task', null, array('min_length' => 4))
+    ->add('task', null, array('max_length' => 4))
 
 .. index::
    single: Forms; Rendering in a Template
@@ -849,7 +846,7 @@ the choice is ultimately up to you.
     good idea to explicitly specify the ``data_class`` option by adding the
     following to your form type class::
 
-        public function getDefaultOptions(array $options)
+        public function getDefaultOptions()
         {
             return array(
                 'data_class' => 'Acme\TaskBundle\Entity\Task',
@@ -890,7 +887,7 @@ to be persisted via Doctrine (i.e. you've added
 it after a form submission can be done when the form is valid::
 
     if ($form->isValid()) {
-        $em = $this->getDoctrine()->getEntityManager();
+        $em = $this->getDoctrine()->getManager();
         $em->persist($task);
         $em->flush();
 
@@ -981,7 +978,7 @@ create a form class so that a ``Category`` object can be modified by the user::
             $builder->add('name');
         }
 
-        public function getDefaultOptions(array $options)
+        public function getDefaultOptions()
         {
             return array(
                 'data_class' => 'Acme\TaskBundle\Entity\Category',
@@ -1410,7 +1407,7 @@ The CSRF token can be customized on a form-by-form basis. For example::
     {
         // ...
 
-        public function getDefaultOptions(array $options)
+        public function getDefaultOptions()
         {
             return array(
                 'data_class'      => 'Acme\TaskBundle\Entity\Task',
@@ -1542,7 +1539,7 @@ method to specify the option::
     {
         // ...
 
-        public function getDefaultOptions(array $options)
+        public function getDefaultOptions()
         {
             $collectionConstraint = new Collection(array(
                 'name' => new MinLength(5),

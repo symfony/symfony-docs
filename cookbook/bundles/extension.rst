@@ -462,14 +462,11 @@ method to merge your configuration and force validation. If any options other
 than ``my_type`` are passed, the user will be notified with an exception
 that an unsupported option was passed::
 
-    use Symfony\Component\Config\Definition\Processor;
-    // ...
-
     public function load(array $configs, ContainerBuilder $container)
     {
-        $processor = new Processor();
         $configuration = new Configuration();
-        $config = $processor->processConfiguration($configuration, $configs);
+
+        $config = $this->processConfiguration($configuration, $configs);
 
         // ...
     }
