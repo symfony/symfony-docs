@@ -23,7 +23,7 @@ was entered::
 
     // src/Acme/TaskBundle/Form/IssueSelectorType.php
 
-    namespace Acme\TaskBundle\Form;
+    namespace Acme\TaskBundle\Form\Type;
 
     use Symfony\Component\Form\AbstractType;
     use Symfony\Component\Form\FormBuilder;
@@ -102,10 +102,10 @@ Next, we create the data transformer, which does the actual conversion::
 
     namespace Acme\TaskBundle\Form\DataTransformer;
 
-    use Symfony\Component\Form\Exception\TransformationFailedException;
     use Symfony\Component\Form\DataTransformerInterface;
+    use Symfony\Component\Form\Exception\TransformationFailedException;
     use Doctrine\Common\Persistence\ObjectManager;
-    use Acme\TaskBundle\Entity;
+    use Acme\TaskBundle\Entity\Issue;
 
     class IssueToNumberTransformer implements DataTransformerInterface
     {
@@ -125,10 +125,10 @@ Next, we create the data transformer, which does the actual conversion::
         /**
          * Transforms an object (issue) to a string (number).
          *
-         * @param  Entity\Issue|null $user
+         * @param  Issue|null $user
          * @return string
          */
-        public function transform($issue = null)
+        public function transform($issue)
         {
             if (null === $issue) {
                 return "";
@@ -141,7 +141,7 @@ Next, we create the data transformer, which does the actual conversion::
          * Transforms a string (number) to an object (issue).
          *
          * @param  string $number
-         * @return Entity\Issue|null
+         * @return Issue|null
          * @throws TransformationFailedException if object (issue) is not found.
          */
         public function reverseTransform($number)
@@ -190,9 +190,9 @@ manager can be automatically injected:
 
 You can now add the type to your form by its alias as follows::
 
-    // src/Acme/TaskBundle/Form/TaskType.php
+    // src/Acme/TaskBundle/Form/Type/TaskType.php
 
-    namespace Acme\TaskBundle\Form;
+    namespace Acme\TaskBundle\Form\Type;
 
     use Symfony\Component\Form\AbstractType;
     use Symfony\Component\Form\FormBuilder;
