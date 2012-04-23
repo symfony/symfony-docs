@@ -9,3 +9,6 @@
 /cookbook/tools/finder /components/finder
 /reference/configuration/mongodb /bundles/DoctrineMongoDBBundle/config
 /reference/YAML /components/yaml
+/components/dependency_injection /components/dependency_injection/introduction
+/components/event_dispatcher /components/event_dispatcher/introduction
+/components/http_foundation /components/http_foundation/introduction
