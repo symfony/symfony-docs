@@ -124,6 +124,9 @@ Symfony itself - into the ``vendor/`` directory.
 	        "symfony-assets-install": "symlink"
 	    }
 		
+	When passing ``relative`` instead of ``symlink`` to symfony-assets-install, the command will generate
+	relative symlinks.	
+		
 
 Configuration and Setup
 ~~~~~~~~~~~~~~~~~~~~~~~
