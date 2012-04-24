@@ -12,6 +12,7 @@ The Book
     routing
     templating
     doctrine
+    propel
     testing
     validation
     forms
