@@ -125,7 +125,7 @@ Next, we create the data transformer, which does the actual conversion::
         /**
          * Transforms an object (issue) to a string (number).
          *
-         * @param  Issue|null $user
+         * @param  Issue|null $issue
          * @return string
          */
         public function transform($issue)
