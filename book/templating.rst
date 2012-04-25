@@ -218,7 +218,7 @@ First, build a base layout file:
             </head>
             <body>
                 <div id="sidebar">
-                    <?php if ($view['slots']->has('sidebar'): ?>
+                    <?php if ($view['slots']->has('sidebar')): ?>
                         <?php $view['slots']->output('sidebar') ?>
                     <?php else: ?>
                         <ul>
@@ -759,7 +759,7 @@ Linking to Assets
 
 Templates also commonly refer to images, Javascript, stylesheets and other
 assets. Of course you could hard-code the path to these assets (e.g. ``/images/logo.png``),
-but Symfony2 provides a more dynamic option via the ``assets`` Twig function:
+but Symfony2 provides a more dynamic option via the ``asset`` Twig function:
 
 .. configuration-block::
 
