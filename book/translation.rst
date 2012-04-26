@@ -292,6 +292,11 @@ Symfony2 looks for message files (i.e. translations) in the following locations:
 The locations are listed with the highest priority first. That is you can
 override the translation messages of a bundle in any of the top 2 directories.
 
+The override mechanism works at a key level: only the overriden keys need
+to be listed in a higher priority message file. When a key is not found
+in a message file, the translator will automatically fallback to the lower
+priority message files.
+
 The filename of the translations is also important as Symfony2 uses a convention
 to determine details about the translations. Each message file must be named
 according to the following pattern: ``domain.locale.loader``:
