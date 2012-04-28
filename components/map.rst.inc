@@ -13,6 +13,7 @@
 * :doc:`/components/dependency_injection/index`
 
   * :doc:`/components/dependency_injection/introduction`
+  * :doc:`/components/dependency_injection/definitions`
 
 * :doc:`/components/event_dispatcher/index`
 

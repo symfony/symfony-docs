@@ -35,7 +35,7 @@ You can retrieve a definition with::
     $container->getDefinition($serviceId);
 
 or::
- 
+
     $container->findDefinition($serviceId);
 
 which unlike ``getDefinition()`` also resolves aliases so if the ``$serviceId``
@@ -76,7 +76,7 @@ To find out what class is set for a definition::
 
 and to set a different class::
 
-    $definition->setClass($class); //Fully qualified class name as string
+    $definition->setClass($class); // Fully qualified class name as string
 
 Constructor Arguments
 ~~~~~~~~~~~~~~~~~~~~~
