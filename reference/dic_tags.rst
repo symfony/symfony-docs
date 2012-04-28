@@ -80,7 +80,8 @@ configuration, and tag it with ``twig.extension``:
         ;
 
 For information on how to create the actual Twig Extension class, see
-`Twig's documentation`_ on the topic.
+`Twig's documentation`_ on the topic or read the cookbook article:
+:doc:`/cookbook/templating/twig_extension`
 
 Before writing your own extensions, have a look at the
 `Twig official extension repository`_ which already includes several
