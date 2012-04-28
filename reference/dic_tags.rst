@@ -8,35 +8,45 @@ you can flag it with the ``kernel.event_listener`` tag.
 
 Below is information about all of the tags available inside Symfony2:
 
-+---------------------------+---------------------------------------------------------------------------+
-| Tag Name                  | Usage                                                                     |
-+---------------------------+---------------------------------------------------------------------------+
-| `data_collector`_         | Create a class that collects custom data for the profiler                 |
-+---------------------------+---------------------------------------------------------------------------+
-| `form.type`_              | Create a custom form field type                                           |
-+---------------------------+---------------------------------------------------------------------------+
-| `form.type_extension`_    | Create a custom "form extension"                                          |
-+---------------------------+---------------------------------------------------------------------------+
-| `form.type_guesser`_      | Add your own logic for "form type guessing"                               |
-+---------------------------+---------------------------------------------------------------------------+
-| `kernel.cache_warmer`_    | Register your service to be called during the cache warming process       |
-+---------------------------+---------------------------------------------------------------------------+
-| `kernel.event_listener`_  | Listen to different events/hooks in Symfony                               |
-+---------------------------+---------------------------------------------------------------------------+
-| `monolog.logger`_         | Logging with a custom logging channel                                     |
-+---------------------------+---------------------------------------------------------------------------+
-| `monolog.processor`_      | Add a custom processor for logging                                        |
-+---------------------------+---------------------------------------------------------------------------+
-| `routing.loader`_         | Register a custom service that loads routes                               |
-+---------------------------+---------------------------------------------------------------------------+
-| `templating.helper`_      | Make your service available in PHP templates                              |
-+---------------------------+---------------------------------------------------------------------------+
-| `translation.loader`_     | Register a custom service that loads translations                         |
-+---------------------------+---------------------------------------------------------------------------+
-| `twig.extension`_         | Register a custom Twig Extension                                          |
-+---------------------------+---------------------------------------------------------------------------+
-| `validator.initializer`_  | Register a service that initializes objects before validation             |
-+---------------------------+---------------------------------------------------------------------------+
++-----------------------------------+---------------------------------------------------------------------------+
+| Tag Name                          | Usage                                                                     |
++-----------------------------------+---------------------------------------------------------------------------+
+| `data_collector`_                 | Create a class that collects custom data for the profiler                 |
++-----------------------------------+---------------------------------------------------------------------------+
+| `form.type`_                      | Create a custom form field type                                           |
++-----------------------------------+---------------------------------------------------------------------------+
+| `form.type_extension`_            | Create a custom "form extension"                                          |
++-----------------------------------+---------------------------------------------------------------------------+
+| `form.type_guesser`_              | Add your own logic for "form type guessing"                               |
++-----------------------------------+---------------------------------------------------------------------------+
+| `kernel.cache_warmer`_            | Register your service to be called during the cache warming process       |
++-----------------------------------+---------------------------------------------------------------------------+
+| `kernel.event_listener`_          | Listen to different events/hooks in Symfony                               |
++-----------------------------------+---------------------------------------------------------------------------+
+| `monolog.logger`_                 | Logging with a custom logging channel                                     |
++-----------------------------------+---------------------------------------------------------------------------+
+| `monolog.processor`_              | Add a custom processor for logging                                        |
++-----------------------------------+---------------------------------------------------------------------------+
+| `routing.loader`_                 | Register a custom service that loads routes                               |
++-----------------------------------+---------------------------------------------------------------------------+
+| `security.voter`_                 | Add a custom voter to Symfony's authorization logic                       |
++-----------------------------------+---------------------------------------------------------------------------+
+| `security.remember_me_aware`_     | To allow remember me authentication                                       |
++-----------------------------------+---------------------------------------------------------------------------+
+| `security.listener.factory`_      | Necessary when creating a custom authentication system                    |
++-----------------------------------+---------------------------------------------------------------------------+
+| `swiftmailer.plugin`_             | Register a custom SwiftMailer Plugin                                      |
++-----------------------------------+---------------------------------------------------------------------------+
+| `templating.helper`_              | Make your service available in PHP templates                              |
++-----------------------------------+---------------------------------------------------------------------------+
+| `translation.loader`_             | Register a custom service that loads translations                         |
++-----------------------------------+---------------------------------------------------------------------------+
+| `twig.extension`_                 | Register a custom Twig Extension                                          |
++-----------------------------------+---------------------------------------------------------------------------+
+| `validator.constraint_validator`_ | Create your own custom validation constraint                              |
++-----------------------------------+---------------------------------------------------------------------------+
+| `validator.initializer`_          | Register a service that initializes objects before validation             |
++-----------------------------------+---------------------------------------------------------------------------+
 
 data_collector
 --------------
@@ -411,6 +421,56 @@ of your configuration, and tag it with ``routing.loader``:
             ->addTag('routing.loader')
         ;
 
+security.listener.factory
+-------------------------
+
+**Purpose**: Necessary when creating a custom authentication system
+
+This tag is used when creating your own custom authentication system. For
+details, see :doc:`/cookbook/security/custom_authentication_provider`.
+
+security.remember_me_aware
+--------------------------
+
+**Purpose**: To allow remember me authentication
+
+This tag is used internally to allow remember-me authentication to work. If
+you have a custom authentication method where a user can be remember-me authenticated,
+then you may need to use this tag.
+
+If your custom authentication factory extends
+:class:`Symfony\\Bundle\\SecurityBundle\\DependencyInjection\\Security\\Factory\\AbstractFactory`
+and your custom authentication listener extends
+:class:`Symfony\\Component\\Security\\Http\\Firewall\\AbstractAuthenticationListener`,
+then your custom authentication listener will automatically have this tagged
+applied and it will function automatically.
+
+security.voter
+--------------
+
+**Purpose**: To add a custom voter to Symfony's authorization logic
+
+When you call ``isGranted`` on Symfony's security context, a system of "voters"
+is used behind the scenes to determine if the user should have access. The
+``security.voter`` tag allows you to add your own custom voter to that system.
+
+For more information, read the cookbook article: :doc:`/cookbook/security/voters`.
+
+swiftmailer.plugin
+------------------
+
+**Purpose**: Register a custom SwiftMailer Plugin
+
+If you're using a custom SwiftMailer plugin (or want to create one), you can
+register it with SwiftMailer by creating a service for your plugin and tagging
+it with ``swiftmailer.plugin`` (it has no options).
+
+A SwiftMailer plugin must implement the ``Swift_Events_EventListener`` interface.
+For more information on plugins, see `SwiftMailer's Plugin Documentation`_.
+
+Several SwiftMailer plugins are core to Symfony and can be activated via
+different configuration. For details, see :doc:`/reference/configuration/swiftmailer`.
+
 templating.helper
 -----------------
 
@@ -581,6 +641,14 @@ also have to be added as regular services:
             ->addTag('twig.extension')
         ;
 
+validator.constraint_validator
+------------------------------
+
+**Purpose**: Create your own custom validation constraint
+
+This tag allows you to create and register your own custom validation constraint.
+For more information, read the cookbook article: :doc:`/cookbook/validation/custom_constraint`.
+
 validator.initializer
 ---------------------
 
@@ -602,3 +670,4 @@ For an example, see the ``EntityInitializer`` class inside the Doctrine Bridge.
 .. _`Twig's documentation`: http://twig.sensiolabs.org/doc/extensions.html
 .. _`Twig official extension repository`: http://github.com/fabpot/Twig-extensions
 .. _`KernelEvents`: https://github.com/symfony/symfony/blob/2.0/src/Symfony/Component/HttpKernel/KernelEvents.php
+.. _`SwiftMailer's Plugin Documentation`: http://swiftmailer.org/docs/plugins.html
