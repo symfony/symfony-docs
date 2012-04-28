@@ -27,7 +27,7 @@ you want to guarantee that some ``state`` property is *not* in a dynamic
 
     protected $state;
 
-    protectd $invalidStates = array();
+    protected $invalidStates = array();
 
     public function isStateInvalid()
     {
