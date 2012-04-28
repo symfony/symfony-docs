@@ -12,13 +12,20 @@ Full Default Configuration
     .. code-block:: yaml
 
         assetic:
-            debug:                true
-            use_controller:       true
+            debug:                %kernel.debug%
+            use_controller:
+                enabled:              %kernel.debug%
+                profiler:             false
             read_from:            %kernel.root_dir%/../web
             write_to:             %assetic.read_from%
             java:                 /usr/bin/java
             node:                 /usr/bin/node
+            ruby:                 /usr/bin/ruby
             sass:                 /usr/bin/sass
+            variables:
+
+                # Prototype
+                name:                 []
             bundles:
 
                 # Defaults (all currently registered bundles):
@@ -30,7 +37,6 @@ Full Default Configuration
                 - DoctrineBundle
                 - AsseticBundle
                 - ...
-
             assets:
 
                 # Prototype

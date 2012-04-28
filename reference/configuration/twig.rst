@@ -9,11 +9,12 @@ TwigBundle Configuration Reference
     .. code-block:: yaml
 
         twig:
+            exception_controller:  Symfony\Bundle\TwigBundle\Controller\ExceptionController::showAction
             form:
                 resources:
 
                     # Default:
-                    - div_layout.html.twig
+                    - form_div_layout.html.twig
 
                     # Example:
                     - MyBundle::form.html.twig
@@ -35,7 +36,7 @@ TwigBundle Configuration Reference
             debug:                %kernel.debug%
             strict_variables:     ~
             auto_reload:          ~
-            exception_controller:  Symfony\Bundle\TwigBundle\Controller\ExceptionController::showAction
+            optimizations:        ~
 
     .. code-block:: xml
 
