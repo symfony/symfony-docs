@@ -287,9 +287,7 @@ to understand than using PHP once there are a lot of services. This ease comes
 at a price though when it comes to performance as the config files need to be
 parsed and the PHP configuration built from them. You can have the best of both
 worlds though by using configuration files and then dumping and caching the resulting
-configuration. The ``PhpDumper`` makes dumping the compiled container easy:
-
-.. code-block:: php
+configuration. The ``PhpDumper`` makes dumping the compiled container easy::
 
     use Symfony\Component\DependencyInjection\ContainerBuilder;
     use Symfony\Component\Config\FileLocator;
@@ -316,15 +314,9 @@ configuration. The ``PhpDumper`` makes dumping the compiled container easy:
 
 ``ProjectServiceContiner`` is the default name given to the dumped container
 class, you can change this though this with the ``class`` option when you dump
-it:
+it::
 
-.. code-block:: php
-
-    use Symfony\Component\DependencyInjection\ContainerBuilder;
-    use Symfony\Component\Config\FileLocator;
-    use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
-    use Symfony\Component\DependencyInjection\Dumper\PhpDumper
-
+    // ...
     $file = __DIR__ .'/cache/container.php';
 
     if (file_exists($file)) {
@@ -344,16 +336,11 @@ configuration files. In the above example you will need to delete the cached
 container file whenever you make any changes. Adding a check for a variable that
 determines if you are in debug mode allows you to keep the speed of the cached
 container in production but getting an up to date configuration whilst developing
-your application:
+your application::
 
-.. code-block:: php
+    // ...
 
-    use Symfony\Component\DependencyInjection\ContainerBuilder;
-    use Symfony\Component\Config\FileLocator;
-    use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
-    use Symfony\Component\DependencyInjection\Dumper\PhpDumper
-
-    //set $isDebug
+    // set $isDebug based on something in your project
 
     $file = __DIR__ .'/cache/container.php';
 
@@ -370,8 +357,6 @@ your application:
             file_put_contents($file, $dumper->dump(array('class' => 'MyCachedContainer')));
         }
     }
-
-
 
 Learn more from the Cookbook
 ----------------------------
