@@ -169,7 +169,7 @@ Restrict files by contents with the
 
 The ``contains()`` method accepts strings or regexes::
 
-    $finder->files()->name('/lorem\s+ipsum$/i');
+    $finder->files()->contains('/lorem\s+ipsum$/i');
 
 The ``notContains()`` method excludes files containing given pattern::
 
