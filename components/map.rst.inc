@@ -10,11 +10,11 @@
 
   * :doc:`/components/css_selector`
 
-* **The Dependency Injection Component**
+* **:doc:`/components/dependency_injection/index`**
 
   * :doc:`/components/dependency_injection/introduction`
 
-* **The Event Dispatcher Component**
+* **:doc:`/components/event_dispatcher/index`**
 
   * :doc:`/components/event_dispatcher/introduction`
 
@@ -26,7 +26,7 @@
 
   * :doc:`/components/finder`
 
-* **The HTTP Foundation Component**
+* **:doc:`/components/http_foundation/index`**
 
   * :doc:`/components/http_foundation/introduction`
 
