@@ -10,11 +10,11 @@
 
   * :doc:`/components/css_selector`
 
-* **:doc:`/components/dependency_injection/index`**
+* :doc:`/components/dependency_injection/index`
 
   * :doc:`/components/dependency_injection/introduction`
 
-* **:doc:`/components/event_dispatcher/index`**
+* :doc:`/components/event_dispatcher/index`
 
   * :doc:`/components/event_dispatcher/introduction`
 
@@ -26,7 +26,7 @@
 
   * :doc:`/components/finder`
 
-* **:doc:`/components/http_foundation/index`**
+* :doc:`/components/http_foundation/index`
 
   * :doc:`/components/http_foundation/introduction`
 
