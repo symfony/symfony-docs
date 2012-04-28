@@ -1,0 +1,136 @@
+﻿Working with Container Parameters and Definitions
+=================================================
+
+Getting and Setting Container Parameters
+----------------------------------------
+
+Working with container parameters is straight forward using the container's
+accessor methods for parameters. You can check if a parameter has been defined
+in the container with::
+
+     $container->hasParameter($name);
+
+You can retrieve parameters set in the container with::
+
+    $container->getParameter($name);
+
+and set a parameter in the container with::
+
+    $container->setParameter($name, $value);
+
+Getting and Setting Service Definitions
+---------------------------------------
+
+There are also some helpful methods for
+working with the service definitions.
+
+To find out if there is a definition for a service id:: 
+
+    $container->hasDefinition($serviceId);
+
+This is useful if you only want to do something if a particular definition exists.
+
+You can retrieve a definition with::
+
+    $container->getDefinition($serviceId);
+
+or::
+
+    $container->findDefinition($serviceId);
+
+which unlike ``getDefinition()`` also resolves aliases so if the ``$serviceId``
+argument is an alias you will get the underlying definition.
+
+The service definitions themselves are objects so if you retrieve a definition
+with these methods and make changes to it these will be reflected in the
+container. If, however, you are creating a new definition then you can add
+it to the container using::
+
+    $container->setDefinition($id, $definition);
+
+Working with a definition
+-------------------------
+
+Creating a new definition
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+If you need to create a new definition rather than manipulate one retrieved
+from then container then the definition class is :class:`Symfony\\Component\\DependencyInjection\\Definition`.
+
+Class
+~~~~~
+
+First up is the class of a definition, this is the class of the object returned
+when the service is requested from the container.
+
+You may want to change the class used by a definition, if for example there is
+functionality which can only be used if a service from another bundle exists
+then you may have a class which make use of that other service and one that
+does not. The one that does not could be used for the service and then the
+one with the extra functionality swapped in using a compiler pass if the other
+service is available.
+
+To find out what class is set for a definition::
+
+    $definition->getClass();
+
+and to set a different class::
+
+    $definition->setClass($class); // Fully qualified class name as string
+
+Constructor Arguments
+~~~~~~~~~~~~~~~~~~~~~
+
+To get an array of the constructor arguments for a definition you can use::
+
+    $definition->getArguments();
+
+or to get a single argument by its position::
+
+    $definition->getArgument($index); 
+    //e.g. $definition->getArguments(0) for the first argument
+
+You can add a new argument to the end of the arguments array using::
+
+    $definition->addArgument($argument);
+
+The argument can be a string, an array, a service parameter by using ``%paramater_name%``
+or a service id by using ::
+
+    use Symfony\Component\DependencyInjection\Reference;
+  
+    //--
+
+    $definition->addArgument(new Reference('service_id'));
+
+In a similar way you can replace an already set argument by index using::
+
+    $definition->replaceArgument($index, $argument);
+
+You can also replace all the arguments (or set some if there are none) with
+an array of arguments::
+
+    $definition->replaceArguments($arguments);
+
+Method Calls
+~~~~~~~~~~~~
+
+If the service you are working with uses setter injection then you can manipulate
+any method calls in the definitions as well.
+
+You can get an array of all the method calls with::
+
+    $definition->getMethodCalls();
+
+Add a method call with::
+
+   $definition->addMethodCall($method, $arguments);
+
+Where ``$method`` is the method name and $arguments is an array of the arguments
+to call the method with. The arguments can be strings, arrays, parameters or
+service ids as with the constructor arguments.
+
+You can also replace any existing method calls with an array of new ones with::
+
+    $definition->setMethodCalls($methodCalls);
+

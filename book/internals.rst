@@ -230,7 +230,8 @@ add the following code at the beginning of your listener method::
 .. tip::
 
     If you are not yet familiar with the Symfony2 Event Dispatcher, read the
-    :doc:`/components/event_dispatcher` section first.
+    :doc:`Event Dispatcher Component Documentation</components/event_dispatcher>`
+    section first.
 
 .. index::
    single: Event; kernel.request
