@@ -63,11 +63,14 @@ authentication (i.e. the old-school username/password box):
 
     .. code-block:: xml
 
-        <!-- app/config/security.xml -->
+        <?xml version="1.0" encoding="UTF-8"?>
+
         <srv:container xmlns="http://symfony.com/schema/dic/security"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xmlns:srv="http://symfony.com/schema/dic/services"
             xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+            <!-- app/config/security.xml -->
 
             <config>
                 <firewall name="secured_area" pattern="^/">
@@ -283,11 +286,14 @@ First, enable form login under your firewall:
 
     .. code-block:: xml
 
-        <!-- app/config/security.xml -->
+        <?xml version="1.0" encoding="UTF-8"?>
+
         <srv:container xmlns="http://symfony.com/schema/dic/security"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xmlns:srv="http://symfony.com/schema/dic/services"
             xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+            <!-- app/config/security.xml -->
 
             <config>
                 <firewall name="secured_area" pattern="^/">
