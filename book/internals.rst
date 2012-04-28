@@ -230,7 +230,7 @@ add the following code at the beginning of your listener method::
 .. tip::
 
     If you are not yet familiar with the Symfony2 Event Dispatcher, read the
-    :doc:`Event Dispatcher Component Documentation</components/event_dispatcher>`
+    :doc:`Event Dispatcher Component Documentation</components/event_dispatcher/introduction>`
     section first.
 
 .. index::
@@ -385,7 +385,7 @@ The Event Dispatcher
 
 The event dispatcher is a standalone component that is responsible for much
 of the underlying logic and flow behind a Symfony request. For more information,
-see the :doc:`Event Dispatcher Component Documentation</components/event_dispatcher>`.
+see the :doc:`Event Dispatcher Component Documentation</components/event_dispatcher/introduction>`.
 
 .. index::
    single: Profiler
