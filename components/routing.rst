@@ -154,8 +154,8 @@ with this class via its constructor::
 
 Normally you can pass the values from the ``$_SERVER`` variable to populate the
 :class:`Symfony\\Component\\Routing\\RequestContext`. But If you use the
-:doc:`HttpFoundation<http_foundation>` component, you can use its
-:class:`Symfony\\Component\\HttpFoundation\\Request` class to feed the
+:doc:`HttpFoundation</components/http_foundation/introduction>` component, you can use its 
+:class:`Symfony\\Component\\HttpFoundation\\Request` class to feed the 
 :class:`Symfony\\Component\\Routing\\RequestContext` in a shortcut::
 
     use Symfony\Component\HttpFoundation\Request;
