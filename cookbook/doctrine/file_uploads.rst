@@ -300,6 +300,18 @@ The class now does everything you need: it generates a unique filename before
 persisting, moves the file after persisting, and removes the file if the
 entity is ever deleted.
 
+Now that the moving of the file is handled atomically by the entity, the
+call to ``$document->upload()`` should be removed from the controller::
+
+    if ($form->isValid()) {
+        $em = $this->getDoctrine()->getEntityManager();
+
+        $em->persist($document);
+        $em->flush();
+
+        $this->redirect('...');
+    }
+
 .. note::
 
     The ``@ORM\PrePersist()`` and ``@ORM\PostPersist()`` event callbacks are
