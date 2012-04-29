@@ -58,7 +58,7 @@ precision
 
 **type**: ``integer`` **default**: ``0``
 
-By default, the input numbers are are rounded. To allow for more decimal
+By default, the input numbers are rounded. To allow for more decimal
 places, use this option.
 
 Inherited Options
