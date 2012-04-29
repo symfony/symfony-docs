@@ -1,8 +1,8 @@
 .. index::
    single: Doctrine
 
-Databases and Doctrine ("The Model")
-====================================
+Databases and Doctrine
+======================
 
 Let's face it, one of the most common and challenging tasks for any application
 involves persisting and reading information to and from a database. Fortunately,

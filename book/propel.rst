@@ -1,8 +1,8 @@
 .. index::
    single: Propel
 
-Databases and Propel ("The model")
-==================================
+Databases and Propel
+====================
 
 Let's face it, one of the most common and challenging tasks for any application
 involves persisting and reading information to and from a database. Symfony2
