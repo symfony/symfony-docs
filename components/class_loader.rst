@@ -33,9 +33,6 @@ You can install the component in many different ways:
 Usage
 -----
 
-.. versionadded:: 2.1
-   The ``useIncludePath`` method was added in Symfony 2.1.
-
 Registering the :class:`Symfony\\Component\\ClassLoader\\UniversalClassLoader`
 autoloader is straightforward::
 
@@ -45,8 +42,7 @@ autoloader is straightforward::
 
     $loader = new UniversalClassLoader();
 
-    // You can search the include_path as a last resort.
-    $loader->useIncludePath(true);
+    // register namespaces and prefixes here - see below
 
     $loader->register();
 
