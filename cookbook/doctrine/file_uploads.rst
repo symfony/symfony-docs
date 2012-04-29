@@ -343,6 +343,9 @@ property, instead of the actual filename::
      */
     class Document
     {
+        // a property used temporarily while deleting
+        private $filenameForRemove;
+
         /**
          * @ORM\PrePersist()
          * @ORM\PreUpdate()
@@ -375,9 +378,17 @@ property, instead of the actual filename::
         /**
          * @ORM\PreRemove()
          */
+        public function storeFilenameForRemove()
+        {
+            $this->filenameForRemove = $this->getAbsolutePath();
+        }
+
+        /**
+         * @ORM\PostRemove()
+         */
         public function removeUpload()
         {
-            if ($file = $this->getAbsolutePath()) {
+            if ($this->filenameForRemove) {
                 unlink($file);
             }
         }
@@ -387,3 +398,8 @@ property, instead of the actual filename::
             return null === $this->path ? null : $this->getUploadRootDir().'/'.$this->id.'.'.$this->path;
         }
     }
+
+You'll notice in this case that you need to do a little bit more work in
+order to remove the file. Before it's removed, you must store the file path
+(since it depends on the id). Then, once the object has been fully removed
+from the database, you can safely delete the file (in ``PostRemove``).
