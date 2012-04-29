@@ -196,7 +196,7 @@ environment by using this code and changing the environment string.
 
             doctrine:
                dbal:
-                   logging:  %kernel.debug%
+                   logging:  "%kernel.debug%"
                    # ...
 
         .. code-block:: xml

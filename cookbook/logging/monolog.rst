@@ -225,7 +225,7 @@ using a processor.
             handlers:
                 main:
                     type: stream
-                    path: %kernel.logs_dir%/%kernel.environment%.log
+                    path: "%kernel.logs_dir%/%kernel.environment%.log"
                     level: debug
                     formatter: monolog.formatter.session_request
 

@@ -23,12 +23,12 @@ Configuration Reference
                         driver_class:         MyNamespace\MyDriverImpl
                         options:
                             foo: bar
-                        path:                 %kernel.data_dir%/data.sqlite
+                        path:                 "%kernel.data_dir%/data.sqlite"
                         memory:               true
                         unix_socket:          /tmp/mysql.sock
                         wrapper_class:        MyDoctrineDbalConnectionWrapper
                         charset:              UTF8
-                        logging:              %kernel.debug%
+                        logging:              "%kernel.debug%"
                         platform_service:     MyOwnDatabasePlatformService
                         mapping_types:
                             enum: string
@@ -39,7 +39,7 @@ Configuration Reference
             orm:
                 auto_generate_proxy_classes:    false
                 proxy_namespace:                Proxies
-                proxy_dir:                      %kernel.cache_dir%/doctrine/orm/Proxies
+                proxy_dir:                      "%kernel.cache_dir%/doctrine/orm/Proxies"
                 default_entity_manager:         default # The first defined is used if not set
                 entity_managers:
                     default:

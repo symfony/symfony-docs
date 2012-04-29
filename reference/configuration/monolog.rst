@@ -34,7 +34,7 @@ Configuration Reference
                     priority:             0
                     level:                DEBUG
                     bubble:               true
-                    path:                 %kernel.logs_dir%/%kernel.environment%.log
+                    path:                 "%kernel.logs_dir%/%kernel.environment%.log"
                     ident:                false
                     facility:             user
                     max_files:            0

@@ -64,11 +64,14 @@ authentication (i.e. the old-school username/password box):
 
     .. code-block:: xml
 
-        <!-- app/config/security.xml -->
+        <?xml version="1.0" encoding="UTF-8"?>
+
         <srv:container xmlns="http://symfony.com/schema/dic/security"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xmlns:srv="http://symfony.com/schema/dic/services"
             xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+            <!-- app/config/security.xml -->
 
             <config>
                 <firewall name="secured_area" pattern="^/">
@@ -260,6 +263,15 @@ the request flow is always the same:
 Using a Traditional Login Form
 ------------------------------
 
+.. tip::
+
+    In this section, you'll learn how to create a basic login form that continues
+    to use the hard-coded users that are defined in the ``security.yml`` file.
+
+    To load users from the database, please read :doc:`/cookbook/security/entity_provider`.
+    By reading that article and this section, you can create a full login form
+    system that loads users from the database.
+
 So far, you've seen how to blanket your application beneath a firewall and
 then protect access to certain areas with roles. By using HTTP Authentication,
 you can effortlessly tap into the native username/password box offered by
@@ -288,11 +300,14 @@ First, enable form login under your firewall:
 
     .. code-block:: xml
 
-        <!-- app/config/security.xml -->
+        <?xml version="1.0" encoding="UTF-8"?>
+
         <srv:container xmlns="http://symfony.com/schema/dic/security"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xmlns:srv="http://symfony.com/schema/dic/services"
             xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+            <!-- app/config/security.xml -->
 
             <config>
                 <firewall name="secured_area" pattern="^/">

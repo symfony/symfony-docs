@@ -30,6 +30,9 @@ day, and year) or three select boxes (see the `widget_` option).
 |                      | - `data_timezone`_                                                          |
 |                      | - `user_timezone`_                                                          |
 +----------------------+-----------------------------------------------------------------------------+
+| Inherited            | - `invalid_message`_                                                        |
+| options              | - `invalid_message_parameters`_                                             |
++----------------------+-----------------------------------------------------------------------------+
 | Parent type          | ``field`` (if text), ``form`` otherwise                                     |
 +----------------------+-----------------------------------------------------------------------------+
 | Class                | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\DateType`          |
@@ -100,6 +103,8 @@ Alternatively, you can specify a string to be displayed for the "blank" value::
 
 .. include:: /reference/forms/types/options/days.rst.inc
 
+.. _reference-forms-type-date-format:
+
 .. include:: /reference/forms/types/options/date_format.rst.inc
 
 .. include:: /reference/forms/types/options/date_pattern.rst.inc
@@ -107,3 +112,12 @@ Alternatively, you can specify a string to be displayed for the "blank" value::
 .. include:: /reference/forms/types/options/data_timezone.rst.inc
 
 .. include:: /reference/forms/types/options/user_timezone.rst.inc
+
+Inherited options
+-----------------
+
+These options inherit from the :doc:`field</reference/forms/types/field>` type:
+
+.. include:: /reference/forms/types/options/invalid_message.rst.inc
+
+.. include:: /reference/forms/types/options/invalid_message_parameters.rst.inc

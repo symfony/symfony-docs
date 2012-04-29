@@ -95,7 +95,7 @@ get logged on the server as well as the emails being sent:
                     members: [streamed, buffered]
                 streamed:
                     type:  stream
-                    path:  %kernel.logs_dir%/%kernel.environment%.log
+                    path:  "%kernel.logs_dir%/%kernel.environment%.log"
                     level: debug
                 buffered:
                     type:    buffer

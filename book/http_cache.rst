@@ -1000,7 +1000,10 @@ Here is how you can configure the Symfony2 reverse proxy to support the
 ``PURGE`` HTTP method::
 
     // app/AppCache.php
-    class AppCache extends Cache
+
+    use Symfony\Bundle\FrameworkBundle\HttpCache\HttpCache;
+
+    class AppCache extends HttpCache
     {
         protected function invalidate(Request $request)
         {

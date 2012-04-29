@@ -1,4 +1,4 @@
-* **:doc:`/cookbook/assetic/index`**
+* :doc:`/cookbook/assetic/index`
 
   * :doc:`/cookbook/assetic/asset_management`
   * :doc:`/cookbook/assetic/yuicompressor`

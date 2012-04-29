@@ -30,9 +30,9 @@ TwigBundle Configuration Reference
                     value:                ~
             autoescape:           ~
             base_template_class:  ~ # Example: Twig_Template
-            cache:                %kernel.cache_dir%/twig
-            charset:              %kernel.charset%
-            debug:                %kernel.debug%
+            cache:                "%kernel.cache_dir%/twig"
+            charset:              "%kernel.charset%"
+            debug:                "%kernel.debug%"
             strict_variables:     ~
             auto_reload:          ~
             exception_controller:  Symfony\Bundle\TwigBundle\Controller\ExceptionController::showAction
