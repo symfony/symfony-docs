@@ -258,6 +258,15 @@ the request flow is always the same:
 Using a Traditional Login Form
 ------------------------------
 
+.. tip::
+
+    In this section, you'll learn how to create a basic login form that continues
+    to use the hard-coded users that are defined in the ``security.yml`` file.
+
+    To load users from the database, please read :doc:`/cookbook/security/entity_provider`.
+    By reading that article and this section, you can create a full login form
+    system that loads users from the database.
+
 So far, you've seen how to blanket your application beneath a firewall and
 then protect access to certain areas with roles. By using HTTP Authentication,
 you can effortlessly tap into the native username/password box offered by
