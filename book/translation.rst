@@ -821,6 +821,8 @@ The translation of database content should be handled by Doctrine through
 the `Translatable Extension`_. For more information, see the documentation
 for that library.
 
+.. _book-translation-constraint-messages:
+
 Translating Constraint Messages
 -------------------------------
 
