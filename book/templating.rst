@@ -1401,5 +1401,5 @@ Learn more from the Cookbook
 .. _`Output Escaping`: http://twig.sensiolabs.org/doc/api.html#escaper-extension
 .. _`tags`: http://twig.sensiolabs.org/doc/tags/index.html
 .. _`filters`: http://twig.sensiolabs.org/doc/filters/index.html
-.. _`add your own extensions`: http://twig.sensiolabs.org/doc/extensions.html
+.. _`add your own extensions`: http://twig.sensiolabs.org/doc/advanced.html#creating-an-extension
 .. _`hinclude.js`: http://mnot.github.com/hinclude/

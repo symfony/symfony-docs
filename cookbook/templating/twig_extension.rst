@@ -123,6 +123,6 @@ Learning further
 For a more in-depth look into Twig Extensions, please take a look at the `Twig extensions documentation`_.
      
 .. _`Twig official extension repository`: http://github.com/fabpot/Twig-extensions
-.. _`Twig extensions documentation`: http://twig.sensiolabs.org/doc/extensions.html
-.. _`global variables`: http://twig.sensiolabs.org/doc/extensions.html#globals
-.. _`functions`: http://twig.sensiolabs.org/doc/extensions.html#functions
+.. _`Twig extensions documentation`: http://twig.sensiolabs.org/doc/advanced.html#creating-an-extension
+.. _`global variables`: http://twig.sensiolabs.org/doc/advanced.html#id1
+.. _`functions`: http://twig.sensiolabs.org/doc/advanced.html#id2

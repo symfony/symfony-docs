@@ -130,4 +130,4 @@ of `Creating Messages`_ in great detail in its documentation.
     * :doc:`spool`
 
 .. _`Swiftmailer`: http://www.swiftmailer.org/
-.. _`Creating Messages`: http://swiftmailer.org/docs/messages
+.. _`Creating Messages`: http://swiftmailer.org/docs/messages.html

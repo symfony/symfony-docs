@@ -366,7 +366,7 @@ Downloading Files
 When uploading a file, you must add a ``Content-Disposition`` header to your
 response. While creating this header for basic file downloads is easy, using
 non-ASCII filenames is more involving. The
-:method:`:Symfony\\Component\\HttpFoundation\\Response:makeDisposition`
+:method:`Symfony\\Component\\HttpFoundation\\Response::makeDisposition`
 abstracts the hard work behind a simple API::
 
     use Symfony\Component\HttpFoundation\ResponseHeaderBag;

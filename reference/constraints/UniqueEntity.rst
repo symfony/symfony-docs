@@ -14,7 +14,7 @@ using an email address that already exists in the system.
 +----------------+-------------------------------------------------------------------------------------+
 | Class          | :class:`Symfony\\Bridge\\Doctrine\\Validator\\Constraints\\UniqueEntity`            |
 +----------------+-------------------------------------------------------------------------------------+
-| Validator      | :class:`Symfony\\Bridge\\Doctrine\\Validator\\Constraints\\UniqueEntity\\Validator` |
+| Validator      | :class:`Symfony\\Bridge\\Doctrine\\Validator\\Constraints\\UniqueEntityValidator`   |
 +----------------+-------------------------------------------------------------------------------------+
 
 Basic Usage

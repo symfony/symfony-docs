@@ -26,9 +26,9 @@ Usage
 
 The :class:`Symfony\\Component\\Templating\\PhpEngine` class is the entry point
 of the component. It needs a template name parser
-(:class:`Symfony\\Component\\templating\\TemplateNameParserInterface`) to
+(:class:`Symfony\\Component\\Templating\\TemplateNameParserInterface`) to
 convert a template name to a template reference and template loader
-(:class:`Symfony\\Component\\templating\\Loader\\LoaderInterface`) to find the
+(:class:`Symfony\\Component\\Templating\\Loader\\LoaderInterface`) to find the
 template associated to a reference.
 
     use Symfony\Component\Templating\PhpEngine;
@@ -66,7 +66,7 @@ The template inheritance is designed to share layouts with many templates.
         </body>
     </html>
 
-The :method:`Symfony\\Templating\\PhpEngine::extend` method is called in the
+The :method:`Symfony\\Component\\Templating\\PhpEngine::extend` method is called in the
 sub-template to set its parent template.
 
 .. code-block:: php
@@ -83,7 +83,7 @@ sub-template to set its parent template.
         <?php echo $page->body ?>
     </p>
 
-To use template inheritance, the :class:`Symfony\\Templating\\Helper\\SlotsHelper`
+To use template inheritance, the :class:`Symfony\\Component\\Templating\\Helper\\SlotsHelper`
 helper must be registered.
 
     use Symfony\Templating\Helper\SlotsHelper;

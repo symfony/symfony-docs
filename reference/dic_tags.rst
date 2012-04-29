@@ -79,7 +79,7 @@ A form type extension can modify any part of any field in your form. To create
 a form type extension, first create a class that implements the
 :class:`Symfony\\Component\\Form\\FormTypeExtensionInterface` interface.
 For simplicity, you'll often extend an
-:class:`Symfony\\Component\\Form\\AbstractTypeExtension`` class instead of
+:class:`Symfony\\Component\\Form\\AbstractTypeExtension` class instead of
 the interface directly::
 
     // src/Acme/MainBundle/Form/Type/MyFormTypeExtension.php
@@ -716,7 +716,7 @@ Then, tag it with the ``validator.initializer`` tag (it has no options).
 
 For an example, see the ``EntityInitializer`` class inside the Doctrine Bridge.
 
-.. _`Twig's documentation`: http://twig.sensiolabs.org/doc/extensions.html
+.. _`Twig's documentation`: http://twig.sensiolabs.org/doc/advanced.html#creating-an-extension
 .. _`Twig official extension repository`: http://github.com/fabpot/Twig-extensions
 .. _`KernelEvents`: https://github.com/symfony/symfony/blob/2.0/src/Symfony/Component/HttpKernel/KernelEvents.php
 .. _`SwiftMailer's Plugin Documentation`: http://swiftmailer.org/docs/plugins.html
