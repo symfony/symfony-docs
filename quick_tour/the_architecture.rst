@@ -166,7 +166,7 @@ PHP. Have a look at the default configuration:
         - { resource: security.yml }
 
     framework:
-        secret:          %secret%
+        secret:          "%secret%"
         charset:         UTF-8
         router:          { resource: "%kernel.root_dir%/config/routing.yml" }
         form:            true
@@ -174,45 +174,45 @@ PHP. Have a look at the default configuration:
         validation:      { enable_annotations: true }
         templating:      { engines: ['twig'] } #assets_version: SomeVersionScheme
         session:
-            default_locale: %locale%
+            default_locale: "%locale%"
             auto_start:     true
 
     # Twig Configuration
     twig:
-        debug:            %kernel.debug%
-        strict_variables: %kernel.debug%
+        debug:            "%kernel.debug%"
+        strict_variables: "%kernel.debug%"
 
     # Assetic Configuration
     assetic:
-        debug:          %kernel.debug%
+        debug:          "%kernel.debug%"
         use_controller: false
         filters:
             cssrewrite: ~
             # closure:
-            #     jar: %kernel.root_dir%/java/compiler.jar
+            #     jar: "%kernel.root_dir%/java/compiler.jar"
             # yui_css:
-            #     jar: %kernel.root_dir%/java/yuicompressor-2.4.2.jar
+            #     jar: "%kernel.root_dir%/java/yuicompressor-2.4.2.jar"
 
     # Doctrine Configuration
     doctrine:
         dbal:
-            driver:   %database_driver%
-            host:     %database_host%
-            dbname:   %database_name%
-            user:     %database_user%
-            password: %database_password%
+            driver:   "%database_driver%"
+            host:     "%database_host%"
+            dbname:   "%database_name%"
+            user:     "%database_user%"
+            password: "%database_password%"
             charset:  UTF8
 
         orm:
-            auto_generate_proxy_classes: %kernel.debug%
+            auto_generate_proxy_classes: "%kernel.debug%"
             auto_mapping: true
 
     # Swiftmailer Configuration
     swiftmailer:
-        transport: %mailer_transport%
-        host:      %mailer_host%
-        username:  %mailer_user%
-        password:  %mailer_password%
+        transport: "%mailer_transport%"
+        host:      "%mailer_host%"
+        username:  "%mailer_user%"
+        password:  "%mailer_password%"
 
     jms_security_extra:
         secure_controllers:  true
@@ -245,7 +245,7 @@ and then modifies it to add some debugging tools:
         handlers:
             main:
                 type:  stream
-                path:  %kernel.logs_dir%/%kernel.environment%.log
+                path:  "%kernel.logs_dir%/%kernel.environment%.log"
                 level: debug
             firephp:
                 type:  firephp

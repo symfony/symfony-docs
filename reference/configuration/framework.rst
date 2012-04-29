@@ -256,7 +256,7 @@ Full Default Configuration
             profiler:
                 only_exceptions:      false
                 only_master_requests:  false
-                dsn:                  sqlite:%kernel.cache_dir%/profiler.db
+                dsn:                  "sqlite:%kernel.cache_dir%/profiler.db"
                 username:
                 password:
                 lifetime:             86400
@@ -323,7 +323,7 @@ Full Default Configuration
             # annotation configuration
             annotations:
                 cache:                file
-                file_cache_dir:       %kernel.cache_dir%/annotations
+                file_cache_dir:       "%kernel.cache_dir%/annotations"
                 debug:                true
 
 .. _`protocol-relative`: http://tools.ietf.org/html/rfc3986#section-4.2

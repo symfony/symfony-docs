@@ -67,7 +67,7 @@ Each part will be explained in the next section.
                     entity: { class: SecurityBundle:User, property: username }
 
             factories:
-                MyFactory: %kernel.root_dir%/../src/Acme/DemoBundle/Resources/config/security_factories.xml
+                MyFactory: "%kernel.root_dir%/../src/Acme/DemoBundle/Resources/config/security_factories.xml"
 
             firewalls:
                 somename:

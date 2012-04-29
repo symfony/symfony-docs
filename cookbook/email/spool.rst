@@ -59,7 +59,7 @@ In order to use the spool, use the following configuration:
 
     .. code-block:: yaml
 
-        path: %kernel.root_dir%/spool
+        path: "%kernel.root_dir%/spool"
 
 Now, when your app sends an email, it will not actually be sent but instead
 added to the spool. Sending the messages from the spool is done separately.

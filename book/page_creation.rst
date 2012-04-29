@@ -729,7 +729,7 @@ format you prefer:
             - { resource: security.yml }
         
         framework:
-            secret:          %secret%
+            secret:          "%secret%"
             charset:         UTF-8
             router:          { resource: "%kernel.root_dir%/config/routing.yml" }
             form:            true
@@ -737,13 +737,13 @@ format you prefer:
             validation:      { enable_annotations: true }
             templating:      { engines: ['twig'] } #assets_version: SomeVersionScheme
             session:
-                default_locale: %locale%
+                default_locale: "%locale%"
                 auto_start:     true
 
         # Twig Configuration
         twig:
-            debug:            %kernel.debug%
-            strict_variables: %kernel.debug%
+            debug:            "%kernel.debug%"
+            strict_variables: "%kernel.debug%"
 
         # ...
 
