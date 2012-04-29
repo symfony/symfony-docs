@@ -1030,6 +1030,11 @@ template doesn't exist there, it continues by checking inside the
 templates can be overridden by placing them in the correct ``app/Resources``
 subdirectory.
 
+.. note::
+
+    You can also override templates from within a bundle by using bundle
+    inheritance. For more information, see :doc:`/cookbook/bundles/inheritance`.
+
 .. _templating-overriding-core-templates:
 
 .. index::
