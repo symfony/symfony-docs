@@ -389,7 +389,7 @@ property, instead of the actual filename::
         public function removeUpload()
         {
             if ($this->filenameForRemove) {
-                unlink($file);
+                unlink($this->filenameForRemove);
             }
         }
 
