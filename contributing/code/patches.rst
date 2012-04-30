@@ -4,105 +4,21 @@ Submitting a Patch
 Patches are the best way to provide a bug fix or to propose enhancements to
 Symfony2.
 
-Check List
-----------
+Step 1: Setup your Environment
+------------------------------
 
-The purpose of the check list is to ensure that contributions may be reviewed
-without needless feedback loops to ensure that your contributions can be included
-into Symfony2 as quickly as possible.
-
-The pull request title should be prefixed with the component name or bundle
-it relates to.
-
-.. code-block:: text
-
-    [Component] Short title description here.
-
-An example title might look like this:
-
-.. code-block:: text
-
-    [Form] Add selectbox field type.
-
-.. tip::
-
-    Please use the title with "[WIP]" if the submission is not yet completed
-    or the tests are incomplete or not yet passing.
-
-All pull requests should include the following template in the request
-description:
-
-.. code-block:: text
-
-    Bug fix: [yes|no]
-    Feature addition: [yes|no]
-    Backwards compatibility break: [yes|no]
-    Symfony2 tests pass: [yes|no]
-    Fixes the following tickets: [comma separated list of tickets fixed by the PR]
-    Todo: [list of todos pending]
-    License of the code: MIT
-
-An example submission could now look as follows:
-
-.. code-block:: text
-
-    Bug fix: no
-    Feature addition: yes
-    Backwards compatibility break: no
-    Symfony2 tests pass: yes
-    Fixes the following tickets: #12, #43
-    Todo: -
-    License of the code: MIT
-
-Thank you for including the filled out template in your submission!
-
-..note::
-
-    All patches you are going to submit must be released under the MIT
-    license, unless explicitly specified in the code.
-
-.. tip::
-
-    All feature addition's should be sent to the "master" branch, while all
-    bug fixes should be sent to the oldest still active branch. Furthermore
-    submissions should, as a rule of thumb, not break backwards compatibility.
-
-When your pull request is not about a bug fix (when you add a new feature or
-change an existing one for instance), your pull request must also include the
-following:
-
-* An summary of the rationale for the changes in the pull request description;
-
-* An explanation of the changes in the relevant CHANGELOG file(s);
-
-* If the changes break backward compatibility, an explanation on how to
-  upgrade an existing application in the relevant UPGRADE file(s).
-
-In addition, you must also send a pull request to the `documentation
-repository`_ to update the documentation.
-
-.. tip::
-
-    To automatically get your feature branch tested, you can add your fork to
-    `travis-ci.org`_. Just login using your github.com account and then simply
-    flip a single switch to enable automated testing. In your pull request,
-    instead of specifying "*Symfony2 tests pass: [yes|no]*", you can link to
-    the `travis-ci.org status icon`_. For more details, see the
-    `travis-ci.org Getting Started Guide`_. This could easily be done by clicking
-    on the wrench icon on the build page of Travis. First select your feature
-    branch and then copy the markdown to your PR description.
-
-Initial Setup
--------------
+Install the Software Stack
+~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Before working on Symfony2, setup a friendly environment with the following
 software:
 
 * Git;
-
 * PHP version 5.3.2 or above;
-
 * PHPUnit 3.5.11 or above.
+
+Configure Git
+~~~~~~~~~~~~~
 
 Set up your user information with your real name and a working email address:
 
@@ -139,6 +55,9 @@ Set up your user information with your real name and a working email address:
     Replace --global by --local if you want to set it only for the active
     repository
 
+Get the Symfony Source Code
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 Get the Symfony2 source code:
 
 * Create a `GitHub`_ account and sign in;
@@ -159,33 +78,55 @@ Get the Symfony2 source code:
       $ cd symfony
       $ git remote add upstream git://github.com/symfony/symfony.git
 
+Check that the current Tests pass
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 Now that Symfony2 is installed, check that all unit tests pass for your
 environment as explained in the dedicated :doc:`document <tests>`.
 
-Working on a Patch
-------------------
+Step 2: Work on your Patch
+--------------------------
 
-Each time you want to work on a patch for a bug or on an enhancement, you need
-to create a topic branch.
+The License
+~~~~~~~~~~~
 
-The branch should be based on the `master` branch if you want to add a new
-feature. But if you want to fix a bug, use the oldest but still maintained
+Before you start, you must know that all the patches you are going to submit
+must be released under the *MIT license*, unless explicitly specified in your
+commits.
+
+Choose the right Branch
+~~~~~~~~~~~~~~~~~~~~~~~
+
+Before working on a patch, you must determine on which branch you need to
+work. The branch should be based on the `master` branch if you want to add a
+new feature. But if you want to fix a bug, use the oldest but still maintained
 version of Symfony where the bug happens (like `2.0`).
 
-Create the topic branch with the following command:
+.. note::
+
+    All bug fixes merged into maintenance branches are also merged into more
+    recent branches on a regular basis. For instance, if you submit a patch
+    for the `2.0` branch, the patch will also be applied by the core team on
+    the `master` branch.
+
+Create a Topic Branch
+~~~~~~~~~~~~~~~~~~~~~
+
+Each time you want to work on a patch for a bug or on an enhancement, create a
+topic branch:
 
 .. code-block:: bash
 
     $ git checkout -b BRANCH_NAME master
 
-Or, if you want to provide a bugfix for the 2.0 branch, you need to first track
-the remote `2.0` branch locally:
+Or, if you want to provide a bugfix for the 2.0 branch, first track the remote
+`2.0` branch locally:
 
 .. code-block:: bash
 
     $ git checkout -t origin/2.0
 
-Then you can create a new branch off the 2.0 branch to work on the bugfix:
+Then create a new branch off the 2.0 branch to work on the bugfix:
 
 .. code-block:: bash
 
@@ -199,19 +140,41 @@ Then you can create a new branch off the 2.0 branch to work on the bugfix:
 The above checkout commands automatically switch the code to the newly created
 branch (check the branch you are working on with `git branch`).
 
+Work on your Patch
+~~~~~~~~~~~~~~~~~~
+
 Work on the code as much as you want and commit as much as you want; but keep
 in mind the following:
 
 * Follow the coding :doc:`standards <standards>` (use `git diff --check` to
-  check for trailing spaces);
+  check for trailing spaces -- also read the tip below);
 
 * Add unit tests to prove that the bug is fixed or that the new feature
   actually works;
 
+* Try hard to not break backward compatibility (if you must do so, try to
+  provide a compatibility layer to support the old way) -- patches that break
+  backward compatibility have less chance to be merged;
+
 * Do atomic and logically separate commits (use the power of `git rebase` to
   have a clean and logical history);
 
-* Write good commit messages.
+* Squash irrelevant commits that are just about fixing coding standards or
+  fixing typos in your own code;
+
+* Never fix coding standards in some existing code as it makes the code review
+  more difficult;
+
+* Write good commit messages (see the tip below).
+
+.. tip::
+
+    You can check the coding standards of your patch by running the
+    ``check_cs`` script bundled with the Symfony repository:
+
+    .. code-block:: bash
+
+        $ ./check_cs fix
 
 .. tip::
 
@@ -222,8 +185,25 @@ in mind the following:
     verb (``fixed ...``, ``added ...``, ...) to start the summary and don't
     add a period at the end.
 
-Submitting a Patch
-------------------
+Prepare your Patch for Submission
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+When your patch is not about a bug fix (when you add a new feature or change
+an existing one for instance), it must also include the following:
+
+* An explanation of the changes in the relevant CHANGELOG file(s);
+
+* An explanation on how to upgrade an existing application in the relevant
+  UPGRADE file(s) if the changes break backward compatibility.
+
+Step 3: Submit your Patch
+-------------------------
+
+Whenever you feel that your patch is ready for submission, follow the
+following steps.
+
+Rebase your Patch
+~~~~~~~~~~~~~~~~~
 
 Before submitting your patch, update your branch (needed if it takes you a
 while to finish your changes):
@@ -255,15 +235,18 @@ Check that all tests still pass and push your branch remotely:
 
     $ git push origin BRANCH_NAME
 
-.. note::
+Make a Pull Request
+~~~~~~~~~~~~~~~~~~~
 
-    Never fix coding standards in your pull requests as it makes the review
-    more complex for the core team.
+You can now make a pull request on the ``symfony/symfony`` Github repository.
 
-You can now discuss your patch on the `dev mailing-list`_ or make a pull
-request (they must be done on the ``symfony/symfony`` repository). To ease the
-core team work, always include the modified components in your pull request
-message, like in:
+.. tip::
+
+    Take care to point your pull request towards ``symfony:2.0`` if you want
+    the core team to pull a bugfix based on the 2.0 branch.
+
+To ease the core team work, always include the modified components in your
+pull request message, like in:
 
 .. code-block:: text
 
@@ -272,20 +255,54 @@ message, like in:
 
 .. tip::
 
-    Take care to point your pull request towards ``symfony:2.0`` if you want
-    the core team to pull a bugfix based on the 2.0 branch.
+    Please use the title with "[WIP]" if the submission is not yet completed
+    or the tests are incomplete or not yet passing.
 
-If you are going to send an email to the mailing-list, don't forget to
-reference you branch URL (``https://github.com/USERNAME/symfony.git
-BRANCH_NAME``) or the pull request URL.
+The pull request description must include the following check list to ensure
+that contributions may be reviewed without needless feedback loops and that
+your contributions can be included into Symfony2 as quickly as possible:
 
-Based on the feedback from the mailing-list or via the pull request on GitHub,
-you might need to rework your patch.
+.. code-block:: text
 
-Before re-submitting the patch, squash irrelevant commits (see below) that are
-just about fixing coding standards or fixing typos in your own code, rebase
-with upstream/master or upstream/2.0, don't merge; and force the push to the
-origin:
+    Bug fix: [yes|no]
+    Feature addition: [yes|no]
+    Backwards compatibility break: [yes|no]
+    Symfony2 tests pass: [yes|no]
+    Fixes the following tickets: [comma separated list of tickets fixed by the PR]
+    Todo: [list of todos pending]
+    License of the code: MIT
+    Documentation PR: [The reference to the documentation PR if any]
+
+An example submission could now look as follows:
+
+.. code-block:: text
+
+    Bug fix: no
+    Feature addition: yes
+    Backwards compatibility break: no
+    Symfony2 tests pass: yes
+    Fixes the following tickets: #12, #43
+    Todo: -
+    License of the code: MIT
+    Documentation PR: symfony/symfony-docs#123
+
+In the pull request description, give as much details as possible about your
+changes (don't hesitate to give code examples to illustrate your points). If
+your pull request is about adding a new feature or modifying an existing one,
+explain the rationale for the changes. The pull request description helps the
+code review and it serves as a reference when the code is merged (the pull
+request description and all its associated comments are part of the merge
+commit message).
+
+In addition to this "code" pull request, you must also send a pull request to
+the `documentation repository`_ to update the documentation when appropriate.
+
+Rework your Patch
+~~~~~~~~~~~~~~~~~
+
+Based on the feedback on the pull request, you might need to rework your
+patch. Before re-submitting the patch, rebase with ``upstream/master`` or
+``upstream/2.0``, don't merge; and force the push to the origin:
 
 .. code-block:: bash
 
@@ -294,9 +311,9 @@ origin:
 
 .. note::
 
-    when doing a push -f (or --force), always specify the branch name explicitly
-    to avoid messing other branches in the repo (--force tells git that you
-    really want to mess with things so do it carefully).
+    when doing a ``push --force``, always specify the branch name explicitly
+    to avoid messing other branches in the repo (``--force`` tells git that
+    you really want to mess with things so do it carefully).
 
 Often, moderators will ask you to "squash" your commits. This means you will
 convert many commits to one commit. To do this, use the rebase command:
@@ -321,16 +338,22 @@ When you save, git will start rebasing, and if successful, will ask you to
 edit the commit message, which by default is a listing of the commit messages
 of all the commits. When you finish, execute the push command.
 
-All bug fixes merged into maintenance branches are also merged into more
-recent branches on a regular basis. For instance, if you submit a patch for
-the `2.0` branch, the patch will also be applied by the core team on the
-`master` branch.
+.. tip::
 
-.. _ProGit:              http://progit.org/
-.. _GitHub:              https://github.com/signup/free
-.. _Symfony2 repository: https://github.com/symfony/symfony
-.. _dev mailing-list:    http://groups.google.com/group/symfony-devs
-.. _travis-ci.org:       http://travis-ci.org
-.. _`travis-ci.org status icon`: http://about.travis-ci.org/docs/user/status-images/
+    To automatically get your feature branch tested, you can add your fork to
+    `travis-ci.org`_. Just login using your github.com account and then simply
+    flip a single switch to enable automated testing. In your pull request,
+    instead of specifying "*Symfony2 tests pass: [yes|no]*", you can link to
+    the `travis-ci.org status icon`_. For more details, see the
+    `travis-ci.org Getting Started Guide`_. This could easily be done by clicking
+    on the wrench icon on the build page of Travis. First select your feature
+    branch and then copy the markdown to your PR description.
+
+.. _ProGit:                                http://progit.org/
+.. _GitHub:                                https://github.com/signup/free
+.. _Symfony2 repository:                   https://github.com/symfony/symfony
+.. _dev mailing-list:                      http://groups.google.com/group/symfony-devs
+.. _travis-ci.org:                         http://travis-ci.org
+.. _`travis-ci.org status icon`:           http://about.travis-ci.org/docs/user/status-images/
 .. _`travis-ci.org Getting Started Guide`: http://about.travis-ci.org/docs/user/getting-started/
-.. _`documentation repository`: https://github.com/symfony/symfony-docs
+.. _`documentation repository`:            https://github.com/symfony/symfony-docs
