@@ -154,7 +154,7 @@ autoload the component::
 Now, let's rewrite our application by using the ``Request`` and the
 ``Response`` classes::
 
-    <php
+    <?php
 
     // framework/index.php
 
