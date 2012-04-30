@@ -40,6 +40,7 @@ description:
     Symfony2 tests pass: [yes|no]
     Fixes the following tickets: [comma separated list of tickets fixed by the PR]
     Todo: [list of todos pending]
+    License of the code: MIT
 
 An example submission could now look as follows:
 
@@ -49,16 +50,36 @@ An example submission could now look as follows:
     Feature addition: yes
     Backwards compatibility break: no
     Symfony2 tests pass: yes
-    Fixes the following tickets: -
+    Fixes the following tickets: #12, #43
     Todo: -
+    License of the code: MIT
 
 Thank you for including the filled out template in your submission!
+
+..note::
+
+    All patches you are going to submit must be released under the MIT
+    license, unless explicitly specified in the code.
 
 .. tip::
 
     All feature addition's should be sent to the "master" branch, while all
     bug fixes should be sent to the oldest still active branch. Furthermore
     submissions should, as a rule of thumb, not break backwards compatibility.
+
+When your pull request is not about a bug fix (when you add a new feature or
+change an existing one for instance), your pull request must also include the
+following:
+
+* An summary of the rationale for the changes in the pull request description;
+
+* An explanation of the changes in the relevant CHANGELOG file(s);
+
+* If the changes break backward compatibility, an explanation on how to
+  upgrade an existing application in the relevant UPGRADE file(s).
+
+In addition, you must also send a pull request to the `documentation
+repository`_ to update the documentation.
 
 .. tip::
 
@@ -234,6 +255,11 @@ Check that all tests still pass and push your branch remotely:
 
     $ git push origin BRANCH_NAME
 
+.. note::
+
+    Never fix coding standards in your pull requests as it makes the review
+    more complex for the core team.
+
 You can now discuss your patch on the `dev mailing-list`_ or make a pull
 request (they must be done on the ``symfony/symfony`` repository). To ease the
 core team work, always include the modified components in your pull request
@@ -241,8 +267,8 @@ message, like in:
 
 .. code-block:: text
 
-    [Yaml] foo bar
-    [Form] [Validator] [FrameworkBundle] foo bar
+    [Yaml] fixed something
+    [Form] [Validator] [FrameworkBundle] added something
 
 .. tip::
 
@@ -254,7 +280,10 @@ reference you branch URL (``https://github.com/USERNAME/symfony.git
 BRANCH_NAME``) or the pull request URL.
 
 Based on the feedback from the mailing-list or via the pull request on GitHub,
-you might need to rework your patch. Before re-submitting the patch, rebase
+you might need to rework your patch.
+
+Before re-submitting the patch, squash irrelevant commits (see below) that are
+just about fixing coding standards or fixing typos in your own code, rebase
 with upstream/master or upstream/2.0, don't merge; and force the push to the
 origin:
 
@@ -288,14 +317,9 @@ type this command, an editor will popup showing a list of commits:
 
 To squash all commits into the first one, remove the word "pick" before the
 second and the last commits, and replace it by the word "squash" or just "s".
-When you save, git will start rebasing, and if succesful, will ask you to edit
-the commit message, which by default is a listing of the commit messages of all
-the commits. When you finish, execute the push command.
-
-.. note::
-
-    All patches you are going to submit must be released under the MIT
-    license, unless explicitly specified in the code.
+When you save, git will start rebasing, and if successful, will ask you to
+edit the commit message, which by default is a listing of the commit messages
+of all the commits. When you finish, execute the push command.
 
 All bug fixes merged into maintenance branches are also merged into more
 recent branches on a regular basis. For instance, if you submit a patch for
@@ -309,3 +333,4 @@ the `2.0` branch, the patch will also be applied by the core team on the
 .. _travis-ci.org:       http://travis-ci.org
 .. _`travis-ci.org status icon`: http://about.travis-ci.org/docs/user/status-images/
 .. _`travis-ci.org Getting Started Guide`: http://about.travis-ci.org/docs/user/getting-started/
+.. _`documentation repository`: https://github.com/symfony/symfony-docs
