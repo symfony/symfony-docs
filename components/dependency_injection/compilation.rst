@@ -42,7 +42,7 @@ Managing Configuration with Extensions
 --------------------------------------
 
 As well as loading configuration directly into the container as shown in 
-:doc:`/components/dependency_injection/index` you can manage it by registering
+:doc:`/components/dependency_injection/introduction` you can manage it by registering
 extensions with the container. The extensions must implement  :class:`Symfony\\Component\\DependencyInjection\\Extension\\ExtensionInterface`
 and can be registered with the container with::
 
