@@ -7,6 +7,8 @@
 /cookbook/console /components/console
 /cookbook/tools/autoloader /components/class_loader
 /cookbook/tools/finder /components/finder
+/cookbook/service_container/parentservices /components/dependency_injection/parentservices
+/cookbook/service_container/factories /components/dependency_injection/factories
 /reference/configuration/mongodb /bundles/DoctrineMongoDBBundle/config
 /reference/YAML /components/yaml
 /components/dependency_injection /components/dependency_injection/introduction
