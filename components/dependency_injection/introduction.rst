@@ -1,4 +1,4 @@
-.. index::
+﻿.. index::
     single: Dependency Injection
 
 The Dependency Injection Component
@@ -45,8 +45,8 @@ You can register this in the container as a service:
 
     use Symfony\Component\DependencyInjection\ContainerBuilder;
 
-    $sc = new ContainerBuilder();
-    $sc->register('mailer', 'Mailer');
+    $container = new ContainerBuilder();
+    $container->register('mailer', 'Mailer');
 
 An improvement to the class to make it more flexible would be to allow
 the container to set the ``transport`` used. If you change the class
@@ -72,9 +72,9 @@ Then you can set the choice of transport in the container:
 
     use Symfony\Component\DependencyInjection\ContainerBuilder;
 
-    $sc = new ContainerBuilder();
-    $sc->register('mailer', 'Mailer')
-        ->addArgument('sendmail'));
+    $container = new ContainerBuilder();
+    $container->register('mailer', 'Mailer')
+        ->addArgument('sendmail');
 
 This class is now much more flexible as we have separated the choice of
 transport out of the implementation and into the container.
@@ -89,10 +89,10 @@ it a parameter in the container and then referring to this parameter for the
 
     use Symfony\Component\DependencyInjection\ContainerBuilder;
 
-    $sc = new ContainerBuilder();
-    $sc->setParameter('mailer.transport', 'sendmail');
-    $sc->register('mailer', 'Mailer')
-        ->addArgument('%mailer.transport%'));
+    $container = new ContainerBuilder();
+    $container->setParameter('mailer.transport', 'sendmail');
+    $container->register('mailer', 'Mailer')
+        ->addArgument('%mailer.transport%');
 
 Now that the ``mailer`` service is in the container you can inject it as
 a dependency of other classes. If you have a ``NewsletterManager`` class
@@ -121,14 +121,14 @@ Then you can register this as a service as well and pass the ``mailer`` service 
     use Symfony\Component\DependencyInjection\ContainerBuilder;
     use Symfony\Component\DependencyInjection\Reference;
 
-    $sc = new ContainerBuilder();
+    $container = new ContainerBuilder();
 
-    $sc->setParameter('mailer.transport', 'sendmail');
-    $sc->register('mailer', 'Mailer')
-        ->addArgument('%mailer.transport%'));
+    $container->setParameter('mailer.transport', 'sendmail');
+    $container->register('mailer', 'Mailer')
+        ->addArgument('%mailer.transport%');
 
-    $sc->register('newsletter_manager', 'NewsletterManager')
-        ->addArgument(new Reference('mailer'));
+    $container->register('newsletter_manager', 'NewsletterManager')
+        ->addArgument(new Reference('mailer');
 
 If the ``NewsletterManager`` did not require the ``Mailer`` and injecting
 it was only optional then you could use setter injection instead:
@@ -157,14 +157,14 @@ If you do want to though then the container can call the setter method:
     use Symfony\Component\DependencyInjection\ContainerBuilder;
     use Symfony\Component\DependencyInjection\Reference;
 
-    $sc = new ContainerBuilder();
+    $container = new ContainerBuilder();
 
-    $sc->setParameter('mailer.transport', 'sendmail');
-    $sc->register('mailer', 'Mailer')
-        ->addArgument('%mailer.transport%'));
+    $container->setParameter('mailer.transport', 'sendmail');
+    $container->register('mailer', 'Mailer')
+        ->addArgument('%mailer.transport%');
 
-    $sc->register('newsletter_manager', 'NewsletterManager')
-        ->addMethodCall('setMailer', new Reference('mailer'));
+    $container->register('newsletter_manager', 'NewsletterManager')
+        ->addMethodCall('setMailer', new Reference('mailer');
 
 You could then get your ``newsletter_manager`` service from the container
 like this:
@@ -174,11 +174,11 @@ like this:
     use Symfony\Component\DependencyInjection\ContainerBuilder;
     use Symfony\Component\DependencyInjection\Reference;
 
-    $sc = new ContainerBuilder();
+    $container = new ContainerBuilder();
 
     //--
 
-    $newsletterManager = $sc->get('newsletter_manager');
+    $newsletterManager = $container->get('newsletter_manager');
 
 Avoiding Your Code Becoming Dependent on the Container
 ------------------------------------------------------
@@ -211,8 +211,8 @@ Loading an xml config file:
     use Symfony\Component\Config\FileLocator;
     use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
 
-    $sc = new ContainerBuilder();
-    $loader = new XmlFileLoader($sc, new FileLocator(__DIR__));
+    $container = new ContainerBuilder();
+    $loader = new XmlFileLoader($container, new FileLocator(__DIR__));
     $loader->load('services.xml');
 
 Loading a yaml config file:
@@ -223,8 +223,8 @@ Loading a yaml config file:
     use Symfony\Component\Config\FileLocator;
     use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 
-    $sc = new ContainerBuilder();
-    $loader = new YamlFileLoader($sc, new FileLocator(__DIR__));
+    $container = new ContainerBuilder();
+    $loader = new YamlFileLoader($container, new FileLocator(__DIR__));
     $loader->load('services.yml');
 
 The ``newsletter_manager`` and ``mailer`` services can be set up using config files:
@@ -272,13 +272,91 @@ The ``newsletter_manager`` and ``mailer`` services can be set up using config fi
         use Symfony\Component\DependencyInjection\Reference;
 
         // ...
-        $sc->setParameter('mailer.transport', 'sendmail');
-        $sc->register('mailer', 'Mailer')
-           ->addArgument('%mailer.transport%'));
+        $container->setParameter('mailer.transport', 'sendmail');
+        $container->register('mailer', 'Mailer')
+           ->addArgument('%mailer.transport%');
 
-        $sc->register('newsletter_manager', 'NewsletterManager')
-           ->addMethodCall('setMailer', new Reference('mailer'));
+        $container->register('newsletter_manager', 'NewsletterManager')
+           ->addMethodCall('setMailer', new Reference('mailer');
 
+Dumping the Configuration for Performance
+-----------------------------------------
+
+Using configuration files to manage the service container can be much easier
+to understand than using PHP once there are a lot of services. This ease comes
+at a price though when it comes to performance as the config files need to be
+parsed and the PHP configuration built from them. You can have the best of both
+worlds though by using configuration files and then dumping and caching the resulting
+configuration. The ``PhpDumper`` makes dumping the compiled container easy::
+
+    use Symfony\Component\DependencyInjection\ContainerBuilder;
+    use Symfony\Component\Config\FileLocator;
+    use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
+    use Symfony\Component\DependencyInjection\Dumper\PhpDumper
+
+    $container = new ContainerBuilder();
+    $loader = new XmlFileLoader($container, new FileLocator(__DIR__));
+    $loader->load('services.xml');
+
+    $file = __DIR__ .'/cache/container.php';
+
+    if (file_exists($file)) {
+        require_once $file;
+        $container = new ProjectServiceContiner();
+    } else {
+        $container = new ContainerBuilder();
+        $loader = new XmlFileLoader($container, new FileLocator(__DIR__));
+        $loader->load('services.xml');
+
+        $dumper = new PhpDumper($container);
+        file_put_contents($file, $dumper->dump());
+    }
+
+``ProjectServiceContiner`` is the default name given to the dumped container
+class, you can change this though this with the ``class`` option when you dump
+it::
+
+    // ...
+    $file = __DIR__ .'/cache/container.php';
+
+    if (file_exists($file)) {
+        require_once $file;
+        $container = new MyCachedContainer();
+    } else {
+        $container = new ContainerBuilder();
+        $loader = new XmlFileLoader($container, new FileLocator(__DIR__));
+        $loader->load('services.xml');
+
+        $dumper = new PhpDumper($container);
+        file_put_contents($file, $dumper->dump(array('class' => 'MyCachedContainer')));
+    }
+
+You will now get the speed of the PHP configured container with the ease of using
+configuration files. In the above example you will need to delete the cached
+container file whenever you make any changes. Adding a check for a variable that
+determines if you are in debug mode allows you to keep the speed of the cached
+container in production but getting an up to date configuration whilst developing
+your application::
+
+    // ...
+
+    // set $isDebug based on something in your project
+
+    $file = __DIR__ .'/cache/container.php';
+
+    if (!$isDebug && file_exists($file)) {
+        require_once $file;
+        $container = new MyCachedContainer();
+    } else {
+        $container = new ContainerBuilder();
+        $loader = new XmlFileLoader($container, new FileLocator(__DIR__));
+        $loader->load('services.xml');
+
+        if(!$isDebug) {
+   	     $dumper = new PhpDumper($container);
+            file_put_contents($file, $dumper->dump(array('class' => 'MyCachedContainer')));
+        }
+    }
 
 Learn more from the Cookbook
 ----------------------------

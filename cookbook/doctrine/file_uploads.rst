@@ -300,6 +300,18 @@ The class now does everything you need: it generates a unique filename before
 persisting, moves the file after persisting, and removes the file if the
 entity is ever deleted.
 
+Now that the moving of the file is handled atomically by the entity, the
+call to ``$document->upload()`` should be removed from the controller::
+
+    if ($form->isValid()) {
+        $em = $this->getDoctrine()->getEntityManager();
+
+        $em->persist($document);
+        $em->flush();
+
+        $this->redirect('...');
+    }
+
 .. note::
 
     The ``@ORM\PrePersist()`` and ``@ORM\PostPersist()`` event callbacks are
@@ -331,6 +343,9 @@ property, instead of the actual filename::
      */
     class Document
     {
+        // a property used temporarily while deleting
+        private $filenameForRemove;
+
         /**
          * @ORM\PrePersist()
          * @ORM\PreUpdate()
@@ -363,10 +378,18 @@ property, instead of the actual filename::
         /**
          * @ORM\PreRemove()
          */
+        public function storeFilenameForRemove()
+        {
+            $this->filenameForRemove = $this->getAbsolutePath();
+        }
+
+        /**
+         * @ORM\PostRemove()
+         */
         public function removeUpload()
         {
-            if ($file = $this->getAbsolutePath()) {
-                unlink($file);
+            if ($this->filenameForRemove) {
+                unlink($this->filenameForRemove);
             }
         }
 
@@ -375,3 +398,8 @@ property, instead of the actual filename::
             return null === $this->path ? null : $this->getUploadRootDir().'/'.$this->id.'.'.$this->path;
         }
     }
+
+You'll notice in this case that you need to do a little bit more work in
+order to remove the file. Before it's removed, you must store the file path
+(since it depends on the id). Then, once the object has been fully removed
+from the database, you can safely delete the file (in ``PostRemove``).

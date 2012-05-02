@@ -1,13 +1,13 @@
 .. index::
    single: Propel
 
-Databases and Propel ("The model")
-==================================
+Databases and Propel
+====================
 
 Let's face it, one of the most common and challenging tasks for any application
 involves persisting and reading information to and from a database. Symfony2
-does not come integrated with Propel by default, but the integration of is
-quite easy. To get started, read `Working With Symfony2`_.
+does not come integrated with any ORMs but the Propel integration is easy.
+To get started, read `Working With Symfony2`_.
 
 A Simple Example: A Product
 ---------------------------
@@ -223,7 +223,7 @@ method on the object::
 Querying for Objects
 --------------------
     
-Propel provides ``Query`` classes to run both basic and complex queries
+Propel provides generated ``Query`` classes to run both basic and complex queries
 without any work::
     
     \Acme\StoreBundle\Model\ProductQuery::create()->findPk($id);
@@ -236,7 +236,7 @@ Imagine that you want to query for products which cost more than 19.99, ordered
 from cheapest to most expensive. From inside a controller, do the following::
 
     $products = \Acme\StoreBundle\Model\ProductQuery::create()
-        ->filterByPrice(19.99, \Criteria::GREATER_THAN)
+        ->filterByPrice(array('min' => 19.99))
         ->orderByPrice()
         ->find();
 
@@ -255,7 +255,7 @@ If you want to reuse some queries, you can add your own methods to the
         public function filterByExpensivePrice()
         {
             return $this
-                ->filterByPrice(1000, \Criteria::GREATER_THAN);
+                ->filterByPrice(array('min' => 1000))
         }
     }
 

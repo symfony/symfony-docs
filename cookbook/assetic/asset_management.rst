@@ -1,3 +1,6 @@
+.. index::
+   single: Assetic; Introduction
+
 How to Use Assetic for Asset Management
 =======================================
 

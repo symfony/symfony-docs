@@ -14,7 +14,7 @@ using an email address that already exists in the system.
 +----------------+-------------------------------------------------------------------------------------+
 | Class          | :class:`Symfony\\Bridge\\Doctrine\\Validator\\Constraints\\UniqueEntity`            |
 +----------------+-------------------------------------------------------------------------------------+
-| Validator      | :class:`Symfony\\Bridge\\Doctrine\\Validator\\Constraints\\UniqueEntity\\Validator` |
+| Validator      | :class:`Symfony\\Bridge\\Doctrine\\Validator\\Constraints\\UniqueEntityValidator`   |
 +----------------+-------------------------------------------------------------------------------------+
 
 Basic Usage
@@ -84,8 +84,14 @@ fields
 **type**: ``array``|``string`` [:ref:`default option<validation-default-option>`]
 
 This required option is the field (or list of fields) on which this entity
-should be unique. For example, you could specify that both the email and
-name fields in the ``User`` example above should be unique.
+should be unique. For example, if you specified both the ``email`` and ``name``
+field in a single ``UniqueEntity`` constraint, then it would enforce that
+the combination value where unique (e.g. two users could have the same email,
+as long as they don't have the same name also).
+
+If you need to require two fields to be individually unique (e.g. a unique
+``email`` *and* a unique ``username``), you use two ``UniqueEntity`` entries,
+each with a single field.
 
 message
 ~~~~~~~

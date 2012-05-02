@@ -19,6 +19,8 @@ you want to use for your number.
 | options     | - `label`_                                                           |
 |             | - `read_only`_                                                       |
 |             | - `error_bubbling`_                                                  |
+|             | - `invalid_message`_                                                 |
+|             | - `invalid_message_parameters`_                                      |
 +-------------+----------------------------------------------------------------------+
 | Parent type | :doc:`field</reference/forms/types/field>`                           |
 +-------------+----------------------------------------------------------------------+
@@ -85,3 +87,7 @@ These options inherit from the :doc:`field</reference/forms/types/field>` type:
 .. include:: /reference/forms/types/options/read_only.rst.inc
 
 .. include:: /reference/forms/types/options/error_bubbling.rst.inc
+
+.. include:: /reference/forms/types/options/invalid_message.rst.inc
+
+.. include:: /reference/forms/types/options/invalid_message_parameters.rst.inc

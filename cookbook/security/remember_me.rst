@@ -19,7 +19,7 @@ are shown here:
         firewalls:
             main:
                 remember_me:
-                    key:      %secret%
+                    key:      "%secret%"
                     lifetime: 3600
                     path:     /
                     domain:   ~ # Defaults to the current domain from $_SERVER

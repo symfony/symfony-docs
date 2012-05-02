@@ -44,6 +44,8 @@ autoloader is straightforward::
     use Symfony\Component\ClassLoader\UniversalClassLoader;
 
     $loader = new UniversalClassLoader();
+    
+    // register namespaces and prefixes here (see below)
 
     // You can search the include_path as a last resort.
     $loader->useIncludePath(true);

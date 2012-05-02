@@ -29,6 +29,9 @@ data can be a ``DateTime`` object, a string, a timestamp or an array.
 |                      | - `data_timezone`_                                                          |
 |                      | - `user_timezone`_                                                          |
 +----------------------+-----------------------------------------------------------------------------+
+| Inherited            | - `invalid_message`_                                                        |
+| options              | - `invalid_message_parameters`_                                             |
++----------------------+-----------------------------------------------------------------------------+
 | Parent type          | :doc:`form</reference/forms/types/form>`                                    |
 +----------------------+-----------------------------------------------------------------------------+
 | Class                | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\DateTimeType`      |
@@ -73,6 +76,8 @@ date_format
 **type**: ``integer`` or ``string`` **default**: ``IntlDateFormatter::MEDIUM``
 
 Defines the ``format`` option that will be passed down to the date field.
+See the :ref:`date type's format option<reference-forms-type-date-format>`
+for more details.
 
 .. include:: /reference/forms/types/options/hours.rst.inc
 
@@ -91,3 +96,12 @@ Defines the ``format`` option that will be passed down to the date field.
 .. include:: /reference/forms/types/options/data_timezone.rst.inc
 
 .. include:: /reference/forms/types/options/user_timezone.rst.inc
+
+Inherited options
+-----------------
+
+These options inherit from the :doc:`field</reference/forms/types/field>` type:
+
+.. include:: /reference/forms/types/options/invalid_message.rst.inc
+
+.. include:: /reference/forms/types/options/invalid_message_parameters.rst.inc

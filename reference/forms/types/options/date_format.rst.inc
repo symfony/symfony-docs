@@ -6,7 +6,8 @@ format
 Option passed to the ``IntlDateFormatter`` class, used to transform user input
 into the proper format. This is critical when the `widget`_ option is
 set to ``single_text``, and will define how the user will input the data.
-By default, the format is determined based on the current user locale; you
+By default, the format is determined based on the current user locale: meaning
+that *the expected format will be different for different users*. You
 can override it by passing the format as a string.
 
 For more information on valid formats, see `Date/Time Format Syntax`_. For

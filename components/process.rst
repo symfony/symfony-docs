@@ -63,7 +63,7 @@ instead::
     $process->run();
 
 .. versionadded:: 2.1
-    The ``ProcessBuilder`` class has been added as of 2.1.
+    The ``ProcessBuilder`` class has been as of 2.1.
 
 To make your code work better on all platforms, you might want to use the
 :class:`Symfony\\Component\\Process\\ProcessBuilder` class instead::
@@ -72,3 +72,4 @@ To make your code work better on all platforms, you might want to use the
 
     $builder = new ProcessBuilder(array('ls', '-lsa'));
     $builder->getProcess()->run();
+

@@ -107,6 +107,26 @@ Symfony itself - into the ``vendor/`` directory.
 
 		php installer
 		php composer.phar install
+		
+.. tip::
+
+	When running ``php composer.phar install`` or ``php composer.phar update``, composer will execute
+	post install/update commands to clear the cache and install assets. By default, the assets will be 
+	copied into your ``web`` directory. To create symlinks instead of copying the assets, you 
+	can add an entry in the ``extra`` node of your composer.json file with the key ``symfony-assets-install``
+	and the value ``symlink``:
+	
+	.. code-block:: json
+	
+	    "extra": {
+	        "symfony-app-dir": "app",
+	        "symfony-web-dir": "web",
+	        "symfony-assets-install": "symlink"
+	    }
+		
+	When passing ``relative`` instead of ``symlink`` to symfony-assets-install, the command will generate
+	relative symlinks.	
+		
 
 Configuration and Setup
 ~~~~~~~~~~~~~~~~~~~~~~~

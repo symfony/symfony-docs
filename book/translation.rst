@@ -333,7 +333,7 @@ Creating Translations
 
 The act of creating translation files is an important part of "localization"
 (often abbreviated `L10n`_). Translation files consist of a series of
-id-translation pairs for the given domain and locale. The id is the identifier
+id-translation pairs for the given domain and locale. The source is the identifier
 for the individual translation, and can be the message in the main locale (e.g.
 "Symfony is great") of your application or a unique identifier (e.g.
 "symfony2.great" - see the sidebar below):
@@ -862,6 +862,8 @@ Translating Database Content
 The translation of database content should be handled by Doctrine through
 the `Translatable Extension`_. For more information, see the documentation
 for that library.
+
+.. _book-translation-constraint-messages:
 
 Translating Constraint Messages
 -------------------------------
