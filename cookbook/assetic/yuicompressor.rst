@@ -138,5 +138,70 @@ apply this filter when debug mode is off.
         <script src="<?php echo $view->escape($url) ?>"></script>
         <?php endforeach; ?>
 
+
+Automatically enable compressor for all assets
+----------------------------------------------
+
+Instead of setting the filter in your twig template, you can also enable the filter
+globally. Place the following configuration in your ``config_prod.yml`` (not in config.yml, otherwise you would compress 
+in debug mode too):
+
+.. code-block:: yaml
+
+        assetic:
+            filters:
+                yui_css:
+                    jar: "%kernel.root_dir%/Resources/java/yuicompressor-2.4.7.jar"
+                    apply_to: "\.css$"
+                yui_js:
+                    jar: "%kernel.root_dir%/Resources/java/yuicompressor-2.4.7.jar"
+                    apply_to: "\.js$"
+
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # app/config/config.yml
+        assetic:
+            filters:
+                yui_css:
+                    jar: "%kernel.root_dir%/Resources/java/yuicompressor.jar"
+                    apply_to: "\.css$"
+                yui_js:
+                    jar: "%kernel.root_dir%/Resources/java/yuicompressor.jar"
+                    apply_to: "\.js$"
+
+    .. code-block:: xml
+
+        <!-- app/config/config.xml -->
+        <assetic:config>
+            <assetic:filter
+                name="yui_css"
+                jar="%kernel.root_dir%/Resources/java/yuicompressor.jar"
+                apply-to="\.css$"/>
+            <assetic:filter
+                name="yui_js"
+                jar="%kernel.root_dir%/Resources/java/yuicompressor.jar"
+                apply-to="\.js$"/>
+        </assetic:config>
+
+    .. code-block:: php
+
+        // app/config/config.php
+        $container->loadFromExtension('assetic', array(
+            'filters' => array(
+                'yui_css' => array(
+                    'jar' => '%kernel.root_dir%/Resources/java/yuicompressor.jar',
+                    'apply_to='\\.css$',
+                ),
+                'yui_js' => array(
+                    'jar' => '%kernel.root_dir%/Resources/java/yuicompressor.jar',
+                    'apply_to='\\.js$',
+                ),
+            ),
+        ));
+
+
 .. _`YUI Compressor`: http://developer.yahoo.com/yui/compressor/
 .. _`Download the JAR`: http://yuilibrary.com/downloads/#yuicompressor
