@@ -6,3 +6,5 @@
 
     introduction
     definitions
+    factories
+    parentservices
