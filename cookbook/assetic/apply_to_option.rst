@@ -100,6 +100,8 @@ You can also combine multiple CoffeeScript files into a single output file:
 Both the files will now be served up as a single file compiled into regular
 JavaScript.
 
+.. _cookbook-assetic-apply-to:
+
 Filtering based on a File Extension
 -----------------------------------
 
