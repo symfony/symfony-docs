@@ -239,9 +239,9 @@ The ``newsletter_manager`` and ``mailer`` services can be set up using config fi
             mailer.transport: sendmail
 
         services:
-            my_mailer:
+            mailer:
                 class:     Mailer
-                arguments: [@mailer]
+                arguments: [%mailer.transport%]
             newsletter_manager:
                 class:     NewsletterManager
                 calls:
