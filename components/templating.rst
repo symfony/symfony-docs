@@ -31,6 +31,7 @@ convert a template name to a template reference and template loader
 (:class:`Symfony\\Component\\templating\\Loader\\LoaderInterface`) to find the
 template associated to a reference.
 
+.. code-block:: php
     use Symfony\Component\Templating\PhpEngine;
     use Symfony\Component\Templating\TemplateNameParser;
     use Symfony\Component\Templating\Loader\FilesystemLoader;
@@ -44,7 +45,7 @@ template associated to a reference.
 The :method:`Symfony\\Component\\Templating\\PhpEngine::render` method executes
 the file `views/hello.php` and returns the output text.
 
-.. code-block:: php
+.. code-block:: php+html
 
     <!-- views/hello.php -->
     Hello, <?php echo $firstname ?>!
@@ -54,7 +55,7 @@ Template Inheritance with Slots
 
 The template inheritance is designed to share layouts with many templates.
 
-.. code-block:: php
+.. code-block:: php+html
 
     <!-- views/layout.php -->
     <html>
@@ -69,7 +70,7 @@ The template inheritance is designed to share layouts with many templates.
 The :method:`Symfony\\Templating\\PhpEngine::extend` method is called in the
 sub-template to set its parent template.
 
-.. code-block:: php
+.. code-block:: php+html
 
     <!-- views/page.php -->
     <?php $view->extend('layout.php') ?>
