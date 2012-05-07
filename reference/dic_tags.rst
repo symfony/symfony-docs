@@ -209,45 +209,13 @@ kernel.event_listener
 
 **Purpose**: To listen to different events/hooks in Symfony
 
-To enable a custom listener, add it as a regular service in one of your
-configuration, and tag it with ``kernel.event_listener``. You must provide
-the name of the event your service listens to, as well as the method that
-will be called:
+This tag allows you to hook your own classes into Symfony's process at different
+points.
 
-.. configuration-block::
+For a full example of this listener, read the :doc:`/cookbook/service_container/event_listener`
+cookbook entry.
 
-    .. code-block:: yaml
-
-        services:
-            kernel.listener.your_listener_name:
-                class: Fully\Qualified\Listener\Class\Name
-                tags:
-                    - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest }
-
-    .. code-block:: xml
-
-        <service id="kernel.listener.your_listener_name" class="Fully\Qualified\Listener\Class\Name">
-            <tag name="kernel.event_listener" event="kernel.request" method="onKernelRequest" />
-        </service>
-
-    .. code-block:: php
-
-        $container
-            ->register('kernel.listener.your_listener_name', 'Fully\Qualified\Listener\Class\Name')
-            ->addTag('kernel.event_listener', array('event' => 'kernel.request', 'method' => 'onKernelRequest'))
-        ;
-
-.. note::
-
-    There is an additional tag option ``priority`` that is optional and defaults
-    to 0. This value can be from -255 to 255, and the listeners will be executed
-    in the order of their priority. This is useful when you need to guarantee
-    that one listener is executed before another.
-
-For a list of the available events and the object that is passed to the methods
-of each listener, see the `KernelEvents`_ class.
-
-For a practical example of one use of a kernel listener, see the cookbook
+For another practical example of a kernel listener, see the cookbook
 article: :doc:`/cookbook/request/mime_type`.
 
 .. _dic_tags-monolog:
