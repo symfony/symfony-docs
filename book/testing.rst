@@ -156,7 +156,7 @@ for its ``DemoController`` (`DemoControllerTest`_) that reads as follows::
     to modify your ``phpunit.xml.dist`` file to set the ``KERNEL_DIR`` environment
     variable to the directory of your kernel::
 
-        <phpunit
+        <phpunit>
             <!-- ... -->
             <php>
                 <server name="KERNEL_DIR" value="/path/to/your/app/" />
