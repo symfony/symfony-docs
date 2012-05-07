@@ -1,15 +1,23 @@
-How to create an event listener
+.. index::
+   single: Events; Create Listener
+
+How to create an Event Listener
 ===============================
 
 Symfony has various events and hooks that can be used to trigger custom
 behavior in your application. Those events are thrown by the HttpKernel 
-component and can be viewed in the `KernelEvents`_ class. 
+component and can be viewed in the :class:`Symfony\\Component\\HttpKernel\\KernelEvents` class. 
 
-In order to trigger a custom behavior based on an event, you have to 
-create a service that will act as an event listener to those specific
-events. In this entry, we will create a service that will act as an 
-Exception Listener, allowing us to modify how exceptions are shown by 
-our application.
+To hook into an event and add your own custom logic, you have to  create
+a service that will act as an event listener on that event. In this entry,
+we will create a service that will act as an Exception Listener, allowing
+us to modify how exceptions are shown by  our application. The ``KernelEvents::EXCEPTION``
+event is just one of the core kernel events::
+
+    // src/Acme/DemoBundle/Listener/AcmeExceptionListener.php
+    namespace Acme\DemoBundle\Listener;
+
+    use Symfony\Component\HttpKernel\Event\GetResponseForExceptionEvent;
 
     class AcmeExceptionListener
     {
@@ -28,8 +36,15 @@ our application.
         }
     }
 
-Now, all we have to do is the service declaration and the registering
-of our event listener to the correct tag.
+.. tip::
+
+    Each event receives a slightly different type of ``$event`` object. For
+    the ``kernel.exception`` event, it is :class:`Symfony\\Component\\HttpKernel\\Event\\GetResponseForExceptionEvent`.
+    To see what type of object each event listener receives, see :class:`Symfony\\Component\\HttpKernel\\KernelEvents`,
+
+Now that the class is created, we just need to register it as a service and
+and notify Symfony that it is a "listener" on the ``kernel.exception`` event
+by using a special "tag":
 
 .. configuration-block::
 
@@ -37,20 +52,20 @@ of our event listener to the correct tag.
 
         services:
             kernel.listener.your_listener_name:
-                class: Acme\DemoBundle\AcmeExceptionListener
+                class: Acme\DemoBundle\Listener\AcmeExceptionListener
                 tags:
                     - { name: kernel.event_listener, event: kernel.exception, method: onKernelException }
 
     .. code-block:: xml
 
-        <service id="kernel.listener.your_listener_name" class="Acme\DemoBundle\AcmeExceptionListener">
+        <service id="kernel.listener.your_listener_name" class="Acme\DemoBundle\Listener\AcmeExceptionListener">
             <tag name="kernel.event_listener" event="kernel.exception" method="onKernelException" />
         </service>
 
     .. code-block:: php
 
         $container
-            ->register('kernel.listener.your_listener_name', 'Acme\DemoBundle\AcmeExceptionListener')
+            ->register('kernel.listener.your_listener_name', 'Acme\DemoBundle\Listener\AcmeExceptionListener')
             ->addTag('kernel.event_listener', array('event' => 'kernel.exception', 'method' => 'onKernelException'))
         ;
         
@@ -60,6 +75,3 @@ of our event listener to the correct tag.
     to 0. This value can be from -255 to 255, and the listeners will be executed
     in the order of their priority. This is useful when you need to guarantee
     that one listener is executed before another.
-
-
-.. _`KernelEvents`: https://github.com/symfony/symfony/blob/2.0/src/Symfony/Component/HttpKernel/KernelEvents.php

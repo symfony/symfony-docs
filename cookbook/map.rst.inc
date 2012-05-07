@@ -52,6 +52,7 @@
 
   * :doc:`/cookbook/event_dispatcher/class_extension`
   * :doc:`/cookbook/event_dispatcher/method_behavior`
+  * (service container) :doc:`/cookbook/service_container/event_listener`
 
 * :doc:`/cookbook/form/index`
 
@@ -87,6 +88,7 @@
 
 * :doc:`/cookbook/service_container/index`
 
+  * :doc:`/cookbook/service_container/event_listener`
   * :doc:`/cookbook/service_container/factories`
   * :doc:`/cookbook/service_container/parentservices`
   * :doc:`/cookbook/service_container/scopes`
