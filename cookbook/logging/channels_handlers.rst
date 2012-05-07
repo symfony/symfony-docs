@@ -1,17 +1,23 @@
 .. index::
    single: Logging
 
-How to log messages to different files
+How to log Messages to different Files
 ======================================
 
-Symfony standard edition contains a bunch of channels for logging: ``doctrine``,
+.. versionadded:: 2.1
+    The ability to specify channels for a specific handler was added to
+    the MonologBundle for Symfony 2.1.
+
+The Symfony Standard Edition contains a bunch of channels for logging: ``doctrine``,
 ``event``, ``security`` and ``request``. Each channel corresponds to a logger
 service (``monolog.logger.XXX``) in the container and is injected to the
-concerned service.
+concerned service. The purpose of channels is to be able to organize different
+types of log messages.
 
-By default, Symfony2 logs every messages in a single file.
+By default, Symfony2 logs every messages into a single file (regardless of
+the channel).
 
-Switching a channel to a different handler
+Switching a Channel to a different Handler
 ------------------------------------------
 
 Now, suppose you want to log the ``doctrine`` channel to a different file.
