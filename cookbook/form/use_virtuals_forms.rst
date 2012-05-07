@@ -89,8 +89,8 @@ location form type::
         {
             $builder
                 ->add('address', 'textarea')
-                ->add('zipcode', 'string')
-                ->add('city', 'string')
+                ->add('zipcode', 'text')
+                ->add('city', 'text')
                 ->add('country', 'text')
             ;
         }
