@@ -9,3 +9,4 @@ Form
     dynamic_form_generation
     form_collections
     create_custom_field_type
+    use_virtuals_forms
