@@ -622,6 +622,8 @@ A routing configuration map provides this information in a readable format:
 
 .. code-block:: yaml
 
+.. code-block:: yaml
+
     # app/config/routing.yml
     blog_list:
         pattern:  /blog
