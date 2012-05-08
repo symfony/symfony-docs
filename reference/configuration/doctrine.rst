@@ -48,7 +48,7 @@ Configuration Reference
                         mappings: # Required
                             AcmeHelloBundle: ~
                         class_metadata_factory_name:    Doctrine\ORM\Mapping\ClassMetadataFactory
-                        # All cache drivers have to be array, apc, xcache or memcache
+                        # All cache drivers have to be array, apc, xcache, memcache or service
                         metadata_cache_driver:          array
                         query_cache_driver:             array
                         result_cache_driver:
@@ -152,8 +152,8 @@ certain classes, but those are for very advanced use-cases only.
 Caching Drivers
 ~~~~~~~~~~~~~~~
 
-For the caching drivers you can specify the values "array", "apc", "memcache"
-or "xcache".
+For the caching drivers you can specify the values "array", "apc", "memcache",
+"xcache" or "service".
 
 The following example shows an overview of the caching configurations:
 
@@ -163,7 +163,9 @@ The following example shows an overview of the caching configurations:
         orm:
             auto_mapping: true
             metadata_cache_driver: apc
-            query_cache_driver: xcache
+            query_cache_driver:
+                type: service
+                id: my_doctrine_common_cache_service
             result_cache_driver:
                 type: memcache
                 host: localhost
