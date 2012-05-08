@@ -246,7 +246,7 @@ possible paths:
    and the form is simply created and rendered;
 
 #. When the user submits the form (i.e. the method is ``POST``) with invalid
-   data (validation is covered in the next section), the form is bound and
+   data (:doc:`validation</book/validation>` was covered in the previous section), the form is bound and
    then rendered, this time displaying all validation errors;
 
 #. When the user submits the form with valid data, the form is bound and
