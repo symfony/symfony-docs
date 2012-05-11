@@ -1,21 +1,21 @@
-Size
-====
+Range
+=====
 
 Validates that a given number is *between* some minimum and maximum number.
 
-+----------------+--------------------------------------------------------------------+
-| Applies to     | :ref:`property or method<validation-property-target>`              |
-+----------------+--------------------------------------------------------------------+
-| Options        | - `min`_                                                           |
-|                | - `max`_                                                           |
-|                | - `minMessage`_                                                    |
-|                | - `maxMessage`_                                                    |
-|                | - `invalidMessage`_                                                |
-+----------------+--------------------------------------------------------------------+
-| Class          | :class:`Symfony\\Component\\Validator\\Constraints\\Size`          |
-+----------------+--------------------------------------------------------------------+
-| Validator      | :class:`Symfony\\Component\\Validator\\Constraints\\SizeValidator` |
-+----------------+--------------------------------------------------------------------+
++----------------+---------------------------------------------------------------------+
+| Applies to     | :ref:`property or method<validation-property-target>`               |
++----------------+---------------------------------------------------------------------+
+| Options        | - `min`_                                                            |
+|                | - `max`_                                                            |
+|                | - `minMessage`_                                                     |
+|                | - `maxMessage`_                                                     |
+|                | - `invalidMessage`_                                                 |
++----------------+---------------------------------------------------------------------+
+| Class          | :class:`Symfony\\Component\\Validator\\Constraints\\Range`          |
++----------------+---------------------------------------------------------------------+
+| Validator      | :class:`Symfony\\Component\\Validator\\Constraints\\RangeValidator` |
++----------------+---------------------------------------------------------------------+
 
 Basic Usage
 -----------
@@ -31,7 +31,7 @@ the following:
         Acme\EventBundle\Entity\Participant:
             properties:
                 height:
-                    - Size:
+                    - Range:
                         min: 120
                         max: 180
                         minMessage: You must be at least 120cm tall to enter
@@ -45,7 +45,7 @@ the following:
         class Participant
         {
             /**
-             * @Assert\Size(
+             * @Assert\Range(
              *      min = "120",
              *      max = "180",
              *      minMessage = "You must be at least 120cm tall to enter",

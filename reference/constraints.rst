@@ -23,7 +23,7 @@ Validation Constraints Reference
 
    constraints/Max
    constraints/Min
-   constraints/Size
+   constraints/Range
 
    constraints/Date
    constraints/DateTime
