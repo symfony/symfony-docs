@@ -320,7 +320,7 @@ convert many commits to one commit. To do this, use the rebase command:
 
 .. code-block:: bash
 
-    $ git rebase -i head~3
+    $ git rebase -i HEAD~3
     $ git push -f origin BRANCH_NAME
 
 The number 3 here must equal the amount of commits in your branch. After you
