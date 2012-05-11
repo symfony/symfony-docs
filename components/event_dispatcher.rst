@@ -246,7 +246,7 @@ that serves to define and document your event:
          *
          * @var string
          */
-        const onStoreOrder = 'store.order';
+        const STORE_ORDER = 'store.order';
     }
 
 Notice that this class doesn't actually *do* anything. The purpose of the
@@ -314,7 +314,7 @@ listener of that event:
 
     // create the FilterOrderEvent and dispatch it
     $event = new FilterOrderEvent($order);
-    $dispatcher->dispatch(StoreEvents::onStoreOrder, $event);
+    $dispatcher->dispatch(StoreEvents::STORE_ORDER, $event);
 
 Notice that the special ``FilterOrderEvent`` object is created and passed to
 the ``dispatch`` method. Now, any listener to the ``store.order`` event will
@@ -323,7 +323,7 @@ the ``getOrder`` method:
 
 .. code-block:: php
 
-    // some listener class that's been registered for onStoreOrder
+    // some listener class that's been registered for "STORE_ORDER" event
     use Acme\StoreBundle\Event\FilterOrderEvent;
 
     public function onStoreOrder(FilterOrderEvent $event)
