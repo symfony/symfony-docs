@@ -43,6 +43,9 @@ Configuration Reference
                     buffer_size:          0
                     handler:              ~
                     members:              []
+                    channels:
+                        type:     ~
+                        elements: ~
                     from_email:           ~
                     to_email:             ~
                     subject:              ~

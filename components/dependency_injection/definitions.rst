@@ -63,13 +63,6 @@ Class
 First up is the class of a definition, this is the class of the object returned
 when the service is requested from the container.
 
-You may want to change the class used by a definition, if for example there is
-functionality which can only be used if a service from another bundle exists
-then you may have a class which make use of that other service and one that
-does not. The one that does not could be used for the service and then the
-one with the extra functionality swapped in using a compiler pass if the other
-service is available.
-
 To find out what class is set for a definition::
 
     $definition->getClass();

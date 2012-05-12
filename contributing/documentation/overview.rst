@@ -33,7 +33,6 @@ checkout the 2.0 branch before the next step:
 
     $ git checkout 2.0
 
-
 Next, create a dedicated branch for your changes (for organization):
 
 .. code-block:: bash
@@ -48,9 +47,8 @@ the ``symfony-docs`` ``master`` branch.
 .. image:: /images/docs-pull-request.png
    :align: center
 
-If you have made your changes based
-on the 2.0 branch then you need to follow the change commit link and change
-the base branch to be @2.0:
+If you have made your changes based on the 2.0 branch then you need to follow
+the change commit link and change the base branch to be @2.0:
 
 .. image:: /images/docs-pull-request-change-base.png
    :align: center
@@ -61,6 +59,14 @@ GitHub covers the topic of `pull requests`_ in detail.
 
     The Symfony2 documentation is licensed under a Creative Commons
     Attribution-Share Alike 3.0 Unported :doc:`License <license>`.
+
+.. tip::
+
+    Your changes appear on the symfony.com website no more than 15 minutes
+    after the documentation team merges your pull request. You can check if
+    your changes have introduced some markup issues by going to the
+    `Documentation Build Errors`_ page (it is updated each French night at 3AM
+    when the server rebuilds the documentation).
 
 Reporting an Issue
 ------------------
@@ -81,3 +87,4 @@ Read the dedicated :doc:`document <translations>`.
 
 .. _`fork`: http://help.github.com/fork-a-repo/
 .. _`pull requests`: http://help.github.com/pull-requests/
+.. _`Documentation Build Errors`: http://symfony.com/doc/build_errors
