@@ -1,22 +1,23 @@
-SizeLength
-==========
+Size
+====
 
-Validates that a given string length is *between* some minimum and maximum value according to the provided charset.
+Validates that a given string length or collection elements count is *between* some minimum and maximum value.
 
-+----------------+--------------------------------------------------------------------------+
-| Applies to     | :ref:`property or method<validation-property-target>`                    |
-+----------------+--------------------------------------------------------------------------+
-| Options        | - `min`_                                                                 |
-|                | - `max`_                                                                 |
-|                | - `charset`_                                                             |
-|                | - `minMessage`_                                                          |
-|                | - `maxMessage`_                                                          |
-|                | - `exactMessage`_                                                        |
-+----------------+--------------------------------------------------------------------------+
-| Class          | :class:`Symfony\\Component\\Validator\\Constraints\\SizeLength`          |
-+----------------+--------------------------------------------------------------------------+
-| Validator      | :class:`Symfony\\Component\\Validator\\Constraints\\SizeLengthValidator` |
-+----------------+--------------------------------------------------------------------------+
++----------------+--------------------------------------------------------------------+
+| Applies to     | :ref:`property or method<validation-property-target>`              |
++----------------+--------------------------------------------------------------------+
+| Options        | - `min`_                                                           |
+|                | - `max`_                                                           |
+|                | - `type`_                                                          |
+|                | - `charset`_                                                       |
+|                | - `minMessage`_                                                    |
+|                | - `maxMessage`_                                                    |
+|                | - `exactMessage`_                                                  |
++----------------+--------------------------------------------------------------------+
+| Class          | :class:`Symfony\\Component\\Validator\\Constraints\\Size`          |
++----------------+--------------------------------------------------------------------+
+| Validator      | :class:`Symfony\\Component\\Validator\\Constraints\\SizeValidator` |
++----------------+--------------------------------------------------------------------+
 
 Basic Usage
 -----------
@@ -32,7 +33,7 @@ To verify that the ``firstName`` field length of a class is between "2" and
         Acme\EventBundle\Entity\Height:
             properties:
                 firstName:
-                    - SizeLength:
+                    - Size:
                         min: 2
                         max: 50
                         minMessage: Your first name must be at least 2 characters length
@@ -46,11 +47,11 @@ To verify that the ``firstName`` field length of a class is between "2" and
         class Participant
         {
             /**
-             * @Assert\SizeLength(
+             * @Assert\Size(
              *      min = "2",
              *      max = "50",
              *      minMessage = "Your first name must be at least 2 characters length",
-             *      maxMessage="Your first name cannot be longer than than 50 characters length"
+             *      maxMessage = "Your first name cannot be longer than than 50 characters length"
              * )
              */
              protected $firstName;
@@ -74,6 +75,14 @@ max
 
 This required option is the "max" length value. Validation will fail if the given
 value's length is **greater** than this max value.
+
+type
+~~~~
+
+**type**: ``string``
+
+The type of value to validate. It can be either ``string`` or ``collection``. If
+not specified, the validator will try to guess it.
 
 charset
 ~~~~~~~
