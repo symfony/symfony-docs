@@ -85,7 +85,7 @@ changes to your git repository.
 
     your project will contain complete the git history of all the bundles
     and libraries defined in the ``deps`` file. It can be as much as 100 MB!
-    If you save current versions of all depencencies with command:
+    If you save the current versions of all your dependencies with the command:
 
     .. code-block:: bash
 
