@@ -562,9 +562,7 @@ other heavy logic that can't be done from within a template.
 
 The solution is to simply embed the result of an entire controller from your
 template. First, create a controller that renders a certain number of recent
-articles:
-
-.. code-block:: php
+articles::
 
     // src/Acme/ArticleBundle/Controller/ArticleController.php
 
@@ -919,15 +917,11 @@ Configuring and using the ``templating`` Service
 The heart of the template system in Symfony2 is the templating ``Engine``.
 This special object is responsible for rendering templates and returning
 their content. When you render a template in a controller, for example,
-you're actually using the templating engine service. For example:
-
-.. code-block:: php
+you're actually using the templating engine service. For example::
 
     return $this->render('AcmeArticleBundle:Article:index.html.twig');
 
-is equivalent to
-
-.. code-block:: php
+is equivalent to:
 
     $engine = $this->container->get('templating');
     $content = $engine->render('AcmeArticleBundle:Article:index.html.twig');
@@ -1272,9 +1266,7 @@ isn't actually rendered differently based on its format.
 
 In many cases, you may want to allow a single controller to render multiple
 different formats based on the "request format". For that reason, a common
-pattern is to do the following:
-
-.. code-block:: php
+pattern is to do the following::
 
     public function indexAction()
     {
@@ -1314,9 +1306,7 @@ The templating engine in Symfony is a powerful tool that can be used each time
 you need to generate presentational content in HTML, XML or any other format.
 And though templates are a common way to generate content in a controller,
 their use is not mandatory. The ``Response`` object returned by a controller
-can be created with our without the use of a template:
-
-.. code-block:: php
+can be created with our without the use of a template::
 
     // creates a Response object whose content is the rendered template
     $response = $this->render('AcmeArticleBundle:Article:index.html.twig');
