@@ -85,7 +85,13 @@ changes to your git repository.
 
     your project will contain complete the git history of all the bundles
     and libraries defined in the ``deps`` file. It can be as much as 100 MB!
-    You can remove the git history directories with the following command:
+    If you save current versions of all depencencies with command:
+
+    .. code-block:: bash
+
+        $ php bin/vendors lock
+
+    then you can remove the git history directories with the following command:
 
     .. code-block:: bash
 
