@@ -128,17 +128,17 @@ To test documentation before a commit:
 
 * Run the `Sphinx quick setup`_;
 
-* Install the configuration-block Sphinx extension (see below);
+* Install the Sphinx extensions (see below);
 
 * Run ``make html`` and view the generated HTML in the ``build`` directory.
 
-Installing the configuration-block Sphinx extension
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Installing the Sphinx extensions
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-* Download the extension from the `configuration-block source`_ repository
+* Download the extension from the `source`_ repository
 
-* Copy the ``configurationblock.py`` to the ``_exts`` folder under your
-   source folder (where ``conf.py`` is located)
+* Copy the ``sensio`` directory to the ``_exts`` folder under your source
+  folder (where ``conf.py`` is located)
 
 * Add the following to the ``conf.py`` file:
 
@@ -148,14 +148,21 @@ Installing the configuration-block Sphinx extension
     sys.path.append(os.path.abspath('_exts'))
     
     # ...
-    # add configurationblock to the list of extensions
-    extensions = ['configurationblock']
+    # add the extensions to the list of extensions
+    extensions = [..., 'sensio.sphinx.refinclude', 'sensio.sphinx.configurationblock', 'sensio.sphinx.phpcode']
 
-.. _reStructuredText:           http://docutils.sf.net/rst.html
-.. _Sphinx:                     http://sphinx.pocoo.org/
-.. _documents:                  http://github.com/symfony/symfony-docs
-.. _reStructuredText Primer:    http://sphinx.pocoo.org/rest.html
-.. _markup:                     http://sphinx.pocoo.org/markup/
-.. _Pygments website:           http://pygments.org/languages/
-.. _configuration-block source: https://github.com/fabpot/sphinx-php
-.. _Sphinx quick setup:         http://sphinx.pocoo.org/tutorial.html#setting-up-the-documentation-sources
+    # enable highlighting for PHP code not between ``<?php ... ?>`` by default
+    lexers['php'] = PhpLexer(startinline=True)
+    lexers['php-annotations'] = PhpLexer(startinline=True)
+
+    # use PHP as the primary domain
+    primary_domain = 'php'
+
+.. _reStructuredText:        http://docutils.sf.net/rst.html
+.. _Sphinx:                  http://sphinx.pocoo.org/
+.. _documents:               http://github.com/symfony/symfony-docs
+.. _reStructuredText Primer: http://sphinx.pocoo.org/rest.html
+.. _markup:                  http://sphinx.pocoo.org/markup/
+.. _Pygments website:        http://pygments.org/languages/
+.. _source:                  https://github.com/fabpot/sphinx-php
+.. _Sphinx quick setup:      http://sphinx.pocoo.org/tutorial.html#setting-up-the-documentation-sources
