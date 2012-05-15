@@ -257,5 +257,5 @@ download all the necessary vendor libraries.
 .. _`GitHub Bootcamp`: http://help.github.com/set-up-git-redirect
 .. _`Composer`: http://getcomposer.org/
 .. _`Apache`: http://httpd.apache.org/docs/current/mod/core.html#documentroot
-.. _`Nginx`: http://wiki.nginx.org/HttpCoreModule#root
+.. _`Nginx`: http://wiki.nginx.org/Symfony
 
