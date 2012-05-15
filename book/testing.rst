@@ -252,7 +252,7 @@ document::
 .. index::
    single: Tests; Assertions
 
-.. sidebar: Useful Assertions
+.. sidebar:: Useful Assertions
 
     To get you started faster, here is a list of the most common and
     useful test assertions::
