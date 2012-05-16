@@ -1306,7 +1306,7 @@ The templating engine in Symfony is a powerful tool that can be used each time
 you need to generate presentational content in HTML, XML or any other format.
 And though templates are a common way to generate content in a controller,
 their use is not mandatory. The ``Response`` object returned by a controller
-can be created with our without the use of a template::
+can be created with or without the use of a template::
 
     // creates a Response object whose content is the rendered template
     $response = $this->render('AcmeArticleBundle:Article:index.html.twig');
