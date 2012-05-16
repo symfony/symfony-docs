@@ -35,6 +35,19 @@ Quick example::
         echo "<div class='flash-notice'>$message</div>";
     }
 
+.. note::
+
+    Symfony sessions are designed to replace several native PHP funtions.
+    Applications should avoid using ``session_start()``, ``session_regenerate_id()``,
+    ``session_id()``, ``session_name()``, and ``session_destroy()`` and instead
+    use the APIs in the following section.
+
+.. warning::
+
+    Symfony sessions are incompatible with PHP ini directive ``session.auto_start = 1``
+    This directive should be turned off in ``php.ini``, in the webserver directives or
+    in ``.htaccess``.
+
 Session API
 ~~~~~~~~~~~
 
@@ -56,19 +69,19 @@ Session workflow
 
 * :method:`Symfony\\Component\\HttpFoundation\\Session\\Session::invalidate`:
   Clears the session data and regenerates the session id do not use ``session_destroy()``.
-  This is basically a shortcut for ``clear()`` and ``migrate()``.
+  This is a shortcut for ``clear()`` and ``migrate()``.
 
 * :method:`Symfony\\Component\\HttpFoundation\\Session\\Session::getId`: Gets the
-  session ID.
+  session ID. Do not use ``session_id()``.
 
 * :method:`Symfony\\Component\\HttpFoundation\\Session\\Session::setId`: Sets the
-  session ID.
+  session ID. Do not use ``session_id()``.
 
 * :method:`Symfony\\Component\\HttpFoundation\\Session\\Session::getName`: Gets the
-  session name.
+  session name. Do not use ``session_name()``.
 
 * :method:`Symfony\\Component\\HttpFoundation\\Session\\Session::setName`: Sets the
-  session name.
+  session name. Do not use ``session_name()``.
 
 Session attributes
 
@@ -116,6 +129,7 @@ Session meta-data
   Gets the :class:`Symfony\\Component\\HttpFoundation\\Session\\Storage\MetadataBag`
   which contains information about the session.
 
+
 Save Handlers
 ~~~~~~~~~~~~~
 
@@ -128,16 +142,21 @@ after the `open` operation).  You can read more about this at
 
 
 Native PHP Save Handlers
-~~~~~~~~~~~~~~~~~~~~~~~~
+------------------------
 
-So-called 'native' handlers, are session handlers which are either compiled into
+So-called 'native' handlers, are save handlers which are either compiled into
 PHP or provided by PHP extensions, such as PHP-Sqlite, PHP-Memcached and so on.
-The handlers are compiled and can be activated directly in PHP using
-`ini_set('session.save_handler', $name);` and are usually configured with
-`ini_set('session.save_path', $path);` and sometimes, a variety of other PHP
-`ini` directives.
 
-Symfony2 provides drivers for native handlers which are easy to configure, these are:
+All native save handlers are internal to PHP and as such, have no public facing API.
+They must be configured by PHP ini directives, usually ``session.save_path`` and
+potentially other driver specific directives. Specific details can be found in
+docblock of the ``setOptions()`` method of each class.
+
+While native save handlers can be activated by directly using
+``ini_set('session.save_handler', $name);``, Symfony2 provides a convenient way to
+activate these in same way as custom handlers.
+
+Symfony2 provides drivers for the following native save handlers:
 
   * :class:`Symfony\\Component\\HttpFoundation\\Session\\Storage\\Handler\\NativeFileSessionHandler`;
   * :class:`Symfony\\Component\\HttpFoundation\\Session\\Storage\\Handler\\NativeSqliteSessionHandler`;
@@ -154,8 +173,20 @@ Example of use::
     $storage = new NativeSessionStorage(array(), new NativeMemcachedSessionHandler());
     $session = new Session($storage);
 
+.. note::
+
+    With the exeption of the ``files`` handler which is built into PHP and always available,
+    the availablilty of the other handlers depends on those PHP extensions being active at runtime.
+
+.. note::
+
+    Native save handlers provide a quick solution to session storage, however, in complex systems
+    where you need more control, custom save handlers may provide more freedom and flexibility.
+    Symfony2 provides several implementations which you may further customise as required.
+
+
 Custom Save Handlers
-~~~~~~~~~~~~~~~~~~~~
+--------------------
 
 Custom handlers are those which completely replace PHP's built in session save
 handlers by providing six callback functions which PHP calls internally at
@@ -178,21 +209,22 @@ Example::
     $storage = new NativeSessionStorage(array(), new PdoSessionHandler());
     $session = new Session($storage);
 
-Session Bags
-------------
 
-PHP's session management requires the use of the `$_SESSION` super-global,
+Session Bags
+~~~~~~~~~~~~
+
+PHP's session management requires the use of the ``$_SESSION`` super-global,
 however, this interferes somewhat with code testability and encapsulation in a
 OOP paradigm. To help overcome this, Symfony2 uses 'session bags' linked to the
 session to encapsulate a specific dataset of 'attributes' or 'flash messages'.
 
-This approach also mitigates namespace pollution within the `$_SESSION`
+This approach also mitigates namespace pollution within the ``$_SESSION``
 super-global because each bag stores all its data under a unique namespace.
 This allows Symfony2 to peacefully co-exist with other applications or libraries
-that might use the `$_SESSION` super-global and all data remains completely
+that might use the ``$_SESSION`` super-global and all data remains completely
 compatible with Symfony2's session management.
 
-Symfony2 provides 2 kinds of bags, with two separate implementations.
+Symfony2 provides 2 kinds of storage bags, with two separate implementations.
 Everything is written against interfaces so you may extend or create your own
 bag types if necessary.
 
@@ -200,7 +232,7 @@ bag types if necessary.
 the following API which is intended mainly for internal purposes:
 
 * :method:`Symfony\\Component\\HttpFoundation\\Session\\SessionBagInterface::getStorageKey`:
-  Returns the key which the bag will ultimately store its array under in `$_SESSION`.
+  Returns the key which the bag will ultimately store its array under in ``$_SESSION``.
   Generally this value can be left at its default and is for internal use.
 
 * :method:`Symfony\\Component\\HttpFoundation\\Session\\SessionBagInterface::initialize`:
@@ -209,6 +241,7 @@ the following API which is intended mainly for internal purposes:
 
 * :method:`Symfony\\Component\\HttpFoundation\\Session\\SessionBagInterface::getName`:
   Returns the name of the session bag.
+
 
 Attributes
 ~~~~~~~~~~
@@ -275,6 +308,7 @@ has a simple API
 
 * :method:`Symfony\\Component\\HttpFoundation\\Session\\Attribute\\AttributeBagInterface::clear`:
   Clear the bag;
+
 
 Flash messages
 ~~~~~~~~~~~~~~
@@ -372,8 +406,9 @@ Compact method to process display all flashes at once::
         }
     }
 
+
 Testability
------------
+~~~~~~~~~~~
 
 Symfony2 is designed from the ground up with code-testability in mind. In order
 to make your code which utilizes session easily testable we provide two separate
@@ -404,7 +439,7 @@ required:
   session name.
 
 Unit Testing
-~~~~~~~~~~~~
+------------
 
 For unit testing where it is not necessary to persist the session, you should
 simply swap out the default storage engine with
@@ -416,7 +451,7 @@ simply swap out the default storage engine with
     $session = new Session(new MockArraySessionStorage());
 
 Functional Testing
-~~~~~~~~~~~~~~~~~~
+------------------
 
 For functional testing where you may need to persist session data across
 separate PHP processes, simply change the storage engine to
@@ -426,6 +461,7 @@ separate PHP processes, simply change the storage engine to
     use Symfony\Component\HttpFoundation\Session\Storage\MockFileSessionStorage;
 
     $session = new Session(new MockFileSessionStorage());
+
 
 PHP 5.4 compatibility
 ~~~~~~~~~~~~~~~~~~~~~
@@ -443,6 +479,7 @@ class called :class:`Symfony\\Component\\HttpFoundation\\Session\\Storage\\Handl
 which under PHP 5.4, extends from `\SessionHandler` and under PHP 5.3 is just a
 empty base class. This provides some interesting opportunities to leverage
 PHP 5.4 functionality if it is available.
+
 
 Save Handler Proxy
 ~~~~~~~~~~~~~~~~~~
@@ -469,6 +506,7 @@ The proxy mechanism allow you to get more deeply involved in session save handle
 classes. A proxy for example could be used to encrypt any session transaction
 without knowledge of the specific save handler.
 
+
 Configuring PHP Sessions
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -483,6 +521,7 @@ Or set them via the
 method.
 
 For the sake of clarity, some key options are explained in this documentation.
+
 
 Session Cookie Lifetime
 ~~~~~~~~~~~~~~~~~~~~~~~
@@ -508,6 +547,7 @@ be securely controlled from the server side.
     with an expiry time of ``time()``+``cookie_lifetime`` where the time is taken
     from the server.
 
+
 Configuring Garbage Collection
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -524,8 +564,9 @@ deleted. This allows one to expire records based on idle time.
 You can configure these settings by passing ``gc_probability``, ``gc_divisor``
 and ``gc_maxlifetime`` in an array to the constructor of
 :class:`Symfony\\Component\\HttpFoundation\\Session\\Storage\\NativeSessionStorage`
-or to the :method:`Symfony\\Component\\HttpFoundation\\Session\\Storage\\NativeSessionStorage::setOptions()`
+or to the :method:`Symfony\\Component\\HttpFoundation\\Session\\Storage\\NativeSessionStorage::setOptions`
 method.
+
 
 Session Lifetime
 ~~~~~~~~~~~~~~~~
@@ -549,6 +590,7 @@ calculated by adding the PHP runtime configuration value in
 
     A cookie lifetime of ``0`` means the cookie expire when the browser is closed.
 
+
 Session Idle Time/Keep Alive
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -570,6 +612,7 @@ experience, for example, by displaying a message.
 
 Symfony2 records some basic meta-data about each session to give you complete
 freedom in this area.
+
 
 Session meta-data
 ~~~~~~~~~~~~~~~~~
