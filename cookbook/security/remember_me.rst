@@ -116,8 +116,8 @@ to access protected resources as if the user had actually authenticated upon
 visiting the site.
 
 In some cases, however, you may want to force the user to actually re-authenticate
-before accessing certain resources. For example, you might allow a "remember me"
-user to see basic account information, but then require them to actually
+before accessing certain resources. For example, you might allow "remember me"
+users to see basic account information, but then require them to actually
 re-authenticate before modifying that information.
 
 The security component provides an easy way to do this. In addition to roles
