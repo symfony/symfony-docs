@@ -1,0 +1,124 @@
+<!--
+    Use this file to faciliate easy per-project building.
+    
+    Simply create a build.properties file in this directory,
+    that contains any needed (i.e. to override) values for this project.
+    
+    Call this build script and specify the name of the project and
+    (optionally) the name of the target you wish to execute (default is
+    'main' target) of build-propel.xml.
+
+    Normal use:
+    $> phing
+    
+    Specific target: 
+    $> phing -Dtarget=insert-sql
+
+-->
+<project name="propel-project-builder" default="main">
+
+<!-- set to this dir -->    
+<property name="project.dir" value="."/>
+
+<!-- set a default target if none provided -->
+<property name="target" value="main"/>
+
+<target name="buildpropescheck">
+  <available file="./build.properties" property="projBuildPopertiesExists"/>  
+</target>
+
+<target name="init">
+	<echo msg="Loading project-specific props from ./build.properties"/>
+	<property file="./build.properties"/>
+</target>
+
+<target name="checkproject" unless="propel.project">
+    <fail msg="Build failed. Please make sure that propel.project is set to your project-name in local build.properties"/>
+</target>
+<target name="checkhome" unless="propel.home">
+    <fail msg="Build failed. Please make sure that propel.home is set to the propel-generator-dir in local build.properties"/>
+</target>
+<target name="checkschemadir" unless="propel.schema.dir">
+    <fail msg="Build failed. Please make sure that propel.schema.dir is set to '.' in local build.properties"/>
+</target>
+<target name="checkconfdir" unless="propel.conf.dir">
+    <fail msg="Build failed. Please make sure that propel.conf.dir is set to '.' in local build.properties"/>
+</target>
+<target name="checkoutputdir" unless="propel.output.dir">
+    <fail msg="Build failed. Please make sure that propel.output.dir is set to a directory of your choice (e.g. './build/') local build.properties"/>
+</target>
+<target name="configure" depends="init,checkproject,checkhome,checkschemadir,checkconfdir,checkoutputdir">
+    <property name="project" value="{$propel.project}"/>
+</target>
+
+<target name="main" depends="configure" 
+  description="The main target. Includes project-specific build.properties and calls the build-propel.xml script">	
+
+ <phing phingfile="${propel.home}/build-propel.xml" target="${target}"/>
+ 
+</target>
+
+<!-- 
+ Convenience mappings to build-propel.xml main targets 
+ 
+ This makes it possible to use this buildfile w/o needing to specify
+ target as a property, e.g.:
+ 
+ $> phing -Dproject=bookstore insert-sql
+ 
+ The main reason for this is just consistency w/ old build-propel.xml file
+ (primarily for documentation & user confusion avoidance reasons).  There are relatively
+ few & infrequently changing main targets of build-propel.xml, so it's a non-
+ issue as far as maintenance is concerned.
+-->
+
+<target name="convert-props" depends="configure">
+	<phing phingfile="${propel.home}/build-propel.xml" target="convert-props"/>
+</target>
+
+<target name="create-db" depends="configure">
+	<phing phingfile="${propel.home}/build-propel.xml" target="create-db"/>
+</target>
+
+<target name="creole" depends="configure">
+	<phing phingfile="${propel.home}/build-propel.xml" target="creole"/>
+</target>
+
+<target name="datadtd" depends="configure">
+	<phing phingfile="${propel.home}/build-propel.xml" target="datadtd"/>
+</target>
+
+<target name="datadump" depends="configure">
+	<phing phingfile="${propel.home}/build-propel.xml" target="datadump"/>
+</target>
+
+<target name="datasql" depends="configure">
+	<phing phingfile="${propel.home}/build-propel.xml" target="datasql"/>
+</target>
+
+<target name="insert-sql" depends="configure">
+	<phing phingfile="${propel.home}/build-propel.xml" target="insert-sql"/>
+</target>
+
+<target name="om" depends="configure">
+	<phing phingfile="${propel.home}/build-propel.xml" target="om"/>
+</target>
+
+<target name="new-om" depends="configure">
+	<phing phingfile="${propel.home}/build-propel.xml" target="new-om"/>
+</target>
+
+<target name="sql" depends="configure">
+	<phing phingfile="${propel.home}/build-propel.xml" target="sql"/>
+</target>
+
+<target name="old-sql" depends="configure">
+	<phing phingfile="${propel.home}/build-propel.xml" target="old-sql"/>
+</target>
+
+<target name="graphviz" depends="configure">
+	<phing phingfile="${propel.home}/build-propel.xml" target="graphviz"/>
+</target>
+
+
+</project>

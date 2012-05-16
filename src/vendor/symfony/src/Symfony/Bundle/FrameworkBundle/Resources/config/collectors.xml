@@ -1,0 +1,53 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://www.symfony-project.org/schema/dic/services"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.symfony-project.org/schema/dic/services http://www.symfony-project.org/schema/dic/services/services-1.0.xsd">
+
+    <parameters>
+        <parameter key="data_collector.config.class">Symfony\Bundle\FrameworkBundle\DataCollector\ConfigDataCollector</parameter>
+        <parameter key="data_collector.request.class">Symfony\Bundle\FrameworkBundle\DataCollector\RequestDataCollector</parameter>
+        <parameter key="data_collector.timer.class">Symfony\Bundle\FrameworkBundle\DataCollector\TimerDataCollector</parameter>
+        <parameter key="data_collector.memory.class">Symfony\Component\HttpKernel\DataCollector\MemoryDataCollector</parameter>
+        <parameter key="data_collector.logger.class">Symfony\Component\HttpKernel\DataCollector\LoggerDataCollector</parameter>
+        <parameter key="data_collector.exception.class">Symfony\Component\HttpKernel\DataCollector\ExceptionDataCollector</parameter>
+        <parameter key="data_collector.events.class">Symfony\Component\HttpKernel\DataCollector\EventDataCollector</parameter>
+    </parameters>
+
+    <services>
+        <service id="data_collector.config" class="%data_collector.config.class%">
+            <tag name="data_collector" />
+            <argument type="service" id="kernel" />
+            <argument type="service" id="router" on-invalid="ignore" />
+        </service>
+
+        <service id="data_collector.request" class="%data_collector.request.class%">
+            <tag name="data_collector" />
+        </service>
+
+        <service id="data_collector.timer" class="%data_collector.timer.class%">
+            <tag name="data_collector" />
+            <argument type="service" id="kernel" />
+        </service>
+
+        <service id="data_collector.memory" class="%data_collector.memory.class%">
+            <tag name="data_collector" />
+        </service>
+
+        <service id="data_collector.logger" class="%data_collector.logger.class%">
+            <tag name="data_collector" />
+            <argument type="service" id="logger" on-invalid="ignore" />
+        </service>
+
+        <service id="data_collector.exception" class="%data_collector.exception.class%">
+            <tag name="data_collector" />
+        </service>
+
+        <service id="data_collector.events" class="%data_collector.events.class%">
+            <tag name="data_collector" />
+            <call method="setEventDispatcher">
+                <argument type="service" id="event_dispatcher" />
+            </call>
+        </service>
+    </services>
+</container>

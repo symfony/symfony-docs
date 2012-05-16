@@ -1,0 +1,180 @@
+<!--
+    Propel XML database schema DTD
+    $Id: database.dtd,v 1.7 2005/03/30 11:38:18 hlellelid Exp $
+
+    This is based very closely on the schema DTD for Torque, but
+    some differences do exist.
+-->
+
+<!--
+
+defaultPhpNamingMethod determines how a table or column name,
+from the name attribute in the xml database file, is converted to a
+PHP class or method name.
+
+     nochange   - indicates not change is performed.
+     underscore - Underscores are removed, First letter is
+              capitalized, first letter after an underscore
+              is capitalized, the rest of the letters are
+              converted to lowercase.
+     phpname   - same as underscore, but no letters are converted
+              to lowercase.
+-->
+
+<!ELEMENT database (external-schema*, table+, behavior*)>
+<!ATTLIST database
+  name CDATA #IMPLIED
+  defaultIdMethod (native|none) "none"
+  defaultTranslateMethode CDATA #IMPLIED
+  package CDATA #IMPLIED
+  namespace CDATA #IMPLIED
+  baseClass CDATA #IMPLIED
+  basePeer CDATA #IMPLIED
+  defaultPhpNamingMethod (nochange|underscore|phpname) "underscore"
+  heavyIndexing (true|false) "false"
+  tablePrefix CDATA #IMPLIED
+>
+
+<!ELEMENT external-schema EMPTY>
+<!ATTLIST external-schema
+  filename CDATA #REQUIRED
+>
+
+<!--
+     note: the interface="true", requires that useManagers=true in the
+     properties file.
+-->
+<!ELEMENT table (column+,(foreign-key|index|unique|id-method-parameter|validator|behavior|vendor)*)>
+<!ATTLIST table
+  name CDATA #REQUIRED
+  phpName CDATA #IMPLIED
+  namespace CDATA #IMPLIED
+  idMethod (native|autoincrement|sequence|none|null) "null"
+  skipSql (true|false) "false"
+  readOnly (true|false) "false"
+  abstract (true|false) "false"
+  isCrossRef (true|false) "false"
+  treeMode (MaterializedPath|NestedSet|AdjacencyList) "AdjacencyList"
+  package CDATA #IMPLIED
+  baseClass CDATA #IMPLIED
+  basePeer CDATA #IMPLIED
+  alias CDATA #IMPLIED
+  interface CDATA #IMPLIED
+  phpNamingMethod (nochange|underscore|phpname) #IMPLIED
+  heavyIndexing (true|false) #IMPLIED
+  description CDATA #IMPLIED
+>
+
+<!ELEMENT id-method-parameter EMPTY>
+<!ATTLIST id-method-parameter
+  name CDATA "default"
+  value CDATA #REQUIRED
+>
+
+<!ELEMENT column ((inheritance|vendor)*)>
+<!ATTLIST column
+  name CDATA #REQUIRED
+  phpName CDATA #IMPLIED
+  peerName CDATA #IMPLIED
+  primaryKey (true|false) "false"
+  required (true|false) "false"
+  type
+    (
+          BIT  | TINYINT | SMALLINT    | INTEGER    | BIGINT    | FLOAT
+        | REAL | NUMERIC | DECIMAL     | CHAR       | VARCHAR   | LONGVARCHAR
+        | DATE | TIME    | TIMESTAMP   | BINARY     | VARBINARY | LONGVARBINARY
+        | NULL | OTHER   | PHP_OBJECT  | DISTINCT   | STRUCT    | ARRAY
+        | BLOB | CLOB    | REF         | BOOLEANINT | BOOLEANCHAR
+        | DOUBLE | BOOLEAN
+    ) "VARCHAR"
+  phpType CDATA #IMPLIED
+  sqlType CDATA #IMPLIED
+  size CDATA #IMPLIED
+  scale CDATA #IMPLIED
+  default CDATA #IMPLIED
+  defaultValue CDATA #IMPLIED
+  defaultExpr CDATA #IMPLIED
+  autoIncrement (true|false) "false"
+  inheritance (single|false) "false"
+  inputValidator CDATA #IMPLIED
+  phpNamingMethod (nochange|underscore|phpname) #IMPLIED
+  description CDATA #IMPLIED
+  lazyLoad (true|false) "false"
+  primaryString (true|false) "false"
+>
+
+<!ELEMENT inheritance EMPTY>
+<!ATTLIST inheritance
+  key CDATA #REQUIRED
+  class CDATA #REQUIRED
+  package CDATA #IMPLIED
+  extends CDATA #IMPLIED
+>
+
+<!ELEMENT foreign-key (reference+, vendor*)>
+<!ATTLIST foreign-key
+  foreignTable CDATA #REQUIRED
+  name CDATA #IMPLIED
+  phpName CDATA #IMPLIED
+  refPhpName CDATA #IMPLIED
+  onUpdate (CASCADE|cascade|SETNULL|setnull|RESTRICT|restrict|NONE|none) "none"
+  onDelete (CASCADE|cascade|SETNULL|setnull|RESTRICT|restrict|NONE|none) "none"
+>
+
+<!ELEMENT reference EMPTY>
+<!ATTLIST reference
+  local CDATA #REQUIRED
+  foreign CDATA #REQUIRED
+>
+
+<!ELEMENT index (index-column+)>
+<!ATTLIST index
+  name CDATA #IMPLIED
+>
+
+<!ELEMENT behavior (parameter+)>
+<!ATTLIST index
+  name CDATA #IMPLIED
+>
+
+<!ELEMENT index-column (vendor*)>
+<!ATTLIST index-column
+  name CDATA #REQUIRED
+  size CDATA #IMPLIED
+>
+
+<!ELEMENT unique (unique-column+)>
+<!ATTLIST unique
+  name CDATA #IMPLIED
+>
+
+<!ELEMENT unique-column (vendor*)>
+<!ATTLIST unique-column
+  name CDATA #REQUIRED
+>
+
+<!ELEMENT validator (rule+)>
+<!ATTLIST validator
+  column CDATA #REQUIRED
+  translate CDATA #IMPLIED
+>
+
+<!ELEMENT rule EMPTY>
+<!ATTLIST rule
+  name (mask|maxLength|maxValue|minLength|minValue|required|unique|validValues|class) #REQUIRED
+  class CDATA #IMPLIED
+  value CDATA #IMPLIED
+  size ID #IMPLIED
+  message CDATA #IMPLIED
+>
+
+<!ELEMENT vendor (parameter+)>
+<!ATTLIST vendor
+  type CDATA #REQUIRED
+>
+
+<!ELEMENT parameter EMPTY>
+<!ATTLIST parameter
+  name CDATA #REQUIRED
+  value CDATA #REQUIRED
+>

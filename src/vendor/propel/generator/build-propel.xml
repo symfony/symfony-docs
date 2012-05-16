@@ -1,0 +1,513 @@
+<project name="propel" default="main">
+
+  <!--
+    Note - You should not have to edit this file.
+
+    Instead, if calling build-propel.xml directly, edit the build.properties
+    that is in the same directory. If calling build-propel.xml via another
+    build file, you can also use the build.properties in the same directory,
+    or set the property propel.contextProperties to the file
+    to use in place of build.properties (e.g. project.properties).
+  -->
+
+  <property name="build.properties" value="build.properties"/>
+  <property name="propel.contextProperties" value="./${build.properties}"/>
+  <property name="propel.home" value="."/>
+
+  <available file="${propel.home}/build.properties" property="globalBuildPopertiesExists"/>
+
+  <if>
+  	<and>
+  		<isset property="globalBuildPopertiesExists"/>
+  	</and>
+  	<then>
+	    <property file="${propel.home}/build.properties"/>
+    </then>
+  </if>
+
+  <!--
+    The default.properties file will map old properties to the new ones along
+    with setting the corret defaults.
+  -->
+  <property file="${propel.home}/default.properties"/>
+
+  <!--
+    Do forward declarations of all of our tasks to
+    centralize them and clean up the targets.
+  -->
+
+  <path id="propelclasses">
+    <pathelement dir="${propel.home}/lib/"/>
+    <pathelement dir="${propel.project.dir}/"/>
+  </path>
+
+  <taskdef
+    name="propel-data-model"
+    classname="task.PropelDataModelTemplateTask" classpathRef="propelclasses"/>
+  <taskdef
+    name="propel-om"
+    classname="task.PropelOMTask" classpathRef="propelclasses"/>
+  <taskdef
+    name="propel-data-dtd"
+    classname="task.PropelDataDTDTask" classpathRef="propelclasses"/>
+  <taskdef
+    name="propel-data-dump"
+    classname="task.PropelDataDumpTask" classpathRef="propelclasses"/>
+  <taskdef
+    name="propel-data-sql"
+    classname="task.PropelDataSQLTask" classpathRef="propelclasses"/>
+   <taskdef
+    name="propel-schema-reverse"
+    classname="task.PropelSchemaReverseTask" classpathRef="propelclasses"/>
+  <taskdef
+    name="propel-sql"
+    classname="task.PropelSQLTask" classpathRef="propelclasses"/>
+  <taskdef
+    name="propel-sql-exec"
+    classname="task.PropelSQLExec" classpathRef="propelclasses"/>
+  <taskdef
+    name="propel-graphviz"
+    classname="task.PropelGraphvizTask" classpathRef="propelclasses"/>
+  <taskdef
+    name="propel-convert-conf"
+    classname="task.PropelConvertConfTask" classpathRef="propelclasses"/>
+
+  <!-- ================================================================ -->
+  <!-- M A I N  T A R G E T                                             -->
+  <!-- ================================================================ -->
+  <!-- This default target will run all the targets that generate       -->
+  <!-- source. You will probably only run this target once then         -->
+  <!-- call individual targets as necessary to update your sources      -->
+  <!-- when you change your XML schema.                                 -->
+  <!-- ================================================================ -->
+
+  <target
+    name="main"
+  	depends="mysqli-check"
+    description="==> generates sql + om classes">
+
+    <phingcall target="sql"/>
+    <phingcall target="om"/>
+    <phingcall target="convert-conf"/>
+  </target>
+
+  <!-- ================================================================ -->
+  <!-- C H E C K  R U N  O N L Y  O N  S C H E M A  C H A N G E         -->
+  <!-- ================================================================ -->
+  <!-- Maps the propel.runOnlyOnSchemaChange to                         -->
+  <!-- propel.internal.runOnlyOnSchemaChange                            -->
+  <!-- ================================================================ -->
+
+  <target name="check-run-only-on-schema-change">
+    <condition property="propel.internal.runOnlyOnSchemaChange">
+      <equals arg1="${propel.runOnlyOnSchemaChange}" arg2="true"/>
+    </condition>
+  </target>
+
+  <!-- ================================================================ -->
+  <!-- G E N E R A T E  P R O J E C T  S Q L                            -->
+  <!-- ================================================================ -->
+  <!-- Generate the SQL for your project, These are in addition         -->
+  <!-- to the base Turbine tables! The tables you require for your      -->
+  <!-- project should be specified in project-schema.xml.               -->
+  <!-- ================================================================ -->
+
+  <target
+    name="sql-check"
+    depends="check-run-only-on-schema-change"
+    if="propel.internal.runOnlyOnSchemaChange">
+    <uptodate
+      property="propel.internal.sql.uptodate"
+      targetfile="${propel.sql.dir}/${propel.schema.default.basename}.sql">
+      <srcfiles dir="${propel.schema.dir}" includes="**/${propel.schema.default.basename}.xml" />
+    </uptodate>
+  </target>
+
+  <!--	temporary target to check whether postgres is being used with identifier quoting ON.
+		If so, a warning is issued, since identifier quoting is only paritally implemented & this point.  -->
+  <target name="pgsql-quoting-check">
+  	<if>
+  		<and>
+			<equals arg1="${propel.database}" arg2="pgsql"/>
+			<equals arg1="${propel.disableIdentifierQuoting}" arg2=""/>
+		</and>
+		<then>
+			<warn>ATTENTION: It appears you are using PostgreSQL and you have identifier-quoting turned on.</warn>
+			<warn>It is suggested that you disable identifier quoting when using PostgreSQL -- especially if you</warn>
+			<warn>have case-sensitive columns in your database.</warn>
+			<warn></warn>
+			<warn>To disable identifier quoting, add the following property to your build.properties (or specify</warn>
+			<warn>it using -D on commandline):</warn>
+			<warn></warn>
+			<warn>propel.disableIdentifierQuoting=true</warn>
+			<warn></warn>
+			<warn>You can ignore this warning if you understand the issues related to case-sensitivity and Propel's</warn>
+			<warn>DDL-only implementation of identifier quoting.</warn>
+		</then>
+	</if>
+  </target>
+
+	  <!--	temporary target to check whether mysqli is being used
+			If so, a warning is issued, since this is deprecated  -->
+	  <target name="mysqli-check">
+	  	<if>
+	  		<and>
+				<equals arg1="${propel.database}" arg2="mysqli"/>
+			</and>
+			<then>
+				<warn>ATTENTION: It appears you are using the mysqli driver.</warn>
+				<warn></warn>
+				<warn>This driver is no longer supported by Propel because Propel now uses PDO for database connections.</warn>
+				<warn>Please use mysqli driver instead.</warn>
+				<fail>Use 'mysql' instead of 'mysqli' for your propel.database property.</fail>
+			</then>
+		</if>
+	  </target>
+	
+  <target
+    name="sql"
+    depends="sql-check,pgsql-quoting-check,mysqli-check"
+    unless="propel.internal.sql.uptodate"
+    description="==> generates the SQL for your project">
+
+    <echo message="+------------------------------------------+"/>
+    <echo message="|                                          |"/>
+    <echo message="| Generating SQL for YOUR Propel project!  |"/>
+    <echo message="|                                          |"/>
+    <echo message="+------------------------------------------+"/>
+
+    <phingcall target="sql-template"/>
+
+  </target>
+
+  <target name="sql-template">
+    <propel-sql
+      validate="${propel.schema.validate}"
+      xsd="${propel.schema.xsd.file}"
+      xsl="${propel.schema.xsl.file}"
+      outputDirectory="${propel.sql.dir}"
+      sqldbmap="${propel.sql.dir}/sqldb.map"
+      targetDatabase="${propel.database}"
+      packageObjectModel="${propel.packageObjectModel}"
+      url="${propel.database.url}"
+      userId="${propel.database.user}"
+      password="${propel.database.password}">
+      <mapper type="glob" from="${propel.sql.mapper.from}" to="${propel.sql.mapper.to}"/>
+      <schemafileset dir="${propel.schema.dir}"
+        includes="${propel.schema.sql.includes}"
+        excludes="${propel.schema.sql.excludes}"
+      />
+    </propel-sql>
+  </target>
+
+  <!-- ================================================================ -->
+  <!-- C R E A T E  T A R G E T  D A T A B A S E                        -->
+  <!-- ================================================================ -->
+  <!-- Create the target database by executing a generated script       -->
+  <!-- that is capable of performing the task.                          -->
+  <!-- ================================================================ -->
+
+  <target name="create-db-check">
+    <condition property="propel.internal.manualCreation">
+      <equals arg1="${propel.database.manualCreation}" arg2="true"/>
+    </condition>
+  </target>
+
+  <target
+    name="create-db"
+    unless="propel.internal.manualCreation"
+    depends="create-db-check,mysqli-check"
+    description="==> generates the target database">
+
+    <fail message="create-db target temporarily disabled, while we replace creole components."/>
+
+	<!--
+    <propel-data-model
+      validate="${propel.schema.validate}"
+      xsd="${propel.schema.xsd.file}"
+      xsl="${propel.schema.xsl.file}"
+      controlTemplate="${propel.template.sqlDbInit}"
+      outputDirectory="${propel.sql.dir}"
+      outputFile="create-db.sql"
+      targetDatabase="${propel.database}"
+      dbEncoding="${propel.database.encoding}"
+      templatePath="${propel.templatePath}"
+      packageObjectModel="${propel.packageObjectModel}">
+      <schemafileset dir="${propel.schema.dir}"
+        includes="${propel.schema.create-db.includes}"
+        excludes="${propel.schema.create-db.excludes}"
+      />
+    </propel-data-model>
+
+    <echo message="Executing the create-db.sql script ..."/>
+
+    <sql
+      autocommit="true"
+      driver="${propel.database.driver}"
+      onerror="continue"
+      src="${propel.sql.dir}/create-db.sql"
+      url="${propel.database.createUrl}"
+    />
+    -->
+  </target>
+
+  <!-- ================================================================ -->
+  <!-- I N S E R T  S I N G L E  S Q L  F I L E S                       -->
+  <!-- ================================================================ -->
+
+  <target
+    name="insert-sql"
+    description="==> inserts the generated sql ">
+
+    <propel-sql-exec
+      autocommit="true"
+      onerror="continue"
+      sqldbmap="${propel.sql.dir}/sqldb.map"
+      srcDir="${propel.sql.dir}"
+      url="${propel.database.buildUrl}"
+      userId="${propel.database.user}"
+      password="${propel.database.password}"
+    />
+  </target>
+  
+  <!-- ================================================================ -->
+  <!-- N E W   R E V E R S E   T O   X M L                              -->
+  <!-- ================================================================ -->
+
+  <target
+    name="reverse"
+    description="==> generate xml schema from reverse-engineered database (new)">
+
+    <echo message="+-----------------------------------------------+"/>
+    <echo message="|                                               |"/>
+    <echo message="| Generating XML from PDO connection !          |"/>
+    <echo message="|                                               |"/>
+    <echo message="+-----------------------------------------------+"/>
+
+    <propel-schema-reverse
+      databaseName="${propel.project}"
+      dbSchema="${propel.database.schema}"
+      dbEncoding="${propel.database.encoding}"
+      url="${propel.database.buildUrl}"
+      userId="${propel.database.user}"
+      password="${propel.database.password}"
+      outputFile="${propel.schema.dir}/${propel.default.schema.basename}.xml"
+      samePhpName="${propel.samePhpName}"
+      addVendorInfo="${propel.addVendorInfo}"
+      addValidators="${propel.addValidators}"
+    />
+
+  </target>
+
+
+  <!-- ================================================================ -->
+  <!-- Generate SQL from XML data file                                  -->
+  <!-- ================================================================ -->
+
+  <target
+    name="datasql"
+    description="==> generates sql from data xml">
+
+    <echo message="+-----------------------------------------------+"/>
+    <echo message="|                                               |"/>
+    <echo message="| Generating SQL from data XML !                |"/>
+    <echo message="|                                               |"/>
+    <echo message="+-----------------------------------------------+"/>
+
+    <propel-data-sql
+      validate="${propel.schema.validate}"
+      xsd="${propel.schema.xsd.file}"
+      xsl="${propel.schema.xsl.file}"
+      outputDirectory="${propel.sql.dir}"
+      sqldbmap="${propel.sql.dir}/sqldb.map"
+      dbEncoding="${propel.database.encoding}"
+      targetDatabase="${propel.database}"
+      datadbmap="${propel.schema.dir}/datadb.map"
+      srcDir="${propel.schema.dir}">
+      <mapper type="glob" from="${propel.datasql.mapper.from}" to="${propel.datasql.mapper.to}"/>
+      <schemafileset dir="${propel.schema.dir}"
+        includes="${propel.schema.datadtd.includes}"
+        excludes="${propel.schema.datadtd.excludes}"
+      />
+    </propel-data-sql>
+  </target>
+
+  <!-- ================================================================ -->
+  <!-- Dump data from database into xml file                            -->
+  <!-- ================================================================ -->
+
+  <target
+    name="datadump"
+    description="==> dump data from database into xml file">
+
+    <echo message="+-----------------------------------------------+"/>
+    <echo message="|                                               |"/>
+    <echo message="| Dumping the data from database into XML       |"/>
+    <echo message="|                                               |"/>
+    <echo message="+-----------------------------------------------+"/>
+
+    <propel-data-dump
+      validate="${propel.schema.validate}"
+      xsd="${propel.schema.xsd.file}"
+      xsl="${propel.schema.xsl.file}"
+      targetDatabase="${propel.database}"
+      datadbmap="${propel.schema.dir}/datadb.map"
+      databaseDriver="${propel.database.driver}"
+      dbEncoding="${propel.database.encoding}"
+      databaseUrl="${propel.database.url}"
+      databaseUser="${propel.database.user}"
+      databasePassword="${propel.database.password}"
+      outputDirectory="${propel.schema.dir}">
+      <mapper type="glob" from="${propel.datadump.mapper.from}" to="${propel.datadump.mapper.to}"/>
+      <schemafileset dir="${propel.schema.dir}"
+        includes="${propel.schema.datadtd.includes}"
+        excludes="${propel.schema.datadtd.excludes}"
+      />
+     </propel-data-dump>
+  </target>
+
+  <!-- ================================================================ -->
+  <!-- G E N E R A T E  P R O J E C T  D A T A  D T D                   -->
+  <!-- ================================================================ -->
+  <!-- Generate the DATA DTD for your project                           -->
+  <!-- ================================================================ -->
+
+  <target
+    name="datadtd"
+    description="==> generates the DATA DTD for your project">
+
+    <echo message="+-----------------------------------------------+"/>
+    <echo message="|                                               |"/>
+    <echo message="| Generating Data DTD for YOUR Propel project!  |"/>
+    <echo message="|                                               |"/>
+    <echo message="+-----------------------------------------------+"/>
+
+    <propel-data-dtd
+      validate="${propel.schema.validate}"
+      xsd="${propel.schema.xsd.file}"
+      xsl="${propel.schema.xsl.file}"
+      targetDatabase="${propel.database}"
+      outputDirectory="${propel.output.dir}"
+      templatePath="${propel.templatePath}">
+      <!-- TODO: add properties for the mapper type, from, and to -->
+      <mapper type="glob" from="${propel.datadtd.mapper.from}" to="${propel.datadtd.mapper.to}"/>
+      <schemafileset dir="${propel.schema.dir}"
+        includes="${propel.schema.datadtd.includes}"
+        excludes="${propel.schema.datadtd.excludes}"
+      />
+    </propel-data-dtd>
+  </target>
+
+  <!-- ================================================================ -->
+  <!-- G E N E R A T E  P R O J E C T  P E E R  B A S E D  O M          -->
+  <!-- ================================================================ -->
+  <!-- Generate the Peer-based object model for your project.           -->
+  <!-- These are in addition to the base Propel OM!                     -->
+  <!-- ================================================================ -->
+
+  <target
+    name="om-check"
+    depends="check-run-only-on-schema-change"
+    if="propel.internal.runOnlyOnSchemaChange">
+    <uptodate
+      property="propel.internal.om.uptodate"
+      targetfile="${propel.php.dir}/report.${propel.project}.om.generation">
+      <srcfiles dir="${propel.schema.dir}" includes="**/${propel.schema.om.includes}.xml" />
+    </uptodate>
+  </target>
+
+  <target
+    name="om"
+    depends="om-check,mysqli-check"
+    unless="propel.internal.om.uptodate"
+    description="==> generates the Peer-based object model for your project">
+
+    <echo message="+------------------------------------------+"/>
+    <echo message="|                                          |"/>
+    <echo message="| Generating Peer-based Object Model for   |"/>
+    <echo message="| YOUR Propel project!                     |"/>
+    <echo message="|                                          |"/>
+    <echo message="+------------------------------------------+"/>
+
+    <phingcall target="om-template"/>
+    <!--<phingcall target="om-tar"/>-->
+  </target>
+
+  <target name="om-template">
+    <propel-om
+      validate="${propel.schema.validate}"
+      xsd="${propel.schema.xsd.file}"
+      xsl="${propel.schema.xsl.file}"
+      outputDirectory="${propel.php.dir}"
+      targetDatabase="${propel.database}"
+      targetPackage="${propel.targetPackage}"
+      targetPlatform="${propel.targetPlatform}"
+      packageObjectModel="${propel.packageObjectModel}">
+      <schemafileset dir="${propel.schema.dir}"
+        includes="${propel.schema.om.includes}"
+        excludes="${propel.schema.om.excludes}"
+      />
+    </propel-om>
+  </target>
+
+  <!-- ================================================================== -->
+  <!-- X M L   R U N T I M E   C O N F   T O   P H P   A R R A Y          -->
+  <!-- ================================================================== -->
+
+  <target
+    name="convert-conf"
+    description="==> converts properties file to PHP array">
+
+    <echo message="+------------------------------------------+"/>
+    <echo message="|                                          |"/>
+    <echo message="| Converting runtime config file to an     |"/>
+    <echo message="| array dump for improved performance.     |"/>
+    <echo message="|                                          |"/>
+    <echo message="+------------------------------------------+"/>
+    
+    <echo>Output file: ${propel.runtime.phpconf.file}</echo>
+    <echo>XMLFile: ${propel.conf.dir}/${propel.runtime.conf.file}</echo>
+
+    <propel-convert-conf
+      targetDatabase="${propel.database}"
+      xsd="${propel.schema.xsd.file}"
+      xsl="${propel.schema.xsl.file}"
+      xmlConfFile="${propel.conf.dir}/${propel.runtime.conf.file}"
+      outputDirectory="${propel.phpconf.dir}"
+      outputFile="${propel.runtime.phpconf.file}"
+      packageObjectModel="${propel.packageObjectModel}">
+      <schemafileset dir="${propel.schema.dir}"
+        includes="${propel.schema.sql.includes}"
+        excludes="${propel.schema.sql.excludes}"
+      />
+     </propel-convert-conf>
+
+  </target>
+
+  <target
+    name="graphviz"
+    depends="sql-check"
+    description="==> generates Graphviz file for your project">
+
+    <echo message="+------------------------------------------+"/>
+    <echo message="|                                          |"/>
+    <echo message="| Generating Graphiz for YOUR Propel       |"/>
+    <echo message="| project!                                 |"/>
+    <echo message="|                                          |"/>
+    <echo message="+------------------------------------------+"/>
+
+    <propel-graphviz
+      outputDirectory="${propel.graph.dir}"
+      targetDatabase="${propel.database}"
+      sqldbmap="${propel.sql.dir}/sqldb.map"
+      packageObjectModel="${propel.packageObjectModel}">
+      <mapper type="glob" from="${propel.sql.mapper.from}" to="${propel.sql.mapper.to}"/>
+      <schemafileset dir="${propel.schema.dir}"
+        includes="${propel.schema.sql.includes}"
+        excludes="${propel.schema.sql.excludes}"
+      />
+    </propel-graphviz>
+  </target>
+
+
+</project>
