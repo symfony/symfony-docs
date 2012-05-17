@@ -103,16 +103,16 @@ minMessage
 
 **type**: ``string`` **default**: ``This value is too short. It should have {{ limit }} characters or more.``
 
-The message that will be shown if the underlying value's length is less than the `min`_
-option.
+The message that will be shown if the underlying value's length or collection elements
+count is less than the `min`_ option.
 
 maxMessage
 ~~~~~~~~~~
 
 **type**: ``string`` **default**: ``This value is too long. It should have {{ limit }} characters or less.``
 
-The message that will be shown if the underlying value's length is more than the `max`_
-option.
+The message that will be shown if the underlying value's length or collection elements
+count is more than the `max`_ option.
 
 exactMessage
 ~~~~~~~~~~~~
@@ -120,4 +120,4 @@ exactMessage
 **type**: ``string`` **default**: ``This value should have exactly {{ limit }} characters.``
 
 The message that will be shown if min and max values are equal and the underlying
-value's length is not exactly this value.
+value's length or collection elements count is not exactly this value.
