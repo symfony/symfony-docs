@@ -101,7 +101,7 @@ is used.
 minMessage
 ~~~~~~~~~~
 
-**type**: ``string`` **default**: ``This value is too short. It should have {{ limit }} characters or more.``
+**type**: ``string`` **default**: ``This value is too short. It should have {{ limit }} characters or more.`` when validating a string, or ``This collection should contain {{ limit }} elements or more.`` when validating a collection.
 
 The message that will be shown if the underlying value's length or collection elements
 count is less than the `min`_ option.
@@ -109,7 +109,7 @@ count is less than the `min`_ option.
 maxMessage
 ~~~~~~~~~~
 
-**type**: ``string`` **default**: ``This value is too long. It should have {{ limit }} characters or less.``
+**type**: ``string`` **default**: ``This value is too long. It should have {{ limit }} characters or less.`` when validating a string, or ``This collection should contain {{ limit }} elements or less.`` when validating a collection.
 
 The message that will be shown if the underlying value's length or collection elements
 count is more than the `max`_ option.
@@ -117,7 +117,7 @@ count is more than the `max`_ option.
 exactMessage
 ~~~~~~~~~~~~
 
-**type**: ``string`` **default**: ``This value should have exactly {{ limit }} characters.``
+**type**: ``string`` **default**: ``This value should have exactly {{ limit }} characters.`` when validating a string, or ``This collection should contain exactly {{ limit }} elements.`` when validating a collection.
 
 The message that will be shown if min and max values are equal and the underlying
 value's length or collection elements count is not exactly this value.
