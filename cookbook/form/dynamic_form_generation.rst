@@ -38,7 +38,7 @@ that has only two relevant properties ("name" and "price"). The form generated
 from this class will look the exact same regardless of a new Product is being created
 or if an existing product is being edited (e.g. a product fetched from the database).
 
-Suppose now, that you don't want the user to be able to change the `name` value 
+Suppose now, that you don't want the user to be able to change the ``name`` value 
 once the object has been created. To do this, you can rely on Symfony's :ref:`Event Dispatcher <book-internals-event-dispatcher>` 
 system to analyze the data on the object and modify the form based on the 
 Product object's data. In this entry, you'll learn how to add this level of 

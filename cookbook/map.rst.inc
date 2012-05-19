@@ -90,8 +90,6 @@
 * :doc:`/cookbook/service_container/index`
 
   * :doc:`/cookbook/service_container/event_listener`
-  * :doc:`/cookbook/service_container/factories`
-  * :doc:`/cookbook/service_container/parentservices`
   * :doc:`/cookbook/service_container/scopes`
   * :doc:`/cookbook/service_container/tags`
 

@@ -358,8 +358,9 @@ your application::
         }
     }
 
-Learn more from the Cookbook
-----------------------------
+Learn more about this Component
+-------------------------------
 
-* :doc:`/cookbook/service_container/factories`
-* :doc:`/cookbook/service_container/parentservices`
+* :doc:`/components/dependency_injection/definitions`
+* :doc:`/components/dependency_injection/factories`
+* :doc:`/components/dependency_injection/parentservices`
