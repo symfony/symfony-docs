@@ -1068,8 +1068,8 @@ additional arguments (beyond just the ``name`` parameter).
 * translation.loader
 * validator.constraint_validator
 
-Learn more from the Cookbook
-----------------------------
+Learn more
+----------
 
 * :doc:`/components/dependency_injection/factories`
 * :doc:`/components/dependency_injection/parentservices`
