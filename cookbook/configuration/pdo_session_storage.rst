@@ -143,7 +143,7 @@ parameter.ini by referencing the database-related parameters defined there:
             <argument>%database_password%</argument>
         </service>
 
-    .. code-block:: xml
+    .. code-block:: php
 
         $pdoDefinition = new Definition('PDO', array(
             'mysql:dbname=%database_name%',
