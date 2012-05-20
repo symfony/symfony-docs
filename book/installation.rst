@@ -20,7 +20,7 @@ Downloading a Symfony2 Distribution
 .. tip::
 
     First, check that you have installed and configured a Web server (such
-    as Apache) with PHP 5.3.2 or higher. For more information on Symfony2
+    as Apache) with PHP 5.3.3 or higher. For more information on Symfony2
     requirements, see the :doc:`requirements reference</reference/requirements>`.
     For information on configuring your specific web server document root, see the
     following documentation: `Apache`_ | `Nginx`_ .
