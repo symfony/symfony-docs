@@ -36,6 +36,8 @@
 
   * :doc:`/components/http_foundation/introduction`
   * :doc:`/components/http_foundation/sessions`
+  * :doc:`/components/http_foundation/session_configuration`
+  * :doc:`/components/http_foundation/session_testing`
 
 * **The Locale Component**
 

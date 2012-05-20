@@ -33,17 +33,17 @@ docblock of the ``setOptions()`` method of each class.
 
 While native save handlers can be activated by directly using
 ``ini_set('session.save_handler', $name);``, Symfony2 provides a convenient way to
-activate these in same way as custom handlers.
+activate these in the same way as custom handlers.
 
 Symfony2 provides drivers for the following native save handlers:
 
-  * :class:`Symfony\\Component\\HttpFoundation\\Session\\Storage\\Handler\\NativeFileSessionHandler`;
-  * :class:`Symfony\\Component\\HttpFoundation\\Session\\Storage\\Handler\\NativeSqliteSessionHandler`;
-  * :class:`Symfony\\Component\\HttpFoundation\\Session\\Storage\\Handler\\NativeMemcacheSessionHandler`;
-  * :class:`Symfony\\Component\\HttpFoundation\\Session\\Storage\\Handler\\NativeMemcachedSessionHandler`;
-  * :class:`Symfony\\Component\\HttpFoundation\\Session\\Storage\\Handler\\NativeRedisSessionHandler`;
+  * :class:`Symfony\\Component\\HttpFoundation\\Session\\Storage\\Handler\\NativeFileSessionHandler`
+  * :class:`Symfony\\Component\\HttpFoundation\\Session\\Storage\\Handler\\NativeSqliteSessionHandler`
+  * :class:`Symfony\\Component\\HttpFoundation\\Session\\Storage\\Handler\\NativeMemcacheSessionHandler`
+  * :class:`Symfony\\Component\\HttpFoundation\\Session\\Storage\\Handler\\NativeMemcachedSessionHandler`
+  * :class:`Symfony\\Component\\HttpFoundation\\Session\\Storage\\Handler\\NativeRedisSessionHandler`
 
-Example of use::
+Example usage::
 
     use Symfony\Component\HttpFoundation\Session\Session;
     use Symfony\Component\HttpFoundation\Session\Storage\NativeSessionStorage;
@@ -54,8 +54,8 @@ Example of use::
 
 .. note::
 
-    With the exeption of the ``files`` handler which is built into PHP and always available,
-    the availablilty of the other handlers depends on those PHP extensions being active at runtime.
+    With the exception of the ``files`` handler which is built into PHP and always available,
+    the availability of the other handlers depends on those PHP extensions being active at runtime.
 
 .. note::
 
@@ -74,12 +74,12 @@ various points in the session workflow.
 Symfony2 HttpFoundation provides some by default and these can easily serve as
 examples if you wish to write your own.
 
-  * :class:`Symfony\\Component\\HttpFoundation\\Session\\Storage\\Handler\\PdoSessionHandler`;
-  * :class:`Symfony\\Component\\HttpFoundation\\Session\\Storage\\Handler\\MemcacheSessionHandler`;
-  * :class:`Symfony\\Component\\HttpFoundation\\Session\\Storage\\Handler\\MemcachedSessionHandler`;
-  * :class:`Symfony\\Component\\HttpFoundation\\Session\\Storage\\Handler\\NullSessionHandler`;
+  * :class:`Symfony\\Component\\HttpFoundation\\Session\\Storage\\Handler\\PdoSessionHandler`
+  * :class:`Symfony\\Component\\HttpFoundation\\Session\\Storage\\Handler\\MemcacheSessionHandler`
+  * :class:`Symfony\\Component\\HttpFoundation\\Session\\Storage\\Handler\\MemcachedSessionHandler`
+  * :class:`Symfony\\Component\\HttpFoundation\\Session\\Storage\\Handler\\NullSessionHandler`
 
-Example::
+Example usage::
 
     use Symfony\Component\HttpFoundation\Session\Session;
     use Symfony\Component\HttpFoundation\Session\Storage\SessionStorage;
@@ -103,7 +103,6 @@ Or set them via the
 method.
 
 For the sake of clarity, some key options are explained in this documentation.
-
 
 Session Cookie Lifetime
 ~~~~~~~~~~~~~~~~~~~~~~~
@@ -129,7 +128,6 @@ be securely controlled from the server side.
     with an expiry time of ``time()``+``cookie_lifetime`` where the time is taken
     from the server.
 
-
 Configuring Garbage Collection
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -148,7 +146,6 @@ and ``gc_maxlifetime`` in an array to the constructor of
 :class:`Symfony\\Component\\HttpFoundation\\Session\\Storage\\NativeSessionStorage`
 or to the :method:`Symfony\\Component\\HttpFoundation\\Session\\Storage\\NativeSessionStorage::setOptions`
 method.
-
 
 Session Lifetime
 ~~~~~~~~~~~~~~~~
@@ -172,7 +169,6 @@ calculated by adding the PHP runtime configuration value in
 
     A cookie lifetime of ``0`` means the cookie expire when the browser is closed.
 
-
 Session Idle Time/Keep Alive
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -194,7 +190,6 @@ experience, for example, by displaying a message.
 
 Symfony2 records some basic meta-data about each session to give you complete
 freedom in this area.
-
 
 Session meta-data
 ~~~~~~~~~~~~~~~~~
@@ -225,7 +220,6 @@ particular cookie by reading the ``getLifetime()`` method::
 The expiry time of the cookie can be determined by adding the created
 timestamp and the lifetime.
 
-
 PHP 5.4 compatibility
 ~~~~~~~~~~~~~~~~~~~~~
 
@@ -242,7 +236,6 @@ class called :class:`Symfony\\Component\\HttpFoundation\\Session\\Storage\\Handl
 which under PHP 5.4, extends from `\SessionHandler` and under PHP 5.3 is just a
 empty base class. This provides some interesting opportunities to leverage
 PHP 5.4 functionality if it is available.
-
 
 Save Handler Proxy
 ~~~~~~~~~~~~~~~~~~
