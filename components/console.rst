@@ -211,14 +211,14 @@ will work:
 
 There are 4 option variants you can use:
 
-===========================  =====================================================
+===========================  =====================================================================================
 Option                       Value
-===========================  =====================================================
-InputOption::VALUE_IS_ARRAY  This option accepts multiple values
+===========================  =====================================================================================
+InputOption::VALUE_IS_ARRAY  This option accepts multiple values (e.g. ``--dir=/foo --dir=/bar``)
 InputOption::VALUE_NONE      Do not accept input for this option (e.g. ``--yell``)
-InputOption::VALUE_REQUIRED  This value is required (e.g. ``iterations=5``), the option itself is still optional
-InputOption::VALUE_OPTIONAL  This value is optional
-===========================  =====================================================
+InputOption::VALUE_REQUIRED  This value is required (e.g. ``--iterations=5``), the option itself is still optional
+InputOption::VALUE_OPTIONAL  This option may or may not have a value (e.g. ``yell`` or ``yell=loud``)
+===========================  =====================================================================================
 
 You can combine VALUE_IS_ARRAY with VALUE_REQUIRED or VALUE_OPTIONAL like this:
 
