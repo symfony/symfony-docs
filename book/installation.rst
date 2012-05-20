@@ -139,6 +139,8 @@ If there are any issues, correct them now before moving on.
         sudo setfacl -R -m u:www-data:rwx -m u:`whoami`:rwx app/cache app/logs
         sudo setfacl -dR -m u:www-data:rwx -m u:`whoami`:rwx app/cache app/logs
 
+    Note that not all web servers run as the user ``www-data``. You have to check as which user the web server is being run and replace it in the place of ``www-data``. 
+
     **3. Without using ACL**
 
     If you don't have access to changing the ACL of the directories, you will
@@ -216,4 +218,4 @@ download all the necessary vendor libraries.
 .. _`Git`: http://git-scm.com/
 .. _`GitHub Bootcamp`: http://help.github.com/set-up-git-redirect
 .. _`Apache`: http://httpd.apache.org/docs/current/mod/core.html#documentroot
-.. _`Nginx`: http://wiki.nginx.org/HttpCoreModule#root
+.. _`Nginx`: http://wiki.nginx.org/Symfony
