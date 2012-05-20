@@ -246,6 +246,22 @@ So far, this works great, but this doesn't allow you to dynamically add new
 tags or delete existing tags. So, while editing existing tags will work
 great, your user can't actually add any new tags yet.
 
+.. caution::
+
+    In this entry, we embed only one collection, but you are not limited
+    to this. You can also embed nested collection as many level down as you
+    like. But if you use Xdebug in your development setup, you may receive
+    a ``Maximum function nesting level of '100' reached, aborting!`` error.
+    This is due to the ``xdebug.max_nesting_level`` PHP setting, which defaults
+    to ``100``.
+
+    This directive limits recursion to 100 calls which may not be enough for
+    rendering the form in the template if you render the whole form at
+    once (e.g ``form_widget(form)``). To fix this you can set this directive
+    to a higher value (either via a PHP ini file or via :phpfunction:`ini_set`,
+    for example in ``app/autoload.php``) or render each form field by hand
+    using ``form_row``.
+
 .. _cookbook-form-collections-new-prototype:
 
 Allowing "new" tags with the "prototype"
