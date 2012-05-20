@@ -61,7 +61,7 @@ Furthering our example, take a look at the ``ProtocolValidator`` as an example:
     {
         public function validate($value, Constraint $constraint)
         {
-            if (in_array($value, $constraint->protocols)) {
+            if (!in_array($value, $constraint->protocols)) {
                 $this->context->addViolation($constraint->message, array('%protocols%' => $constraint->protocols));
             }
         }
@@ -72,9 +72,15 @@ Furthering our example, take a look at the ``ProtocolValidator`` as an example:
     The ``validate`` method does not return a value; instead, it adds violations
     to the validator's ``context`` property with an ``addViolation`` method
     call if there are validation failures. Therefore, a value could be considered
-    as being validated if it causes no violations to be added to the context.
+    as being valid if it causes no violations to be added to the context.
     The first parameter of the ``addViolation`` call is the error message to
     use for that violation.
+
+.. versionadded:: 2.1
+
+    The ``isValid`` method was renamed to ``validate`` in Symfony 2.1. The
+    ``setMessage`` method was also deprecated, in favor of calling ``addViolation``
+    on the context.
 
 Constraint Validators with Dependencies
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
