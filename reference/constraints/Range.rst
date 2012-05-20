@@ -3,6 +3,9 @@ Range
 
 Validates that a given number is *between* some minimum and maximum number.
 
+.. versionadded:: 2.1
+    The Range constraint was added in Symfony 2.1.
+
 +----------------+---------------------------------------------------------------------+
 | Applies to     | :ref:`property or method<validation-property-target>`               |
 +----------------+---------------------------------------------------------------------+

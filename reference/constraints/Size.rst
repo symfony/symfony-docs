@@ -1,7 +1,11 @@
 Size
 ====
 
-Validates that a given string length or collection elements count is *between* some minimum and maximum value.
+Validates that a given string length or collection elements count is *between*
+some minimum and maximum value.
+
+.. versionadded:: 2.1
+    The Size constraint was added in Symfony 2.1.
 
 +----------------+--------------------------------------------------------------------+
 | Applies to     | :ref:`property or method<validation-property-target>`              |
@@ -30,7 +34,7 @@ To verify that the ``firstName`` field length of a class is between "2" and
     .. code-block:: yaml
 
         # src/Acme/EventBundle/Resources/config/validation.yml
-        Acme\EventBundle\Entity\Height:
+        Acme\EventBundle\Entity\Participant:
             properties:
                 firstName:
                     - Size:
@@ -55,6 +59,44 @@ To verify that the ``firstName`` field length of a class is between "2" and
              * )
              */
              protected $firstName;
+        }
+
+Basic Usage - Collections
+-------------------------
+
+To verify that the ``emails`` array field contains between 1 and 5 elements
+you might add the following:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # src/Acme/EventBundle/Resources/config/validation.yml
+        Acme\EventBundle\Entity\Participant:
+            properties:
+                emails:
+                    - Size:
+                        min: 1
+                        max: 5
+                        minMessage: You must specify at least one email
+                        maxMessage: You cannot specify more than 5 emails
+
+    .. code-block:: php-annotations
+
+        // src/Acme/EventBundle/Entity/Participant.php
+        use Symfony\Component\Validator\Constraints as Assert;
+
+        class Participant
+        {
+            /**
+             * @Assert\Size(
+             *      min = "1",
+             *      max = "5",
+             *      minMessage = "You must specify at least one email",
+             *      maxMessage = "You cannot specify more than 5 emails"
+             * )
+             */
+             protected $emails = array();
         }
 
 Options
@@ -82,21 +124,18 @@ type
 **type**: ``string``
 
 The type of value to validate. It can be either ``string`` or ``collection``. If
-not specified, the validator will try to guess it.
+not specified, the validator will try the correct type based on the underlying
+data being validated.
 
 charset
 ~~~~~~~
 
 **type**: ``string``  **default**: ``UTF-8``
 
-The charset to be used when computing value's length. The `grapheme_strlen`_ PHP
-function is used if available. If not, the the `mb_strlen`_ PHP function
-is used if available. If neither are available, the `strlen`_ PHP function
+The charset to be used when computing value's length. The :phpfunction:`grapheme_strlen` PHP
+function is used if available. If not, the the :phpfunction:`mb_strlen` PHP function
+is used if available. If neither are available, the :phpfunction:`strlen` PHP function
 is used.
-
-.. _`grapheme_strlen`: http://www.php.net/manual/en/function.grapheme_strlen.php
-.. _`mb_strlen`: http://www.php.net/manual/en/function.mb_strlen.php
-.. _`strlen`: http://www.php.net/manual/en/function.strlen.php
 
 minMessage
 ~~~~~~~~~~
