@@ -239,9 +239,9 @@ The ``newsletter_manager`` and ``mailer`` services can be set up using config fi
             mailer.transport: sendmail
 
         services:
-            my_mailer:
+            mailer:
                 class:     Mailer
-                arguments: [@mailer]
+                arguments: [%mailer.transport%]
             newsletter_manager:
                 class:     NewsletterManager
                 calls:
@@ -358,8 +358,9 @@ your application::
         }
     }
 
-Learn more from the Cookbook
-----------------------------
+Learn more about this Component
+-------------------------------
 
-* :doc:`/cookbook/service_container/factories`
-* :doc:`/cookbook/service_container/parentservices`
+* :doc:`/components/dependency_injection/definitions`
+* :doc:`/components/dependency_injection/factories`
+* :doc:`/components/dependency_injection/parentservices`

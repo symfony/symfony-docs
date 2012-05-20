@@ -354,7 +354,7 @@ will be show next):
             e.preventDefault();
 
             // add a new tag form (see next code block)
-            addTagForm();
+            addTagForm(collectionHolder, $newLinkLi);
         });
     });
 
@@ -372,7 +372,7 @@ one example:
 
 .. code-block:: javascript
 
-    function addTagForm() {
+    function addTagForm(collectionHolder, $newLinkLi) {
         // Get the data-prototype we explained earlier
         var prototype = collectionHolder.attr('data-prototype');
 

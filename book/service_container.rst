@@ -1068,11 +1068,11 @@ additional arguments (beyond just the ``name`` parameter).
 * translation.loader
 * validator.constraint_validator
 
-Learn more from the Cookbook
-----------------------------
+Learn more
+----------
 
-* :doc:`/cookbook/service_container/factories`
-* :doc:`/cookbook/service_container/parentservices`
+* :doc:`/components/dependency_injection/factories`
+* :doc:`/components/dependency_injection/parentservices`
 * :doc:`/cookbook/controller/service`
 
 .. _`service-oriented architecture`: http://wikipedia.org/wiki/Service-oriented_architecture

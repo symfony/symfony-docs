@@ -169,12 +169,13 @@ in mind the following:
 
 .. tip::
 
-    You can check the coding standards of your patch by running the
-    ``check_cs`` script bundled with the Symfony repository:
+    You can check the coding standards of your patch by running the following
+    [script](https://github.com/fabpot/Symfony-CS-Fixer/raw/master/symfony-cs-fixer.phar):
 
     .. code-block:: bash
 
-        $ ./check_cs fix
+        $ cd /path/to/symfony/src
+        $ php symfony-cs-fixer.phar fix . Symfony20Finder
 
 .. tip::
 
@@ -320,7 +321,7 @@ convert many commits to one commit. To do this, use the rebase command:
 
 .. code-block:: bash
 
-    $ git rebase -i head~3
+    $ git rebase -i HEAD~3
     $ git push -f origin BRANCH_NAME
 
 The number 3 here must equal the amount of commits in your branch. After you

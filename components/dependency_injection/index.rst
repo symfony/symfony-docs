@@ -6,3 +6,7 @@
 
     introduction
     definitions
+    compilation
+    factories
+    parentservices
+

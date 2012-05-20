@@ -29,7 +29,7 @@ of the component. It needs a template name parser
 (:class:`Symfony\\Component\\Templating\\TemplateNameParserInterface`) to
 convert a template name to a template reference and template loader
 (:class:`Symfony\\Component\\Templating\\Loader\\LoaderInterface`) to find the
-template associated to a reference.
+template associated to a reference::
 
     use Symfony\Component\Templating\PhpEngine;
     use Symfony\Component\Templating\TemplateNameParser;
@@ -44,7 +44,7 @@ template associated to a reference.
 The :method:`Symfony\\Component\\Templating\\PhpEngine::render` method executes
 the file `views/hello.php` and returns the output text.
 
-.. code-block:: php
+.. code-block:: html+php
 
     <!-- views/hello.php -->
     Hello, <?php echo $firstname ?>!
@@ -54,7 +54,7 @@ Template Inheritance with Slots
 
 The template inheritance is designed to share layouts with many templates.
 
-.. code-block:: php
+.. code-block:: html+php
 
     <!-- views/layout.php -->
     <html>
@@ -69,7 +69,7 @@ The template inheritance is designed to share layouts with many templates.
 The :method:`Symfony\\Component\\Templating\\PhpEngine::extend` method is called in the
 sub-template to set its parent template.
 
-.. code-block:: php
+.. code-block:: html+php
 
     <!-- views/page.php -->
     <?php $view->extend('layout.php') ?>
@@ -84,7 +84,7 @@ sub-template to set its parent template.
     </p>
 
 To use template inheritance, the :class:`Symfony\\Component\\Templating\\Helper\\SlotsHelper`
-helper must be registered.
+helper must be registered::
 
     use Symfony\Templating\Helper\SlotsHelper;
 

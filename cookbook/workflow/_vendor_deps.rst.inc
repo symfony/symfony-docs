@@ -1,7 +1,8 @@
 Managing Vendor Libraries with composer.json
 --------------------------------------------
 
-### How does it work ?
+How does it work ?
+~~~~~~~~~~~~~~~~~~
 
 Every Symfony project uses a group of third-party "vendor" libraries. One
 way or another the goal is to download these files into your ``vendor/``
@@ -48,3 +49,4 @@ script to ensure that all of the needed vendor libraries are downloaded.
 
 .. _Composer: http://getcomposer.org/
 .. _GetComposer.org: http://getcomposer.org/
+

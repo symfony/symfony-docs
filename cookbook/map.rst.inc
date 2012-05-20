@@ -21,6 +21,7 @@
   * :doc:`/cookbook/configuration/environments`
   * :doc:`/cookbook/configuration/external_parameters`
   * :doc:`/cookbook/configuration/pdo_session_storage`
+  * :doc:`/cookbook/configuration/apache_router`
 
 * **Console Commands**
 
@@ -91,8 +92,6 @@
 * :doc:`/cookbook/service_container/index`
 
   * :doc:`/cookbook/service_container/event_listener`
-  * :doc:`/cookbook/service_container/factories`
-  * :doc:`/cookbook/service_container/parentservices`
   * :doc:`/cookbook/service_container/scopes`
   * :doc:`/cookbook/service_container/tags`
 
