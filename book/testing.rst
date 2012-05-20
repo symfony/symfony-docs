@@ -144,7 +144,7 @@ for its ``DemoController`` (`DemoControllerTest`_) that reads as follows::
 
             $crawler = $client->request('GET', '/demo/hello/Fabien');
 
-            $this->assertTrue($crawler->filter('html:contains("Hello Fabien")')->count() > 0);
+            $this->assertGreaterThan(0, $crawler->filter('html:contains("Hello Fabien")')->count());
         }
     }
 
@@ -210,7 +210,7 @@ that it actually does what you expect it to. Use the Crawler to make assertions
 on the DOM::
 
     // Assert that the response matches a given CSS selector.
-    $this->assertTrue($crawler->filter('h1')->count() > 0);
+    $this->assertGreaterThan(0, $crawler->filter('h1')->count());
 
 Or, test against the Response content directly if you just want to assert that
 the content contains some text, or if the Response is not an XML/HTML
@@ -258,10 +258,10 @@ document::
     useful test assertions::
 
         // Assert that there is more than one h2 tag with the class "subtitle"
-        $this->assertTrue($crawler->filter('h2.subtitle')->count() > 0);
+        $this->assertGreaterThan(0, $crawler->filter('h2.subtitle')->count());
 
         // Assert that there are exactly 4 h2 tags on the page
-        $this->assertEquals(4, $crawler->filter('h2')->count());
+        $this->assertCount(4, $crawler->filter('h2')->count());
 
         // Assert the the "Content-Type" header is "application/json"
         $this->assertTrue($client->getResponse()->headers->contains('Content-Type', 'application/json'));
