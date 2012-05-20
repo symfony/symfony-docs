@@ -233,7 +233,7 @@ then be checked against our User entity records in the database:
                 - { path: ^/admin, roles: ROLE_ADMIN }
 
 The ``encoders`` section associates the ``sha1`` password encoder to the entity
-class. This means that Symfony will expect the password that's encoded in
+class. This means that Symfony will expect the password that's stored in
 the database to be encoded using this algorithm. For details on how to create
 a new User object with a properly encoded password, see the
 :ref:`book-security-encoding-user-password` section of the security chapter.
@@ -424,7 +424,7 @@ about in this section.
 
 In this example, the ``AcmeUserBundle:User`` entity class defines a
 many-to-many relationship with a ``AcmeUserBundle:Group`` entity class. A user
-can be related several groups and a group can be composed of one or
+can be related to several groups and a group can be composed of one or
 more users. As a group is also a role, the previous ``getRoles()`` method now
 returns the list of related groups::
 

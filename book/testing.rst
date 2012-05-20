@@ -264,7 +264,7 @@ document::
         // Assert that there are exactly 4 h2 tags on the page
         $this->assertCount(4, $crawler->filter('h2')->count());
 
-        // Assert the the "Content-Type" header is "application/json"
+        // Assert that the "Content-Type" header is "application/json"
         $this->assertTrue($client->getResponse()->headers->contains('Content-Type', 'application/json'));
 
         // Assert that the response content matches a regexp.

@@ -1,8 +1,8 @@
 Managing Vendor Libraries with composer.json
 --------------------------------------------
 
-How does it work ?
-~~~~~~~~~~~~~~~~~~
+How does it work?
+~~~~~~~~~~~~~~~~~
 
 Every Symfony project uses a group of third-party "vendor" libraries. One
 way or another the goal is to download these files into your ``vendor/``

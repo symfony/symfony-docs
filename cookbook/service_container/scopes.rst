@@ -69,7 +69,7 @@ when compiling the container. Read the sidebar below for more details.
 Setting the Scope in the Definition
 -----------------------------------
 
-The scope of a service is defined in the definition of the service:
+The scope of a service is set in the definition of the service:
 
 .. configuration-block::
 
@@ -139,8 +139,8 @@ you have the right instance::
 .. caution::
 
     Take care not to store the request in a property of the object for a
-    future call of the service as it would be the same issue described
-    in the first section (except that symfony cannot detect that you are
+    future call of the service as it would cause the same issue described
+    in the first section (except that Symfony cannot detect that you are
     wrong).
 
 The service config for this class would look something like this:

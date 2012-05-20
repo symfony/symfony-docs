@@ -211,14 +211,14 @@ will work:
 
 There are 4 option variants you can use:
 
-===========================  =====================================================
+===========================  =====================================================================================
 Option                       Value
-===========================  =====================================================
-InputOption::VALUE_IS_ARRAY  This option accepts multiple values
+===========================  =====================================================================================
+InputOption::VALUE_IS_ARRAY  This option accepts multiple values (e.g. ``--dir=/foo --dir=/bar``)
 InputOption::VALUE_NONE      Do not accept input for this option (e.g. ``--yell``)
-InputOption::VALUE_REQUIRED  This value is required (e.g. ``iterations=5``)
-InputOption::VALUE_OPTIONAL  This value is optional
-===========================  =====================================================
+InputOption::VALUE_REQUIRED  This value is required (e.g. ``--iterations=5``), the option itself is still optional
+InputOption::VALUE_OPTIONAL  This option may or may not have a value (e.g. ``yell`` or ``yell=loud``)
+===========================  =====================================================================================
 
 You can combine VALUE_IS_ARRAY with VALUE_REQUIRED or VALUE_OPTIONAL like this:
 
@@ -353,8 +353,8 @@ Then, you need to create a new
 options you want to pass to the command.
 
 Eventually, calling the ``run()`` method actually executes the command and
-returns the returned code from the command (``0`` if everything went fine, any
-other integer otherwise).
+returns the returned code from the command (return value from command's
+``execute()`` method).
 
 .. note::
 
