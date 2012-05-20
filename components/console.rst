@@ -163,9 +163,8 @@ Using Command Options
 Unlike arguments, options are not ordered (meaning you can specify them in any
 order) and are specified with two dashes (e.g. ``--yell`` - you can also
 declare a one-letter shortcut that you can call with a single dash like
-``-y``). Options are *always* optional, and can be setup to accept a value
-(e.g. ``dir=src``) or simply as a boolean flag without a value (e.g.
-``yell``).
+``-y``). Options can be setup to accept a value (e.g. ``dir=src``)
+or simply as a boolean flag without a value (e.g. ``yell``).
 
 .. tip::
 
