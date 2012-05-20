@@ -157,6 +157,9 @@ Installing the Sphinx extensions
 
     # use PHP as the primary domain
     primary_domain = 'php'
+    
+    # set url for API links
+    api_url = 'http://api.symfony.com/master/%s'
 
 .. _reStructuredText:        http://docutils.sf.net/rst.html
 .. _Sphinx:                  http://sphinx.pocoo.org/

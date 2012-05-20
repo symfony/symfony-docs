@@ -353,8 +353,8 @@ Then, you need to create a new
 options you want to pass to the command.
 
 Eventually, calling the ``run()`` method actually executes the command and
-returns the returned code from the command (``0`` if everything went fine, any
-other integer otherwise).
+returns the returned code from the command (return value from command's
+``execute()`` method).
 
 .. note::
 
