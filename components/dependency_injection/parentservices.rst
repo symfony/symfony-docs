@@ -539,4 +539,4 @@ will be called twice, resulting in the ``$filters`` array containing both
 ``my_filter`` and ``another_filter`` objects. This is great if you just want
 to add additional filters to the subclasses. If you want to replace the filters
 passed to the subclass, removing the parent setting from the config will 
-prevent the base class from calling to ``setFilter``.
+prevent the base class from calling ``setFilter``.

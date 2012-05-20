@@ -17,7 +17,7 @@ chat for instance), create several Clients::
     $this->assertRegExp('/Hello/', $sally->getResponse()->getContent());
 
 This works except when your code maintains a global state or if it depends on
-third-party libraries that has some kind of global state. In such a case, you
+a third-party library that has some kind of global state. In such a case, you
 can insulate your clients::
 
     $harry = static::createClient();

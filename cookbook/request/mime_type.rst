@@ -15,7 +15,7 @@ object. Internally, Symfony contains a map of the most common formats (e.g.
 easily be added. This document will show how you can add the ``jsonp`` format
 and corresponding MIME type.
 
-Create an ``kernel.request`` Listener
+Create a ``kernel.request`` Listener
 -------------------------------------
 
 The key to defining a new MIME type is to create a class that will "listen" to

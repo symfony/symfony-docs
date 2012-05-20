@@ -40,11 +40,11 @@ event is just one of the core kernel events::
 
     Each event receives a slightly different type of ``$event`` object. For
     the ``kernel.exception`` event, it is :class:`Symfony\\Component\\HttpKernel\\Event\\GetResponseForExceptionEvent`.
-    To see what type of object each event listener receives, see :class:`Symfony\\Component\\HttpKernel\\KernelEvents`,
+    To see what type of object each event listener receives, see :class:`Symfony\\Component\\HttpKernel\\KernelEvents`.
 
 Now that the class is created, we just need to register it as a service and
-and notify Symfony that it is a "listener" on the ``kernel.exception`` event
-by using a special "tag":
+notify Symfony that it is a "listener" on the ``kernel.exception`` event by
+using a special "tag":
 
 .. configuration-block::
 
