@@ -6,3 +6,5 @@ HTTP Foundation
 
     introduction
     sessions
+    session_configuration
+    session_testing
