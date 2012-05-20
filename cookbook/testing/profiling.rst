@@ -28,10 +28,10 @@ environment)::
             // Check that the profiler is enabled
             if ($profile = $client->getProfile()) {
                 // check the number of requests
-                $this->assertTrue($profile->getCollector('db')->getQueryCount() < 10);
+                $this->assertLessThan(10, $profile->getCollector('db')->getQueryCount());
 
                 // check the time spent in the framework
-                $this->assertTrue( $profile->getCollector('timer')->getTime() < 0.5);
+                $this->assertLessThan(0.5, $profile->getCollector('timer')->getTime());
             }
         }
     }
@@ -40,8 +40,9 @@ If a test fails because of profiling data (too many DB queries for instance),
 you might want to use the Web Profiler to analyze the request after the tests
 finish. It's easy to achieve if you embed the token in the error message::
 
-    $this->assertTrue(
-        $profile->get('db')->getQueryCount() < 30,
+    $this->assertLessThan(
+        30,
+        $profile->get('db')->getQueryCount(),
         sprintf('Checks that query count is less than 30 (token %s)', $profile->getToken())
     );
 
