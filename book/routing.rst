@@ -1101,7 +1101,7 @@ In an upcoming section, you'll learn how to generate URLs from inside templates.
 
     .. code-block:: javascript
 
-        var url = Routing.generate('blog_show', { "slug": 'my-blog-post});
+        var url = Routing.generate('blog_show', { "slug": 'my-blog-post'});
 
     For more information, see the documentation for that bundle.
 
