@@ -163,8 +163,9 @@ Using Command Options
 Unlike arguments, options are not ordered (meaning you can specify them in any
 order) and are specified with two dashes (e.g. ``--yell`` - you can also
 declare a one-letter shortcut that you can call with a single dash like
-``-y``). Options can be setup to accept a value (e.g. ``dir=src``)
-or simply as a boolean flag without a value (e.g. ``yell``).
+``-y``). Options are *always* optional, and can be setup to accept a value
+(e.g. ``dir=src``) or simply as a boolean flag without a value (e.g.
+``yell``).
 
 .. tip::
 
@@ -215,7 +216,7 @@ Option                       Value
 ===========================  =====================================================
 InputOption::VALUE_IS_ARRAY  This option accepts multiple values
 InputOption::VALUE_NONE      Do not accept input for this option (e.g. ``--yell``)
-InputOption::VALUE_REQUIRED  This value is required (e.g. ``iterations=5``)
+InputOption::VALUE_REQUIRED  This value is required (e.g. ``iterations=5``), the option itself is still optional
 InputOption::VALUE_OPTIONAL  This value is optional
 ===========================  =====================================================
 
