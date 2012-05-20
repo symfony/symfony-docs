@@ -139,7 +139,10 @@ If there are any issues, correct them now before moving on.
         sudo setfacl -R -m u:www-data:rwx -m u:`whoami`:rwx app/cache app/logs
         sudo setfacl -dR -m u:www-data:rwx -m u:`whoami`:rwx app/cache app/logs
 
-    Note that not all web servers run as the user ``www-data``. You have to check as which user the web server is being run and replace it in the place of ``www-data``. 
+    Note that not all web servers run as the user ``www-data``. You have to
+    check which user the web server is being run as and put it in for ``www-data``.
+    This can be done by checking your process list to see which user is running
+    your web server processes.
 
     **3. Without using ACL**
 
