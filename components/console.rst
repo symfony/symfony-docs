@@ -216,7 +216,7 @@ Option                       Value
 ===========================  =====================================================
 InputOption::VALUE_IS_ARRAY  This option accepts multiple values
 InputOption::VALUE_NONE      Do not accept input for this option (e.g. ``--yell``)
-InputOption::VALUE_REQUIRED  This value is required (e.g. ``iterations=5``)
+InputOption::VALUE_REQUIRED  This value is required (e.g. ``iterations=5``), the option itself is still optional
 InputOption::VALUE_OPTIONAL  This value is optional
 ===========================  =====================================================
 
