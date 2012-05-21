@@ -251,7 +251,7 @@ see the :ref:`book-doctrine-field-types` section.
     `Reserved SQL keywords documentation`_ on how to properly escape these
     names. Alternatively, if you're free to choose your database schema,
     simply map to a different table name or column name. See Doctrine's
-    `Persistent classes`_ and `Property Mapping`_ documentation. test
+    `Persistent classes`_ and `Property Mapping`_ documentation.
 
 .. note::
 
