@@ -250,7 +250,7 @@ see the :ref:`book-doctrine-field-types` section.
     which will cause an SQL error in some engines. See Doctrine's
     `Reserved SQL keywords documentation`_ on how to properly escape these
     names. Alternatively, if you're free to choose your database schema,
-    simply map to a different table name or column name. See Doctrines 
+    simply map to a different table name or column name. See Doctrine's 
     `Persistent classes`_ and `Property Mapping`_ documentation.
 
 .. note::
