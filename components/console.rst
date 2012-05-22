@@ -345,7 +345,7 @@ Calling a command from another one is straightforward::
         // ...
     }
 
-First, you :method:`Symfony\\Component\\Console\\Command\\Command::find` the
+First, you :method:`Symfony\\Component\\Console\\Application::find` the
 command you want to execute by passing the command name.
 
 Then, you need to create a new
