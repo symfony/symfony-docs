@@ -58,7 +58,7 @@ example containing most features described below:
                 return;
             }
             if ('string' === $dummy) {
-                if (mergedOptions['some_default'] === 'values') {
+                if ('values' === $mergedOptions['some_default']) {
                     $dummy = substr($dummy, 0, 5);
                 } else {
                     $dummy = ucwords($dummy);
