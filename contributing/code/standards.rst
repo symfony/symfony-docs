@@ -82,9 +82,6 @@ Structure
 * Use braces to indicate control structure body regardless of the number of
   statements it contains;
 
-* Declare visibility explicitly for class, methods, and properties (usage of
-  `var` is prohibited);
-
 * Define one class per file - this does not apply to private helper classes
   that are not intended to be instantiated from the outside and thus are not
   concerned by the PSR-0 standard;
