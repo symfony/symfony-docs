@@ -101,6 +101,6 @@ request. This can be easily done as follow::
 
 .. tip::
 
-    Two types of request are available in the :class:`Symfony\\Componen\\/HttpKernel\\HttpKernelInterface`
-    class: ``HttpKernelInterface::MASTER_REQUEST`` and
+    Two types of request are available in the :class:`Symfony\\Component\\HttpKernel\\HttpKernelInterface`
+    interface: ``HttpKernelInterface::MASTER_REQUEST`` and
     ``HttpKernelInterface::SUB_REQUEST``.
