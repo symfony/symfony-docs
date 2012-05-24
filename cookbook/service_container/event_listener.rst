@@ -75,3 +75,32 @@ using a special "tag":
     to 0. This value can be from -255 to 255, and the listeners will be executed
     in the order of their priority. This is useful when you need to guarantee
     that one listener is executed before another.
+
+Request events, checking types
+------------------------------
+
+A single page can make several requests, which is why when working with the
+``KernelEvents::REQUEST`` event, you might need to check the type of the
+request. This can be easily done as follow::
+
+    // src/Acme/DemoBundle/Listener/AcmeRequestListener.php
+    namespace Acme\DemoBundle\Listener;
+
+    use Symfony\Component\HttpKernel\Event\GetResponseEvent;
+    use Symfony\Component\HttpKernel\HttpKernel;
+
+    class AcmeRequestListener
+    {
+        public function onKernelRequest(GetResponseEvent $event)
+        {
+            if (HttpKernel::MASTER_REQUEST == $event->getRequestType()) {
+                // Your code
+            }
+        }
+    }
+
+.. tip::
+
+    Two types of request are available in the :class:`Symfony\\Componen\\/HttpKernel\\HttpKernelInterface`
+    class: ``HttpKernelInterface::MASTER_REQUEST`` and
+    ``HttpKernelInterface::SUB_REQUEST``.
