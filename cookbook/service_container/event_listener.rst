@@ -79,9 +79,10 @@ using a special "tag":
 Request events, checking types
 ------------------------------
 
-A single page can make several requests, which is why when working with the
-``KernelEvents::REQUEST`` event, you might need to check the type of the
-request. This can be easily done as follow::
+A single page can make several requests (one mast request, and then multiple
+sub-requests), which is why when working with the ``KernelEvents::REQUEST``
+event, you might need to check the type of the request. This can be easily
+done as follow::
 
     // src/Acme/DemoBundle/Listener/AcmeRequestListener.php
     namespace Acme\DemoBundle\Listener;
@@ -93,9 +94,12 @@ request. This can be easily done as follow::
     {
         public function onKernelRequest(GetResponseEvent $event)
         {
-            if (HttpKernel::MASTER_REQUEST == $event->getRequestType()) {
-                // Your code
+            if (HttpKernel::MASTER_REQUEST != $event->getRequestType()) {
+                // don't do anything if it's not the master request
+                return;
             }
+
+            // your code
         }
     }
 
