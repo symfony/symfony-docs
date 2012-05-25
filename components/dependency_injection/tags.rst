@@ -1,10 +1,10 @@
-.. index::
+﻿.. index::
    single: Service Container; Tags
 
 How to make your Services use Tags
 ==================================
 
-You can ask the container for any services that were tagged when registered
+You can ask a container builder for any services that were tagged when registered
 with it. This is useful in compiler passes where you can find services which
 were registered in config files you do not have control over and make use
 of them. This is useful if your service handles a collection of some kind,
