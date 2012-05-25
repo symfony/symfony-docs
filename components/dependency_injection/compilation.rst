@@ -31,9 +31,12 @@ something needed in everyday use.
 The compiler pass must have the ``process`` method which is passed the container
 being compiled::
 
-    public function process(ContainerBuilder $container)
+    class CustomCompilerPass
     {
-       //--
+        public function process(ContainerBuilder $container)
+        {
+           //--
+        }
     }
 
 The container's parameters and definitions can be manipulated using the
@@ -41,6 +44,43 @@ methods described in the :doc:`/components/dependency_injection/definitions`.
 One common thing to do in a compiler pass is to search for all services that
 have a certain tag in order to process them in some way or dynamically plug
 each into some other service.
+
+Registering a Compiler Pass
+---------------------------
+
+You need to register your custom pass with the container, its process method
+will then be called when the container is compiled::
+
+    use Symfony\Component\DependencyInjection\ContainerBuilder;
+
+    $container = new ContainerBuilder();
+    $container->addCompilerPass(new CustomCompilerPass);
+
+Controlling the Pass Ordering
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The default compiler passes are grouped into optimization passes and removal
+passes. The optimization passes run first and include tasks such as resolving
+references within the definitions. The removal passes perform tasks such removing
+private aliases and unused services. You can choose where in the order any custom
+passes you add are run. By default they will be run before the optimization passes.
+
+You can use the following constants as the second argument when registering
+a pass with the container to control where it goes in the order:
+
+* ``PassConfig::TYPE_BEFORE_OPTIMIZATION``
+* ``PassConfig::TYPE_OPTIMIZE``
+* ``PassConfig::TYPE_BEFORE_REMOVING``
+* ``PassConfig::TYPE_REMOVE``
+* ``PassConfig::TYPE_AFTER_REMOVING``
+
+For example, to run your custom pass after the default removal passes have been run::
+
+    use Symfony\Component\DependencyInjection\ContainerBuilder;
+
+    $container = new ContainerBuilder();
+    $container->addCompilerPass(new CustomCompilerPass, PassConfig::TYPE_AFTER_REMOVING);
+
 
 Managing Configuration with Extensions
 --------------------------------------
