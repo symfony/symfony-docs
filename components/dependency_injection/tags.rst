@@ -4,18 +4,17 @@
 How to make your Services use Tags
 ==================================
 
-You can ask a container builder for any services that were tagged when registered
-with it. This is useful in compiler passes where you can find services which
-were registered in config files you do not have control over and make use
-of them. This is useful if your service handles a collection of some kind,
-or implements a "chain", in which several alternative strategies are tried
-until one of them is successful. You can then allow services to be registered
-with a tag and add these services to your collection or chain.
+Tags are a generic string (along with some options) that can be applied to
+any service. By themselves, tags don't actually the functionality of your
+services in any way. But if you choose to, you can ask a container builder
+for a list of all services that were tagged with some specific tag. This
+is useful in compiler passes where you can find these services and use or
+modify them in some specific way.
 
-For example, if you are using Swift Mailer and want to implement a
-of a "transport chain", which is a collection of classes implementing ``\Swift_Transport``.
-Using the chain, Swift Mailer can try several ways of transport, until one
-succeeds.
+For example, if you are using Swift Mailer you might imagine that you want
+to implement a "transport chain", which is a collection of classes implementing
+``\Swift_Transport``. Using the chain, you'll want Swift Mailer to try several
+ways of transporting the message until one succeeds.
 
 To begin with, define the ``TransportChain`` class::
 
@@ -111,12 +110,14 @@ As an example we add the following transports as services:
         $definitionSendmail->addTag('acme_mailer.transport');
         $container->setDefinition('acme_mailer.transport.sendmail', $definitionSendmail);
 
-Notice the tags named "acme_mailer.transport". This is the custom tag to use ion your compiler pass::
+Notice that each was given a tag named ``acme_mailer.transport``. This is
+the custom tag that you'll use in your compiler pass. The compiler pass
+is what makes this tag "mean" something.
 
 Create a ``CompilerPass``
 -------------------------
 
-Your compiler pass can then ask the container for any services with the
+Your compiler pass can now ask the container for any services with the
 custom tag::
 
     use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -146,7 +147,7 @@ to the definition of the ``acme_mailer.transport_chain`` service a call to
 The first argument of each of these calls will be the mailer transport service
 itself.
 
-Register the pass with the container
+Register the Pass with the Container
 ------------------------------------
 
 You also need to register the pass with the container, it will then be
