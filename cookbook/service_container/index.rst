@@ -6,4 +6,4 @@ Service Container
 
     event_listener
     scopes
-    tags
+    compiler_passes
