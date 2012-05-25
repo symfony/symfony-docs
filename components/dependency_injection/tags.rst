@@ -150,7 +150,7 @@ Register the pass with the container
 ------------------------------------
 
 You also need to register the pass with the container, it will then be
-run when the container is compiled.
+run when the container is compiled::
 
     use Symfony\Component\DependencyInjection\ContainerBuilder;
 
