@@ -61,7 +61,7 @@ The validator class is also simple, and only has one required method: ``isValid`
         public function isValid($value, Constraint $constraint)
         {
             if (!preg_match('/^[a-zA-Za0-9]+$/', $value, $matches)) {
-                $this->setMessage($constraint->message);
+                $this->setMessage($constraint->message, array('%string%' => $value);
 
                 return false;
             }
