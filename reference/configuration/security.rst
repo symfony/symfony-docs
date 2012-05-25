@@ -163,7 +163,7 @@ The Login Form and Process
 
 *   ``check_path`` (type: ``string``, default: ``/login_check``)
     This is the URL that your login form must submit to. The firewall will
-    intercept any requests (``POST`` requests only, be default) to this URL
+    intercept any requests (``POST`` requests only, by default) to this URL
     and process the submitted login credentials.
     
     Be sure that this URL is covered by your main firewall (i.e. don't create
