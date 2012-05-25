@@ -1,4 +1,4 @@
-Compiling the Container
+﻿Compiling the Container
 =======================
 
 The service container can be compiled for various reasons. These reasons
@@ -108,4 +108,84 @@ but are processed when the container's ``compile`` method is called.
     you cannot do it from another extension as it uses a fresh container.
     You should instead use a compiler pass which works with the full container
     after the extensions have been processed. 
+
+Dumping the Configuration for Performance
+-----------------------------------------
+
+Using configuration files to manage the service container can be much easier
+to understand than using PHP once there are a lot of services. This ease comes
+at a price though when it comes to performance as the config files need to be
+parsed and the PHP configuration built from them. The compilation process makes
+the container more efficient but it takes time to run. You can have the best of both
+worlds though by using configuration files and then dumping and caching the resulting
+configuration. The ``PhpDumper`` makes dumping the compiled container easy::
+
+    use Symfony\Component\DependencyInjection\ContainerBuilder;
+    use Symfony\Component\Config\FileLocator;
+    use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
+    use Symfony\Component\DependencyInjection\Dumper\PhpDumper
+
+    $container = new ContainerBuilder();
+    $loader = new XmlFileLoader($container, new FileLocator(__DIR__));
+    $loader->load('services.xml');
+
+    $file = __DIR__ .'/cache/container.php';
+
+    if (file_exists($file)) {
+        require_once $file;
+        $container = new ProjectServiceContiner();
+    } else {
+        $container = new ContainerBuilder();
+        //--
+        $container->compile();
+
+        $dumper = new PhpDumper($container);
+        file_put_contents($file, $dumper->dump());
+    }
+
+``ProjectServiceContiner`` is the default name given to the dumped container
+class, you can change this though this with the ``class`` option when you dump
+it::
+
+    // ...
+    $file = __DIR__ .'/cache/container.php';
+
+    if (file_exists($file)) {
+        require_once $file;
+        $container = new MyCachedContainer();
+    } else {
+        $container = new ContainerBuilder();
+        //--
+        $container->compile();
+
+        $dumper = new PhpDumper($container);
+        file_put_contents($file, $dumper->dump(array('class' => 'MyCachedContainer')));
+    }
+
+You will now get the speed of the PHP configured container with the ease of using
+configuration files. In the above example you will need to delete the cached
+container file whenever you make any changes. Adding a check for a variable that
+determines if you are in debug mode allows you to keep the speed of the cached
+container in production but getting an up to date configuration whilst developing
+your application::
+
+    // ...
+
+    // set $isDebug based on something in your project
+
+    $file = __DIR__ .'/cache/container.php';
+
+    if (!$isDebug && file_exists($file)) {
+        require_once $file;
+        $container = new MyCachedContainer();
+    } else {
+        $container = new ContainerBuilder();
+        //--
+        $container->compile();
+
+        if(!$isDebug) 
+            $dumper = new PhpDumper($container);
+            file_put_contents($file, $dumper->dump(array('class' => 'MyCachedContainer')));
+        }
+    }
 
