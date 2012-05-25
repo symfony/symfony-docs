@@ -2,40 +2,42 @@
    single: Validation; Custom constraints
 
 How to create a Custom Validation Constraint
---------------------------------------------
+============================================
 
 You can create a custom constraint by extending the base constraint class,
-:class:`Symfony\\Component\\Validator\\Constraint`. Options for your
-constraint are represented as public properties on the constraint class. For
-example, the :doc:`Url</reference/constraints/Url>` constraint includes
-the ``message`` and ``protocols`` properties:
+:class:`Symfony\\Component\\Validator\\Constraint`. 
+As an example we're going to create a simple validator that checks if string contains only alphanumeric characters.
 
-.. code-block:: php
+Creating Constraint class
+-------------------------
 
-    namespace Symfony\Component\Validator\Constraints;
+First you need to create a Constraint class and extend :class:`Symfony\\Component\\Validator\\Constraint`:: 
+
+    namespace Acme\DemoBundle\Validator\Constraints;
     
     use Symfony\Component\Validator\Constraint;
 
     /**
      * @Annotation
      */
-    class Protocol extends Constraint
+    class ContainsAlphanumeric extends Constraint
     {
-        public $message = 'The value "%protocol%" is not a valid protocol';
-        public $protocols = array('http', 'https', 'ftp', 'ftps');
+        public $message = 'Missing at least one alphanumeric character in "%string%" string';
     }
 
 .. note::
 
     The ``@Annotation`` annotation is necessary for this new constraint in
     order to make it available for use in classes via annotations.
+    Options for your constraint are represented as public properties on the constraint class. 
 
+Creating Validator itself
+-------------------------    
+    
 As you can see, a constraint class is fairly minimal. The actual validation is
 performed by a another "constraint validator" class. The constraint validator
 class is specified by the constraint's ``validatedBy()`` method, which
-includes some simple default logic:
-
-.. code-block:: php
+includes some simple default logic::
 
     // in the base Symfony\Component\Validator\Constraint class
     public function validatedBy()
@@ -47,22 +49,19 @@ In other words, if you create a custom ``Constraint`` (e.g. ``MyConstraint``),
 Symfony2 will automatically look for another class, ``MyConstraintValidator``
 when actually performing the validation.
 
-The validator class is also simple, and only has one required method: ``isValid``.
-Furthering our example, take a look at the ``ProtocolValidator`` as an example:
+The validator class is also simple, and only has one required method: ``isValid``::
 
-.. code-block:: php
-
-    namespace Symfony\Component\Validator\Constraints;
+    namespace Acme\DemoBundle\Validator\Constraints;
     
     use Symfony\Component\Validator\Constraint;
     use Symfony\Component\Validator\ConstraintValidator;
 
-    class ProtocolValidator extends ConstraintValidator
+    class ContainsAlphanumericValidator extends ConstraintValidator
     {
         public function isValid($value, Constraint $constraint)
         {
-            if (!in_array($value, $constraint->protocols)) {
-                $this->setMessage($constraint->message, array('%protocol%' => $value));
+            if (!preg_match('/^[a-zA-Za0-9]+$/', $value, $matches)) {
+                $this->setMessage($constraint->message);
 
                 return false;
             }
@@ -75,6 +74,36 @@ Furthering our example, take a look at the ``ProtocolValidator`` as an example:
 
     Don't forget to call ``setMessage`` to construct an error message when the
     value is invalid.
+    
+Using newly created validator
+-----------------------------
+
+Using custom validators is very easy, just as the ones provided by Symfony2 itself::
+
+    namespace Acme\DemoBundle\Entity;
+
+    use Doctrine\ORM\Mapping as ORM;
+    use Symfony\Component\Validator\Constraints as Assert;
+    use Acme\DemoBundle\Validator\Constraints as AcmeAssert;
+        
+    class AcmeEntity
+    {
+        /**
+         * @ORM\Id
+         * @ORM\GeneratedValue
+         * @ORM\Column(name="id", type="integer")
+         */
+        protected $id;
+    
+        /**
+         * @Assert\NotBlank
+         * @AcmeAssert\ContainsAlphanumeric
+         * @ORM\Column(name="name", type="string", length=100)
+         */
+        protected $name;        
+        
+        // ...
+    }
 
 Constraint Validators with Dependencies
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
