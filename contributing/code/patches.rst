@@ -170,7 +170,7 @@ in mind the following:
 .. tip::
 
     You can check the coding standards of your patch by running the following
-    [script](https://github.com/fabpot/Symfony-CS-Fixer/raw/master/symfony-cs-fixer.phar):
+    [script](http://cs.sensiolabs.org/get/php-cs-fixer.phar) [src](https://github.com/fabpot/PHP-CS-Fixer):
 
     .. code-block:: bash
 
