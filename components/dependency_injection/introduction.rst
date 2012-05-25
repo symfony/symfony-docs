@@ -358,9 +358,3 @@ your application::
         }
     }
 
-Learn more about this Component
--------------------------------
-
-* :doc:`/components/dependency_injection/definitions`
-* :doc:`/components/dependency_injection/factories`
-* :doc:`/components/dependency_injection/parentservices`
