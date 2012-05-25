@@ -249,7 +249,9 @@ see the :ref:`book-doctrine-field-types` section.
     class name is ``Group``, then, by default, your table name will be ``group``,
     which will cause an SQL error in some engines. See Doctrine's
     `Reserved SQL keywords documentation`_ on how to properly escape these
-    names.
+    names. Alternatively, if you're free to choose your database schema,
+    simply map to a different table name or column name. See Doctrine's
+    `Persistent classes`_ and `Property Mapping`_ documentation.
 
 .. note::
 
@@ -1384,3 +1386,5 @@ For more information about Doctrine, see the *Doctrine* section of the
 .. _`Property Mapping documentation`: http://docs.doctrine-project.org/projects/doctrine-orm/en/latest/reference/basic-mapping.html#property-mapping
 .. _`Lifecycle Events documentation`: http://docs.doctrine-project.org/projects/doctrine-orm/en/latest/reference/events.html#lifecycle-events
 .. _`Reserved SQL keywords documentation`: http://docs.doctrine-project.org/projects/doctrine-orm/en/latest/reference/basic-mapping.html#quoting-reserved-words
+.. _`Persistent classes`: http://docs.doctrine-project.org/projects/doctrine-orm/en/latest/reference/basic-mapping.html#persistent-classes
+.. _`Property Mapping`: http://docs.doctrine-project.org/projects/doctrine-orm/en/latest/reference/basic-mapping.html#property-mapping

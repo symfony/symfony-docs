@@ -357,10 +357,3 @@ your application::
             file_put_contents($file, $dumper->dump(array('class' => 'MyCachedContainer')));
         }
     }
-
-Learn more about this Component
--------------------------------
-
-* :doc:`/components/dependency_injection/definitions`
-* :doc:`/components/dependency_injection/factories`
-* :doc:`/components/dependency_injection/parentservices`

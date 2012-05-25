@@ -93,7 +93,7 @@
 
   * :doc:`/cookbook/service_container/event_listener`
   * :doc:`/cookbook/service_container/scopes`
-  * :doc:`/cookbook/service_container/tags`
+  * :doc:`/cookbook/service_container/compiler_passes`
 
 * :doc:`/cookbook/security/index`
 

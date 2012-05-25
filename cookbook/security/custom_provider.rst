@@ -157,7 +157,7 @@ Here's an example of how this might look::
 Create a Service for the User Provider
 --------------------------------------
 
-Now we make the user provider available as service.
+Now we make the user provider available as a service.
 
 .. configuration-block::
 

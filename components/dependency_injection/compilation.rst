@@ -1,4 +1,4 @@
-Compiling the Container
+﻿Compiling the Container
 =======================
 
 The service container can be compiled for various reasons. These reasons
@@ -24,16 +24,19 @@ Creating a Compiler Pass
 
 You can also create and register your own compiler passes with the container.
 To create a compiler pass it needs to implements the :class:`Symfony\\Component\\DependencyInjection\\Compiler\\CompilerPassInterface`
-interface. The compiler gives you an opportunity to manipulate the service
+interface. The compiler pass gives you an opportunity to manipulate the service
 definitions that have been compiled. This can be very powerful, but is not
 something needed in everyday use.
 
 The compiler pass must have the ``process`` method which is passed the container
 being compiled::
 
-    public function process(ContainerBuilder $container)
+    class CustomCompilerPass
     {
-       //--
+        public function process(ContainerBuilder $container)
+        {
+           //--
+        }
     }
 
 The container's parameters and definitions can be manipulated using the
@@ -41,6 +44,43 @@ methods described in the :doc:`/components/dependency_injection/definitions`.
 One common thing to do in a compiler pass is to search for all services that
 have a certain tag in order to process them in some way or dynamically plug
 each into some other service.
+
+Registering a Compiler Pass
+---------------------------
+
+You need to register your custom pass with the container. Tts process method
+will then be called when the container is compiled::
+
+    use Symfony\Component\DependencyInjection\ContainerBuilder;
+
+    $container = new ContainerBuilder();
+    $container->addCompilerPass(new CustomCompilerPass);
+
+Controlling the Pass Ordering
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The default compiler passes are grouped into optimization passes and removal
+passes. The optimization passes run first and include tasks such as resolving
+references within the definitions. The removal passes perform tasks such as removing
+private aliases and unused services. You can choose where in the order any custom
+passes you add are run. By default they will be run before the optimization passes.
+
+You can use the following constants as the second argument when registering
+a pass with the container to control where it goes in the order:
+
+* ``PassConfig::TYPE_BEFORE_OPTIMIZATION``
+* ``PassConfig::TYPE_OPTIMIZE``
+* ``PassConfig::TYPE_BEFORE_REMOVING``
+* ``PassConfig::TYPE_REMOVE``
+* ``PassConfig::TYPE_AFTER_REMOVING``
+
+For example, to run your custom pass after the default removal passes have been run::
+
+    use Symfony\Component\DependencyInjection\ContainerBuilder;
+
+    $container = new ContainerBuilder();
+    $container->addCompilerPass(new CustomCompilerPass, PassConfig::TYPE_AFTER_REMOVING);
+
 
 Managing Configuration with Extensions
 --------------------------------------
@@ -68,4 +108,84 @@ but are processed when the container's ``compile`` method is called.
     you cannot do it from another extension as it uses a fresh container.
     You should instead use a compiler pass which works with the full container
     after the extensions have been processed. 
+
+Dumping the Configuration for Performance
+-----------------------------------------
+
+Using configuration files to manage the service container can be much easier
+to understand than using PHP once there are a lot of services. This ease comes
+at a price though when it comes to performance as the config files need to be
+parsed and the PHP configuration built from them. The compilation process makes
+the container more efficient but it takes time to run. You can have the best of both
+worlds though by using configuration files and then dumping and caching the resulting
+configuration. The ``PhpDumper`` makes dumping the compiled container easy::
+
+    use Symfony\Component\DependencyInjection\ContainerBuilder;
+    use Symfony\Component\Config\FileLocator;
+    use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
+    use Symfony\Component\DependencyInjection\Dumper\PhpDumper
+
+    $container = new ContainerBuilder();
+    $loader = new XmlFileLoader($container, new FileLocator(__DIR__));
+    $loader->load('services.xml');
+
+    $file = __DIR__ .'/cache/container.php';
+
+    if (file_exists($file)) {
+        require_once $file;
+        $container = new ProjectServiceContiner();
+    } else {
+        $container = new ContainerBuilder();
+        //--
+        $container->compile();
+
+        $dumper = new PhpDumper($container);
+        file_put_contents($file, $dumper->dump());
+    }
+
+``ProjectServiceContiner`` is the default name given to the dumped container
+class, you can change this though this with the ``class`` option when you dump
+it::
+
+    // ...
+    $file = __DIR__ .'/cache/container.php';
+
+    if (file_exists($file)) {
+        require_once $file;
+        $container = new MyCachedContainer();
+    } else {
+        $container = new ContainerBuilder();
+        //--
+        $container->compile();
+
+        $dumper = new PhpDumper($container);
+        file_put_contents($file, $dumper->dump(array('class' => 'MyCachedContainer')));
+    }
+
+You will now get the speed of the PHP configured container with the ease of using
+configuration files. In the above example you will need to delete the cached
+container file whenever you make any changes. Adding a check for a variable that
+determines if you are in debug mode allows you to keep the speed of the cached
+container in production but getting an up to date configuration whilst developing
+your application::
+
+    // ...
+
+    // set $isDebug based on something in your project
+
+    $file = __DIR__ .'/cache/container.php';
+
+    if (!$isDebug && file_exists($file)) {
+        require_once $file;
+        $container = new MyCachedContainer();
+    } else {
+        $container = new ContainerBuilder();
+        //--
+        $container->compile();
+
+        if(!$isDebug) 
+            $dumper = new PhpDumper($container);
+            file_put_contents($file, $dumper->dump(array('class' => 'MyCachedContainer')));
+        }
+    }
 
