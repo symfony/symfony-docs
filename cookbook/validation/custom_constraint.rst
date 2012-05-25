@@ -21,7 +21,7 @@ the ``message`` and ``protocols`` properties:
      */
     class Protocol extends Constraint
     {
-        public $message = 'This value is not a valid protocol';
+        public $message = 'The value "%protocol%" is not a valid protocol';
         public $protocols = array('http', 'https', 'ftp', 'ftps');
     }
 
@@ -62,7 +62,7 @@ Furthering our example, take a look at the ``ProtocolValidator`` as an example:
         public function isValid($value, Constraint $constraint)
         {
             if (!in_array($value, $constraint->protocols)) {
-                $this->setMessage($constraint->message, array('%protocols%' => $constraint->protocols));
+                $this->setMessage($constraint->message, array('%protocol%' => $value));
 
                 return false;
             }
@@ -142,8 +142,9 @@ With this, the validator ``isValid()`` method gets an object as its first argume
         {
             if ($protocol->getFoo() != $protocol->getBar()) {
 
-                // bind error message on foo property
-                $this->context->addViolationAtSubPath('foo', $constraint->getMessage(), array(), null);
+                $propertyPath = $this->context->getPropertyPath() . 'foo';
+                $this->context->setPropertyPath($propertyPath);
+                $this->context->addViolation($constraint->getMessage(), array(), null);
 
                 return false;
             }
