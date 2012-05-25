@@ -143,8 +143,8 @@ your application::
         //--
         $container->compile();
 
-        if(!$isDebug) {
-   	     $dumper = new PhpDumper($container);
+        if(!$isDebug) 
+            $dumper = new PhpDumper($container);
             file_put_contents($file, $dumper->dump(array('class' => 'MyCachedContainer')));
         }
     }
