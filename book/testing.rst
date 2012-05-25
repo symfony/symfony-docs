@@ -261,7 +261,7 @@ document::
         $this->assertGreaterThan(0, $crawler->filter('h2.subtitle')->count());
 
         // Assert that there are exactly 4 h2 tags on the page
-        $this->assertCount(4, $crawler->filter('h2')->count());
+        $this->assertCount(4, $crawler->filter('h2'));
 
         // Assert that the "Content-Type" header is "application/json"
         $this->assertTrue($client->getResponse()->headers->contains('Content-Type', 'application/json'));
