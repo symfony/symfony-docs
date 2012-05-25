@@ -48,7 +48,7 @@ each into some other service.
 Registering a Compiler Pass
 ---------------------------
 
-You need to register your custom pass with the container, its process method
+You need to register your custom pass with the container. Tts process method
 will then be called when the container is compiled::
 
     use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -61,7 +61,7 @@ Controlling the Pass Ordering
 
 The default compiler passes are grouped into optimization passes and removal
 passes. The optimization passes run first and include tasks such as resolving
-references within the definitions. The removal passes perform tasks such removing
+references within the definitions. The removal passes perform tasks such as removing
 private aliases and unused services. You can choose where in the order any custom
 passes you add are run. By default they will be run before the optimization passes.
 
