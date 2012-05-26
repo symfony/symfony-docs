@@ -1,4 +1,7 @@
-﻿Working with Tagged Services
+﻿.. index::
+   single: Service Container; Tags
+
+Working with Tagged Services
 ============================
 
 Tags are a generic string (along with some options) that can be applied to
