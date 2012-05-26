@@ -1,3 +1,6 @@
+.. index::
+   single: Dependency Injection; Factories
+
 How to Use a Factory to Create Services
 =======================================
 
