@@ -1,5 +1,5 @@
-How to Use a Factory to Create Services
-=======================================
+Using a Factory to Create Services
+==================================
 
 Symfony2's Service Container provides a powerful way of controlling the 
 creation of objects, allowing you to specify arguments passed to the constructor

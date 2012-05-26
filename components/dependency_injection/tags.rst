@@ -1,8 +1,5 @@
-﻿.. index::
-   single: Service Container; Tags
-
-How to make your Services use Tags
-==================================
+﻿Working with Tagged Services
+============================
 
 Tags are a generic string (along with some options) that can be applied to
 any service. By themselves, tags don't actually the functionality of your
