@@ -5,7 +5,7 @@ How to make your Services use Tags
 ==================================
 
 Tags are a generic string (along with some options) that can be applied to
-any service. By themselves, tags don't actually the functionality of your
+any service. By themselves, tags don't actually alter the functionality of your
 services in any way. But if you choose to, you can ask a container builder
 for a list of all services that were tagged with some specific tag. This
 is useful in compiler passes where you can find these services and use or
