@@ -46,8 +46,8 @@ Each part will be explained in the next section.
                     security_identity:    acl_security_identities
                 voter:
                     allow_if_object_identity_unavailable:  true
-            encoders:
 
+            encoders:
                 # Examples:
                 Acme\DemoBundle\Entity\User1: sha512
                 Acme\DemoBundle\Entity\User2:
@@ -62,8 +62,8 @@ Each part will be explained in the next section.
                     encode_as_base64:     true
                     iterations:           5000
                     id:                   ~
-            providers:            # Required
 
+            providers:            # Required
                 # Examples:
                 memory:
                     name:                memory
@@ -84,7 +84,64 @@ Each part will be explained in the next section.
                     id:                   ~
                     chain:
                         providers:            []
+
             firewalls:            # Required
+                # Examples:
+                somename:
+                    pattern: .*
+                    request_matcher: some.service.id
+                    access_denied_url: /foo/error403
+                    access_denied_handler: some.service.id
+                    entry_point: some.service.id
+                    provider: name
+                    context: name
+                    stateless: false
+                    x509:
+                        provider: name
+                    http_basic:
+                        provider: name
+                    http_digest:
+                        provider: name
+                    form_login:
+                        check_path: /login_check
+                        login_path: /login
+                        use_forward: false
+                        always_use_default_target_path: false
+                        default_target_path: /
+                        target_path_parameter: _target_path
+                        use_referer: false
+                        failure_path: /foo
+                        failure_forward: false
+                        failure_handler: some.service.id
+                        success_handler: some.service.id
+                        username_parameter: _username
+                        password_parameter: _password
+                        csrf_parameter: _csrf_token
+                        intention: authenticate
+                        csrf_provider: my.csrf_provider.id
+                        post_only: true
+                        remember_me: false
+                    remember_me:
+                        token_provider: name
+                        key: someS3cretKey
+                        name: NameOfTheCookie
+                        lifetime: 3600 # in seconds
+                        path: /foo
+                        domain: somedomain.foo
+                        secure: false
+                        httponly: true
+                        always_remember_me: false
+                        remember_me_parameter: _remember_me
+                    logout:
+                        path:   /logout
+                        target: /
+                        invalidate_session: false
+                        delete_cookies:
+                            a: { path: null, domain: null }
+                            b: { path: null, domain: null }
+                        handlers: [some.service.id, another.service.id]
+                        success_handler: some.service.id
+                    anonymous: ~
 
                 # Prototype
                 name:
@@ -118,6 +175,7 @@ Each part will be explained in the next section.
                         provider:             ~
                         parameter:            _switch_user
                         role:                 ROLE_ALLOWED_TO_SWITCH
+
             access_control:
                 requires_channel:     ~
 

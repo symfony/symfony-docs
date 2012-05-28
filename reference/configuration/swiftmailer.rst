@@ -193,4 +193,4 @@ Full Default Configuration
                 sleep:                0
             delivery_address:     ~
             disable_delivery:     ~
-            logging:              true
+            logging:              %kernel.debug%

@@ -11,14 +11,16 @@ Configuration Reference
 
         doctrine:
             dbal:
-                default_connection:   ~
+                default_connection:   default
                 types:
-
                     # Prototype
                     name:
                         class:                ~ # Required
                         commented:            true
+
                 connections:
+                    default:
+                        dbname:               database
 
                     # Prototype
                     name:
@@ -98,6 +100,7 @@ Configuration Reference
 
                                 # Configuring MultipleActiveResultSets for the pdo_sqlsrv driver
                                 MultipleActiveResultSets:  ~
+
             orm:
                 default_entity_manager:  ~
                 auto_generate_proxy_classes:  false

@@ -21,7 +21,7 @@ Configuration Reference
                     processors:
                         - some_callable
                 main:
-                    type:                fingerscrossed
+                    type:                fingers_crossed
                     action_level:        WARNING
                     buffer_size:         30
                     handler:             custom
@@ -50,7 +50,7 @@ Configuration Reference
                     to_email:             ~
                     subject:              ~
                     email_prototype:
-                        id:                   ~ # Required
+                        id:                   ~ # Required (when the email_prototype is used)
                         factory-method:       ~
                     channels:
                         type:                 ~
