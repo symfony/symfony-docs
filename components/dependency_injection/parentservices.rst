@@ -1,5 +1,5 @@
-How to Manage Common Dependencies with Parent Services
-======================================================
+Managing Common Dependencies with Parent Services
+=================================================
 
 As you add more functionality to your application, you may well start to have
 related classes that share some of the same dependencies. For example you
