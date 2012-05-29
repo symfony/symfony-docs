@@ -48,7 +48,7 @@ each into some other service.
 Registering a Compiler Pass
 ---------------------------
 
-You need to register your custom pass with the container. Tts process method
+You need to register your custom pass with the container. Its process method
 will then be called when the container is compiled::
 
     use Symfony\Component\DependencyInjection\ContainerBuilder;
