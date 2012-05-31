@@ -55,8 +55,8 @@ Configuration Reference
                         MultipleActiveResultSets:  ~
                         driver:               pdo_mysql
                         platform_service:     ~
-                        logging:              true
-                        profiling:            true
+                        logging:              %kernel.debug%
+                        profiling:            %kernel.debug%
                         driver_class:         ~
                         wrapper_class:        ~
                         options:
