@@ -835,6 +835,10 @@ the choice is ultimately up to you.
     Additionally, if there are any fields on the form that aren't included in
     the submitted data, those fields will be explicitly set to ``null``.
 
+    The field data can be accessed in a controller with::
+
+        $form->get('dueDate')->getData();
+
 .. index::
    pair: Forms; Doctrine
 
