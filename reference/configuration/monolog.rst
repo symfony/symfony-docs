@@ -18,6 +18,8 @@ Configuration Reference
                     level:               ERROR
                     bubble:              false
                     formatter:           my_formatter
+                    processors:
+                        - some_callable
                 main:
                     type:                fingers_crossed
                     action_level:        WARNING
@@ -39,6 +41,7 @@ Configuration Reference
                     facility:             user
                     max_files:            0
                     action_level:         WARNING
+                    activation_strategy:  ~
                     stop_buffering:       true
                     buffer_size:          0
                     handler:              ~
@@ -50,8 +53,11 @@ Configuration Reference
                     to_email:             ~
                     subject:              ~
                     email_prototype:
-                        id:     ~ # Required (when the email_prototype is used)
-                        method: ~
+                        id:                   ~ # Required (when the email_prototype is used)
+                        factory-method:       ~
+                    channels:
+                        type:                 ~
+                        elements:             []
                     formatter:            ~
 
     .. code-block:: xml
