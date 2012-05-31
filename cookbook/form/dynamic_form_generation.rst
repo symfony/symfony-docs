@@ -11,11 +11,11 @@ of what a bare form class looks like::
     namespace Acme\DemoBundle\Form;
 
     use Symfony\Component\Form\AbstractType;
-    use Symfony\Component\Form\FormBuilder;
+    use Symfony\Component\Form\FormBuilderInterface;
     
     class ProductType extends AbstractType
     {
-        public function buildForm(FormBuilder $builder, array $options)
+        public function buildForm(FormBuilderInterface $builder, array $options)
         {
             $builder->add('name');
             $builder->add('price');
@@ -57,12 +57,12 @@ to an Event Subscriber::
     namespace Acme\DemoBundle\Form
 
     use Symfony\Component\Form\AbstractType
-    use Symfony\Component\Form\FormBuilder;
+    use Symfony\Component\Form\FormBuilderInterface;
     use Acme\DemoBundle\Form\EventListener\AddNameFieldSubscriber;
 
     class ProductType extends AbstractType
     {
-        public function buildForm(FormBuilder $builder, array $options)
+        public function buildForm(FormBuilderInterface $builder, array $options)
         {
             $subscriber = new AddNameFieldSubscriber($builder->getFormFactory());
             $builder->addEventSubscriber($subscriber);

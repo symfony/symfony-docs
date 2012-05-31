@@ -393,11 +393,13 @@ If you're creating :ref:`form classes<book-form-creating-form-classes>` (a
 good practice), then you'll need to add the following to the ``getDefaultOptions()``
 method::
 
-    public function getDefaultOptions()
+    use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+
+    public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        return array(
+        $resolver->setDefaults(array(
             'validation_groups' => array('registration')
-        );
+        ));
     }
 
 In both of these cases, *only* the ``registration`` validation group will
@@ -414,11 +416,13 @@ If you need some advanced logic to determine the validation groups (e.g.
 based on submitted data), you can set the ``validation_groups`` option
 to an array callback, or a ``Closure``::
 
-    public function getDefaultOptions()
+    use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+
+    public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        return array(
+        $resolver->setDefaults(array(
             'validation_groups' => array('Acme\\AcmeBundle\\Entity\\Client', 'determineValidationGroups'),
-        );
+        ));
     }
 
 This will call the static method ``determineValidationGroups()`` on the
@@ -426,9 +430,12 @@ This will call the static method ``determineValidationGroups()`` on the
 The Form object is passed as an argument to that method (see next example).
 You can also define whole logic inline by using a Closure::
 
-    public function getDefaultOptions()
+    use Symfony\Component\Form\FormInterface;
+    use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+
+    public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        return array(
+        $resolver->setDefaults(array(
             'validation_groups' => function(FormInterface $form) {
                 $data = $form->getData();
                 if (Entity\Client::TYPE_PERSON == $data->getType()) {
@@ -437,7 +444,7 @@ You can also define whole logic inline by using a Closure::
                     return array('company');
                 }
             },
-        );
+        ));
     }
 
 .. index::
@@ -846,11 +853,13 @@ the choice is ultimately up to you.
     good idea to explicitly specify the ``data_class`` option by adding the
     following to your form type class::
 
-        public function getDefaultOptions()
+        use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+
+        public function setDefaultOptions(OptionsResolverInterface $resolver)
         {
-            return array(
+            $resolver->setDefaults(array(
                 'data_class' => 'Acme\TaskBundle\Entity\Task',
-            );
+            ));
         }
 
 .. tip::
@@ -863,7 +872,9 @@ the choice is ultimately up to you.
     agree with these terms" checkbox) that will not be mapped to the underlying
     object, you need to set the property_path option to ``false``::
 
-        public function buildForm(FormBuilder $builder, array $options)
+        use Symfony\Component\Form\FormBuilderInterface;
+
+        public function buildForm(FormBuilderInterface $builder, array $options)
         {
             $builder->add('task');
             $builder->add('dueDate', null, array('property_path' => false));
@@ -969,20 +980,21 @@ create a form class so that a ``Category`` object can be modified by the user::
     namespace Acme\TaskBundle\Form\Type;
 
     use Symfony\Component\Form\AbstractType;
-    use Symfony\Component\Form\FormBuilder;
+    use Symfony\Component\Form\FormBuilderInterface;
+    use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
     class CategoryType extends AbstractType
     {
-        public function buildForm(FormBuilder $builder, array $options)
+        public function buildForm(FormBuilderInterface $builder, array $options)
         {
             $builder->add('name');
         }
 
-        public function getDefaultOptions()
+        public function setDefaultOptions(OptionsResolverInterface $resolver)
         {
-            return array(
+            $resolver->setDefaults(array(
                 'data_class' => 'Acme\TaskBundle\Entity\Category',
-            );
+            ));
         }
 
         public function getName()
@@ -998,7 +1010,9 @@ class:
 
 .. code-block:: php
 
-    public function buildForm(FormBuilder $builder, array $options)
+    use Symfony\Component\Form\FormBuilderInterface;
+
+    public function buildForm(FormBuilderInterface $builder, array $options)
     {
         // ...
 
@@ -1403,19 +1417,21 @@ that all un-rendered fields are output.
 
 The CSRF token can be customized on a form-by-form basis. For example::
 
+    use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+
     class TaskType extends AbstractType
     {
         // ...
 
-        public function getDefaultOptions()
+        public function setDefaultOptions(OptionsResolverInterface $resolver)
         {
-            return array(
+            $resolver->setDefaults(array(
                 'data_class'      => 'Acme\TaskBundle\Entity\Task',
                 'csrf_protection' => true,
                 'csrf_field_name' => '_token',
                 // a unique key to help generate the secret token
                 'intention'       => 'task_item',
-            );
+            ));
         }
 
         // ...
@@ -1531,6 +1547,7 @@ method to specify the option::
 
     use Symfony\Component\Form\AbstractType;
     use Symfony\Component\Form\FormBuilder;
+    use Symfony\Component\OptionsResolver\OptionsResolverInterface;
     use Symfony\Component\Validator\Constraints\Email;
     use Symfony\Component\Validator\Constraints\MinLength;
     use Symfony\Component\Validator\Constraints\Collection;
@@ -1539,14 +1556,16 @@ method to specify the option::
     {
         // ...
 
-        public function getDefaultOptions()
+        public function setDefaultOptions(OptionsResolverInterface $resolver)
         {
             $collectionConstraint = new Collection(array(
                 'name' => new MinLength(5),
                 'email' => new Email(array('message' => 'Invalid email address')),
             ));
 
-            return array('validation_constraint' => $collectionConstraint);
+            $resolver->setDefaults(array(
+                'validation_constraint' => $collectionConstraint
+            ));
         }
     }
 
