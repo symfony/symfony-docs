@@ -337,8 +337,8 @@ Full Default Configuration
                 loaders:              []
                 packages:
 
-                    # Prototype
-                    name:
+                    # A collection of named packages
+                    some_package_name:
                         version:              ~
                         version_format:       %%s?%%s
                         base_urls:

@@ -13,17 +13,18 @@ Configuration Reference
             dbal:
                 default_connection:   default
                 types:
-                    # Prototype
-                    name:
-                        class:                ~ # Required
+                    # A collection of custom types
+                    # Example
+                    some_custom_type:
+                        class:                Acme\HelloBundle\MyCustomType
                         commented:            true
 
                 connections:
                     default:
                         dbname:               database
 
-                    # Prototype
-                    name:
+                    # A collection of different named connections (e.g. default, conn2, etc)
+                    default:
                         dbname:               ~
                         host:                 localhost
                         port:                 ~
@@ -60,16 +61,15 @@ Configuration Reference
                         driver_class:         ~
                         wrapper_class:        ~
                         options:
-                            # Prototype
+                            # an array of options
                             key:                  []
                         mapping_types:
-
-                            # Prototype
+                            # an array of mapping types
                             name:                 []
                         slaves:
 
-                            # Prototype
-                            name:
+                            # a collection of named slave connections (e.g. slave1, slave2)
+                            slave1:
                                 dbname:               ~
                                 host:                 localhost
                                 port:                 ~
@@ -106,8 +106,8 @@ Configuration Reference
                 proxy_dir:            %kernel.cache_dir%/doctrine/orm/Proxies
                 proxy_namespace:      Proxies
                 entity_managers:
-                    # Prototype
-                    name:
+                    # A collection of different named entity managers (e.g. some_em, another_em)
+                    some_em:
                         query_cache_driver:
                             type:                 array # Required
                             host:                 ~
@@ -132,12 +132,11 @@ Configuration Reference
                         auto_mapping:         false
                         hydrators:
 
-                            # Prototype
-                            name:                 []
+                            # An array of hydrator names
+                            hydrator_name:                 []
                         mappings:
-
-                            # Prototype
-                            name:
+                            # An array of mappings, which may be a bundle name or something else
+                            mapping_name:
                                 mapping:              true
                                 type:                 ~
                                 dir:                  ~
@@ -145,24 +144,25 @@ Configuration Reference
                                 prefix:               ~
                                 is_bundle:            ~
                         dql:
+                            # a collection of string functions
                             string_functions:
+                                # example
+                                # test_string: Acme\HelloBundle\DQL\StringFunction
 
-                                # Prototype
-                                name:                 []
+                            # a collection of numeric functions
                             numeric_functions:
+                                # example
+                                # test_numeric: Acme\HelloBundle\DQL\NumericFunction
 
-                                # Prototype
-                                name:                 []
+                            # a collection of datetime functions
                             datetime_functions:
-
-                                # Prototype
-                                name:                 []
+                                # example
+                                # test_datetime: Acme\HelloBundle\DQL\DatetimeFunction
 
                         # Register SQL Filters in the entity manager
                         filters:
-
-                            # Prototype
-                            name:
+                            # An array of filters
+                            some_filter:
                                 class:                ~ # Required
                                 enabled:              false
 

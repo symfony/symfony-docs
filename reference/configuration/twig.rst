@@ -24,9 +24,11 @@ TwigBundle Configuration Reference
                 foo:                 "@bar"
                 pi:                  3.14
 
-                # Prototype
-                key:
+                # Example options, but the easiest use is as seen above
+                some_variable_name:
+                    # a service id that should be the value
                     id:                   ~
+                    # set to service or leave blank
                     type:                 ~
                     value:                ~
             autoescape:           ~

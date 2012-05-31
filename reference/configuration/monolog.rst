@@ -29,8 +29,8 @@ Configuration Reference
                     type:                service
                     id:                  my_handler
 
-                # Prototype
-                name:
+                # Default options and values for some "my_custom_handler" 
+                my_custom_handler:
                     type:                 ~ # Required
                     id:                   ~
                     priority:             0

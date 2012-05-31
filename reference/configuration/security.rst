@@ -55,8 +55,8 @@ Each part will be explained in the next section.
                     encode_as_base64:    true
                     iterations:          5000
 
-                # Prototype
-                class:
+                # Example options/values for what a custom encoder might look like
+                Acme\Your\Class\Name:
                     algorithm:            ~
                     ignore_case:          false
                     encode_as_base64:     true
@@ -79,8 +79,8 @@ Each part will be explained in the next section.
                         class:               SecurityBundle:User
                         property:            username
 
-                # Prototype
-                name:
+                # Example custom provider
+                some_custom_provider:
                     id:                   ~
                     chain:
                         providers:            []
@@ -143,8 +143,8 @@ Each part will be explained in the next section.
                         success_handler: some.service.id
                     anonymous: ~
 
-                # Prototype
-                name:
+                # Default values and options for any firewall
+                some_firewall_listener:
                     pattern:              ~
                     security:             true
                     request_matcher:      ~
@@ -186,9 +186,8 @@ Each part will be explained in the next section.
                 methods:              []
                 roles:                []
             role_hierarchy:
-
-                # Prototype
-                id:                   []
+                ROLE_ADMIN:      [ROLE_ORGANIZER, ROLE_USER]
+                ROLE_SUPERADMIN: [ROLE_ADMIN]
 
 .. _reference-security-firewall-form-login:
 
