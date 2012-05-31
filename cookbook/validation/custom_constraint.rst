@@ -6,7 +6,8 @@ How to create a Custom Validation Constraint
 
 You can create a custom constraint by extending the base constraint class,
 :class:`Symfony\\Component\\Validator\\Constraint`. 
-As an example we're going to create a simple validator that checks if string contains only alphanumeric characters.
+As an example we're going to create a simple validator that checks if string 
+contains only alphanumeric characters.
 
 Creating Constraint class
 -------------------------
@@ -78,32 +79,73 @@ The validator class is also simple, and only has one required method: ``isValid`
 Using newly created validator
 -----------------------------
 
-Using custom validators is very easy, just as the ones provided by Symfony2 itself::
+Using custom validators is very easy, just as the ones provided by Symfony2 itself:
 
-    namespace Acme\DemoBundle\Entity;
+.. configuration-block::
 
-    use Doctrine\ORM\Mapping as ORM;
-    use Symfony\Component\Validator\Constraints as Assert;
-    use Acme\DemoBundle\Validator\Constraints as AcmeAssert;
+    .. code-block:: yaml
         
-    class AcmeEntity
-    {
-        /**
-         * @ORM\Id
-         * @ORM\GeneratedValue
-         * @ORM\Column(name="id", type="integer")
-         */
-        protected $id;
+        # src/Acme/BlogBundle/Resources/config/validation.yml
+        Acme\DemoBundle\Entity\AcmeEntity:
+            properties:
+                name:
+                    - NotBlank: ~
+                    - Acme\DemoBundle\Validator\Constraints\ContainsAlphanumeric: ~
+
+    .. code-block:: php-annotations
+
+        // src/Acme/DemoBundle/Entity/AcmeEntity.php
     
-        /**
-         * @Assert\NotBlank
-         * @AcmeAssert\ContainsAlphanumeric
-         * @ORM\Column(name="name", type="string", length=100)
-         */
-        protected $name;        
+        use Symfony\Component\Validator\Constraints as Assert;
+        use Acme\DemoBundle\Validator\Constraints as AcmeAssert;
+            
+        class AcmeEntity
+        {
+            // ...
+            
+            /**
+             * @Assert\NotBlank
+             * @AcmeAssert\ContainsAlphanumeric
+             */
+            protected $name;
+            
+            // ...
+        }
+
+    .. code-block:: xml
         
-        // ...
-    }
+        <!-- src/Acme/DemoBundle/Resources/config/validation.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
+
+            <class name="Acme\DemoBundle\Entity\AcmeEntity">
+                <property name="name">
+                    <constraint name="NotBlank" />
+                    <constraint name="Acme\DemoBundle\Validator\Constraints\ContainsAlphanumeric" />
+                </property>
+            </class>
+        </constraint-mapping>
+
+    .. code-block:: php
+        
+        // src/Acme/DemoBundle/Entity/AcmeEntity.php
+
+        use Symfony\Component\Validator\Mapping\ClassMetadata;
+        use Symfony\Component\Validator\Constraints\NotBlank;
+        use Acme\DemoBundle\Validator\Constraints\ContainsAlphanumeric;
+
+        class AcmeEntity
+        {
+            public $name;
+
+            public static function loadValidatorMetadata(ClassMetadata $metadata)
+            {
+                $metadata->addPropertyConstraint('name', new NotBlank());
+                $metadata->addPropertyConstraint('name', new ContainsAlphanumeric());
+            }
+        }
 
 Constraint Validators with Dependencies
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
