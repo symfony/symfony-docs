@@ -149,6 +149,10 @@ mimeTypes
 
 **type**: ``array`` or ``string`` **default**: ``image/*``
 
+You can find a list of existing image mime types on the `IANA website`__
+.. _iana: http://www.iana.org/assignments/media-types/image/index.html
+iana__
+
 mimeTypesMessage
 ~~~~~~~~~~~~~~~~
 

@@ -171,6 +171,10 @@ If set, the validator will check that the mime type of the underlying file
 is equal to the given mime type (if a string) or exists in the collection
 of given mime types (if an array).
 
+You can find a list of existing mime types on the `IANA website`__
+.. _iana: http://www.iana.org/assignments/media-types/index.html
+iana__
+
 maxSizeMessage
 ~~~~~~~~~~~~~~
 
