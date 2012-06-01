@@ -93,15 +93,15 @@ Each part will be explained in the next section.
                     access_denied_url: /foo/error403
                     access_denied_handler: some.service.id
                     entry_point: some.service.id
-                    provider: name
+                    provider: some_key_from_above
                     context: name
                     stateless: false
                     x509:
-                        provider: name
+                        provider: some_key_from_above
                     http_basic:
-                        provider: name
+                        provider: some_key_from_above
                     http_digest:
-                        provider: name
+                        provider: some_key_from_above
                     form_login:
                         check_path: /login_check
                         login_path: /login
