@@ -689,6 +689,10 @@ some of the most common elements of a bundle:
 
 * ``Controller/`` contains the controllers of the bundle (e.g. ``HelloController.php``);
 
+* ``DependencyInjection/`` holds dependency injection and service containers configuration,
+  which allows you to standardize and centralize the way objects are constructed
+  in your application;
+
 * ``Resources/config/`` houses configuration, including routing configuration
   (e.g. ``routing.yml``);
 
