@@ -68,7 +68,7 @@ an ``Application`` and adds commands to it::
 
     #!/usr/bin/env php
     # app/console
-    <?php 
+    <?php
 
     use Acme\DemoBundle\Command\GreetCommand;
     use Symfony\Component\Console\Application;
@@ -260,7 +260,7 @@ useful one is the :class:`Symfony\\Component\\Console\\Tester\\CommandTester`
 class. It uses special input and output classes to ease testing without a real
 console::
 
-    use Symfony\Component\Console\Application;
+    use Symfony\Bundle\FrameworkBundle\Console\Application;
     use Symfony\Component\Console\Tester\CommandTester;
 
     class ListCommandTest extends \PHPUnit_Framework_TestCase
