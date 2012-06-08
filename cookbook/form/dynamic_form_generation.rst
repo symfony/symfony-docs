@@ -128,7 +128,7 @@ might look like the following::
 
             // check if the product object is "new"
             if (!$data->getId()) {
-                $form->add($this->factory->createNamed('text', 'name'));
+                $form->add($this->factory->createNamed('name', 'text'));
             }
         }
     }
