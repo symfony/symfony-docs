@@ -12,8 +12,8 @@ the ``message`` and ``protocols`` properties:
 
 .. code-block:: php
 
-    namespace Symfony\Component\Validator\Constraints;
-    
+    namespace Acme\DemoBundle\Validator;
+
     use Symfony\Component\Validator\Constraint;
 
     /**
@@ -52,8 +52,8 @@ Furthering our example, take a look at the ``ProtocolValidator`` as an example:
 
 .. code-block:: php
 
-    namespace Symfony\Component\Validator\Constraints;
-    
+    namespace Acme\DemoBundle\Validator;
+
     use Symfony\Component\Validator\Constraint;
     use Symfony\Component\Validator\ConstraintValidator;
 
