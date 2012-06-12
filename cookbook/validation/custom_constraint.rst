@@ -6,7 +6,7 @@ How to create a Custom Validation Constraint
 
 You can create a custom constraint by extending the base constraint class,
 :class:`Symfony\\Component\\Validator\\Constraint`. 
-As an example we're going to create a simple validator that checks if string 
+As an example we're going to create a simple validator that checks if a string 
 contains only alphanumeric characters.
 
 Creating Constraint class
@@ -23,17 +23,18 @@ First you need to create a Constraint class and extend :class:`Symfony\\Componen
      */
     class ContainsAlphanumeric extends Constraint
     {
-        public $message = 'Missing at least one alphanumeric character in "%string%" string';
+        public $message = 'The string "%string%" contains an illegal character: it can only contain letters or numbers.';
     }
 
 .. note::
 
     The ``@Annotation`` annotation is necessary for this new constraint in
     order to make it available for use in classes via annotations.
-    Options for your constraint are represented as public properties on the constraint class. 
+    Options for your constraint are represented as public properties on the
+    constraint class. 
 
-Creating Validator itself
--------------------------    
+Creating the Validator itself
+-----------------------------
     
 As you can see, a constraint class is fairly minimal. The actual validation is
 performed by a another "constraint validator" class. The constraint validator
@@ -76,8 +77,8 @@ The validator class is also simple, and only has one required method: ``isValid`
     Don't forget to call ``setMessage`` to construct an error message when the
     value is invalid.
     
-Using newly created validator
------------------------------
+Using the new Validator
+-----------------------
 
 Using custom validators is very easy, just as the ones provided by Symfony2 itself:
 
@@ -146,6 +147,10 @@ Using custom validators is very easy, just as the ones provided by Symfony2 itse
                 $metadata->addPropertyConstraint('name', new ContainsAlphanumeric());
             }
         }
+
+If your constraint contains options, then they should be public properties
+on the custom Constraint class you created earlier. These options can be
+configured like options on core Symfony constraints.
 
 Constraint Validators with Dependencies
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
