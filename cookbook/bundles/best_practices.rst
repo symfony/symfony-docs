@@ -1,5 +1,5 @@
 .. index::
-   single: Bundles; Best Practices
+   single: Bundles; Best practices
 
 Bundle Structure and Best Practices
 ===================================
@@ -9,7 +9,7 @@ from classes to controllers and web resources. Even if bundles are very
 flexible, you should follow some best practices if you want to distribute them.
 
 .. index::
-   pair: Bundles; Naming Conventions
+   pair: Bundles; Naming conventions
 
 .. _bundles-naming-conventions:
 

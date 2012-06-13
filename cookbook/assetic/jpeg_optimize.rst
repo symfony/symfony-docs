@@ -1,5 +1,5 @@
 .. index::
-   single: Assetic; Image Optimization
+   single: Assetic; Image optimization
 
 How to Use Assetic For Image Optimization with Twig Functions
 =============================================================
