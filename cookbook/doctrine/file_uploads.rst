@@ -304,7 +304,7 @@ Now that the moving of the file is handled atomically by the entity, the
 call to ``$document->upload()`` should be removed from the controller::
 
     if ($form->isValid()) {
-        $em = $this->getDoctrine()->getEntityManager();
+        $em = $this->getDoctrine()->getManager();
 
         $em->persist($document);
         $em->flush();
