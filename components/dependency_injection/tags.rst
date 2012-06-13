@@ -1,5 +1,5 @@
 ﻿.. index::
-   single: Service Container; Tags
+   single: Dependency Injection; Tags
 
 Working with Tagged Services
 ============================

@@ -1,3 +1,6 @@
+.. index::
+   single: Dependency Injection; Parent Services
+
 Managing Common Dependencies with Parent Services
 =================================================
 
