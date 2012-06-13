@@ -30,32 +30,40 @@ example containing most features described below:
 
     namespace Acme;
 
-    class Foo
+    class FooBar
     {
         const SOME_CONST = 42;
 
-        private $foo;
+        private $fooBar;
 
         /**
          * @param string $dummy Some argument description
          */
         public function __construct($dummy)
         {
-            $this->foo = $this->transform($dummy);
+            $this->fooBar = $this->transform($dummy);
         }
 
         /**
          * @param string $dummy Some argument description
          * @return string|null Transformed input
          */
-        private function transform($dummy)
+        private function transformText($dummy, $options = array())
         {
+            $mergedOptions = array_merge($options, array(
+                'some_default' => 'values',
+            ));
+
             if (true === $dummy) {
                 return;
             }
             if ('string' === $dummy) {
-                $dummy = substr($dummy, 0, 5);
-            }
+                if ('values' === $mergedOptions['some_default']) {
+                    $dummy = substr($dummy, 0, 5);
+                } else {
+                    $dummy = ucwords($dummy);
+                }
+            } 
 
             return $dummy;
         }
@@ -73,9 +81,6 @@ Structure
 
 * Use braces to indicate control structure body regardless of the number of
   statements it contains;
-
-* Declare visibility explicitly for class, methods, and properties (usage of
-  `var` is prohibited);
 
 * Define one class per file - this does not apply to private helper classes
   that are not intended to be instantiated from the outside and thus are not

@@ -1,3 +1,6 @@
+.. index::
+   single: Dependency Injection; Factories
+
 Using a Factory to Create Services
 ==================================
 
@@ -11,8 +14,6 @@ the object.
 
 Suppose you have a factory that configures and returns a new NewsletterManager
 object::
-
-    namespace Acme\HelloBundle\Newsletter;
 
     class NewsletterFactory
     {
@@ -34,11 +35,10 @@ class:
 
     .. code-block:: yaml
 
-        # src/Acme/HelloBundle/Resources/config/services.yml
         parameters:
             # ...
-            newsletter_manager.class: Acme\HelloBundle\Newsletter\NewsletterManager
-            newsletter_factory.class: Acme\HelloBundle\Newsletter\NewsletterFactory
+            newsletter_manager.class: NewsletterManager
+            newsletter_factory.class: NewsletterFactory
         services:
             newsletter_manager:
                 class:          %newsletter_manager.class%
@@ -47,11 +47,10 @@ class:
 
     .. code-block:: xml
 
-        <!-- src/Acme/HelloBundle/Resources/config/services.xml -->
         <parameters>
             <!-- ... -->
-            <parameter key="newsletter_manager.class">Acme\HelloBundle\Newsletter\NewsletterManager</parameter>
-            <parameter key="newsletter_factory.class">Acme\HelloBundle\Newsletter\NewsletterFactory</parameter>
+            <parameter key="newsletter_manager.class">NewsletterManager</parameter>
+            <parameter key="newsletter_factory.class">NewsletterFactory</parameter>
         </parameters>
 
         <services>
@@ -64,12 +63,11 @@ class:
 
     .. code-block:: php
 
-        // src/Acme/HelloBundle/Resources/config/services.php
         use Symfony\Component\DependencyInjection\Definition;
 
         // ...
-        $container->setParameter('newsletter_manager.class', 'Acme\HelloBundle\Newsletter\NewsletterManager');
-        $container->setParameter('newsletter_factory.class', 'Acme\HelloBundle\Newsletter\NewsletterFactory');
+        $container->setParameter('newsletter_manager.class', 'NewsletterManager');
+        $container->setParameter('newsletter_factory.class', 'NewsletterFactory');
 
         $container->setDefinition('newsletter_manager', new Definition(
             '%newsletter_manager.class%'
@@ -88,11 +86,10 @@ factory itself as a service:
 
     .. code-block:: yaml
 
-        # src/Acme/HelloBundle/Resources/config/services.yml
         parameters:
             # ...
-            newsletter_manager.class: Acme\HelloBundle\Newsletter\NewsletterManager
-            newsletter_factory.class: Acme\HelloBundle\Newsletter\NewsletterFactory
+            newsletter_manager.class: NewsletterManager
+            newsletter_factory.class: NewsletterFactory
         services:
             newsletter_factory:
                 class:            %newsletter_factory.class%
@@ -103,11 +100,10 @@ factory itself as a service:
 
     .. code-block:: xml
 
-        <!-- src/Acme/HelloBundle/Resources/config/services.xml -->
         <parameters>
             <!-- ... -->
-            <parameter key="newsletter_manager.class">Acme\HelloBundle\Newsletter\NewsletterManager</parameter>
-            <parameter key="newsletter_factory.class">Acme\HelloBundle\Newsletter\NewsletterFactory</parameter>
+            <parameter key="newsletter_manager.class">NewsletterManager</parameter>
+            <parameter key="newsletter_factory.class">NewsletterFactory</parameter>
         </parameters>
 
         <services>
@@ -121,12 +117,11 @@ factory itself as a service:
 
     .. code-block:: php
 
-        // src/Acme/HelloBundle/Resources/config/services.php
         use Symfony\Component\DependencyInjection\Definition;
 
         // ...
-        $container->setParameter('newsletter_manager.class', 'Acme\HelloBundle\Newsletter\NewsletterManager');
-        $container->setParameter('newsletter_factory.class', 'Acme\HelloBundle\Newsletter\NewsletterFactory');
+        $container->setParameter('newsletter_manager.class', 'NewsletterManager');
+        $container->setParameter('newsletter_factory.class', 'NewsletterFactory');
 
         $container->setDefinition('newsletter_factory', new Definition(
             '%newsletter_factory.class%'
@@ -155,11 +150,10 @@ in the previous example takes the ``templating`` service as an argument:
 
     .. code-block:: yaml
 
-        # src/Acme/HelloBundle/Resources/config/services.yml
         parameters:
             # ...
-            newsletter_manager.class: Acme\HelloBundle\Newsletter\NewsletterManager
-            newsletter_factory.class: Acme\HelloBundle\Newsletter\NewsletterFactory
+            newsletter_manager.class: NewsletterManager
+            newsletter_factory.class: NewsletterFactory
         services:
             newsletter_factory:
                 class:            %newsletter_factory.class%
@@ -172,11 +166,10 @@ in the previous example takes the ``templating`` service as an argument:
 
     .. code-block:: xml
 
-        <!-- src/Acme/HelloBundle/Resources/config/services.xml -->
         <parameters>
             <!-- ... -->
-            <parameter key="newsletter_manager.class">Acme\HelloBundle\Newsletter\NewsletterManager</parameter>
-            <parameter key="newsletter_factory.class">Acme\HelloBundle\Newsletter\NewsletterFactory</parameter>
+            <parameter key="newsletter_manager.class">NewsletterManager</parameter>
+            <parameter key="newsletter_factory.class">NewsletterFactory</parameter>
         </parameters>
 
         <services>
@@ -192,12 +185,11 @@ in the previous example takes the ``templating`` service as an argument:
 
     .. code-block:: php
 
-        // src/Acme/HelloBundle/Resources/config/services.php
         use Symfony\Component\DependencyInjection\Definition;
 
         // ...
-        $container->setParameter('newsletter_manager.class', 'Acme\HelloBundle\Newsletter\NewsletterManager');
-        $container->setParameter('newsletter_factory.class', 'Acme\HelloBundle\Newsletter\NewsletterFactory');
+        $container->setParameter('newsletter_manager.class', 'NewsletterManager');
+        $container->setParameter('newsletter_factory.class', 'NewsletterFactory');
 
         $container->setDefinition('newsletter_factory', new Definition(
             '%newsletter_factory.class%'

@@ -1,4 +1,8 @@
-﻿Working with Container Parameters and Definitions
+﻿.. index::
+   single: Dependency Injection; Service Definitions
+
+
+Working with Container Parameters and Definitions
 =================================================
 
 Getting and Setting Container Parameters
