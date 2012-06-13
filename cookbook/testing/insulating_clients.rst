@@ -1,5 +1,5 @@
 .. index::
-   single: Tests
+   single: Tests; Insulating clients
 
 How to test the Interaction of several Clients
 ==============================================

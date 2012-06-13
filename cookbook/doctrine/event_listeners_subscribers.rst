@@ -1,3 +1,6 @@
+.. index::
+   single: Doctrine; Event listeners and subscribers
+
 .. _doctrine-event-config:
 
 Registering Event Listeners and Subscribers
