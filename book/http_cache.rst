@@ -290,7 +290,7 @@ which is actually a collection of various cache information.
     :ref:`http-expiration-validation` section.
 
 .. index::
-   single: Cache; Cache-Control Header
+   single: Cache; Cache-Control header
    single: HTTP headers; Cache-Control
 
 The Cache-Control Header
@@ -624,7 +624,7 @@ code.
     whether or not the resource has been updated since it was cached.
 
 .. index::
-   single: Cache; Conditional Get
+   single: Cache; Conditional get
    single: HTTP; 304
 
 .. _optimizing-cache-validation:

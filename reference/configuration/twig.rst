@@ -1,5 +1,5 @@
 .. index::
-   pair: Twig; Configuration Reference
+   pair: Twig; Configuration reference
 
 TwigBundle Configuration Reference
 ==================================

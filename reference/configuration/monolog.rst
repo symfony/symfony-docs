@@ -1,5 +1,5 @@
 .. index::
-   pair: Monolog; Configuration Reference
+   pair: Monolog; Configuration reference
 
 Configuration Reference
 =======================
