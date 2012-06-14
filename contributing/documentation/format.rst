@@ -146,7 +146,11 @@ Installing the Sphinx extensions
     
     # ...
     sys.path.append(os.path.abspath('_exts'))
-    
+
+    # adding PhpLexer
+    from sphinx.highlighting import lexers
+    from pygments.lexers.web import PhpLexer
+
     # ...
     # add the extensions to the list of extensions
     extensions = [..., 'sensio.sphinx.refinclude', 'sensio.sphinx.configurationblock', 'sensio.sphinx.phpcode']
