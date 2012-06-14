@@ -22,9 +22,9 @@ you to apply a collection of constraints to each element of the array.
 +----------------+----------------------------------------------------------------------------------------+
 | Options        | - `message`_                                                                           |
 +----------------+----------------------------------------------------------------------------------------+
-| Class          | :class:`Symfony\\Component\\Validator\\Constraints\\UserPassword`                      |
+| Class          | :class:`Symfony\\Bridge\\Security\\Core\\Validator\\Constraints\\UserPassword`                      |
 +----------------+----------------------------------------------------------------------------------------+
-| Validator      | :class:`Symfony\\Bundle\\SecurityBundle\\Validator\\Constraint\\UserPasswordValidator` |
+| Validator      | :class:`Symfony\\Bridge\\Security\\Core\\Validator\\Constraint\\UserPasswordValidator` |
 +----------------+----------------------------------------------------------------------------------------+
 
 Basic Usage
