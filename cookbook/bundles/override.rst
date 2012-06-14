@@ -7,13 +7,6 @@ How to Override any Part of a Bundle
 This document is a quick reference for how to override different parts of
 third-party bundles.
 
-.. note::
-
-    Whenever you are extending a (part of a) bundle, make sure that your bundle
-    is registered in the kernel **after** the bundle you're trying to override
-    parts of. Otherwise, your config that is supposed to override bundle 
-    configuration, is instead overridden by it!
-
 Templates
 ---------
 
@@ -42,15 +35,24 @@ inheritance. For more information, see :doc:`/cookbook/bundles/inheritance`.
 Services & Configuration
 ------------------------
 
+.. note::
+
+    Whenever you are extending a (part of a) bundle, make sure that your bundle
+    is registered in the kernel **after** the bundle you're trying to override
+    parts of. Otherwise, your config that is supposed to override bundle
+    configuration, is instead overridden by it!
+
 In order to completely override a service, just define the service as you would
 usual, but making sure the id of the service is identical to the one you are
 overriding.
 
 In order to extend a service (e.g. just add a method, but leaving the
 dependencies or tags intact), make sure the class name is defined as a parameter
-in the service config of the bundle containing the service. Then, in your bundle
-you can override the class name by setting the parameter directly in the
-container in the Extension class of your bundle:
+in the service config of the bundle containing the service. You can then either
+set this parameter in your config.yml, or, if you're going to reuse your bundle
+and it should always override the class, in your bundle you can override the
+class name by setting the parameter directly in the container in the Extension
+class of your bundle:
 
 .. code-block:: html+php
     <?php
@@ -76,6 +78,10 @@ container in the Extension class of your bundle:
             $loader->load('services.xml');
         }
     }
+
+If you want to do something beyond just overriding a parameter - like adding a
+method call - it must be done as a compiler pass. See
+`/cookbook/service_container/compiler_passes`
 
 Entities & Entity mapping
 -------------------------
