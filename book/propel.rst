@@ -28,7 +28,7 @@ Before you can start, you'll need to configure your database connection
 information.  By convention, this information is usually configured in an
 ``app/config/parameters.yml`` file:
 
-.. code-block:: yml
+.. code-block:: yaml
 
     # app/config/parameters.yml
     parameters:
