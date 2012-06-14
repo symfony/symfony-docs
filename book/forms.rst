@@ -1280,15 +1280,10 @@ to define form output.
     ever be needed in a single template.
 
     .. caution::
-
-        Templates that do not make use of the extends tag and thereby become 
-        a child of another template will have all of their blocks executed 
-        the moment they are rendered. This has the side-effect of preventing 
-        form_theme from having access to blocks you may be attempting to use 
-        when overriding the default form blocks.
-        
-        In practice, {% form_theme form _self %} should only be used by templates 
-        that do extend a base template.
+    
+        This ``{% form_theme form _self %}`` functionality will *only* work
+        if your template extends another. If your template does not, you
+        must point ``form_theme`` to a separate template.
 
 PHP
 ...
