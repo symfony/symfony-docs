@@ -25,7 +25,8 @@ was entered::
     namespace Acme\TaskBundle\Form\Type;
 
     use Symfony\Component\Form\AbstractType;
-    use Symfony\Component\Form\FormBuilder;
+    use Symfony\Component\Form\FormBuilderInterface;
+    use Symfony\Component\OptionsResolver\OptionsResolverInterface;
     use Acme\TaskBundle\Form\DataTransformer\IssueToNumberTransformer;
     use Doctrine\Common\Persistence\ObjectManager;
 
@@ -44,20 +45,13 @@ was entered::
             $this->om = $om;
         }
 
-        public function buildForm(FormBuilder $builder, array $options)
+        public function buildForm(FormBuilderInterface $builder, array $options)
         {
             $transformer = new IssueToNumberTransformer($this->om);
-            $builder->appendClientTransformer($transformer);
+            $builder->addViewTransformer($transformer);
         }
 
-        public function getDefaultOptions()
-        {
-            return array(
-                'invalid_message' => 'The selected issue does not exist',
-            );
-        }
-
-        public function getParent(array $options)
+        public function getParent()
         {
             return 'text';
         }
@@ -73,11 +67,12 @@ was entered::
     You can also use transformers without creating a new custom form type
     by calling ``appendClientTransformer`` on any field builder::
 
+        use Symfony\Component\Form\FormBuilderInterface;
         use Acme\TaskBundle\Form\DataTransformer\IssueToNumberTransformer;
 
         class TaskType extends AbstractType
         {
-            public function buildForm(FormBuilder $builder, array $options)
+            public function buildForm(FormBuilderInterface $builder, array $options)
             {
                 // ...
 
@@ -88,7 +83,7 @@ was entered::
                 // use a normal text field, but transform the text into an issue object
                 $builder
                     ->add('issue', 'text')
-                    ->appendClientTransformer($transformer)
+                    ->addViewTransformer($transformer)
                 ;
             }
 
@@ -194,11 +189,11 @@ You can now add the type to your form by its alias as follows::
     namespace Acme\TaskBundle\Form\Type;
 
     use Symfony\Component\Form\AbstractType;
-    use Symfony\Component\Form\FormBuilder;
+    use Symfony\Component\Form\FormBuilderInterface;
 
     class TaskType extends AbstractType
     {
-        public function buildForm(FormBuilder $builder, array $options)
+        public function buildForm(FormBuilderInterface $builder, array $options)
         {
             $builder
                 ->add('task')

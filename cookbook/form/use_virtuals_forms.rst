@@ -50,9 +50,11 @@ Start by creating a very simple ``CompanyType`` and ``CustomerType``::
     // src/Acme/HelloBundle/Form/Type/CompanyType.php
     namespace Acme\HelloBundle\Form\Type;
 
+    use Symfony\Component\Form\FormBuilderInterface;
+
     class CompanyType extends AbstractType
     {
-        public function buildForm(FormBuilder $builder, array $options)
+        public function buildForm(FormBuilderInterface $builder, array $options)
         {
             $builder
                 ->add('name', 'text')
@@ -66,9 +68,11 @@ Start by creating a very simple ``CompanyType`` and ``CustomerType``::
     // src/Acme/HelloBundle/Form/Type/CustomerType.php
     namespace Acme\HelloBundle\Form\Type;
 
+    use Symfony\Component\Form\FormBuilderInterface;
+
     class CustomerType extends AbstractType
     {
-        public function buildForm(FormBuilder $builder, array $options)
+        public function buildForm(FormBuilderInterface $builder, array $options)
         {
             $builder
                 ->add('firstName', 'text')
@@ -83,9 +87,11 @@ location form type::
     // src/Acme/HelloBundle/Form/Type/LocationType.php
     namespace Acme\HelloBundle\Form\Type;
 
+    use Symfony\Component\Form\FormBuilderInterface;
+
     class LocationType extends AbstractType
     {
-        public function buildForm(FormBuilder $builder, array $options)
+        public function buildForm(FormBuilderInterface $builder, array $options)
         {
             $builder
                 ->add('address', 'textarea')
@@ -113,7 +119,7 @@ of ``LocationType`` and directly start using it in the two original form types.
 Look at the result::
 
     // CompanyType
-    public function buildForm(FormBuilder $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('foo', new LocationType());
     }
@@ -121,7 +127,7 @@ Look at the result::
 .. code-block:: php
 
     // CustomerType
-    public function buildForm(FormBuilder $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('bar', new LocationType());
     }
