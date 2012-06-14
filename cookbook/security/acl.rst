@@ -192,7 +192,7 @@ several base permissions:
         ->add('delete')
         ->add('undelete')
     ;
-    $mask = $builder->get(); // int(15)
+    $mask = $builder->get(); // int(29)
 
 This integer bitmask can then be used to grant a user the base permissions you
 added above:
