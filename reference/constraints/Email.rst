@@ -81,15 +81,17 @@ checkMX
 
 **type**: ``Boolean`` **default**: ``false``
 
-If true, then the `checkdnsrr`_ PHP function will be used to check the validity
-of the MX record of the host of the given email.
+If true, then the :phpfunction:`checkdnsrr` PHP function will be used to
+check the validity of the MX record of the host of the given email.
 
 checkHost
 ~~~~~~~~~
 
+.. versionadded:: 2.1
+    The ``checkHost`` option was added in Symfony 2.1
+
 **type**: ``Boolean`` **default**: ``false``
 
-If true, then the `checkdnsrr`_ PHP function will be used to check the validity
-of the MX *or* the A *or* the AAAA record of the host of the given email.
-
-.. _`checkdnsrr`: http://www.php.net/manual/en/function.checkdnsrr.php
+If true, then the :phpfunction:`checkdnsrr` PHP function will be used to
+check the validity of the MX *or* the A *or* the AAAA record of the host
+of the given email.
