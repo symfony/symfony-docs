@@ -9,7 +9,7 @@ or just after our controller actions acting as filters or hooks.
 
 In Symfony1, this was achieved with the preExecute and postExecute methods, most major frameworks have similar
 methods but there is no such thing in Symfony2. Good news is that there is a much better way to interfere our
-Request -> Response process with the EventListener component.
+Request -> Response process with the EventDispatcher component.
 
 Token validation example
 ========================
@@ -22,8 +22,8 @@ And if it is restricted, we need to validate the provided token.
 
 .. note::
 
-Please note that for simplicity in the recipe, tokens will be defined in config
-and neither database setup nor authentication provider via Security component will be used
+    Please note that for simplicity in the recipe, tokens will be defined in config
+    and neither database setup nor authentication provider via Security component will be used
 
 Creating a before filter with a controller.request event
 ========================================================
@@ -43,6 +43,23 @@ We can add basic tokens configuration using config.yml and parameters key
                 client1: pass1
                 client2: pass2
 
+    .. code-block:: xml
+
+        <!-- app/config/config.xml -->
+        <parameters>
+            <parameter key="tokens" type="collection">
+                <parameter key="client1">pass1</parameter>
+                <parameter key="client2">pass2</parameter>
+            </parameter>
+        </parameters>
+
+    .. code-block:: php
+
+        // app/config/config.php
+        $container->setParameter('tokens', array(
+            'client1' => 'pass1',
+            'client2' => 'pass2'
+        ));
 
 Tag controllers to be checked
 -----------------------------
@@ -58,12 +75,12 @@ A clean and easy way is to create an empty interface and make the controllers im
 
     interface TokenAuthenticatedController
     {
-    // Nothing here
+        // Nothing here
     }
 
     class FooController implements TokenAuthenticatedController
     {
-    // Your actions that need authentication
+        // Your actions that need authentication
     }
 
 Creating an Event Listener
@@ -92,7 +109,9 @@ Creating an Event Listener
              * $controller passed can be either a class or a Closure. This is not usual in Symfony2 but it may happen.
              * If it is a class, it comes in array format
              */
-            if (!is_array($controller)) return;
+            if (!is_array($controller)) {
+                return;
+            }
 
             if($controller[0] instanceof TokenAuthenticatedController) {
                 $token = $event->getRequest()->get('token');
@@ -103,8 +122,8 @@ Creating an Event Listener
         }
     }
 
-Tagging the EventListener
--------------------------
+Registering the listener
+------------------------
 
 .. configuration-block::
 
