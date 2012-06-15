@@ -342,7 +342,7 @@ Referencing Base Form Blocks (Twig specific)
 
 So far, to override a particular form block, the best method is to copy
 the default block from `form_div_layout.html.twig`_, paste it into a different template,
-and the customize it. In many cases, you can avoid doing this by referencing
+and then customize it. In many cases, you can avoid doing this by referencing
 the base block when customizing it.
 
 This is easy to do, but varies slightly depending on if your form block customizations
