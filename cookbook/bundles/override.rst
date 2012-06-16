@@ -35,53 +35,36 @@ inheritance. For more information, see :doc:`/cookbook/bundles/inheritance`.
 Services & Configuration
 ------------------------
 
-.. note::
+In order to override/extend a service, there are two options. Firstly, you can
+set the parameter holding the service's class name to your own class by setting
+it in the config.yml. This of course is only possible if the class name is
+defined as a parameter in the service config of the bundle containing the
+service. Secondly, if this is not the case, or if you want to make sure the
+class is always overridden when your bundle is used, you should use a compiler
+pass:
 
-    Whenever you are extending a (part of a) bundle, make sure that your bundle
-    is registered in the kernel **after** the bundle you're trying to override
-    parts of. Otherwise, your config that is supposed to override bundle
-    configuration, is instead overridden by it!
+.. code-block:: php
+    namespace Foo\BarBundle\DependencyInjection\Compiler;
 
-In order to completely override a service, just define the service as you would
-usual, but making sure the id of the service is identical to the one you are
-overriding.
-
-In order to extend a service (e.g. just add a method, but leaving the
-dependencies or tags intact), make sure the class name is defined as a parameter
-in the service config of the bundle containing the service. You can then either
-set this parameter in your config.yml, or, if you're going to reuse your bundle
-and it should always override the class, in your bundle you can override the
-class name by setting the parameter directly in the container in the Extension
-class of your bundle:
-
-.. code-block:: html+php
-    <?php
-
-    namespace Foo\BarBundle\DependencyInjection;
-
+    use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
     use Symfony\Component\DependencyInjection\ContainerBuilder;
-    use Symfony\Component\Config\FileLocator;
-    use Symfony\Component\HttpKernel\DependencyInjection\Extension;
-    use Symfony\Component\DependencyInjection\Loader;
 
-    class FooBarExtension extends Extension
+    class OverrideServiceCompilerPass implements CompilerPassInterface
     {
 
-        public function load(array $configs, ContainerBuilder $container)
+        public function process(ContainerBuilder $container)
         {
-            $configuration = new Configuration();
-            $config = $this->processConfiguration($configuration, $configs);
-
-            $container->setParameter('parameter_name.containing.service_class', 'Foo\BarBundle\Service\Service');
-
-            $loader = new Loader\XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
-            $loader->load('services.xml');
+            $definition = $container->getDefinition('original-service-id');
+            $definition->setClass('Foo\BarBundle\YourService');
         }
     }
 
-If you want to do something beyond just overriding a parameter - like adding a
-method call - it must be done as a compiler pass. See
-`/cookbook/service_container/compiler_passes`
+In this example we fetch the service definition of the original service, and set
+it's class name to our own class.
+
+See `/cookbook/service_container/compiler_passes` for information on how to use
+compiler passes. If you want to do something beyond just overriding the class -
+like adding a method call - You can only use the compiler pass method.
 
 Entities & Entity mapping
 -------------------------
