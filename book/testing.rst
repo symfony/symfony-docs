@@ -275,7 +275,7 @@ document::
         // Assert that the response status code is 404
         $this->assertTrue($client->getResponse()->isNotFound());
         // Assert a specific 200 status code
-        $this->assertEquals(200, $client->getResponse()->getStatus());
+        $this->assertEquals(200, $client->getResponse()->getStatusCode());
 
         // Assert that the response is a redirect to /demo/contact
         $this->assertTrue($client->getResponse()->isRedirect('/demo/contact'));

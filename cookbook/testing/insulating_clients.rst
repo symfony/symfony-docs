@@ -13,7 +13,7 @@ chat for instance), create several Clients::
     $harry->request('POST', '/say/sally/Hello');
     $sally->request('GET', '/messages');
 
-    $this->assertEquals(201, $harry->getResponse()->getStatus());
+    $this->assertEquals(201, $harry->getResponse()->getStatusCode());
     $this->assertRegExp('/Hello/', $sally->getResponse()->getContent());
 
 This works except when your code maintains a global state or if it depends on
@@ -29,7 +29,7 @@ can insulate your clients::
     $harry->request('POST', '/say/sally/Hello');
     $sally->request('GET', '/messages');
 
-    $this->assertEquals(201, $harry->getResponse()->getStatus());
+    $this->assertEquals(201, $harry->getResponse()->getStatusCode());
     $this->assertRegExp('/Hello/', $sally->getResponse()->getContent());
 
 Insulated clients transparently execute their requests in a dedicated and
