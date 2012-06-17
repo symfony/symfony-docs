@@ -22,5 +22,3 @@ The ``field`` type predefines a couple of options:
 .. include:: /reference/forms/types/options/attr.rst.inc
 
 .. include:: /reference/forms/types/options/translation_domain.rst.inc
-
-.. include:: /reference/forms/types/options/escape_label.rst.inc
