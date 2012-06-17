@@ -5,17 +5,17 @@ How to create a Custom Validation Constraint
 ============================================
 
 You can create a custom constraint by extending the base constraint class,
-:class:`Symfony\\Component\\Validator\\Constraint`. 
-As an example we're going to create a simple validator that checks if a string 
+:class:`Symfony\\Component\\Validator\\Constraint`.
+As an example we're going to create a simple validator that checks if a string
 contains only alphanumeric characters.
 
 Creating Constraint class
 -------------------------
 
-First you need to create a Constraint class and extend :class:`Symfony\\Component\\Validator\\Constraint`:: 
+First you need to create a Constraint class and extend :class:`Symfony\\Component\\Validator\\Constraint`::
 
     namespace Acme\DemoBundle\Validator\Constraints;
-    
+
     use Symfony\Component\Validator\Constraint;
 
     /**
@@ -31,11 +31,11 @@ First you need to create a Constraint class and extend :class:`Symfony\\Componen
     The ``@Annotation`` annotation is necessary for this new constraint in
     order to make it available for use in classes via annotations.
     Options for your constraint are represented as public properties on the
-    constraint class. 
+    constraint class.
 
 Creating the Validator itself
 -----------------------------
-    
+
 As you can see, a constraint class is fairly minimal. The actual validation is
 performed by a another "constraint validator" class. The constraint validator
 class is specified by the constraint's ``validatedBy()`` method, which
@@ -54,7 +54,7 @@ when actually performing the validation.
 The validator class is also simple, and only has one required method: ``validate``::
 
     namespace Acme\DemoBundle\Validator\Constraints;
-    
+
     use Symfony\Component\Validator\Constraint;
     use Symfony\Component\Validator\ConstraintValidator;
 
@@ -82,7 +82,7 @@ The validator class is also simple, and only has one required method: ``validate
     The ``isValid`` method was renamed to ``validate`` in Symfony 2.1. The
     ``setMessage`` method was also deprecated, in favor of calling ``addViolation``
     on the context.
-    
+
 Using the new Validator
 -----------------------
 
@@ -91,7 +91,7 @@ Using custom validators is very easy, just as the ones provided by Symfony2 itse
 .. configuration-block::
 
     .. code-block:: yaml
-        
+
         # src/Acme/BlogBundle/Resources/config/validation.yml
         Acme\DemoBundle\Entity\AcmeEntity:
             properties:
@@ -102,25 +102,25 @@ Using custom validators is very easy, just as the ones provided by Symfony2 itse
     .. code-block:: php-annotations
 
         // src/Acme/DemoBundle/Entity/AcmeEntity.php
-    
+
         use Symfony\Component\Validator\Constraints as Assert;
         use Acme\DemoBundle\Validator\Constraints as AcmeAssert;
-            
+
         class AcmeEntity
         {
             // ...
-            
+
             /**
              * @Assert\NotBlank
              * @AcmeAssert\ContainsAlphanumeric
              */
             protected $name;
-            
+
             // ...
         }
 
     .. code-block:: xml
-        
+
         <!-- src/Acme/DemoBundle/Resources/config/validation.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
@@ -136,7 +136,7 @@ Using custom validators is very easy, just as the ones provided by Symfony2 itse
         </constraint-mapping>
 
     .. code-block:: php
-        
+
         // src/Acme/DemoBundle/Entity/AcmeEntity.php
 
         use Symfony\Component\Validator\Mapping\ClassMetadata;
@@ -223,7 +223,7 @@ With this, the validator ``validate()`` method gets an object as its first argum
         public function validate($protocol, Constraint $constraint)
         {
             if ($protocol->getFoo() != $protocol->getBar()) {
-                $this->context->addViolationAtSubPath('foo', $constraint->getMessage(), array(), null);
+                $this->context->addViolationAtSubPath('foo', $constraint->message, array(), null);
 
                 return false;
             }
