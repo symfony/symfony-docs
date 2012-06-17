@@ -521,6 +521,15 @@ The Symfony templating engine is explained in great detail in the
         $templating = $this->get('templating');
         $content = $templating->render('AcmeHelloBundle:Hello:index.html.twig', array('name' => $name));
 
+.. note::
+
+    It is possible to render templates in deeper subdirectories as well, however
+    be careful to avoid the pitfall of making your directory structure unduly
+    elaborate::
+
+        $templating->render('AcmeHelloBundle:Hello/Greetings:index.html.twig', array('name' => $name));
+        // index.html.twig found in Resources/views/Hello/Greetings is rendered.
+
 .. index::
    single: Controller; Accessing services
 
