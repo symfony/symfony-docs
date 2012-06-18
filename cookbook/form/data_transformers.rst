@@ -65,7 +65,7 @@ was entered::
 .. tip::
 
     You can also use transformers without creating a new custom form type
-    by calling ``appendClientTransformer`` on any field builder::
+    by calling ``addViewTransformer`` on any field builder::
 
         use Symfony\Component\Form\FormBuilderInterface;
         use Acme\TaskBundle\Form\DataTransformer\IssueToNumberTransformer;
