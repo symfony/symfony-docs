@@ -231,9 +231,12 @@ The last step is to update the compiler to take care of your additional informat
 
             $definition = $container->getDefinition('acme_mailer.transport_chain');
 
-            foreach ($container->findTaggedServiceIds('acme_mailer.transport') as $id => $attributes) {
-                $definition->addMethodCall('addTransport', array(new Reference($id), $attributes[0]["alias"]));
+            foreach ($container->findTaggedServiceIds('acme_mailer.transport') as $id => $tagAttributes) {
+                foreach ($tagAttributes as $attributes) {
+                    $definition->addMethodCall('addTransport', array(new Reference($id), $attributes["alias"]));
+                }
             }
         }
     }
     
+Take care of ``$attributes`` variable. Because you can use the same tag many times on the same service, ``$attributes`` is an array of attributes for each tag that refers to the same service.
