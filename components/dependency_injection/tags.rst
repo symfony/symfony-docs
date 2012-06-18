@@ -157,3 +157,79 @@ run when the container is compiled::
 
     $container = new ContainerBuilder();
     $container->addCompilerPass(new TransportCompilerPass);
+
+Additional information
+----------------------
+
+To begin with, change the ``TransportChain`` class:
+
+    class TransportChain
+    {
+        private $transports;
+
+        public function __construct()
+        {
+            $this->transports = array();
+        }
+
+        public function addTransport(\Swift_Transport  $transport, $alias)
+        {
+            $this->transports[$alias] = $transport;
+        }
+
+        public function addTransport($alias)
+        {
+            return $this->transports[];
+        }
+    }
+
+Change the service delaration:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        services:
+            acme_mailer.transport.smtp:
+                class: \Swift_SmtpTransport
+                arguments:
+                    - %mailer_host%
+                tags:
+                    -  { name: acme_mailer.transport, alias: foo }
+            acme_mailer.transport.sendmail:
+                class: \Swift_SendmailTransport
+                tags:
+                    -  { name: acme_mailer.transport, alias: bar }
+
+    .. code-block:: xml
+
+        <service id="acme_mailer.transport.smtp" class="\Swift_SmtpTransport">
+            <argument>%mailer_host%</argument>
+            <tag name="acme_mailer.transport" alias="foo" />
+        </service>
+
+        <service id="acme_mailer.transport.sendmail" class="\Swift_SendmailTransport">
+            <tag name="acme_mailer.transport" alias="bar" />
+        </service>
+
+The last step is to update the compiler to take care of your additional information:
+
+    use Symfony\Component\DependencyInjection\ContainerBuilder;
+    use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
+    use Symfony\Component\DependencyInjection\Reference;
+
+    class TransportCompilerPass implements CompilerPassInterface
+    {
+        public function process(ContainerBuilder $container)
+        {
+            if (false === $container->hasDefinition('acme_mailer.transport_chain')) {
+                return;
+            }
+
+            $definition = $container->getDefinition('acme_mailer.transport_chain');
+
+            foreach ($container->findTaggedServiceIds('acme_mailer.transport') as $id => $attributes) {
+                $definition->addMethodCall('addTransport', array(new Reference($id), $attributes[0]["alias"]));
+            }
+        }
+    }
