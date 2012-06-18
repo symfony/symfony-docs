@@ -182,6 +182,7 @@ To begin with, change the ``TransportChain`` class::
             return $this->transports[];
         }
     }
+    
 
 Change the service delaration:
 
@@ -200,6 +201,7 @@ Change the service delaration:
                 class: \Swift_SendmailTransport
                 tags:
                     -  { name: acme_mailer.transport, alias: bar }
+        
 
     .. code-block:: xml
 
@@ -211,6 +213,7 @@ Change the service delaration:
         <service id="acme_mailer.transport.sendmail" class="\Swift_SendmailTransport">
             <tag name="acme_mailer.transport" alias="bar" />
         </service>
+        
 
 The last step is to update the compiler to take care of your additional information::
 
@@ -233,3 +236,4 @@ The last step is to update the compiler to take care of your additional informat
             }
         }
     }
+    
