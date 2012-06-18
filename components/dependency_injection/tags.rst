@@ -161,7 +161,7 @@ run when the container is compiled::
 Additional information
 ----------------------
 
-To begin with, change the ``TransportChain`` class:
+To begin with, change the ``TransportChain`` class::
 
     class TransportChain
     {
@@ -212,7 +212,7 @@ Change the service delaration:
             <tag name="acme_mailer.transport" alias="bar" />
         </service>
 
-The last step is to update the compiler to take care of your additional information:
+The last step is to update the compiler to take care of your additional information::
 
     use Symfony\Component\DependencyInjection\ContainerBuilder;
     use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
