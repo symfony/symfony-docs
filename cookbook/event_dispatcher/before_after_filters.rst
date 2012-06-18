@@ -92,10 +92,12 @@ Creating an Event Listener
 
     use Acme\DemoBundle\Controller\TokenAuthenticatedController;
     use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
+    use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
 
     class BeforeListener
     {
         private $tokens;
+
         public function __contruct($tokens)
         {
             $this->tokens = $tokens;
@@ -105,7 +107,7 @@ Creating an Event Listener
         {
             $controller = $event->getController();
 
-            /**
+            /*
              * $controller passed can be either a class or a Closure. This is not usual in Symfony2 but it may happen.
              * If it is a class, it comes in array format
              */
