@@ -57,6 +57,25 @@ default mode value `0777`. You can use the second argument to set your own mode.
     You can pass an array or any :phpclass:`\\Traversable` object as the first
     argument.
 
+
+Exists
+~~~~~~
+
+Exists checks the presence of all files or directories and return false if a 
+file is missing.
+
+    // this directory exists, return true
+    $fs->exists('/tmp/photos');
+
+    // rabbit.jpg exists, bottle.png does not exists, return false
+    $fs->exists(array('rabbit.jpg', 'bottle.png));
+
+
+.. note::
+
+    You can pass an array or any :phpclass:`\\Traversable` object as the first
+    argument.
+
 Copy
 ~~~~
 
