@@ -1343,11 +1343,11 @@ to define form output.
     this method to quickly make form output customizations that will only
     ever be needed in a single template.
 
-    .. caution::
+.. caution::
     
-        This ``{% form_theme form _self %}`` functionality will *only* work
-        if your template extends another. If your template does not, you
-        must point ``form_theme`` to a separate template.
+    This ``{% form_theme form _self %}`` functionality will *only* work
+    if your template extends another. If your template does not, you
+    must point ``form_theme`` to a separate template.
 
 PHP
 ...
