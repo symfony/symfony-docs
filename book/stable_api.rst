@@ -1,3 +1,6 @@
+.. index::
+   single: Stable API
+
 The Symfony2 Stable API
 =======================
 

@@ -1,3 +1,6 @@
+.. index::
+   single: Doctrine; Multiple entity managers
+
 How to work with Multiple Entity Managers
 =========================================
 

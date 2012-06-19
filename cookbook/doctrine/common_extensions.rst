@@ -1,3 +1,6 @@
+.. index::
+   single: Doctrine; Common extensions
+
 Doctrine Extensions: Timestampable, Sluggable, Translatable, etc.
 =================================================================
 

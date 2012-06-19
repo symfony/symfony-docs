@@ -1,3 +1,6 @@
+.. index::
+   single: Dependency Injection; Scopes
+
 How to work with Scopes
 =======================
 

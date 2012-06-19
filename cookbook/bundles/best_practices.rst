@@ -1,5 +1,5 @@
 .. index::
-   single: Bundles; Best Practices
+   single: Bundle; Best Practices
 
 Bundle Structure and Best Practices
 ===================================
