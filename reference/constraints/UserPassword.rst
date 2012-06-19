@@ -11,7 +11,7 @@ but needs to enter his old password for security.
 
 .. note::
 
-    This should **not** be used validate a login form, since this is done
+    This should **not** be used to validate a login form, since this is done
     automatically by the security system.
 
 When applied to an array (or Traversable object), this constraint allows
