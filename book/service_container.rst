@@ -1,6 +1,6 @@
 .. index::
    single: Service Container
-   single: Dependency Injection Container
+   single: Dependency Injection; Container
 
 Service Container
 =================
@@ -62,7 +62,7 @@ classes is a well-known and trusted object-oriented best-practice. These skills
 are key to being a good developer in almost any language.
 
 .. index::
-   single: Service Container; What is?
+   single: Service Container; What is a Service Container?
 
 What is a Service Container?
 ----------------------------
@@ -330,7 +330,7 @@ second method, which is the flexible and preferred method for importing service
 configuration from third-party bundles.
 
 .. index::
-   single: Service Container; imports
+   single: Service Container; Imports
 
 .. _service-container-imports-directive:
 
