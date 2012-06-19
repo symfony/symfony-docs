@@ -1,3 +1,6 @@
+.. index::
+   single: Workflow; Subversion
+
 How to Create and store a Symfony2 Project in Subversion
 ========================================================
 

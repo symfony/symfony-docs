@@ -1,4 +1,7 @@
-﻿Compiling the Container
+﻿.. index::
+   single: Dependency Injection; Compilation
+
+Compiling the Container
 =======================
 
 The service container can be compiled for various reasons. These reasons

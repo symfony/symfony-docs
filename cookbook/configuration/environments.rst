@@ -1,5 +1,5 @@
 .. index::
-   single: Environments;
+   single: Environments
 
 How to Master and Create new Environments
 =========================================
