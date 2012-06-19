@@ -121,13 +121,7 @@ worlds though by using configuration files and then dumping and caching the resu
 configuration. The ``PhpDumper`` makes dumping the compiled container easy::
 
     use Symfony\Component\DependencyInjection\ContainerBuilder;
-    use Symfony\Component\Config\FileLocator;
-    use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
     use Symfony\Component\DependencyInjection\Dumper\PhpDumper
-
-    $container = new ContainerBuilder();
-    $loader = new XmlFileLoader($container, new FileLocator(__DIR__));
-    $loader->load('services.xml');
 
     $file = __DIR__ .'/cache/container.php';
 
