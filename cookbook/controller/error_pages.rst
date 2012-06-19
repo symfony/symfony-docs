@@ -1,3 +1,7 @@
+.. index::
+   single: Controller; Customize error pages
+   single: Error pages
+
 How to customize Error Pages
 ============================
 

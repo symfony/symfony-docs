@@ -1,5 +1,5 @@
 .. index::
-   pair: Assetic; Configuration Reference
+   pair: Assetic; Configuration reference
 
 AsseticBundle Configuration Reference
 =====================================

@@ -1,6 +1,6 @@
 .. index::
    single: Configuration; Semantic
-   single: Bundle; Extension Configuration
+   single: Bundle; Extension configuration
 
 How to expose a Semantic Configuration for a Bundle
 ===================================================
@@ -90,7 +90,7 @@ The second method has several specific advantages:
 
 .. index::
    single: Bundles; Extension
-   single: Dependency Injection, Extension
+   single: Dependency Injection; Extension
 
 Creating an Extension Class
 ---------------------------

@@ -1,3 +1,6 @@
+.. index::
+   single: Doctrine; Custom DQL functions
+
 Registering Custom DQL Functions
 ================================
 

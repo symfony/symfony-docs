@@ -1,5 +1,5 @@
 .. index::
-   single: Configuration Reference; Framework
+   single: Configuration reference; Framework
 
 FrameworkBundle Configuration ("framework")
 ===========================================

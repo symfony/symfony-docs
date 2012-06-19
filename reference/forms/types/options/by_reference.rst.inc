@@ -28,7 +28,7 @@ when you call ``bindRequest`` on the form::
 
 Notice that ``setAuthor`` is not called. The author is modified by reference.
 
-If we set ``by_reference`` to false, binding looks like this:
+If we set ``by_reference`` to false, binding looks like this::
 
     $article->setTitle('...');
     $author = $article->getAuthor();

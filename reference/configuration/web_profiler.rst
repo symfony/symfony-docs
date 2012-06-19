@@ -1,5 +1,5 @@
 .. index::
-   single: Configuration Reference; WebProfiler
+   single: Configuration reference; WebProfiler
 
 WebProfilerBundle Configuration
 ===============================
@@ -20,3 +20,4 @@ Full Default Configuration
             toolbar:              false
             position:             bottom
             intercept_redirects:  false
+

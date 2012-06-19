@@ -1,3 +1,6 @@
+.. index::
+   single: symfony1
+
 How Symfony2 differs from symfony1
 ==================================
 

@@ -1,5 +1,5 @@
 .. index::
-   single: Form; Use virtual forms
+   single: Form; Virtual forms
 
 How to use the Virtual Form Field Option
 ========================================

@@ -1,3 +1,7 @@
+.. index::
+   single: Doctrine; File uploads
+
+
 How to handle File Uploads with Doctrine
 ========================================
 
