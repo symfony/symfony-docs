@@ -80,7 +80,7 @@ important:
     If you're creating a field that consists of many fields, then be sure
     to set your "parent" type as ``form`` or something that extends ``form``.
     Also, if you need to modify the "view" of any of your child types from
-    your parent type, use the ``buildViewBottomUp()`` method.
+    your parent type, use the ``finishView()`` method.
 
 The ``getName()`` method returns an identifier which should be unique in
 your application. This is used in various places, such as when customizing
