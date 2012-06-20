@@ -390,7 +390,7 @@ you'll need to specify which validation group(s) your form should use::
     ;
 
 If you're creating :ref:`form classes<book-form-creating-form-classes>` (a
-good practice), then you'll need to add the following to the ``getDefaultOptions()``
+good practice), then you'll need to add the following to the ``setDefaultOptions()``
 method::
 
     use Symfony\Component\OptionsResolver\OptionsResolverInterface;
@@ -1550,7 +1550,7 @@ but here's a short example::
     ;
 
 Now, when you call `$form->bindRequest($request)`, the constraints setup here are run
-against your form's data. If you're using a form class, override the ``getDefaultOptions``
+against your form's data. If you're using a form class, override the ``setDefaultOptions()``
 method to specify the option::
 
     namespace Acme\TaskBundle\Form\Type;

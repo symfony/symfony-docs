@@ -113,7 +113,7 @@ But we absolutely want to have a dedicated form type to deal with location (reme
 
 The ``virtual`` form field option is the solution.
 
-We can set the option ``'virtual' => true`` in the ``getDefaultOptions`` method
+We can set the option ``'virtual' => true`` in the ``setDefaultOptions()`` method
 of ``LocationType`` and directly start using it in the two original form types.
 
 Look at the result::

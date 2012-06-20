@@ -70,9 +70,9 @@ important:
   set) the ``multiple`` attribute on the ``select`` field. See `Creating a Template for the Field`_
   for more details.
 
-* ``getDefaultOptions()`` - This defines options for your form type that
+* ``setDefaultOptions()`` - This defines options for your form type that
   can be used in ``buildForm()`` and ``buildView()``. There are a lot of
-  options common to all fields (see `FieldType`_), but you can create any
+  options common to all fields (see `FormType`_), but you can create any
   others that you need here.
 
 .. tip::
