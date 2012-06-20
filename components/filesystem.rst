@@ -6,6 +6,10 @@ The Filesystem Component
 
     The Filesystem components provides basic utilities for the filesystem.
 
+.. versionadded:: 2.1
+    The Filesystem Component is new to Symfony 2.1. Previously, the ``Filesystem``
+    class was located in the ``HttpKernel`` component.
+
 Installation
 ------------
 
@@ -40,40 +44,37 @@ endpoint for filesystem operations::
     :method:`Symfony\\Component\\Filesystem\\Filesystem::remove` and 
     :method:`Symfony\\Component\\Filesystem\\Filesystem::touch` can receive a 
     string, an array or any object implementing :phpclass:`\\Traversable` as 
-    target argument.
+    the target argument.
 
 
 Mkdir
 ~~~~~
 
 Mkdir creates directory. On posix filesystems, directories are created with a 
-default mode value `0777`. You can use the second argument to set your own mode.
+default mode value `0777`. You can use the second argument to set your own mode::
 
     $fs->mkdir('/tmp/photos', 0700);
 
-
 .. note::
 
-    You can pass an array or any :phpclass:`\\Traversable` object as the first
+    You can pass an array or any :phpclass:`Traversable` object as the first
     argument.
-
 
 Exists
 ~~~~~~
 
-Exists checks the presence of all files or directories and return false if a 
-file is missing.
+Exists checks for the presence of all files or directories and returns false if a 
+file is missing::
 
     // this directory exists, return true
     $fs->exists('/tmp/photos');
 
     // rabbit.jpg exists, bottle.png does not exists, return false
-    $fs->exists(array('rabbit.jpg', 'bottle.png));
-
+    $fs->exists(array('rabbit.jpg', 'bottle.png'));
 
 .. note::
 
-    You can pass an array or any :phpclass:`\\Traversable` object as the first
+    You can pass an array or any :phpclass:`Traversable` object as the first
     argument.
 
 Copy
@@ -89,11 +90,10 @@ behavior can be overridden by the third boolean argument::
     // image.jpg will be overridden
     $fs->copy('image-ICC.jpg', 'image.jpg', true);
 
-
 Touch
 ~~~~~
 
-Touch sets access and modification time to a file. The current time is used by
+Touch sets access and modification time for a file. The current time is used by
 default. You can set your own with the second argument. The third argument is 
 the access time::
 
@@ -104,10 +104,9 @@ the access time::
     // set access time 10 seconds in the past
     $fs->touch('file.txt', time(), time() - 10);
 
-
 .. note::
 
-    You can pass an array or any :phpclass:`\\Traversable` object as the first
+    You can pass an array or any :phpclass:`Traversable` object as the first
     argument.
 
 Chown
@@ -121,10 +120,9 @@ recursive option::
     // change the owner of the video directory recursively
     $fs->chown('/video', 'www-data', true);
 
-
 .. note::
 
-    You can pass an array or any :phpclass:`\\Traversable` object as the first
+    You can pass an array or any :phpclass:`Traversable` object as the first
     argument.
 
 Chgrp
@@ -141,7 +139,7 @@ recursive option::
 
 .. note::
 
-    You can pass an array or any :phpclass:`\\Traversable` object as the first
+    You can pass an array or any :phpclass:`Traversable` object as the first
     argument.
 
 Chmod
@@ -155,10 +153,9 @@ recursive option::
     // change the mod of the src directory recursively
     $fs->chmod('src', 0700, true);
 
-
 .. note::
 
-    You can pass an array or any :phpclass:`\\Traversable` object as the first
+    You can pass an array or any :phpclass:`Traversable` object as the first
     argument.
 
 Remove
@@ -168,7 +165,6 @@ Remove let's you remove files, symlink, directories easily::
 
     $fs->remove(array('symlink', '/path/to/directory', 'activity.log'));
 
-
 .. note::
 
     You can pass an array or any :phpclass:`\\Traversable` object as the first
@@ -177,7 +173,7 @@ Remove let's you remove files, symlink, directories easily::
 Rename
 ~~~~~~
 
-Rename is used to rename file and directories::
+Rename is used to rename files and directories::
 
     //rename a file
     $fs->rename('/tmp/processed_video.ogg', '/path/to/store/video_647.ogg');
@@ -187,8 +183,8 @@ Rename is used to rename file and directories::
 symlink
 ~~~~~~~
 
-Create a symbolic link from target to destination. If the filesystem does not
-support symbolic links, a third boolean argument is available::
+Creates a symbolic link from the target to the destination. If the filesystem
+does not support symbolic links, a third boolean argument is available::
 
     // create a symbolic link
     $fs->symlink('/path/to/source', '/path/to/destination');
@@ -229,11 +225,10 @@ isAbsolutePath returns true if the given path is absolute, false otherwise::
 Error Handling
 --------------
 
-Whenever something wrong happends, a :phpclass:`\\RuntimeException` is thrown.
-
+Whenever something wrong happens, a :phpclass:`RuntimeException` is thrown.
 
 .. note::
 
     Prior to version 2.1, :method:`Symfony\\Component\\Filesystem\\Filesystem::mkdir`
-    was returning a boolean and did not throw exceptions. As of 2.1, a
-    :phpclass:`\\RuntimeException` is thrown if a directory creation fails.
+    returned a boolean and did not throw exceptions. As of 2.1, a
+    :phpclass:`RuntimeException` is thrown if a directory creation fails.
