@@ -43,7 +43,7 @@ endpoint for filesystem operations::
     :method:`Symfony\\Component\\Filesystem\\Filesystem::chown`,
     :method:`Symfony\\Component\\Filesystem\\Filesystem::remove` and 
     :method:`Symfony\\Component\\Filesystem\\Filesystem::touch` can receive a 
-    string, an array or any object implementing :phpclass:`\\Traversable` as 
+    string, an array or any object implementing :phpclass:`Traversable` as 
     the target argument.
 
 
@@ -167,7 +167,7 @@ Remove let's you remove files, symlink, directories easily::
 
 .. note::
 
-    You can pass an array or any :phpclass:`\\Traversable` object as the first
+    You can pass an array or any :phpclass:`Traversable` object as the first
     argument.
 
 Rename
