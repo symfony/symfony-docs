@@ -29,6 +29,10 @@
 
   * :doc:`/components/dom_crawler`
 
+* **The Filesystem Component**
+
+  * :doc:`/components/filesystem`
+  
 * **The Finder Component**
 
   * :doc:`/components/finder`
