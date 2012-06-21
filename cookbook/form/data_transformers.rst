@@ -51,7 +51,7 @@ was entered::
         public function buildForm(FormBuilderInterface $builder, array $options)
         {
             $transformer = new IssueToNumberTransformer($this->om);
-            $builder->addViewTransformer($transformer);
+            $builder->addModelTransformer($transformer);
         }
 
         public function getParent()
@@ -68,7 +68,7 @@ was entered::
 .. tip::
 
     You can also use transformers without creating a new custom form type
-    by calling ``appendClientTransformer`` on any field builder::
+    by calling ``addModelTransformer`` on any field builder::
 
         use Symfony\Component\Form\FormBuilderInterface;
         use Acme\TaskBundle\Form\DataTransformer\IssueToNumberTransformer;
@@ -85,9 +85,10 @@ was entered::
 
                 // use a normal text field, but transform the text into an issue object
                 $builder
-                    ->add('issue', 'text')
-                    ->addViewTransformer($transformer)
-                ;
+                    ->add(
+                        $builder->create('issue', 'text')
+                            ->addModelTransformer($transformer)
+                );
             }
 
             // ...
