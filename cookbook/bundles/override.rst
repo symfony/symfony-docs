@@ -35,15 +35,41 @@ inheritance. For more information, see :doc:`/cookbook/bundles/inheritance`.
 Services & Configuration
 ------------------------
 
-In order to override/extend a service, there are two options. Firstly, you can
+In order to override/extend a service, there are two options. First, you can
 set the parameter holding the service's class name to your own class by setting
-it in the config.yml. This of course is only possible if the class name is
+it in ``app/config/config.yml``. This of course is only possible if the class name is
 defined as a parameter in the service config of the bundle containing the
-service. Secondly, if this is not the case, or if you want to make sure the
-class is always overridden when your bundle is used, you should use a compiler
-pass:
+service. For example, to override the class used for Symfony's ``translator``
+service, you would override the ``translator.class`` parameter. Knowing exactly
+which parameter to override may take some research. For the translator, the
+parameter is defined and used in the ``Resources/config/translation.xml`` file
+in the core FrameworkBundle:
 
-.. code-block:: php
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # app/config/config.yml
+        parameters:
+            translator.class:      Acme\HelloBundle\Translation\Translator
+
+    .. code-block:: xml
+
+        <!-- app/config/config.xml -->
+        <parameters>
+            <parameter key="translator.class">Acme\HelloBundle\Translation\Translator</parameter>
+        </parameters>
+
+    .. code-block:: php
+
+        // app/config/config.php
+
+        $container->setParameter('translator.class', 'Acme\HelloBundle\Translation\Translator');
+
+Secondly, if the class is not available as a parameter, you want to make sure the
+class is always overridden when your bundle is used, or you need to modify
+something beyond just the class name, you should use a compiler pass::
+
     namespace Foo\BarBundle\DependencyInjection\Compiler;
 
     use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
@@ -51,7 +77,6 @@ pass:
 
     class OverrideServiceCompilerPass implements CompilerPassInterface
     {
-
         public function process(ContainerBuilder $container)
         {
             $definition = $container->getDefinition('original-service-id');
@@ -60,11 +85,11 @@ pass:
     }
 
 In this example we fetch the service definition of the original service, and set
-it's class name to our own class.
+its class name to our own class.
 
-See `/cookbook/service_container/compiler_passes` for information on how to use
+See :doc:`/cookbook/service_container/compiler_passes` for information on how to use
 compiler passes. If you want to do something beyond just overriding the class -
-like adding a method call - You can only use the compiler pass method.
+like adding a method call - you can only use the compiler pass method.
 
 Entities & Entity mapping
 -------------------------
