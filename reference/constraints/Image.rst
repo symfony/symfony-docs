@@ -19,7 +19,12 @@ mimeTypes
 
 **type**: ``array`` or ``string`` **default**: an array of jpg, gif and png image mime types
 
+You can find a list of existing image mime types on the `IANA website`_
+
 mimeTypesMessage
 ~~~~~~~~~~~~~~~~
 
 **type**: ``string`` **default**: ``This file is not a valid image``
+
+
+.. _`IANA website`: http://www.iana.org/assignments/media-types/image/index.html
