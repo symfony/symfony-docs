@@ -839,6 +839,49 @@ the choice is ultimately up to you.
 
         $form->get('dueDate')->getData();
 
+Accessing Your Form Class with a Service Definition
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+If you want to be able to access your form class you have created without 
+the need to instantiate it or otherwise reference the class and its namespace 
+via the use operator, you may utilize a new dependency injection container 
+definition.
+
+The container has a built-in form.type tag just for these purposes
+
+.. configuration-block::
+
+    .. code-block:: xml
+
+        <service id="acme.form.task_type" class="%acme.task_type.class%">
+            <tag name="form.type" alias="form.task_type" />
+       </service> 
+        
+    .. code-block:: yaml
+
+        services:
+            acme.form.task_type:
+                class: %acme.task_type.class%
+                alias: form.task_type
+                tags:
+                    - { name: form.type }
+
+Then, to create the form in your controller you follow almost the exact same 
+procedure as before, except this time you use a string for your form type 
+in lieu of the instantiated FormType object::
+
+.. code-block:: php
+
+        public function newAction()
+        {
+            $form = $this->createForm('form.task_type', $task);
+
+            // ...
+        }
+ 
+For more information on the service container, see For more information, see 
+the :doc:`/book/service_container` chapter.
+
 .. index::
    pair: Forms; Doctrine
 
