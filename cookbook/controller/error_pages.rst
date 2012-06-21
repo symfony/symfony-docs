@@ -58,7 +58,7 @@ end-user, create a new template located at
 
 In addition to the standard HTML error page, Symfony provides a default error
 page for many of the most common response formats, including JSON
-(``error.json.twig``), XML, (``error.xml.twig``), and even Javascript
+(``error.json.twig``), XML (``error.xml.twig``) and even Javascript
 (``error.js.twig``), to name a few. To override any of these templates, just
 create a new file with the same name in the
 ``app/Resources/TwigBundle/views/Exception`` directory. This is the standard
