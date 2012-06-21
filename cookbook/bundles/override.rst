@@ -35,7 +35,36 @@ inheritance. For more information, see :doc:`/cookbook/bundles/inheritance`.
 Services & Configuration
 ------------------------
 
-In progress...
+In order to override/extend a service, there are two options. Firstly, you can
+set the parameter holding the service's class name to your own class by setting
+it in the config.yml. This of course is only possible if the class name is
+defined as a parameter in the service config of the bundle containing the
+service. Secondly, if this is not the case, or if you want to make sure the
+class is always overridden when your bundle is used, you should use a compiler
+pass:
+
+.. code-block:: php
+    namespace Foo\BarBundle\DependencyInjection\Compiler;
+
+    use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
+    use Symfony\Component\DependencyInjection\ContainerBuilder;
+
+    class OverrideServiceCompilerPass implements CompilerPassInterface
+    {
+
+        public function process(ContainerBuilder $container)
+        {
+            $definition = $container->getDefinition('original-service-id');
+            $definition->setClass('Foo\BarBundle\YourService');
+        }
+    }
+
+In this example we fetch the service definition of the original service, and set
+it's class name to our own class.
+
+See `/cookbook/service_container/compiler_passes` for information on how to use
+compiler passes. If you want to do something beyond just overriding the class -
+like adding a method call - You can only use the compiler pass method.
 
 Entities & Entity mapping
 -------------------------
