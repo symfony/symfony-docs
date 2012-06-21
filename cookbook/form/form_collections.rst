@@ -339,9 +339,6 @@ new "tag" forms. To render it, make the following change to your template:
     
         {{ form_widget(form.tags.vars.prototype.name) | e }}
 
-    .. versionadded:: 2.1
-        Prototype is accessed as ``form.tags.vars.prototype`` instead of ``form.tags.get('prototype')`` in Symfony 2.1
-
 
 On the rendered page, the result will look something like this:
 
