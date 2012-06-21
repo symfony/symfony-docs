@@ -299,7 +299,7 @@ collection field:
 
     .. code-block:: php
     
-        <?php echo $view['form']->row($form['emails']->vars['prototype']) ?>
+        <?php echo $view['form']->row($form['emails']->getVar('prototype')) ?>
 
 Note that all you really need is the "widget", but depending on how you're
 rendering your form, having the entire "form row" may be easier for you.
