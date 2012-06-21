@@ -311,13 +311,13 @@ new "tag" forms. To render it, make the following change to your template:
 
     .. code-block:: html+jinja
     
-        <ul class="tags" data-prototype="{{ form_widget(form.tags.getVar('prototype')) | e }}">
+        <ul class="tags" data-prototype="{{ form_widget(form.tags.vars.prototype) | e }}">
             ...
         </ul>
     
     .. code-block:: html+php
     
-        <ul class="tags" data-prototype="<?php echo $view->escape($view['form']->row($form['tags']->getVar('prototype'))) ?>">
+        <ul class="tags" data-prototype="<?php echo $view->escape($view['form']->row($form['tags']->vars['prototype'])) ?>">
             ...
         </ul>
 
@@ -329,7 +329,7 @@ new "tag" forms. To render it, make the following change to your template:
 
 .. tip::
 
-    The ``form.tags.getVar('prototype')`` is form element that looks and feels just
+    The ``form.tags.vars.prototype`` is form element that looks and feels just
     like the individual ``form_widget(tag)`` elements inside our ``for`` loop.
     This means that you can call ``form_widget``, ``form_row``, or ``form_label``
     on it. You could even choose to render only one of its fields (e.g. the
@@ -337,10 +337,10 @@ new "tag" forms. To render it, make the following change to your template:
     
     .. code-block:: html+jinja
     
-        {{ form_widget(form.tags.getVar('prototype').name) | e }}
+        {{ form_widget(form.tags.vars.prototype.name) | e }}
 
     .. versionadded:: 2.1
-        Prototype is accessed as ``form.tags.getVar('prototype')`` instead of ``form.tags.get('prototype')`` in Symfony 2.1
+        Prototype is accessed as ``form.tags.vars.prototype`` instead of ``form.tags.get('prototype')`` in Symfony 2.1
 
 
 On the rendered page, the result will look something like this:
