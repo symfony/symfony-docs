@@ -101,16 +101,14 @@ Forms
 
 In order to override a form type, it has to be registered as a service (meaning
 it is tagged as "form.type"). You can then override it as you would override any
-service as explained in "Services & Configuration". This, of course, will only
+service as explained in `Services & Configuration`_. This, of course, will only
 work if the type is referred to by its alias rather than being instantiated,
-e.g.:
+e.g.::
 
-.. code-block:: php
     $builder->add('name', 'custom_type');
 
-rather than
+rather than::
 
-.. code-block:: php
     $builder->add('name', new CustomType());
 
 Validation metadata
