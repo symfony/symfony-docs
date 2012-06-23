@@ -95,7 +95,7 @@ a ``postPersist`` method, which will be called when the event is thrown::
         public function postPersist(LifecycleEventArgs $args)
         {
             $entity = $args->getEntity();
-            $entityManager = $args->getManager();
+            $entityManager = $args->getEntityManager();
             
             // perhaps you only want to act on some "Product" entity
             if ($entity instanceof Product) {
