@@ -161,6 +161,9 @@ run when the container is compiled::
 Adding additional attributes on Tags
 ------------------------------------
 
+Sometimes you need additional information about each service that's tagged with your tag. 
+For example, add an alias to our TransportChain 
+
 To begin with, change the ``TransportChain`` class::
 
     class TransportChain
@@ -177,9 +180,14 @@ To begin with, change the ``TransportChain`` class::
             $this->transports[$alias] = $transport;
         }
 
-        public function addTransport($alias)
+        public function getTransport($alias)
         {
-            return $this->transports[];
+            if (array_key_exists($alias, $this->transports)) {
+               return $this->transports[$alias];
+            }
+            else {
+               return null;
+            }
         }
     }
     
