@@ -1,37 +1,42 @@
 .. index::
    single: Event Dispatcher
 
-How to setup before and after filters
+How to setup before and after Filters
 =====================================
 
-It is quite common in web applications development to need some logic to be executed just before
-or just after our controller actions acting as filters or hooks.
+It is quite common in web application development to need some logic to be
+executed just before or just after your controller actions acting as filters 
+or hooks.
 
-In Symfony1, this was achieved with the preExecute and postExecute methods, most major frameworks have similar
-methods but there is no such thing in Symfony2. Good news is that there is a much better way to interfere our
-Request -> Response process with the EventDispatcher component.
+In Symfony1, this was achieved with the preExecute and postExecute methods,
+most major frameworks have similar methods but there is no such thing in Symfony2.
+The good news is that there is a much better way to interfere the
+Request -> Response process using the EventDispatcher component.
 
-Token validation example
-========================
+Token validation Example
+------------------------
 
-Imagine that we need to develop an API where some controllers are public but some others are restricted
-to one or some clients. For this private features, we provide a token to our clients to identify themselves.
+Imagine that you need to develop an API where some controllers are public
+but some others are restricted to one or some clients. For these private features,
+you might provide a token to your clients to identify themselves.
 
-So, before executing our controller action, we need to check if the action is restricted or not.
-And if it is restricted, we need to validate the provided token.
+So, before executing your controller action, you need to check if the action
+is restricted or not. And if it is restricted, you need to validate the provided
+token.
 
 .. note::
 
-    Please note that for simplicity in the recipe, tokens will be defined in config
-    and neither database setup nor authentication provider via Security component will be used
+    Please note that for simplicity in the recipe, tokens will be defined
+    in config and neither database setup nor authentication provider via
+    the Security component will be used.
 
 Creating a before filter with a controller.request event
-========================================================
+--------------------------------------------------------
 
 Basic Setup
------------
+~~~~~~~~~~~
 
-We can add basic tokens configuration using config.yml and parameters key
+You can add basic token configuration using ``config.yml`` and the parameters key:
 
 .. configuration-block::
 
@@ -61,15 +66,15 @@ We can add basic tokens configuration using config.yml and parameters key
             'client2' => 'pass2'
         ));
 
-Tag controllers to be checked
+Tag Controllers to be checked
 -----------------------------
 
-A kernel.controller listener gets executed at every request, so we need some way to identify
-if the controller that matches the request needs a token validation.
+A ``kernel.controller`` listener gets notified on every request, right before
+the controller is executed. First, you need some way to identify if the controller
+that matches the request needs token validation.
 
-A clean and easy way is to create an empty interface and make the controllers implement it
-
-.. code-block:: php
+A clean and easy way is to create an empty interface and make the controllers
+implement it::
 
     namespace Acme\DemoBundle\Controller;
 
@@ -77,6 +82,8 @@ A clean and easy way is to create an empty interface and make the controllers im
     {
         // Nothing here
     }
+
+A controller that implements this interface simply looks like this::
 
     class FooController implements TokenAuthenticatedController
     {
@@ -86,7 +93,9 @@ A clean and easy way is to create an empty interface and make the controllers im
 Creating an Event Listener
 --------------------------
 
-.. code-block:: php
+Next, you'll need to create an event listener, which will hold the logic
+that you want executed before your controllers. If you're not familiar with
+event listeners, you can learn more about them at :doc:`/cookbook/service_container/event_listener`::
 
     namespace Acme\DemoBundle\EventListener;
 
@@ -124,8 +133,12 @@ Creating an Event Listener
         }
     }
 
-Registering the listener
+Registering the Listener
 ------------------------
+
+Finally, register your listener as a service and tag it as an event listener.
+By listening on ``kernel.controller``, you're telling Symfony that you want
+your listener to be called just before any controller is executed:
 
 .. configuration-block::
 
