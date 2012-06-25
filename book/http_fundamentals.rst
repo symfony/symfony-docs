@@ -13,7 +13,7 @@ ideas from many technologies: the tools and concepts you're about to learn
 represent the efforts of thousands of people, over many years. In other words,
 you're not just learning "Symfony", you're learning the fundamentals of the
 web, development best practices, and how to use many amazing new PHP libraries,
-inside or independent of Symfony2. So, get ready.
+inside or independently of Symfony2. So, get ready.
 
 True to the Symfony2 philosophy, this chapter begins by explaining the fundamental
 concept common to web development: HTTP. Regardless of your background or
@@ -298,7 +298,7 @@ and create the appropriate response based on your application logic*.
 
     The ``Request`` and ``Response`` classes are part of a standalone component
     included with Symfony called ``HttpFoundation``. This component can be
-    used entirely independent of Symfony and also provides classes for handling
+    used entirely independently of Symfony and also provides classes for handling
     sessions and file uploads.
 
 The Journey from the Request to the Response
@@ -351,7 +351,7 @@ file that handles every request coming into your application. For example:
     the URLs can easily be cleaned up to be just ``/``, ``/contact`` and
     ``/blog``.
 
-Now, every request is handled exactly the same. Instead of individual URLs
+Now, every request is handled exactly the same way. Instead of individual URLs
 executing different PHP files, the front controller is *always* executed,
 and the routing of different URLs to different parts of your application
 is done internally. This solves both problems with the original approach.

@@ -9,7 +9,7 @@ follow the same guidelines, and you should too.
 Remember that the main advantage of standards is that every piece of code
 looks and feels familiar, it's not about this or that being more readable.
 
-Symfony follows the standards defined in the PSR-0, PSR-1, and PSR-2
+Symfony follows the standards defined in the `PSR-0`_, `PSR-1`_ and `PSR-2`_
 documents.
 
 Since a picture - or some code - is worth a thousand words, here's a short
@@ -63,7 +63,7 @@ example containing most features described below:
                 } else {
                     $dummy = ucwords($dummy);
                 }
-            } 
+            }
 
             return $dummy;
         }
@@ -121,3 +121,7 @@ License
 
 * Symfony is released under the MIT license, and the license block has to be
   present at the top of every PHP file, before the namespace.
+
+.. _`PSR-0`: https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-0.md
+.. _`PSR-1`: https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-1-basic-coding-standard.md
+.. _`PSR-2`: https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-2-coding-style-guide.md

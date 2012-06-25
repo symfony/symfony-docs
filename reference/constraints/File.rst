@@ -171,6 +171,8 @@ If set, the validator will check that the mime type of the underlying file
 is equal to the given mime type (if a string) or exists in the collection
 of given mime types (if an array).
 
+You can find a list of existing mime types on the `IANA website`_
+
 maxSizeMessage
 ~~~~~~~~~~~~~~
 
@@ -227,3 +229,6 @@ uploadErrorMessage
 The message that is displayed if the uploaded file could not be uploaded
 for some unknown reason, such as the file upload failed or it couldn't be written
 to disk.
+
+
+.. _`IANA website`: http://www.iana.org/assignments/media-types/index.html

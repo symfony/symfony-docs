@@ -149,11 +149,14 @@ mimeTypes
 
 **type**: ``array`` or ``string`` **default**: ``image/*``
 
+You can find a list of existing image mime types on the `IANA website`_
+
 mimeTypesMessage
 ~~~~~~~~~~~~~~~~
 
 **type**: ``string`` **default**: ``This file is not a valid image``
 
+<<<<<<< HEAD
 .. versionadded:: 2.1
     All of the min/max width/height options are new to Symfony 2.1.
 
@@ -225,3 +228,5 @@ minHeightMessage
 **type**: ``string`` **default**: ``The image height is too small ({{ height }}px). Minimum height expected is {{ min_height }}px``
 
 The error message if the height of the image is less than `minHeight`_.
+
+.. _`IANA website`: http://www.iana.org/assignments/media-types/image/index.html
