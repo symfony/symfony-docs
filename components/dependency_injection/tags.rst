@@ -158,7 +158,7 @@ run when the container is compiled::
     $container = new ContainerBuilder();
     $container->addCompilerPass(new TransportCompilerPass);
 
-Adding additional attributes on tags
+Adding additional attributes on Tags
 ------------------------------------
 
 To begin with, change the ``TransportChain`` class::
