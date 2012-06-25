@@ -247,4 +247,5 @@ The last step is to update the compiler to take care of your additional informat
         }
     }
     
-Take care of ``$attributes`` variable. Because you can use the same tag many times on the same service, ``$attributes`` is an array of attributes for each tag that refers to the same service.
+Take care of ``$attributes`` variable. Because you can use the same tag many times on the same service, 
+``$attributes`` is an array of attributes for each tag that refers to the same service.
