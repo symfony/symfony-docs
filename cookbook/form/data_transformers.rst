@@ -25,11 +25,11 @@ will enter the issue number. The field will display an error if a non existing n
 was entered::
 
     // src/Acme/TaskBundle/Form/Type/IssueSelectorType.php
+
     namespace Acme\TaskBundle\Form\Type;
 
     use Symfony\Component\Form\AbstractType;
     use Symfony\Component\Form\FormBuilderInterface;
-    use Symfony\Component\OptionsResolver\OptionsResolverInterface;
     use Acme\TaskBundle\Form\DataTransformer\IssueToNumberTransformer;
     use Doctrine\Common\Persistence\ObjectManager;
 
@@ -137,7 +137,7 @@ Next, we create the data transformer, which does the actual conversion::
         /**
          * Transforms a string (number) to an object (issue).
          *
-         * @param  string $number
+         * @param  string                        $number
          * @return Issue|null
          * @throws TransformationFailedException if object (issue) is not found.
          */

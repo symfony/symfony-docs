@@ -149,11 +149,12 @@ You can now use your custom field type immediately, simply by creating a
 new instance of the type in one of your forms::
 
     // src/Acme/DemoBundle/Form/Type/AuthorType.php
+
     namespace Acme\DemoBundle\Form\Type;
 
     use Symfony\Component\Form\AbstractType;
     use Symfony\Component\Form\FormBuilderInterface;
-    
+
     class AuthorType extends AbstractType
     {
         public function buildForm(FormBuilderInterface $builder, array $options)
@@ -262,6 +263,7 @@ registered as a service. And because we used the ``form.type`` alias in its
 configuration, using the field is now much easier::
 
     // src/Acme/DemoBundle/Form/Type/AuthorType.php
+
     namespace Acme\DemoBundle\Form\Type;
 
     use Symfony\Component\Form\FormBuilderInterface;

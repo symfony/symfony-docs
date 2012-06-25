@@ -52,6 +52,7 @@ provider.
 .. code-block:: php
 
     // src/Acme/DemoBundle/Security/Authentication/Token/WsseUserToken.php
+
     namespace Acme\DemoBundle\Security\Authentication\Token;
 
     use Symfony\Component\Security\Core\Authentication\Token\AbstractToken;
@@ -61,11 +62,11 @@ provider.
         public $created;
         public $digest;
         public $nonce;
-        
+
         public function __construct(array $roles = array())
         {
             parent::__construct($roles);
-            
+
             // If the user has roles, consider it authenticated
             $this->setAuthenticated(count($roles) > 0);
         }
@@ -98,6 +99,7 @@ set an authenticated token in the security context if successful.
 .. code-block:: php
 
     // src/Acme/DemoBundle/Security/Firewall/WsseListener.php
+
     namespace Acme\DemoBundle\Security\Firewall;
 
     use Symfony\Component\HttpFoundation\Response;
@@ -141,7 +143,7 @@ set an authenticated token in the security context if successful.
 
                         if ($returnValue instanceof TokenInterface) {
                             return $this->securityContext->setToken($returnValue);
-                        } else if ($returnValue instanceof Response) {
+                        } elseif ($returnValue instanceof Response) {
                             return $event->setResponse($returnValue);
                         }
                     } catch (AuthenticationException $e) {
@@ -184,6 +186,7 @@ the ``PasswordDigest`` header value matches with the user's password.
 .. code-block:: php
 
     // src/Acme/DemoBundle/Security/Authentication/Provider/WsseProvider.php
+
     namespace Acme\DemoBundle\Security\Authentication\Provider;
 
     use Symfony\Component\Security\Core\Authentication\Provider\AuthenticationProviderInterface;
@@ -208,7 +211,7 @@ the ``PasswordDigest`` header value matches with the user's password.
         {
             $user = $this->userProvider->loadUserByUsername($token->getUsername());
 
-            if ($user && $this->validateDigest($token->digest, $token->nonce, $token->created, $user->getPassword())) {            
+            if ($user && $this->validateDigest($token->digest, $token->nonce, $token->created, $user->getPassword())) {
                 $authenticatedToken = new WsseUserToken($user->getRoles());
                 $authenticatedToken->setUser($user);
 
@@ -265,6 +268,7 @@ create a class which implements
 .. code-block:: php
 
     // src/Acme/DemoBundle/DependencyInjection/Security/Factory/WsseFactory.php
+
     namespace Acme\DemoBundle\DependencyInjection\Security\Factory;
 
     use Symfony\Component\DependencyInjection\ContainerBuilder;

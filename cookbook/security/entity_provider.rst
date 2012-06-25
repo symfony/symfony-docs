@@ -161,8 +161,6 @@ For more details on each of these, see :class:`Symfony\\Component\\Security\\Cor
 
     namespace Acme\UserBundle\Entity;
 
-    use Symfony\Component\Security\Core\User\EquatableInterface;
-
     // ...
 
     public function isEqualTo(UserInterface $user)

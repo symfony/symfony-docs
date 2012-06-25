@@ -997,6 +997,7 @@ be stored in the database.
 .. code-block:: php
 
     // src/Acme/UserBundle/Entity/User.php
+
     namespace Acme\UserBundle\Entity;
 
     use Symfony\Component\Security\Core\User\UserInterface;

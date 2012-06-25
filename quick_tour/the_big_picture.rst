@@ -202,6 +202,7 @@ controller *logical name*, and it references the ``indexAction`` method from
 the ``Acme\DemoBundle\Controller\WelcomeController`` class::
 
     // src/Acme/DemoBundle/Controller/WelcomeController.php
+
     namespace Acme\DemoBundle\Controller;
 
     use Symfony\Bundle\FrameworkBundle\Controller\Controller;

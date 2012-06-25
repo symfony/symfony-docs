@@ -85,18 +85,19 @@ listener on the event ``postPersist``. That class behind that service must have
 a ``postPersist`` method, which will be called when the event is thrown::
 
     // src/Acme/SearchBundle/Listener/SearchIndexer.php
+
     namespace Acme\SearchBundle\Listener;
-    
+
     use Doctrine\ORM\Event\LifecycleEventArgs;
     use Acme\StoreBundle\Entity\Product;
-    
+
     class SearchIndexer
     {
         public function postPersist(LifecycleEventArgs $args)
         {
             $entity = $args->getEntity();
             $entityManager = $args->getEntityManager();
-            
+
             // perhaps you only want to act on some "Product" entity
             if ($entity instanceof Product) {
                 // do something with the Product

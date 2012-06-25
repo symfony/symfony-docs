@@ -83,6 +83,7 @@ For simplicity, you'll often extend an
 the interface directly::
 
     // src/Acme/MainBundle/Form/Type/MyFormTypeExtension.php
+
     namespace Acme\MainBundle\Form\Type\MyFormTypeExtension;
 
     use Symfony\Component\Form\AbstractTypeExtension;
@@ -154,6 +155,7 @@ To register your own cache warmer, first create a service that implements
 the :class:`Symfony\\Component\\HttpKernel\\CacheWarmer\\CacheWarmerInterface` interface::
 
     // src/Acme/MainBundle/Cache/MyCustomWarmer.php
+
     namespace Acme\MainBundle\Cache;
 
     use Symfony\Component\HttpKernel\CacheWarmer\CacheWarmerInterface;
@@ -532,6 +534,7 @@ other source, first create a class that implements the
 :class:`Symfony\\Component\\Translation\\Loader\\LoaderInterface` interface::
 
     // src/Acme/MainBundle/Translation/MyCustomLoader.php
+
     namespace Acme\MainBundle\Translation;
 
     use Symfony\Component\Translation\Loader\LoaderInterface

@@ -29,7 +29,6 @@ As an example we will create a price filter to format a given number into price:
 
     use Twig_Extension;
     use Twig_Filter_Method;
-    use Twig_Function_Method;
 
     class AcmeExtension extends Twig_Extension
     {
@@ -39,7 +38,7 @@ As an example we will create a price filter to format a given number into price:
                 'price' => new Twig_Filter_Method($this, 'priceFilter'),
             );
         }
-        
+
         public function priceFilter($number, $decimals = 0, $decPoint = '.', $thousandsSep = ',')
         {
             $price = number_format($number, $decimals, $decPoint, $thousandsSep);
@@ -53,7 +52,7 @@ As an example we will create a price filter to format a given number into price:
             return 'acme_extension';
         }
     }
-    
+
 .. tip::
 
     Along with custom filters, you can also add custom `functions` and register `global variables`.    

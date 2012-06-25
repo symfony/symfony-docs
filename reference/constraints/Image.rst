@@ -42,6 +42,7 @@ image for the author. In your form, the ``headshot`` property would be a
 ``file`` type. The ``Author`` class might look as follows::
 
     // src/Acme/BlogBundle/Entity/Author.php
+
     namespace Acme\BlogBundle\Entity;
 
     use Symfony\Component\HttpFoundation\File\File;

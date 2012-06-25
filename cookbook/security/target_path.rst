@@ -46,6 +46,7 @@ configuration file. This can be done from your main configuration file (in
 Next, create your own ``ExceptionListener``::
 
     // src/Acme/HelloBundle/Security/Firewall/ExceptionListener.php
+
     namespace Acme\HelloBundle\Security\Firewall;
 
     use Symfony\Component\HttpFoundation\Request;

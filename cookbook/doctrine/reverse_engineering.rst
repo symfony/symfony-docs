@@ -109,6 +109,7 @@ The newly created ``BlogComment`` entity class looks as follow:
     <?php
 
     // src/Acme/BlogBundle/Entity/BlogComment.php
+
     namespace Acme\BlogBundle\Entity;
 
     use Doctrine\ORM\Mapping as ORM;

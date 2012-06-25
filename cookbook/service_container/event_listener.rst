@@ -15,6 +15,7 @@ us to modify how exceptions are shown by  our application. The ``KernelEvents::E
 event is just one of the core kernel events::
 
     // src/Acme/DemoBundle/Listener/AcmeExceptionListener.php
+
     namespace Acme\DemoBundle\Listener;
 
     use Symfony\Component\HttpKernel\Event\GetResponseForExceptionEvent;
@@ -26,11 +27,11 @@ event is just one of the core kernel events::
             // We get the exception object from the received event
             $exception = $event->getException();
             $message = 'My Error says: ' . $exception->getMessage();
-            
+
             // Customize our response object to display our exception details
             $response->setContent($message);
             $response->setStatusCode($exception->getStatusCode());
-            
+
             // Send our modified response object to the event
             $event->setResponse($response);
         }
@@ -85,6 +86,7 @@ event, you might need to check the type of the request. This can be easily
 done as follow::
 
     // src/Acme/DemoBundle/Listener/AcmeRequestListener.php
+
     namespace Acme\DemoBundle\Listener;
 
     use Symfony\Component\HttpKernel\Event\GetResponseEvent;

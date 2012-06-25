@@ -28,11 +28,12 @@ class: ``getRoles()``, ``getPassword()``, ``getSalt()``, ``getUsername()``,
 Let's see this in action::
 
     // src/Acme/WebserviceUserBundle/Security/User.php
+
     namespace Acme\WebserviceUserBundle\Security\User;
 
     use Symfony\Component\Security\Core\User\UserInterface;
 
-    class WebserviceUser implements UserInterface
+    class User implements UserInterface
     {
         private $username;
         private $password;
@@ -65,7 +66,7 @@ Let's see this in action::
         public function getUsername()
         {
             return $this->username;
-        }   
+        }
 
         public function eraseCredentials()
         {
@@ -114,6 +115,7 @@ more details, see :class:`Symfony\\Component\\Security\\Core\\User\\UserProvider
 Here's an example of how this might look::
 
     // src/Acme/WebserviceUserBundle/Security/User/WebserviceUserProvider.php
+
     namespace Acme\WebserviceUserBundle\Security\User;
 
     use Symfony\Component\Security\Core\User\UserProviderInterface;
