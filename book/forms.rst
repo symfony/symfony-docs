@@ -1550,7 +1550,7 @@ but here's a short example::
     ;
 
 Now, when you call `$form->bindRequest($request)`, the constraints setup here are run
-against your form's data. If you're using a form class, override the ``getDefaultOptions``
+against your form's data. If you're using a form class, override the ``setDefaultOptions()``
 method to specify the option::
 
     namespace Acme\TaskBundle\Form\Type;
