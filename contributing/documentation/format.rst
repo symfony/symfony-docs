@@ -13,7 +13,7 @@ markup syntax and parser system".
 You can learn more about its syntax by reading existing Symfony2 `documents`_
 or by reading the `reStructuredText Primer`_ on the Sphinx website.
 
-If you are familiar with Markdown, be careful as things as sometimes very
+If you are familiar with Markdown, be careful as things are sometimes very
 similar but different:
 
 * Lists starts at the beginning of a line (no indentation is allowed);
