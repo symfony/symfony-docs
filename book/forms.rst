@@ -390,7 +390,7 @@ you'll need to specify which validation group(s) your form should use::
     ;
 
 If you're creating :ref:`form classes<book-form-creating-form-classes>` (a
-good practice), then you'll need to add the following to the ``getDefaultOptions()``
+good practice), then you'll need to add the following to the ``setDefaultOptions()``
 method::
 
     use Symfony\Component\OptionsResolver\OptionsResolverInterface;
