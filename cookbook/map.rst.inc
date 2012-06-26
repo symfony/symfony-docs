@@ -41,6 +41,7 @@
   * :doc:`/cookbook/doctrine/reverse_engineering`
   * :doc:`/cookbook/doctrine/multiple_entity_managers`
   * :doc:`/cookbook/doctrine/custom_dql_functions`
+  * :doc:`/cookbook/doctrine/resolve_target_entity`
 
 * :doc:`/cookbook/email/index`
 

@@ -105,6 +105,8 @@ Configuration Reference
                 auto_generate_proxy_classes:  false
                 proxy_dir:            %kernel.cache_dir%/doctrine/orm/Proxies
                 proxy_namespace:      Proxies
+                # search for the "ResolveTargetEntityListener" class for a cookbook about this
+                resolve_target_entities: []
                 entity_managers:
                     # A collection of different named entity managers (e.g. some_em, another_em)
                     some_em:

@@ -1,38 +1,41 @@
-Keeping your Bundles independent
-=================================
+Defining Relationships with Abstract Classes and Interfaces
+===========================================================
+
+.. versionadded: 2.1
+    The ResolveTargetEntityListener is new to Doctrine 2.2, which was first
+    packaged with Symfony 2.1.
 
 One of the goals of bundles is to create discreet bundles of functionality
 that do not have many (if any) dependencies, allowing you to use that
 functionality in other applications without including unnecessary items.
 
 Doctrine 2.2 includes a new utility called the ``ResolveTargetEntityListener``,
-that functions by intercepting certain calls inside Doctrine and rewrite
-targetEntity parameters in your metadata mapping at runtime. It means that
+that functions by intercepting certain calls inside Doctrine and rewriting
+``targetEntity`` parameters in your metadata mapping at runtime. It means that
 in your bundle you are able to use an interface or abstract class in your
 mappings and expect correct mapping to a concrete entity at runtime.
 
 This functionality allows you to define relationships between different entities
-but not making them hard dependencies.
+without making them hard dependencies.
 
 Background
 ----------
 
-In the following example, the situation is we have an `InvoiceBundle`
-which provides invoicing functionality, and a `CustomerBundle` that
-contains customer management tools. We want to keep these separated,
-because they can be used in other systems without each other, but for
-our application we want to use them together.
+Suppose you have an `InvoiceBundle` which provides invoicing functionality
+and a `CustomerBundle` that contains customer management tools. You want
+to keep these separated, because they can be used in other systems without
+each other, but for your application you want to use them together.
 
-In this case, we have an ``Invoice`` entity with a relationship to a
-non-existant object, an ``InvoiceSubjectInterface``. The goal is to get
+In this case, you have an ``Invoice`` entity with a relationship to a
+non-existent object, an ``InvoiceSubjectInterface``. The goal is to get
 the ``ResolveTargetEntityListener`` to replace any mention of the interface
 with a real object that implements that interface.
 
 Set up
 ------
 
-We're going to use the following basic entities (which are incomplete
-for brevity) to explain how to set up and use the RTEL.
+Let's use the following basic entities (which are incomplete for brevity)
+to explain how to set up and use the RTEL.
 
 A Customer entity::
 
@@ -102,13 +105,14 @@ An InvoiceSubjectInterface::
         public function getName();
     }
 
-Next, we need to configure the listener. DoctrineBundle lets us configure
-the listener
+Next, you need to configure the listener, which tells the DoctrineBundle
+about the replacement:
 
 .. configuration-block::
 
     .. code-block:: yaml
 
+        # app/config/config.yml
         doctrine:
             # ....
             orm:
@@ -116,12 +120,39 @@ the listener
                 resolve_target_entities:
                     Acme\InvoiceBundle\Model\InvoiceSubjectInterface: Acme\AppBundle\Entity\Customer
 
+    .. code-block:: xml
+
+        <!-- app/config/config.xml -->
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:doctrine="http://symfony.com/schema/dic/doctrine"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd
+                                http://symfony.com/schema/dic/doctrine http://symfony.com/schema/dic/doctrine/doctrine-1.0.xsd">
+
+            <doctrine:config>
+                <doctrine:orm>
+                    <!-- ... -->
+                    <doctrine:resolve-target-entity interface="Acme\InvoiceBundle\Model\InvoiceSubjectInterface">Acme\AppBundle\Entity\Customer</resolve-target-entity>
+                </doctrine:orm>
+            </doctrine:config>
+        </container>
+
+    .. code-block:: php
+
+        // app/config/config.php
+        $container->loadFromExtension('doctrine', array(
+            'orm' => array(
+                // ...
+                'resolve_target_entities' => array(
+                    'Acme\InvoiceBundle\Model\InvoiceSubjectInterface' => 'Acme\AppBundle\Entity\Customer',
+                ),
+            ),
+        ));
+
 Final Thoughts
 --------------
 
-With the ``ResolveTargetEntityListener``, we are able to decouple our
+With the ``ResolveTargetEntityListener``, you are able to decouple your
 bundles, keeping them usable by themselves, but still being able to
 define relationships between different objects. By using this method,
-I've found my bundles end up being easier to maintain independently.
-
-
+your bundles will end up being easier to maintain independently.
