@@ -2,7 +2,6 @@ UserPassword
 ============
 
 .. versionadded:: 2.1
-
    This constraint is new in version 2.1.
 
 This validates that an input value is equal to the current authenticated
@@ -22,7 +21,7 @@ you to apply a collection of constraints to each element of the array.
 +----------------+----------------------------------------------------------------------------------------+
 | Options        | - `message`_                                                                           |
 +----------------+----------------------------------------------------------------------------------------+
-| Class          | :class:`Symfony\\Bridge\\Security\\Core\\Validator\\Constraints\\UserPassword`                      |
+| Class          | :class:`Symfony\\Bridge\\Security\\Core\\Validator\\Constraints\\UserPassword`         |
 +----------------+----------------------------------------------------------------------------------------+
 | Validator      | :class:`Symfony\\Bridge\\Security\\Core\\Validator\\Constraint\\UserPasswordValidator` |
 +----------------+----------------------------------------------------------------------------------------+
