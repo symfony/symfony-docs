@@ -22,16 +22,17 @@ You can install the component in many different ways:
 Usage
 -----
 
-The :class:`Symfony\\Component\\Filesystem\\Filesystem` class is the unique 
+The :class:`Symfony\\Component\\Filesystem\\Filesystem` class is the unique
 endpoint for filesystem operations::
 
     use Symfony\Component\Filesystem\Filesystem;
+    use Symfony\Component\Filesystem\Exception\IOException;
 
     $fs = new Filesystem();
-    
+
     try {
         $fs->mkdir('/tmp/random/dir/' . mt_rand());
-    } catch (\RuntimeException $e) {
+    } catch (IOException $e) {
         echo "An error occured while creating your directory";
     }
 
@@ -41,16 +42,16 @@ endpoint for filesystem operations::
     :method:`Symfony\\Component\\Filesystem\\Filesystem::chown`,
     :method:`Symfony\\Component\\Filesystem\\Filesystem::chgrp`,
     :method:`Symfony\\Component\\Filesystem\\Filesystem::chown`,
-    :method:`Symfony\\Component\\Filesystem\\Filesystem::remove` and 
-    :method:`Symfony\\Component\\Filesystem\\Filesystem::touch` can receive a 
-    string, an array or any object implementing :phpclass:`Traversable` as 
+    :method:`Symfony\\Component\\Filesystem\\Filesystem::remove` and
+    :method:`Symfony\\Component\\Filesystem\\Filesystem::touch` can receive a
+    string, an array or any object implementing :phpclass:`Traversable` as
     the target argument.
 
 
 Mkdir
 ~~~~~
 
-Mkdir creates directory. On posix filesystems, directories are created with a 
+Mkdir creates directory. On posix filesystems, directories are created with a
 default mode value `0777`. You can use the second argument to set your own mode::
 
     $fs->mkdir('/tmp/photos', 0700);
@@ -63,7 +64,7 @@ default mode value `0777`. You can use the second argument to set your own mode:
 Exists
 ~~~~~~
 
-Exists checks for the presence of all files or directories and returns false if a 
+Exists checks for the presence of all files or directories and returns false if a
 file is missing::
 
     // this directory exists, return true
@@ -80,13 +81,13 @@ file is missing::
 Copy
 ~~~~
 
-This method is used to copy files. If the target already exists, the file is 
-copied only if the source modification date is earlier than the target. This 
+This method is used to copy files. If the target already exists, the file is
+copied only if the source modification date is earlier than the target. This
 behavior can be overridden by the third boolean argument::
 
     // works only if image-ICC has been modified after image.jpg
     $fs->copy('image-ICC.jpg', 'image.jpg');
-    
+
     // image.jpg will be overridden
     $fs->copy('image-ICC.jpg', 'image.jpg', true);
 
@@ -94,7 +95,7 @@ Touch
 ~~~~~
 
 Touch sets access and modification time for a file. The current time is used by
-default. You can set your own with the second argument. The third argument is 
+default. You can set your own with the second argument. The third argument is
 the access time::
 
     // set modification time to the current timestamp
@@ -145,7 +146,7 @@ recursive option::
 Chmod
 ~~~~~
 
-Chmod is used to change the mode of a file. The third argument is a boolean 
+Chmod is used to change the mode of a file. The third argument is a boolean
 recursive option::
 
     // set the mode of the video to 0600
@@ -225,10 +226,13 @@ isAbsolutePath returns true if the given path is absolute, false otherwise::
 Error Handling
 --------------
 
-Whenever something wrong happens, a :phpclass:`RuntimeException` is thrown.
+Whenever something wrong happens, an exception implementing
+:class:`Symfony\\Component\\Filesystem\\Exception\\ExceptionInterface` is
+thrown.
 
 .. note::
 
     Prior to version 2.1, :method:`Symfony\\Component\\Filesystem\\Filesystem::mkdir`
     returned a boolean and did not throw exceptions. As of 2.1, a
-    :phpclass:`RuntimeException` is thrown if a directory creation fails.
+    :class:`Symfony\\Component\\Filesystem\\Exception\\IOException` is
+    thrown if a directory creation fails.
