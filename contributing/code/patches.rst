@@ -34,6 +34,18 @@ Set up your user information with your real name and a working email address:
 
 .. tip::
 
+    If your IDE creates configuration files inside project's directory,
+    you can use ``.git/info/exclude`` file to exclude them. Here is an example
+    rule to exclude ``ide-cfg/`` directory and ``ide.cfg`` file residing inside
+    Symfony 2 folder:
+
+    .. code-block:: text
+
+        /ide-cfg
+        /ide.cfg
+
+.. tip::
+
     Windows users: when installing Git, the installer will ask what to do with
     line endings and suggests to replace all Lf by CRLF. This is the wrong
     setting if you wish to contribute to Symfony! Selecting the as-is method is
