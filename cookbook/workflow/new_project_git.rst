@@ -37,6 +37,7 @@ git repository:
         /app/logs/*
         /vendor/  
         /app/config/parameters.yml
+        /composer.phar
 
 .. tip::
 
