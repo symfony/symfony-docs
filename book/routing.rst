@@ -1129,7 +1129,7 @@ method:
 
     .. code-block:: php
 
-        $request->headers->set('HOST', 'www.example.com');
+        $router->getContext()->setHost('www.example.com');
 
 .. index::
    single: Routing; Generating URLs in a template
