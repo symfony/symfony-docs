@@ -35,14 +35,9 @@ Set up your user information with your real name and a working email address:
 .. tip::
 
     If your IDE creates configuration files inside project's directory,
-    you can use ``.git/info/exclude`` file to exclude them. Here is an example
-    rule to exclude ``ide-cfg/`` directory and ``ide.cfg`` file residing inside
-    Symfony 2 folder:
-
-    .. code-block:: text
-
-        /ide-cfg
-        /ide.cfg
+    you can use global ``.gitignore`` file (for all projects) or
+    ``.git/info/exclude`` file (per project) to ignore them. See
+    [Github's documentation](https://help.github.com/articles/ignoring-files)
 
 .. tip::
 
