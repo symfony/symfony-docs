@@ -1125,7 +1125,7 @@ method:
     the current ``Request`` object. This is detected automatically based
     on server information supplied by PHP. When generating absolute URLs for
     scripts run from the command line, you'll need to manually set the desired
-    host on the ``Request`` object:
+    host on the ``RequestContext`:
 
     .. code-block:: php
 
