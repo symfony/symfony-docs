@@ -400,7 +400,7 @@ even better looking URL:
     *AcmeDemoBundle* is enabled only in dev environment and its routes imported
     in *app/config/routing_dev.yml*.
 
-To make you application respond faster, Symfony2 maintains a cache under the
+To make your application respond faster, Symfony2 maintains a cache under the
 ``app/cache/`` directory. In the development environment (``app_dev.php``),
 this cache is flushed automatically whenever you make changes to any code or
 configuration. But that's not the case in the production environment
