@@ -369,7 +369,7 @@ Validation is a very powerful feature of Symfony2 and has its own
 :doc:`dedicated chapter</book/validation>`.
 
 .. index::
-   single: Forms; Validation Groups
+   single: Forms; Validation groups
 
 .. _book-forms-validation-groups:
 
@@ -404,7 +404,7 @@ In both of these cases, *only* the ``registration`` validation group will
 be used to validate the underlying object.
 
 .. index::
-   single: Forms; Built-in Field Types
+   single: Forms; Built-in field types
 
 .. _book-forms-type-reference:
 
@@ -543,7 +543,7 @@ passing the option in the options field array::
     ->add('task', null, array('max_length' => 4))
 
 .. index::
-   single: Forms; Rendering in a Template
+   single: Forms; Rendering in a template
 
 .. _form-rendering-template:
 
@@ -1172,7 +1172,7 @@ customize (e.g. ``widget``), you can construct the fragment name that needs
 to be overridden (e.g. ``textarea_widget``).
 
 .. index::
-   single: Forms; Template Fragment Inheritance
+   single: Forms; Template fragment inheritance
 
 Template Fragment Inheritance
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -1335,7 +1335,7 @@ Any fragments inside the ``Acme/TaskBundle/Resources/views/Form`` directory
 are now used globally to define form output.
 
 .. index::
-   single: Forms; CSRF Protection
+   single: Forms; CSRF protection
 
 .. _forms-csrf:
 

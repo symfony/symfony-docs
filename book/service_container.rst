@@ -62,7 +62,7 @@ classes is a well-known and trusted object-oriented best-practice. These skills
 are key to being a good developer in almost any language.
 
 .. index::
-   single: Service Container; What is a Service Container?
+   single: Service Container; What is a service container?
 
 What is a Service Container?
 ----------------------------

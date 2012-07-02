@@ -1,5 +1,5 @@
 .. index::
-   single: Profiling; Data Collector
+   single: Profiling; Data collector
 
 How to create a custom Data Collector
 =====================================
