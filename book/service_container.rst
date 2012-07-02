@@ -1071,8 +1071,13 @@ additional arguments (beyond just the ``name`` parameter).
 Learn more
 ----------
 
+* :doc:`/components/dependency_injection/compilation`
+* :doc:`/components/dependency_injection/definitions`
 * :doc:`/components/dependency_injection/factories`
 * :doc:`/components/dependency_injection/parentservices`
+* :doc:`/components/dependency_injection/tags`
 * :doc:`/cookbook/controller/service`
+* :doc:`/cookbook/service_container/scopes`
+* :doc:`/cookbook/service_container/compiler_passes`
 
 .. _`service-oriented architecture`: http://wikipedia.org/wiki/Service-oriented_architecture
