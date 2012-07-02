@@ -17,8 +17,8 @@ event is just one of the core kernel events::
     // src/Acme/DemoBundle/Listener/AcmeExceptionListener.php
     namespace Acme\DemoBundle\Listener;
 
-    use Symfony\Component\HttpKernel\Event\GetResponseForExceptionEvent,
-        Symfony\Component\HttpFoundation\Response;
+    use Symfony\Component\HttpKernel\Event\GetResponseForExceptionEvent;
+    use Symfony\Component\HttpFoundation\Response;
 
     class AcmeExceptionListener
     {
