@@ -17,7 +17,8 @@ event is just one of the core kernel events::
     // src/Acme/DemoBundle/Listener/AcmeExceptionListener.php
     namespace Acme\DemoBundle\Listener;
 
-    use Symfony\Component\HttpKernel\Event\GetResponseForExceptionEvent;
+    use Symfony\Component\HttpKernel\Event\GetResponseForExceptionEvent,
+        Symfony\Component\HttpFoundation\Response;
 
     class AcmeExceptionListener
     {
@@ -28,6 +29,7 @@ event is just one of the core kernel events::
             $message = 'My Error says: ' . $exception->getMessage();
             
             // Customize our response object to display our exception details
+            $response = new Response();
             $response->setContent($message);
             $response->setStatusCode($exception->getStatusCode());
             
