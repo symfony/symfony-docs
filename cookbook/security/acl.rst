@@ -199,6 +199,7 @@ added above:
 
 .. code-block:: php
 
-    $acl->insertObjectAce(new UserSecurityIdentity('johannes'), $mask);
+    $identity = new UserSecurityIdentity('johannes', 'Acme\UserBundle\Entity\User');
+    $acl->insertObjectAce($identity, $mask);
 
 The user is now allowed to view, edit, delete, and un-delete objects.
