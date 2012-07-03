@@ -162,7 +162,7 @@ Adding additional attributes on Tags
 ------------------------------------
 
 Sometimes you need additional information about each service that's tagged with your tag. 
-For example, add an alias to our TransportChain 
+For example, you might want to add an alias to each TransportChain.
 
 To begin with, change the ``TransportChain`` class::
 
@@ -175,7 +175,7 @@ To begin with, change the ``TransportChain`` class::
             $this->transports = array();
         }
 
-        public function addTransport(\Swift_Transport  $transport, $alias)
+        public function addTransport(\Swift_Transport $transport, $alias)
         {
             $this->transports[$alias] = $transport;
         }
@@ -190,9 +190,12 @@ To begin with, change the ``TransportChain`` class::
             }
         }
     }
-    
 
-Change the service delaration:
+As you can see, when ``addTransport`` is called, it takes not only a ``Swift_Transport``
+object, but also a string alias for that transport. So, how can we allow
+each tagged transport service to also supply an alias?
+
+To answer this, change the service declaration:
 
 .. configuration-block::
 
@@ -222,8 +225,8 @@ Change the service delaration:
             <tag name="acme_mailer.transport" alias="bar" />
         </service>
         
-
-The last step is to update the compiler to take care of your additional information::
+Notice that you've added a generic ``alias`` key to the tag. To actually
+use this, update the compiler::
 
     use Symfony\Component\DependencyInjection\ContainerBuilder;
     use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
@@ -246,6 +249,8 @@ The last step is to update the compiler to take care of your additional informat
             }
         }
     }
-    
-Take care of ``$attributes`` variable. Because you can use the same tag many times on the same service, 
-``$attributes`` is an array of attributes for each tag that refers to the same service.
+
+The trickiest part is the ``$attributes`` variable. Because you can use the
+same tag many times on the same service (e.g. you could theoretically tag
+the same service 5 times with the ``acme_mailer.transport`` tag), ``$attributes``
+is an array of the tag information for each tag on that service.
