@@ -436,7 +436,6 @@ To take advantage of this system, you'll create a ``Configuration`` class
 and build a tree that defines your configuration in that class::
 
     // src/Acme/HelloBundle/DependencyInjection/Configuration.php
-
     namespace Acme\HelloBundle\DependencyInjection;
 
     use Symfony\Component\Config\Definition\Builder\TreeBuilder;
@@ -502,7 +501,6 @@ Comments and examples can be added to your configuration nodes using the
 ``->setInfo()`` and ``->setExample()`` methods::
 
     // src/Acme/HelloBundle/DependencyExtension/Configuration.php
-
     namespace Acme\HelloBundle\DependencyInjection;
 
     use Symfony\Component\Config\Definition\Builder\TreeBuilder;

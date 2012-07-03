@@ -52,7 +52,6 @@ provider.
 .. code-block:: php
 
     // src/Acme/DemoBundle/Security/Authentication/Token/WsseUserToken.php
-
     namespace Acme\DemoBundle\Security\Authentication\Token;
 
     use Symfony\Component\Security\Core\Authentication\Token\AbstractToken;
@@ -99,7 +98,6 @@ set an authenticated token in the security context if successful.
 .. code-block:: php
 
     // src/Acme/DemoBundle/Security/Firewall/WsseListener.php
-
     namespace Acme\DemoBundle\Security\Firewall;
 
     use Symfony\Component\HttpFoundation\Response;
@@ -186,7 +184,6 @@ the ``PasswordDigest`` header value matches with the user's password.
 .. code-block:: php
 
     // src/Acme/DemoBundle/Security/Authentication/Provider/WsseProvider.php
-
     namespace Acme\DemoBundle\Security\Authentication\Provider;
 
     use Symfony\Component\Security\Core\Authentication\Provider\AuthenticationProviderInterface;
@@ -268,7 +265,6 @@ create a class which implements
 .. code-block:: php
 
     // src/Acme/DemoBundle/DependencyInjection/Security/Factory/WsseFactory.php
-
     namespace Acme\DemoBundle\DependencyInjection\Security\Factory;
 
     use Symfony\Component\DependencyInjection\ContainerBuilder;

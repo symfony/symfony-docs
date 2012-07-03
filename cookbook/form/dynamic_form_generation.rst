@@ -89,7 +89,6 @@ is new (e.g. hasn't been persisted to the database). Based on that, the subscrib
 might look like the following::
 
     // src/Acme/DemoBundle/Form/EventListener/AddNameFieldSubscriber.php
-
     namespace Acme\DemoBundle\Form\EventListener;
 
     use Symfony\Component\Form\Event\DataEvent;

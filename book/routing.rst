@@ -80,7 +80,6 @@ pattern that points to a specific PHP class and method:
 .. code-block:: php
 
     // src/Acme/BlogBundle/Controller/BlogController.php
-
     namespace Acme\BlogBundle\Controller;
     use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
@@ -825,7 +824,6 @@ The controller might look like this:
 .. code-block:: php
 
     // src/Acme/BlogBundle/Controller/BlogController.php
-
     namespace Acme\BlogBundle\Controller;
     use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 

@@ -25,7 +25,6 @@ Basic Setup
 First, create a simple Doctrine Entity class to work with::
 
     // src/Acme/DemoBundle/Entity/Document.php
-
     namespace Acme\DemoBundle\Entity;
 
     use Doctrine\ORM\Mapping as ORM;

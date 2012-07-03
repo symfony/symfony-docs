@@ -17,7 +17,6 @@ where you want the overridden files to live. Start by registering the ``FOSUserB
 as the "parent" of your bundle::
 
     // src/Acme/UserBundle/AcmeUserBundle.php
-
     namespace Acme\UserBundle;
 
     use Symfony\Component\HttpKernel\Bundle\Bundle;
@@ -42,7 +41,6 @@ just create your own ``RegistrationController.php`` file, override the bundle's
 original method, and change its functionality::
 
     // src/Acme/UserBundle/Controller/RegistrationController.php
-
     namespace Acme\UserBundle\Controller;
 
     use FOS\UserBundle\Controller\RegistrationController as BaseController;

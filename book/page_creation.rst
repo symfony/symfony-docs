@@ -207,7 +207,6 @@ called ``Acme\HelloBundle\Controller\Hello``. Start by creating this file
 inside your ``AcmeHelloBundle``::
 
     // src/Acme/HelloBundle/Controller/HelloController.php
-
     namespace Acme\HelloBundle\Controller;
 
     class HelloController
@@ -281,7 +280,6 @@ of writing the HTML inside the controller, render a template instead:
     :linenos:
 
     // src/Acme/HelloBundle/Controller/HelloController.php
-
     namespace Acme\HelloBundle\Controller;
 
     use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -625,7 +623,6 @@ Start by creating a ``src/Acme/TestBundle/`` directory and adding a new file
 called ``AcmeTestBundle.php``::
 
     // src/Acme/TestBundle/AcmeTestBundle.php
-
     namespace Acme\TestBundle;
 
     use Symfony\Component\HttpKernel\Bundle\Bundle;

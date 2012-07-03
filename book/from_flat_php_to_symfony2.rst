@@ -543,7 +543,6 @@ them for you. Here's the same sample application, now built in Symfony2:
 
     <?php
     // src/Acme/BlogBundle/Controller/BlogController.php
-
     namespace Acme\BlogBundle\Controller;
     use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 

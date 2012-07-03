@@ -19,7 +19,6 @@ Edition) to greet us from the command line, create ``GreetCommand.php`` and
 add the following to it::
 
     // src/Acme/DemoBundle/Command/GreetCommand.php
-
     namespace Acme\DemoBundle\Command;
 
     use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;

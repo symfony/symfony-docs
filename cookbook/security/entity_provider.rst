@@ -43,7 +43,6 @@ focus on the most important methods that come from the
 .. code-block:: php
 
     // src/Acme/UserBundle/Entity/User.php
-
     namespace Acme\UserBundle\Entity;
 
     use Doctrine\ORM\Mapping as ORM;
@@ -158,7 +157,6 @@ For more details on each of these, see :class:`Symfony\\Component\\Security\\Cor
 .. code-block:: php
 
     // src/Acme/UserBundle/Entity/User.php
-
     namespace Acme\UserBundle\Entity;
 
     // ...
@@ -273,7 +271,6 @@ For this example, the first three methods will return ``true`` whereas the
 .. code-block:: php
 
     // src/Acme/UserBundle/Entity/User.php
-
     namespace Acme\Bundle\UserBundle\Entity;
 
     // ...
@@ -331,7 +328,6 @@ The code below shows the implementation of the
 ``UserRepository`` class::
 
     // src/Acme/UserBundle/Entity/UserRepository.php
-
     namespace Acme\UserBundle\Entity;
 
     use Symfony\Component\Security\Core\User\UserInterface;
@@ -427,7 +423,6 @@ more users. As a group is also a role, the previous ``getRoles()`` method now
 returns the list of related groups::
 
     // src/Acme/UserBundle/Entity/User.php
-
     namespace Acme\Bundle\UserBundle\Entity;
 
     use Doctrine\Common\Collections\ArrayCollection;
@@ -517,7 +512,6 @@ relationship in the ``UserRepository::loadUserByUsername()`` method. This will
 fetch the user and his associated roles / groups with a single query::
 
     // src/Acme/UserBundle/Entity/UserRepository.php
-
     namespace Acme\Bundle\UserBundle\Entity;
 
     // ...

@@ -10,7 +10,6 @@ duplicated fields in different entities.
 For example, imagine you have two entities, a ``Company`` and a ``Customer``::
 
     // src/Acme/HelloBundle/Entity/Company.php
-
     namespace Acme\HelloBundle\Entity;
 
     class Company
@@ -27,7 +26,6 @@ For example, imagine you have two entities, a ``Company`` and a ``Customer``::
 .. code-block:: php
 
     // src/Acme/HelloBundle/Entity/Customer.php
-
     namespace Acme\HelloBundle\Entity;
 
     class Customer
@@ -50,7 +48,6 @@ a ``Customer``.
 Start by creating a very simple ``CompanyType`` and ``CustomerType``::
 
     // src/Acme/HelloBundle/Form/Type/CompanyType.php
-
     namespace Acme\HelloBundle\Form\Type;
 
     use Symfony\Component\Form\FormBuilderInterface;
@@ -69,7 +66,6 @@ Start by creating a very simple ``CompanyType`` and ``CustomerType``::
 .. code-block:: php
 
     // src/Acme/HelloBundle/Form/Type/CustomerType.php
-
     namespace Acme\HelloBundle\Form\Type;
 
     use Symfony\Component\Form\FormBuilderInterface;
@@ -89,7 +85,6 @@ Now, we have to deal with the four duplicated fields. Here is a (simple)
 location form type::
 
     // src/Acme/HelloBundle/Form/Type/LocationType.php
-
     namespace Acme\HelloBundle\Form\Type;
 
     use Symfony\Component\Form\FormBuilderInterface;

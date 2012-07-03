@@ -23,7 +23,6 @@ Let's start there: suppose that each ``Task`` belongs to multiple ``Tags``
 objects. Start by creating a simple ``Task`` class::
 
     // src/Acme/TaskBundle/Entity/Task.php
-
     namespace Acme\TaskBundle\Entity;
 
     use Doctrine\Common\Collections\ArrayCollection;
@@ -70,7 +69,6 @@ Now, create a ``Tag`` class. As you saw above, a ``Task`` can have many ``Tag``
 objects::
 
     // src/Acme/TaskBundle/Entity/Tag.php
-
     namespace Acme\TaskBundle\Entity;
 
     class Tag
@@ -87,7 +85,6 @@ Now let's get to the forms. Create a form class so that a ``Tag`` object
 can be modified by the user::
 
     // src/Acme/TaskBundle/Form/Type/TagType.php
-
     namespace Acme\TaskBundle\Form\Type;
 
     use Symfony\Component\Form\AbstractType;
@@ -122,7 +119,6 @@ Notice that we embed a collection of ``TagType`` forms using the
 :doc:`collection</reference/forms/types/collection>` field type::
 
     // src/Acme/TaskBundle/Form/Type/TaskType.php
-
     namespace Acme\TaskBundle\Form\Type;
 
     use Symfony\Component\Form\AbstractType;
@@ -154,7 +150,6 @@ Notice that we embed a collection of ``TagType`` forms using the
 In your controller, you'll now initialize a new instance of ``TaskType``::
 
     // src/Acme/TaskBundle/Controller/TaskController.php
-
     namespace Acme\TaskBundle\Controller;
 
     use Acme\TaskBundle\Entity\Task;

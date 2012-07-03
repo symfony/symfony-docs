@@ -94,7 +94,6 @@ you need a ``Product`` object to represent those products. Create this class
 inside the ``Entity`` directory of your ``AcmeStoreBundle``::
 
     // src/Acme/StoreBundle/Entity/Product.php
-
     namespace Acme\StoreBundle\Entity;
 
     class Product
@@ -734,7 +733,6 @@ ordered alphabetically.
 .. code-block:: php
 
     // src/Acme/StoreBundle/Repository/ProductRepository.php
-
     namespace Acme\StoreBundle\Repository;
 
     use Doctrine\ORM\EntityRepository;

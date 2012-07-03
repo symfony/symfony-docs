@@ -29,7 +29,6 @@ going to need to build a form. But before you begin, first focus on the generic
 .. code-block:: php
 
     // src/Acme/TaskBundle/Entity/Task.php
-
     namespace Acme\TaskBundle\Entity;
 
     class Task
@@ -86,7 +85,6 @@ object and then rendering it in a template. For now, this can all be done
 from inside a controller::
 
     // src/Acme/TaskBundle/Controller/DefaultController.php
-
     namespace Acme\TaskBundle\Controller;
 
     use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -800,7 +798,6 @@ that will house the logic for building the task form:
 .. code-block:: php
 
     // src/Acme/TaskBundle/Form/Type/TaskType.php
-
     namespace Acme\TaskBundle\Form\Type;
 
     use Symfony\Component\Form\AbstractType;
@@ -941,7 +938,6 @@ Suppose that each ``Task`` belongs to a simple ``Category`` object. Start,
 of course, by creating the ``Category`` object::
 
     // src/Acme/TaskBundle/Entity/Category.php
-
     namespace Acme\TaskBundle\Entity;
 
     use Symfony\Component\Validator\Constraints as Assert;
@@ -984,7 +980,6 @@ Now that your application has been updated to reflect the new requirements,
 create a form class so that a ``Category`` object can be modified by the user::
 
     // src/Acme/TaskBundle/Form/Type/CategoryType.php
-
     namespace Acme\TaskBundle\Form\Type;
 
     use Symfony\Component\Form\AbstractType;

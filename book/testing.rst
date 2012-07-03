@@ -52,7 +52,6 @@ unit tests. Suppose, for example, that you have an *incredibly* simple class
 called ``Calculator`` in the ``Utility/`` directory of your bundle::
 
     // src/Acme/DemoBundle/Utility/Calculator.php
-
     namespace Acme\DemoBundle\Utility;
 
     class Calculator
@@ -67,7 +66,6 @@ To test this, create a ``CalculatorTest`` file in the ``Tests/Utility`` director
 of your bundle::
 
     // src/Acme/DemoBundle/Tests/Utility/CalculatorTest.php
-
     namespace Acme\DemoBundle\Tests\Utility;
 
     use Acme\DemoBundle\Utility\Calculator;
@@ -135,7 +133,6 @@ For example, the Symfony2 Standard Edition provides a simple functional test
 for its ``DemoController`` (`DemoControllerTest`_) that reads as follows::
 
     // src/Acme/DemoBundle/Tests/Controller/DemoControllerTest.php
-
     namespace Acme\DemoBundle\Tests\Controller;
 
     use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;

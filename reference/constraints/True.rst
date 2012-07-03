@@ -28,7 +28,6 @@ example, suppose you have the following method:
 .. code-block:: php
 
     // src/Acme/BlogBundle/Entity/Author.php
-
     namespace Acme\BlogBundle\Entity;
 
     class Author

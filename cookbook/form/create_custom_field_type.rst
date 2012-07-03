@@ -20,7 +20,7 @@ will be called `GenderType` and the file will be stored in the default location
 for form fields, which is ``<BundleName>\Form\Type``. Make sure the field extends
 :class:`Symfony\\Component\\Form\\AbstractType`::
 
-    # src/Acme/DemoBundle/Form/Type/GenderType.php
+    // src/Acme/DemoBundle/Form/Type/GenderType.php
     namespace Acme\DemoBundle\Form\Type;
 
     use Symfony\Component\Form\AbstractType;
@@ -149,7 +149,6 @@ You can now use your custom field type immediately, simply by creating a
 new instance of the type in one of your forms::
 
     // src/Acme/DemoBundle/Form/Type/AuthorType.php
-
     namespace Acme\DemoBundle\Form\Type;
 
     use Symfony\Component\Form\AbstractType;
@@ -232,7 +231,7 @@ returned by the ``getName`` method defined earlier. We'll see the importance
 of this in a moment when we use the custom field type. But first, add a ``__construct``
 argument to ``GenderType``, which receives the gender configuration::
 
-    # src/Acme/DemoBundle/Form/Type/GenderType.php
+    // src/Acme/DemoBundle/Form/Type/GenderType.php
     namespace Acme\DemoBundle\Form\Type;
 
     use Symfony\Component\OptionsResolver\OptionsResolverInterface;
@@ -263,7 +262,6 @@ registered as a service. And because we used the ``form.type`` alias in its
 configuration, using the field is now much easier::
 
     // src/Acme/DemoBundle/Form/Type/AuthorType.php
-
     namespace Acme\DemoBundle\Form\Type;
 
     use Symfony\Component\Form\FormBuilderInterface;

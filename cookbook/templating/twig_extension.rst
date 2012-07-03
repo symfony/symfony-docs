@@ -24,7 +24,6 @@ To get your custom functionality you must first create a Twig Extension class.
 As an example we will create a price filter to format a given number into price::
 
     // src/Acme/DemoBundle/Twig/AcmeExtension.php
-
     namespace Acme\DemoBundle\Twig;
 
     use Twig_Extension;

@@ -25,7 +25,6 @@ will enter the issue number. The field will display an error if a non existing n
 was entered::
 
     // src/Acme/TaskBundle/Form/Type/IssueSelectorType.php
-
     namespace Acme\TaskBundle\Form\Type;
 
     use Symfony\Component\Form\AbstractType;
@@ -96,7 +95,6 @@ was entered::
 Next, we create the data transformer, which does the actual conversion::
 
     // src/Acme/TaskBundle/Form/DataTransformer/IssueToNumberTransformer.php
-
     namespace Acme\TaskBundle\Form\DataTransformer;
 
     use Symfony\Component\Form\DataTransformerInterface;
@@ -188,7 +186,6 @@ manager can be automatically injected:
 You can now add the type to your form by its alias as follows::
 
     // src/Acme/TaskBundle/Form/Type/TaskType.php
-
     namespace Acme\TaskBundle\Form\Type;
 
     use Symfony\Component\Form\AbstractType;
