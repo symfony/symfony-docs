@@ -146,7 +146,7 @@ you need is the JavaScript:
             {# ... #}
 
             {# store the prototype on the data-prototype attribute #}
-            <ul id="email-fields-list" data-prototype="{{ form_widget(form.emails.get('prototype')) | e }}">
+            <ul id="email-fields-list" data-prototype="{{ form_widget(form.emails.vars.prototype) | e }}">
             {% for emailField in form.emails %}
                 <li>
                     {{ form_errors(emailField) }}
@@ -295,7 +295,7 @@ collection field:
 
     .. code-block:: jinja
     
-        {{ form_row(form.emails.get('prototype')) }}
+        {{ form_row(form.emails.vars.prototype) }}
 
     .. code-block:: php
     

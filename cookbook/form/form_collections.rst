@@ -307,7 +307,7 @@ new "tag" forms. To render it, make the following change to your template:
 
     .. code-block:: html+jinja
     
-        <ul class="tags" data-prototype="{{ form_widget(form.tags.get('prototype')) | e }}">
+        <ul class="tags" data-prototype="{{ form_widget(form.tags.vars.prototype) | e }}">
             ...
         </ul>
     
@@ -325,7 +325,7 @@ new "tag" forms. To render it, make the following change to your template:
 
 .. tip::
 
-    The ``form.tags.get('prototype')`` is form element that looks and feels just
+    The ``form.tags.vars.prototype`` is form element that looks and feels just
     like the individual ``form_widget(tag)`` elements inside our ``for`` loop.
     This means that you can call ``form_widget``, ``form_row``, or ``form_label``
     on it. You could even choose to render only one of its fields (e.g. the
@@ -333,7 +333,7 @@ new "tag" forms. To render it, make the following change to your template:
     
     .. code-block:: html+jinja
     
-        {{ form_widget(form.tags.get('prototype').name) | e }}
+        {{ form_widget(form.tags.vars.prototype.name) | e }}
 
 On the rendered page, the result will look something like this:
 
