@@ -48,7 +48,7 @@ greeted. To create the page, follow the simple two-step process.
     ``web`` directory of your new Symfony2 project. For detailed information
     on this process, see the documentation on the web server you are using.
     Here's the relevant documentation page for some web server you might be using:
-    
+
     * For Apache HTTP Server, refer to `Apache's DirectoryIndex documentation`_.
     * For Nginx, refer to `Nginx HttpCoreModule location documentation`_.
 
@@ -223,8 +223,10 @@ Create the ``indexAction`` method that Symfony will execute when the ``hello``
 route is matched::
 
     // src/Acme/HelloBundle/Controller/HelloController.php
+    namespace Acme\HelloBundle\Controller;
 
-    // ...
+    use Symfony\Component\HttpFoundation\Response;
+
     class HelloController
     {
         public function indexAction($name)
