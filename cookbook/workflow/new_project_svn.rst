@@ -81,6 +81,7 @@ To get started, you'll need to download Symfony2 and get the basic Subversion se
         $ svn propset svn:ignore "parameters.yml" app/config/
         $ svn propset svn:ignore "*" app/cache/
         $ svn propset svn:ignore "*" app/logs/
+        $ svn propset svn:ignore "composer.phar" .
 
         $ svn propset svn:ignore "bundles" web
 
