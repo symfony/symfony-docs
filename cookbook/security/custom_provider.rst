@@ -27,12 +27,12 @@ class: ``getRoles()``, ``getPassword()``, ``getSalt()``, ``getUsername()``,
 
 Let's see this in action::
 
-    // src/Acme/WebserviceUserBundle/Security/User.php
+    // src/Acme/WebserviceUserBundle/Security/User/WebserviceUser.php
     namespace Acme\WebserviceUserBundle\Security\User;
 
     use Symfony\Component\Security\Core\User\UserInterface;
 
-    class User implements UserInterface
+    class WebserviceUser implements UserInterface
     {
         private $username;
         private $password;
