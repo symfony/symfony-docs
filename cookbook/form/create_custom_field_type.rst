@@ -70,9 +70,9 @@ important:
   set) the ``multiple`` attribute on the ``select`` field. See `Creating a Template for the Field`_
   for more details.
 
-* ``getDefaultOptions()`` - This defines options for your form type that
+* ``setDefaultOptions()`` - This defines options for your form type that
   can be used in ``buildForm()`` and ``buildView()``. There are a lot of
-  options common to all fields (see `FieldType`_), but you can create any
+  options common to all fields (see `FormType`_), but you can create any
   others that you need here.
 
 .. tip::
@@ -80,7 +80,7 @@ important:
     If you're creating a field that consists of many fields, then be sure
     to set your "parent" type as ``form`` or something that extends ``form``.
     Also, if you need to modify the "view" of any of your child types from
-    your parent type, use the ``buildViewBottomUp()`` method.
+    your parent type, use the ``finishView()`` method.
 
 The ``getName()`` method returns an identifier which should be unique in
 your application. This is used in various places, such as when customizing
