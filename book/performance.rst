@@ -15,7 +15,7 @@ application even faster.
 Use a Byte Code Cache (e.g. APC)
 --------------------------------
 
-One the best (and easiest) things that you should do to improve your performance
+One of the best (and easiest) things that you should do to improve your performance
 is to use a "byte code cache". The idea of a byte code cache is to remove
 the need to constantly recompile the PHP source code. There are a number of
 `byte code caches`_ available, some of which are open source. The most widely

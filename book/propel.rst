@@ -18,8 +18,11 @@ persist it to the database and fetch it back out.
 .. sidebar:: Code along with the example
 
     If you want to follow along with the example in this chapter, create an
-    ``AcmeStoreBundle`` via: ``php app/console generate:bundle
-    --namespace=Acme/StoreBundle``.
+    ``AcmeStoreBundle`` via: 
+    
+    .. code-block:: bash
+
+        php app/console generate:bundle --namespace=Acme/StoreBundle
 
 Configuring the Database
 ~~~~~~~~~~~~~~~~~~~~~~~~

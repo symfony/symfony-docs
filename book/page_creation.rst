@@ -203,7 +203,7 @@ that controller.
 
 The controller - ``AcmeHelloBundle:Hello:index`` is the *logical* name of
 the controller, and it maps to the ``indexAction`` method of a PHP class
-called ``Acme\HelloBundle\Controller\Hello``. Start by creating this file
+called ``Acme\HelloBundle\Controller\HelloController``. Start by creating this file
 inside your ``AcmeHelloBundle``::
 
     // src/Acme/HelloBundle/Controller/HelloController.php
@@ -274,7 +274,7 @@ An optional, but common, third step in the process is to create a template.
 Optional Step 3: Create the Template
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Templates allows you to move all of the presentation (e.g. HTML code) into
+Templates allow you to move all of the presentation (e.g. HTML code) into
 a separate file and reuse different portions of the page layout. Instead
 of writing the HTML inside the controller, render a template instead:
 

@@ -157,3 +157,100 @@ run when the container is compiled::
 
     $container = new ContainerBuilder();
     $container->addCompilerPass(new TransportCompilerPass);
+
+Adding additional attributes on Tags
+------------------------------------
+
+Sometimes you need additional information about each service that's tagged with your tag. 
+For example, you might want to add an alias to each TransportChain.
+
+To begin with, change the ``TransportChain`` class::
+
+    class TransportChain
+    {
+        private $transports;
+
+        public function __construct()
+        {
+            $this->transports = array();
+        }
+
+        public function addTransport(\Swift_Transport $transport, $alias)
+        {
+            $this->transports[$alias] = $transport;
+        }
+
+        public function getTransport($alias)
+        {
+            if (array_key_exists($alias, $this->transports)) {
+               return $this->transports[$alias];
+            }
+            else {
+               return null;
+            }
+        }
+    }
+
+As you can see, when ``addTransport`` is called, it takes not only a ``Swift_Transport``
+object, but also a string alias for that transport. So, how can we allow
+each tagged transport service to also supply an alias?
+
+To answer this, change the service declaration:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        services:
+            acme_mailer.transport.smtp:
+                class: \Swift_SmtpTransport
+                arguments:
+                    - %mailer_host%
+                tags:
+                    -  { name: acme_mailer.transport, alias: foo }
+            acme_mailer.transport.sendmail:
+                class: \Swift_SendmailTransport
+                tags:
+                    -  { name: acme_mailer.transport, alias: bar }
+        
+
+    .. code-block:: xml
+
+        <service id="acme_mailer.transport.smtp" class="\Swift_SmtpTransport">
+            <argument>%mailer_host%</argument>
+            <tag name="acme_mailer.transport" alias="foo" />
+        </service>
+
+        <service id="acme_mailer.transport.sendmail" class="\Swift_SendmailTransport">
+            <tag name="acme_mailer.transport" alias="bar" />
+        </service>
+        
+Notice that you've added a generic ``alias`` key to the tag. To actually
+use this, update the compiler::
+
+    use Symfony\Component\DependencyInjection\ContainerBuilder;
+    use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
+    use Symfony\Component\DependencyInjection\Reference;
+
+    class TransportCompilerPass implements CompilerPassInterface
+    {
+        public function process(ContainerBuilder $container)
+        {
+            if (false === $container->hasDefinition('acme_mailer.transport_chain')) {
+                return;
+            }
+
+            $definition = $container->getDefinition('acme_mailer.transport_chain');
+
+            foreach ($container->findTaggedServiceIds('acme_mailer.transport') as $id => $tagAttributes) {
+                foreach ($tagAttributes as $attributes) {
+                    $definition->addMethodCall('addTransport', array(new Reference($id), $attributes["alias"]));
+                }
+            }
+        }
+    }
+
+The trickiest part is the ``$attributes`` variable. Because you can use the
+same tag many times on the same service (e.g. you could theoretically tag
+the same service 5 times with the ``acme_mailer.transport`` tag), ``$attributes``
+is an array of the tag information for each tag on that service.

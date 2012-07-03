@@ -339,7 +339,6 @@ new "tag" forms. To render it, make the following change to your template:
     
         {{ form_widget(form.tags.vars.prototype.name) | e }}
 
-
 On the rendered page, the result will look something like this:
 
 .. code-block:: html

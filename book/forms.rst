@@ -567,7 +567,7 @@ the correct values of a number of field options.
     And though you'll need to manually add your server-side validation, these
     field type options can then be guessed from that information.
 
-* ``required``: The ``required`` option can be guessed based off of the validation
+* ``required``: The ``required`` option can be guessed based on the validation
   rules (i.e. is the field ``NotBlank`` or ``NotNull``) or the Doctrine metadata
   (i.e. is the field ``nullable``). This is very useful, as your client-side
   validation will automatically match your validation rules.
