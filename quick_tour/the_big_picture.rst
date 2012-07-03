@@ -19,6 +19,16 @@ Downloading Symfony2
 First, check that you have installed and configured a Web server (such as
 Apache) with PHP 5.3.2 or higher.
 
+.. tips::
+   
+    Since PHP 5.4, you could use the Build-in web server:
+    
+    .. code-block:: bash
+
+        php -S localhost:80 -t www
+
+    For development purpose only, it can help you to start your project right now.
+
 Ready? Start by downloading the "`Symfony2 Standard Edition`_", a Symfony
 :term:`distribution` that is preconfigured for the most common use cases and
 also contains some code that demonstrates how to use Symfony2 (get the archive
