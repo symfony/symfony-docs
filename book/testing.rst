@@ -279,6 +279,8 @@ document::
 
         // Assert that the response is a redirect to /demo/contact
         $this->assertTrue($client->getResponse()->isRedirect('/demo/contact'));
+        // Assert that the response is a redirect to a URL that ends with /contact (using regular expressions)
+        $this->assertTrue($client->getResponse()->isRedirect('/\/contact$/'));
         // or simply check that the response is a redirect to any URL
         $this->assertTrue($client->getResponse()->isRedirect());
 
