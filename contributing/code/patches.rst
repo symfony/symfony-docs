@@ -34,6 +34,13 @@ Set up your user information with your real name and a working email address:
 
 .. tip::
 
+    If your IDE creates configuration files inside project's directory,
+    you can use global ``.gitignore`` file (for all projects) or
+    ``.git/info/exclude`` file (per project) to ignore them. See
+    [Github's documentation](https://help.github.com/articles/ignoring-files)
+
+.. tip::
+
     Windows users: when installing Git, the installer will ask what to do with
     line endings and suggests to replace all Lf by CRLF. This is the wrong
     setting if you wish to contribute to Symfony! Selecting the as-is method is
