@@ -88,7 +88,8 @@ pattern that points to a specific PHP class and method:
     {
         public function showAction($slug)
         {
-            $blog = ... use the $slug variable to query the database;
+            // use the $slug variable to query the database
+            $blog = ...;
             
             return $this->render('AcmeBlogBundle:Blog:show.html.twig', array(
                 'blog' => $blog,

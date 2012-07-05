@@ -570,7 +570,8 @@ If you're extending the base controller class, do the following::
 
     public function indexAction()
     {
-        $product = ... retrieve the object from database;
+        // retrieve the object from database
+        $product = ...;
         if (!$product) {
             throw $this->createNotFoundException('The product does not exist');
         }
