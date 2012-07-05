@@ -187,7 +187,7 @@ the dispatcher calls the ``AcmeListener::onFooAction`` method and passes the
 
         public function onFooAction(Event $event)
         {
-            // do something
+            // ... do something
         }
     }
 
