@@ -80,15 +80,15 @@ pattern that points to a specific PHP class and method:
 .. code-block:: php
 
     // src/Acme/BlogBundle/Controller/BlogController.php
-    
     namespace Acme\BlogBundle\Controller;
+
     use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
     class BlogController extends Controller
     {
         public function showAction($slug)
         {
-            $blog = // use the $slug variable to query the database
+            $blog = ... use the $slug variable to query the database;
             
             return $this->render('AcmeBlogBundle:Blog:show.html.twig', array(
                 'blog' => $blog,
@@ -1145,7 +1145,7 @@ a template helper function:
 
     .. code-block:: html+jinja
 
-        <a href="{{ path('blog_show', { 'slug': 'my-blog-post' }) }}">
+        <a href="{{ path('blog_show', {'slug': 'my-blog-post'}) }}">
           Read this blog post.
         </a>
 
@@ -1161,7 +1161,7 @@ Absolute URLs can also be generated.
 
     .. code-block:: html+jinja
 
-        <a href="{{ url('blog_show', { 'slug': 'my-blog-post' }) }}">
+        <a href="{{ url('blog_show', {'slug': 'my-blog-post'}) }}">
           Read this blog post.
         </a>
 
