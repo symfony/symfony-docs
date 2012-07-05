@@ -613,7 +613,8 @@ syntax for controllers (i.e. **bundle**:**controller**:**action**):
     .. code-block:: html+jinja
 
         {# app/Resources/views/base.html.twig #}
-        ...
+
+        {# ... #}
 
         <div id="sidebar">
             {% render "AcmeArticleBundle:Article:recentArticles" with {'max': 3} %}
@@ -622,7 +623,8 @@ syntax for controllers (i.e. **bundle**:**controller**:**action**):
     .. code-block:: html+php
 
         <!-- app/Resources/views/base.html.php -->
-        ...
+
+        {# ... #}
 
         <div id="sidebar">
             <?php echo $view['actions']->render('AcmeArticleBundle:Article:recentArticles', array('max' => 3)) ?>
@@ -720,7 +722,7 @@ correctly:
 
         {# src/Acme/ArticleBundle/Resources/views/Article/recentList.html.twig #}
         {% for article in articles %}
-            <a href="{{ path('article_show', { 'slug': article.slug }) }}">
+            <a href="{{ path('article_show', {'slug': article.slug}) }}">
                 {{ article.title }}
             </a>
         {% endfor %}
@@ -989,7 +991,8 @@ customize the markup specifically for your application. By digging into the
 
     public function indexAction()
     {
-        $blogs = // some logic to retrieve the blogs
+        // some logic to retrieve the blogs
+        $blogs = ...;
 
         $this->render('AcmeBlogBundle:Blog:index.html.twig', array('blogs' => $blogs));
     }
@@ -1233,7 +1236,6 @@ Template parameters can then be dumped using the ``dump`` function:
 .. code-block:: html+jinja
 
     {# src/Acme/ArticleBundle/Resources/views/Article/recentList.html.twig #}
-
     {{ dump(articles) }}
 
     {% for article in articles %}
