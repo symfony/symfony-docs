@@ -90,7 +90,8 @@ helper must be registered::
 
     $view->set(new SlotsHelper());
 
-    // Retrieve $page object
+    // Retrieve page object
+    $page = ...;
 
     echo $view->render('page.php', array('page' => $page));
 
