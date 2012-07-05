@@ -94,8 +94,8 @@ a controller object. Controllers are also called *actions*.
     :linenos:
 
     // src/Acme/HelloBundle/Controller/HelloController.php
-
     namespace Acme\HelloBundle\Controller;
+
     use Symfony\Component\HttpFoundation\Response;
 
     class HelloController
@@ -208,8 +208,8 @@ passed to that method:
 
     <?php
     // src/Acme/HelloBundle/Controller/HelloController.php
-
     namespace Acme\HelloBundle\Controller;
+
     use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
     class HelloController extends Controller
@@ -276,7 +276,7 @@ the following guidelines in mind while you develop.
 
         public function indexAction($last_name, $color, $first_name)
         {
-            // ..
+            // ...
         }
 
 * **Each required controller argument must match up with a routing parameter**
@@ -286,7 +286,7 @@ the following guidelines in mind while you develop.
 
         public function indexAction($first_name, $last_name, $color, $foo)
         {
-            // ..
+            // ...
         }
 
     Making the argument optional, however, is perfectly ok. The following
@@ -294,7 +294,7 @@ the following guidelines in mind while you develop.
 
         public function indexAction($first_name, $last_name, $color, $foo = 'bar')
         {
-            // ..
+            // ...
         }
 
 * **Not all routing parameters need to be arguments on your controller**
@@ -304,7 +304,7 @@ the following guidelines in mind while you develop.
 
         public function indexAction($first_name, $color)
         {
-            // ..
+            // ...
         }
 
 .. tip::
@@ -349,8 +349,8 @@ Add the ``use`` statement atop the ``Controller`` class and then modify the
 .. code-block:: php
 
     // src/Acme/HelloBundle/Controller/HelloController.php
-
     namespace Acme\HelloBundle\Controller;
+
     use Symfony\Bundle\FrameworkBundle\Controller\Controller;
     use Symfony\Component\HttpFoundation\Response;
 
@@ -448,7 +448,7 @@ object that's returned from that controller::
             'color' => 'green'
         ));
 
-        // further modify the response or return it directly
+        // ... further modify the response or return it directly
         
         return $response;
     }
@@ -570,7 +570,7 @@ If you're extending the base controller class, do the following::
 
     public function indexAction()
     {
-        $product = // retrieve the object from database
+        $product = ... retrieve the object from database;
         if (!$product) {
             throw $this->createNotFoundException('The product does not exist');
         }
