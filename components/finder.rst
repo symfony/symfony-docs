@@ -30,8 +30,10 @@ directories::
     foreach ($finder as $file) {
         // Print the absolute path
         print $file->getRealpath()."\n";
+
         // Print the relative path to the file, omitting the filename
         print $file->getRelativePath()."\n";
+
         // Print the relative path to the file
         print $file->getRelativePathname()."\n";
     }
@@ -87,7 +89,7 @@ And it also works with user-defined streams::
     $finder = new Finder();
     $finder->name('photos*')->size('< 100K')->date('since 1 hour ago');
     foreach ($finder->in('s3://bucket-name') as $file) {
-        // do something
+        // ... do something
 
         print $file->getFilename()."\n";
     }
