@@ -56,6 +56,8 @@ following:
     .. code-block:: php-annotations
 
         // src/Acme/BlogBundle/Entity/Author.php
+
+        // ...
         use Symfony\Component\Validator\Constraints as Assert;
 
         class Author
@@ -85,6 +87,7 @@ following:
 
         // src/Acme/BlogBundle/Entity/Author.php
 
+        // ...
         use Symfony\Component\Validator\Mapping\ClassMetadata;
         use Symfony\Component\Validator\Constraints\NotBlank;
 
@@ -118,9 +121,9 @@ simple example from inside a controller:
 
 .. code-block:: php
 
+    // ...
     use Symfony\Component\HttpFoundation\Response;
     use Acme\BlogBundle\Entity\Author;
-    // ...
 
     public function indexAction()
     {
@@ -174,7 +177,6 @@ Inside the template, you can output the list of errors exactly as needed:
     .. code-block:: html+jinja
 
         {# src/Acme/BlogBundle/Resources/views/Author/validate.html.twig #}
-
         <h3>The author has the following errors</h3>
         <ul>
         {% for error in errors %}
@@ -185,7 +187,6 @@ Inside the template, you can output the list of errors exactly as needed:
     .. code-block:: html+php
 
         <!-- src/Acme/BlogBundle/Resources/views/Author/validate.html.php -->
-
         <h3>The author has the following errors</h3>
         <ul>
         <?php foreach ($errors as $error): ?>
@@ -214,10 +215,10 @@ and bound. The constraint violations on the object are converted into ``FieldErr
 objects that can easily be displayed with your form. The typical form submission
 workflow looks like the following from inside a controller::
 
+    // ...
     use Acme\BlogBundle\Entity\Author;
     use Acme\BlogBundle\Form\AuthorType;
     use Symfony\Component\HttpFoundation\Request;
-    // ...
 
     public function updateAction(Request $request)
     {
@@ -230,7 +231,7 @@ workflow looks like the following from inside a controller::
             if ($form->isValid()) {
                 // the validation passed, do something with the $author object
 
-                return $this->redirect($this->generateUrl('...'));
+                return $this->redirect($this->generateUrl(...));
             }
         }
 
@@ -370,6 +371,8 @@ constraint, have several configuration options available. Suppose that the
     .. code-block:: php
 
         // src/Acme/BlogBundle/Entity/Author.php
+
+        // ...
         use Symfony\Component\Validator\Mapping\ClassMetadata;
         use Symfony\Component\Validator\Constraints\NotBlank;
 
@@ -406,6 +409,8 @@ options can be specified in this way.
     .. code-block:: php-annotations
 
         // src/Acme/BlogBundle/Entity/Author.php
+
+        // ...
         use Symfony\Component\Validator\Constraints as Assert;
 
         class Author
@@ -437,6 +442,8 @@ options can be specified in this way.
     .. code-block:: php
 
         // src/Acme/BlogBundle/Entity/Author.php
+
+        // ...
         use Symfony\Component\Validator\Mapping\ClassMetadata;
         use Symfony\Component\Validator\Constraints\Choice;
 
@@ -502,6 +509,8 @@ class to have at least 3 characters.
     .. code-block:: php-annotations
 
         // Acme/BlogBundle/Entity/Author.php
+
+        // ...
         use Symfony\Component\Validator\Constraints as Assert;
 
         class Author
@@ -526,6 +535,8 @@ class to have at least 3 characters.
     .. code-block:: php
 
         // src/Acme/BlogBundle/Entity/Author.php
+
+        // ...
         use Symfony\Component\Validator\Mapping\ClassMetadata;
         use Symfony\Component\Validator\Constraints\NotBlank;
         use Symfony\Component\Validator\Constraints\MinLength;
@@ -571,6 +582,8 @@ this method must return ``true``:
     .. code-block:: php-annotations
 
         // src/Acme/BlogBundle/Entity/Author.php
+
+        // ...
         use Symfony\Component\Validator\Constraints as Assert;
 
         class Author
@@ -598,6 +611,8 @@ this method must return ``true``:
     .. code-block:: php
 
         // src/Acme/BlogBundle/Entity/Author.php
+
+        // ...
         use Symfony\Component\Validator\Mapping\ClassMetadata;
         use Symfony\Component\Validator\Constraints\True;
 
@@ -799,7 +814,7 @@ it looks like this::
             // this is *not* a valid email address
             $errorMessage = $errorList[0]->getMessage()
             
-            // do something with the error
+            // ... do something with the error
         }
         
         // ...
