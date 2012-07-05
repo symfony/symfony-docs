@@ -42,7 +42,7 @@ autoloader is straightforward::
 
     $loader = new UniversalClassLoader();
 
-    // register namespaces and prefixes here - see below
+    // ... register namespaces and prefixes here - see below
 
     $loader->register();
 
