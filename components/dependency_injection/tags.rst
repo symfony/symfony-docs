@@ -186,7 +186,7 @@ To begin with, change the ``TransportChain`` class::
                return $this->transports[$alias];
             }
             else {
-               return null;
+               return;
             }
         }
     }

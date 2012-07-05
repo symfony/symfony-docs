@@ -176,7 +176,7 @@ like this:
 
     $container = new ContainerBuilder();
 
-    //--
+    // ...
 
     $newsletterManager = $container->get('newsletter_manager');
 
