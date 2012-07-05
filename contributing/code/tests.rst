@@ -87,6 +87,15 @@ and if the tests are broken because of your modifications.
 
 .. tip::
 
+    If you want to test a single component type it's path after `phpunit`
+    command, e.g.:
+
+    .. code-block:: bash
+
+        $ phpunit src/Symfony/Component/Finder/
+
+.. tip::
+
     Run the test suite before applying your modifications to check that they
     run fine on your configuration.
 
