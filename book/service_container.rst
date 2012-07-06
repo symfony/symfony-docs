@@ -942,7 +942,6 @@ Learn more
 * :doc:`/components/dependency_injection/factories`
 * :doc:`/components/dependency_injection/parentservices`
 * :doc:`/cookbook/controller/service`
-* :doc:`/components/dependency_injection/advanced
-`
+* :doc:`/components/dependency_injection/advanced`
 
 .. _`service-oriented architecture`: http://wikipedia.org/wiki/Service-oriented_architecture
