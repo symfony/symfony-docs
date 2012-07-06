@@ -14,6 +14,7 @@ Creating Constraint class
 
 First you need to create a Constraint class and extend :class:`Symfony\\Component\\Validator\\Constraint`:: 
 
+    // src/Acme/DemoBundle/Validator/constraints/ContainsAlphanumeric.php
     namespace Acme\DemoBundle\Validator\Constraints;
     
     use Symfony\Component\Validator\Constraint;
@@ -53,6 +54,7 @@ when actually performing the validation.
 
 The validator class is also simple, and only has one required method: ``isValid``::
 
+    // src/Acme/DemoBundle/Validator/Constraints/ContainsAlphanumericValidator.php
     namespace Acme\DemoBundle\Validator\Constraints;
     
     use Symfony\Component\Validator\Constraint;
@@ -96,7 +98,6 @@ Using custom validators is very easy, just as the ones provided by Symfony2 itse
     .. code-block:: php-annotations
 
         // src/Acme/DemoBundle/Entity/AcmeEntity.php
-    
         use Symfony\Component\Validator\Constraints as Assert;
         use Acme\DemoBundle\Validator\Constraints as AcmeAssert;
             
@@ -132,7 +133,6 @@ Using custom validators is very easy, just as the ones provided by Symfony2 itse
     .. code-block:: php
         
         // src/Acme/DemoBundle/Entity/AcmeEntity.php
-
         use Symfony\Component\Validator\Mapping\ClassMetadata;
         use Symfony\Component\Validator\Constraints\NotBlank;
         use Acme\DemoBundle\Validator\Constraints\ContainsAlphanumeric;
@@ -181,8 +181,7 @@ tag and an ``alias`` attribute:
 
         $container
             ->register('validator.unique.your_validator_name', 'Fully\Qualified\Validator\Class\Name')
-            ->addTag('validator.constraint_validator', array('alias' => 'alias_name'))
-        ;
+            ->addTag('validator.constraint_validator', array('alias' => 'alias_name'));
 
 Your constraint class should now use this alias to reference the appropriate
 validator::
