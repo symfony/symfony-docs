@@ -17,6 +17,8 @@ in Symfony2 is straightforward. Tweak the route by adding a default value of
     use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
     use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
+    // ...
+
     /**
      * @Route("/hello/{name}", defaults={"_format"="xml"}, name="_demo_hello")
      * @Template()
@@ -44,6 +46,8 @@ placeholder in the route pattern instead::
     // src/Acme/DemoBundle/Controller/DemoController.php
     use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
     use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+
+    // ...
 
     /**
      * @Route("/hello/{name}.{_format}", defaults={"_format"="html"}, requirements={"_format"="html|xml|json"}, name="_demo_hello")
@@ -80,7 +84,7 @@ object from that sub-request::
 
     $response = $this->forward('AcmeDemoBundle:Hello:fancy', array('name' => $name, 'color' => 'green'));
 
-    // do something with the response or return it directly
+    // ... do something with the response or return it directly
 
 Getting information from the Request
 ------------------------------------
