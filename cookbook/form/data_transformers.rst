@@ -101,7 +101,6 @@ was entered::
 Next, we create the data transformer, which does the actual conversion::
 
     // src/Acme/TaskBundle/Form/DataTransformer/IssueToNumberTransformer.php
-
     namespace Acme\TaskBundle\Form\DataTransformer;
 
     use Symfony\Component\Form\DataTransformerInterface;
@@ -193,7 +192,6 @@ manager can be automatically injected:
 You can now add the type to your form by its alias as follows::
 
     // src/Acme/TaskBundle/Form/Type/TaskType.php
-
     namespace Acme\TaskBundle\Form\Type;
 
     use Symfony\Component\Form\AbstractType;
@@ -206,8 +204,7 @@ You can now add the type to your form by its alias as follows::
             $builder
                 ->add('task')
                 ->add('dueDate', null, array('widget' => 'single_text'));
-                ->add('issue', 'issue_selector')
-            ;
+                ->add('issue', 'issue_selector');
         }
 
         public function getName()

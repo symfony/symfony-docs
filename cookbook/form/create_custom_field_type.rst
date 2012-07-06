@@ -20,7 +20,7 @@ will be called `GenderType` and the file will be stored in the default location
 for form fields, which is ``<BundleName>\Form\Type``. Make sure the field extends
 :class:`Symfony\\Component\\Form\\AbstractType`::
 
-    # src/Acme/DemoBundle/Form/Type/GenderType.php
+    // src/Acme/DemoBundle/Form/Type/GenderType.php
     namespace Acme\DemoBundle\Form\Type;
 
     use Symfony\Component\Form\AbstractType;
@@ -107,23 +107,22 @@ we want to always render it in a ``ul`` element. In your form theme template
 .. code-block:: html+jinja
 
     {# src/Acme/DemoBundle/Resources/views/Form/fields.html.twig #}
-
     {% block gender_widget %}
-    {% spaceless %}
-        {% if expanded %}
-            <ul {{ block('widget_container_attributes') }}>
-            {% for child in form %}
-                <li>
-                    {{ form_widget(child) }}
-                    {{ form_label(child) }}
-                </li>
-            {% endfor %}
-            </ul>
-        {% else %}
-            {# just let the choice widget render the select tag #}
-            {{ block('choice_widget') }}
-        {% endif %}
-    {% endspaceless %}
+        {% spaceless %}
+            {% if expanded %}
+                <ul {{ block('widget_container_attributes') }}>
+                {% for child in form %}
+                    <li>
+                        {{ form_widget(child) }}
+                        {{ form_label(child) }}
+                    </li>
+                {% endfor %}
+                </ul>
+            {% else %}
+                {# just let the choice widget render the select tag #}
+                {{ block('choice_widget') }}
+            {% endif %}
+        {% endspaceless %}
     {% endblock %}
 
 .. note::
@@ -136,7 +135,6 @@ we want to always render it in a ``ul`` element. In your form theme template
     .. code-block:: yaml
 
         # app/config/config.yml
-
         twig:
             form:
                 resources:
@@ -231,7 +229,7 @@ returned by the ``getName`` method defined earlier. We'll see the importance
 of this in a moment when we use the custom field type. But first, add a ``__construct``
 argument to ``GenderType``, which receives the gender configuration::
 
-    # src/Acme/DemoBundle/Form/Type/GenderType.php
+    // src/Acme/DemoBundle/Form/Type/GenderType.php
     namespace Acme\DemoBundle\Form\Type;
     // ...
 

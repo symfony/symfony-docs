@@ -30,7 +30,7 @@ You can also render each of the three parts of the field individually:
 
 .. configuration-block::
 
-    .. code-block:: jinja
+    .. code-block:: html+jinja
 
         <div>
             {{ form_label(form.age) }}
@@ -135,6 +135,7 @@ The default implementation of the ``integer_widget`` fragment looks like this:
 
     .. code-block:: jinja
 
+        {# integer_widget.html.twig #}
         {% block integer_widget %}
             {% set type = type|default('number') %}
             {{ block('field_widget') }}
@@ -143,7 +144,6 @@ The default implementation of the ``integer_widget`` fragment looks like this:
     .. code-block:: html+php
 
         <!-- integer_widget.html.php -->
-
         <?php echo $view['form']->renderBlock('field_widget', array('type' => isset($type) ? $type : "number")) ?>
 
 As you can see, this fragment itself renders another fragment - ``field_widget``:
@@ -152,6 +152,7 @@ As you can see, this fragment itself renders another fragment - ``field_widget``
 
     .. code-block:: html+jinja
 
+        {# FrameworkBundle/Resources/views/Form/field_widget.html.twig #}
         {% block field_widget %}
             {% set type = type|default('text') %}
             <input type="{{ type }}" {{ block('widget_attributes') }} value="{{ value }}" />
@@ -160,7 +161,6 @@ As you can see, this fragment itself renders another fragment - ``field_widget``
     .. code-block:: html+php
 
         <!-- FrameworkBundle/Resources/views/Form/field_widget.html.php -->
-
         <input
             type="<?php echo isset($type) ? $view->escape($type) : "text" ?>"
             value="<?php echo $view->escape($value) ?>"
@@ -247,7 +247,7 @@ directly in the template that's actually rendering the form.
     {% endblock %}
 
     {% block content %}
-        {# render the form #}
+        {# ... render the form #}
 
         {{ form_row(form.age) }}
     {% endblock %}
@@ -275,7 +275,6 @@ can now re-use the form customization across many templates:
 .. code-block:: html+jinja
 
     {# src/Acme/DemoBundle/Resources/views/Form/fields.html.twig #}
-
     {% block integer_widget %}
         <div class="integer_widget">
             {% set type = type|default('number') %}
@@ -314,7 +313,6 @@ file in order to customize the ``integer_widget`` fragment.
 .. code-block:: html+php
 
     <!-- src/Acme/DemoBundle/Resources/views/Form/integer_widget.html.php -->
-
     <div class="integer_widget">
         <?php echo $view['form']->renderBlock('field_widget', array('type' => isset($type) ? $type : "number")) ?>
     </div>
@@ -380,7 +378,6 @@ the base block by using the ``parent()`` Twig function:
 .. code-block:: html+jinja
 
     {# src/Acme/DemoBundle/Resources/views/Form/fields.html.twig #}
-
     {% extends 'form_div_layout.html.twig' %}
 
     {% block integer_widget %}
@@ -416,7 +413,6 @@ form is rendered.
     .. code-block:: yaml
 
         # app/config/config.yml
-
         twig:
             form:
                 resources:
@@ -426,7 +422,6 @@ form is rendered.
     .. code-block:: xml
 
         <!-- app/config/config.xml -->
-
         <twig:config ...>
                 <twig:form>
                     <resource>AcmeDemoBundle:Form:fields.html.twig</resource>
@@ -437,12 +432,11 @@ form is rendered.
     .. code-block:: php
 
         // app/config/config.php
-
         $container->loadFromExtension('twig', array(
             'form' => array('resources' => array(
                 'AcmeDemoBundle:Form:fields.html.twig',
-             ))
-            // ...
+             )),
+             ...,
         ));
 
 By default, Twig uses a *div* layout when rendering forms. Some people, however,
@@ -454,7 +448,6 @@ resource to use such a layout:
     .. code-block:: yaml
 
         # app/config/config.yml
-
         twig:
             form:
                 resources: ['form_table_layout.html.twig']
@@ -463,7 +456,6 @@ resource to use such a layout:
     .. code-block:: xml
 
         <!-- app/config/config.xml -->
-
         <twig:config ...>
                 <twig:form>
                     <resource>form_table_layout.html.twig</resource>
@@ -474,12 +466,11 @@ resource to use such a layout:
     .. code-block:: php
 
         // app/config/config.php
-
         $container->loadFromExtension('twig', array(
             'form' => array('resources' => array(
                 'form_table_layout.html.twig',
-             ))
-            // ...
+             )),
+             ...,
         ));
 
 If you only want to make the change in one template, add the following line to
@@ -504,7 +495,6 @@ form is rendered.
     .. code-block:: yaml
 
         # app/config/config.yml
-
         framework:
             templating:
                 form:
@@ -516,7 +506,6 @@ form is rendered.
     .. code-block:: xml
 
         <!-- app/config/config.xml -->
-
         <framework:config ...>
             <framework:templating>
                 <framework:form>
@@ -530,14 +519,13 @@ form is rendered.
     .. code-block:: php
 
         // app/config/config.php
-
         // PHP
         $container->loadFromExtension('framework', array(
             'templating' => array('form' =>
                 array('resources' => array(
                     'AcmeDemoBundle:Form',
-             )))
-            // ...
+             ))),
+             ...,
         ));
 
 By default, the PHP engine uses a *div* layout when rendering forms. Some people,
@@ -549,7 +537,6 @@ resource to use such a layout:
     .. code-block:: yaml
 
         # app/config/config.yml
-
         framework:
             templating:
                 form:
@@ -559,7 +546,6 @@ resource to use such a layout:
     .. code-block:: xml
 
         <!-- app/config/config.xml -->
-
         <framework:config ...>
             <framework:templating>
                 <framework:form>
@@ -572,13 +558,12 @@ resource to use such a layout:
     .. code-block:: php
 
         // app/config/config.php
-
         $container->loadFromExtension('framework', array(
             'templating' => array('form' =>
                 array('resources' => array(
                     'FrameworkBundle:FormTable',
-             )))
-            // ...
+             ))),
+             ...,
         ));
 
 If you only want to make the change in one template, add the following line to
@@ -618,7 +603,6 @@ which part of the field is being customized. For example:
     .. code-block:: html+php
 
         <!-- Main template -->
-
         <?php echo $view['form']->setTheme($form, array('AcmeDemoBundle:Form')); ?>
 
         <?php echo $view['form']->widget($form['name']); ?>
@@ -645,6 +629,7 @@ You can also override the markup for an entire field row using the same method:
 
     .. code-block:: html+jinja
 
+        {# _product_name_row.html.twig #}
         {% form_theme form _self %}
 
         {% block _product_name_row %}
@@ -714,23 +699,23 @@ and customize the ``field_errors`` fragment.
 .. configuration-block::
 
     .. code-block:: html+jinja
-
+        
+        {# fields_errors.html.twig #}
         {% block field_errors %}
-        {% spaceless %}
-            {% if errors|length > 0 %}
-            <ul class="error_list">
-                {% for error in errors %}
-                    <li>{{ error.messageTemplate|trans(error.messageParameters, 'validators') }}</li>
-                {% endfor %}
-            </ul>
-            {% endif %}
-        {% endspaceless %}
+            {% spaceless %}
+                {% if errors|length > 0 %}
+                <ul class="error_list">
+                    {% for error in errors %}
+                        <li>{{ error.messageTemplate|trans(error.messageParameters, 'validators') }}</li>
+                    {% endfor %}
+                </ul>
+                {% endif %}
+            {% endspaceless %}
         {% endblock field_errors %}
 
     .. code-block:: html+php
 
         <!-- fields_errors.html.php -->
-
         <?php if ($errors): ?>
             <ul class="error_list">
                 <?php foreach ($errors as $error): ?>
@@ -778,6 +763,7 @@ class to the ``div`` element around each row:
 
     .. code-block:: html+jinja
 
+        {# field_row.html.twig #}
         {% block field_row %}
             <div class="form_row">
                 {{ form_label(form) }}
@@ -789,7 +775,6 @@ class to the ``div`` element around each row:
     .. code-block:: html+php
 
         <!-- field_row.html.php -->
-
         <div class="form_row">
             <?php echo $view['form']->label($form) ?>
             <?php echo $view['form']->errors($form) ?>
@@ -913,7 +898,7 @@ To render a help message below a field, pass in a ``help`` variable:
 
     .. code-block:: jinja
 
-        {{ form_widget(form.title, { 'help': 'foobar' }) }}
+        {{ form_widget(form.title, {'help': 'foobar'}) }}
 
     .. code-block:: php
 
