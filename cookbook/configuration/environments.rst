@@ -36,6 +36,7 @@ class:
 .. code-block:: php
 
     // app/AppKernel.php
+
     // ...
     
     class AppKernel extends Kernel
@@ -63,7 +64,6 @@ easily and transparently:
 
         imports:
             - { resource: config.yml }
-
         # ...
 
     .. code-block:: xml
@@ -71,13 +71,11 @@ easily and transparently:
         <imports>
             <import resource="config.xml" />
         </imports>
-
         <!-- ... -->
 
     .. code-block:: php
 
         $loader->import('config.php');
-
         // ...
 
 To share common configuration, each environment's configuration file
@@ -108,8 +106,7 @@ activated by modifying the default value in the ``dev`` configuration file:
 
         <webprofiler:config
             toolbar="true"
-            # ...
-        />
+            ... />
 
     .. code-block:: php
 
@@ -118,7 +115,7 @@ activated by modifying the default value in the ``dev`` configuration file:
 
         $container->loadFromExtension('web_profiler', array(
             'toolbar' => true,
-            // ..
+            ...,
         ));
 
 .. index::
@@ -208,9 +205,9 @@ environment by using this code and changing the environment string.
             $container->loadFromExtension('doctrine', array(
                 'dbal' => array(
                     'logging'  => '%kernel.debug%',
-                    // ...
+                    ...,
                 ),
-                // ...
+                ...
             ));
 
 .. index::
@@ -237,7 +234,6 @@ The best way to accomplish this is via a new environment called, for example,
     .. code-block:: yaml
 
         # app/config/config_benchmark.yml
-
         imports:
             - { resource: config_prod.yml }
 
@@ -247,7 +243,6 @@ The best way to accomplish this is via a new environment called, for example,
     .. code-block:: xml
 
         <!-- app/config/config_benchmark.xml -->
-
         <imports>
             <import resource="config_prod.xml" />
         </imports>
@@ -259,7 +254,6 @@ The best way to accomplish this is via a new environment called, for example,
     .. code-block:: php
 
         // app/config/config_benchmark.php
-        
         $loader->import('config_prod.php')
 
         $container->loadFromExtension('framework', array(
