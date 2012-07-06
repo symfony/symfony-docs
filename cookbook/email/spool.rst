@@ -33,8 +33,8 @@ In order to use the spool, use the following configuration:
         <!-- app/config/config.xml -->
 
         <!--
-        xmlns:swiftmailer="http://symfony.com/schema/dic/swiftmailer"
-        http://symfony.com/schema/dic/swiftmailer http://symfony.com/schema/dic/swiftmailer/swiftmailer-1.0.xsd
+            xmlns:swiftmailer="http://symfony.com/schema/dic/swiftmailer"
+            http://symfony.com/schema/dic/swiftmailer http://symfony.com/schema/dic/swiftmailer/swiftmailer-1.0.xsd
         -->
 
         <swiftmailer:config>
@@ -47,7 +47,7 @@ In order to use the spool, use the following configuration:
 
         // app/config/config.php
         $container->loadFromExtension('swiftmailer', array(
-             // ...
+             ...,
             'spool' => array(
                 'type' => 'file',
                 'path' => '/path/to/spool',
