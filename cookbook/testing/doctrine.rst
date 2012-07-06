@@ -21,7 +21,6 @@ to get a valid connection. In this case, you'll extend the ``WebTestCase``,
 which makes all of this quite easy::
 
     // src/Acme/StoreBundle/Tests/Entity/ProductRepositoryFunctionalTest.php
-
     namespace Acme\StoreBundle\Tests\Entity;
 
     use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
