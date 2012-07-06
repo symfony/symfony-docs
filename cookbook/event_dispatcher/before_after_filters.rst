@@ -63,7 +63,7 @@ You can add basic token configuration using ``config.yml`` and the parameters ke
         // app/config/config.php
         $container->setParameter('tokens', array(
             'client1' => 'pass1',
-            'client2' => 'pass2'
+            'client2' => 'pass2',
         ));
 
 Tag Controllers to be checked
@@ -87,7 +87,7 @@ A controller that implements this interface simply looks like this::
 
     class FooController implements TokenAuthenticatedController
     {
-        // Your actions that need authentication
+        // ... Your actions that need authentication
     }
 
 Creating an Event Listener
@@ -97,6 +97,7 @@ Next, you'll need to create an event listener, which will hold the logic
 that you want executed before your controllers. If you're not familiar with
 event listeners, you can learn more about them at :doc:`/cookbook/service_container/event_listener`::
 
+    // src/Acme/DemoBundle/EventListener/BeforeListener.php
     namespace Acme\DemoBundle\EventListener;
 
     use Acme\DemoBundle\Controller\TokenAuthenticatedController;
@@ -144,7 +145,7 @@ your listener to be called just before any controller is executed:
 
     .. code-block:: yaml
 
-        # app/config/config.yml (or inside or your services.yml)
+        # app/config/config.yml (or inside your services.yml)
         services:
             demo.tokens.action_listener:
               class: Acme\DemoBundle\EventListener\BeforeListener
@@ -154,6 +155,7 @@ your listener to be called just before any controller is executed:
 
     .. code-block:: xml
 
+        <!-- app/config/config.xml (or inside your services.xml) -->
         <service id="demo.tokens.action_listener" class="Acme\DemoBundle\EventListener\BeforeListener">
             <argument>%tokens%</argument>
             <tag name="kernel.event_listener" event="kernel.controller" method="onKernelController" />
@@ -161,6 +163,7 @@ your listener to be called just before any controller is executed:
 
     .. code-block:: php
 
+        // app/config/config.php (or inside your services.php)
         use Symfony\Component\DependencyInjection\Definition;
 
         $listener = new Definition('Acme\DemoBundle\EventListener\BeforeListener', array('%tokens%'));
