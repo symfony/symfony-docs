@@ -43,7 +43,6 @@ focus on the most important methods that come from the
 .. code-block:: php
 
     // src/Acme/UserBundle/Entity/User.php
-
     namespace Acme\UserBundle\Entity;
 
     use Doctrine\ORM\Mapping as ORM;
@@ -200,7 +199,6 @@ then be checked against our User entity records in the database:
     .. code-block:: yaml
 
         # app/config/security.yml
-
         security:
             encoders:
                 Acme\UserBundle\Entity\User:
@@ -267,16 +265,15 @@ For this example, the first three methods will return ``true`` whereas the
 .. code-block:: php
 
     // src/Acme/UserBundle/Entity/User.php
-
     namespace Acme\Bundle\UserBundle\Entity;
 
     // ...
     use Symfony\Component\Security\Core\User\AdvancedUserInterface;
 
-    // ...
     class User implements AdvancedUserInterface
     {
         // ...
+
         public function isAccountNonExpired()
         {
             return true;
@@ -325,7 +322,6 @@ The code below shows the implementation of the
 ``UserRepository`` class::
 
     // src/Acme/UserBundle/Entity/UserRepository.php
-
     namespace Acme\UserBundle\Entity;
 
     use Symfony\Component\Security\Core\User\UserInterface;
@@ -421,12 +417,11 @@ more users. As a group is also a role, the previous ``getRoles()`` method now
 returns the list of related groups::
 
     // src/Acme/UserBundle/Entity/User.php
-
     namespace Acme\Bundle\UserBundle\Entity;
 
     use Doctrine\Common\Collections\ArrayCollection;
-
     // ...
+
     class User implements AdvancedUserInterface
     {
         /**
@@ -455,6 +450,7 @@ important thing to notice is that the ``AcmeUserBundle:Group`` entity class
 implements the :class:`Symfony\\Component\\Security\\Core\\Role\\RoleInterface`
 that forces it to have a ``getRole()`` method::
 
+    // src/Acme/Bundle/UserBundle/Entity/Group.php
     namespace Acme\Bundle\UserBundle\Entity;
 
     use Symfony\Component\Security\Core\Role\RoleInterface;
@@ -511,7 +507,6 @@ relationship in the ``UserRepository::loadUserByUsername()`` method. This will
 fetch the user and his associated roles / groups with a single query::
 
     // src/Acme/UserBundle/Entity/UserRepository.php
-
     namespace Acme\Bundle\UserBundle\Entity;
 
     // ...
@@ -527,8 +522,7 @@ fetch the user and his associated roles / groups with a single query::
                 ->where('u.username = :username OR u.email = :email')
                 ->setParameter('username', $username)
                 ->setParameter('email', $username)
-                ->getQuery()
-            ;
+                ->getQuery();
 
             // ...
         }

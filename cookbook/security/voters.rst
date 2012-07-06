@@ -59,6 +59,7 @@ and compare the IP address against a set of blacklisted IP addresses:
 
 .. code-block:: php
 
+    // src/Acme/DemoBundle/Security/Authorization/Voter/ClientIpVoter.php
     namespace Acme\DemoBundle\Security\Authorization\Voter;
 
     use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -110,7 +111,6 @@ and tag it as a "security.voter":
     .. code-block:: yaml
 
         # src/Acme/AcmeBundle/Resources/config/services.yml
-
         services:
             security.access.blacklist_voter:
                 class:      Acme\DemoBundle\Security\Authorization\Voter\ClientIpVoter
@@ -122,7 +122,6 @@ and tag it as a "security.voter":
     .. code-block:: xml
 
         <!-- src/Acme/AcmeBundle/Resources/config/services.xml -->
-
         <service id="security.access.blacklist_voter"
                  class="Acme\DemoBundle\Security\Authorization\Voter\ClientIpVoter" public="false">
             <argument type="service" id="service_container" strict="false" />
@@ -136,7 +135,6 @@ and tag it as a "security.voter":
     .. code-block:: php
 
         // src/Acme/AcmeBundle/Resources/config/services.php
-
         use Symfony\Component\DependencyInjection\Definition;
         use Symfony\Component\DependencyInjection\Reference;
 

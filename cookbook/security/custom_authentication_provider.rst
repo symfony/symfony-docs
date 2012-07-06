@@ -300,7 +300,8 @@ create a class which implements
         }
 
         public function addConfiguration(NodeDefinition $node)
-        {}
+        {
+        }
     }
 
 The :class:`Symfony\\Bundle\\SecurityBundle\\DependencyInjection\\Security\\Factory\\SecurityFactoryInterface`
@@ -500,15 +501,14 @@ the ``addConfiguration`` method.
 
     class WsseFactory implements SecurityFactoryInterface
     {
-        # ...
+        // ...
 
         public function addConfiguration(NodeDefinition $node)
         {
           $node
             ->children()
-              ->scalarNode('lifetime')->defaultValue(300)
-            ->end()
-          ;
+            ->scalarNode('lifetime')->defaultValue(300)
+            ->end();
         }
     }
 
@@ -528,10 +528,10 @@ in order to put it to use.
                 ->setDefinition($providerId,
                   new DefinitionDecorator('wsse.security.authentication.provider'))
                 ->replaceArgument(0, new Reference($userProvider))
-                ->replaceArgument(2, $config['lifetime'])
-            ;
+                ->replaceArgument(2, $config['lifetime']);
             // ...
         }
+
         // ...
     }
 
