@@ -70,7 +70,7 @@ class is always overridden when your bundle is used, or you need to modify
 something beyond just the class name, you should use a compiler pass::
 
     // src/Acme/FooBundle/DependencyInjection/Compiler/OverrideServiceCompilerPass.php
-    namespace Acme\FooBundle\DependencyInjection\Compiler;
+    namespace Acme\DemoBundle\DependencyInjection\Compiler;
 
     use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
     use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -80,7 +80,7 @@ something beyond just the class name, you should use a compiler pass::
         public function process(ContainerBuilder $container)
         {
             $definition = $container->getDefinition('original-service-id');
-            $definition->setClass('Foo\BarBundle\YourService');
+            $definition->setClass('Acme\DemoBundle\YourService');
         }
     }
 
