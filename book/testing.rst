@@ -52,7 +52,7 @@ called ``Calculator`` in the ``Utility/`` directory of your bundle::
 
     // src/Acme/DemoBundle/Utility/Calculator.php
     namespace Acme\DemoBundle\Utility;
-    
+
     class Calculator
     {
         public function add($a, $b)

@@ -61,11 +61,11 @@ provider.
         public $created;
         public $digest;
         public $nonce;
-        
+
         public function __construct(array $roles = array())
         {
             parent::__construct($roles);
-            
+
             // If the user has roles, consider it authenticated
             $this->setAuthenticated(count($roles) > 0);
         }
@@ -141,7 +141,7 @@ set an authenticated token in the security context if successful.
 
                         if ($returnValue instanceof TokenInterface) {
                             return $this->securityContext->setToken($returnValue);
-                        } else if ($returnValue instanceof Response) {
+                        } elseif ($returnValue instanceof Response) {
                             return $event->setResponse($returnValue);
                         }
                     } catch (AuthenticationException $e) {
@@ -208,7 +208,7 @@ the ``PasswordDigest`` header value matches with the user's password.
         {
             $user = $this->userProvider->loadUserByUsername($token->getUsername());
 
-            if ($user && $this->validateDigest($token->digest, $token->nonce, $token->created, $user->getPassword())) {            
+            if ($user && $this->validateDigest($token->digest, $token->nonce, $token->created, $user->getPassword())) {
                 $authenticatedToken = new WsseUserToken($user->getRoles());
                 $authenticatedToken->setUser($user);
 

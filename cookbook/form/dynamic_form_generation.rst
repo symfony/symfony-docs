@@ -99,12 +99,12 @@ might look like the following::
     class AddNameFieldSubscriber implements EventSubscriberInterface
     {
         private $factory;
-        
+
         public function __construct(FormFactoryInterface $factory)
         {
             $this->factory = $factory;
         }
-        
+
         public static function getSubscribedEvents()
         {
             // Tells the dispatcher that we want to listen on the form.pre_set_data
@@ -116,11 +116,11 @@ might look like the following::
         {
             $data = $event->getData();
             $form = $event->getForm();
-            
-            // During form creation setData() is called with null as an argument 
-            // by the FormBuilder constructor. We're only concerned with when 
+
+            // During form creation setData() is called with null as an argument
+            // by the FormBuilder constructor. We're only concerned with when
             // setData is called with an actual Entity object in it (whether new,
-            // or fetched with Doctrine). This if statement let's us skip right 
+            // or fetched with Doctrine). This if statement let's us skip right
             // over the null condition.
             if (null === $data) {
                 return;

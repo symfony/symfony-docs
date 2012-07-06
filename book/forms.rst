@@ -754,7 +754,6 @@ that will house the logic for building the task form:
 .. code-block:: php
 
     // src/Acme/TaskBundle/Form/Type/TaskType.php
-
     namespace Acme\TaskBundle\Form\Type;
 
     use Symfony\Component\Form\AbstractType;

@@ -24,7 +24,7 @@ objects. Start by creating a simple ``Task`` class::
 
     // src/Acme/TaskBundle/Entity/Task.php
     namespace Acme\TaskBundle\Entity;
-    
+
     use Doctrine\Common\Collections\ArrayCollection;
 
     class Task
@@ -37,7 +37,7 @@ objects. Start by creating a simple ``Task`` class::
         {
             $this->tags = new ArrayCollection();
         }
-        
+
         public function getDescription()
         {
             return $this->description;
@@ -149,13 +149,13 @@ In your controller, you'll now initialize a new instance of ``TaskType``::
 
     // src/Acme/TaskBundle/Controller/TaskController.php
     namespace Acme\TaskBundle\Controller;
-    
+
     use Acme\TaskBundle\Entity\Task;
     use Acme\TaskBundle\Entity\Tag;
     use Acme\TaskBundle\Form\Type\TaskType;
     use Symfony\Component\HttpFoundation\Request;
     use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-    
+
     class TaskController extends Controller
     {
         public function newAction(Request $request)
@@ -171,9 +171,9 @@ In your controller, you'll now initialize a new instance of ``TaskType``::
             $tag2->name = 'tag2';
             $task->getTags()->add($tag2);
             // end dummy code
-            
+
             $form = $this->createForm(new TaskType(), $task);
-            
+
             // process the form on POST
             if ('POST' === $request->getMethod()) {
                 $form->bindRequest($request);
@@ -181,7 +181,7 @@ In your controller, you'll now initialize a new instance of ``TaskType``::
                     // maybe do some form processing, like saving the Task and Tag objects
                 }
             }
-            
+
             return $this->render('AcmeTaskBundle:Task:new.html.twig', array(
                 'form' => $form->createView(),
             ));
@@ -280,7 +280,7 @@ add the ``allow_add`` option to our collection field::
 
     // src/Acme/TaskBundle/Form/Type/TaskType.php
     // ...
-    
+
     public function buildForm(FormBuilder $builder, array $options)
     {
         $builder->add('description');
@@ -491,7 +491,7 @@ Start by adding the ``allow_delete`` option in the form Type::
     
     // src/Acme/TaskBundle/Form/Type/TaskType.php
     // ...
-    
+
     public function buildForm(FormBuilder $builder, array $options)
     {
         $builder->add('description');
