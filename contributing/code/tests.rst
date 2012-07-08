@@ -65,7 +65,7 @@ and if the tests are broken because of your modifications.
 
 .. tip::
 
-    If you want to test a single component type it's path after `phpunit`
+    If you want to test a single component type its path after the `phpunit`
     command, e.g.:
 
     .. code-block:: bash
