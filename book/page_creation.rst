@@ -734,7 +734,6 @@ format you prefer:
 
         framework:
             secret:          "%secret%"
-            charset:         UTF-8
             router:          { resource: "%kernel.root_dir%/config/routing.yml" }
             # ...
 
@@ -753,7 +752,7 @@ format you prefer:
             <import resource="security.yml" />
         </imports>
 
-        <framework:config charset="UTF-8" secret="%secret%">
+        <framework:config secret="%secret%">
             <framework:router resource="%kernel.root_dir%/config/routing.xml" />
             <!-- ... -->
         </framework:config>
@@ -770,7 +769,6 @@ format you prefer:
 
         $container->loadFromExtension('framework', array(
             'secret'          => '%secret%',
-            'charset'         => 'UTF-8',
             'router'          => array('resource' => '%kernel.root_dir%/config/routing.php'),
             // ...
             ),
