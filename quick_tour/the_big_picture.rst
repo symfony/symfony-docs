@@ -21,13 +21,15 @@ Apache) with PHP 5.3.2 or higher.
 
 .. tips::
    
-    Since PHP 5.4, you could use the Build-in web server:
+    Since PHP 5.4, you could use the Build-in web server. For development purpose only, it can help you to start your project right now.
+    Just use this command to launch the server:
     
     .. code-block:: bash
 
-        php -S localhost:80 -t www
+        php -S localhost:80 -t /path/to/www
 
-    For development purpose only, it can help you to start your project right now.
+    Where "/path/to/www" is the path to some directory on your machine that you'll extract Symfony into so that the eventual URL to your application is "http://localhost/Symfony/app_dev.php".
+    You can also extract Symfony first and then start the web server in the Symfony "web" directory. If you do this, the URL to your application will be "http://localhost/app_dev.php".
 
 Ready? Start by downloading the "`Symfony2 Standard Edition`_", a Symfony
 :term:`distribution` that is preconfigured for the most common use cases and
