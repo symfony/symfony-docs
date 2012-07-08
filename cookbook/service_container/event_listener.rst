@@ -1,5 +1,5 @@
 .. index::
-   single: Events; Create Listener
+   single: Events; Create listener
 
 How to create an Event Listener
 ===============================

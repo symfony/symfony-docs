@@ -1,6 +1,6 @@
 .. index::
-   single: Security; User Provider
-   single: Security; Entity Provider
+   single: Security; User provider
+   single: Security; Entity provider
 
 How to load Security Users from the Database (the Entity Provider)
 ==================================================================

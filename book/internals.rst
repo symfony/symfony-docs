@@ -88,7 +88,7 @@ Every Symfony2 Kernel implements
     function handle(Request $request, $type = self::MASTER_REQUEST, $catch = true)
 
 .. index::
-   single: Internals; Controller Resolver
+   single: Internals; Controller resolver
 
 Controllers
 ~~~~~~~~~~~
@@ -139,7 +139,7 @@ the Request attributes.
         }
 
 .. index::
-  single: Internals; Request Handling
+  single: Internals; Request handling
 
 Handling Requests
 ~~~~~~~~~~~~~~~~~
@@ -181,7 +181,7 @@ instance), disable the ``kernel.exception`` event by passing ``false`` as the
 third argument to the ``handle()`` method.
 
 .. index::
-  single: Internals; Internal Requests
+  single: Internals; Internal requests
 
 Internal Requests
 ~~~~~~~~~~~~~~~~~

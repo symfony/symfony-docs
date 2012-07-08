@@ -1305,7 +1305,7 @@ and ``nullable``. Take a few examples:
     Doctrine's `Property Mapping documentation`_
 
 .. index::
-   single: Doctrine; ORM Console Commands
+   single: Doctrine; ORM console commands
    single: CLI; Doctrine ORM
 
 Console Commands

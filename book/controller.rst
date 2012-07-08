@@ -384,7 +384,7 @@ itself.
     </cookbook/controller/service>`.
 
 .. index::
-   single: Controller; Common Tasks
+   single: Controller; Common tasks
 
 Common Controller Tasks
 -----------------------
@@ -623,7 +623,7 @@ These attributes will remain on the user for the remainder of that user's
 session.
 
 .. index::
-   single Session; Flash messages
+   single: Session; Flash messages
 
 Flash Messages
 ~~~~~~~~~~~~~~
