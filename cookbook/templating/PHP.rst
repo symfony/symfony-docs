@@ -191,7 +191,7 @@ The ``render()`` method evaluates and returns the content of another template
 (this is the exact same method as the one used in the controller).
 
 .. index::
-   single: Templating; Embedding Pages
+   single: Templating; Embedding pages
 
 Embedding other Controllers
 ---------------------------

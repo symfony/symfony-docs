@@ -1,5 +1,5 @@
 .. index::
-   single: Console; Create Commands
+   single: Console; Create commands
 
 How to create a Console Command
 ===============================
