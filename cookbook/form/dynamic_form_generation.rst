@@ -142,7 +142,7 @@ might look like the following::
     setData() method itself.
 
 The ``FormEvents::PRE_SET_DATA`` line actually resolves to the string ``form.pre_set_data``. 
-The `FormEvents class`_ serves an organizational purpose. It is a centralized  location
+The `FormEvents class`_ serves an organizational purpose. It is a centralized location
 in which you can find all of the various form events available.
 
 While this example could have used the ``form.set_data`` event or even the ``form.post_set_data`` 
