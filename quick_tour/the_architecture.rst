@@ -169,7 +169,6 @@ PHP. Have a look at the default configuration:
         #esi:             ~
         #translator:      { fallback: "%locale%" }
         secret:          "%secret%"
-        charset:         UTF-8
         router:          { resource: "%kernel.root_dir%/config/routing.yml" }
         form:            true
         csrf_protection: true

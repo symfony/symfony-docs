@@ -15,7 +15,6 @@ routing and more.
 Configuration
 -------------
 
-* `charset`_
 * `secret`_
 * `ide`_
 * `test`_
@@ -30,14 +29,6 @@ Configuration
     * `assets_base_urls`_
     * `assets_version`_
     * `assets_version_format`_
-
-charset
-~~~~~~~
-
-**type**: ``string`` **default**: ``UTF-8``
-
-The character set that's used throughout the framework. It becomes the service
-container parameter named ``kernel.charset``.
 
 secret
 ~~~~~~
@@ -245,7 +236,6 @@ Full Default Configuration
         framework:
 
             # general configuration
-            charset:              ~
             trust_proxy_headers:  false
             secret:               ~ # Required
             ide:                  ~
