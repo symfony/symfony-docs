@@ -121,7 +121,6 @@ collections. URL's starting with ``http://`` will only be added to the
 ``http`` collection.
 
 .. versionadded:: 2.1
-
     Unlike most configuration blocks, successive values for ``assets_base_urls``
     will overwrite each other instead of being merged. This behavior was chosen
     because developers will typically define base URL's for each environment.

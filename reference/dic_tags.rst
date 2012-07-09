@@ -228,7 +228,6 @@ kernel.event_subscriber
 **Purpose**: To subscribe to a set of different events/hooks in Symfony
 
 .. versionadded:: 2.1
-
    The ability to add kernel event subscribers is new to 2.1.
 
 To enable a custom subscriber, add it as a regular service in one of your
