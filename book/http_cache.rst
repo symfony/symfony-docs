@@ -63,7 +63,7 @@ Nottingham's `Cache Tutorial`_.
 
 .. index::
    single: Cache; Proxy
-   single: Cache; Reverse Proxy
+   single: Cache; Reverse proxy
    single: Cache; Gateway
 
 .. _gateway-caches:
@@ -126,7 +126,7 @@ the first two cache types. These caches are outside of your control but follow
 the HTTP cache directions set in the response.
 
 .. index::
-   single: Cache; Symfony2 Reverse Proxy
+   single: Cache; Symfony2 reverse proxy
 
 .. _`symfony-gateway-cache`:
 
@@ -431,7 +431,7 @@ on a cache to store and return "fresh" responses.
     are much more beautiful than its cover.
 
 .. index::
-   single: Cache; HTTP Expiration
+   single: Cache; HTTP expiration
 
 Expiration
 ~~~~~~~~~~

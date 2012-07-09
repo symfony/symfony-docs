@@ -86,7 +86,7 @@ Here are some examples of good event names:
 * ``form.pre_set_data``
 
 .. index::
-   single: Event Dispatcher; Event Subclasses
+   single: Event Dispatcher; Event subclasses
 
 Event Names and Event Objects
 .............................
@@ -203,7 +203,7 @@ instance of ``Symfony\Component\HttpKernel\Event\FilterResponseEvent``::
 .. _event_dispatcher-closures-as-listeners:
 
 .. index::
-   single: Event Dispatcher; Creating and Dispatching an Event
+   single: Event Dispatcher; Creating and dispatching an event
 
 Creating and Dispatching an Event
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

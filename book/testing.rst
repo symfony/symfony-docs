@@ -39,7 +39,7 @@ file.
     Code coverage can be generated with the ``--coverage-html`` option.
 
 .. index::
-   single: Tests; Unit Tests
+   single: Tests; Unit tests
 
 Unit Tests
 ----------
@@ -106,7 +106,7 @@ Running tests for a given file or directory is also very easy:
     $ phpunit -c app src/Acme/DemoBundle/
 
 .. index::
-   single: Tests; Functional Tests
+   single: Tests; Functional tests
 
 Functional Tests
 ----------------

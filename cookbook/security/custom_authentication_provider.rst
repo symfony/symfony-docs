@@ -1,5 +1,5 @@
 .. index::
-   single: Security; Custom Authentication Provider
+   single: Security; Custom authentication provider
 
 How to create a custom Authentication Provider
 ==============================================

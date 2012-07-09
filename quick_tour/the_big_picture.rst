@@ -19,6 +19,24 @@ Downloading Symfony2
 First, check that you have installed and configured a Web server (such as
 Apache) with PHP 5.3.3 or higher.
 
+.. tip::
+   
+    If you have PHP 5.4, you could use the built-in web server. The built-in
+    server should be used only for development purpose, but it can help you
+    to start your project quickly and easily.
+
+    Just use this command to launch the server:
+    
+    .. code-block:: bash
+
+        php -S localhost:80 -t /path/to/www
+
+    where "/path/to/www" is the path to some directory on your machine that
+    you'll extract Symfony into so that the eventual URL to your application
+    is "http://localhost/Symfony/app_dev.php". You can also extract Symfony
+    first and then start the web server in the Symfony "web" directory. If
+    you do this, the URL to your application will be "http://localhost/app_dev.php".
+
 Ready? Start by downloading the "`Symfony2 Standard Edition`_", a Symfony
 :term:`distribution` that is preconfigured for the most common use cases and
 also contains some code that demonstrates how to use Symfony2 (get the archive

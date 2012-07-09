@@ -62,7 +62,7 @@ classes is a well-known and trusted object-oriented best-practice. These skills
 are key to being a good developer in almost any language.
 
 .. index::
-   single: Service Container; What is a Service Container?
+   single: Service Container; What is a service container?
 
 What is a Service Container?
 ----------------------------
@@ -1069,8 +1069,13 @@ additional arguments (beyond just the ``name`` parameter).
 Learn more
 ----------
 
+* :doc:`/components/dependency_injection/compilation`
+* :doc:`/components/dependency_injection/definitions`
 * :doc:`/components/dependency_injection/factories`
 * :doc:`/components/dependency_injection/parentservices`
+* :doc:`/components/dependency_injection/tags`
 * :doc:`/cookbook/controller/service`
+* :doc:`/cookbook/service_container/scopes`
+* :doc:`/cookbook/service_container/compiler_passes`
 
 .. _`service-oriented architecture`: http://wikipedia.org/wiki/Service-oriented_architecture

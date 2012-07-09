@@ -355,8 +355,8 @@ When working with template inheritance, here are some tips to keep in mind:
         {% endblock %}
 
 .. index::
-   single: Templating; Naming Conventions
-   single: Templating; File Locations
+   single: Templating; Naming conventions
+   single: Templating; File locations
 
 .. _template-naming-locations:
 
@@ -444,7 +444,7 @@ section.
    See :ref:`Templating Configuration<template-configuration>` for more details.
 
 .. index::
-   single: Templating; Tags and Helpers
+   single: Templating; Tags and helpers
    single: Templating; Helpers
 
 Tags and Helpers
@@ -844,7 +844,7 @@ configuration option.
 .. index::
    single: Templating; Including stylesheets and Javascripts
    single: Stylesheets; Including stylesheets
-   single: Javascripts; Including Javascripts
+   single: Javascript; Including Javascripts
 
 Including Stylesheets and Javascripts in Twig
 ---------------------------------------------
@@ -1023,7 +1023,7 @@ Several configuration options are available and are covered in the
    third-party bundles).
 
 .. index::
-    single; Template; Overriding templates
+    single: Template; Overriding templates
 
 .. _overriding-bundle-templates:
 
@@ -1086,7 +1086,7 @@ subdirectory.
 .. _templating-overriding-core-templates:
 
 .. index::
-    single; Template; Overriding exception templates
+    single: Template; Overriding exception templates
 
 Overriding Core Templates
 ~~~~~~~~~~~~~~~~~~~~~~~~~
