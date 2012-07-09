@@ -129,9 +129,6 @@ string or a file containing YAML. Internally, it calls the
 :method:`Symfony\\Component\\Yaml\\Parser::parse` method, but with some added
 bonuses:
 
-* It executes the YAML file as if it was a PHP file, so that you can embed PHP
-  commands in YAML files;
-
 * When a file cannot be parsed, it automatically adds the file name to the
   error message, simplifying debugging when your application is loading
   several YAML files.
