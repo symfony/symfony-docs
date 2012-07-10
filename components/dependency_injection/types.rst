@@ -60,7 +60,7 @@ service container configuration:
         use Symfony\Component\DependencyInjection\Reference;
 
         // ...
-        $container->setDefinition('my_mailer', ... );
+        $container->setDefinition('my_mailer', ...);
         $container->setDefinition('newsletter_manager', new Definition(
             'NewsletterManager',
             array(new Reference('my_mailer'))
@@ -142,12 +142,10 @@ accepts the dependency::
         use Symfony\Component\DependencyInjection\Reference;
 
         // ...
-        $container->setDefinition('my_mailer', ... );
+        $container->setDefinition('my_mailer', ...);
         $container->setDefinition('newsletter_manager', new Definition(
             'NewsletterManager'
-        ))->addMethodCall('setMailer', array(
-            new Reference('my_mailer')
-        ));
+        ))->addMethodCall('setMailer', array(new Reference('my_mailer')));
 
 This time the advantages are:
 
@@ -209,7 +207,7 @@ Another possibility is just setting public fields of the class directly::
         use Symfony\Component\DependencyInjection\Reference;
 
         // ...
-        $container->setDefinition('my_mailer', ... );
+        $container->setDefinition('my_mailer', ...);
         $container->setDefinition('newsletter_manager', new Definition(
             'NewsletterManager'
         ))->setProperty('mailer', new Reference('my_mailer')));
