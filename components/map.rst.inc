@@ -2,6 +2,13 @@
 
   * :doc:`/components/class_loader`
 
+* :doc:`/components/config/index`
+
+  * :doc:`/components/config/introduction`
+  * :doc:`/components/config/resources`
+  * :doc:`/components/config/caching`
+  * :doc:`/components/config/definition`
+
 * **The Console Component**
 
   * :doc:`/components/console`
