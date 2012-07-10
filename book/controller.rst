@@ -94,8 +94,8 @@ a controller object. Controllers are also called *actions*.
     :linenos:
 
     // src/Acme/HelloBundle/Controller/HelloController.php
-
     namespace Acme\HelloBundle\Controller;
+
     use Symfony\Component\HttpFoundation\Response;
 
     class HelloController
@@ -208,8 +208,8 @@ passed to that method:
 
     <?php
     // src/Acme/HelloBundle/Controller/HelloController.php
-
     namespace Acme\HelloBundle\Controller;
+
     use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
     class HelloController extends Controller
@@ -349,8 +349,8 @@ Add the ``use`` statement atop the ``Controller`` class and then modify the
 .. code-block:: php
 
     // src/Acme/HelloBundle/Controller/HelloController.php
-
     namespace Acme\HelloBundle\Controller;
+
     use Symfony\Bundle\FrameworkBundle\Controller\Controller;
     use Symfony\Component\HttpFoundation\Response;
 

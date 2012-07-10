@@ -25,7 +25,7 @@ For example, imagine you have two entities, a ``Company`` and a ``Customer``::
 
 .. code-block:: php
 
-    // src/Acme/HelloBundle/Entity/Company.php
+    // src/Acme/HelloBundle/Entity/Customer.php
     namespace Acme\HelloBundle\Entity;
 
     class Customer
