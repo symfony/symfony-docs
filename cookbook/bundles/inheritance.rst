@@ -50,9 +50,9 @@ original method, and change its functionality::
         public function registerAction()
         {
             $response = parent::registerAction();
-            
+
             // do custom stuff
-            
+
             return $response;
         }
     }
