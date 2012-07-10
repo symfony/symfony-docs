@@ -304,11 +304,6 @@ can override almost any part of another bundle!
 Do you understand now why Symfony2 is so flexible? Share your bundles between
 applications, store them locally or globally, your choice.
 
-.. note::
-
-    Despite the method name, there is no parent/child relationship between 
-    the bundles, it is just a way to extend and override an existing bundle.
-
 .. _using-vendors:
 
 Using Vendors
