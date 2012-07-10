@@ -12,4 +12,4 @@ these additional resources:
 .. _pull requests:         https://github.com/symfony/symfony/pulls
 .. _commits:               https://github.com/symfony/symfony/commits/master
 .. _bugs and enhancements: https://github.com/symfony/symfony/issues
-.. _bundles:               http://symfony2bundles.org/
+.. _bundles:               http://knpbundles.com/

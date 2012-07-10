@@ -188,7 +188,6 @@ manager can be automatically injected:
 You can now add the type to your form by its alias as follows::
 
     // src/Acme/TaskBundle/Form/Type/TaskType.php
-
     namespace Acme\TaskBundle\Form\Type;
 
     use Symfony\Component\Form\AbstractType;

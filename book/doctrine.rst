@@ -93,7 +93,7 @@ Without even thinking about Doctrine or databases, you already know that
 you need a ``Product`` object to represent those products. Create this class
 inside the ``Entity`` directory of your ``AcmeStoreBundle``::
 
-    // src/Acme/StoreBundle/Entity/Product.php    
+    // src/Acme/StoreBundle/Entity/Product.php
     namespace Acme\StoreBundle\Entity;
 
     class Product
@@ -369,7 +369,7 @@ of the bundle:
     use Acme\StoreBundle\Entity\Product;
     use Symfony\Component\HttpFoundation\Response;
     // ...
-    
+
     public function createAction()
     {
         $product = new Product();
@@ -1058,7 +1058,7 @@ can avoid the second query by issuing a join in the original query. Add the
 following method to the ``ProductRepository`` class::
 
     // src/Acme/StoreBundle/Repository/ProductRepository.php
-    
+
     public function findOneByIdJoinedToCategory($id)
     {
         $query = $this->getManager()
@@ -1067,7 +1067,7 @@ following method to the ``ProductRepository`` class::
                 JOIN p.category c
                 WHERE p.id = :id'
             )->setParameter('id', $id);
-        
+
         try {
             return $query->getSingleResult();
         } catch (\Doctrine\ORM\NoResultException $e) {
