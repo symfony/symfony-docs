@@ -100,6 +100,14 @@ lifetime
 This determines the lifetime of the session - in seconds. By default it will use
 ``0``, which means the cookie is valid for the length of the browser session.
 
+auto_start
+........
+
+**type**: ``boolean`` **default**: ``true``
+
+Determines wether or not a session should be started on every request, regardless 
+of wether any components actually need it.
+
 templating
 ~~~~~~~~~~
 
