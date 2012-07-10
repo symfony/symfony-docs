@@ -303,7 +303,6 @@ automatically in the background if you want to use it. A basic example of the
     permissions for that location.
 
 .. versionadded:: 2.1
-
     As of Symfony 2.1, the Routing component also accepts Unicode values
     in routes like this::
 
