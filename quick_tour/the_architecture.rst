@@ -297,8 +297,8 @@ If you follow these conventions, then you can use :doc:`bundle inheritance</cook
 to "override" files, controllers or templates. For example, you can create
 a bundle - ``AcmeNewBundle`` - and specify that it overrides ``AcmeDemoBundle``.
 When Symfony loads the ``AcmeDemoBundle:Welcome:index`` controller, it will
-first look for the ``WelcomeController`` class in ``AcmeNewBundle`` and, if it
-does not exists, then look inside ``AcmeDemoBundle``. This means that one bundle 
+first look for the ``WelcomeController`` class in ``AcmeNewBundle`` and, if 
+not exists, then look inside ``AcmeDemoBundle``. This means that one bundle 
 can override almost any part of another bundle!
 
 Do you understand now why Symfony2 is so flexible? Share your bundles between
