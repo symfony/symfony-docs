@@ -25,7 +25,7 @@ then clone your fork:
 
     $ git clone git://github.com/YOURUSERNAME/symfony-docs.git
 
-Unless you're documenting a feature that's new to Symfony 2.1, you changes
+Unless you're documenting a feature that's new to Symfony 2.1, your changes
 should be based on the 2.0 branch instead of the master branch. To do this
 checkout the 2.0 branch before the next step:
 

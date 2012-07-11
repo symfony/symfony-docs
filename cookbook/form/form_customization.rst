@@ -175,7 +175,7 @@ When rendering a form, you can choose which form theme(s) you want to apply.
 In Twig a theme is a single template file and the fragments are the blocks defined
 in this file.
 
-In PHP a theme is a folder and the the fragments are individual template files in
+In PHP a theme is a folder and the fragments are individual template files in
 this folder.
 
 .. _cookbook-form-customization-sidebar:
