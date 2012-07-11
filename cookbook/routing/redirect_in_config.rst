@@ -12,21 +12,19 @@ your application and you want to redirect theses requests to ``/app``.
 
 Your configuration will look like this:
 
-.. configuration-block::
+.. code-block:: yaml
 
-    .. code-block:: yaml
+    AppBundle:
+        resource: "@App/Controller/"
+        type:     annotation
+        prefix:   /app
 
-        AppBundle:
-            resource: "@App/Controller/"
-            type:     annotation
-            prefix:   /app
-
-        root:
-            pattern: /
-            defaults:
-                _controller: FrameworkBundle:Redirect:urlRedirect
-                path: /app
-                permanent: true
+    root:
+        pattern: /
+        defaults:
+            _controller: FrameworkBundle:Redirect:urlRedirect
+            path: /app
+            permanent: true
 
 Your ``AppBundle`` is registered to handle all requests under ``/app``.
 
@@ -37,4 +35,3 @@ This controller is builtin and offers two methods for redirecting request:
    * ``urlRedirect`` redirects to another *path*. You must provide the ``path`` parameter containing the path of the resource you want to redirect to.
 
 The ``permanent`` switch tells both methods to issue a 301 HTTP status code.
-
