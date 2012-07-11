@@ -316,9 +316,7 @@ object.
             </property>
             <property name="dueDate">
                 <constraint name="NotBlank" />
-                <constraint name="Type">
-                    <value>\DateTime</value>
-                </constraint>
+                <constraint name="Type">\DateTime</constraint>
             </property>
         </class>
 
