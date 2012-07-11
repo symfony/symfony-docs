@@ -11,6 +11,7 @@ Cookbook
 
     routing/scheme
     routing/slash_in_parameter
+    routing/redirect_in_config
 
     assetic/asset_management
     assetic/yuicompressor
