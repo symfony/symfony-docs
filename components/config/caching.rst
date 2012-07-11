@@ -27,8 +27,8 @@ be regenerated.
 
     $cachePath = __DIR__.'/cache/appUserMatcher.php';
 
+    // the second argument indicates whether or not we are in debug mode
     $userMatcherCache = new ConfigCache($cachePath, true);
-    // the second constructor argument indicates whether or not we are in debug mode
 
     if (!$userMatcherCache->isFresh()) {
         // fill this with an array of 'users.yml' file paths
@@ -41,7 +41,7 @@ be regenerated.
             $resources[] = new FileResource($yamlUserFile);
         }
 
-        // The code for the UserMatcher is generated elsewhere
+        // the code for the UserMatcher is generated elsewhere
         $code = ...;
 
         $userMatcherCache->write($code, $resources);

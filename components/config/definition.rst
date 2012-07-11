@@ -171,7 +171,7 @@ has a certain value:
 ``isRequired()``
     Must be defined (but may be empty)
 ``cannotBeEmpty()``
-    may not contain an empty value
+    May not contain an empty value
 ``default*()``
     (``Null``, ``True``, ``False``), shortcut for ``defaultValue()``
 ``treat*Like()``
