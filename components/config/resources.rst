@@ -14,7 +14,7 @@ can be done with the :class:`Symfony\\Component\\Config\\FileLocator`:
 
     use Symfony\Component\Config\FileLocator;
 
-    $configDirectories = array(__DIR__ . DIRECTORY_SEPARATOR . 'app' . DIRECTORY_SEPARATOR . 'config');
+    $configDirectories = array(__DIR__.'/app/config');
 
     $locator = new FileLocator($configDirectories);
     $yamlUserFiles = $locator->locate('users.yml', null, false);
@@ -44,7 +44,7 @@ importing other resources.
         {
             $configValues = Yaml::parse($resource);
 
-            // handle the config values
+            // ... handle the config values
 
             // maybe import some other resource:
 
@@ -60,7 +60,7 @@ importing other resources.
 Finding the right loader
 ------------------------
 
-The :class:`Symfony\\Component\\Config\\Loader\\LoaderResolver` receives as it’s first constructor
+The :class:`Symfony\\Component\\Config\\Loader\\LoaderResolver` receives as its first constructor
 argument a collection of loaders. When a resource (for instance an XML file) should be loaded,
 it loops through this collection of loaders and returns the loader which supports this
 particular resource type.
@@ -77,7 +77,7 @@ In case the resolver has found a suitable loader, this loader will be asked to l
     $loaderResolver = new LoaderResolver(array(new YamlUserLoader));
     $delegatingLoader = new DelegatingLoader($loaderResolver);
 
-    $delegatingLoader->load(__DIR__ . DIRECTORY_SEPARATOR . '/users.yml');
+    $delegatingLoader->load(__DIR__.'/users.yml');
     /*
     The YamlUserLoader will be used to load this resource,
     since it supports files with a "yml" extension

@@ -60,7 +60,7 @@ from a custom ``Configuration`` class which implements the
             $treeBuilder = new TreeBuilder();
             $rootNode = $treeBuilder->root('database');
 
-            // add node definitions to the root of the tree
+            // ... add node definitions to the root of the tree
 
             return $treeBuilder;
         }
@@ -244,6 +244,7 @@ A validation rule always has an "if" part. You can specify this part in the foll
 - ``ifArray()``
 - ``ifInArray()``
 - ``ifNotInArray()``
+- ``always()``
 
 A validation rule also requires a "then" part:
 
@@ -252,12 +253,8 @@ A validation rule also requires a "then" part:
 - ``thenInvalid()``
 - ``thenUnset()``
 
-The only exception is of course:
-
-- ``always()``
-
-Usually, “then” is a closure. It’s return value will be used as a new value for the node, instead
-of the node’s original value.
+Usually, "then" is a closure. Its return value will be used as a new value for the node, instead
+of the node's original value.
 
 Processing configuration values
 -------------------------------
@@ -279,6 +276,6 @@ an exception will be thrown. Otherwise the result is a clean array of configurat
 
     $configs = array($config1, $config2);
 
-    $processor = new Processor;
+    $processor = new Processor();
     $configuration = new DatabaseConfiguration;
     $processedConfiguration = $processor->processConfiguration($configuration, $configs);
