@@ -2,7 +2,7 @@
    single: Routing; Configure redirect to another route without a custom controller
 
 How to configure a redirect to another route without a custom controller
-=================================================
+========================================================================
 
 This guide explains how to configure a redirect from one route to another
 without using a custom controller.
