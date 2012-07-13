@@ -25,17 +25,16 @@ Apache) with PHP 5.3.4 or higher.
     server should be used only for development purpose, but it can help you
     to start your project quickly and easily.
 
-    Just use this command to launch the server:
+    Just use this command in your Symfony directory to launch the server:
     
     .. code-block:: bash
 
-        php -S localhost:80 -t /path/to/www
+        ./app/console server:run localhost:8000
 
-    where "/path/to/www" is the path to some directory on your machine that
-    you'll extract Symfony into so that the eventual URL to your application
-    is "http://localhost/Symfony/app_dev.php". You can also extract Symfony
-    first and then start the web server in the Symfony "web" directory. If
-    you do this, the URL to your application will be "http://localhost/app_dev.php".
+    Then the URL to your application will be "http://localhost:8000/app_dev.php"
+
+    If you want to access your application via "http://localhost/app_dev.php",
+    you will need to launch the command with administrator rights.
 
 Ready? Start by downloading the "`Symfony2 Standard Edition`_", a Symfony
 :term:`distribution` that is preconfigured for the most common use cases and
