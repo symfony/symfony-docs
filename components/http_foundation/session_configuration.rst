@@ -35,21 +35,17 @@ While native save handlers can be activated by directly using
 ``ini_set('session.save_handler', $name);``, Symfony2 provides a convenient way to
 activate these in the same way as custom handlers.
 
-Symfony2 provides drivers for the following native save handlers:
+Symfony2 provides drivers for the following native save handler as an example:
 
   * :class:`Symfony\\Component\\HttpFoundation\\Session\\Storage\\Handler\\NativeFileSessionHandler`
-  * :class:`Symfony\\Component\\HttpFoundation\\Session\\Storage\\Handler\\NativeSqliteSessionHandler`
-  * :class:`Symfony\\Component\\HttpFoundation\\Session\\Storage\\Handler\\NativeMemcacheSessionHandler`
-  * :class:`Symfony\\Component\\HttpFoundation\\Session\\Storage\\Handler\\NativeMemcachedSessionHandler`
-  * :class:`Symfony\\Component\\HttpFoundation\\Session\\Storage\\Handler\\NativeRedisSessionHandler`
 
 Example usage::
 
     use Symfony\Component\HttpFoundation\Session\Session;
     use Symfony\Component\HttpFoundation\Session\Storage\NativeSessionStorage;
-    use Symfony\Component\HttpFoundation\Session\Storage\Handler\NativeMemcachedSessionHandler;
+    use Symfony\Component\HttpFoundation\Session\Storage\Handler\NativeFileSessionHandler;
 
-    $storage = new NativeSessionStorage(array(), new NativeMemcachedSessionHandler());
+    $storage = new NativeSessionStorage(array(), new NativeFileSessionHandler());
     $session = new Session($storage);
 
 .. note::
