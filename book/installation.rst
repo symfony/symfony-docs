@@ -141,7 +141,7 @@ to check your configuration:
 
 .. code-block:: text
 
-    http://localhost/Symfony/web/config.php
+    http://localhost/web/config.php
 
 If there are any issues, correct them now before moving on.
 
@@ -209,7 +209,7 @@ first "real" Symfony2 webpage:
 
 .. code-block:: text
 
-    http://localhost/Symfony/web/app_dev.php/
+    http://localhost/web/app_dev.php/
 
 Symfony2 should welcome and congratulate you for your hard work so far!
 

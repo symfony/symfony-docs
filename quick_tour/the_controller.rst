@@ -194,7 +194,7 @@ Moreover, the ``admin`` user has a ``ROLE_ADMIN`` role, which includes the
     configuration, but you can use any hashing algorithm by tweaking the
     ``encoders`` section.
 
-Going to the ``http://localhost/Symfony/web/app_dev.php/demo/secured/hello``
+Going to the ``http://localhost/web/app_dev.php/demo/secured/hello``
 URL will automatically redirect you to the login form because this resource is
 protected by a ``firewall``.
 
