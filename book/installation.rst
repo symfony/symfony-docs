@@ -164,6 +164,31 @@ If there are any issues, correct them now before moving on.
     Note that using the ACL is recommended when you have access to them
     on your server because changing the umask is not thread-safe.
 
+.. sidebar:: Setting Up The Database
+    
+    One mistake even seasoned developers make when starting a Symfony2 project
+    is forgetting to setup default charset and collation on their database,
+    ending up with latin type collations, which are default for most databases.
+    They might even remember to do it the very first time, but forget that
+    it's all gone after running a relatively common command during development:
+    
+    :: code-block: bash
+        
+        app/console doctrine:database:drop --force
+        app/console doctrine:database:create
+    
+    There's no way to configure these defaults inside doctrine, as it tries to be
+    as agnostic as possible in terms of enviroment configuration, so only way around it 
+    is to configure server level defaults.
+    
+    Setting UTF8 defaults for MySQL is as simple as adding a few lines to configuration file:
+    
+    :: code-block: text
+    
+        [mysqld]
+        collation-server = utf8_general_ci
+        character-set-server = utf8
+    
 When everything is fine, click on "Go to the Welcome page" to request your
 first "real" Symfony2 webpage:
 
