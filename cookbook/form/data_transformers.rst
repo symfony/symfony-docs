@@ -94,9 +94,7 @@ for converting to and from the issue number and the Issue object::
 .. tip::
 
     If you want a new issue to be created when an unknown number is entered, you
-    can instantiate it rather than throwing the ``TransformationFailedException``,
-    and even persist it to your entity manager if the task has no cascading options
-    for the issue.
+    can instantiate it rather than throwing the ``TransformationFailedException``.
 
 Using the Transformer
 ---------------------
