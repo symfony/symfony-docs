@@ -147,7 +147,6 @@ helper functions:
     .. code-block:: html+jinja
 
         {# src/Acme/TaskBundle/Resources/views/Default/new.html.twig #}
-
         <form action="{{ path('task_new') }}" method="post" {{ form_enctype(form) }}>
             {{ form_widget(form) }}
 
@@ -157,7 +156,6 @@ helper functions:
     .. code-block:: html+php
 
         <!-- src/Acme/TaskBundle/Resources/views/Default/new.html.php -->
-
         <form action="<?php echo $view['router']->generate('task_new') ?>" method="post" <?php echo $view['form']->enctype($form) ?> >
             <?php echo $view['form']->widget($form) ?>
 
@@ -386,8 +384,7 @@ you'll need to specify which validation group(s) your form should use::
 
     $form = $this->createFormBuilder($users, array(
         'validation_groups' => array('registration'),
-    ))->add(...)
-    ;
+    ))->add(...);
 
 If you're creating :ref:`form classes<book-form-creating-form-classes>` (a
 good practice), then you'll need to add the following to the ``getDefaultOptions()``
@@ -558,7 +555,6 @@ of code. Of course, you'll usually need much more flexibility when rendering:
     .. code-block:: html+jinja
 
         {# src/Acme/TaskBundle/Resources/views/Default/new.html.twig #}
-
         <form action="{{ path('task_new') }}" method="post" {{ form_enctype(form) }}>
             {{ form_errors(form) }}
 
@@ -572,8 +568,7 @@ of code. Of course, you'll usually need much more flexibility when rendering:
 
     .. code-block:: html+php
 
-        <!-- // src/Acme/TaskBundle/Resources/views/Default/newAction.html.php -->
-
+        <!-- src/Acme/TaskBundle/Resources/views/Default/newAction.html.php -->
         <form action="<?php echo $view['router']->generate('task_new') ?>" method="post" <?php echo $view['form']->enctype($form) ?>>
             <?php echo $view['form']->errors($form) ?>
 
@@ -786,7 +781,7 @@ form "type"). It can be used to quickly build a form object in the controller:
 
     public function newAction()
     {
-        $task = // ...
+        $task = ...;
         $form = $this->createForm(new TaskType(), $task);
 
         // ...
@@ -1051,7 +1046,6 @@ do this, create a new template file that will store the new markup:
     .. code-block:: html+jinja
 
         {# src/Acme/TaskBundle/Resources/views/Form/fields.html.twig #}
-
         {% block field_row %}
         {% spaceless %}
             <div class="form_row">
@@ -1065,7 +1059,6 @@ do this, create a new template file that will store the new markup:
     .. code-block:: html+php
 
         <!-- src/Acme/TaskBundle/Resources/views/Form/field_row.html.php -->
-
         <div class="form_row">
             <?php echo $view['form']->label($form, $label) ?>
             <?php echo $view['form']->errors($form) ?>
@@ -1082,7 +1075,6 @@ renders the form:
     .. code-block:: html+jinja
 
         {# src/Acme/TaskBundle/Resources/views/Default/new.html.twig #}
-
         {% form_theme form 'AcmeTaskBundle:Form:fields.html.twig' %}
 
         {% form_theme form 'AcmeTaskBundle:Form:fields.html.twig' 'AcmeTaskBundle:Form:fields2.html.twig' %}
@@ -1092,7 +1084,6 @@ renders the form:
     .. code-block:: html+php
 
         <!-- src/Acme/TaskBundle/Resources/views/Default/new.html.php -->
-
         <?php $view['form']->setTheme($form, array('AcmeTaskBundle:Form')) ?>
 
         <?php $view['form']->setTheme($form, array('AcmeTaskBundle:Form', 'AcmeTaskBundle:Form')) ?>
@@ -1218,7 +1209,6 @@ file:
     .. code-block:: yaml
 
         # app/config/config.yml
-
         twig:
             form:
                 resources:
@@ -1228,7 +1218,6 @@ file:
     .. code-block:: xml
 
         <!-- app/config/config.xml -->
-
         <twig:config ...>
                 <twig:form>
                     <resource>AcmeTaskBundle:Form:fields.html.twig</resource>
@@ -1239,7 +1228,6 @@ file:
     .. code-block:: php
 
         // app/config/config.php
-
         $container->loadFromExtension('twig', array(
             'form' => array('resources' => array(
                 'AcmeTaskBundle:Form:fields.html.twig',
@@ -1296,7 +1284,6 @@ file:
     .. code-block:: yaml
 
         # app/config/config.yml
-
         framework:
             templating:
                 form:
@@ -1308,7 +1295,6 @@ file:
     .. code-block:: xml
 
         <!-- app/config/config.xml -->
-
         <framework:config ...>
             <framework:templating>
                 <framework:form>
@@ -1321,7 +1307,6 @@ file:
     .. code-block:: php
 
         // app/config/config.php
-
         $container->loadFromExtension('framework', array(
             'templating' => array('form' =>
                 array('resources' => array(

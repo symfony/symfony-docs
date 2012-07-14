@@ -63,14 +63,14 @@ in the core FrameworkBundle:
     .. code-block:: php
 
         // app/config/config.php
-
         $container->setParameter('translator.class', 'Acme\HelloBundle\Translation\Translator');
 
 Secondly, if the class is not available as a parameter, you want to make sure the
 class is always overridden when your bundle is used, or you need to modify
 something beyond just the class name, you should use a compiler pass::
 
-    namespace Foo\BarBundle\DependencyInjection\Compiler;
+    // src/Acme/FooBundle/DependencyInjection/Compiler/OverrideServiceCompilerPass.php
+    namespace Acme\DemoBundle\DependencyInjection\Compiler;
 
     use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
     use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -80,7 +80,7 @@ something beyond just the class name, you should use a compiler pass::
         public function process(ContainerBuilder $container)
         {
             $definition = $container->getDefinition('original-service-id');
-            $definition->setClass('Foo\BarBundle\YourService');
+            $definition->setClass('Acme\DemoBundle\YourService');
         }
     }
 

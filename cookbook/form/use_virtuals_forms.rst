@@ -56,8 +56,7 @@ Start by creating a very simple ``CompanyType`` and ``CustomerType``::
         {
             $builder
                 ->add('name', 'text')
-                ->add('website', 'text')
-            ;
+                ->add('website', 'text');
         }
     }
 
@@ -72,8 +71,7 @@ Start by creating a very simple ``CompanyType`` and ``CustomerType``::
         {
             $builder
                 ->add('firstName', 'text')
-                ->add('lastName', 'text')
-            ;
+                ->add('lastName', 'text');
         }
     }
 
@@ -91,8 +89,7 @@ location form type::
                 ->add('address', 'textarea')
                 ->add('zipcode', 'text')
                 ->add('city', 'text')
-                ->add('country', 'text')
-            ;
+                ->add('country', 'text');
         }
 
         public function getName()

@@ -652,6 +652,7 @@ configuration option:
     .. code-block:: yaml
 
         # app/config/config_test.yml
+
         # ...
 
         swiftmailer:
@@ -669,6 +670,7 @@ configuration option:
     .. code-block:: php
 
         // app/config/config_test.php
+
         // ...
 
         $container->loadFromExtension('swiftmailer', array(

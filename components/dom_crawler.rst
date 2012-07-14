@@ -28,6 +28,7 @@ traverse easily::
     use Symfony\Component\DomCrawler\Crawler;
 
     $html = <<<'HTML'
+    <!DOCTYPE html>
     <html>
         <body>
             <p class="message">Hello World!</p>

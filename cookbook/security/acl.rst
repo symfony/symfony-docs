@@ -85,38 +85,44 @@ Creating an ACL, and adding an ACE
 
 .. code-block:: php
 
+    // src/Acme/DemoBundle/Controller/BlogController.php
+    namespace Acme\DemoBundle\Controller;
+
+    use Symfony\Bundle\FrameworkBundle\Controller\Controller;
     use Symfony\Component\Security\Core\Exception\AccessDeniedException;
     use Symfony\Component\Security\Acl\Domain\ObjectIdentity;
     use Symfony\Component\Security\Acl\Domain\UserSecurityIdentity;
     use Symfony\Component\Security\Acl\Permission\MaskBuilder;
-    // ...
-    
-    // BlogController.php
-    public function addCommentAction(Post $post)
-    {
-        $comment = new Comment();
 
-        // setup $form, and bind data
+    class BlogController
+    {
         // ...
 
-        if ($form->isValid()) {
-            $entityManager = $this->get('doctrine.orm.default_entity_manager');
-            $entityManager->persist($comment);
-            $entityManager->flush();
+        public function addCommentAction(Post $post)
+        {
+            $comment = new Comment();
 
-            // creating the ACL
-            $aclProvider = $this->get('security.acl.provider');
-            $objectIdentity = ObjectIdentity::fromDomainObject($comment);
-            $acl = $aclProvider->createAcl($objectIdentity);
+            // ... setup $form, and bind data
 
-            // retrieving the security identity of the currently logged-in user
-            $securityContext = $this->get('security.context');
-            $user = $securityContext->getToken()->getUser();
-            $securityIdentity = UserSecurityIdentity::fromAccount($user);
+            if ($form->isValid()) {
+                $entityManager = $this->get('doctrine.orm.default_entity_manager');
+                $entityManager->persist($comment);
+                $entityManager->flush();
 
-            // grant owner access
-            $acl->insertObjectAce($securityIdentity, MaskBuilder::MASK_OWNER);
-            $aclProvider->updateAcl($acl);
+                // creating the ACL
+                $aclProvider = $this->get('security.acl.provider');
+                $objectIdentity = ObjectIdentity::fromDomainObject($comment);
+                $acl = $aclProvider->createAcl($objectIdentity);
+
+                // retrieving the security identity of the currently logged-in user
+                $securityContext = $this->get('security.context');
+                $user = $securityContext->getToken()->getUser();
+                $securityIdentity = UserSecurityIdentity::fromAccount($user);
+
+                // grant owner access
+                $acl->insertObjectAce($securityIdentity, MaskBuilder::MASK_OWNER);
+                $aclProvider->updateAcl($acl);
+            }
         }
     }
 
@@ -147,19 +153,26 @@ Checking Access
 
 .. code-block:: php
 
-    // BlogController.php
-    public function editCommentAction(Comment $comment)
+    // src/Acme/DemoBundle/Controller/BlogController.php
+
+    // ...
+
+    class BlogController
     {
-        $securityContext = $this->get('security.context');
-
-        // check for edit access
-        if (false === $securityContext->isGranted('EDIT', $comment))
-        {
-            throw new AccessDeniedException();
-        }
-
-        // retrieve actual comment object, and do your editing here
         // ...
+
+        public function editCommentAction(Comment $comment)
+        {
+            $securityContext = $this->get('security.context');
+
+            // check for edit access
+            if (false === $securityContext->isGranted('EDIT', $comment))
+            {
+                throw new AccessDeniedException();
+            }
+
+            // ... retrieve actual comment object, and do your editing here
+        }
     }
 
 In this example, we check whether the user has the ``EDIT`` permission.

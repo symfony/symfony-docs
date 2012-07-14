@@ -27,13 +27,13 @@ persisted to the database. Writing in flat PHP is quick and dirty:
 
     <?php
     // index.php
-
     $link = mysql_connect('localhost', 'myuser', 'mypassword');
     mysql_select_db('blog_db', $link);
 
     $result = mysql_query('SELECT id, title FROM post', $link);
     ?>
 
+    <!doctype html>
     <html>
         <head>
             <title>List of Posts</title>
@@ -54,6 +54,7 @@ persisted to the database. Writing in flat PHP is quick and dirty:
 
     <?php
     mysql_close($link);
+    ?>
 
 That's quick to write, fast to execute, and, as your app grows, impossible
 to maintain. There are several problems that need to be addressed:
@@ -85,7 +86,6 @@ the code that prepares the HTML "presentation":
 
     <?php
     // index.php
-
     $link = mysql_connect('localhost', 'myuser', 'mypassword');
     mysql_select_db('blog_db', $link);
 
@@ -106,6 +106,7 @@ is primarily an HTML file that uses a template-like PHP syntax:
 
 .. code-block:: html+php
 
+    <!doctype html>
     <html>
         <head>
             <title>List of Posts</title>
@@ -146,7 +147,6 @@ of the application are isolated in a new file called ``model.php``:
 
     <?php
     // model.php
-
     function open_database_connection()
     {
         $link = mysql_connect('localhost', 'myuser', 'mypassword');
@@ -602,6 +602,7 @@ The layout is nearly identical:
 .. code-block:: html+php
 
     <!-- app/Resources/views/layout.html.php -->
+    <!doctype html>
     <html>
         <head>
             <title><?php echo $view['slots']->output('title', 'Default title') ?></title>
@@ -699,7 +700,6 @@ for example, the list template written in Twig:
 .. code-block:: html+jinja
 
     {# src/Acme/BlogBundle/Resources/views/Blog/list.html.twig #}
-
     {% extends "::layout.html.twig" %}
     {% block title %}List of Posts{% endblock %}
 
@@ -708,7 +708,7 @@ for example, the list template written in Twig:
         <ul>
             {% for post in posts %}
             <li>
-                <a href="{{ path('blog_show', { 'id': post.id }) }}">
+                <a href="{{ path('blog_show', {'id': post.id}) }}">
                     {{ post.title }}
                 </a>
             </li>
@@ -721,7 +721,7 @@ The corresponding ``layout.html.twig`` template is also easier to write:
 .. code-block:: html+jinja
 
     {# app/Resources/views/layout.html.twig #}
-
+    <!doctype html>
     <html>
         <head>
             <title>{% block title %}Default title{% endblock %}</title>

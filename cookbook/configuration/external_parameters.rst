@@ -104,8 +104,7 @@ key, and define the type as ``constant``.
         <?xml version="1.0" encoding="UTF-8"?>
 
         <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        >
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 
             <parameters>
                 <parameter key="global.constant.value" type="constant">GLOBAL_CONSTANT</parameter>
@@ -164,7 +163,6 @@ the symfony service container.
 .. code-block:: php
 
     // app/config/parameters.php
-
     include_once('/path/to/drupal/sites/default/settings.php');
     $container->setParameter('drupal.database.url', $db_url);
 

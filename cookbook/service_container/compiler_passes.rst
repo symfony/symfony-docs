@@ -11,6 +11,7 @@ can read about how to create them in the components section ":doc:`/components/d
 To register a compiler pass from a bundle you need to add it to the build
 method of the bundle definition class::
 
+    // src/Acme/MailerBundle/AcmeMailerBundle.php
     namespace Acme\MailerBundle;
 
     use Symfony\Component\HttpKernel\Bundle\Bundle;

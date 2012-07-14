@@ -119,6 +119,7 @@ In these cases, you should pass the entire container into your service and
 retrieve your dependency from the container each time we need it to be sure
 you have the right instance::
 
+    // src/Acme/HelloBundle/Mail/Mailer.php
     namespace Acme\HelloBundle\Mail;
 
     use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -135,7 +136,7 @@ you have the right instance::
         public function sendEmail()
         {
             $request = $this->container->get('request');
-            // Do something using the request here
+            // ... do something using the request here
         }
     }
 

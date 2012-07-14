@@ -48,7 +48,7 @@ information. By convention, this information is usually configured in an
 
 .. code-block:: ini
 
-    ;app/config/parameters.ini
+    ; app/config/parameters.ini
     [parameters]
         database_driver   = pdo_mysql
         database_host     = localhost
@@ -64,6 +64,7 @@ information. By convention, this information is usually configured in an
     
     .. code-block:: yaml
     
+        # app/config/config.yml
         doctrine:
             dbal:
                 driver:   %database_driver%
@@ -366,9 +367,10 @@ of the bundle:
     :linenos:
 
     // src/Acme/StoreBundle/Controller/DefaultController.php
+
+    // ...
     use Acme\StoreBundle\Entity\Product;
     use Symfony\Component\HttpFoundation\Response;
-    // ...
 
     public function createAction()
     {
@@ -444,7 +446,7 @@ on its ``id`` value::
             throw $this->createNotFoundException('No product found for id '.$id);
         }
 
-        // do something, like pass the $product object into a template
+        // ... do something, like pass the $product object into a template
     }
 
 When you query for a particular type of object, you always use what's known
@@ -605,7 +607,7 @@ for just one object, you can use the ``getSingleResult()`` method instead::
     returned (if you're querying on something that could feasibly return
     more than one result)::
     
-        $query = $em->createQuery('SELECT ....')
+        $query = $em->createQuery('SELECT ...')
             ->setMaxResults(1);
         
         try {
@@ -710,6 +712,7 @@ To do this, add the name of the repository class to your mapping definition.
     .. code-block:: xml
 
         <!-- src/Acme/StoreBundle/Resources/config/doctrine/Product.orm.xml -->
+
         <!-- ... -->
         <doctrine-mapping>
 
@@ -792,6 +795,7 @@ To relate the ``Category`` and ``Product`` entities, start by creating a
     .. code-block:: php-annotations
 
         // src/Acme/StoreBundle/Entity/Category.php
+
         // ...
         use Doctrine\Common\Collections\ArrayCollection;
         
@@ -852,6 +856,7 @@ object, you'll want to add a ``$category`` property to the ``Product`` class:
     .. code-block:: php-annotations
 
         // src/Acme/StoreBundle/Entity/Product.php
+
         // ...
     
         class Product
@@ -928,10 +933,10 @@ Saving Related Entities
 Now, let's see the code in action. Imagine you're inside a controller::
 
     // ...
+
     use Acme\StoreBundle\Entity\Category;
     use Acme\StoreBundle\Entity\Product;
     use Symfony\Component\HttpFoundation\Response;
-    // ...
 
     class DefaultController extends Controller
     {
@@ -1058,7 +1063,6 @@ can avoid the second query by issuing a join in the original query. Add the
 following method to the ``ProductRepository`` class::
 
     // src/Acme/StoreBundle/Repository/ProductRepository.php
-
     public function findOneByIdJoinedToCategory($id)
     {
         $query = $this->getEntityManager()
@@ -1162,6 +1166,7 @@ the current date, only when the entity is first persisted (i.e. inserted):
     .. code-block:: xml
 
         <!-- src/Acme/StoreBundle/Resources/config/doctrine/Product.orm.xml -->
+
         <!-- ... -->
         <doctrine-mapping>
 

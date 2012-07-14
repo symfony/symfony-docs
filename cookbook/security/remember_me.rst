@@ -18,7 +18,6 @@ are shown here:
     .. code-block:: yaml
 
         # app/config/security.yml
-
         firewalls:
             main:
                 remember_me:
@@ -30,7 +29,6 @@ are shown here:
     .. code-block:: xml
 
         <!-- app/config/security.xml -->
-
         <config>
             <firewall>
                 <remember-me
@@ -45,7 +43,6 @@ are shown here:
     .. code-block:: php
 
         // app/config/security.php
-
         $container->loadFromExtension('security', array(
             'firewalls' => array(
                 'main' => array('remember_me' => array(
@@ -88,7 +85,7 @@ might ultimately look like this:
 
     .. code-block:: html+php
 
-        <?php // src/Acme/SecurityBundle/Resources/views/Security/login.html.php ?>
+        <!-- src/Acme/SecurityBundle/Resources/views/Security/login.html.php -->
         <?php if ($error): ?>
             <div><?php echo $error->getMessage() ?></div>
         <?php endif; ?>
@@ -158,14 +155,14 @@ In the following example, the action is only allowed if the user has the
 
 .. code-block:: php
 
-    use Symfony\Component\Security\Core\Exception\AccessDeniedException
     // ...
+    use Symfony\Component\Security\Core\Exception\AccessDeniedException
 
     public function editAction()
     {
         if (false === $this->get('security.context')->isGranted(
             'IS_AUTHENTICATED_FULLY'
-        )) {
+           )) {
             throw new AccessDeniedException();
         }
 

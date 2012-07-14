@@ -103,6 +103,8 @@ Bundle class name with ``Extension``. For example, the Extension class of
 ``AcmeHelloBundle`` would be called ``AcmeHelloExtension``::
 
     // Acme/HelloBundle/DependencyInjection/AcmeHelloExtension.php
+    namespace Acme\HelloBundle\DependencyInjection;
+
     use Symfony\Component\HttpKernel\DependencyInjection\Extension;
     use Symfony\Component\DependencyInjection\ContainerBuilder;
 
@@ -110,7 +112,7 @@ Bundle class name with ``Extension``. For example, the Extension class of
     {
         public function load(array $configs, ContainerBuilder $container)
         {
-            // where all of the heavy logic is done
+            // ... where all of the heavy logic is done
         }
 
         public function getXsdValidationBasePath()
@@ -155,8 +157,8 @@ You can begin specifying configuration under this namespace immediately:
             xsi:schemaLocation="http://www.example.com/symfony/schema/ http://www.example.com/symfony/schema/hello-1.0.xsd">
 
            <acme_hello:config />
-           ...
 
+           <!-- ... -->
         </container>
 
     .. code-block:: php
@@ -259,7 +261,7 @@ you might just merge them manually::
             $config = array_merge($config, $subConfig);
         }
 
-        // now use the flat $config array
+        // ... now use the flat $config array
     }
 
 .. caution::
@@ -289,7 +291,7 @@ configuration::
 
     public function load(array $configs, ContainerBuilder $container)
     {
-        // prepare your $config variable
+        // ... prepare your $config variable
 
         $loader = new XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.xml');
@@ -301,7 +303,7 @@ option is passed and set to true::
 
     public function load(array $configs, ContainerBuilder $container)
     {
-        // prepare your $config variable
+        // ... prepare your $config variable
 
         $loader = new XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         
@@ -347,7 +349,7 @@ Add the following to the ``load()`` method to do this::
 
     public function load(array $configs, ContainerBuilder $container)
     {
-        // prepare your $config variable
+        // ... prepare your $config variable
 
         $loader = new XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.xml');
@@ -450,9 +452,8 @@ and build a tree that defines your configuration in that class::
 
             $rootNode
                 ->children()
-                    ->scalarNode('my_type')->defaultValue('bar')->end()
-                ->end()
-            ;
+                ->scalarNode('my_type')->defaultValue('bar')->end()
+                ->end();
 
             return $treeBuilder;
         }
@@ -500,6 +501,7 @@ automatically by Symfony2. If not, override the Bundle
 :method:`Symfony\\Component\\HttpKernel\\Bundle\\Bundle::build` method in
 your bundle::
 
+    // ...
     use Acme\HelloBundle\DependencyInjection\UnconventionalExtensionClass;
 
     class AcmeHelloBundle extends Bundle

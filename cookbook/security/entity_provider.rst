@@ -199,7 +199,6 @@ then be checked against our User entity records in the database:
     .. code-block:: yaml
 
         # app/config/security.yml
-
         security:
             encoders:
                 Acme\UserBundle\Entity\User:
@@ -271,10 +270,10 @@ For this example, the first three methods will return ``true`` whereas the
     // ...
     use Symfony\Component\Security\Core\User\AdvancedUserInterface;
 
-    // ...
     class User implements AdvancedUserInterface
     {
         // ...
+
         public function isAccountNonExpired()
         {
             return true;
@@ -421,8 +420,8 @@ returns the list of related groups::
     namespace Acme\Bundle\UserBundle\Entity;
 
     use Doctrine\Common\Collections\ArrayCollection;
-
     // ...
+
     class User implements AdvancedUserInterface
     {
         /**
@@ -451,6 +450,7 @@ important thing to notice is that the ``AcmeUserBundle:Group`` entity class
 implements the :class:`Symfony\\Component\\Security\\Core\\Role\\RoleInterface`
 that forces it to have a ``getRole()`` method::
 
+    // src/Acme/Bundle/UserBundle/Entity/Group.php
     namespace Acme\Bundle\UserBundle\Entity;
 
     use Symfony\Component\Security\Core\Role\RoleInterface;
@@ -522,8 +522,7 @@ fetch the user and his associated roles / groups with a single query::
                 ->where('u.username = :username OR u.email = :email')
                 ->setParameter('username', $username)
                 ->setParameter('email', $username)
-                ->getQuery()
-            ;
+                ->getQuery();
 
             // ...
         }
