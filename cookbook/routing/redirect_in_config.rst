@@ -28,10 +28,13 @@ Your configuration will look like this:
 
 Your ``AppBundle`` is registered to handle all requests under ``/app``.
 
-We configure a route for the ``/`` path and let :class:`Symfony\\Bundle\\FrameworkBundle\\Controller\\RedirectController` handle it.
-This controller is builtin and offers two methods for redirecting request:
+We configure a route for the ``/`` path and let :class:`Symfony\\Bundle\\FrameworkBundle\\Controller\\RedirectController`
+handle it. This controller is built-in and offers two methods for redirecting request:
 
-   * ``redirect`` redirects to another *route*. You must provide the ``route`` parameter with the *name* of the route you want to redirect to.
-   * ``urlRedirect`` redirects to another *path*. You must provide the ``path`` parameter containing the path of the resource you want to redirect to.
+* ``redirect`` redirects to another *route*. You must provide the ``route``
+  parameter with the *name* of the route you want to redirect to.
+
+* ``urlRedirect`` redirects to another *path*. You must provide the ``path``
+  parameter containing the path of the resource you want to redirect to.
 
 The ``permanent`` switch tells both methods to issue a 301 HTTP status code.
