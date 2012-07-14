@@ -37,7 +37,7 @@ Set up your user information with your real name and a working email address:
     If your IDE creates configuration files inside project's directory,
     you can use global ``.gitignore`` file (for all projects) or
     ``.git/info/exclude`` file (per project) to ignore them. See
-    `Github's documentation <https://help.github.com/articles/ignoring-files>`_.
+    `Github's documentation`_.
 
 .. tip::
 
@@ -360,6 +360,7 @@ of all the commits. When you finish, execute the push command.
 
 .. _ProGit:                                http://progit.org/
 .. _GitHub:                                https://github.com/signup/free
+.. _`Github's Documentation`:              https://help.github.com/articles/ignoring-files
 .. _Symfony2 repository:                   https://github.com/symfony/symfony
 .. _dev mailing-list:                      http://groups.google.com/group/symfony-devs
 .. _travis-ci.org:                         http://travis-ci.org
