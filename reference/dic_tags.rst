@@ -90,7 +90,7 @@ the interface directly::
     class MyFormTypeExtension extends AbstractTypeExtension
     {
         // ... fill in whatever methods you want to override
-        // like buildForm(), buildView(), buildViewBottomUp(), getDefaultOptions() or getAllowedOptionValues()
+        // like buildForm(), buildView(), finishView(), setDefaultOptions()
     }
 
 In order for Symfony to know about your form extension and use it, give it
