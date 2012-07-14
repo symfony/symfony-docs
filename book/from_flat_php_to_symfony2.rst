@@ -263,7 +263,7 @@ an individual blog result based on a given id::
     {
         $link = open_database_connection();
 
-        $id = mysql_real_escape_string($id);
+        $id = intval($id);
         $query = 'SELECT date, title, body FROM post WHERE id = '.$id;
         $result = mysql_query($query);
         $row = mysql_fetch_assoc($result);
@@ -308,7 +308,7 @@ this page introduces even more lingering problems that a framework can solve
 for you. For example, a missing or invalid ``id`` query parameter will cause
 the page to crash. It would be better if this caused a 404 page to be rendered,
 but this can't really be done easily yet. Worse, had you forgotten to clean
-the ``id`` parameter via the ``mysql_real_escape_string()`` function, your
+the ``id`` parameter via the ``intval()`` function, your
 entire database would be at risk for an SQL injection attack.
 
 Another major problem is that each individual controller file must include
