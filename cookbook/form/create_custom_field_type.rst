@@ -72,7 +72,7 @@ important:
 
 * ``setDefaultOptions()`` - This defines options for your form type that
   can be used in ``buildForm()`` and ``buildView()``. There are a lot of
-  options common to all fields (see :doc:`/reference/forms/types/form`_),
+  options common to all fields (see :doc:`/reference/forms/types/form`),
   but you can create any others that you need here.
 
 .. tip::
