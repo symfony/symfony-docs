@@ -102,7 +102,7 @@ Now that you have the transformer built, you just need to add it to your
 issue field in some form.
 
     You can also use transformers without creating a new custom form type
-    by calling ``appendNormTransformer`` (or ``appendClientTransformer`` - see
+    by calling ``prependNormTransformer`` (or ``appendClientTransformer`` - see
     `Norm and Client Transformers`_) on any field builder::
 
         use Acme\TaskBundle\Form\DataTransformer\IssueToNumberTransformer;
@@ -120,7 +120,7 @@ issue field in some form.
                 // add a normal text field, but add our transformer to it
                 $builder->add(
                     $builder->create('issue', 'text')
-                        ->appendNormTransformer($transformer)
+                        ->prependNormTransformer($transformer)
                 );
             }
 
@@ -152,7 +152,7 @@ its error message can be controlled with the ``invalid_message`` field option.
         // THIS IS WRONG - TRANSFORMER WILL BE APPLIED TO THE ENTIRE FORM
         // see above example for correct code
         $builder->add('issue', 'text')
-            ->appendNormTransformer($transformer);
+            ->prependNormTransformer($transformer);
 
 Norm and Client Transformers
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -245,7 +245,7 @@ First, create the custom field type class::
         public function buildForm(FormBuilder $builder, array $options)
         {
             $transformer = new IssueToNumberTransformer($this->om);
-            $builder->appendNormTransformer($transformer);
+            $builder->prependNormTransformer($transformer);
         }
 
         public function getDefaultOptions(array $options)
