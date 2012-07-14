@@ -51,7 +51,7 @@ The above configuration forces the ``secure`` route to always use HTTPS.
 When generating the ``secure`` URL, and if the current scheme is HTTP, Symfony
 will automatically generate an absolute URL with HTTPS as the scheme:
 
-.. code-block:: twig
+.. code-block:: jinja
 
     {# If the current scheme is HTTPS #}
     {{ path('secure') }}
