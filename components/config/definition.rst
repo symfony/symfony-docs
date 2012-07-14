@@ -7,12 +7,13 @@ Define and process configuration values
 Validate configuration values
 -----------------------------
 
-After loading configuration values from all kinds of resources, the values and their structure can
-be validated using the "Definition" part of the Config Component. Configuration values are usually
-expected to show some kind of hierarchy. Also, values should be of a certain type, be restricted in
-number or be one of a given set of values. For example, the following configuration (in Yaml) shows
-a clear hierarchy and some validation rules that should be applied to it (like: "the value for
-'auto_connect' must be a boolean value"):
+After loading configuration values from all kinds of resources, the values
+and their structure can be validated using the "Definition" part of the Config
+Component. Configuration values are usually expected to show some kind of
+hierarchy. Also, values should be of a certain type, be restricted in number
+or be one of a given set of values. For example, the following configuration
+(in Yaml) shows a clear hierarchy and some validation rules that should be
+applied to it (like: "the value for ``auto_connect`` must be a boolean value"):
 
 .. code-block:: yaml
 
@@ -31,10 +32,11 @@ a clear hierarchy and some validation rules that should be applied to it (like: 
             username: user
             password: pass
 
-When loading multiple configuration files, it should be possible to merge and overwrite some
-values. Other values should not be merged and stay as they are when first encountered. Also,
-some keys are only available, when another key has a specific value (in the sample configuration
-above: the "memory" key only makes sense when the "driver" is "sqlite").
+When loading multiple configuration files, it should be possible to merge
+and overwrite some values. Other values should not be merged and stay as
+they are when first encountered. Also, some keys are only available when
+another key has a specific value (in the sample configuration above: the
+``memory`` key only makes sense when the ``driver`` is ``sqlite``).
 
 Define a hierarchy of configuration values using the TreeBuilder
 ----------------------------------------------------------------
@@ -42,11 +44,9 @@ Define a hierarchy of configuration values using the TreeBuilder
 All the rules concerning configuration values can be defined using the
 :class:`Symfony\\Component\\Config\\Definition\\Builder\\TreeBuilder`.
 
-A :class:`Symfony\\Component\\Config\\Definition\\Builder\\TreeBuilder` instance should be returned
-from a custom ``Configuration`` class which implements the
-:class:`Symfony\\Component\\Config\\Definition\\ConfigurationInterface`:
-
-.. code-block:: php
+A :class:`Symfony\\Component\\Config\\Definition\\Builder\\TreeBuilder` instance
+should be returned from a custom ``Configuration`` class which implements the
+:class:`Symfony\\Component\\Config\\Definition\\ConfigurationInterface`::
 
     namespace Acme\DatabaseConfiguration;
 
@@ -72,11 +72,9 @@ Add node definitions to the tree
 Variable nodes
 ~~~~~~~~~~~~~~
 
-A tree contains node definitions which can be layed out in a semantic way. This means, using
-indentation and the fluent notation, it is possible to reflect the real structure of the
-configuration values:
-
-.. code-block:: php
+A tree contains node definitions which can be layed out in a semantic way.
+This means, using indentation and the fluent notation, it is possible to
+reflect the real structure of the configuration values::
 
     $rootNode
         ->children()
@@ -89,15 +87,15 @@ configuration values:
         ->end()
     ;
 
-The root node itself is an array node, and has children, like the boolean node "auto_connect"
-and the scalar node "default_connection". In general: after defining a node, a call to ``end()``
-takes you one step up in the hierarchy.
+The root node itself is an array node, and has children, like the boolean
+node ``auto_connect`` and the scalar node ``default_connection``. In general:
+after defining a node, a call to ``end()`` takes you one step up in the hierarchy.
 
 Array nodes
 ~~~~~~~~~~~
 
-It is possible to add a deeper level to the hierarchy, by adding an array node. The array node
-itself, may have a pre-defined set of variable nodes:
+It is possible to add a deeper level to the hierarchy, by adding an array
+node. The array node itself, may have a pre-defined set of variable nodes:
 
 .. code-block:: php
 
@@ -116,7 +114,7 @@ Or you may define a prototype for each node inside an array node:
 
     $rootNode
         ->arrayNode('connections')
-            ->prototype('array)
+            ->prototype('array')
                 ->children()
                     ->scalarNode('driver')->end()
                     ->scalarNode('host')->end()
@@ -127,9 +125,10 @@ Or you may define a prototype for each node inside an array node:
         ->end()
     ;
 
-A prototype can be used to add a definition which may be repeated many times inside the current
-node. According to the prototype definition in the example above, it is possible to have multiple
-connection arrays (containing a "driver", "host", etc.).
+A prototype can be used to add a definition which may be repeated many times
+inside the current node. According to the prototype definition in the example
+above, it is possible to have multiple connection arrays (containing a ``driver``,
+``host``, etc.).
 
 Array node options
 ~~~~~~~~~~~~~~~~~~
@@ -137,7 +136,7 @@ Array node options
 Before defining the children of an array node, you can provide options like:
 
 ``useAttributeAsKey()``
-    Provide the name of a childnode, whose value should be used as the key in the resulting array
+    Provide the name of a child node, whose value should be used as the key in the resulting array
 ``requiresAtLeastOneElement()``
     There should be at least one element in the array (works only when ``isRequired()`` is also
     called).
@@ -163,7 +162,8 @@ An example of this:
 Default and required values
 ---------------------------
 
-For all node types, it is possible to define default values and replacement values in case a node
+For all node types, it is possible to define default values and replacement
+values in case a node
 has a certain value:
 
 ``defaultValue()``
@@ -173,9 +173,9 @@ has a certain value:
 ``cannotBeEmpty()``
     May not contain an empty value
 ``default*()``
-    (``Null``, ``True``, ``False``), shortcut for ``defaultValue()``
+    (``null``, ``true``, ``false``), shortcut for ``defaultValue()``
 ``treat*Like()``
-    (``Null``, ``True``, ``False``), provide a replacement value in case the value is *.
+    (``null``, ``true``, ``false``), provide a replacement value in case the value is ``*.``
 
 .. code-block:: php
 
@@ -204,8 +204,8 @@ Merging options
 Extra options concerning the merge process may be provided. For arrays:
 
 ``performNoDeepMerging()``
-    When the value is also defined in a second configuration array, don’t try to merge an array,
-    but overwrite it entirely
+    When the value is also defined in a second configuration array, don’t
+    try to merge an array, but overwrite it entirely
 
 For all nodes:
 
@@ -216,11 +216,9 @@ Validation rules
 ----------------
 
 More advanced validation rules can be provided using the
-:class:`Symfony\\Component\\Config\\Definition\\Builder\\ExprBuilder`. This builder implements a
-fluent interface for a well-known control structure. The builder is used for adding advanced
-validation rules to node definitions, like:
-
-.. code-block:: php
+:class:`Symfony\\Component\\Config\\Definition\\Builder\\ExprBuilder`. This
+builder implements a fluent interface for a well-known control structure.
+The builder is used for adding advanced validation rules to node definitions, like::
 
     $rootNode
         ->arrayNode('connection')
@@ -236,7 +234,8 @@ validation rules to node definitions, like:
         ->end()
     ;
 
-A validation rule always has an "if" part. You can specify this part in the following ways:
+A validation rule always has an "if" part. You can specify this part in the
+following ways:
 
 - ``ifTrue()``
 - ``ifString()``
@@ -253,19 +252,19 @@ A validation rule also requires a "then" part:
 - ``thenInvalid()``
 - ``thenUnset()``
 
-Usually, "then" is a closure. Its return value will be used as a new value for the node, instead
+Usually, "then" is a closure. Its return value will be used as a new value
+for the node, instead
 of the node's original value.
 
 Processing configuration values
 -------------------------------
 
-The :class:`Symfony\\Component\\Config\\Definition\\Processor` uses the tree as it was built
-using the :class:`Symfony\\Component\\Config\\Definition\\Builder\\TreeBuilder` to process
-multiple arrays of configuration values that should be merged. If any value is not of the
-expected type, is mandatory and yet undefined, or could not be validated in some other way,
-an exception will be thrown. Otherwise the result is a clean array of configuration values.
-
-.. code-block:: php
+The :class:`Symfony\\Component\\Config\\Definition\\Processor` uses the tree
+as it was built using the :class:`Symfony\\Component\\Config\\Definition\\Builder\\TreeBuilder`
+to process multiple arrays of configuration values that should be merged.
+If any value is not of the expected type, is mandatory and yet undefined,
+or could not be validated in some other way, an exception will be thrown.
+Otherwise the result is a clean array of configuration values::
 
     use Symfony\Component\Yaml\Yaml;
     use Symfony\Component\Config\Definition\Processor;
