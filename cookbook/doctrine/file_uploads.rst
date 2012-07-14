@@ -271,8 +271,8 @@ Next, refactor the ``Document`` class to take advantage of these callbacks::
         }
 
         /**
-         * @ORM\PostPersist()
-         * @ORM\PostUpdate()
+         * @ORM\PrePersist()
+         * @ORM\PreUpdate()
          */
         public function upload()
         {
@@ -293,8 +293,8 @@ Next, refactor the ``Document`` class to take advantage of these callbacks::
          */
         public function removeUpload()
         {
-            if ($file = $this->getAbsolutePath()) {
-                unlink($file);
+            if ($this->$file = $this->getAbsolutePath()) {
+                unlink($this->$file);
             }
         }
     }
