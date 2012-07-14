@@ -160,7 +160,7 @@ Model and View Transformers
 
 .. versionadded:: 2.1
     The names and method of the transformers were changed in Symfony 2.1.
-    ``appendNormTransformer`` became ``addModelTransformer`` and ``appendClientTransformer``
+    ``prependNormTransformer`` became ``addModelTransformer`` and ``appendClientTransformer``
     became ``addViewTransformer``.
 
 In the above example, the transformer was used as a "model" transformer.
