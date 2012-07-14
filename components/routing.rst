@@ -41,7 +41,7 @@ your autoloader to load the Routing component::
 
     $matcher = new UrlMatcher($routes, $context);
 
-    $parameters = $matcher->match( '/foo' );
+    $parameters = $matcher->match('/foo'); 
     // array('controller' => 'MyController', '_route' => 'route_name')
 
 .. note::
@@ -97,7 +97,7 @@ Take the following route, which combines several of these ideas::
    // ...
 
    $parameters = $matcher->match('/archive/2012-01');
-   // array('controller' => 'showArchive', 'month' => '2012-01', '_route' => '...')
+   // array('controller' => 'showArchive', 'month' => '2012-01', '_route' => ...)
 
    $parameters = $matcher->match('/archive/foo');
    // throws ResourceNotFoundException
@@ -136,8 +136,8 @@ default requirements and default options to all routes of a subtree::
     $rootCollection = new RouteCollection();
 
     $subCollection = new RouteCollection();
-    $subCollection->add( /*...*/ );
-    $subCollection->add( /*...*/ );
+    $subCollection->add(...);
+    $subCollection->add(...);
 
     $rootCollection->addCollection($subCollection, '/prefix', array('_scheme' => 'https'));
 

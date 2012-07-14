@@ -78,7 +78,7 @@ we need it:
     use Acme\HelloBundle\Mailer;
 
     $mailer = new Mailer('sendmail');
-    $mailer->send('ryan@foobar.net', ... );
+    $mailer->send('ryan@foobar.net', ...);
 
 This is easy enough. The imaginary ``Mailer`` class allows us to configure
 the method used to deliver the email messages (e.g. ``sendmail``, ``smtp``, etc).
@@ -150,7 +150,7 @@ shortcut method::
         {
             // ...
             $mailer = $this->get('my_mailer');
-            $mailer->send('ryan@foobar.net', ... );
+            $mailer->send('ryan@foobar.net', ...);
         }
     }
 
@@ -546,6 +546,7 @@ really good at delivering email messages, so we'll use it inside ``NewsletterMan
 to handle the actual delivery of the messages. This pretend class might look
 something like this::
 
+    // src/Acme/HelloBundle/Newsletter/NewsletterManager.php
     namespace Acme\HelloBundle\Newsletter;
 
     use Acme\HelloBundle\Mailer;
@@ -603,7 +604,7 @@ the service container gives us a much more appealing option:
         </parameters>
 
         <services>
-            <service id="my_mailer" ... >
+            <service id="my_mailer" ...>
               <!-- ... -->
             </service>
             <service id="newsletter_manager" class="%newsletter_manager.class%">
@@ -620,7 +621,7 @@ the service container gives us a much more appealing option:
         // ...
         $container->setParameter('newsletter_manager.class', 'Acme\HelloBundle\Newsletter\NewsletterManager');
 
-        $container->setDefinition('my_mailer', ... );
+        $container->setDefinition('my_mailer', ...);
         $container->setDefinition('newsletter_manager', new Definition(
             '%newsletter_manager.class%',
             array(new Reference('my_mailer'))
@@ -691,7 +692,7 @@ Injecting the dependency by the setter method just needs a change of syntax:
         </parameters>
 
         <services>
-            <service id="my_mailer" ... >
+            <service id="my_mailer" ...>
               <!-- ... -->
             </service>
             <service id="newsletter_manager" class="%newsletter_manager.class%">
@@ -710,7 +711,7 @@ Injecting the dependency by the setter method just needs a change of syntax:
         // ...
         $container->setParameter('newsletter_manager.class', 'Acme\HelloBundle\Newsletter\NewsletterManager');
 
-        $container->setDefinition('my_mailer', ... );
+        $container->setDefinition('my_mailer', ...);
         $container->setDefinition('newsletter_manager', new Definition(
             '%newsletter_manager.class%'
         ))->addMethodCall('setMailer', array(
@@ -751,7 +752,7 @@ it exists and do nothing if it doesn't:
         <!-- src/Acme/HelloBundle/Resources/config/services.xml -->
 
         <services>
-            <service id="my_mailer" ... >
+            <service id="my_mailer" ...>
               <!-- ... -->
             </service>
             <service id="newsletter_manager" class="%newsletter_manager.class%">
@@ -769,7 +770,7 @@ it exists and do nothing if it doesn't:
         // ...
         $container->setParameter('newsletter_manager.class', 'Acme\HelloBundle\Newsletter\NewsletterManager');
 
-        $container->setDefinition('my_mailer', ... );
+        $container->setDefinition('my_mailer', ...);
         $container->setDefinition('newsletter_manager', new Definition(
             '%newsletter_manager.class%',
             array(new Reference('my_mailer', ContainerInterface::IGNORE_ON_INVALID_REFERENCE))

@@ -51,8 +51,7 @@ original method, and change its functionality::
         {
             $response = parent::registerAction();
 
-            // do custom stuff
-
+            // ... do custom stuff
             return $response;
         }
     }

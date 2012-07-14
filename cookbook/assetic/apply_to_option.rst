@@ -55,10 +55,8 @@ templates:
 
     .. code-block:: html+jinja
 
-        {% javascripts '@AcmeFooBundle/Resources/public/js/example.coffee'
-            filter='coffee'
-        %}
-        <script src="{{ asset_url }}" type="text/javascript"></script>
+        {% javascripts '@AcmeFooBundle/Resources/public/js/example.coffee' filter='coffee' %}
+            <script src="{{ asset_url }}" type="text/javascript"></script>
         {% endjavascripts %}
 
     .. code-block:: html+php
@@ -66,7 +64,7 @@ templates:
         <?php foreach ($view['assetic']->javascripts(
             array('@AcmeFooBundle/Resources/public/js/example.coffee'),
             array('coffee')) as $url): ?>
-        <script src="<?php echo $view->escape($url) ?>" type="text/javascript"></script>
+            <script src="<?php echo $view->escape($url) ?>" type="text/javascript"></script>
         <?php endforeach; ?>
 
 This is all that's needed to compile this CoffeeScript file and server it
@@ -83,9 +81,8 @@ You can also combine multiple CoffeeScript files into a single output file:
 
         {% javascripts '@AcmeFooBundle/Resources/public/js/example.coffee'
                        '@AcmeFooBundle/Resources/public/js/another.coffee'
-            filter='coffee'
-        %}
-        <script src="{{ asset_url }}" type="text/javascript"></script>
+            filter='coffee' %}
+            <script src="{{ asset_url }}" type="text/javascript"></script>
         {% endjavascripts %}
 
     .. code-block:: html+php
@@ -94,7 +91,7 @@ You can also combine multiple CoffeeScript files into a single output file:
             array('@AcmeFooBundle/Resources/public/js/example.coffee',
                   '@AcmeFooBundle/Resources/public/js/another.coffee'),
             array('coffee')) as $url): ?>
-        <script src="<?php echo $view->escape($url) ?>" type="text/javascript"></script>
+            <script src="<?php echo $view->escape($url) ?>" type="text/javascript"></script>
         <?php endforeach; ?>
 
 Both the files will now be served up as a single file compiled into regular
@@ -164,9 +161,8 @@ being run through the CoffeeScript filter):
 
         {% javascripts '@AcmeFooBundle/Resources/public/js/example.coffee'
                        '@AcmeFooBundle/Resources/public/js/another.coffee'
-                       '@AcmeFooBundle/Resources/public/js/regular.js'
-        %}
-        <script src="{{ asset_url }}" type="text/javascript"></script>
+                       '@AcmeFooBundle/Resources/public/js/regular.js' %}
+            <script src="{{ asset_url }}" type="text/javascript"></script>
         {% endjavascripts %}
 
     .. code-block:: html+php
@@ -176,5 +172,5 @@ being run through the CoffeeScript filter):
                   '@AcmeFooBundle/Resources/public/js/another.coffee',
                   '@AcmeFooBundle/Resources/public/js/regular.js'),
             as $url): ?>
-        <script src="<?php echo $view->escape($url) ?>" type="text/javascript"></script>
+            <script src="<?php echo $view->escape($url) ?>" type="text/javascript"></script>
         <?php endforeach; ?>

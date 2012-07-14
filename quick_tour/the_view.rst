@@ -186,7 +186,7 @@ the ``index`` template. To do this, use the ``render`` tag:
 .. code-block:: jinja
 
     {# src/Acme/DemoBundle/Resources/views/Demo/index.html.twig #}
-    {% render "AcmeDemoBundle:Demo:fancy" with { 'name': name, 'color': 'green' } %}
+    {% render "AcmeDemoBundle:Demo:fancy" with {'name': name, 'color': 'green'} %}
 
 Here, the ``AcmeDemoBundle:Demo:fancy`` string refers to the ``fancy`` action
 of the ``Demo`` controller. The arguments (``name`` and ``color``) act like
@@ -229,6 +229,8 @@ pattern::
     use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
     use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
+    // ...
+
     /**
      * @Route("/hello/{name}", name="_demo_hello")
      * @Template()
@@ -241,7 +243,7 @@ pattern::
 .. tip::
 
     The ``url`` function generates *absolute* URLs: ``{{ url('_demo_hello', {
-    'name': 'Thomas' }) }}``.
+    'name': 'Thomas'}) }}``.
 
 Including Assets: images, JavaScripts, and stylesheets
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

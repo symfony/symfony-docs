@@ -141,8 +141,7 @@ and make the ``name`` argument required::
     $this
         // ...
         ->addArgument('name', InputArgument::REQUIRED, 'Who do you want to greet?')
-        ->addArgument('last_name', InputArgument::OPTIONAL, 'Your last name?')
-        // ...
+        ->addArgument('last_name', InputArgument::OPTIONAL, 'Your last name?');
 
 You now have access to a ``last_name`` argument in your command::
 
@@ -178,7 +177,7 @@ how many times in a row the message should be printed::
 
     $this
         // ...
-        ->addOption('iterations', null, InputOption::VALUE_REQUIRED, 'How many times should the message be printed?', 1)
+        ->addOption('iterations', null, InputOption::VALUE_REQUIRED, 'How many times should the message be printed?', 1);
 
 Next, use this in the command to print the message multiple times:
 
@@ -226,7 +225,7 @@ You can combine VALUE_IS_ARRAY with VALUE_REQUIRED or VALUE_OPTIONAL like this:
 
     $this
         // ...
-        ->addOption('iterations', null, InputOption::VALUE_REQUIRED | InputOption::VALUE_IS_ARRAY, 'How many times should the message be printed?', 1)
+        ->addOption('iterations', null, InputOption::VALUE_REQUIRED | InputOption::VALUE_IS_ARRAY, 'How many times should the message be printed?', 1);
 
 Asking the User for Information
 -------------------------------
@@ -294,8 +293,7 @@ method::
 
     class ListCommandTest extends \PHPUnit_Framework_TestCase
     {
-
-        //--
+        // ...
 
         public function testNameIsOutput()
         {

@@ -201,6 +201,7 @@ zero tags when first created).
     .. code-block:: html+jinja
 
         {# src/Acme/TaskBundle/Resources/views/Task/new.html.twig #}
+
         {# ... #}
 
         <form action="..." method="POST" {{ form_enctype(form) }}>
@@ -222,6 +223,7 @@ zero tags when first created).
     .. code-block:: html+php
 
         <!-- src/Acme/TaskBundle/Resources/views/Task/new.html.php -->
+
         <!-- ... -->
 
         <form action="..." method="POST" ...>
@@ -281,6 +283,7 @@ type expects to receive exactly two, otherwise an error will be thrown:
 add the ``allow_add`` option to our collection field::
 
     // src/Acme/TaskBundle/Form/Type/TaskType.php
+
     // ...
     
     use Symfony\Component\Form\FormBuilderInterface;
@@ -311,7 +314,7 @@ new "tag" forms. To render it, make the following change to your template:
 
     .. code-block:: html+jinja
     
-        <ul class="tags" data-prototype="{{ form_widget(form.tags.vars.prototype) | e }}">
+        <ul class="tags" data-prototype="{{ form_widget(form.tags.vars.prototype)|e }}">
             ...
         </ul>
     
@@ -337,7 +340,7 @@ new "tag" forms. To render it, make the following change to your template:
     
     .. code-block:: html+jinja
     
-        {{ form_widget(form.tags.vars.prototype.name) | e }}
+        {{ form_widget(form.tags.vars.prototype.name)|e }}
 
 On the rendered page, the result will look something like this:
 
@@ -431,6 +434,10 @@ new ``Tag`` objects and added to the ``tags`` property of the ``Task`` object.
     
         .. code-block:: php-annotations
 
+            // src/Acme/TaskBundle/Entity/Task.php
+
+            // ...
+
             /**
              * @ORM\ManyToMany(targetEntity="Tag", cascade={"persist"})
              */
@@ -460,6 +467,7 @@ new ``Tag`` objects and added to the ``tags`` property of the ``Task`` object.
     is set to ``false``::
     
         // src/Acme/TaskBundle/Entity/Task.php
+
         // ...
 
         public function setTags(ArrayCollection $tags)
@@ -474,6 +482,7 @@ new ``Tag`` objects and added to the ``tags`` property of the ``Task`` object.
     Inside ``Tag``, just make sure you have an ``addTask`` method::
 
         // src/Acme/TaskBundle/Entity/Tag.php
+
         // ...
 
         public function addTask(Task $task)
@@ -497,6 +506,7 @@ The solution is similar to allowing tags to be added.
 Start by adding the ``allow_delete`` option in the form Type::
     
     // src/Acme/TaskBundle/Form/Type/TaskType.php
+
     // ...
     use Symfony\Component\Form\FormBuilderInterface;
 
@@ -581,6 +591,7 @@ the relationship between the removed ``Tag`` and ``Task`` object.
     is handling the "update" of your Task::
 
         // src/Acme/TaskBundle/Controller/TaskController.php
+
         // ...
 
         public function editAction($id, Request $request)

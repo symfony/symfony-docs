@@ -128,6 +128,7 @@ example::
     class SensioFrameworkExtraBundle extends Bundle
     {
         // ...
+    }
 
 The file itself lives at
 ``vendor/sensio/framework-extra-bundle/Sensio/Bundle/FrameworkExtraBundle/SensioFrameworkExtraBundle.php``.
@@ -144,7 +145,7 @@ look for the ``Sensio`` namespace in the ``vendor/sensio`` directory:
 
     // ...
     $loader->registerNamespaces(array(
-        // ...
+        ...,
         'Sensio'           => __DIR__.'/../vendor/sensio/framework-extra-bundle',
     ));
 
@@ -236,7 +237,7 @@ class::
     // config/ProjectConfiguration.class.php
     public function setup()
     {
-        $this->enableAllPluginsExcept(array(/* some plugins here */));
+        $this->enableAllPluginsExcept(array(... some plugins here));
     }
 
 In Symfony2, the bundles are activated inside the application kernel::
@@ -247,7 +248,7 @@ In Symfony2, the bundles are activated inside the application kernel::
         $bundles = array(
             new Symfony\Bundle\FrameworkBundle\FrameworkBundle(),
             new Symfony\Bundle\TwigBundle\TwigBundle(),
-            // ...
+            ...,
             new Acme\DemoBundle\AcmeDemoBundle(),
         );
 

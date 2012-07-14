@@ -144,7 +144,6 @@ To enable caching, modify the code of a front controller to use the caching
 kernel::
 
     // web/app.php
-
     require_once __DIR__.'/../app/bootstrap.php.cache';
     require_once __DIR__.'/../app/AppKernel.php';
     require_once __DIR__.'/../app/AppCache.php';
@@ -176,7 +175,6 @@ finely tuned via a set of options you can set by overriding the ``getOptions()``
 method::
 
     // app/AppCache.php
-
     use Symfony\Bundle\FrameworkBundle\HttpCache\HttpCache;
 
     class AppCache extends HttpCache
@@ -646,7 +644,7 @@ exposing a simple and efficient pattern::
         // the ETag or the Last-Modified value
         // (based on the Request, data is retrieved from
         // a database or a key-value store for instance)
-        $article = // ...
+        $article = ...;
 
         // create a Response with a ETag and/or a Last-Modified header
         $response = new Response();
@@ -659,7 +657,7 @@ exposing a simple and efficient pattern::
             return $response;
         } else {
             // do more work here - like retrieving more data
-            $comments = // ...
+            $comments = ...;
 
             // or render a template with the $response you've already started
             return $this->render(
@@ -779,14 +777,15 @@ as this is the only useful one outside of Akamaï context:
 
 .. code-block:: html
 
+    <!doctype html>
     <html>
         <body>
-            Some content
+            ... some content
 
             <!-- Embed the content of another page here -->
             <esi:include src="http://..." />
 
-            More content
+            ... more content
         </body>
     </html>
 

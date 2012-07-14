@@ -126,11 +126,12 @@ Here's an example of how this might look::
         public function loadUserByUsername($username)
         {
             // make a call to your webservice here
-            // $userData = ...
+            $userData = ...
             // pretend it returns an array on success, false if there is no user
 
             if ($userData) {
-                // $password = '...';
+                $password = '...';
+
                 // ...
 
                 return new WebserviceUser($username, $password, $salt, $roles)

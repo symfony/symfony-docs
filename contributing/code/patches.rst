@@ -37,7 +37,7 @@ Set up your user information with your real name and a working email address:
     If your IDE creates configuration files inside project's directory,
     you can use global ``.gitignore`` file (for all projects) or
     ``.git/info/exclude`` file (per project) to ignore them. See
-    [Github's documentation](https://help.github.com/articles/ignoring-files)
+    `Github's documentation`_.
 
 .. tip::
 
@@ -177,7 +177,8 @@ in mind the following:
 .. tip::
 
     You can check the coding standards of your patch by running the following
-    [script](http://cs.sensiolabs.org/get/php-cs-fixer.phar) [src](https://github.com/fabpot/PHP-CS-Fixer):
+    `script <http://cs.sensiolabs.org/get/php-cs-fixer.phar>`_
+    (`source <https://github.com/fabpot/PHP-CS-Fixer>`_):
 
     .. code-block:: bash
 
@@ -359,6 +360,7 @@ of all the commits. When you finish, execute the push command.
 
 .. _ProGit:                                http://progit.org/
 .. _GitHub:                                https://github.com/signup/free
+.. _`Github's Documentation`:              https://help.github.com/articles/ignoring-files
 .. _Symfony2 repository:                   https://github.com/symfony/symfony
 .. _dev mailing-list:                      http://groups.google.com/group/symfony-devs
 .. _travis-ci.org:                         http://travis-ci.org

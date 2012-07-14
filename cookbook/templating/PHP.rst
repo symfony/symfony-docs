@@ -27,9 +27,9 @@ your application configuration file:
     .. code-block:: xml
 
         <!-- app/config/config.xml -->
-        <framework:config ... >
+        <framework:config ...>
             <!-- ... -->
-            <framework:templating ... >
+            <framework:templating ...>
                 <framework:engine id="twig" />
                 <framework:engine id="php" />
             </framework:templating>
@@ -38,7 +38,7 @@ your application configuration file:
     .. code-block:: php
 
         $container->loadFromExtension('framework', array(
-            // ...
+            ...,
             'templating'      => array(
                 'engines' => array('twig', 'php'),
             ),
@@ -49,6 +49,8 @@ You can now render a PHP template instead of a Twig one simply by using the
 below renders the ``index.html.php`` template::
 
     // src/Acme/HelloBundle/Controller/HelloController.php
+
+    // ...
 
     public function indexAction($name)
     {

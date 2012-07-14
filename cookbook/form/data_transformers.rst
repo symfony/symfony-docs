@@ -24,7 +24,6 @@ First, create an `IssueToNumberTransformer` class - this class will be responsib
 for converting to and from the issue number and the Issue object::
 
     // src/Acme/TaskBundle/Form/DataTransformer/IssueToNumberTransformer.php
-
     namespace Acme\TaskBundle\Form\DataTransformer;
 
     use Symfony\Component\Form\DataTransformerInterface;
@@ -309,9 +308,9 @@ it's quite easy::
         public function buildForm(FormBuilderInterface $builder, array $options)
         {
             $builder
-                // ...
-                ->add('issue', 'issue_selector')
-            ;
+                ->add('task')
+                ->add('dueDate', null, array('widget' => 'single_text'));
+                ->add('issue', 'issue_selector');
         }
 
         public function getName()

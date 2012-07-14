@@ -822,8 +822,8 @@ authorization from inside a controller:
 
 .. code-block:: php
 
-    use Symfony\Component\Security\Core\Exception\AccessDeniedException;
     // ...
+    use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
     public function helloAction($name)
     {
@@ -841,6 +841,7 @@ which can secure your controller using annotations:
 
 .. code-block:: php
 
+    // ...
     use JMS\SecurityExtraBundle\Annotation\Secure;
 
     /**

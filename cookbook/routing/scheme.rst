@@ -51,15 +51,15 @@ The above configuration forces the ``secure`` route to always use HTTPS.
 When generating the ``secure`` URL, and if the current scheme is HTTP, Symfony
 will automatically generate an absolute URL with HTTPS as the scheme:
 
-.. code-block:: text
+.. code-block:: twig
 
-    # If the current scheme is HTTPS
+    {# If the current scheme is HTTPS #}
     {{ path('secure') }}
     # generates /secure
 
-    # If the current scheme is HTTP
+    {# If the current scheme is HTTP #}
     {{ path('secure') }}
-    # generates https://example.com/secure
+    {# generates https://example.com/secure #}
 
 The requirement is also enforced for incoming requests. If you try to access
 the ``/secure`` path with HTTP, you will automatically be redirected to the

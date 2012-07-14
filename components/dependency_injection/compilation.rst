@@ -38,7 +38,7 @@ being compiled::
     {
         public function process(ContainerBuilder $container)
         {
-           //--
+           // ...
         }
     }
 
@@ -152,7 +152,7 @@ it::
         $container = new MyCachedContainer();
     } else {
         $container = new ContainerBuilder();
-        //--
+        // ...
         $container->compile();
 
         $dumper = new PhpDumper($container);

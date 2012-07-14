@@ -96,7 +96,7 @@ or a service id by using ::
 
     use Symfony\Component\DependencyInjection\Reference;
   
-    //--
+    // ...
 
     $definition->addArgument(new Reference('service_id'));
 

@@ -1,4 +1,4 @@
-.. index::
+. . index::
    single: Symfony2 Fundamentals
 
 Symfony2 and HTTP Fundamentals
@@ -128,7 +128,7 @@ like this:
     Content-Type: text/html
 
     <html>
-      <!-- HTML for the xkcd comic -->
+      <!-- ... HTML for the xkcd comic -->
     </html>
 
 The HTTP response contains the requested resource (the HTML content in this
@@ -368,7 +368,6 @@ on that value. This can get ugly quickly:
 .. code-block:: php
 
     // index.php
-
     $request = Request::createFromGlobals();
     $path = $request->getPathInfo(); // the URI path being requested
 

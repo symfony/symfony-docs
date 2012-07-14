@@ -82,7 +82,7 @@ the view layer, this work is done in your templates:
     .. code-block:: html+jinja
 
         {% javascripts '@AcmeFooBundle/Resources/public/js/*' filter='yui_js' %}
-        <script src="{{ asset_url }}"></script>
+            <script src="{{ asset_url }}"></script>
         {% endjavascripts %}
 
     .. code-block:: html+php
@@ -90,7 +90,7 @@ the view layer, this work is done in your templates:
         <?php foreach ($view['assetic']->javascripts(
             array('@AcmeFooBundle/Resources/public/js/*'),
             array('yui_js')) as $url): ?>
-        <script src="<?php echo $view->escape($url) ?>"></script>
+            <script src="<?php echo $view->escape($url) ?>"></script>
         <?php endforeach; ?>
 
 .. note::
@@ -109,7 +109,7 @@ can be repeated to minify your stylesheets.
     .. code-block:: html+jinja
 
         {% stylesheets '@AcmeFooBundle/Resources/public/css/*' filter='yui_css' %}
-        <link rel="stylesheet" type="text/css" media="screen" href="{{ asset_url }}" />
+            <link rel="stylesheet" type="text/css" media="screen" href="{{ asset_url }}" />
         {% endstylesheets %}
 
     .. code-block:: html+php
@@ -117,7 +117,7 @@ can be repeated to minify your stylesheets.
         <?php foreach ($view['assetic']->stylesheets(
             array('@AcmeFooBundle/Resources/public/css/*'),
             array('yui_css')) as $url): ?>
-        <link rel="stylesheet" type="text/css" media="screen" href="<?php echo $view->escape($url) ?>" />
+            <link rel="stylesheet" type="text/css" media="screen" href="<?php echo $view->escape($url) ?>" />
         <?php endforeach; ?>
 
 Disable Minification in Debug Mode
@@ -134,7 +134,7 @@ apply this filter when debug mode is off.
     .. code-block:: html+jinja
 
         {% javascripts '@AcmeFooBundle/Resources/public/js/*' filter='?yui_js' %}
-        <script src="{{ asset_url }}"></script>
+            <script src="{{ asset_url }}"></script>
         {% endjavascripts %}
 
     .. code-block:: html+php
@@ -142,7 +142,7 @@ apply this filter when debug mode is off.
         <?php foreach ($view['assetic']->javascripts(
             array('@AcmeFooBundle/Resources/public/js/*'),
             array('?yui_js')) as $url): ?>
-        <script src="<?php echo $view->escape($url) ?>"></script>
+            <script src="<?php echo $view->escape($url) ?>"></script>
         <?php endforeach; ?>
 
 

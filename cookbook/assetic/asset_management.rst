@@ -21,8 +21,7 @@ directly:
 
     .. code-block:: php
 
-        <script src="<?php echo $view['assets']->getUrl('js/script.js') ?>"
-                type="text/javascript" />
+        <script src="<?php echo $view['assets']->getUrl('js/script.js') ?>" type="text/javascript" />
 
 But *with* Assetic, you can manipulate these assets however you want (or
 load them from anywhere) before serving them. These means you can:
@@ -45,17 +44,15 @@ drawn from various sources such as from within a bundle:
 
     .. code-block:: html+jinja
 
-        {% javascripts
-            '@AcmeFooBundle/Resources/public/js/*'
-        %}
-        <script type="text/javascript" src="{{ asset_url }}"></script>
+        {% javascripts '@AcmeFooBundle/Resources/public/js/*' %}
+            <script type="text/javascript" src="{{ asset_url }}"></script>
         {% endjavascripts %}
 
     .. code-block:: html+php
 
         <?php foreach ($view['assetic']->javascripts(
             array('@AcmeFooBundle/Resources/public/js/*')) as $url): ?>
-        <script type="text/javascript" src="<?php echo $view->escape($url) ?>"></script>
+            <script type="text/javascript" src="<?php echo $view->escape($url) ?>"></script>
         <?php endforeach; ?>
 
 .. tip::
@@ -67,17 +64,16 @@ drawn from various sources such as from within a bundle:
 
         .. code-block:: html+jinja
 
-            {% stylesheets
-                '@AcmeFooBundle/Resources/public/css/*'
-            %}
-            <link rel="stylesheet" href="{{ asset_url }}" />
+            {% stylesheets '@AcmeFooBundle/Resources/public/css/*' %}
+                <link rel="stylesheet" href="{{ asset_url }}" />
             {% endstylesheets %}
 
         .. code-block:: html+php
 
             <?php foreach ($view['assetic']->stylesheets(
-                array('@AcmeFooBundle/Resources/public/css/*')) as $url): ?>
-            <link rel="stylesheet" href="<?php echo $view->escape($url) ?>" />
+                                                 array('@AcmeFooBundle/Resources/public/css/*')
+                                             ) as $url): ?>
+                <link rel="stylesheet" href="<?php echo $view->escape($url) ?>" />
             <?php endforeach; ?>
 
 In this example, all of the files in the ``Resources/public/js/`` directory
@@ -113,9 +109,8 @@ them as a single file:
         {% javascripts
             '@AcmeFooBundle/Resources/public/js/*'
             '@AcmeBarBundle/Resources/public/js/form.js'
-            '@AcmeBarBundle/Resources/public/js/calendar.js'
-        %}
-        <script src="{{ asset_url }}"></script>
+            '@AcmeBarBundle/Resources/public/js/calendar.js' %}
+            <script src="{{ asset_url }}"></script>
         {% endjavascripts %}
 
     .. code-block:: html+php
@@ -124,7 +119,7 @@ them as a single file:
             array('@AcmeFooBundle/Resources/public/js/*',
                   '@AcmeBarBundle/Resources/public/js/form.js',
                   '@AcmeBarBundle/Resources/public/js/calendar.js')) as $url): ?>
-        <script src="<?php echo $view->escape($url) ?>"></script>
+            <script src="<?php echo $view->escape($url) ?>"></script>
         <?php endforeach; ?>
 
 In the `dev` environment, each file is still served individually, so that
@@ -147,9 +142,8 @@ combine third party assets, such as jQuery, with your own into a single file:
 
         {% javascripts
             '@AcmeFooBundle/Resources/public/js/thirdparty/jquery.js'
-            '@AcmeFooBundle/Resources/public/js/*'
-        %}
-        <script src="{{ asset_url }}"></script>
+            '@AcmeFooBundle/Resources/public/js/*' %}
+            <script src="{{ asset_url }}"></script>
         {% endjavascripts %}
 
     .. code-block:: html+php
@@ -157,7 +151,7 @@ combine third party assets, such as jQuery, with your own into a single file:
         <?php foreach ($view['assetic']->javascripts(
             array('@AcmeFooBundle/Resources/public/js/thirdparty/jquery.js',
                   '@AcmeFooBundle/Resources/public/js/*')) as $url): ?>
-        <script src="<?php echo $view->escape($url) ?>"></script>
+            <script src="<?php echo $view->escape($url) ?>"></script>
         <?php endforeach; ?>
 
 Filters
@@ -221,11 +215,8 @@ into your template:
 
     .. code-block:: html+jinja
 
-        {% javascripts
-            '@AcmeFooBundle/Resources/public/js/*'
-            filter='yui_js'
-        %}
-        <script src="{{ asset_url }}"></script>
+        {% javascripts '@AcmeFooBundle/Resources/public/js/*' filter='yui_js' %}
+            <script src="{{ asset_url }}"></script>
         {% endjavascripts %}
 
     .. code-block:: html+php
@@ -233,7 +224,7 @@ into your template:
         <?php foreach ($view['assetic']->javascripts(
             array('@AcmeFooBundle/Resources/public/js/*'),
             array('yui_js')) as $url): ?>
-        <script src="<?php echo $view->escape($url) ?>"></script>
+            <script src="<?php echo $view->escape($url) ?>"></script>
         <?php endforeach; ?>
 
 A more detailed guide about configuring and using Assetic filters as well as
@@ -249,11 +240,8 @@ done from the template and is relative to the public document root:
 
     .. code-block:: html+jinja
 
-        {% javascripts
-            '@AcmeFooBundle/Resources/public/js/*'
-            output='js/compiled/main.js'
-        %}
-        <script src="{{ asset_url }}"></script>
+        {% javascripts '@AcmeFooBundle/Resources/public/js/*' output='js/compiled/main.js' %}
+            <script src="{{ asset_url }}"></script>
         {% endjavascripts %}
 
     .. code-block:: html+php
@@ -263,7 +251,7 @@ done from the template and is relative to the public document root:
             array(),
             array('output' => 'js/compiled/main.js')
         ) as $url): ?>
-        <script src="<?php echo $view->escape($url) ?>"></script>
+            <script src="<?php echo $view->escape($url) ?>"></script>
         <?php endforeach; ?>
 
 .. note::
@@ -373,11 +361,8 @@ some isolated directory (e.g. ``/js/compiled``), to keep things organized:
 
     .. code-block:: html+jinja
 
-        {% javascripts
-            '@AcmeFooBundle/Resources/public/js/*'
-            output='js/compiled/main.js'
-        %}
-        <script src="{{ asset_url }}"></script>
+        {% javascripts '@AcmeFooBundle/Resources/public/js/*' output='js/compiled/main.js' %}
+            <script src="{{ asset_url }}"></script>
         {% endjavascripts %}
 
     .. code-block:: html+php
@@ -387,5 +372,5 @@ some isolated directory (e.g. ``/js/compiled``), to keep things organized:
             array(),
             array('output' => 'js/compiled/main.js')
         ) as $url): ?>
-        <script src="<?php echo $view->escape($url) ?>"></script>
+            <script src="<?php echo $view->escape($url) ?>"></script>
         <?php endforeach; ?>

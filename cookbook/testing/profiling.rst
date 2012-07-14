@@ -22,8 +22,7 @@ environment)::
             $client = static::createClient();
             $crawler = $client->request('GET', '/hello/Fabien');
 
-            // Write some assertions about the Response
-            // ...
+            // ... write some assertions about the Response
 
             // Check that the profiler is enabled
             if ($profile = $client->getProfile()) {

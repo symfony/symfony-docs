@@ -323,7 +323,7 @@ The purpose of this event is to allow other systems to modify or replace the
     public function onKernelResponse(FilterResponseEvent $event)
     {
         $response = $event->getResponse();
-        // .. modify the response object
+        // ... modify the response object
     }
 
 The ``FrameworkBundle`` registers several listeners:

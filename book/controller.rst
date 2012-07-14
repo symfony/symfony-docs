@@ -276,7 +276,7 @@ the following guidelines in mind while you develop.
 
         public function indexAction($last_name, $color, $first_name)
         {
-            // ..
+            // ...
         }
 
 * **Each required controller argument must match up with a routing parameter**
@@ -286,7 +286,7 @@ the following guidelines in mind while you develop.
 
         public function indexAction($first_name, $last_name, $color, $foo)
         {
-            // ..
+            // ...
         }
 
     Making the argument optional, however, is perfectly ok. The following
@@ -294,7 +294,7 @@ the following guidelines in mind while you develop.
 
         public function indexAction($first_name, $last_name, $color, $foo = 'bar')
         {
-            // ..
+            // ...
         }
 
 * **Not all routing parameters need to be arguments on your controller**
@@ -304,7 +304,7 @@ the following guidelines in mind while you develop.
 
         public function indexAction($first_name, $color)
         {
-            // ..
+            // ...
         }
 
 .. tip::
@@ -448,7 +448,7 @@ object that's returned from that controller::
             'color' => 'green'
         ));
 
-        // further modify the response or return it directly
+        // ... further modify the response or return it directly
 
         return $response;
     }
@@ -570,7 +570,8 @@ If you're extending the base controller class, do the following::
 
     public function indexAction()
     {
-        $product = // retrieve the object from database
+        // retrieve the object from database
+        $product = ...;
         if (!$product) {
             throw $this->createNotFoundException('The product does not exist');
         }

@@ -107,23 +107,22 @@ we want to always render it in a ``ul`` element. In your form theme template
 .. code-block:: html+jinja
 
     {# src/Acme/DemoBundle/Resources/views/Form/fields.html.twig #}
-
     {% block gender_widget %}
-    {% spaceless %}
-        {% if expanded %}
-            <ul {{ block('widget_container_attributes') }}>
-            {% for child in form %}
-                <li>
-                    {{ form_widget(child) }}
-                    {{ form_label(child) }}
-                </li>
-            {% endfor %}
-            </ul>
-        {% else %}
-            {# just let the choice widget render the select tag #}
-            {{ block('choice_widget') }}
-        {% endif %}
-    {% endspaceless %}
+        {% spaceless %}
+            {% if expanded %}
+                <ul {{ block('widget_container_attributes') }}>
+                {% for child in form %}
+                    <li>
+                        {{ form_widget(child) }}
+                        {{ form_label(child) }}
+                    </li>
+                {% endfor %}
+                </ul>
+            {% else %}
+                {# just let the choice widget render the select tag #}
+                {{ block('choice_widget') }}
+            {% endif %}
+        {% endspaceless %}
     {% endblock %}
 
 .. note::
@@ -136,7 +135,6 @@ we want to always render it in a ``ul`` element. In your form theme template
     .. code-block:: yaml
 
         # app/config/config.yml
-
         twig:
             form:
                 resources:

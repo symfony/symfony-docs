@@ -115,6 +115,11 @@ alternating ``odd``, ``even`` classes:
 
 Throughout this chapter, template examples will be shown in both Twig and PHP.
 
+.. tip::
+
+    If you *do* choose to not use Twig and you disable it, you'll need to implement
+    your own exception handler via the ``kernel.exception`` event.
+
 .. sidebar:: Why Twig?
 
     Twig templates are meant to be simple and won't process PHP tags. This
@@ -123,12 +128,11 @@ Throughout this chapter, template examples will be shown in both Twig and PHP.
     and benefit from this distinction. And of course, you'll be loved by
     web designers everywhere.
 
-    Twig can also do things that PHP can't, such as true template inheritance
-    (Twig templates compile down to PHP classes that inherit from each other),
-    whitespace control, sandboxing, and the inclusion of custom functions
-    and filters that only affect templates. Twig contains little features
-    that make writing templates easier and more concise. Take the following
-    example, which combines a loop with a logical ``if`` statement:
+    Twig can also do things that PHP can't, such as whitespace control, sandboxing,
+    and the inclusion of custom functions and filters that only affect templates.
+    Twig contains little features that make writing templates easier and
+    more concise. Take the following example, which combines a loop with
+    a logical ``if`` statement:
 
     .. code-block:: html+jinja
 
@@ -613,7 +617,8 @@ syntax for controllers (i.e. **bundle**:**controller**:**action**):
     .. code-block:: html+jinja
 
         {# app/Resources/views/base.html.twig #}
-        ...
+
+        {# ... #}
 
         <div id="sidebar">
             {% render "AcmeArticleBundle:Article:recentArticles" with {'max': 3} %}
@@ -622,7 +627,8 @@ syntax for controllers (i.e. **bundle**:**controller**:**action**):
     .. code-block:: html+php
 
         <!-- app/Resources/views/base.html.php -->
-        ...
+
+        {# ... #}
 
         <div id="sidebar">
             <?php echo $view['actions']->render('AcmeArticleBundle:Article:recentArticles', array('max' => 3)) ?>
@@ -774,7 +780,7 @@ correctly:
 
         {# src/Acme/ArticleBundle/Resources/views/Article/recentList.html.twig #}
         {% for article in articles %}
-            <a href="{{ path('article_show', { 'slug': article.slug }) }}">
+            <a href="{{ path('article_show', {'slug': article.slug}) }}">
                 {{ article.title }}
             </a>
         {% endfor %}
@@ -1043,7 +1049,8 @@ customize the markup specifically for your application. By digging into the
 
     public function indexAction()
     {
-        $blogs = // some logic to retrieve the blogs
+        // some logic to retrieve the blogs
+        $blogs = ...;
 
         $this->render('AcmeBlogBundle:Blog:index.html.twig', array('blogs' => $blogs));
     }
@@ -1287,7 +1294,6 @@ Template parameters can then be dumped using the ``dump`` function:
 .. code-block:: html+jinja
 
     {# src/Acme/ArticleBundle/Resources/views/Article/recentList.html.twig #}
-
     {{ dump(articles) }}
 
     {% for article in articles %}

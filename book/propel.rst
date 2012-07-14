@@ -140,9 +140,10 @@ is pretty easy. Add the following method to the ``DefaultController`` of the
 bundle::
 
     // src/Acme/StoreBundle/Controller/DefaultController.php
+
+    // ...
     use Acme\StoreBundle\Model\Product;
     use Symfony\Component\HttpFoundation\Response;
-    // ...
 
     public function createAction()
     {
@@ -172,6 +173,7 @@ Fetching an object back from the database is even easier. For example, suppose
 you've configured a route to display a specific ``Product`` based on its ``id``
 value::
     
+    // ...
     use Acme\StoreBundle\Model\ProductQuery;
     
     public function showAction($id)
@@ -183,7 +185,7 @@ value::
             throw $this->createNotFoundException('No product found for id '.$id);
         }
     
-        // do something, like pass the $product object into a template
+        // ... do something, like pass the $product object into a template
     }
 
 Updating an Object
@@ -192,6 +194,7 @@ Updating an Object
 Once you've fetched an object from Propel, updating it is easy. Suppose you
 have a route that maps a product id to an update action in a controller::
     
+    // ...
     use Acme\StoreBundle\Model\ProductQuery;
     
     public function updateAction($id)
@@ -252,7 +255,6 @@ If you want to reuse some queries, you can add your own methods to the
 ``ProductQuery`` class::
 
     // src/Acme/StoreBundle/Model/ProductQuery.php
-    
     class ProductQuery extends BaseProductQuery
     {
         public function filterByExpensivePrice()
@@ -326,7 +328,6 @@ Now, let's see the code in action. Imagine you're inside a controller::
     use Acme\StoreBundle\Model\Category;
     use Acme\StoreBundle\Model\Product;
     use Symfony\Component\HttpFoundation\Response;
-    // ...
     
     class DefaultController extends Controller
     {

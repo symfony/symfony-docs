@@ -9,8 +9,8 @@ In the security chapter, you can see how to :ref:`secure a controller<book-secur
 by requesting the ``security.context`` service from the Service Container
 and checking the current user's role::
 
-    use Symfony\Component\Security\Core\Exception\AccessDeniedException;
     // ...
+    use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
     public function helloAction($name)
     {
@@ -30,6 +30,7 @@ role. Before you add security, the class looks something like this:
 
 .. code-block:: php
 
+    // src/Acme/HelloBundle/Newsletter/NewsletterManager.php
     namespace Acme\HelloBundle\Newsletter;
 
     class NewsletterManager
@@ -37,7 +38,7 @@ role. Before you add security, the class looks something like this:
 
         public function sendNewsletter()
         {
-            // where you actually do the work
+            // ... where you actually do the work
         }
 
         // ...
@@ -131,7 +132,7 @@ The injected service can then be used to perform the security check when the
                 throw new AccessDeniedException();
             }
 
-            //--
+            // ...
         }
 
         // ...
@@ -205,7 +206,7 @@ You can then achieve the same results as above using an annotation::
          */
         public function sendNewsletter()
         {
-            //--
+            // ...
         }
 
         // ...
@@ -259,7 +260,7 @@ documentation.
 
             // app/config/config.php
             $container->loadFromExtension('jms_security_extra', array(
-                // ...
+                ...,
                 'secure_all_services' => true,
             ));
 
