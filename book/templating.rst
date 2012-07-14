@@ -115,6 +115,11 @@ alternating ``odd``, ``even`` classes:
 
 Throughout this chapter, template examples will be shown in both Twig and PHP.
 
+.. tip::
+
+    If you *do* choose to not use Twig and you disable it, you'll need to implement
+    your own exception handler via the ``kernel.exception`` event.
+
 .. sidebar:: Why Twig?
 
     Twig templates are meant to be simple and won't process PHP tags. This
