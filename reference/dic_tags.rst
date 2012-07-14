@@ -218,6 +218,74 @@ cookbook entry.
 For another practical example of a kernel listener, see the cookbook
 article: :doc:`/cookbook/request/mime_type`.
 
+Core Event Listener Reference
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+When adding your own listeners, it might be useful to know about the other
+core Symfony listeners and their priorities.
+
+.. note::
+
+    All listeners listed here may not be listening depending on your environment,
+    settings and bundles. Additionally, third-party bundles will bring in
+    additional listener not listed here.
+
+kernel.request
+..............
+
++-------------------------------------------------------------------------------------------+-----------+
+| Listener Class Name                                                                       | Priority  |
++-------------------------------------------------------------------------------------------+-----------+
+| :class:`Symfony\\Component\\HttpKernel\\EventListener\\ProfilerListener`                  | 1024      |
++-------------------------------------------------------------------------------------------+-----------+
+| :class:`Symfony\\Bundle\\FrameworkBundle\\EventListener\\RouterListener`                  | 0 and 255 |
++-------------------------------------------------------------------------------------------+-----------+
+| :class:`Symfony\\Bundle\\FrameworkBundle\\EventListener\\TestSessionListener`             | 192       |
++-------------------------------------------------------------------------------------------+-----------+
+| :class:`Symfony\\Bundle\\FrameworkBundle\\EventListener\\SessionListener`                 | 128       |
++-------------------------------------------------------------------------------------------+-----------+
+| :class:`Symfony\\Component\\Security\\Http\\Firewall`                                     | 64        |
++-------------------------------------------------------------------------------------------+-----------+
+
+kernel.controller
+.................
+
++-------------------------------------------------------------------------------------------+----------+
+| Listener Class Name                                                                       | Priority |
++-------------------------------------------------------------------------------------------+----------+
+| :class:`Symfony\\Bundle\\FrameworkBundle\\DataCollector\\RequestDataCollector`            | 0        |
++-------------------------------------------------------------------------------------------+----------+
+
+kernel.response
+...............
+
++-------------------------------------------------------------------------------------------+----------+
+| Listener Class Name                                                                       | Priority |
++-------------------------------------------------------------------------------------------+----------+
+| :class:`Symfony\\Component\\HttpKernel\\EventListener\\EsiListener`                       | 0        |
++-------------------------------------------------------------------------------------------+----------+
+| :class:`Symfony\\Component\\HttpKernel\\EventListener\\ResponseListener`                  | 0        |
++-------------------------------------------------------------------------------------------+----------+
+| :class:`Symfony\\Bundle\\SecurityBundle\\EventListener\\ResponseListener`                 | 0        |
++-------------------------------------------------------------------------------------------+----------+
+| :class:`Symfony\\Component\\HttpKernel\\EventListener\\ProfilerListener`                  | -100     |
++-------------------------------------------------------------------------------------------+----------+
+| :class:`Symfony\\Bundle\\FrameworkBundle\\EventListener\\TestSessionListener`             | -128     |
++-------------------------------------------------------------------------------------------+----------+
+| :class:`Symfony\\Bundle\\WebProfilerBundle\\EventListener\\WebDebugToolbarListener`       | -128     |
++-------------------------------------------------------------------------------------------+----------+
+
+kernel.exception
+................
+
++-------------------------------------------------------------------------------------------+----------+
+| Listener Class Name                                                                       | Priority |
++-------------------------------------------------------------------------------------------+----------+
+| :class:`Symfony\\Component\\HttpKernel\\EventListener\\ProfilerListener`                  | 0        |
++-------------------------------------------------------------------------------------------+----------+
+| :class:`Symfony\\Component\\HttpKernel\\EventListener\\ExceptionListener`                 | -128     |
++-------------------------------------------------------------------------------------------+----------+
+
 .. _dic_tags-monolog:
 
 monolog.logger
