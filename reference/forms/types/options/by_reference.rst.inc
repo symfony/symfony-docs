@@ -20,7 +20,7 @@ To understand this further, let's look at a simple example::
         )
 
 If ``by_reference`` is true, the following takes place behind the scenes
-when you call ``bindRequest`` on the form::
+when you call ``bind`` on the form::
 
     $article->setTitle('...');
     $article->getAuthor()->setName('...');

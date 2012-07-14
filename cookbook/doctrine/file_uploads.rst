@@ -153,7 +153,7 @@ The following controller shows you how to handle the entire process::
         ;
 
         if ($this->getRequest()->getMethod() === 'POST') {
-            $form->bindRequest($this->getRequest());
+            $form->bind($this->getRequest());
             if ($form->isValid()) {
                 $em = $this->getDoctrine()->getManager();
 

@@ -217,7 +217,7 @@ controller::
             ->getForm();
 
         if ($request->getMethod() == 'POST') {
-            $form->bindRequest($request);
+            $form->bind($request);
 
             if ($form->isValid()) {
                 // perform some action, such as saving the task to the database
@@ -229,13 +229,18 @@ controller::
         // ...
     }
 
+.. versionadded:: 2.1
+    The ``bind`` method was made more flexible in Symfony 2.1. It now accepts
+    the raw client data (same as before) or a Symfony Request object. This
+    is preferred over the deprecated ``bindRequest`` method.
+
 Now, when submitting the form, the controller binds the submitted data to the
 form, which translates that data back to the ``task`` and ``dueDate`` properties
-of the ``$task`` object. This all happens via the ``bindRequest()`` method.
+of the ``$task`` object. This all happens via the ``bind()`` method.
 
 .. note::
 
-    As soon as ``bindRequest()`` is called, the submitted data is transferred
+    As soon as ``bind()`` is called, the submitted data is transferred
     to the underlying object immediately. This happens regardless of whether
     or not the underlying data is actually valid.
 
@@ -1483,7 +1488,7 @@ an array of the submitted data. This is actually really easy::
             ->getForm();
 
             if ($request->getMethod() == 'POST') {
-                $form->bindRequest($request);
+                $form->bind($request);
 
                 // data is an array with "name", "email", and "message" keys
                 $data = $form->getData();
@@ -1548,7 +1553,7 @@ but here's a short example::
         // ...
     ;
 
-Now, when you call `$form->bindRequest($request)`, the constraints setup here are run
+Now, when you call `$form->bind($request)`, the constraints setup here are run
 against your form's data. If you're using a form class, override the ``setDefaultOptions()``
 method to specify the option::
 
