@@ -240,13 +240,15 @@ kernel.request
 +-------------------------------------------------------------------------------------------+-----------+
 | :class:`Symfony\\Component\\HttpKernel\\EventListener\\ProfilerListener`                  | 1024      |
 +-------------------------------------------------------------------------------------------+-----------+
-| :class:`Symfony\\Bundle\\FrameworkBundle\\EventListener\\RouterListener`                  | 0 and 255 |
-+-------------------------------------------------------------------------------------------+-----------+
 | :class:`Symfony\\Bundle\\FrameworkBundle\\EventListener\\TestSessionListener`             | 192       |
 +-------------------------------------------------------------------------------------------+-----------+
 | :class:`Symfony\\Bundle\\FrameworkBundle\\EventListener\\SessionListener`                 | 128       |
 +-------------------------------------------------------------------------------------------+-----------+
-| :class:`Symfony\\Component\\Security\\Http\\Firewall`                                     | 64        |
+| :class:`Symfony\\Component\\HttpKernel\\EventListener\\RouterListener`                    | 32        |
++-------------------------------------------------------------------------------------------+-----------+
+| :class:`Symfony\\Component\\HttpKernel\\EventListener\\LocaleListener`                    | 16        |
++-------------------------------------------------------------------------------------------+-----------+
+| :class:`Symfony\\Component\\Security\\Http\\Firewall`                                     | 8         |
 +-------------------------------------------------------------------------------------------+-----------+
 
 kernel.controller
@@ -276,6 +278,8 @@ kernel.response
 +-------------------------------------------------------------------------------------------+----------+
 | :class:`Symfony\\Bundle\\WebProfilerBundle\\EventListener\\WebDebugToolbarListener`       | -128     |
 +-------------------------------------------------------------------------------------------+----------+
+| :class:`Symfony\\Component\\HttpKernel\\EventListener\\StreamedResponseListener`          | -1024    |
++-------------------------------------------------------------------------------------------+----------+
 
 kernel.exception
 ................
@@ -286,6 +290,15 @@ kernel.exception
 | :class:`Symfony\\Component\\HttpKernel\\EventListener\\ProfilerListener`                  | 0        |
 +-------------------------------------------------------------------------------------------+----------+
 | :class:`Symfony\\Component\\HttpKernel\\EventListener\\ExceptionListener`                 | -128     |
++-------------------------------------------------------------------------------------------+----------+
+
+kernel.terminate
+................
+
++-------------------------------------------------------------------------------------------+----------+
+| Listener Class Name                                                                       | Priority |
++-------------------------------------------------------------------------------------------+----------+
+| :class:`Symfony\\Bundle\\SwiftmailerBundle\\EventListener\\EmailSenderListener`           | 0        |
 +-------------------------------------------------------------------------------------------+----------+
 
 .. _dic-tags-kernel-event-subscriber:
