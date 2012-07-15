@@ -14,6 +14,7 @@ objects from the database.
 +-------------+------------------------------------------------------------------+
 | Options     | - `class`_                                                       |
 |             | - `property`_                                                    |
+|             | - `group_by`_                                                    |
 |             | - `query_builder`_                                               |
 |             | - `em`_                                                          |
 +-------------+------------------------------------------------------------------+
@@ -85,6 +86,17 @@ property
 This is the property that should be used for displaying the entities
 as text in the HTML element. If left blank, the entity object will be
 cast into a string and so must have a ``__toString()`` method.
+
+group_by
+~~~~~~~~
+
+**type**: ``string``
+
+This is a property path (e.g. ``author.name``) used to organize the 
+available choices in groups. It only works when rendered as a select tag
+and does so by adding optgroup tags around options. Choices that do not
+return a value for this property path are rendered directly under the
+select tag, without a surrounding optgroup.
 
 query_builder
 ~~~~~~~~~~~~~
