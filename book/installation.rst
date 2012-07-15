@@ -174,8 +174,8 @@ If there are any issues, correct them now before moving on.
     
     :: code-block: bash
         
-        app/console doctrine:database:drop --force
-        app/console doctrine:database:create
+        $ app/console doctrine:database:drop --force
+        $ app/console doctrine:database:create
     
     There's no way to configure these defaults inside doctrine, as it tries to be
     as agnostic as possible in terms of enviroment configuration, so only way around it 
@@ -183,7 +183,7 @@ If there are any issues, correct them now before moving on.
     
     Setting UTF8 defaults for MySQL is as simple as adding a few lines to configuration file:
     
-    :: code-block: text
+    :: code-block: ini
     
         [mysqld]
         collation-server = utf8_general_ci
