@@ -31,7 +31,7 @@ the dependency::
         // ...
     }
 
-You can can specify what service you would like to inject into this in the
+You can specify what service you would like to inject into this in the
 service container configuration:
 
 .. configuration-block::

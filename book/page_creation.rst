@@ -981,8 +981,11 @@ in mind:
 * each feature in Symfony2 (including the Symfony2 framework core) is organized
   into a *bundle*, which is a structured set of files for that feature;
 
-* the **configuration** for each bundle lives in the ``app/config`` directory
-  and can be specified in YAML, XML or PHP;
+* the **configuration** for each bundle lives in the ``Resources/config``
+  directory of the bundle and can be specified in YAML, XML or PHP;
+
+* the global **application configuration** lives in the ``app/Resources/config``
+  directory;
 
 * each **environment** is accessible via a different front controller (e.g.
   ``app.php`` and ``app_dev.php``) and loads a different configuration file.
