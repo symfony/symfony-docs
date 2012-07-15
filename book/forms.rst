@@ -64,7 +64,7 @@ going to need to build a form. But before you begin, first focus on the generic
 
    .. code-block:: bash
 
-        php app/console generate:bundle --namespace=Acme/TaskBundle
+        $ php app/console generate:bundle --namespace=Acme/TaskBundle
 
 This class is a "plain-old-PHP-object" because, so far, it has nothing
 to do with Symfony or any other library. It's quite simply a normal PHP object
