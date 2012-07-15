@@ -61,6 +61,9 @@ have a ``Symfony/`` directory that looks like this:
 
         composer.phar create-project symfony/framework-standard-edition path/to/install
 
+        # remove the Git history
+        rm -rf .git
+
 .. tip::
 
     If you have PHP 5.4, you can use the built-in web server:
