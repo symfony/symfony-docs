@@ -33,7 +33,7 @@ information.  By convention, this information is usually configured in an
 
 .. code-block:: ini
 
-    ;app/config/parameters.ini
+    ; app/config/parameters.ini
     [parameters]
         database_driver   = mysql
         database_host     = localhost
