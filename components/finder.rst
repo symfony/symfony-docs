@@ -242,6 +242,25 @@ it is called with the file as a :class:`Symfony\\Component\\Finder\\SplFileInfo`
 instance. The file is excluded from the result set if the Closure returns
 ``false``.
 
+Reading contents of returned files
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 2.1
+   Method ``getContents()`` have been introduced in version 2.1.
+
+The contents of returned files can be read with
+:method:`Symfony\\Component\\Finder\\SplFileInfo::getContents`::
+
+    use Symfony\Component\Finder\Finder;
+
+    $finder = new Finder();
+    $finder->files()->in(__DIR__);
+
+    foreach ($finder as $file) {
+        $contents = $file->getContents();
+        ...
+    }
+
 .. _strtotime:   http://www.php.net/manual/en/datetime.formats.php
 .. _Iterator:     http://www.php.net/manual/en/spl.iterators.php
 .. _protocol:     http://www.php.net/manual/en/wrappers.php
