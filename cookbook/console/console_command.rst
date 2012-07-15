@@ -60,7 +60,7 @@ This command will now automatically be available to run:
 
 .. code-block:: bash
 
-    app/console demo:greet Fabien
+    $ app/console demo:greet Fabien
 
 Testing Commands
 ----------------
