@@ -120,7 +120,6 @@ needed for every known model in your application.  To do this, run:
 .. code-block:: bash
 
     $ php app/console propel:sql:build
-
     $ php app/console propel:sql:insert --force
 
 Your database now has a fully-functional ``product`` table with columns that
@@ -314,7 +313,6 @@ data.
 .. code-block:: bash
 
     $ php app/console propel:migration:generate-diff
-
     $ php app/console propel:migration:migrate
 
 Your database has been updated, you can continue to write your application.
