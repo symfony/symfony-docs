@@ -22,7 +22,7 @@ persist it to the database and fetch it back out.
     
     .. code-block:: bash
 
-        php app/console generate:bundle --namespace=Acme/StoreBundle
+        $ php app/console generate:bundle --namespace=Acme/StoreBundle
 
 Configuring the Database
 ~~~~~~~~~~~~~~~~~~~~~~~~
@@ -62,7 +62,7 @@ you:
 
 .. code-block:: bash
 
-    php app/console propel:database:create
+    $ php app/console propel:database:create
 
 .. note::
 
@@ -104,7 +104,7 @@ After creating your ``schema.xml``, generate your model from it by running:
 
 .. code-block:: bash
 
-    php app/console propel:model:build
+    $ php app/console propel:model:build
 
 This generates each model class to quickly develop your application in the
 ``Model/`` directory the ``AcmeStoreBundle`` bundle.
@@ -119,9 +119,9 @@ needed for every known model in your application.  To do this, run:
 
 .. code-block:: bash
 
-    php app/console propel:sql:build
+    $ php app/console propel:sql:build
 
-    php app/console propel:sql:insert --force
+    $ php app/console propel:sql:insert --force
 
 Your database now has a fully-functional ``product`` table with columns that
 match the schema you've specified.
@@ -305,7 +305,7 @@ Create the classes:
 
 .. code-block:: bash
 
-    php app/console propel:model:build
+    $ php app/console propel:model:build
 
 Assuming you have products in your database, you don't want lose them. Thanks to
 migrations, Propel will be able to update your database without losing existing
@@ -313,9 +313,9 @@ data.
 
 .. code-block:: bash
 
-    php app/console propel:migration:generate-diff
+    $ php app/console propel:migration:generate-diff
 
-    php app/console propel:migration:migrate
+    $ php app/console propel:migration:migrate
 
 Your database has been updated, you can continue to write your application.
 
