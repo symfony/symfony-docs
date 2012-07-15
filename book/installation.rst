@@ -14,22 +14,25 @@ developing in immediately.
     If you're looking for instructions on how best to create a new project
     and store it via source control, see `Using Source Control`_.
 
-Downloading a Symfony2 Distribution
------------------------------------
+Installing a Symfony2 Distribution
+----------------------------------
 
 .. tip::
 
-    First, check that you have installed and configured a Web server (such
-    as Apache) with PHP 5.3.3 or higher. For more information on Symfony2
-    requirements, see the :doc:`requirements reference</reference/requirements>`.
-    For information on configuring your specific web server document root, see the
-    following documentation: `Apache`_ | `Nginx`_ .
+    First, check that you have installed and configured a Web server (such as
+    Apache) with the most recent PHP version possible (PHP 5.3.8 or newer is
+    recommended). For more information on Symfony2 requirements, see the
+    :doc:`requirements reference</reference/requirements>`. For information on
+    configuring your specific web server document root, see the following
+    documentation: `Apache`_ | `Nginx`_ .
 
 Symfony2 packages "distributions", which are fully-functional applications
 that include the Symfony2 core libraries, a selection of useful bundles, a
 sensible directory structure and some default configuration. When you download
 a Symfony2 distribution, you're downloading a functional application skeleton
 that can be used immediately to begin developing your application.
+
+
 
 Start by visiting the Symfony2 download page at `http://symfony.com/download`_.
 On this page, you'll see the *Symfony Standard Edition*, which is the main
@@ -99,34 +102,33 @@ Symfony itself - into the ``vendor/`` directory.
 
 .. note::
 
-	If you don't have ``curl`` installed, you can also just download the ``installer``
-	file manually at http://getcomposer.org/installer. Place this file into your
-	project and then run:
+    If you don't have ``curl`` installed, you can also just download the ``installer``
+    file manually at http://getcomposer.org/installer. Place this file into your
+    project and then run:
 
-	.. code-block:: bash
+    .. code-block:: bash
 
-		php installer
-		php composer.phar install
-		
+        php installer
+        php composer.phar install
+
 .. tip::
 
-	When running ``php composer.phar install`` or ``php composer.phar update``, composer will execute
-	post install/update commands to clear the cache and install assets. By default, the assets will be 
-	copied into your ``web`` directory. To create symlinks instead of copying the assets, you 
-	can add an entry in the ``extra`` node of your composer.json file with the key ``symfony-assets-install``
-	and the value ``symlink``:
-	
-	.. code-block:: json
-	
-	    "extra": {
-	        "symfony-app-dir": "app",
-	        "symfony-web-dir": "web",
-	        "symfony-assets-install": "symlink"
-	    }
-		
-	When passing ``relative`` instead of ``symlink`` to symfony-assets-install, the command will generate
-	relative symlinks.	
-		
+    When running ``php composer.phar install`` or ``php composer.phar update``, composer will execute
+    post install/update commands to clear the cache and install assets. By default, the assets will be
+    copied into your ``web`` directory. To create symlinks instead of copying the assets, you
+    can add an entry in the ``extra`` node of your composer.json file with the key ``symfony-assets-install``
+    and the value ``symlink``:
+
+    .. code-block:: json
+
+        "extra": {
+            "symfony-app-dir": "app",
+            "symfony-web-dir": "web",
+            "symfony-assets-install": "symlink"
+        }
+
+    When passing ``relative`` instead of ``symlink`` to symfony-assets-install, the command will generate
+    relative symlinks.
 
 Configuration and Setup
 ~~~~~~~~~~~~~~~~~~~~~~~
@@ -169,9 +171,9 @@ If there are any issues, correct them now before moving on.
 
     **2. Using Acl on a system that does not support chmod +a**
 
-    Some systems don't support ``chmod +a``, but do support another utility 
+    Some systems don't support ``chmod +a``, but do support another utility
     called ``setfacl``. You may need to `enable ACL support`_ on your partition
-    and install setfacl before using it (as is the case with Ubuntu), like 
+    and install setfacl before using it (as is the case with Ubuntu), like
     so:
 
     .. code-block:: bash
@@ -249,12 +251,12 @@ file:
 
 .. code-block:: text
 
-    vendor/
+    /vendor/
 
 Now, the vendor directory won't be committed to source control. This is fine
 (actually, it's great!) because when someone else clones or checks out the
 project, he/she can simply run the ``php composer.phar install`` script to
-download all the necessary vendor libraries.
+install all the necessary project dependencies.
 
 .. _`enable ACL support`: https://help.ubuntu.com/community/FilePermissionsACLs
 .. _`http://symfony.com/download`: http://symfony.com/download
