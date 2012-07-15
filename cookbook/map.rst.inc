@@ -86,6 +86,7 @@
 
   * :doc:`/cookbook/routing/scheme`
   * :doc:`/cookbook/routing/slash_in_parameter`
+  * :doc:`/cookbook/routing/redirect_in_config`
 
 * **symfony1**
 
