@@ -408,7 +408,8 @@ login form submission (i.e. ``/login_check``):
 
 .. versionadded:: 2.1
     As of Symfony 2.1, you *must* have routes configured for your ``login_path``
-    (e.g. ``/login``) and ``check_path`` (e.g. ``/login_check``) URLs.
+    (e.g. ``/login``), ``check_path`` (e.g. ``/login_check``) and ``logout``
+    (e.g. ``/logout`` - see `Logging Out`_) URLs.
 
 Notice that the name of the ``login`` route isn't important. What's important
 is that the URL of the route (``/login``) matches the ``login_path`` config
@@ -1551,8 +1552,13 @@ them, you can omit them entirely and shorten your configuration:
         'logout' => array(),
 
 Note that you will *not* need to implement a controller for the ``/logout``
-URL as the firewall takes care of everything. You may, however, want to create
+URL as the firewall takes care of everything. You *do*, however, need to create
 a route so that you can use it to generate the URL:
+
+.. warning::
+
+    As of Symfony 2.1, you *must* have a route that corresponds to your logout
+    path. Without this route, logging out will not work.
 
 .. configuration-block::
 
