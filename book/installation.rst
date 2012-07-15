@@ -49,10 +49,10 @@ one of the following commands (replacing ``###`` with your actual filename):
 .. code-block:: bash
 
     # for .tgz file
-    tar zxvf Symfony_Standard_Vendors_2.0.###.tgz
+    $ tar zxvf Symfony_Standard_Vendors_2.0.###.tgz
 
     # for a .zip file
-    unzip Symfony_Standard_Vendors_2.0.###.zip
+    $ unzip Symfony_Standard_Vendors_2.0.###.zip
 
 When you're finished, you should have a ``Symfony/`` directory that looks
 something like this:
@@ -81,7 +81,7 @@ by running the following command from the command line:
 
 .. code-block:: bash
 
-    php bin/vendors install
+    $ php bin/vendors install
 
 This command downloads all of the necessary vendor libraries - including
 Symfony itself - into the ``vendor/`` directory. For more information on
@@ -121,11 +121,11 @@ If there are any issues, correct them now before moving on.
 
     .. code-block:: bash
 
-        rm -rf app/cache/*
-        rm -rf app/logs/*
+        $ rm -rf app/cache/*
+        $ rm -rf app/logs/*
 
-        sudo chmod +a "www-data allow delete,write,append,file_inherit,directory_inherit" app/cache app/logs
-        sudo chmod +a "`whoami` allow delete,write,append,file_inherit,directory_inherit" app/cache app/logs
+        $ sudo chmod +a "www-data allow delete,write,append,file_inherit,directory_inherit" app/cache app/logs
+        $ sudo chmod +a "`whoami` allow delete,write,append,file_inherit,directory_inherit" app/cache app/logs
 
     **2. Using Acl on a system that does not support chmod +a**
 
@@ -136,8 +136,8 @@ If there are any issues, correct them now before moving on.
 
     .. code-block:: bash
 
-        sudo setfacl -R -m u:www-data:rwx -m u:`whoami`:rwx app/cache app/logs
-        sudo setfacl -dR -m u:www-data:rwx -m u:`whoami`:rwx app/cache app/logs
+        $ sudo setfacl -R -m u:www-data:rwx -m u:`whoami`:rwx app/cache app/logs
+        $ sudo setfacl -dR -m u:www-data:rwx -m u:`whoami`:rwx app/cache app/logs
 
     Note that not all web servers run as the user ``www-data``. You have to
     check which user the web server is being run as and put it in for ``www-data``.
