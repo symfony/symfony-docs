@@ -72,7 +72,7 @@ Standards
 ---------
 To keep the examples in the documentation consistent and to help the reader as much as we can to understand the code, you need to follow these standards:
 
-* The code follows the Coding Standards, the [Symfony Coding Standards](http://symfony.com/doc/current/contributing/code/standards.html) as well as the [Twig Coding Standards](http://twig.sensiolabs.org/doc/coding_standards.html).
+* The code follows the Coding Standards, the `Symfony Coding Standards`_ as well as the `Twig Coding Standards`_.
 * When we fold one or more lines of code, we place `...` in a comment at the point of the fold. These comments are: `// ...` (php), `# ...` (yaml/bash), `{# ... #}` (twig), `<!-- ... -->` (xml/html), `; ...` (ini), `...` (text)
 * When we fold a part of a line, e.g. a variable value, we put `...` (without comment) at the place of the fold.
 * Description about the fold: (optional)
@@ -126,3 +126,5 @@ Read the dedicated :doc:`document <translations>`.
 .. _`fork`: http://help.github.com/fork-a-repo/
 .. _`pull requests`: http://help.github.com/pull-requests/
 .. _`Documentation Build Errors`: http://symfony.com/doc/build_errors
+.. _`Symfony Coding Standards`: http://symfony.com/doc/current/contributing/code/standards.html
+.. _`Twig Coding Standards`: http://twig.sensiolabs.org/doc/coding_standards.html
