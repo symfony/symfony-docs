@@ -76,7 +76,7 @@ something like this:
 .. tip::
 
     You can change the default location of the ``cache`` and ``log`` directories
-    by creating a ``getCacheDir()`` and ``getLogDir()`` methods in the ``AppKernel``
+    by creating a ``getCacheDir()`` or ``getLogDir()`` method in the ``AppKernel``
     class::
 
         // app/AppKernel.php
