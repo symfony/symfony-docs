@@ -292,7 +292,7 @@ Symfony2 looks for message files (i.e. translations) in the following locations:
 The locations are listed with the highest priority first. That is you can
 override the translation messages of a bundle in any of the top 2 directories.
 
-The override mechanism works at a key level: only the overriden keys need
+The override mechanism works at a key level: only the overridden keys need
 to be listed in a higher priority message file. When a key is not found
 in a message file, the translator will automatically fallback to the lower
 priority message files.
@@ -499,7 +499,7 @@ via the ``request`` object:
 
 .. code-block:: php
 
-    // access the reqest object in a standard controller
+    // access the request object in a standard controller
     $request = $this->getRequest();
 
     $locale = $request->getLocale();

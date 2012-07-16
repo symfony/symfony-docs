@@ -130,7 +130,7 @@ configuration. The ``PhpDumper`` makes dumping the compiled container easy::
 
     if (file_exists($file)) {
         require_once $file;
-        $container = new ProjectServiceContiner();
+        $container = new ProjectServiceContainer();
     } else {
         $container = new ContainerBuilder();
         //--

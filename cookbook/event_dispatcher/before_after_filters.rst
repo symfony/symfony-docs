@@ -108,7 +108,7 @@ event listeners, you can learn more about them at :doc:`/cookbook/service_contai
     {
         private $tokens;
 
-        public function __contruct($tokens)
+        public function __construct($tokens)
         {
             $this->tokens = $tokens;
         }

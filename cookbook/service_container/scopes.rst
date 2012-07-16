@@ -35,7 +35,7 @@ when compiling the container. Read the sidebar below for more details.
 
     Imagine you've configured a `my_mailer` service. You haven't configured
     the scope of the service, so it defaults to `container`. In other words,
-    everytime you ask the container for the `my_mailer` service, you get
+    every time you ask the container for the `my_mailer` service, you get
     the same object back. This is usually how you want your services to work.
     
     Imagine, however, that you need the `request` service in your `my_mailer`
