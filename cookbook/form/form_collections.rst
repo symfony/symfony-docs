@@ -595,6 +595,9 @@ the relationship between the removed ``Tag`` and ``Task`` object.
                 throw $this->createNotFoundException('No task found for is '.$id);
             }
 
+            // Define originalTags
+            $originalTags = array();
+
             // Create an array of the current Tag objects in the database
             foreach ($task->getTags() as $tag) $originalTags[] = $tag;
           
