@@ -39,7 +39,7 @@ The ``app_dev.php`` front controller reads as follows by default::
     $kernel->loadClassCache();
     $kernel->handle(Request::createFromGlobals())->send();
 
-To make you debugger happier, disable all PHP class caches by removing the
+To make your debugger happier, disable all PHP class caches by removing the
 call to ``loadClassCache()`` and by replacing the require statements like
 below::
 
