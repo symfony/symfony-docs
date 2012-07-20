@@ -122,4 +122,4 @@ instance of ``Bar`` with the ``foo.method_is_not_found`` event:
 .. code-block:: php
 
     $bar = new Bar();
-    $dispatcher->addListener('foo.method_is_not_found', $bar);
+    $dispatcher->addListener('foo.method_is_not_found', array($bar, 'onFooMethodIsNotFound'));
