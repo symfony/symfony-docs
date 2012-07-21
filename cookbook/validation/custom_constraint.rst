@@ -228,3 +228,13 @@ With this, the validator ``isValid()`` method gets an object as its first argume
         }
     }
 
+Note that Class Constraint Validator requires annotation is before class declaration::
+
+    /**
+     * @AcmeAssert\ContainsAlphanumeric
+     */
+    class AcmeEntity
+    {
+        // ...
+    }
+
