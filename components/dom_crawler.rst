@@ -319,4 +319,9 @@ directly::
     // submit that form
     $crawler = $client->submit($form);
 
+.. note::
+
+    Any fields without name attributes will be ignored when generating the form object.
+    This means that your form's submit buttons must have name attributes, else you won't be able to submit the form.
+
 .. _`Goutte`: https://github.com/fabpot/goutte
