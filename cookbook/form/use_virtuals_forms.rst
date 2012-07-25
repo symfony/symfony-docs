@@ -118,7 +118,9 @@ Look at the result::
     // CompanyType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('foo', new LocationType());
+        $builder->add('foo', new LocationType(), array(
+            'data_class' => 'Acme\HelloBundle\Entity\Company'
+        ));
     }
 
 .. code-block:: php
@@ -126,7 +128,9 @@ Look at the result::
     // CustomerType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('bar', new LocationType());
+        $builder->add('bar', new LocationType(), array(
+            'data_class' => 'Acme\HelloBundle\Entity\Customer'
+        );
     }
 
 With the virtual option set to false (default behavior), the Form Component
