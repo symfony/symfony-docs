@@ -205,11 +205,12 @@ using a processor.
         }
     }
 
-Add this to ``app/config/config.yml``:
 
 .. configuration-block::
 
     .. code-block:: yaml
+
+        # app/config/config.yml
 
         services:
             monolog.formatter.session_request:
