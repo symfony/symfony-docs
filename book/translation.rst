@@ -910,7 +910,7 @@ Create a translation file under the ``validators`` catalog for the constraint me
 
     .. code-block:: xml
 
-        <!-- validators.fr.xliff -->
+        <!-- validators.en.xliff -->
         <?xml version="1.0"?>
         <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
             <file source-language="en" datatype="plaintext" original="file.ext">
@@ -925,14 +925,14 @@ Create a translation file under the ``validators`` catalog for the constraint me
 
     .. code-block:: php
 
-        // validators.fr.php
+        // validators.en.php
         return array(
             'author.name.not_blank' => 'Please enter an author name.',
         );
 
     .. code-block:: yaml
 
-        # validators.fr.yml
+        # validators.en.yml
         author.name.not_blank: Please enter an author name.
 
 Summary
