@@ -133,5 +133,4 @@ Read the dedicated :doc:`document <translations>`.
 .. _`fork`: http://help.github.com/fork-a-repo/
 .. _`pull requests`: http://help.github.com/pull-requests/
 .. _`Documentation Build Errors`: http://symfony.com/doc/build_errors
-.. _`Symfony Coding Standards`: http://symfony.com/doc/current/contributing/code/standards.html
 .. _`Twig Coding Standards`: http://twig.sensiolabs.org/doc/coding_standards.html
