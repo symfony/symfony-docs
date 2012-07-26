@@ -73,7 +73,7 @@ Standards
 
 In order to help the reader as much as possible and to create code examples that looks and feels familiar, you should follow these rules:
 
-* The code follows the Coding Standards, the `Symfony Coding Standards`_ as well as the `Twig Coding Standards`_;
+* The code follows the Coding Standards, the :doc:`Symfony Coding Standards</contributing/code/standards.rst` as well as the `Twig Coding Standards`_;
 * When we fold one or more lines of code, we place `...` in a comment at the point of the fold. These comments are: `// ...` (php), `# ...` (yaml/bash), `{# ... #}` (twig), `<!-- ... -->` (xml/html), `; ...` (ini), `...` (text);
 * When we fold a part of a line, e.g. a variable value, we put `...` (without comment) at the place of the fold;
 * Description about the fold: (optional)
