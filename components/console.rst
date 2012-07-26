@@ -288,8 +288,8 @@ You can test sending arguments and options to the command by passing them
 as an array to the :method:`Symfony\\Component\\Console\\Tester\\CommandTester::getDisplay`
 method::
 
-    use Symfony\Component\Console\Tester\CommandTester;
     use Symfony\Component\Console\Application;
+    use Symfony\Component\Console\Tester\CommandTester;
     use Acme\DemoBundle\Command\GreetCommand;
 
     class ListCommandTest extends \PHPUnit_Framework_TestCase
