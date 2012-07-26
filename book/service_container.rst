@@ -879,8 +879,8 @@ the framework.
 
 .. _book-service-container-tags:
 
-Tags (``tags``)
----------------
+Tags
+----
 
 In the same way that a blog post on the Web might be tagged with things such
 as "Symfony" or "PHP", services configured in your container can also be
