@@ -42,6 +42,12 @@ Quick example::
     ``session_id()``, ``session_name()``, and ``session_destroy()`` and instead
     use the APIs in the following section.
 
+.. note::
+
+    While it is recommended to explicitly start a session, a sessions will actually
+    start on demand, that is, if any session request is made to read/write session
+    data.
+
 .. warning::
 
     Symfony sessions are incompatible with PHP ini directive ``session.auto_start = 1``
