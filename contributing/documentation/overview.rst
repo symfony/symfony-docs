@@ -100,12 +100,10 @@ An example::
     * In Yaml you should to put a space after `{` and before `}` (e.g. `{ _controller: ... }`), but this should not be done in Twig (e.g. `{'hello' : 'value'}`).
     * An array item is a part of a line, not a complete line. So you should not use `// ...` but `...,` (the comma because of the Coding Standards):
 
-        ```
         array(
             'some value',
             ...,
         )
-        ```
 
 Reporting an Issue
 ------------------
