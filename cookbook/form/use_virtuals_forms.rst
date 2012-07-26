@@ -86,6 +86,7 @@ location form type::
     namespace Acme\HelloBundle\Form\Type;
 
     use Symfony\Component\Form\FormBuilderInterface;
+    use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
     class LocationType extends AbstractType
     {
@@ -96,6 +97,13 @@ location form type::
                 ->add('zipcode', 'text')
                 ->add('city', 'text')
                 ->add('country', 'text');
+        }
+
+        public function setDefaultOptions(OptionsResolverInterface $resolver)
+        {
+            $resolver->setDefaults(array(
+                'virtual' => true
+            ));
         }
 
         public function getName()
@@ -118,7 +126,9 @@ Look at the result::
     // CompanyType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('foo', new LocationType());
+        $builder->add('foo', new LocationType(), array(
+            'data_class' => 'Acme\HelloBundle\Entity\Company'
+        ));
     }
 
 .. code-block:: php
@@ -126,7 +136,9 @@ Look at the result::
     // CustomerType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('bar', new LocationType());
+        $builder->add('bar', new LocationType(), array(
+            'data_class' => 'Acme\HelloBundle\Entity\Customer'
+        ));
     }
 
 With the virtual option set to false (default behavior), the Form Component
