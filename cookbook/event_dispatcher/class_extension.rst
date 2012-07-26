@@ -17,7 +17,7 @@ magic ``__call()`` method in the class you want to be extended like this:
         {
             // create an event named 'foo.method_is_not_found'
             $event = new HandleUndefinedMethodEvent($this, $method, $arguments);
-            $this->dispatcher->dispatch($this, 'foo.method_is_not_found', $event);
+            $this->dispatcher->dispatch('foo.method_is_not_found', $event);
 
             // no listener was able to process the event? The method does not exist
             if (!$event->isProcessed()) {
@@ -122,4 +122,4 @@ instance of ``Bar`` with the ``foo.method_is_not_found`` event:
 .. code-block:: php
 
     $bar = new Bar();
-    $dispatcher->addListener('foo.method_is_not_found', $bar);
+    $dispatcher->addListener('foo.method_is_not_found', array($bar, 'onFooMethodIsNotFound'));
