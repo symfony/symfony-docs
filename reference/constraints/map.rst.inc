@@ -54,6 +54,11 @@ File Constraints
 * :doc:`File </reference/constraints/File>`
 * :doc:`Image </reference/constraints/Image>`
 
+Financial Constraints
+~~~~~~~~~~~~~~~~~~~~~
+
+* :doc:`Luhn </reference/constraints/Luhn>`
+
 Other Constraints
 ~~~~~~~~~~~~~~~~~
 
