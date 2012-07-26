@@ -1012,10 +1012,10 @@ from the bundle to ``app/Resources/AcmeBlogBundle/views/Blog/index.html.twig``
 (the ``app/Resources/AcmeBlogBundle`` directory won't exist, so you'll need
 to create it). You're now free to customize the template.
 
-When Symfony looks into folders to discover templates, the location of the 
-found template is cached. If you add a template in a new location, don't 
-forget to clear the cache (``./app/console cache:clear``), even if you are in 
-debug mode.
+.. caution::
+
+    If you add a template in a new location, you *may* need to clear your
+    cache (``php app/console cache:clear``), even if you are in debug mode.
 
 This logic also applies to base bundle templates. Suppose also that each
 template in ``AcmeBlogBundle`` inherits from a base template called
