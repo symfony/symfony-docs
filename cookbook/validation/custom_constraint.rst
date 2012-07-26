@@ -226,3 +226,13 @@ With this, the validator ``validate()`` method gets an object as its first argum
         }
     }
 
+Note that Class Constraint Validator requires annotation is before class declaration::
+
+    /**
+     * @AcmeAssert\ContainsAlphanumeric
+     */
+    class AcmeEntity
+    {
+        // ...
+    }
+
