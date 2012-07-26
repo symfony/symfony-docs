@@ -224,7 +224,7 @@ is done just as before:
     .. code-block:: yaml
 
         # messages.fr.yml
-        'Hello %name%': Hello %name%
+        'Hello %name%': Bonjour %name%
 
 .. note::
 
