@@ -71,21 +71,15 @@ GitHub covers the topic of `pull requests`_ in detail.
 Standards
 ---------
 
-In order to help the reader as much as possible and to create code examples that 
-looks and feels familiar, you should follow these rules:
+In order to help the reader as much as possible and to create code examples that looks and feels familiar, you should follow these rules:
 
-* The code follows the Coding Standards, the `Symfony Coding Standards`_ as well 
-  as the `Twig Coding Standards`_;
-* When we fold one or more lines of code, we place `...` in a comment at the point 
-  of the fold. These comments are: `// ...` (php), `# ...` (yaml/bash), `{# ... #}` (twig), 
-  `<!-- ... -->` (xml/html), `; ...` (ini), `...` (text);
-* When we fold a part of a line, e.g. a variable value, we put `...` (without comment) 
-  at the place of the fold;
+* The code follows the Coding Standards, the `Symfony Coding Standards`_ as well as the `Twig Coding Standards`_;
+* When we fold one or more lines of code, we place `...` in a comment at the point of the fold. These comments are: `// ...` (php), `# ...` (yaml/bash), `{# ... #}` (twig), `<!-- ... -->` (xml/html), `; ...` (ini), `...` (text);
+* When we fold a part of a line, e.g. a variable value, we put `...` (without comment) at the place of the fold;
 * Description about the fold: (optional)
   If we fold some lines: The description can be placed after the `...`
   If we fold a part of a line: The description can be placed before the line;
-* If usefull, a codeblock begins with a comment with the filename. After this comment 
-  should not be a blank line, except if the next line is a comment too;
+* If usefull, a codeblock begins with a comment with the filename. After this comment should not be a blank line, except if the next line is a comment too;
 * You should put a `$` in front of every bash line;
 * We prefer the `::` shorthand over `.. code-block:: php` to begin a PHP code block.
 
@@ -103,10 +97,8 @@ An example::
     }
 
 .. note::
-    * In Yaml you should to put a space after `{` and before `}` (e.g. `{ _controller: ... }`), 
-      but this should not be done in Twig (e.g. `{'hello' : 'value'}`).
-    * An array item is a part of a line, not a complete line. So you should not use `// ...` 
-      but `...,` (the comma because of the Coding Standards):
+    * In Yaml you should to put a space after `{` and before `}` (e.g. `{ _controller: ... }`), but this should not be done in Twig (e.g. `{'hello' : 'value'}`).
+    * An array item is a part of a line, not a complete line. So you should not use `// ...` but `...,` (the comma because of the Coding Standards):
 
         ```
         array(
