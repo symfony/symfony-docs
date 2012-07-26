@@ -7,8 +7,8 @@ How to Dynamically Generate Forms Using Form Events
 Before jumping right into dynamic form generation, let's have a quick review 
 of what a bare form class looks like::
 
-    // src/Acme/DemoBundle/Form/ProductType.php
-    namespace Acme\DemoBundle\Form;
+    // src/Acme/DemoBundle/Form/Type/ProductType.php
+    namespace Acme\DemoBundle\Form\Type;
 
     use Symfony\Component\Form\AbstractType;
     use Symfony\Component\Form\FormBuilderInterface;
@@ -53,8 +53,8 @@ So, instead of directly adding that "name" widget via our ProductType form
 class, let's delegate the responsibility of creating that particular field 
 to an Event Subscriber::
 
-    // src/Acme/DemoBundle/Form/ProductType.php
-    namespace Acme\DemoBundle\Form
+    // src/Acme/DemoBundle/Form/Type/ProductType.php
+    namespace Acme\DemoBundle\Form\Type;
 
     use Symfony\Component\Form\AbstractType
     use Symfony\Component\Form\FormBuilderInterface;

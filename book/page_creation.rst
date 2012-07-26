@@ -984,7 +984,7 @@ in mind:
 * the **configuration** for each bundle lives in the ``Resources/config``
   directory of the bundle and can be specified in YAML, XML or PHP;
 
-* the global **application configuration** lives in the ``app/Resources/config``
+* the global **application configuration** lives in the ``app/config``
   directory;
 
 * each **environment** is accessible via a different front controller (e.g.

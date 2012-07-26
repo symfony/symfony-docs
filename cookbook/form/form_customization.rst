@@ -478,7 +478,7 @@ your template file rather than adding the template as a resource:
 
 .. code-block:: html+jinja
 
-	{% form_theme form 'form_table_layout.html.twig' %}
+    {% form_theme form 'form_table_layout.html.twig' %}
 
 Note that the ``form`` variable in the above code is the form view variable
 that you passed to your template.
@@ -571,7 +571,7 @@ your template file rather than adding the template as a resource:
 
 .. code-block:: html+php
 
-	<?php $view['form']->setTheme($form, array('FrameworkBundle:FormTable')); ?>
+    <?php $view['form']->setTheme($form, array('FrameworkBundle:FormTable')); ?>
 
 Note that the ``$form`` variable in the above code is the form view variable
 that you passed to your template.

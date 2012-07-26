@@ -226,3 +226,31 @@ With this, the validator ``validate()`` method gets an object as its first argum
         }
     }
 
+Note that a class constraint validator is applied to the class itself, and
+not to the property:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # src/Acme/BlogBundle/Resources/config/validation.yml
+        Acme\DemoBundle\Entity\AcmeEntity:
+            constraints:
+                - ContainsAlphanumeric
+
+    .. code-block:: php-annotations
+
+        /**
+         * @AcmeAssert\ContainsAlphanumeric
+         */
+        class AcmeEntity
+        {
+            // ...
+        }
+
+    .. code-block:: xml
+
+        <!-- src/Acme/BlogBundle/Resources/config/validation.xml -->
+        <class name="Acme\DemoBundle\Entity\AcmeEntity">
+            <constraint name="ContainsAlphanumeric" />
+        </class>

@@ -603,12 +603,14 @@ the relationship between the removed ``Tag`` and ``Task`` object.
                 throw $this->createNotFoundException('No task found for is '.$id);
             }
 
+            $originalTags = array();
+
             // Create an array of the current Tag objects in the database
             foreach ($task->getTags() as $tag) $originalTags[] = $tag;
           
             $editForm = $this->createForm(new TaskType(), $task);
 
-               if ('POST' === $request->getMethod()) {
+            if ('POST' === $request->getMethod()) {
                 $editForm->bind($this->getRequest());
 
                 if ($editForm->isValid()) {

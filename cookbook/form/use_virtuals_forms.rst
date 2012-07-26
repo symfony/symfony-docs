@@ -142,7 +142,7 @@ Look at the result::
     }
 
 With the virtual option set to false (default behavior), the Form Component
-expect each underlying object to have a ``foo`` (or ``bar``) property that
+expects each underlying object to have a ``foo`` (or ``bar``) property that
 is either some object or array which contains the four location fields.
 Of course, we don't have this object/array in our entities and we don't want it!
 
