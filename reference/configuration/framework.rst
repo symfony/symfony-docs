@@ -91,18 +91,16 @@ services related to testing your application (e.g. ``test.client``) are loaded.
 This setting should be present in your ``test`` environment (usually via
 ``app/config/config_test.yml``). For more information, see :doc:`/book/testing`.
 
-.. _reference-framework-trust-proxy-headers:
-
 trust_proxy_headers
 ~~~~~~~~~~~~~~~~~~~
 
 **type**: ``Boolean``
 
 Configures if HTTP headers (like ``HTTP_X_FORWARDED_FOR``, ``X_FORWARDED_PROTO``, and
-``X_FORWARDED_HOST``) are trusted as indication for a SSL connection. By default, it is
+``X_FORWARDED_HOST``) are trusted as indication for an SSL connection. By default, it is
 set to ``false`` and only SSL_HTTPS connections are indicated as secure.
 
-You should enable this setting, if your application is behind a reverse proxy.
+You should enable this setting if your application is behind a reverse proxy.
 
 .. _reference-framework-form:
 
