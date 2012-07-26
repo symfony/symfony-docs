@@ -122,6 +122,10 @@
   * :doc:`/cookbook/testing/profiling`
   * :doc:`/cookbook/testing/doctrine`
 
+* :doc:`/cookbook/validation/index`
+
+  * :doc:`/cookbook/validation/custom_constraint`
+
 * :doc:`/cookbook/web_services/index`
 
   * :doc:`/cookbook/web_services/php_soap_extension`
