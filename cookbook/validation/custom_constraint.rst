@@ -228,13 +228,31 @@ With this, the validator ``isValid()`` method gets an object as its first argume
         }
     }
 
-Note that Class Constraint Validator requires annotation is before class declaration::
+Note that a class constraint validator is applied to the class itself, and
+not to the property:
 
-    /**
-     * @AcmeAssert\ContainsAlphanumeric
-     */
-    class AcmeEntity
-    {
-        // ...
-    }
+.. configuration-block::
 
+    .. code-block:: yaml
+
+        # src/Acme/BlogBundle/Resources/config/validation.yml
+        Acme\DemoBundle\Entity\AcmeEntity:
+            constraints:
+                - ContainsAlphanumeric
+
+    .. code-block:: php-annotations
+
+        /**
+         * @AcmeAssert\ContainsAlphanumeric
+         */
+        class AcmeEntity
+        {
+            // ...
+        }
+
+    .. code-block:: xml
+
+        <!-- src/Acme/BlogBundle/Resources/config/validation.xml -->
+        <class name="Acme\DemoBundle\Entity\AcmeEntity">
+            <constraint name="ContainsAlphanumeric" />
+        </class>
