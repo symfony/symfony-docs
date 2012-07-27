@@ -5,8 +5,8 @@ How to create an Event Listener
 ===============================
 
 Symfony has various events and hooks that can be used to trigger custom
-behavior in your application. Those events are thrown by the HttpKernel 
-component and can be viewed in the :class:`Symfony\\Component\\HttpKernel\\KernelEvents` class. 
+behavior in your application. Those events are thrown by the HttpKernel
+component and can be viewed in the :class:`Symfony\\Component\\HttpKernel\\KernelEvents` class.
 
 To hook into an event and add your own custom logic, you have to  create
 a service that will act as an event listener on that event. In this entry,
@@ -61,19 +61,19 @@ using a special "tag":
 
     .. code-block:: xml
 
-        <!-- app/config/config.yml -->
+        <!-- app/config/config.xml -->
         <service id="kernel.listener.your_listener_name" class="Acme\DemoBundle\Listener\AcmeExceptionListener">
             <tag name="kernel.event_listener" event="kernel.exception" method="onKernelException" />
         </service>
 
     .. code-block:: php
 
-        // app/config/config.yml
+        // app/config/config.php
         $container
             ->register('kernel.listener.your_listener_name', 'Acme\DemoBundle\Listener\AcmeExceptionListener')
             ->addTag('kernel.event_listener', array('event' => 'kernel.exception', 'method' => 'onKernelException'))
         ;
-        
+
 .. note::
 
     There is an additional tag option ``priority`` that is optional and defaults

@@ -15,7 +15,7 @@ To use it, you just need to change some parameters in ``config.yml`` (or the
 configuration format of your choice):
 
 .. versionadded:: 2.1
-    In Symfony2.1 the class and namespace are slightly modified. You can now 
+    In Symfony2.1 the class and namespace are slightly modified. You can now
     find the `PdoSessionStorage` class in the `Session\\Storage` namespace:
     ``Symfony\Component\HttpFoundation\Session\Storage\PdoSessionStorage``. Also
     note the second and third constructor arguments to the class have changed
@@ -83,7 +83,7 @@ configuration format of your choice):
 
     .. code-block:: php
 
-        // app/config/config.yml
+        // app/config/config.php
         use Symfony\Component\DependencyInjection\Definition;
         use Symfony\Component\DependencyInjection\Reference;
 
