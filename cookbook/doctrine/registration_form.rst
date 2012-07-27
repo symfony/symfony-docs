@@ -178,7 +178,7 @@ represents the "registration"::
 
         public function setTermsAccepted($termsAccepted)
         {
-            $this->termsAccepted = (boolean) $termsAccepted;
+            $this->termsAccepted = (Boolean) $termsAccepted;
         }
     }
 
