@@ -106,7 +106,7 @@ Next, create the form for the ``User`` model::
             $builder->add('password', 'repeated', array(
                'first_name' => 'password',
                'second_name' => 'confirm',
-               'type' => 'password'
+               'type' => 'password',
             ));
         }
 
@@ -178,7 +178,7 @@ represents the "registration"::
 
         public function setTermsAccepted($termsAccepted)
         {
-            $this->termsAccepted = (boolean)$termsAccepted;
+            $this->termsAccepted = (boolean) $termsAccepted;
         }
     }
 
@@ -240,7 +240,6 @@ and its template:
 .. code-block:: html+jinja
 
     {# src/Acme/AccountBundle/Resources/views/Account/register.html.twig #}
-
     <form action="{{ path('create')}}" method="post" {{ form_enctype(form) }}>
         {{ form_widget(form) }}
 
