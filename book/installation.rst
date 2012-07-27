@@ -172,7 +172,7 @@ If there are any issues, correct them now before moving on.
     They might even remember to do it the very first time, but forget that
     it's all gone after running a relatively common command during development:
     
-    :: code-block: bash
+    .. code-block:: bash
         
         $ app/console doctrine:database:drop --force
         $ app/console doctrine:database:create
@@ -181,9 +181,10 @@ If there are any issues, correct them now before moving on.
     as agnostic as possible in terms of enviroment configuration, so only way around it 
     is to configure server level defaults.
     
-    Setting UTF8 defaults for MySQL is as simple as adding a few lines to configuration file:
+    Setting UTF8 defaults for MySQL is as simple as adding a few lines to configuration file 
+    (typically ``my.cnf``):
     
-    :: code-block: ini
+    .. code-block:: ini
     
         [mysqld]
         collation-server = utf8_general_ci
