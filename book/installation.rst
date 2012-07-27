@@ -163,7 +163,7 @@ If there are any issues, correct them now before moving on.
 
     Note that using the ACL is recommended when you have access to them
     on your server because changing the umask is not thread-safe.
-    
+
 When everything is fine, click on "Go to the Welcome page" to request your
 first "real" Symfony2 webpage:
 

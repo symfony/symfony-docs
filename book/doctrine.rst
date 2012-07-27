@@ -92,8 +92,8 @@ information. By convention, this information is usually configured in an
         $ app/console doctrine:database:create
     
     There's no way to configure these defaults inside doctrine, as it tries to be
-    as agnostic as possible in terms of enviroment configuration, so only way around it 
-    is to configure server level defaults.
+    as agnostic as possible in terms of enviroment configuration. One way to solve
+    this problem is to configure server level defaults.
     
     Setting UTF8 defaults for MySQL is as simple as adding a few lines to configuration file 
     (typically ``my.cnf``):
