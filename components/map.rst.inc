@@ -65,6 +65,10 @@
 
   * :doc:`/components/serializer`
 
+* **Security**
+
+  * :doc:`/components/security/index`
+
 * **Templating**
 
   * :doc:`/components/templating`
