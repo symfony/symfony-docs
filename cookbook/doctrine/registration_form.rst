@@ -94,11 +94,12 @@ Next, create the form for the ``User`` model::
     namespace Acme\AccountBundle\Form\Type;
 
     use Symfony\Component\Form\AbstractType;
-    use Symfony\Component\Form\FormBuilder;
+    use Symfony\Component\Form\FormBuilderInterface;
+    use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
     class UserType extends AbstractType
     {
-        public function buildForm(FormBuilder $builder, array $options)
+        public function buildForm(FormBuilderInterface $builder, array $options)
         {
             $builder->add('email', 'email');
             $builder->add('plainPassword', 'repeated', array(
@@ -108,9 +109,11 @@ Next, create the form for the ``User`` model::
             ));
         }
 
-        public function getDefaultOptions(array $options)
+        public function setDefaultOptions(OptionsResolverInterface $resolver)
         {
-            return array('data_class' => 'Acme\AccountBundle\Entity\User');
+            $resolver->setDefaults(array(
+                'data_class' => 'Acme\AccountBundle\Entity\User'
+            ));
         }
 
         public function getName()
@@ -184,11 +187,11 @@ Next, create the form for this ``Registration`` model::
     namespace Acme\AccountBundle\Form\Type;
 
     use Symfony\Component\Form\AbstractType;
-    use Symfony\Component\Form\FormBuilder;
+    use Symfony\Component\Form\FormBuilderInterface;
 
     class RegistrationType extends AbstractType
     {
-        public function buildForm(FormBuilder $builder, array $options)
+        public function buildForm(FormBuilderInterface $builder, array $options)
         {
             $builder->add('user', new UserType());
             $builder->add('terms', 'checkbox', array('property_path' => 'termsAccepted'));
@@ -250,7 +253,7 @@ the validation and saves the data into the database::
 
         $form = $this->createForm(new RegistrationType(), new Registration());
 
-        $form->bindRequest($this->getRequest());
+        $form->bind($this->getRequest());
 
         if ($form->isValid()) {
             $registration = $form->getData();
