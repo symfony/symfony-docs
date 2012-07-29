@@ -36,7 +36,7 @@ You have a simple ``User`` entity mapped to the database::
         protected $id;
 
         /**
-         *  @ORM\Column(type="string", length=255)
+         * @ORM\Column(type="string", length=255)
          * @Assert\NotBlank()
          * @Assert\Email()
          */
@@ -46,7 +46,7 @@ You have a simple ``User`` entity mapped to the database::
          * @ORM\Column(type="string", length=255)
          * @Assert\NotBlank()
          */
-        protected $password;
+        protected $plainPassword;
 
         public function getId()
         {
@@ -63,15 +63,14 @@ You have a simple ``User`` entity mapped to the database::
             $this->email = $email;
         }
 
-        public function getPassword()
+        public function getPlainPassword()
         {
-            return $this->password;
+            return $this->plainPassword;
         }
 
-        // stupid simple encryption (please don't copy it!)
-        public function setPassword($password)
+        public function setPlainPassword($password)
         {
-            $this->password = sha1($password);
+            $this->plainPassword = $password;
         }
     }
 
@@ -82,9 +81,9 @@ the class.
 
 .. note::
 
-    If you want to integrate this User within the security system,you need
+    If you want to integrate this User within the security system, you need
     to implement the :ref:`UserInterface<book-security-user-entity>` of the
-    security component .
+    security component.
 
 Create a Form for the Model
 ---------------------------
@@ -103,7 +102,7 @@ Next, create the form for the ``User`` model::
         public function buildForm(FormBuilder $builder, array $options)
         {
             $builder->add('email', 'email');
-            $builder->add('password', 'repeated', array(
+            $builder->add('plainPassword', 'repeated', array(
                'first_name' => 'password',
                'second_name' => 'confirm',
                'type' => 'password',
@@ -127,19 +126,17 @@ password). The ``data_class`` option tells the form the name of data class
 
 .. tip::
 
-    To explore more things about the form component, read this documentation :doc:`file</book/forms>`.
+    To explore more things about the form component, read :doc:`/book/forms`.
 
 Embedding the User form into a Registration Form
 ------------------------------------------------
 
 The form that you'll use for the registration page is not the same as the
-form for used to simply modify the ``User`` (i.e. ``UserType``). The registration
-form will contain further fields like "accept the terms", whose value is
-won't be stored into database.
+form used to simply modify the ``User`` (i.e. ``UserType``). The registration
+form will contain further fields like "accept the terms", whose value won't
+be stored in the database.
 
-In other words, create a second form for registration, which embeds the ``User``
-form and adds the extra field needed. Start by creating a simple class which
-represents the "registration"::
+Start by creating a simple class which represents the "registration"::
 
     // src/Acme/AccountBundle/Form/Model/Registration.php
     namespace Acme\AccountBundle\Form\Model;
@@ -207,8 +204,8 @@ Next, create the form for this ``Registration`` model::
 
 You don't need to use special method for embedding the ``UserType`` form.
 A form is a field, too - so you can add this like any other field, with the
-expectation that the corresponding ``user`` property will hold an instance
-of the class ``UserType``.
+expectation that the ``Registration.user`` property will hold an instance
+of the ``User`` class.
 
 Handling the Form Submission
 ----------------------------
@@ -270,4 +267,6 @@ the validation and saves the data into the database::
     }
 
 That's it! Your form now validates, and allows you to save the ``User``
-object to the database.
+object to the database. The extra ``terms`` checkbox on the ``Registration``
+model class is used during validation, but not actually used afterwards when
+saving the User to the database.
