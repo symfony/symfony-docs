@@ -4,12 +4,12 @@
 Using HTTP Methods beyond GET and POST in Routes
 ================================================
 
-When you are defining routes one of the restrictions you can put on whether
-a request matches the route is the HTTP method of the request. This is introduced
-in the routing chapter of the book ":doc:`/book/routing`" with examples using
-GET and POST. You can also use other HTTP verbs in this way. For example, if
-you have a blog post entry then you could use the same url pattern to show
-it, make changes to it and delete it by matching on GET, PUT and DELETE.
+The HTTP method of a request is one of the requirements that can be checked
+when seeing if it matches a route. This is introduced in the routing chapter
+of the book ":doc:`/book/routing`" with examples using GET and POST. You
+can also use other HTTP verbs in this way. For example, if you have a blog
+post entry then you could use the same url pattern to show it, make changes
+to it and delete it by matching on GET, PUT and DELETE.
 
 .. configuration-block::
 
@@ -83,20 +83,19 @@ it, make changes to it and delete it by matching on GET, PUT and DELETE.
 
         return $collection;
 
-Unfortunately it is not as simple as that is you are creating a website
-because most browsers do not support sending PUT and DELETE requests. Fortunately
-Symfony2 provides you with a simple way of working around this limitation.
-By including the ``_method`` parameter in the query string or parameters of an
-HTTP request Symfony2 will use this as the method when matching routes. This
-can be done easily in forms with a hidden field. So we could have a forms for
-editing and blog posts that looks like this:
+Unfortunately, life isn't quite this simple, since most browsers do not
+support sending PUT and DELETE requests. Fortunately Symfony2 provides you
+with a simple way of working around this limitation. By including a ``_method``
+parameter in the query string or parameters of an HTTP request Symfony2 will
+use this as the method when matching routes. This can be done easily in forms
+with a hidden field. Suppose you have a form for editing a blog post:
 
 .. code-block:: html+jinja
 
-    <form action="{{ path('blog_update', { 'slug': blog.slug }) }}" method="post">
-        <input type="hidden" name="_method" value="PUT"/>
+    <form action="{{ path('blog_update', {'slug': blog.slug}) }}" method="post">
+        <input type="hidden" name="_method" value="PUT" />
         {{ form_widget(form) }}
-        <button type="submit">Updare</button>
+        <input type="submit" value="Update" />
     </form>
 
 The submitted request will now match the ``blog_update`` route and the ``updateAction``
@@ -106,10 +105,10 @@ Likewise the delete form could be changed to look like this:
 
 .. code-block:: html+jinja
 
-    <form action="{{ path('blog_delete', { 'slug': blog.slug }) }}" method="post">
-        <input type="hidden" name="_method" value="DELETE"/>
+    <form action="{{ path('blog_delete', {'slug': blog.slug}) }}" method="post">
+        <input type="hidden" name="_method" value="DELETE" />
         {{ form_widget(delete_form) }}
-        <button type="submit">Delete</button>
+        <input type="submit" value="Delete" />
     </form>
 
 It will then match the ``blog_delete`` route.
