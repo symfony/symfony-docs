@@ -15,8 +15,8 @@ The simple User model
 
 You have a simple ``User`` entity mapped to the database::
 
-    // src/Acme/AccountBundle/Document/User.php
-    namespace Acme\AccountBundle\Document;
+    // src/Acme/AccountBundle/Entity/User.php
+    namespace Acme\AccountBundle\Entity;
 
     use Doctrine\ORM\Mapping as ORM;
     use Symfony\Component\Validator\Constraints as Assert;
@@ -74,7 +74,7 @@ You have a simple ``User`` entity mapped to the database::
         }
     }
 
-This ``User`` document contains three fields and two of them (email and
+This ``User`` entity contains three fields and two of them (email and
 password) should display on the form. The email property must be unique
 in the database, this is enforced by adding this validation at the top of
 the class.
@@ -111,7 +111,7 @@ Next, create the form for the ``User`` model::
 
         public function getDefaultOptions(array $options)
         {
-            return array('data_class' => 'Acme\AccountBundle\Document\User');
+            return array('data_class' => 'Acme\AccountBundle\Entity\User');
         }
 
         public function getName()
@@ -122,7 +122,7 @@ Next, create the form for the ``User`` model::
 
 There are just two fields: email and password (repeated to confirm the entered
 password). The ``data_class`` option tells the form the name of data class
-(i.e. your ``User`` document).
+(i.e. your ``User`` entity).
 
 .. tip::
 
@@ -143,12 +143,12 @@ Start by creating a simple class which represents the "registration"::
 
     use Symfony\Component\Validator\Constraints as Assert;
 
-    use Acme\AccountBundle\Document\User;
+    use Acme\AccountBundle\Entity\User;
 
     class Registration
     {
         /**
-         * @Assert\Type(type="Acme\AccountBundle\Document\User")
+         * @Assert\Type(type="Acme\AccountBundle\Entity\User")
          */
         protected $user;
 
