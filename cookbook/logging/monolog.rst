@@ -177,7 +177,7 @@ using a processor.
 
     namespace Acme\MyBundle;
 
-    use Symfony\Component\HttpFoundation\Session;
+    use Symfony\Component\HttpFoundation\Session\Session;
 
     class SessionRequestProcessor
     {
@@ -205,9 +205,12 @@ using a processor.
         }
     }
 
+
 .. configuration-block::
 
     .. code-block:: yaml
+
+        # app/config/config.yml
 
         services:
             monolog.formatter.session_request:
