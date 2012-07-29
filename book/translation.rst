@@ -270,7 +270,7 @@ filesystem and discovered by Symfony, thanks to some conventions.
     
     .. code-block:: bash
     
-        php app/console cache:clear
+        $ php app/console cache:clear
 
 .. index::
    single: Translations; Translation resource locations

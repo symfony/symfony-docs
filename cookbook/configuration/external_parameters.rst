@@ -48,8 +48,8 @@ the following ``VirtualHost`` configuration:
     
     .. code-block:: bash
     
-        export SYMFONY__DATABASE__USER=user
-        export SYMFONY__DATABASE__PASSWORD=secret
+        $ export SYMFONY__DATABASE__USER=user
+        $ export SYMFONY__DATABASE__PASSWORD=secret
 
 Now that you have declared an environment variable, it will be present
 in the PHP ``$_SERVER`` global variable. Symfony then automatically sets all

@@ -553,7 +553,7 @@ command:
 
 .. code-block:: bash
 
-    php app/console container:debug
+    $ php app/console container:debug
 
 For more information, see the :doc:`/book/service_container` chapter.
 

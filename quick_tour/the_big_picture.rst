@@ -29,7 +29,7 @@ Apache) with PHP 5.3.2 or higher.
     
     .. code-block:: bash
 
-        php -S localhost:80 -t /path/to/www
+        $ php -S localhost:80 -t /path/to/www
 
     where "/path/to/www" is the path to some directory on your machine that
     you'll extract Symfony into so that the eventual URL to your application
@@ -76,7 +76,7 @@ have a ``Symfony/`` directory that looks like this:
 
     .. code-block:: bash
 
-        php bin/vendors install
+        $ php bin/vendors install
 
 Checking the Configuration
 --------------------------

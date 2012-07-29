@@ -82,7 +82,7 @@ Test the new console command by running the following
 
 .. code-block:: bash
 
-    app/console demo:greet Fabien
+    $ app/console demo:greet Fabien
 
 This will print the following to the command line:
 
@@ -94,7 +94,7 @@ You can also use the ``--yell`` option to make everything uppercase:
 
 .. code-block:: bash
 
-    app/console demo:greet Fabien --yell
+    $ app/console demo:greet Fabien --yell
 
 This prints::
 
@@ -154,8 +154,8 @@ The command can now be used in either of the following ways:
 
 .. code-block:: bash
 
-    app/console demo:greet Fabien
-    app/console demo:greet Fabien Potencier
+    $ app/console demo:greet Fabien
+    $ app/console demo:greet Fabien Potencier
 
 Using Command Options
 ---------------------
@@ -193,9 +193,8 @@ flag:
 
 .. code-block:: bash
 
-    app/console demo:greet Fabien
-
-    app/console demo:greet Fabien --iterations=5
+    $ app/console demo:greet Fabien
+    $ app/console demo:greet Fabien --iterations=5
 
 The first example will only print once, since ``iterations`` is empty and
 defaults to ``1`` (the last argument of ``addOption``). The second example
@@ -206,8 +205,8 @@ will work:
 
 .. code-block:: bash
 
-    app/console demo:greet Fabien --iterations=5 --yell
-    app/console demo:greet Fabien --yell --iterations=5
+    $ app/console demo:greet Fabien --iterations=5 --yell
+    $ app/console demo:greet Fabien --yell --iterations=5
 
 There are 4 option variants you can use:
 
