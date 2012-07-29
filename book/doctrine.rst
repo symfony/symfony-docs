@@ -744,7 +744,7 @@ ordered alphabetically.
     {
         public function findAllOrderedByName()
         {
-            return $this->getManager()
+            return $this->getEntityManager()
                 ->createQuery('SELECT p FROM AcmeStoreBundle:Product p ORDER BY p.name ASC')
                 ->getResult();
         }
@@ -752,7 +752,7 @@ ordered alphabetically.
 
 .. tip::
 
-    The entity manager can be accessed via ``$this->getManager()``
+    The entity manager can be accessed via ``$this->getEntityManager()``
     from inside the repository.
 
 You can use this new method just like the default finder methods of the repository::
@@ -1065,7 +1065,7 @@ following method to the ``ProductRepository`` class::
     // src/Acme/StoreBundle/Repository/ProductRepository.php
     public function findOneByIdJoinedToCategory($id)
     {
-        $query = $this->getManager()
+        $query = $this->getEntityManager()
             ->createQuery('
                 SELECT p, c FROM AcmeStoreBundle:Product p
                 JOIN p.category c
