@@ -345,13 +345,13 @@ Run it without any arguments to learn more about its capabilities:
 
 .. code-block:: bash
 
-    php app/console
+    $ php app/console
 
 The ``--help`` option helps you discover the usage of a command:
 
 .. code-block:: bash
 
-    php app/console router:debug --help
+    $ php app/console router:debug --help
 
 Final Thoughts
 --------------

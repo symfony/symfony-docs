@@ -1,5 +1,6 @@
 .. index::
    single: DomCrawler
+   single: Components; DomCrawler
 
 The DomCrawler Component
 ========================

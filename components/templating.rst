@@ -1,5 +1,6 @@
 .. index::
    single: Templating
+   single: Components; Templating
 
 The Templating Component
 ========================

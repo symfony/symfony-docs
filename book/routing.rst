@@ -1035,7 +1035,7 @@ the command by running the following from the root of your project.
 
 .. code-block:: bash
 
-    php app/console router:debug
+    $ php app/console router:debug
 
 The command will print a helpful list of *all* the configured routes in
 your application:
@@ -1054,7 +1054,7 @@ the route name after the command:
 
 .. code-block:: bash
 
-    php app/console router:debug article_show
+    $ php app/console router:debug article_show
 
 .. index::
    single: Routing; Generating URLs

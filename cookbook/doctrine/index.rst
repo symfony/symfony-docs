@@ -12,3 +12,4 @@ Doctrine
     multiple_entity_managers
     custom_dql_functions
     resolve_target_entity
+    registration_form

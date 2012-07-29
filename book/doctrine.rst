@@ -37,7 +37,7 @@ persist it to the database and fetch it back out.
     
     .. code-block:: bash
     
-        php app/console generate:bundle --namespace=Acme/StoreBundle
+        $ php app/console generate:bundle --namespace=Acme/StoreBundle
 
 Configuring the Database
 ~~~~~~~~~~~~~~~~~~~~~~~~
@@ -79,12 +79,38 @@ information. By convention, this information is usually configured in an
     of your project, like inside your Apache configuration, for example. For
     more information, see :doc:`/cookbook/configuration/external_parameters`.
 
+.. sidebar:: Setting Up The Database
+
+    One mistake even seasoned developers make when starting a Symfony2 project
+    is forgetting to setup default charset and collation on their database,
+    ending up with latin type collations, which are default for most databases.
+    They might even remember to do it the very first time, but forget that
+    it's all gone after running a relatively common command during development:
+
+    .. code-block:: bash
+
+        $ app/console doctrine:database:drop --force
+        $ app/console doctrine:database:create
+
+    There's no way to configure these defaults inside Doctrine, as it tries to be
+    as agnostic as possible in terms of environment configuration. One way to solve
+    this problem is to configure server-level defaults.
+
+    Setting UTF8 defaults for MySQL is as simple as adding a few lines to
+    your configuration file  (typically ``my.cnf``):
+
+    .. code-block:: ini
+    
+        [mysqld]
+        collation-server = utf8_general_ci
+        character-set-server = utf8    
+
 Now that Doctrine knows about your database, you can have it create the database
 for you:
 
 .. code-block:: bash
 
-    php app/console doctrine:database:create
+    $ php app/console doctrine:database:create
 
 Creating an Entity Class
 ~~~~~~~~~~~~~~~~~~~~~~~~
@@ -118,7 +144,7 @@ just a simple PHP class.
     
     .. code-block:: bash
         
-        php app/console doctrine:generate:entity --entity="AcmeStoreBundle:Product" --fields="name:string(255) price:float description:text"
+        $ php app/console doctrine:generate:entity --entity="AcmeStoreBundle:Product" --fields="name:string(255) price:float description:text"
 
 .. index::
     single: Doctrine; Adding mapping metadata
@@ -279,7 +305,7 @@ a regular PHP class, you need to create getter and setter methods (e.g. ``getNam
 
 .. code-block:: bash
 
-    php app/console doctrine:generate:entities Acme/StoreBundle/Entity/Product
+    $ php app/console doctrine:generate:entities Acme/StoreBundle/Entity/Product
 
 This command makes sure that all of the getters and setters are generated
 for the ``Product`` class. This is a safe command - you can run it over and
@@ -313,8 +339,8 @@ mapping information) of a bundle or an entire namespace:
 
 .. code-block:: bash
 
-    php app/console doctrine:generate:entities AcmeStoreBundle
-    php app/console doctrine:generate:entities Acme
+    $ php app/console doctrine:generate:entities AcmeStoreBundle
+    $ php app/console doctrine:generate:entities Acme
 
 .. note::
 
@@ -334,7 +360,7 @@ in your application. To do this, run:
 
 .. code-block:: bash
 
-    php app/console doctrine:schema:update --force
+    $ php app/console doctrine:schema:update --force
 
 .. tip::
 
@@ -727,7 +753,7 @@ used earlier to generate the missing getter and setter methods:
 
 .. code-block:: bash
 
-    php app/console doctrine:generate:entities Acme
+    $ php app/console doctrine:generate:entities Acme
 
 Next, add a new method - ``findAllOrderedByName()`` - to the newly generated
 repository class. This method will query for all of the ``Product`` entities,
@@ -779,7 +805,7 @@ you can let Doctrine create the class for you.
 
 .. code-block:: bash
 
-    php app/console doctrine:generate:entity --entity="AcmeStoreBundle:Category" --fields="name:string(255)"
+    $ php app/console doctrine:generate:entity --entity="AcmeStoreBundle:Category" --fields="name:string(255)"
 
 This task generates the ``Category`` entity for you, with an ``id`` field,
 a ``name`` field and the associated getter and setter functions.
@@ -890,7 +916,7 @@ methods for you:
 
 .. code-block:: bash
 
-    php app/console doctrine:generate:entities Acme
+    $ php app/console doctrine:generate:entities Acme
 
 Ignore the Doctrine metadata for a moment. You now have two classes - ``Category``
 and ``Product`` with a natural one-to-many relationship. The ``Category``
@@ -919,7 +945,7 @@ table, and ``product.category_id`` column, and new foreign key:
 
 .. code-block:: bash
 
-    php app/console doctrine:schema:update --force
+    $ php app/console doctrine:schema:update --force
 
 .. note::
 
@@ -1322,7 +1348,7 @@ without any arguments:
 
 .. code-block:: bash
 
-    php app/console
+    $ php app/console
 
 A list of available command will print out, many of which start with the
 ``doctrine:`` prefix. You can find out more information about any of these
@@ -1331,7 +1357,7 @@ to get details about the ``doctrine:database:create`` task, run:
 
 .. code-block:: bash
 
-    php app/console help doctrine:database:create
+    $ php app/console help doctrine:database:create
 
 Some notable or interesting tasks include:
 
@@ -1341,7 +1367,7 @@ Some notable or interesting tasks include:
   
   .. code-block:: bash
   
-    php app/console doctrine:ensure-production-settings --env=prod
+    $ php app/console doctrine:ensure-production-settings --env=prod
 
 * ``doctrine:mapping:import`` - allows Doctrine to introspect an existing
   database and create mapping information. For more information, see

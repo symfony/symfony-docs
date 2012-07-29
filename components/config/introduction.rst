@@ -1,5 +1,6 @@
 .. index::
    single: Config
+   single: Components; Config
 
 The Config Component
 ====================

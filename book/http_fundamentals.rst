@@ -483,12 +483,14 @@ libraries that can be used inside *any* PHP project. These libraries, called
 the *Symfony2 Components*, contain something useful for almost any situation,
 regardless of how your project is developed. To name a few:
 
-* `HttpFoundation`_ - Contains the ``Request`` and ``Response`` classes, as
-  well as other classes for handling sessions and file uploads;
+* :doc:`HttpFoundation</components/http_foundation/introduction>` - Contains
+  the ``Request`` and ``Response`` classes, as well as other classes for handling
+  sessions and file uploads;
 
-* `Routing`_ - Powerful and fast routing system that allows you to map a
-  specific URI (e.g. ``/contact``) to some information about how that request
-  should be handled (e.g. execute the ``contactAction()`` method);
+* :doc:`Routing</components/routing>` - Powerful and fast routing system that
+  allows you to map a specific URI (e.g. ``/contact``) to some information
+  about how that request should be handled (e.g. execute the ``contactAction()``
+  method);
 
 * `Form`_ - A full-featured and flexible framework for creating forms and
   handling form submissions;
@@ -496,12 +498,13 @@ regardless of how your project is developed. To name a few:
 * `Validator`_ A system for creating rules about data and then validating
   whether or not user-submitted data follows those rules;
 
-* `ClassLoader`_ An autoloading library that allows PHP classes to be used
-  without needing to manually ``require`` the files containing those classes;
+* :doc:`ClassLoader</components/class_loader>` An autoloading library that allows
+  PHP classes to be used without needing to manually ``require`` the files
+  containing those classes;
 
-* `Templating`_ A toolkit for rendering templates, handling template inheritance
-  (i.e. a template is decorated with a layout) and performing other common
-  template tasks;
+* :doc:`Templating</components/templating>` A toolkit for rendering templates,
+  handling template inheritance (i.e. a template is decorated with a layout)
+  and performing other common template tasks;
 
 * `Security`_ - A powerful library for handling all types of security inside
   an application;
@@ -541,11 +544,7 @@ sensible defaults. For more advanced users, the sky is the limit.
 .. _`List of HTTP status codes`: http://en.wikipedia.org/wiki/List_of_HTTP_status_codes
 .. _`List of HTTP header fields`: http://en.wikipedia.org/wiki/List_of_HTTP_header_fields
 .. _`List of common media types`: http://en.wikipedia.org/wiki/Internet_media_type#List_of_common_media_types
-.. _`HttpFoundation`: https://github.com/symfony/HttpFoundation
-.. _`Routing`: https://github.com/symfony/Routing
 .. _`Form`: https://github.com/symfony/Form
 .. _`Validator`: https://github.com/symfony/Validator
-.. _`ClassLoader`: https://github.com/symfony/ClassLoader
-.. _`Templating`: https://github.com/symfony/Templating
 .. _`Security`: https://github.com/symfony/Security
 .. _`Translation`: https://github.com/symfony/Translation

@@ -30,7 +30,7 @@ recommended).
     
     .. code-block:: bash
 
-        ./app/console server:run localhost:8000
+        $ php app/console server:run localhost:8000
 
     Then the URL to your application will be "http://localhost:8000/app_dev.php"
 
@@ -76,10 +76,10 @@ have a ``Symfony/`` directory that looks like this:
 
     .. code-block:: bash
 
-        composer.phar create-project symfony/framework-standard-edition path/to/install
+        $ composer.phar create-project symfony/framework-standard-edition path/to/install
 
         # remove the Git history
-        rm -rf .git
+        $ rm -rf .git
 
 .. tip::
 
@@ -88,10 +88,10 @@ have a ``Symfony/`` directory that looks like this:
     .. code-block:: bash
 
         # check your PHP CLI configuration
-        php ./app/check.php
+        $ php ./app/check.php
 
         # run the built-in web server
-        php ./app/console server:run
+        $ php ./app/console server:run
 
     The built-in server should be used only for development purpose, but it
     can help you to start your project quickly and easily.
