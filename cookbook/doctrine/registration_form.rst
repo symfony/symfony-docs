@@ -74,8 +74,8 @@ You have a simple ``User`` entity mapped to the database::
         }
     }
 
-This ``User`` entity contains three fields and two of them (email and
-password) should display on the form. The email property must be unique
+This ``User`` entity contains three fields and two of them (``email`` and
+``plainPassword``) should display on the form. The email property must be unique
 in the database, this is enforced by adding this validation at the top of
 the class.
 
@@ -94,7 +94,6 @@ Next, create the form for the ``User`` model::
     namespace Acme\AccountBundle\Form\Type;
 
     use Symfony\Component\Form\AbstractType;
-    use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
     use Symfony\Component\Form\FormBuilder;
 
     class UserType extends AbstractType
@@ -120,9 +119,9 @@ Next, create the form for the ``User`` model::
         }
     }
 
-There are just two fields: email and password (repeated to confirm the entered
-password). The ``data_class`` option tells the form the name of data class
-(i.e. your ``User`` entity).
+There are just two fields: ``email`` and ``plainPassword`` (repeated to confirm
+the entered password). The ``data_class`` option tells the form the name of
+data class (i.e. your ``User`` entity).
 
 .. tip::
 
@@ -185,7 +184,6 @@ Next, create the form for this ``Registration`` model::
     namespace Acme\AccountBundle\Form\Type;
 
     use Symfony\Component\Form\AbstractType;
-    use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
     use Symfony\Component\Form\FormBuilder;
 
     class RegistrationType extends AbstractType
