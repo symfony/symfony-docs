@@ -69,7 +69,7 @@ instructions (use all of the default options):
 
 .. code-block:: bash
 
-    php app/console generate:bundle --namespace=Acme/HelloBundle --format=yml
+    $ php app/console generate:bundle --namespace=Acme/HelloBundle --format=yml
 
 Behind the scenes, a directory is created for the bundle at ``src/Acme/HelloBundle``.
 A line is also automatically added to the ``app/AppKernel.php`` file so that
@@ -261,7 +261,7 @@ application should greet you:
     
     .. code-block:: bash
 
-        php app/console cache:clear --env=prod --no-debug
+        $ php app/console cache:clear --env=prod --no-debug
 
 An optional, but common, third step in the process is to create a template.
 
@@ -667,7 +667,7 @@ generating a basic bundle skeleton:
 
 .. code-block:: bash
 
-    php app/console generate:bundle --namespace=Acme/TestBundle
+    $ php app/console generate:bundle --namespace=Acme/TestBundle
 
 The bundle skeleton generates with a basic controller, template and routing
 resource that can be customized. You'll learn more about Symfony2's command-line

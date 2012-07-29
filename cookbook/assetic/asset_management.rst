@@ -300,7 +300,7 @@ each time you deploy), you should run the following task:
 
 .. code-block:: bash
 
-    php app/console assetic:dump --env=prod --no-debug
+    $ php app/console assetic:dump --env=prod --no-debug
 
 This will physically generate and write each file that you need (e.g. ``/js/abcd123.js``).
 If you update any of your assets, you'll need to run this again to regenerate
@@ -342,7 +342,7 @@ need to dump them manually. To do so, run the following:
 
 .. code-block:: bash
 
-    php app/console assetic:dump
+    $ php app/console assetic:dump
 
 This physically writes all of the asset files you need for your ``dev``
 environment. The big disadvantage is that you need to run this each time
@@ -351,7 +351,7 @@ command will automatically regenerate assets *as they change*:
 
 .. code-block:: bash
 
-    php app/console assetic:dump --watch
+    $ php app/console assetic:dump --watch
 
 Since running this command in the ``dev`` environment may generate a bunch
 of files, it's usually a good idea to point your generated assets files to
