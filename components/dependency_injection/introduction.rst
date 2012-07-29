@@ -1,5 +1,6 @@
 ﻿.. index::
     single: Dependency Injection
+    single: Components; DependencyInjection
 
 The Dependency Injection Component
 ==================================

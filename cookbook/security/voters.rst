@@ -1,5 +1,5 @@
 .. index::
-   single: Security, Voters
+   single: Security; Voters
 
 How to implement your own Voter to blacklist IP Addresses
 =========================================================

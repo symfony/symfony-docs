@@ -1,5 +1,6 @@
 .. index::
    single: Finder
+   single: Components; Finder
 
 The Finder Component
 ====================
