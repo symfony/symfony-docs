@@ -84,7 +84,7 @@ using a special "tag":
 Request events, checking types
 ------------------------------
 
-A single page can make several requests (one mast request, and then multiple
+A single page can make several requests (one master request, and then multiple
 sub-requests), which is why when working with the ``KernelEvents::REQUEST``
 event, you might need to check the type of the request. This can be easily
 done as follow::
