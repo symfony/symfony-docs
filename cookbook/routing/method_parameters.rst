@@ -8,7 +8,7 @@ The HTTP method of a request is one of the requirements that can be checked
 when seeing if it matches a route. This is introduced in the routing chapter
 of the book ":doc:`/book/routing`" with examples using GET and POST. You
 can also use other HTTP verbs in this way. For example, if you have a blog
-post entry then you could use the same url pattern to show it, make changes
+post entry then you could use the same URL pattern to show it, make changes
 to it and delete it by matching on GET, PUT and DELETE.
 
 .. configuration-block::
@@ -86,7 +86,7 @@ to it and delete it by matching on GET, PUT and DELETE.
 Unfortunately, life isn't quite this simple, since most browsers do not
 support sending PUT and DELETE requests. Fortunately Symfony2 provides you
 with a simple way of working around this limitation. By including a ``_method``
-parameter in the query string or parameters of an HTTP request Symfony2 will
+parameter in the query string or parameters of an HTTP request, Symfony2 will
 use this as the method when matching routes. This can be done easily in forms
 with a hidden field. Suppose you have a form for editing a blog post:
 
