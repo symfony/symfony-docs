@@ -93,15 +93,22 @@ look and feel familiar, you should follow these rules:
 
 An example::
 
-    // src/Foo/Bar/foo.php
-    public function foo($bar)
+    // src/Foo/Bar.php
+
+    // ...
+    class Bar
     {
-        // set foo with a value of bar
-        $foo = ...;
+        // ...
 
-        // ... check if $bar has the correct value
+        public function foo($bar)
+        {
+            // set foo with a value of bar
+            $foo = ...;
 
-        return $foo->baz($bar, ...);
+            // ... check if $bar has the correct value
+
+            return $foo->baz($bar, ...);
+        }
     }
 
 .. note::
