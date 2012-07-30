@@ -262,7 +262,7 @@ First, create the custom field type class::
             ));
         }
 
-        public function getParent(array $options)
+        public function getParent()
         {
             return 'text';
         }
