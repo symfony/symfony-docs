@@ -76,12 +76,14 @@ look and feel familiar, you should follow these rules:
 
 * The code follows the :doc:`Symfony Coding Standards</contributing/code/standards>`
   as well as the `Twig Coding Standards`_;
+* Each line should break approximately after the first word that crosses the
+  72nd character (so most lines end up being 72-78 lines);
 * When we fold one or more lines of code, we place ``...`` in a comment at the point
   of the fold. These comments are: ``// ...`` (php), ``# ...`` (yaml/bash), ``{# ... #}``
   (twig), ``<!-- ... -->`` (xml/html), ``; ...`` (ini), ``...`` (text);
 * When we fold a part of a line, e.g. a variable value, we put ``...`` (without comment)
   at the place of the fold;
-* Description of the foloed code: (optional)
+* Description of the folded code: (optional)
   If we fold several lines: the description of the fold can be placed after the ``...``
   If we fold only part of a line: the description can be placed before the line;
 * If useful, a ``codeblock`` should begin with a comment containing the filename
