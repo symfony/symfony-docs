@@ -1,8 +1,8 @@
 .. index::
    single: Security; Access Control Lists (ACLs)
 
-Access Control Lists (ACLs)
-===========================
+How to use Access Control Lists (ACLs)
+======================================
 
 In complex applications, you will often face the problem that access decisions
 cannot only be based on the person (``Token``) who is requesting access, but
