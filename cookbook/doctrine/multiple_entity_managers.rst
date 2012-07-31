@@ -69,3 +69,26 @@ the default entity manager (i.e. ``default``) is returned::
 You can now use Doctrine just as you did before - using the ``default`` entity
 manager to persist and fetch entities that it manages and the ``customer``
 entity manager to persist and fetch its entities.
+
+The same applies to repository call::
+
+    class UserController extends Controller
+    {
+        public function indexAction()
+        {
+            // Retrieves a repository managed by the "default" em
+            $products = $this->get('doctrine')
+                             ->getRepository('AcmeStoreBundle:Product')
+                             ->findAll();
+
+            // Explicit way to deal with the "default" em
+            $products = $this->get('doctrine')
+                             ->getRepository('AcmeStoreBundle:Product', 'default')
+                             ->findAll();
+
+            // Retrieves a repository managed by the "customer" em
+            $customers = $this->get('doctrine')
+                              ->getRepository('AcmeCustomerBundle:Customer', 'customer')
+                              ->findAll();
+        }
+    }
