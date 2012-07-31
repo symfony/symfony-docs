@@ -42,8 +42,17 @@ and ``customer``. The ``default`` entity manager manages entities in the
 manager manages entities in the ``AcmeCustomerBundle``.
 
 When working with multiple entity managers, you should be explicit about which
-entity manager you want. If you *do* omit the entity manager's name when
-asking for it, the default entity manager (i.e. ``default``) is returned::
+entity manager you want. If you *do* omit the entity manager's name when you
+update your schema, the default (i.e. ``default``) is used::
+
+    # Play only with "default" mappings
+    php app/console doctrine:schema:update --force
+
+    # Play only with "customer" mappings
+    php app/console doctrine:schema:update --force --em=customer
+
+If you *do* omit the entity manager's name when asking for it,
+the default entity manager (i.e. ``default``) is returned::
 
     class UserController extends Controller
     {
@@ -52,7 +61,7 @@ asking for it, the default entity manager (i.e. ``default``) is returned::
             // both return the "default" em
             $em = $this->get('doctrine')->getEntityManager();
             $em = $this->get('doctrine')->getEntityManager('default');
-            
+
             $customerEm =  $this->get('doctrine')->getEntityManager('customer');
         }
     }
