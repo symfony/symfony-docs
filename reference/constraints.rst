@@ -35,6 +35,7 @@ Validation Constraints Reference
    constraints/Language
    constraints/Locale
    constraints/Country
+   constraints/Count
 
    constraints/File
    constraints/Image

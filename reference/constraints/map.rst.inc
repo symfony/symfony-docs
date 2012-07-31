@@ -46,7 +46,7 @@ Collection Constraints
 * :doc:`Language </reference/constraints/Language>`
 * :doc:`Locale </reference/constraints/Locale>`
 * :doc:`Country </reference/constraints/Country>`
-* :doc:`Size </reference/constraints/Size>`
+* :doc:`Count </reference/constraints/Count>`
 
 File Constraints
 ~~~~~~~~~~~~~~~~
