@@ -1,8 +1,8 @@
 .. index::
    single: Templating; Global variables
 
-Injecting variables into all templates (i.e. Global Variables)
-==============================================================
+How to Inject Variables into all Templates (i.e. Global Variables)
+==================================================================
 
 Sometimes you want a variable to be accessible to all the templates you use.
 This is possible inside your ``app/config/config.yml`` file:

@@ -1,8 +1,8 @@
 .. index::
    single: Doctrine; Common extensions
 
-Doctrine Extensions: Timestampable, Sluggable, Translatable, etc.
-=================================================================
+How to use Doctrine Extensions: Timestampable, Sluggable, Translatable, etc.
+============================================================================
 
 Doctrine2 is very flexible, and the community has already created a series
 of useful Doctrine extensions to help you with common entity-related tasks.
