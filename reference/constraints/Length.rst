@@ -1,11 +1,11 @@
-Size
+Length
 ====
 
 Validates that a given string length or collection elements count is *between*
 some minimum and maximum value.
 
 .. versionadded:: 2.1
-    The Size constraint was added in Symfony 2.1.
+    The Length constraint was added in Symfony 2.1.
 
 +----------------+--------------------------------------------------------------------+
 | Applies to     | :ref:`property or method<validation-property-target>`              |
@@ -18,9 +18,9 @@ some minimum and maximum value.
 |                | - `maxMessage`_                                                    |
 |                | - `exactMessage`_                                                  |
 +----------------+--------------------------------------------------------------------+
-| Class          | :class:`Symfony\\Component\\Validator\\Constraints\\Size`          |
+| Class          | :class:`Symfony\\Component\\Validator\\Constraints\\Length`          |
 +----------------+--------------------------------------------------------------------+
-| Validator      | :class:`Symfony\\Component\\Validator\\Constraints\\SizeValidator` |
+| Validator      | :class:`Symfony\\Component\\Validator\\Constraints\\LengthValidator` |
 +----------------+--------------------------------------------------------------------+
 
 Basic Usage
@@ -37,7 +37,7 @@ To verify that the ``firstName`` field length of a class is between "2" and
         Acme\EventBundle\Entity\Participant:
             properties:
                 firstName:
-                    - Size:
+                    - Length:
                         min: 2
                         max: 50
                         minMessage: Your first name must be at least 2 characters length
@@ -51,7 +51,7 @@ To verify that the ``firstName`` field length of a class is between "2" and
         class Participant
         {
             /**
-             * @Assert\Size(
+             * @Assert\Length(
              *      min = "2",
              *      max = "50",
              *      minMessage = "Your first name must be at least 2 characters length",
@@ -75,7 +75,7 @@ you might add the following:
         Acme\EventBundle\Entity\Participant:
             properties:
                 emails:
-                    - Size:
+                    - Length:
                         min: 1
                         max: 5
                         minMessage: You must specify at least one email
@@ -89,7 +89,7 @@ you might add the following:
         class Participant
         {
             /**
-             * @Assert\Size(
+             * @Assert\Length(
              *      min = "1",
              *      max = "5",
              *      minMessage = "You must specify at least one email",
