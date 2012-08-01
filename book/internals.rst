@@ -377,6 +377,15 @@ and set a new ``Exception`` object, or do nothing:
         // $event->setException($exception);
     }
 
+.. note::
+
+    As Symfony ensures that the Response status code is set to the most
+    appropriate one depending on the exception, setting the status on the
+    response won't work. If you want to overwrite the status code (which you
+    should not without a good reason), set the ``X-Status-Code`` header::
+
+        return new Response('Error', 404 /* ignored */, array('X-Status-Code' => 200));
+
 .. index::
    single: Event Dispatcher
 
