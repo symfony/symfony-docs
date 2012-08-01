@@ -1,8 +1,8 @@
 .. index::
    single: Bundle; Best practices
 
-Bundle Structure and Best Practices
-===================================
+How to use Best Practices for Structuring Bundles
+=================================================
 
 A bundle is a directory that has a well-defined structure and can host anything
 from classes to controllers and web resources. Even if bundles are very
