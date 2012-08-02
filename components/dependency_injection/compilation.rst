@@ -160,11 +160,13 @@ it::
     }
 
 You will now get the speed of the PHP configured container with the ease of using
-configuration files. In the above example you will need to delete the cached
-container file whenever you make any changes. Adding a check for a variable that
-determines if you are in debug mode allows you to keep the speed of the cached
-container in production but getting an up to date configuration whilst developing
-your application::
+configuration files. Additionally dumping the container in this way further optimizes
+how the services are created by the container.
+
+In the above example you will need to delete the cached container file whenever
+you make any changes. Adding a check for a variable that determines if you are
+in debug mode allows you to keep the speed of the cached container in production
+but getting an up to date configuration whilst developing your application::
 
     // ...
 
@@ -206,24 +208,24 @@ and use them as metadata for the cache::
     $file = __DIR__ .'/cache/container.php';
     $containerConfigCache = new ConfigCache($file, $isDebug);
 
-    if ($cache->isFresh()) {
-        require_once $file;
-        $container = new MyCachedContainer();
-    } else {
-        $container = new ContainerBuilder();
+    if (!$cache->isFresh()) {
+        $containerBuilder = new ContainerBuilder();
         //--
         $container->compile();
 
-        $dumper = new PhpDumper($container);
+        $dumper = new PhpDumper($containerBuilder);
         $containerConfigCache->write(
             $dumper->dump(array('class' => 'MyCachedContainer')),
-            $container->getResources()
+            $containerBuilder->getResources()
         );
     }
 
-Now the cache is used regardless of whether debug mode is on or not. The difference
-is that the ``ConfigCache`` is set to debug mode with its second constructor
-argument. When the cache is not in debug mode the cached container will always
-be used if it exists. In debug mode, an additional metadata file is written with
-the timestamps of all the resource files. These are then checked to see if the files
-have changed, if they have the cache will be considered stale.
+    require_once $file;
+    $container = new MyCachedContainer();
+
+Now the cached dumped container is used regardless of whether debug mode is on or not.
+The difference is that the ``ConfigCache`` is set to debug mode with its second
+constructor argument. When the cache is not in debug mode the cached container
+will always be used if it exists. In debug mode, an additional metadata file
+is written with the timestamps of all the resource files. These are then checked
+to see if the files have changed, if they have the cache will be considered stale.
