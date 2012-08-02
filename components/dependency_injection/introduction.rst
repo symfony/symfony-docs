@@ -198,11 +198,7 @@ Setting Up the Container with Configuration Files
 -------------------------------------------------
 
 As well as setting up the services using PHP as above you can also use configuration
-files. To do this you also need to install the Config component:
-
-* Use the official Git repository (https://github.com/symfony/Config);
-* Install it via PEAR ( `pear.symfony.com/Config`);
-* Install it via Composer (`symfony/config` on Packagist).
+files. To do this you also need to install :doc:`the Config Component</components/config/introduction>`.
 
 Loading an xml config file:
 
