@@ -204,7 +204,7 @@ files. To do this you also need to install the Config component:
 * Install it via PEAR ( `pear.symfony.com/Config`);
 * Install it via Composer (`symfony/config` on Packagist).
 
-Loading an xml config file:
+Loading an XML config file:
 
 .. code-block:: php
 
@@ -216,7 +216,7 @@ Loading an xml config file:
     $loader = new XmlFileLoader($container, new FileLocator(__DIR__));
     $loader->load('services.xml');
 
-Loading a yaml config file:
+Loading a YAML config file:
 
 .. code-block:: php
 
@@ -227,6 +227,11 @@ Loading a yaml config file:
     $container = new ContainerBuilder();
     $loader = new YamlFileLoader($container, new FileLocator(__DIR__));
     $loader->load('services.yml');
+
+.. note::
+
+    If you want to load YAML config files then you will also need to install
+    :doc:`The YAML component</components/yaml>`.
 
 The ``newsletter_manager`` and ``mailer`` services can be set up using config files:
 
