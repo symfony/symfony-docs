@@ -80,6 +80,7 @@ a pass with the container to control where it goes in the order:
 For example, to run your custom pass after the default removal passes have been run::
 
     use Symfony\Component\DependencyInjection\ContainerBuilder;
+    use Symfony\Component\DependencyInjection\Compiler\PassConfig;
 
     $container = new ContainerBuilder();
     $container->addCompilerPass(new CustomCompilerPass, PassConfig::TYPE_AFTER_REMOVING);
