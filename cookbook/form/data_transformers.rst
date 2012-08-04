@@ -1,8 +1,8 @@
 .. index::
    single: Form; Data transformers
 
-Using Data Transformers
-=======================
+How to use Data Transformers
+============================
 
 You'll often find the need to transform the data the user entered in a form into
 something else for use in your program. You could easily do this manually in your

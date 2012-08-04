@@ -42,8 +42,17 @@ and ``customer``. The ``default`` entity manager manages entities in the
 manager manages entities in the ``AcmeCustomerBundle``.
 
 When working with multiple entity managers, you should be explicit about which
-entity manager you want. If you *do* omit the entity manager's name when
-asking for it, the default entity manager (i.e. ``default``) is returned::
+entity manager you want. If you *do* omit the entity manager's name when you
+update your schema, the default (i.e. ``default``) is used::
+
+    # Play only with "default" mappings
+    php app/console doctrine:schema:update --force
+
+    # Play only with "customer" mappings
+    php app/console doctrine:schema:update --force --em=customer
+
+If you *do* omit the entity manager's name when asking for it,
+the default entity manager (i.e. ``default``) is returned::
 
     class UserController extends Controller
     {
@@ -60,3 +69,26 @@ asking for it, the default entity manager (i.e. ``default``) is returned::
 You can now use Doctrine just as you did before - using the ``default`` entity
 manager to persist and fetch entities that it manages and the ``customer``
 entity manager to persist and fetch its entities.
+
+The same applies to repository call::
+
+    class UserController extends Controller
+    {
+        public function indexAction()
+        {
+            // Retrieves a repository managed by the "default" em
+            $products = $this->get('doctrine')
+                             ->getRepository('AcmeStoreBundle:Product')
+                             ->findAll();
+
+            // Explicit way to deal with the "default" em
+            $products = $this->get('doctrine')
+                             ->getRepository('AcmeStoreBundle:Product', 'default')
+                             ->findAll();
+
+            // Retrieves a repository managed by the "customer" em
+            $customers = $this->get('doctrine')
+                              ->getRepository('AcmeCustomerBundle:Customer', 'customer')
+                              ->findAll();
+        }
+    }

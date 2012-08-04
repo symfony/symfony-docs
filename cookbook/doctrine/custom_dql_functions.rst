@@ -1,8 +1,8 @@
 .. index::
    single: Doctrine; Custom DQL functions
 
-Registering Custom DQL Functions
-================================
+How to Register Custom DQL Functions
+====================================
 
 Doctrine allows you to specify custom DQL functions. For more information
 on this topic, read Doctrine's cookbook article "`DQL User Defined Functions`_".

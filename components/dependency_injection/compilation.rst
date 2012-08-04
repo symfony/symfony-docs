@@ -80,6 +80,7 @@ a pass with the container to control where it goes in the order:
 For example, to run your custom pass after the default removal passes have been run::
 
     use Symfony\Component\DependencyInjection\ContainerBuilder;
+    use Symfony\Component\DependencyInjection\Compiler\PassConfig;
 
     $container = new ContainerBuilder();
     $container->addCompilerPass(new CustomCompilerPass, PassConfig::TYPE_AFTER_REMOVING);
@@ -160,11 +161,13 @@ it::
     }
 
 You will now get the speed of the PHP configured container with the ease of using
-configuration files. In the above example you will need to delete the cached
-container file whenever you make any changes. Adding a check for a variable that
-determines if you are in debug mode allows you to keep the speed of the cached
-container in production but getting an up to date configuration whilst developing
-your application::
+configuration files. Additionally dumping the container in this way further optimizes
+how the services are created by the container.
+
+In the above example you will need to delete the cached container file whenever
+you make any changes. Adding a check for a variable that determines if you are
+in debug mode allows you to keep the speed of the cached container in production
+but getting an up to date configuration whilst developing your application::
 
     // ...
 
@@ -186,3 +189,44 @@ your application::
         }
     }
 
+This could be further improved by only recompiling the container in debug
+mode when changes have been made to its configuration rather than on every
+request. This can be done by caching the resource files used to configure
+the container in the way describe in ":doc:`/components/conf/caching`"
+in the config component documentation.
+
+You do not need to work out which files to cache as the container builder
+keeps track of all the resources used to configure it, not just the configuration
+files but the extension classes and compiler passes as well. This means that
+any changes to any of these files will invalidate the cache and trigger the
+container being rebuilt. You just need to ask the container for these resources
+and use them as metadata for the cache::
+
+    // ...
+
+    // set $isDebug based on something in your project
+
+    $file = __DIR__ .'/cache/container.php';
+    $containerConfigCache = new ConfigCache($file, $isDebug);
+
+    if (!$cache->isFresh()) {
+        $containerBuilder = new ContainerBuilder();
+        //--
+        $container->compile();
+
+        $dumper = new PhpDumper($containerBuilder);
+        $containerConfigCache->write(
+            $dumper->dump(array('class' => 'MyCachedContainer')),
+            $containerBuilder->getResources()
+        );
+    }
+
+    require_once $file;
+    $container = new MyCachedContainer();
+
+Now the cached dumped container is used regardless of whether debug mode is on or not.
+The difference is that the ``ConfigCache`` is set to debug mode with its second
+constructor argument. When the cache is not in debug mode the cached container
+will always be used if it exists. In debug mode, an additional metadata file
+is written with the timestamps of all the resource files. These are then checked
+to see if the files have changed, if they have the cache will be considered stale.
