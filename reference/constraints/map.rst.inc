@@ -18,7 +18,7 @@ String Constraints
 * :doc:`Email </reference/constraints/Email>`
 * :doc:`MinLength </reference/constraints/MinLength>`
 * :doc:`MaxLength </reference/constraints/MaxLength>`
-* :doc:`Size </reference/constraints/Size>`
+* :doc:`Length </reference/constraints/Length>`
 * :doc:`Url </reference/constraints/Url>`
 * :doc:`Regex </reference/constraints/Regex>`
 * :doc:`Ip </reference/constraints/Ip>`
@@ -46,7 +46,7 @@ Collection Constraints
 * :doc:`Language </reference/constraints/Language>`
 * :doc:`Locale </reference/constraints/Locale>`
 * :doc:`Country </reference/constraints/Country>`
-* :doc:`Size </reference/constraints/Size>`
+* :doc:`Count </reference/constraints/Count>`
 
 File Constraints
 ~~~~~~~~~~~~~~~~
