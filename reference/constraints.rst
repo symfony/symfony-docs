@@ -31,11 +31,11 @@ Validation Constraints Reference
 
    constraints/Choice
    constraints/Collection
+   constraints/Count
    constraints/UniqueEntity
    constraints/Language
    constraints/Locale
    constraints/Country
-   constraints/Count
 
    constraints/File
    constraints/Image

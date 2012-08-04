@@ -42,11 +42,11 @@ Collection Constraints
 
 * :doc:`Choice </reference/constraints/Choice>`
 * :doc:`Collection </reference/constraints/Collection>`
+* :doc:`Count </reference/constraints/Count>`
 * :doc:`UniqueEntity </reference/constraints/UniqueEntity>`
 * :doc:`Language </reference/constraints/Language>`
 * :doc:`Locale </reference/constraints/Locale>`
 * :doc:`Country </reference/constraints/Country>`
-* :doc:`Count </reference/constraints/Count>`
 
 File Constraints
 ~~~~~~~~~~~~~~~~
