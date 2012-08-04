@@ -10,17 +10,16 @@ values instead of files, because databases are easier to use and scale in a
 multi-webserver environment.
 
 Symfony2 has a built-in solution for database session storage called
-:class:`Symfony\\Component\\HttpFoundation\\Session\\Storage\\PdoSessionStorage`.
+:class:`Symfony\\Component\\HttpFoundation\\Session\\Storage\\Handler\\PdoSessionHandler`.
 To use it, you just need to change some parameters in ``config.yml`` (or the
 configuration format of your choice):
 
 .. versionadded:: 2.1
     In Symfony2.1 the class and namespace are slightly modified. You can now 
-    find the `PdoSessionStorage` class in the `Session\\Storage` namespace:
-    ``Symfony\Component\HttpFoundation\Session\Storage\PdoSessionStorage``. Also
-    note the second and third constructor arguments to the class have changed
-    order. Below, you'll notice that ``%session.storage.options%`` and ``%pdo.db_options%``
-    have switched places.
+    find the session storage classes in the `Session\\Storage` namespace:
+    ``Symfony\Component\HttpFoundation\Session\Storage``. Also
+    note that in Symfony2.1 you should configure ``handler_id`` not ``storage_id`` like in Symfony2.0. 
+    Below, you'll notice that ``%session.storage.options%`` is not used anymore.
 
 .. configuration-block::
 
@@ -30,7 +29,7 @@ configuration format of your choice):
         framework:
             session:
                 # ...
-                handler_id:     session.storage.pdo
+                handler_id:     session.handler.pdo
 
         parameters:
             pdo.db_options:
@@ -47,15 +46,15 @@ configuration format of your choice):
                     user:     myuser
                     password: mypassword
 
-            session.storage.pdo:
+            session.handler.pdo:
                 class:     Symfony\Component\HttpFoundation\Session\Storage\Handler\PdoSessionHandler
-                arguments: [@pdo, %pdo.db_options%, %session.storage.options%]
+                arguments: [@pdo, %pdo.db_options%]
 
     .. code-block:: xml
 
         <!-- app/config/config.xml -->
         <framework:config>
-            <framework:session handler-id="session.storage.pdo" lifetime="3600" auto-start="true"/>
+            <framework:session handler-id="session.handler.pdo" lifetime="3600" auto-start="true"/>
         </framework:config>
 
         <parameters>
@@ -74,16 +73,15 @@ configuration format of your choice):
                 <argument>mypassword</argument>
             </service>
 
-            <service id="session.storage.pdo" class="Symfony\Component\HttpFoundation\Session\Storage\Handler\PdoSessionHandler">
+            <service id="session.handler.pdo" class="Symfony\Component\HttpFoundation\Session\Storage\Handler\PdoSessionHandler">
                 <argument type="service" id="pdo" />
                 <argument>%pdo.db_options%</argument>
-                <argument>%session.storage.options%</argument>
             </service>
         </services>
 
     .. code-block:: php
 
-        // app/config/config.yml
+        // app/config/config.php
         use Symfony\Component\DependencyInjection\Definition;
         use Symfony\Component\DependencyInjection\Reference;
 
@@ -91,7 +89,7 @@ configuration format of your choice):
             // ...
             'session' => array(
                 ...,
-                'handler_id' => 'session.storage.pdo',
+                'handler_id' => 'session.handler.pdo',
             ),
         ));
 
@@ -112,9 +110,8 @@ configuration format of your choice):
         $storageDefinition = new Definition('Symfony\Component\HttpFoundation\Session\Storage\Handler\PdoSessionHandler', array(
             new Reference('pdo'),
             '%pdo.db_options%',
-            '%session.storage.options%',
         ));
-        $container->setDefinition('session.storage.pdo', $storageDefinition);
+        $container->setDefinition('session.handler.pdo', $storageDefinition);
 
 * ``db_table``: The name of the session table in your database
 * ``db_id_col``: The name of the id column in your session table (VARCHAR(255) or larger)
