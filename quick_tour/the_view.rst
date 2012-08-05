@@ -265,7 +265,7 @@ code.
 Escaping Variables
 ------------------
 
-Twig is configured to automatically escapes all output by default. Read Twig
+Twig is configured to automatically escape all output by default. Read Twig
 `documentation`_ to learn more about output escaping and the Escaper
 extension.
 
