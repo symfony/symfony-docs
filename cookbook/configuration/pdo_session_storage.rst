@@ -75,7 +75,7 @@ configuration format of your choice):
 
     .. code-block:: php
 
-        // app/config/config.yml
+        // app/config/config.php
         use Symfony\Component\DependencyInjection\Definition;
         use Symfony\Component\DependencyInjection\Reference;
 

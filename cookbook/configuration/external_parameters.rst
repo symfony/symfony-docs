@@ -4,8 +4,8 @@
 How to Set External Parameters in the Service Container
 =======================================================
 
-In the chapter :doc:`/cookbook/configuration/environments`, you learned how 
-to manage your application configuration. At times, it may benefit your application 
+In the chapter :doc:`/cookbook/configuration/environments`, you learned how
+to manage your application configuration. At times, it may benefit your application
 to store certain credentials outside of your project code. Database configuration
 is one such example. The flexibility of the symfony service container allows
 you to easily do this.
@@ -38,16 +38,16 @@ the following ``VirtualHost`` configuration:
 
 .. note::
 
-    The example above is for an Apache configuration, using the `SetEnv`_ 
+    The example above is for an Apache configuration, using the `SetEnv`_
     directive.  However, this will work for any web server which supports
     the setting of environment variables.
-    
+
     Also, in order for your console to work (which does not use Apache),
     you must export these as shell variables. On a Unix system, you can run
     the following:
-    
+
     .. code-block:: bash
-    
+
         $ export SYMFONY__DATABASE__USER=user
         $ export SYMFONY__DATABASE__PASSWORD=secret
 
@@ -116,18 +116,18 @@ key, and define the type as ``constant``.
 
     This only works for XML configuration. If you're *not* using XML, simply
     import an XML file to take advantage of this functionality:
-    
+
     .. code-block:: yaml
-    
-        // app/config/config.yml
+
+        # app/config/config.yml
         imports:
             - { resource: parameters.xml }
 
 Miscellaneous Configuration
 ---------------------------
 
-The ``imports`` directive can be used to pull in parameters stored elsewhere. 
-Importing a PHP file gives you the flexibility to add whatever is needed 
+The ``imports`` directive can be used to pull in parameters stored elsewhere.
+Importing a PHP file gives you the flexibility to add whatever is needed
 in the container. The following imports a file named ``parameters.php``.
 
 .. configuration-block::
