@@ -1021,7 +1021,20 @@ class:
     }
 
 The fields from ``CategoryType`` can now be rendered alongside those from
-the ``TaskType`` class. Render the ``Category`` fields in the same way
+the ``TaskType`` class. To activate validation on CategoryType, add
+``cascade_validation`` option:
+
+.. code-block:: php
+
+    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    {
+        $resolver->setDefaults(array(
+            'data_class' => 'Acme\TaskBundle\Entity\Category',
+            'cascade_validation' => true,
+        ));
+    }
+
+Render the ``Category`` fields in the same way
 as the original ``Task`` fields:
 
 .. configuration-block::
