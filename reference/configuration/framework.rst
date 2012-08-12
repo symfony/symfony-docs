@@ -285,6 +285,7 @@ Full Default Configuration
                 type:                 ~
                 http_port:            80
                 https_port:           443
+                strict_requirements:  true
 
             # session configuration
             session:
