@@ -1022,9 +1022,7 @@ class:
 
 The fields from ``CategoryType`` can now be rendered alongside those from
 the ``TaskType`` class. To activate validation on CategoryType, add
-``cascade_validation`` option:
-
-.. code-block:: php
+the ``cascade_validation`` option::
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
