@@ -499,7 +499,7 @@ different your ``Extension`` class will have to override the
 ``Configuration``.
 
 Comments and examples can be added to your configuration nodes using the
-``->setInfo()`` and ``->setExample()`` methods::
+``->info()`` and ``->example()`` methods::
 
     // src/Acme/HelloBundle/DependencyExtension/Configuration.php
     namespace Acme\HelloBundle\DependencyInjection;
@@ -518,8 +518,8 @@ Comments and examples can be added to your configuration nodes using the
                 ->children()
                     ->scalarNode('my_type')
                         ->defaultValue('bar')
-                        ->setInfo('what my_type configures')
-                        ->setExample('example setting')
+                        ->info('what my_type configures')
+                        ->example('example setting')
                     ->end()
                 ->end()
             ;
