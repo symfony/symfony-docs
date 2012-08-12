@@ -71,7 +71,7 @@ has found a suitable loader, this loader will be asked to load the resource::
     use Symfony\Component\Config\Loader\LoaderResolver;
     use Symfony\Component\Config\Loader\DelegatingLoader;
 
-    $loaderResolver = new LoaderResolver(array(new YamlUserLoader));
+    $loaderResolver = new LoaderResolver(array(new YamlUserLoader($locator)));
     $delegatingLoader = new DelegatingLoader($loaderResolver);
 
     $delegatingLoader->load(__DIR__.'/users.yml');

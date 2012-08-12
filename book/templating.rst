@@ -516,7 +516,7 @@ Including this template from any other template is simple:
 
     .. code-block:: html+jinja
 
-        {# src/Acme/ArticleBundle/Resources/Article/list.html.twig #}
+        {# src/Acme/ArticleBundle/Resources/views/Article/list.html.twig #}
         {% extends 'AcmeArticleBundle::layout.html.twig' %}
 
         {% block body %}

@@ -1,4 +1,4 @@
-. . index::
+.. index::
    single: Symfony2 Fundamentals
 
 Symfony2 and HTTP Fundamentals
