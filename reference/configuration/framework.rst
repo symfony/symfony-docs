@@ -285,7 +285,8 @@ Full Default Configuration
                 type:                 ~
                 http_port:            80
                 https_port:           443
-                strict_requirements:  true
+                # if false, an empty URL will be generated if a route is missing required parameters
+                strict_requirements:  %kernel.debug%
 
             # session configuration
             session:
