@@ -28,19 +28,19 @@ addition to the base class :class:`Symfony\\Component\\EventDispatcher\\Event`
 * :method:`Symfony\\Component\\EventDispatcher\\GenericEvent::getSubject`:
   Get the subject;
 
-* :method:`Symfony\\Component\\EventDispatcher\\GenericEvent::setArg`:
+* :method:`Symfony\\Component\\EventDispatcher\\GenericEvent::setArgument`:
   Sets an argument by key;
 
-* :method:`Symfony\\Component\\EventDispatcher\\GenericEvent::setArgs`:
+* :method:`Symfony\\Component\\EventDispatcher\\GenericEvent::setArguments`:
   Sets arguments array;
 
-* :method:`Symfony\\Component\\EventDispatcher\\GenericEvent::getArg`:
+* :method:`Symfony\\Component\\EventDispatcher\\GenericEvent::getArgument`:
   Gets an argument by key;
 
-* :method:`Symfony\\Component\\EventDispatcher\\GenericEvent::getArgs`:
-  Gets an array of argument;
+* :method:`Symfony\\Component\\EventDispatcher\\GenericEvent::getArguments`:
+  Getter for all arguments;
 
-* :method:`Symfony\\Component\\EventDispatcher\\GenericEvent::hasArg`:
+* :method:`Symfony\\Component\\EventDispatcher\\GenericEvent::hasArgument`:
   Returns true if the argument key exists;
 
 The ``GenericEvent`` also implements :phpclass:`ArrayAccess` on the event
