@@ -650,6 +650,9 @@ exposing a simple and efficient pattern::
         $response = new Response();
         $response->setETag($article->computeETag());
         $response->setLastModified($article->getPublishedAt());
+        
+        // Set response as public. Otherwise it will be private by default.
+        $response->setPublic();
 
         // Check that the Response is not modified for the given Request
         if ($response->isNotModified($this->getRequest())) {
