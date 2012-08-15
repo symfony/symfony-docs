@@ -209,10 +209,10 @@ and use them as metadata for the cache::
     $file = __DIR__ .'/cache/container.php';
     $containerConfigCache = new ConfigCache($file, $isDebug);
 
-    if (!$cache->isFresh()) {
+    if (!$containerConfigCache->isFresh()) {
         $containerBuilder = new ContainerBuilder();
         //--
-        $container->compile();
+        $containerBuilder->compile();
 
         $dumper = new PhpDumper($containerBuilder);
         $containerConfigCache->write(
