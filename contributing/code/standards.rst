@@ -12,7 +12,7 @@ looks and feels familiar, it's not about this or that being more readable.
 Symfony follows the standards defined in the `PSR-0`_, `PSR-1`_ and `PSR-2`_
 documents.
 
-Since a picture - or some code - is worth a thousand words, here's a short
+Since a picture — or some code — is worth a thousand words, here's a short
 example containing most features described below:
 
 .. code-block:: php
@@ -82,7 +82,7 @@ Structure
 * Use braces to indicate control structure body regardless of the number of
   statements it contains;
 
-* Define one class per file - this does not apply to private helper classes
+* Define one class per file — this does not apply to private helper classes
   that are not intended to be instantiated from the outside and thus are not
   concerned by the PSR-0 standard;
 
