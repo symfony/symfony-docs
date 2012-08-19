@@ -34,19 +34,18 @@ which makes all of this quite easy::
 
         public function setUp()
         {
-            $kernel = static::createKernel();
-            $kernel->boot();
-            $this->em = $kernel->getContainer()->get('doctrine.orm.entity_manager');
+            static::$kernel = static::createKernel();
+            static::$kernel->boot();
+            $this->em = static::$kernel->getContainer()->get('doctrine.orm.entity_manager');
         }
 
-        public function testProductByCategoryName()
+        public function testSearchByCategoryName()
         {
-            $results = $this->em
+            $products = $this->em
                 ->getRepository('AcmeStoreBundle:Product')
-                ->searchProductsByNameQuery('foo')
-                ->getResult()
+                ->searchByCategoryName('foo')
             ;
 
-            $this->assertCount(1, $results);
+            $this->assertCount(1, $products);
         }
     }
