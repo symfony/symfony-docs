@@ -20,13 +20,13 @@ If you need to actually execute a query, you will need to boot the kernel
 to get a valid connection. In this case, you'll extend the ``WebTestCase``,
 which makes all of this quite easy::
 
-    // src/Acme/StoreBundle/Tests/Entity/ProductRepositoryFunctionalTest.php
+    // src/Acme/StoreBundle/Tests/Entity/ProductRepositoryTest.php
 
     namespace Acme\StoreBundle\Tests\Entity;
 
     use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
-    class ProductRepositoryFunctionalTest extends WebTestCase
+    class ProductRepositoryTest extends WebTestCase
     {
         /**
          * @var \Doctrine\ORM\EntityManager
@@ -35,19 +35,19 @@ which makes all of this quite easy::
 
         public function setUp()
         {
-            $kernel = static::createKernel();
-            $kernel->boot();
-            $this->em = $kernel->getContainer()->get('doctrine.orm.entity_manager');
+            static::$kernel = static::createKernel();
+            static::$kernel->boot();
+            $this->em = static::$kernel->getContainer()->get('doctrine.orm.entity_manager');
         }
 
-        public function testProductByCategoryName()
+        public function testSearchByCategoryName()
         {
-            $results = $this->em
+            $products = $this->em
                 ->getRepository('AcmeStoreBundle:Product')
-                ->searchProductsByNameQuery('foo')
+                ->searchByCategoryName('foo')
                 ->getResult()
             ;
 
-            $this->assertCount(1, $results);
+            $this->assertCount(1, $products);
         }
     }
