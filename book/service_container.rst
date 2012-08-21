@@ -926,6 +926,7 @@ additional arguments (beyond just the ``name`` parameter).
 * form.field_factory.guesser
 * kernel.cache_warmer
 * kernel.event_listener
+* kernel.event_subscriber
 * monolog.logger
 * routing.loader
 * security.listener.factory
