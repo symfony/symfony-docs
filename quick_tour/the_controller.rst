@@ -143,7 +143,9 @@ next request::
     {{ app.session.flash('notice') }}
 
 This is useful when you need to set a success message before redirecting
-the user to another page (which will then show the message).
+the user to another page (which will then show the message). Please not that
+when you use hasFlash or getFlash instead of flash, the flash message will
+not be cleared and thus remain visible during following requests.
 
 Securing Resources
 ------------------
