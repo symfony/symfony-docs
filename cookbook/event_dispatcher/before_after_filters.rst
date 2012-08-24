@@ -125,7 +125,7 @@ event listeners, you can learn more about them at :doc:`/cookbook/service_contai
                 return;
             }
 
-            if($controller[0] instanceof TokenAuthenticatedController) {
+            if ($controller[0] instanceof TokenAuthenticatedController) {
                 $token = $event->getRequest()->get('token');
                 if (!in_array($token, $this->tokens)) {
                     throw new AccessDeniedHttpException('This action needs a valid token!');
@@ -148,9 +148,9 @@ your listener to be called just before any controller is executed:
         # app/config/config.yml (or inside your services.yml)
         services:
             demo.tokens.action_listener:
-              class: Acme\DemoBundle\EventListener\BeforeListener
-              arguments: [ %tokens% ]
-              tags:
+                class: Acme\DemoBundle\EventListener\BeforeListener
+                arguments: [ %tokens% ]
+                tags:
                     - { name: kernel.event_listener, event: kernel.controller, method: onKernelController }
 
     .. code-block:: xml
