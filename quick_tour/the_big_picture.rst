@@ -20,23 +20,6 @@ First, check that you have installed and configured a Web server (such as
 Apache) with the most recent PHP version possible (PHP 5.3.8 or newer is
 recommended).
 
-.. tip::
-   
-    If you have PHP 5.4, you could use the built-in web server. The built-in
-    server should be used only for development purpose, but it can help you
-    to start your project quickly and easily.
-
-    Just use this command in your Symfony directory to launch the server:
-    
-    .. code-block:: bash
-
-        $ php app/console server:run localhost:8000
-
-    Then the URL to your application will be "http://localhost:8000/app_dev.php"
-
-    If you want to access your application via "http://localhost/app_dev.php",
-    you will need to launch the command with administrator rights.
-
 Ready? Start by downloading the "`Symfony2 Standard Edition`_", a Symfony
 :term:`distribution` that is preconfigured for the most common use cases and
 also contains some code that demonstrates how to use Symfony2 (get the archive
@@ -78,9 +61,6 @@ have a ``Symfony/`` directory that looks like this:
 
         $ composer.phar create-project symfony/framework-standard-edition path/to/install
 
-        # remove the Git history
-        $ rm -rf .git
-
 .. tip::
 
     If you have PHP 5.4, you can use the built-in web server:
@@ -92,6 +72,8 @@ have a ``Symfony/`` directory that looks like this:
 
         # run the built-in web server
         $ php ./app/console server:run
+
+    Then the URL to your application will be "http://localhost:8000/app_dev.php"
 
     The built-in server should be used only for development purpose, but it
     can help you to start your project quickly and easily.
@@ -106,6 +88,17 @@ URL to see the diagnostics for your machine:
 .. code-block:: text
 
     http://localhost/config.php
+
+.. note::
+
+    All of the example URLs assume that you've downloaded and unzipped Symfony
+    directly into the web server web root. If you've followed the directions
+    above and unzipped the `Symfony` directory into your web root, then add
+    `/Symfony/web` after `localhost` for all the URLs you see:
+
+    .. code-block:: text
+
+        http://localhost/Symfony/web/config.php
 
 If there are any outstanding issues listed, correct them. You might also tweak
 your configuration by following any given recommendations. When everything is
