@@ -118,7 +118,7 @@ Updating Vendors
 At this point, you've downloaded a fully-functional Symfony project in which
 you'll start to develop your own application. A Symfony project depends on
 a number of external libraries. These are downloaded into the `vendor/` directory
-of your project via a library called `Composer_`.
+of your project via a library called `Composer`_.
 
 Depending on how you downloaded Symfony, you may or may not need to do update
 your vendors right now. But, updating your vendors is always safe, and guarantees
