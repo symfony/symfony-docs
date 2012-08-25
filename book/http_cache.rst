@@ -553,6 +553,7 @@ md5 of the content::
     {
         $response = $this->render('MyBundle:Main:index.html.twig');
         $response->setETag(md5($response->getContent()));
+        $response->setPublic(); // make sure the response is public/cacheable
         $response->isNotModified($this->getRequest());
 
         return $response;
@@ -604,7 +605,14 @@ header value::
         $date = $authorDate > $articleDate ? $authorDate : $articleDate;
 
         $response->setLastModified($date);
-        $response->isNotModified($this->getRequest());
+        // Set response as public. Otherwise it will be private by default.
+        $response->setPublic();
+
+        if ($response->isNotModified($this->getRequest())) {
+            return $response;
+        }
+
+        // do more work to populate the response will the full content
 
         return $response;
     }
@@ -846,6 +854,7 @@ independent of the rest of the page.
     public function indexAction()
     {
         $response = $this->render('MyBundle:MyController:index.html.twig');
+        // set the shared max age - the also marks the response as public
         $response->setSharedMaxAge(600);
 
         return $response;
