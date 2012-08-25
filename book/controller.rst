@@ -618,7 +618,7 @@ from any controller::
     $foo = $session->get('foo');
 
     // use a default value if the key doesn't exist
-    $filters = $session->set('filters', array());
+    $filters = $session->get('filters', array());
 
 These attributes will remain on the user for the remainder of that user's
 session.
