@@ -192,7 +192,7 @@ but getting an up to date configuration whilst developing your application::
 This could be further improved by only recompiling the container in debug
 mode when changes have been made to its configuration rather than on every
 request. This can be done by caching the resource files used to configure
-the container in the way describe in ":doc:`/components/conf/caching`"
+the container in the way describe in ":doc:`/components/config/caching`"
 in the config component documentation.
 
 You do not need to work out which files to cache as the container builder
@@ -209,10 +209,10 @@ and use them as metadata for the cache::
     $file = __DIR__ .'/cache/container.php';
     $containerConfigCache = new ConfigCache($file, $isDebug);
 
-    if (!$cache->isFresh()) {
+    if (!$containerConfigCache->isFresh()) {
         $containerBuilder = new ContainerBuilder();
         //--
-        $container->compile();
+        $containerBuilder->compile();
 
         $dumper = new PhpDumper($containerBuilder);
         $containerConfigCache->write(

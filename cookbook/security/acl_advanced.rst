@@ -90,8 +90,8 @@ two more sub-scopes:
 Pre-Authorization Decisions
 ---------------------------
 
-For pre-authorization decisions, that is decisions before any method, or
-secure action is invoked, we rely on the proven AccessDecisionManager service
+For pre-authorization decisions, that is decisions made before any secure method (or
+secure action) is invoked, we rely on the proven AccessDecisionManager service
 that is also used for reaching authorization decisions based on roles. Just
 like roles, the ACL system adds several new attributes which may be used to
 check for different permissions.
@@ -142,10 +142,9 @@ Built-in Permission Map
 Permission Attributes vs. Permission Bitmasks
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Attributes are used by the AccessDecisionManager, just like roles are
-attributes used by the AccessDecisionManager. Often, these attributes
-represent in fact an aggregate of integer bitmasks. Integer bitmasks on the
-other hand, are used by the ACL system internally to efficiently store your
+Attributes are used by the AccessDecisionManager, just like roles. Often, these
+attributes represent in fact an aggregate of integer bitmasks. Integer bitmasks on
+the other hand, are used by the ACL system internally to efficiently store your
 users' permissions in the database, and perform access checks using extremely
 fast bitmask operations.
 

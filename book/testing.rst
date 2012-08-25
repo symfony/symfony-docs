@@ -757,9 +757,11 @@ section:
         </whitelist>
     </filter>
 
-Learn more from the Cookbook
-----------------------------
+Learn more
+----------
 
+* :doc:`/components/dom_crawler`
+* :doc:`/components/css_selector`
 * :doc:`/cookbook/testing/http_authentication`
 * :doc:`/cookbook/testing/insulating_clients`
 * :doc:`/cookbook/testing/profiling`

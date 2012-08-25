@@ -32,6 +32,10 @@
   * :doc:`/cookbook/controller/error_pages`
   * :doc:`/cookbook/controller/service`
 
+* **Debugging**
+
+  * :doc:`/cookbook/debugging`
+
 * :doc:`/cookbook/doctrine/index`
 
   * :doc:`/cookbook/doctrine/file_uploads`

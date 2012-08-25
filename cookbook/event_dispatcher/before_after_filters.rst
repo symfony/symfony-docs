@@ -10,8 +10,8 @@ or hooks.
 
 In Symfony1, this was achieved with the preExecute and postExecute methods,
 most major frameworks have similar methods but there is no such thing in Symfony2.
-The good news is that there is a much better way to interfere the
-Request -> Response process using the EventDispatcher component.
+The good news is that there is a much better way to interfere with the
+Request -> Response process using the :doc:`EventDispatcher component</components/event_dispatcher/introduction>`.
 
 Token validation Example
 ------------------------
@@ -21,13 +21,13 @@ but some others are restricted to one or some clients. For these private feature
 you might provide a token to your clients to identify themselves.
 
 So, before executing your controller action, you need to check if the action
-is restricted or not. And if it is restricted, you need to validate the provided
+is restricted or not. If it is restricted, you need to validate the provided
 token.
 
 .. note::
 
-    Please note that for simplicity in the recipe, tokens will be defined
-    in config and neither database setup nor authentication provider via
+    Please note that for simplicity in this recipe, tokens will be defined
+    in config and neither database setup nor authentication via
     the Security component will be used.
 
 Creating a before filter with a controller.request event
@@ -108,7 +108,7 @@ event listeners, you can learn more about them at :doc:`/cookbook/service_contai
     {
         private $tokens;
 
-        public function __contruct($tokens)
+        public function __construct($tokens)
         {
             $this->tokens = $tokens;
         }
@@ -125,7 +125,7 @@ event listeners, you can learn more about them at :doc:`/cookbook/service_contai
                 return;
             }
 
-            if($controller[0] instanceof TokenAuthenticatedController) {
+            if ($controller[0] instanceof TokenAuthenticatedController) {
                 $token = $event->getRequest()->get('token');
                 if (!in_array($token, $this->tokens)) {
                     throw new AccessDeniedHttpException('This action needs a valid token!');
@@ -148,9 +148,9 @@ your listener to be called just before any controller is executed:
         # app/config/config.yml (or inside your services.yml)
         services:
             demo.tokens.action_listener:
-              class: Acme\DemoBundle\EventListener\BeforeListener
-              arguments: [ %tokens% ]
-              tags:
+                class: Acme\DemoBundle\EventListener\BeforeListener
+                arguments: [ %tokens% ]
+                tags:
                     - { name: kernel.event_listener, event: kernel.controller, method: onKernelController }
 
     .. code-block:: xml
