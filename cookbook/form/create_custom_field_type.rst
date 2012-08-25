@@ -248,7 +248,7 @@ argument to ``GenderType``, which receives the gender configuration::
         public function setDefaultOptions(OptionsResolverInterface $resolver)
         {
             $resolver->setDefaults(array(
-                'data_class' => $this->genderChoices
+                'choices' => $this->genderChoices,
             ));
         }
 
