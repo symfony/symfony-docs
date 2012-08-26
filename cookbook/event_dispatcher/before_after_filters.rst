@@ -30,8 +30,16 @@ token.
     in config and neither database setup nor authentication via
     the Security component will be used.
 
-Creating a before filter with a controller.request event
---------------------------------------------------------
+Adding a hash to a JSON Response
+--------------------------------
+
+In the same context as the token example imagine that we want to add a sha1
+hash (with a salt using that token) to all our responses.
+
+So, after generating a JSON response, this hash has to be added to the response.
+
+Before and after filters with kernel.controller / kernel.response events
+------------------------------------------------------------------------
 
 Basic Setup
 ~~~~~~~~~~~
@@ -67,14 +75,18 @@ You can add basic token configuration using ``config.yml`` and the parameters ke
         ));
 
 Tag Controllers to be checked
------------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 A ``kernel.controller`` listener gets notified on every request, right before
-the controller is executed. First, you need some way to identify if the controller
-that matches the request needs token validation.
+the controller is executed. Same happens to ``kernel.response`` listeners
+after the controller returns a Response object.
+
+So, first, you need some way to identify if the controller that matches the
+request needs token validation. Regarding the response, you will also need
+some way to identify that the response needs to be hashed.
 
 A clean and easy way is to create an empty interface and make the controllers
-implement it::
+implement it:
 
     namespace Acme\DemoBundle\Controller;
 
@@ -83,15 +95,33 @@ implement it::
         // Nothing here
     }
 
+And also create a HashedResponse object extending Response
+
+    namespace Acme\DemoBundle\Response;
+
+    use Symfony\Component\HttpFoundation\Response;
+
+    class HashedResponse extends Response
+    {
+        // Nothing here
+    }
+
 A controller that implements this interface simply looks like this::
+
+    use Acme\DemoBundle\Controller\TokenAuthenticatedController;
+    use Acme\DemoBundle\Response\HashedResponse;
 
     class FooController implements TokenAuthenticatedController
     {
-        // ... Your actions that need authentication
+        // An action that needs authentication and signature
+        public function barAction()
+        {
+            return new HashedResponse('Hello world');
+        }
     }
 
 Creating an Event Listener
---------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Next, you'll need to create an event listener, which will hold the logic
 that you want executed before your controllers. If you're not familiar with
@@ -101,10 +131,12 @@ event listeners, you can learn more about them at :doc:`/cookbook/service_contai
     namespace Acme\DemoBundle\EventListener;
 
     use Acme\DemoBundle\Controller\TokenAuthenticatedController;
+    use Acme\DemoBundle\Response\HashedResponse;
+
     use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
     use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
 
-    class BeforeListener
+    class BeforeAndAfterListener
     {
         private $tokens;
 
@@ -132,14 +164,34 @@ event listeners, you can learn more about them at :doc:`/cookbook/service_contai
                 }
             }
         }
+
+        public function onKernelResponse(FilterResponseEvent $event)
+        {
+            $response = $event->getResponse();
+
+            if ($response instanceof HashedResponse) {
+                $token = $event->getRequest()->get('token');
+
+                $hash = sha1($response->getContent() . $token);
+
+                $response->setContent(
+                    json_encode(array(
+                        'hash'    => $hash,
+                        'content' => $response->getContent(),
+                    ))
+                );
+            }
+        }
     }
 
 Registering the Listener
-------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~
 
 Finally, register your listener as a service and tag it as an event listener.
 By listening on ``kernel.controller``, you're telling Symfony that you want
-your listener to be called just before any controller is executed:
+your listener to be called just before any controller is executed. And by
+listening on ``kernel.response``, your listener will be called after returning
+a Response:
 
 .. configuration-block::
 
@@ -148,17 +200,19 @@ your listener to be called just before any controller is executed:
         # app/config/config.yml (or inside your services.yml)
         services:
             demo.tokens.action_listener:
-                class: Acme\DemoBundle\EventListener\BeforeListener
+                class: Acme\DemoBundle\EventListener\BeforeAndAfterListener
                 arguments: [ %tokens% ]
                 tags:
                     - { name: kernel.event_listener, event: kernel.controller, method: onKernelController }
+                    - { name: kernel.event_listener, event: kernel.response, method: onKernelResponse }
 
     .. code-block:: xml
 
         <!-- app/config/config.xml (or inside your services.xml) -->
-        <service id="demo.tokens.action_listener" class="Acme\DemoBundle\EventListener\BeforeListener">
+        <service id="demo.tokens.action_listener" class="Acme\DemoBundle\EventListener\BeforeAndAfterListener">
             <argument>%tokens%</argument>
             <tag name="kernel.event_listener" event="kernel.controller" method="onKernelController" />
+            <tag name="kernel.event_listener" event="kernel.response" method="onKernelResponse" />
         </service>
 
     .. code-block:: php
@@ -166,7 +220,9 @@ your listener to be called just before any controller is executed:
         // app/config/config.php (or inside your services.php)
         use Symfony\Component\DependencyInjection\Definition;
 
-        $listener = new Definition('Acme\DemoBundle\EventListener\BeforeListener', array('%tokens%'));
+        $listener = new Definition('Acme\DemoBundle\EventListener\BeforeAndAfterListener', array('%tokens%'));
         $listener->addTag('kernel.event_listener', array('event' => 'kernel.controller', 'method' => 'onKernelController'));
+        $listener->addTag('kernel.event_listener', array('event' => 'kernel.response', 'method' => 'onKernelResponse'));
         $container->setDefinition('demo.tokens.action_listener', $listener);
+
 
