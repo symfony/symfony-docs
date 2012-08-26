@@ -81,6 +81,24 @@ You can specify the configuration by many forms:
         type:     exclusive # Include all, except those listed below
         elements: [ foo, bar ]
 
+Creating your own channel
+-------------------------
+
+You can change the channel monolog logs to one service at a time. This is done with the dependency injection tag ``monolog.logger``.
+
+For example the Doctrine channel mentioned above is configured this way:
+
+.. code-block:: xml
+
+   <service id="doctrine.dbal.logger" class="%doctrine.dbal.logger.class%" public="false">
+      <tag name="monolog.logger" channel="doctrine" />
+      <argument type="service" id="logger" on-invalid="null" />
+      <argument type="service" id="debug.stopwatch" on-invalid="null" />
+   </service>
+
+The ``logger`` service passed to ``doctrine.dbal.logger`` now logs to the ``doctrine`` channel.
+
+To change the channel of the logger instance inside a particular service, just use the ``monolog.logger`` tag and specify the ``channel`` attribute.
 
 Learn more from the Cookbook
 ----------------------------
