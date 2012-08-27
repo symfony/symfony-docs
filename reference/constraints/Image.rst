@@ -102,7 +102,7 @@ it is between a certain size, add the following:
         <!-- src/Acme/BlogBundle/Resources/config/validation.xml -->
         <class name="Acme\BlogBundle\Entity\Author">
             <property name="headshot">
-                <constraint name="File">
+                <constraint name="Image">
                     <option name="minWidth">200</option>
                     <option name="maxWidth">400</option>
                     <option name="minHeight">200</option>
@@ -117,7 +117,7 @@ it is between a certain size, add the following:
         // ...
 
         use Symfony\Component\Validator\Mapping\ClassMetadata;
-        use Symfony\Component\Validator\Constraints\File;
+        use Symfony\Component\Validator\Constraints\Image;
 
         class Author
         {
@@ -125,7 +125,7 @@ it is between a certain size, add the following:
 
             public static function loadValidatorMetadata(ClassMetadata $metadata)
             {
-                $metadata->addPropertyConstraint('headshot', new File(array(
+                $metadata->addPropertyConstraint('headshot', new Image(array(
                     'minWidth' => 200,
                     'maxWidth' => 400,
                     'minHeight' => 200,
