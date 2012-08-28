@@ -153,6 +153,16 @@ You can also add links to the API documentation:
 
     :method:`Symfony\\Component\\HttpKernel\\Bundle\\Bundle::build`
 
+and to the PHP documentation:
+
+.. code-block:: rst
+
+    :phpclass:`SimpleXMLElement`
+
+    :phpmethod:`DateTime::createFromFormat`
+
+    :phpfunction:`iterator_to_array`
+
 Testing Documentation
 ~~~~~~~~~~~~~~~~~~~~~
 
