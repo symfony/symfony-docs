@@ -140,10 +140,14 @@ to use :doc:`the Config Component</components/config/introduction>` to merge
 and validate the config values. Using the configuration processing you could
 access the config value this way::
 
+    use Symfony\Component\Config\Definition\Processor;
+    //--
+
     public function load(array $configs, ContainerBuilder $container)
     {
         $configuration = new Configuration();
-        $config = $this->processConfiguration($configuration, $configs);
+        $processor = new Processor();
+        $config = $processor->processConfiguration($configuration, $configs);
 
         $foo = $config['foo']; //fooValue
         $bar = $config['bar']; //barValue
@@ -185,8 +189,8 @@ The XML version of the config would then look like this:
 
 ..note::
     In the Symfony2 full stack framework there is a base Extension class which
-    implements these methods. See :doc:`/cookbook/bundles/extension` for
-    more details.
+    implements these methods as well as a short cut method for processing the
+    configuration. See :doc:`/cookbook/bundles/extension` for more details.
 
 The processed config value can now be added as container parameters as if they were
 listed in a ``parameters`` section of the config file but with merging multiple files
@@ -195,7 +199,8 @@ and validation of the configuration thrown in::
     public function load(array $configs, ContainerBuilder $container)
     {
         $configuration = new Configuration();
-        $config = $this->processConfiguration($configuration, $configs);
+        $processor = new Processor();
+        $config = $processor->processConfiguration($configuration, $configs);
 
         $container->setParameter('acme_demo.FOO', $config['foo'])
 
@@ -209,7 +214,8 @@ but also load a secondary one only if a certain parameter is set::
     public function load(array $configs, ContainerBuilder $container)
     {
         $configuration = new Configuration();
-        $config = $this->processConfiguration($configuration, $configs);
+        $processor = new Processor();
+        $config = $processor->processConfiguration($configuration, $configs);
 
         $loader = new XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.xml');
