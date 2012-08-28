@@ -63,7 +63,7 @@ A very simple extension may just load configuration files into the container::
             $loader->load('services.xml');
         }
 
-        //--
+        // ...
     }
 
 This does not gain very much compared to loading the file directly into the
@@ -77,11 +77,11 @@ relevant Extension.
 
 The Extension must specify a ``getAlias`` method to implement the interface::
 
-    //--
+    // ...
 
     class AcmeDemoExtension implements ExtensionInterface
     {
-        //--
+        // ...
 
         public function getAlias()
         {
@@ -93,7 +93,7 @@ For YAML configuration files specifying the alias for the Extension as a key
 will mean that those values are passed to the Extension's ``load`` method:
 
 .. code-block:: yaml
-    #--
+    # ...
 
     acme_demo:
         foo: fooValue
@@ -111,7 +111,7 @@ processed when the container is compiled at which point the Extensions are loade
     $loader->load('config.yml');
 
     $container->registerExtension(new AcmeDemoExtension);
-    //--
+    // ...
     $container->compile();
 
 The values from those sections of the config files are passed into the first
@@ -141,7 +141,7 @@ and validate the config values. Using the configuration processing you could
 access the config value this way::
 
     use Symfony\Component\Config\Definition\Processor;
-    //--
+    // ...
 
     public function load(array $configs, ContainerBuilder $container)
     {
@@ -152,7 +152,7 @@ access the config value this way::
         $foo = $config['foo']; //fooValue
         $bar = $config['bar']; //barValue
 
-        //--
+        // ...
     }
 
 There are a further two methods you must implement. One to return the XML
@@ -208,7 +208,7 @@ and validation of the configuration thrown in::
 
         $container->setParameter('acme_demo.FOO', $config['foo'])
 
-        //--
+        // ...
     }
 
 More complex configuration requirements can be catered for in the Extension
@@ -320,7 +320,7 @@ configuration. The ``PhpDumper`` makes dumping the compiled container easy::
         $container = new ProjectServiceContiner();
     } else {
         $container = new ContainerBuilder();
-        //--
+        // ...
         $container->compile();
 
         $dumper = new PhpDumper($container);
@@ -366,7 +366,7 @@ but getting an up to date configuration whilst developing your application::
         $container = new MyCachedContainer();
     } else {
         $container = new ContainerBuilder();
-        //--
+        // ...
         $container->compile();
 
         if(!$isDebug) 
@@ -397,7 +397,7 @@ and use them as metadata for the cache::
 
     if (!$containerConfigCache->isFresh()) {
         $containerBuilder = new ContainerBuilder();
-        //--
+        // ...
         $containerBuilder->compile();
 
         $dumper = new PhpDumper($containerBuilder);
