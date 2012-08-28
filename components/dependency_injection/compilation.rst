@@ -22,6 +22,210 @@ validity, further compiler passes are used to optimize the configuration
 before it is cached. For example, private services and abstract services
 are removed, and aliases are resolved.
 
+Managing Configuration with Extensions
+--------------------------------------
+
+As well as loading configuration directly into the container as shown in
+:doc:`/components/dependency_injection/introduction`, you can manage it by
+registering extensions with the container. The first step in the compilation
+process is to load configuration from any extension classes registered with
+the container. Unlike the configuration loaded directly they are only processed
+when the container is compiled. If your application is modular then extensions
+allow each module to register and manage their own service configuration.
+
+The extensions must implement  :class:`Symfony\\Component\\DependencyInjection\\Extension\\ExtensionInterface`
+and can be registered with the container with::
+
+    $container->registerExtension($extension);
+
+The main work of the extension is done in the ``load`` method. In the load method
+you can load configuration from one or more configuration files as well as
+manipulate the container definitions using the methods shown in :doc:`/components/dependency_injection/definitions`.
+
+The ``load`` method is passed a fresh container to set up, which is then
+merged afterwards into the container it is registered with. This allows you
+to have several extensions managing container definitions independently.
+The extensions do not add to the containers configuration when they are added
+but are processed when the container's ``compile`` method is called.
+
+A very simple extension may just load configuration files into the container::
+
+    use Symfony\Component\DependencyInjection\ContainerBuilder;
+    use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
+    use Symfony\Component\DependencyInjection\Extension\ExtensionInterface;
+    use Symfony\Component\Config\FileLocator;
+
+    class AcmeDemoExtension implements ExtensionInterface
+    {
+        public function load(array $configs, ContainerBuilder $container)
+        {
+            $loader = new XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
+            $loader->load('services.xml');
+        }
+
+        //--
+    }
+
+This does not gain very much compared to loading the file directly into the
+overall container being built. It just allows the files to be split up amongst
+the modules/bundles. Being able to affect the configuration of a module from
+configuration files outside of the module/bundle is needed to make a complex
+application configurable. This can be done by specifying sections of config files
+loaded directly into the container as being for a particular extension. These
+sections on the config will not be processed directly by the container but by the
+relevant Extension.
+
+The Extension must specify a ``getAlias`` method to implement the interface::
+
+    //--
+
+    class AcmeDemoExtension implements ExtensionInterface
+    {
+        //--
+
+        public function getAlias()
+        {
+            return 'acme_demo';
+        }
+    }
+
+For YAML configuration files specifying the alias for the Extension as a key
+will mean that those values are passed to the Extension's ``load`` method:
+
+.. code-block:: yaml
+    #--
+
+    acme_demo:
+        foo: fooValue
+        bar: barValue
+
+If this file is loaded into the configuration then the values in it are only
+processed when the container is compiled at which point the Extensions are loaded::
+
+    use Symfony\Component\DependencyInjection\ContainerBuilder;
+    use Symfony\Component\Config\FileLocator;
+    use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
+
+    $container = new ContainerBuilder();
+    $loader = new YamlFileLoader($container, new FileLocator(__DIR__));
+    $loader->load('config.yml');
+
+    $container->registerExtension(new AcmeDemoExtension);
+    //--
+    $container->compile();
+
+The values from those sections of the config files are passed into the first
+argument of the ``load`` method of the extension::
+
+    public function load(array $configs, ContainerBuilder $container)
+    {
+        $foo = $configs[0]['foo']; //fooValue
+        $bar = $configs[0]['bar']; //barValue
+    }
+
+The ``$configs`` argument is an array containing each different config file
+that was loaded into the container. You are only loading a single config file
+in the above example but it will still be within an array. The array will look
+like this::
+
+    array(
+        array(
+            'foo' => 'fooValue',
+            'bar' => 'barValue',
+        )
+    )
+
+Whilst you can manually manage merging the different files, it is much better
+to use :doc:`the Config Component</components/config/introduction>` to merge
+and validate the config values. Using the configuration processing you could
+access the config value this way::
+
+    public function load(array $configs, ContainerBuilder $container)
+    {
+        $configuration = new Configuration();
+        $config = $this->processConfiguration($configuration, $configs);
+
+        $foo = $config['foo']; //fooValue
+        $bar = $config['bar']; //barValue
+
+        //--
+    }
+
+There are a further two methods you must implement. One to return the XML
+namespace so that the relevant parts of an XML config file are passed to
+the extension. The other to specify the base path to XSD files to validate
+the XML configuration::
+
+    public function getXsdValidationBasePath()
+    {
+        return __DIR__.'/../Resources/config/';
+    }
+
+    public function getNamespace()
+    {
+        return 'http://www.example.com/symfony/schema/';
+    }
+
+The XML version of the config would then look like this:
+
+.. code-block:: xml
+    <?xml version="1.0" ?>
+
+    <container xmlns="http://symfony.com/schema/dic/services"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:acme_demo="http://www.example.com/symfony/schema/"
+        xsi:schemaLocation="http://www.example.com/symfony/schema/ http://www.example.com/symfony/schema/hello-1.0.xsd">
+
+        <acme_demo:config>
+            <acme_demo:foo>fooValue</acme_hello:foo>
+            <acme_demo:bar>barValue</acme_demo:bar>
+        </acme_demo:config>
+
+    </container>
+
+..note::
+    In the Symfony2 full stack framework there is a base Extension class which
+    implements these methods. See :doc:`/cookbook/bundles/extension` for
+    more details.
+
+The processed config value can now be added as container parameters as if they were
+listed in a ``parameters`` section of the config file but with merging multiple files
+and validation of the configuration thrown in::
+
+    public function load(array $configs, ContainerBuilder $container)
+    {
+        $configuration = new Configuration();
+        $config = $this->processConfiguration($configuration, $configs);
+
+        $container->setParameter('acme_demo.FOO', $config['foo'])
+
+        //--
+    }
+
+More complex configuration requirements can be catered for in the Extension
+classes. For example, you may choose to load a main service configuration file
+but also load a secondary one only if a certain parameter is set::
+
+    public function load(array $configs, ContainerBuilder $container)
+    {
+        $configuration = new Configuration();
+        $config = $this->processConfiguration($configuration, $configs);
+
+        $loader = new XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
+        $loader->load('services.xml');
+
+        if ($config['advanced']) {
+            $loader->load('advanced.xml');
+        }
+    }
+
+.. note::
+
+    If you need to manipulate the configuration loaded by an extension then
+    you cannot do it from another extension as it uses a fresh container.
+    You should instead use a compiler pass which works with the full container
+    after the extensions have been processed.
+
 Creating a Compiler Pass
 ------------------------
 
@@ -84,34 +288,6 @@ For example, to run your custom pass after the default removal passes have been 
 
     $container = new ContainerBuilder();
     $container->addCompilerPass(new CustomCompilerPass, PassConfig::TYPE_AFTER_REMOVING);
-
-
-Managing Configuration with Extensions
---------------------------------------
-
-As well as loading configuration directly into the container as shown in 
-:doc:`/components/dependency_injection/introduction`, you can manage it by registering
-extensions with the container. The extensions must implement  :class:`Symfony\\Component\\DependencyInjection\\Extension\\ExtensionInterface`
-and can be registered with the container with::
-
-    $container->registerExtension($extension);
-
-The main work of the extension is done in the ``load`` method. In the load method 
-you can load configuration from one or more configuration files as well as
-manipulate the container definitions using the methods shown in :doc:`/components/dependency_injection/definitions`. 
-
-The ``load`` method is passed a fresh container to set up, which is then
-merged afterwards into the container it is registered with. This allows you
-to have several extensions managing container definitions independently.
-The extensions do not add to the containers configuration when they are added
-but are processed when the container's ``compile`` method is called.
-
-.. note::
- 
-    If you need to manipulate the configuration loaded by an extension then
-    you cannot do it from another extension as it uses a fresh container.
-    You should instead use a compiler pass which works with the full container
-    after the extensions have been processed. 
 
 Dumping the Configuration for Performance
 -----------------------------------------
