@@ -119,6 +119,40 @@ The current list of supported formats are the following:
 | php-annotations | Annotations |
 +-----------------+-------------+
 
+Adding Links
+~~~~~~~~~~~~
+
+To add links to other pages in the documents use the following syntax:
+
+.. code-block:: rst
+
+    :doc:`/path/to/page`
+
+Using the path and filename of the page without the extension, for example:
+
+.. code-block:: rst
+
+    :doc:`/book/controller`
+
+    :doc:`/components/event_dispatcher/introduction`
+
+    :doc:`/cookbook/configuration/environments`
+
+The link text will be the main heading of the document linked to. You can
+also specify alternative text for the link:
+
+.. code-block:: rst
+
+    :doc:`Spooling Email</cookbook/email/spool>`
+
+You can also add links to the API documentation:
+
+.. code-block:: rst
+
+    :class:`Symfony\\Component\\Routing\\Matcher\\ApacheUrlMatcher`
+
+    :method:`Symfony\\Component\\HttpKernel\\Bundle\\Bundle::build`
+
 Testing Documentation
 ~~~~~~~~~~~~~~~~~~~~~
 
