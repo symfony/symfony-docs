@@ -44,6 +44,12 @@ example, to get the help for the ``list`` command:
 
     $ php app/console help list
 
+Running ``help`` without specifying a command will list the global options:
+
+.. code-block:: bash
+
+    $ php app/console help
+
 Global Options
 ~~~~~~~~~~~~~~
 
