@@ -170,6 +170,10 @@ the XML configuration::
         return 'http://www.example.com/symfony/schema/';
     }
 
+..note::
+    XSD validation is optional, returning ``false`` from the ``getXsdValidationBasePath``
+    method will disable it.
+
 The XML version of the config would then look like this:
 
 .. code-block:: xml
