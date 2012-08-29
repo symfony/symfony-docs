@@ -38,8 +38,8 @@ hash (with a salt using that token) to all our responses.
 
 So, after generating a JSON response, this hash has to be added to the response.
 
-Before and after filters with kernel.controller / kernel.response events
-------------------------------------------------------------------------
+Before and after filters with ``kernel.controller`` / ``kernel.response`` events
+--------------------------------------------------------------------------------
 
 Basic Setup
 ~~~~~~~~~~~
@@ -86,16 +86,16 @@ request needs token validation. Regarding the response, you will also need
 some way to identify that the response needs to be hashed.
 
 A clean and easy way is to create an empty interface and make the controllers
-implement it:
+implement it::
 
     namespace Acme\DemoBundle\Controller;
 
     interface TokenAuthenticatedController
     {
-        // Nothing here
+        // ...
     }
 
-And also create a HashedResponse object extending Response
+And also create a ``HashedResponse`` object extending ``Response``
 
     namespace Acme\DemoBundle\Response;
 
@@ -103,7 +103,7 @@ And also create a HashedResponse object extending Response
 
     class HashedResponse extends Response
     {
-        // Nothing here
+        // ...
     }
 
 A controller that implements this interface simply looks like this::
@@ -172,7 +172,7 @@ event listeners, you can learn more about them at :doc:`/cookbook/service_contai
             if ($response instanceof HashedResponse) {
                 $token = $event->getRequest()->get('token');
 
-                $hash = sha1($response->getContent() . $token);
+                $hash = sha1($response->getContent().$token);
 
                 $response->setContent(
                     json_encode(array(
