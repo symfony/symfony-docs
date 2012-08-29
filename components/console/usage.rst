@@ -103,13 +103,13 @@ You can force turning on ANSI output coloring with:
 
 .. code-block:: bash
 
-    $ php app/console list -ansi
+    $ php app/console list --ansi
 
 or turn it off with:
 
 .. code-block:: bash
 
-    $ php app/console list -no-ansi
+    $ php app/console list --no-ansi
 
 You can suppress any interactive questions from the command you are running with:
 
