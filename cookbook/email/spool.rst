@@ -12,10 +12,51 @@ page to load while the email is sending. This can be avoided by choosing
 to "spool" the emails instead of sending them directly. This means that ``Swiftmailer``
 does not attempt to send the email but instead saves the message to somewhere
 such as a file. Another process can then read from the spool and take care
-of sending the emails in the spool. Currently only spooling to file is supported
+of sending the emails in the spool. Currently only spooling to file or memory is supported
 by ``Swiftmailer``.
 
-In order to use the spool, use the following configuration:
+Spool using memory
+------------------
+
+When you use spooling to store the emails to memory, they will get sent right before the kernel 
+terminates. This means the email only gets sent if the whole request got executed without
+any Exception or Error comming up. To configure swiftmailer with the memory option, use
+the following configuration:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # app/config/config.yml
+        swiftmailer:
+            # ...
+            spool: { type: memory }
+
+    .. code-block:: xml
+
+        <!-- app/config/config.xml -->
+
+        <!--
+            xmlns:swiftmailer="http://symfony.com/schema/dic/swiftmailer"
+            http://symfony.com/schema/dic/swiftmailer http://symfony.com/schema/dic/swiftmailer/swiftmailer-1.0.xsd
+        -->
+
+        <swiftmailer:config>
+             <swiftmailer:spool type="memory" />
+        </swiftmailer:config>
+
+    .. code-block:: php
+
+        // app/config/config.php
+        $container->loadFromExtension('swiftmailer', array(
+             ...,
+            'spool' => array('type' => 'memory')
+        ));
+        
+Spool using a file
+------------------
+
+In order to use the spool with a file, use the following configuration:
 
 .. configuration-block::
 
