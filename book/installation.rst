@@ -82,6 +82,7 @@ you should have a directory that looks something like this:
                 app.php
                 ...
 
+<<<<<<< HEAD
 Option 2) Download an Archive
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -111,6 +112,12 @@ If you've downloaded "without vendors", you'll definitely need to read the
 next section.
 
 .. _installation-updating-vendors:
+=======
+.. note::
+
+    You can easilly override the default directory structure. See :doc:`/cookbook/configuration/override_symfony_dir`
+    for more information.
+>>>>>>> 4c9723b... [Book/installation] Added quick note to the cookbook article
 
 Updating Vendors
 ~~~~~~~~~~~~~~~~
