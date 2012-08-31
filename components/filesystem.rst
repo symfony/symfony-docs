@@ -42,6 +42,8 @@ endpoint for filesystem operations::
     :method:`Symfony\\Component\\Filesystem\\Filesystem::chown`,
     :method:`Symfony\\Component\\Filesystem\\Filesystem::chgrp`,
     :method:`Symfony\\Component\\Filesystem\\Filesystem::chown`,
+    :method:`Symfony\\Component\\Filesystem\\Filesystem::exist`,
+    :method:`Symfony\\Component\\Filesystem\\Filesystem::isAbsent`,
     :method:`Symfony\\Component\\Filesystem\\Filesystem::remove` and
     :method:`Symfony\\Component\\Filesystem\\Filesystem::touch` can receive a
     string, an array or any object implementing :phpclass:`Traversable` as
@@ -72,6 +74,23 @@ file is missing::
 
     // rabbit.jpg exists, bottle.png does not exists, return false
     $fs->exists(array('rabbit.jpg', 'bottle.png'));
+
+.. note::
+
+    You can pass an array or any :phpclass:`Traversable` object as the first
+    argument.
+
+IsAbsent
+~~~~~~~~
+
+IsAbsent checks for the absence of all files or directories and returns false if a
+file exists::
+
+    // this video file does not exist, return true
+    $fs->isAbsent('/tmp/video.mp4');
+
+    // rabbit.jpg exists, bottle.png does not exists, return false
+    $fs->isAbsent(array('rabbit.jpg', 'bottle.png'));
 
 .. note::
 
