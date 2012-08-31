@@ -11,10 +11,8 @@ To run the Symfony2 test suite, `install`_ PHPUnit 3.5.11 or later first:
 
 .. code-block:: bash
 
-    $ pear channel-discover pear.phpunit.de
-    $ pear channel-discover components.ez.no
-    $ pear channel-discover pear.symfony-project.com
-    $ pear install phpunit/PHPUnit
+    $ pear config-set auto_discover 1
+    $ pear install pear.phpunit.de/PHPUnit
 
 Dependencies (optional)
 -----------------------
