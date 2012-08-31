@@ -116,7 +116,7 @@ Bootstrap Files and Byte Code Caches
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Even when using a byte code cache, performance will improve when using a bootstrap
-file since there will be less files to monitor for changes. Of course if this
+file since there will be fewer files to monitor for changes. Of course if this
 feature is disabled in the byte code cache (e.g. ``apc.stat=0`` in APC), there
 is no longer a reason to use a bootstrap file.
 
