@@ -73,6 +73,27 @@ something like this:
                 app.php
                 ...
 
+.. tip::
+
+    You can change the default location of the ``cache`` and ``log`` directories
+    by creating a ``getCacheDir()`` or ``getLogDir()`` method in the ``AppKernel``
+    class. The following example set the ``cache`` directory to the root of your
+    project::
+
+        // app/AppKernel.php
+
+        // ...
+        class AppKernel extends Kernel
+        {
+            // ...
+
+            public function getCacheDir()
+            {
+                // $this->rootDir is the path to the app directory
+                return $this->rootDir.'/../cache/'.$this->environment;
+            }
+        }
+
 Updating Vendors
 ~~~~~~~~~~~~~~~~
 
