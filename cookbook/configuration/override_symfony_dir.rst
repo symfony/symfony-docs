@@ -44,7 +44,7 @@ in the ``AppKernel`` class of you application::
     }
 
 ``$this->rootDir`` is the absolute path to the ``app`` directory and ``$this->environment``
-is the current environment (i.e. ``dev``). In this case we changed the location 
+is the current environment (i.e. ``dev``). In this case we have changed the location 
 of the cache directory to ``app/{environment}/cache``.
 
 Override the ``logs`` directory
@@ -72,7 +72,7 @@ Override the ``web`` directory
 ------------------------------
 
 Some shared hosting require to rename the ``web`` directory to ``public_html``
-and at this directory to the apache root. You can simply rename the directory: 
+and move this directory to the apache root. You can simply rename the directory: 
 The only thing you need to check is if the path to the ``app`` directory is 
 still right in ``app.php`` or ``app_dev.php``. For instance: If we move the 
 ``web`` directory one map up we need to add ``Symfony`` (the name of your 
