@@ -20,9 +20,9 @@ argument for another service.
 
 .. note::
 
-    If you use a private service as an argument to more than one other service,
-    this will result in two different instances being used as the instantiation
-    of the private service is done inline (e.g. ``new PrivateFooBar()``).
+    If you use a private service as an argument to only one other service,
+    this will result in an inlined instantiation (e.g. ``new PrivateFooBar()``)
+    inside this other service, making it publicly unavailable at runtime.
 
 Simply said: A service will be private when you do not want to access it
 directly from your code.
