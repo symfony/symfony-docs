@@ -145,7 +145,7 @@ next request::
 This is useful when you need to set a success message before redirecting
 the user to another page (which will then show the message). Please note that
 when you use has() instead of get(), the flash message will not be cleared and
-thus remain available during following requests.
+thus remains available during the following requests.
 
 Securing Resources
 ------------------
