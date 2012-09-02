@@ -246,7 +246,7 @@ Control the Redirect URL from inside the Form
 
 You can also override where the user is redirected to via the form itself by 
 including a hidden field with the name ``_target_path``. For example, to
-redirect to the URL defined by some ``acount`` route, use the following:
+redirect to the URL defined by some ``account`` route, use the following:
 
 .. configuration-block::
 
