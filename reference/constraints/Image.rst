@@ -87,7 +87,7 @@ it is between a certain size, add the following:
         class Author
         {
             /**
-             * @Assert\File(
+             * @Assert\Image(
              *     minWidth = 200,
              *     maxWidth = 400,
              *     minHeight = 200,
