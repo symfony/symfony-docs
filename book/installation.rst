@@ -115,9 +115,14 @@ next section.
 =======
 .. note::
 
+<<<<<<< HEAD
     You can easilly override the default directory structure. See :doc:`/cookbook/configuration/override_symfony_dir`
     for more information.
 >>>>>>> 4c9723b... [Book/installation] Added quick note to the cookbook article
+=======
+    You can easily override the default directory structure. See 
+    :doc:`/cookbook/configuration/override_symfony_dir` for more information.
+>>>>>>> 561a1a7... [Cookbook/configuration][book/installation] Fixed catches by @stof
 
 Updating Vendors
 ~~~~~~~~~~~~~~~~
