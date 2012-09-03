@@ -236,6 +236,7 @@ a parent for a service.
     .. code-block:: php
 
         use Symfony\Component\DependencyInjection\Definition;
+        use Symfony\Component\DependencyInjection\DefinitionDecorator;
         use Symfony\Component\DependencyInjection\Reference;
 
         // ...
@@ -264,6 +265,8 @@ a parent for a service.
         ))->setClass(
             '%greeting_card_manager.class%'
         );
+
+        $container->compile();
 
 In this context, having a ``parent`` service implies that the arguments and
 method calls of the parent service should be used for the child services.
@@ -482,6 +485,7 @@ If you had the following config:
     .. code-block:: php
 
         use Symfony\Component\DependencyInjection\Definition;
+        use Symfony\Component\DependencyInjection\DefinitionDecorator;
         use Symfony\Component\DependencyInjection\Reference;
 
         // ...
@@ -504,6 +508,8 @@ If you had the following config:
         )->addMethodCall('setFilter', array(
             new Reference('another_filter')
         ));
+
+        $container->compile();
 
 In this example, the ``setFilter`` of the ``newsletter_manager`` service
 will be called twice, resulting in the ``$filters`` array containing both
