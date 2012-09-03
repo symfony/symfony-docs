@@ -12,13 +12,19 @@ Full Default Configuration
     .. code-block:: yaml
 
         assetic:
-            debug:                true
-            use_controller:       true
+            debug:                %kernel.debug%
+            use_controller:
+                enabled:              %kernel.debug%
+                profiler:             false
             read_from:            %kernel.root_dir%/../web
             write_to:             %assetic.read_from%
             java:                 /usr/bin/java
             node:                 /usr/bin/node
+            ruby:                 /usr/bin/ruby
             sass:                 /usr/bin/sass
+            # An key-value pair of any number of named elements
+            variables:
+                some_name:                 []
             bundles:
 
                 # Defaults (all currently registered bundles):
@@ -30,23 +36,19 @@ Full Default Configuration
                 - DoctrineBundle
                 - AsseticBundle
                 - ...
-
             assets:
-
-                # Prototype
-                name:
+                # An array of named assets (e.g. some_asset, some_other_asset)
+                some_asset:
                     inputs:               []
                     filters:              []
                     options:
-
-                        # Prototype
-                        name:                 []
+                        # A key-value array of options and values
+                        some_option_name: []
             filters:
 
-                # Prototype
-                name:                 []
+                # An array of named filters (e.g. some_filter, some_other_filter)
+                some_filter:                 []
             twig:
                 functions:
-
-                    # Prototype
-                    name:                 []
+                    # An array of named functions (e.g. some_function, some_other_function)
+                    some_function:                 []

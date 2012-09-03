@@ -59,10 +59,10 @@ the default entity manager (i.e. ``default``) is returned::
         public function indexAction()
         {
             // both return the "default" em
-            $em = $this->get('doctrine')->getEntityManager();
-            $em = $this->get('doctrine')->getEntityManager('default');
-
-            $customerEm =  $this->get('doctrine')->getEntityManager('customer');
+            $em = $this->get('doctrine')->getManager();
+            $em = $this->get('doctrine')->getManager('default');
+            
+            $customerEm =  $this->get('doctrine')->getManager('customer');
         }
     }
 

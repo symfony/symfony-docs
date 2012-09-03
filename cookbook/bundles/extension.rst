@@ -18,19 +18,19 @@ as integration of other related components:
 .. configuration-block::
 
     .. code-block:: yaml
-    
+
         framework:
             # ...
             form:            true
 
     .. code-block:: xml
-    
+
         <framework:config>
             <framework:form />
         </framework:config>
 
     .. code-block:: php
-    
+
         $container->loadFromExtension('framework', array(
             // ...
             'form'            => true,
@@ -306,7 +306,7 @@ option is passed and set to true::
         // ... prepare your $config variable
 
         $loader = new XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
-        
+
         if (isset($config['enabled']) && $config['enabled']) {
             $loader->load('services.xml');
         }
@@ -466,6 +466,7 @@ that an unsupported option was passed::
     public function load(array $configs, ContainerBuilder $container)
     {
         $configuration = new Configuration();
+
         $config = $this->processConfiguration($configuration, $configs);
 
         // ...
@@ -480,6 +481,54 @@ supporting array nodes, "prototype" nodes, advanced validation, XML-specific
 normalization and advanced merging. The best way to see this in action is
 to checkout out some of the core Configuration classes, such as the one from
 the `FrameworkBundle Configuration`_ or the `TwigBundle Configuration`_.
+
+Default Configuration Dump
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 2.1
+    The ``config:dump-reference`` command was added in Symfony 2.1
+
+The ``config:dump-reference`` command allows a bundle's default configuration to
+be output to the console in yaml.
+
+As long as your bundle's configuration is located in the standard location
+(``YourBundle\DependencyInjection\Configuration``) and does not have a
+``__constructor()`` it will work automatically.  If you have a something
+different your ``Extension`` class will have to override the
+``Extension::getConfiguration()`` method.  Have it return an instance of your
+``Configuration``.
+
+Comments and examples can be added to your configuration nodes using the
+``->info()`` and ``->example()`` methods::
+
+    // src/Acme/HelloBundle/DependencyExtension/Configuration.php
+    namespace Acme\HelloBundle\DependencyInjection;
+
+    use Symfony\Component\Config\Definition\Builder\TreeBuilder;
+    use Symfony\Component\Config\Definition\ConfigurationInterface;
+
+    class Configuration implements ConfigurationInterface
+    {
+        public function getConfigTreeBuilder()
+        {
+            $treeBuilder = new TreeBuilder();
+            $rootNode = $treeBuilder->root('acme_hello');
+
+            $rootNode
+                ->children()
+                    ->scalarNode('my_type')
+                        ->defaultValue('bar')
+                        ->info('what my_type configures')
+                        ->example('example setting')
+                    ->end()
+                ->end()
+            ;
+
+            return $treeBuilder;
+        }
+
+This text appears as yaml comments in the output of the ``config:dump-reference``
+command.
 
 .. index::
    pair: Convention; Configuration

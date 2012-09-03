@@ -36,7 +36,8 @@ the process has several common steps:
 3. Create translation resources for each supported locale that translate
    each message in the application;
 
-4. Determine, set and manage the user's locale in the session.
+4. Determine, set and manage the user's locale for the request and optionally
+   on the user's entire session.
 
 .. index::
    single: Translations; Configuration
@@ -80,7 +81,8 @@ not exist in the user's locale.
     ``fr_FR`` for instance). If this also fails, it looks for a translation
     using the fallback locale.
 
-The locale used in translations is the one stored in the user session.
+The locale used in translations is the one stored on the request. This is
+typically set via a ``_locale`` attribute on your routes (see :ref:`book-translation-locale-url`).
 
 .. index::
    single: Translations; Basic translation
@@ -147,7 +149,8 @@ The Translation Process
 
 To actually translate the message, Symfony2 uses a simple process:
 
-* The ``locale`` of the current user, which is stored in the session, is determined;
+* The ``locale`` of the current user, which is stored on the request (or
+  stored as ``_locale`` on the session), is determined;
 
 * A catalog of translated messages is loaded from translation resources defined
   for the ``locale`` (e.g. ``fr_FR``). Messages from the fallback locale are
@@ -278,13 +281,21 @@ filesystem and discovered by Symfony, thanks to some conventions.
 Translation Locations and Naming Conventions
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Symfony2 looks for message files (i.e. translations) in two locations:
+Symfony2 looks for message files (i.e. translations) in the following locations:
 
-* For messages found in a bundle, the corresponding message files should
-  live in the ``Resources/translations/`` directory of the bundle;
+* the ``<kernel root directory>/Resources/translations`` directory;
 
-* To override any bundle translations, place message files in the
-  ``app/Resources/translations`` directory.
+* the ``<kernel root directory>/Resources/<bundle name>/translations`` directory;
+
+* the ``Resources/translations/`` directory of the bundle.
+
+The locations are listed with the highest priority first. That is you can
+override the translation messages of a bundle in any of the top 2 directories.
+
+The override mechanism works at a key level: only the overriden keys need
+to be listed in a higher priority message file. When a key is not found
+in a message file, the translator will automatically fallback to the lower
+priority message files.
 
 The filename of the translations is also important as Symfony2 uses a convention
 to determine details about the translations. Each message file must be named
@@ -483,17 +494,30 @@ locale.
 Handling the User's Locale
 --------------------------
 
-The locale of the current user is stored in the session and is accessible
-via the ``session`` service:
+The locale of the current user is stored in the request and is accessible
+via the ``request`` object:
 
 .. code-block:: php
 
-    $locale = $this->get('session')->getLocale();
+    // access the reqest object in a standard controller
+    $request = $this->getRequest();
 
-    $this->get('session')->setLocale('en_US');
+    $locale = $request->getLocale();
+
+    $request->setLocale('en_US');
 
 .. index::
    single: Translations; Fallback and default locale
+
+It is also possible to store the locale in the session instead of on a per 
+request basis. If you do this, each subsequent request will have this locale.
+
+.. code-block:: php
+
+    $this->get('session')->set('_locale', 'en_US');
+
+See the :ref:`book-translation-locale-url` section below about setting the
+locale via routing.
 
 Fallback and Default Locale
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -502,8 +526,8 @@ If the locale hasn't been set explicitly in the session, the ``fallback_locale``
 configuration parameter will be used by the ``Translator``. The parameter
 defaults to ``en`` (see `Configuration`_).
 
-Alternatively, you can guarantee that a locale is set on the user's session
-by defining a ``default_locale`` for the session service:
+Alternatively, you can guarantee that a locale is set on each user's request
+by defining a ``default_locale`` for the framework:
 
 .. configuration-block::
 
@@ -511,28 +535,33 @@ by defining a ``default_locale`` for the session service:
 
         # app/config/config.yml
         framework:
-            session: { default_locale: en }
+            default_locale: en
 
     .. code-block:: xml
 
         <!-- app/config/config.xml -->
         <framework:config>
-            <framework:session default-locale="en" />
+            <framework:default-locale>en</framework:default-locale>
         </framework:config>
 
     .. code-block:: php
 
         // app/config/config.php
         $container->loadFromExtension('framework', array(
-            'session' => array('default_locale' => 'en'),
+            'default_locale' => 'en',
         ));
+
+.. versionadded:: 2.1
+     The ``default_locale`` parameter was defined under the session key
+     originally, however, as of 2.1 this has been moved. This is because the 
+     locale is now set on the request instead of the session.
 
 .. _book-translation-locale-url:
 
 The Locale and the URL
 ~~~~~~~~~~~~~~~~~~~~~~
 
-Since the locale of the user is stored in the session, it may be tempting
+Since you can store the locale of the user is in the session, it may be tempting
 to use the same URL to display a resource in many different languages based
 on the user's locale. For example, ``http://www.example.com/contact`` could
 show content in English for one user and French for another user. Unfortunately,
@@ -774,6 +803,17 @@ texts* and complex expressions:
             {# but static strings are never escaped #}
             {{ '<h3>foo</h3>'|trans }}
 
+.. versionadded:: 2.1
+     You can now set the translation domain for an entire Twig template with a
+     single tag:
+
+     .. code-block:: jinja
+
+            {% trans_default_domain "app" %}
+
+     Note that this only influences the current template, not any "included"
+     templates (in order to avoid side effects).
+
 PHP Templates
 ~~~~~~~~~~~~~
 
@@ -793,7 +833,7 @@ The translator service is accessible in PHP templates through the
 Forcing the Translator Locale
 -----------------------------
 
-When translating a message, Symfony2 uses the locale from the user's session
+When translating a message, Symfony2 uses the locale from the current request
 or the ``fallback`` locale if necessary. You can also manually specify the
 locale to use for translation:
 
@@ -950,7 +990,8 @@ steps:
   files. Symfony2 discovers and processes each file because its name follows
   a specific convention;
 
-* Manage the user's locale, which is stored in the session.
+* Manage the user's locale, which is stored on the request, but can also
+  be set once the user's session.
 
 .. _`i18n`: http://en.wikipedia.org/wiki/Internationalization_and_localization
 .. _`L10n`: http://en.wikipedia.org/wiki/Internationalization_and_localization

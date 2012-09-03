@@ -20,8 +20,8 @@ label you want to display as the second argument.
     {{ form_label(form.name) }}
 
     {# The two following syntaxes are equivalent #}
-    {{ form_label(form.name, 'Your Name', { 'attr': {'class': 'foo'} }) }}
-    {{ form_label(form.name, null, { 'label': 'Your name', 'attr': {'class': 'foo'} }) }}
+    {{ form_label(form.name, 'Your Name', {'label_attr': {'class': 'foo'}}) }}
+    {{ form_label(form.name, null, {'label': 'Your name', 'label_attr': {'class': 'foo'}}) }}
 
 form_errors(form.name)
 ----------------------
@@ -44,7 +44,7 @@ or collection of fields, each underlying form row will be rendered.
 .. code-block:: jinja
 
     {# render a widget, but add a "foo" class to it #}
-    {{ form_widget(form.name, { 'attr': {'class': 'foo'} }) }}
+    {{ form_widget(form.name, {'attr': {'class': 'foo'}}) }}
 
 The second argument to ``form_widget`` is an array of variables. The most
 common variable is ``attr``, which is an array of HTML attributes to apply
@@ -60,7 +60,7 @@ label, errors and widget.
 .. code-block:: jinja
 
     {# render a field row, but display a label with text "foo" #}
-    {{ form_row(form.name, { 'label': 'foo' }) }}
+    {{ form_row(form.name, {'label': 'foo'}) }}
 
 The second argument to ``form_row`` is an array of variables. The templates
 provided in Symfony only allow to override the label as shown in the example

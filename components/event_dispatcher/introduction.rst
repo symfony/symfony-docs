@@ -117,9 +117,7 @@ The Dispatcher
 The dispatcher is the central object of the event dispatcher system. In
 general, a single dispatcher is created, which maintains a registry of
 listeners. When an event is dispatched via the dispatcher, it notifies all
-listeners registered with that event.
-
-.. code-block:: php
+listeners registered with that event::
 
     use Symfony\Component\EventDispatcher\EventDispatcher;
 
@@ -134,9 +132,7 @@ Connecting Listeners
 To take advantage of an existing event, you need to connect a listener to the
 dispatcher so that it can be notified when the event is dispatched. A call to
 the dispatcher ``addListener()`` method associates any valid PHP callable to
-an event:
-
-.. code-block:: php
+an event::
 
     $listener = new AcmeListener();
     $dispatcher->addListener('foo.action', array($listener, 'onFooAction'));
@@ -163,9 +159,7 @@ The ``addListener()`` method takes up to three arguments:
     method or a class method.
 
     So far, you've seen how PHP objects can be registered as listeners. You
-    can also register PHP `Closures`_ as event listeners:
-
-    .. code-block:: php
+    can also register PHP `Closures`_ as event listeners::
 
         use Symfony\Component\EventDispatcher\Event;
 
@@ -176,9 +170,7 @@ The ``addListener()`` method takes up to three arguments:
 Once a listener is registered with the dispatcher, it waits until the event is
 notified. In the above example, when the ``foo.action`` event is dispatched,
 the dispatcher calls the ``AcmeListener::onFooAction`` method and passes the
-``Event`` object as the single argument:
-
-.. code-block:: php
+``Event`` object as the single argument::
 
     use Symfony\Component\EventDispatcher\Event;
 
@@ -197,9 +189,7 @@ is passed to the listener. This gives the listener access to special
 information about the event. Check the documentation or implementation of each
 event to determine the exact ``Symfony\Component\EventDispatcher\Event``
 instance that's being passed. For example, the ``kernel.event`` event passes an
-instance of ``Symfony\Component\HttpKernel\Event\FilterResponseEvent``:
-
-.. code-block:: php
+instance of ``Symfony\Component\HttpKernel\Event\FilterResponseEvent``::
 
     use Symfony\Component\HttpKernel\Event\FilterResponseEvent
 
@@ -230,9 +220,7 @@ The Static ``Events`` Class
 Suppose you want to create a new Event - ``store.order`` - that is dispatched
 each time an order is created inside your application. To keep things
 organized, start by creating a ``StoreEvents`` class inside your application
-that serves to define and document your event:
-
-.. code-block:: php
+that serves to define and document your event::
 
     namespace Acme\StoreBundle;
 
@@ -268,9 +256,7 @@ accomplish this, you'll create a new class that extends
 ``Symfony\Component\EventDispatcher\Event``.
 
 In this example, each listener will need access to some pretend ``Order``
-object. Create an ``Event`` class that makes this possible:
-
-.. code-block:: php
+object. Create an ``Event`` class that makes this possible::
 
     namespace Acme\StoreBundle\Event;
 
@@ -301,9 +287,7 @@ Dispatch the Event
 The :method:`Symfony\\Component\\EventDispatcher\\EventDispatcher::dispatch`
 method notifies all listeners of the given event. It takes two arguments: the
 name of the event to dispatch and the ``Event`` instance to pass to each
-listener of that event:
-
-.. code-block:: php
+listener of that event::
 
     use Acme\StoreBundle\StoreEvents;
     use Acme\StoreBundle\Order;
@@ -320,9 +304,7 @@ listener of that event:
 Notice that the special ``FilterOrderEvent`` object is created and passed to
 the ``dispatch`` method. Now, any listener to the ``store.order`` event will
 receive the ``FilterOrderEvent`` and have access to the ``Order`` object via
-the ``getOrder`` method:
-
-.. code-block:: php
+the ``getOrder`` method::
 
     // some listener class that's been registered for "STORE_ORDER" event
     use Acme\StoreBundle\Event\FilterOrderEvent;
@@ -332,51 +314,6 @@ the ``getOrder`` method:
         $order = $event->getOrder();
         // do something to or with the order
     }
-
-Passing along the Event Dispatcher Object
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-If you have a look at the ``EventDispatcher`` class, you will notice that the
-class does not act as a Singleton (there is no ``getInstance()`` static method).
-That is intentional, as you might want to have several concurrent event
-dispatchers in a single PHP request. But it also means that you need a way to
-pass the dispatcher to the objects that need to connect or notify events.
-
-The best practice is to inject the event dispatcher object into your objects,
-aka dependency injection.
-
-You can use constructor injection::
-
-    use Symfony\Component\EventDispatcher\EventDispatcherInterface;
-
-    class Foo
-    {
-        protected $dispatcher = null;
-
-        public function __construct(EventDispatcherInterface $dispatcher)
-        {
-            $this->dispatcher = $dispatcher;
-        }
-    }
-
-Or setter injection::
-
-    use Symfony\Component\EventDispatcher\EventDispatcherInterface;
-
-    class Foo
-    {
-        protected $dispatcher = null;
-
-        public function setEventDispatcher(EventDispatcherInterface $dispatcher)
-        {
-            $this->dispatcher = $dispatcher;
-        }
-    }
-
-Choosing between the two is really a matter of taste. Many tend to prefer the
-constructor injection as the objects are fully initialized at construction
-time. But when you have a long list of dependencies, using setter injection
-can be the way to go, especially for optional dependencies.
 
 .. index::
    single: Event Dispatcher; Event subscribers
@@ -394,9 +331,7 @@ events it should subscribe to. It implements the
 :class:`Symfony\\Component\\EventDispatcher\\EventSubscriberInterface`
 interface, which requires a single static method called
 ``getSubscribedEvents``. Take the following example of a subscriber that
-subscribes to the ``kernel.response`` and ``store.order`` events:
-
-.. code-block:: php
+subscribes to the ``kernel.response`` and ``store.order`` events::
 
     namespace Acme\StoreBundle\Event;
 
@@ -442,9 +377,7 @@ This is very similar to a listener class, except that the class itself can
 tell the dispatcher which events it should listen to. To register a subscriber
 with the dispatcher, use the
 :method:`Symfony\\Component\\EventDispatcher\\EventDispatcher::addSubscriber`
-method:
-
-.. code-block:: php
+method::
 
     use Acme\StoreBundle\Event\StoreSubscriber;
 
@@ -471,9 +404,7 @@ from being called. In other words, the listener needs to be able to tell the
 dispatcher to stop all propagation of the event to future listeners (i.e. to
 not notify any more listeners). This can be accomplished from inside a
 listener via the
-:method:`Symfony\\Component\\EventDispatcher\\Event::stopPropagation` method:
-
-.. code-block:: php
+:method:`Symfony\\Component\\EventDispatcher\\Event::stopPropagation` method::
 
    use Acme\StoreBundle\Event\FilterOrderEvent;
 
@@ -486,6 +417,180 @@ listener via the
 
 Now, any listeners to ``store.order`` that have not yet been called will *not*
 be called.
+
+It is possible to detect if an event was stopped by using the
+:method:`Symfony\\Component\\EventDispatcher\\Event::isStoppedPropagation` method
+which returns a boolean value::
+
+    $dispatcher->dispatch('foo.event', $event);
+    if ($event->isStoppedPropagation()) {
+        // ...
+    }
+
+.. index::
+   single: Event Dispatcher; Event Dispatcher aware events and listeners
+
+.. _event_dispatcher-dispatcher-aware-events:
+
+EventDispatcher aware Events and Listeners
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 2.1
+    The ``Event`` object contains a reference to the invoking dispatcher since Symfony 2.1
+
+The ``EventDispatcher`` always injects a reference to itself in the passed event
+object.  This means that all listeners have direct access to the
+``EventDispatcher`` object that notified the listener via the passed ``Event``
+object's :method:`Symfony\\Component\\EventDispatcher\\Event::getDispatcher`
+method.
+
+This can lead to some advanced applications of the ``EventDispatcher`` including
+letting listeners dispatch other events, event chaining or even lazy loading of
+more listeners into the dispatcher object. Examples follow:
+
+Lazy loading listeners::
+
+    use Symfony\Component\EventDispatcher\Event;
+    use Acme\StoreBundle\Event\StoreSubscriber;
+
+    class Foo
+    {
+        private $started = false;
+
+        public function myLazyListener(Event $event)
+        {
+            if (false === $this->started) {
+                $subscriber = new StoreSubscriber();
+                $event->getDispatcher()->addSubscriber($subscriber);
+            }
+
+            $this->started = true;
+
+            // ... more code
+        }
+    }
+
+Dispatching another event from within a listener::
+
+    use Symfony\Component\EventDispatcher\Event;
+
+    class Foo
+    {
+        public function myFooListener(Event $event)
+        {
+            $event->getDispatcher()->dispatch('log', $event);
+
+            // ... more code
+        }
+    }
+
+While this above is sufficient for most uses, if your application uses multiple
+``EventDispatcher`` instances, you might need to specifically inject a known
+instance of the ``EventDispatcher`` into your listeners.  This could be done
+using constructor or setter injection as follows:
+
+Constructor injection::
+
+    use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+
+    class Foo
+    {
+        protected $dispatcher = null;
+
+        public function __construct(EventDispatcherInterface $dispatcher)
+        {
+            $this->dispatcher = $dispatcher;
+        }
+    }
+
+Or setter injection::
+
+    use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+
+    class Foo
+    {
+        protected $dispatcher = null;
+
+        public function setEventDispatcher(EventDispatcherInterface $dispatcher)
+        {
+            $this->dispatcher = $dispatcher;
+        }
+    }
+
+Choosing between the two is really a matter of taste. Many tend to prefer the
+constructor injection as the objects are fully initialized at construction
+time. But when you have a long list of dependencies, using setter injection
+can be the way to go, especially for optional dependencies.
+
+.. index::
+   single: Event Dispatcher; Dispatcher shortcuts
+
+.. _event_dispatcher-shortcuts:
+
+Dispatcher Shortcuts
+~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 2.1
+    ``EventDispatcher::dispatch()`` method returns the event since Symfony 2.1.
+
+The :method:`EventDispatcher::dispatch<Symfony\\Component\\EventDispatcher\\EventDispatcher::dispatch>`
+method always returns an :class:`Symfony\\Component\\EventDispatcher\\Event`
+object. This allows for various shortcuts. For example if one does not need
+a custom event object, one can simply rely on a plain
+:class:`Symfony\\Component\\EventDispatcher\\Event` object. You do not even need
+to pass this to the dispatcher as it will create one by default unless you
+specifically pass one::
+
+    $dispatcher->dispatch('foo.event');
+
+Moreover, the EventDispatcher always returns whichever event object that was
+dispatched, i.e. either the event that was passed or the event that was
+created internally by the dispatcher. This allows for nice shortcuts::
+
+    if (!$dispatcher->dispatch('foo.event')->isStoppedPropagation()) {
+        // ...
+    }
+
+Or::
+
+    $barEvent = new BarEvent();
+    $bar = $dispatcher->dispatch('bar.event', $barEvent)->getBar();
+
+Or::
+
+    $response = $dispatcher->dispatch('bar.event', new BarEvent())->getBar();
+
+and so on...
+
+.. index::
+   single: Event Dispatcher; Event name introspection
+
+.. _event_dispatcher-event-name-introspection:
+
+Event Name Introspection
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 2.1
+    Added event name to the ``Event`` object since Symfony 2.1
+
+Since the ``EventDispatcher`` already knows the name of the event when dispatching
+it, the event name is also injected into the
+:class:`Symfony\\Component\\EventDispatcher\\Event` objects, making it available
+to event listeners via the :method:`Symfony\\Component\\EventDispatcher\\Event::getName`
+method.
+
+The event name, (as with any other data in a custom event object) can be used as
+part of the listener's processing logic::
+
+    use Symfony\Component\EventDispatcher\Event;
+
+    class Foo
+    {
+        public function myEventListener(Event $event)
+        {
+            echo $event->getName();
+        }
+    }
 
 .. _Observer: http://en.wikipedia.org/wiki/Observer_pattern
 .. _`Symfony2 HttpKernel component`: https://github.com/symfony/HttpKernel

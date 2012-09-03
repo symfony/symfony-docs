@@ -11,11 +11,11 @@ of what a bare form class looks like::
     namespace Acme\DemoBundle\Form\Type;
 
     use Symfony\Component\Form\AbstractType;
-    use Symfony\Component\Form\FormBuilder;
+    use Symfony\Component\Form\FormBuilderInterface;
     
     class ProductType extends AbstractType
     {
-        public function buildForm(FormBuilder $builder, array $options)
+        public function buildForm(FormBuilderInterface $builder, array $options)
         {
             $builder->add('name');
             $builder->add('price');
@@ -56,13 +56,13 @@ to an Event Subscriber::
     // src/Acme/DemoBundle/Form/Type/ProductType.php
     namespace Acme\DemoBundle\Form\Type;
 
-    use Symfony\Component\Form\AbstractType;
-    use Symfony\Component\Form\FormBuilder;
+    use Symfony\Component\Form\AbstractType
+    use Symfony\Component\Form\FormBuilderInterface;
     use Acme\DemoBundle\Form\EventListener\AddNameFieldSubscriber;
 
     class ProductType extends AbstractType
     {
-        public function buildForm(FormBuilder $builder, array $options)
+        public function buildForm(FormBuilderInterface $builder, array $options)
         {
             $subscriber = new AddNameFieldSubscriber($builder->getFormFactory());
             $builder->addEventSubscriber($subscriber);
@@ -128,7 +128,7 @@ might look like the following::
 
             // check if the product object is "new"
             if (!$data->getId()) {
-                $form->add($this->factory->createNamed('text', 'name'));
+                $form->add($this->factory->createNamed('name', 'text'));
             }
         }
     }

@@ -11,6 +11,7 @@ The Components
     dom_crawler
     dependency_injection/index
     event_dispatcher/index
+    filesystem
     finder
     http_foundation/index
     locale

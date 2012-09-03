@@ -17,25 +17,8 @@ Downloading Symfony2
 --------------------
 
 First, check that you have installed and configured a Web server (such as
-Apache) with PHP 5.3.2 or higher.
-
-.. tip::
-   
-    If you have PHP 5.4, you could use the built-in web server. The built-in
-    server should be used only for development purpose, but it can help you
-    to start your project quickly and easily.
-
-    Just use this command to launch the server:
-    
-    .. code-block:: bash
-
-        $ php -S localhost:80 -t /path/to/www
-
-    where "/path/to/www" is the path to some directory on your machine that
-    you'll extract Symfony into so that the eventual URL to your application
-    is "http://localhost/Symfony/app_dev.php". You can also extract Symfony
-    first and then start the web server in the Symfony "web" directory. If
-    you do this, the URL to your application will be "http://localhost/app_dev.php".
+Apache) with the most recent PHP version possible (PHP 5.3.8 or newer is
+recommended).
 
 Ready? Start by downloading the "`Symfony2 Standard Edition`_", a Symfony
 :term:`distribution` that is preconfigured for the most common use cases and
@@ -71,12 +54,32 @@ have a ``Symfony/`` directory that looks like this:
 
 .. note::
 
-    If you downloaded the Standard Edition *without vendors*, simply run the
-    following command to download all of the vendor libraries:
+    If you are familiar with Composer, you can run the following command
+    instead of downloading the archive:
 
     .. code-block:: bash
 
-        $ php bin/vendors install
+        $ composer.phar create-project symfony/framework-standard-edition path/to/install
+
+        # remove the Git history
+        $ rm -rf .git
+
+.. tip::
+
+    If you have PHP 5.4, you can use the built-in web server:
+
+    .. code-block:: bash
+
+        # check your PHP CLI configuration
+        $ php ./app/check.php
+
+        # run the built-in web server
+        $ php ./app/console server:run
+
+    Then the URL to your application will be "http://localhost:8000/app_dev.php"
+
+    The built-in server should be used only for development purpose, but it
+    can help you to start your project quickly and easily.
 
 Checking the Configuration
 --------------------------
@@ -87,7 +90,18 @@ URL to see the diagnostics for your machine:
 
 .. code-block:: text
 
-    http://localhost/Symfony/web/config.php
+    http://localhost/config.php
+
+.. note::
+
+    All of the example URLs assume that you've downloaded and unzipped Symfony
+    directly into the web server web root. If you've followed the directions
+    above and unzipped the `Symfony` directory into your web root, then add
+    `/Symfony/web` after `localhost` for all the URLs you see:
+
+    .. code-block:: text
+
+        http://localhost/Symfony/web/config.php
 
 If there are any outstanding issues listed, correct them. You might also tweak
 your configuration by following any given recommendations. When everything is
@@ -96,7 +110,7 @@ your first "real" Symfony2 webpage:
 
 .. code-block:: text
 
-    http://localhost/Symfony/web/app_dev.php/
+    http://localhost/app_dev.php/
 
 Symfony2 should welcome and congratulate you for your hard work so far!
 
@@ -124,7 +138,7 @@ Symfony2 (replace *Fabien* with your first name):
 
 .. code-block:: text
 
-    http://localhost/Symfony/web/app_dev.php/demo/hello/Fabien
+    http://localhost/app_dev.php/demo/hello/Fabien
 
 .. image:: /images/quick_tour/hello_fabien.png
    :align: center
@@ -381,14 +395,14 @@ to production. That's why you will find another front controller in the
 
 .. code-block:: text
 
-    http://localhost/Symfony/web/app.php/demo/hello/Fabien
+    http://localhost/app.php/demo/hello/Fabien
 
 And if you use Apache with ``mod_rewrite`` enabled, you can even omit the
 ``app.php`` part of the URL:
 
 .. code-block:: text
 
-    http://localhost/Symfony/web/demo/hello/Fabien
+    http://localhost/demo/hello/Fabien
 
 Last but not least, on the production servers, you should point your web root
 directory to the ``web/`` directory to secure your installation and have an

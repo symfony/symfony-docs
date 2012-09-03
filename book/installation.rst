@@ -14,16 +14,17 @@ developing in immediately.
     If you're looking for instructions on how best to create a new project
     and store it via source control, see `Using Source Control`_.
 
-Downloading a Symfony2 Distribution
------------------------------------
+Installing a Symfony2 Distribution
+----------------------------------
 
 .. tip::
 
-    First, check that you have installed and configured a Web server (such
-    as Apache) with PHP 5.3.2 or higher. For more information on Symfony2
-    requirements, see the :doc:`requirements reference</reference/requirements>`.
-    For information on configuring your specific web server document root, see the
-    following documentation: `Apache`_ | `Nginx`_ .
+    First, check that you have installed and configured a Web server (such as
+    Apache) with the most recent PHP version possible (PHP 5.3.8 or newer is
+    recommended). For more information on Symfony2 requirements, see the
+    :doc:`requirements reference</reference/requirements>`. For information on
+    configuring your specific web server document root, see the following
+    documentation: `Apache`_ | `Nginx`_ .
 
 Symfony2 packages "distributions", which are fully-functional applications
 that include the Symfony2 core libraries, a selection of useful bundles, a
@@ -33,34 +34,42 @@ that can be used immediately to begin developing your application.
 
 Start by visiting the Symfony2 download page at `http://symfony.com/download`_.
 On this page, you'll see the *Symfony Standard Edition*, which is the main
-Symfony2 distribution. Here, you'll need to make two choices:
+Symfony2 distribution. There are 2 ways to get your project started:
 
-* Download either a ``.tgz`` or ``.zip`` archive - both are equivalent, download
-  whatever you're more comfortable using;
+Option 1) Composer
+~~~~~~~~~~~~~~~~~~
 
-* Download the distribution with or without vendors. If you have `Git`_ installed
-  on your computer, you should download Symfony2 "without vendors", as it
-  adds a bit more flexibility when including third-party/vendor libraries.
+`Composer`_ is a dependency management library for PHP, which you can use
+to download the Symfony2 Standard Edition.
 
-Download one of the archives somewhere under your local web server's root
-directory and unpack it. From a UNIX command line, this can be done with
-one of the following commands (replacing ``###`` with your actual filename):
+Start by `downloading Composer`_ anywhere onto your local computer. If you
+have curl installed, it's as easy as:
 
 .. code-block:: bash
 
-    # for .tgz file
-    $ tar zxvf Symfony_Standard_Vendors_2.0.###.tgz
+    curl -s https://getcomposer.org/installer | php
 
-    # for a .zip file
-    $ unzip Symfony_Standard_Vendors_2.0.###.zip
+.. note::
 
-When you're finished, you should have a ``Symfony/`` directory that looks
-something like this:
+    If your computer is not ready to use Composer, you'll see some recommendations
+    when running this command. Follow those recommendations to get Composer
+    working properly.
+
+Composer is an executable PHAR file, which you can use to download the Standard
+Distribution:
+
+.. code-block:: bash
+
+    php composer.phar create-project symfony/framework-standard-edition /path/to/webroot/Symfony
+
+This command may take several minutes to run as Composer download the Standard
+Distribution along with all of the vendor libraries that it needs. When it finishes,
+you should have a directory that looks something like this:
 
 .. code-block:: text
 
-    www/ <- your web root directory
-        Symfony/ <- the unpacked archive
+    path/to/webroot/ <- your web root directory
+        Symfony/ <- the new directory
             app/
                 cache/
                 config/
@@ -73,20 +82,109 @@ something like this:
                 app.php
                 ...
 
-Updating Vendors
-~~~~~~~~~~~~~~~~
+<<<<<<< HEAD
+Option 2) Download an Archive
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Finally, if you downloaded the archive "without vendors", install the vendors
-by running the following command from the command line:
+You can also download an archive of the Standard Edition. Here, you'll
+need to make two choices:
+
+* Download either a ``.tgz`` or ``.zip`` archive - both are equivalent, download
+  whatever you're more comfortable using;
+
+* Download the distribution with or without vendors. If you're planning on
+  using more third-party libraries or bundles and managing them via Composer,
+  you should probably download "without vendors".
+
+Download one of the archives somewhere under your local web server's root
+directory and unpack it. From a UNIX command line, this can be done with
+one of the following commands (replacing ``###`` with your actual filename):
 
 .. code-block:: bash
 
-    $ php bin/vendors install
+    # for .tgz file
+    $ tar zxvf Symfony_Standard_Vendors_2.1.###.tgz
+
+    # for a .zip file
+    $ unzip Symfony_Standard_Vendors_2.1.###.zip
+
+If you've downloaded "without vendors", you'll definitely need to read the
+next section.
+
+.. _installation-updating-vendors:
+=======
+.. note::
+
+<<<<<<< HEAD
+    You can easilly override the default directory structure. See :doc:`/cookbook/configuration/override_symfony_dir`
+    for more information.
+>>>>>>> 4c9723b... [Book/installation] Added quick note to the cookbook article
+=======
+    You can easily override the default directory structure. See 
+    :doc:`/cookbook/configuration/override_symfony_dir` for more information.
+>>>>>>> 561a1a7... [Cookbook/configuration][book/installation] Fixed catches by @stof
+
+Updating Vendors
+~~~~~~~~~~~~~~~~
+
+At this point, you've downloaded a fully-functional Symfony project in which
+you'll start to develop your own application. A Symfony project depends on
+a number of external libraries. These are downloaded into the `vendor/` directory
+of your project via a library called `Composer`_.
+
+Depending on how you downloaded Symfony, you may or may not need to do update
+your vendors right now. But, updating your vendors is always safe, and guarantees
+that you have all the vendor libraries you need.
+
+Step 1: Get `Composer`_ (The great new PHP packaging system)
+
+.. code-block:: bash
+
+    curl -s http://getcomposer.org/installer | php
+
+Make sure you download ``composer.phar`` in the same folder where
+the ``composer.json`` file is located (this is your Symfony project
+root by default).
+
+Step 2: Install vendors
+
+.. code-block:: bash
+
+    $ php composer.phar install
 
 This command downloads all of the necessary vendor libraries - including
-Symfony itself - into the ``vendor/`` directory. For more information on
-how third-party vendor libraries are managed inside Symfony2, see
-":ref:`cookbook-managing-vendor-libraries`".
+Symfony itself - into the ``vendor/`` directory.
+
+.. note::
+
+    If you don't have ``curl`` installed, you can also just download the ``installer``
+    file manually at http://getcomposer.org/installer. Place this file into your
+    project and then run:
+
+    .. code-block:: bash
+
+        php installer
+        php composer.phar install
+
+.. tip::
+
+    When running ``php composer.phar install`` or ``php composer.phar update``,
+    composer will execute post install/update commands to clear the cache
+    and install assets. By default, the assets will be copied into your ``web``
+    directory. To create symlinks instead of copying the assets, you can
+    add an entry in the ``extra`` node of your composer.json file with the
+    key ``symfony-assets-install`` and the value ``symlink``:
+
+    .. code-block:: json
+
+        "extra": {
+            "symfony-app-dir": "app",
+            "symfony-web-dir": "web",
+            "symfony-assets-install": "symlink"
+        }
+
+    When passing ``relative`` instead of ``symlink`` to symfony-assets-install,
+    the command will generate relative symlinks.
 
 Configuration and Setup
 ~~~~~~~~~~~~~~~~~~~~~~~
@@ -101,7 +199,7 @@ to check your configuration:
 
 .. code-block:: text
 
-    http://localhost/Symfony/web/config.php
+    http://localhost/config.php
 
 If there are any issues, correct them now before moving on.
 
@@ -129,9 +227,9 @@ If there are any issues, correct them now before moving on.
 
     **2. Using Acl on a system that does not support chmod +a**
 
-    Some systems don't support ``chmod +a``, but do support another utility 
+    Some systems don't support ``chmod +a``, but do support another utility
     called ``setfacl``. You may need to `enable ACL support`_ on your partition
-    and install setfacl before using it (as is the case with Ubuntu), like 
+    and install setfacl before using it (as is the case with Ubuntu), like
     so:
 
     .. code-block:: bash
@@ -169,7 +267,7 @@ first "real" Symfony2 webpage:
 
 .. code-block:: text
 
-    http://localhost/Symfony/web/app_dev.php/
+    http://localhost/app_dev.php/
 
 Symfony2 should welcome and congratulate you for your hard work so far!
 
@@ -187,6 +285,9 @@ you can remove it later.
 If you're new to Symfony, join us in the ":doc:`page_creation`", where you'll
 learn how to create pages, change configuration, and do everything else you'll
 need in your new application.
+
+Be sure to also check out the :doc:`Cookbook</cookbook/index>`, which contains
+a wide variety of articles about solving specific problems with Symfony.
 
 Using Source Control
 --------------------
@@ -209,16 +310,18 @@ file:
 
 .. code-block:: text
 
-    vendor/
+    /vendor/
 
 Now, the vendor directory won't be committed to source control. This is fine
 (actually, it's great!) because when someone else clones or checks out the
-project, he/she can simply run the ``php bin/vendors install`` script to
-download all the necessary vendor libraries.
+project, he/she can simply run the ``php composer.phar install`` script to
+install all the necessary project dependencies.
 
 .. _`enable ACL support`: https://help.ubuntu.com/community/FilePermissionsACLs
 .. _`http://symfony.com/download`: http://symfony.com/download
 .. _`Git`: http://git-scm.com/
 .. _`GitHub Bootcamp`: http://help.github.com/set-up-git-redirect
+.. _`Composer`: http://getcomposer.org/
+.. _`downloading Composer`: http://getcomposer.org/download/
 .. _`Apache`: http://httpd.apache.org/docs/current/mod/core.html#documentroot
 .. _`Nginx`: http://wiki.nginx.org/Symfony

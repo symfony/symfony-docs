@@ -127,15 +127,15 @@ Throughout this chapter, template examples will be shown in both Twig and PHP.
     not program logic. The more you use Twig, the more you'll appreciate
     and benefit from this distinction. And of course, you'll be loved by
     web designers everywhere.
-    
+
     Twig can also do things that PHP can't, such as whitespace control, sandboxing,
     and the inclusion of custom functions and filters that only affect templates.
     Twig contains little features that make writing templates easier and
     more concise. Take the following example, which combines a loop with
     a logical ``if`` statement:
-    
+
     .. code-block:: html+jinja
-    
+
         <ul>
             {% for user in users %}
                 <li>{{ user.username }}</li>
@@ -638,6 +638,60 @@ Whenever you find that you need a variable or a piece of information that
 you don't have access to in a template, consider rendering a controller.
 Controllers are fast to execute and promote good code organization and reuse.
 
+Asynchronous Content with hinclude.js
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 2.1
+    hinclude.js support was added in Symfony 2.1
+
+Controllers can be embedded asyncronous using the hinclude.js_ javascript library.
+As the embedded content comes from another page (or controller for that matter),
+Symfony2 uses the standard ``render`` helper to configure ``hinclude`` tags:
+
+.. configuration-block::
+
+    .. code-block:: jinja
+
+        {% render '...:news' with {}, {'standalone': 'js'} %}
+
+    .. code-block:: php
+
+        <?php echo $view['actions']->render('...:news', array(), array('standalone' => 'js')) ?>
+
+.. note::
+
+   hinclude.js_ needs to be included in your page to work.
+
+Default content (while loading or if javascript is disabled) can be set globally
+in your application configuration:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # app/config/config.yml
+        framework:
+            # ...
+            templating:
+                hinclude_default_template: AcmeDemoBundle::hinclude.html.twig
+
+    .. code-block:: xml
+
+        <!-- app/config/config.xml -->
+        <framework:config>
+            <framework:templating hinclude-default-template="AcmeDemoBundle::hinclude.html.twig" />
+        </framework:config>
+
+    .. code-block:: php
+
+        // app/config/config.php
+        $container->loadFromExtension('framework', array(
+            // ...
+            'templating'      => array(
+                'hinclude_default_template' => array('AcmeDemoBundle::hinclude.html.twig'),
+            ),
+        ));
+
 .. index::
    single: Templating; Linking to pages
 
@@ -810,7 +864,7 @@ advantage of Symfony's template inheritance.
     This section will teach you the philosophy behind including stylesheet
     and Javascript assets in Symfony. Symfony also packages another library,
     called Assetic, which follows this philosophy but allows you to do much
-    more interesting things with those assets. For more information on 
+    more interesting things with those assets. For more information on
     using Assetic see :doc:`/cookbook/assetic/asset_management`.
 
 
@@ -851,13 +905,13 @@ page. From inside that contact page's template, do the following:
 
     {% block stylesheets %}
         {{ parent() }}
-        
+
         <link href="{{ asset('/css/contact.css') }}" type="text/css" rel="stylesheet" />
     {% endblock %}
-    
+
     {# ... #}
 
-In the child template, you simply override the ``stylesheets`` block and 
+In the child template, you simply override the ``stylesheets`` block and
 put your new stylesheet tag inside of that block. Of course, since you want
 to add to the parent block's content (and not actually *replace* it), you
 should use the ``parent()`` Twig function to include everything from the ``stylesheets``
@@ -1282,7 +1336,7 @@ pattern is to do the following::
     public function indexAction()
     {
         $format = $this->getRequest()->getRequestFormat();
-    
+
         return $this->render('AcmeBlogBundle:Blog:index.'.$format.'.twig');
     }
 
@@ -1349,3 +1403,4 @@ Learn more from the Cookbook
 .. _`tags`: http://twig.sensiolabs.org/doc/tags/index.html
 .. _`filters`: http://twig.sensiolabs.org/doc/filters/index.html
 .. _`add your own extensions`: http://twig.sensiolabs.org/doc/advanced.html#creating-an-extension
+.. _`hinclude.js`: http://mnot.github.com/hinclude/

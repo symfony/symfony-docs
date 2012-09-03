@@ -47,7 +47,7 @@ to a post record thanks to a foreign key constraint.
     ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 Before diving into the recipe, be sure your database connection parameters are
-correctly setup in the ``app/config/parameters.ini`` file (or wherever your
+correctly setup in the ``app/config/parameters.yml`` file (or wherever your
 database configuration is kept) and that you have initialized a bundle that
 will host your future entity class. In this tutorial, we will assume that
 an ``AcmeBlogBundle`` exists and is located under the ``src/Acme/BlogBundle``
@@ -170,4 +170,4 @@ The last command generated all getters and setters for your two ``BlogPost`` and
 ``BlogComment`` entity class properties. The generated entities are now ready to be
 used. Have fun!
 
-.. _`Doctrine tools documentation`: http://docs.doctrine-project.org/projects/doctrine-orm/en/2.1/reference/tools.html#reverse-engineering
+.. _`Doctrine tools documentation`: http://docs.doctrine-project.org/projects/doctrine-orm/en/latest/reference/tools.html#reverse-engineering

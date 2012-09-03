@@ -55,20 +55,23 @@ namespaces to find a particular file, making ``file_exists`` calls until it
 finally finds the file it's looking for.
 
 The simplest solution is to cache the location of each class after it's located
-the first time. Symfony comes with a class - ``ApcUniversalClassLoader`` -
-loader that extends the ``UniversalClassLoader`` and stores the class locations
-in APC.
+the first time. Symfony comes with a class - :class:`Symfony\\Component\\ClassLoader\\ApcClassLoader` -
+that does exactly this. To use it, just adapt your front controller file.
+If you're using the Standard Distribution, this code should already be available
+as comments in this file::
 
-To use this class loader, simply adapt your ``autoloader.php`` as follows:
+    // app.php
+    // ...
 
-.. code-block:: php
+    $loader = require_once __DIR__.'/../app/bootstrap.php.cache';
 
-    // app/autoload.php
-    require __DIR__.'/../vendor/symfony/src/Symfony/Component/ClassLoader/ApcUniversalClassLoader.php';
+    // Use APC for autoloading to improve performance
+    // Change 'sf2' by the prefix you want in order to prevent key conflict with another application
+    /*
+    $loader = new ApcClassLoader('sf2', $loader);
+    $loader->register(true);
+    */
 
-    use Symfony\Component\ClassLoader\ApcUniversalClassLoader;
-
-    $loader = new ApcUniversalClassLoader('some caching unique prefix');
     // ...
 
 .. note::
@@ -109,7 +112,7 @@ Note that there are two disadvantages when using a bootstrap file:
 * when debugging, one will need to place break points inside the bootstrap file.
 
 If you're using Symfony2 Standard Edition, the bootstrap file is automatically
-rebuilt after updating the vendor libraries via the ``php bin/vendors install``
+rebuilt after updating the vendor libraries via the ``php composer.phar install``
 command.
 
 Bootstrap Files and Byte Code Caches
@@ -122,5 +125,5 @@ is no longer a reason to use a bootstrap file.
 
 .. _`byte code caches`: http://en.wikipedia.org/wiki/List_of_PHP_accelerators
 .. _`APC`: http://php.net/manual/en/book.apc.php
-.. _`autoloader.php`: https://github.com/symfony/symfony-standard/blob/2.0/app/autoload.php
-.. _`bootstrap file`: https://github.com/sensio/SensioDistributionBundle/blob/2.0/Resources/bin/build_bootstrap.php
+.. _`autoloader.php`: https://github.com/symfony/symfony-standard/blob/master/app/autoload.php
+.. _`bootstrap file`: https://github.com/sensio/SensioDistributionBundle/blob/master/Composer/ScriptHandler.php

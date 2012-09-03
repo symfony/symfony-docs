@@ -31,11 +31,17 @@
 * :doc:`/components/event_dispatcher/index`
 
   * :doc:`/components/event_dispatcher/introduction`
+  * :doc:`/components/event_dispatcher/container_aware_dispatcher`
+  * :doc:`/components/event_dispatcher/generic_event`
 
 * **The DOM Crawler Component**
 
   * :doc:`/components/dom_crawler`
 
+* **The Filesystem Component**
+
+  * :doc:`/components/filesystem`
+  
 * **The Finder Component**
 
   * :doc:`/components/finder`
@@ -43,6 +49,9 @@
 * :doc:`/components/http_foundation/index`
 
   * :doc:`/components/http_foundation/introduction`
+  * :doc:`/components/http_foundation/sessions`
+  * :doc:`/components/http_foundation/session_configuration`
+  * :doc:`/components/http_foundation/session_testing`
 
 * **The Locale Component**
 

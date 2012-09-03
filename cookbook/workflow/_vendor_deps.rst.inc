@@ -1,5 +1,5 @@
-Managing Vendor Libraries with bin/vendors and deps
----------------------------------------------------
+Managing Vendor Libraries with composer.json
+--------------------------------------------
 
 How does it work?
 ~~~~~~~~~~~~~~~~~
@@ -9,82 +9,44 @@ way or another the goal is to download these files into your ``vendor/``
 directory and, ideally, to give you some sane way to manage the exact version
 you need for each.
 
-By default, these libraries are downloaded by running a ``php bin/vendors install``
-"downloader" script. This script reads from the ``deps`` file at the root
-of your project. This is an ini-formatted script, which holds a list of each
-of the external libraries you need, the directory each should be downloaded to,
-and (optionally) the version to be downloaded. The ``bin/vendors`` script
-uses ``git`` to downloaded these, solely because these external libraries
-themselves tend to be stored via git. The ``bin/vendors`` script also reads
-the ``deps.lock`` file, which allows you to pin each library to an exact
-git commit hash.
+By default, these libraries are downloaded by running a ``php composer.phar install``
+"downloader" binary. This ``composer.phar`` file is from a library called
+`Composer`_ and you can read more about installing it in the :ref:`Installation<installation-updating-vendors>`
+chapter.
+
+The ``composer.phar`` file reads from the ``composer.json`` file at the root
+of your project. This is an JSON-formatted file, which holds a list of each
+of the external packages you need, the version to be downloaded and more.
+The ``composer.phar`` file also reads from a ``composer.lock`` file, which
+allows you to pin each library to an **exact** version. In fact, if a ``composer.lock``
+file exists, the versions inside will override those in ``composer.json``.
+To upgrade your libraries to new versions, run ``php composer.phar update``.
+
+To learn more about Composer, see `GetComposer.org`_:
 
 It's important to realize that these vendor libraries are *not* actually part
 of *your* repository. Instead, they're simply un-tracked files that are downloaded
-into the ``vendor/`` directory by the ``bin/vendors`` script. But since all
-the information needed to download these files is saved in ``deps`` and ``deps.lock``
-(which *are* stored) in our repository), any other developer can use our
-project, run ``php bin/vendors install``, and download the exact same set
-of vendor libraries. This means that you're controlling exactly what each
-vendor library looks like, without needing to actually commit them to *your*
-repository.
+into the ``vendor/``. But since all the information needed to download these
+files is saved in ``composer.json`` and ``composer.lock`` (which *are* stored)
+in our repository, any other developer can use our project, run ``php composer.phar install``,
+and download the exact same set of vendor libraries. This means that you're
+controlling exactly what each vendor library looks like, without needing to
+actually commit them to *your* repository.
 
-So, whenever a developer uses your project, he/she should run the ``php bin/vendors install``
+So, whenever a developer uses your project, he/she should run the ``php composer.phar install``
 script to ensure that all of the needed vendor libraries are downloaded.
 
 .. sidebar:: Upgrading Symfony
 
     Since Symfony is just a group of third-party libraries and third-party
-    libraries are entirely controlled through ``deps`` and ``deps.lock``,
+    libraries are entirely controlled through ``composer.json`` and ``composer.lock``,
     upgrading Symfony means simply upgrading each of these files to match
     their state in the latest Symfony Standard Edition.
 
-    Of course, if you've added new entries to ``deps`` or ``deps.lock``, be sure
+    Of course, if you've added new entries to ``composer.json``, be sure
     to replace only the original parts (i.e. be sure not to also delete any of
     your custom entries).
 
-.. caution::
+.. _Composer: http://getcomposer.org/
+.. _GetComposer.org: http://getcomposer.org/
 
-    There is also a ``php bin/vendors update`` command, but this has nothing
-    to do with upgrading your project and you will normally not need to use
-    it. This command is used to freeze the versions of all of your vendor libraries
-    by updating them to the version specified in ``deps`` and recording it
-    into the ``deps.lock`` file.
-
-Hacking vendor libraries
-~~~~~~~~~~~~~~~~~~~~~~~~
-
-Sometimes, you want a specific branch, tag, or commit of a library to be downloaded
-or upgraded. You can set that directly to the ``deps`` file :
-
-.. code-block:: text
-
-    [AcmeAwesomeBundle]
-        git=http://github.com/johndoe/Acme/AwesomeBundle.git
-        target=/bundles/Acme/AwesomeBundle
-        version=the-awesome-version
-
-* The ``git`` option sets the URL of the library. It can use various protocols,
-  like ``http://`` as well as ``git://``. 
-
-* The ``target`` option specifies where the repository will live : plain Symfony
-  bundles should go under the ``vendor/bundles/Acme`` directory, other third-party
-  libraries usually go to ``vendor/my-awesome-library-name``. The target directory
-  defaults to this last option when not specified.
-
-* The ``version`` option allows you to set a specific revision. You can use a tag
-    (``version=origin/0.42``) or a branch name (``refs/remotes/origin/awesome-branch``).
-    It defaults to ``origin/HEAD``.
-
-Updating workflow
-~~~~~~~~~~~~~~~~~
-
-When you execute the ``php bin/vendors install``, for every library, the script first
-checks if the install directory exists. 
-
-If it does not (and ONLY if it does not), it runs a ``git clone``. 
-
-Then, it does a ``git fetch origin`` and a ``git reset --hard the-awesome-version``. 
-
-This means that the repository will only be cloned once. If you want to perform any
-change of the git remote, you MUST delete the entire target directory, not only its content.

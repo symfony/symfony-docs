@@ -18,7 +18,7 @@ areas of your application. By the end of this chapter, you'll be able to:
 
 * Create complex routes that map to controllers
 * Generate URLs inside templates and controllers
-* Load routing resources from bundles (or anywhere else) 
+* Load routing resources from bundles (or anywhere else)
 * Debug your routes
 
 .. index::
@@ -90,7 +90,7 @@ pattern that points to a specific PHP class and method:
         {
             // use the $slug variable to query the database
             $blog = ...;
-            
+
             return $this->render('AcmeBlogBundle:Blog:show.html.twig', array(
                 'blog' => $blog,
             ));
@@ -103,7 +103,11 @@ will be executed and the ``$slug`` variable will be equal to ``my-post``.
 
 This is the goal of the Symfony2 router: to map the URL of a request to a
 controller. Along the way, you'll learn all sorts of tricks that make mapping
-even the most complex URLs easy. 
+even the most complex URLs easy.
+
+.. versionadded:: 2.1
+    As of Symfony 2.1, the Routing component also accepts Unicode values
+    in routes like: /Жени/
 
 .. index::
    single: Routing; Under the hood
@@ -784,7 +788,12 @@ that are special: each adds a unique piece of functionality inside your applicat
 
 * ``_format``: Used to set the request format (:ref:`read more<book-routing-format-param>`);
 
-* ``_locale``: Used to set the locale on the session (:ref:`read more<book-translation-locale-url>`);
+* ``_locale``: Used to set the locale on the request (:ref:`read more<book-translation-locale-url>`);
+
+.. tip::
+
+    If you use the ``_locale`` parameter in a route, that value will also
+    be stored on the session so that subsequent requests keep this same locale.
 
 .. index::
    single: Routing; Controllers
@@ -819,7 +828,7 @@ The controller might look like this:
     namespace Acme\BlogBundle\Controller;
 
     use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-    
+
     class BlogController extends Controller
     {
         public function showAction($slug)
@@ -1089,9 +1098,9 @@ In an upcoming section, you'll learn how to generate URLs from inside templates.
     If the frontend of your application uses AJAX requests, you might want
     to be able to generate URLs in JavaScript based on your routing configuration.
     By using the `FOSJsRoutingBundle`_, you can do exactly that:
-    
+
     .. code-block:: javascript
-    
+
         var url = Routing.generate('blog_show', { "slug": 'my-blog-post'});
 
     For more information, see the documentation for that bundle.

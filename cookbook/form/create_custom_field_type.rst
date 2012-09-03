@@ -24,21 +24,21 @@ for form fields, which is ``<BundleName>\Form\Type``. Make sure the field extend
     namespace Acme\DemoBundle\Form\Type;
 
     use Symfony\Component\Form\AbstractType;
-    use Symfony\Component\Form\FormBuilder;
+    use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
     class GenderType extends AbstractType
     {
-        public function getDefaultOptions(array $options)
+        public function setDefaultOptions(OptionsResolverInterface $resolver)
         {
-            return array(
+            $resolver->setDefaults(array(
                 'choices' => array(
                     'm' => 'Male',
                     'f' => 'Female',
                 )
-            );
+            ));
         }
 
-        public function getParent(array $options)
+        public function getParent()
         {
             return 'choice';
         }
@@ -70,17 +70,17 @@ important:
   set) the ``multiple`` attribute on the ``select`` field. See `Creating a Template for the Field`_
   for more details.
 
-* ``getDefaultOptions()`` - This defines options for your form type that
+* ``setDefaultOptions()`` - This defines options for your form type that
   can be used in ``buildForm()`` and ``buildView()``. There are a lot of
-  options common to all fields (see `FieldType`_), but you can create any
-  others that you need here.
+  options common to all fields (see :doc:`/reference/forms/types/form`),
+  but you can create any others that you need here.
 
 .. tip::
 
     If you're creating a field that consists of many fields, then be sure
     to set your "parent" type as ``form`` or something that extends ``form``.
     Also, if you need to modify the "view" of any of your child types from
-    your parent type, use the ``buildViewBottomUp()`` method.
+    your parent type, use the ``finishView()`` method.
 
 The ``getName()`` method returns an identifier which should be unique in
 your application. This is used in various places, such as when customizing
@@ -150,11 +150,11 @@ new instance of the type in one of your forms::
     namespace Acme\DemoBundle\Form\Type;
 
     use Symfony\Component\Form\AbstractType;
-    use Symfony\Component\Form\FormBuilder;
+    use Symfony\Component\Form\FormBuilderInterface;
 
     class AuthorType extends AbstractType
     {
-        public function buildForm(FormBuilder $builder, array $options)
+        public function buildForm(FormBuilderInterface $builder, array $options)
         {
             $builder->add('gender_code', new GenderType(), array(
                 'empty_value' => 'Choose a gender',
@@ -231,6 +231,9 @@ argument to ``GenderType``, which receives the gender configuration::
 
     // src/Acme/DemoBundle/Form/Type/GenderType.php
     namespace Acme\DemoBundle\Form\Type;
+
+    use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+
     // ...
 
     class GenderType extends AbstractType
@@ -242,13 +245,13 @@ argument to ``GenderType``, which receives the gender configuration::
             $this->genderChoices = $genderChoices;
         }
     
-        public function getDefaultOptions(array $options)
+        public function setDefaultOptions(OptionsResolverInterface $resolver)
         {
-            return array(
+            $resolver->setDefaults(array(
                 'choices' => $this->genderChoices,
-            );
+            ));
         }
-        
+
         // ...
     }
 
@@ -258,11 +261,14 @@ configuration, using the field is now much easier::
 
     // src/Acme/DemoBundle/Form/Type/AuthorType.php
     namespace Acme\DemoBundle\Form\Type;
+
+    use Symfony\Component\Form\FormBuilderInterface;
+
     // ...
 
     class AuthorType extends AbstractType
     {
-        public function buildForm(FormBuilder $builder, array $options)
+        public function buildForm(FormBuilderInterface $builder, array $options)
         {
             $builder->add('gender_code', 'gender', array(
                 'empty_value' => 'Choose a gender',

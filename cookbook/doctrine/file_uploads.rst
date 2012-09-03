@@ -152,9 +152,9 @@ The following controller shows you how to handle the entire process::
         ;
 
         if ($this->getRequest()->getMethod() === 'POST') {
-            $form->bindRequest($this->getRequest());
+            $form->bind($this->getRequest());
             if ($form->isValid()) {
-                $em = $this->getDoctrine()->getEntityManager();
+                $em = $this->getDoctrine()->getManager();
 
                 $em->persist($document);
                 $em->flush();
@@ -190,7 +190,7 @@ a new ``upload()`` method on the ``Document`` class, which you'll create
 in a moment to handle the file upload::
 
     if ($form->isValid()) {
-        $em = $this->getDoctrine()->getEntityManager();
+        $em = $this->getDoctrine()->getManager();
 
         $document->upload();
 
@@ -307,7 +307,7 @@ Now that the moving of the file is handled atomically by the entity, the
 call to ``$document->upload()`` should be removed from the controller::
 
     if ($form->isValid()) {
-        $em = $this->getDoctrine()->getEntityManager();
+        $em = $this->getDoctrine()->getManager();
 
         $em->persist($document);
         $em->flush();

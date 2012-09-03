@@ -127,9 +127,9 @@ will look like this:
 
 .. code-block:: html
 
-    <input type="email" id="form_emails_$$name$$" name="form[emails][$$name$$]" value="" />
+    <input type="email" id="form_emails___name__" name="form[emails][__name__]" value="" />
 
-By replacing ``$$name$$`` with some unique value (e.g. ``2``),
+By replacing ``__name__`` with some unique value (e.g. ``2``),
 you can build and insert new HTML fields into your form.
 
 Using jQuery, a simple example might look like this. If you're rendering
@@ -170,10 +170,10 @@ you need is the JavaScript:
 
                     // grab the prototype template
                     var newWidget = emailList.attr('data-prototype');
-                    // replace the "$$name$$" used in the id and name of the prototype
+                    // replace the "__name__" used in the id and name of the prototype
                     // with a number that's unique to our emails
                     // end name attribute looks like name="contact[emails][2]"
-                    newWidget = newWidget.replace(/\$\$name\$\$/g, emailCount);
+                    newWidget = newWidget.replace(/__name__/g, emailCount);
                     emailCount++;
 
                     // create a new list element and add it to our list
@@ -283,8 +283,8 @@ This option is useful when using the `allow_add`_ option. If ``true`` (and
 if `allow_add`_ is also ``true``), a special "prototype" attribute will be
 available so that you can render a "template" example on your page of what
 a new element should look like. The ``name`` attribute given to this element
-is ``$$name$$``. This allows you to add a "add another" button via JavaScript
-which reads the prototype, replaces ``$$name$$`` with some unique name or
+is ``__name__``. This allows you to add a "add another" button via JavaScript
+which reads the prototype, replaces ``__name__`` with some unique name or
 number, and render it inside your form. When submitted, it will be added
 to your underlying array due to the `allow_add`_ option.
 
@@ -299,7 +299,7 @@ collection field:
 
     .. code-block:: php
     
-        <?php echo $view['form']->row($form['emails']->get('prototype')) ?>
+        <?php echo $view['form']->row($form['emails']->getVar('prototype')) ?>
 
 Note that all you really need is the "widget", but depending on how you're
 rendering your form, having the entire "form row" may be easier for you.

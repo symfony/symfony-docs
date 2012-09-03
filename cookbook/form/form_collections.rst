@@ -88,20 +88,21 @@ can be modified by the user::
     namespace Acme\TaskBundle\Form\Type;
 
     use Symfony\Component\Form\AbstractType;
-    use Symfony\Component\Form\FormBuilder;
+    use Symfony\Component\Form\FormBuilderInterface;
+    use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
     class TagType extends AbstractType
     {
-        public function buildForm(FormBuilder $builder, array $options)
+        public function buildForm(FormBuilderInterface $builder, array $options)
         {
             $builder->add('name');
         }
 
-        public function getDefaultOptions(array $options)
+        public function setDefaultOptions(OptionsResolverInterface $resolver)
         {
-            return array(
+            $resolver->setDefaults(array(
                 'data_class' => 'Acme\TaskBundle\Entity\Tag',
-            );
+            ));
         }
 
         public function getName()
@@ -121,22 +122,23 @@ Notice that we embed a collection of ``TagType`` forms using the
     namespace Acme\TaskBundle\Form\Type;
 
     use Symfony\Component\Form\AbstractType;
-    use Symfony\Component\Form\FormBuilder;
+    use Symfony\Component\Form\FormBuilderInterface;
+    use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
     class TaskType extends AbstractType
     {
-        public function buildForm(FormBuilder $builder, array $options)
+        public function buildForm(FormBuilderInterface $builder, array $options)
         {
             $builder->add('description');
 
             $builder->add('tags', 'collection', array('type' => new TagType()));
         }
 
-        public function getDefaultOptions(array $options)
+        public function setDefaultOptions(OptionsResolverInterface $resolver)
         {
-            return array(
+            $resolver->setDefaults(array(
                 'data_class' => 'Acme\TaskBundle\Entity\Task',
-            );
+            ));
         }
 
         public function getName()
@@ -176,7 +178,7 @@ In your controller, you'll now initialize a new instance of ``TaskType``::
 
             // process the form on POST
             if ('POST' === $request->getMethod()) {
-                $form->bindRequest($request);
+                $form->bind($request);
                 if ($form->isValid()) {
                     // maybe do some form processing, like saving the Task and Tag objects
                 }
@@ -283,8 +285,10 @@ add the ``allow_add`` option to our collection field::
     // src/Acme/TaskBundle/Form/Type/TaskType.php
 
     // ...
+    
+    use Symfony\Component\Form\FormBuilderInterface;
 
-    public function buildForm(FormBuilder $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('description');
 
@@ -316,7 +320,7 @@ new "tag" forms. To render it, make the following change to your template:
     
     .. code-block:: html+php
     
-        <ul class="tags" data-prototype="<?php echo $view->escape($view['form']->row($form['tags']->get('prototype'))) ?>">
+        <ul class="tags" data-prototype="<?php echo $view->escape($view['form']->row($form['tags']->getVar('prototype'))) ?>">
             ...
         </ul>
 
@@ -342,7 +346,7 @@ On the rendered page, the result will look something like this:
 
 .. code-block:: html
 
-    <ul class="tags" data-prototype="&lt;div&gt;&lt;label class=&quot; required&quot;&gt;$$name$$&lt;/label&gt;&lt;div id=&quot;task_tags_$$name$$&quot;&gt;&lt;div&gt;&lt;label for=&quot;task_tags_$$name$$_name&quot; class=&quot; required&quot;&gt;Name&lt;/label&gt;&lt;input type=&quot;text&quot; id=&quot;task_tags_$$name$$_name&quot; name=&quot;task[tags][$$name$$][name]&quot; required=&quot;required&quot; maxlength=&quot;255&quot; /&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;">
+    <ul class="tags" data-prototype="&lt;div&gt;&lt;label class=&quot; required&quot;&gt;__name__&lt;/label&gt;&lt;div id=&quot;task_tags___name__&quot;&gt;&lt;div&gt;&lt;label for=&quot;task_tags___name___name&quot; class=&quot; required&quot;&gt;Name&lt;/label&gt;&lt;input type=&quot;text&quot; id=&quot;task_tags___name___name&quot; name=&quot;task[tags][__name__][name]&quot; required=&quot;required&quot; maxlength=&quot;255&quot; /&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;">
 
 The goal of this section will be to use JavaScript to read this attribute
 and dynamically add new tag forms when the user clicks a "Add a tag" link.
@@ -379,9 +383,12 @@ will be show next):
 
 The ``addTagForm`` function's job will be to use the ``data-prototype`` attribute
 to dynamically add a new form when this link is clicked. The ``data-prototype``
-HTML contains the tag ``text`` input element with a name of ``task[tags][$$name$$][name]``
-and id of ``task_tags_$$name$$_name``. The ``$$name`` is a little "placeholder",
+HTML contains the tag ``text`` input element with a name of ``task[tags][__name__][name]``
+and id of ``task_tags___name___name``. The ``__name__`` is a little "placeholder",
 which we'll replace with a unique, incrementing number (e.g. ``task[tags][3][name]``).
+
+.. versionadded:: 2.1
+    The placeholder was changed from ``$$name$$`` to ``__name__`` in Symfony 2.1
 
 The actual code needed to make this all work can vary quite a bit, but here's
 one example:
@@ -392,9 +399,9 @@ one example:
         // Get the data-prototype we explained earlier
         var prototype = collectionHolder.attr('data-prototype');
 
-        // Replace '$$name$$' in the prototype's HTML to
+        // Replace '__name__' in the prototype's HTML to
         // instead be a number based on the current collection's length.
-        var newForm = prototype.replace(/\$\$name\$\$/g, collectionHolder.children().length);
+        var newForm = prototype.replace(/__name__/g, collectionHolder.children().length);
 
         // Display the form in the page in an li, before the "Add a tag" link li
         var $newFormLi = $('<li></li>').append(newForm);
@@ -501,8 +508,9 @@ Start by adding the ``allow_delete`` option in the form Type::
     // src/Acme/TaskBundle/Form/Type/TaskType.php
 
     // ...
+    use Symfony\Component\Form\FormBuilderInterface;
 
-    public function buildForm(FormBuilder $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('description');
 
@@ -588,7 +596,7 @@ the relationship between the removed ``Tag`` and ``Task`` object.
 
         public function editAction($id, Request $request)
         {
-            $em = $this->getDoctrine()->getEntityManager();
+            $em = $this->getDoctrine()->getManager();
             $task = $em->getRepository('AcmeTaskBundle:Task')->find($id);
     
             if (!$task) {
@@ -603,7 +611,7 @@ the relationship between the removed ``Tag`` and ``Task`` object.
             $editForm = $this->createForm(new TaskType(), $task);
 
             if ('POST' === $request->getMethod()) {
-                $editForm->bindRequest($this->getRequest());
+                $editForm->bind($this->getRequest());
 
                 if ($editForm->isValid()) {
         
