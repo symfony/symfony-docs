@@ -22,7 +22,7 @@ are shown here:
             main:
                 remember_me:
                     key:      "%secret%"
-                    lifetime: 3600
+                    lifetime: 31536000 # 365 days in seconds
                     path:     /
                     domain:   ~ # Defaults to the current domain from $_SERVER
 
@@ -33,7 +33,7 @@ are shown here:
             <firewall>
                 <remember-me
                     key      = "%secret%"
-                    lifetime = "3600"
+                    lifetime = "31536000" <!-- 365 days in seconds -->
                     path     = "/"
                     domain   = "" <!-- Defaults to the current domain from $_SERVER -->
                 />
@@ -47,7 +47,7 @@ are shown here:
             'firewalls' => array(
                 'main' => array('remember_me' => array(
                     'key'      => '%secret%',
-                    'lifetime' => 3600,
+                    'lifetime' => 31536000, // 365 days in seconds
                     'path'     => '/',
                     'domain'   => '', // Defaults to the current domain from $_SERVER
                 )),
