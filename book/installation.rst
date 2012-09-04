@@ -180,7 +180,7 @@ Beginning Development
 
 Now that you have a fully-functional Symfony2 application, you can begin
 development! Your distribution may contain some sample code - check the
-``README.rst`` file included with the distribution (open it as a text file)
+``README.md`` file included with the distribution (open it as a text file)
 to learn about what sample code was included with your distribution and how
 you can remove it later.
 
