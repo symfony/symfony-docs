@@ -367,6 +367,7 @@ to the ``NewsletterManager`` class, the config would look like this:
     .. code-block:: php
 
         use Symfony\Component\DependencyInjection\Definition;
+        use Symfony\Component\DependencyInjection\DefinitionDecorator;
         use Symfony\Component\DependencyInjection\Reference;
 
         // ...
@@ -398,6 +399,8 @@ to the ``NewsletterManager`` class, the config would look like this:
         ))->setClass(
             '%greeting_card_manager.class%'
         );
+
+        $container->compile();
 
 The ``GreetingCardManager`` will receive the same dependencies as before,
 but the ``NewsletterManager`` will be passed the ``my_alternative_mailer``
