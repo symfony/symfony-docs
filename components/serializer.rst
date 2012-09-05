@@ -51,6 +51,8 @@ Serializing an object
 For the sake of this example, let's ssume the following class already
 exists in our project::
 
+    namespace Acme;
+
     class Person
     {
         private $age;
@@ -82,7 +84,7 @@ exists in our project::
 Now, if we want to serialize this object into JSON, we only need to
 use the Serializer service created before::
 
-    $person = new Person();
+    $person = new Acme\Person();
     $person->setName('foo');
     $person->setAge(99);
 
@@ -105,7 +107,7 @@ of the `People` class would be encoded in XML format::
     </person>
     EOF;
 
-    $person = $serializer->deserialize($data,'Person','xml');
+    $person = $serializer->deserialize($data,'Acme\Person','xml');
 
 In this case, `Serializer::deserialize` needs three parameters:
 
