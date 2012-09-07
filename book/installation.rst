@@ -60,7 +60,7 @@ Distribution:
 
 .. code-block:: bash
 
-    php composer.phar create-project symfony/framework-standard-edition /path/to/webroot/Symfony
+    php composer.phar create-project symfony/framework-standard-edition /path/to/webroot/Symfony 2.1
 
 This command may take several minutes to run as Composer download the Standard
 Distribution along with all of the vendor libraries that it needs. When it finishes,
