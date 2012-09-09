@@ -20,7 +20,7 @@ Spool using memory
 
 When you use spooling to store the emails to memory, they will get sent right
 before the kernel terminates. This means the email only gets sent if the whole
-request got executed without any unhandled Exception or any Errors. To configure
+request got executed without any unhandled Exception or any errors. To configure
 swiftmailer with the memory option, use the following configuration:
 
 .. configuration-block::
