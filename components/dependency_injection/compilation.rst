@@ -29,11 +29,11 @@ As well as loading configuration directly into the container as shown in
 :doc:`/components/dependency_injection/introduction`, you can manage it by
 registering extensions with the container. The first step in the compilation
 process is to load configuration from any extension classes registered with
-the container. Unlike the configuration loaded directly they are only processed
+the container. Unlike the configuration loaded directly, they are only processed
 when the container is compiled. If your application is modular then extensions
 allow each module to register and manage their own service configuration.
 
-The extensions must implement  :class:`Symfony\\Component\\DependencyInjection\\Extension\\ExtensionInterface`
+The extensions must implement :class:`Symfony\\Component\\DependencyInjection\\Extension\\ExtensionInterface`
 and can be registered with the container with::
 
     $container->registerExtension($extension);
@@ -171,6 +171,7 @@ the XML configuration::
     }
 
 ..note::
+
     XSD validation is optional, returning ``false`` from the ``getXsdValidationBasePath``
     method will disable it.
 
@@ -192,13 +193,14 @@ The XML version of the config would then look like this:
     </container>
 
 ..note::
+
     In the Symfony2 full stack framework there is a base Extension class which
-    implements these methods as well as a short cut method for processing the
+    implements these methods as well as a shortcut method for processing the
     configuration. See :doc:`/cookbook/bundles/extension` for more details.
 
-The processed config value can now be added as container parameters as if they were
-listed in a ``parameters`` section of the config file but with merging multiple files
-and validation of the configuration thrown in::
+The processed config value can now be added as container parameters as if it were
+listed in a ``parameters`` section of the config file but with the additional
+benefit of merging multiple files and validation of the configuration::
 
     public function load(array $configs, ContainerBuilder $container)
     {
