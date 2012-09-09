@@ -56,7 +56,9 @@ that's what we will do in this tutorial.::
     use Symfony\Component\Form\AbstractTypeExtension;
     use Symfony\Component\Form\FormTypeExtensionInterface;
 
-    class ImageTypeExtension extends AbstractTypeExtension {
+    class ImageTypeExtension extends AbstractTypeExtension
+    {
+
         /**
          * Returns the name of the type being extended.
          *
@@ -87,6 +89,8 @@ to override one of the following methods :
 * ``buildView()``
 
 * ``setDefaultOptions()``
+
+* ``finishView()``
 
 For more information on what those methods do, you can refer to the
 :doc:`Creating Custom Field Types </cookbook/form/create_custom_field_type>`
@@ -199,7 +203,8 @@ it in the view.::
     use Symfony\Component\OptionsResolver\OptionsResolverInterface;
     use Symfony\Component\Form\Util\PropertyPath;
 
-    class ImageTypeExtension extends AbstractTypeExtension {
+    class ImageTypeExtension extends AbstractTypeExtension
+    {
 
         /**
          * Returns the name of the type being extended.
@@ -290,6 +295,7 @@ next to the file field. As an example : ::
 
     class MediaType extends AbstractType
     {
+
         public function buildForm(FormBuilderInterface $builder, array $options)
         {
             $builder
