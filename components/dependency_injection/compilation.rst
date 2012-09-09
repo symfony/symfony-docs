@@ -93,8 +93,8 @@ For YAML configuration files specifying the alias for the Extension as a key
 will mean that those values are passed to the Extension's ``load`` method:
 
 .. code-block:: yaml
-    # ...
 
+    # ...
     acme_demo:
         foo: fooValue
         bar: barValue
@@ -178,8 +178,8 @@ the XML configuration::
 The XML version of the config would then look like this:
 
 .. code-block:: xml
-    <?xml version="1.0" ?>
 
+    <?xml version="1.0" ?>
     <container xmlns="http://symfony.com/schema/dic/services"
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xmlns:acme_demo="http://www.example.com/symfony/schema/"
