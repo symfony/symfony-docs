@@ -1,5 +1,5 @@
-Config
-======
+Console
+=======
 
 .. toctree::
     :maxdepth: 2

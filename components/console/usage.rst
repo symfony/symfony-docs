@@ -4,10 +4,11 @@
 Console Usage
 =============
 
-As well as the options you specify for the commands you add there are some
-built options as well as a couple of built in commands for the console component.
+In addition to the options you specify for your commands, there are some
+built-in options as well as a couple of built-in commands for the console component.
 
 .. note::
+
     These examples assume you have added a file ``app/console`` to run at
     the cli::
 
@@ -21,10 +22,10 @@ built options as well as a couple of built in commands for the console component
         // ...
         $application->run();
 
-Built in Commands
+Built-in Commands
 ~~~~~~~~~~~~~~~~~
 
-There is a built in command ``list`` which outputs all the standard options
+There is a built-in command ``list`` which outputs all the standard options
 and the registered commands:
 
 .. code-block:: bash
@@ -53,7 +54,7 @@ Running ``help`` without specifying a command will list the global options:
 Global Options
 ~~~~~~~~~~~~~~
 
-You can get help information for any command with the ``--help`` option, to
+You can get help information for any command with the ``--help`` option. To
 get help for the list command:
 
 .. code-block:: bash
@@ -68,7 +69,7 @@ You can suppress output with:
     $ php app/console list --quiet
     $ php app/console list -q
 
-You can get more verbose messages (where this is supported for a command)
+You can get more verbose messages (if this is supported for a command)
 with:
 
 .. code-block:: bash
@@ -122,7 +123,7 @@ Shortcut Syntax
 ~~~~~~~~~~~~~~~
 
 You do not have to type out the full command names. You can just type the
-shortest unambiguous name to run a command. So if there are non clashing
+shortest unambiguous name to run a command. So if there are non-clashing
 commands, then you can run ``help`` like this:
 
 .. code-block:: bash
@@ -138,5 +139,5 @@ can run it with:
 
     $ php app/console d:g Fabien
 
-If you choose too short a command so it is ambiguous then no command will be run and
+If you choose too short a command so it is ambiguous, then no command will be run and
 some suggestions of the possible commands to choose from will be output.
