@@ -367,7 +367,7 @@ The previous YAML file is equivalent to the following PHP code:
 
     array('PHP', 'Perl', 'Python');
 
-Mappings use a colon followed by a space (``: ``) to mark each key/value pair:
+Mappings use a colon followed by a space (``:`` ) to mark each key/value pair:
 
 .. code-block:: yaml
 
@@ -445,7 +445,7 @@ A sequence can be written as a comma separated list within square brackets
     [PHP, Perl, Python]
 
 A mapping can be written as a comma separated list of key/values within curly
-braces (`{}`):
+braces (``{}``):
 
 .. code-block:: yaml
 
