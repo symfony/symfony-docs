@@ -277,6 +277,18 @@ need in your new application.
 Be sure to also check out the :doc:`Cookbook</cookbook/index>`, which contains
 a wide variety of articles about solving specific problems with Symfony.
 
+.. tip::
+
+    If you want to quickly remove the demo bundle, there's now a command
+    available for that, you can call:
+
+    .. code-block:: bash
+
+        $ app/console demo:self-remove
+
+    Note that the command will work properly only if you haven't changed
+    any of the files in the default Symfony2 Standard Distribution.
+
 Using Source Control
 --------------------
 
