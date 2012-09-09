@@ -131,7 +131,7 @@ configuration. The ``PhpDumper`` makes dumping the compiled container easy::
 
     if (file_exists($file)) {
         require_once $file;
-        $container = new ProjectServiceContiner();
+        $container = new ProjectServiceContainer();
     } else {
         $container = new ContainerBuilder();
         //--
@@ -141,7 +141,7 @@ configuration. The ``PhpDumper`` makes dumping the compiled container easy::
         file_put_contents($file, $dumper->dump());
     }
 
-``ProjectServiceContiner`` is the default name given to the dumped container
+``ProjectServiceContainer`` is the default name given to the dumped container
 class, you can change this though this with the ``class`` option when you dump
 it::
 
