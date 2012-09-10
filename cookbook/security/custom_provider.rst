@@ -135,9 +135,9 @@ Here's an example of how this might look::
                 // ...
 
                 return new WebserviceUser($username, $password, $salt, $roles)
-            } else {
-                throw new UsernameNotFoundException(sprintf('Username "%s" does not exist.', $username));
             }
+
+            throw new UsernameNotFoundException(sprintf('Username "%s" does not exist.', $username));
         }
 
         public function refreshUser(UserInterface $user)
