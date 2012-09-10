@@ -21,7 +21,8 @@ Full Default Configuration
             java:                 /usr/bin/java
             node:                 /usr/bin/node
             ruby:                 /usr/bin/ruby
-            sass:                 /usr/bin/sass
+            sass:                 
+                bin:              usr/bin/sass
             # An key-value pair of any number of named elements
             variables:
                 some_name:                 []
