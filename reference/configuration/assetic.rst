@@ -22,7 +22,7 @@ Full Default Configuration
             node:                 /usr/bin/node
             ruby:                 /usr/bin/ruby
             sass:                 
-                bin:              usr/bin/sass
+                bin:              /usr/bin/sass
             # An key-value pair of any number of named elements
             variables:
                 some_name:                 []
