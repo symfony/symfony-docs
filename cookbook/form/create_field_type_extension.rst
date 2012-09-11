@@ -4,7 +4,7 @@
 How to Create a Field Type Extension
 ======================================
 
-:doc:`Custom form field types <create_custom_field_type>` are great when
+:doc:`Custom form field types<create_custom_field_type>` are great when
 you need field types with a specific purpose, such as a gender selector,
 or a VAT number input.
 
@@ -12,7 +12,7 @@ But sometimes, you don't really need to add new field types - you want
 to add features on top of existing field types. This is where Field Type
 Extensions come in.
 
-Field Type Extensions have 2 main use cases :
+Field Type Extensions have 2 main use cases:
 
 #. You want to add a **generic feature to several field types** (such as
    adding a "help" field to every field type)
@@ -48,7 +48,9 @@ When creating a form type extension, you can either implements the
 :class:`Symfony\\Component\\Form\\FormTypeExtensionInterface` interface,
 or extends the :class:`Symfony\\Component\\Form\\AbstractTypeExtension`
 class. Most of the time, you will end up extending the abstract class ;
-that's what we will do in this tutorial.::
+that's what we will do in this tutorial.
+
+.. code-block:: php
 
     // src/Acme/DemoBundle/Form/Type/ImageTypeExtension.php
     namespace Acme\DemoBundle\Form\Type;
@@ -82,7 +84,7 @@ by your extension.
     you wish to extend.
 
 In adition to the ``getExtendedType`` function, you will probably want
-to override one of the following methods :
+to override one of the following methods:
 
 * ``buildForm()``
 
@@ -93,7 +95,7 @@ to override one of the following methods :
 * ``finishView()``
 
 For more information on what those methods do, you can refer to the
-:doc:`Creating Custom Field Types </cookbook/form/create_custom_field_type>`
+:doc:`Creating Custom Field Types</cookbook/form/create_custom_field_type>`
 cookbook article.
 
 Creating your Field Type as a Service
@@ -101,7 +103,7 @@ Creating your Field Type as a Service
 
 The next step is to make Symfony aware of your form extension. All you
 need to do is to declare it as a service by using the ``form.type_extension``
-tag :
+tag:
 
 .. configuration-block::
 
@@ -123,8 +125,7 @@ tag :
 
         $container
             ->register('acme_demo_bundle.image_type_extension', 'Acme\DemoBundle\Form\Type\ImageTypeExtension')
-            ->addTag('form.type_extension', array('alias' => 'file'))
-        ;
+            ->addTag('form.type_extension', array('alias' => 'file'));
 
 The ``alias`` key of the tag is the type of field that this extension should
 be applied to. In our case, as we want to extend the ``file`` field type,
@@ -136,10 +137,12 @@ Adding the extension business logic
 The goal of our extension is to display a nice image next to file field
 types containing image files. For that purpose, we will assume that we
 use an approach similar to the one described in
-:doc:`How to handle File Uploads with Doctrine </cookbook/doctrine/file_uploads>` :
+:doc:`How to handle File Uploads with Doctrine</cookbook/doctrine/file_uploads>`:
 we have a Media model with a file property (corresponding to the file field
 in the form) and a path property (corresponding to the image path in the
-database).::
+database).
+
+.. code-block:: php
 
     // src/Acme/DemoBundle/Entity/Media.php
     namespace Acme\DemoBundle\Entity;
@@ -178,20 +181,24 @@ database).::
          */
         public function getWebPath()
         {
-            // return the full image url, to be used in templates for example
+            // ... $webPath being the full image url, to be used in templates
+
+            return $webPath;
         }
 
-Our field type extension class will need to do two things :
+Our field type extension class will need to do two things:
 
 1) Override the ``setDefaultOptions`` method in order to add an image_path
    option
 2) Override the ``buildView`` method in order to pass the image url to
    the view
 
-The logic is the following : when adding a form field of type ``file``,
-we will be able to specify a new option : ``image_path``. This option will
+The logic is the following: when adding a form field of type ``file``,
+we will be able to specify a new option: ``image_path``. This option will
 tell the file field how to get the actual image url in order to display
-it in the view.::
+it in the view.
+
+.. code-block:: php
 
     // src/Acme/DemoBundle/Form/Type/ImageTypeExtension.php
     namespace Acme\DemoBundle\Form\Type;
@@ -229,9 +236,9 @@ it in the view.::
         /**
          * Pass the image url to the view
          *
-         * @param \Symfony\Component\Form\FormView $view
+         * @param \Symfony\Component\Form\FormView      $view
          * @param \Symfony\Component\Form\FormInterface $form
-         * @param array $options
+         * @param array                                 $options
          */
         public function buildView(FormView $view, FormInterface $form, array $options)
         {
@@ -255,7 +262,7 @@ see :ref:`cookbook-form-customization-form-themes`.
 
 In our extension class, we have added a new variable (``image_url``), but
 we still need to take advantage of this new variable in our templates.
-We need to override the ``file_widget`` block :
+We need to override the ``file_widget`` block:
 
 .. code-block:: html+jinja
 
@@ -263,14 +270,14 @@ We need to override the ``file_widget`` block :
     {% extends 'form_div_layout.html.twig' %}
 
     {% block file_widget %}
-    {% spaceless %}
+        {% spaceless %}
 
-    {{ block('form_widget') }}
-    {% if image_url is not null %}
-        <img src="{{ asset(image_url) }}"/>
-    {% endif %}
+        {{ block('form_widget') }}
+        {% if image_url is not null %}
+            <img src="{{ asset(image_url) }}"/>
+        {% endif %}
 
-    {% endspaceless %}
+        {% endspaceless %}
     {% endblock %}
 
 .. note::
@@ -285,7 +292,7 @@ Using the Field Type Extension
 
 From now on, when adding a field of type ``file`` in your form, you can
 specify an ``image_path`` option that will be used to display an image
-next to the file field. As an example : ::
+next to the file field. As an example::
 
     // src/Acme/DemoBundle/Form/Type/MediaType.php
     namespace Acme\DemoBundle\Form;
