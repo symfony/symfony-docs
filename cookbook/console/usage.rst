@@ -52,3 +52,9 @@ When using the shell you can choose to run each command in a separate process:
 
 When you do this the output will not be colorized and interactivity is not
 supported so you will need to pass all command params explicitly.
+
+.. note::
+
+    Unless you are using isolated processes, clearing the cache in the shell
+    will not have an effect on subsequent commands you run. This is because
+    the original cached files will still be being used.
