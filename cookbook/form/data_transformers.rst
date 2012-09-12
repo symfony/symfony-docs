@@ -125,6 +125,14 @@ issue field in some form.
                 );
             }
 
+            public function setDefaultOptions(OptionsResolverInterface $resolver)
+            {
+                $resolver->setDefaults(array(
+                    'data_class' => 'Acme\TaskBundle\Entity\Issue',
+                    'em'         => null,
+                ));
+            }
+
             // ...
         }
 
