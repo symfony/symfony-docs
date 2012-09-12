@@ -183,7 +183,7 @@ file:
 .. tip::
 
     Even though all routes are loaded from a single file, it's common practice
-    to include additional routing resources from inside the file. See the
+    to include additional routing resources from outside the file. See the
     :ref:`routing-include-external-resources` section for more information.
 
 Basic Route Configuration
