@@ -340,7 +340,7 @@ includes the following:
 
 .. note::
 
-    You can easilly change the directory location and name, for more information
+    You can easily change the directory location and name. For more information
     read the article :doc:`/cookbook/configuration/override_dir_structure`.
 
 

@@ -48,10 +48,10 @@ the location of the cache directory to ``app/{environment}/cache``.
 
 .. warning::
 
-    You should keep the ``cache`` directory different for each environment, 
-    otherwise some unexpected behaviour can happen as a different environment
-    means different config files and those are cached, so the cached data
-    is different.
+    You should keep the ``cache`` directory different for each environment,
+    otherwise some unexpected behaviour may happen. Each environment generates
+    its own cached config files, and so each needs its own directory to store
+    those cache files.
 
 Override the ``logs`` directory
 -------------------------------
@@ -73,23 +73,31 @@ method::
         }
     }
 
-We have changed location of the directory to ``app/{environment}/logs``.
+Here we have changed the location of the directory to ``app/{environment}/logs``.
 
 Override the ``web`` directory
 ------------------------------
 
-Some shared hosting require to rename the ``web`` directory to ``public_html``
-and move this directory to the apache root. You can simply rename the directory: 
-The only thing you need to check is if the path to the ``app`` directory 
-is still right in ``app.php`` or ``app_dev.php``. For instance: If we move 
-the ``web`` directory one map up we need to add ``Symfony`` (the name of 
-your Symfony installation directory) to the path::
+If you need to rename or move your ``web`` directory, the only thing you
+need to guarantee is that the path to the ``app`` directory is still correct
+in your ``app.php`` and ``app_dev.php`` front controllers. If you simply
+renamed the directory, you're fine. But if you moved it in some way, you
+may need to modify the paths inside these files::
 
     require_once __DIR__.'/../Symfony/app/bootstrap.php.cache';
     require_once __DIR__.'/../Symfony/app/AppKernel.php';
-    
+
+.. tip::
+
+    Some shared hosts have a ``public_html`` web directory root. Renaming
+    your web directory from ``web`` to ``public_html`` is one way to make
+    your Symfony project work on your shared host. Another way is to deploy
+    your application to a directory outside of your web root, delete your
+    ``public_html`` directory, and then replace it with a symbolic link to
+    the ``web`` in your project.
+
 .. note::
-    
+
     If you use the AsseticBundle you need to configure this, so it can use 
     the correct ``web`` directory:
 
