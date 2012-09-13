@@ -73,6 +73,12 @@ something like this:
                 app.php
                 ...
 
+.. note::
+
+    You can easily override the default directory structure. See 
+    :doc:`/cookbook/configuration/override_dir_structure` for more 
+    information.
+
 Updating Vendors
 ~~~~~~~~~~~~~~~~
 
