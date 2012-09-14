@@ -338,6 +338,11 @@ includes the following:
 
 * ``twig/`` - this directory contains all the cached Twig templates.
 
+.. note::
+
+    You can easily change the directory location and name. For more information
+    read the article :doc:`/cookbook/configuration/override_dir_structure`.
+
 
 Going Further
 -------------

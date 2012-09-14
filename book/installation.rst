@@ -110,6 +110,12 @@ one of the following commands (replacing ``###`` with your actual filename):
 If you've downloaded "without vendors", you'll definitely need to read the
 next section.
 
+.. note::
+
+    You can easily override the default directory structure. See
+    :doc:`/cookbook/configuration/override_dir_structure` for more
+    information.
+
 .. _installation-updating-vendors:
 
 Updating Vendors

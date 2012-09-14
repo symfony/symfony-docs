@@ -66,6 +66,10 @@
 
   * :doc:`/components/routing`
 
+* **The Serializer Component**
+
+  * :doc:`/components/serializer`
+
 * **The Templating Component**
 
   * :doc:`/components/templating`
