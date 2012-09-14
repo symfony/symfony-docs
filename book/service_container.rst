@@ -929,13 +929,13 @@ Debugging Services
 ------------------
 
 You can find out what services are registered with the container using the
-console, to list the services by id and which class they are:
+console. To show all services and the class for each service, run:
 
 .. code-block:: bash
 
     $ php app/console container:debug
 
-By default only public services are shown, you can also view private services:
+By default only public services are shown, but you can also view private services:
 
 .. code-block:: bash
 
