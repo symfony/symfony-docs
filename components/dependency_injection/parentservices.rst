@@ -266,8 +266,6 @@ a parent for a service.
             '%greeting_card_manager.class%'
         );
 
-        $container->compile();
-
 In this context, having a ``parent`` service implies that the arguments and
 method calls of the parent service should be used for the child services.
 Specifically, the setter methods defined for the parent service will be called
@@ -286,6 +284,12 @@ it to abstract in the config file as has been done above will mean that it
 can only be used as a parent service and cannot be used directly as a service
 to inject and will be removed at compile time. In other words, it exists merely
 as a "template" that other services can use.
+
+.. note::
+
+   In order for parent dependencies to resolve, the ``ContainerBuilder`` must 
+   first be compiled. See :doc:`/components/dependency_injection/compilation` 
+   for more details.
 
 Overriding Parent Dependencies
 ------------------------------
@@ -400,8 +404,6 @@ to the ``NewsletterManager`` class, the config would look like this:
             '%greeting_card_manager.class%'
         );
 
-        $container->compile();
-
 The ``GreetingCardManager`` will receive the same dependencies as before,
 but the ``NewsletterManager`` will be passed the ``my_alternative_mailer``
 instead of the ``my_mailer`` service.
@@ -511,8 +513,6 @@ If you had the following config:
         )->addMethodCall('setFilter', array(
             new Reference('another_filter')
         ));
-
-        $container->compile();
 
 In this example, the ``setFilter`` of the ``newsletter_manager`` service
 will be called twice, resulting in the ``$filters`` array containing both
