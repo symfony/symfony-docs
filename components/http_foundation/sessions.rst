@@ -69,13 +69,12 @@ Session workflow
   Starts the session - do not use ``session_start()``.
 
 * :method:`Symfony\\Component\\HttpFoundation\\Session\\Session::migrate`:
-  Regenerates the session id - do not use ``session_regenerate_id()``.
+  Regenerates the session ID - do not use ``session_regenerate_id()``.
   This method can optionally change the lifetime of the new cookie that will
   be emitted by calling this method.
 
 * :method:`Symfony\\Component\\HttpFoundation\\Session\\Session::invalidate`:
-  Clears the session data and regenerates the session id do not use ``session_destroy()``.
-  This is a shortcut for ``clear()`` and ``migrate()``.
+  Clears the all session data and regenerates session ID do not use ``session_destroy()``.
 
 * :method:`Symfony\\Component\\HttpFoundation\\Session\\Session::getId`: Gets the
   session ID. Do not use ``session_id()``.
