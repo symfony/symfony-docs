@@ -74,7 +74,7 @@ Session workflow
   be emitted by calling this method.
 
 * :method:`Symfony\\Component\\HttpFoundation\\Session\\Session::invalidate`:
-  Clears the all session data and regenerates session ID do not use ``session_destroy()``.
+  Clears all session data and regenerates session ID. Do not use ``session_destroy()``.
 
 * :method:`Symfony\\Component\\HttpFoundation\\Session\\Session::getId`: Gets the
   session ID. Do not use ``session_id()``.
