@@ -60,7 +60,12 @@ Distribution:
 
 .. code-block:: bash
 
-    php composer.phar create-project symfony/framework-standard-edition /path/to/webroot/Symfony 2.1
+    php composer.phar create-project symfony/framework-standard-edition /path/to/webroot/Symfony 2.1.x-dev
+
+.. tip::
+
+    For an exact version, replace `2.1.x-dev` with the latest Symfony version
+    (e.g. 2.1.1). For details, see the `Symfony Installation Page`_
 
 This command may take several minutes to run as Composer download the Standard
 Distribution along with all of the vendor libraries that it needs. When it finishes,
@@ -319,3 +324,4 @@ install all the necessary project dependencies.
 .. _`downloading Composer`: http://getcomposer.org/download/
 .. _`Apache`: http://httpd.apache.org/docs/current/mod/core.html#documentroot
 .. _`Nginx`: http://wiki.nginx.org/Symfony
+.. _`Symfony Installation Page`:    http://symfony.com/download

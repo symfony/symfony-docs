@@ -59,10 +59,13 @@ have a ``Symfony/`` directory that looks like this:
 
     .. code-block:: bash
 
-        $ composer.phar create-project symfony/framework-standard-edition path/to/install
+        $ composer.phar create-project symfony/framework-standard-edition path/to/install 2.1.x-dev
 
         # remove the Git history
         $ rm -rf .git
+    
+    For an exact version, replace `2.1.x-dev` with the latest Symfony version
+    (e.g. 2.1.1). For details, see the `Symfony Installation Page`_
 
 .. tip::
 
@@ -461,3 +464,4 @@ are eager to learn more about Symfony2, dive into the next section:
 .. _YAML:                           http://www.yaml.org/
 .. _annotations in controllers:     http://symfony.com/doc/current/bundles/SensioFrameworkExtraBundle/index.html#annotations-for-controllers
 .. _Twig:                           http://twig.sensiolabs.org/
+.. _`Symfony Installation Page`:    http://symfony.com/download
