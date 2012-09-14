@@ -27,6 +27,7 @@
 * **Console Commands**
 
   * :doc:`/cookbook/console/console_command`
+  * :doc:`/cookbook/console/usage`
 
 * :doc:`/cookbook/controller/index`
 
