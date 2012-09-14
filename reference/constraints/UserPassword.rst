@@ -21,7 +21,7 @@ you to apply a collection of constraints to each element of the array.
 +----------------+-------------------------------------------------------------------------------------------+
 | Options        | - `message`_                                                                              |
 +----------------+-------------------------------------------------------------------------------------------+
-| Class          | :class:`Symfony\\Component\\Security\\Core\\Validator\\Constraint\\UserPassword`         |
+| Class          | :class:`Symfony\\Component\\Security\\Core\\Validator\\Constraint\\UserPassword`          |
 +----------------+-------------------------------------------------------------------------------------------+
 | Validator      | :class:`Symfony\\Component\\Security\\Core\\Validator\\Constraint\\UserPasswordValidator` |
 +----------------+-------------------------------------------------------------------------------------------+
