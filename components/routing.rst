@@ -301,10 +301,3 @@ automatically in the background if you want to use it. A basic example of the
     If you use caching, the Routing component will compile new classes which
     are saved in the ``cache_dir``. This means your script must have write
     permissions for that location.
-
-.. versionadded:: 2.1
-    As of Symfony 2.1, the Routing component also accepts Unicode values
-    in routes like this::
-
-        $routes->add('unicode_route', new Route('/Жени'));
-
