@@ -16,6 +16,7 @@ The Components
     locale
     process
     routing
+    serializer
     templating
     yaml
 
