@@ -140,7 +140,7 @@ set an authenticated token in the security context if successful.
 
                 $this->securityContext->setToken($authToken);
             } catch (AuthenticationException $failed) {
-                // you might log something here
+                // ... you might log something here
 
                 // To deny the authentication clear the token. This will redirect to the login page.
                 // $this->securityContext->setToken(null);
