@@ -275,7 +275,7 @@ there is a solution: use subscribers instead of listeners::
     $dispatcher->addSubscriber(new Simplex\ContentLengthListener());
     $dispatcher->addSubscriber(new Simplex\GoogleListener());
 
-A subscriber knowns about all the events it is interested in and pass this
+A subscriber knows about all the events it is interested in and pass this
 information to the dispatcher via the ``getSubscribedEvents()`` method. Have a
 look at the new version of the ``GoogleListener``::
 
