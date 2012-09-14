@@ -14,7 +14,7 @@ simple schema.
 .. image:: /images/components/serializer/serializer_workflow.png
 
 As you can see in the picture above, an array is used as a man in
-the middle. This way, Serializers will only deal with turning specific
+the middle. This way, Encoders will only deal with turning specific
 **formats** into **arrays** and vice versa. The same way, Normalizers 
 will deal with turning specific **objects** into **arrays** and vice versa.
 
