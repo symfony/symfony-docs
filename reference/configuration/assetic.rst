@@ -48,6 +48,7 @@ Full Default Configuration
 
                 # An array of named filters (e.g. some_filter, some_other_filter)
                 some_filter:                 []
+                sass: ~
             twig:
                 functions:
                     # An array of named functions (e.g. some_function, some_other_function)
