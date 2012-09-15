@@ -139,5 +139,6 @@ can run it with:
 
     $ php app/console d:g Fabien
 
-If you choose a too short command so it is ambiguous, then no command will be
-run and some suggestions of the possible commands to choose from will be output.
+If you enter a short command that's ambiguous (i.e. there are more than one
+command that match), then no command will be run and some suggestions of
+the possible commands to choose from will be output.
