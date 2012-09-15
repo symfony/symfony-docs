@@ -236,6 +236,7 @@ a parent for a service.
     .. code-block:: php
 
         use Symfony\Component\DependencyInjection\Definition;
+        use Symfony\Component\DependencyInjection\DefinitionDecorator;
         use Symfony\Component\DependencyInjection\Reference;
 
         // ...
@@ -283,6 +284,12 @@ it to abstract in the config file as has been done above will mean that it
 can only be used as a parent service and cannot be used directly as a service
 to inject and will be removed at compile time. In other words, it exists merely
 as a "template" that other services can use.
+
+.. note::
+
+   In order for parent dependencies to resolve, the ``ContainerBuilder`` must 
+   first be compiled. See :doc:`/components/dependency_injection/compilation` 
+   for more details.
 
 Overriding Parent Dependencies
 ------------------------------
@@ -364,6 +371,7 @@ to the ``NewsletterManager`` class, the config would look like this:
     .. code-block:: php
 
         use Symfony\Component\DependencyInjection\Definition;
+        use Symfony\Component\DependencyInjection\DefinitionDecorator;
         use Symfony\Component\DependencyInjection\Reference;
 
         // ...
@@ -482,6 +490,7 @@ If you had the following config:
     .. code-block:: php
 
         use Symfony\Component\DependencyInjection\Definition;
+        use Symfony\Component\DependencyInjection\DefinitionDecorator;
         use Symfony\Component\DependencyInjection\Reference;
 
         // ...
