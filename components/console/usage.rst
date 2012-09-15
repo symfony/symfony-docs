@@ -74,7 +74,7 @@ with:
 
 .. code-block:: bash
 
-    $ php app/console list -verbose
+    $ php app/console list --verbose
     $ php app/console list -v
 
 If you set the optional arguments to give your application a name and version::
@@ -85,7 +85,7 @@ then you can use:
 
 .. code-block:: bash
 
-    $ php app/console list -version
+    $ php app/console list --version
     $ php app/console list -V
 
 to get this information output:
@@ -139,5 +139,5 @@ can run it with:
 
     $ php app/console d:g Fabien
 
-If you choose too short a command so it is ambiguous, then no command will be run and
-some suggestions of the possible commands to choose from will be output.
+If you choose a too short command so it is ambiguous, then no command will be
+run and some suggestions of the possible commands to choose from will be output.
