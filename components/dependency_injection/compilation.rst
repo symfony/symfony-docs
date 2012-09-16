@@ -6,7 +6,7 @@ Compiling the Container
 
 The service container can be compiled for various reasons. These reasons
 include checking for any potential issues such as circular references and
-making the container more efficient by resolving parameters and removing 
+making the container more efficient by resolving parameters and removing
 unused services.
 
 It is compiled by running::
@@ -170,7 +170,7 @@ the XML configuration::
         return 'http://www.example.com/symfony/schema/';
     }
 
-..note::
+.. note::
 
     XSD validation is optional, returning ``false`` from the ``getXsdValidationBasePath``
     method will disable it.
@@ -192,7 +192,7 @@ The XML version of the config would then look like this:
 
     </container>
 
-..note::
+.. note::
 
     In the Symfony2 full stack framework there is a base Extension class which
     implements these methods as well as a shortcut method for processing the
@@ -371,7 +371,7 @@ but getting an up to date configuration whilst developing your application::
         // ...
         $container->compile();
 
-        if(!$isDebug) 
+        if(!$isDebug)
             $dumper = new PhpDumper($container);
             file_put_contents($file, $dumper->dump(array('class' => 'MyCachedContainer')));
         }
