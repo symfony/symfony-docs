@@ -18,7 +18,7 @@ areas of your application. By the end of this chapter, you'll be able to:
 
 * Create complex routes that map to controllers
 * Generate URLs inside templates and controllers
-* Load routing resources from bundles (or anywhere else) 
+* Load routing resources from bundles (or anywhere else)
 * Debug your routes
 
 .. index::
@@ -90,7 +90,7 @@ pattern that points to a specific PHP class and method:
         {
             // use the $slug variable to query the database
             $blog = ...;
-            
+
             return $this->render('AcmeBlogBundle:Blog:show.html.twig', array(
                 'blog' => $blog,
             ));
@@ -103,7 +103,7 @@ will be executed and the ``$slug`` variable will be equal to ``my-post``.
 
 This is the goal of the Symfony2 router: to map the URL of a request to a
 controller. Along the way, you'll learn all sorts of tricks that make mapping
-even the most complex URLs easy. 
+even the most complex URLs easy.
 
 .. index::
    single: Routing; Under the hood
@@ -819,7 +819,7 @@ The controller might look like this:
     namespace Acme\BlogBundle\Controller;
 
     use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-    
+
     class BlogController extends Controller
     {
         public function showAction($slug)
@@ -1047,6 +1047,14 @@ the route name after the command:
 
     $ php app/console router:debug article_show
 
+You can check which, if any, route matches a path with the ``router:match``
+console command:
+
+.. code-block:: bash
+
+    $ php app/console router:match /articles/en/2012/article.rss
+    Route "article_show" matches
+
 .. index::
    single: Routing; Generating URLs
 
@@ -1089,9 +1097,9 @@ In an upcoming section, you'll learn how to generate URLs from inside templates.
     If the frontend of your application uses AJAX requests, you might want
     to be able to generate URLs in JavaScript based on your routing configuration.
     By using the `FOSJsRoutingBundle`_, you can do exactly that:
-    
+
     .. code-block:: javascript
-    
+
         var url = Routing.generate('blog_show', { "slug": 'my-blog-post'});
 
     For more information, see the documentation for that bundle.
@@ -1118,9 +1126,9 @@ method:
     on server information supplied by PHP. When generating absolute URLs for
     scripts run from the command line, you'll need to manually set the desired
     host on the ``RequestContext`` object:
-    
+
     .. code-block:: php
-    
+
         $router->getContext()->setHost('www.example.com');
 
 .. index::
