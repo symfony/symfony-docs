@@ -1,5 +1,5 @@
 .. index::
-   single: Event Dispatcher; Container Aware; Dependency Injection; DIC
+   single: Event Dispatcher; Service container aware
 
 The Container Aware Event Dispatcher
 ====================================
@@ -11,9 +11,10 @@ Introduction
 ------------
 
 The :class:`Symfony\\Component\\EventDispatcher\\ContainerAwareEventDispatcher` is
-a special event dispatcher implementation which is coupled to the Symfony2
-Dependency Injection Container Component (DIC). It allows DIC services to be
-specified as event listeners making the event dispatcher extremely powerful.
+a special event dispatcher implementation which is coupled to the service container
+that is part of :doc:`the Dependency Injection component</components/dependency_injection/introduction>`.
+It allows services to be specified as event listeners making the event dispatcher
+extremely powerful.
 
 Services are lazy loaded meaning the services attached as listeners will only be
 created if an event is dispatched that requires those listeners.
@@ -36,12 +37,12 @@ Adding Listeners
 The *Container Aware Event Dispatcher* can either load specified services
 directly, or services that implement :class:`Symfony\\Component\\EventDispatcher\\EventSubscriberInterface`.
 
-The following examples assume the DIC has been loaded with any services that
-are mentioned.
+The following examples assume the service container has been loaded with any
+services that are mentioned.
 
 .. note::
 
-    Services must be marked as public in the DIC.
+    Services must be marked as public in the container.
 
 Adding Services
 ~~~~~~~~~~~~~~~
