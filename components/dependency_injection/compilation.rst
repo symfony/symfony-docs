@@ -371,7 +371,7 @@ but getting an up to date configuration whilst developing your application::
         // ...
         $container->compile();
 
-        if(!$isDebug)
+        if (!$isDebug)
             $dumper = new PhpDumper($container);
             file_put_contents($file, $dumper->dump(array('class' => 'MyCachedContainer')));
         }
