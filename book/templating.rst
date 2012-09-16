@@ -127,15 +127,15 @@ Throughout this chapter, template examples will be shown in both Twig and PHP.
     not program logic. The more you use Twig, the more you'll appreciate
     and benefit from this distinction. And of course, you'll be loved by
     web designers everywhere.
-    
+
     Twig can also do things that PHP can't, such as whitespace control, sandboxing,
     and the inclusion of custom functions and filters that only affect templates.
     Twig contains little features that make writing templates easier and
     more concise. Take the following example, which combines a loop with
     a logical ``if`` statement:
-    
+
     .. code-block:: html+jinja
-    
+
         <ul>
             {% for user in users %}
                 <li>{{ user.username }}</li>
@@ -810,7 +810,7 @@ advantage of Symfony's template inheritance.
     This section will teach you the philosophy behind including stylesheet
     and Javascript assets in Symfony. Symfony also packages another library,
     called Assetic, which follows this philosophy but allows you to do much
-    more interesting things with those assets. For more information on 
+    more interesting things with those assets. For more information on
     using Assetic see :doc:`/cookbook/assetic/asset_management`.
 
 
@@ -851,13 +851,13 @@ page. From inside that contact page's template, do the following:
 
     {% block stylesheets %}
         {{ parent() }}
-        
+
         <link href="{{ asset('/css/contact.css') }}" type="text/css" rel="stylesheet" />
     {% endblock %}
-    
+
     {# ... #}
 
-In the child template, you simply override the ``stylesheets`` block and 
+In the child template, you simply override the ``stylesheets`` block and
 put your new stylesheet tag inside of that block. Of course, since you want
 to add to the parent block's content (and not actually *replace* it), you
 should use the ``parent()`` Twig function to include everything from the ``stylesheets``
@@ -1258,6 +1258,22 @@ The variables will only be dumped if Twig's ``debug`` setting (in ``config.yml``
 is ``true``. By default this means that the variables will be dumped in the
 ``dev`` environment but not the ``prod`` environment.
 
+Syntax Checking
+---------------
+
+You can check for syntax errors in Twig templates using the ``twig:lint``
+console command. You can check by filename:
+
+.. code-block:: bash
+
+    $ php app/console twig:lint src/Acme/ArticleBundle/Resources/views/Article/recentList.html.twig
+
+    # or by directory:
+    $ php app/console twig:lint src/Acme/ArticleBundle/Resources/views
+
+    # or using the bundle's short name:
+    $ php app/console twig:lint @AcmeArticleBundle
+
 Template Formats
 ----------------
 
@@ -1282,7 +1298,7 @@ pattern is to do the following::
     public function indexAction()
     {
         $format = $this->getRequest()->getRequestFormat();
-    
+
         return $this->render('AcmeBlogBundle:Blog:index.'.$format.'.twig');
     }
 
