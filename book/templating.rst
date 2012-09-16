@@ -1312,6 +1312,23 @@ The variables will only be dumped if Twig's ``debug`` setting (in ``config.yml``
 is ``true``. By default this means that the variables will be dumped in the
 ``dev`` environment but not the ``prod`` environment.
 
+Syntax Checking
+---------------
+
+You can check for syntax errors in Twig templates using the ``twig:lint``
+console command:
+
+.. code-block:: bash
+
+    # You can check by filename:
+    $ php app/console twig:lint src/Acme/ArticleBundle/Resources/views/Article/recentList.html.twig
+
+    # or by directory:
+    $ php app/console twig:lint src/Acme/ArticleBundle/Resources/views
+
+    # or using the bundle name:
+    $ php app/console twig:lint @AcmeArticleBundle
+
 Template Formats
 ----------------
 
