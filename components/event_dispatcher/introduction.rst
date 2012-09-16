@@ -419,11 +419,11 @@ Now, any listeners to ``store.order`` that have not yet been called will *not*
 be called.
 
 It is possible to detect if an event was stopped by using the
-:method:`Symfony\\Component\\EventDispatcher\\Event::isStoppedPropagation` method
+:method:`Symfony\\Component\\EventDispatcher\\Event::isPropagationStopped` method
 which returns a boolean value::
 
     $dispatcher->dispatch('foo.event', $event);
-    if ($event->isStoppedPropagation()) {
+    if ($event->isPropagationStopped()) {
         // ...
     }
 
@@ -547,7 +547,7 @@ Moreover, the EventDispatcher always returns whichever event object that was
 dispatched, i.e. either the event that was passed or the event that was
 created internally by the dispatcher. This allows for nice shortcuts::
 
-    if (!$dispatcher->dispatch('foo.event')->isStoppedPropagation()) {
+    if (!$dispatcher->dispatch('foo.event')->isPropagationStopped()) {
         // ...
     }
 
