@@ -2,7 +2,7 @@
    single: Form; Field type extension
 
 How to Create a Field Type Extension
-======================================
+====================================
 
 :doc:`Custom form field types<create_custom_field_type>` are great when
 you need field types with a specific purpose, such as a gender selector,
@@ -34,7 +34,7 @@ to a file. Your ``Media`` form uses a file type, but when editing the entity,
 you would like to see its image automatically rendered next to the file
 input.
 
-You could of course do by fine-tuning your edition form template. But form
+You could of course do this by customizing how this field is rendered in a template. But form
 type extensions allow you to do this in a nice DRY fashion.
 
 Defining the Field Type Extension
@@ -44,13 +44,11 @@ Our first task will be to create the field type extension class. Let's
 call it ``ImageTypeExtension``. We will store the class in a file called
 ``ImageTypeExtension.php``, in the ``<BundleName>\Form\Type`` directory.
 
-When creating a form type extension, you can either implements the
+When creating a form type extension, you can either implement the
 :class:`Symfony\\Component\\Form\\FormTypeExtensionInterface` interface,
-or extends the :class:`Symfony\\Component\\Form\\AbstractTypeExtension`
-class. Most of the time, you will end up extending the abstract class ;
-that's what we will do in this tutorial.
-
-.. code-block:: php
+or extend the :class:`Symfony\\Component\\Form\\AbstractTypeExtension`
+class. Most of the time, you will end up extending the abstract class;
+that's what we will do in this tutorial::
 
     // src/Acme/DemoBundle/Form/Type/ImageTypeExtension.php
     namespace Acme\DemoBundle\Form\Type;
@@ -83,7 +81,7 @@ by your extension.
     to the value returned by the ``getName`` method in the form type class
     you wish to extend.
 
-In adition to the ``getExtendedType`` function, you will probably want
+In addition to the ``getExtendedType`` function, you will probably want
 to override one of the following methods:
 
 * ``buildForm()``
@@ -257,7 +255,7 @@ Override the file widget template fragment
 ------------------------------------------
 
 Each field type is rendered by a template fragment. Those template fragments
-can be overriden in order to customize form rendering ; for more information,
+can be overridden in order to customize form rendering; for more information,
 see :ref:`cookbook-form-customization-form-themes`.
 
 In our extension class, we have added a new variable (``image_url``), but
@@ -283,7 +281,7 @@ We need to override the ``file_widget`` block:
 .. note::
 
     You will need to change your config file or to explicitly specify how
-    you want your form to be themed in order for Symfony to use your overriden
+    you want your form to be themed in order for Symfony to use your overridden
     block. See :ref:`cookbook-form-customization-form-themes` for more
     information.
 
