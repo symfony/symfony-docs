@@ -1268,16 +1268,10 @@ console command. You can check by filename:
 
     $ php app/console twig:lint src/Acme/ArticleBundle/Resources/views/Article/recentList.html.twig
 
-or by directory:
-
-.. code-block:: bash
-
+    # or by directory:
     $ php app/console twig:lint src/Acme/ArticleBundle/Resources/views
 
-or using the ``@BundleName`` syntax:
-
-.. code-block:: bash
-
+    # or using the bundle's short name:
     $ php app/console twig:lint @AcmeArticleBundle
 
 Template Formats
