@@ -1315,6 +1315,9 @@ is ``true``. By default this means that the variables will be dumped in the
 Syntax Checking
 ---------------
 
+.. versionadded:: 2.1
+    The ``twig:lint`` command was added in Symfony 2.1
+
 You can check for syntax errors in Twig templates using the ``twig:lint``
 console command:
 
