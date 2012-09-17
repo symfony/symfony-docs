@@ -28,3 +28,4 @@ Sections
 
 * :doc:`/components/security/firewall`
 * :doc:`/components/security/authentication`
+* :doc:`/components/security/authorization`
