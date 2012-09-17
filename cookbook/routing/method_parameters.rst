@@ -1,8 +1,8 @@
 .. index::
    single: Routing; _method
 
-Using HTTP Methods beyond GET and POST in Routes
-================================================
+How to use HTTP Methods beyond GET and POST in Routes
+=====================================================
 
 The HTTP method of a request is one of the requirements that can be checked
 when seeing if it matches a route. This is introduced in the routing chapter
