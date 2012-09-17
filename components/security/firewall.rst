@@ -5,23 +5,25 @@ The Security Context
 ====================
 
 Central to the Security Component is the security context, which is an instance
-of :class:`Symfony\\Component\\Security\\Core\\SecurityContext`. When all
+of :class:`Symfony\\Component\\Security\\Core\\SecurityContextInterface`. When all
 steps in the process of authenticating the user have been taken successfully,
 the security context may be asked if the authenticated user has access
 to a certain action or resource of the application.
 
-.. code-block:: php
+::
 
     use Symfony\Component\Security\SecurityContext;
     use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
-    $context = new SecurityContext();
+    $securityContext = new SecurityContext();
 
-    // authenticate the user...
+    // ... authenticate the user
 
-    if (!$context->isGranted('ROLE_ADMIN')) {
+    if (!$securityContext->isGranted('ROLE_ADMIN')) {
         throw new AccessDeniedException();
     }
+
+.. _firewall:
 
 A firewall for HTTP requests
 ============================
@@ -34,7 +36,7 @@ ability to find out if the current request points to a secured area.
 The listeners are then asked if the current request can be used to authenticate
 the user.
 
-.. code-block:: php
+::
 
     use Symfony\Component\Security\Http\FirewallMap;
     use Symfony\Component\HttpFoundation\RequestMatcher;
@@ -44,17 +46,17 @@ the user.
 
     $requestMatcher = new RequestMatcher('^/secured-area/');
 
-    $listeners = array(
-        // ...
-    );
-    $exceptionListener = new ExceptionListener(/* ... */);
+    // instances of Symfony\Component\Security\Http\Firewall\ListenerInterface
+    $listeners = array(...);
+
+    $exceptionListener = new ExceptionListener(...);
 
     $map->add($requestMatcher, $listeners, $exceptionListener);
 
 The firewall map will be given to the firewall as it's first argument, together
 with the event dispatcher that is used by the :class:`Symfony\\Component\\HttpKernel\\HttpKernel`.
 
-.. code-block:: php
+::
 
     use Symfony\Component\Security\Http\Firewall;
     use Symfony\Component\HttpKernel\KernelEvents;
@@ -69,6 +71,8 @@ The firewall is registered to listen to the ``kernel.request`` event that
 will be dispatched by the ``HttpKernel`` at the beginning of each request
 it processes. This way, the firewall may prevent the user from going any
 further than allowed.
+
+.. _firewall_listeners:
 
 Firewall listeners
 ------------------

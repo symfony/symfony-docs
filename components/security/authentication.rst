@@ -12,7 +12,7 @@ do is ask the authentication manager to validate the given token, and return
 an authenticated token when the supplied credentials were found to be valid.
 The listener should then store the authenticated token in the security context:
 
-.. code-block:: php
+::
 
     use Symfony\Component\Security\Http\Firewall\ListenerInterface;
     use Symfony\Component\Security\Core\SecurityContextInterface;
@@ -22,10 +22,14 @@ The listener should then store the authenticated token in the security context:
 
     class SomeAuthenticationListener implements ListenerInterface
     {
-        /* @var SecurityContextInterface */
+        /**
+         * @var SecurityContextInterface
+         */
         private $securityContext;
 
-        /* @var AuthenticationManagerInterface */
+        /**
+         * @var AuthenticationManagerInterface
+         */
         private $authenticationManager;
 
         // string Uniquely identifies the secured area
@@ -36,6 +40,9 @@ The listener should then store the authenticated token in the security context:
         public function handle(GetResponseEvent $event)
         {
             $request = $event->getRequest();
+
+            $username = ...;
+            $password = ...;
 
             $unauthenticatedToken = new UsernamePasswordToken(
                 $username,
@@ -60,13 +67,12 @@ The authentication manager
 
 The default authentication manager is an instance of :class:`Symfony\\Component\\Security\\Core\\Authentication\\AuthenticationProviderManager`:
 
-.. code-block:: php
+::
 
     use Symfony\Component\Security\Core\Authentication\AuthenticationProviderManager;
 
-    $providers = array(
-        // instances of Symfony\Component\Security\Core\Authentication\AuthenticationProviderInterface
-    );
+    // instances of Symfony\Component\Security\Core\Authentication\AuthenticationProviderInterface
+    $providers = array(...);
 
     $authenticationManager = new AuthenticationProviderManager($providers);
 
@@ -84,6 +90,8 @@ authentication providers, each supporting a different type of token.
 
     You may of course write your own authentication manager, it only has
     to implement :class:`Symfony\\Component\\Security\\Core\\Authentication\\AuthenticationManagerInterface`.
+
+.. _authentication_providers:
 
 Authentication providers
 ------------------------
@@ -113,7 +121,7 @@ It fetches the user's data from a ``UserProvider``, uses a ``PasswordEncoder``
 to create a hash of the password and returns an authenticated token if the
 password was valid.
 
-.. code-block:: php
+::
 
     use Symfony\Component\Security\Core\Authentication\Provider\DaoAuthenticationProvider;
     use Symfony\Component\Security\Core\User\UserChecker;
@@ -131,7 +139,8 @@ password was valid.
     // for some extra checks: is account enabled, locked, expired, etc.?
     $userChecker = new UserChecker();
 
-    $encoderFactory = new EncoderFactory(/* ... encoders */);
+    // an array of password encoders (see below)
+    $encoderFactory = new EncoderFactory(...);
 
     $provider = new DaoAuthenticationProvider(
         $userProvider,
@@ -159,7 +168,7 @@ strategies for different types of users.
 The default :class:`Symfony\\Component\\Security\\Core\\Encoder\\EncoderFactory`
 receives an array of encoders:
 
-.. code-block:: php
+::
 
     use Symfony\Component\Security\Core\Encoder\EncoderFactory;
     use Symfony\Component\Security\Core\Encoder\MessageDigestPasswordEncoder;
@@ -167,10 +176,17 @@ receives an array of encoders:
     $defaultEncoder = new MessageDigestPasswordEncoder('sha512', true, 5000);
     $weakEncoder = new MessageDigestPasswordEncoder('md5', true, 1);
 
-    $encoderFactory = new EncoderFactory(array(
+    $encoders = array(
         'Symfony\\Component\\Security\\Core\\User\\User' => $defaultEncoder,
         'Acme\\Entity\\LegacyUser' => $weakEncoder,
-    ));
+        ...
+    );
+
+    $encoderFactory = new EncoderFactory($encoders);
+
+Each encoder should implement :class:`Symfony\\Component\\Security\\Core\\Encoder\\PasswordEncoderInterface`
+or be an array with a ``class`` and an ``arguments`` key, which allows the
+encoder factory to construct the encoder only when it is needed.
 
 Password encoders
 ~~~~~~~~~~~~~~~~~
@@ -180,9 +196,10 @@ with the user object as its first argument, it will return an encoder of
 type :class:`Symfony\\Component\\Security\\Core\\Encoder\\PasswordEncoderInterface`
 which should be used to encode this user's password:
 
-.. code-block:: php
+::
 
-    $user = // ... fetch a user of type Acme\Entity\LegacyUser
+    // fetch a user of type Acme\Entity\LegacyUser
+    $user = ...
 
     $encoder = $encoderFactory->getEncoder($user);
 
@@ -190,7 +207,7 @@ which should be used to encode this user's password:
 
     $encodedPassword = $encoder->encodePassword($password, $user->getSalt());
 
-    // or check if the password is valid:
+    // check if the password is valid:
 
     $validPassword = $encoder->isPasswordValid(
         $user->getPassword(),
