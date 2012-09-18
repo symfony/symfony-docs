@@ -158,10 +158,16 @@ run when the container is compiled::
     $container = new ContainerBuilder();
     $container->addCompilerPass(new TransportCompilerPass);
 
+.. note::
+
+    Compiler passes are registered differently is you are using the full
+    stack framework, see :doc:`cookbook/service_container/compiler_passes`
+    for more details.
+
 Adding additional attributes on Tags
 ------------------------------------
 
-Sometimes you need additional information about each service that's tagged with your tag. 
+Sometimes you need additional information about each service that's tagged with your tag.
 For example, you might want to add an alias to each TransportChain.
 
 To begin with, change the ``TransportChain`` class::
@@ -212,7 +218,7 @@ To answer this, change the service declaration:
                 class: \Swift_SendmailTransport
                 tags:
                     -  { name: acme_mailer.transport, alias: bar }
-        
+
 
     .. code-block:: xml
 
@@ -224,7 +230,7 @@ To answer this, change the service declaration:
         <service id="acme_mailer.transport.sendmail" class="\Swift_SendmailTransport">
             <tag name="acme_mailer.transport" alias="bar" />
         </service>
-        
+
 Notice that you've added a generic ``alias`` key to the tag. To actually
 use this, update the compiler::
 

@@ -275,6 +275,12 @@ will then be called when the container is compiled::
     $container = new ContainerBuilder();
     $container->addCompilerPass(new CustomCompilerPass);
 
+.. note::
+
+    Compiler passes are registered differently is you are using the full
+    stack framework, see :doc:`cookbook/service_container/compiler_passes`
+    for more details.
+
 Controlling the Pass Ordering
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -418,3 +424,8 @@ constructor argument. When the cache is not in debug mode the cached container
 will always be used if it exists. In debug mode, an additional metadata file
 is written with the timestamps of all the resource files. These are then checked
 to see if the files have changed, if they have the cache will be considered stale.
+
+.. note::
+
+    In the full stack framework the compilation and caching of the container
+    is taken care of for you.
