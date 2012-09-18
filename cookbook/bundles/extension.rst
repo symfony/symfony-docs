@@ -18,19 +18,19 @@ as integration of other related components:
 .. configuration-block::
 
     .. code-block:: yaml
-    
+
         framework:
             # ...
             form:            true
 
     .. code-block:: xml
-    
+
         <framework:config>
             <framework:form />
         </framework:config>
 
     .. code-block:: php
-    
+
         $container->loadFromExtension('framework', array(
             // ...
             'form'            => true,
@@ -306,7 +306,7 @@ option is passed and set to true::
         // ... prepare your $config variable
 
         $loader = new XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
-        
+
         if (isset($config['enabled']) && $config['enabled']) {
             $loader->load('services.xml');
         }
@@ -477,9 +477,9 @@ configuration arrays together.
 
 The ``Configuration`` class can be much more complicated than shown here,
 supporting array nodes, "prototype" nodes, advanced validation, XML-specific
-normalization and advanced merging. The best way to see this in action is
-to checkout out some of the core Configuration classes, such as the one from
-the `FrameworkBundle Configuration`_ or the `TwigBundle Configuration`_.
+normalization and advanced merging. You can read more about this in :doc:`the Config Component documentation</components/config/definition>`.
+You can also see it action by checking out some of the core Configuration classes,
+such as the one from the `FrameworkBundle Configuration`_ or the `TwigBundle Configuration`_.
 
 .. index::
    pair: Convention; Configuration
