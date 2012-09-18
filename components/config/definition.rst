@@ -72,7 +72,7 @@ Add node definitions to the tree
 Variable nodes
 ~~~~~~~~~~~~~~
 
-A tree contains node definitions which can be layed out in a semantic way.
+A tree contains node definitions which can be laid out in a semantic way.
 This means, using indentation and the fluent notation, it is possible to
 reflect the real structure of the configuration values::
 
