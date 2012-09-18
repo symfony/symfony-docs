@@ -1052,6 +1052,17 @@ the route name after the command:
 
     $ php app/console router:debug article_show
 
+.. versionadded:: 2.1
+    The ``router:match`` command was added in Symfony 2.1
+
+You can check which, if any, route matches a path with the ``router:match``
+console command:
+
+.. code-block:: bash
+
+    $ php app/console router:match /articles/en/2012/article.rss
+    Route "article_show" matches
+
 .. index::
    single: Routing; Generating URLs
 
@@ -1123,9 +1134,9 @@ method:
     on server information supplied by PHP. When generating absolute URLs for
     scripts run from the command line, you'll need to manually set the desired
     host on the ``RequestContext`` object:
-    
+
     .. code-block:: php
-    
+
         $router->getContext()->setHost('www.example.com');
 
 .. index::
