@@ -1,5 +1,9 @@
-Defining Relationships with Abstract Classes and Interfaces
-===========================================================
+.. index::
+   single: Doctrine; Resolving target entities
+   single: Doctrine; Define relationships with abstract classes and interfaces
+
+How to Define Relationships with Abstract Classes and Interfaces
+================================================================
 
 .. versionadded: 2.1
     The ResolveTargetEntityListener is new to Doctrine 2.2, which was first
