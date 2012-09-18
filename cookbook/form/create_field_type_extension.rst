@@ -9,13 +9,13 @@ you need field types with a specific purpose, such as a gender selector,
 or a VAT number input.
 
 But sometimes, you don't really need to add new field types - you want
-to add features on top of existing field types. This is where Field Type
-Extensions come in.
+to add features on top of existing field types. This is where field type
+extensions come in.
 
-Field Type Extensions have 2 main use cases:
+Field type extensions have 2 main use cases:
 
 #. You want to add a **generic feature to several field types** (such as
-   adding a "help" field to every field type)
+   adding a "help" text to every field type)
 #. You want to add a **specific feature to a single field type** (such
    as adding a "download" feature to the "file" field type)
 
@@ -25,7 +25,7 @@ can be cleaner (by limiting the amount of business logic in templates)
 and more flexible (you can add several type extensions to a single form
 type).
 
-Field Type Extensions can achieve most of what custom field types can do,
+Field type extensions can achieve most of what custom field types can do,
 but instead of being field types of their own, **they plug into existing
 field types**.
 
@@ -34,27 +34,26 @@ to a file. Your ``Media`` form uses a file type, but when editing the entity,
 you would like to see its image automatically rendered next to the file
 input.
 
-You could of course do this by customizing how this field is rendered in a template. But form
+You could of course do this by customizing how this field is rendered in a template. But field
 type extensions allow you to do this in a nice DRY fashion.
 
 Defining the Field Type Extension
 ---------------------------------
 
-Our first task will be to create the field type extension class. Let's
-call it ``ImageTypeExtension``. We will store the class in a file called
+Your first task will be to create the field type extension class. Let's
+call it ``ImageTypeExtension``. You will store the class in a file called
 ``ImageTypeExtension.php``, in the ``<BundleName>\Form\Type`` directory.
 
-When creating a form type extension, you can either implement the
+When creating a field type extension, you can either implement the
 :class:`Symfony\\Component\\Form\\FormTypeExtensionInterface` interface,
 or extend the :class:`Symfony\\Component\\Form\\AbstractTypeExtension`
-class. Most of the time, you will end up extending the abstract class;
-that's what we will do in this tutorial::
+class. Most of the time, you will end up extending the abstract class.
+That's what you will do in this tutorial::
 
     // src/Acme/DemoBundle/Form/Type/ImageTypeExtension.php
     namespace Acme\DemoBundle\Form\Type;
 
     use Symfony\Component\Form\AbstractTypeExtension;
-    use Symfony\Component\Form\FormTypeExtensionInterface;
 
     class ImageTypeExtension extends AbstractTypeExtension
     {
@@ -96,10 +95,10 @@ For more information on what those methods do, you can refer to the
 :doc:`Creating Custom Field Types</cookbook/form/create_custom_field_type>`
 cookbook article.
 
-Creating your Field Type as a Service
--------------------------------------
+Registering your Field Type Extension as a Service
+--------------------------------------------------
 
-The next step is to make Symfony aware of your form extension. All you
+The next step is to make Symfony aware of your extension. All you
 need to do is to declare it as a service by using the ``form.type_extension``
 tag:
 
@@ -126,17 +125,17 @@ tag:
             ->addTag('form.type_extension', array('alias' => 'file'));
 
 The ``alias`` key of the tag is the type of field that this extension should
-be applied to. In our case, as we want to extend the ``file`` field type,
-we will use ``file`` as an alias.
+be applied to. In your case, as you want to extend the ``file`` field type,
+you will use ``file`` as an alias.
 
 Adding the extension business logic
 -----------------------------------
 
-The goal of our extension is to display a nice image next to file field
-types containing image files. For that purpose, we will assume that we
-use an approach similar to the one described in
+The goal of your extension is to display a nice image next to file inputs
+(when the underlying model contains images). For that purpose, let's assume
+that you use an approach similar to the one described in
 :doc:`How to handle File Uploads with Doctrine</cookbook/doctrine/file_uploads>`:
-we have a Media model with a file property (corresponding to the file field
+you have a Media model with a file property (corresponding to the file field
 in the form) and a path property (corresponding to the image path in the
 database).
 
@@ -184,7 +183,7 @@ database).
             return $webPath;
         }
 
-Our field type extension class will need to do two things:
+Your field type extension class will need to do two things:
 
 1) Override the ``setDefaultOptions`` method in order to add an image_path
    option
@@ -192,7 +191,7 @@ Our field type extension class will need to do two things:
    the view
 
 The logic is the following: when adding a form field of type ``file``,
-we will be able to specify a new option: ``image_path``. This option will
+you will be able to specify a new option: ``image_path``. This option will
 tell the file field how to get the actual image url in order to display
 it in the view.
 
@@ -202,7 +201,6 @@ it in the view.
     namespace Acme\DemoBundle\Form\Type;
 
     use Symfony\Component\Form\AbstractTypeExtension;
-    use Symfony\Component\Form\FormTypeExtensionInterface;
     use Symfony\Component\Form\FormView;
     use Symfony\Component\Form\FormInterface;
     use Symfony\Component\OptionsResolver\OptionsResolverInterface;
@@ -256,11 +254,11 @@ Override the file widget template fragment
 
 Each field type is rendered by a template fragment. Those template fragments
 can be overridden in order to customize form rendering; for more information,
-see :ref:`cookbook-form-customization-form-themes`.
+you can refer to the :ref:`cookbook-form-customization-form-themes` article.
 
-In our extension class, we have added a new variable (``image_url``), but
-we still need to take advantage of this new variable in our templates.
-We need to override the ``file_widget`` block:
+In your extension class, you have added a new variable (``image_url``), but
+you still need to take advantage of this new variable in your templates.
+You need to override the ``file_widget`` block:
 
 .. code-block:: html+jinja
 
