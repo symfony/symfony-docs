@@ -137,10 +137,13 @@ You can also store small messages that will only be available for the very
 next request::
 
     // store a message for the very next request (in a controller)
-    $session->getFlashBag()->set('notice', 'Congratulations, your action succeeded!');
+    $session->getFlashBag()->add('notice', 'Congratulations, your action succeeded!');
 
-    // display the message back in the next request (in a template)
-    {{ app.session.flashBag.get('notice') }}
+    // display any messages back in the next request (in a template)
+
+    {% for flashMessage in app.session.flashbag.get('notice') %}
+        <div>{{ flashMessage }}</div>
+    {% endfor %}
 
 This is useful when you need to set a success message before redirecting
 the user to another page (which will then show the message). Please note that
