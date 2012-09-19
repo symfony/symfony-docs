@@ -35,6 +35,24 @@ you'll interact directly with the services that you need. Fortunately, this is
 usually pretty easy and the base ``Controller`` class itself is a great source
 on how to perform many common tasks.
 
+When using annotations to setup routing when using a controller defined as a
+service, you need to specify your service as follows::
+
+    /**
+     * @Route("/blog", service="my_bundle.annot_controller")
+     * @Cache(expires="tomorrow")
+     */
+    class AnnotController extends Controller
+    {
+    }
+
+In this example, ``my_bundle.annot_controller`` should be the id of the
+``AnnotController`` instance defined in the service container. This is
+documented in the :doc:`bundles/SensioFrameworkExtraBundle/annotations/routing`
+chapter.
+
+Read more
+
 .. note::
 
     Specifying a controller as a service takes a little bit more work. The
