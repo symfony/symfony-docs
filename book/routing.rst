@@ -105,10 +105,6 @@ This is the goal of the Symfony2 router: to map the URL of a request to a
 controller. Along the way, you'll learn all sorts of tricks that make mapping
 even the most complex URLs easy.
 
-.. versionadded:: 2.1
-    As of Symfony 2.1, the Routing component also accepts Unicode values
-    in routes like: /Жени/
-
 .. index::
    single: Routing; Under the hood
 
@@ -1056,6 +1052,17 @@ the route name after the command:
 
     $ php app/console router:debug article_show
 
+.. versionadded:: 2.1
+    The ``router:match`` command was added in Symfony 2.1
+
+You can check which, if any, route matches a path with the ``router:match``
+console command:
+
+.. code-block:: bash
+
+    $ php app/console router:match /articles/en/2012/article.rss
+    Route "article_show" matches
+
 .. index::
    single: Routing; Generating URLs
 
@@ -1127,9 +1134,9 @@ method:
     on server information supplied by PHP. When generating absolute URLs for
     scripts run from the command line, you'll need to manually set the desired
     host on the ``RequestContext`` object:
-    
+
     .. code-block:: php
-    
+
         $router->getContext()->setHost('www.example.com');
 
 .. index::

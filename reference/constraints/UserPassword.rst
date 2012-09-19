@@ -16,15 +16,15 @@ but needs to enter his old password for security.
 When applied to an array (or Traversable object), this constraint allows
 you to apply a collection of constraints to each element of the array.
 
-+----------------+----------------------------------------------------------------------------------------+
-| Applies to     | :ref:`property or method<validation-property-target>`                                  |
-+----------------+----------------------------------------------------------------------------------------+
-| Options        | - `message`_                                                                           |
-+----------------+----------------------------------------------------------------------------------------+
-| Class          | :class:`Symfony\\Bridge\\Security\\Core\\Validator\\Constraints\\UserPassword`         |
-+----------------+----------------------------------------------------------------------------------------+
-| Validator      | :class:`Symfony\\Bridge\\Security\\Core\\Validator\\Constraint\\UserPasswordValidator` |
-+----------------+----------------------------------------------------------------------------------------+
++----------------+-------------------------------------------------------------------------------------------+
+| Applies to     | :ref:`property or method<validation-property-target>`                                     |
++----------------+-------------------------------------------------------------------------------------------+
+| Options        | - `message`_                                                                              |
++----------------+-------------------------------------------------------------------------------------------+
+| Class          | :class:`Symfony\\Component\\Security\\Core\\Validator\\Constraint\\UserPassword`          |
++----------------+-------------------------------------------------------------------------------------------+
+| Validator      | :class:`Symfony\\Component\\Security\\Core\\Validator\\Constraint\\UserPasswordValidator` |
++----------------+-------------------------------------------------------------------------------------------+
 
 Basic Usage
 -----------
@@ -42,7 +42,7 @@ password:
         Acme\UserBundle\Form\Model\ChangePassword:
             properties:
                 oldPassword:
-                    - UserPassword:
+                    - Symfony\Component\Security\Core\Validator\Constraint\UserPassword:
                         message: "Wrong value for your current password"
 
     .. code-block:: php-annotations
@@ -50,12 +50,12 @@ password:
        // src/Acme/UserBundle/Form/Model/ChangePassword.php
        namespace Acme\UserBundle\Form\Model;
        
-       use Symfony\Component\Validator\Constraints as Assert;
+       use Symfony\Component\Security\Core\Validator\Constraints as SecurityAssert;
 
        class ChangePassword
        {
            /**
-            * @Assert\UserPassword(
+            * @SecurityAssert\UserPassword(
             *     message = "Wrong value for your current password"
             * )
             */

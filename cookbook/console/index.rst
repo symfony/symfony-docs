@@ -5,3 +5,4 @@ Console
     :maxdepth: 2
 
     console_command
+    usage

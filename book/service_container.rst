@@ -923,6 +923,29 @@ additional arguments (beyond just the ``name`` parameter).
 For a list of all the tags available in the core Symfony Framework, check
 out :doc:`/reference/dic_tags`.
 
+Debugging Services
+------------------
+
+You can find out what services are registered with the container using the
+console. To show all services and the class for each service, run:
+
+.. code-block:: bash
+
+    $ php app/console container:debug
+
+By default only public services are shown, but you can also view private services:
+
+.. code-block:: bash
+
+    $ php app/console container:debug --show-private
+
+You can get more detailed information about a particular service by specifying
+its id:
+
+.. code-block:: bash
+
+    $ php app/console container:debug my_mailer
+
 Learn more
 ----------
 
