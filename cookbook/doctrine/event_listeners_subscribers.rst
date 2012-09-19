@@ -3,8 +3,8 @@
 
 .. _doctrine-event-config:
 
-Registering Event Listeners and Subscribers
-===========================================
+How to Register Event Listeners and Subscribers
+===============================================
 
 Doctrine packages a rich event system that fires events when almost anything
 happens inside the system. For you, this means that you can create arbitrary
