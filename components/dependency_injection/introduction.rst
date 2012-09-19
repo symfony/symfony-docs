@@ -194,6 +194,8 @@ difficult to reuse the class elsewhere.
 You will need to get a service from the container at some point but this
 should be as few times as possible at the entry point to your application.
 
+.. _components-dependency-injection-loading-config:
+
 Setting Up the Container with Configuration Files
 -------------------------------------------------
 
