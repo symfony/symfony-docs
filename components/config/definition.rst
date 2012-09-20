@@ -74,7 +74,7 @@ Variable nodes
 
 A tree contains node definitions which can be laid out in a semantic way.
 This means, using indentation and the fluent notation, it is possible to
-reflect the real structure of the configuration values:
+reflect the real structure of the configuration values::
 
     $rootNode
         ->children()
@@ -106,7 +106,7 @@ node definition. Node type are available for:
 * variable (no validation)
 
 and are created with ``node($name, $type)`` or their associated shortcut
-``xxxxNode($name)`` method.
+ ``xxxxNode($name)`` method.
 
 Numeric node constraints
 ~~~~~~~~~~~~~~~~~~~~~~~~
@@ -115,7 +115,8 @@ Numeric node constraints
 
     The numeric (float and integer) nodes are new in 2.2
 
-Numeric node (float and integer) provide two extra constraints min() and max() allowing to validate the value:
+Numeric node (float and integer) provide two extra constraints min() and
+ max() allowing to validate the value:
 
 .. code-block:: php
 
