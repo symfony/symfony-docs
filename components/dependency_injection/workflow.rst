@@ -12,18 +12,18 @@ in the Symfony2 full stack framework will help you see how this all fits
 together whether you are using the full stack framework or looking to use
 the service container in another application.
 
-The full stack framework uses the ``HTTPKernel`` component to manage the loading
+The full stack framework uses the ``HttpKernel`` component to manage the loading
 of service container configuration from the app level and from bundles as well
-as with the compilation and caching. Even if you are not using the ``HTTPKernel``
+as with the compilation and caching. Even if you are not using the ``HttpKernel``
 it should give you an idea of a way of organising configuration in a modular
 application.
 
-Working with cached controller
-------------------------------
+Working with cached container
+-----------------------------
 
-Before building the container a cached version is checked for. The ``HTTPKernel``
+Before building the container a cached version is checked for. The ``HttpKernel``
 has a debug setting, if this is false then the cached version is used if it
-exists. If debug is true then the cached configuration is checked for freshness
+exists. If debug is true then the :doc:`cached configuration is checked for freshness<components/config/caching>`
 and the cached version of the container used if it is. If not then the container
 is built from the app level configuration and the bundle's extension configuration.
 Read :ref:`Dumping the Configuration for Performance<components-dependency-injection-dumping>`
@@ -33,12 +33,12 @@ Application level configuration
 -------------------------------
 
 Application level config is loaded from the ``app/config`` directory. Multiple
-files are loaded which are then merged when the Extensions are processed. This
+files are loaded which are then merged when the extensions are processed. This
 allows for different config for different environments e.g. dev, prod.
 
-These files contain parameters and services to be be loaded directly into
+These files contain parameters and services to be loaded directly into
 the container as per :ref:`Setting Up the Container with Configuration Files<components-dependency-injection-loading-config>`.
-They all contain config to be processed by Extensions as per :ref:`Managing Configuration with Extensions<components-dependency-injection-extension>`.
+They all contain config to be processed by extensions as per :ref:`Managing Configuration with Extensions<components-dependency-injection-extension>`.
 These are considered to be bundle configuration since each bundle contains
 an Extension class.
 
@@ -47,12 +47,12 @@ Bundle level config with extensions
 
 By convention each bundle contains an Extension class which is in the bundle's
 Dependency Injection directory. These are registered with the ``ContainerBuilder``
-when the Kernel is booted. When the ContainerBundle is :doc:`compiled<components/dependency-injection/compilation>`
+when the Kernel is booted. When the ContainerBuilder is :doc:`compiled<components/dependency-injection/compilation>`
 the app level config relevant to the bundle's extension is passed to the Extension
 which also usually loads its own config file(s), typically from the bundle's
 ``Resources/config`` directory. The app level config is usually processed with
-a Configuration object also stored in the bundle's ``DependencyInjection``
-directory.
+a :doc:`Configuration object<components/config/definition>` also stored in the
+bundle's ``DependencyInjection`` directory.
 
 Compiler passes to allow interaction between bundles
 ----------------------------------------------------
