@@ -365,7 +365,8 @@ but getting an up to date configuration whilst developing your application::
 
     // ...
 
-    // set $isDebug based on something in your project
+    // based on something in your project
+    $isDebug = ...;
 
     $file = __DIR__ .'/cache/container.php';
 
@@ -398,7 +399,8 @@ and use them as metadata for the cache::
 
     // ...
 
-    // set $isDebug based on something in your project
+    // based on something in your project
+    $isDebug = ...;
 
     $file = __DIR__ .'/cache/container.php';
     $containerConfigCache = new ConfigCache($file, $isDebug);
