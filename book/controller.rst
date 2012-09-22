@@ -117,7 +117,7 @@ a controller object. Controllers are also called *actions*.
 
 This controller is pretty straightforward, but let's walk through it:
 
-* *line 3*: Symfony2 takes advantage of PHP 5.3 namespace functionality to
+* *line 4*: Symfony2 takes advantage of PHP 5.3 namespace functionality to
   namespace the entire controller class. The ``use`` keyword imports the
   ``Response`` class, which our controller must return.
 
