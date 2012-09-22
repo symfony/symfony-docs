@@ -200,7 +200,7 @@ the array::
     $tokens['c'] = $value;
     $session->set('tokens', $tokens);
 
-With structured namespacing, the the key can be translated to the array
+With structured namespacing, the key can be translated to the array
 structure like this using a namespace character (defaults to `/`)::
 
     $session->set('tokens/c', $value);
