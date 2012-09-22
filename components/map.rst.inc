@@ -1,4 +1,4 @@
-* **The Class Loader Component**
+* **Class Loader**
 
   * :doc:`/components/class_loader`
 
@@ -14,7 +14,7 @@
   * :doc:`/components/console/introduction`
   * :doc:`/components/console/usage`
 
-* **The CSS Selector Component**
+* **CSS Selector**
 
   * :doc:`/components/css_selector`
 
@@ -29,21 +29,21 @@
   * :doc:`/components/dependency_injection/parentservices`
   * :doc:`/components/dependency_injection/advanced`
 
+* **DOM Crawler**
+
+* :doc:`/components/dom_crawler`
+
 * :doc:`/components/event_dispatcher/index`
 
   * :doc:`/components/event_dispatcher/introduction`
   * :doc:`/components/event_dispatcher/container_aware_dispatcher`
   * :doc:`/components/event_dispatcher/generic_event`
 
-* **The DOM Crawler Component**
-
-  * :doc:`/components/dom_crawler`
-
-* **The Filesystem Component**
+* **Filesystem**
 
   * :doc:`/components/filesystem`
   
-* **The Finder Component**
+* **Finder**
 
   * :doc:`/components/finder`
 
@@ -54,26 +54,26 @@
   * :doc:`/components/http_foundation/session_configuration`
   * :doc:`/components/http_foundation/session_testing`
 
-* **The Locale Component**
+* **Locale**
 
   * :doc:`/components/locale`
 
-* **The Process Component**
+* **Process**
 
   * :doc:`/components/process`
 
-* **The Routing Component**
+* **Routing**
 
   * :doc:`/components/routing`
 
-* **The Serializer Component**
+* **Serializer**
 
   * :doc:`/components/serializer`
 
-* **The Templating Component**
+* **Templating**
 
   * :doc:`/components/templating`
 
-* **The YAML Component**
+* **YAML**
 
   * :doc:`/components/yaml`
