@@ -74,5 +74,5 @@ must be used instead (where ``XXX`` is the name of the related thing):
 
     While "setXXX" and "replaceXXX" are very similar, there is one notable 
     difference: "setXXX" may replace, or add new elements to the relation. 
-    "replaceXXX" on the other hand is specifically forbidden to add new 
-    elements, but must throw an exception in these cases.
+    "replaceXXX", on the other hand, cannot add new elements. If an unrecognized
+    key as passed to "replaceXXX" it must throw an exception.
