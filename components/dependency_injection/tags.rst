@@ -128,9 +128,7 @@ custom tag::
     {
         public function process(ContainerBuilder $container)
         {
-            if (false === $container->hasDefinition(
-                'acme_mailer.transport_chain'
-            )) {
+            if (!$container->hasDefinition('acme_mailer.transport_chain')) {
                 return;
             }
 
@@ -252,9 +250,7 @@ use this, update the compiler::
     {
         public function process(ContainerBuilder $container)
         {
-            if (false === $container->hasDefinition(
-                'acme_mailer.transport_chain')
-            ) {
+            if (!$container->hasDefinition('acme_mailer.transport_chain')) {
                 return;
             }
 
