@@ -5,7 +5,7 @@
 The Routing Component
 =====================
 
-   The Routing Component maps an HTTP request to a set of configuration 
+   The Routing Component maps an HTTP request to a set of configuration
    variables.
 
 Installation
@@ -34,14 +34,15 @@ your autoloader to load the Routing component::
     use Symfony\Component\Routing\RouteCollection;
     use Symfony\Component\Routing\Route;
 
+    $route = new Route('/foo', array('controller' => 'MyController'))
     $routes = new RouteCollection();
-    $routes->add('route_name', new Route('/foo', array('controller' => 'MyController')));
+    $routes->add('route_name', $route);
 
     $context = new RequestContext($_SERVER['REQUEST_URI']);
 
     $matcher = new UrlMatcher($routes, $context);
 
-    $parameters = $matcher->match('/foo'); 
+    $parameters = $matcher->match('/foo');
     // array('controller' => 'MyController', '_route' => 'route_name')
 
 .. note::
@@ -51,7 +52,7 @@ your autoloader to load the Routing component::
     matching. An easy way to solve this is to use the HttpFoundation component
     as explained :ref:`below<components-routing-http-foundation>`.
 
-You can add as many routes as you like to a 
+You can add as many routes as you like to a
 :class:`Symfony\\Component\\Routing\\RouteCollection`.
 
 The :method:`RouteCollection::add()<Symfony\\Component\\Routing\\RouteCollection::add>`
@@ -61,7 +62,7 @@ URL path and some array of custom variables in its constructor. This array
 of custom variables can be *anything* that's significant to your application,
 and is returned when that route is matched.
 
-If no matching route can be found a 
+If no matching route can be found a
 :class:`Symfony\\Component\\Routing\\Exception\\ResourceNotFoundException` will be thrown.
 
 In addition to your array of custom variables, a ``_route`` key is added,
@@ -97,7 +98,11 @@ Take the following route, which combines several of these ideas::
    // ...
 
    $parameters = $matcher->match('/archive/2012-01');
-   // array('controller' => 'showArchive', 'month' => '2012-01', '_route' => ...)
+   // array(
+   //     'controller' => 'showArchive',
+   //     'month' => '2012-01',
+   //     '_route' => ...
+   //  )
 
    $parameters = $matcher->match('/archive/foo');
    // throws ResourceNotFoundException
@@ -106,29 +111,37 @@ In this case, the route is matched by ``/archive/2012-01``, because the ``{month
 wildcard matches the regular expression wildcard given. However, ``/archive/foo``
 does *not* match, because "foo" fails the month wildcard.
 
-Besides the regular expression constraints there are two special requirements 
+Besides the regular expression constraints there are two special requirements
 you can define:
 
 * ``_method`` enforces a certain HTTP request method (``HEAD``, ``GET``, ``POST``, ...)
-* ``_scheme`` enforces a certain HTTP scheme (``http``, ``https``) 
+* ``_scheme`` enforces a certain HTTP scheme (``http``, ``https``)
 
 For example, the following route would only accept requests to /foo with
 the POST method and a secure connection::
 
-   $route = new Route('/foo', array(), array('_method' => 'post', '_scheme' => 'https' ));
+   $route = new Route(
+       '/foo',
+       array(),
+       array('_method' => 'post', '_scheme' => 'https' )
+   );
 
 .. tip::
-    
+
     If you want to match all urls which start with a certain path and end in an
     arbitrary suffix you can use the following route definition::
-        
-        $route = new Route('/start/{suffix}', array('suffix' => ''), array('suffix' => '.*'));
-    
+
+        $route = new Route(
+            '/start/{suffix}',
+            array('suffix' => ''),
+            array('suffix' => '.*')
+        );
+
 
 Using Prefixes
 ~~~~~~~~~~~~~~
 
-You can add routes or other instances of 
+You can add routes or other instances of
 :class:`Symfony\\Component\\Routing\\RouteCollection` to *another* collection.
 This way you can build a tree of routes. Additionally you can define a prefix,
 default requirements and default options to all routes of a subtree::
@@ -139,23 +152,34 @@ default requirements and default options to all routes of a subtree::
     $subCollection->add(...);
     $subCollection->add(...);
 
-    $rootCollection->addCollection($subCollection, '/prefix', array('_scheme' => 'https'));
+    $rootCollection->addCollection(
+        $subCollection,
+        '/prefix',
+        array('_scheme' => 'https')
+    );
 
 Set the Request Parameters
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The :class:`Symfony\\Component\\Routing\\RequestContext` provides information 
+The :class:`Symfony\\Component\\Routing\\RequestContext` provides information
 about the current request. You can define all parameters of an HTTP request
 with this class via its constructor::
 
-    public function __construct($baseUrl = '', $method = 'GET', $host = 'localhost', $scheme = 'http', $httpPort = 80, $httpsPort = 443)
+    public function __construct(
+        $baseUrl = '',
+        $method = 'GET',
+        $host = 'localhost',
+        $scheme = 'http',
+        $httpPort = 80,
+        $httpsPort = 443
+    )
 
 .. _components-routing-http-foundation:
 
-Normally you can pass the values from the ``$_SERVER`` variable to populate the 
+Normally you can pass the values from the ``$_SERVER`` variable to populate the
 :class:`Symfony\\Component\\Routing\\RequestContext`. But If you use the
-:doc:`HttpFoundation</components/http_foundation/index>` component, you can use its 
-:class:`Symfony\\Component\\HttpFoundation\\Request` class to feed the 
+:doc:`HttpFoundation</components/http_foundation/index>` component, you can use its
+:class:`Symfony\\Component\\HttpFoundation\\Request` class to feed the
 :class:`Symfony\\Component\\Routing\\RequestContext` in a shortcut::
 
     use Symfony\Component\HttpFoundation\Request;
@@ -242,7 +266,10 @@ have to provide the name of a php file which returns a :class:`Symfony\\Componen
     use Symfony\Component\Routing\Route;
 
     $collection = new RouteCollection();
-    $collection->add('route_name', new Route('/foo', array('controller' => 'ExampleController')));
+    $collection->add(
+        'route_name',
+        new Route('/foo', array('controller' => 'ExampleController'))
+    );
     // ...
 
     return $collection;
@@ -250,7 +277,7 @@ have to provide the name of a php file which returns a :class:`Symfony\\Componen
 Routes as Closures
 ..................
 
-There is also the :class:`Symfony\\Component\\Routing\\Loader\\ClosureLoader`, which 
+There is also the :class:`Symfony\\Component\\Routing\\Loader\\ClosureLoader`, which
 calls a closure and uses the result as a :class:`Symfony\\Component\\Routing\\RouteCollection`::
 
     use Symfony\Component\Routing\Loader\ClosureLoader;
@@ -278,11 +305,17 @@ The :class:`Symfony\\Component\\Routing\\Router` class is a all-in-one package
 to quickly use the Routing component. The constructor expects a loader instance,
 a path to the main route definition and some other settings::
 
-    public function __construct(LoaderInterface $loader, $resource, array $options = array(), RequestContext $context = null, array $defaults = array());
+    public function __construct(
+        LoaderInterface $loader,
+        $resource,
+        array $options = array(),
+        RequestContext $context = null,
+        array $defaults = array()
+    );
 
-With the ``cache_dir`` option you can enable route caching (if you provide a 
-path) or disable caching (if it's set to ``null``). The caching is done 
-automatically in the background if you want to use it. A basic example of the 
+With the ``cache_dir`` option you can enable route caching (if you provide a
+path) or disable caching (if it's set to ``null``). The caching is done
+automatically in the background if you want to use it. A basic example of the
 :class:`Symfony\\Component\\Routing\\Router` class would look like::
 
     $locator = new FileLocator(array(__DIR__));
@@ -298,6 +331,6 @@ automatically in the background if you want to use it. A basic example of the
 
 .. note::
 
-    If you use caching, the Routing component will compile new classes which 
-    are saved in the ``cache_dir``. This means your script must have write 
+    If you use caching, the Routing component will compile new classes which
+    are saved in the ``cache_dir``. This means your script must have write
     permissions for that location.
