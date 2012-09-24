@@ -274,10 +274,10 @@ of the config that are repeated in different places.
 Normalization
 -------------
 
-When the config files are processed they are first normalized, they are then
-merged and then the tree is used to validate the resulting array. The normalization
-is to remove some of the differences that result from different configuration formats,
-mainly the differences between Yaml and XML.
+When the config files are processed they are first normalized, then merged
+and finally the tree is used to validate the resulting array. The normalization
+process is used to remove some of the differences that result from different
+configuration formats, mainly the differences between Yaml and XML.
 
 The separator used in keys is typically ``_`` in Yaml and ``-`` in XML. For
 example, ``auto_connect`` in Yaml and ``auto-connect``. The normalization would
@@ -323,8 +323,8 @@ a second argument::
         ->end()
     ;
 
-As well as fixing this it ensures that single xml elements are still turned into an array.
-So you may have:
+As well as fixing this, ``fixXmlConfig`` ensures that single xml elements
+are still turned into an array. So you may have:
 
 .. code-block:: xml
 
@@ -341,7 +341,7 @@ By default ``connection`` would be an array in the first case and a string
 in the second making it difficult to validate. You can ensure it is always
 an array with with ``fixXmlConfig``.
 
-You can further control the normalization process if you need to. For example
+You can further control the normalization process if you need to. For example,
 you may want to allow a string to be set and used as a particular key or several
 keys to be set explicitly. So that, if everything apart from id is optional in this
 config:
