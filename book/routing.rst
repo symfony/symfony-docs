@@ -1017,7 +1017,8 @@ loaded from the new routing resource.
 
 .. tip::
 
-    You can also define routes using annotations. See the :doc:`FrameworkExtraBundle documentation<bundles/SensioFrameworkExtraBundle/annotations/routing>`
+    You can also define routes using annotations. See the
+    :doc:`FrameworkExtraBundle documentation<bundles/SensioFrameworkExtraBundle/annotations/routing>`
     to see how to.
 
 .. index::
