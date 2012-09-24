@@ -29,12 +29,12 @@ As an example we will create a price filter to format a given number into price:
     use Twig_Extension;
     use Twig_Filter_Method;
 
-    class AcmeExtension extends Twig_Extension
+    class AcmeExtension extends \Twig_Extension
     {
         public function getFilters()
         {
             return array(
-                'price' => new Twig_Filter_Method($this, 'priceFilter'),
+                'price' => new \Twig_Filter_Method($this, 'priceFilter'),
             );
         }
 
