@@ -31,7 +31,7 @@
 
 * **DOM Crawler**
 
-* :doc:`/components/dom_crawler`
+  * :doc:`/components/dom_crawler`
 
 * :doc:`/components/event_dispatcher/index`
 

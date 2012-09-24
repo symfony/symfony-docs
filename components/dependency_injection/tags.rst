@@ -161,7 +161,7 @@ run when the container is compiled::
 .. note::
 
     Compiler passes are registered differently is you are using the full
-    stack framework, see :doc:`cookbook/service_container/compiler_passes`
+    stack framework, see :doc:`/cookbook/service_container/compiler_passes`
     for more details.
 
 Adding additional attributes on Tags
