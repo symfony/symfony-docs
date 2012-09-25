@@ -67,9 +67,9 @@ Then, define the chain as a service:
 Define Services with a Custom Tag
 ---------------------------------
 
-Now we want several of the ``\Swift_Transport`` classes to be instantiated
+Now you might want several of the ``\Swift_Transport`` classes to be instantiated
 and added to the chain automatically using the ``addTransport()`` method.
-As an example we add the following transports as services:
+For example you may add the following transports as services:
 
 .. configuration-block::
 
@@ -198,7 +198,7 @@ To begin with, change the ``TransportChain`` class::
     }
 
 As you can see, when ``addTransport`` is called, it takes not only a ``Swift_Transport``
-object, but also a string alias for that transport. So, how can we allow
+object, but also a string alias for that transport. So, how can you allow
 each tagged transport service to also supply an alias?
 
 To answer this, change the service declaration:
