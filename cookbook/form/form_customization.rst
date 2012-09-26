@@ -848,10 +848,10 @@ form, modify the ``use`` tag and add the following:
 
 .. code-block:: html+jinja
 
-    {% use 'form_div_layout.html.twig' with field_widget as base_field_widget %}
+    {% use 'form_div_layout.html.twig' with form_widget_simple as base_form_widget_simple %}
 
-    {% block field_widget %}
-        {{ block('base_field_widget') }}
+    {% block form_widget_simple %}
+        {{ block('base_form_widget_simple') }}
 
         {% if help is defined %}
             <span class="help">{{ help }}</span>
@@ -865,7 +865,7 @@ the following:
 
     {% extends 'form_div_layout.html.twig' %}
 
-    {% block field_widget %}
+    {% block form_widget_simple %}
         {{ parent() }}
 
         {% if help is defined %}
@@ -878,7 +878,7 @@ original template:
 
 .. code-block:: html+php
 
-    <!-- field_widget.html.php -->
+    <!-- form_widget_simple.html.php -->
 
     <!-- Original content -->
     <input
