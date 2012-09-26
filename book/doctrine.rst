@@ -34,9 +34,9 @@ persist it to the database and fetch it back out.
 
     If you want to follow along with the example in this chapter, create
     an ``AcmeStoreBundle`` via:
-    
+
     .. code-block:: bash
-    
+
         $ php app/console generate:bundle --namespace=Acme/StoreBundle
 
 Configuring the Database
@@ -61,9 +61,9 @@ information. By convention, this information is usually configured in an
     Defining the configuration via ``parameters.ini`` is just a convention.
     The parameters defined in that file are referenced by the main configuration
     file when setting up Doctrine:
-    
+
     .. code-block:: yaml
-    
+
         # app/config/config.yml
         doctrine:
             dbal:
@@ -72,7 +72,7 @@ information. By convention, this information is usually configured in an
                 dbname:   %database_name%
                 user:     %database_user%
                 password: %database_password%
-    
+
     By separating the database information into a separate file, you can
     easily keep different versions of the file on each server. You can also
     easily store database configuration (or any sensitive information) outside
@@ -100,10 +100,10 @@ information. By convention, this information is usually configured in an
     your configuration file  (typically ``my.cnf``):
 
     .. code-block:: ini
-    
+
         [mysqld]
         collation-server = utf8_general_ci
-        character-set-server = utf8    
+        character-set-server = utf8
 
 Now that Doctrine knows about your database, you can have it create the database
 for you:
@@ -141,9 +141,9 @@ just a simple PHP class.
 
     Once you learn the concepts behind Doctrine, you can have Doctrine create
     this entity class for you:
-    
+
     .. code-block:: bash
-        
+
         $ php app/console doctrine:generate:entity --entity="AcmeStoreBundle:Product" --fields="name:string(255) price:float description:text"
 
 .. index::
@@ -440,9 +440,9 @@ Let's walk through this example:
   In fact, since Doctrine is aware of all your managed entities, when you
   call the ``flush()`` method, it calculates an overall changeset and executes
   the most efficient query/queries possible. For example, if you persist a
-  total of 100 ``Product`` objects and then subsequently call ``flush()``, 
-  Doctrine will create a *single* prepared statement and re-use it for each 
-  insert. This pattern is called *Unit of Work*, and it's used because it's 
+  total of 100 ``Product`` objects and then subsequently call ``flush()``,
+  Doctrine will create a *single* prepared statement and re-use it for each
+  insert. This pattern is called *Unit of Work*, and it's used because it's
   fast and efficient.
 
 When creating or updating objects, the workflow is always the same. In the
@@ -467,7 +467,7 @@ on its ``id`` value::
         $product = $this->getDoctrine()
             ->getRepository('AcmeStoreBundle:Product')
             ->find($id);
-        
+
         if (!$product) {
             throw $this->createNotFoundException('No product found for id '.$id);
         }
@@ -589,7 +589,7 @@ You've already seen how the repository object allows you to run basic queries
 without any work::
 
     $repository->find($id);
-    
+
     $repository->findOneByName('Foo');
 
 Of course, Doctrine also allows you to write more complex queries using the
@@ -611,7 +611,7 @@ a controller, do the following::
     $query = $em->createQuery(
         'SELECT p FROM AcmeStoreBundle:Product p WHERE p.price > :price ORDER BY p.price ASC'
     )->setParameter('price', '19.99');
-    
+
     $products = $query->getResult();
 
 If you're comfortable with SQL, then DQL should feel very natural. The biggest
@@ -632,10 +632,10 @@ for just one object, you can use the ``getSingleResult()`` method instead::
     need to wrap it in a try-catch block and ensure that only one result is
     returned (if you're querying on something that could feasibly return
     more than one result)::
-    
+
         $query = $em->createQuery('SELECT ...')
             ->setMaxResults(1);
-        
+
         try {
             $product = $query->getSingleResult();
         } catch (\Doctrine\Orm\NoResultException $e) {
@@ -653,7 +653,7 @@ covered later), group, etc. For more information, see the official Doctrine
     Take note of the ``setParameter()`` method. When working with Doctrine,
     it's always a good idea to set any external values as "placeholders",
     which was done in the above query:
-    
+
     .. code-block:: text
 
         ... WHERE p.price > :price ...
@@ -689,7 +689,7 @@ type the method names. From inside a controller::
         ->setParameter('price', '19.99')
         ->orderBy('p.price', 'ASC')
         ->getQuery();
-    
+
     $products = $query->getResult();
 
 The ``QueryBuilder`` object contains every method necessary to build your
@@ -824,16 +824,16 @@ To relate the ``Category`` and ``Product`` entities, start by creating a
 
         // ...
         use Doctrine\Common\Collections\ArrayCollection;
-        
+
         class Category
         {
             // ...
-            
+
             /**
              * @ORM\OneToMany(targetEntity="Product", mappedBy="category")
              */
             protected $products;
-    
+
             public function __construct()
             {
                 $this->products = new ArrayCollection();
@@ -855,9 +855,6 @@ To relate the ``Category`` and ``Product`` entities, start by creating a
 
 First, since a ``Category`` object will relate to many ``Product`` objects,
 a ``products`` array property is added to hold those ``Product`` objects.
-Again, this isn't done because Doctrine needs it, but instead because it
-makes sense in the application for each ``Category`` to hold an array of
-``Product`` objects.
 
 .. note::
 
@@ -870,7 +867,7 @@ makes sense in the application for each ``Category`` to hold an array of
 .. tip::
 
    The targetEntity value in the decorator used above can reference any entity
-   with a valid namespace, not just entities defined in the same class. To 
+   with a valid namespace, not just entities defined in the same class. To
    relate to an entity defined in a different class or bundle, enter a full
    namespace as the targetEntity.
 
@@ -884,11 +881,11 @@ object, you'll want to add a ``$category`` property to the ``Product`` class:
         // src/Acme/StoreBundle/Entity/Product.php
 
         // ...
-    
+
         class Product
         {
             // ...
-        
+
             /**
              * @ORM\ManyToOne(targetEntity="Category", inversedBy="products")
              * @ORM\JoinColumn(name="category_id", referencedColumnName="id")
@@ -970,18 +967,18 @@ Now, let's see the code in action. Imagine you're inside a controller::
         {
             $category = new Category();
             $category->setName('Main Products');
-            
+
             $product = new Product();
             $product->setName('Foo');
             $product->setPrice(19.99);
             // relate this product to the category
             $product->setCategory($category);
-            
+
             $em = $this->getDoctrine()->getEntityManager();
             $em->persist($category);
             $em->persist($product);
             $em->flush();
-            
+
             return new Response(
                 'Created product id: '.$product->getId().' and category id: '.$category->getId()
             );
@@ -1007,7 +1004,7 @@ did before. First, fetch a ``$product`` object and then access its related
             ->find($id);
 
         $categoryName = $product->getCategory()->getName();
-        
+
         // ...
     }
 
@@ -1034,7 +1031,7 @@ You can also query in the other direction::
             ->find($id);
 
         $products = $category->getProducts();
-    
+
         // ...
     }
 
@@ -1049,7 +1046,7 @@ to the given ``Category`` object via their ``category_id`` value.
     This "lazy loading" is possible because, when necessary, Doctrine returns
     a "proxy" object in place of the true object. Look again at the above
     example::
-    
+
         $product = $this->getDoctrine()
             ->getRepository('AcmeStoreBundle:Product')
             ->find($id);
@@ -1115,9 +1112,9 @@ object and its related ``Category`` with just one query::
             ->findOneByIdJoinedToCategory($id);
 
         $category = $product->getCategory();
-    
+
         // ...
-    }    
+    }
 
 More Information on Associations
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -1233,7 +1230,7 @@ in general, see Doctrine's `Lifecycle Events documentation`_
     callbacks should be simple methods that are concerned with internally
     transforming data in the entity (e.g. setting a created/updated field,
     generating a slug value).
-    
+
     If you need to do some heavier lifting - like perform logging or send
     an email - you should register an external class as an event listener
     or subscriber and give it access to whatever resources you need. For
@@ -1300,11 +1297,11 @@ and ``nullable``. Take a few examples:
         /**
          * A string field with length 255 that cannot be null
          * (reflecting the default values for the "type", "length" and *nullable* options)
-         * 
+         *
          * @ORM\Column()
          */
         protected $name;
-    
+
         /**
          * A string field of length 150 that persists to an "email_address" column
          * and has a unique index.
@@ -1364,9 +1361,9 @@ Some notable or interesting tasks include:
 * ``doctrine:ensure-production-settings`` - checks to see if the current
   environment is configured efficiently for production. This should always
   be run in the ``prod`` environment:
-  
+
   .. code-block:: bash
-  
+
     $ php app/console doctrine:ensure-production-settings --env=prod
 
 * ``doctrine:mapping:import`` - allows Doctrine to introspect an existing
