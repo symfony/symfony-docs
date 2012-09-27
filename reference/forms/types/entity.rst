@@ -39,11 +39,14 @@ be listed inside the choice field::
 
     $builder->add('users', 'entity', array(
         'class' => 'AcmeHelloBundle:User',
+        'property' => 'username',
     ));
 
 In this case, all ``User`` objects will be loaded from the database and rendered
 as either a ``select`` tag, a set or radio buttons or a series of checkboxes
 (this depends on the ``multiple`` and ``expanded`` values).
+If the entity object does not have a ``__toString()`` method the ``property`` option
+is needed.
 
 Using a Custom Query for the Entities
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
