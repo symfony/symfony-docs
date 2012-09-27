@@ -4,6 +4,7 @@ Contributing Code
 .. toctree::
     :maxdepth: 2
 
+    releases
     bugs
     patches
     security
