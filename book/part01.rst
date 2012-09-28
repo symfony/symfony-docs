@@ -93,14 +93,6 @@ To store our framework, create a directory somewhere on your machine:
     $ mkdir framework
     $ cd framework
 
-Coding Standards
-~~~~~~~~~~~~~~~~
-
-Before anyone starts a flame war about coding standards and why the one used
-here suck hard, let's all admit that this does not matter that much as long as
-you are consistent. For this book, we are going to use the `Symfony2 Coding
-Standards`_.
-
 Components Installation
 ~~~~~~~~~~~~~~~~~~~~~~~
 
