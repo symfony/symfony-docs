@@ -867,6 +867,14 @@ makes sense in the application for each ``Category`` to hold an array of
     added flexibility. If this makes you uncomfortable, don't worry. Just
     imagine that it's an ``array`` and you'll be in good shape.
 
+.. note::
+
+    If you are using ``doctrine:mapping:import` and want oneToMany associations
+    make sure to add the yaml ``oneToMany`` portion of the above code to
+    your entities ``.yml`` file. After adding this, running 
+    ``doctrine:generate:entities`` will automatically create the
+    ``__construct()`` along with the getters and setters.
+
 .. tip::
 
    The targetEntity value in the decorator used above can reference any entity
