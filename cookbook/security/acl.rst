@@ -70,9 +70,9 @@ First, we need to configure the connection the ACL system is supposed to use:
 After the connection is configured, we have to import the database structure.
 Fortunately, we have a task for this. Simply run the following command:
 
-.. code-block:: text
+.. code-block:: bash
 
-    php app/console init:acl
+    $ php app/console init:acl
 
 Getting Started
 ---------------
