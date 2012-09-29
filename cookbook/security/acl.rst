@@ -61,13 +61,11 @@ First, we need to configure the connection the ACL system is supposed to use:
 
 .. note::
 
-    The ACL system requires either one Doctrine DBAL (usable by default)
-    or Doctrine ODM connection (usable with `MongoDBAclBundle
-    <https://github.com/iampersistent/MongoDBAclBundle>`_) to be configured.
-    However, that does not mean that you have to use Doctrine for
-    mapping your domain objects. You can use whatever mapper you like for your
-    objects, be it Doctrine ORM, Mongo ODM, Propel, or raw SQL, the choice is 
-    yours.
+    The ACL system requires a connection from either Doctrine DBAL (usable by
+    default) or Doctrine MongoDB (usable with `MongoDBAclBundle`_). However,
+    that does not mean that you have to use Doctrine ORM or ODM for mapping your
+    domain objects. You can use whatever mapper you like for your objects, be it
+    Doctrine ORM, MongoDB ODM, Propel, raw SQL, etc. The choice is yours.
 
 After the connection is configured, we have to import the database structure.
 Fortunately, we have a task for this. Simply run the following command:
@@ -218,3 +216,5 @@ added above:
     $acl->insertObjectAce($identity, $mask);
 
 The user is now allowed to view, edit, delete, and un-delete objects.
+
+.. _`MongoDBAclBundle`: https://github.com/IamPersistent/MongoDBAclBundle
