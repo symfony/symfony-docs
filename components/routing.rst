@@ -34,14 +34,15 @@ your autoloader to load the Routing component::
     use Symfony\Component\Routing\RouteCollection;
     use Symfony\Component\Routing\Route;
 
+    $route = new Route('/foo', array('controller' => 'MyController'))
     $routes = new RouteCollection();
-    $routes->add('route_name', new Route('/foo', array('controller' => 'MyController')));
+    $routes->add('route_name', $route);
 
     $context = new RequestContext($_SERVER['REQUEST_URI']);
 
     $matcher = new UrlMatcher($routes, $context);
 
-    $parameters = $matcher->match('/foo'); 
+    $parameters = $matcher->match('/foo');
     // array('controller' => 'MyController', '_route' => 'route_name')
 
 .. note::
@@ -97,7 +98,11 @@ Take the following route, which combines several of these ideas::
    // ...
 
    $parameters = $matcher->match('/archive/2012-01');
-   // array('controller' => 'showArchive', 'month' => '2012-01', '_route' => ...)
+   // array(
+   //     'controller' => 'showArchive',
+   //     'month' => '2012-01',
+   //     '_route' => ...
+   //  )
 
    $parameters = $matcher->match('/archive/foo');
    // throws ResourceNotFoundException
@@ -115,15 +120,22 @@ you can define:
 For example, the following route would only accept requests to /foo with
 the POST method and a secure connection::
 
-   $route = new Route('/foo', array(), array('_method' => 'post', '_scheme' => 'https' ));
+   $route = new Route(
+       '/foo',
+       array(),
+       array('_method' => 'post', '_scheme' => 'https' )
+   );
 
 .. tip::
 
     If you want to match all urls which start with a certain path and end in an
     arbitrary suffix you can use the following route definition::
 
-        $route = new Route('/start/{suffix}', array('suffix' => ''), array('suffix' => '.*'));
-
+        $route = new Route(
+            '/start/{suffix}',
+            array('suffix' => ''),
+            array('suffix' => '.*')
+        );
 
 Using Prefixes
 ~~~~~~~~~~~~~~
@@ -139,7 +151,11 @@ default requirements and default options to all routes of a subtree::
     $subCollection->add(...);
     $subCollection->add(...);
 
-    $rootCollection->addCollection($subCollection, '/prefix', array('_scheme' => 'https'));
+    $rootCollection->addCollection(
+        $subCollection,
+        '/prefix',
+        array('_scheme' => 'https')
+    );
 
 Set the Request Parameters
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -148,14 +164,21 @@ The :class:`Symfony\\Component\\Routing\\RequestContext` provides information
 about the current request. You can define all parameters of an HTTP request
 with this class via its constructor::
 
-    public function __construct($baseUrl = '', $method = 'GET', $host = 'localhost', $scheme = 'http', $httpPort = 80, $httpsPort = 443)
+    public function __construct(
+        $baseUrl = '',
+        $method = 'GET',
+        $host = 'localhost',
+        $scheme = 'http',
+        $httpPort = 80,
+        $httpsPort = 443
+    )
 
 .. _components-routing-http-foundation:
 
 Normally you can pass the values from the ``$_SERVER`` variable to populate the
 :class:`Symfony\\Component\\Routing\\RequestContext`. But If you use the
-:doc:`HttpFoundation</components/http_foundation/index>` component, you can use its 
-:class:`Symfony\\Component\\HttpFoundation\\Request` class to feed the 
+:doc:`HttpFoundation</components/http_foundation/index>` component, you can use its
+:class:`Symfony\\Component\\HttpFoundation\\Request` class to feed the
 :class:`Symfony\\Component\\Routing\\RequestContext` in a shortcut::
 
     use Symfony\Component\HttpFoundation\Request;
@@ -242,7 +265,10 @@ have to provide the name of a php file which returns a :class:`Symfony\\Componen
     use Symfony\Component\Routing\Route;
 
     $collection = new RouteCollection();
-    $collection->add('route_name', new Route('/foo', array('controller' => 'ExampleController')));
+    $collection->add(
+        'route_name',
+        new Route('/foo', array('controller' => 'ExampleController'))
+    );
     // ...
 
     return $collection;
@@ -278,7 +304,13 @@ The :class:`Symfony\\Component\\Routing\\Router` class is a all-in-one package
 to quickly use the Routing component. The constructor expects a loader instance,
 a path to the main route definition and some other settings::
 
-    public function __construct(LoaderInterface $loader, $resource, array $options = array(), RequestContext $context = null, array $defaults = array());
+    public function __construct(
+        LoaderInterface $loader,
+        $resource,
+        array $options = array(),
+        RequestContext $context = null,
+        array $defaults = array()
+    );
 
 With the ``cache_dir`` option you can enable route caching (if you provide a
 path) or disable caching (if it's set to ``null``). The caching is done
