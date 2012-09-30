@@ -439,5 +439,8 @@ Otherwise the result is a clean array of configuration values::
 
     $processor = new Processor();
     $configuration = new DatabaseConfiguration;
-    $processedConfiguration = $processor->processConfiguration($configuration, $configs);
+    $processedConfiguration = $processor->processConfiguration(
+        $configuration,
+        $configs)
+    ;
 
