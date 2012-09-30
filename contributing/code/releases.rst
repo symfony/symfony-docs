@@ -58,12 +58,12 @@ Below is the schedule for the first few versions that use this release model:
 
  * *(special)* Symfony 2.2 will be released at the end of February 2013;
 
- * *(special)* Symfony 2.3 (the first LTS) will be released at the end of Mai
+ * *(special)* Symfony 2.3 (the first LTS) will be released at the end of May
    2013;
 
  * Symfony 2.4 will be released at the end of November 2013;
 
- * Symfony 2.5 will be released at the end of Mai 2014;
+ * Symfony 2.5 will be released at the end of May 2014;
 
  * ...
 
