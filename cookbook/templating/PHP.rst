@@ -57,6 +57,20 @@ below renders the ``index.html.php`` template::
         return $this->render('AcmeHelloBundle:Hello:index.html.php', array('name' => $name));
     }
 
+Or, you can use the @Template() annotation to make it render the default "AcmeHelloBundle:Hello:index.html.php" template::
+
+    // src/Acme/HelloBundle/Controller/HelloController.php
+
+    // ...
+
+    /**
+     * @Template(engine="php")
+     */
+    public function indexAction($name)
+    {
+        return array('name' => $name);
+    }
+
 .. index::
   single: Templating; Layout
   single: Layout
