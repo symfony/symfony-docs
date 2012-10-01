@@ -286,7 +286,7 @@ Full Default Configuration
                 http_port:            80
                 https_port:           443
                 # if false, an empty URL will be generated if a route is missing required parameters
-                strict_requirements:  %kernel.debug%
+                strict_requirements:  "%kernel.debug%"
 
             # session configuration
             session:
@@ -302,7 +302,7 @@ Full Default Configuration
                 gc_divisor:           ~
                 gc_probability:       ~
                 gc_maxlifetime:       ~
-                save_path:            %kernel.cache_dir%/sessions
+                save_path:            "%kernel.cache_dir%/sessions"
 
                 # DEPRECATED! Please use: cookie_lifetime
                 lifetime:             ~
@@ -322,7 +322,7 @@ Full Default Configuration
             # templating configuration
             templating:
                 assets_version:       ~
-                assets_version_format:  %%s?%%s
+                assets_version_format:  "%%s?%%s"
                 hinclude_default_template:  ~
                 form:
                     resources:
@@ -343,7 +343,7 @@ Full Default Configuration
                     # A collection of named packages
                     some_package_name:
                         version:              ~
-                        version_format:       %%s?%%s
+                        version_format:       "%%s?%%s"
                         base_urls:
                             http:                 []
                             ssl:                  []

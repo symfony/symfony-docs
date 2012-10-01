@@ -44,7 +44,7 @@ Then, define the chain as a service:
 
         services:
             acme_mailer.transport_chain:
-                class: %acme_mailer.transport_chain.class%
+                class: "%acme_mailer.transport_chain.class%"
 
     .. code-block:: xml
 
@@ -79,7 +79,7 @@ As an example we add the following transports as services:
             acme_mailer.transport.smtp:
                 class: \Swift_SmtpTransport
                 arguments:
-                    - %mailer_host%
+                    - "%mailer_host%"
                 tags:
                     -  { name: acme_mailer.transport }
             acme_mailer.transport.sendmail:
@@ -211,7 +211,7 @@ To answer this, change the service declaration:
             acme_mailer.transport.smtp:
                 class: \Swift_SmtpTransport
                 arguments:
-                    - %mailer_host%
+                    - "%mailer_host%"
                 tags:
                     -  { name: acme_mailer.transport, alias: foo }
             acme_mailer.transport.sendmail:
