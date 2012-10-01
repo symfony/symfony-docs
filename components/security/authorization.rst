@@ -7,8 +7,9 @@ Authorization
 When any of the authentication providers (see :ref:`authentication_providers`)
 has verified the still unauthenticated token, an authenticated token will
 be returned. The authentication listener should set this token directly
-in the :class:`Symfony\\Component\\Security\\Core\\SecurityContext` using its
-``setToken()`` method.
+in the :class:`Symfony\\Component\\Security\\Core\\SecurityContextInterface`
+using its :method:`Symfony\\Component\\Security\\Core\\SecurityContextInterface::setToken`
+method.
 
 From then on, the user is authenticated, i.e. means identified.
 Now, other parts of the application can use the token to decide whether
@@ -18,19 +19,21 @@ This decision will be made by an instance of :class:`Symfony\\Component\\Securit
 An authorization decision will always be based on a few things:
 
 The current token
-    The token`s ``getRoles()`` method will be used to retrieve the roles
-    of the current user (e.g. "ROLE_SUPER_ADMIN")
+    For instance, the token's :method:`Symfony\\Component\\Security\\Core\\Authentication\\Token\\TokenInterface::getRoles`
+    method may be used to retrieve the roles of the current user (e.g.
+    "ROLE_SUPER_ADMIN"), or a decision may be based on the class of the token.
 A set of attributes
     Each attribute stands for a certain right the user should have, e.g.
     "ROLE_ADMIN" to make sure the user is an administrator.
 An object (optional)
     Any object on which to decide, e.g. the current :class:`Symfony\\Component\\HttpFoundation\\Request`
-    object.
+    object, or an object for which access control needs to be checked, like
+    an article or a comment object.
 
 Access decision manager
 -----------------------
 
-Since choosing whether or not a user is authorized to perform a certain
+Since deciding whether or not a user is authorized to perform a certain
 action can be a complicated process, the standard :class:`Symfony\\Component\\Security\\Core\\Authorization\\AccessDecisionManager`
 itself depends on multiple voters, and makes a final verdict based on all
 the votes (either positive, negative or neutral) it has received. It
@@ -45,7 +48,7 @@ recognizes several strategies:
 ``unanimous``
     Only grant access if none of the voters has denied access
 
-::
+.. code-block:: php
 
     use Symfony\Component\Security\Core\Authorization\AccessDecisionManager;
 
@@ -61,8 +64,12 @@ recognizes several strategies:
     // whether or not to grant access when there is no majority (applies only to the "consensus" strategy)
     $allowIfEqualGrantedDeniedDecisions = ...;
 
-    $accessDecisionManager = new AccessDecisionManager($voters, $strategy,
-        $allowIfAllAbstainDecisions, $allowIfEqualGrantedDeniedDecisions);
+    $accessDecisionManager = new AccessDecisionManager(
+        $voters,
+        $strategy,
+        $allowIfAllAbstainDecisions,
+        $allowIfEqualGrantedDeniedDecisions
+    );
 
 Voters
 ------
@@ -92,7 +99,7 @@ and "IS_AUTHENTICATED_ANONYMOUSLY" and grants access based on the current
 level of authentication, i.e. is the user fully authenticated, or only based
 on a "remember-me" cookie, or even authenticated anonymously?
 
-::
+.. code-block:: php
 
     use Symfony\Component\Security\Core\Authentication\AuthenticationTrustResolver;
 
@@ -104,19 +111,20 @@ on a "remember-me" cookie, or even authenticated anonymously?
     $authenticatedVoter = new AuthenticatedVoter($trustResolver);
 
     // instance of Symfony\Component\Security\Core\Authentication\Token\TokenInterface
-    $token = ...
+    $token = ...;
 
     // any object
-    $object = ...
+    $object = ...;
 
     $vote = $authenticatedVoter->vote($token, $object, array('IS_AUTHENTICATED_FULLY');
 
 The :class:`Symfony\\Component\\Security\\Core\\Authorization\\Voter\\RoleVoter`
 supports attributes starting with "ROLE_" and grants access to the user
 when the required "ROLE_*" attributes can all be found in the array of
-roles returned by the token's ``getRoles()`` method.
+roles returned by the token's :method:`Symfony\\Component\\Security\\Core\\Authentication\\Token\\TokenInterface::getRoles`
+method.
 
-::
+.. code-block:: php
 
     use Symfony\Component\Security\Core\Authorization\Voter\RoleVoter;
 
@@ -133,7 +141,7 @@ user to have the "ROLE_ADMIN" role, it grants access to users who in fact
 have the "ROLE_ADMIN" role, but also to users having the "ROLE_SUPER_ADMIN"
 role.
 
-::
+.. code-block:: php
 
     use Symfony\Component\Security\Core\Authorization\Voter\RoleHierarchyVoter;
     use Symfony\Component\Security\Core\Role\RoleHierarchy;
@@ -156,11 +164,10 @@ Roles
 
 Roles are objects that give expression to a certain right the user has.
 The only requirement is that they implement :class:`Symfony\\Component\\Security\\Core\\Role\\RoleInterface`,
-which means they should also have a ``getRole()`` method that returns a
-string representation of the role itself. The default :class:`Symfony\\Component\\Security\\Core\\Role\\Role`
-simply returns its first constructor argument:
-
-::
+which means they should also have a :method:`Symfony\\Component\\Security\\Core\\Role\\Role\\RoleInterface::getRole`
+method that returns a string representation of the role itself. The default
+:class:`Symfony\\Component\\Security\\Core\\Role\\Role` simply returns its
+first constructor argument::
 
     use Symfony\Component\Security\Core\Role\Role;
 
@@ -191,7 +198,7 @@ It uses an access map (which should be an instance of :class:`Symfony\\Component
 which contains request matchers and a corresponding set of attributes that
 are required for the current user to get access to the application.
 
-::
+.. code-block:: php
 
     use Symfony\Component\Security\Http\AccessMap;
     use Symfony\Component\HttpFoundation\RequestMatcher;
@@ -201,23 +208,31 @@ are required for the current user to get access to the application.
     $requestMatcher = new RequestMatcher('^/admin');
     $accessMap->add($requestMatcher, array('ROLE_ADMIN'));
 
-    $accessListener = new AccessListener($securityContext, $accessDecisionManager,
-        $accessMap, $authenticationManager);
+    $accessListener = new AccessListener(
+        $securityContext,
+        $accessDecisionManager,
+        $accessMap,
+        $authenticationManager
+    );
 
 Security context
 ~~~~~~~~~~~~~~~~
 
 The access decision manager is also available to other parts of the application
-by means of the ``isGranted($attribute)`` method of the :class:`Symfony\\Component\\Security\\Core\\SecurityContext`.
+by means of the :method:`Symfony\\Component\\Security\\Core\\SecurityContext::isGranted`
+method of the :class:`Symfony\\Component\\Security\\Core\\SecurityContext`.
 A call to this method will directly delegate the question to the access
 decision manager.
 
-::
+.. code-block:: php
 
     use Symfony\Component\Security\SecurityContext;
     use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
-    $securityContext = new SecurityContext();
+    $securityContext = new SecurityContext(
+        $authenticationManager,
+        $accessDecisionManager
+    );
 
     if (!$securityContext->isGranted('ROLE_ADMIN')) {
         throw new AccessDeniedException();
