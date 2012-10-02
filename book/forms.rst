@@ -214,7 +214,7 @@ controller::
             ->add('dueDate', 'date')
             ->getForm();
 
-        if ($request->getMethod() == 'POST') {
+        if ($request->isMethod('post')) {
             $form->bind($request);
 
             if ($form->isValid()) {
