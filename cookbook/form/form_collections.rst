@@ -177,7 +177,7 @@ In your controller, you'll now initialize a new instance of ``TaskType``::
             $form = $this->createForm(new TaskType(), $task);
 
             // process the form on POST
-            if ('POST' === $request->getMethod()) {
+            if ($request->isMethod('POST')) {
                 $form->bind($request);
                 if ($form->isValid()) {
                     // maybe do some form processing, like saving the Task and Tag objects
@@ -610,7 +610,7 @@ the relationship between the removed ``Tag`` and ``Task`` object.
           
             $editForm = $this->createForm(new TaskType(), $task);
 
-            if ('POST' === $request->getMethod()) {
+            if ($request->isMethod('POST')) {
                 $editForm->bind($this->getRequest());
 
                 if ($editForm->isValid()) {
