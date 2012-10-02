@@ -32,7 +32,7 @@ final release.
 Maintenance
 -----------
 
-Each Symfony version is maintained for a fix period of time, depending on the
+Each Symfony version is maintained for a fixed period of time, depending on the
 type of the release.
 
 Standard Releases
@@ -58,12 +58,12 @@ Below is the schedule for the first few versions that use this release model:
 
  * *(special)* Symfony 2.2 will be released at the end of February 2013;
 
- * *(special)* Symfony 2.3 (the first LTS) will be released at the end of Mai
+ * *(special)* Symfony 2.3 (the first LTS) will be released at the end of May
    2013;
 
  * Symfony 2.4 will be released at the end of November 2013;
 
- * Symfony 2.5 will be released at the end of Mai 2014;
+ * Symfony 2.5 will be released at the end of May 2014;
 
  * ...
 
@@ -71,7 +71,7 @@ Backward Compatibility
 ----------------------
 
 After the release of Symfony 2.3, backward compatibility will be kept at all
-cost. If it is not possible, the feature, the enhancement, or the bug fix will
+cost. If it is not possible, the feature, enhancement, or bug fix will
 be scheduled for the next major version: Symfony 3.0.
 
 .. note::
@@ -101,7 +101,7 @@ This release process was adopted to give more *predictability* and
    (bundle authors, documentation writers, translators, ...).
 
 The six month period was chosen as two releases fit in a year. It also gives
-plenty of time to work on new features and it also allows for non-ready
+plenty of time to work on new features and allows for non-ready
 features to be postponed to the next version without having to wait too much
 for the next cycle.
 
