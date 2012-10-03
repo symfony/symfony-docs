@@ -55,6 +55,13 @@ Each part will be explained in the next section.
                     encode_as_base64:    true
                     iterations:          5000
 
+                # PBKDF2 encoder
+                Acme\Your\Class\Name:
+                    algorithm:            pbkdf2
+                    hash_algorithm:       sha512
+                    encode_as_base64:     true
+                    iterations:           1000
+
                 # Example options/values for what a custom encoder might look like
                 Acme\Your\Class\Name:
                     algorithm:            ~
@@ -188,6 +195,17 @@ Each part will be explained in the next section.
             role_hierarchy:
                 ROLE_ADMIN:      [ROLE_ORGANIZER, ROLE_USER]
                 ROLE_SUPERADMIN: [ROLE_ADMIN]
+
+.. caution::
+    PBKDF2 encoder uses the PBKDF2 (Password-Based Key Derivation Function 2).
+
+    Providing a high level of Cryptographic security,
+    as recommended by the National Institute of Standards and Technology (NIST).
+
+    But also warrants a warning, using PBKDF2 (with a high number of iterations) slows down the process.
+    PBKDF2 should be used with caution and care.
+    
+    A good configuration lies around at least 1000 iterations and sha512 for the hash algorithm.
 
 .. _reference-security-firewall-form-login:
 

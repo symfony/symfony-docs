@@ -1200,6 +1200,9 @@ it as base64. In other words, the password has been greatly obfuscated so
 that the hashed password can't be decoded (i.e. you can't determine the password
 from the hashed password).
 
+.. versionadded:: 2.2
+    As of Symfony 2.2 you can also use the PBKDF2 password encoder.
+
 If you have some sort of registration form for users, you'll need to be able
 to determine the hashed password so that you can set it on your user. No
 matter what algorithm you configure for your user object, the hashed password
