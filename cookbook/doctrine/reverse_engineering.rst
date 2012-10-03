@@ -92,6 +92,13 @@ The generated ``BlogPost.dcm.xml`` metadata file looks as follows:
       </entity>
     </doctrine-mapping>
 
+.. note::
+
+    If you have ``oneToMany`` relationships between your entities,
+    you will need to edit the generated ``xml`` or ``yml`` files to add
+    a section on the specific entities for ``oneToMany`` defining the
+    ``inversedBy`` and the ``mappedBy`` pieces.
+
 Once the metadata files are generated, you can ask Doctrine to import the
 schema and build related entity classes by executing the following two commands.
 
