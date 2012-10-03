@@ -22,6 +22,8 @@ validity, further compiler passes are used to optimize the configuration
 before it is cached. For example, private services and abstract services
 are removed, and aliases are resolved.
 
+.. _components-dependency-injection-extension:
+
 Managing Configuration with Extensions
 --------------------------------------
 
@@ -238,6 +240,8 @@ but also load a secondary one only if a certain parameter is set::
     You should instead use a compiler pass which works with the full container
     after the extensions have been processed.
 
+.. _components-dependency-injection-compiler-passes:
+
 Creating a Compiler Pass
 ------------------------
 
@@ -306,6 +310,8 @@ For example, to run your custom pass after the default removal passes have been 
 
     $container = new ContainerBuilder();
     $container->addCompilerPass(new CustomCompilerPass, PassConfig::TYPE_AFTER_REMOVING);
+
+.. _components-dependency-injection-dumping:
 
 Dumping the Configuration for Performance
 -----------------------------------------
