@@ -16,9 +16,9 @@ Configuring the Request Context globally
 ----------------------------------------
 
 To configure the Request Context - which is used by the URL Generator - you can
-redefine the parameters it uses as default value to change the default host and
-scheme. Note that this does not impact URL generated via normal web requests,
-since those will override the defaults.
+redefine the parameters it uses as default values to change the default host
+(localhost) and scheme (http). Note that this does not impact URLs generated
+via normal web requests, since those will override the defaults.
 
 .. configuration-block::
 
