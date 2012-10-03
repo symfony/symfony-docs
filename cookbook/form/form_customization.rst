@@ -83,8 +83,8 @@ What are Form Themes?
 ---------------------
 
 Symfony uses form fragments - a small piece of a template that renders just
-one part of a form - to render every part of a form - - field labels, errors,
-``input`` text fields, ``select`` tags, etc
+one part of a form - to render each part of a form - field labels, errors,
+``input`` text fields, ``select`` tags, etc.
 
 The fragments are defined as blocks in Twig and as template files in PHP.
 
@@ -100,7 +100,7 @@ to render every part of a form.
 In the next section you will learn how to customize a theme by overriding
 some or all of its fragments.
 
-For example, when the widget of a ``integer`` type field is rendered, an ``input``
+For example, when the widget of an ``integer`` type field is rendered, an ``input``
 ``number`` field is generated
 
 .. configuration-block::
@@ -119,15 +119,15 @@ renders:
 
     <input type="number" id="form_age" name="form[age]" required="required" value="33" />
 
-Internally, Symfony uses the ``integer_widget`` fragment  to render the field.
+Internally, Symfony uses the ``integer_widget`` fragment to render the field.
 This is because the field type is ``integer`` and you're rendering its ``widget``
 (as opposed to its ``label`` or ``errors``).
 
 In Twig that would default to the block ``integer_widget`` from the `form_div_layout.html.twig`_
 template.
 
-In PHP it would rather be the ``integer_widget.html.php`` file located in ``FrameworkBundle/Resources/views/Form``
-folder.
+In PHP it would rather be the ``integer_widget.html.php`` file located in
+the ``FrameworkBundle/Resources/views/Form`` folder.
 
 The default implementation of the ``integer_widget`` fragment looks like this:
 
@@ -610,7 +610,7 @@ which part of the field is being customized. For example:
         <!-- src/Acme/DemoBundle/Resources/views/Form/_product_name_widget.html.php -->
 
         <div class="text_widget">
-              echo $view['form']->renderBlock('form_widget_simple') ?>
+              echo $view['form']->block('form_widget_simple') ?>
         </div>
 
 Here, the ``_product_name_widget`` fragment defines the template to use for the
