@@ -129,6 +129,7 @@
   * :doc:`/cookbook/testing/insulating_clients`
   * :doc:`/cookbook/testing/profiling`
   * :doc:`/cookbook/testing/doctrine`
+  * :doc:`/cookbook/testing/bootstrap`
 
 * :doc:`/cookbook/validation/index`
 
