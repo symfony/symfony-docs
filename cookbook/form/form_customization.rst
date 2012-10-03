@@ -135,7 +135,7 @@ The default implementation of the ``integer_widget`` fragment looks like this:
 
     .. code-block:: jinja
 
-        {# integer_widget.html.twig #}
+        {# form_div_layout.html.twig #}
         {% block integer_widget %}
             {% set type = type|default('number') %}
             {{ block('field_widget') }}
@@ -152,7 +152,7 @@ As you can see, this fragment itself renders another fragment - ``field_widget``
 
     .. code-block:: html+jinja
 
-        {# FrameworkBundle/Resources/views/Form/field_widget.html.twig #}
+        {# form_div_layout.html.twig #}
         {% block field_widget %}
             {% set type = type|default('text') %}
             <input type="{{ type }}" {{ block('widget_attributes') }} value="{{ value }}" />
