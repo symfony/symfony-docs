@@ -136,7 +136,7 @@ the registration of a listener for the ``response`` event::
 
     // example.com/web/front.php
 
-    require_once __DIR__.'/../vendor/.composer/autoload.php';
+    require_once __DIR__.'/../vendor/autoload.php';
 
     // ...
 

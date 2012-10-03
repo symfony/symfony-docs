@@ -38,7 +38,7 @@ The front controller code would become more concise::
 
     // example.com/web/front.php
 
-    require_once __DIR__.'/../vendor/.composer/autoload.php';
+    require_once __DIR__.'/../vendor/autoload.php';
 
     use Symfony\Component\HttpFoundation\Request;
 
@@ -168,7 +168,7 @@ The front controller is now only about wiring everything together::
 
     // example.com/web/front.php
 
-    require_once __DIR__.'/../vendor/.composer/autoload.php';
+    require_once __DIR__.'/../vendor/autoload.php';
 
     use Symfony\Component\HttpFoundation\Request;
 
