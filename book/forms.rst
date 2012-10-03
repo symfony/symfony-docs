@@ -214,7 +214,7 @@ controller::
             ->add('dueDate', 'date')
             ->getForm();
 
-        if ($request->getMethod() == 'POST') {
+        if ($request->isMethod('POST')) {
             $form->bind($request);
 
             if ($form->isValid()) {
@@ -1481,7 +1481,7 @@ an array of the submitted data. This is actually really easy::
             ->add('message', 'textarea')
             ->getForm();
 
-            if ($request->getMethod() == 'POST') {
+            if ($request->isMethod('POST')) {
                 $form->bind($request);
 
                 // data is an array with "name", "email", and "message" keys

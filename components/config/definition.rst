@@ -91,6 +91,20 @@ The root node itself is an array node, and has children, like the boolean
 node ``auto_connect`` and the scalar node ``default_connection``. In general:
 after defining a node, a call to ``end()`` takes you one step up in the hierarchy.
 
+Node type
+~~~~~~~~~
+
+It is possible to validate the type of a provided value by using the appropriate
+node definition. Node type are available for:
+
+* scalar
+* boolean
+* array
+* variable (no validation)
+
+and are created with ``node($name, $type)`` or their associated shortcut
+``xxxxNode($name)`` method.
+
 Array nodes
 ~~~~~~~~~~~
 
