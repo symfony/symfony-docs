@@ -192,11 +192,11 @@ this folder.
     just input ``text`` fields, you should customize the ``text_errors`` fragment.
 
     More commonly, however, you'll want to customize how errors are displayed
-    across *all* fields. You can do this by customizing the ``field_errors``
+    across *all* fields. You can do this by customizing the ``form_errors``
     fragment. This takes advantage of field type inheritance. Specifically,
-    since the ``text`` type extends from the ``field`` type, the form component
+    since the ``text`` type extends from the ``form`` type, the form component
     will first look for the type-specific fragment (e.g. ``text_errors``) before
-    falling back to its parent fragment name if it doesn't exist (e.g. ``field_errors``).
+    falling back to its parent fragment name if it doesn't exist (e.g. ``form_errors``).
 
     For more information on this topic, see :ref:`form-template-blocks`.
 
@@ -694,39 +694,54 @@ By default, the errors are rendered inside an unordered list:
     </ul>
 
 To override how errors are rendered for *all* fields, simply copy, paste
-and customize the ``field_errors`` fragment.
+and customize the ``form_errors`` fragment.
 
 .. configuration-block::
 
     .. code-block:: html+jinja
         
-        {# fields_errors.html.twig #}
-        {% block field_errors %}
+        {# form_errors.html.twig #}
+        {% block form_errors %}
             {% spaceless %}
                 {% if errors|length > 0 %}
                 <ul class="error_list">
                     {% for error in errors %}
-                        <li>{{ error.messageTemplate|trans(error.messageParameters, 'validators') }}</li>
+                        <li>{{
+                            error.messagePluralization is null
+                                ? error.messageTemplate|trans(error.messageParameters, 'validators')
+                                : error.messageTemplate|transchoice(error.messagePluralization, error.messageParameters, 'validators')
+                        }}</li>
                     {% endfor %}
                 </ul>
                 {% endif %}
             {% endspaceless %}
-        {% endblock field_errors %}
+        {% endblock form_errors %}
 
     .. code-block:: html+php
 
-        <!-- fields_errors.html.php -->
+        <!-- form_errors.html.php -->
         <?php if ($errors): ?>
             <ul class="error_list">
                 <?php foreach ($errors as $error): ?>
-                    <li><?php echo $view['translator']->trans(
-                        $error->getMessageTemplate(),
-                        $error->getMessageParameters(),
-                        'validators'
-                    ) ?></li>
+                    <li><?php
+                        if (null === $error->getMessagePluralization()) {
+                            echo $view['translator']->trans(
+                                $error->getMessageTemplate(),
+                                $error->getMessageParameters(),
+                                'validators'
+                            );
+                        } else {
+                            echo $view['translator']->transChoice(
+                                $error->getMessageTemplate(),
+                                $error->getMessagePluralization(),
+                                $error->getMessageParameters(),
+                                'validators'
+                            );
+                        }?></li>
                 <?php endforeach; ?>
             </ul>
         <?php endif ?>
+
 
 .. tip::
     See :ref:`cookbook-form-theming-methods` for how to apply this customization.
@@ -748,7 +763,7 @@ to just one field) are rendered separately, usually at the top of your form:
 To customize *only* the markup used for these errors, follow the same directions
 as above, but now call the block ``form_errors`` (Twig) / the file ``form_errors.html.php``
 (PHP). Now, when errors for the ``form`` type are rendered, your customized
-fragment will be used instead of the default ``field_errors``.
+fragment will be used instead of the default ``form_errors``.
 
 Customizing the "Form Row"
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -756,25 +771,25 @@ Customizing the "Form Row"
 When you can manage it, the easiest way to render a form field is via the
 ``form_row`` function, which renders the label, errors and HTML widget of
 a field. To customize the markup used for rendering *all* form field rows,
-override the ``field_row`` fragment. For example, suppose you want to add a
+override the ``form_row`` fragment. For example, suppose you want to add a
 class to the ``div`` element around each row:
 
 .. configuration-block::
 
     .. code-block:: html+jinja
 
-        {# field_row.html.twig #}
-        {% block field_row %}
+        {# form_row.html.twig #}
+        {% block form_row %}
             <div class="form_row">
                 {{ form_label(form) }}
                 {{ form_errors(form) }}
                 {{ form_widget(form) }}
             </div>
-        {% endblock field_row %}
+        {% endblock form_row %}
 
     .. code-block:: html+php
 
-        <!-- field_row.html.php -->
+        <!-- form_row.html.php -->
         <div class="form_row">
             <?php echo $view['form']->label($form) ?>
             <?php echo $view['form']->errors($form) ?>
@@ -788,17 +803,17 @@ Adding a "Required" Asterisk to Field Labels
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 If you want to denote all of your required fields with a required asterisk (``*``),
-you can do this by customizing the ``field_label`` fragment.
+you can do this by customizing the ``form_label`` fragment.
 
 In Twig, if you're making the form customization inside the same template as your
 form, modify the ``use`` tag and add the following:
 
 .. code-block:: html+jinja
 
-    {% use 'form_div_layout.html.twig' with field_label as base_field_label %}
+    {% use 'form_div_layout.html.twig' with form_label as base_form_label %}
 
-    {% block field_label %}
-        {{ block('base_field_label') }}
+    {% block form_label %}
+        {{ block('base_form_label') }}
 
         {% if required %}
             <span class="required" title="This field is required">*</span>
@@ -812,7 +827,7 @@ the following:
 
     {% extends 'form_div_layout.html.twig' %}
 
-    {% block field_label %}
+    {% block form_label %}
         {{ parent() }}
 
         {% if required %}
@@ -825,10 +840,13 @@ original template:
 
 .. code-block:: html+php
 
-    <!-- field_label.html.php -->
+    <!-- form_label.html.php -->
 
     <!-- original content -->
-    <label for="<?php echo $view->escape($id) ?>" <?php foreach($attr as $k => $v) { printf('%s="%s" ', $view->escape($k), $view->escape($v)); } ?>><?php echo $view->escape($view['translator']->trans($label)) ?></label>
+    <?php if ($required) { $label_attr['class'] = trim((isset($label_attr['class']) ? $label_attr['class'] : '').' required'); } ?>
+    <?php if (!$compound) { $label_attr['for'] = $id; } ?>
+    <?php if (!$label) { $label = $view['form']->humanize($name); } ?>
+    <label <?php foreach ($label_attr as $k => $v) { printf('%s="%s" ', $view->escape($k), $view->escape($v)); } ?>><?php echo $view->escape($view['translator']->trans($label, array(), $translation_domain)) ?></label>
 
     <!-- customization -->
     <?php if ($required) : ?>

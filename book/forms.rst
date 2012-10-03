@@ -1111,7 +1111,7 @@ do this, create a new template file that will store the new markup:
     .. code-block:: html+jinja
 
         {# src/Acme/TaskBundle/Resources/views/Form/fields.html.twig #}
-        {% block field_row %}
+        {% block form_row %}
         {% spaceless %}
             <div class="form_row">
                 {{ form_label(form) }}
@@ -1119,19 +1119,19 @@ do this, create a new template file that will store the new markup:
                 {{ form_widget(form) }}
             </div>
         {% endspaceless %}
-        {% endblock field_row %}
+        {% endblock form_row %}
 
     .. code-block:: html+php
 
-        <!-- src/Acme/TaskBundle/Resources/views/Form/field_row.html.php -->
+        <!-- src/Acme/TaskBundle/Resources/views/Form/form_row.html.php -->
         <div class="form_row">
             <?php echo $view['form']->label($form, $label) ?>
             <?php echo $view['form']->errors($form) ?>
             <?php echo $view['form']->widget($form, $parameters) ?>
         </div>
 
-The ``field_row`` form fragment is used when rendering most fields via the
-``form_row`` function. To tell the form component to use your new ``field_row``
+The ``form_row`` form fragment is used when rendering most fields via the
+``form_row`` function. To tell the form component to use your new ``form_row``
 fragment defined above, add the following to the top of the template that
 renders the form:
 
@@ -1157,8 +1157,8 @@ renders the form:
 
 The ``form_theme`` tag (in Twig) "imports" the fragments defined in the given
 template and uses them when rendering the form. In other words, when the
-``form_row`` function is called later in this template, it will use the ``field_row``
-block from your custom theme (instead of the default ``field_row`` block
+``form_row`` function is called later in this template, it will use the ``form_row``
+block from your custom theme (instead of the default ``form_row`` block
 that ships with Symfony).
 
 Your custom theme does not have to override all the blocks. When rendering a block
@@ -1209,10 +1209,10 @@ the `Resources/views/Form` directory of the framework bundle (`view on GitHub`_)
 Each fragment name follows the same basic pattern and is broken up into two pieces,
 separated by a single underscore character (``_``). A few examples are:
 
-* ``field_row`` - used by ``form_row`` to render most fields;
+* ``form_row`` - used by ``form_row`` to render most fields;
 * ``textarea_widget`` - used by ``form_widget`` to render a ``textarea`` field
   type;
-* ``field_errors`` - used by ``form_errors`` to render errors for a field;
+* ``form_errors`` - used by ``form_errors`` to render errors for a field;
 
 Each fragment follows the same basic pattern: ``type_part``. The ``type`` portion
 corresponds to the field *type* being rendered (e.g. ``textarea``, ``checkbox``,
@@ -1249,16 +1249,17 @@ In some cases, the fragment you want to customize will appear to be missing.
 For example, there is no ``textarea_errors`` fragment in the default themes
 provided with Symfony. So how are the errors for a textarea field rendered?
 
-The answer is: via the ``field_errors`` fragment. When Symfony renders the errors
+The answer is: via the ``form_errors`` fragment. When Symfony renders the errors
 for a textarea type, it looks first for a ``textarea_errors`` fragment before
-falling back to the ``field_errors`` fragment. Each field type has a *parent*
-type (the parent type of ``textarea`` is ``field``), and Symfony uses the
-fragment for the parent type if the base fragment doesn't exist.
+falling back to the ``form_errors`` fragment. Each field type has a *parent*
+type (the parent type of ``textarea`` is ``text``, its parent is ``form``),
+and Symfony uses the fragment for the parent type if the base fragment doesn't
+exist.
 
 So, to override the errors for *only* ``textarea`` fields, copy the
-``field_errors`` fragment, rename it to ``textarea_errors`` and customize it. To
+``form_errors`` fragment, rename it to ``textarea_errors`` and customize it. To
 override the default error rendering for *all* fields, copy and customize the
-``field_errors`` fragment directly.
+``form_errors`` fragment directly.
 
 .. tip::
 
@@ -1329,9 +1330,9 @@ to define form output.
         {% form_theme form _self %}
 
         {# make the form fragment customization #}
-        {% block field_row %}
+        {% block form_row %}
             {# custom field row output #}
-        {% endblock field_row %}
+        {% endblock form_row %}
 
         {% block content %}
             {# ... #}
