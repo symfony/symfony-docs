@@ -68,22 +68,25 @@ two connections, one for each entity manager.
     explicit about which configuration you want. If you *do* omit the name of
     the connection or entity manager, the default (i.e. ``default``) is used.
 
- 
-When working with multiple connections to create your databases::
+When working with multiple connections to create your databases:
+
+.. code-block:: bash
 
     # Play only with "default" connection
-    php app/console doctrine:database:create
+    $ php app/console doctrine:database:create
 
     # Play only with "customer" connection
-    php app/console doctrine:database:create --connection=customer
+    $ php app/console doctrine:database:create --connection=customer
 
-When working with multiple entity managers to update your schema::
+When working with multiple entity managers to update your schema:
+
+.. code-block:: bash
 
     # Play only with "default" mappings
-    php app/console doctrine:schema:update --force
+    $ php app/console doctrine:schema:update --force
 
     # Play only with "customer" mappings
-    php app/console doctrine:schema:update --force --em=customer
+    $ php app/console doctrine:schema:update --force --em=customer
 
 If you *do* omit the entity manager's name when asking for it,
 the default entity manager (i.e. ``default``) is returned::
