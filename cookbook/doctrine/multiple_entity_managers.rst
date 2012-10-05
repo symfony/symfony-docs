@@ -65,8 +65,8 @@ two connections, one for each entity manager.
 .. note::
 
     When working with multiple connections and entity managers, you should be 
-    explicit about which configuration you want. If you *do* omit the 
-    connection's or entity manager's name, the default (i.e. ``default``) is used.
+    explicit about which configuration you want. If you *do* omit the name of
+    the connection or entity manager, the default (i.e. ``default``) is used.
 
  
 When working with multiple connections to create your databases::
