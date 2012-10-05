@@ -137,8 +137,8 @@ parameter.ini by referencing the database-related parameters defined there:
             class: PDO
             arguments:
                 - "mysql:dbname=%database_name%"
-                - %database_user%
-                - %database_password%
+                - "%database_user%"
+                - "%database_password%"
 
     .. code-block:: xml
 

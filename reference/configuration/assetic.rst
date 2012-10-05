@@ -12,12 +12,12 @@ Full Default Configuration
     .. code-block:: yaml
 
         assetic:
-            debug:                %kernel.debug%
+            debug:                "%kernel.debug%"
             use_controller:
-                enabled:              %kernel.debug%
+                enabled:              "%kernel.debug%"
                 profiler:             false
-            read_from:            %kernel.root_dir%/../web
-            write_to:             %assetic.read_from%
+            read_from:            "%kernel.root_dir%/../web"
+            write_to:             "%assetic.read_from%"
             java:                 /usr/bin/java
             node:                 /usr/bin/node
             ruby:                 /usr/bin/ruby

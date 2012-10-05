@@ -170,7 +170,7 @@ Now we make the user provider available as a service.
             
         services:
             webservice_user_provider:
-                class: %webservice_user_provider.class%
+                class: "%webservice_user_provider.class%"
     
     .. code-block:: xml
 
