@@ -33,7 +33,7 @@ The following configuration code shows how you can configure two entity managers
                         dbname:   %database_name%
                         user:     %database_user%
                         password: %database_password%
-                        charset:  UTF8                
+                        charset:  UTF8
                     customer:
                         driver:   %database_driver2%
                         host:     %database_host2%
@@ -59,11 +59,25 @@ The following configuration code shows how you can configure two entity managers
 In this case, you've defined two entity managers and called them ``default``
 and ``customer``. The ``default`` entity manager manages entities in the
 ``AcmeDemoBundle`` and ``AcmeStoreBundle``, while the ``customer`` entity
-manager manages entities in the ``AcmeCustomerBundle``.
+manager manages entities in the ``AcmeCustomerBundle``. You've also defined
+two connections, one for each entity manager.
 
-When working with multiple entity managers, you should be explicit about which
-entity manager you want. If you *do* omit the entity manager's name when you
-update your schema, the default (i.e. ``default``) is used::
+.. note::
+
+    When working with multiple connections and entity managers, you should be 
+    explicit about which configuration you want. If you *do* omit the 
+    connection's or entity manager's name, the default (i.e. ``default``) is used.
+
+ 
+When working with multiple connections to create your databases::
+
+    # Play only with "default" connection
+    php app/console doctrine:database:create
+
+    # Play only with "customer" connection
+    php app/console doctrine:database:create --connection=customer
+
+When working with multiple entity managers to update your schema::
 
     # Play only with "default" mappings
     php app/console doctrine:schema:update --force
