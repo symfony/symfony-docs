@@ -4,49 +4,54 @@
 How to deploy a Symfony2 application
 ====================================
 
-There are several ways you can deploy a Symfony2 application:
+There are several ways you can deploy a Symfony2 application.
 
-* One way is moving the files manually or via ftp if you don't use versioning
-  (e.g. git);
+Let's start with a few basic examples of where developers typically begin with their
+deployment strategies, and build on things from there.
 
-* If you use versioning you could still move things manually cloning or fetching
-  your repository from the final server folder location. However it is advised
-  you make use of better tools especially in the case where you have access
-  capabilities such as enough permissions in a virtual private server or similar system;
+* The most basic way of deploying an application is copying the files manually via ftp
+  (or similar method). This is one of the worst methods because of the complete lack of
+  control you have over the system as the upgrade progresses.
 
-* Some projects are really large so they make use of more established tools for
-  deploying not only the files but really deploy a OS or package distribution
-  containing the sf2 project inside;
+* When using a source code versioning tool (such as git or subversion), you can
+  simplify this by instead having your live installation also be a copy of your repository,
+  so when you're ready to upgrade it is as simple as fetching the latest updates from
+  your source control system. This way still causes problems when you have to incorporate
+  database migrations, however. It does improve upon the prior method, however, as only
+  the files that were changed would need to be updated, and that means your application
+  will be in an unstable state for far less time.
 
-* Another important thing to keep in mind is the handling of dependencies.
-  One can use composer to fetch dependencies or include them all together with the
-  repository. Some tools would handle this for you and even perhaps avoid fetching
-  dependencies when a simple copy would do;
+* There are tools to help ease the pains of deployment, and their use is becoming more widespread.
+  Now we even have a few tools which have been specifically tailored to the requirements of
+  Symfony2, that take special care to ensure that everything before, during, and after a deployment
+  has gone correctly, and is able to halt (and roll back, if necessary) the process should an error
+  occur.
 
-* Do remember that deployment process includes all the setup and configuring, warming up caches,
-  cleaning cache, all configuration environment required, setting of permissions, run of
-  cron jobs, etc. All these before, during and after the deployment should be kept in
-  mind to properly deploy a working Symfony2 application.
-
-Deployment of large applications require care. The use of staging, testing, QA,
+Deployment of an application require care. The use of staging, testing, QA,
 continuous integration, database migrations and capability to roll back in case of failure
-is strongly advised. There are simple and more complex tools and one can make
-the deployment as easy or sophisticated. Here we present only a few popular on the map:
+are all strongly advised. There are simple and more complex tools and one can make
+the deployment as easy (or sophisticated) as your environment requires.
+
+Don't forget that deploying your application also involves updating any dependency (via
+composer), migrating your database, and clearing your cache. You may even need permission
+management, and the ability to add, edit, or remove cron jobs.
+
+Next, we will take a look at some of the more popular options.
 
 The Tools
 ---------
 
 `Capifony`_:
 
-    This tool is a deployment recipe on top of capistrano for Symfony2 project
+    This tool is a deployment recipe on top of Capistrano for Symfony2 project
 
 `Magallanes`_:
 
-    This tool is probably the one top php deployment tool capistrano-like for deploying any kind of php project
+    This tool is probably the one top php deployment tool Capistrano-like for deploying any kind of php project
 
 `sf2debpkg`_:
 
-    This tool helps you build a native debian package for your symfony project
+    This tool helps you build a native Debian package for your symfony project
 
 Bundles:
 
@@ -54,11 +59,11 @@ Bundles:
 
 Basic scripting:
 
-    You can of course use shell, `ant`_, or other build tool to script the deploying of your project
+    You can of course use shell, `Ant`_, or other build tool to script the deploying of your project
 
 Deployment services:
 
-    Some services require a single file in project's git repository like `pagodabox`_ to handle all deployment
+    Some services require a single file in project's git repository like `PagodaBox`_ to handle all deployment
 
 
 .. tip::
@@ -67,7 +72,7 @@ Deployment services:
 
 .. _`Capifony`: https://capifony.org/
 .. _`sf2debpkg`: https://github.com/liip/sf2debpkg
-.. _`ant`: http://blog.sznapka.pl/deploying-Symfony2-applications-with-ant
-.. _`pagodabox`: https://github.com/jmather/pagoda-symfony-sonata-distribution/blob/master/Boxfile
+.. _`Ant`: http://blog.sznapka.pl/deploying-symfony2-applications-with-ant
+.. _`PagodaBox`: https://github.com/jmather/pagoda-symfony-sonata-distribution/blob/master/Boxfile
 .. _`Magallanes`: https://github.com/andres-montanez/Magallanes
 .. _`listings`: http://knpbundles.com/search?q=deploy
