@@ -108,7 +108,7 @@ may need to modify the paths inside these files::
         # ...
         assetic:
             # ...
-            read_from: %kernel.root_dir%/../../public_html
+            read_from: "%kernel.root_dir%/../../public_html"
 
     Now you just need to dump the assets again and your application should 
     work:

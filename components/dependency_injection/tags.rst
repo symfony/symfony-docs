@@ -44,7 +44,7 @@ Then, define the chain as a service:
 
         services:
             acme_mailer.transport_chain:
-                class: %acme_mailer.transport_chain.class%
+                class: "%acme_mailer.transport_chain.class%"
 
     .. code-block:: xml
 

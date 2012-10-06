@@ -140,7 +140,7 @@ the ORM resolves to:
             # the standard distribution overrides this to be true in debug, false otherwise
             auto_generate_proxy_classes: false
             proxy_namespace: Proxies
-            proxy_dir: %kernel.cache_dir%/doctrine/orm/Proxies
+            proxy_dir: "%kernel.cache_dir%/doctrine/orm/Proxies"
             default_entity_manager: default
             metadata_cache_driver: array
             query_cache_driver: array
@@ -236,12 +236,12 @@ can configure. The following block shows all possible configuration keys:
                 driver_class:         MyNamespace\MyDriverImpl
                 options:
                     foo: bar
-                path:                 %kernel.data_dir%/data.sqlite
+                path:                 "%kernel.data_dir%/data.sqlite"
                 memory:               true
                 unix_socket:          /tmp/mysql.sock
                 wrapper_class:        MyDoctrineDbalConnectionWrapper
                 charset:              UTF8
-                logging:              %kernel.debug%
+                logging:              "%kernel.debug%"
                 platform_service:     MyOwnDatabasePlatformService
                 mapping_types:
                     enum: string
