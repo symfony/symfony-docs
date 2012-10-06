@@ -35,7 +35,7 @@ system, which lets you isolate or reuse the value:
     # app/config/config.yml
     twig:
         globals:
-            ga_tracking: %ga_tracking%
+            ga_tracking: "%ga_tracking%"
 
 The same variable is available exactly as before.
 

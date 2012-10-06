@@ -186,7 +186,7 @@ straightforward. Parameters make defining services more organized and flexible:
 
         services:
             my_mailer:
-                class:        %my_mailer.class%
+                class:        "%my_mailer.class%"
                 arguments:    [%my_mailer.transport%]
 
     .. code-block:: xml
@@ -358,7 +358,7 @@ directories don't exist, create them.
 
         services:
             my_mailer:
-                class:        %my_mailer.class%
+                class:        "%my_mailer.class%"
                 arguments:    [%my_mailer.transport%]
 
     .. code-block:: xml
@@ -594,7 +594,7 @@ the service container gives us a much more appealing option:
             my_mailer:
                 # ...
             newsletter_manager:
-                class:     %newsletter_manager.class%
+                class:     "%newsletter_manager.class%"
                 arguments: [@my_mailer]
 
     .. code-block:: xml
@@ -681,7 +681,7 @@ Injecting the dependency by the setter method just needs a change of syntax:
             my_mailer:
                 # ...
             newsletter_manager:
-                class:     %newsletter_manager.class%
+                class:     "%newsletter_manager.class%"
                 calls:
                     - [ setMailer, [ @my_mailer ] ]
 
@@ -746,7 +746,7 @@ it exists and do nothing if it doesn't:
 
         services:
             newsletter_manager:
-                class:     %newsletter_manager.class%
+                class:     "%newsletter_manager.class%"
                 arguments: [@?my_mailer]
 
     .. code-block:: xml
@@ -845,7 +845,7 @@ Configuring the service container is easy:
 
         services:
             newsletter_manager:
-                class:     %newsletter_manager.class%
+                class:     "%newsletter_manager.class%"
                 arguments: [@mailer, @templating]
 
     .. code-block:: xml
