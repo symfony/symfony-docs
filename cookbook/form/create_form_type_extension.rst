@@ -1,7 +1,7 @@
 .. index::
-   single: Form; Field type extension
+   single: Form; Form type extension
 
-How to Create a Field Type Extension
+How to Create a Form Type Extension
 ====================================
 
 :doc:`Custom form field types<create_custom_field_type>` are great when
@@ -9,25 +9,24 @@ you need field types with a specific purpose, such as a gender selector,
 or a VAT number input.
 
 But sometimes, you don't really need to add new field types - you want
-to add features on top of existing field types. This is where field type
+to add features on top of existing types. This is where form type
 extensions come in.
 
-Field type extensions have 2 main use cases:
+Form type extensions have 2 main use cases:
 
-#. You want to add a **generic feature to several field types** (such as
+#. You want to add a **generic feature to several types** (such as
    adding a "help" text to every field type)
-#. You want to add a **specific feature to a single field type** (such
+#. You want to add a **specific feature to a single type** (such
    as adding a "download" feature to the "file" field type)
 
 In both those cases, it might be possible to achieve your goal with custom
-form rendering, or custom form field types. But using field type extensions
+form rendering, or custom form field types. But using form type extensions
 can be cleaner (by limiting the amount of business logic in templates)
 and more flexible (you can add several type extensions to a single form
 type).
 
-Field type extensions can achieve most of what custom field types can do,
-but instead of being field types of their own, **they plug into existing
-field types**.
+Form type extensions can achieve most of what custom field types can do,
+but instead of being field types of their own, **they plug into existing types**.
 
 Imagine that you manage a ``Media`` entity, and that each media is associated
 to a file. Your ``Media`` form uses a file type, but when editing the entity,
@@ -37,14 +36,14 @@ input.
 You could of course do this by customizing how this field is rendered in a template. But field
 type extensions allow you to do this in a nice DRY fashion.
 
-Defining the Field Type Extension
+Defining the Form Type Extension
 ---------------------------------
 
-Your first task will be to create the field type extension class. Let's
+Your first task will be to create the form type extension class. Let's
 call it ``ImageTypeExtension``. You will store the class in a file called
 ``ImageTypeExtension.php``, in the ``<BundleName>\Form\Type`` directory.
 
-When creating a field type extension, you can either implement the
+When creating a form type extension, you can either implement the
 :class:`Symfony\\Component\\Form\\FormTypeExtensionInterface` interface,
 or extend the :class:`Symfony\\Component\\Form\\AbstractTypeExtension`
 class. Most of the time, you will end up extending the abstract class.
@@ -95,7 +94,7 @@ For more information on what those methods do, you can refer to the
 :doc:`Creating Custom Field Types</cookbook/form/create_custom_field_type>`
 cookbook article.
 
-Registering your Field Type Extension as a Service
+Registering your Form Type Extension as a Service
 --------------------------------------------------
 
 The next step is to make Symfony aware of your extension. All you
@@ -183,7 +182,7 @@ database).
             return $webPath;
         }
 
-Your field type extension class will need to do two things:
+Your form type extension class will need to do two things:
 
 1) Override the ``setDefaultOptions`` method in order to add an image_path
    option
@@ -283,7 +282,7 @@ You need to override the ``file_widget`` block:
     block. See :ref:`cookbook-form-customization-form-themes` for more
     information.
 
-Using the Field Type Extension
+Using the Form Type Extension
 ------------------------------
 
 From now on, when adding a field of type ``file`` in your form, you can
