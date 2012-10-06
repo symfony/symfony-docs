@@ -17,7 +17,8 @@ that Task, right inside the same form.
     of this tutorial that really care about "persistence".
     
     If you *are* using Doctrine, you'll need to add the Doctrine metadata,
-    including the ``ManyToMany`` on the Task's ``tags`` property.
+    including the ``ManyToMany`` association mapping definition on the Task's
+    ``tags`` property.
 
 Let's start there: suppose that each ``Task`` belongs to multiple ``Tags``
 objects. Start by creating a simple ``Task`` class::
