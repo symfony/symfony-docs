@@ -23,8 +23,8 @@ There are several ways you can deploy a symfony2 application:
   repository. Some tools would handle this for you and even perhaps avoid fetching
   dependencies when a simple copy would do;
 
-* Remember deployment process includes all the setup and configuring, warming up caches,
-  cleaning cache, all configuring environment required, setting of permissions, run of
+* Do remember that deployment process includes all the setup and configuring, warming up caches,
+  cleaning cache, all configuration environment required, setting of permissions, run of
   cron jobs, etc. All these before, during and after the deployment should be kept in
   mind to properly deploy a working symfony2 application.
 
