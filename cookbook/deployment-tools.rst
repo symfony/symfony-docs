@@ -7,21 +7,21 @@ How to deploy a symfony2 application
 There are several ways you can deploy a symfony2 application:
 
 * One way is moving the files manually or via ftp if you don't use versioning
-  (e.g. git).
+  (e.g. git);
 
 * If you use versioning you could still move things manually cloning or fetching
   your repository from the final server folder location. However it is advised
   you make use of better tools especially in the case where you have access
-  capabilities such as enough permissions in a virtual private server or similar system.
+  capabilities such as enough permissions in a virtual private server or similar system;
 
 * Some projects are really large so they make use of more established tools for
   deploying not only the files but really deploy a OS or package distribution
-  containing the sf2 project inside.
+  containing the sf2 project inside;
 
 * Another important thing to keep in mind is the handling of dependencies.
   One can use composer to fetch dependencies or include them all together with the
   repository. Some tools would handle this for you and even perhaps avoid fetching
-  dependencies when a simple copy would do.
+  dependencies when a simple copy would do;
 
 * Remember deployment process includes all the setup and configuring, warming up caches,
   cleaning cache, all configuring environment required, setting of permissions, run of
