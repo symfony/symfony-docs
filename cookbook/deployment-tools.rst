@@ -43,36 +43,39 @@ The Tools
 
 `Capifony`_:
 
-    This tool is a deployment recipe on top of Capistrano for Symfony2 project
+    This tool provides a specialized set of tools on top of Capistrano, tailored specifically to symfony and Symfony2 projects.
 
 `Magallanes`_:
 
-    This tool is probably the one top php deployment tool Capistrano-like for deploying any kind of php project
+    This Capistrano-like deployment tool is built in PHP, and may be easier for PHP developers to extend for their needs.
 
 `sf2debpkg`_:
 
-    This tool helps you build a native Debian package for your symfony project
+    This tool helps you build a native Debian package for your Symfony2 project.
 
 Bundles:
 
-    There are `listings`_ of bundles for deployment you can search and use
+    There are many `bundles that add deployment features`_ directly into your Symfony2 console.
 
 Basic scripting:
 
-    You can of course use shell, `Ant`_, or other build tool to script the deploying of your project
+    You can of course use shell, `Ant`_, or any other build tool to script the deploying of your project.
 
-Deployment services:
+Platform as a Service Providers:
 
-    Some services require a single file in project's git repository like `PagodaBox`_ to handle all deployment
+    PaaS is a relatively new way to deploy your application. Typically a PaaS will use a single configuration file
+    in your project's root directory to detrmine how to build an environment on the fly that supports your software.
+    One provider with confirmed Symfony2 support is `PagodaBox`_.
 
 
 .. tip::
 
-    Consult your symfony community at IRC channel #symfony for more fresh ideas or common problems.
+    Looking for more? Talk to the community on the `Symfony IRC channel`_ #symfony (on freenode) for more information.
 
 .. _`Capifony`: https://capifony.org/
 .. _`sf2debpkg`: https://github.com/liip/sf2debpkg
 .. _`Ant`: http://blog.sznapka.pl/deploying-symfony2-applications-with-ant
 .. _`PagodaBox`: https://github.com/jmather/pagoda-symfony-sonata-distribution/blob/master/Boxfile
 .. _`Magallanes`: https://github.com/andres-montanez/Magallanes
-.. _`listings`: http://knpbundles.com/search?q=deploy
+.. _`bundles that add deployment features`: http://knpbundles.com/search?q=deploy
+.. _`Symfony IRC channel`: http://webchat.freenode.net/?channels=symfony
