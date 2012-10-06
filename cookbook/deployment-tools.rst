@@ -1,10 +1,10 @@
 .. index::
    single: Deployment Tools
 
-How to deploy a symfony2 application
+How to deploy a Symfony2 application
 ====================================
 
-There are several ways you can deploy a symfony2 application:
+There are several ways you can deploy a Symfony2 application:
 
 * One way is moving the files manually or via ftp if you don't use versioning
   (e.g. git);
@@ -26,7 +26,7 @@ There are several ways you can deploy a symfony2 application:
 * Do remember that deployment process includes all the setup and configuring, warming up caches,
   cleaning cache, all configuration environment required, setting of permissions, run of
   cron jobs, etc. All these before, during and after the deployment should be kept in
-  mind to properly deploy a working symfony2 application.
+  mind to properly deploy a working Symfony2 application.
 
 Deployment of large applications require care. The use of staging, testing, QA,
 continuous integration, database migrations and capability to roll back in case of failure
@@ -38,7 +38,7 @@ The Tools
 
 `Capifony`_:
 
-    This tool is a deployment recipe on top of capistrano for symfony2 project
+    This tool is a deployment recipe on top of capistrano for Symfony2 project
 
 `Magallanes`_:
 
@@ -63,11 +63,11 @@ Deployment services:
 
 .. tip::
 
-    Consult your symfony community at IRC channel #symfony2 for more fresh ideas or common problems.
+    Consult your symfony community at IRC channel #symfony for more fresh ideas or common problems.
 
 .. _`Capifony`: https://capifony.org/
 .. _`sf2debpkg`: https://github.com/liip/sf2debpkg
-.. _`ant`: http://blog.sznapka.pl/deploying-symfony2-applications-with-ant
+.. _`ant`: http://blog.sznapka.pl/deploying-Symfony2-applications-with-ant
 .. _`pagodabox`: https://github.com/jmather/pagoda-symfony-sonata-distribution/blob/master/Boxfile
 .. _`Magallanes`: https://github.com/andres-montanez/Magallanes
 .. _`listings`: http://knpbundles.com/search?q=deploy
