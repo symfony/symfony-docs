@@ -59,12 +59,12 @@ have a ``Symfony/`` directory that looks like this:
 
     .. code-block:: bash
 
-        $ composer.phar create-project symfony/framework-standard-edition path/to/install 2.1.x-dev
+        $ composer.phar create-project symfony/framework-standard-edition path/to/install dev-master
 
         # remove the Git history
         $ rm -rf .git
     
-    For an exact version, replace `2.1.x-dev` with the latest Symfony version
+    For an exact version, replace `dev-master` with the latest Symfony version
     (e.g. 2.1.1). For details, see the `Symfony Installation Page`_
 
 .. tip::
