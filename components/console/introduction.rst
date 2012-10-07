@@ -257,7 +257,7 @@ Displaying a Progress Bar
 .. versionadded:: 2.2
     The ``progress`` helper was added in Symfony 2.2.
 
-When executing longer-running commands, it may be helpful to to show progress
+When executing longer-running commands, it may be helpful to show progress
 information, which updates as your command runs:
 
 .. image:: /images/components/console/progress.png
@@ -283,9 +283,9 @@ of different levels of verbosity. Each of these displays different possible
 items - like percentage completion, a moving progress bar, or current/total
 information (e.g. 10/50)::
 
-    $progress->setFormat(ProgressHelper::QUIET);
-    $progress->setFormat(ProgressHelper::NORMAL);
-    $progress->setFormat(ProgressHelper::VERBOSE);
+    $progress->setFormat(ProgressHelper::FORMAT_QUIET);
+    $progress->setFormat(ProgressHelper::FORMAT_NORMAL);
+    $progress->setFormat(ProgressHelper::FORMAT_VERBOSE);
     $progress->setFormat(ProgressHelper::FORMAT_QUIET_NOMAX);
     // the default value
     $progress->setFormat(ProgressHelper::FORMAT_NORMAL_NOMAX);
@@ -314,7 +314,7 @@ To see other available options, check the API documentation for
         $progress->start($output, 500);
         $i = 0;
         while ($i++ < 50000) {
-            // do some work
+            // ... do some work
 
             // advance every 100 iterations
             if ($i % 100 == 0) {
