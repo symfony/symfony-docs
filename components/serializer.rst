@@ -1,5 +1,5 @@
 .. index::
-   single: Serializer 
+   single: Serializer
    single: Components; Serializer
 
 The Serializer Component
@@ -15,7 +15,7 @@ simple schema.
 
 As you can see in the picture above, an array is used as a man in
 the middle. This way, Encoders will only deal with turning specific
-**formats** into **arrays** and vice versa. The same way, Normalizers 
+**formats** into **arrays** and vice versa. The same way, Normalizers
 will deal with turning specific **objects** into **arrays** and vice versa.
 
 Serialization is a complicated topic, and while this component may not work
@@ -34,7 +34,7 @@ You can install the component in many different ways:
 Usage
 -----
 
-Using the Serializer component is really simple. We just need to set up
+Using the Serializer component is really simple. You just need to set up
 the :class:`Symfony\\Component\\Serializer\\Serializer` specifying
 which Encoders and Normalizer are going to be available::
 
@@ -84,7 +84,7 @@ exists in our project::
         }
     }
 
-Now, if we want to serialize this object into JSON, we only need to
+Now, if you want to serialize this object into JSON, you only need to
 use the Serializer service created before::
 
     $person = new Acme\Person();
