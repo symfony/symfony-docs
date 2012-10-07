@@ -561,7 +561,7 @@ by defining a ``default_locale`` for the framework:
 The Locale and the URL
 ~~~~~~~~~~~~~~~~~~~~~~
 
-Since you can store the locale of the user is in the session, it may be tempting
+Since you can store the locale of the user in the session, it may be tempting
 to use the same URL to display a resource in many different languages based
 on the user's locale. For example, ``http://www.example.com/contact`` could
 show content in English for one user and French for another user. Unfortunately,
