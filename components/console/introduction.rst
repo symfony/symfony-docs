@@ -42,8 +42,17 @@ and add the following to it::
             $this
                 ->setName('demo:greet')
                 ->setDescription('Greet someone')
-                ->addArgument('name', InputArgument::OPTIONAL, 'Who do you want to greet?')
-                ->addOption('yell', null, InputOption::VALUE_NONE, 'If set, the task will yell in uppercase letters')
+                ->addArgument(
+                    'name',
+                    InputArgument::OPTIONAL,
+                    'Who do you want to greet?'
+                )
+                ->addOption(
+                   'yell',
+                   null,
+                   InputOption::VALUE_NONE,
+                   'If set, the task will yell in uppercase letters'
+                )
             ;
         }
 
@@ -69,7 +78,7 @@ an ``Application`` and adds commands to it::
 
     #!/usr/bin/env php
     # app/console
-    <?php 
+    <?php
 
     use Acme\DemoBundle\Command\GreetCommand;
     use Symfony\Component\Console\Application;
@@ -141,8 +150,16 @@ and make the ``name`` argument required::
 
     $this
         // ...
-        ->addArgument('name', InputArgument::REQUIRED, 'Who do you want to greet?')
-        ->addArgument('last_name', InputArgument::OPTIONAL, 'Your last name?');
+        ->addArgument(
+            'name',
+            InputArgument::REQUIRED,
+            'Who do you want to greet?'
+        )
+        ->addArgument(
+            'last_name',
+            InputArgument::OPTIONAL,
+            'Your last name?'
+        );
 
 You now have access to a ``last_name`` argument in your command::
 
@@ -178,7 +195,13 @@ how many times in a row the message should be printed::
 
     $this
         // ...
-        ->addOption('iterations', null, InputOption::VALUE_REQUIRED, 'How many times should the message be printed?', 1);
+        ->addOption(
+            'iterations',
+            null,
+            InputOption::VALUE_REQUIRED,
+            'How many times should the message be printed?',
+            1
+        );
 
 Next, use this in the command to print the message multiple times:
 
@@ -225,7 +248,13 @@ You can combine VALUE_IS_ARRAY with VALUE_REQUIRED or VALUE_OPTIONAL like this:
 
     $this
         // ...
-        ->addOption('iterations', null, InputOption::VALUE_REQUIRED | InputOption::VALUE_IS_ARRAY, 'How many times should the message be printed?', 1);
+        ->addOption(
+            'iterations',
+            null,
+            InputOption::VALUE_REQUIRED | InputOption::VALUE_IS_ARRAY,
+            'How many times should the message be printed?',
+            1
+        );
 
 Asking the User for Information
 -------------------------------
@@ -236,7 +265,11 @@ to confirm an action before actually executing it. Add the following to your
 command::
 
     $dialog = $this->getHelperSet()->get('dialog');
-    if (!$dialog->askConfirmation($output, '<question>Continue with this action?</question>', false)) {
+    if (!$dialog->askConfirmation(
+            $output,
+            '<question>Continue with this action?</question>',
+            false
+        )) {
         return;
     }
 
@@ -249,7 +282,11 @@ You can also ask questions with more than a simple yes/no answer. For example,
 if you needed to know the name of something, you might do the following::
 
     $dialog = $this->getHelperSet()->get('dialog');
-    $name = $dialog->ask($output, 'Please enter the name of the widget', 'foo');
+    $name = $dialog->ask(
+        $output,
+        'Please enter the name of the widget',
+        'foo'
+    );
 
 Displaying a Progress Bar
 -------------------------
@@ -356,7 +393,7 @@ method returns what would have been displayed during a normal call from the
 console.
 
 You can test sending arguments and options to the command by passing them
-as an array to the :method:`Symfony\\Component\\Console\\Tester\\CommandTester::getDisplay`
+as an array to the :method:`Symfony\\Component\\Console\\Tester\\CommandTester::execute`
 method::
 
     use Symfony\Component\Console\Application;

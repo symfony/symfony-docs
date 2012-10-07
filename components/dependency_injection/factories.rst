@@ -41,8 +41,8 @@ class:
             newsletter_factory.class: NewsletterFactory
         services:
             newsletter_manager:
-                class:          %newsletter_manager.class%
-                factory_class:  %newsletter_factory.class%
+                class:          "%newsletter_manager.class%"
+                factory_class:  "%newsletter_factory.class%"
                 factory_method: get 
 
     .. code-block:: xml
@@ -92,9 +92,9 @@ factory itself as a service:
             newsletter_factory.class: NewsletterFactory
         services:
             newsletter_factory:
-                class:            %newsletter_factory.class%
+                class:            "%newsletter_factory.class%"
             newsletter_manager:
-                class:            %newsletter_manager.class%
+                class:            "%newsletter_manager.class%"
                 factory_service:  newsletter_factory
                 factory_method:   get 
 
@@ -156,9 +156,9 @@ in the previous example takes the ``templating`` service as an argument:
             newsletter_factory.class: NewsletterFactory
         services:
             newsletter_factory:
-                class:            %newsletter_factory.class%
+                class:            "%newsletter_factory.class%"
             newsletter_manager:
-                class:            %newsletter_manager.class%
+                class:            "%newsletter_manager.class%"
                 factory_service:  newsletter_factory
                 factory_method:   get
                 arguments:
