@@ -285,7 +285,7 @@ method returns what would have been displayed during a normal call from the
 console.
 
 You can test sending arguments and options to the command by passing them
-as an array to the :method:`Symfony\\Component\\Console\\Tester\\CommandTester::getDisplay`
+as an array to the :method:`Symfony\\Component\\Console\\Tester\\CommandTester::execute`
 method::
 
     use Symfony\Component\Console\Application;
