@@ -37,7 +37,8 @@ the cache can tell if it is still fresh or that its contents should be regenerat
         $resources = array();
 
         foreach ($yamlUserFiles as $yamlUserFile) {
-            // see the previous article "Loading resources" to see where $delegatingLoader comes from
+            // see the previous article "Loading resources" to
+            // see where $delegatingLoader comes from
             $delegatingLoader->load($yamlUserFile);
             $resources[] = new FileResource($yamlUserFile);
         }
