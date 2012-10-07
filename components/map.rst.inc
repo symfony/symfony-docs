@@ -28,6 +28,7 @@
   * :doc:`/components/dependency_injection/factories`
   * :doc:`/components/dependency_injection/parentservices`
   * :doc:`/components/dependency_injection/advanced`
+  * :doc:`/components/dependency_injection/workflow`
 
 * **DOM Crawler**
 
