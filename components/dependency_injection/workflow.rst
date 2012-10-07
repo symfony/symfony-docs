@@ -24,7 +24,7 @@ Working with cached Container
 Before building it, the kernel checks to see if a cached version of the container
 exists. The ``HttpKernel`` has a debug setting and if this is false, the
 cached version is used if it exists. If debug is true then the kernel
-:doc:`checks to see if configuration is fresh<components/config/caching>`
+:doc:`checks to see if configuration is fresh</components/config/caching>`
 and if it is, the cached version of the container is. If not then the container
 is built from the application-level configuration and the bundles's extension
 configuration.
@@ -51,11 +51,11 @@ Bundle-level Configuration with Extensions
 
 By convention, each bundle contains an Extension class which is in the bundle's
 ``DependencyInjection`` directory. These are registered with the ``ContainerBuilder``
-when the kernel is booted. When the ``ContainerBuilder`` is :doc:`compiled<components/dependency-injection/compilation>`,
+when the kernel is booted. When the ``ContainerBuilder`` is :doc:`/compiled<components/dependency-injection/compilation>`,
 the application-level configuration relevant to the bundle's extension is
 passed to the Extension which also usually loads its own config file(s), typically from the bundle's
 ``Resources/config`` directory. The application-level config is usually processed
-with a :doc:`Configuration object<components/config/definition>` also stored
+with a :doc:`Configuration object</components/config/definition>` also stored
 in the bundle's ``DependencyInjection`` directory.
 
 Compiler passes to allow Interaction between Bundles
