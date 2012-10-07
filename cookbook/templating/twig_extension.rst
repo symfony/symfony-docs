@@ -26,9 +26,6 @@ As an example we will create a price filter to format a given number into price:
     // src/Acme/DemoBundle/Twig/AcmeExtension.php
     namespace Acme\DemoBundle\Twig;
 
-    use Twig_Extension;
-    use Twig_Filter_Method;
-
     class AcmeExtension extends \Twig_Extension
     {
         public function getFilters()
