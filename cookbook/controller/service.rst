@@ -35,6 +35,19 @@ you'll interact directly with the services that you need. Fortunately, this is
 usually pretty easy and the base ``Controller`` class itself is a great source
 on how to perform many common tasks.
 
+.. note::
+
+    Specifying a controller as a service takes a little bit more work. The
+    primary advantage is that the entire controller or any services passed to
+    the controller can be modified via the service container configuration.
+    This is especially useful when developing an open-source bundle or any
+    bundle that will be used in many different projects. So, even if you don't
+    specify your controllers as services, you'll likely see this done in some
+    open-source Symfony2 bundles.
+
+Using Annotation Routing
+------------------------
+
 When using annotations to setup routing when using a controller defined as a
 service, you need to specify your service as follows::
 
@@ -48,17 +61,5 @@ service, you need to specify your service as follows::
 
 In this example, ``my_bundle.annot_controller`` should be the id of the
 ``AnnotController`` instance defined in the service container. This is
-documented in the :doc:`bundles/SensioFrameworkExtraBundle/annotations/routing`
+documented in the :doc:`/bundles/SensioFrameworkExtraBundle/annotations/routing`
 chapter.
-
-Read more
-
-.. note::
-
-    Specifying a controller as a service takes a little bit more work. The
-    primary advantage is that the entire controller or any services passed to
-    the controller can be modified via the service container configuration.
-    This is especially useful when developing an open-source bundle or any
-    bundle that will be used in many different projects. So, even if you don't
-    specify your controllers as services, you'll likely see this done in some
-    open-source Symfony2 bundles.
