@@ -251,6 +251,77 @@ if you needed to know the name of something, you might do the following::
     $dialog = $this->getHelperSet()->get('dialog');
     $name = $dialog->ask($output, 'Please enter the name of the widget', 'foo');
 
+Displaying a Progress Bar
+-------------------------
+
+.. versionadded:: 2.2
+    The ``progress`` helper was added in Symfony 2.2.
+
+When executing longer-running commands, it may be helpful to show progress
+information, which updates as your command runs:
+
+.. image:: /images/components/console/progress.png
+
+To display progress details, use the :class:`Symfony\\Component\\Console\\Helper\\ProgressHelper`,
+pass it a total number of units, and advance the progress as your command executes::
+
+    $progress = $app->getHelperSet()->get('progress');
+
+    $progress->start($output, 50);
+    $i = 0;
+    while ($i++ < 50) {
+        // do some work
+
+        // advance the progress bar 1 unit
+        $progress->advance();
+    } 
+
+    $progress->finish();
+
+The appearance of the progress output can be customized as well, with a number
+of different levels of verbosity. Each of these displays different possible
+items - like percentage completion, a moving progress bar, or current/total
+information (e.g. 10/50)::
+
+    $progress->setFormat(ProgressHelper::FORMAT_QUIET);
+    $progress->setFormat(ProgressHelper::FORMAT_NORMAL);
+    $progress->setFormat(ProgressHelper::FORMAT_VERBOSE);
+    $progress->setFormat(ProgressHelper::FORMAT_QUIET_NOMAX);
+    // the default value
+    $progress->setFormat(ProgressHelper::FORMAT_NORMAL_NOMAX);
+    $progress->setFormat(ProgressHelper::FORMAT_VERBOSE_NOMAX);
+
+You can also control the different characters and the width used for the
+progress bar::
+
+    // the finished part of the bar
+    $progress->setBarCharacter('<comment>=</comment>');
+    // the unfinished part of the bar
+    $progress->setEmptyBarCharacter(' ');
+    $progress->setProgressChar('|');
+    $progress->setBarWidth(50);
+
+To see other available options, check the API documentation for
+:class:`Symfony\\Component\\Console\\Helper\\ProgressHelper`.
+
+.. caution::
+
+    For performance reasons, be careful to not set the total number of steps
+    to a high number. For example, if you're iterating over a large number
+    of items, consider a smaller "step" number that updates on only some
+    iterations::
+    
+        $progress->start($output, 500);
+        $i = 0;
+        while ($i++ < 50000) {
+            // ... do some work
+
+            // advance every 100 iterations
+            if ($i % 100 == 0) {
+                $progress->advance();
+            }
+        }
+
 Testing Commands
 ----------------
 

@@ -44,3 +44,22 @@ on how to perform many common tasks.
     bundle that will be used in many different projects. So, even if you don't
     specify your controllers as services, you'll likely see this done in some
     open-source Symfony2 bundles.
+
+Using Annotation Routing
+------------------------
+
+When using annotations to setup routing when using a controller defined as a
+service, you need to specify your service as follows::
+
+    /**
+     * @Route("/blog", service="my_bundle.annot_controller")
+     * @Cache(expires="tomorrow")
+     */
+    class AnnotController extends Controller
+    {
+    }
+
+In this example, ``my_bundle.annot_controller`` should be the id of the
+``AnnotController`` instance defined in the service container. This is
+documented in the :doc:`/bundles/SensioFrameworkExtraBundle/annotations/routing`
+chapter.

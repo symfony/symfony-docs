@@ -755,7 +755,7 @@ routing system can be:
 
 As you've seen, this route will only match if the ``{culture}`` portion of
 the URL is either ``en`` or ``fr`` and if the ``{year}`` is a number. This
-route also shows how you can use a period between placeholders instead of
+route also shows how you can use a dot between placeholders instead of
 a slash. URLs matching this route might look like:
 
 * ``/articles/en/2010/my-post``
@@ -1019,6 +1019,12 @@ instead of simply ``/hello/{name}``:
 
 The string ``/admin`` will now be prepended to the pattern of each route
 loaded from the new routing resource.
+
+.. tip::
+
+    You can also define routes using annotations. See the
+    :doc:`FrameworkExtraBundle documentation</bundles/SensioFrameworkExtraBundle/annotations/routing>`
+    to see how.
 
 .. index::
    single: Routing; Debugging

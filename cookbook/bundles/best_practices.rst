@@ -172,7 +172,7 @@ the ``Tests/`` directory. Tests should follow the following principles:
   a sample application;
 * The functional tests should only be used to test the response output and
   some profiling information if you have some;
-* The code coverage should at least covers 95% of the code base.
+* The tests should cover at least 95% of the code base.
 
 .. note::
    A test suite must not contain ``AllTests.php`` scripts, but must rely on the

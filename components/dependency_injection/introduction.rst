@@ -77,7 +77,7 @@ Then you can set the choice of transport in the container:
     $container->register('mailer', 'Mailer')
         ->addArgument('sendmail');
 
-This class is now much more flexible as we have separated the choice of
+This class is now much more flexible as you have separated the choice of
 transport out of the implementation and into the container.
 
 Which mail transport you have chosen may be something other services need to
@@ -185,9 +185,9 @@ Avoiding Your Code Becoming Dependent on the Container
 ------------------------------------------------------
 
 Whilst you can retrieve services from the container directly it is best
-to minimize this. For example, in the ``NewsletterManager`` we injected
+to minimize this. For example, in the ``NewsletterManager`` you injected
 the ``mailer`` service in rather than asking for it from the container.
-We could have injected the container in and retrieved the ``mailer`` service
+You could have injected the container in and retrieved the ``mailer`` service
 from it but it would then be tied to this particular container making it
 difficult to reuse the class elsewhere.
 

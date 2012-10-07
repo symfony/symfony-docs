@@ -27,7 +27,7 @@ the cache can tell if it is still fresh or that its contents should be regenerat
 
     $cachePath = __DIR__.'/cache/appUserMatcher.php';
 
-    // the second argument indicates whether or not we are in debug mode
+    // the second argument indicates whether or not you want to use debug mode
     $userMatcherCache = new ConfigCache($cachePath, true);
 
     if (!$userMatcherCache->isFresh()) {
