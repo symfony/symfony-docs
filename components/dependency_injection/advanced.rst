@@ -107,7 +107,7 @@ the service itself gets loaded. To do so, you can use the ``file`` directive.
         services:
            foo:
              class: Example\Foo\Bar
-             file: %kernel.root_dir%/src/path/to/file/foo.php
+             file: "%kernel.root_dir%/src/path/to/file/foo.php"
 
     .. code-block:: xml
 
