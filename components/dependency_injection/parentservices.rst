@@ -248,7 +248,7 @@ a parent for a service.
         $container->setDefinition('my_email_formatter', ...);
         $container->setDefinition('mail_manager', new Definition(
             '%mail_manager.class%'
-        ))->SetAbstract(
+        ))->setAbstract(
             true
         )->addMethodCall('setMailer', array(
             new Reference('my_mailer')
@@ -384,7 +384,7 @@ to the ``NewsletterManager`` class, the config would look like this:
         $container->setDefinition('my_email_formatter', ...);
         $container->setDefinition('mail_manager', new Definition(
             '%mail_manager.class%'
-        ))->SetAbstract(
+        ))->setAbstract(
             true
         )->addMethodCall('setMailer', array(
             new Reference('my_mailer')
@@ -501,7 +501,7 @@ If you had the following config:
         $container->setDefinition('another_filter', ...);
         $container->setDefinition('mail_manager', new Definition(
             '%mail_manager.class%'
-        ))->SetAbstract(
+        ))->setAbstract(
             true
         )->addMethodCall('setFilter', array(
             new Reference('my_filter')
