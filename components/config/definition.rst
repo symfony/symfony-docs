@@ -212,6 +212,29 @@ has a certain value:
         ->end()
     ;
 
+Optional Sections
+-----------------
+If you have entire sections which are optional and can be enabled/disabled,
+you can take advantage of the shortcut ``canBeEnabled``, or ``canBeDisabled``::
+
+    $arrayNode
+        ->canBeEnabled()
+    ;
+
+    // is equivalent to
+
+    $arrayNode
+        ->treatFalseLike(array('enabled' => false))
+        ->treatTrueLike(array('enabled' => true))
+        ->treatNullLike(array('enabled' => true))
+        ->children()
+            ->booleanNode('enabled')
+                ->defaultFalse()
+    ;
+
+``canBeDisabled`` looks about the same with the difference that the section 
+would be enabled by default.
+
 Merging options
 ---------------
 
