@@ -6,3 +6,4 @@ Console
 
     console_command
     usage
+    generating_urls
