@@ -87,7 +87,7 @@ look and feel familiar, you should follow these rules:
   If we fold several lines: the description of the fold can be placed after the ``...``
   If we fold only part of a line: the description can be placed before the line;
 * If useful, a ``codeblock`` should begin with a comment containing the filename
-  of the file in the code block. Place a blank line after this comment,
+  of the file in the code block. Don't place a blank line after this comment,
   unless the next line is also a comment;
 * You should put a ``$`` in front of every bash line;
 * We prefer the ``::`` shorthand over ``.. code-block:: php`` to begin a PHP
