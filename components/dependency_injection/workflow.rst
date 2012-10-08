@@ -74,5 +74,5 @@ Compilation and Caching
 
 After the compilation process has loaded the services from the configuration,
 extensions and the compiler passes, it is dumped so that the cache can be used
-next time. The dumped version is then used during subsequent request as it
+next time. The dumped version is then used during subsequent requests as it
 is more efficient.
