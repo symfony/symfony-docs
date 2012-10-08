@@ -59,16 +59,23 @@ Below is the schedule for the first few versions that use this release model:
 .. image:: /images/release-process.jpg
    :align: center
 
- * *(special)* Symfony 2.2 will be released at the end of February 2013;
 
- * *(special)* Symfony 2.3 (the first LTS) will be released at the end of May
+* **Yellow** represents the Development phase
+* **Blue** represents the Stabilisation phase
+* **Green** represents the Maintenance period
+
+This results in very predictable dates and maintenance periods.
+
+* *(special)* Symfony 2.2 will be released at the end of February 2013;
+
+* *(special)* Symfony 2.3 (the first LTS) will be released at the end of May
    2013;
 
- * Symfony 2.4 will be released at the end of November 2013;
+* Symfony 2.4 will be released at the end of November 2013;
 
- * Symfony 2.5 will be released at the end of May 2014;
+* Symfony 2.5 will be released at the end of May 2014;
 
- * ...
+* ...
 
 Backward Compatibility
 ----------------------
@@ -86,7 +93,7 @@ Rationale
 ---------
 
 This release process was adopted to give more *predictability* and
-*transparency*. Is was discussed based on the following goals:
+*transparency*. It was discussed based on the following goals:
 
  * Shorten the release cycle (allow developers to benefit from the new
    features faster);
@@ -95,7 +102,7 @@ This release process was adopted to give more *predictability* and
    projects using Symfony;
 
  * Improve the experience of Symfony core contributors: everyone knows when a
-   feature might be available in Symfony.
+   feature might be available in Symfony;
 
  * Coordinate the Symfony timeline with popular PHP projects that work well
    with Symfony and with projects using Symfony;
@@ -103,9 +110,9 @@ This release process was adopted to give more *predictability* and
  * Give time to the Symfony ecosystem to catch up with the new versions
    (bundle authors, documentation writers, translators, ...).
 
-The six month period was chosen as two releases fit in a year. It also gives
-plenty of time to work on new features and it also allows for non-ready
-features to be postponed to the next version without having to wait too much
+The six month period was chosen as two releases fit in a year. It also allows
+for plenty of time to work on new features and it allows for non-ready
+features to be postponed to the next version without having to wait too long
 for the next cycle.
 
 The dual maintenance mode was adopted to make every Symfony user happy. Fast
