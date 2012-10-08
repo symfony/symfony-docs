@@ -439,7 +439,7 @@ You can also define whole logic inline by using a Closure::
             'validation_groups' => function(FormInterface $form) {
                 $data = $form->getData();
                 if (Entity\Client::TYPE_PERSON == $data->getType()) {
-                    return array('person')
+                    return array('person');
                 } else {
                     return array('company');
                 }
