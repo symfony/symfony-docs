@@ -1,14 +1,14 @@
 .. index::
    single: Doctrine; Multiple entity managers
 
-How to work with Multiple Entity Managers
-=========================================
+How to work with Multiple Entity Managers and Connections
+=========================================================
 
-You can use multiple entity managers in a Symfony2 application. This is
-necessary if you are using different databases or even vendors with entirely
-different sets of entities. In other words, one entity manager that connects
-to one database will handle some entities while another entity manager that
-connects to another database might handle the rest.
+You can use multiple Doctrine entity managers or connections in a Symfony2
+application. This is necessary if you are using different databases or even
+vendors with entirely different sets of entities. In other words, one entity
+manager that connects to one database will handle some entities while another
+entity manager that connects to another database might handle the rest.
 
 .. note::
 
@@ -23,6 +23,26 @@ The following configuration code shows how you can configure two entity managers
     .. code-block:: yaml
 
         doctrine:
+            dbal:
+                default_connection:   default
+                connections:
+                    default:
+                        driver:   %database_driver%
+                        host:     %database_host%
+                        port:     %database_port%
+                        dbname:   %database_name%
+                        user:     %database_user%
+                        password: %database_password%
+                        charset:  UTF8
+                    customer:
+                        driver:   %database_driver2%
+                        host:     %database_host2%
+                        port:     %database_port2%
+                        dbname:   %database_name2%
+                        user:     %database_user2%
+                        password: %database_password2%
+                        charset:  UTF8
+
             orm:
                 default_entity_manager:   default
                 entity_managers:
@@ -39,17 +59,34 @@ The following configuration code shows how you can configure two entity managers
 In this case, you've defined two entity managers and called them ``default``
 and ``customer``. The ``default`` entity manager manages entities in the
 ``AcmeDemoBundle`` and ``AcmeStoreBundle``, while the ``customer`` entity
-manager manages entities in the ``AcmeCustomerBundle``.
+manager manages entities in the ``AcmeCustomerBundle``. You've also defined
+two connections, one for each entity manager.
 
-When working with multiple entity managers, you should be explicit about which
-entity manager you want. If you *do* omit the entity manager's name when you
-update your schema, the default (i.e. ``default``) is used::
+.. note::
+
+    When working with multiple connections and entity managers, you should be 
+    explicit about which configuration you want. If you *do* omit the name of
+    the connection or entity manager, the default (i.e. ``default``) is used.
+
+When working with multiple connections to create your databases:
+
+.. code-block:: bash
+
+    # Play only with "default" connection
+    $ php app/console doctrine:database:create
+
+    # Play only with "customer" connection
+    $ php app/console doctrine:database:create --connection=customer
+
+When working with multiple entity managers to update your schema:
+
+.. code-block:: bash
 
     # Play only with "default" mappings
-    php app/console doctrine:schema:update --force
+    $ php app/console doctrine:schema:update --force
 
     # Play only with "customer" mappings
-    php app/console doctrine:schema:update --force --em=customer
+    $ php app/console doctrine:schema:update --force --em=customer
 
 If you *do* omit the entity manager's name when asking for it,
 the default entity manager (i.e. ``default``) is returned::
