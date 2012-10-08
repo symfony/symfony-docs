@@ -51,7 +51,7 @@ Bundle-level Configuration with Extensions
 
 By convention, each bundle contains an Extension class which is in the bundle's
 ``DependencyInjection`` directory. These are registered with the ``ContainerBuilder``
-when the kernel is booted. When the ``ContainerBuilder`` is :doc:`/compiled<components/dependency-injection/compilation>`,
+when the kernel is booted. When the ``ContainerBuilder`` is :doc:`compiled</components/dependency-injection/compilation>`,
 the application-level configuration relevant to the bundle's extension is
 passed to the Extension which also usually loads its own config file(s), typically from the bundle's
 ``Resources/config`` directory. The application-level config is usually processed
@@ -63,7 +63,7 @@ Compiler passes to allow Interaction between Bundles
 
 :ref:`Compiler passes<components-dependency-injection-compiler-passes>` are
 used to allow interaction between different bundles as they cannot affect
-each others configuration in the extension classes. One of the main uses is
+each other's configuration in the extension classes. One of the main uses is
 to process tagged services, allowing bundles to register services to picked
 up by other bundles, such as Monolog loggers, Twig extensions and Data Collectors
 for the Web Profiler. Compiler passes are usually placed in the bundle's
@@ -74,5 +74,5 @@ Compilation and Caching
 
 After the compilation process has loaded the services from the configuration,
 extensions and the compiler passes, it is dumped so that the cache can be used
-next time. The dumped version is then used during subsequent request as it
+next time. The dumped version is then used during subsequent requests as it
 is more efficient.
