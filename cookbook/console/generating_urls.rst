@@ -35,6 +35,7 @@ via normal web requests, since those will override the defaults.
 
     .. code-block:: xml
 
+        <!-- app/config/parameters.xml -->
         <?xml version="1.0" encoding="UTF-8"?>
 
         <container xmlns="http://symfony.com/schema/dic/services"
@@ -59,8 +60,8 @@ To change it only in one command you can simply fetch the Request Context
 service and override its settings::
 
     // src/Acme/DemoBundle/Command/DemoCommand.php
-    // ...
 
+    // ...
     class DemoCommand extends ContainerAwareCommand
     {
         protected function execute(InputInterface $input, OutputInterface $output)
