@@ -18,12 +18,12 @@ Development
 
 The six-months period is divided into two phases:
 
- * *Development*: *Four months* to add new features and to enhance existing
-   ones;
+* *Development*: *Four months* to add new features and to enhance existing
+  ones;
 
- * *Stabilisation*: *Two months* to fix bugs, prepare the release, and wait
-   for the whole Symfony ecosystem (third-party libraries, bundles, and
-   projects using Symfony) to catch up.
+* *Stabilisation*: *Two months* to fix bugs, prepare the release, and wait
+  for the whole Symfony ecosystem (third-party libraries, bundles, and
+  projects using Symfony) to catch up.
 
 During the development phase, any new feature can be reverted if it won't be
 finished in time or if it won't be stable enough to be included in the current
@@ -59,7 +59,6 @@ Below is the schedule for the first few versions that use this release model:
 .. image:: /images/release-process.jpg
    :align: center
 
-
 * **Yellow** represents the Development phase
 * **Blue** represents the Stabilisation phase
 * **Green** represents the Maintenance period
@@ -67,14 +66,10 @@ Below is the schedule for the first few versions that use this release model:
 This results in very predictable dates and maintenance periods.
 
 * *(special)* Symfony 2.2 will be released at the end of February 2013;
-
 * *(special)* Symfony 2.3 (the first LTS) will be released at the end of May
    2013;
-
 * Symfony 2.4 will be released at the end of November 2013;
-
 * Symfony 2.5 will be released at the end of May 2014;
-
 * ...
 
 Backward Compatibility
@@ -95,20 +90,16 @@ Rationale
 This release process was adopted to give more *predictability* and
 *transparency*. It was discussed based on the following goals:
 
- * Shorten the release cycle (allow developers to benefit from the new
-   features faster);
-
- * Give more visibility to the developers using the framework and Open-Source
-   projects using Symfony;
-
- * Improve the experience of Symfony core contributors: everyone knows when a
-   feature might be available in Symfony;
-
- * Coordinate the Symfony timeline with popular PHP projects that work well
-   with Symfony and with projects using Symfony;
-
- * Give time to the Symfony ecosystem to catch up with the new versions
-   (bundle authors, documentation writers, translators, ...).
+* Shorten the release cycle (allow developers to benefit from the new
+  features faster);
+* Give more visibility to the developers using the framework and Open-Source
+  projects using Symfony;
+* Improve the experience of Symfony core contributors: everyone knows when a
+  feature might be available in Symfony;
+* Coordinate the Symfony timeline with popular PHP projects that work well
+  with Symfony and with projects using Symfony;
+* Give time to the Symfony ecosystem to catch up with the new versions
+  (bundle authors, documentation writers, translators, ...).
 
 The six month period was chosen as two releases fit in a year. It also allows
 for plenty of time to work on new features and it allows for non-ready
