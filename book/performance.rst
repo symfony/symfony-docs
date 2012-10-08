@@ -59,9 +59,7 @@ the first time. Symfony comes with a class - ``ApcUniversalClassLoader`` -
 loader that extends the ``UniversalClassLoader`` and stores the class locations
 in APC.
 
-To use this class loader, simply adapt your ``autoloader.php`` as follows:
-
-.. code-block:: php
+To use this class loader, simply adapt your ``autoloader.php`` as follows::
 
     // app/autoload.php
     require __DIR__.'/../vendor/symfony/src/Symfony/Component/ClassLoader/ApcUniversalClassLoader.php';

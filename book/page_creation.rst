@@ -49,8 +49,8 @@ greeted. To create the page, follow the simple two-step process.
     on this process, see the documentation on the web server you are using.
     Here's the relevant documentation page for some web server you might be using:
 
-    * For Apache HTTP Server, refer to `Apache's DirectoryIndex documentation`_.
-    * For Nginx, refer to `Nginx HttpCoreModule location documentation`_.
+    * For Apache HTTP Server, refer to `Apache's DirectoryIndex documentation`_
+    * For Nginx, refer to `Nginx HttpCoreModule location documentation`_
 
 Before you begin: Create the Bundle
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -299,9 +299,10 @@ of writing the HTML inside the controller, render a template instead:
 
 .. note::
 
-   In order to use the ``render()`` method, your controller must extend the
-   ``Symfony\Bundle\FrameworkBundle\Controller\Controller`` class (API
-   docs: :class:`Symfony\\Bundle\\FrameworkBundle\\Controller\\Controller`),
+   In order to use the :method:`Symfony\\Bundle\\FrameworkBundle\\Controller\\Controller::render` 
+   method, your controller must extend the 
+   :class:`Symfony\\Bundle\\FrameworkBundle\\Controller\\Controller` class 
+   (API docs: :class:`Symfony\\Bundle\\FrameworkBundle\\Controller\\Controller`),
    which adds shortcuts for tasks that are common inside controllers. This
    is done in the above example by adding the ``use`` statement on line 4
    and then extending ``Controller`` on line 6.
@@ -868,9 +869,11 @@ call the ``prod`` front controller instead:
 Since the ``prod`` environment is optimized for speed; the configuration,
 routing and Twig templates are compiled into flat PHP classes and cached.
 When viewing changes in the ``prod`` environment, you'll need to clear these
-cached files and allow them to rebuild::
+cached files and allow them to rebuild:
 
-    php app/console cache:clear --env=prod --no-debug
+.. code-block:: bash
+
+    $ php app/console cache:clear --env=prod --no-debug
 
 .. note::
 
@@ -967,24 +970,24 @@ hopefully discovered how easy and flexible it can be. And while there are
 *a lot* of features still to come, be sure to keep the following basic points
 in mind:
 
-* creating a page is a three-step process involving a **route**, a **controller**
-  and (optionally) a **template**.
+* Creating a page is a three-step process involving a **route**, a **controller**
+  And (optionally) a **template**;
 
-* each project contains just a few main directories: ``web/`` (web assets and
-  the front controllers), ``app/`` (configuration), ``src/`` (your bundles),
-  and ``vendor/`` (third-party code) (there's also a ``bin/`` directory that's
-  used to help updated vendor libraries);
+* Each project contains just a few main directories: ``web/`` (web assets and
+  The front controllers), ``app/`` (configuration), ``src/`` (your bundles),
+  And ``vendor/`` (third-party code) (there's also a ``bin/`` directory that's
+  Used to help updated vendor libraries);
 
-* each feature in Symfony2 (including the Symfony2 framework core) is organized
-  into a *bundle*, which is a structured set of files for that feature;
+* Each feature in Symfony2 (including the Symfony2 framework core) is organized
+  Into a *bundle*, which is a structured set of files for that feature;
 
-* the **configuration** for each bundle lives in the ``Resources/config``
-  directory of the bundle and can be specified in YAML, XML or PHP;
+* The **configuration** for each bundle lives in the ``Resources/config``
+  Directory of the bundle and can be specified in YAML, XML or PHP;
 
-* the global **application configuration** lives in the ``app/config``
-  directory;
+* The global **application configuration** lives in the ``app/config``
+  Directory;
 
-* each **environment** is accessible via a different front controller (e.g.
+* Each **environment** is accessible via a different front controller (e.g.
   ``app.php`` and ``app_dev.php``) and loads a different configuration file.
 
 From here, each chapter will introduce you to more and more powerful tools

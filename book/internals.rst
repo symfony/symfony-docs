@@ -110,8 +110,7 @@ method returns the Controller (a PHP callable) associated with the given
 Request. The default implementation
 (:class:`Symfony\\Component\\HttpKernel\\Controller\\ControllerResolver`)
 looks for a ``_controller`` request attribute that represents the controller
-name (a "class::method" string, like
-``Bundle\BlogBundle\PostController:indexAction``).
+name (a "class::method" string, like ``Bundle\BlogBundle\PostController:indexAction``).
 
 .. tip::
 
@@ -144,32 +143,33 @@ the Request attributes.
 Handling Requests
 ~~~~~~~~~~~~~~~~~
 
-The ``handle()`` method takes a ``Request`` and *always* returns a ``Response``.
-To convert the ``Request``, ``handle()`` relies on the Resolver and an ordered
-chain of Event notifications (see the next section for more information about
-each Event):
+The :method:`Symfony\\Component\\HttpKernel\\HttpKernel::handle` method 
+takes a ``Request`` and *always* returns a ``Response``. To convert the 
+``Request``, ``handle()`` relies on the Resolver and an ordered chain of 
+Event notifications (see the next section for more information about each 
+Event):
 
-1. Before doing anything else, the ``kernel.request`` event is notified -- if
+#. Before doing anything else, the ``kernel.request`` event is notified -- if
    one of the listeners returns a ``Response``, it jumps to step 8 directly;
 
-2. The Resolver is called to determine the Controller to execute;
+#. The Resolver is called to determine the Controller to execute;
 
-3. Listeners of the ``kernel.controller`` event can now manipulate the
+#. Listeners of the ``kernel.controller`` event can now manipulate the
    Controller callable the way they want (change it, wrap it, ...);
 
-4. The Kernel checks that the Controller is actually a valid PHP callable;
+#. The Kernel checks that the Controller is actually a valid PHP callable;
 
-5. The Resolver is called to determine the arguments to pass to the Controller;
+#. The Resolver is called to determine the arguments to pass to the Controller;
 
-6. The Kernel calls the Controller;
+#. The Kernel calls the Controller;
 
-7. If the Controller does not return a ``Response``, listeners of the
+#. If the Controller does not return a ``Response``, listeners of the
    ``kernel.view`` event can convert the Controller return value to a ``Response``;
 
-8. Listeners of the ``kernel.response`` event can manipulate the ``Response``
+#. Listeners of the ``kernel.response`` event can manipulate the ``Response``
    (content and headers);
 
-9. The Response is returned.
+#. The Response is returned.
 
 If an Exception is thrown during processing, the ``kernel.exception`` is
 notified and listeners are given a chance to convert the Exception to a
@@ -206,12 +206,15 @@ Each event thrown by the Kernel is a subclass of
 :class:`Symfony\\Component\\HttpKernel\\Event\\KernelEvent`. This means that
 each event has access to the same basic information:
 
-* ``getRequestType()`` - returns the *type* of the request
-  (``HttpKernelInterface::MASTER_REQUEST`` or ``HttpKernelInterface::SUB_REQUEST``);
+* :method:`Symfony\\Component\\HttpKernel\\Event\\KernelEvent::getRequestType` 
+  - returns the *type* of the request (``HttpKernelInterface::MASTER_REQUEST`` 
+    or ``HttpKernelInterface::SUB_REQUEST``);
 
-* ``getKernel()`` - returns the Kernel handling the request;
+* :method:`Symfony\\Component\\HttpKernel\\Event\\KernelEvent::getKernel` 
+  - returns the Kernel handling the request;
 
-* ``getRequest()`` - returns the current ``Request`` being handled.
+* :method:`Symfony\\Component\\HttpKernel\\Event\\KernelEvent::getRequest` 
+  - returns the current ``Request`` being handled.
 
 ``getRequestType()``
 ....................
@@ -264,9 +267,7 @@ the ``Request`` and determine the Controller name (stored in the
 *Event Class*: :class:`Symfony\\Component\\HttpKernel\\Event\\FilterControllerEvent`
 
 This event is not used by ``FrameworkBundle``, but can be an entry point used
-to modify the controller that should be executed:
-
-.. code-block:: php
+to modify the controller that should be executed::
 
     use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
 
@@ -302,7 +303,8 @@ The value returned by the Controller is accessible via the
     {
         $val = $event->getControllerResult();
         $response = new Response();
-        // some how customize the Response from the return value
+
+        // ... some how customize the Response from the return value
 
         $event->setResponse($response);
     }
@@ -316,13 +318,12 @@ The value returned by the Controller is accessible via the
 *Event Class*: :class:`Symfony\\Component\\HttpKernel\\Event\\FilterResponseEvent`
 
 The purpose of this event is to allow other systems to modify or replace the
-``Response`` object after its creation:
-
-.. code-block:: php
+``Response`` object after its creation::
 
     public function onKernelResponse(FilterResponseEvent $event)
     {
         $response = $event->getResponse();
+
         // ... modify the response object
     }
 
@@ -358,9 +359,7 @@ forwards the ``Request`` to a given Controller (the value of the
 ``class::method`` notation).
 
 A listener on this event can create and set a ``Response`` object, create
-and set a new ``Exception`` object, or do nothing:
-
-.. code-block:: php
+and set a new ``Exception`` object, or do nothing::
 
     use Symfony\Component\HttpKernel\Event\GetResponseForExceptionEvent;
     use Symfony\Component\HttpFoundation\Response;
@@ -466,7 +465,8 @@ HTTP header of the Response::
     want to get the token for an Ajax request, use a tool like Firebug to get
     the value of the ``X-Debug-Token`` HTTP header.
 
-Use the ``find()`` method to access tokens based on some criteria::
+Use the :method:`Symfony\\Component\\HttpKernel\\Profiler\\Profiler::find` 
+method to access tokens based on some criteria::
 
     // get the latest 10 tokens
     $tokens = $container->get('profiler')->find('', '', 10);
@@ -478,8 +478,9 @@ Use the ``find()`` method to access tokens based on some criteria::
     $tokens = $container->get('profiler')->find('127.0.0.1', '', 10);
 
 If you want to manipulate profiling data on a different machine than the one
-where the information were generated, use the ``export()`` and ``import()``
-methods::
+where the information were generated, use the 
+:method:`Symfony\\Component\\HttpKernel\\Profiler\\Profiler::export` and 
+:method:`Symfony\\Component\\HttpKernel\\Profiler\\Profiler::import` methods::
 
     // on the production machine
     $profile = $container->get('profiler')->loadProfile($token);

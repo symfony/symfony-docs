@@ -71,9 +71,7 @@ A :term:`Service Container` (or *dependency injection container*) is simply
 a PHP object that manages the instantiation of services (i.e. objects).
 For example, suppose we have a simple PHP class that delivers email messages.
 Without a service container, we must manually create the object whenever
-we need it:
-
-.. code-block:: php
+we need it::
 
     use Acme\HelloBundle\Mailer;
 
@@ -491,7 +489,7 @@ invokes the service container extension inside the ``FrameworkBundle``:
             'form'            => array(),
             'csrf-protection' => array(),
             'router'          => array('resource' => '%kernel.root_dir%/config/routing.php'),
-            // ...
+            ...,
         ));
 
 When the configuration is parsed, the container looks for an extension that
@@ -780,9 +778,7 @@ it exists and do nothing if it doesn't:
 
 In YAML, the special ``@?`` syntax tells the service container that the dependency
 is optional. Of course, the ``NewsletterManager`` must also be written to
-allow for an optional dependency:
-
-.. code-block:: php
+allow for an optional dependency::
 
         public function __construct(Mailer $mailer = null)
         {
