@@ -1,8 +1,36 @@
 .. index::
    single: Deployment Tools
 
+Deployment Tools
+================
+
+This cookbook entry will teach you the what and how of Symfony2 application deployment. 
+
+
+What is deployment?
+-------------------
+
+Deploying software changes to your website is a critical step in the lifecycle of your application.
+How you deploy the changes can affect how others perceive the stability and quality of your website.
+
+The typical steps taken while deploying a Symfony2 application include:
+
+1. Uploading your modified code to the live server
+2. Updating your vendor dependencies via composer
+3. Running database migrations to update any changed data structures.
+4. Clearing (and perhaps more importantly, warming up) your cache
+
+A deployment may also include other things, such as:
+
+* Tagging a particular version of of your code as a release in your source control repository
+* Creating a temporary staging area to build your updated setup 'offline'
+* Running any tests available to ensure code and/or server stability
+* Removal of any unnecessary files from `web` to keep your production environment clean
+* Clearing of external cache systems (like `Memcached`_ or `Redis`_)
+
+
 How to deploy a Symfony2 application
-====================================
+------------------------------------
 
 There are several ways you can deploy a Symfony2 application.
 
@@ -79,3 +107,5 @@ Platform as a Service Providers:
 .. _`Magallanes`: https://github.com/andres-montanez/Magallanes
 .. _`bundles that add deployment features`: http://knpbundles.com/search?q=deploy
 .. _`Symfony IRC channel`: http://webchat.freenode.net/?channels=symfony
+.. _`Memcached`: http://memcached.org/
+.. _`Redis`: http://redis.io/
