@@ -287,7 +287,7 @@ will then be called when the container is compiled::
 
 .. note::
 
-    Compiler passes are registered differently is you are using the full
+    Compiler passes are registered differently if you are using the full
     stack framework, see :doc:`/cookbook/service_container/compiler_passes`
     for more details.
 
@@ -408,7 +408,7 @@ but getting an up to date configuration whilst developing your application::
 This could be further improved by only recompiling the container in debug
 mode when changes have been made to its configuration rather than on every
 request. This can be done by caching the resource files used to configure
-the container in the way describe in ":doc:`/components/config/caching`"
+the container in the way described in ":doc:`/components/config/caching`"
 in the config component documentation.
 
 You do not need to work out which files to cache as the container builder
