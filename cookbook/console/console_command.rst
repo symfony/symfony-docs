@@ -5,7 +5,7 @@ How to create a Console Command
 ===============================
 
 The Console page of the Components section (:doc:`/components/console/introduction`) covers
-how to create a Console command. This cookbook articles covers the differences
+how to create a Console command. This cookbook article covers the differences
 when creating Console commands within the Symfony2 framework.
 
 Automatically Registering Commands
