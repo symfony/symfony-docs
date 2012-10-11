@@ -24,7 +24,7 @@ directly:
         <script src="<?php echo $view['assets']->getUrl('js/script.js') ?>" type="text/javascript" />
 
 But *with* Assetic, you can manipulate these assets however you want (or
-load them from anywhere) before serving them. These means you can:
+load them from anywhere) before serving them. This means you can:
 
 * Minify and combine all of your CSS and JS files
 
