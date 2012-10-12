@@ -270,21 +270,31 @@ In your extension class, you have added a new variable (``image_url``), but
 you still need to take advantage of this new variable in your templates.
 You need to override the ``file_widget`` block:
 
-.. code-block:: html+jinja
+.. configuration-block::
 
-    {# src/Acme/DemoBundle/Resources/views/Form/fields.html.twig #}
-    {% extends 'form_div_layout.html.twig' %}
+    .. code-block:: html+jinja
 
-    {% block file_widget %}
-        {% spaceless %}
+        {# src/Acme/DemoBundle/Resources/views/Form/fields.html.twig #}
+        {% extends 'form_div_layout.html.twig' %}
 
-        {{ block('field_widget') }}
-        {% if image_url is not null %}
-            <img src="{{ asset(image_url) }}"/>
-        {% endif %}
+        {% block file_widget %}
+            {% spaceless %}
 
-        {% endspaceless %}
-    {% endblock %}
+            {{ block('field_widget') }}
+            {% if image_url is not null %}
+                <img src="{{ asset(image_url) }}"/>
+            {% endif %}
+
+            {% endspaceless %}
+        {% endblock %}
+
+    .. code-block:: html+php
+
+        <!-- src/Acme/DemoBundle/Resources/views/Form/file_widget.html.php -->
+        <?php echo $view['form']->widget($form) ?>
+        <?php if (null !== $image_url): ?>
+            <img src="<?php echo $view['assets']->getUrl($image_url) ?>"/>
+        <?php endif ?>
 
 .. note::
 
