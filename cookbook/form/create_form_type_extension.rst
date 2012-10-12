@@ -15,9 +15,9 @@ extensions come in.
 Form type extensions have 2 main use cases:
 
 #. You want to add a **generic feature to several types** (such as
-   adding a "help" text to every field type)
+   adding a "help" text to every field type);
 #. You want to add a **specific feature to a single type** (such
-   as adding a "download" feature to the "file" field type)
+   as adding a "download" feature to the "file" field type).
 
 In both those cases, it might be possible to achieve your goal with custom
 form rendering, or custom form field types. But using form type extensions
@@ -56,7 +56,6 @@ That's what you will do in this tutorial::
 
     class ImageTypeExtension extends AbstractTypeExtension
     {
-
         /**
          * Returns the name of the type being extended.
          *
@@ -152,7 +151,6 @@ database).
      */
     class Media
     {
-
         // ...
 
         /**
@@ -184,10 +182,10 @@ database).
 
 Your form type extension class will need to do two things:
 
-1) Override the ``setDefaultOptions`` method in order to add an image_path
-   option
-2) Override the ``buildView`` method in order to pass the image url to
-   the view
+#. Override the ``setDefaultOptions`` method in order to add an image_path
+   option;
+#. Override the ``buildView`` method in order to pass the image url to
+   the view.
 
 The logic is the following: when adding a form field of type ``file``,
 you will be able to specify a new option: ``image_path``. This option will
@@ -207,7 +205,6 @@ it in the view.
 
     class ImageTypeExtension extends AbstractTypeExtension
     {
-
         /**
          * Returns the name of the type being extended.
          *
@@ -297,7 +294,6 @@ next to the file field. As an example::
 
     class MediaType extends AbstractType
     {
-
         public function buildForm(FormBuilderInterface $builder, array $options)
         {
             $builder
