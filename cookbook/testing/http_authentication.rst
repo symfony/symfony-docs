@@ -14,7 +14,7 @@ as server variables to ``createClient()``::
 
 You can also override it on a per request basis::
 
-    $client->request('DELETE', '/post/12', array(), array(
+    $client->request('DELETE', '/post/12', array(), array(), array(
         'PHP_AUTH_USER' => 'username',
         'PHP_AUTH_PW'   => 'pa$$word',
     ));
