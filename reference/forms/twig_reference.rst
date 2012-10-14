@@ -51,6 +51,11 @@ common variable is ``attr``, which is an array of HTML attributes to apply
 to the HTML widget. In some cases, certain types also have other template-related
 options that can be passed. These are discussed on a type-by-type basis.
 
+.. note::
+
+    In case the first argument is a form, all ``variables`` will 
+    only be applied to the form itself and not its children.
+
 form_row(form.name, variables)
 ------------------------------
 
