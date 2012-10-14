@@ -16,7 +16,7 @@ To run the Symfony2 test suite, `install`_ PHPUnit 3.6.4 or later first:
     
 .. note::
 
-    You don't need phpunit from pear when you install development dependencies.
+    You don't need phpunit from pear when you install dependencies with composer using --dev option.
 
 Dependencies (optional)
 -----------------------
