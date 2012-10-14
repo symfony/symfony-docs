@@ -315,9 +315,7 @@ will produce the following typical console interaction:
     > <Press 'Enter' to get default value>
     int(0)
 
-You can also get the value selected directly by specifying return type:
-
-.. code-block:: php
+You can also get the value selected directly by specifying return type::
 
     $locale = $dialog->select($output, 'Please select your locale',
         $availableLocales, 0, array('return' => 'value'));
