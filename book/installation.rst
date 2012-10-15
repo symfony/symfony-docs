@@ -192,6 +192,9 @@ At this point, all of the needed third-party libraries now live in the ``vendor/
 directory. You also have a default application setup in ``app/`` and some
 sample code inside the ``src/`` directory.
 
+To finally bring Symfony2 to life point the document root of your webserver to the
+``web/`` directory inside your project or set up a virtual host.
+
 Symfony2 comes with a visual server configuration tester to help make sure
 your Web server and PHP are configured to use Symfony. Use the following URL
 to check your configuration:
