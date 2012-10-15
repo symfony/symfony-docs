@@ -854,7 +854,7 @@ independent of the rest of the page.
     public function indexAction()
     {
         $response = $this->render('MyBundle:MyController:index.html.twig');
-        // set the shared max age - the also marks the response as public
+        // set the shared max age - which also marks the response as public
         $response->setSharedMaxAge(600);
 
         return $response;
