@@ -1,5 +1,6 @@
 * **Code**
 
+  * :doc:`Release Process </contributing/code/releases>`
   * :doc:`Bugs </contributing/code/bugs>`
   * :doc:`Patches </contributing/code/patches>`
   * :doc:`Security </contributing/code/security>`
