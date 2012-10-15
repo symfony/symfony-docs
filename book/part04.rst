@@ -8,7 +8,7 @@ a little to make templates even more readable::
 
     // example.com/web/front.php
 
-    require_once __DIR__.'/../src/autoload.php';
+    require_once __DIR__.'/../vendor/autoload.php';
 
     use Symfony\Component\HttpFoundation\Request;
     use Symfony\Component\HttpFoundation\Response;
@@ -61,23 +61,10 @@ update`` command to install it:
 
     {
         "require": {
-            "symfony/class-loader": "2.1.*",
             "symfony/http-foundation": "2.1.*",
             "symfony/routing": "2.1.*"
         }
     }
-
-From now on, we are going to use the generated Composer autoloader instead of
-our own ``autoload.php``. Remove the ``autoload.php`` file and replace its
-reference in ``front.php``::
-
-    <?php
-
-    // example.com/web/front.php
-
-    require_once __DIR__.'/../vendor/autoload.php';
-
-    // ...
 
 Instead of an array for the URL map, the Routing component relies on a
 ``RouteCollection`` instance::

@@ -24,7 +24,7 @@ using `PHPUnit`_. Create a PHPUnit configuration file in
              processIsolation="false"
              stopOnFailure="false"
              syntaxCheck="false"
-             bootstrap="vendor/.composer/autoload.php"
+             bootstrap="vendor/autoload.php"
     >
         <testsuites>
             <testsuite name="Test Suite">

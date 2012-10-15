@@ -9,7 +9,7 @@ goodbye::
 
     // framework/bye.php
 
-    require_once __DIR__.'/autoload.php';
+    require_once __DIR__.'/vendor/autoload.php';
 
     use Symfony\Component\HttpFoundation\Request;
     use Symfony\Component\HttpFoundation\Response;
@@ -31,7 +31,7 @@ include file::
 
     // framework/init.php
 
-    require_once __DIR__.'/autoload.php';
+    require_once __DIR__.'/vendor/autoload.php';
 
     use Symfony\Component\HttpFoundation\Request;
     use Symfony\Component\HttpFoundation\Response;
@@ -87,7 +87,7 @@ Such a script might look like the following::
 
     // framework/front.php
 
-    require_once __DIR__.'/autoload.php';
+    require_once __DIR__.'/vendor/autoload.php';
 
     use Symfony\Component\HttpFoundation\Request;
     use Symfony\Component\HttpFoundation\Response;
@@ -160,7 +160,6 @@ outside the web root directory:
     example.com
     ├── composer.json
     │   src
-    │   ├── autoload.php
     │   └── pages
     │       ├── hello.php
     │       └── bye.php
@@ -212,7 +211,7 @@ We have our framework for today::
 
     // example.com/web/front.php
 
-    require_once __DIR__.'/../src/autoload.php';
+    require_once __DIR__.'/../vendor/autoload.php';
 
     use Symfony\Component\HttpFoundation\Request;
     use Symfony\Component\HttpFoundation\Response;

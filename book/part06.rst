@@ -41,7 +41,6 @@ component::
 
     {
         "require": {
-            "symfony/class-loader": "2.1.*",
             "symfony/http-foundation": "2.1.*",
             "symfony/routing": "2.1.*",
             "symfony/http-kernel": "2.1.*"

@@ -1,12 +1,12 @@
 The HttpFoundation Component
 ============================
 
-Before we dive into the code refactoring, I first want to step back and take a
-look at why you would like to use a framework instead of keeping your
-plain-old PHP applications as is. Why using a framework is actually a good
-idea, even for the simplest snippet of code and why creating your framework on
-top of the Symfony2 components is better than creating a framework from
-scratch.
+Before diving into the framework creation process, I first want to step back
+and take a look at why you would like to use a framework instead of keeping
+your plain-old PHP applications as is. Why using a framework is actually a
+good idea, even for the simplest snippet of code and why creating your
+framework on top of the Symfony2 components is better than creating a
+framework from scratch.
 
 .. note::
 
@@ -106,8 +106,7 @@ Going OOP with the HttpFoundation Component
 -------------------------------------------
 
 Writing web code is about interacting with HTTP. So, the fundamental
-principles of our framework should be centered around the `HTTP
-specification`_.
+principles of our framework should be around the `HTTP specification`_.
 
 The HTTP specification describes how a client (a browser for instance)
 interacts with a server (our application via a web server). The dialog between
@@ -131,7 +130,6 @@ dependency for the project:
 
     {
         "require": {
-            "symfony/class-loader": "2.1.*",
             "symfony/http-foundation": "2.1.*"
         }
     }
@@ -142,15 +140,6 @@ Then, run the composer ``update`` command:
 
     $ php composer.phar update
 
-Finally, at the bottom of the ``autoload.php`` file, add the code needed to
-autoload the component::
-
-    <?php
-
-    // framework/autoload.php
-
-    $loader->registerNamespace('Symfony\\Component\\HttpFoundation', __DIR__.'/vendor/symfony/http-foundation');
-
 Now, let's rewrite our application by using the ``Request`` and the
 ``Response`` classes::
 
@@ -158,7 +147,7 @@ Now, let's rewrite our application by using the ``Request`` and the
 
     // framework/index.php
 
-    require_once __DIR__.'/autoload.php';
+    require_once __DIR__.'/vendor/autoload.php';
 
     use Symfony\Component\HttpFoundation\Request;
     use Symfony\Component\HttpFoundation\Response;

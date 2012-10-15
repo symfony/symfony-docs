@@ -64,9 +64,9 @@ Propel, or plain-old PDO for the Model; PHP or Twig for the View).
 When creating a framework, following the MVC pattern is not the right goal.
 The main goal should be the Separation of Concerns; I actually think that this
 is the only design pattern that you should really care about. The fundamental
-principles of the Symfony2 Components are centered around the HTTP
-specification. As such, the frameworks that we are going to create should be
-more accurately labelled as HTTP frameworks or Request/Response frameworks.
+principles of the Symfony2 Components are focused on the HTTP specification.
+As such, the frameworks that we are going to create should be more accurately
+labelled as HTTP frameworks or Request/Response frameworks.
 
 Before we start
 ---------------
@@ -97,20 +97,18 @@ Components Installation
 ~~~~~~~~~~~~~~~~~~~~~~~
 
 To install the Symfony2 Components that we need for our framework, we are
-going to use `Composer`_, a project dependency manager for PHP. First, list
-your dependencies in a ``composer.json`` file:
+going to use `Composer`_, a project dependency manager for PHP. Create a
+``composer.json`` file, where we will list our dependencies:
 
 .. code-block:: javascript
 
     {
         "require": {
-            "symfony/class-loader": "2.1.*"
         }
     }
 
-Here, we tell Composer that our project depends on the Symfony2 ClassLoader
-component, version 2.1.0 or later. To actually install the project
-dependencies, download the composer binary and run it:
+The file is empty for now as we do not depend on anything yet. To install the
+project dependencies, download the composer binary and run it:
 
 .. code-block:: sh
 
@@ -121,13 +119,7 @@ dependencies, download the composer binary and run it:
     $ php composer.phar install
 
 After running the ``install`` command, you must see a new ``vendor/``
-directory that must contain the Symfony2 ClassLoader code.
-
-.. note::
-
-    Even if we highly recommend you the use of Composer, you can also download
-    the archives of the components directly or use Git submodules. That's
-    really up to you.
+directory.
 
 Naming Conventions and Autoloading
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -137,42 +129,8 @@ require the file where a class is defined before being able to use it. But
 with some conventions, we can just let PHP do the hard work for us.
 
 Symfony2 follows the de-facto PHP standard, `PSR-0`_, for class names and
-autoloading. The Symfony2 ClassLoader Component provides an autoloader that
-implements this PSR-0 standard and most of the time, the Symfony2 ClassLoader
-is all you need to autoload all your project classes.
-
-Create an empty autoloader in a new ``autoload.php`` file:
-
-.. code-block:: php
-
-    <?php
-
-    // framework/autoload.php
-
-    require_once __DIR__.'/vendor/symfony/class-loader/Symfony/Component/ClassLoader/UniversalClassLoader.php';
-
-    use Symfony\Component\ClassLoader\UniversalClassLoader;
-
-    $loader = new UniversalClassLoader();
-    $loader->register();
-
-You can now run the ``autoload.php`` on the CLI, it should not do anything and
-should not throw any error:
-
-.. code-block:: sh
-
-    $ php autoload.php
-
-.. tip::
-
-    The Symfony website has more information about the `ClassLoader`_
-    component.
-
-.. note::
-
-    Composer automatically creates an autoloader for all your installed
-    dependencies; instead of using the ClassLoader component, you can also
-    just require ``vendor/.composer/autoload.php``.
+autoloading and Composer generates such an autoloader for all the dependencies
+it manages; it can be enabled by requiring the ``vendor/autoload.php`` file.
 
 Our Project
 -----------
@@ -182,6 +140,8 @@ Instead of creating our framework from scratch, we are going to write the same
 start with the simplest web application we can think of in PHP::
 
     <?php
+
+    // framework/index.php
 
     $input = $_GET['name'];
 
