@@ -1367,7 +1367,12 @@ Some notable or interesting tasks include:
 
   .. code-block:: bash
 
-    $ php app/console doctrine:ensure-production-settings --env=prod
+      $ php app/console doctrine:ensure-production-settings --no-debug --env=prod
+
+  .. caution::
+
+      Don't forget to add the ``--no-debug`` switch, because the debug flag is 
+      always set to true, even if the environment is set to ``prod``.
 
 * ``doctrine:mapping:import`` - allows Doctrine to introspect an existing
   database and create mapping information. For more information, see
