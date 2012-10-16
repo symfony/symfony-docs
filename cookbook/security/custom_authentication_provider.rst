@@ -489,7 +489,7 @@ Configuration
 ~~~~~~~~~~~~~
 
 You can add custom options under the ``wsse`` key in your security configuration.
-For instance, the time allowed before expiring the Created header item,
+For instance, the time allowed before expiring the ``Created`` header item,
 by default, is 5 minutes. Make this configurable, so different firewalls
 can have different timeout lengths.
 
