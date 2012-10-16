@@ -330,7 +330,7 @@ option to another value.
 Redirecting on Login Failure
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-In addition to redirect the user after a successful login, you can also set
+In addition to redirecting the user after a successful login, you can also set
 the URL that the user should be redirected to after a failed login (e.g. an
 invalid username or password was submitted). By default, the user is redirected
 back to the login form itself. You can set this to a different URL with the
