@@ -304,7 +304,7 @@ convenient for passwords::
 
     When you ask an hidden response, Symfony will use either a binary, change
     stty mode or use another trick to hide the response. If none is available,
-    it will fallback on the classic question unless you pass `false` as the
+    it will fallback on the classic question unless you pass ``false`` as the
     third argument like in the example above. In this case, a RuntimeException
     would be thrown.
 
@@ -316,7 +316,7 @@ You can easily ask question and validate response with built-in methods::
     $dialog = $this->getHelperSet()->get('dialog');
 
     $validator = function ($value) {
-        if (trim($value) === '') {
+        if (trim($value) == '') {
             throw new \Exception('The value can not be empty');
         }
     }
@@ -330,18 +330,18 @@ You can easily ask question and validate response with built-in methods::
     );
 
 The validation callback can be any callable PHP function, the fourth argument is
-the maximum number of attempts, set it to `false` for unlimited attempts. The
+the maximum number of attempts, set it to ``false`` for unlimited attempts. The
 fifth argument is the default value.
 
 .. versionadded:: 2.2
-    The ``askHiddenResponse`` method was added in Symfony 2.2.
+    The ``askHiddenResponseAndValidate`` method was added in Symfony 2.2.
 
 You can also ask and validate hidden response::
 
     $dialog = $this->getHelperSet()->get('dialog');
 
     $validator = function ($value) {
-        if (trim($value) === '') {
+        if (trim($value) == '') {
             throw new \Exception('The password can not be empty');
         }
     }
