@@ -156,7 +156,7 @@ the following config:
             ),
         ));
 
-Now, when no URL is set in the session users will be sent to ``/admin``.
+Now, when no URL is set in the session, users will be sent to ``/admin``.
 
 Always Redirect to the Default Page
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
