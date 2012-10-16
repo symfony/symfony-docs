@@ -287,6 +287,76 @@ if you needed to know the name of something, you might do the following::
         'foo'
     );
 
+.. versionadded:: 2.2
+    The ``askHiddenResponse`` method was added in Symfony 2.2.
+
+You can also ask question and hide the response. This is particularly
+convenient for passwords::
+
+    $dialog = $this->getHelperSet()->get('dialog');
+    $password = $dialog->askHiddenResponse(
+        $output,
+        'What is the database password ?',
+        false
+    );
+
+.. caution::
+
+    When you ask an hidden response, Symfony will use either a binary, change
+    stty mode or use another trick to hide the response. If none is available,
+    it will fallback on the classic question unless you pass `false` as the
+    third argument like in the example above. In this case, a RuntimeException
+    would be thrown.
+
+Ask and validate response
+-------------------------
+
+You can easily ask question and validate response with built-in methods::
+
+    $dialog = $this->getHelperSet()->get('dialog');
+
+    $validator = function ($value) {
+        if (trim($value) === '') {
+            throw new \Exception('The value can not be empty');
+        }
+    }
+
+    $password = $dialog->askAndValidate(
+        $output,
+        'Please enter the name of the widget',
+        $validator,
+        20,
+        'foo'
+    );
+
+The validation callback can be any callable PHP function, the fourth argument is
+the maximum number of attempts, set it to `false` for unlimited attempts. The
+fifth argument is the default value.
+
+.. versionadded:: 2.2
+    The ``askHiddenResponse`` method was added in Symfony 2.2.
+
+You can also ask and validate hidden response::
+
+    $dialog = $this->getHelperSet()->get('dialog');
+
+    $validator = function ($value) {
+        if (trim($value) === '') {
+            throw new \Exception('The password can not be empty');
+        }
+    }
+
+    $password = $dialog->askHiddenResponseAndValidate(
+        $output,
+        'Please enter the name of the widget',
+        $validator,
+        20,
+        false
+    );
+
+If you want to fallback on classic question in case hidden response can not be
+provided, pass true as fifth argument.
+
 Displaying a Progress Bar
 -------------------------
 
@@ -310,7 +380,7 @@ pass it a total number of units, and advance the progress as your command execut
 
         // advance the progress bar 1 unit
         $progress->advance();
-    } 
+    }
 
     $progress->finish();
 
@@ -346,7 +416,7 @@ To see other available options, check the API documentation for
     to a high number. For example, if you're iterating over a large number
     of items, consider a smaller "step" number that updates on only some
     iterations::
-    
+
         $progress->start($output, 500);
         $i = 0;
         while ($i++ < 50000) {
