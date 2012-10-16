@@ -7,7 +7,7 @@ How to force HTTPS or HTTP for Different URLs
 You can force areas of your site to use the ``HTTPS`` protocol in the security
 config. This is done through the ``access_control`` rules using the ``requires_channel``
 option. For example, if you want to force all URLs starting with ``/secure``
-to use ``HTTPS`` then you could use the following config:
+to use ``HTTPS`` then you could use the following configuration:
 
 .. configuration-block::
 
