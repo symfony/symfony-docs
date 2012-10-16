@@ -106,7 +106,7 @@ You can change where the login form redirects after a successful login using
 the various config options. By default the form will redirect to the URL the
 user requested (i.e. the URL which triggered the login form being shown).
 For example, if the user requested ``http://www.example.com/admin/post/18/edit``,
-then after he/she successfully logs in, he/she will eventually be sent back to
+then after they successfully logs in, they will eventually be sent back to
 ``http://www.example.com/admin/post/18/edit``.
 This is done by storing the requested URL in the session.
 If no URL is present in the session (perhaps the user went
