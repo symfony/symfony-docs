@@ -1369,7 +1369,7 @@ Some notable or interesting tasks include:
 
   .. code-block:: bash
 
-    $ php app/console doctrine:ensure-production-settings --env=prod
+      $ php app/console doctrine:ensure-production-settings --env=prod
 
 * ``doctrine:mapping:import`` - allows Doctrine to introspect an existing
   database and create mapping information. For more information, see
