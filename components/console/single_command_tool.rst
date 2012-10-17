@@ -24,6 +24,7 @@ it is possible to remove this need by extending the application::
          */
         protected function getCommandName(InputInterface $input)
         {
+            // This should return the name of your command.
             return 'my_command';
         }
 

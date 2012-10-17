@@ -7,4 +7,3 @@ Console
     console_command
     usage
     generating_urls
-    single_command_tool
