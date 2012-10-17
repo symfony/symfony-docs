@@ -18,6 +18,7 @@ forms, which is useful when creating forms that expose one-to-many relationships
 |             | - `allow_add`_                                                              |
 |             | - `allow_delete`_                                                           |
 |             | - `prototype`_                                                              |
+|             | - `prototype_name`_                                                         |
 +-------------+-----------------------------------------------------------------------------+
 | Inherited   | - `label`_                                                                  |
 | options     | - `error_bubbling`_                                                         |
@@ -312,6 +313,18 @@ rendering your form, having the entire "form row" may be easier for you.
 
 For details on how to actually use this option, see the above example as well
 as :ref:`cookbook-form-collections-new-prototype`.
+
+prototype_name
+~~~~~~~~~~~~~~
+
+.. versionadded:: 2.1
+    The ``prototype_name`` option was added in Symfony 2.1
+
+**type**: ``String`` **default**: ``__name__``
+
+If you have several collections in your form, or worse, nested collections
+you may want to change the placeholder so that unrelated placeholders are not
+replaced with the same value.
 
 Inherited options
 -----------------
