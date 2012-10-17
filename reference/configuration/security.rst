@@ -56,6 +56,7 @@ Each part will be explained in the next section.
                     iterations:          5000
 
                 # PBKDF2 encoder
+                # see the note about PBKDF2 below for details on security and speed
                 Acme\Your\Class\Name:
                     algorithm:            pbkdf2
                     hash_algorithm:       sha512
@@ -196,17 +197,6 @@ Each part will be explained in the next section.
                 ROLE_ADMIN:      [ROLE_ORGANIZER, ROLE_USER]
                 ROLE_SUPERADMIN: [ROLE_ADMIN]
 
-.. caution::
-    PBKDF2 encoder uses the PBKDF2 (Password-Based Key Derivation Function 2).
-
-    Providing a high level of Cryptographic security,
-    as recommended by the National Institute of Standards and Technology (NIST).
-
-    But also warrants a warning, using PBKDF2 (with a high number of iterations) slows down the process.
-    PBKDF2 should be used with caution and care.
-    
-    A good configuration lies around at least 1000 iterations and sha512 for the hash algorithm.
-
 .. _reference-security-firewall-form-login:
 
 Form Login Configuration
@@ -261,3 +251,18 @@ Redirecting after Login
 * ``default_target_path`` (type: ``string``, default: ``/``)
 * ``target_path_parameter`` (type: ``string``, default: ``_target_path``)
 * ``use_referer`` (type: ``Boolean``, default: ``false``)
+
+Using the PBKDF2 encoder: security and speed
+--------------------------------------------
+
+The `PBKDF2`_ encoder provides a high level of Cryptographic security, as
+recommended by the National Institute of Standards and Technology (NIST).
+
+But using PBKDF2 also warrants a warning: using it (with a high number
+of iterations) slows down the process. Thus, PBKDF2 should be used with
+caution and care.
+
+A good configuration lies around at least 1000 iterations and sha512
+for the hash algorithm.
+
+.. _`PBKDF2`: http://en.wikipedia.org/wiki/PBKDF2
