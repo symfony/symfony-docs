@@ -618,7 +618,7 @@ the regular expression ``(en|fr)``.
 Requirements defined in the Service Container
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-If for some reason you need to define some configurable requirements,  you can
+If, for some reason, you need to define some configurable requirements,  you can
 use a parameter from the Service Container. For instance, if you have a
 ``_locale`` parameter in the routes and you like it to be configurable,
 you can do this:
