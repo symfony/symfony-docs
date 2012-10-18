@@ -60,5 +60,6 @@ instead::
 
     $process = new PhpProcess(<<<EOF
         <?php echo 'Hello World'; ?>
-    EOF);
+    EOF
+    );
     $process->run();
