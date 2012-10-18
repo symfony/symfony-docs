@@ -26,6 +26,8 @@ Configuration
     * field_name
 * `session`_
     * `lifetime`_
+* `serializer`_
+    * enabled
 * `templating`_
     * `assets_base_urls`_
     * `assets_version`_
@@ -111,6 +113,23 @@ lifetime
 
 This determines the lifetime of the session - in seconds. By default it will use
 ``0``, which means the cookie is valid for the length of the browser session.
+
+serializer
+~~~~~~~~~~
+
+enabled
+.......
+
+**type**: ``boolean`` **default**: ``false``
+
+Whether to enable or not the serializer service in the service container. If enabled,
+the serializer will be loaded along with two encoders (:class:`Symfony\\Component\\Serializer\\Encoder\\JsonEncoder` 
+and :class:`Symfony\\Component\\Serializer\\Encoder\\XmlEncoder)
+and one normalizer (:class:`Symfony\\Component\\Serializer\\Normalizer\\GetSetMethodNormalizer`).
+
+You can add more normalizers and/or encoders by tagging them as `serializer.encoder` and
+`serializer.normalizer`. It's also possible to set the priority of the tag in order to decide the
+matching order.
 
 templating
 ~~~~~~~~~~
@@ -318,6 +337,10 @@ Full Default Configuration
 
                 # DEPRECATED! Please use: cookie_httponly
                 httponly:             ~
+
+            # serializer configuration
+            serializer:
+               enabled: false
 
             # templating configuration
             templating:
