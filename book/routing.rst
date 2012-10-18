@@ -612,6 +612,16 @@ the regular expression ``(en|fr)``.
 | /es | *won't match this route* |
 +-----+--------------------------+
 
+.. sidebar:: Requirements defined in the container
+
+    If for some reason you need to define some configurable requirements,
+    you can use a parameter from the service container. For instance, if you
+    have a _locale parameter in the routes and you like it to be configurable,
+    you can do this: requirements: _locale: %locale%
+
+    Then just define in the container a locale parameter. This is quite useful
+    if you don't want to search all your code only to change a simple requirement.
+
 .. index::
    single: Routing; Method requirement
 
