@@ -628,7 +628,7 @@ you can do this:
     .. code-block:: yaml
 
         contact:
-            pattern:  /_locale/contact
+            pattern:  /{_locale}/contact
             defaults: { _controller: AcmeDemoBundle:Main:contact }
             requirements:
                 _locale: %locale%
@@ -641,7 +641,7 @@ you can do this:
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/routing http://symfony.com/schema/routing/routing-1.0.xsd">
 
-            <route id="contact" pattern="/_locale/contact">
+            <route id="contact" pattern="/{_locale}/contact">
                 <default key="_controller">AcmeDemoBundle:Main:contact</default>
                 <requirement key="_locale">%locale%</requirement>
             </route>
@@ -653,7 +653,7 @@ you can do this:
         use Symfony\Component\Routing\Route;
 
         $collection = new RouteCollection();
-        $collection->add('contact', new Route('/_locale/contact', array(
+        $collection->add('contact', new Route('/{_locale}/contact', array(
             '_controller' => 'AcmeDemoBundle:Main:contact',
         ), array(
             '_locale' => '%locale%',
