@@ -1221,13 +1221,13 @@ rendered (e.g. ``label``, ``widget``, ``errors``, etc). By default, there
 are 4 possible *parts* of a form that can be rendered:
 
 +-------------+--------------------------+---------------------------------------------------------+
-| ``label``   | (e.g. ``form_label``)   | renders the field's label                               |
+| ``label``   | (e.g. ``form_label``)   | renders the field's label                                |
 +-------------+--------------------------+---------------------------------------------------------+
-| ``widget``  | (e.g. ``form_widget``)  | renders the field's HTML representation                 |
+| ``widget``  | (e.g. ``form_widget``)  | renders the field's HTML representation                  |
 +-------------+--------------------------+---------------------------------------------------------+
-| ``errors``  | (e.g. ``form_errors``)  | renders the field's errors                              |
+| ``errors``  | (e.g. ``form_errors``)  | renders the field's errors                               |
 +-------------+--------------------------+---------------------------------------------------------+
-| ``row``     | (e.g. ``form_row``)     | renders the field's entire row (label, widget & errors) |
+| ``row``     | (e.g. ``form_row``)     | renders the field's entire row (label, widget & errors)  |
 +-------------+--------------------------+---------------------------------------------------------+
 
 .. note::
