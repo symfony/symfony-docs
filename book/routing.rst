@@ -417,6 +417,50 @@ match, giving the ``page`` parameter a value of ``2``. Perfect.
 | /blog/2 | {page} = 2 |
 +---------+------------+
 
+Routing with patterns from the Service Container
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 2.1
+    This feature was added in Symfony 2.1
+
+You can define patterns using parameters defined in the Service Container.
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        some_route:
+            pattern:  /%parameter_name%
+            defaults: { _controller: AcmeDemoBundle:Main:index }
+
+    .. code-block:: xml
+
+        <?xml version="1.0" encoding="UTF-8" ?>
+
+        <routes xmlns="http://symfony.com/schema/routing"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/routing http://symfony.com/schema/routing/routing-1.0.xsd">
+
+            <route id="some_route" pattern="/%parameter_name%">
+                <default key="_controller">AcmeDemoBundle:Main:index</default>
+            </route>
+        </routes>
+
+    .. code-block:: php
+
+        use Symfony\Component\Routing\RouteCollection;
+        use Symfony\Component\Routing\Route;
+
+        $collection = new RouteCollection();
+        $collection->add('some_route', new Route('/%parameter_name%', array(
+            '_controller' => 'AcmeDemoBundle:Main:contact',
+        )));
+
+        return $collection;
+
+.. note::
+    You can escape a parameter by doubling the ``%``, e.g. ``/%%parameter_name%%``
+
 .. index::
    single: Routing; Requirements
 
