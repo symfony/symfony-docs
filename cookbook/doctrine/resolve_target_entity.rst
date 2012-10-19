@@ -5,7 +5,7 @@
 How to Define Relationships with Abstract Classes and Interfaces
 ================================================================
 
-.. versionadded: 2.1
+.. versionadded:: 2.1
     The ResolveTargetEntityListener is new to Doctrine 2.2, which was first
     packaged with Symfony 2.1.
 
