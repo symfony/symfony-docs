@@ -417,8 +417,8 @@ match, giving the ``page`` parameter a value of ``2``. Perfect.
 | /blog/2 | {page} = 2 |
 +---------+------------+
 
-Routing with patterns from the Service Container
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Routing with patterns using parameters from the Service Container
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. versionadded:: 2.1
     This feature was added in Symfony 2.1
@@ -662,8 +662,8 @@ the regular expression ``(en|fr)``.
 .. index::
    single: Routing; Requirements service
 
-Requirements defined in the Service Container
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Requirements using parameters from the Service Container
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. versionadded:: 2.1
     This feature was added in Symfony 2.1
