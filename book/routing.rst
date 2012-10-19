@@ -616,6 +616,61 @@ the regular expression ``(en|fr)``.
 +-----+--------------------------+
 
 .. index::
+   single: Routing; Requirements service
+
+Requirements defined in the Service Container
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 2.1
+    This feature was added in Symfony 2.1
+
+If, for some reason, you need to define some configurable requirements,  you can
+use a parameter from the Service Container. For instance, if you have a
+``_locale`` parameter in the routes and you like it to be configurable,
+you can do this:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        contact:
+            pattern:  /{_locale}/contact
+            defaults: { _controller: AcmeDemoBundle:Main:contact }
+            requirements:
+                _locale: %locale%
+
+    .. code-block:: xml
+
+        <?xml version="1.0" encoding="UTF-8" ?>
+
+        <routes xmlns="http://symfony.com/schema/routing"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/routing http://symfony.com/schema/routing/routing-1.0.xsd">
+
+            <route id="contact" pattern="/{_locale}/contact">
+                <default key="_controller">AcmeDemoBundle:Main:contact</default>
+                <requirement key="_locale">%locale%</requirement>
+            </route>
+        </routes>
+
+    .. code-block:: php
+
+        use Symfony\Component\Routing\RouteCollection;
+        use Symfony\Component\Routing\Route;
+
+        $collection = new RouteCollection();
+        $collection->add('contact', new Route('/{_locale}/contact', array(
+            '_controller' => 'AcmeDemoBundle:Main:contact',
+        ), array(
+            '_locale' => '%locale%',
+        )));
+
+        return $collection;
+
+Then just define in the container the locale parameter. This is quite useful
+if you don't want to search all your code only to change a simple requirement.
+
+.. index::
    single: Routing; Method requirement
 
 Adding HTTP Method Requirements
