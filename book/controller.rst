@@ -370,7 +370,7 @@ itself.
 
     Extending the base class is *optional* in Symfony; it contains useful
     shortcuts but nothing mandatory. You can also extend
-    :class:`Symfony\Component\DependencyInjection\ContainerAware`. The service
+    :class:`Symfony\\Component\\DependencyInjection\\ContainerAware`. The service
     container object will then be accessible via the ``container`` property.
 
 .. note::
