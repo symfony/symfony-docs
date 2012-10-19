@@ -1072,7 +1072,7 @@ to the given ``Category`` object via their ``category_id`` value.
     all at once (via a *join*), Doctrine will return the *true* ``Category``
     object, since nothing needs to be lazily loaded.
 
-Joining to Related Records
+Joining two Related Records
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 In the above examples, two queries were made - one for the original object
