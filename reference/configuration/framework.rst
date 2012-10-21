@@ -127,8 +127,8 @@ the serializer will be loaded along with two encoders (:class:`Symfony\\Componen
 and :class:`Symfony\\Component\\Serializer\\Encoder\\XmlEncoder)
 and one normalizer (:class:`Symfony\\Component\\Serializer\\Normalizer\\GetSetMethodNormalizer`).
 
-You can add more normalizers and/or encoders by tagging them as `serializer.encoder` and
-`serializer.normalizer`. It's also possible to set the priority of the tag in order to decide the
+You can add more normalizers and/or encoders by tagging them as ``serializer.encoder`` and
+``serializer.normalizer``. It's also possible to set the priority of the tag in order to decide the
 matching order.
 
 templating
