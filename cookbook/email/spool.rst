@@ -53,6 +53,24 @@ swiftmailer with the memory option, use the following configuration:
             'spool' => array('type' => 'memory')
         ));
         
+.. note::
+
+    If you are trying to sent emails from within a console command, you must
+    trigger the sending of all spooled messages by yourself as the kernel 
+    terminate event doesn't get called. Use the following code to sent
+    emails inside your console command::
+
+        $container = $this->getContainer();
+        $mailer = $container->get('mailer');
+        $spool = $mailer->getTransport()->getSpool();
+        $transport = $container->get('swiftmailer.transport.real');
+
+        $spool->flushQueue($transport);
+        
+    Another option is to create an environment which is only used by console
+    commands and either deactivate spooling, thus sending messages directly, or
+    use file spooling and then send spooled emails as described below.
+        
 Spool using a file
 ------------------
 
