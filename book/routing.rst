@@ -786,7 +786,12 @@ that are special: each adds a unique piece of functionality inside your applicat
 
 * ``_format``: Used to set the request format (:ref:`read more<book-routing-format-param>`);
 
-* ``_locale``: Used to set the locale on the session (:ref:`read more<book-translation-locale-url>`);
+* ``_locale``: Used to set the locale on the request (:ref:`read more<book-translation-locale-url>`);
+
+.. tip::
+
+    If you use the ``_locale`` parameter in a route, that value will also
+    be stored on the session so that subsequent requests keep this same locale.
 
 .. index::
    single: Routing; Controllers
@@ -1054,6 +1059,17 @@ the route name after the command:
 .. code-block:: bash
 
     $ php app/console router:debug article_show
+
+.. versionadded:: 2.1
+    The ``router:match`` command was added in Symfony 2.1
+
+You can check which, if any, route matches a path with the ``router:match``
+console command:
+
+.. code-block:: bash
+
+    $ php app/console router:match /articles/en/2012/article.rss
+    Route "article_show" matches
 
 .. index::
    single: Routing; Generating URLs

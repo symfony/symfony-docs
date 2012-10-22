@@ -154,7 +154,10 @@ kernel::
     $kernel->loadClassCache();
     // wrap the default AppKernel with the AppCache one
     $kernel = new AppCache($kernel);
-    $kernel->handle(Request::createFromGlobals())->send();
+    $request = Request::createFromGlobals();
+    $response = $kernel->handle($request);
+    $response->send();
+    $kernel->terminate($request, $response);
 
 The caching kernel will immediately act as a reverse proxy - caching responses
 from your application and returning them to the client.

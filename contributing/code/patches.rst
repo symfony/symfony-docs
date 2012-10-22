@@ -14,8 +14,8 @@ Before working on Symfony2, setup a friendly environment with the following
 software:
 
 * Git;
-* PHP version 5.3.2 or above;
-* PHPUnit 3.5.11 or above.
+* PHP version 5.3.3 or above;
+* PHPUnit 3.6.4 or above.
 
 Configure Git
 ~~~~~~~~~~~~~

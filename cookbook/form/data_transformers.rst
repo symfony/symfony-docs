@@ -102,14 +102,15 @@ Now that you have the transformer built, you just need to add it to your
 issue field in some form.
 
     You can also use transformers without creating a new custom form type
-    by calling ``prependNormTransformer`` (or ``appendClientTransformer`` - see
-    `Norm and Client Transformers`_) on any field builder::
+    by calling ``addModelTransformer`` (or ``addViewTransformer`` - see
+    `Model and View Transformers`_) on any field builder::
 
+        use Symfony\Component\Form\FormBuilderInterface;
         use Acme\TaskBundle\Form\DataTransformer\IssueToNumberTransformer;
 
         class TaskType extends AbstractType
         {
-            public function buildForm(FormBuilder $builder, array $options)
+            public function buildForm(FormBuilderInterface $builder, array $options)
             {
                 // ...
 
@@ -120,7 +121,7 @@ issue field in some form.
                 // add a normal text field, but add our transformer to it
                 $builder->add(
                     $builder->create('issue', 'text')
-                        ->prependNormTransformer($transformer)
+                        ->addModelTransformer($transformer)
                 );
             }
 
@@ -152,51 +153,56 @@ its error message can be controlled with the ``invalid_message`` field option.
         // THIS IS WRONG - TRANSFORMER WILL BE APPLIED TO THE ENTIRE FORM
         // see above example for correct code
         $builder->add('issue', 'text')
-            ->prependNormTransformer($transformer);
+            ->addModelTransformer($transformer);
 
-Norm and Client Transformers
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Model and View Transformers
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-In the above example, the transformer was used as a "norm" transformer.
+.. versionadded:: 2.1
+    The names and method of the transformers were changed in Symfony 2.1.
+    ``prependNormTransformer`` became ``addModelTransformer`` and ``appendClientTransformer``
+    became ``addViewTransformer``.
+
+In the above example, the transformer was used as a "model" transformer.
 In fact, there are two different type of transformers and three different
 types of underlying data.
 
 In any form, the 3 different types of data are:
 
-1) **App data** - This is the data in the format used in your application
+1) **Model data** - This is the data in the format used in your application
 (e.g. an ``Issue`` object). If you call ``Form::getData`` or ``Form::setData``, 
-you're dealing with the "app" data.
+you're dealing with the "model" data.
 
 2) **Norm Data** - This is a normalized version of your data, and is commonly
-the same as your "app" data (though not in our example). It's not commonly
+the same as your "model" data (though not in our example). It's not commonly
 used directly.
 
-3) **Client Data** - This is the format that's used to fill in the form fields
+3) **View Data** - This is the format that's used to fill in the form fields
 themselves. It's also the format in which the user will submit the data. When
-you call ``Form::bind($data)``, the ``$data`` is in the "client" data format.
+you call ``Form::bind($data)``, the ``$data`` is in the "view" data format.
 
 The 2 different types of transformers help convert to and from each of these
 types of data:
 
-**Norm transformers**:
-    - ``transform``: "app data" => "norm data"
-    - ``reverseTransform``: "norm data" => "app data"
+**Model transformers**:
+    - ``transform``: "model data" => "norm data"
+    - ``reverseTransform``: "norm data" => "model data"
 
-**Client transformers**:
-    - ``transform``: "norm data" => "client data"
-    - ``reverseTransform``: "client data" => "norm data"
+**View transformers**:
+    - ``transform``: "norm data" => "view data"
+    - ``reverseTransform``: "view data" => "norm data"
 
 Which transformer you need depends on your situation.
 
-To use the client transformer, call ``appendClientTransformer``.
+To use the view transformer, call ``addViewTransformer``.
 
-So why did we use the norm transformer?
----------------------------------------
+So why did we use the model transformer?
+----------------------------------------
 
 In our example, the field is a ``text`` field, and we always expect a text
-field to be a simple, scalar format in the "norm" and "client" formats. For
-this reason, the most appropriate transformer was the "norm" transformer
-(which converts to/from the *norm* format - string issue number - to the *app*
+field to be a simple, scalar format in the "norm" and "view" formats. For
+this reason, the most appropriate transformer was the "model" transformer
+(which converts to/from the *norm* format - string issue number - to the *model*
 format - Issue object).
 
 The difference between the transformers is subtle and you should always think
@@ -223,9 +229,10 @@ First, create the custom field type class::
     namespace Acme\TaskBundle\Form\Type;
 
     use Symfony\Component\Form\AbstractType;
-    use Symfony\Component\Form\FormBuilder;
+    use Symfony\Component\Form\FormBuilderInterface;
     use Acme\TaskBundle\Form\DataTransformer\IssueToNumberTransformer;
     use Doctrine\Common\Persistence\ObjectManager;
+    use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
     class IssueSelectorType extends AbstractType
     {
@@ -242,20 +249,20 @@ First, create the custom field type class::
             $this->om = $om;
         }
 
-        public function buildForm(FormBuilder $builder, array $options)
+        public function buildForm(FormBuilderInterface $builder, array $options)
         {
             $transformer = new IssueToNumberTransformer($this->om);
-            $builder->prependNormTransformer($transformer);
+            $builder->addModelTransformer($transformer);
         }
 
-        public function getDefaultOptions(array $options)
+        public function setDefaultOptions(OptionsResolverInterface $resolver)
         {
-            return array(
+            $resolver->setDefaults(array(
                 'invalid_message' => 'The selected issue does not exist',
-            );
+            ));
         }
 
-        public function getParent(array $options)
+        public function getParent()
         {
             return 'text';
         }
@@ -294,11 +301,11 @@ it's quite easy::
     namespace Acme\TaskBundle\Form\Type;
 
     use Symfony\Component\Form\AbstractType;
-    use Symfony\Component\Form\FormBuilder;
+    use Symfony\Component\Form\FormBuilderInterface;
 
     class TaskType extends AbstractType
     {
-        public function buildForm(FormBuilder $builder, array $options)
+        public function buildForm(FormBuilderInterface $builder, array $options)
         {
             $builder
                 ->add('task')

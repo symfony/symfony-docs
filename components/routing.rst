@@ -137,7 +137,6 @@ the POST method and a secure connection::
             array('suffix' => '.*')
         );
 
-
 Using Prefixes
 ~~~~~~~~~~~~~~
 

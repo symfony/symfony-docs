@@ -78,13 +78,13 @@ To get started, you'll need to download Symfony2 and get the basic Subversion se
 
         $ svn propset svn:ignore "vendor" .
         $ svn propset svn:ignore "bootstrap*" app/
-        $ svn propset svn:ignore "parameters.ini" app/config/
+        $ svn propset svn:ignore "parameters.yml" app/config/
         $ svn propset svn:ignore "*" app/cache/
         $ svn propset svn:ignore "*" app/logs/
 
         $ svn propset svn:ignore "bundles" web
 
-        $ svn ci -m "commit basic symfony ignore list (vendor, app/bootstrap*, app/config/parameters.ini, app/cache/*, app/logs/*, web/bundles)"
+        $ svn ci -m "commit basic symfony ignore list (vendor, app/bootstrap*, app/config/parameters.yml, app/cache/*, app/logs/*, web/bundles)"
 
 6. The rest of the files can now be added and committed to the project:
 
@@ -93,24 +93,20 @@ To get started, you'll need to download Symfony2 and get the basic Subversion se
         $ svn add --force .
         $ svn ci -m "add basic Symfony Standard 2.X.Y"
 
-7. Copy ``app/config/parameters.ini`` to ``app/config/parameters.ini.dist``.
-   The ``parameters.ini`` file is ignored by svn (see above) so that
+7. Copy ``app/config/parameters.yml`` to ``app/config/parameters.yml.dist``.
+   The ``parameters.yml`` file is ignored by svn (see above) so that
    machine-specific settings like database passwords aren't committed. By
-   creating the ``parameters.ini.dist`` file, new developers can quickly clone
-   the project, copy this file to ``parameters.ini``, customize it, and start
+   creating the ``parameters.yml.dist`` file, new developers can quickly clone
+   the project, copy this file to ``parameters.yml``, customize it, and start
    developing.
 
-8. Finally, download all of the third-party vendor libraries:
-
-   .. code-block:: bash
-
-        $ php bin/vendors install
+8. Finally, download all of the third-party vendor libraries by
+   executing composer. For details, see :ref:`installation-updating-vendors`.
 
 .. tip::
 
-    `git`_ has to be installed to run ``bin/vendors``, this is the protocol
-    used to fetch vendor libraries. This only means that ``git`` is used as
-    a tool to basically help download the libraries in the ``vendor/`` directory.
+	If you rely on any "dev" versions, then git may be used to install
+	those libraries, since there is no archive available for download.
 
 At this point, you have a fully-functional Symfony2 project stored in your
 Subversion repository. The development can start with commits in the Subversion

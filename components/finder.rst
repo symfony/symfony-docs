@@ -158,6 +158,26 @@ The ``notName()`` method excludes files matching a pattern::
 
     $finder->files()->notName('*.rb');
 
+File Contents
+~~~~~~~~~~~~~
+
+.. versionadded:: 2.1
+   Methods ``contains()`` and ``notContains()`` have been
+   introduced in version 2.1.
+
+Restrict files by contents with the
+:method:`Symfony\\Component\\Finder\\Finder::contains` method::
+
+    $finder->files()->contains('lorem ipsum');
+
+The ``contains()`` method accepts strings or regexes::
+
+    $finder->files()->contains('/lorem\s+ipsum$/i');
+
+The ``notContains()`` method excludes files containing given pattern::
+
+    $finder->files()->notContains('dolor sit amet');
+
 File Size
 ~~~~~~~~~
 
@@ -170,8 +190,11 @@ Restrict by a size range by chaining calls::
 
     $finder->files()->size('>= 1K')->size('<= 2K');
 
-The comparison operator can be any of the following: ``>``, ``>=``, ``<``, '<=',
-'=='.
+The comparison operator can be any of the following: ``>``, ``>=``, ``<``, ``<=``,
+``==``, ``!=``.
+
+.. versionadded:: 2.1
+   The operator ``!=`` was added in version 2.1.
 
 The target value may use magnitudes of kilobytes (``k``, ``ki``), megabytes
 (``m``, ``mi``), or gigabytes (``g``, ``gi``). Those suffixed with an ``i`` use
@@ -219,6 +242,25 @@ The ``filter()`` method takes a Closure as an argument. For each matching file,
 it is called with the file as a :class:`Symfony\\Component\\Finder\\SplFileInfo`
 instance. The file is excluded from the result set if the Closure returns
 ``false``.
+
+Reading contents of returned files
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 2.1
+   Method ``getContents()`` have been introduced in version 2.1.
+
+The contents of returned files can be read with
+:method:`Symfony\\Component\\Finder\\SplFileInfo::getContents`::
+
+    use Symfony\Component\Finder\Finder;
+
+    $finder = new Finder();
+    $finder->files()->in(__DIR__);
+
+    foreach ($finder as $file) {
+        $contents = $file->getContents();
+        ...
+    }
 
 .. _strtotime:   http://www.php.net/manual/en/datetime.formats.php
 .. _Iterator:     http://www.php.net/manual/en/spl.iterators.php

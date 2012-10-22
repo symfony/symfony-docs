@@ -377,6 +377,15 @@ and set a new ``Exception`` object, or do nothing:
         // $event->setException($exception);
     }
 
+.. note::
+
+    As Symfony ensures that the Response status code is set to the most
+    appropriate one depending on the exception, setting the status on the
+    response won't work. If you want to overwrite the status code (which you
+    should not without a good reason), set the ``X-Status-Code`` header::
+
+        return new Response('Error', 404 /* ignored */, array('X-Status-Code' => 200));
+
 .. index::
    single: Event Dispatcher
 
@@ -510,7 +519,6 @@ the configuration for the development environment:
         web_profiler:
             toolbar: true
             intercept_redirects: true
-            verbose: true
 
     .. code-block:: xml
 
@@ -549,10 +557,6 @@ when an exception is thrown by the application.
 When ``intercept-redirects`` is set to ``true``, the web profiler intercepts
 the redirects and gives you the opportunity to look at the collected data
 before following the redirect.
-
-When ``verbose`` is set to ``true``, the Web Debug Toolbar displays a lot of
-information. Setting ``verbose`` to ``false`` hides some secondary information
-to make the toolbar shorter.
 
 If you enable the web profiler, you also need to mount the profiler routes:
 

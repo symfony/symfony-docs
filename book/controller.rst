@@ -327,8 +327,8 @@ working with forms, for example::
     public function updateAction(Request $request)
     {
         $form = $this->createForm(...);
-        
-        $form->bindRequest($request);
+
+        $form->bind($request);
         // ...
     }
 
@@ -449,7 +449,7 @@ object that's returned from that controller::
         ));
 
         // ... further modify the response or return it directly
-        
+
         return $response;
     }
 
@@ -478,7 +478,7 @@ value to each variable.
     a shortcut for core Symfony2 functionality. A forward can be accomplished
     directly via the ``http_kernel`` service. A forward returns a ``Response``
     object::
-    
+
         $httpKernel = $this->container->get('http_kernel');
         $response = $httpKernel->forward('AcmeHelloBundle:Hello:fancy', array(
             'name'  => $name,
@@ -517,7 +517,7 @@ The Symfony templating engine is explained in great detail in the
 
     The ``renderView`` method is a shortcut to direct use of the ``templating``
     service. The ``templating`` service can also be used directly::
-    
+
         $templating = $this->get('templating');
         $content = $templating->render('AcmeHelloBundle:Hello:index.html.twig', array('name' => $name));
 
@@ -617,8 +617,8 @@ from any controller::
     // in another controller for another request
     $foo = $session->get('foo');
 
-    // set the user locale
-    $session->setLocale('fr');
+    // use a default value if the key doesn't exist
+    $filters = $session->get('filters', array());
 
 These attributes will remain on the user for the remainder of that user's
 session.
@@ -640,11 +640,11 @@ For example, imagine you're processing a form submit::
     {
         $form = $this->createForm(...);
 
-        $form->bindRequest($this->getRequest());
+        $form->bind($this->getRequest());
         if ($form->isValid()) {
             // do some sort of processing
 
-            $this->get('session')->setFlash('notice', 'Your changes were saved!');
+            $this->get('session')->getFlashBag()->add('notice', 'Your changes were saved!');
 
             return $this->redirect($this->generateUrl(...));
         }
@@ -663,19 +663,19 @@ the ``notice`` message:
 
     .. code-block:: html+jinja
 
-        {% if app.session.hasFlash('notice') %}
+        {% for flashMessage in app.session.flashbag.get('notice') %}
             <div class="flash-notice">
-                {{ app.session.flash('notice') }}
+                {{ flashMessage }}
             </div>
-        {% endif %}
+        {% endfor %}
 
     .. code-block:: php
-    
-        <?php if ($view['session']->hasFlash('notice')): ?>
+
+        <?php foreach ($view['session']->getFlashBag()->get('notice') as $message): ?>
             <div class="flash-notice">
-                <?php echo $view['session']->getFlash('notice') ?>
+                <?php echo "<div class='flash-error'>$message</div>" ?>
             </div>
-        <?php endif; ?>
+        <?php endforeach; ?>
 
 By design, flash messages are meant to live for exactly one request (they're
 "gone in a flash"). They're designed to be used across redirects exactly as
@@ -694,7 +694,7 @@ headers and content that's sent back to the client::
 
     // create a simple Response with a 200 status code (the default)
     $response = new Response('Hello '.$name, 200);
-    
+
     // create a JSON-response with a 200 status code
     $response = new Response(json_encode(array('name' => $name)));
     $response->headers->set('Content-Type', 'application/json');

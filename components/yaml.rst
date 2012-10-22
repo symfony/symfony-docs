@@ -127,15 +127,22 @@ When loading a YAML file, it is sometimes better to use the
 
 The :method:`Symfony\\Component\\Yaml\\Yaml::parse` static method takes a YAML
 string or a file containing YAML. Internally, it calls the
-:method:`Symfony\\Component\\Yaml\\Parser::parse` method, but with some added
-bonuses:
+:method:`Symfony\\Component\\Yaml\\Parser::parse` method, but enhances the
+error if something goes wrong by adding the filename to the message.
 
-* It executes the YAML file as if it was a PHP file, so that you can embed PHP
-  commands in YAML files;
+Executing PHP Inside YAML Files
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-* When a file cannot be parsed, it automatically adds the file name to the
-  error message, simplifying debugging when your application is loading
-  several YAML files.
+.. versionadded:: 2.1
+    The ``Yaml::enablePhpParsing()`` method is new to Symfony 2.1. Prior to 2.1,
+    PHP was *always* executed when calling the ``parse()`` function.
+
+By default, if you include PHP inside a YAML file, it will not be parsed.
+If you do want PHP to be parsed, you must call ``Yaml::enablePhpParsing()``
+before parsing the file to activate this mode. If you only want to allow
+PHP code for a single YAML file, be sure to disable PHP parsing after parsing
+the single file by calling ``Yaml::$enablePhpParsing = false;`` (``$enablePhpParsing``
+is a public property).
 
 Writing YAML Files
 ~~~~~~~~~~~~~~~~~~

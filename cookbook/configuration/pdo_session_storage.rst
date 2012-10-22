@@ -10,9 +10,16 @@ values instead of files, because databases are easier to use and scale in a
 multi-webserver environment.
 
 Symfony2 has a built-in solution for database session storage called
-:class:`Symfony\\Component\\HttpFoundation\\SessionStorage\\PdoSessionStorage`.
+:class:`Symfony\\Component\\HttpFoundation\\Session\\Storage\\Handler\\PdoSessionHandler`.
 To use it, you just need to change some parameters in ``config.yml`` (or the
 configuration format of your choice):
+
+.. versionadded:: 2.1
+    In Symfony2.1 the class and namespace are slightly modified. You can now 
+    find the session storage classes in the `Session\\Storage` namespace:
+    ``Symfony\Component\HttpFoundation\Session\Storage``. Also
+    note that in Symfony2.1 you should configure ``handler_id`` not ``storage_id`` like in Symfony2.0. 
+    Below, you'll notice that ``%session.storage.options%`` is not used anymore.
 
 .. configuration-block::
 
@@ -22,7 +29,7 @@ configuration format of your choice):
         framework:
             session:
                 # ...
-                storage_id:     session.storage.pdo
+                handler_id:     session.handler.pdo
 
         parameters:
             pdo.db_options:
@@ -39,15 +46,15 @@ configuration format of your choice):
                     user:     myuser
                     password: mypassword
 
-            session.storage.pdo:
-                class:     Symfony\Component\HttpFoundation\SessionStorage\PdoSessionStorage
-                arguments: [@pdo, %session.storage.options%, %pdo.db_options%]
+            session.handler.pdo:
+                class:     Symfony\Component\HttpFoundation\Session\Storage\Handler\PdoSessionHandler
+                arguments: [@pdo, %pdo.db_options%]
 
     .. code-block:: xml
 
         <!-- app/config/config.xml -->
         <framework:config>
-            <framework:session storage-id="session.storage.pdo" default-locale="en" lifetime="3600" auto-start="true"/>
+            <framework:session handler-id="session.handler.pdo" lifetime="3600" auto-start="true"/>
         </framework:config>
 
         <parameters>
@@ -66,9 +73,8 @@ configuration format of your choice):
                 <argument>mypassword</argument>
             </service>
 
-            <service id="session.storage.pdo" class="Symfony\Component\HttpFoundation\SessionStorage\PdoSessionStorage">
+            <service id="session.handler.pdo" class="Symfony\Component\HttpFoundation\Session\Storage\Handler\PdoSessionHandler">
                 <argument type="service" id="pdo" />
-                <argument>%session.storage.options%</argument>
                 <argument>%pdo.db_options%</argument>
             </service>
         </services>
@@ -83,7 +89,7 @@ configuration format of your choice):
             // ...
             'session' => array(
                 ...,
-                'storage_id' => 'session.storage.pdo',
+                'handler_id' => 'session.handler.pdo',
             ),
         ));
 
@@ -101,12 +107,11 @@ configuration format of your choice):
         ));
         $container->setDefinition('pdo', $pdoDefinition);
 
-        $storageDefinition = new Definition('Symfony\Component\HttpFoundation\SessionStorage\PdoSessionStorage', array(
+        $storageDefinition = new Definition('Symfony\Component\HttpFoundation\Session\Storage\Handler\PdoSessionHandler', array(
             new Reference('pdo'),
-            '%session.storage.options%',
             '%pdo.db_options%',
         ));
-        $container->setDefinition('session.storage.pdo', $storageDefinition);
+        $container->setDefinition('session.handler.pdo', $storageDefinition);
 
 * ``db_table``: The name of the session table in your database
 * ``db_id_col``: The name of the id column in your session table (VARCHAR(255) or larger)

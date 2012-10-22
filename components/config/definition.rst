@@ -212,6 +212,35 @@ has a certain value:
         ->end()
     ;
 
+Optional Sections
+-----------------
+
+.. versionadded:: 2.1
+    The ``canBeEnabled`` and ``canBeDisabled`` methods are new in Symfony 2.2
+
+If you have entire sections which are optional and can be enabled/disabled,
+you can take advantage of the shortcut
+:method:`Symfony\\Component\\Config\\Definition\\Builder\\ArrayNodeDefinition::canBeEnabled` and
+:method:`Symfony\\Component\\Config\\Definition\\Builder\\ArrayNodeDefinition::canBeDisabled` methods::
+
+    $arrayNode
+        ->canBeEnabled()
+    ;
+
+    // is equivalent to
+
+    $arrayNode
+        ->treatFalseLike(array('enabled' => false))
+        ->treatTrueLike(array('enabled' => true))
+        ->treatNullLike(array('enabled' => true))
+        ->children()
+            ->booleanNode('enabled')
+                ->defaultFalse()
+    ;
+
+The ``canBeDisabled`` method looks about the same except that the section 
+would be enabled by default.
+
 Merging options
 ---------------
 

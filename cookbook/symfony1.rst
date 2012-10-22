@@ -48,7 +48,7 @@ lives inside a bundle (roughly equivalent to a symfony1 plugin) and, by default,
 each bundle lives inside the ``src`` directory. In that way, the ``src``
 directory is a bit like the ``plugins`` directory in symfony1, but much more
 flexible. Additionally, while *your* bundles will live in the ``src/`` directory,
-third-party bundles may live in the ``vendor/bundles/`` directory.
+third-party bundles will live somewhere in the ``vendor/`` directory.
 
 To get a better picture of the ``src/`` directory, let's first think of a
 symfony1 application. First, part of your code likely lives inside one or
@@ -77,8 +77,8 @@ The ``vendor/`` directory is basically equivalent to the ``lib/vendor/``
 directory in symfony1, which was the conventional directory for all vendor
 libraries and bundles. By default, you'll find the Symfony2 library files in
 this directory, along with several other dependent libraries such as Doctrine2,
-Twig and Swiftmailer. 3rd party Symfony2 bundles usually live in the
-``vendor/bundles/``.
+Twig and Swiftmailer. 3rd party Symfony2 bundles live somewhere in the
+``vendor/``.
 
 The ``web/`` Directory
 ~~~~~~~~~~~~~~~~~~~~~~
@@ -131,13 +131,13 @@ example::
     }
 
 The file itself lives at
-``vendor/bundle/Sensio/Bundle/FrameworkExtraBundle/SensioFrameworkExtraBundle.php``.
+``vendor/sensio/framework-extra-bundle/Sensio/Bundle/FrameworkExtraBundle/SensioFrameworkExtraBundle.php``.
 As you can see, the location of the file follows the namespace of the class.
 Specifically, the namespace, ``Sensio\Bundle\FrameworkExtraBundle``, spells out
-the directory that the file should live in 
-(``vendor/bundle/Sensio/Bundle/FrameworkExtraBundle``). This is because, in the
-``app/autoload.php`` file, you'll configure Symfony to look for the ``Sensio``
-namespace in the ``vendor/bundle`` directory:
+the directory that the file should live in
+(``vendor/sensio/framework-extra-bundle/Sensio/Bundle/FrameworkExtraBundle/``).
+This is because, in the ``app/autoload.php`` file, you'll configure Symfony to
+look for the ``Sensio`` namespace in the ``vendor/sensio`` directory:
 
 .. code-block:: php
 
@@ -146,7 +146,7 @@ namespace in the ``vendor/bundle`` directory:
     // ...
     $loader->registerNamespaces(array(
         ...,
-        'Sensio'           => __DIR__.'/../vendor/bundles',
+        'Sensio'           => __DIR__.'/../vendor/sensio/framework-extra-bundle',
     ));
 
 If the file did *not* live at this exact location, you'd receive a
@@ -159,7 +159,7 @@ contains a different class). In order for a class to be autoloaded, you
 
 As mentioned before, for the autoloader to work, it needs to know that the
 ``Sensio`` namespace lives in the ``vendor/bundles`` directory and that, for
-example, the ``Doctrine`` namespace lives in the ``vendor/doctrine/lib/``
+example, the ``Doctrine`` namespace lives in the ``vendor/doctrine/orm/lib/``
 directory. This mapping is entirely controlled by you via the
 ``app/autoload.php`` file.
 
@@ -251,7 +251,7 @@ In Symfony2, the bundles are activated inside the application kernel::
             ...,
             new Acme\DemoBundle\AcmeDemoBundle(),
         );
-        
+
         return $bundles;
     }
 

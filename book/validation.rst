@@ -225,8 +225,8 @@ workflow looks like the following from inside a controller::
         $author = new Author();
         $form = $this->createForm(new AuthorType(), $author);
 
-        if ($request->getMethod() == 'POST') {
-            $form->bindRequest($request);
+        if ($request->isMethod('POST')) {
+            $form->bind($request);
 
             if ($form->isValid()) {
                 // the validation passed, do something with the $author object

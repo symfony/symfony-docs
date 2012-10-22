@@ -214,8 +214,8 @@ controller::
             ->add('dueDate', 'date')
             ->getForm();
 
-        if ($request->getMethod() == 'POST') {
-            $form->bindRequest($request);
+        if ($request->isMethod('POST')) {
+            $form->bind($request);
 
             if ($form->isValid()) {
                 // perform some action, such as saving the task to the database
@@ -227,13 +227,18 @@ controller::
         // ...
     }
 
+.. versionadded:: 2.1
+    The ``bind`` method was made more flexible in Symfony 2.1. It now accepts
+    the raw client data (same as before) or a Symfony Request object. This
+    is preferred over the deprecated ``bindRequest`` method.
+
 Now, when submitting the form, the controller binds the submitted data to the
 form, which translates that data back to the ``task`` and ``dueDate`` properties
-of the ``$task`` object. This all happens via the ``bindRequest()`` method.
+of the ``$task`` object. This all happens via the ``bind()`` method.
 
 .. note::
 
-    As soon as ``bindRequest()`` is called, the submitted data is transferred
+    As soon as ``bind()`` is called, the submitted data is transferred
     to the underlying object immediately. This happens regardless of whether
     or not the underlying data is actually valid.
 
@@ -385,18 +390,62 @@ you'll need to specify which validation group(s) your form should use::
     ))->add(...);
 
 If you're creating :ref:`form classes<book-form-creating-form-classes>` (a
-good practice), then you'll need to add the following to the ``getDefaultOptions()``
+good practice), then you'll need to add the following to the ``setDefaultOptions()``
 method::
 
-    public function getDefaultOptions(array $options)
+    use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+
+    public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        return array(
+        $resolver->setDefaults(array(
             'validation_groups' => array('registration')
-        );
+        ));
     }
 
 In both of these cases, *only* the ``registration`` validation group will
 be used to validate the underlying object.
+
+Groups based on Submitted Data
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 2.1
+   The ability to specify a callback or Closure in ``validation_groups``
+   is new to version 2.1
+
+If you need some advanced logic to determine the validation groups (e.g.
+based on submitted data), you can set the ``validation_groups`` option
+to an array callback, or a ``Closure``::
+
+    use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+
+    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    {
+        $resolver->setDefaults(array(
+            'validation_groups' => array('Acme\\AcmeBundle\\Entity\\Client', 'determineValidationGroups'),
+        ));
+    }
+
+This will call the static method ``determineValidationGroups()`` on the
+``Client`` class after the form is bound, but before validation is executed.
+The Form object is passed as an argument to that method (see next example).
+You can also define whole logic inline by using a Closure::
+
+    use Symfony\Component\Form\FormInterface;
+    use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+
+    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    {
+        $resolver->setDefaults(array(
+            'validation_groups' => function(FormInterface $form) {
+                $data = $form->getData();
+                if (Entity\Client::TYPE_PERSON == $data->getType()) {
+                    return array('person');
+                } else {
+                    return array('company');
+                }
+            },
+        ));
+    }
 
 .. index::
    single: Forms; Built-in field types
@@ -750,11 +799,11 @@ that will house the logic for building the task form:
     namespace Acme\TaskBundle\Form\Type;
 
     use Symfony\Component\Form\AbstractType;
-    use Symfony\Component\Form\FormBuilder;
+    use Symfony\Component\Form\FormBuilderInterface;
 
     class TaskType extends AbstractType
     {
-        public function buildForm(FormBuilder $builder, array $options)
+        public function buildForm(FormBuilderInterface $builder, array $options)
         {
             $builder->add('task');
             $builder->add('dueDate', null, array('widget' => 'single_text'));
@@ -801,11 +850,13 @@ the choice is ultimately up to you.
     good idea to explicitly specify the ``data_class`` option by adding the
     following to your form type class::
 
-        public function getDefaultOptions(array $options)
+        use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+
+        public function setDefaultOptions(OptionsResolverInterface $resolver)
         {
-            return array(
+            $resolver->setDefaults(array(
                 'data_class' => 'Acme\TaskBundle\Entity\Task',
-            );
+            ));
         }
 
 .. tip::
@@ -818,7 +869,9 @@ the choice is ultimately up to you.
     agree with these terms" checkbox) that will not be mapped to the underlying
     object, you need to set the property_path option to ``false``::
 
-        public function buildForm(FormBuilder $builder, array $options)
+        use Symfony\Component\Form\FormBuilderInterface;
+
+        public function buildForm(FormBuilderInterface $builder, array $options)
         {
             $builder->add('task');
             $builder->add('dueDate', null, array('property_path' => false));
@@ -846,7 +899,7 @@ to be persisted via Doctrine (i.e. you've added
 it after a form submission can be done when the form is valid::
 
     if ($form->isValid()) {
-        $em = $this->getDoctrine()->getEntityManager();
+        $em = $this->getDoctrine()->getManager();
         $em->persist($task);
         $em->flush();
 
@@ -928,20 +981,21 @@ create a form class so that a ``Category`` object can be modified by the user::
     namespace Acme\TaskBundle\Form\Type;
 
     use Symfony\Component\Form\AbstractType;
-    use Symfony\Component\Form\FormBuilder;
+    use Symfony\Component\Form\FormBuilderInterface;
+    use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
     class CategoryType extends AbstractType
     {
-        public function buildForm(FormBuilder $builder, array $options)
+        public function buildForm(FormBuilderInterface $builder, array $options)
         {
             $builder->add('name');
         }
 
-        public function getDefaultOptions(array $options)
+        public function setDefaultOptions(OptionsResolverInterface $resolver)
         {
-            return array(
+            $resolver->setDefaults(array(
                 'data_class' => 'Acme\TaskBundle\Entity\Category',
-            );
+            ));
         }
 
         public function getName()
@@ -957,7 +1011,9 @@ class:
 
 .. code-block:: php
 
-    public function buildForm(FormBuilder $builder, array $options)
+    use Symfony\Component\Form\FormBuilderInterface;
+
+    public function buildForm(FormBuilderInterface $builder, array $options)
     {
         // ...
 
@@ -965,7 +1021,18 @@ class:
     }
 
 The fields from ``CategoryType`` can now be rendered alongside those from
-the ``TaskType`` class. Render the ``Category`` fields in the same way
+the ``TaskType`` class. To activate validation on CategoryType, add
+the ``cascade_validation`` option::
+
+    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    {
+        $resolver->setDefaults(array(
+            'data_class' => 'Acme\TaskBundle\Entity\Category',
+            'cascade_validation' => true,
+        ));
+    }
+
+Render the ``Category`` fields in the same way
 as the original ``Task`` fields:
 
 .. configuration-block::
@@ -1044,7 +1111,7 @@ do this, create a new template file that will store the new markup:
     .. code-block:: html+jinja
 
         {# src/Acme/TaskBundle/Resources/views/Form/fields.html.twig #}
-        {% block field_row %}
+        {% block form_row %}
         {% spaceless %}
             <div class="form_row">
                 {{ form_label(form) }}
@@ -1052,19 +1119,19 @@ do this, create a new template file that will store the new markup:
                 {{ form_widget(form) }}
             </div>
         {% endspaceless %}
-        {% endblock field_row %}
+        {% endblock form_row %}
 
     .. code-block:: html+php
 
-        <!-- src/Acme/TaskBundle/Resources/views/Form/field_row.html.php -->
+        <!-- src/Acme/TaskBundle/Resources/views/Form/form_row.html.php -->
         <div class="form_row">
             <?php echo $view['form']->label($form, $label) ?>
             <?php echo $view['form']->errors($form) ?>
             <?php echo $view['form']->widget($form, $parameters) ?>
         </div>
 
-The ``field_row`` form fragment is used when rendering most fields via the
-``form_row`` function. To tell the form component to use your new ``field_row``
+The ``form_row`` form fragment is used when rendering most fields via the
+``form_row`` function. To tell the form component to use your new ``form_row``
 fragment defined above, add the following to the top of the template that
 renders the form:
 
@@ -1090,8 +1157,8 @@ renders the form:
 
 The ``form_theme`` tag (in Twig) "imports" the fragments defined in the given
 template and uses them when rendering the form. In other words, when the
-``form_row`` function is called later in this template, it will use the ``field_row``
-block from your custom theme (instead of the default ``field_row`` block
+``form_row`` function is called later in this template, it will use the ``form_row``
+block from your custom theme (instead of the default ``form_row`` block
 that ships with Symfony).
 
 Your custom theme does not have to override all the blocks. When rendering a block
@@ -1104,6 +1171,19 @@ before falling back to the global theme.
 To customize any portion of a form, you just need to override the appropriate
 fragment. Knowing exactly which block or file to override is the subject of
 the next section.
+
+.. versionadded:: 2.1
+   An alternate Twig syntax for ``form_theme`` has been introduced in 2.1. It accepts
+   any valid Twig expression (the most noticeable difference is using an array when
+   using multiple themes).
+
+   .. code-block:: html+jinja
+
+       {# src/Acme/TaskBundle/Resources/views/Default/new.html.twig #}
+
+       {% form_theme form with 'AcmeTaskBundle:Form:fields.html.twig' %}
+
+       {% form_theme form with ['AcmeTaskBundle:Form:fields.html.twig', 'AcmeTaskBundle:Form:fields2.html.twig'] %}
 
 For a more extensive discussion, see :doc:`/cookbook/form/form_customization`.
 
@@ -1129,10 +1209,10 @@ the `Resources/views/Form` directory of the framework bundle (`view on GitHub`_)
 Each fragment name follows the same basic pattern and is broken up into two pieces,
 separated by a single underscore character (``_``). A few examples are:
 
-* ``field_row`` - used by ``form_row`` to render most fields;
+* ``form_row`` - used by ``form_row`` to render most fields;
 * ``textarea_widget`` - used by ``form_widget`` to render a ``textarea`` field
   type;
-* ``field_errors`` - used by ``form_errors`` to render errors for a field;
+* ``form_errors`` - used by ``form_errors`` to render errors for a field;
 
 Each fragment follows the same basic pattern: ``type_part``. The ``type`` portion
 corresponds to the field *type* being rendered (e.g. ``textarea``, ``checkbox``,
@@ -1141,13 +1221,13 @@ rendered (e.g. ``label``, ``widget``, ``errors``, etc). By default, there
 are 4 possible *parts* of a form that can be rendered:
 
 +-------------+--------------------------+---------------------------------------------------------+
-| ``label``   | (e.g. ``field_label``)   | renders the field's label                               |
+| ``label``   | (e.g. ``form_label``)   | renders the field's label                               |
 +-------------+--------------------------+---------------------------------------------------------+
-| ``widget``  | (e.g. ``field_widget``)  | renders the field's HTML representation                 |
+| ``widget``  | (e.g. ``form_widget``)  | renders the field's HTML representation                 |
 +-------------+--------------------------+---------------------------------------------------------+
-| ``errors``  | (e.g. ``field_errors``)  | renders the field's errors                              |
+| ``errors``  | (e.g. ``form_errors``)  | renders the field's errors                              |
 +-------------+--------------------------+---------------------------------------------------------+
-| ``row``     | (e.g. ``field_row``)     | renders the field's entire row (label, widget & errors) |
+| ``row``     | (e.g. ``form_row``)     | renders the field's entire row (label, widget & errors) |
 +-------------+--------------------------+---------------------------------------------------------+
 
 .. note::
@@ -1169,16 +1249,17 @@ In some cases, the fragment you want to customize will appear to be missing.
 For example, there is no ``textarea_errors`` fragment in the default themes
 provided with Symfony. So how are the errors for a textarea field rendered?
 
-The answer is: via the ``field_errors`` fragment. When Symfony renders the errors
+The answer is: via the ``form_errors`` fragment. When Symfony renders the errors
 for a textarea type, it looks first for a ``textarea_errors`` fragment before
-falling back to the ``field_errors`` fragment. Each field type has a *parent*
-type (the parent type of ``textarea`` is ``field``), and Symfony uses the
-fragment for the parent type if the base fragment doesn't exist.
+falling back to the ``form_errors`` fragment. Each field type has a *parent*
+type (the parent type of ``textarea`` is ``text``, its parent is ``form``),
+and Symfony uses the fragment for the parent type if the base fragment doesn't
+exist.
 
 So, to override the errors for *only* ``textarea`` fields, copy the
-``field_errors`` fragment, rename it to ``textarea_errors`` and customize it. To
+``form_errors`` fragment, rename it to ``textarea_errors`` and customize it. To
 override the default error rendering for *all* fields, copy and customize the
-``field_errors`` fragment directly.
+``form_errors`` fragment directly.
 
 .. tip::
 
@@ -1249,9 +1330,9 @@ to define form output.
         {% form_theme form _self %}
 
         {# make the form fragment customization #}
-        {% block field_row %}
+        {% block form_row %}
             {# custom field row output #}
-        {% endblock field_row %}
+        {% endblock form_row %}
 
         {% block content %}
             {# ... #}
@@ -1345,19 +1426,21 @@ that all un-rendered fields are output.
 
 The CSRF token can be customized on a form-by-form basis. For example::
 
+    use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+
     class TaskType extends AbstractType
     {
         // ...
 
-        public function getDefaultOptions(array $options)
+        public function setDefaultOptions(OptionsResolverInterface $resolver)
         {
-            return array(
+            $resolver->setDefaults(array(
                 'data_class'      => 'Acme\TaskBundle\Entity\Task',
                 'csrf_protection' => true,
                 'csrf_field_name' => '_token',
                 // a unique key to help generate the secret token
                 'intention'       => 'task_item',
-            );
+            ));
         }
 
         // ...
@@ -1399,8 +1482,8 @@ an array of the submitted data. This is actually really easy::
             ->add('message', 'textarea')
             ->getForm();
 
-            if ($request->getMethod() == 'POST') {
-                $form->bindRequest($request);
+            if ($request->isMethod('POST')) {
+                $form->bind($request);
 
                 // data is an array with "name", "email", and "message" keys
                 $data = $form->getData();
@@ -1465,14 +1548,15 @@ but here's a short example::
         // ...
     ;
 
-Now, when you call `$form->bindRequest($request)`, the constraints setup here are run
-against your form's data. If you're using a form class, override the ``getDefaultOptions``
+Now, when you call `$form->bind($request)`, the constraints setup here are run
+against your form's data. If you're using a form class, override the ``setDefaultOptions()``
 method to specify the option::
 
     namespace Acme\TaskBundle\Form\Type;
 
     use Symfony\Component\Form\AbstractType;
     use Symfony\Component\Form\FormBuilder;
+    use Symfony\Component\OptionsResolver\OptionsResolverInterface;
     use Symfony\Component\Validator\Constraints\Email;
     use Symfony\Component\Validator\Constraints\MinLength;
     use Symfony\Component\Validator\Constraints\Collection;
@@ -1481,14 +1565,16 @@ method to specify the option::
     {
         // ...
 
-        public function getDefaultOptions(array $options)
+        public function setDefaultOptions(OptionsResolverInterface $resolver)
         {
             $collectionConstraint = new Collection(array(
                 'name' => new MinLength(5),
                 'email' => new Email(array('message' => 'Invalid email address')),
             ));
 
-            return array('validation_constraint' => $collectionConstraint);
+            $resolver->setDefaults(array(
+                'validation_constraint' => $collectionConstraint
+            ));
         }
     }
 
