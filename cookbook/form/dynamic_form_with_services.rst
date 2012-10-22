@@ -58,11 +58,11 @@ done in the constructor.
 
 .. code-block:: php
 
-    private $security_context;
+    private $securityContext;
 
-    public function __construct(SecurityContext $security_context)
+    public function __construct(SecurityContext $securityContext)
     {
-        $this->security_context = $security_context;
+        $this->securityContext = $securityContext;
     }
 
 .. note::
@@ -81,11 +81,11 @@ our listener::
 
     class FriendMessageFormType extends AbstractType
     {
-        private $security_context;
+        private $securityContext;
 
-        public function __construct(SecurityContext $security_context)
+        public function __construct(SecurityContext $securityContext)
         {
-            $this->security_context = $security_context;
+            $this->securityContext = $securityContext;
         }
 
         public function buildForm(FormBuilderInterface $builder, array $options)
@@ -94,22 +94,22 @@ our listener::
                 ->add('subject', 'text')
                 ->add('body', 'textarea')
             ;
-            $user = $this->security_context->getToken()->getUser();
+            $user = $this->securityContext->getToken()->getUser();
             $factory = $builder->getFormFactory();
 
             $builder->addEventListener(
                 FormEvents::PRE_SET_DATA,
                 function(FormEvent $event) use($user, $factory){
                     $form = $event->getForm();
-                    $user_id = $user->getId();
+                    $userId = $user->getId();
 
                     $form_options = [
                         'class' => 'Acme\WhateverBundle\Document\User',
                         'multiple' => false,
                         'expanded' => false,
                         'property' => 'fullName',
-                        'query_builder' => function(DocumentRepository $dr) use ($user_id) {
-                            return $dr->createQueryBuilder()->field('friends.$id')->equals(new \MongoId($user_id));
+                        'query_builder' => function(DocumentRepository $dr) use ($userId) {
+                            return $dr->createQueryBuilder()->field('friends.$id')->equals(new \MongoId($userId));
                         }
                     ];
 
