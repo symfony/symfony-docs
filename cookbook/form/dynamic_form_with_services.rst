@@ -138,13 +138,34 @@ context, or by defining it as a service. This is the option we will show here.
 To define your form as a service, you simply add the configuration to your
 ``config.yml`` file.
 
-.. code-block:: yaml
+.. configuration-block::
 
-    acme.form.friend_message:
-        class: Acme\WhateverBundle\FormType\FriendMessageType
-        arguments: [@security.context]
-        tags:
-            - { name: form.type, alias: acme_friend_message}
+    .. code-block:: yaml
+
+        acme.form.friend_message:
+            class: Acme\WhateverBundle\FormType\FriendMessageType
+            arguments: [@security.context]
+            tags:
+                - { name: form.type, alias: acme_friend_message}
+
+    .. code-block:: xml
+
+        <services>
+            <service id="acme.form.friend_message" class="Acme\WhateverBundle\FormType\FriendMessageType">
+                <argument type="service" id="security.context" />
+                <tag name="form.type" alias="acme_friend_message" />
+            </service>
+        </services>
+
+    .. code-block:: php
+
+        $definition = new Definition('Acme\WhateverBundle\FormType\FriendMessageType');
+        $definition->addTag('form.type', array('alias' => 'acme_friend_message'));
+        $container->setDefinition(
+            'acme.form.friend_message',
+            $definition,
+            array('security.context')
+        );
 
 By adding the form as a service, we make sure that this form can now be used
 simply from anywhere. If you need to add it to another form, you will just need
