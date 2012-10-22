@@ -867,14 +867,14 @@ the choice is ultimately up to you.
 
     In cases where you need extra fields in the form (for example: a "do you
     agree with these terms" checkbox) that will not be mapped to the underlying
-    object, you need to set the property_path option to ``false``::
+    object, you need to set the ``mapped`` option to ``false``::
 
         use Symfony\Component\Form\FormBuilderInterface;
 
         public function buildForm(FormBuilderInterface $builder, array $options)
         {
             $builder->add('task');
-            $builder->add('dueDate', null, array('property_path' => false));
+            $builder->add('dueDate', null, array('mapped' => false));
         }
 
     Additionally, if there are any fields on the form that aren't included in
