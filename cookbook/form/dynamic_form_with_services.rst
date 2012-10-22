@@ -17,7 +17,8 @@ Creating the form type
 
 Using an event listener, our form could be built like this::
 
-    namespace Acme\WhateverBundle\FormType;
+    // src/Acme/DemoBundle/FormType/FriendMessageFormType.php
+    namespace Acme\DemoBundle\FormType;
 
     use Symfony\Component\Form\AbstractType;
     use Symfony\Component\Form\FormBuilderInterface;
@@ -25,7 +26,7 @@ Using an event listener, our form could be built like this::
     use Symfony\Component\Form\FormEvent;
     use Symfony\Component\Security\Core\SecurityContext;
     use Symfony\Component\OptionsResolver\OptionsResolverInterface;
-    use Acme\WhateverBundle\FormSubscriber\UserListener;
+    use Acme\DemoBundle\FormSubscriber\UserListener;
 
     class FriendMessageFormType extends AbstractType
     {
@@ -79,6 +80,7 @@ Customizing the form type
 Now that we have all the basics in place, we can put everything in place and add
 our listener::
 
+    // src/Acme/DemoBundle/FormType/FriendMessageFormType.php
     class FriendMessageFormType extends AbstractType
     {
         private $securityContext;
@@ -104,7 +106,7 @@ our listener::
                     $userId = $user->getId();
 
                     $form_options = [
-                        'class' => 'Acme\WhateverBundle\Document\User',
+                        'class' => 'Acme\DemoBundle\Document\User',
                         'multiple' => false,
                         'expanded' => false,
                         'property' => 'fullName',
@@ -136,22 +138,24 @@ controller. Either by creating it everytime and remembering to pass the security
 context, or by defining it as a service. This is the option we will show here.
 
 To define your form as a service, you simply add the configuration to your
-``config.yml`` file.
+configuration.
 
 .. configuration-block::
 
     .. code-block:: yaml
 
+        # app/config/config.yml
         acme.form.friend_message:
-            class: Acme\WhateverBundle\FormType\FriendMessageType
+            class: Acme\DemoBundle\FormType\FriendMessageType
             arguments: [@security.context]
             tags:
                 - { name: form.type, alias: acme_friend_message}
 
     .. code-block:: xml
 
+        <!-- app/config/config.xml -->
         <services>
-            <service id="acme.form.friend_message" class="Acme\WhateverBundle\FormType\FriendMessageType">
+            <service id="acme.form.friend_message" class="Acme\DemoBundle\FormType\FriendMessageType">
                 <argument type="service" id="security.context" />
                 <tag name="form.type" alias="acme_friend_message" />
             </service>
@@ -159,7 +163,8 @@ To define your form as a service, you simply add the configuration to your
 
     .. code-block:: php
 
-        $definition = new Definition('Acme\WhateverBundle\FormType\FriendMessageType');
+        // app/config/config.php
+        $definition = new Definition('Acme\DemoBundle\FormType\FriendMessageType');
         $definition->addTag('form.type', array('alias' => 'acme_friend_message'));
         $container->setDefinition(
             'acme.form.friend_message',
