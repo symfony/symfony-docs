@@ -46,7 +46,7 @@ in the ``AppKernel`` class of you application::
 is the current environment (i.e. ``dev``). In this case we have changed 
 the location of the cache directory to ``app/{environment}/cache``.
 
-.. warning::
+.. caution::
 
     You should keep the ``cache`` directory different for each environment,
     otherwise some unexpected behaviour may happen. Each environment generates
