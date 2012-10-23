@@ -1,26 +1,21 @@
 .. index::
-   single: Routing; _service_container_parameters
+   single: Routing; Service Container Parameters
 
-How to use Service Container parameters in your routes
+How to use Service Container Parameters in your Routes
 ======================================================
 
 .. versionadded:: 2.1
-    This feature was added in Symfony 2.1
+    The ability to use parameters in your routes was added in Symfony 2.1.
 
-Sometimes you may find useful to make some parts of your routes
+Sometimes you may find it useful to make some parts of your routes
 globally configurable. For instance, if you build an internationalized
 site, you'll probably start with one or two locales. Surely you'll
-add requirements to avoid a user specify a locale other than those you
-support, or simple to increase the power of your routes.
+add a requirement to your routes to prevent a user from matching a locale
+other than the locales your support.
 
-Suppose that you have a lot of routes and you want to add yet another locale
-to your application. If you hardcode the requirements directly in your code,
-then you'll need to search everywhere and change the requirements.
-
-Then, why not use a configurable parameter, defined in the Service Container
-and make your life easier?
-
-Here you have an example on how to make the ``_locale`` of your routes configurable.
+You *could* hardcode your ``_locale`` requirement in all your routes. But
+a better solution is to use a configurable service container parameter right
+inside your routing configuration:
 
 .. configuration-block::
 
@@ -60,17 +55,39 @@ Here you have an example on how to make the ``_locale`` of your routes configura
 
         return $collection;
 
-Easy like that, then simply define the ``acme_demo.locales`` parameter in your container.
+You can now control and set the  ``acme_demo.locales`` parameter somewhere
+in your container:
 
-You can also define patterns which use parameters defined in the Service Container.
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # app/config/config.yml
+        parameters:
+            acme_demo.locales: en|es
+
+    .. code-block:: xml
+
+        <!-- app/config/config.xml -->
+        <parameters>
+            <parameter key="acme_demo.locales">en|es</parameter>
+        </parameters>
+
+    .. code-block:: php
+
+        # app/config/config.php
+        $container->setParameter('acme_demo.locales', 'en|es');
+
+You can also use a parameter to define your route pattern (or part of your
+pattern):
 
 .. configuration-block::
 
     .. code-block:: yaml
 
         some_route:
-            pattern:  /%acme_demo.parameter_name%
-            defaults: { _controller: AcmeDemoBundle:Main:index }
+            pattern:  /%acme_demo.route_prefix%/contact
+            defaults: { _controller: AcmeDemoBundle:Main:contact }
 
     .. code-block:: xml
 
@@ -80,8 +97,8 @@ You can also define patterns which use parameters defined in the Service Contain
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/routing http://symfony.com/schema/routing/routing-1.0.xsd">
 
-            <route id="some_route" pattern="/%acme_demo.parameter_name%">
-                <default key="_controller">AcmeDemoBundle:Main:index</default>
+            <route id="some_route" pattern="/%acme_demo.route_prefix%/contact">
+                <default key="_controller">AcmeDemoBundle:Main:contact</default>
             </route>
         </routes>
 
@@ -91,12 +108,14 @@ You can also define patterns which use parameters defined in the Service Contain
         use Symfony\Component\Routing\Route;
 
         $collection = new RouteCollection();
-        $collection->add('some_route', new Route('/%acme_demo.parameter_name%', array(
+        $collection->add('some_route', new Route('/%acme_demo.route_prefix%/contact', array(
             '_controller' => 'AcmeDemoBundle:Main:contact',
         )));
 
         return $collection;
 
 .. note::
-    You can escape a parameter by doubling the ``%``, e.g. ``/%%acme_demo.parameter_name%%``
 
+    Just like in normal service container configuration files, if you actually
+    need a ``%`` in  your route, you can escape the percent sign by doubling
+    it, e.g. ``/score-50%%``, which would resolve to ``/score-50%``.
