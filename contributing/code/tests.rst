@@ -13,6 +13,10 @@ To run the Symfony2 test suite, `install`_ PHPUnit 3.6.4 or later first:
 
     $ pear config-set auto_discover 1
     $ pear install pear.phpunit.de/PHPUnit
+    
+.. note::
+
+    You don't need phpunit from pear when you install dependencies with composer using --dev option.
 
 Dependencies (optional)
 -----------------------
@@ -79,6 +83,14 @@ command:
 .. code-block:: bash
 
     $ phpunit
+
+.. note::
+
+    If you install dependencies mentioned above you can use this command from the Symfony2 root directory:
+
+    .. code-block:: bash
+
+        $ vendor/bin/phpunit
 
 The output should display `OK`. If not, you need to figure out what's going on
 and if the tests are broken because of your modifications.
