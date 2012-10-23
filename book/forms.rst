@@ -1022,7 +1022,7 @@ class:
 
 The fields from ``CategoryType`` can now be rendered alongside those from
 the ``TaskType`` class. To activate validation on CategoryType, add
-the ``cascade_validation`` option::
+the ``cascade_validation`` option to ``TaskType``::
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
