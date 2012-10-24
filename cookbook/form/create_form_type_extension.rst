@@ -2,7 +2,7 @@
    single: Form; Form type extension
 
 How to Create a Form Type Extension
-====================================
+===================================
 
 :doc:`Custom form field types<create_custom_field_type>` are great when
 you need field types with a specific purpose, such as a gender selector,
@@ -12,7 +12,7 @@ But sometimes, you don't really need to add new field types - you want
 to add features on top of existing types. This is where form type
 extensions come in.
 
-Form type extensions have 2 main use cases:
+Form type extensions have 2 main use-cases:
 
 #. You want to add a **generic feature to several types** (such as
    adding a "help" text to every field type);
@@ -33,24 +33,23 @@ to a file. Your ``Media`` form uses a file type, but when editing the entity,
 you would like to see its image automatically rendered next to the file
 input.
 
-You could of course do this by customizing how this field is rendered in a template. But field
-type extensions allow you to do this in a nice DRY fashion.
+You could of course do this by customizing how this field is rendered in a
+template. But field type extensions allow you to do this in a nice DRY fashion.
 
 Defining the Form Type Extension
----------------------------------
+--------------------------------
 
 Your first task will be to create the form type extension class. Let's
-call it ``ImageTypeExtension``. You will store the class in a file called
-``ImageTypeExtension.php``, in the ``<BundleName>\Form\Type`` directory.
+call it ``ImageTypeExtension``. By standard, form extensions usually live
+in the ``Form\Extension`` directory of one of your bundles.
 
 When creating a form type extension, you can either implement the
-:class:`Symfony\\Component\\Form\\FormTypeExtensionInterface` interface,
+:class:`Symfony\\Component\\Form\\FormTypeExtensionInterface` interface
 or extend the :class:`Symfony\\Component\\Form\\AbstractTypeExtension`
-class. Most of the time, you will end up extending the abstract class.
-That's what you will do in this tutorial::
+class. In most cases, it's easier to extend the abstract class::
 
-    // src/Acme/DemoBundle/Form/Type/ImageTypeExtension.php
-    namespace Acme\DemoBundle\Form\Type;
+    // src/Acme/DemoBundle/Form/Extension/ImageTypeExtension.php
+    namespace Acme\DemoBundle\Form\Extension;
 
     use Symfony\Component\Form\AbstractTypeExtension;
 
@@ -65,7 +64,6 @@ That's what you will do in this tutorial::
         {
             return 'file';
         }
-
     }
 
 The only method you **must** implement is the ``getExtendedType`` function.
@@ -128,37 +126,28 @@ The ``alias`` key of the tag is the type of field that this extension should
 be applied to. In your case, as you want to extend the ``file`` field type,
 you will use ``file`` as an alias.
 
-Adding the extension business logic
+Adding the extension Business Logic
 -----------------------------------
 
-The goal of your extension is to display a nice image next to file inputs
+The goal of your extension is to display nice images next to file inputs
 (when the underlying model contains images). For that purpose, let's assume
 that you use an approach similar to the one described in
 :doc:`How to handle File Uploads with Doctrine</cookbook/doctrine/file_uploads>`:
 you have a Media model with a file property (corresponding to the file field
 in the form) and a path property (corresponding to the image path in the
-database).
-
-.. code-block:: php
+database)::
 
     // src/Acme/DemoBundle/Entity/Media.php
     namespace Acme\DemoBundle\Entity;
 
-    use Doctrine\ORM\Mapping as ORM;
     use Symfony\Component\Validator\Constraints as Assert;
 
-    /**
-     * @ORM\Entity
-     * @ORM\Table
-     */
     class Media
     {
         // ...
 
         /**
-         * @var string
-         *
-         * @ORM\Column(name="path", type="string", length=255)
+         * @var string The path - typically stored in the database
          */
         private $path;
 
@@ -182,7 +171,8 @@ database).
             return $webPath;
         }
 
-Your form type extension class will need to do two things:
+Your form type extension class will need to do two things in order to extend
+the ``file`` form type:
 
 #. Override the ``getDefaultOptions`` method in order to add an image_path
    option;
@@ -192,12 +182,10 @@ Your form type extension class will need to do two things:
 The logic is the following: when adding a form field of type ``file``,
 you will be able to specify a new option: ``image_path``. This option will
 tell the file field how to get the actual image url in order to display
-it in the view.
+it in the view::
 
-.. code-block:: php
-
-    // src/Acme/DemoBundle/Form/Type/ImageTypeExtension.php
-    namespace Acme\DemoBundle\Form\Type;
+    // src/Acme/DemoBundle/Form/Extension/ImageTypeExtension.php
+    namespace Acme\DemoBundle\Form\Extension;
 
     use Symfony\Component\Form\AbstractTypeExtension;
     use Symfony\Component\Form\FormBuilder;
@@ -253,22 +241,23 @@ it in the view.
 
                 $propertyPath = new PropertyPath($form->getAttribute('image_path'));
                 $imageUrl = $propertyPath->getValue($parentData);
+                // set an "image_url" variable that will be available when rendering this field
                 $view->set('image_url', $imageUrl);
             }
         }
 
     }
 
-Override the file widget template fragment
+Override the File Widget Template Fragment
 ------------------------------------------
 
 Each field type is rendered by a template fragment. Those template fragments
-can be overridden in order to customize form rendering; for more information,
+can be overridden in order to customize form rendering. For more information,
 you can refer to the :ref:`cookbook-form-customization-form-themes` article.
 
 In your extension class, you have added a new variable (``image_url``), but
 you still need to take advantage of this new variable in your templates.
-You need to override the ``file_widget`` block:
+Specifically, you need to override the ``file_widget`` block:
 
 .. configuration-block::
 
@@ -298,7 +287,7 @@ You need to override the ``file_widget`` block:
 
 .. note::
 
-    You will need to change your config file or to explicitly specify how
+    You will need to change your config file or explicitly specify how
     you want your form to be themed in order for Symfony to use your overridden
     block. See :ref:`cookbook-form-customization-form-themes` for more
     information.
@@ -308,10 +297,10 @@ Using the Form Type Extension
 
 From now on, when adding a field of type ``file`` in your form, you can
 specify an ``image_path`` option that will be used to display an image
-next to the file field. As an example::
+next to the file field. For example::
 
     // src/Acme/DemoBundle/Form/Type/MediaType.php
-    namespace Acme\DemoBundle\Form;
+    namespace Acme\DemoBundle\Form\Type;
 
     use Symfony\Component\Form\AbstractType;
     use Symfony\Component\Form\FormBuilder;
