@@ -1543,7 +1543,7 @@ but here's a short example::
 
     // create a form, no default values, pass in the constraint option
     $form = $this->createFormBuilder(null, array(
-        'validation_constraint' => $collectionConstraint,
+        'constraints' => $collectionConstraint,
     ))->add('email', 'email')
         // ...
     ;
@@ -1573,7 +1573,7 @@ method to specify the option::
             ));
 
             $resolver->setDefaults(array(
-                'validation_constraint' => $collectionConstraint
+                'constraints' => $collectionConstraint
             ));
         }
     }
