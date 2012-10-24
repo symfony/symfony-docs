@@ -4,16 +4,16 @@
 How to Create a SOAP Web Service in a Symfony2 Controller
 =========================================================
 
-Setting up a controller to act as a SOAP server is simple with a couple 
-tools.  You must, of course, have the `PHP SOAP`_ extension installed.  
-As the PHP SOAP extension can not currently generate a WSDL, you must either 
+Setting up a controller to act as a SOAP server is simple with a couple
+tools. You must, of course, have the `PHP SOAP`_ extension installed.
+As the PHP SOAP extension can not currently generate a WSDL, you must either
 create one from scratch or use a 3rd party generator.
 
 .. note::
 
-    There are several SOAP server implementations available for use with 
-    PHP. `Zend SOAP`_ and `NuSOAP`_ are two examples. Although we use 
-    the PHP SOAP extension in our examples, the general idea should still 
+    There are several SOAP server implementations available for use with
+    PHP. `Zend SOAP`_ and `NuSOAP`_ are two examples. Although we use
+    the PHP SOAP extension in our examples, the general idea should still
     be applicable to other implementations.
 
 SOAP works by exposing the methods of a PHP object to an external entity
@@ -22,8 +22,8 @@ which represents the functionality that you'll expose in your SOAP service.
 In this case, the SOAP service will allow the client to call a method called
 ``hello``, which happens to send an email::
 
-    // src/Acme/SoapBundle/HelloService.php
-    namespace Acme\SoapBundle;
+    // src/Acme/SoapBundle/Services/HelloService.php
+    namespace Acme\SoapBundle\Services;
 
     class HelloService
     {
@@ -58,23 +58,23 @@ a ``HelloService`` object properly:
 
     .. code-block:: yaml
 
-        # app/config/config.yml    
+        # app/config/config.yml
         services:
             hello_service:
-                class: Acme\DemoBundle\Services\HelloService
+                class: Acme\SoapBundle\Services\HelloService
                 arguments: [@mailer]
 
     .. code-block:: xml
 
         <!-- app/config/config.xml -->
         <services>
-         <service id="hello_service" class="Acme\DemoBundle\Services\HelloService">
+         <service id="hello_service" class="Acme\SoapBundle\Services\HelloService">
           <argument type="service" id="mailer"/>
          </service>
         </services>
 
-Below is an example of a controller that is capable of handling a SOAP 
-request.  If ``indexAction()`` is accessible via the route ``/soap``, then the 
+Below is an example of a controller that is capable of handling a SOAP
+request. If ``indexAction()`` is accessible via the route ``/soap``, then the
 WSDL document can be retrieved via ``/soap?wsdl``.
 
 .. code-block:: php
@@ -82,8 +82,9 @@ WSDL document can be retrieved via ``/soap?wsdl``.
     namespace Acme\SoapBundle\Controller;
     
     use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+    use Symfony\Component\HttpFoundation\Response;
 
-    class HelloServiceController extends Controller 
+    class HelloServiceController extends Controller
     {
         public function indexAction()
         {
@@ -101,17 +102,17 @@ WSDL document can be retrieved via ``/soap?wsdl``.
         }
     }
 
-Take note of the calls to ``ob_start()`` and ``ob_get_clean()``.  These
-methods control `output buffering`_ which allows you to "trap" the echoed 
+Take note of the calls to ``ob_start()`` and ``ob_get_clean()``. These
+methods control `output buffering`_ which allows you to "trap" the echoed
 output of ``$server->handle()``. This is necessary because Symfony expects
 your controller to return a ``Response`` object with the output as its "content".
 You must also remember to set the "Content-Type" header to "text/xml", as
-this is what the client  will expect.  So, you use ``ob_start()`` to start
-buffering the STDOUT and use  ``ob_get_clean()`` to dump the echoed output
-into the content of the Response and clear the output buffer.  Finally, you're
+this is what the client  will expect. So, you use ``ob_start()`` to start
+buffering the STDOUT and use ``ob_get_clean()`` to dump the echoed output
+into the content of the Response and clear the output buffer. Finally, you're
 ready to return the ``Response``.
 
-Below is an example calling the service using `NuSOAP`_ client.  This example 
+Below is an example calling the service using `NuSOAP`_ client. This example
 assumes that the ``indexAction`` in the controller above is accessible via the
 route ``/soap``::
 
