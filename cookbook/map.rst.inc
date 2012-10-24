@@ -29,6 +29,7 @@
   * :doc:`/cookbook/console/console_command`
   * :doc:`/cookbook/console/usage`
   * :doc:`/cookbook/console/generating_urls`
+  * :doc:`/cookbook/console/sending_emails`
 
 * :doc:`/cookbook/controller/index`
 
