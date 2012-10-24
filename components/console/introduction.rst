@@ -401,3 +401,9 @@ returns the returned code from the command (return value from command's
     something and display feedback to the user. So, instead of calling a
     command from the Web, refactor your code and move the logic to a new
     class.
+
+Learn More!
+-----------
+
+* :doc:`/components/console/usage`
+* :doc:`/components/console/single_command_tool`

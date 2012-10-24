@@ -192,17 +192,16 @@ instance with just the selected link(s). Calling ``link()`` gives us a special
 The :class:`Symfony\\Component\\DomCrawler\\Link` object has several useful
 methods to get more information about the selected link itself::
 
-    // return the raw href value
-    $href = $link->getRawUri();
-
     // return the proper URI that can be used to make another request
     $uri = $link->getUri();
 
-The ``getUri()`` is especially useful as it cleans the ``href`` value and
-transforms it into how it should really be processed. For example, for a
-link with ``href="#foo"``, this would return the full URI of the current
-page suffixed with ``#foo``. The return from ``getUri()`` is always a full
-URI that you can act on.
+.. note::
+
+    The ``getUri()`` is especially useful as it cleans the ``href`` value and
+    transforms it into how it should really be processed. For example, for a
+    link with ``href="#foo"``, this would return the full URI of the current
+    page suffixed with ``#foo``. The return from ``getUri()`` is always a full
+    URI that you can act on.
 
 Forms
 .....

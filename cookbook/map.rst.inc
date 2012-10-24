@@ -72,6 +72,7 @@
   * :doc:`/cookbook/form/dynamic_form_generation`
   * :doc:`/cookbook/form/form_collections`
   * :doc:`/cookbook/form/create_custom_field_type`
+  * :doc:`/cookbook/form/create_form_type_extension`
   * :doc:`/cookbook/form/use_virtuals_forms`
   * (validation) :doc:`/cookbook/validation/custom_constraint`
   * (doctrine) :doc:`/cookbook/doctrine/file_uploads`
