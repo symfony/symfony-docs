@@ -31,7 +31,7 @@ The ``Collection`` constraint allows you to validate the different keys of
 a collection individually. Take the following example::
 
     namespace Acme\BlogBundle\Entity;
-    
+
     class Author
     {
         protected $profileData = array(
@@ -63,7 +63,7 @@ blank but is no longer than 100 characters in length, you would do the following
                             - MaxLength:
                                 limit:   100
                                 message: Your short bio is too long!
-                    allowMissingfields: true
+                    allowMissingFields: true
 
     .. code-block:: php-annotations
 
@@ -84,7 +84,7 @@ blank but is no longer than 100 characters in length, you would do the following
              *             )
              *         }
              *     },
-             *     allowMissingfields = true
+             *     allowMissingFields = true
              * )
              */
              protected $profileData = array(
