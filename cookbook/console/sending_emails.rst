@@ -10,7 +10,7 @@ Sending emails in a console command works the same way as described in the
 When using memory spooling (see the :doc:`/cookbook/email/spool` cookbook for more
 information), you must be aware that because of how symfony handles console 
 commands, emails are not sent automatically. You must take care of flushing 
-the queue yourself. Use the following code to sent emails inside your 
+the queue yourself. Use the following code to send emails inside your 
 console command::
 
     $container = $this->getContainer();
