@@ -105,10 +105,11 @@ Redirecting after Success
 You can change where the login form redirects after a successful login using
 the various config options. By default the form will redirect to the URL the
 user requested (i.e. the URL which triggered the login form being shown).
-For example, if the user requested ``http://www.example.com/admin/post/18/edit``
-then after he/she will eventually be sent back to ``http://www.example.com/admin/post/18/edit`` 
-after successfully logging in. This is done by storing the requested URL
-in the session. If no URL is present in the session (perhaps the user went
+For example, if the user requested ``http://www.example.com/admin/post/18/edit``,
+then after she successfully logs in, she will eventually be sent back to
+``http://www.example.com/admin/post/18/edit``.
+This is done by storing the requested URL in the session.
+If no URL is present in the session (perhaps the user went
 directly to the login page), then the user is redirected to the default page,
 which is  ``/`` (i.e. the homepage) by default. You can change this behavior
 in several ways.
@@ -163,7 +164,7 @@ the following config:
             ),
         ));
 
-Now, when no URL is set in the session users will be sent to ``/admin``.
+Now, when no URL is set in the session, users will be sent to ``/admin``.
 
 Always Redirect to the Default Page
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -341,7 +342,7 @@ option to another value.
 Redirecting on Login Failure
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-In addition to redirect the user after a successful login, you can also set
+In addition to redirecting the user after a successful login, you can also set
 the URL that the user should be redirected to after a failed login (e.g. an
 invalid username or password was submitted). By default, the user is redirected
 back to the login form itself. You can set this to a different URL with the

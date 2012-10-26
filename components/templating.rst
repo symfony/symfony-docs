@@ -87,7 +87,7 @@ sub-template to set its parent template.
 To use template inheritance, the :class:`Symfony\\Component\\Templating\\Helper\\SlotsHelper`
 helper must be registered::
 
-    use Symfony\Templating\Helper\SlotsHelper;
+    use Symfony\Component\Templating\Helper\SlotsHelper;
 
     $view->set(new SlotsHelper());
 
