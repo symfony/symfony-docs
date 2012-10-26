@@ -63,7 +63,7 @@ blank but is no longer than 100 characters in length, you would do the following
                             - MaxLength:
                                 limit:   100
                                 message: Your short bio is too long!
-                    allowMissingfields: true
+                    allowMissingFields: true
 
     .. code-block:: php-annotations
 
