@@ -50,7 +50,6 @@ Installation
 You can install the component in many different ways:
 
 * Use the official Git repository (https://github.com/symfony/EventDispatcher);
-* Install it via PEAR ( `pear.symfony.com/EventDispatcher`);
 * Install it via Composer (`symfony/event-dispatcher` on Packagist).
 
 Usage
