@@ -982,7 +982,7 @@ you're actually using the templating engine service. For example::
 
     return $this->render('AcmeArticleBundle:Article:index.html.twig');
 
-is equivalent to:
+is equivalent to::
 
     $engine = $this->container->get('templating');
     $content = $engine->render('AcmeArticleBundle:Article:index.html.twig');
