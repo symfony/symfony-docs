@@ -19,6 +19,7 @@ event is just one of the core kernel events::
 
     use Symfony\Component\HttpKernel\Event\GetResponseForExceptionEvent;
     use Symfony\Component\HttpFoundation\Response;
+    use Symfony\Component\HttpKernel\Exception\HttpExceptionInterface;
 
     class AcmeExceptionListener
     {
@@ -31,7 +32,15 @@ event is just one of the core kernel events::
             // Customize our response object to display our exception details
             $response = new Response();
             $response->setContent($message);
-            $response->setStatusCode(500);
+
+            // HttpExceptionInterface is a special type of exception that
+            // holds status code and header details
+            if ($exception instanceof HttpExceptionInterface) {
+                $response->setStatusCode($exception->getStatusCode());
+                $response->headers->replace($exception->getHeaders());
+            } else {
+                $response->setStatusCode(500);
+            }
 
             // Send our modified response object to the event
             $event->setResponse($response);
