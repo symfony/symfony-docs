@@ -119,8 +119,8 @@ might look like the following::
 
             // During form creation setData() is called with null as an argument
             // by the FormBuilder constructor. We're only concerned with when
-            // setData is called with an actual Entity object in it (whether new,
-            // or fetched with DRemoving octrine). This if statement lets us skip right
+            // setData is called with an actual Entity object in it (whether new
+            // or fetched with Doctrine). This if statement lets us skip right
             // over the null condition.
             if (null === $data) {
                 return;
