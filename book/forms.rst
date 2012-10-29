@@ -563,7 +563,7 @@ the correct values of a number of field options.
 
     When these options are set, the field will be rendered with special HTML
     attributes that provide for HTML5 client-side validation. However, it
-    doesn't generate the equivalent server-side constraints (e.g. ``Assert\MaxLength``).
+    doesn't generate the equivalent server-side constraints (e.g. ``Assert\Length``).
     And though you'll need to manually add your server-side validation, these
     field type options can then be guessed from that information.
 
@@ -867,14 +867,14 @@ the choice is ultimately up to you.
 
     In cases where you need extra fields in the form (for example: a "do you
     agree with these terms" checkbox) that will not be mapped to the underlying
-    object, you need to set the property_path option to ``false``::
+    object, you need to set the ``mapped`` option to ``false``::
 
         use Symfony\Component\Form\FormBuilderInterface;
 
         public function buildForm(FormBuilderInterface $builder, array $options)
         {
             $builder->add('task');
-            $builder->add('dueDate', null, array('property_path' => false));
+            $builder->add('dueDate', null, array('mapped' => false));
         }
 
     Additionally, if there are any fields on the form that aren't included in
@@ -1022,12 +1022,12 @@ class:
 
 The fields from ``CategoryType`` can now be rendered alongside those from
 the ``TaskType`` class. To activate validation on CategoryType, add
-the ``cascade_validation`` option::
+the ``cascade_validation`` option to ``TaskType``::
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'Acme\TaskBundle\Entity\Category',
+            'data_class' => 'Acme\TaskBundle\Entity\Task',
             'cascade_validation' => true,
         ));
     }
@@ -1221,13 +1221,13 @@ rendered (e.g. ``label``, ``widget``, ``errors``, etc). By default, there
 are 4 possible *parts* of a form that can be rendered:
 
 +-------------+--------------------------+---------------------------------------------------------+
-| ``label``   | (e.g. ``form_label``)   | renders the field's label                               |
+| ``label``   | (e.g. ``form_label``)   | renders the field's label                                |
 +-------------+--------------------------+---------------------------------------------------------+
-| ``widget``  | (e.g. ``form_widget``)  | renders the field's HTML representation                 |
+| ``widget``  | (e.g. ``form_widget``)  | renders the field's HTML representation                  |
 +-------------+--------------------------+---------------------------------------------------------+
-| ``errors``  | (e.g. ``form_errors``)  | renders the field's errors                              |
+| ``errors``  | (e.g. ``form_errors``)  | renders the field's errors                               |
 +-------------+--------------------------+---------------------------------------------------------+
-| ``row``     | (e.g. ``form_row``)     | renders the field's entire row (label, widget & errors) |
+| ``row``     | (e.g. ``form_row``)     | renders the field's entire row (label, widget & errors)  |
 +-------------+--------------------------+---------------------------------------------------------+
 
 .. note::
@@ -1533,17 +1533,17 @@ but here's a short example::
 
     // import the namespaces above your controller class
     use Symfony\Component\Validator\Constraints\Email;
-    use Symfony\Component\Validator\Constraints\MinLength;
+    use Symfony\Component\Validator\Constraints\Length;
     use Symfony\Component\Validator\Constraints\Collection;
 
     $collectionConstraint = new Collection(array(
-        'name' => new MinLength(5),
+        'name' => new Length(array("min" => 5)),
         'email' => new Email(array('message' => 'Invalid email address')),
     ));
 
     // create a form, no default values, pass in the constraint option
     $form = $this->createFormBuilder(null, array(
-        'validation_constraint' => $collectionConstraint,
+        'constraints' => $collectionConstraint,
     ))->add('email', 'email')
         // ...
     ;
@@ -1558,7 +1558,7 @@ method to specify the option::
     use Symfony\Component\Form\FormBuilder;
     use Symfony\Component\OptionsResolver\OptionsResolverInterface;
     use Symfony\Component\Validator\Constraints\Email;
-    use Symfony\Component\Validator\Constraints\MinLength;
+    use Symfony\Component\Validator\Constraints\Length;
     use Symfony\Component\Validator\Constraints\Collection;
 
     class ContactType extends AbstractType
@@ -1568,12 +1568,12 @@ method to specify the option::
         public function setDefaultOptions(OptionsResolverInterface $resolver)
         {
             $collectionConstraint = new Collection(array(
-                'name' => new MinLength(5),
+                'name' => new Length(array("min" => 5)),
                 'email' => new Email(array('message' => 'Invalid email address')),
             ));
 
             $resolver->setDefaults(array(
-                'validation_constraint' => $collectionConstraint
+                'constraints' => $collectionConstraint
             ));
         }
     }

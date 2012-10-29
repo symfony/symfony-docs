@@ -31,7 +31,7 @@ The ``Collection`` constraint allows you to validate the different keys of
 a collection individually. Take the following example::
 
     namespace Acme\BlogBundle\Entity;
-    
+
     class Author
     {
         protected $profileData = array(
@@ -60,10 +60,10 @@ blank but is no longer than 100 characters in length, you would do the following
                         personal_email: Email
                         short_bio:
                             - NotBlank
-                            - MaxLength:
-                                limit:   100
-                                message: Your short bio is too long!
-                    allowMissingfields: true
+                            - Length:
+                                max:   100
+                                maxMessage: Your short bio is too long!
+                    allowMissingFields: true
 
     .. code-block:: php-annotations
 
@@ -78,13 +78,13 @@ blank but is no longer than 100 characters in length, you would do the following
              *         "personal_email" = @Assert\Email,
              *         "short_bio" = {
              *             @Assert\NotBlank(),
-             *             @Assert\MaxLength(
-             *                 limit = 100,
-             *                 message = "Your bio is too long!"
+             *             @Assert\Length(
+             *                 max = 100,
+             *                 maxMessage = "Your bio is too long!"
              *             )
              *         }
              *     },
-             *     allowMissingfields = true
+             *     allowMissingFields = true
              * )
              */
              protected $profileData = array(
@@ -105,9 +105,9 @@ blank but is no longer than 100 characters in length, you would do the following
                         </value>
                         <value key="short_bio">
                             <constraint name="NotBlank" />
-                            <constraint name="MaxLength">
-                                <option name="limit">100</option>
-                                <option name="message">Your bio is too long!</option>
+                            <constraint name="Length">
+                                <option name="max">100</option>
+                                <option name="maxMessage">Your bio is too long!</option>
                             </constraint>
                         </value>
                     </option>
@@ -122,7 +122,7 @@ blank but is no longer than 100 characters in length, you would do the following
         use Symfony\Component\Validator\Mapping\ClassMetadata;
         use Symfony\Component\Validator\Constraints\Collection;
         use Symfony\Component\Validator\Constraints\Email;
-        use Symfony\Component\Validator\Constraints\MaxLength;
+        use Symfony\Component\Validator\Constraints\Length;
 
         class Author
         {
@@ -133,7 +133,9 @@ blank but is no longer than 100 characters in length, you would do the following
                 $metadata->addPropertyConstraint('profileData', new Collection(array(
                     'fields' => array(
                         'personal_email' => new Email(),
-                        'lastName' => array(new NotBlank(), new MaxLength(100)),
+                        'lastName' => array(
+                            new NotBlank(),
+                            new Length(array("max" => 100)),
                     ),
                     'allowMissingFields' => true,
                 )));
