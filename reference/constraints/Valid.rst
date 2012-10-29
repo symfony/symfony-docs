@@ -50,7 +50,8 @@ an ``Address`` instance in the ``$address`` property.
                     - NotBlank: ~
                 zipCode:
                     - NotBlank: ~
-                    - MaxLength: 5
+                    - Length:
+                        max: 5
 
         Acme\HelloBundle\Author:
             properties:
@@ -70,7 +71,9 @@ an ``Address`` instance in the ``$address`` property.
             </property>
             <property name="zipCode">
                 <constraint name="NotBlank" />
-                <constraint name="MaxLength">5</constraint>
+                <constraint name="Length">
+                    <option name="max">5</option>
+                </constraint>
             </property>
         </class>
 
@@ -100,7 +103,7 @@ an ``Address`` instance in the ``$address`` property.
 
             /**
              * @Assert\NotBlank
-             * @Assert\MaxLength(5)
+             * @Assert\MaxLength(max = "5")
              */
             protected $zipCode;
         }
@@ -127,7 +130,7 @@ an ``Address`` instance in the ``$address`` property.
         // src/Acme/HelloBundle/Address.php
         use Symfony\Component\Validator\Mapping\ClassMetadata;
         use Symfony\Component\Validator\Constraints\NotBlank;
-        use Symfony\Component\Validator\Constraints\MaxLength;
+        use Symfony\Component\Validator\Constraints\Length;
         
         class Address
         {
@@ -139,7 +142,9 @@ an ``Address`` instance in the ``$address`` property.
             {
                 $metadata->addPropertyConstraint('street', new NotBlank());
                 $metadata->addPropertyConstraint('zipCode', new NotBlank());
-                $metadata->addPropertyConstraint('zipCode', new MaxLength(5));
+                $metadata->addPropertyConstraint(
+                    'zipCode',
+                    new Length(array("max" => 5)));
             }
         }
 

@@ -563,7 +563,7 @@ the correct values of a number of field options.
 
     When these options are set, the field will be rendered with special HTML
     attributes that provide for HTML5 client-side validation. However, it
-    doesn't generate the equivalent server-side constraints (e.g. ``Assert\MaxLength``).
+    doesn't generate the equivalent server-side constraints (e.g. ``Assert\Length``).
     And though you'll need to manually add your server-side validation, these
     field type options can then be guessed from that information.
 
