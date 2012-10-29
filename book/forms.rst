@@ -563,7 +563,7 @@ the correct values of a number of field options.
 
     When these options are set, the field will be rendered with special HTML
     attributes that provide for HTML5 client-side validation. However, it
-    doesn't generate the equivalent server-side constraints (e.g. ``Assert\MaxLength``).
+    doesn't generate the equivalent server-side constraints (e.g. ``Assert\Length``).
     And though you'll need to manually add your server-side validation, these
     field type options can then be guessed from that information.
 
@@ -573,8 +573,9 @@ the correct values of a number of field options.
   validation will automatically match your validation rules.
 
 * ``max_length``: If the field is some sort of text field, then the ``max_length``
-  option can be guessed from the validation constraints (if ``MaxLength`` or ``Max``
-  is used) or from the Doctrine metadata (via the field's length).
+  option can be guessed from the validation constraints (if ``Length`` or
+  ``MaxLength`` or ``Max`` is used) or from the Doctrine metadata (via the
+  field's length).
   
 .. note::
 
@@ -1533,11 +1534,11 @@ but here's a short example::
 
     // import the namespaces above your controller class
     use Symfony\Component\Validator\Constraints\Email;
-    use Symfony\Component\Validator\Constraints\MinLength;
+    use Symfony\Component\Validator\Constraints\Length;
     use Symfony\Component\Validator\Constraints\Collection;
 
     $collectionConstraint = new Collection(array(
-        'name' => new MinLength(5),
+        'name' => new Length(array("min" => 5)),
         'email' => new Email(array('message' => 'Invalid email address')),
     ));
 
@@ -1558,7 +1559,7 @@ method to specify the option::
     use Symfony\Component\Form\FormBuilder;
     use Symfony\Component\OptionsResolver\OptionsResolverInterface;
     use Symfony\Component\Validator\Constraints\Email;
-    use Symfony\Component\Validator\Constraints\MinLength;
+    use Symfony\Component\Validator\Constraints\Length;
     use Symfony\Component\Validator\Constraints\Collection;
 
     class ContactType extends AbstractType
@@ -1568,7 +1569,7 @@ method to specify the option::
         public function setDefaultOptions(OptionsResolverInterface $resolver)
         {
             $collectionConstraint = new Collection(array(
-                'name' => new MinLength(5),
+                'name' => new Length(array("min" => 5)),
                 'email' => new Email(array('message' => 'Invalid email address')),
             ));
 
