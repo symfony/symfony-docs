@@ -42,6 +42,7 @@ Form Login Configuration Reference
                         # login failure redirecting options (read further below)
                         failure_path:                   null
                         failure_forward:                false
+                        failure_target_path:            _failure_path
 
                         # field names for the username and password fields
                         username_parameter:             _username
@@ -66,6 +67,7 @@ Form Login Configuration Reference
                     use_referer="false"
                     failure_path="null"
                     failure_forward="false"
+                    failure_target_path="_failure_path"
                     username_parameter="_username"
                     password_parameter="_password"
                     csrf_parameter="_csrf_token"
@@ -90,6 +92,7 @@ Form Login Configuration Reference
                     'use_referer'                    => false,
                     'failure_path'                   => null,
                     'failure_forward'                => false,
+                    'failure_target_path'            => _failure_path,
                     'username_parameter'             => '_username',
                     'password_parameter'             => '_password',
                     'csrf_parameter'                 => '_csrf_token',
