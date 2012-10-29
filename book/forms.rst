@@ -1533,11 +1533,11 @@ but here's a short example::
 
     // import the namespaces above your controller class
     use Symfony\Component\Validator\Constraints\Email;
-    use Symfony\Component\Validator\Constraints\MinLength;
+    use Symfony\Component\Validator\Constraints\Length;
     use Symfony\Component\Validator\Constraints\Collection;
 
     $collectionConstraint = new Collection(array(
-        'name' => new MinLength(5),
+        'name' => new Length(array("min" => 5)),
         'email' => new Email(array('message' => 'Invalid email address')),
     ));
 
@@ -1558,7 +1558,7 @@ method to specify the option::
     use Symfony\Component\Form\FormBuilder;
     use Symfony\Component\OptionsResolver\OptionsResolverInterface;
     use Symfony\Component\Validator\Constraints\Email;
-    use Symfony\Component\Validator\Constraints\MinLength;
+    use Symfony\Component\Validator\Constraints\Length;
     use Symfony\Component\Validator\Constraints\Collection;
 
     class ContactType extends AbstractType
@@ -1568,7 +1568,7 @@ method to specify the option::
         public function setDefaultOptions(OptionsResolverInterface $resolver)
         {
             $collectionConstraint = new Collection(array(
-                'name' => new MinLength(5),
+                'name' => new Length(array("min" => 5)),
                 'email' => new Email(array('message' => 'Invalid email address')),
             ));
 
