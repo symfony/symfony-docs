@@ -16,7 +16,7 @@ Symfony2 Deployment Basics
 The typical steps taken while deploying a Symfony2 application include:
 
 #. Upload your modified code to the live server;
-#. Update your vendor dependencies (typically done via ``bin/vendors``, and may
+#. Update your vendor dependencies (typically done via Composer, and may
    be done before uploading);
 #. Running database migrations or similar tasks to update any changed data structures;
 #. Clearing (and perhaps more importantly, warming up) your cache.
@@ -88,7 +88,7 @@ as your normally do:
 
 .. code-block:: bash
 
-    $ php bin/vendors install
+    $ php composer.phar install
 
 C) Clear your Symfony cache
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -108,7 +108,7 @@ setup:
 * Running any database migrations
 * Clearing your APC cache
 * Dumping your Assetic assets (taken care of already in ``cache:clear``)
-* Running ``assets:install`` (taken care of already in ``bin/vendors``)
+* Running ``assets:install`` (taken care of already in ``composer.phar install``)
 * Add/edit CRON jobs
 * Pushing assets to a CDN
 * ...
@@ -126,7 +126,7 @@ are simple and more complex tools and one can make the deployment as easy
 (or sophisticated) as your environment requires.
 
 Don't forget that deploying your application also involves updating any dependency
-(typically via ``bin/vendors``), migrating your database, clearing your cache and
+(typically via Composer), migrating your database, clearing your cache and
 other potential things like pushing assets to a CDN (see `Common Post-Deployment Tasks`_).
 
 The Tools
