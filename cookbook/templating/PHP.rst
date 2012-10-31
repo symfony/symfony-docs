@@ -57,9 +57,12 @@ below renders the ``index.html.php`` template::
         return $this->render('AcmeHelloBundle:Hello:index.html.php', array('name' => $name));
     }
 
-Or, you can use the @Template() annotation to make it render the default "AcmeHelloBundle:Hello:index.html.php" template::
+You can also use the :doc:`/bundles/SensioFrameworkExtraBundle/annotations/view`
+shortcut to render the default ``AcmeHelloBundle:Hello:index.html.php`` template::
 
     // src/Acme/HelloBundle/Controller/HelloController.php
+
+    use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
     // ...
 
