@@ -88,7 +88,12 @@ as your normally do:
 
 .. code-block:: bash
 
-    $ php composer.phar install
+    $ php composer.phar install --optimize-autoloader
+
+.. tip::
+
+    The ``--optimize-autoloader`` flag makes Composer's autoloader more
+    performant by building a "class map".
 
 C) Clear your Symfony cache
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
