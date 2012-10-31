@@ -16,6 +16,7 @@ The Components
     http_foundation/index
     locale
     process
+    resource_watcher
     routing
     serializer
     templating
