@@ -178,6 +178,34 @@ The ``notContains()`` method excludes files containing given pattern::
 
     $finder->files()->notContains('dolor sit amet');
 
+Path
+~~~~
+
+.. versionadded:: 2.2
+   Methods ``path()`` and ``notPath()`` have been
+   introduced in version 2.2.
+
+Restrict files and directories by path with the
+:method:`Symfony\\Component\\Finder\\Finder::path` method::
+
+    $finder->path('some/special/dir');
+
+On all platforms slash (i.e. ``/``) should be used as a separator.
+
+The ``path()`` method accepts strings or regexes::
+
+    $finder->path('foo/bar');
+    $finder->path('/^foo\/bar/');
+
+Strings are converted into regexes by escaping slashes and adding delimiters:
+
+    dirname    ===>    /dirname/
+    a/b/c      ===>    /a\/b\/c/
+
+The ``notPath()`` method excludes files by path::
+
+    $finder->notPath('other/dir');
+
 File Size
 ~~~~~~~~~
 
