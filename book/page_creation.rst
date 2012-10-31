@@ -393,7 +393,7 @@ and in the ``app`` directory:
                 <link rel="shortcut icon" href="<?php echo $view['assets']->getUrl('favicon.ico') ?>" />
             </head>
             <body>
-                <?php $view['slots']->output('body') ?>
+                <?php $view['slots']->output('_content') ?>
                 <?php $view['slots']->output('javascripts') ?>
             </body>
         </html>
