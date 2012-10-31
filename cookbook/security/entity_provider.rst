@@ -422,7 +422,7 @@ returns the list of related groups::
     use Doctrine\Common\Collections\ArrayCollection;
     // ...
 
-    class User implements AdvancedUserInterface
+    class User implements AdvancedUserInterface, \Serializable
     {
         /**
          * @ORM\ManyToMany(targetEntity="Group", inversedBy="users")
@@ -440,6 +440,36 @@ returns the list of related groups::
         public function getRoles()
         {
             return $this->groups->toArray();
+        }
+
+        /**
+         * @see \Serializable::serialize()
+         */
+        public function serialize()
+        {
+            return \serialize(array(
+                $this->id,
+                $this->username,
+                $this->email,
+                $this->salt,
+                $this->password,
+                $this->isActive
+            ));
+        }
+
+        /**
+         * @see \Serializable::unserialize()
+         */
+        public function unserialize($serialized)
+        {
+            list (
+                $this->id,
+                $this->username,
+                $this->email,
+                $this->salt,
+                $this->password,
+                $this->isActive
+            ) = \unserialize($serialized);
         }
     }
 
@@ -461,7 +491,7 @@ that forces it to have a ``getRole()`` method::
      * @ORM\Table(name="acme_groups")
      * @ORM\Entity()
      */
-    class Group implements RoleInterface
+    class Group implements RoleInterface, \Serializable
     {
         /**
          * @ORM\Column(name="id", type="integer")
@@ -498,6 +528,30 @@ that forces it to have a ``getRole()`` method::
         public function getRole()
         {
             return $this->role;
+        }
+    
+        /**
+         * @see \Serializable::serialize()
+         */
+        public function serialize()
+        {
+            return \serialize(array(
+                $this->id,
+                $this->name,
+                $this->role
+            ));
+        }
+
+        /**
+         * @see \Serializable::unserialize()
+         */
+        public function unserialize($serialized)
+        {
+            list(
+                $this->id,
+                $this->name,
+                $this->role
+            ) = \unserialize($serialized);
         }
     }
 
