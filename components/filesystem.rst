@@ -36,6 +36,10 @@ endpoint for filesystem operations::
         echo "An error occured while creating your directory";
     }
 
+You will find two methods for file manipulations :
+:method:`Symfony\\Component\\Filesystem\\Filesystem::getTemporaryFiles` and
+:method:`Symfony\\Component\\Filesystem\\Filesystem::createEmptyFile`.
+
 .. note::
 
     Methods :method:`Symfony\\Component\\Filesystem\\Filesystem::mkdir`,
@@ -47,6 +51,39 @@ endpoint for filesystem operations::
     string, an array or any object implementing :phpclass:`Traversable` as
     the target argument.
 
+GetTemporaryFiles
+~~~~~~~~~~~~~~~~~
+
+GetTemporaryFiles creates a set of empty files in the temporary folder::
+
+    // return an array of 5 path to temporary files
+    $fs->getTemporaryFiles(5);
+
+    // return an array of 5 path to empty temporary files with a "thumb-"
+    // prefix, '.dcm' as suffix and 'jpg' as extension
+    $fs->getTemporaryFiles(20, 'thumb-', '.dcm', 'jpg');
+
+.. note::
+
+    This method is useful when dealing with libraries which encode images
+    depending on the filename extension.
+
+CreateEmptyFile
+~~~~~~~~~~~~~~~
+
+CreateEmptyFile creates an empty file in the specified folder::
+
+    // return a path to an empty file inside the current working directory
+    $fs->createEmptyFile(getcwd());
+
+    // return a path to an empty file in the "/home/romain" directory. The file
+    // has "original." as prefix, ".raw" as suffix and "CR2" as extension.
+    $fs->createEmptyFile("/home/romain", 'original.', '.raw', 'CR2');
+
+.. note::
+
+    This method is particularly useful when dealing with concurrent process
+    writing in the same directory.
 
 Mkdir
 ~~~~~
