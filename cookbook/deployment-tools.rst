@@ -1,104 +1,172 @@
 .. index::
-   single: Deployment Tools
+   single: Deployment
 
-Deployment Tools
-================
+Deploying a Symfony2 Application
+================================
 
-This cookbook entry will teach you the what and how of Symfony2 application deployment. 
+.. note::
 
+    Deploying can be a complex and varied task depending on your setup and needs.
+    This entry doesn't try to explain everything, but rather offers the most
+    common requirements and ideas for deployment.
 
-What is deployment?
--------------------
-
-Deploying software changes to your website is a critical step in the lifecycle of your application.
-How you deploy the changes can affect how others perceive the stability and quality of your website.
+Symfony2 Deployment Basics
+--------------------------
 
 The typical steps taken while deploying a Symfony2 application include:
 
-1. Uploading your modified code to the live server
-2. Updating your vendor dependencies via composer
-3. Running database migrations to update any changed data structures.
-4. Clearing (and perhaps more importantly, warming up) your cache
+#. Upload your modified code to the live server;
+#. Update your vendor dependencies (typically done via ``bin/vendors``, and may
+   be done before uploading);
+#. Running database migrations or similar tasks to update any changed data structures;
+#. Clearing (and perhaps more importantly, warming up) your cache.
 
 A deployment may also include other things, such as:
 
-* Tagging a particular version of of your code as a release in your source control repository
-* Creating a temporary staging area to build your updated setup 'offline'
-* Running any tests available to ensure code and/or server stability
-* Removal of any unnecessary files from `web` to keep your production environment clean
-* Clearing of external cache systems (like `Memcached`_ or `Redis`_)
-
+* Tagging a particular version of of your code as a release in your source control repository;
+* Creating a temporary staging area to build your updated setup "offline";
+* Running any tests available to ensure code and/or server stability;
+* Removal of any unnecessary files from ``web`` to keep your production environment clean;
+* Clearing of external cache systems (like `Memcached`_ or `Redis`_).
 
 How to deploy a Symfony2 application
 ------------------------------------
 
 There are several ways you can deploy a Symfony2 application.
 
-Let's start with a few basic examples of where developers typically begin with their
-deployment strategies, and build on things from there.
+Let's start with a few basic deployment strategies and build up from there.
 
-* The most basic way of deploying an application is copying the files manually via ftp
-  (or similar method). This is one of the worst methods because of the complete lack of
-  control you have over the system as the upgrade progresses.
+Basic File Transfer
+~~~~~~~~~~~~~~~~~~~
 
-* When using a source code versioning tool (such as git or subversion), you can
-  simplify this by instead having your live installation also be a copy of your repository,
-  so when you're ready to upgrade it is as simple as fetching the latest updates from
-  your source control system. This way still causes problems when you have to incorporate
-  database migrations, however. It does improve upon the prior method, however, as only
-  the files that were changed would need to be updated, and that means your application
-  will be in an unstable state for far less time.
+The most basic way of deploying an application is copying the files manually
+via ftp/scp (or similar method). This has its disadvantages as you lack control
+over the system as the upgrade progresses. This method also requires you
+to take some manual steps after transferring the files (see `Common Post-Deployment Tasks`_)
 
-* There are tools to help ease the pains of deployment, and their use is becoming more widespread.
-  Now we even have a few tools which have been specifically tailored to the requirements of
-  Symfony2, that take special care to ensure that everything before, during, and after a deployment
-  has gone correctly, and is able to halt (and roll back, if necessary) the process should an error
-  occur.
+Using Source Control
+~~~~~~~~~~~~~~~~~~~~
 
-Deployment of an application require care. The use of staging, testing, QA,
-continuous integration, database migrations and capability to roll back in case of failure
-are all strongly advised. There are simple and more complex tools and one can make
-the deployment as easy (or sophisticated) as your environment requires.
+If you're using source control (e.g. git or svn), you can simplify by having
+your live installation also be a copy of your repository. When you're ready
+to upgrade it is as simple as fetching the latest updates from your source
+control system.
 
-Don't forget that deploying your application also involves updating any dependency (via
-composer), migrating your database, and clearing your cache. You may even need permission
-management, and the ability to add, edit, or remove cron jobs.
+This makes updating your files *easier*, but you still need to worry about
+manually taking other steps (see `Common Post-Deployment Tasks`_).
 
-Next, we will take a look at some of the more popular options.
+Using Build scripts and other Tools
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+There are also high-quality tools to help ease the pain of deployment. There
+are even a few tools which have been specifically tailored to the requirements of
+Symfony2, and which take special care to ensure that everything before, during,
+and after a deployment has gone correctly.
+
+See `The Tools`_ for a list of tools that can help with deployment.
+
+Common Post-Deployment Tasks
+----------------------------
+
+After deploying your actual source code, there are a number of common things
+you'll need to do:
+
+A) Configure your ``app/config/parameters.ini`` file
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+This file should be customized on each system. The method you use to
+deploy your source code should *not* deploy this file. Instead, you should
+set it up manually (or via some build process) on your server(s).
+
+B) Update your vendors
+~~~~~~~~~~~~~~~~~~~~~~
+
+Your vendors can be updated before transferring your source code (i.e.
+update the ``vendor/`` directory, then transfer that with your source
+code) or afterwards on the server. Either way, just update your vendors
+as your normally do:
+
+.. code-block:: bash
+
+    $ php bin/vendors install
+
+C) Clear your Symfony cache
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Make sure you clear (and warm-up) your Symfony cache:
+
+.. code-block:: bash
+
+    $ php app/console cache:clear --env=prod --no-debug
+
+D) Other things!
+~~~~~~~~~~~~~~~~
+
+There may be lots of other things that you need to do, depending on your
+setup:
+
+* Running any database migrations
+* Clearing your APC cache
+* Dumping your Assetic assets (taken care of already in ``cache:clear``)
+* Running ``assets:install`` (taken care of already in ``bin/vendors``)
+* Add/edit CRON jobs
+* Pushing assets to a CDN
+* ...
+
+Application Lifecycle: Continuous Integration, QA, etc
+------------------------------------------------------
+
+While this entry covers the technical details of deploying, the full lifecycle
+of taking code from development up to production may have a lot more steps
+(think deploying to staging, QA, running tests, etc).
+
+The use of staging, testing, QA, continuous integration, database migrations
+and the capability to roll back in case of failure are all strongly advised. There
+are simple and more complex tools and one can make the deployment as easy
+(or sophisticated) as your environment requires.
+
+Don't forget that deploying your application also involves updating any dependency
+(typically via ``bin/vendors``), migrating your database, clearing your cache and
+other potential things like pushing assets to a CDN (see `Common Post-Deployment Tasks`_).
 
 The Tools
 ---------
 
 `Capifony`_:
 
-    This tool provides a specialized set of tools on top of Capistrano, tailored specifically to symfony and Symfony2 projects.
-
-`Magallanes`_:
-
-    This Capistrano-like deployment tool is built in PHP, and may be easier for PHP developers to extend for their needs.
+    This tool provides a specialized set of tools on top of Capistrano, tailored
+    specifically to symfony and Symfony2 projects.
 
 `sf2debpkg`_:
 
     This tool helps you build a native Debian package for your Symfony2 project.
 
+`Magallanes`_:
+
+    This Capistrano-like deployment tool is built in PHP, and may be easier
+    for PHP developers to extend for their needs.
+
 Bundles:
 
-    There are many `bundles that add deployment features`_ directly into your Symfony2 console.
+    There are many `bundles that add deployment features`_ directly into your
+    Symfony2 console.
 
 Basic scripting:
 
-    You can of course use shell, `Ant`_, or any other build tool to script the deploying of your project.
+    You can of course use shell, `Ant`_, or any other build tool to script
+    the deploying of your project.
 
 Platform as a Service Providers:
 
-    PaaS is a relatively new way to deploy your application. Typically a PaaS will use a single configuration file
-    in your project's root directory to detrmine how to build an environment on the fly that supports your software.
+    PaaS is a relatively new way to deploy your application. Typically a PaaS
+    will use a single configuration file in your project's root directory to
+    determine how to build an environment on the fly that supports your software.
     One provider with confirmed Symfony2 support is `PagodaBox`_.
-
 
 .. tip::
 
-    Looking for more? Talk to the community on the `Symfony IRC channel`_ #symfony (on freenode) for more information.
+    Looking for more? Talk to the community on the `Symfony IRC channel`_ #symfony
+    (on freenode) for more information.
 
 .. _`Capifony`: https://capifony.org/
 .. _`sf2debpkg`: https://github.com/liip/sf2debpkg

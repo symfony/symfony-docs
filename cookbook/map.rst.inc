@@ -146,4 +146,4 @@
   * :doc:`/cookbook/workflow/new_project_git`
   * :doc:`/cookbook/workflow/new_project_svn`
 
-* :doc:`/cookbook/deployment-tools/index`
+* :doc:`/cookbook/deployment-tools`
