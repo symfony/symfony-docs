@@ -13,6 +13,7 @@
 
   * :doc:`/components/console/introduction`
   * :doc:`/components/console/usage`
+  * :doc:`/components/console/single_command_tool`
 
 * **CSS Selector**
 

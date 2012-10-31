@@ -92,7 +92,7 @@ The :class:`Symfony\\Component\\HttpFoundation\\Session\\Storage\\NativeSessionS
 can configure most of the PHP ini configuration directives which are documented
 at `php.net/session.configuration`_.
 
-To configure these setting, pass the keys (omitting the initial ``session.`` part
+To configure these settings, pass the keys (omitting the initial ``session.`` part
 of the key) as a key-value array to the ``$options`` constructor argument.
 Or set them via the
 :method:`Symfony\\Component\\HttpFoundation\\Session\\Storage\\NativeSessionStorage::setOptions`
@@ -133,7 +133,7 @@ example if these were set to ``5/100`` respectively, it would mean a probability
 of 5%. Similarly, ``3/4`` would mean a 3 in 4 chance of being called, i.e. 75%.
 
 If the garbage collection handler is invoked, PHP will pass the value stored in
-the PHP ini directive ``session.gc_maxlifetime`. The meaning in this context is
+the PHP ini directive ``session.gc_maxlifetime``. The meaning in this context is
 that any stored session that was saved more than ``maxlifetime`` ago should be
 deleted. This allows one to expire records based on idle time.
 
@@ -163,7 +163,7 @@ calculated by adding the PHP runtime configuration value in
 
 .. note::
 
-    A cookie lifetime of ``0`` means the cookie expire when the browser is closed.
+    A cookie lifetime of ``0`` means the cookie expires when the browser is closed.
 
 Session Idle Time/Keep Alive
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -254,7 +254,7 @@ will be used to wrap any custom save handlers, that implement :phpclass:`Session
 Under PHP 5.4 and above, all session handlers implement :phpclass:`SessionHandlerInterface`
 including `Native*SessionHandler` classes which inherit from :phpclass:`SessionHandler`.
 
-The proxy mechanism allow you to get more deeply involved in session save handler
+The proxy mechanism allows you to get more deeply involved in session save handler
 classes. A proxy for example could be used to encrypt any session transaction
 without knowledge of the specific save handler.
 

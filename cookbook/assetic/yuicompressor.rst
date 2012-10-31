@@ -157,4 +157,4 @@ apply this filter when debug mode is off.
 
 
 .. _`YUI Compressor`: http://developer.yahoo.com/yui/compressor/
-.. _`Download the JAR`: http://yuilibrary.com/downloads/#yuicompressor
+.. _`Download the JAR`: http://yuilibrary.com/projects/yuicompressor/
