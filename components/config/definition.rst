@@ -106,19 +106,18 @@ node definition. Node type are available for:
 * variable (no validation)
 
 and are created with ``node($name, $type)`` or their associated shortcut
- ``xxxxNode($name)`` method.
+``xxxxNode($name)`` method.
 
 Numeric node constraints
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. versionadded:: 2.2
-
     The numeric (float and integer) nodes are new in 2.2
 
-Numeric node (float and integer) provide two extra constraints min() and
- max() allowing to validate the value:
-
-.. code-block:: php
+Numeric nodes (float and integer) provide two extra constraints -
+:method:`Symfony\\Component\\Config\\Definition\\Builder::min` and
+:method:`Symfony\\Component\\Config\\Definition\\Builder::max` -
+allowing to validate the value::
 
     $rootNode
         ->children()
