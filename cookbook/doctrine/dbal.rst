@@ -133,7 +133,7 @@ The SchemaTool is used to inspect the database to compare the schema. To
 achieve this task, it needs to know which mapping type needs to be used
 for each database types. Registering new ones can be done through the configuration.
 
-Let's map the ENUM type (not suppoorted by DBAL by default) to a the ``string``
+Let's map the ENUM type (not supported by DBAL by default) to a the ``string``
 mapping type:
 
 .. configuration-block::

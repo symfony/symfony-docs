@@ -34,7 +34,7 @@ Object Identities
 The ACL system is completely decoupled from your domain objects. They don't
 even have to be stored in the same database, or on the same server. In order
 to achieve this decoupling, in the ACL system your objects are represented
-through object identity objects. Everytime you want to retrieve the ACL for a
+through object identity objects. Every time you want to retrieve the ACL for a
 domain object, the ACL system will first create an object identity from your
 domain object, and then pass this object identity to the ACL provider for
 further processing.
