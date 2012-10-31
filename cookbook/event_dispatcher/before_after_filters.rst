@@ -5,7 +5,7 @@ How to setup before and after Filters
 =====================================
 
 It is quite common in web application development to need some logic to be
-executed just before or just after your controller actions acting as filters 
+executed just before or just after your controller actions acting as filters
 or hooks.
 
 In symfony1, this was achieved with the preExecute and postExecute methods.
@@ -180,7 +180,7 @@ your listener to be called just before any controller is executed.
 With this configuration, your ``TokenListener`` ``onKernelController`` method
 will be executed on each request. If the controller that is about to be executed
 implements ``TokenAuthenticatedController``, token authentication is
-applied. This let's us have a "before" filter on any controller that you
+applied. This lets us have a "before" filter on any controller that you
 want.
 
 After filters with the ``kernel.response`` Event
