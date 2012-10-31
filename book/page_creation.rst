@@ -394,7 +394,7 @@ and in the ``app`` directory:
             </head>
             <body>
                 <?php $view['slots']->output('_content') ?>
-                <?php $view['slots']->output('stylesheets') ?>
+                <?php $view['slots']->output('javascripts') ?>
             </body>
         </html>
 
