@@ -162,8 +162,7 @@ File Contents
 ~~~~~~~~~~~~~
 
 .. versionadded:: 2.1
-   Methods ``contains()`` and ``notContains()`` have been
-   introduced in version 2.1.
+   The ``contains()`` and ``notContains()`` methods were added in version 2.1
 
 Restrict files by contents with the
 :method:`Symfony\\Component\\Finder\\Finder::contains` method::
