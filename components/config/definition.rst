@@ -100,10 +100,39 @@ node definition. Node type are available for:
 * scalar
 * boolean
 * array
+* enum (new in 2.1)
+* integer (new in 2.2)
+* float (new in 2.2)
 * variable (no validation)
 
 and are created with ``node($name, $type)`` or their associated shortcut
-``xxxxNode($name)`` method.
+ ``xxxxNode($name)`` method.
+
+Numeric node constraints
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 2.2
+
+    The numeric (float and integer) nodes are new in 2.2
+
+Numeric node (float and integer) provide two extra constraints min() and
+ max() allowing to validate the value:
+
+.. code-block:: php
+
+    $rootNode
+        ->children()
+            ->integerNode('positive_value')
+                ->min(0)
+            ->end()
+            ->floatNode('big_value')
+                ->max(5E45)
+            ->end()
+            ->integerNode('value_inside_a_range')
+                ->min(-50)->max(50)
+            ->end()
+        ->end()
+    ;
 
 Array nodes
 ~~~~~~~~~~~
