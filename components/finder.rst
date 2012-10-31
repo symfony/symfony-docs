@@ -181,27 +181,29 @@ Path
 ~~~~
 
 .. versionadded:: 2.2
-   Methods ``path()`` and ``notPath()`` have been
-   introduced in version 2.2.
+   The ``path()`` and ``notPath()`` methods were added in version 2.2.
 
 Restrict files and directories by path with the
 :method:`Symfony\\Component\\Finder\\Finder::path` method::
 
     $finder->path('some/special/dir');
 
-On all platforms slash (i.e. ``/``) should be used as a separator.
+On all platforms slash (i.e. ``/``) should be used as the directory separator.
 
-The ``path()`` method accepts strings or regexes::
+The ``path()`` method accepts a string or a regular expression::
 
     $finder->path('foo/bar');
     $finder->path('/^foo\/bar/');
 
-Strings are converted into regexes by escaping slashes and adding delimiters:
+Internally, strings are converted into regular expressions by escaping slashes
+and adding delimiters:
+
+.. code-block:: text
 
     dirname    ===>    /dirname/
     a/b/c      ===>    /a\/b\/c/
 
-The ``notPath()`` method excludes files by path::
+The :method:`Symfony\\Component\\Finder\\Finder::notPath` method excludes files by path::
 
     $finder->notPath('other/dir');
 
