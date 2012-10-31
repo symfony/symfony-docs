@@ -645,7 +645,7 @@ Asynchronous Content with hinclude.js
 .. versionadded:: 2.1
     hinclude.js support was added in Symfony 2.1
 
-Controllers can be embedded asyncronously using the hinclude.js_ javascript library.
+Controllers can be embedded asynchronously using the hinclude.js_ javascript library.
 As the embedded content comes from another page (or controller for that matter),
 Symfony2 uses the standard ``render`` helper to configure ``hinclude`` tags:
 
