@@ -447,13 +447,13 @@ returns the list of related groups::
          */
         public function serialize()
         {
-            return \serialize(array(
+            return serialize(array(
                 $this->id,
                 $this->username,
                 $this->email,
                 $this->salt,
                 $this->password,
-                $this->isActive
+                $this->isActive,
             ));
         }
 
@@ -468,8 +468,8 @@ returns the list of related groups::
                 $this->email,
                 $this->salt,
                 $this->password,
-                $this->isActive
-            ) = \unserialize($serialized);
+                $this->isActive,
+            ) = unserialize($serialized);
         }
     }
 
@@ -535,10 +535,10 @@ that forces it to have a ``getRole()`` method::
          */
         public function serialize()
         {
-            return \serialize(array(
+            return serialize(array(
                 $this->id,
                 $this->name,
-                $this->role
+                $this->role,
             ));
         }
 
@@ -550,8 +550,8 @@ that forces it to have a ``getRole()`` method::
             list(
                 $this->id,
                 $this->name,
-                $this->role
-            ) = \unserialize($serialized);
+                $this->role,
+            ) = unserialize($serialized);
         }
     }
 
