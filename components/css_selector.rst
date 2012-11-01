@@ -13,7 +13,6 @@ Installation
 You can install the component in several different ways:
 
 * Use the official Git repository (https://github.com/symfony/CssSelector);
-* Install it via PEAR ( `pear.symfony.com/CssSelector`);
 * Install it via Composer (`symfony/css-selector` on Packagist).
 
 Usage

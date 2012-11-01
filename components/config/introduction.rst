@@ -18,7 +18,6 @@ Installation
 You can install the component in many different ways:
 
 * Use the official Git repository (https://github.com/symfony/Config);
-* Install it via PEAR ( `pear.symfony.com/Config`);
 * Install it via Composer (`symfony/config` on Packagist).
 
 Sections

@@ -13,7 +13,6 @@ Installation
 You can install the component in many different ways:
 
 * Use the official Git repository (https://github.com/symfony/DomCrawler);
-* Install it via PEAR ( `pear.symfony.com/DomCrawler`);
 * Install it via Composer (`symfony/dom-crawler` on Packagist).
 
 Usage

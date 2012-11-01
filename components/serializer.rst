@@ -28,7 +28,6 @@ Installation
 You can install the component in many different ways:
 
 * Use the official Git repository (https://github.com/symfony/Serializer);
-* Install it via PEAR ( `pear.symfony.com/Serializer`);
 * Install it via Composer (`symfony/serializer` on Packagist).
 
 Usage
