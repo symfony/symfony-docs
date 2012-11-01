@@ -5,10 +5,10 @@ Symfony2 Twig Extensions
 ========================
 
 Twig is the default template engine for Symfony2. It contains a lot of build-in
-functions, filters and blocks. Symfony2 created some custom extension on
-top of Twig to integrate some components into the Twig templates.
+functions, filters and tags. Symfony2 created some custom extension on top 
+of Twig to integrate some components into the Twig templates.
 
-Below is information about all the custom functions, filters and blocks
+Below is information about all the custom functions, filters and tags
 that are defined by the Symfony2 Core Framework. There may also be tags
 in bundles that are included within the Symfony Standard Edition, or in
 bundles you use, that aren't listed here.
@@ -56,3 +56,37 @@ Functions
 +---------------------------------------------+---------------------------------------------------------------------------+
 | ``url(name, parameters)``                   | Equal to ``path(...)`` but it generates an absolute url                   |
 +---------------------------------------------+---------------------------------------------------------------------------+
+
+Filters
+-------
+
++-------------------------------------------------+-------------------------------------------------------------------+
+| Filter Syntax                                   | Usage                                                             |
++=================================================+===================================================================+
+| ``classname|abbr_class``                        | This will render an ``abbr`` element with the class short name.   |
++-------------------------------------------------+-------------------------------------------------------------------+
+| ``methodname|abbr_method``                      | This will render a method inside a ``abbr`` element.              |
++-------------------------------------------------+-------------------------------------------------------------------+
+| ``arguments|format_args``                       | This will render a string with the arguments and there types.     |
++-------------------------------------------------+-------------------------------------------------------------------+
+| ``arguments|format_args_as_text``               | Equal to ``[...]|format_args``, but it strips the tags.           |
++-------------------------------------------------+-------------------------------------------------------------------+
+| ``path|file_excerpt(line)``                     | This will render an excerpt of a code file around the given line. |
++-------------------------------------------------+-------------------------------------------------------------------+
+| ``path|format_file(line, text)``                | This will render a file path in a link.                           |
++-------------------------------------------------+-------------------------------------------------------------------+
+| ``exceptionMessage|format_file_from_text``      | Equal to ``format_file`` except it parsed the default PHP error   |
+|                                                 | string into a file path (i.e. 'in foo.php on line 45')            |
++-------------------------------------------------+-------------------------------------------------------------------+
+| ``path|file_link(line)``                        | This will render a path to the correct file (and line number)     |
++-------------------------------------------------+-------------------------------------------------------------------+
+| ``text|trans(parameters, domain)``              | This will translate the text into the current language, more      |
+|                                                 | information in :ref:`book-translation-twig`.                      |
++-------------------------------------------------+-------------------------------------------------------------------+
+| ``text|transchoice(count, parameters, domain)`` | This will translate the text with pluralization, more information |
+|                                                 | in :ref:`book-translation-twig`.                                  |
++-------------------------------------------------+-------------------------------------------------------------------+
+| ``variable|yaml_encode(inline)``                | This will transform the variable text into a YAML syntax.         |
++-------------------------------------------------+-------------------------------------------------------------------+
+| ``variable|yaml_dump``                          | This will render a yaml syntax with their type.                   |
++-------------------------------------------------+-------------------------------------------------------------------+
