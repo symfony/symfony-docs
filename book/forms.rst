@@ -84,6 +84,8 @@ render the actual HTML form. In Symfony2, this is done by building a form
 object and then rendering it in a template. For now, this can all be done
 from inside a controller::
 
+.. code-block:: php
+
     // src/Acme/TaskBundle/Controller/DefaultController.php
     namespace Acme\TaskBundle\Controller;
 
