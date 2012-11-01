@@ -19,7 +19,6 @@ Installation
 You can install the component in many different ways:
 
 * Use the official Git repository (https://github.com/symfony/Templating);
-* Install it via PEAR (`pear.symfony.com/Templating`);
 * Install it via Composer (`symfony/templating` on Packagist).
 
 Usage
