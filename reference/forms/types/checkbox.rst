@@ -9,7 +9,7 @@ has a Boolean value: if the box is checked, the field will be set to true,
 if the box is unchecked, the value will be set to false.
 
 +-------------+------------------------------------------------------------------------+
-| Rendered as | ``input`` ``text`` field                                               |
+| Rendered as | ``input`` ``checkbox`` field                                           |
 +-------------+------------------------------------------------------------------------+
 | Options     | - `value`_                                                             |
 +-------------+------------------------------------------------------------------------+
