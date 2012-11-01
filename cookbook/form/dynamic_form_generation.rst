@@ -263,17 +263,17 @@ our listener::
                     $form = $event->getForm();
                     $userId = $user->getId();
 
-                    $form_options = [
+                    $formOptions = array(
                         'class' => 'Acme\DemoBundle\Document\User',
                         'multiple' => false,
                         'expanded' => false,
                         'property' => 'fullName',
                         'query_builder' => function(DocumentRepository $dr) use ($userId) {
                             return $dr->createQueryBuilder()->field('friends.$id')->equals(new \MongoId($userId));
-                        }
-                    ];
+                        },
+                    );
 
-                    $form->add($factory->createNamed('friend', 'document', null, $form_options));
+                    $form->add($factory->createNamed('friend', 'document', null, $formOptions));
                 }
             );
         }
@@ -396,11 +396,11 @@ call to ``$form->bind($request)``.
 
 On a form, we can usually listen to the following events::
 
-    PRE_SET_DATA
-    POST_SET_DATA
-    PRE_BIND
-    BIND
-    POST_BIND
+ * ``PRE_SET_DATA``
+ * ``POST_SET_DATA``
+ * ``PRE_BIND``
+ * ``BIND``
+ * ``POST_BIND``
 
 When listening to bind and post-bind, it's already "too late" to make changes to
 the form. But pre-bind is fine. There is however a big difference in what
