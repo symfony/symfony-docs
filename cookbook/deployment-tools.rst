@@ -104,7 +104,16 @@ Make sure you clear (and warm-up) your Symfony cache:
 
     $ php app/console cache:clear --env=prod --no-debug
 
-D) Other things!
+D) Dump your Assetic assets
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+If you're using Assetic, you'll also want to dump your assets:
+
+.. code-block:: bash
+
+    $ php app/console assetic:dump --env=prod --no-debug
+
+E) Other things!
 ~~~~~~~~~~~~~~~~
 
 There may be lots of other things that you need to do, depending on your
@@ -112,7 +121,6 @@ setup:
 
 * Running any database migrations
 * Clearing your APC cache
-* Dumping your Assetic assets (taken care of already in ``cache:clear``)
 * Running ``assets:install`` (taken care of already in ``composer.phar install``)
 * Add/edit CRON jobs
 * Pushing assets to a CDN
