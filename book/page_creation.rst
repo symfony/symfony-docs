@@ -301,8 +301,7 @@ of writing the HTML inside the controller, render a template instead:
 
    In order to use the :method:`Symfony\\Bundle\\FrameworkBundle\\Controller\\Controller::render` 
    method, your controller must extend the 
-   :class:`Symfony\\Bundle\\FrameworkBundle\\Controller\\Controller` class 
-   (API docs: :class:`Symfony\\Bundle\\FrameworkBundle\\Controller\\Controller`),
+   :class:`Symfony\\Bundle\\FrameworkBundle\\Controller\\Controller` class,
    which adds shortcuts for tasks that are common inside controllers. This
    is done in the above example by adding the ``use`` statement on line 4
    and then extending ``Controller`` on line 6.
@@ -971,21 +970,21 @@ hopefully discovered how easy and flexible it can be. And while there are
 in mind:
 
 * Creating a page is a three-step process involving a **route**, a **controller**
-  And (optionally) a **template**;
+  and (optionally) a **template**;
 
 * Each project contains just a few main directories: ``web/`` (web assets and
-  The front controllers), ``app/`` (configuration), ``src/`` (your bundles),
-  And ``vendor/`` (third-party code) (there's also a ``bin/`` directory that's
-  Used to help updated vendor libraries);
+  the front controllers), ``app/`` (configuration), ``src/`` (your bundles),
+  and ``vendor/`` (third-party code) (there's also a ``bin/`` directory that's
+  used to help updated vendor libraries);
 
 * Each feature in Symfony2 (including the Symfony2 framework core) is organized
-  Into a *bundle*, which is a structured set of files for that feature;
+  into a *bundle*, which is a structured set of files for that feature;
 
 * The **configuration** for each bundle lives in the ``Resources/config``
-  Directory of the bundle and can be specified in YAML, XML or PHP;
+  directory of the bundle and can be specified in YAML, XML or PHP;
 
 * The global **application configuration** lives in the ``app/config``
-  Directory;
+  directory;
 
 * Each **environment** is accessible via a different front controller (e.g.
   ``app.php`` and ``app_dev.php``) and loads a different configuration file.
