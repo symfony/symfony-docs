@@ -90,3 +90,22 @@ Filters
 +-------------------------------------------------+-------------------------------------------------------------------+
 | ``variable|yaml_dump``                          | This will render a yaml syntax with their type.                   |
 +-------------------------------------------------+-------------------------------------------------------------------+
+
+Tags
+----
+
++---------------------------------------------------+-------------------------------------------------------------------+
+| Tag Syntax                                        | Usage                                                             |
++===================================================+===================================================================+
+| ``{% render 'controller' with {parameters} %}``   | This will render the Response Content for the given controller,   |
+|                                                   | more information in :ref:`templating-embedding-controller`.       |
++---------------------------------------------------+-------------------------------------------------------------------+
+| ``{% form_theme form 'file' %}``                  | This will look inside the given file for overriden form blocks,   |
+|                                                   | more information in :doc:`cookbook/form/form_customization`.      |
++---------------------------------------------------+-------------------------------------------------------------------+
+| ``{% trans with {variables} %}...{% endtrans %}`` | This will translate and render the text, more information in      |
+|                                                   | :ref:`book-translation-twig`                                      |
++---------------------------------------------------+-------------------------------------------------------------------+
+| ``{% transchoice count with {variables}...        | This will translate and render the text with pluralization, more  |
+| {% endtranschoice %}``                            | information in :ref:`book-translation-twig`                       |
++---------------------------------------------------+-------------------------------------------------------------------+
