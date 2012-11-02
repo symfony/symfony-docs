@@ -334,18 +334,18 @@ are organized inside a Symfony2 project.
 When working with template inheritance, here are some tips to keep in mind:
 
 * If you use ``{% extends %}`` in a template, it must be the first tag in
-  that template.
+  that template;
 
 * The more ``{% block %}`` tags you have in your base templates, the better.
   Remember, child templates don't have to define all parent blocks, so create
   as many blocks in your base templates as you want and give each a sensible
   default. The more blocks your base templates have, the more flexible your
-  layout will be.
+  layout will be;
 
 * If you find yourself duplicating content in a number of templates, it probably
   means you should move that content to a ``{% block %}`` in a parent template.
   In some cases, a better solution may be to move the content to a new template
-  and ``include`` it (see :ref:`including-templates`).
+  and ``include`` it (see :ref:`including-templates`);
 
 * If you need to get the content of a block from the parent template, you
   can use the ``{{ parent() }}`` function. This is useful if you want to add
@@ -355,7 +355,9 @@ When working with template inheritance, here are some tips to keep in mind:
 
         {% block sidebar %}
             <h3>Table of Contents</h3>
-            ...
+
+            {# ... #}
+
             {{ parent() }}
         {% endblock %}
 
@@ -570,7 +572,6 @@ template. First, create a controller that renders a certain number of recent
 articles::
 
     // src/Acme/ArticleBundle/Controller/ArticleController.php
-
     class ArticleController extends Controller
     {
         public function recentArticlesAction($max = 3)
@@ -620,7 +621,6 @@ syntax for controllers (i.e. **bundle**:**controller**:**action**):
         {# app/Resources/views/base.html.twig #}
 
         {# ... #}
-
         <div id="sidebar">
             {% render "AcmeArticleBundle:Article:recentArticles" with {'max': 3} %}
         </div>
@@ -629,8 +629,7 @@ syntax for controllers (i.e. **bundle**:**controller**:**action**):
 
         <!-- app/Resources/views/base.html.php -->
 
-        {# ... #}
-
+        <!-- ... -->
         <div id="sidebar">
             <?php echo $view['actions']->render('AcmeArticleBundle:Article:recentArticles', array('max' => 3)) ?>
         </div>
@@ -822,7 +821,7 @@ stylesheets and Javascripts that you'll need throughout your site:
 
 .. code-block:: html+jinja
 
-    {# 'app/Resources/views/base.html.twig' #}
+    {# app/Resources/views/base.html.twig #}
     <html>
         <head>
             {# ... #}
@@ -961,8 +960,8 @@ configuration file:
 
         // app/config/config.php
         $container->loadFromExtension('framework', array(
-            // ...
-            'templating'      => array(
+            ...,
+            'templating' => array(
                 'engines' => array('twig'),
             ),
         ));
@@ -1075,32 +1074,32 @@ covered:
   would have a template called ``AcmeBlogBundle::layout.html.twig`` that contains
   only blog section-specific elements;
 
-    .. code-block:: html+jinja
+  .. code-block:: html+jinja
 
-        {# src/Acme/BlogBundle/Resources/views/layout.html.twig #}
-        {% extends '::base.html.twig' %}
+      {# src/Acme/BlogBundle/Resources/views/layout.html.twig #}
+      {% extends '::base.html.twig' %}
 
-        {% block body %}
-            <h1>Blog Application</h1>
+      {% block body %}
+          <h1>Blog Application</h1>
 
-            {% block content %}{% endblock %}
-        {% endblock %}
+          {% block content %}{% endblock %}
+      {% endblock %}
 
 * Create individual templates for each page and make each extend the appropriate
   section template. For example, the "index" page would be called something
   close to ``AcmeBlogBundle:Blog:index.html.twig`` and list the actual blog posts.
 
-    .. code-block:: html+jinja
+  .. code-block:: html+jinja
 
-        {# src/Acme/BlogBundle/Resources/views/Blog/index.html.twig #}
-        {% extends 'AcmeBlogBundle::layout.html.twig' %}
+      {# src/Acme/BlogBundle/Resources/views/Blog/index.html.twig #}
+      {% extends 'AcmeBlogBundle::layout.html.twig' %}
 
-        {% block content %}
-            {% for entry in blog_entries %}
-                <h2>{{ entry.title }}</h2>
-                <p>{{ entry.body }}</p>
-            {% endfor %}
-        {% endblock %}
+      {% block content %}
+          {% for entry in blog_entries %}
+              <h2>{{ entry.title }}</h2>
+              <p>{{ entry.body }}</p>
+          {% endfor %}
+      {% endblock %}
 
 Notice that this template extends the section template -(``AcmeBlogBundle::layout.html.twig``)
 which in-turn extends the base application layout (``::base.html.twig``).

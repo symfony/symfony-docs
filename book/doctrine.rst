@@ -15,9 +15,9 @@ be.
 
     Doctrine is totally decoupled from Symfony and using it is optional.
     This chapter is all about the Doctrine ORM, which aims to let you map
-    objects to a relational database (such as *MySQL*, *PostgreSQL* or *Microsoft SQL*).
-    If you prefer to use raw database queries, this is easy, and explained
-    in the ":doc:`/cookbook/doctrine/dbal`" cookbook entry.
+    objects to a relational database (such as *MySQL*, *PostgreSQL* or 
+    *Microsoft SQL*). If you prefer to use raw database queries, this is 
+    easy, and explained in the ":doc:`/cookbook/doctrine/dbal`" cookbook entry.
 
     You can also persist data to `MongoDB`_ using Doctrine ODM library. For
     more information, read the ":doc:`/bundles/DoctrineMongoDBBundle/index`"
@@ -169,12 +169,6 @@ properties should be *mapped* to the database. This metadata can be specified
 in a number of different formats including YAML, XML or directly inside the
 ``Product`` class via annotations:
 
-.. note::
-
-    A bundle can accept only one metadata definition format. For example, it's
-    not possible to mix YAML metadata definitions with annotated PHP entity
-    class definitions.
-
 .. configuration-block::
 
     .. code-block:: php-annotations
@@ -251,6 +245,12 @@ in a number of different formats including YAML, XML or directly inside the
             </entity>
         </doctrine-mapping>
 
+.. note::
+
+    A bundle can accept only one metadata definition format. For example, it's
+    not possible to mix YAML metadata definitions with annotated PHP entity
+    class definitions.
+
 .. tip::
 
     The table name is optional and if omitted, will be determined automatically
@@ -293,6 +293,7 @@ see the :ref:`book-doctrine-field-types` section.
          * @IgnoreAnnotation("fn")
          */
         class Product
+        // ...
 
 Generating Getters and Setters
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -316,10 +317,10 @@ doesn't replace your existing methods).
 
     With the ``doctrine:generate:entities`` command you can:
 
-        * generate getters and setters,
+        * generate getters and setters;
 
         * generate repository classes configured with the
-            ``@ORM\Entity(repositoryClass="...")`` annotation,
+            ``@ORM\Entity(repositoryClass="...")`` annotation;
 
         * generate the appropriate constructor for 1:n and n:m relations.
 
@@ -420,11 +421,11 @@ of the bundle:
 Let's walk through this example:
 
 * **lines 9-12** In this section, you instantiate and work with the ``$product``
-  object like any other, normal PHP object;
+  object like any other, normal PHP object.
 
 * **line 14** This line fetches Doctrine's *entity manager* object, which is
   responsible for handling the process of persisting and fetching objects
-  to and from the database;
+  to and from the database.
 
 * **line 15** The ``persist()`` method tells Doctrine to "manage" the ``$product``
   object. This does not actually cause a query to be made to the database (yet).
@@ -558,9 +559,9 @@ you have a route that maps a product id to an update action in a controller::
 
 Updating an object involves just three steps:
 
-1. fetching the object from Doctrine;
-2. modifying the object;
-3. calling ``flush()`` on the entity manager
+#. fetching the object from Doctrine;
+#. modifying the object;
+#. calling ``flush()`` on the entity manager
 
 Notice that calling ``$em->persist($product)`` isn't necessary. Recall that
 this method simply tells Doctrine to manage or "watch" the ``$product`` object.
@@ -884,7 +885,6 @@ object, you'll want to add a ``$category`` property to the ``Product`` class:
         // src/Acme/StoreBundle/Entity/Product.php
 
         // ...
-
         class Product
         {
             // ...

@@ -33,7 +33,7 @@ persisted to the database. Writing in flat PHP is quick and dirty:
     $result = mysql_query('SELECT id, title FROM post', $link);
     ?>
 
-    <!doctype html>
+    <!DOCTYPE html>
     <html>
         <head>
             <title>List of Posts</title>
@@ -70,6 +70,7 @@ to maintain. There are several problems that need to be addressed:
   way to reuse any part of the application for other "pages" of the blog.
 
 .. note::
+
     Another problem not mentioned here is the fact that the database is
     tied to MySQL. Though not covered here, Symfony2 fully integrates `Doctrine`_,
     a library dedicated to database abstraction and mapping.
@@ -106,7 +107,7 @@ is primarily an HTML file that uses a template-like PHP syntax:
 
 .. code-block:: html+php
 
-    <!doctype html>
+    <!DOCTYPE html>
     <html>
         <head>
             <title>List of Posts</title>
@@ -211,6 +212,7 @@ that by creating a new ``layout.php`` file:
 .. code-block:: html+php
 
     <!-- templates/layout.php -->
+    <!DOCTYPE html>
     <html>
         <head>
             <title><?php echo $title ?></title>
@@ -366,9 +368,9 @@ on the requested URI:
 
     // route the request internally
     $uri = $_SERVER['REQUEST_URI'];
-    if ($uri == '/index.php') {
+    if ('/index.php' == $uri) {
         list_action();
-    } elseif ($uri == '/index.php/show' && isset($_GET['id'])) {
+    } elseif ('/index.php/show' == $uri && isset($_GET['id'])) {
         show_action($_GET['id']);
     } else {
         header('Status: 404 Not Found');
@@ -466,9 +468,9 @@ the HTTP response being returned. Use them to improve the blog:
     $request = Request::createFromGlobals();
 
     $uri = $request->getPathInfo();
-    if ($uri == '/') {
+    if ('/' == $uri) {
         $response = list_action();
-    } elseif ($uri == '/show' && $request->query->has('id')) {
+    } elseif ('/show' == $uri && $request->query->has('id')) {
         $response = show_action($request->query->get('id'));
     } else {
         $html = '<html><body><h1>Page Not Found</h1></body></html>';
@@ -537,11 +539,8 @@ from scratch, you could at least use Symfony's standalone `Routing`_ and
 `Templating`_ components, which already solve these problems.
 
 Instead of re-solving common problems, you can let Symfony2 take care of
-them for you. Here's the same sample application, now built in Symfony2:
+them for you. Here's the same sample application, now built in Symfony2::
 
-.. code-block:: html+php
-
-    <?php
     // src/Acme/BlogBundle/Controller/BlogController.php
     namespace Acme\BlogBundle\Controller;
 
@@ -563,7 +562,8 @@ them for you. Here's the same sample application, now built in Symfony2:
             $post = $this->get('doctrine')
                 ->getEntityManager()
                 ->getRepository('AcmeBlogBundle:Post')
-                ->find($id);
+                ->find($id)
+            ;
             
             if (!$post) {
                 // cause the 404 page not found to be displayed
@@ -602,7 +602,7 @@ The layout is nearly identical:
 .. code-block:: html+php
 
     <!-- app/Resources/views/layout.html.php -->
-    <!doctype html>
+    <!DOCTYPE html>
     <html>
         <head>
             <title><?php echo $view['slots']->output('title', 'Default title') ?></title>
@@ -635,11 +635,8 @@ A routing configuration map provides this information in a readable format:
 Now that Symfony2 is handling all the mundane tasks, the front controller
 is dead simple. And since it does so little, you'll never have to touch
 it once it's created (and if you use a Symfony2 distribution, you won't
-even need to create it!):
+even need to create it!)::
 
-.. code-block:: html+php
-
-    <?php
     // web/app.php
     require_once __DIR__.'/../app/bootstrap.php';
     require_once __DIR__.'/../app/AppKernel.php';
@@ -667,18 +664,18 @@ migrating the blog from flat PHP to Symfony2 has improved life:
 
 * Your application now has **clear and consistently organized code** (though
   Symfony doesn't force you into this). This promotes **reusability** and
-  allows for new developers to be productive in your project more quickly.
+  allows for new developers to be productive in your project more quickly;
 
 * 100% of the code you write is for *your* application. You **don't need
   to develop or maintain low-level utilities** such as :ref:`autoloading<autoloading-introduction-sidebar>`,
-  :doc:`routing</book/routing>`, or rendering :doc:`controllers</book/controller>`.
+  :doc:`routing</book/routing>`, or rendering :doc:`controllers</book/controller>`;
 
 * Symfony2 gives you **access to open source tools** such as Doctrine and the
   Templating, Security, Form, Validation and Translation components (to name
-  a few).
+  a few);
 
 * The application now enjoys **fully-flexible URLs** thanks to the ``Routing``
-  component.
+  component;
 
 * Symfony2's HTTP-centric architecture gives you access to powerful tools
   such as **HTTP caching** powered by **Symfony2's internal HTTP cache** or
@@ -701,6 +698,7 @@ for example, the list template written in Twig:
 
     {# src/Acme/BlogBundle/Resources/views/Blog/list.html.twig #}
     {% extends "::layout.html.twig" %}
+
     {% block title %}List of Posts{% endblock %}
 
     {% block body %}
@@ -721,7 +719,7 @@ The corresponding ``layout.html.twig`` template is also easier to write:
 .. code-block:: html+jinja
 
     {# app/Resources/views/layout.html.twig #}
-    <!doctype html>
+    <!DOCTYPE html>
     <html>
         <head>
             <title>{% block title %}Default title{% endblock %}</title>
