@@ -10,8 +10,7 @@ of Twig to integrate some components into the Twig templates.
 
 Below is information about all the custom functions, filters and tags
 that are defined by the Symfony2 Core Framework. There may also be tags
-in bundles that are included within the Symfony Standard Edition, or in
-bundles you use, that aren't listed here.
+in bundles you use that aren't listed here.
 
 Functions
 ---------
@@ -109,3 +108,18 @@ Tags
 | ``{% transchoice count with {variables}...        | This will translate and render the text with pluralization, more  |
 | {% endtranschoice %}``                            | information in :ref:`book-translation-twig`                       |
 +---------------------------------------------------+-------------------------------------------------------------------+
+
+Symfony Standard Edition Extensions
+-----------------------------------
+
+The Symfony Standard Edition adds some bundles to the Symfony2 Core Framework.
+Those bundles can have other Twig extensions:
+
+* **Twig Extension** includes all extensions that do not belong to the
+  Twig core but can be interesting. You can read more in 
+  `the official Twig Extensions documentation`_
+* **Assetic** adds the ``{% stylesheets %}``, ``{% javascripts %}`` and 
+  ``{% image %}`` tags. You can read more about them in 
+  :doc:`the Assetic Documentation<cookbook/assetic>`;
+
+.. _`the official Twig Extensions documentation`: http://twig.sensiolabs.org/doc/extensions/index.html
