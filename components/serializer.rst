@@ -28,7 +28,7 @@ Installation
 You can install the component in many different ways:
 
 * Use the official Git repository (https://github.com/symfony/Serializer);
-* Install it via Composer (`symfony/serializer` on Packagist).
+* Install it via Composer (`symfony/serializer` on `Packagist`_).
 
 Usage
 -----
@@ -128,3 +128,4 @@ annotations (as well as YML, XML and PHP), integration with the Doctrine ORM,
 and handling of other complex cases (e.g. circular references).
 
 .. _`JMSSerializationBundle`: https://github.com/schmittjoh/JMSSerializerBundle
+.. _Packagist: https://packagist.org/packages/symfony/serializer

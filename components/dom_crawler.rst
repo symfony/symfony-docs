@@ -13,7 +13,7 @@ Installation
 You can install the component in many different ways:
 
 * Use the official Git repository (https://github.com/symfony/DomCrawler);
-* Install it via Composer (`symfony/dom-crawler` on Packagist).
+* Install it via Composer (`symfony/dom-crawler` on `Packagist`_).
 
 Usage
 -----
@@ -318,4 +318,5 @@ directly::
     // submit that form
     $crawler = $client->submit($form);
 
-.. _`Goutte`: https://github.com/fabpot/goutte
+.. _`Goutte`:  https://github.com/fabpot/goutte
+.. _Packagist: https://packagist.org/packages/symfony/dom-crawler

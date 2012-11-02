@@ -13,7 +13,7 @@ Installation
 You can install the component in many different ways:
 
 * Use the official Git repository (https://github.com/symfony/Process);
-* Install it via Composer (`symfony/process` on Packagist).
+* Install it via Composer (`symfony/process` on `Packagist`_).
 
 Usage
 -----
@@ -62,3 +62,5 @@ instead::
     EOF
     );
     $process->run();
+
+.. _Packagist: https://packagist.org/packages/symfony/process

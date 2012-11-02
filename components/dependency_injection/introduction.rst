@@ -17,7 +17,7 @@ Installation
 You can install the component in many different ways:
 
 * Use the official Git repository (https://github.com/symfony/DependencyInjection);
-* Install it via Composer (`symfony/dependency-injection` on Packagist).
+* Install it via Composer (`symfony/dependency-injection` on `Packagist`_).
 
 Basic Usage
 -----------
@@ -282,3 +282,4 @@ The ``newsletter_manager`` and ``mailer`` services can be set up using config fi
         $container->register('newsletter_manager', 'NewsletterManager')
            ->addMethodCall('setMailer', new Reference('mailer');
 
+.. _Packagist: https://packagist.org/packages/symfony/dependency-injection
