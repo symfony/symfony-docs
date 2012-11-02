@@ -8,12 +8,13 @@ Validation is a very common task in web applications. Data entered in forms
 needs to be validated. Data also needs to be validated before it is written
 into a database or passed to a web service.
 
-Symfony2 ships with a `Validator`_ component that makes this task easy and transparent.
-This component is based on the `JSR303 Bean Validation specification`_. What?
-A Java specification in PHP? You heard right, but it's not as bad as it sounds.
-Let's look at how it can be used in PHP.
+Symfony2 ships with a `Validator`_ component that makes this task easy and 
+transparent. This component is based on the 
+`JSR303 Bean Validation specification`_. What? A Java specification in PHP? 
+You heard right, but it's not as bad as it sounds. Let's look at how it 
+can be used in PHP.
 
-.. index:
+.. index::
    single: Validation; The basics
 
 The Basics of Validation
@@ -21,9 +22,7 @@ The Basics of Validation
 
 The best way to understand validation is to see it in action. To start, suppose
 you've created a plain-old-PHP object that you need to use somewhere in
-your application:
-
-.. code-block:: php
+your application::
 
     // src/Acme/BlogBundle/Entity/Author.php
     namespace Acme\BlogBundle\Entity;
@@ -117,9 +116,7 @@ on the ``validator`` service (class :class:`Symfony\\Component\\Validator\\Valid
 The job of the ``validator`` is easy: to read the constraints (i.e. rules)
 of a class and verify whether or not the data on the object satisfies those
 constraints. If validation fails, an array of errors is returned. Take this
-simple example from inside a controller:
-
-.. code-block:: php
+simple example from inside a controller::
 
     // ...
     use Symfony\Component\HttpFoundation\Response;
@@ -752,15 +749,15 @@ user registers and when a user updates his/her contact information later:
             public static function loadValidatorMetadata(ClassMetadata $metadata)
             {
                 $metadata->addPropertyConstraint('email', new Email(array(
-                    'groups' => array('registration')
+                    'groups' => array('registration'),
                 )));
 
                 $metadata->addPropertyConstraint('password', new NotBlank(array(
-                    'groups' => array('registration')
+                    'groups' => array('registration'),
                 )));
                 $metadata->addPropertyConstraint('password', new MinLength(array(
                     'limit'  => 7,
-                    'groups' => array('registration')
+                    'groups' => array('registration'),
                 )));
 
                 $metadata->addPropertyConstraint('city', new MinLength(3));
@@ -796,9 +793,9 @@ just want to validate a simple value - like to verify that a string is a valid
 email address. This is actually pretty easy to do. From inside a controller,
 it looks like this::
 
-    // add this to the top of your class
     use Symfony\Component\Validator\Constraints\Email;
-    
+    // ...
+
     public function addEmailAction($email)
     {
         $emailConstraint = new Email();

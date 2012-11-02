@@ -24,9 +24,7 @@ Creating a Simple Form
 Suppose you're building a simple todo list application that will need to
 display "tasks". Because your users will need to edit and create tasks, you're
 going to need to build a form. But before you begin, first focus on the generic
-``Task`` class that represents and stores the data for a single task:
-
-.. code-block:: php
+``Task`` class that represents and stores the data for a single task::
 
     // src/Acme/TaskBundle/Entity/Task.php
     namespace Acme\TaskBundle\Entity;
@@ -742,9 +740,7 @@ Creating Form Classes
 As you've seen, a form can be created and used directly in a controller.
 However, a better practice is to build the form in a separate, standalone PHP
 class, which can then be reused anywhere in your application. Create a new class
-that will house the logic for building the task form:
-
-.. code-block:: php
+that will house the logic for building the task form::
 
     // src/Acme/TaskBundle/Form/Type/TaskType.php
     namespace Acme\TaskBundle\Form\Type;
@@ -768,9 +764,7 @@ that will house the logic for building the task form:
 
 This new class contains all the directions needed to create the task form
 (note that the ``getName()`` method should return a unique identifier for this
-form "type"). It can be used to quickly build a form object in the controller:
-
-.. code-block:: php
+form "type"). It can be used to quickly build a form object in the controller::
 
     // src/Acme/TaskBundle/Controller/DefaultController.php
 
@@ -1068,7 +1062,7 @@ The ``field_row`` form fragment is used when rendering most fields via the
 fragment defined above, add the following to the top of the template that
 renders the form:
 
-.. configuration-block:: php
+.. configuration-block::
 
     .. code-block:: html+jinja
 
@@ -1373,7 +1367,7 @@ section.
     The ``intention`` option is optional but greatly enhances the security of
     the generated token by making it different for each form.
 
-.. index:
+.. index::
    single: Forms; With no class
 
 Using a Form without a Class
@@ -1413,10 +1407,10 @@ By default, a form actually assumes that you want to work with arrays of
 data, instead of an object. There are exactly two ways that you can change
 this behavior and tie the form to an object instead:
 
-1. Pass an object when creating the form (as the first argument to ``createFormBuilder``
+#. Pass an object when creating the form (as the first argument to ``createFormBuilder``
    or the second argument to ``createForm``);
 
-2. Declare the ``data_class`` option on your form.
+#. Declare the ``data_class`` option on your form.
 
 If you *don't* do either of these, then the form will return the data as
 an array. In this example, since ``$defaultData`` is not an object (and
@@ -1426,9 +1420,7 @@ an array.
 .. tip::
 
     You can also access POST values (in this case "name") directly through
-    the request object, like so:
-
-    .. code-block:: php
+    the request object, like so::
 
         $this->get('request')->request->get('name');
 
