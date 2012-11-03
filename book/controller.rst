@@ -663,7 +663,7 @@ the ``notice`` message:
 
     .. code-block:: php
 
-        <?php foreach ($view['session']->getFlashBag()->get('notice') as $message): ?>
+        <?php foreach ($view['session']->getFlash('notice') as $message): ?>
             <div class="flash-notice">
                 <?php echo "<div class='flash-error'>$message</div>" ?>
             </div>
