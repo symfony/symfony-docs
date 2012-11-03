@@ -21,11 +21,11 @@ the user::
 
     The term *locale* refers roughly to the user's language and country. It
     can be any string that your application uses to manage translations
-    and other format differences (e.g. currency format). We recommended the
+    and other format differences (e.g. currency format). The
     `ISO639-1`_ *language* code, an underscore (``_``), then the `ISO3166 Alpha-2`_ *country*
-    code (e.g. ``fr_FR`` for French/France).
+    code (e.g. ``fr_FR`` for French/France) is recommended.
 
-In this chapter, we'll learn how to prepare an application to support multiple
+In this chapter, you'll learn how to prepare an application to support multiple
 locales and then how to create translations for multiple locales. Overall,
 the process has several common steps:
 
@@ -94,7 +94,7 @@ Translation of text is done through the  ``translator`` service
 (:class:`Symfony\\Component\\Translation\\Translator`). To translate a block
 of text (called a *message*), use the
 :method:`Symfony\\Component\\Translation\\Translator::trans` method. Suppose,
-for example, that we're translating a simple message from inside a controller::
+for example, that you're translating a simple message from inside a controller::
 
     public function indexAction()
     {
@@ -105,7 +105,7 @@ for example, that we're translating a simple message from inside a controller::
 
 When this code is executed, Symfony2 will attempt to translate the message
 "Symfony2 is great" based on the ``locale`` of the user. For this to work,
-we need to tell Symfony2 how to translate the message via a "translation
+you need to tell Symfony2 how to translate the message via a "translation
 resource", which is a collection of message translations for a given locale.
 This "dictionary" of translations can be created in several different formats,
 XLIFF being the recommended format:
@@ -180,7 +180,7 @@ Sometimes, a message containing a variable needs to be translated::
 However, creating a translation for this string is impossible since the translator
 will try to look up the exact message, including the variable portions
 (e.g. "Hello Ryan" or "Hello Fabien"). Instead of writing a translation
-for every possible iteration of the ``$name`` variable, we can replace the
+for every possible iteration of the ``$name`` variable, you can replace the
 variable with a "placeholder"::
 
     public function indexAction($name)
@@ -230,7 +230,7 @@ is done just as before:
     required when translating in Twig templates, and is overall a sensible
     convention to follow.
 
-As we've seen, creating a translation is a two-step process:
+As you've seen, creating a translation is a two-step process:
 
 #. Abstract the message that needs to be translated by processing it through
    the ``Translator``.
@@ -266,9 +266,9 @@ filesystem and discovered by Symfony, thanks to some conventions.
     Each time you create a *new* translation resource (or install a bundle
     that includes a translation resource), be sure to clear your cache so
     that Symfony can discover the new translation resource:
-    
+
     .. code-block:: bash
-    
+
         $ php app/console cache:clear
 
 .. index::
@@ -392,11 +392,11 @@ Symfony2 will discover these files and use them when translating either
     locale (i.e. to translate ``symfony2.great`` to ``Symfony2 is great``).
 
     The second method is handy because the message key won't need to be changed
-    in every translation file if we decide that the message should actually
+    in every translation file if you decide that the message should actually
     read "Symfony2 is really great" in the default locale.
 
     The choice of which method to use is entirely up to you, but the "keyword"
-    format is often recommended. 
+    format is often recommended.
 
     Additionally, the ``php`` and ``yaml`` file formats support nested ids to
     avoid repeating yourself if you use keywords instead of real text for your
@@ -460,7 +460,7 @@ Symfony2 will discover these files and use them when translating either
 Using Message Domains
 ---------------------
 
-As we've seen, message files are organized into the different locales that
+As you've seen, message files are organized into the different locales that
 they translate. The message files can also be organized further into "domains".
 When creating message files, the domain is the first portion of the filename.
 The default domain is ``messages``. For example, suppose that, for organization,

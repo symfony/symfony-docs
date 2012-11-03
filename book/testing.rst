@@ -227,11 +227,11 @@ document::
 
         request(
             $method,
-            $uri, 
-            array $parameters = array(), 
-            array $files = array(), 
-            array $server = array(), 
-            $content = null, 
+            $uri,
+            array $parameters = array(),
+            array $files = array(),
+            array $server = array(),
+            $content = null,
             $changeHistory = true
         )
 
@@ -441,8 +441,8 @@ it automatically. You can examine the response and force a redirection
 afterwards  with the ``followRedirect()`` method::
 
     $crawler = $client->followRedirect();
-    
-If you want the client to automatically follow all redirects, you can 
+
+If you want the client to automatically follow all redirects, you can
 force him with the ``followRedirects()`` method::
 
     $client->followRedirects();
@@ -568,7 +568,7 @@ Just like links, you select forms with the ``selectButton()`` method::
 
 .. note::
 
-    Notice that we select form buttons and not forms as a form can have several
+    Notice that you select form buttons and not forms as a form can have several
     buttons; if you use the traversing API, keep in mind that you must look for a
     button.
 

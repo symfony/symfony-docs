@@ -532,7 +532,7 @@ The Sample Application in Symfony2
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The blog has come a *long* way, but it still contains a lot of code for such
-a simple application. Along the way, we've also invented a simple routing
+a simple application. Along the way, you've made a simple routing
 system and a method using ``ob_start()`` and ``ob_get_clean()`` to render
 templates. If, for some reason, you needed to continue building this "framework"
 from scratch, you could at least use Symfony's standalone `Routing`_ and
@@ -564,6 +564,7 @@ them for you. Here's the same sample application, now built in Symfony2::
                 ->getRepository('AcmeBlogBundle:Post')
                 ->find($id)
             ;
+
             if (!$post) {
                 // cause the 404 page not found to be displayed
                 throw $this->createNotFoundException();
@@ -613,7 +614,7 @@ The layout is nearly identical:
 
 .. note::
 
-    We'll leave the show template as an exercise, as it should be trivial to
+    The show template is left as an exercise, as it should be trivial to
     create based on the list template.
 
 When Symfony2's engine (called the ``Kernel``) boots up, it needs a map so
@@ -729,8 +730,8 @@ The corresponding ``layout.html.twig`` template is also easier to write:
     </html>
 
 Twig is well-supported in Symfony2. And while PHP templates will always
-be supported in Symfony2, we'll continue to discuss the many advantages of
-Twig. For more information, see the :doc:`templating chapter</book/templating>`.
+be supported in Symfony2, the many advantages of Twig will continue to
+be discussed. For more information, see the :doc:`templating chapter</book/templating>`.
 
 Learn more from the Cookbook
 ----------------------------

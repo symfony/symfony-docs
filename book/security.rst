@@ -883,7 +883,7 @@ Users
 -----
 
 In the previous sections, you learned how you can protect different resources
-by requiring a set of *roles* for a resource. In this section we'll explore
+by requiring a set of *roles* for a resource. This section explores
 the other side of authorization: users.
 
 Where do Users come from? (*User Providers*)
@@ -1237,7 +1237,7 @@ In a controller this can be shortcut to:
     method of an anonymous user object will return true. To check if your
     user is actually authenticated, check for the ``IS_AUTHENTICATED_FULLY``
     role.
-    
+
 In a Twig Template this object can be accessed via the ``app.user`` key,
 which calls the :method:`GlobalVariables::getUser()<Symfony\\Bundle\\FrameworkBundle\\Templating\\GlobalVariables::getUser>`
 method:
@@ -1630,7 +1630,7 @@ Access Control in Controllers
 -----------------------------
 
 If you want to check if the current user has a role in your controller, use
-the :method:`Symfony\\Component\\Security\\Core\\SecurityContext::isGranted` 
+the :method:`Symfony\\Component\\Security\\Core\\SecurityContext::isGranted`
 method of the security context::
 
     public function indexAction()

@@ -175,8 +175,8 @@ Template Inheritance and Layouts
 --------------------------------
 
 More often than not, templates in a project share common elements, like the
-header, footer, sidebar or more. In Symfony2, we like to think about this
-problem differently: a template can be decorated by another one. This works
+header, footer, sidebar or more. In Symfony2, this problem is thought about
+differently: a template can be decorated by another one. This works
 exactly the same as PHP classes: template inheritance allows you to build
 a base "layout" template that contains all the common elements of your site
 defined as **blocks** (think "PHP class with base methods"). A child template
@@ -468,8 +468,8 @@ ease the work of the template designer. In PHP, the templating system provides
 an extensible *helper* system that provides useful features in a template
 context.
 
-We've already seen a few built-in Twig tags (``{% block %}`` & ``{% extends %}``)
-as well as an example of a PHP helper (``$view['slots']``). Let's learn a
+You've already seen a few built-in Twig tags (``{% block %}`` & ``{% extends %}``)
+as well as an example of a PHP helper (``$view['slots']``). Here you will learn a
 few more.
 
 .. index::
@@ -551,7 +551,7 @@ template using the ``with`` command.
 .. tip::
 
     The ``{'article': article}`` syntax is the standard Twig syntax for hash
-    maps (i.e. an array with named keys). If we needed to pass in multiple
+    maps (i.e. an array with named keys). If you needed to pass in multiple
     elements, it would look like this: ``{'foo': foo, 'bar': bar}``.
 
 .. index::
@@ -607,7 +607,7 @@ The ``recentList`` template is perfectly straightforward:
 
 .. note::
 
-    Notice that we've cheated and hardcoded the article URL in this example
+    Notice that the article URL is hardcoded in this example
     (e.g. ``/article/*slug*``). This is a bad practice. In the next section,
     you'll learn how to do this correctly.
 
@@ -1117,7 +1117,7 @@ Three-level Inheritance
 -----------------------
 
 One common way to use inheritance is to use a three-level approach. This
-method works perfectly with the three different types of templates we've just
+method works perfectly with the three different types of templates that were just
 covered:
 
 * Create a ``app/Resources/views/base.html.twig`` file that contains the main
