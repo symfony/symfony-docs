@@ -11,7 +11,7 @@ better software than with flat PHP, you'll see for yourself.
 In this chapter, you'll write a simple application in flat PHP, and then
 refactor it to be more organized. You'll travel through time, seeing the
 decisions behind why web development has evolved over the past several years
-to where it is now. 
+to where it is now.
 
 By the end, you'll see how Symfony2 can rescue you from mundane tasks and
 let you take back control of your code.
@@ -134,7 +134,7 @@ to the area of *your* code that processes user input and prepares the response.
 In this case, our controller prepares data from the database and then includes
 a template to present that data. With the controller isolated, you could
 easily change *just* the template file if you needed to render the blog
-entries in some other format (e.g. ``list.json.php`` for JSON format). 
+entries in some other format (e.g. ``list.json.php`` for JSON format).
 
 Isolating the Application (Domain) Logic
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -532,7 +532,7 @@ The Sample Application in Symfony2
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The blog has come a *long* way, but it still contains a lot of code for such
-a simple application. Along the way, we've also invented a simple routing
+a simple application. Along the way, you've made a simple routing
 system and a method using ``ob_start()`` and ``ob_get_clean()`` to render
 templates. If, for some reason, you needed to continue building this "framework"
 from scratch, you could at least use Symfony's standalone `Routing`_ and
@@ -564,7 +564,7 @@ them for you. Here's the same sample application, now built in Symfony2::
                 ->getRepository('AcmeBlogBundle:Post')
                 ->find($id)
             ;
-            
+
             if (!$post) {
                 // cause the 404 page not found to be displayed
                 throw $this->createNotFoundException();
@@ -581,7 +581,7 @@ now quite a bit simpler:
 
 .. code-block:: html+php
 
-    <!-- src/Acme/BlogBundle/Resources/views/Blog/list.html.php --> 
+    <!-- src/Acme/BlogBundle/Resources/views/Blog/list.html.php -->
     <?php $view->extend('::layout.html.php') ?>
 
     <?php $view['slots']->set('title', 'List of Posts') ?>
@@ -614,7 +614,7 @@ The layout is nearly identical:
 
 .. note::
 
-    We'll leave the show template as an exercise, as it should be trivial to
+    The show template is left as an exercise, as it should be trivial to
     create based on the list template.
 
 When Symfony2's engine (called the ``Kernel``) boots up, it needs a map so
@@ -730,8 +730,8 @@ The corresponding ``layout.html.twig`` template is also easier to write:
     </html>
 
 Twig is well-supported in Symfony2. And while PHP templates will always
-be supported in Symfony2, we'll continue to discuss the many advantages of
-Twig. For more information, see the :doc:`templating chapter</book/templating>`.
+be supported in Symfony2, the many advantages of Twig will continue to
+be discussed. For more information, see the :doc:`templating chapter</book/templating>`.
 
 Learn more from the Cookbook
 ----------------------------

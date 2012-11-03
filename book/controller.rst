@@ -73,7 +73,7 @@ maps a URL to that controller (#2).
 .. note::
 
     Though similarly named, a "front controller" is different from the
-    "controllers" we'll talk about in this chapter. A front controller
+    "controllers" talked about in this chapter. A front controller
     is a short PHP file that lives in your web directory and through which
     all requests are directed. A typical application will have a production
     front controller (e.g. ``app.php``) and a development front controller
@@ -324,7 +324,7 @@ working with forms, for example::
     public function updateAction(Request $request)
     {
         $form = $this->createForm(...);
-        
+
         $form->bindRequest($request);
         // ...
     }
@@ -441,7 +441,7 @@ object that's returned from that controller::
         ));
 
         // ... further modify the response or return it directly
-        
+
         return $response;
     }
 
@@ -470,7 +470,7 @@ value to each variable.
     a shortcut for core Symfony2 functionality. A forward can be accomplished
     directly via the ``http_kernel`` service. A forward returns a ``Response``
     object::
-    
+
         $httpKernel = $this->container->get('http_kernel');
         $response = $httpKernel->forward('AcmeHelloBundle:Hello:fancy', array(
             'name'  => $name,
@@ -509,7 +509,7 @@ The Symfony templating engine is explained in great detail in the
 
     The ``renderView`` method is a shortcut to direct use of the ``templating``
     service. The ``templating`` service can also be used directly::
-    
+
         $templating = $this->get('templating');
         $content = $templating->render('AcmeHelloBundle:Hello:index.html.twig', array('name' => $name));
 
@@ -662,7 +662,7 @@ the ``notice`` message:
         {% endif %}
 
     .. code-block:: php
-    
+
         <?php if ($view['session']->hasFlash('notice')): ?>
             <div class="flash-notice">
                 <?php echo $view['session']->getFlash('notice') ?>
@@ -686,7 +686,7 @@ headers and content that's sent back to the client::
 
     // create a simple Response with a 200 status code (the default)
     $response = new Response('Hello '.$name, 200);
-    
+
     // create a JSON-response with a 200 status code
     $response = new Response(json_encode(array('name' => $name)));
     $response->headers->set('Content-Type', 'application/json');
