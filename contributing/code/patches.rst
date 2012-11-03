@@ -358,12 +358,12 @@ of all the commits. When you finish, execute the push command.
     on the wrench icon on the build page of Travis. First select your feature
     branch and then copy the markdown to your PR description.
 
-.. _ProGit:                                http://progit.org/
+.. _ProGit:                                http://git-scm.com/book
 .. _GitHub:                                https://github.com/signup/free
 .. _`Github's Documentation`:              https://help.github.com/articles/ignoring-files
 .. _Symfony2 repository:                   https://github.com/symfony/symfony
 .. _dev mailing-list:                      http://groups.google.com/group/symfony-devs
-.. _travis-ci.org:                         http://travis-ci.org
+.. _travis-ci.org:                         https://travis-ci.org/
 .. _`travis-ci.org status icon`:           http://about.travis-ci.org/docs/user/status-images/
 .. _`travis-ci.org Getting Started Guide`: http://about.travis-ci.org/docs/user/getting-started/
 .. _`documentation repository`:            https://github.com/symfony/symfony-docs

@@ -50,8 +50,7 @@ Installation
 You can install the component in many different ways:
 
 * Use the official Git repository (https://github.com/symfony/EventDispatcher);
-* Install it via PEAR ( `pear.symfony.com/EventDispatcher`);
-* Install it via Composer (`symfony/event-dispatcher` on Packagist).
+* Install it via Composer (``symfony/event-dispatcher`` on `Packagist`_).
 
 Usage
 -----
@@ -596,3 +595,4 @@ part of the listener's processing logic::
 .. _`Symfony2 HttpKernel component`: https://github.com/symfony/HttpKernel
 .. _Closures: http://php.net/manual/en/functions.anonymous.php
 .. _PHP callable: http://www.php.net/manual/en/language.pseudo-types.php#language.types.callback
+.. _Packagist: https://packagist.org/packages/symfony/event-dispatcher

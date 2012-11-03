@@ -75,9 +75,7 @@ for you to use in your controller (keep reading).
 The ``_controller`` parameter is a special key that tells Symfony which controller
 should be executed when a URL matches this route. The ``_controller`` string
 is called the :ref:`logical name<controller-string-syntax>`. It follows a
-pattern that points to a specific PHP class and method:
-
-.. code-block:: php
+pattern that points to a specific PHP class and method::
 
     // src/Acme/BlogBundle/Controller/BlogController.php
     namespace Acme\BlogBundle\Controller;
@@ -818,9 +816,7 @@ For example, a ``_controller`` value of ``AcmeBlogBundle:Blog:show`` means:
 | AcmeBlogBundle | BlogController   | showAction  |
 +----------------+------------------+-------------+
 
-The controller might look like this:
-
-.. code-block:: php
+The controller might look like this::
 
     // src/Acme/BlogBundle/Controller/BlogController.php
     namespace Acme\BlogBundle\Controller;
@@ -854,9 +850,7 @@ Route Parameters and Controller Arguments
 -----------------------------------------
 
 The route parameters (e.g. ``{slug}``) are especially important because
-each is made available as an argument to the controller method:
-
-.. code-block:: php
+each is made available as an argument to the controller method::
 
     public function showAction($slug)
     {
@@ -1092,9 +1086,7 @@ system. Take the ``blog_show`` example route from earlier::
 
 To generate a URL, you need to specify the name of the route (e.g. ``blog_show``)
 and any wildcards (e.g. ``slug = my-blog-post``) used in the pattern for
-that route. With this information, any URL can easily be generated:
-
-.. code-block:: php
+that route. With this information, any URL can easily be generated::
 
     class MainController extends Controller
     {
@@ -1128,9 +1120,7 @@ Generating Absolute URLs
 
 By default, the router will generate relative URLs (e.g. ``/blog``). To generate
 an absolute URL, simply pass ``true`` to the third argument of the ``generate()``
-method:
-
-.. code-block:: php
+method::
 
     $router->generate('blog_show', array('slug' => 'my-blog-post'), true);
     // http://www.example.com/blog/my-blog-post
@@ -1141,9 +1131,7 @@ method:
     the current ``Request`` object. This is detected automatically based
     on server information supplied by PHP. When generating absolute URLs for
     scripts run from the command line, you'll need to manually set the desired
-    host on the ``RequestContext`` object:
-
-    .. code-block:: php
+    host on the ``RequestContext`` object::
 
         $router->getContext()->setHost('www.example.com');
 
