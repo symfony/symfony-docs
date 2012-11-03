@@ -28,7 +28,7 @@ Installation
 You can install the component in many different ways:
 
 * Use the official Git repository (https://github.com/symfony/Locale);
-* Install it via Composer (`symfony/locale` on Packagist).
+* Install it via Composer (``symfony/locale`` on `Packagist`_).
 
 Usage
 -----
@@ -67,3 +67,4 @@ When using the ClassLoader component following code is sufficient to supplement 
     $icuVersion = Locale::getIcuVersion();
     $icuDataVersion = Locale::getIcuDataVersion();
 
+.. _Packagist: https://packagist.org/packages/symfony/locale
