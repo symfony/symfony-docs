@@ -25,7 +25,7 @@ Before building it, the kernel checks to see if a cached version of the containe
 exists. The ``HttpKernel`` has a debug setting and if this is false, the
 cached version is used if it exists. If debug is true then the kernel
 :doc:`checks to see if configuration is fresh</components/config/caching>`
-and if it is, the cached version of the container is. If not then the container
+and if it is, the cached version of the container is used. If not then the container
 is built from the application-level configuration and the bundles's extension
 configuration.
 
