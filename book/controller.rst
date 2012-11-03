@@ -73,7 +73,7 @@ maps a URL to that controller (#2).
 .. note::
 
     Though similarly named, a "front controller" is different from the
-    "controllers" we'll talk about in this chapter. A front controller
+    "controllers" talked about in this chapter. A front controller
     is a short PHP file that lives in your web directory and through which
     all requests are directed. A typical application will have a production
     front controller (e.g. ``app.php``) and a development front controller
