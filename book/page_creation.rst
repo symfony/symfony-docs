@@ -255,10 +255,10 @@ application should greet you:
     .. code-block:: text
 
         http://localhost/app.php/hello/Ryan
-    
+
     If you get an error, it's likely because you need to clear your cache
     by running:
-    
+
     .. code-block:: bash
 
         $ php app/console cache:clear --env=prod --no-debug
@@ -299,8 +299,8 @@ of writing the HTML inside the controller, render a template instead:
 
 .. note::
 
-   In order to use the :method:`Symfony\\Bundle\\FrameworkBundle\\Controller\\Controller::render` 
-   method, your controller must extend the 
+   In order to use the :method:`Symfony\\Bundle\\FrameworkBundle\\Controller\\Controller::render`
+   method, your controller must extend the
    :class:`Symfony\\Bundle\\FrameworkBundle\\Controller\\Controller` class,
    which adds shortcuts for tasks that are common inside controllers. This
    is done in the above example by adding the ``use`` statement on line 4
@@ -476,7 +476,7 @@ use a Kernel class, ``AppKernel``, to bootstrap the application.
         http://localhost/hello/Ryan
 
 Though front controllers are essential in handling every request, you'll
-rarely need to modify or even think about them. We'll mention them again
+rarely need to modify or even think about them. They'll be mentioned again
 briefly in the `Environments`_ section.
 
 The Application (``app``) Directory
@@ -731,7 +731,7 @@ format you prefer:
         imports:
             - { resource: parameters.ini }
             - { resource: security.yml }
-        
+
         framework:
             secret:          "%secret%"
             charset:         UTF-8
@@ -758,7 +758,7 @@ format you prefer:
             <import resource="parameters.ini" />
             <import resource="security.yml" />
         </imports>
-        
+
         <framework:config charset="UTF-8" secret="%secret%">
             <framework:router resource="%kernel.root_dir%/config/routing.xml" />
             <framework:form />
