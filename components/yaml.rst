@@ -27,7 +27,7 @@ Installation
 You can install the component in many different ways:
 
 * Use the official Git repository (https://github.com/symfony/Yaml);
-* Install it via Composer (`symfony/yaml` on Packagist).
+* Install it via Composer (``symfony/yaml`` on `Packagist`_).
 
 Why?
 ----
@@ -472,3 +472,4 @@ Comments can be added in YAML by prefixing them with a hash mark (``#``):
     indented according to the current level of nesting in a collection.
 
 .. _YAML: http://yaml.org/
+.. _Packagist: https://packagist.org/packages/symfony/yaml

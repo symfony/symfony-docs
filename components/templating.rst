@@ -19,7 +19,7 @@ Installation
 You can install the component in many different ways:
 
 * Use the official Git repository (https://github.com/symfony/Templating);
-* Install it via Composer (`symfony/templating` on Packagist).
+* Install it via Composer (``symfony/templating`` on `Packagist`_).
 
 Usage
 -----
@@ -109,3 +109,5 @@ The Asset Helper
 ----------------
 
 This documentation is still being written.
+
+.. _Packagist: https://packagist.org/packages/symfony/templating

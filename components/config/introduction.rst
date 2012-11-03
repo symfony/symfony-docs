@@ -18,7 +18,7 @@ Installation
 You can install the component in many different ways:
 
 * Use the official Git repository (https://github.com/symfony/Config);
-* Install it via Composer (`symfony/config` on Packagist).
+* Install it via Composer (``symfony/config`` on `Packagist`_).
 
 Sections
 --------
@@ -26,3 +26,5 @@ Sections
 * :doc:`/components/config/resources`
 * :doc:`/components/config/caching`
 * :doc:`/components/config/definition`
+
+.. _Packagist: https://packagist.org/packages/symfony/config
