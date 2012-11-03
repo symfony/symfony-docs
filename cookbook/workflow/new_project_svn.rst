@@ -144,7 +144,7 @@ central repository to work. You then have several solutions:
 .. _`Symfony2 Standard Edition`: http://symfony.com/download
 .. _`Standard Edition Readme`: https://github.com/symfony/symfony-standard/blob/master/README.md
 .. _`Version Control with Subversion`: http://svnbook.red-bean.com/
-.. _`GitHub`: http://github.com/
+.. _`GitHub`: https://github.com/
 .. _`Google code`: http://code.google.com/hosting/
 .. _`SourceForge`: http://sourceforge.net/
 .. _`Gna`: http://gna.org/

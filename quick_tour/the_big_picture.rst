@@ -117,7 +117,7 @@ your first "real" Symfony2 webpage:
 
 Symfony2 should welcome and congratulate you for your hard work so far!
 
-.. image:: /images/quick_tour/welcome.jpg
+.. image:: /images/quick_tour/welcome.png
    :align: center
 
 Understanding the Fundamentals
@@ -391,6 +391,11 @@ the profiler.
 
 .. image:: /images/quick_tour/profiler.png
    :align: center
+
+.. note::
+
+    You can get more information quickly by hovering over the items on the 
+    Web Debug Toolbar.
 
 Of course, you won't want to show these tools when you deploy your application
 to production. That's why you will find another front controller in the

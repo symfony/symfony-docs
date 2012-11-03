@@ -179,11 +179,8 @@ Requests and Responses in PHP
 -----------------------------
 
 So how do you interact with the "request" and create a "response" when using
-PHP? In reality, PHP abstracts you a bit from the whole process:
+PHP? In reality, PHP abstracts you a bit from the whole process::
 
-.. code-block:: php
-
-    <?php
     $uri = $_SERVER['REQUEST_URI'];
     $foo = $_GET['foo'];
 
@@ -363,9 +360,7 @@ Stay Organized
 But inside your front controller, how do you know which page should
 be rendered and how can you render each in a sane way? One way or another, you'll need to
 check the incoming URI and execute different parts of your code depending
-on that value. This can get ugly quickly:
-
-.. code-block:: php
+on that value. This can get ugly quickly::
 
     // index.php
     $request = Request::createFromGlobals();
@@ -422,11 +417,33 @@ Without diving into too much detail, let's see this process in action. Suppose
 you want to add a ``/contact`` page to your Symfony application. First, start
 by adding an entry for ``/contact`` to your routing configuration file:
 
-.. code-block:: yaml
+.. configuration-block::
 
-    contact:
-        pattern:  /contact
-        defaults: { _controller: AcmeDemoBundle:Main:contact }
+    .. code-block:: yaml
+
+        # app/config/routing.yml
+        contact:
+            pattern:  /contact
+            defaults: { _controller: AcmeDemoBundle:Main:contact }
+
+    .. code-block:: xml
+
+        <route id="contact" pattern="/contact">
+            <default key="_controller">AcmeBlogBundle:Main:contact</default>
+        </route>
+
+    .. code-block:: php
+
+        // app/config/routing.php
+        use Symfony\Component\Routing\RouteCollection;
+        use Symfony\Component\Routing\Route;
+
+        $collection = new RouteCollection();
+        $collection->add('contact', new Route('/contact', array(
+            '_controller' => 'AcmeBlogBundle:Main:contact',
+        )));
+
+        return $collection;
 
 .. note::
 
@@ -437,10 +454,9 @@ by adding an entry for ``/contact`` to your routing configuration file:
 When someone visits the ``/contact`` page, this route is matched, and the
 specified controller is executed. As you'll learn in the :doc:`routing chapter</book/routing>`,
 the ``AcmeDemoBundle:Main:contact`` string is a short syntax that points to a
-specific PHP method ``contactAction`` inside a class called ``MainController``:
+specific PHP method ``contactAction`` inside a class called ``MainController``::
 
-.. code-block:: php
-
+    // src/Acme/DemoBundle/Controller/MainController.php
     class MainController
     {
         public function contactAction()
@@ -449,8 +465,9 @@ specific PHP method ``contactAction`` inside a class called ``MainController``:
         }
     }
 
-In this very simple example, the controller simply creates a ``Response``
-object with the HTML "<h1>Contact us!</h1>". In the :doc:`controller chapter</book/controller>`,
+In this very simple example, the controller simply creates a 
+:class:`Symfony\\Component\\HttpFoundation\\Response` object with the HTML 
+"``<h1>Contact us!</h1>"``. In the :doc:`controller chapter</book/controller>`,
 you'll learn how a controller can render templates, allowing your "presentation"
 code (i.e. anything that actually writes out HTML) to live in a separate
 template file. This frees up the controller to worry only about the hard
@@ -522,7 +539,7 @@ So then, what *is* the Symfony2 *Framework*? The *Symfony2 Framework* is
 a PHP library that accomplishes two distinct tasks:
 
 #. Provides a selection of components (i.e. the Symfony2 Components) and
-   third-party libraries (e.g. ``Swiftmailer`` for sending emails);
+   third-party libraries (e.g. `Swiftmailer`_ for sending emails);
 
 #. Provides sensible configuration and a "glue" library that ties all of these
    pieces together.
@@ -548,3 +565,4 @@ sensible defaults. For more advanced users, the sky is the limit.
 .. _`Validator`: https://github.com/symfony/Validator
 .. _`Security`: https://github.com/symfony/Security
 .. _`Translation`: https://github.com/symfony/Translation
+.. _`Swiftmailer`: http://swiftmailer.org/

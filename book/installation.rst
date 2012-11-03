@@ -248,9 +248,7 @@ If there are any issues, correct them now before moving on.
     be group-writable or world-writable (depending if the web server user
     and the command line user are in the same group or not). To achieve
     this, put the following line at the beginning of the ``app/console``,
-    ``web/app.php`` and ``web/app_dev.php`` files:
-
-    .. code-block:: php
+    ``web/app.php`` and ``web/app_dev.php`` files::
 
         umask(0002); // This will let the permissions be 0775
 

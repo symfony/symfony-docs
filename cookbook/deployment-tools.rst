@@ -88,7 +88,12 @@ as your normally do:
 
 .. code-block:: bash
 
-    $ php composer.phar install
+    $ php composer.phar install --optimize-autoloader
+
+.. tip::
+
+    The ``--optimize-autoloader`` flag makes Composer's autoloader more
+    performant by building a "class map".
 
 C) Clear your Symfony cache
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -99,7 +104,16 @@ Make sure you clear (and warm-up) your Symfony cache:
 
     $ php app/console cache:clear --env=prod --no-debug
 
-D) Other things!
+D) Dump your Assetic assets
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+If you're using Assetic, you'll also want to dump your assets:
+
+.. code-block:: bash
+
+    $ php app/console assetic:dump --env=prod --no-debug
+
+E) Other things!
 ~~~~~~~~~~~~~~~~
 
 There may be lots of other things that you need to do, depending on your
@@ -107,7 +121,6 @@ setup:
 
 * Running any database migrations
 * Clearing your APC cache
-* Dumping your Assetic assets (taken care of already in ``cache:clear``)
 * Running ``assets:install`` (taken care of already in ``composer.phar install``)
 * Add/edit CRON jobs
 * Pushing assets to a CDN
@@ -168,7 +181,7 @@ Platform as a Service Providers:
     Looking for more? Talk to the community on the `Symfony IRC channel`_ #symfony
     (on freenode) for more information.
 
-.. _`Capifony`: https://capifony.org/
+.. _`Capifony`: http://capifony.org/
 .. _`sf2debpkg`: https://github.com/liip/sf2debpkg
 .. _`Ant`: http://blog.sznapka.pl/deploying-symfony2-applications-with-ant
 .. _`PagodaBox`: https://github.com/jmather/pagoda-symfony-sonata-distribution/blob/master/Boxfile

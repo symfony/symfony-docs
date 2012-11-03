@@ -661,7 +661,6 @@ configuration option:
         # app/config/config_test.yml
 
         # ...
-
         swiftmailer:
             disable_delivery: true
 
@@ -670,7 +669,6 @@ configuration option:
         <!-- app/config/config_test.xml -->
         <container>
             <!-- ... -->
-
             <swiftmailer:config disable-delivery="true" />
         </container>
 
@@ -679,9 +677,8 @@ configuration option:
         // app/config/config_test.php
 
         // ...
-
         $container->loadFromExtension('swiftmailer', array(
-            'disable_delivery' => true
+            'disable_delivery' => true,
         ));
 
 You can also use a different environment entirely, or override the default
@@ -751,6 +748,7 @@ section:
 
 .. code-block:: xml
 
+    <!-- ... -->
     <filter>
         <whitelist>
             <directory>../src</directory>

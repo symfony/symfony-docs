@@ -22,8 +22,7 @@ Installation
 You can install the component in many different ways:
 
 * Use the official Git repository (https://github.com/symfony/HttpFoundation);
-* Install it via PEAR ( `pear.symfony.com/HttpFoundation`);
-* Install it via Composer (`symfony/http-foundation` on Packagist).
+* Install it via Composer (``symfony/http-foundation`` on `Packagist`_).
 
 Request
 -------
@@ -380,3 +379,5 @@ Session
 -------
 
 The session information is in its own document: :doc:`/components/http_foundation/sessions`.
+
+.. _Packagist: https://packagist.org/packages/symfony/http-foundation

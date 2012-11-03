@@ -18,8 +18,7 @@ Installation
 You can install the component in many different ways:
 
 * Use the official Git repository (https://github.com/symfony/Console);
-* Install it via PEAR ( `pear.symfony.com/Console`);
-* Install it via Composer (`symfony/console` on Packagist).
+* Install it via Composer (``symfony/console`` on `Packagist`_).
 
 Creating a basic Command
 ------------------------
@@ -478,3 +477,5 @@ Learn More!
 
 * :doc:`/components/console/usage`
 * :doc:`/components/console/single_command_tool`
+
+.. _Packagist: https://packagist.org/packages/symfony/console
