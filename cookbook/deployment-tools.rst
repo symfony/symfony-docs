@@ -168,7 +168,7 @@ Platform as a Service Providers:
     Looking for more? Talk to the community on the `Symfony IRC channel`_ #symfony
     (on freenode) for more information.
 
-.. _`Capifony`: https://capifony.org/
+.. _`Capifony`: http://capifony.org/
 .. _`sf2debpkg`: https://github.com/liip/sf2debpkg
 .. _`Ant`: http://blog.sznapka.pl/deploying-symfony2-applications-with-ant
 .. _`PagodaBox`: https://github.com/jmather/pagoda-symfony-sonata-distribution/blob/master/Boxfile

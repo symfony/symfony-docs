@@ -154,4 +154,4 @@ manage this is `Gitolite`_.
 .. _`GitHub`: https://github.com/
 .. _`barebones repository`: http://git-scm.com/book/en/Git-Basics-Getting-a-Git-Repository
 .. _`Gitolite`: https://github.com/sitaramc/gitolite
-.. _`Github .gitignore`: http://help.github.com/ignore-files/
+.. _`Github .gitignore`: https://help.github.com/articles/ignoring-files

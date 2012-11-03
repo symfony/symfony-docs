@@ -745,5 +745,5 @@ Learn more from the Cookbook
 .. _`Templating`: https://github.com/symfony/Templating
 .. _`KnpBundles.com`: http://knpbundles.com/
 .. _`Twig`: http://twig.sensiolabs.org
-.. _`Varnish`: http://www.varnish-cache.org
+.. _`Varnish`: https://www.varnish-cache.org/
 .. _`PHPUnit`: http://www.phpunit.de

@@ -211,11 +211,11 @@ Installing the Sphinx extensions
     # set url for API links
     api_url = 'http://api.symfony.com/master/%s'
 
-.. _reStructuredText:        http://docutils.sf.net/rst.html
-.. _Sphinx:                  http://sphinx.pocoo.org/
-.. _documents:               http://github.com/symfony/symfony-docs
-.. _reStructuredText Primer: http://sphinx.pocoo.org/rest.html
-.. _markup:                  http://sphinx.pocoo.org/markup/
+.. _reStructuredText:        http://docutils.sourceforge.net/rst.html
+.. _Sphinx:                  http://sphinx-doc.org/
+.. _documents:               https://github.com/symfony/symfony-docs
+.. _reStructuredText Primer: http://sphinx-doc.org/rest.html
+.. _markup:                  http://sphinx-doc.org/markup/
 .. _Pygments website:        http://pygments.org/languages/
 .. _source:                  https://github.com/fabpot/sphinx-php
-.. _Sphinx quick setup:      http://sphinx.pocoo.org/tutorial.html#setting-up-the-documentation-sources
+.. _Sphinx quick setup:      http://sphinx-doc.org/tutorial.html#setting-up-the-documentation-sources

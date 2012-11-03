@@ -169,7 +169,7 @@ from your application and returning them to the client.
 
 The ``AppCache`` object has a sensible default configuration, but it can be
 finely tuned via a set of options you can set by overriding the 
-:method:`Symfony\\Bundle\\FrameworkBundle\\HttpCache\\HttpCache:getOptions`
+:method:`Symfony\\Bundle\\FrameworkBundle\\HttpCache\\HttpCache::getOptions`
 method::
 
     // app/AppCache.php
@@ -1064,7 +1064,7 @@ Learn more from the Cookbook
 
 .. _`Things Caches Do`: http://tomayko.com/writings/things-caches-do
 .. _`Cache Tutorial`: http://www.mnot.net/cache_docs/
-.. _`Varnish`: http://www.varnish-cache.org/
+.. _`Varnish`: https://www.varnish-cache.org/
 .. _`Squid in reverse proxy mode`: http://wiki.squid-cache.org/SquidFaq/ReverseProxy
 .. _`expiration model`: http://tools.ietf.org/html/rfc2616#section-13.2
 .. _`validation model`: http://tools.ietf.org/html/rfc2616#section-13.3
