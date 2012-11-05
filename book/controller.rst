@@ -688,8 +688,7 @@ headers and content that's sent back to the client::
     $response = new Response('Hello '.$name, 200);
 
     // create a JSON-response with a 200 status code
-    $response = new Response(json_encode(array('name' => $name)));
-    $response->headers->set('Content-Type', 'application/json');
+    $response = new JsonResponse(array('name' => $name));
 
 .. tip::
 
