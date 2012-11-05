@@ -29,7 +29,7 @@ of an ``Author`` class exactly equal to ``null``, you could do the following:
         Acme\BlogBundle\Entity\Author:
             properties:
                 firstName:
-                    - Null: ~
+                    - 'Null': ~
 
     .. code-block:: php-annotations
 
