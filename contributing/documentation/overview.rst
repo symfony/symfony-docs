@@ -47,8 +47,8 @@ the ``symfony-docs`` ``master`` branch.
 .. image:: /images/docs-pull-request.png
    :align: center
 
-If you have made your changes based on the 2.0 branch then you need to follow
-the change commit link and change the base branch to be @2.0:
+If you have made your changes based on the 2.0 branch then you need to change 
+the base branch to be 2.0 on the preview page:
 
 .. image:: /images/docs-pull-request-change-base.png
    :align: center
