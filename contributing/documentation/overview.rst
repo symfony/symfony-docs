@@ -61,7 +61,7 @@ the base branch to be 2.0 on the preview page:
 .. note::
 
   All changes made to the 2.0 branch will be merged into 2.1 which in turn will be
-  merged in to the master branch for the next release on a weekly basis. 
+  merged into the master branch for the next release on a weekly basis. 
 
 GitHub covers the topic of `pull requests`_ in detail.
 
