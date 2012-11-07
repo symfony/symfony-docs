@@ -25,9 +25,14 @@ then clone your fork:
 
     $ git clone git://github.com/YOURUSERNAME/symfony-docs.git
 
+According to the framework's sources the documentation repository is split into 
+three branches: ``2.0`` for the current Symfony 2.0.x release, ``2.1`` for the 
+current Symfony 2.1.x release and ``master`` as the development branch for 
+upcoming releases.
+
 Unless you're documenting a feature that's new to Symfony 2.1, your changes
-should be based on the 2.0 branch instead of the master branch. To do this
-checkout the 2.0 branch before the next step:
+should always be based on the 2.0 branch instead of the master branch. To do 
+this checkout the 2.0 branch before the next step:
 
 .. code-block:: bash
 
@@ -47,11 +52,16 @@ the ``symfony-docs`` ``master`` branch.
 .. image:: /images/docs-pull-request.png
    :align: center
 
-If you have made your changes based on the 2.0 branch then you need to follow
-the change commit link and change the base branch to be @2.0:
+If you have made your changes based on the 2.0 branch then you need to change 
+the base branch to be 2.0 on the preview page:
 
 .. image:: /images/docs-pull-request-change-base.png
    :align: center
+
+.. note::
+
+  All changes made to the 2.0 branch will be merged into 2.1 which in turn will be
+  merged into the master branch for the next release on a weekly basis. 
 
 GitHub covers the topic of `pull requests`_ in detail.
 
@@ -62,11 +72,11 @@ GitHub covers the topic of `pull requests`_ in detail.
 
 .. tip::
 
-    Your changes appear on the symfony.com website no more than 15 minutes
-    after the documentation team merges your pull request. You can check if
-    your changes have introduced some markup issues by going to the
-    `Documentation Build Errors`_ page (it is updated each French night at 3AM
-    when the server rebuilds the documentation).
+    Please be patient. It can take from 15 minutes to several days for your changes
+    to appear on the symfony.com website after the documentation team merges your 
+    pull request. You can check if your changes have introduced some markup issues 
+    by going to the `Documentation Build Errors`_ page (it is updated each French 
+    night at 3AM when the server rebuilds the documentation).
 
 Standards
 ---------
