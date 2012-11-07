@@ -323,11 +323,10 @@ The service container is built using a single configuration resource
 be imported from inside this file in one way or another. This gives you absolute
 flexibility over the services in your application.
 
-External service configuration can be imported in two different ways. First up is
-the method that you'll use most commonly in your application:
-the ``imports`` directive. The section after introduces the
-second method, which is the flexible and preferred method for importing service
-configuration from third-party bundles.
+External service configuration can be imported in two different ways. The
+first - and most common method - is via the ``imports`` directive. Later, you'll
+learn about the second method, which is the flexible and preferred method
+for importing service configuration from third-party bundles.
 
 .. index::
    single: Service Container; Imports
