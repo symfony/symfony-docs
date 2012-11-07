@@ -507,6 +507,12 @@ The Symfony templating engine is explained in great detail in the
 
 .. tip::
 
+    You can even avoid calling the ``render`` method by using the ``@Template``
+    annotation. See the :doc:`FrameworkExtraBundle documentation</bundles/SensioFrameworkExtraBundle/annotations/view>`
+    more details.
+
+.. tip::
+
     The ``renderView`` method is a shortcut to direct use of the ``templating``
     service. The ``templating`` service can also be used directly::
 

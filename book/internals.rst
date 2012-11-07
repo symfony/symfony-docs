@@ -208,7 +208,7 @@ each event has access to the same basic information:
 
 * :method:`Symfony\\Component\\HttpKernel\\Event\\KernelEvent::getRequestType` 
   - returns the *type* of the request (``HttpKernelInterface::MASTER_REQUEST`` 
-    or ``HttpKernelInterface::SUB_REQUEST``);
+  or ``HttpKernelInterface::SUB_REQUEST``);
 
 * :method:`Symfony\\Component\\HttpKernel\\Event\\KernelEvent::getKernel` 
   - returns the Kernel handling the request;
