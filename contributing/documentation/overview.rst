@@ -25,7 +25,7 @@ then clone your fork:
 
     $ git clone git://github.com/YOURUSERNAME/symfony-docs.git
 
-According to the framework's sources the documentation repository is split into 
+Consistent with Symfony's source code, the documentation repository is split into
 three branches: ``2.0`` for the current Symfony 2.0.x release, ``2.1`` for the 
 current Symfony 2.1.x release and ``master`` as the development branch for 
 upcoming releases.
