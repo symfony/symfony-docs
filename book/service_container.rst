@@ -12,12 +12,12 @@ your product inventory, or another object that processes data from a third-party
 API. The point is that a modern application does many things and is organized
 into many objects that handle each task.
 
-In this chapter, we'll talk about a special PHP object in Symfony2 that helps
+This chapter is about a special PHP object in Symfony2 that helps
 you instantiate, organize and retrieve the many objects of your application.
 This object, called a service container, will allow you to standardize and
 centralize the way objects are constructed in your application. The container
 makes your life easier, is super fast, and emphasizes an architecture that
-promotes reusable and decoupled code. And since all core Symfony2 classes
+promotes reusable and decoupled code. Since all core Symfony2 classes
 use the container, you'll learn how to extend, configure and use any object
 in Symfony2. In large part, the service container is the biggest contributor
 to the speed and extensibility of Symfony2.
@@ -69,9 +69,10 @@ What is a Service Container?
 
 A :term:`Service Container` (or *dependency injection container*) is simply
 a PHP object that manages the instantiation of services (i.e. objects).
-For example, suppose we have a simple PHP class that delivers email messages.
-Without a service container, we must manually create the object whenever
-we need it::
+
+For example, suppose you have a simple PHP class that delivers email messages.
+Without a service container, you must manually create the object whenever
+you need it::
 
     use Acme\HelloBundle\Mailer;
 
@@ -80,11 +81,11 @@ we need it::
 
 This is easy enough. The imaginary ``Mailer`` class allows us to configure
 the method used to deliver the email messages (e.g. ``sendmail``, ``smtp``, etc).
-But what if we wanted to use the mailer service somewhere else? We certainly
-don't want to repeat the mailer configuration *every* time we need to use
-the ``Mailer`` object. What if we needed to change the ``transport`` from
-``sendmail`` to ``smtp`` everywhere in the application? We'd need to hunt
-down every place we create a ``Mailer`` service and change it.
+But what if you wanted to use the mailer service somewhere else? You certainly
+don't want to repeat the mailer configuration *every* time you need to use
+the ``Mailer`` object. What if you needed to change the ``transport`` from
+``sendmail`` to ``smtp`` everywhere in the application? You'd need to hunt
+down every place you create a ``Mailer`` service and change it.
 
 .. index::
    single: Service Container; Configuring services
@@ -93,7 +94,7 @@ Creating/Configuring Services in the Container
 ----------------------------------------------
 
 A better answer is to let the service container create the ``Mailer`` object
-for you. In order for this to work, we must *teach* the container how to
+for you. In order for this to work, you must *teach* the container how to
 create the ``Mailer`` service. This is done via configuration, which can
 be specified in YAML, XML or PHP:
 
@@ -152,7 +153,7 @@ shortcut method::
         }
     }
 
-When we ask for the ``my_mailer`` service from the container, the container
+When you ask for the ``my_mailer`` service from the container, the container
 constructs the object and returns it. This is another major advantage of
 using the service container. Namely, a service is *never* constructed until
 it's needed. If you define a service and never use it on a request, the service
@@ -162,8 +163,8 @@ lots of services. Services that are never used are never constructed.
 
 As an added bonus, the ``Mailer`` service is only created once and the same
 instance is returned each time you ask for the service. This is almost always
-the behavior you'll need (it's more flexible and powerful), but you learn how 
-to configure a service that has multiple instances in the
+the behavior you'll need (it's more flexible and powerful), but you'll learn
+later how you can configure a service that has multiple instances in the
 ":doc:`/cookbook/service_container/scopes`" cookbook article.
 
 .. _book-service-container-parameters:
@@ -216,16 +217,16 @@ straightforward. Parameters make defining services more organized and flexible:
         ));
 
 The end result is exactly the same as before - the difference is only in
-*how* we defined the service. By surrounding the ``my_mailer.class`` and
+*how* you defined the service. By surrounding the ``my_mailer.class`` and
 ``my_mailer.transport`` strings in percent (``%``) signs, the container knows
 to look for parameters with those names. When the container is built, it
 looks up the value of each parameter and uses it in the service definition.
 
 .. note::
 
-    The percent sign inside a parameter or argument, as part of the string, must 
+    The percent sign inside a parameter or argument, as part of the string, must
     be escaped with another percent sign:
-    
+
     .. code-block:: xml
 
         <argument type="string">http://symfony.com/?foo=%%s&bar=%%d</argument>
@@ -239,7 +240,7 @@ Parameters, however, have several advantages:
 
 * parameter values can be used in multiple service definitions;
 
-* when creating a service in a bundle (we'll show this shortly), using parameters
+* when creating a service in a bundle (this follows shortly), using parameters
   allows the service to be easily customized in your application.
 
 The choice of using or not using parameters is up to you. High-quality
@@ -310,7 +311,7 @@ Importing other Container Configuration Resources
 
 .. tip::
 
-    In this section, we'll refer to service configuration files as *resources*.
+    In this section, service configuration files are referred to as *resources*.
     This is to highlight that fact that, while most configuration resources
     will be files (e.g. YAML, XML, PHP), Symfony2 is so flexible that configuration
     could be loaded from anywhere (e.g. a database or even via an external
@@ -322,9 +323,9 @@ The service container is built using a single configuration resource
 be imported from inside this file in one way or another. This gives you absolute
 flexibility over the services in your application.
 
-External service configuration can be imported in two different ways. First,
-we'll talk about the method that you'll use most commonly in your application:
-the ``imports`` directive. In the following section, we'll introduce the
+External service configuration can be imported in two different ways. First up is
+the method that you'll use most commonly in your application:
+the ``imports`` directive. The section after introduces the
 second method, which is the flexible and preferred method for importing service
 configuration from third-party bundles.
 
@@ -336,7 +337,7 @@ configuration from third-party bundles.
 Importing Configuration with ``imports``
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-So far, we've placed our ``my_mailer`` service container definition directly
+So far, you've placed our ``my_mailer`` service container definition directly
 in the application configuration file (e.g. ``app/config/config.yml``). Of
 course, since the ``Mailer`` class itself lives inside the ``AcmeHelloBundle``,
 it makes more sense to put the ``my_mailer`` container definition inside the
@@ -388,7 +389,7 @@ directories don't exist, create them.
         ));
 
 The definition itself hasn't changed, only its location. Of course the service
-container doesn't know about the new resource file. Fortunately, we can
+container doesn't know about the new resource file. Fortunately, you can
 easily import the resource file using the ``imports`` key in the application
 configuration.
 
@@ -435,7 +436,7 @@ Symfony2 core services, are usually loaded using another method that's more
 flexible and easy to configure in your application.
 
 Here's how it works. Internally, each bundle defines its services very much
-like we've seen so far. Namely, a bundle uses one or more configuration
+like you've seen so far. Namely, a bundle uses one or more configuration
 resource files (usually XML) to specify the parameters and services for that
 bundle. However, instead of importing each of these resources directly from
 your application configuration using the ``imports`` directive, you can simply
@@ -451,7 +452,7 @@ to accomplish two things:
   service container configuration.
 
 In other words, a service container extension configures the services for
-a bundle on your behalf. And as we'll see in a moment, the extension provides
+a bundle on your behalf. And as you'll see in a moment, the extension provides
 a sensible, high-level interface for configuring the bundle.
 
 Take the ``FrameworkBundle`` - the core Symfony2 framework bundle - as an
@@ -540,10 +541,10 @@ in its constructor, which is easily configurable. As you'll see, the real
 power of the container is realized when you need to create a service that
 depends on one or more other services in the container.
 
-Let's start with an example. Suppose we have a new service, ``NewsletterManager``,
+Let's start with an example. Suppose you have a new service, ``NewsletterManager``,
 that helps to manage the preparation and delivery of an email message to
 a collection of addresses. Of course the ``my_mailer`` service is already
-really good at delivering email messages, so we'll use it inside ``NewsletterManager``
+really good at delivering email messages, so you'll use it inside ``NewsletterManager``
 to handle the actual delivery of the messages. This pretend class might look
 something like this::
 
@@ -564,7 +565,7 @@ something like this::
         // ...
     }
 
-Without using the service container, we can create a new ``NewsletterManager``
+Without using the service container, you can create a new ``NewsletterManager``
 fairly easily from inside a controller::
 
     public function sendNewsletterAction()
@@ -574,8 +575,8 @@ fairly easily from inside a controller::
         // ...
     }
 
-This approach is fine, but what if we decide later that the ``NewsletterManager``
-class needs a second or third constructor argument? What if we decide to
+This approach is fine, but what if you decide later that the ``NewsletterManager``
+class needs a second or third constructor argument? What if you decide to
 refactor our code and rename the class? In both cases, you'd need to find every
 place where the ``NewsletterManager`` is instantiated and modify it. Of course,
 the service container gives us a much more appealing option:
@@ -809,7 +810,7 @@ In Symfony2, you'll constantly use services provided by the Symfony core or
 other third-party bundles to perform tasks such as rendering templates (``templating``),
 sending emails (``mailer``), or accessing information on the request (``request``).
 
-We can take this a step further by using these services inside services that
+You can take this a step further by using these services inside services that
 you've created for your application. Let's modify the ``NewsletterManager``
 to use the real Symfony2 ``mailer`` service (instead of the pretend ``my_mailer``).
 Let's also pass the templating engine service to the ``NewsletterManager``
@@ -870,7 +871,7 @@ the framework.
 .. tip::
 
     Be sure that ``swiftmailer`` entry appears in your application
-    configuration. As we mentioned in :ref:`service-container-extension-configuration`,
+    configuration. As you mentioned in :ref:`service-container-extension-configuration`,
     the ``swiftmailer`` key invokes the service extension from the
     ``SwiftmailerBundle``, which registers the ``mailer`` service.
 
