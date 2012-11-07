@@ -22,8 +22,8 @@ Caching on the Shoulders of Giants
 The most effective way to improve performance of an application is to cache
 the full output of a page and then bypass the application entirely on each
 subsequent request. Of course, this isn't always possible for highly dynamic
-websites, or is it? In this chapter, we'll show you how the Symfony2 cache
-system works and why we think this is the best possible approach.
+websites, or is it? In this chapter, you'll see how the Symfony2 cache
+system works and why this is the best possible approach.
 
 The Symfony2 cache system is different because it relies on the simplicity
 and power of the HTTP cache as defined in the :term:`HTTP specification`.
@@ -32,8 +32,8 @@ that defines basic communication on the Web. Once you understand the fundamental
 HTTP validation and expiration caching models, you'll be ready to master
 the Symfony2 cache system.
 
-For the purposes of learning how to cache with Symfony2, we'll cover the
-subject in four steps:
+For the purposes of learning how to cache with Symfony2, the
+subject is covered in four steps:
 
 #. A :ref:`gateway cache <gateway-caches>`, or reverse proxy, is
    an independent layer that sits in front of your application. The reverse
@@ -57,8 +57,8 @@ subject in four steps:
    sidebar for only 5 minutes.
 
 Since caching with HTTP isn't unique to Symfony, many articles already exist
-on the topic. If you're new to HTTP caching, we *highly* recommend Ryan
-Tomayko's article `Things Caches Do`_. Another in-depth resource is Mark
+on the topic. If you're new to HTTP caching, Ryan
+Tomayko's article `Things Caches Do`_ is *highly* recommended . Another in-depth resource is Mark
 Nottingham's `Cache Tutorial`_.
 
 .. index::
@@ -118,8 +118,8 @@ different types of caches:
 .. note::
 
     The significance of *private* versus *shared* caches will become more
-    obvious as we talk about caching responses containing content that is
-    specific to exactly one user (e.g. account information).
+    obvious when caching responses containing content that is
+    specific to exactly one user (e.g. account information) is discussed.
 
 Each response from your application will likely go through one or both of
 the first two cache types. These caches are outside of your control but follow
@@ -171,7 +171,7 @@ from your application and returning them to the client.
         error_log($kernel->getLog());
 
 The ``AppCache`` object has a sensible default configuration, but it can be
-finely tuned via a set of options you can set by overriding the 
+finely tuned via a set of options you can set by overriding the
 :method:`Symfony\\Bundle\\FrameworkBundle\\HttpCache\\HttpCache::getOptions`
 method::
 
@@ -239,8 +239,8 @@ misses.
     The Symfony2 reverse proxy is a great tool to use when developing your
     website or when you deploy your website to a shared host where you cannot
     install anything beyond PHP code. But being written in PHP, it cannot
-    be as fast as a proxy written in C. That's why we highly recommend you
-    to use Varnish or Squid on your production servers if possible. The good
+    be as fast as a proxy written in C. That's why it is highly recommended you
+    use Varnish or Squid on your production servers if possible. The good
     news is that the switch from one proxy server to another is easy and
     transparent as no code modification is needed in your application. Start
     easy with the Symfony2 reverse proxy and upgrade later to Varnish when
@@ -272,11 +272,10 @@ headers on the response.
 
     Keep in mind that "HTTP" is nothing more than the language (a simple text
     language) that web clients (e.g. browsers) and web servers use to communicate
-    with each other. When we talk about HTTP caching, we're talking about the
-    part of that language that allows clients and servers to exchange information
-    related to caching.
+    with each other. HTTP caching is the part of that language that allows clients
+    and servers to exchange information related to caching.
 
-HTTP specifies four response cache headers that we're concerned with:
+HTTP specifies four response cache headers that are looked at here:
 
 * ``Cache-Control``
 * ``Expires``
@@ -424,7 +423,7 @@ on a cache to store and return "fresh" responses.
     found in two dedicated parts (`P4 - Conditional Requests`_ and `P6 -
     Caching: Browser and intermediary caches`_).
 
-    As a web developer, we strongly urge you to read the specification. Its
+    As a web developer, you are strongly urged to read the specification. Its
     clarity and power - even more than ten years after its creation - is
     invaluable. Don't be put-off by the appearance of the spec - its contents
     are much more beautiful than its cover.
@@ -567,16 +566,16 @@ md5 of the content::
         return $response;
     }
 
-The :method:`Symfony\\Component\\HttpFoundation\\Response::isNotModified` 
-method compares the ``ETag`` sent with the ``Request`` with the one set 
-on the ``Response``. If the two match, the method automatically sets the 
+The :method:`Symfony\\Component\\HttpFoundation\\Response::isNotModified`
+method compares the ``ETag`` sent with the ``Request`` with the one set
+on the ``Response``. If the two match, the method automatically sets the
 ``Response`` status code to 304.
 
 This algorithm is simple enough and very generic, but you need to create the
 whole ``Response`` before being able to compute the ETag, which is sub-optimal.
 In other words, it saves on bandwidth, but not CPU cycles.
 
-In the :ref:`optimizing-cache-validation` section, we'll show how validation
+In the :ref:`optimizing-cache-validation` section, you'll see how validation
 can be used more intelligently to determine the validity of a cache without
 doing so much work.
 
@@ -626,9 +625,9 @@ header value::
         return $response;
     }
 
-The :method:`Symfony\\Component\\HttpFoundation\\Response::isNotModified` 
-method compares the ``If-Modified-Since`` header sent by the request with 
-the ``Last-Modified`` header set on the response. If they are equivalent, 
+The :method:`Symfony\\Component\\HttpFoundation\\Response::isNotModified`
+method compares the ``If-Modified-Since`` header sent by the request with
+the ``Last-Modified`` header set on the response. If they are equivalent,
 the ``Response`` will be set to a 304 status code.
 
 .. note::
@@ -664,7 +663,7 @@ exposing a simple and efficient pattern::
         $response = new Response();
         $response->setETag($article->computeETag());
         $response->setLastModified($article->getPublishedAt());
-        
+
         // Set response as public. Otherwise it will be private by default.
         $response->setPublic();
 
@@ -697,7 +696,7 @@ headers that must not be present for ``304`` responses (see
 Varying the Response
 ~~~~~~~~~~~~~~~~~~~~
 
-So far, we've assumed that each URI has exactly one representation of the
+So far, it's been assumed that each URI has exactly one representation of the
 target resource. By default, HTTP caching is done by using the URI of the
 resource as the cache key. If two people request the same URI of a cacheable
 resource, the second person will receive the cached version.
@@ -708,7 +707,7 @@ compress pages when the client supports it, any given URI has two representation
 one when the client supports compression, and one when it does not. This
 determination is done by the value of the ``Accept-Encoding`` request header.
 
-In this case, we need the cache to store both a compressed and uncompressed
+In this case, you need the cache to store both a compressed and uncompressed
 version of the response for the particular URI and return them based on the
 request's ``Accept-Encoding`` value. This is done by using the ``Vary`` response
 header, which is a comma-separated list of different headers whose values
@@ -856,8 +855,8 @@ First, to use ESI, be sure to enable it in your application configuration:
             'esi'    => array('enabled' => true),
         ));
 
-Now, suppose we have a page that is relatively static, except for a news
-ticker at the bottom of the content. With ESI, we can cache the news ticker
+Now, suppose you have a page that is relatively static, except for a news
+ticker at the bottom of the content. With ESI, you can cache the news ticker
 independent of the rest of the page.
 
 .. code-block:: php
@@ -871,7 +870,7 @@ independent of the rest of the page.
         return $response;
     }
 
-In this example, we've given the full-page cache a lifetime of ten minutes.
+In this example, the full-page cache has a lifetime of ten minutes.
 Next, let's include the news ticker in the template by embedding an action.
 This is done via the ``render`` helper (See :ref:`templating-embedding-controller`
 for more details).
@@ -966,8 +965,8 @@ the ``_internal`` route:
 
     Since this route allows all actions to be accessed via a URL, you might
     want to protect it by using the Symfony2 firewall feature (by allowing
-    access to your reverse proxy's IP range). See the :ref:`Securing by IP<book-security-securing-ip>` 
-    section of the :doc:`Security Chapter </book/security>` for more information 
+    access to your reverse proxy's IP range). See the :ref:`Securing by IP<book-security-securing-ip>`
+    section of the :doc:`Security Chapter </book/security>` for more information
     on how to do this.
 
 One great advantage of this caching strategy is that you can make your

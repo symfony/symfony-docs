@@ -56,7 +56,7 @@ to an Event Subscriber::
     // src/Acme/DemoBundle/Form/Type/ProductType.php
     namespace Acme\DemoBundle\Form\Type;
 
-    use Symfony\Component\Form\AbstractType
+    use Symfony\Component\Form\AbstractType;
     use Symfony\Component\Form\FormBuilderInterface;
     use Acme\DemoBundle\Form\EventListener\AddNameFieldSubscriber;
 
