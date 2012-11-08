@@ -225,8 +225,13 @@ it in the view::
             if (array_key_exists('image_path', $options)) {
                 $parentData = $form->getParent()->getData();
 
-                $propertyPath = new PropertyPath($options['image_path']);
-                $imageUrl = $propertyPath->getValue($parentData);
+                if (null !== $parentData) {
+                    $propertyPath = new PropertyPath($options['image_path']);
+                    $imageUrl = $propertyPath->getValue($parentData);
+                } else {
+                     $imageUrl = null;
+                }
+
                 // set an "image_url" variable that will be available when rendering this field
                 $view->set('image_url', $imageUrl);
             }
