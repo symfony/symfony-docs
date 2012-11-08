@@ -12,8 +12,8 @@ create one from scratch or use a 3rd party generator.
 .. note::
 
     There are several SOAP server implementations available for use with
-    PHP. `Zend SOAP`_ and `NuSOAP`_ are two examples. Although we use
-    the PHP SOAP extension in our examples, the general idea should still
+    PHP. `Zend SOAP`_ and `NuSOAP`_ are two examples. Although the PHP SOAP
+    extension is used in these examples, the general idea should still
     be applicable to other implementations.
 
 SOAP works by exposing the methods of a PHP object to an external entity
@@ -36,7 +36,7 @@ In this case, the SOAP service will allow the client to call a method called
 
         public function hello($name)
         {
-            
+
             $message = \Swift_Message::newInstance()
                                     ->setTo('me@example.com')
                                     ->setSubject('Hello Service')
@@ -51,7 +51,7 @@ In this case, the SOAP service will allow the client to call a method called
 
 Next, you can train Symfony to be able to create an instance of this class.
 Since the class sends an e-mail, it's been designed to accept a ``Swift_Mailer``
-instance. Using the Service Container, we can configure Symfony to construct
+instance. Using the Service Container, you can configure Symfony to construct
 a ``HelloService`` object properly:
 
 .. configuration-block::
@@ -80,7 +80,7 @@ WSDL document can be retrieved via ``/soap?wsdl``.
 .. code-block:: php
 
     namespace Acme\SoapBundle\Controller;
-    
+
     use Symfony\Bundle\FrameworkBundle\Controller\Controller;
     use Symfony\Component\HttpFoundation\Response;
 
@@ -90,14 +90,14 @@ WSDL document can be retrieved via ``/soap?wsdl``.
         {
             $server = new \SoapServer('/path/to/hello.wsdl');
             $server->setObject($this->get('hello_service'));
-            
+
             $response = new Response();
             $response->headers->set('Content-Type', 'text/xml; charset=ISO-8859-1');
-            
+
             ob_start();
             $server->handle();
             $response->setContent(ob_get_clean());
-            
+
             return $response;
         }
     }
@@ -117,7 +117,7 @@ assumes that the ``indexAction`` in the controller above is accessible via the
 route ``/soap``::
 
     $client = new \Soapclient('http://example.com/app.php/soap?wsdl', true);
-    
+
     $result = $client->call('hello', array('name' => 'Scott'));
 
 An example WSDL is below.
@@ -125,14 +125,14 @@ An example WSDL is below.
 .. code-block:: xml
 
     <?xml version="1.0" encoding="ISO-8859-1"?>
-     <definitions xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" 
-         xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
-         xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/" 
-         xmlns:tns="urn:arnleadservicewsdl" 
-         xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" 
-         xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" 
-         xmlns="http://schemas.xmlsoap.org/wsdl/" 
+     <definitions xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/"
+         xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/"
+         xmlns:tns="urn:arnleadservicewsdl"
+         xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+         xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+         xmlns="http://schemas.xmlsoap.org/wsdl/"
          targetNamespace="urn:helloservicewsdl">
       <types>
        <xsd:schema targetNamespace="urn:hellowsdl">
@@ -158,11 +158,11 @@ An example WSDL is below.
       <operation name="hello">
        <soap:operation soapAction="urn:arnleadservicewsdl#hello" style="rpc"/>
        <input>
-        <soap:body use="encoded" namespace="urn:hellowsdl" 
+        <soap:body use="encoded" namespace="urn:hellowsdl"
             encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
        </input>
        <output>
-        <soap:body use="encoded" namespace="urn:hellowsdl" 
+        <soap:body use="encoded" namespace="urn:hellowsdl"
             encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
        </output>
       </operation>

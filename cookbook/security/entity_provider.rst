@@ -159,7 +159,7 @@ For more details on each of these, see :class:`Symfony\\Component\\Security\\Cor
 To keep it simple, the ``equals()`` method just compares the ``username`` field
 but it's also possible to do more checks depending on the complexity of your
 data model. On the other hand, the ``eraseCredentials()`` method remains empty
-as we don't care about it in this tutorial.
+for the purposes of this tutorial.
 
 Below is an export of my ``User`` table from MySQL. For details on how to
 create user records and encode their password, see :ref:`book-security-encoding-user-password`.
@@ -192,7 +192,7 @@ layer is a piece of cake. Everything resides in the configuration of the
 
 Below is an example of configuration where the user will enter his/her
 username and password via HTTP basic authentication. That information will
-then be checked against our User entity records in the database:
+then be checked against your User entity records in the database:
 
 .. configuration-block::
 
@@ -236,7 +236,7 @@ the ``username`` unique field. In other words, this tells Symfony how to
 fetch the user from the database before checking the password validity.
 
 This code and configuration works but it's not enough to secure the application
-for **active** users. As of now, we still can authenticate with ``maxime``. The
+for **active** users. As of now, you can still authenticate with ``maxime``. The
 next section explains how to forbid non active users.
 
 Forbid non Active Users
@@ -295,7 +295,7 @@ For this example, the first three methods will return ``true`` whereas the
         }
     }
 
-If we try to authenticate a ``maxime``, the access is now forbidden as this
+If you try to authenticate as ``maxime``, the access is now forbidden as this
 user does not have an enabled account. The next session will focus on how
 to write a custom entity provider to authenticate a user with his username
 or his email address.
@@ -400,7 +400,7 @@ from the database. As mentioned previously, when your user is loaded, its
 ``getRoles()`` method returns the array of security roles that should be
 assigned to the user. You can load this data from anywhere - a hardcoded
 list used for all users (e.g. ``array('ROLE_USER')``), a Doctrine array
-property called ``roles``, or via a Doctrine relationship, as we'll learn
+property called ``roles``, or via a Doctrine relationship, as you'll learn
 about in this section.
 
 .. caution::

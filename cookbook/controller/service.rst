@@ -10,8 +10,8 @@ extends the base
 this works fine, controllers can also be specified as services.
 
 To refer to a controller that's defined as a service, use the single colon (:)
-notation. For example, suppose we've defined a service called
-``my_controller`` and we want to forward to a method called ``indexAction()``
+notation. For example, suppose you've defined a service called
+``my_controller`` and you want to forward to a method called ``indexAction()``
 inside the service::
 
     $this->forward('my_controller:indexAction', array('foo' => $bar));

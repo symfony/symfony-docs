@@ -97,7 +97,7 @@ and *add* the method ``bar()``:
     {
         public function onFooMethodIsNotFound(HandleUndefinedMethodEvent $event)
         {
-            // we only want to respond to the calls to the 'bar' method
+            // only respond to the calls to the 'bar' method
             if ('bar' != $event->getMethod()) {
                 // allow another listener to take care of this unknown method
                 return;
