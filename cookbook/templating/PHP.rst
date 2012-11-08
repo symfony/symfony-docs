@@ -18,7 +18,7 @@ your application configuration file:
 .. configuration-block::
 
     .. code-block:: yaml
-    
+
         # app/config/config.yml
         framework:
             # ...
@@ -42,7 +42,7 @@ your application configuration file:
             'templating'      => array(
                 'engines' => array('twig', 'php'),
             ),
-        )); 
+        ));
 
 You can now render a PHP template instead of a Twig one simply by using the
 ``.php`` extension in the template name instead of ``.twig``. The controller
@@ -82,7 +82,7 @@ Decorating Templates
 --------------------
 
 More often than not, templates in a project share common elements, like the
-well-known header and footer. In Symfony2, we like to think about this problem
+well-known header and footer. In Symfony2, this problem is thought about
 differently: a template can be decorated by another one.
 
 The ``index.html.php`` template is decorated by ``layout.html.php``, thanks to
