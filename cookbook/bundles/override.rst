@@ -84,8 +84,8 @@ something beyond just the class name, you should use a compiler pass::
         }
     }
 
-In this example we fetch the service definition of the original service, and set
-its class name to our own class.
+In this example you fetch the service definition of the original service, and set
+its class name to your own class.
 
 See :doc:`/cookbook/service_container/compiler_passes` for information on how to use
 compiler passes. If you want to do something beyond just overriding the class -

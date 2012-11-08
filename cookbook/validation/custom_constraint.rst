@@ -5,18 +5,18 @@ How to create a Custom Validation Constraint
 ============================================
 
 You can create a custom constraint by extending the base constraint class,
-:class:`Symfony\\Component\\Validator\\Constraint`. 
-As an example we're going to create a simple validator that checks if a string 
+:class:`Symfony\\Component\\Validator\\Constraint`.
+As an example you're going to create a simple validator that checks if a string
 contains only alphanumeric characters.
 
 Creating Constraint class
 -------------------------
 
-First you need to create a Constraint class and extend :class:`Symfony\\Component\\Validator\\Constraint`:: 
+First you need to create a Constraint class and extend :class:`Symfony\\Component\\Validator\\Constraint`::
 
     // src/Acme/DemoBundle/Validator/Constraints/ContainsAlphanumeric.php
     namespace Acme\DemoBundle\Validator\Constraints;
-    
+
     use Symfony\Component\Validator\Constraint;
 
     /**
@@ -32,11 +32,11 @@ First you need to create a Constraint class and extend :class:`Symfony\\Componen
     The ``@Annotation`` annotation is necessary for this new constraint in
     order to make it available for use in classes via annotations.
     Options for your constraint are represented as public properties on the
-    constraint class. 
+    constraint class.
 
 Creating the Validator itself
 -----------------------------
-    
+
 As you can see, a constraint class is fairly minimal. The actual validation is
 performed by a another "constraint validator" class. The constraint validator
 class is specified by the constraint's ``validatedBy()`` method, which
@@ -56,7 +56,7 @@ The validator class is also simple, and only has one required method: ``isValid`
 
     // src/Acme/DemoBundle/Validator/Constraints/ContainsAlphanumericValidator.php
     namespace Acme\DemoBundle\Validator\Constraints;
-    
+
     use Symfony\Component\Validator\Constraint;
     use Symfony\Component\Validator\ConstraintValidator;
 
@@ -78,7 +78,7 @@ The validator class is also simple, and only has one required method: ``isValid`
 
     Don't forget to call ``setMessage`` to construct an error message when the
     value is invalid.
-    
+
 Using the new Validator
 -----------------------
 
@@ -87,7 +87,7 @@ Using custom validators is very easy, just as the ones provided by Symfony2 itse
 .. configuration-block::
 
     .. code-block:: yaml
-        
+
         # src/Acme/BlogBundle/Resources/config/validation.yml
         Acme\DemoBundle\Entity\AcmeEntity:
             properties:
@@ -100,22 +100,22 @@ Using custom validators is very easy, just as the ones provided by Symfony2 itse
         // src/Acme/DemoBundle/Entity/AcmeEntity.php
         use Symfony\Component\Validator\Constraints as Assert;
         use Acme\DemoBundle\Validator\Constraints as AcmeAssert;
-            
+
         class AcmeEntity
         {
             // ...
-            
+
             /**
              * @Assert\NotBlank
              * @AcmeAssert\ContainsAlphanumeric
              */
             protected $name;
-            
+
             // ...
         }
 
     .. code-block:: xml
-        
+
         <!-- src/Acme/DemoBundle/Resources/config/validation.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
@@ -131,7 +131,7 @@ Using custom validators is very easy, just as the ones provided by Symfony2 itse
         </constraint-mapping>
 
     .. code-block:: php
-        
+
         // src/Acme/DemoBundle/Entity/AcmeEntity.php
         use Symfony\Component\Validator\Mapping\ClassMetadata;
         use Symfony\Component\Validator\Constraints\NotBlank;
