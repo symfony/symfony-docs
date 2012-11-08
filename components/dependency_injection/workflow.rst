@@ -51,7 +51,7 @@ Bundle-level Configuration with Extensions
 
 By convention, each bundle contains an Extension class which is in the bundle's
 ``DependencyInjection`` directory. These are registered with the ``ContainerBuilder``
-when the kernel is booted. When the ``ContainerBuilder`` is :doc:`compiled</components/dependency-injection/compilation>`,
+when the kernel is booted. When the ``ContainerBuilder`` is :doc:`compiled</components/dependency_injection/compilation>`,
 the application-level configuration relevant to the bundle's extension is
 passed to the Extension which also usually loads its own config file(s), typically from the bundle's
 ``Resources/config`` directory. The application-level config is usually processed
