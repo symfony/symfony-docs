@@ -25,7 +25,7 @@ would do with `git`_.
 The Subversion Repository
 -------------------------
 
-For this article we will suppose that your repository layout follows the
+For this article it's assumed that your repository layout follows the
 widespread standard structure:
 
 .. code-block:: text
@@ -69,7 +69,7 @@ To get started, you'll need to download Symfony2 and get the basic Subversion se
    subversion repository. Some files (like the cache) are generated and
    others (like the database configuration) are meant to be customized
    on each machine. This makes use of the ``svn:ignore`` property, so that
-   we can ignore specific files.
+   specific files can be ignored.
 
    .. code-block:: bash
 

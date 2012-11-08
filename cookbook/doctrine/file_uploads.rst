@@ -210,9 +210,9 @@ object, which is what's returned after a ``file`` field is submitted::
             return;
         }
 
-        // we use the original file name here but you should
+        // use the original file name here but you should
         // sanitize it at least to avoid any security issues
-        
+
         // move takes the target directory and then the target filename to move to
         $this->file->move($this->getUploadRootDir(), $this->file->getClientOriginalName());
 

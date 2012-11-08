@@ -19,7 +19,7 @@ Now, the variable ``ga_tracking`` is available in all Twig templates:
 
 .. code-block:: html+jinja
 
-    <p>Our google tracking code is: {{ ga_tracking }} </p>
+    <p>The google tracking code is: {{ ga_tracking }} </p>
 
 It's that easy! You can also take advantage of the built-in :ref:`book-service-container-parameters`
 system, which lets you isolate or reuse the value:

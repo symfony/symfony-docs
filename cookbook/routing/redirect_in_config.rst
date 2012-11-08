@@ -28,7 +28,7 @@ Your configuration will look like this:
 
 Your ``AppBundle`` is registered to handle all requests under ``/app``.
 
-We configure a route for the ``/`` path and let :class:`Symfony\\Bundle\\FrameworkBundle\\Controller\\RedirectController`
+You configure a route for the ``/`` path and let :class:`Symfony\\Bundle\\FrameworkBundle\\Controller\\RedirectController`
 handle it. This controller is built-in and offers two methods for redirecting request:
 
 * ``redirect`` redirects to another *route*. You must provide the ``route``
