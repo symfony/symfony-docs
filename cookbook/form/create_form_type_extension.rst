@@ -104,20 +104,20 @@ tag:
 
         services:
             acme_demo_bundle.image_type_extension:
-                class: Acme\DemoBundle\Form\Type\ImageTypeExtension
+                class: Acme\DemoBundle\Form\Extension\ImageTypeExtension
                 tags:
                     - { name: form.type_extension, alias: file }
 
     .. code-block:: xml
 
-        <service id="acme_demo_bundle.image_type_extension" class="Acme\DemoBundle\Form\Type\ImageTypeExtension">
+        <service id="acme_demo_bundle.image_type_extension" class="Acme\DemoBundle\Form\Extension\ImageTypeExtension">
             <tag name="form.type_extension" alias="file" />
         </service>
 
     .. code-block:: php
 
         $container
-            ->register('acme_demo_bundle.image_type_extension', 'Acme\DemoBundle\Form\Type\ImageTypeExtension')
+            ->register('acme_demo_bundle.image_type_extension', 'Acme\DemoBundle\Form\Extension\ImageTypeExtension')
             ->addTag('form.type_extension', array('alias' => 'file'));
 
 The ``alias`` key of the tag is the type of field that this extension should
