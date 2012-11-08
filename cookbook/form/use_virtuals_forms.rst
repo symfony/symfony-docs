@@ -75,7 +75,7 @@ Start by creating a very simple ``CompanyType`` and ``CustomerType``::
         }
     }
 
-Now, we have to deal with the four duplicated fields. Here is a (simple)
+Now, to deal with the four duplicated fields. Here is a (simple)
 location form type::
 
     // src/Acme/HelloBundle/Form/Type/LocationType.php
@@ -105,13 +105,13 @@ location form type::
         }
     }
 
-We don't *actually* have a location field in each of our entities, so we
-can't directly link our ``LocationType`` to our ``CompanyType`` or ``CustomerType``.
-But we absolutely want to have a dedicated form type to deal with location (remember, DRY!).
+You don't *actually* have a location field in each of your entities, so you
+can't directly link ``LocationType`` to ``CompanyType`` or ``CustomerType``.
+But you absolutely want to have a dedicated form type to deal with location (remember, DRY!).
 
 The ``virtual`` form field option is the solution.
 
-We can set the option ``'virtual' => true`` in the ``getDefaultOptions`` method
+You can set the option ``'virtual' => true`` in the ``getDefaultOptions`` method
 of ``LocationType`` and directly start using it in the two original form types.
 
 Look at the result::
@@ -133,7 +133,7 @@ Look at the result::
 With the virtual option set to false (default behavior), the Form Component
 expects each underlying object to have a ``foo`` (or ``bar``) property that
 is either some object or array which contains the four location fields.
-Of course, we don't have this object/array in our entities and we don't want it!
+Of course, you don't have this object/array in your entities and you don't want it!
 
 With the virtual option set to true, the Form component skips the ``foo`` (or ``bar``)
 property, and instead "gets" and "sets" the 4 location fields directly
