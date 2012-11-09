@@ -10,7 +10,7 @@ component and can be viewed in the :class:`Symfony\\Component\\HttpKernel\\Kerne
 
 To hook into an event and add your own custom logic, you have to  create
 a service that will act as an event listener on that event. In this entry,
-we will create a service that will act as an Exception Listener, allowing
+you will create a service that will act as an Exception Listener, allowing
 us to modify how exceptions are shown by  our application. The ``KernelEvents::EXCEPTION``
 event is just one of the core kernel events::
 
@@ -25,11 +25,11 @@ event is just one of the core kernel events::
     {
         public function onKernelException(GetResponseForExceptionEvent $event)
         {
-            // We get the exception object from the received event
+            // You get the exception object from the received event
             $exception = $event->getException();
             $message = 'My Error says: ' . $exception->getMessage() . ' with code: ' . $exception->getCode();
 
-            // Customize our response object to display our exception details
+            // Customize your response object to display the exception details
             $response = new Response();
             $response->setContent($message);
 
@@ -42,7 +42,7 @@ event is just one of the core kernel events::
                 $response->setStatusCode(500);
             }
 
-            // Send our modified response object to the event
+            // Send the modified response object to the event
             $event->setResponse($response);
         }
     }
@@ -53,7 +53,7 @@ event is just one of the core kernel events::
     the ``kernel.exception`` event, it is :class:`Symfony\\Component\\HttpKernel\\Event\\GetResponseForExceptionEvent`.
     To see what type of object each event listener receives, see :class:`Symfony\\Component\\HttpKernel\\KernelEvents`.
 
-Now that the class is created, we just need to register it as a service and
+Now that the class is created, you just need to register it as a service and
 notify Symfony that it is a "listener" on the ``kernel.exception`` event by
 using a special "tag":
 
