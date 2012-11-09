@@ -253,7 +253,7 @@ argument to ``GenderType``, which receives the gender configuration::
     }
 
 Great! The ``GenderType`` is now fueled by the configuration parameters and
-registered as a service. Additionally because you used the ``form.type`` alias in its
+registered as a service. Additionally, because you used the ``form.type`` alias in its
 configuration, using the field is now much easier::
 
     // src/Acme/DemoBundle/Form/Type/AuthorType.php
