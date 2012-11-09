@@ -5,17 +5,17 @@ How to Create a Custom Form Field Type
 ======================================
 
 Symfony comes with a bunch of core field types available for building forms.
-However there are situations where we want to create a custom form field
-type for a specific purpose. This recipe assumes we need a field definition
+However there are situations where you may want to create a custom form field
+type for a specific purpose. This recipe assumes you need a field definition
 that holds a person's gender, based on the existing choice field. This section
-explains how the field is defined, how we can customize its layout and finally,
-how we can register it for use in our application.
+explains how the field is defined, how you can customize its layout and finally,
+how you can register it for use in your application.
 
 Defining the Field Type
 -----------------------
 
-In order to create the custom field type, first we have to create the class
-representing the field. In our situation the class holding the field type
+In order to create the custom field type, first you have to create the class
+representing the field. In this situation the class holding the field type
 will be called `GenderType` and the file will be stored in the default location
 for form fields, which is ``<BundleName>\Form\Type``. Make sure the field extends
 :class:`Symfony\\Component\\Form\\AbstractType`::
@@ -54,8 +54,8 @@ for form fields, which is ``<BundleName>\Form\Type``. Make sure the field extend
     The location of this file is not important - the ``Form\Type`` directory
     is just a convention.
 
-Here, the return value of the ``getParent`` function indicates that we're
-extending the ``choice`` field type. This means that, by default, we inherit
+Here, the return value of the ``getParent`` function indicates that you're
+extending the ``choice`` field type. This means that, by default, you inherit
 all of the logic and rendering of that field type. To see some of the logic,
 check out the `ChoiceType`_ class. There are three methods that are particularly
 important:
@@ -86,7 +86,7 @@ The ``getName()`` method returns an identifier which should be unique in
 your application. This is used in various places, such as when customizing
 how your form type will be rendered.
 
-The goal of our field was to extend the choice type to enable selection of
+The goal of this field was to extend the choice type to enable selection of
 a gender. This is achieved by fixing the ``choices`` to a list of possible
 genders.
 
@@ -97,11 +97,11 @@ Each field type is rendered by a template fragment, which is determined in
 part by the value of your ``getName()`` method. For more information, see
 :ref:`cookbook-form-customization-form-themes`.
 
-In this case, since our parent field is ``choice``, we don't *need* to do
-any work as our custom field type will automatically be rendered like a ``choice``
-type. But for the sake of this example, let's suppose that when our field
+In this case, since tge parent field is ``choice``, you don't *need* to do
+any work as the custom field type will automatically be rendered like a ``choice``
+type. But for the sake of this example, let's suppose that when your field
 is "expanded" (i.e. radio buttons or checkboxes, instead of a select field),
-we want to always render it in a ``ul`` element. In your form theme template
+you want to always render it in a ``ul`` element. In your form theme template
 (see above link for details), create a ``gender_widget`` block to handle this:
 
 .. code-block:: html+jinja
@@ -172,12 +172,12 @@ Creating your Field Type as a Service
 So far, this entry has assumed that you have a very simple custom field type.
 But if you need access to configuration, a database connection, or some other
 service, then you'll want to register your custom type as a service. For
-example, suppose that we're storing the gender parameters in configuration:
+example, suppose that you're storing the gender parameters in configuration:
 
 .. configuration-block::
 
     .. code-block:: yaml
-    
+
         # app/config/config.yml
         parameters:
             genders:
@@ -194,7 +194,7 @@ example, suppose that we're storing the gender parameters in configuration:
             </parameter>
         </parameters>
 
-To use the parameter, we'll define our custom field type as a service, injecting
+To use the parameter, define your custom field type as a service, injecting
 the ``genders`` parameter value as the first argument to its to-be-created
 ``__construct`` function:
 
@@ -225,8 +225,8 @@ the ``genders`` parameter value as the first argument to its to-be-created
     for details.
 
 Be sure that the ``alias`` attribute of the tag corresponds with the value
-returned by the ``getName`` method defined earlier. We'll see the importance
-of this in a moment when we use the custom field type. But first, add a ``__construct``
+returned by the ``getName`` method defined earlier. You'll see the importance
+of this in a moment when you use the custom field type. But first, add a ``__construct``
 argument to ``GenderType``, which receives the gender configuration::
 
     // src/Acme/DemoBundle/Form/Type/GenderType.php
@@ -236,24 +236,24 @@ argument to ``GenderType``, which receives the gender configuration::
     class GenderType extends AbstractType
     {
         private $genderChoices;
-        
+
         public function __construct(array $genderChoices)
         {
             $this->genderChoices = $genderChoices;
         }
-    
+
         public function getDefaultOptions(array $options)
         {
             return array(
                 'choices' => $this->genderChoices,
             );
         }
-        
+
         // ...
     }
 
 Great! The ``GenderType`` is now fueled by the configuration parameters and
-registered as a service. And because we used the ``form.type`` alias in its
+registered as a service. Additionally because you used the ``form.type`` alias in its
 configuration, using the field is now much easier::
 
     // src/Acme/DemoBundle/Form/Type/AuthorType.php
@@ -270,8 +270,8 @@ configuration, using the field is now much easier::
         }
     }
 
-Notice that instead of instantiating a new instance, we can just refer to
-it by the alias used in our service configuration, ``gender``. Have fun!
+Notice that instead of instantiating a new instance, you can just refer to
+it by the alias used in your service configuration, ``gender``. Have fun!
 
 .. _`ChoiceType`: https://github.com/symfony/symfony/blob/master/src/Symfony/Component/Form/Extension/Core/Type/ChoiceType.php
 .. _`FieldType`: https://github.com/symfony/symfony/blob/master/src/Symfony/Component/Form/Extension/Core/Type/FieldType.php
