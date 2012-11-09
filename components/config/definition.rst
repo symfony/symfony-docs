@@ -115,10 +115,12 @@ node. The array node itself, may have a pre-defined set of variable nodes:
 
     $rootNode
         ->arrayNode('connection')
-            ->scalarNode('driver')->end()
-            ->scalarNode('host')->end()
-            ->scalarNode('username')->end()
-            ->scalarNode('password')->end()
+            ->children()
+                ->scalarNode('driver')->end()
+                ->scalarNode('host')->end()
+                ->scalarNode('username')->end()
+                ->scalarNode('password')->end()
+            ->end()
         ->end()
     ;
 
