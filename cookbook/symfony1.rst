@@ -15,7 +15,7 @@ As you'll see, many tasks are tackled in a slightly different way. You'll
 come to appreciate these minor differences as they promote stable, predictable,
 testable and decoupled code in your Symfony2 applications.
 
-So, sit back and relax as your taken from "then" to "now".
+So, sit back and relax as you travel from "then" to "now".
 
 Directory Structure
 -------------------
