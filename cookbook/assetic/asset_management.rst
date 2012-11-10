@@ -173,7 +173,7 @@ and deployment processes.
 
 To use a filter, you first need to specify it in the Assetic configuration.
 Adding a filter here doesn't mean it's being used - it just means that it's
-available to use (we'll use the filter below).
+available to use (you'll use the filter below).
 
 For example to use the JavaScript YUI Compressor the following config should
 be added:

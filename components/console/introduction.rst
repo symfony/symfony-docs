@@ -287,6 +287,38 @@ if you needed to know the name of something, you might do the following::
         'foo'
     );
 
+Ask Questions and validate the Response
+---------------------------------------
+
+You can easily ask a question and validate the response with built-in methods::
+
+    $dialog = $this->getHelperSet()->get('dialog');
+
+    $validator = function ($value) {
+        if ('' === trim($value)) {
+            throw new \Exception('The value can not be empty');
+        }
+
+        return $value;
+    }
+
+    $password = $dialog->askAndValidate(
+        $output,
+        'Please enter the name of the widget',
+        $validator,
+        20,
+        'foo'
+    );
+
+The validation callback can be any callable PHP function and the fourth argument
+to :method:`Symfony\\Component\\Console\\Helper::askAndValidate` is the maximum
+number of attempts - set it to ``false`` (the default value) for unlimited
+attempts. The fifth argument is the default value.
+
+The callback must throw an exception in case the value is not acceptable. Please
+note that the callback **must** return the value. The value can be modified by
+the callback (it will be returned modified by the helper).
+
 Testing Commands
 ----------------
 

@@ -118,7 +118,7 @@ issue field in some form.
                 $entityManager = $options['em'];
                 $transformer = new IssueToNumberTransformer($entityManager);
 
-                // add a normal text field, but add our transformer to it
+                // add a normal text field, but add your transformer to it
                 $builder->add(
                     $builder->create('issue', 'text')
                         ->addModelTransformer($transformer)
@@ -196,11 +196,11 @@ Which transformer you need depends on your situation.
 
 To use the view transformer, call ``addViewTransformer``.
 
-So why did we use the model transformer?
-----------------------------------------
+So why use the model transformer?
+---------------------------------
 
-In our example, the field is a ``text`` field, and we always expect a text
-field to be a simple, scalar format in the "norm" and "view" formats. For
+In this example, the field is a ``text`` field, and a text field is always
+expected to be a simple, scalar format in the "norm" and "view" formats. For
 this reason, the most appropriate transformer was the "model" transformer
 (which converts to/from the *norm* format - string issue number - to the *model*
 format - Issue object).

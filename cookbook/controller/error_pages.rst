@@ -28,7 +28,7 @@ control you need:
     information, see :ref:`kernel-kernel.exception`.
 
 All of the error templates live inside ``TwigBundle``. To override the
-templates, we simply rely on the standard method for overriding templates that
+templates, simply rely on the standard method for overriding templates that
 live inside a bundle. For more information, see
 :ref:`overriding-bundle-templates`.
 

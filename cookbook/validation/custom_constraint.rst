@@ -6,7 +6,7 @@ How to create a Custom Validation Constraint
 
 You can create a custom constraint by extending the base constraint class,
 :class:`Symfony\\Component\\Validator\\Constraint`.
-As an example we're going to create a simple validator that checks if a string
+As an example you're going to create a simple validator that checks if a string
 contains only alphanumeric characters.
 
 Creating Constraint class

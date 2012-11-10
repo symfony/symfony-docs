@@ -10,12 +10,12 @@ at its core, the skills used to master a symfony1 project continue to be
 very relevant when developing in Symfony2. Sure, ``app.yml`` is gone, but
 routing, controllers and templates all remain.
 
-In this chapter, we'll walk through the differences between symfony1 and Symfony2.
+This chapter walks through the differences between symfony1 and Symfony2.
 As you'll see, many tasks are tackled in a slightly different way. You'll
 come to appreciate these minor differences as they promote stable, predictable,
 testable and decoupled code in your Symfony2 applications.
 
-So, sit back and relax as we take you from "then" to "now".
+So, sit back and relax as you travel from "then" to "now".
 
 Directory Structure
 -------------------
@@ -61,7 +61,7 @@ In other words, the code that drives your application lives in many different
 places.
 
 In Symfony2, life is much simpler because *all* Symfony2 code must live in
-a bundle. In our pretend symfony1 project, all the code *could* be moved
+a bundle. In the pretend symfony1 project, all the code *could* be moved
 into one or more plugins (which is a very good practice, in fact). Assuming
 that all modules, PHP classes, schema, routing configuration, etc were moved
 into a plugin, the symfony1 ``plugins/`` directory would be very similar
