@@ -122,9 +122,14 @@ rules::
         /**
          * @Assert\File(maxSize="6000000")
          */
-        public $file;
+        private $file;
 
         // ...
+
+        public function setFile($file)
+        {
+            $this->file = $file;
+        }
     }
 
 .. note::
