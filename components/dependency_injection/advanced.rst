@@ -107,18 +107,18 @@ the service itself gets loaded. To do so, you can use the ``file`` directive.
         services:
            foo:
              class: Example\Foo\Bar
-             file: "%kernel.root_dir%/src/path/to/file/foo.php"
+             file: "%app.root_dir%/src/path/to/file/foo.php"
 
     .. code-block:: xml
 
         <service id="foo" class="Example\Foo\Bar">
-            <file>%kernel.root_dir%/src/path/to/file/foo.php</file>
+            <file>%app.root_dir%/src/path/to/file/foo.php</file>
         </service>
 
     .. code-block:: php
 
         $definition = new Definition('Example\Foo\Bar');
-        $definition->setFile('%kernel.root_dir%/src/path/to/file/foo.php');
+        $definition->setFile('%app.root_dir%/src/path/to/file/foo.php');
         $container->setDefinition('foo', $definition);
 
 Notice that symfony will internally call the PHP function require_once
