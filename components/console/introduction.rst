@@ -287,10 +287,10 @@ if you needed to know the name of something, you might do the following::
         'foo'
     );
 
-Ask and validate response
--------------------------
+Ask Questions and validate the Response
+---------------------------------------
 
-You can easily ask question and validate response with built-in methods::
+You can easily ask a question and validate the response with built-in methods::
 
     $dialog = $this->getHelperSet()->get('dialog');
 
@@ -310,9 +310,10 @@ You can easily ask question and validate response with built-in methods::
         'foo'
     );
 
-The validation callback can be any callable PHP function, the fourth argument is
-the maximum number of attempts, set it to ``false`` for unlimited attempts. The
-fifth argument is the default value.
+The validation callback can be any callable PHP function and the fourth argument
+to :method:`Symfony\\Component\\Console\\Helper::askAndValidate` is the maximum
+number of attempts - set it to ``false`` (the default value) for unlimited
+attempts. The fifth argument is the default value.
 
 The callback must throw an exception in case the value is not acceptable. Please
 note that the callback **must** return the value. The value can be modified by
