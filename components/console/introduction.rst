@@ -287,6 +287,39 @@ if you needed to know the name of something, you might do the following::
         'foo'
     );
 
+.. versionadded:: 2.2
+    ``DialogHelper::select()`` was added in version 2.2
+
+Sometimes you need to provide user with a list of values to select. For example,
+suggesting couple of different strategies to use for performing certain operation.
+
+.. code-block:: php
+
+    $availableLocales = $this->getAvailableLocales();
+    $dialog = $this->getHelperSet()->get('dialog');
+    $locale = $dialog->select($output, 'Please select your locale',
+        $availableLocales, 0);
+    var_dump($locale);
+
+will produce the following typical console interaction:
+
+.. code-block:: bash
+
+    $ app/console demo:installer
+    Please select your locale
+      0   English
+      1   French
+      2   Ukrainian
+      ...
+    > <Press 'Enter' to get default value>
+    int(0)
+
+You can also get the value selected directly by specifying return type::
+
+    $locale = $dialog->select($output, 'Please select your locale',
+        $availableLocales, 0, array('return' => 'value'));
+    var_dump($locale); // Now default value would be "English"
+
 Displaying a Progress Bar
 -------------------------
 
