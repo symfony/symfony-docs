@@ -4,8 +4,8 @@
 How to override Symfony's Default Directory Structure
 =====================================================
 
-Symfony automatically ships with a default directory structure. You can 
-easily override this directory structure to create your own. The default 
+Symfony automatically ships with a default directory structure. You can
+easily override this directory structure to create your own. The default
 directory structure is:
 
 .. code-block:: text
@@ -26,7 +26,7 @@ directory structure is:
 Override the ``cache`` directory
 --------------------------------
 
-You can override the cache directory by overriding the ``getCacheDir`` method 
+You can override the cache directory by overriding the ``getCacheDir`` method
 in the ``AppKernel`` class of you application::
 
     // app/AppKernel.php
@@ -43,7 +43,7 @@ in the ``AppKernel`` class of you application::
     }
 
 ``$this->rootDir`` is the absolute path to the ``app`` directory and ``$this->environment``
-is the current environment (i.e. ``dev``). In this case we have changed 
+is the current environment (i.e. ``dev``). In this case you have changed
 the location of the cache directory to ``app/{environment}/cache``.
 
 .. caution::
@@ -56,8 +56,8 @@ the location of the cache directory to ``app/{environment}/cache``.
 Override the ``logs`` directory
 -------------------------------
 
-Overriding the ``logs`` directory is the same as overriding the ``cache`` 
-directory, the only difference is that you need to override the ``getLogDir`` 
+Overriding the ``logs`` directory is the same as overriding the ``cache``
+directory, the only difference is that you need to override the ``getLogDir``
 method::
 
     // app/AppKernel.php
@@ -73,7 +73,7 @@ method::
         }
     }
 
-Here we have changed the location of the directory to ``app/{environment}/logs``.
+Here you have changed the location of the directory to ``app/{environment}/logs``.
 
 Override the ``web`` directory
 ------------------------------
@@ -98,7 +98,7 @@ may need to modify the paths inside these files::
 
 .. note::
 
-    If you use the AsseticBundle you need to configure this, so it can use 
+    If you use the AsseticBundle you need to configure this, so it can use
     the correct ``web`` directory:
 
     .. code-block:: yaml
@@ -110,7 +110,7 @@ may need to modify the paths inside these files::
             # ...
             read_from: "%kernel.root_dir%/../../public_html"
 
-    Now you just need to dump the assets again and your application should 
+    Now you just need to dump the assets again and your application should
     work:
 
     .. code-block:: bash
