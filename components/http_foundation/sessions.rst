@@ -239,7 +239,7 @@ Flash messages
 ~~~~~~~~~~~~~~
 
 The purpose of the :class:`Symfony\\Component\\HttpFoundation\\Session\\Flash\\FlashBagInterface`
-is to provide a way of settings and retrieving messages on a per session basis.
+is to provide a way of setting and retrieving messages on a per session basis.
 The usual workflow for flash messages would be set in an request, and displayed
 after a page redirect. For example, a user submits a form which hits an update
 controller, and after processing the controller redirects the page to either the
