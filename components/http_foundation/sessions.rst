@@ -131,7 +131,7 @@ an array. A few methods exist for "Bag" management:
 Session meta-data
 
 * :method:`Symfony\\Component\\HttpFoundation\\Session\\Session::getMetadataBag`:
-  Gets the :class:`Symfony\\Component\\HttpFoundation\\Session\\Storage\MetadataBag`
+  Gets the :class:`Symfony\\Component\\HttpFoundation\\Session\\Storage\\MetadataBag`
   which contains information about the session.
 
 
