@@ -402,7 +402,7 @@ one example:
 
         // Replace '__name__' in the prototype's HTML to
         // instead be a number based on the current collection's length.
-        var newForm = prototype.replace(/__name__/g, collectionHolder.children().length);
+        var newForm = prototype.replace(/__name__/g, collectionHolder.children().length-1);
 
         // Display the form in the page in an li, before the "Add a tag" link li
         var $newFormLi = $('<li></li>').append(newForm);
