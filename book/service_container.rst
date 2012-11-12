@@ -312,7 +312,7 @@ Importing other Container Configuration Resources
 .. tip::
 
     In this section, service configuration files are referred to as *resources*.
-    This is to highlight that fact that, while most configuration resources
+    This is to highlight the fact that, while most configuration resources
     will be files (e.g. YAML, XML, PHP), Symfony2 is so flexible that configuration
     could be loaded from anywhere (e.g. a database or even via an external
     web service).
