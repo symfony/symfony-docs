@@ -108,6 +108,8 @@ This prints::
 
     HELLO FABIEN
 
+.. _components-console-coloring:
+
 Coloring the Output
 ~~~~~~~~~~~~~~~~~~~
 
