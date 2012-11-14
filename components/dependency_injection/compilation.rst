@@ -334,7 +334,7 @@ worlds though by using configuration files and then dumping and caching the resu
 configuration. The ``PhpDumper`` makes dumping the compiled container easy::
 
     use Symfony\Component\DependencyInjection\ContainerBuilder;
-    use Symfony\Component\DependencyInjection\Dumper\PhpDumper
+    use Symfony\Component\DependencyInjection\Dumper\PhpDumper;
 
     $file = __DIR__ .'/cache/container.php';
 
