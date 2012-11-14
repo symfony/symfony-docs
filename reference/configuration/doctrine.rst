@@ -347,6 +347,8 @@ The following block shows all possible configuration keys:
                     enum: string
                 types:
                     custom: Acme\HelloBundle\MyCustomType
+                # the DBAL keepSlave option
+                keep_slave:           false
 
     .. code-block:: xml
 
