@@ -182,3 +182,20 @@ For PostgreSQL, the statement should look like this:
         session_time integer NOT NULL,
         CONSTRAINT session_pkey PRIMARY KEY (session_id)
     );
+
+Microsoft SQL Server
+~~~~~~~~~~
+
+For MSSQL, the statement might look like the following:
+
+.. code-block:: sql
+
+   CREATE TABLE [dbo].[session](
+	[session_id] [nvarchar](255) NOT NULL,
+	[session_value] [ntext] NOT NULL,
+	[session_time] [int] NOT NULL,
+		PRIMARY KEY CLUSTERED 
+		(
+			[session_id] ASC
+		) WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+		) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
