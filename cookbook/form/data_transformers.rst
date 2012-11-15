@@ -1,4 +1,21 @@
-.. index::
+
+
+            public function setDefaultOptions(OptionsResolverInterface $resolver)
+            {
+                $resolver->setDefaults(array(
+                    'data_class' => '\Acme\TaskBundle\Entity\Task'
+                ));
+
+                $resolver->setRequired(array(
+                    'em'
+                ));
+
+                $resolver->setRequired(array(
+                    'em'
+                ));
+
+                // ...
+            }.. index::
    single: Form; Data transformers
 
 How to use Data Transformers
@@ -123,6 +140,23 @@ issue field in some form.
                     $builder->create('issue', 'text')
                         ->addModelTransformer($transformer)
                 );
+            }
+
+            public function setDefaultOptions(OptionsResolverInterface $resolver)
+            {
+                $resolver->setDefaults(array(
+                    'data_class' => '\Acme\TaskBundle\Entity\Task'
+                ));
+
+                $resolver->setRequired(array(
+                    'em'
+                ));
+
+                $resolver->setAllowedTypes(array(
+                    'em' => 'Doctrine\Common\Persistence\ObjectManager'
+                ));
+
+                // ...
             }
 
             // ...
