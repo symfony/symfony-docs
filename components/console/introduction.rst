@@ -296,16 +296,16 @@ convenient for passwords::
     $dialog = $this->getHelperSet()->get('dialog');
     $password = $dialog->askHiddenResponse(
         $output,
-        'What is the database password ?',
+        'What is the database password?',
         false
     );
 
 .. caution::
 
-    When you ask an hidden response, Symfony will use either a binary, change
+    When you ask for a hidden response, Symfony will use either a binary, change
     stty mode or use another trick to hide the response. If none is available,
-    it will fallback on the classic question unless you pass ``false`` as the
-    third argument like in the example above. In this case, a RuntimeException
+    it will fallback and allow the response to be visible unless you pass ``false``
+    as the third argument like in the example above. In this case, a RuntimeException
     would be thrown.
 
 Ask and validate response
@@ -336,7 +336,7 @@ fifth argument is the default value.
 .. versionadded:: 2.2
     The ``askHiddenResponseAndValidate`` method was added in Symfony 2.2.
 
-You can also ask and validate hidden response::
+You can also ask and validate a hidden response::
 
     $dialog = $this->getHelperSet()->get('dialog');
 
@@ -354,8 +354,8 @@ You can also ask and validate hidden response::
         false
     );
 
-If you want to fallback on classic question in case hidden response can not be
-provided, pass true as fifth argument.
+If you want to allow the response to be visible if it cannot be hidden for
+some reason, pass true as the fifth argument.
 
 Displaying a Progress Bar
 -------------------------
