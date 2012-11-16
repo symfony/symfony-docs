@@ -204,7 +204,7 @@ the ``genders`` parameter value as the first argument to its to-be-created
 
         # src/Acme/DemoBundle/Resources/config/services.yml
         services:
-            form.type.gender:
+            acme_demo.form.type.gender:
                 class: Acme\DemoBundle\Form\Type\GenderType
                 arguments:
                     - "%genders%"
@@ -214,7 +214,7 @@ the ``genders`` parameter value as the first argument to its to-be-created
     .. code-block:: xml
 
         <!-- src/Acme/DemoBundle/Resources/config/services.xml -->
-        <service id="form.type.gender" class="Acme\DemoBundle\Form\Type\GenderType">
+        <service id="acme_demo.form.type.gender" class="Acme\DemoBundle\Form\Type\GenderType">
             <argument>%genders%</argument>
             <tag name="form.type" alias="gender" />
         </service>
