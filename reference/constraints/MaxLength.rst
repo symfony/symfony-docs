@@ -1,6 +1,12 @@
 MaxLength
 =========
 
+.. caution::
+
+    The MaxLength constraint is deprecated since version 2.1 and will be removed
+    in Symfony 2.3. Use :doc:`/reference/constraints/Length` with the ``max``
+    option instead.
+
 Validates that the length of a string is not larger than the given limit.
 
 +----------------+-------------------------------------------------------------------------+

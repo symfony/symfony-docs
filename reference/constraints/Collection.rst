@@ -5,7 +5,7 @@ This constraint is used when the underlying data is a collection (i.e. an
 array or an object that implements ``Traversable`` and ``ArrayAccess``),
 but you'd like to validate different keys of that collection in different
 ways. For example, you might validate the ``email`` key using the ``Email``
-constraint and the ``inventory`` key of the collection with the ``Min`` constraint.
+constraint and the ``inventory`` key of the collection with the ``Range`` constraint.
 
 This constraint can also make sure that certain collection keys are present
 and that extra keys are not present.

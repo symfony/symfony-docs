@@ -103,7 +103,7 @@ an ``Address`` instance in the ``$address`` property.
 
             /**
              * @Assert\NotBlank
-             * @Assert\MaxLength(max = "5")
+             * @Assert\Length(max = "5")
              */
             protected $zipCode;
         }
