@@ -91,7 +91,7 @@ You can add a new argument to the end of the arguments array using::
 
     $definition->addArgument($argument);
 
-The argument can be a string, an array, a service parameter by using ``%paramater_name%``
+The argument can be a string, an array, a service parameter by using ``%parameter_name%``
 or a service id by using ::
 
     use Symfony\Component\DependencyInjection\Reference;
