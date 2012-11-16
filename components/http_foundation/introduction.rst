@@ -214,6 +214,21 @@ the
 method tells you if the request contains a Session which was started in one of
 the previous requests.
 
+Accessing `Accept-*` Headers Data
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+You can easily access basic data extracted from ``Accept-*`` headers
+by using the following methods:
+
+* :method:`Symfony\\Component\\HttpFoundation\\Request::getAcceptableContentTypes`:
+  returns the list of accepted content types ordered by descending quality;
+
+* :method:`Symfony\\Component\\HttpFoundation\\Request::getLanguages`:
+  returns the list of accepted languages ordered by descending quality;
+
+* :method:`Symfony\\Component\\HttpFoundation\\Request::getCharsets`:
+  returns the list of accepted languages ordered by descending quality;
+
 Accessing other Data
 ~~~~~~~~~~~~~~~~~~~~
 
