@@ -572,8 +572,7 @@ the correct values of a number of field options.
 
 * ``max_length``: If the field is some sort of text field, then the ``max_length``
   option can be guessed from the validation constraints (if ``Length`` or
-  ``MaxLength`` or ``Max`` is used) or from the Doctrine metadata (via the
-  field's length).
+  ``Range`` is used) or from the Doctrine metadata (via the field's length).
   
 .. note::
 
