@@ -1,6 +1,12 @@
 Min
 ===
 
+.. caution::
+
+    The Min constraint is deprecated since version 2.1 and will be removed
+    in Symfony 2.3. Use :doc:`/reference/constraints/Range` with the ``min``
+    option instead.
+
 Validates that a given number is *greater* than some minimum number.
 
 +----------------+--------------------------------------------------------------------+
