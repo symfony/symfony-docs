@@ -218,20 +218,22 @@ Accessing `Accept-*` Headers Data
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 You can easily access basic data extracted from ``Accept-*`` headers
-by using following methods:
+by using the following methods:
 
 * :method:`Symfony\\Component\\HttpFoundation\\Request::getAcceptableContentTypes`:
-  Returns the list of accepted content types ordered by descending quality;
+  returns the list of accepted content types ordered by descending quality;
 
 * :method:`Symfony\\Component\\HttpFoundation\\Request::getLanguages`:
-  Returns the list of accepted languages ordered by descending quality;
+  returns the list of accepted languages ordered by descending quality;
 
 * :method:`Symfony\\Component\\HttpFoundation\\Request::getCharsets`:
-  Returns the list of accepted languages ordered by descending quality;
+  returns the list of accepted languages ordered by descending quality;
 
-If you need to egt full access to parsed data from ``Accept``, ``Accept-Language``,
+If you need to get full access to parsed data from ``Accept``, ``Accept-Language``,
 ``Accept-Charset`` or ``Accept-Encoding``, you can use
 :class:`Symfony\\Component\\HttpFoundation\\AcceptHeader` utility class::
+
+    use Symfony\Component\HttpFoundation\AcceptHeader;
 
     $accept = AcceptHeader::fromString($request->headers->get('Accept'));
     if ($accept->has('text/html') {
