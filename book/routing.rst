@@ -418,8 +418,7 @@ match, giving the ``page`` parameter a value of ``2``. Perfect.
 .. tip::
 
     Routes with optional parameters at the end will not match on requests 
-    with a trailing slash (i.e. ``/blog/``). In this case the slash is a separator and
-    should not be used if the optional parameter isn't passed.
+    with a trailing slash (i.e. ``/blog/`` will not match, ``/blog`` will match).
 
 .. index::
    single: Routing; Requirements
