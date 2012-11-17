@@ -265,7 +265,7 @@ For this example, the first three methods will return ``true`` whereas the
 .. code-block:: php
 
     // src/Acme/UserBundle/Entity/User.php
-    namespace Acme\Bundle\UserBundle\Entity;
+    namespace Acme\UserBundle\Entity;
 
     // ...
     use Symfony\Component\Security\Core\User\AdvancedUserInterface;
@@ -417,7 +417,7 @@ more users. As a group is also a role, the previous ``getRoles()`` method now
 returns the list of related groups::
 
     // src/Acme/UserBundle/Entity/User.php
-    namespace Acme\Bundle\UserBundle\Entity;
+    namespace Acme\UserBundle\Entity;
 
     use Doctrine\Common\Collections\ArrayCollection;
     // ...
@@ -451,7 +451,7 @@ implements the :class:`Symfony\\Component\\Security\\Core\\Role\\RoleInterface`
 that forces it to have a ``getRole()`` method::
 
     // src/Acme/Bundle/UserBundle/Entity/Group.php
-    namespace Acme\Bundle\UserBundle\Entity;
+    namespace Acme\UserBundle\Entity;
 
     use Symfony\Component\Security\Core\Role\RoleInterface;
     use Doctrine\Common\Collections\ArrayCollection;
@@ -507,7 +507,7 @@ relationship in the ``UserRepository::loadUserByUsername()`` method. This will
 fetch the user and his associated roles / groups with a single query::
 
     // src/Acme/UserBundle/Entity/UserRepository.php
-    namespace Acme\Bundle\UserBundle\Entity;
+    namespace Acme\UserBundle\Entity;
 
     // ...
 
