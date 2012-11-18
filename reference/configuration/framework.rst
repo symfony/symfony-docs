@@ -226,8 +226,8 @@ would be ``/images/logo.png?version=5``.
     is not limited to producing versioned query strings.
 
     The pattern receives the asset's original path and version as its first and
-    second parameters, respectively. Since the asset's path is one parameter, we
-    cannot modify it in-place (e.g. ``/images/logo-v5.png``); however, we can
+    second parameters, respectively. Since the asset's path is one parameter, you
+    cannot modify it in-place (e.g. ``/images/logo-v5.png``); however, you can
     prefix the asset's path using a pattern of ``version-%%2$s/%%1$s``, which
     would result in the path ``version-5/images/logo.png``.
 

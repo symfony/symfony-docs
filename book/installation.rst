@@ -75,8 +75,8 @@ something like this:
 
 .. note::
 
-    You can easily override the default directory structure. See 
-    :doc:`/cookbook/configuration/override_dir_structure` for more 
+    You can easily override the default directory structure. See
+    :doc:`/cookbook/configuration/override_dir_structure` for more
     information.
 
 Updating Vendors
@@ -135,9 +135,9 @@ If there are any issues, correct them now before moving on.
 
     **2. Using Acl on a system that does not support chmod +a**
 
-    Some systems don't support ``chmod +a``, but do support another utility 
+    Some systems don't support ``chmod +a``, but do support another utility
     called ``setfacl``. You may need to `enable ACL support`_ on your partition
-    and install setfacl before using it (as is the case with Ubuntu), like 
+    and install setfacl before using it (as is the case with Ubuntu), like
     so:
 
     .. code-block:: bash
@@ -188,7 +188,7 @@ development! Your distribution may contain some sample code - check the
 to learn about what sample code was included with your distribution and how
 you can remove it later.
 
-If you're new to Symfony, join us in the ":doc:`page_creation`", where you'll
+If you're new to Symfony, look at ":doc:`page_creation`", where you'll
 learn how to create pages, change configuration, and do everything else you'll
 need in your new application.
 

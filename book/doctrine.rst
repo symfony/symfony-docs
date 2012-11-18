@@ -4,7 +4,7 @@
 Databases and Doctrine
 ======================
 
-Let's face it, one of the most common and challenging tasks for any application
+One of the most common and challenging tasks for any application
 involves persisting and reading information to and from a database. Fortunately,
 Symfony comes integrated with `Doctrine`_, a library whose sole goal is to
 give you powerful tools to make this easy. In this chapter, you'll learn the
@@ -15,8 +15,8 @@ be.
 
     Doctrine is totally decoupled from Symfony and using it is optional.
     This chapter is all about the Doctrine ORM, which aims to let you map
-    objects to a relational database (such as *MySQL*, *PostgreSQL* or 
-    *Microsoft SQL*). If you prefer to use raw database queries, this is 
+    objects to a relational database (such as *MySQL*, *PostgreSQL* or
+    *Microsoft SQL*). If you prefer to use raw database queries, this is
     easy, and explained in the ":doc:`/cookbook/doctrine/dbal`" cookbook entry.
 
     You can also persist data to `MongoDB`_ using Doctrine ODM library. For
@@ -418,7 +418,7 @@ of the bundle:
     If you're following along with this example, you'll need to create a
     route that points to this action to see it work.
 
-Let's walk through this example:
+Walking through this example:
 
 * **lines 9-12** In this section, you instantiate and work with the ``$product``
   object like any other, normal PHP object.
@@ -956,7 +956,7 @@ table, and ``product.category_id`` column, and new foreign key:
 Saving Related Entities
 ~~~~~~~~~~~~~~~~~~~~~~~
 
-Now, let's see the code in action. Imagine you're inside a controller::
+Now, to see the code in action. Imagine you're inside a controller::
 
     // ...
 
@@ -1371,7 +1371,7 @@ Some notable or interesting tasks include:
 
   .. caution::
 
-      Don't forget to add the ``--no-debug`` switch, because the debug flag is 
+      Don't forget to add the ``--no-debug`` switch, because the debug flag is
       always set to true, even if the environment is set to ``prod``.
 
 * ``doctrine:mapping:import`` - allows Doctrine to introspect an existing

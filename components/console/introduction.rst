@@ -23,7 +23,7 @@ You can install the component in many different ways:
 Creating a basic Command
 ------------------------
 
-To make a console command to greet us from the command line, create ``GreetCommand.php``
+To make a console command to greet you from the command line, create ``GreetCommand.php``
 and add the following to it::
 
     namespace Acme\DemoBundle\Command;
