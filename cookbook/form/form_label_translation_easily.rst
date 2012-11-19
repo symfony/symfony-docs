@@ -28,9 +28,9 @@ keys::
         /**
          * Manipulates the label.
          *
-         * @param FormView $view
+         * @param FormView      $view
          * @param FormInterface $form
-         * @param array $options
+         * @param array         $options
          */
         public function finishView(FormView $view, FormInterface $form, array $options)
         {
