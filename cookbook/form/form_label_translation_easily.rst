@@ -2,18 +2,19 @@
    single: Form; Translate field labels
 
 How to Translate field labels easily
-===================================
+====================================
 
-Translate the field labels in each form can be a tedious task, 
-especially if we use **"Keyword Messages"**. 
-For example, if we had two different forms with a field named "order", 
+Translating the field labels in each form can be a tedious task, 
+especially if you use **"Keyword Messages"**. 
+For example, if you had two different forms with a field named "order", 
 the default translation keyword would be exactly the same. 
-On the other hand, if We need to write different translations depending the form, 
-we need to change the default label in one of them.
+On the other hand, if you need to write different translations 
+depending the form, you need to change the default label in one of them.
 
 This is why you can use a simple solution:
-:doc:`Create a Form Type Extension </cookbook/form/create_form_type_extension>` that allows you 
-to manipulate the labels and automatically create unique keys::
+:doc:`Create a Form Type Extension</cookbook/form/create_form_type_extension>` 
+that allows you to manipulate the labels and automatically create unique 
+keys::
 
     // src/Acme/DemoBundle/Form/Extension/LabelTranslationExtension.php
     namespace Acme\DemoBundle\Form\Extension;
@@ -27,13 +28,15 @@ to manipulate the labels and automatically create unique keys::
         /**
          * Manipulates the label.
          *
-         * @param \Symfony\Component\Form\FormView $view
-         * @param \Symfony\Component\Form\FormInterface $form
+         * @param FormView $view
+         * @param FormInterface $form
          * @param array $options
          */
         public function finishView(FormView $view, FormInterface $form, array $options)
         {
-            $view->vars['label'] = str_replace('_', '.', $view->vars['id']);
+            if (null === $options['label']) {
+                $view->vars['label'] = str_replace('_', '.', $view->vars['id']);
+            }
         }   
 
         /**
@@ -61,14 +64,18 @@ Now, declare it as a **service**:
 
     .. code-block:: xml
 
-        <service id="acme_demo_bundle.label_translation_extension" class="Acme\DemoBundle\Form\Type\LabelTranslationExtension">
+        <service id="acme_demo_bundle.label_translation_extension" 
+            class="Acme\DemoBundle\Form\Type\LabelTranslationExtension">
             <tag name="form.type_extension" alias="form" />
         </service>
 
     .. code-block:: php
 
         $container
-            ->register('acme_demo_bundle.label_translation_extension', 'Acme\DemoBundle\Form\Type\LabelTranslationExtension')
+            ->register(
+                'acme_demo_bundle.label_translation_extension',
+                'Acme\DemoBundle\Form\Type\LabelTranslationExtension'
+            )
             ->addTag('form.type_extension', array('alias' => 'form'));
 
 
@@ -83,7 +90,7 @@ Now, declare it as a **service**:
                 <body>
                     <trans-unit id="1">
                         <source>acme.demobundle.exampletype.order</source>
-                        <target>Order</target>
+                        <target>Ordre</target>
                     </trans-unit>
                 </body>
             </file>
@@ -93,7 +100,7 @@ Now, declare it as a **service**:
 
         // messages.fr.php
         return array(
-            'acme.demobundle.exampletype.order' => 'Order',
+            'acme.demobundle.exampletype.order' => 'Ordre',
         );
 
         .. code-block:: yaml
@@ -102,9 +109,4 @@ Now, declare it as a **service**:
         acme:
             demobundle:
                 exampletype:
-                    order: Order
-
-.. note::
-
-    As we see in the code, the most comfortable and clean code is YAML version.
-
+                    order: Ordre
