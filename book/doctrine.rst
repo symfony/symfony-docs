@@ -478,8 +478,9 @@ on its ``id`` value::
 
 .. tip::
 
-    In a controller action you can achieve teh equivalent of this without writing
-    any code by using the ``@ParamConverter``. See the :doc:`FrameworkExtraBundle documentation</bundles/SensioFrameworkExtraBundle/annotations/converters>`
+    You can achieve the equivalent of this without writing any code by using
+    the ``@ParamConverter`` shortcut. See the
+    :doc:`FrameworkExtraBundle documentation</bundles/SensioFrameworkExtraBundle/annotations/converters>`
     for more details.
 
 When you query for a particular type of object, you always use what's known
