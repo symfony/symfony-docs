@@ -217,7 +217,7 @@ With this, the validator ``isValid()`` method gets an object as its first argume
         {
             if ($protocol->getFoo() != $protocol->getBar()) {
 
-                $propertyPath = $this->context->getPropertyPath() . 'foo';
+                $propertyPath = $this->context->getPropertyPath().'.foo';
                 $this->context->setPropertyPath($propertyPath);
                 $this->context->addViolation($constraint->getMessage(), array(), null);
 
