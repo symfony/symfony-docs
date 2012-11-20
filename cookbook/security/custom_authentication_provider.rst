@@ -45,8 +45,8 @@ The Token
 The role of the token in the Symfony2 security context is an important one.
 A token represents the user authentication data present in the request. Once
 a request is authenticated, the token retains the user's data, and delivers
-this data across the security context. First, we will create our token class.
-This will allow the passing of all relevant information to our authentication
+this data across the security context. First, you'll create your token class.
+This will allow the passing of all relevant information to your authentication
 provider.
 
 .. code-block:: php
@@ -332,7 +332,7 @@ a firewall in your security configuration.
 
 .. note::
 
-    You may be wondering "why do we need a special factory class to add listeners
+    You may be wondering "why do you need a special factory class to add listeners
     and providers to the dependency injection container?". This is a very
     good question. The reason is you can use your firewall multiple times,
     to secure multiple parts of your application. Because of this, each

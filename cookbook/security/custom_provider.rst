@@ -10,9 +10,9 @@ the configured user provider to return a user object for a given username.
 Symfony then checks whether the password of this user is correct and generates
 a security token so the user stays authenticated during the current session.
 Out of the box, Symfony has an "in_memory" and an "entity" user provider.
-In this entry we'll see how you can create your own user provider, which
+In this entry you'll see how you can create your own user provider, which
 could be useful if your users are accessed via a custom database, a file,
-or - as we show in this example - a web service.
+or - as shown in this example - a web service.
 
 Create a User Class
 -------------------
@@ -21,7 +21,7 @@ First, regardless of *where* your user data is coming from, you'll need to
 create a ``User`` class that represents that data. The ``User`` can look
 however you want and contain any data. The only requirement is that the
 class implements :class:`Symfony\\Component\\Security\\Core\\User\\UserInterface`.
-The methods in this interface should therefore be defined in the custom user 
+The methods in this interface should therefore be defined in the custom user
 class: ``getRoles()``, ``getPassword()``, ``getSalt()``, ``getUsername()``,
 ``eraseCredentials()``, ``equals()``.
 
@@ -101,12 +101,12 @@ For more details on each of the methods, see :class:`Symfony\\Component\\Securit
 Create a User Provider
 ----------------------
 
-Now that we have a ``User`` class, we'll create a user provider, which will
+Now that you have a ``User`` class, you'll create a user provider, which will
 grab user information from some web service, create a ``WebserviceUser`` object,
 and populate it with data.
 
-The user provider is just a plain PHP class that has to implement the 
-:class:`Symfony\\Component\\Security\\Core\\User\\UserProviderInterface`, 
+The user provider is just a plain PHP class that has to implement the
+:class:`Symfony\\Component\\Security\\Core\\User\\UserProviderInterface`,
 which requires three methods to be defined: ``loadUserByUsername($username)``,
 ``refreshUser(UserInterface $user)``, and ``supportsClass($class)``. For
 more details, see :class:`Symfony\\Component\\Security\\Core\\User\\UserProviderInterface`.
@@ -158,7 +158,7 @@ Here's an example of how this might look::
 Create a Service for the User Provider
 --------------------------------------
 
-Now we make the user provider available as a service.
+Now you make the user provider available as a service:
 
 .. configuration-block::
 
@@ -167,29 +167,29 @@ Now we make the user provider available as a service.
         # src/Acme/WebserviceUserBundle/Resources/config/services.yml
         parameters:
             webservice_user_provider.class: Acme\WebserviceUserBundle\Security\User\WebserviceUserProvider
-            
+
         services:
             webservice_user_provider:
                 class: "%webservice_user_provider.class%"
-    
+
     .. code-block:: xml
 
         <!-- src/Acme/WebserviceUserBundle/Resources/config/services.xml -->
         <parameters>
             <parameter key="webservice_user_provider.class">Acme\WebserviceUserBundle\Security\User\WebserviceUserProvider</parameter>
         </parameters>
- 
+
         <services>
             <service id="webservice_user_provider" class="%webservice_user_provider.class%"></service>
         </services>
-        
+
     .. code-block:: php
-    
+
         // src/Acme/WebserviceUserBundle/Resources/config/services.php
         use Symfony\Component\DependencyInjection\Definition;
-        
+
         $container->setParameter('webservice_user_provider.class', 'Acme\WebserviceUserBundle\Security\User\WebserviceUserProvider');
-        
+
         $container->setDefinition('webservice_user_provider', new Definition('%webservice_user_provider.class%');
 
 .. tip::
@@ -207,7 +207,7 @@ Modify ``security.yml``
 -----------------------
 
 In ``/app/config/security.yml`` everything comes together. Add the user provider
-to the list of providers in the "security" section. Choose a name for the user provider 
+to the list of providers in the "security" section. Choose a name for the user provider
 (e.g. "webservice") and mention the id of the service you just defined.
 
 .. code-block:: yaml
@@ -218,8 +218,8 @@ to the list of providers in the "security" section. Choose a name for the user p
                 id: webservice_user_provider
 
 Symfony also needs to know how to encode passwords that are supplied by website
-users, e.g. by filling in a login form. You can do this by adding a line to the 
-"encoders" section in ``/app/config/security.yml``. 
+users, e.g. by filling in a login form. You can do this by adding a line to the
+"encoders" section in ``/app/config/security.yml``.
 
 .. code-block:: yaml
 
@@ -241,7 +241,7 @@ options, the password may be encoded multiple times and encoded to base64.
     nothing, then the submitted password is simply encoded using the algorithm
     you specify in ``security.yml``. If a salt *is* specified, then the following
     value is created and *then* hashed via the algorithm:
-    
+
         ``$password.'{'.$salt.'}';``
 
     If your external users have their passwords salted via a different method,
@@ -249,13 +249,13 @@ options, the password may be encoded multiple times and encoded to base64.
     the password. That is beyond the scope of this entry, but would include
     sub-classing ``MessageDigestPasswordEncoder`` and overriding the ``mergePasswordAndSalt``
     method.
-    
+
     Additionally, the hash, by default, is encoded multiple times and encoded
     to base64. For specific details, see `MessageDigestPasswordEncoder`_.
     To prevent this, configure it in ``security.yml``:
-    
+
     .. code-block:: yaml
-    
+
         security:
             encoders:
                 Acme\WebserviceUserBundle\Security\User\WebserviceUser:
