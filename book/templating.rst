@@ -15,6 +15,7 @@ learn shortcuts, clever ways to extend templates and how to reuse template
 code.
 
 .. note::
+
     How to render templates is covered in the :ref:`controller <controller-rendering-templates>`
     page of the book.
 
