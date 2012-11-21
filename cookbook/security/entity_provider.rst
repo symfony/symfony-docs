@@ -481,7 +481,7 @@ that forces it to have a ``getRole()`` method::
      * @ORM\Table(name="acme_groups")
      * @ORM\Entity()
      */
-    class Group implements RoleInterface, \Serializable
+    class Group implements RoleInterface
     {
         /**
          * @ORM\Column(name="id", type="integer")
@@ -518,30 +518,6 @@ that forces it to have a ``getRole()`` method::
         public function getRole()
         {
             return $this->role;
-        }
-    
-        /**
-         * @see \Serializable::serialize()
-         */
-        public function serialize()
-        {
-            return serialize(array(
-                $this->id,
-                $this->name,
-                $this->role,
-            ));
-        }
-
-        /**
-         * @see \Serializable::unserialize()
-         */
-        public function unserialize($serialized)
-        {
-            list(
-                $this->id,
-                $this->name,
-                $this->role,
-            ) = unserialize($serialized);
         }
     }
 
