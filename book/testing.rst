@@ -247,7 +247,7 @@ document::
             array(
                 'CONTENT_TYPE'          => 'application/json',
                 'HTTP_REFERER'          => '/foo/bar',
-                'HTTP_X-Requested-With' => 'XMLHttpRequest'
+                'HTTP_X-Requested-With' => 'XMLHttpRequest',
             )
         );
 
