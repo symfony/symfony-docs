@@ -368,7 +368,7 @@ The code below shows the implementation of the
                 throw new UnsupportedUserException(sprintf('Instances of "%s" are not supported.', $class));
             }
 
-            return $this->loadUserByUsername($user->getUsername());
+            return $this->findOneById($user->getId());
         }
 
         public function supportsClass($class)
@@ -429,7 +429,7 @@ returns the list of related groups::
     use Doctrine\Common\Collections\ArrayCollection;
     // ...
 
-    class User implements AdvancedUserInterface
+    class User implements AdvancedUserInterface, \Serializable
     {
         /**
          * @ORM\ManyToMany(targetEntity="Group", inversedBy="users")
@@ -447,6 +447,26 @@ returns the list of related groups::
         public function getRoles()
         {
             return $this->groups->toArray();
+        }
+
+        /**
+         * @see \Serializable::serialize()
+         */
+        public function serialize()
+        {
+            return serialize(array(
+                $this->id,
+            ));
+        }
+
+        /**
+         * @see \Serializable::unserialize()
+         */
+        public function unserialize($serialized)
+        {
+            list (
+                $this->id,
+            ) = unserialize($serialized);
         }
     }
 
