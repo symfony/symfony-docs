@@ -268,7 +268,7 @@ first "real" Symfony2 webpage:
 
 Symfony2 should welcome and congratulate you for your hard work so far!
 
-.. image:: /images/quick_tour/welcome.jpg
+.. image:: /images/quick_tour/welcome.png
 
 Beginning Development
 ---------------------
