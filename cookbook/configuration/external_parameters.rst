@@ -7,7 +7,7 @@ How to Set External Parameters in the Service Container
 In the chapter :doc:`/cookbook/configuration/environments`, you learned how
 to manage your application configuration. At times, it may benefit your application
 to store certain credentials outside of your project code. Database configuration
-is one such example. The flexibility of the symfony service container allows
+is one such example. The flexibility of the Symfony service container allows
 you to easily do this.
 
 Environment Variables
