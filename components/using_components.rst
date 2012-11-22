@@ -55,7 +55,7 @@ immediately::
         $finder = new Finder();
         $finder->in('../data/');
 
-        ...
+        // ...
 
 .. tip::
 
