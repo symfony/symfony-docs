@@ -390,6 +390,21 @@ abstracts the hard work behind a simple API::
 
     $response->headers->set('Content-Disposition', $d);
 
+Creating a JSON Response
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+Any type of response can be created via the
+:class:`Symfony\\Component\\HttpFoundation\\Response` class by setting the
+right content and headers. A JSON response might look like this::
+
+    use Symfony\Component\HttpFoundation\Response;
+    
+    $response = new Response();
+    $response->setContent(json_encode(array(
+        'data' => 123
+    )));
+    $response->headers->set('Content-Type', 'application/json');
+
 Session
 -------
 
