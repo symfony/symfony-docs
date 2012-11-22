@@ -112,7 +112,7 @@ might look like the following::
             return array(FormEvents::PRE_SET_DATA => 'preSetData');
         }
 
-        public function preSetData(DataEvent $event)
+        public function preSetData(FormEvent $event)
         {
             $data = $event->getData();
             $form = $event->getForm();
