@@ -67,6 +67,7 @@
 * :doc:`/components/routing/index`
 
   * :doc:`/components/routing/introduction`
+  * :doc:`/components/routing/hostname_pattern`
 
 * **Serializer**
 

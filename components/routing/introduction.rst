@@ -85,9 +85,8 @@ placeholders as regular expressions.
 4. An array of options. These contain internal settings for the route and
 are the least commonly needed.
 
-5. A hostname pattern. This is matched against the hostname passed to the
-`RequestContext`, and can contain named wildcard placeholders (e.g.
-``{placeholders}``) to match dynamic parts in the hostname.
+5. A hostname pattern. This is matched against the hostname of the request.
+See :doc:`/components/routing/hostname_pattern` for more details.
 
 .. versionadded:: 2.2
     The hostname pattern was added in Symfony 2.2
