@@ -204,7 +204,7 @@ Both methods return a Unix timestamp (relative to the server).
 This meta-data can be used to explicitly expire a session on access, e.g.::
 
     $session->start();
-    if (time() - $session->getMetadataBag()->getLastUpdate() > $maxIdleTime) {
+    if (time() - $session->getMetadataBag()->getLastUsed() > $maxIdleTime) {
         $session->invalidate();
         throw new SessionExpired(); // redirect to expired session page
     }
