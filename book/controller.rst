@@ -694,7 +694,8 @@ headers and content that's sent back to the client::
     $response = new Response('Hello '.$name, 200);
 
     // create a JSON-response with a 200 status code
-    $response = new JsonResponse(array('name' => $name));
+    $response = new Response(json_encode(array('name' => $name)));
+    $response->headers->set('Content-Type', 'application/json');
 
 .. tip::
 
@@ -703,6 +704,11 @@ headers and content that's sent back to the client::
     useful methods for reading and mutating the ``Response`` headers. The
     header names are normalized so that using ``Content-Type`` is equivalent
     to ``content-type`` or even ``content_type``.
+
+.. tip::
+
+    There is also a special :class:`Symfony\\Component\\HttpFoundation\\JsonResponse`
+    class that helps return JSON responses. See :ref:`component-http-foundation-json-response`.
 
 .. index::
    single: Controller; Request object
