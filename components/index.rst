@@ -4,6 +4,7 @@ The Components
 .. toctree::
     :hidden:
 
+    using_components
     class_loader
     config/index
     console/index

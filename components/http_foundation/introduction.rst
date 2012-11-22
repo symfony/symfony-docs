@@ -22,7 +22,7 @@ Installation
 You can install the component in many different ways:
 
 * Use the official Git repository (https://github.com/symfony/HttpFoundation);
-* Install it via Composer (``symfony/http-foundation`` on `Packagist`_).
+* :doc:`Install it via Composer</components/using_components>` (``symfony/http-foundation`` on `Packagist`_).
 
 Request
 -------
