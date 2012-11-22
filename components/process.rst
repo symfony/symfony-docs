@@ -13,7 +13,7 @@ Installation
 You can install the component in many different ways:
 
 * Use the official Git repository (https://github.com/symfony/Process);
-* Install it via Composer (``symfony/process`` on `Packagist`_).
+* :doc:`Install it via Composer</components/using_components>` (``symfony/process`` on `Packagist`_).
 
 Usage
 -----
