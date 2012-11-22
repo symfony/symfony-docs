@@ -138,6 +138,18 @@ Available foreground and background colors are: ``black``, ``red``, ``green``,
 
 And available options are: ``bold``, ``underscore``, ``blink``, ``reverse`` and ``conceal``.
 
+You can also set these colors and options inside the tagname::
+
+    // green text
+    $output->writeln('<fg=green>foo</fg=green>');
+
+    // black text on a cyan background
+    $output->writeln('<fg=black;bg=cyan>foo</fg=black;bg=cyan>');
+
+    // bold text on a yellow background
+    $output->writeln('<bg=yellow;options=bold>foo</bg=yellow;options=bold>');
+
+
 Using Command Arguments
 -----------------------
 
