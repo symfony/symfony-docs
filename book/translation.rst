@@ -691,6 +691,8 @@ Translations in Templates
 Most of the time, translation occurs in templates. Symfony2 provides native
 support for both Twig and PHP templates.
 
+.. _book-translation-twig:
+
 Twig Templates
 ~~~~~~~~~~~~~~
 

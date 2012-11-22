@@ -1539,6 +1539,8 @@ is defined by the ``target`` parameter above (e.g. the ``homepage``). For
 more information on configuring the logout, see the
 :doc:`Security Configuration Reference</reference/configuration/security>`.
 
+.. _book-security-template:
+
 Access Control in Templates
 ---------------------------
 

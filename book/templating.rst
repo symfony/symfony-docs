@@ -647,6 +647,8 @@ Controllers are fast to execute and promote good code organization and reuse.
 .. index::
    single: Templating; Linking to pages
 
+.. _book-templating-pages:
+
 Linking to Pages
 ~~~~~~~~~~~~~~~~
 
@@ -763,6 +765,8 @@ correctly:
 
 .. index::
    single: Templating; Linking to assets
+
+.. _book-templating-assets:
 
 Linking to Assets
 ~~~~~~~~~~~~~~~~~
