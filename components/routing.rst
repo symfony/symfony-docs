@@ -70,7 +70,7 @@ which holds the name of the matched route.
 Defining routes
 ~~~~~~~~~~~~~~~
 
-A full route definition can contain up to four parts:
+A full route definition can contain up to five parts:
 
 1. The URL pattern route. This is matched against the URL passed to the `RequestContext`,
 and can contain named wildcard placeholders (e.g. ``{placeholders}``)
@@ -85,13 +85,21 @@ placeholders as regular expressions.
 4. An array of options. These contain internal settings for the route and
 are the least commonly needed.
 
+5. A hostname pattern. This is matched against the hostname passed to the
+`RequestContext`, and can contain named wildcard placeholders (e.g.
+``{placeholders}``) to match dynamic parts in the hostname.
+
+.. versionadded:: 2.2
+    The hostname pattern was added in Symfony 2.2
+
 Take the following route, which combines several of these ideas::
 
    $route = new Route(
        '/archive/{month}', // path
        array('controller' => 'showArchive'), // default values
-       array('month' => '[0-9]{4}-[0-9]{2}'), // requirements
-       array() // options
+       array('month' => '[0-9]{4}-[0-9]{2}', 'subdomain' => 'www|m'), // requirements
+       array(), // options
+       '{subdomain}.example.com' // hostname
    );
 
    // ...
@@ -100,6 +108,7 @@ Take the following route, which combines several of these ideas::
    // array(
    //     'controller' => 'showArchive',
    //     'month' => '2012-01',
+   //     'subdomain' => 'www',
    //     '_route' => ...
    //  )
 
@@ -142,7 +151,8 @@ Using Prefixes
 You can add routes or other instances of
 :class:`Symfony\\Component\\Routing\\RouteCollection` to *another* collection.
 This way you can build a tree of routes. Additionally you can define a prefix,
-default requirements and default options to all routes of a subtree::
+default requirements, default options, and hostname pattern to all routes
+of a subtree::
 
     $rootCollection = new RouteCollection();
 
@@ -152,8 +162,11 @@ default requirements and default options to all routes of a subtree::
 
     $rootCollection->addCollection(
         $subCollection,
-        '/prefix',
-        array('_scheme' => 'https')
+        '/prefix', // prefix
+        array('_scheme' => 'https'), // defaults
+        array(), // requirements
+        array(), // options
+        'admin.example.com', // hostname
     );
 
 Set the Request Parameters
