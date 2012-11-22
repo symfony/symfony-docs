@@ -22,7 +22,7 @@ Installation
 You can install the component in many different ways:
 
 * Use the official Git repository (https://github.com/symfony/HttpFoundation);
-* Install it via Composer (``symfony/http-foundation`` on `Packagist`_).
+* :doc:`Install it via Composer</components/using_components>` (``symfony/http-foundation`` on `Packagist`_).
 
 Request
 -------
@@ -408,6 +408,49 @@ abstracts the hard work behind a simple API::
     $d = $response->headers->makeDisposition(ResponseHeaderBag::DISPOSITION_ATTACHMENT, 'foo.pdf');
 
     $response->headers->set('Content-Disposition', $d);
+
+.. _component-http-foundation-json-response:
+
+Creating a JSON Response
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+Any type of response can be created via the
+:class:`Symfony\\Component\\HttpFoundation\\Response` class by setting the
+right content and headers. A JSON response might look like this::
+
+    use Symfony\Component\HttpFoundation\Response;
+    
+    $response = new Response();
+    $response->setContent(json_encode(array(
+        'data' => 123
+    )));
+    $response->headers->set('Content-Type', 'application/json');
+
+.. versionadded:: 2.1
+    The :class:`Symfony\\Component\\HttpFoundation\\JsonResponse` class was added in Symfony 2.1.
+
+There is also a helpful :class:`Symfony\\Component\\HttpFoundation\\JsonResponse`
+class, which can make this even easier::
+
+    use Symfony\Component\HttpFoundation\JsonResponse;
+
+    $response = new JsonResponse();
+    $response->setContent(array(
+        'data' => 123
+    ));
+
+This encodes your array of data to JSON and sets the ``Content-Type`` header
+to ``application/json``. If you're using JSONP, you can set the callback
+function that the data should be passed to::
+
+    $response->setCallback('handleResponse');
+
+In this case, the ``Content-Type`` header will be ``text/javascript`` and
+the response content will look like this:
+
+.. code-block:: javascript
+
+    handleResponse({'data': 123});
 
 Session
 -------
