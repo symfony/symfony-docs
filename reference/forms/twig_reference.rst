@@ -11,8 +11,8 @@ widgets, etc).
 
 .. _reference-forms-twig-label:
 
-form_label(form.name, label, variables)
----------------------------------------
+form_label(view, label, variables)
+----------------------------------
 
 Renders the label for the given field. You can optionally pass the specific
 label you want to display as the second argument.
@@ -30,8 +30,8 @@ argument.
 
 .. _reference-forms-twig-errors:
 
-form_errors(form.name)
-----------------------
+form_errors(view)
+-----------------
 
 Renders any errors for the given field.
 
@@ -44,8 +44,8 @@ Renders any errors for the given field.
 
 .. _reference-forms-twig-widget:
 
-form_widget(form.name, variables)
----------------------------------
+form_widget(view, variables)
+----------------------------
 
 Renders the HTML widget of a given field. If you apply this to an entire form
 or collection of fields, each underlying form row will be rendered.
@@ -67,8 +67,8 @@ argument.
 
 .. _reference-forms-twig-row:
 
-form_row(form.name, variables)
-------------------------------
+form_row(view, variables)
+-------------------------
 
 Renders the "row" of a given field, which is the combination of the field's
 label, errors and widget.
@@ -87,7 +87,7 @@ argument.
 
 .. _reference-forms-twig-rest:
 
-form_rest(form, variables)
+form_rest(view, variables)
 --------------------------
 
 This renders all fields that have not yet been rendered for the given form.
@@ -101,7 +101,7 @@ obvious (since it'll render the field for you).
 
 .. _reference-forms-twig-enctype:
 
-form_enctype(form)
+form_enctype(view)
 ------------------
 
 If the form contains at least one file upload field, this will render the
