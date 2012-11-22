@@ -327,15 +327,19 @@ useful one is the :class:`Symfony\\Component\\Console\\Tester\\CommandTester`
 class. It uses special input and output classes to ease testing without a real
 console::
 
-    use Symfony\Component\Console\Application;
+    use Symfony\Bundle\FrameworkBundle\Console\Application;
     use Symfony\Component\Console\Tester\CommandTester;
     use Acme\DemoBundle\Command\GreetCommand;
+    use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
-    class ListCommandTest extends \PHPUnit_Framework_TestCase
+    class ListCommandTest extends WebTestCase
     {
         public function testExecute()
         {
-            $application = new Application();
+            $kernel = static::createKernel();
+            $kernel->boot();
+            
+            $application = new Application($kernel);
             $application->add(new GreetCommand());
 
             $command = $application->find('demo:greet');
@@ -356,17 +360,21 @@ You can test sending arguments and options to the command by passing them
 as an array to the :method:`Symfony\\Component\\Console\\Tester\\CommandTester::execute`
 method::
 
-    use Symfony\Component\Console\Application;
+    use Symfony\Bundle\FrameworkBundle\Console\Application;
     use Symfony\Component\Console\Tester\CommandTester;
     use Acme\DemoBundle\Command\GreetCommand;
+    use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
-    class ListCommandTest extends \PHPUnit_Framework_TestCase
+    class ListCommandTest extends WebTestCase
     {
         // ...
 
         public function testNameIsOutput()
         {
-            $application = new Application();
+            $kernel = static::createKernel();
+            $kernel->boot();
+
+            $application = new Application($kernel);
             $application->add(new GreetCommand());
 
             $command = $application->find('demo:greet');
