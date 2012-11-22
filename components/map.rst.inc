@@ -1,3 +1,5 @@
+* :doc:`/components/using_components`
+
 * **Class Loader**
 
   * :doc:`/components/class_loader`
