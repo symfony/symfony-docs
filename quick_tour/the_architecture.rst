@@ -58,46 +58,17 @@ This class must implement two methods:
 * ``registerContainerConfiguration()`` loads the application configuration
   (more on this later).
 
-PHP autoloading can be configured via ``app/autoload.php``::
-
-    // app/autoload.php
-    use Symfony\Component\ClassLoader\UniversalClassLoader;
-
-    $loader = new UniversalClassLoader();
-    $loader->registerNamespaces(array(
-        'Symfony'          => array(__DIR__.'/../vendor/symfony/symfony/src', __DIR__.'/../vendor/bundles'),
-        'Sensio'           => __DIR__.'/../vendor/bundles',
-        'JMS'              => __DIR__.'/../vendor/jms/',
-        'Doctrine\\Common' => __DIR__.'/../vendor/doctrine/common/lib',
-        'Doctrine\\DBAL'   => __DIR__.'/../vendor/doctrine/dbal/lib',
-        'Doctrine'         => __DIR__.'/../vendor/doctrine/orm/lib',
-        'Monolog'          => __DIR__.'/../vendor/monolog/monolog/src',
-        'Assetic'          => __DIR__.'/../vendor/kriswallsmith/assetic/src',
-        'Metadata'         => __DIR__.'/../vendor/jms/metadata/src',
-    ));
-    $loader->registerPrefixes(array(
-        'Twig_Extensions_' => __DIR__.'/../vendor/twig/extensions/lib',
-        'Twig_'            => __DIR__.'/../vendor/twig/twig/lib',
-    ));
-
-    // ...
-
-    $loader->registerNamespaceFallbacks(array(
-        __DIR__.'/../src',
-    ));
-    $loader->register();
-
-The :class:`Symfony\\Component\\ClassLoader\\UniversalClassLoader` is used to
-autoload files that respect either the technical interoperability `standards`_
-for PHP 5.3 namespaces or the PEAR naming `convention`_ for classes. As you
-can see here, all dependencies are stored under the ``vendor/`` directory, but
-this is just a convention. You can store them wherever you want, globally on
-your server or locally in your projects.
+Autoloading is handled automatically via `Composer`_, which means that you
+can use any PHP classes without doing anything at all! If you need more flexibility,
+you can extend the autoloader in the ``app/autoload.php`` file. All dependencies
+are stored under the ``vendor/`` directory, but this is just a convention.
+You can store them wherever you want, globally on your server or locally
+in your projects.
 
 .. note::
 
-    If you want to learn more about the flexibility of the Symfony2
-    autoloader, read the ":doc:`/components/class_loader`" chapter.
+    If you want to learn more about Composer's autoloader, read `Composer-Autoloader`_.
+    Symfony also has an autoloading component - read ":doc:`/components/class_loader`".
 
 Understanding the Bundle System
 -------------------------------
@@ -368,3 +339,5 @@ any topic you want.
 
 .. _standards:  http://symfony.com/PSR0
 .. _convention: http://pear.php.net/
+.. _Composer:   http://getcomposer.org
+.. _`Composer-Autoloader`: http://getcomposer.org/doc/01-basic-usage.md#autoloading

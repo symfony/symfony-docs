@@ -21,11 +21,9 @@ on top of the previous one.
 
 .. tip::
 
-    Autoloading is not managed by the framework directly; it's done
-    independently with the help of the
-    :class:`Symfony\\Component\\ClassLoader\\UniversalClassLoader` class
-    and the ``src/autoload.php`` file. Read the :doc:`dedicated chapter
-    </components/class_loader>` for more information.
+    Autoloading is not managed by the framework directly; it's done by using
+    Composer's autoloader (``vendor/autoload.php``), which is included in
+    the ``src/autoload.php`` file.
 
 ``HttpFoundation`` Component
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
