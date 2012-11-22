@@ -14,6 +14,12 @@ used to return content to the user, populate email bodies, and more. You'll
 learn shortcuts, clever ways to extend templates and how to reuse template
 code.
 
+.. note::
+
+    How to render templates is covered in the :ref:`controller <controller-rendering-templates>`
+    page of the book.
+
+
 .. index::
    single: Templating; What is a template?
 
@@ -695,6 +701,8 @@ in your application configuration:
 .. index::
    single: Templating; Linking to pages
 
+.. _book-templating-pages:
+
 Linking to Pages
 ~~~~~~~~~~~~~~~~
 
@@ -811,6 +819,8 @@ correctly:
 
 .. index::
    single: Templating; Linking to assets
+
+.. _book-templating-assets:
 
 Linking to Assets
 ~~~~~~~~~~~~~~~~~

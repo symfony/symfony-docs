@@ -45,16 +45,16 @@ values:
 * ``VoterInterface::ACCESS_ABSTAIN``: The voter cannot decide if the user is granted or not
 * ``VoterInterface::ACCESS_DENIED``: The user is not allowed to access the application
 
-In this example, we will check if the user's IP address matches against a list of
-blacklisted addresses. If the user's IP is blacklisted, we will return 
-``VoterInterface::ACCESS_DENIED``, otherwise we will return 
+In this example, you'll check if the user's IP address matches against a list of
+blacklisted addresses. If the user's IP is blacklisted, you'll return
+``VoterInterface::ACCESS_DENIED``, otherwise you'll return
 ``VoterInterface::ACCESS_ABSTAIN`` as this voter's purpose is only to deny
 access, not to grant access.
 
 Creating a Custom Voter
 -----------------------
 
-To blacklist a user based on its IP, we can use the ``request`` service
+To blacklist a user based on its IP, you can use the ``request`` service
 and compare the IP address against a set of blacklisted IP addresses:
 
 .. code-block:: php
@@ -76,13 +76,13 @@ and compare the IP address against a set of blacklisted IP addresses:
 
         public function supportsAttribute($attribute)
         {
-            // we won't check against a user attribute, so we return true
+            // you won't check against a user attribute, so return true
             return true;
         }
 
         public function supportsClass($class)
         {
-            // our voter supports all type of token classes, so we return true
+            // your voter supports all type of token classes, so return true
             return true;
         }
 
@@ -103,7 +103,7 @@ the security layer. This can be done easily through the service container.
 Declaring the Voter as a Service
 --------------------------------
 
-To inject the voter into the security layer, we must declare it as a service,
+To inject the voter into the security layer, you must declare it as a service,
 and tag it as a "security.voter":
 
 .. configuration-block::
@@ -160,11 +160,11 @@ and tag it as a "security.voter":
 Changing the Access Decision Strategy
 -------------------------------------
 
-In order for the new voter to take effect, we need to change the default access
+In order for the new voter to take effect, you need to change the default access
 decision strategy, which, by default, grants access if *any* voter grants
 access.
 
-In our case, we will choose the ``unanimous`` strategy. Unlike the ``affirmative``
+In this case, choose the ``unanimous`` strategy. Unlike the ``affirmative``
 strategy (the default), with the ``unanimous`` strategy, if only one voter
 denies access (e.g. the ``ClientIpVoter``), access is not granted to the
 end user.

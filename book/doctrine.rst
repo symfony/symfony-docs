@@ -15,8 +15,8 @@ be.
 
     Doctrine is totally decoupled from Symfony and using it is optional.
     This chapter is all about the Doctrine ORM, which aims to let you map
-    objects to a relational database (such as *MySQL*, *PostgreSQL* or 
-    *Microsoft SQL*). If you prefer to use raw database queries, this is 
+    objects to a relational database (such as *MySQL*, *PostgreSQL* or
+    *Microsoft SQL*). If you prefer to use raw database queries, this is
     easy, and explained in the ":doc:`/cookbook/doctrine/dbal`" cookbook entry.
 
     You can also persist data to `MongoDB`_ using Doctrine ODM library. For
@@ -477,6 +477,13 @@ on its ``id`` value::
 
         // ... do something, like pass the $product object into a template
     }
+
+.. tip::
+
+    You can achieve the equivalent of this without writing any code by using
+    the ``@ParamConverter`` shortcut. See the
+    :doc:`FrameworkExtraBundle documentation</bundles/SensioFrameworkExtraBundle/annotations/converters>`
+    for more details.
 
 When you query for a particular type of object, you always use what's known
 as its "repository". You can think of a repository as a PHP class whose only

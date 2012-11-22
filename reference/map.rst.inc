@@ -20,6 +20,8 @@
   * :doc:`Validation Constraints Reference </reference/constraints>`
   * :doc:`Twig Template Function Reference</reference/forms/twig_reference>`
 
+* :doc:`Twig Extensions (forms, filters, tags, etc) Reference</reference/twig_reference>`
+
 * **Other Areas**
 
   * :doc:`/reference/dic_tags`

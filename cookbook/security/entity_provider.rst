@@ -54,7 +54,7 @@ focus on the most important methods that come from the
      * @ORM\Table(name="acme_users")
      * @ORM\Entity(repositoryClass="Acme\UserBundle\Entity\UserRepository")
      */
-    class User implements UserInterface
+    class User implements UserInterface, \Serializable
     {
         /**
          * @ORM\Column(type="integer")
@@ -132,6 +132,26 @@ focus on the most important methods that come from the
         public function eraseCredentials()
         {
         }
+
+        /**
+         * @see \Serializable::serialize()
+         */
+        public function serialize()
+        {
+            return serialize(array(
+                $this->id,
+            ));
+        }
+
+        /**
+         * @see \Serializable::unserialize()
+         */
+        public function unserialize($serialized)
+        {
+            list (
+                $this->id,
+            ) = unserialize($serialized);
+        }
     }
 
 In order to use an instance of the ``AcmeUserBundle:User`` class in the Symfony
@@ -168,6 +188,15 @@ For more details on each of these, see :class:`Symfony\\Component\\Security\\Cor
         return $this->username === $user->getUsername();
     }
 
+.. note::
+
+    The :phpclass:`Serializable` interface and its ``serialize`` and ``unserialize``
+    methods have been added to allow the ``User`` class to be serialized
+    to the session. This may or may not be needed depending on your setup,
+    but it's probably a good idea. Only the ``id`` needs to be serialized,
+    because the :method:`Symfony\\Bridge\\Doctrine\\Security\\User\\EntityUserProvider::refreshUser`
+    method reloads the user on each request by using the ``id``.
+
 Below is an export of my ``User`` table from MySQL. For details on how to
 create user records and encode their password, see :ref:`book-security-encoding-user-password`.
 
@@ -199,7 +228,7 @@ layer is a piece of cake. Everything resides in the configuration of the
 
 Below is an example of configuration where the user will enter his/her
 username and password via HTTP basic authentication. That information will
-then be checked against our User entity records in the database:
+then be checked against your User entity records in the database:
 
 .. configuration-block::
 
@@ -243,7 +272,7 @@ the ``username`` unique field. In other words, this tells Symfony how to
 fetch the user from the database before checking the password validity.
 
 This code and configuration works but it's not enough to secure the application
-for **active** users. As of now, we still can authenticate with ``maxime``. The
+for **active** users. As of now, you can still authenticate with ``maxime``. The
 next section explains how to forbid non active users.
 
 Forbid non Active Users
@@ -302,7 +331,7 @@ For this example, the first three methods will return ``true`` whereas the
         }
     }
 
-If we try to authenticate a ``maxime``, the access is now forbidden as this
+If you try to authenticate as ``maxime``, the access is now forbidden as this
 user does not have an enabled account. The next session will focus on how
 to write a custom entity provider to authenticate a user with his username
 or his email address.
@@ -368,7 +397,7 @@ The code below shows the implementation of the
                 throw new UnsupportedUserException(sprintf('Instances of "%s" are not supported.', $class));
             }
 
-            return $this->loadUserByUsername($user->getUsername());
+            return $this->find($user->getId());
         }
 
         public function supportsClass($class)
@@ -407,7 +436,7 @@ from the database. As mentioned previously, when your user is loaded, its
 ``getRoles()`` method returns the array of security roles that should be
 assigned to the user. You can load this data from anywhere - a hardcoded
 list used for all users (e.g. ``array('ROLE_USER')``), a Doctrine array
-property called ``roles``, or via a Doctrine relationship, as we'll learn
+property called ``roles``, or via a Doctrine relationship, as you'll learn
 about in this section.
 
 .. caution::
@@ -429,7 +458,7 @@ returns the list of related groups::
     use Doctrine\Common\Collections\ArrayCollection;
     // ...
 
-    class User implements AdvancedUserInterface
+    class User implements AdvancedUserInterface, \Serializable
     {
         /**
          * @ORM\ManyToMany(targetEntity="Group", inversedBy="users")
@@ -447,6 +476,26 @@ returns the list of related groups::
         public function getRoles()
         {
             return $this->groups->toArray();
+        }
+
+        /**
+         * @see \Serializable::serialize()
+         */
+        public function serialize()
+        {
+            return serialize(array(
+                $this->id,
+            ));
+        }
+
+        /**
+         * @see \Serializable::unserialize()
+         */
+        public function unserialize($serialized)
+        {
+            list (
+                $this->id,
+            ) = unserialize($serialized);
         }
     }
 
