@@ -15,7 +15,7 @@ The Components
     http_foundation/index
     locale
     process
-    routing
+    routing/index
     serializer
     templating
     yaml

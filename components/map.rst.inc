@@ -55,9 +55,9 @@
 
   * :doc:`/components/process`
 
-* **Routing**
+* :doc:`/components/routing/index`
 
-  * :doc:`/components/routing`
+  * :doc:`/components/routing/introduction`
 
 * **Serializer**
 
