@@ -9,7 +9,7 @@ The Form Component
     forms.
 
 The form component is a tool to help you solve the problem of allowing end-users
-to interact with the data and modify the data in your application. And thought
+to interact with the data and modify the data in your application. And though
 traditionally this has been through HTML forms, the component focuses on
 processing data to and from your client and application, whether that data
 be from a normal form post or from an API.
@@ -155,7 +155,7 @@ line to your ``composer.json`` file:
         }
     }
 
-The TwigBridge integration provides you with several :doc:`Twig Functions</reference/forms/twig_reference`
+The TwigBridge integration provides you with several :doc:`Twig Functions</reference/forms/twig_reference>`
 that help you render each the HTML widget, label and error for each field
 (as well as a few other things). To configure the integration, you'll need
 to bootstrap or access Twig and add the :class:`Symfony\\Bridge\\Twig\\Extension\\FormExtension`::
@@ -267,8 +267,8 @@ Validation
 
 The Form component comes with tight (but optional) integration with Symfony's
 Validator component. If you're using a different solution for validation,
-no problem! Simply take the bound data of your form (which is an array or
-object) and pass it through your own validation system.
+no problem! Simply take the submitted/bound data of your form (which is an
+array or object) and pass it through your own validation system.
 
 To use the integration with Symfony's Validator component, first make sure
 it's installed in your application. If you're using Composer and want to
@@ -302,8 +302,18 @@ Your integration with the Validation component will look something like this::
     $validator = Validation::createValidator();
 
     // there are built-in translations for the core error messages
-    $translator->addResource('xlf', VENDOR_FORM_DIR . '/Resources/translations/validators.en.xlf', 'en', 'validators');
-    $translator->addResource('xlf', VENDOR_VALIDATOR_DIR . '/Resources/translations/validators.en.xlf', 'en', 'validators');
+    $translator->addResource(
+        'xlf',
+        VENDOR_FORM_DIR . '/Resources/translations/validators.en.xlf',
+        'en',
+        'validators'
+    );
+    $translator->addResource(
+        'xlf',
+        VENDOR_VALIDATOR_DIR . '/Resources/translations/validators.en.xlf',
+        'en',
+        'validators'
+    );
 
     $formFactory = Forms::createFormFactoryBuilder()
         // ...
@@ -319,6 +329,12 @@ Your application only needs one form factory, and that one factory object
 should be used to create any and all form objects in your application. This
 means that you should create it in some central, bootstrap part of your application
 and then access it whenever you need to build a form.
+
+.. note::
+
+    In this document, the form factory is always a locally variable called
+    ``$formFactory``. The point here is that you will probably need to create
+    this object in some more "global" way so you can access it from anywhere.
 
 Exactly how you gain access to your one form factory is up to you. If you're
 using a :term`Service Container`, then you should add the form factory to
@@ -373,7 +389,7 @@ is created from the form factory.
             public function newAction(Request $request)
             {
                 // createFormBuilder is a shortcut to get the "form factory"
-                // and then call "createBuilder" on it
+                // and then call "createBuilder()" on it
                 $form = $this->createFormBuilder()
                     ->add('task', 'text')
                     ->add('dueDate', 'date')
@@ -388,7 +404,7 @@ is created from the form factory.
 As you can see, creating a form is like writing a recipe: you call ``add``
 for each new field you want to create. The first argument to ``add`` is the
 name of your field, and the second is the field "type". The Form component
-comes with a lot of :ref:`built-in types</reference/forms/types>`.
+comes with a lot of :doc:`built-in types</reference/forms/types>`.
 
 Now that you've built your form, learn how to :ref:`render<component-form-intro-rendering-form>`
 it and :ref:`process the form submission<component-form-intro-handling-submission>`.
@@ -507,6 +523,7 @@ method:
                 ->add('dueDate', 'date')
                 ->getForm();
 
+            // only process the form if the request is a POST request
             if ($request->isMethod('POST')) {
                 $form->bind($request);
 
@@ -522,17 +539,20 @@ method:
             // ...
         }
 
-This defines a common form "workflow", which looks like this:
+This defines a common form "workflow", which contains 3 different possibilities:
 
-1) Build your form;
-2) If POST, process the form by calling ``bind``;
-3a) If the form is valid, perform some action and redirect;
-3b) If the form is invalid, re-render the form (which will now contain errors)
+1) On the initial GET request (i.e. when the user "surfs" to your page),
+   build your form and render it;
+
+If the request is a POST, process the submitted data (via ``bind``). Then:
+
+2) if the form is invalid, re-render the form (which will now contain errors)
+3) if the form is valid, perform some action and redirect;
 
 .. note::
 
     If you're not using HttpFoundation, just pass the POST'ed data directly
-    to ``bind``:
+    to ``bind``::
 
         if (isset($_POST[$form->getName()])) {
             $form->bind($_POST[$form->getName())
@@ -598,3 +618,4 @@ and the errors will display next to the fields on error.
 
 .. _Packagist: https://packagist.org/packages/symfony/form
 .. _Twig:      http://twig.sensiolabs.org
+.. _`Twig Configuration`: http://twig.sensiolabs.org/doc/intro.html
