@@ -246,7 +246,7 @@ it in the view::
                     $imageUrl = null;
                 }
                 // set an "image_url" variable that will be available when rendering this field
-                $view->vars['image_url'] = $imageUrl;
+                $view->set('image_url', $imageUrl);
             }
         }
 
