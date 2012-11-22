@@ -121,7 +121,7 @@ Global Variables
 +-------------------------------------------------------+------------------------------------------------------------------------------------+
 | Variable                                              | Usage                                                                              |
 +=======================================================+====================================================================================+
-| ``app`` *Methods*: ``app.user``, ``app.request``      | The ``app`` variable is available everywhere, and gives you quick                  |
+| ``app`` *Attributes*: ``app.user``, ``app.request``   | The ``app`` variable is available everywhere, and gives you quick                  |
 | ``app.session``, ``app.environment``, ``app.debug``   | access to many commonly needed objects. The ``app`` variable is                    |
 | ``app.security``                                      | instance of :class:`Symfony\\Bundle\\FrameworkBundle\\Templating\\GlobalVariables` |
 +-------------------------------------------------------+------------------------------------------------------------------------------------+
