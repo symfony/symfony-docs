@@ -184,7 +184,7 @@ For PostgreSQL, the statement should look like this:
     );
 
 Microsoft SQL Server
-~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~
 
 For MSSQL, the statement might look like the following:
 
@@ -197,5 +197,11 @@ For MSSQL, the statement might look like the following:
 		PRIMARY KEY CLUSTERED 
 		(
 			[session_id] ASC
-		) WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+		) WITH (
+		    PAD_INDEX  = OFF,
+		    STATISTICS_NORECOMPUTE  = OFF,
+		    IGNORE_DUP_KEY = OFF,
+		    ALLOW_ROW_LOCKS  = ON,
+		    ALLOW_PAGE_LOCKS  = ON
+		) ON [PRIMARY]
 		) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
