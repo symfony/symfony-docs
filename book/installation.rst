@@ -67,6 +67,12 @@ Distribution:
     For an exact version, replace `2.1.x-dev` with the latest Symfony version
     (e.g. 2.1.1). For details, see the `Symfony Installation Page`_
 
+.. tip::
+    If you don't want to have the "Tests" directories in your sources when using
+    Composer, you'll need to add the "--prefer-dist" option at the end of any
+    command and it will skip those directories from the listing. Here you can view
+    more information about `light-weight distribution packages` and Composer.
+
 This command may take several minutes to run as Composer download the Standard
 Distribution along with all of the vendor libraries that it needs. When it finishes,
 you should have a directory that looks something like this:
@@ -323,3 +329,4 @@ install all the necessary project dependencies.
 .. _`Apache`: http://httpd.apache.org/docs/current/mod/core.html#documentroot
 .. _`Nginx`: http://wiki.nginx.org/Symfony
 .. _`Symfony Installation Page`:    http://symfony.com/download
+.. _`light-weight distribution packages`: http://getcomposer.org/doc/02-libraries.md#light-weight-distribution-packages
