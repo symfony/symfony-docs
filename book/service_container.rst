@@ -79,7 +79,7 @@ you need it::
     $mailer = new Mailer('sendmail');
     $mailer->send('ryan@foobar.net', ...);
 
-This is easy enough. The imaginary ``Mailer`` class allows us to configure
+This is easy enough. The imaginary ``Mailer`` class allows you to configure
 the method used to deliver the email messages (e.g. ``sendmail``, ``smtp``, etc).
 But what if you wanted to use the mailer service somewhere else? You certainly
 don't want to repeat the mailer configuration *every* time you need to use
@@ -312,7 +312,7 @@ Importing other Container Configuration Resources
 .. tip::
 
     In this section, service configuration files are referred to as *resources*.
-    This is to highlight that fact that, while most configuration resources
+    This is to highlight the fact that, while most configuration resources
     will be files (e.g. YAML, XML, PHP), Symfony2 is so flexible that configuration
     could be loaded from anywhere (e.g. a database or even via an external
     web service).
@@ -576,7 +576,7 @@ This approach is fine, but what if you decide later that the ``NewsletterManager
 class needs a second or third constructor argument? What if you decide to
 refactor our code and rename the class? In both cases, you'd need to find every
 place where the ``NewsletterManager`` is instantiated and modify it. Of course,
-the service container gives us a much more appealing option:
+the service container gives you a much more appealing option:
 
 .. configuration-block::
 

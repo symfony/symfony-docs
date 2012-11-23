@@ -122,7 +122,7 @@ When loading a YAML file, it is sometimes better to use the
 
     use Symfony\Component\Yaml\Yaml;
 
-    $loader = Yaml::parse('/path/to/file.yml');
+    $yaml = Yaml::parse('/path/to/file.yml');
 
 The :method:`Symfony\\Component\\Yaml\\Yaml::parse` static method takes a YAML
 string or a file containing YAML. Internally, it calls the

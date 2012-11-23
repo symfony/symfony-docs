@@ -831,7 +831,7 @@ locale to use for translation::
         'Symfony2 is great',
         array(),
         'messages',
-        'fr_FR',
+        'fr_FR'
     );
 
     $this->get('translator')->transChoice(
@@ -839,7 +839,7 @@ locale to use for translation::
         10,
         array('%count%' => 10),
         'messages',
-        'fr_FR',
+        'fr_FR'
     );
 
 Translating Database Content

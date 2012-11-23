@@ -426,7 +426,7 @@ an autoloader that Symfony provides. An autoloader is a tool that makes it
 possible to start using PHP classes without explicitly including the file
 containing the class.
 
-First, `download symfony`_ and place it into a ``vendor/symfony/symfony/`` directory.
+First, `download Symfony`_ and place it into a ``vendor/symfony/symfony/`` directory.
 Next, create an ``app/bootstrap.php`` file. Use it to ``require`` the two
 files in the application and to configure the autoloader:
 
@@ -740,7 +740,7 @@ Learn more from the Cookbook
 * :doc:`/cookbook/controller/service`
 
 .. _`Doctrine`: http://www.doctrine-project.org
-.. _`download symfony`: http://symfony.com/download
+.. _`download Symfony`: http://symfony.com/download
 .. _`Routing`: https://github.com/symfony/Routing
 .. _`Templating`: https://github.com/symfony/Templating
 .. _`KnpBundles.com`: http://knpbundles.com/

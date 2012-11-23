@@ -67,6 +67,12 @@ Distribution:
     For an exact version, replace `dev-master` with the latest Symfony version
     (e.g. 2.1.1). For details, see the `Symfony Installation Page`_
 
+.. tip::
+
+    To download the vendor files faster and without unnecessary directories
+    (e.g. "Tests"), add the ``--prefer-dist`` option at the end of any Composer
+    command.
+
 This command may take several minutes to run as Composer download the Standard
 Distribution along with all of the vendor libraries that it needs. When it finishes,
 you should have a directory that looks something like this:
@@ -279,7 +285,7 @@ development! Your distribution may contain some sample code - check the
 to learn about what sample code was included with your distribution and how
 you can remove it later.
 
-If you're new to Symfony, join us in the ":doc:`page_creation`", where you'll
+If you're new to Symfony, check out ":doc:`page_creation`", where you'll
 learn how to create pages, change configuration, and do everything else you'll
 need in your new application.
 

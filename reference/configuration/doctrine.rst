@@ -40,7 +40,7 @@ Configuration Reference
                         # True to use as persistent connection for the ibm_db2 driver
                         persistent:           ~
 
-                        # The protocol to use for the ibm_db2 driver (default to TCPIP if ommited)
+                        # The protocol to use for the ibm_db2 driver (default to TCPIP if omitted)
                         protocol:             ~
 
                         # True to use dbname as service name instead of SID for Oracle
@@ -85,7 +85,7 @@ Configuration Reference
                                 # True to use as persistent connection for the ibm_db2 driver
                                 persistent:           ~
 
-                                # The protocol to use for the ibm_db2 driver (default to TCPIP if ommited)
+                                # The protocol to use for the ibm_db2 driver (default to TCPIP if omitted)
                                 protocol:             ~
 
                                 # True to use dbname as service name instead of SID for Oracle

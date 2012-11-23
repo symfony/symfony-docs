@@ -37,7 +37,7 @@ Quick example::
 
 .. note::
 
-    Symfony sessions are designed to replace several native PHP funtions.
+    Symfony sessions are designed to replace several native PHP functions.
     Applications should avoid using ``session_start()``, ``session_regenerate_id()``,
     ``session_id()``, ``session_name()``, and ``session_destroy()`` and instead
     use the APIs in the following section.
@@ -131,7 +131,7 @@ an array. A few methods exist for "Bag" management:
 Session meta-data
 
 * :method:`Symfony\\Component\\HttpFoundation\\Session\\Session::getMetadataBag`:
-  Gets the :class:`Symfony\\Component\\HttpFoundation\\Session\\Storage\MetadataBag`
+  Gets the :class:`Symfony\\Component\\HttpFoundation\\Session\\Storage\\MetadataBag`
   which contains information about the session.
 
 
@@ -239,7 +239,7 @@ Flash messages
 ~~~~~~~~~~~~~~
 
 The purpose of the :class:`Symfony\\Component\\HttpFoundation\\Session\\Flash\\FlashBagInterface`
-is to provide a way of settings and retrieving messages on a per session basis.
+is to provide a way of setting and retrieving messages on a per session basis.
 The usual workflow for flash messages would be set in an request, and displayed
 after a page redirect. For example, a user submits a form which hits an update
 controller, and after processing the controller redirects the page to either the

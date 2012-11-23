@@ -4,7 +4,7 @@
 Databases and Doctrine
 ======================
 
-Let's face it, one of the most common and challenging tasks for any application
+One of the most common and challenging tasks for any application
 involves persisting and reading information to and from a database. Fortunately,
 Symfony comes integrated with `Doctrine`_, a library whose sole goal is to
 give you powerful tools to make this easy. In this chapter, you'll learn the
@@ -420,7 +420,7 @@ of the bundle:
     If you're following along with this example, you'll need to create a
     route that points to this action to see it work.
 
-Let's walk through this example:
+Take a look at the previous example in more detail:
 
 * **lines 9-12** In this section, you instantiate and work with the ``$product``
   object like any other, normal PHP object.
@@ -965,7 +965,7 @@ table, and ``product.category_id`` column, and new foreign key:
 Saving Related Entities
 ~~~~~~~~~~~~~~~~~~~~~~~
 
-Now, let's see the code in action. Imagine you're inside a controller::
+Now you can see this new code in action! Imagine you're inside a controller::
 
     // ...
 

@@ -32,7 +32,7 @@ is a main relation:
 * a ``CookieJar`` has many ``Cookie`` objects;
 
 * a Service ``Container`` has many services and many parameters (as services
-  is the main relation, we use the naming convention for this relation);
+  is the main relation, the naming convention is used for this relation);
 
 * a Console ``Input`` has many arguments and many options. There is no "main"
   relation, and so the naming convention does not apply.
@@ -72,7 +72,7 @@ must be used instead (where ``XXX`` is the name of the related thing):
 
 .. note::
 
-    While "setXXX" and "replaceXXX" are very similar, there is one notable 
-    difference: "setXXX" may replace, or add new elements to the relation. 
+    While "setXXX" and "replaceXXX" are very similar, there is one notable
+    difference: "setXXX" may replace, or add new elements to the relation.
     "replaceXXX", on the other hand, cannot add new elements. If an unrecognized
     key as passed to "replaceXXX" it must throw an exception.
