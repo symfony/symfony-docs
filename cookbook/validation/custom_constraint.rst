@@ -38,7 +38,7 @@ Creating the Validator itself
 -----------------------------
 
 As you can see, a constraint class is fairly minimal. The actual validation is
-performed by a another "constraint validator" class. The constraint validator
+performed by another "constraint validator" class. The constraint validator
 class is specified by the constraint's ``validatedBy()`` method, which
 includes some simple default logic::
 
