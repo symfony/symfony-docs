@@ -180,7 +180,7 @@ your listener to be called just before any controller is executed.
 With this configuration, your ``TokenListener`` ``onKernelController`` method
 will be executed on each request. If the controller that is about to be executed
 implements ``TokenAuthenticatedController``, token authentication is
-applied. This lets us have a "before" filter on any controller that you
+applied. This lets you have a "before" filter on any controller that you
 want.
 
 After filters with the ``kernel.response`` Event

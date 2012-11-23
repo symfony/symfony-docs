@@ -16,7 +16,7 @@ object and all sub-objects associated with it.
 Basic Usage
 -----------
 
-In the following example, we create two classes ``Author`` and ``Address``
+In the following example, you create two classes ``Author`` and ``Address``
 that both have constraints on their properties. Furthermore, ``Author`` stores
 an ``Address`` instance in the ``$address`` property.
 
@@ -115,7 +115,7 @@ an ``Address`` instance in the ``$address`` property.
              * @Assert\NotBlank
              */
             protected $lastName;
-            
+
             protected $address;
         }
 
@@ -125,13 +125,13 @@ an ``Address`` instance in the ``$address`` property.
         use Symfony\Component\Validator\Mapping\ClassMetadata;
         use Symfony\Component\Validator\Constraints\NotBlank;
         use Symfony\Component\Validator\Constraints\MaxLength;
-        
+
         class Address
         {
             protected $street;
 
             protected $zipCode;
-            
+
             public static function loadValidatorMetadata(ClassMetadata $metadata)
             {
                 $metadata->addPropertyConstraint('street', new NotBlank());
@@ -144,15 +144,15 @@ an ``Address`` instance in the ``$address`` property.
         use Symfony\Component\Validator\Mapping\ClassMetadata;
         use Symfony\Component\Validator\Constraints\NotBlank;
         use Symfony\Component\Validator\Constraints\MinLength;
-        
+
         class Author
         {
             protected $firstName;
 
             protected $lastName;
-            
+
             protected $address;
-            
+
             public static function loadValidatorMetadata(ClassMetadata $metadata)
             {
                 $metadata->addPropertyConstraint('firstName', new NotBlank());
@@ -192,7 +192,7 @@ property.
         class Author
         {
             /* ... */
-            
+
             /**
              * @Assert\Valid
              */
@@ -204,11 +204,11 @@ property.
         // src/Acme/HelloBundle/Author.php
         use Symfony\Component\Validator\Mapping\ClassMetadata;
         use Symfony\Component\Validator\Constraints\Valid;
-        
+
         class Author
         {
             protected $address;
-            
+
             public static function loadValidatorMetadata(ClassMetadata $metadata)
             {
                 $metadata->addPropertyConstraint('address', new Valid());

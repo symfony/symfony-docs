@@ -11,7 +11,7 @@ component and can be viewed in the :class:`Symfony\\Component\\HttpKernel\\Kerne
 To hook into an event and add your own custom logic, you have to  create
 a service that will act as an event listener on that event. In this entry,
 you will create a service that will act as an Exception Listener, allowing
-us to modify how exceptions are shown by  our application. The ``KernelEvents::EXCEPTION``
+you to modify how exceptions are shown by  our application. The ``KernelEvents::EXCEPTION``
 event is just one of the core kernel events::
 
     // src/Acme/DemoBundle/Listener/AcmeExceptionListener.php
