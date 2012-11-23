@@ -15,7 +15,7 @@ To make the console commands available automatically with Symfony2, create a
 ``Command`` directory inside your bundle and create a php file suffixed with
 ``Command.php`` for each command that you want to provide. For example, if you
 want to extend the ``AcmeDemoBundle`` (available in the Symfony Standard
-Edition) to greet us from the command line, create ``GreetCommand.php`` and
+Edition) to greet you from the command line, create ``GreetCommand.php`` and
 add the following to it::
 
     // src/Acme/DemoBundle/Command/GreetCommand.php
@@ -93,9 +93,9 @@ should be used instead of :class:`Symfony\\Component\\Console\\Application`::
 Getting Services from the Service Container
 -------------------------------------------
 
-By using :class:`Symfony\\Bundle\\FrameworkBundle\\Command\\ContainerAwareCommand` 
-as the base class for the command (instead of the more basic 
-:class:`Symfony\\Component\\Console\\Command\\Command`), you have access to the 
+By using :class:`Symfony\\Bundle\\FrameworkBundle\\Command\\ContainerAwareCommand`
+as the base class for the command (instead of the more basic
+:class:`Symfony\\Component\\Console\\Command\\Command`), you have access to the
 service container. In other words, you have access to any configured service.
 For example, you could easily extend the task to be translatable::
 

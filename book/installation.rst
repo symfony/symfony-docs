@@ -285,7 +285,7 @@ development! Your distribution may contain some sample code - check the
 to learn about what sample code was included with your distribution and how
 you can remove it later.
 
-If you're new to Symfony, join us in the ":doc:`page_creation`", where you'll
+If you're new to Symfony, check out ":doc:`page_creation`", where you'll
 learn how to create pages, change configuration, and do everything else you'll
 need in your new application.
 

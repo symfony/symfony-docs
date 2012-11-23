@@ -17,7 +17,7 @@ Getting familiar with Twig
 
 .. tip::
 
-    If you want to learn Twig, we highly recommend you to read its official
+    If you want to learn Twig, it's highly recommended you read its official
     `documentation`_. This section is just a quick overview of the main
     concepts.
 
@@ -98,7 +98,7 @@ Decorating Templates
 --------------------
 
 More often than not, templates in a project share common elements, like the
-well-known header and footer. In Symfony2, we like to think about this problem
+well-known header and footer. In Symfony2, you think about this problem
 differently: a template can be decorated by another one. This works exactly
 the same as PHP classes: template inheritance allows you to build a base
 "layout" template that contains all the common elements of your site and

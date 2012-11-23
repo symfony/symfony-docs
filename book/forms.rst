@@ -573,7 +573,7 @@ the correct values of a number of field options.
 * ``max_length``: If the field is some sort of text field, then the ``max_length``
   option can be guessed from the validation constraints (if ``Length`` or
   ``Range`` is used) or from the Doctrine metadata (via the field's length).
-  
+
 .. note::
 
   These field options are *only* guessed if you're using Symfony to guess
@@ -625,7 +625,7 @@ of code. Of course, you'll usually need much more flexibility when rendering:
             <input type="submit" />
         </form>
 
-Let's take a look at each part:
+Take a look at each part:
 
 * ``form_enctype(form)`` - If at least one field is a file upload field, this
   renders the obligatory ``enctype="multipart/form-data"``;
@@ -1096,7 +1096,7 @@ In PHP, each form "fragment" is rendered via an individual template file.
 To customize any part of how a form renders, you just need to override the
 existing template by creating a new one.
 
-To understand how this works, let's customize the ``form_row`` fragment and
+To understand how this works, customize the ``form_row`` fragment and
 add a class attribute to the ``div`` element that surrounds each row. To
 do this, create a new template file that will store the new markup:
 
@@ -1340,7 +1340,7 @@ to define form output.
     ever be needed in a single template.
 
     .. caution::
-    
+
         This ``{% form_theme form _self %}`` functionality will *only* work
         if your template extends another. If your template does not, you
         must point ``form_theme`` to a separate template.

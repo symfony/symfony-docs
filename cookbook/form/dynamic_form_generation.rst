@@ -35,7 +35,7 @@ of what a bare form class looks like::
 
 Let's assume for a moment that this form utilizes an imaginary "Product" class
 that has only two relevant properties ("name" and "price"). The form generated
-from this class will look the exact same regardless of a new Product is being created
+from this class will look the exact same regardless if a new Product is being created
 or if an existing product is being edited (e.g. a product fetched from the database).
 
 Suppose now, that you don't want the user to be able to change the ``name`` value
@@ -120,7 +120,7 @@ might look like the following::
             // During form creation setData() is called with null as an argument
             // by the FormBuilder constructor. You're only concerned with when
             // setData is called with an actual Entity object in it (whether new
-            // or fetched with Doctrine). This if statement lets us skip right
+            // or fetched with Doctrine). This if statement lets you skip right
             // over the null condition.
             if (null === $data) {
                 return;

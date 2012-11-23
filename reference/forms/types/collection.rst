@@ -52,11 +52,11 @@ The simplest way to render this is all at once:
 .. configuration-block::
 
     .. code-block:: jinja
-    
+
         {{ form_row(form.emails) }}
 
     .. code-block:: php
-    
+
         <?php echo $view['form']->row($form['emails']) ?>
 
 A much more flexible method would look like this:
@@ -64,7 +64,7 @@ A much more flexible method would look like this:
 .. configuration-block::
 
     .. code-block:: html+jinja
-    
+
         {{ form_label(form.emails) }}
         {{ form_errors(form.emails) }}
 
@@ -81,7 +81,7 @@ A much more flexible method would look like this:
 
         <?php echo $view['form']->label($form['emails']) ?>
         <?php echo $view['form']->errors($form['emails']) ?>
-        
+
         <ul>
         <?php foreach ($form['emails'] as $emailField): ?>
             <li>
@@ -142,7 +142,7 @@ you need is the JavaScript:
 .. configuration-block::
 
     .. code-block:: html+jinja
-    
+
         <form action="..." method="POST" {{ form_enctype(form) }}>
             {# ... #}
 
@@ -155,9 +155,9 @@ you need is the JavaScript:
                 </li>
             {% endfor %}
             </ul>
-        
+
             <a href="#" id="add-another-email">Add another email</a>
-        
+
             {# ... #}
         </form>
 
@@ -192,7 +192,7 @@ you need is the JavaScript:
     is automatically available on the ``data-prototype`` attribute of the
     element (e.g. ``div`` or ``table``) that surrounds your collection. The
     only difference is that the entire "form row" is rendered for you, meaning
-    you wouldn't have to wrap it in any container element like we've done
+    you wouldn't have to wrap it in any container element as was done
     above.
 
 Field Options
@@ -295,11 +295,11 @@ collection field:
 .. configuration-block::
 
     .. code-block:: jinja
-    
+
         {{ form_row(form.emails.vars.prototype) }}
 
     .. code-block:: php
-    
+
         <?php echo $view['form']->row($form['emails']->getVar('prototype')) ?>
 
 Note that all you really need is the "widget", but depending on how you're

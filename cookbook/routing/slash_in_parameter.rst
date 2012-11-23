@@ -15,7 +15,7 @@ matches the ``/hello/{name}`` route, where ``{name}`` equals ``Fabien/Kris``.
 Configure the Route
 -------------------
 
-By default, the symfony routing components requires that the parameters 
+By default, the Symfony routing components requires that the parameters 
 match the following regex pattern: ``[^/]+``. This means that all characters 
 are allowed except ``/``. 
 

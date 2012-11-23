@@ -11,7 +11,7 @@ a serialized JSON array, an image, a redirect, a 404 error or anything else
 you can dream up. The controller contains whatever arbitrary logic *your
 application* needs to render the content of a page.
 
-To see how simple this is, let's look at a Symfony2 controller in action.
+See how simple this is by looking at a Symfony2 controller in action.
 The following controller would render a page that simply prints ``Hello world!``::
 
     use Symfony\Component\HttpFoundation\Response;
@@ -115,7 +115,7 @@ a controller object. Controllers are also called *actions*.
     will house several controllers/actions (e.g. ``updateAction``, ``deleteAction``,
     etc).
 
-This controller is pretty straightforward, but let's walk through it:
+This controller is pretty straightforward:
 
 * *line 4*: Symfony2 takes advantage of PHP 5.3 namespace functionality to
   namespace the entire controller class. The ``use`` keyword imports the
