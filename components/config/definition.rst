@@ -383,7 +383,7 @@ By changing a string value into an associative array with ``name`` as the key::
                ->ifString()
                ->then(function($v) { return array('name'=> $v); })
            ->end()
-           ->scalarValue('name')->isRequired()
+           ->scalarNode('name')->isRequired()
            // ...
         ->end()
     ;
