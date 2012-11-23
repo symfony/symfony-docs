@@ -37,7 +37,7 @@ Quick example::
 
 .. note::
 
-    Symfony sessions are designed to replace several native PHP funtions.
+    Symfony sessions are designed to replace several native PHP functions.
     Applications should avoid using ``session_start()``, ``session_regenerate_id()``,
     ``session_id()``, ``session_name()``, and ``session_destroy()`` and instead
     use the APIs in the following section.
