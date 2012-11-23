@@ -88,6 +88,8 @@ look and feel familiar, you should follow these rules:
   as well as the `Twig Coding Standards`_;
 * Each line should break approximately after the first word that crosses the
   72nd character (so most lines end up being 72-78 lines);
+* To avoid horiziontal scrolling on code blocks, we prefer to break a line 
+  correctly if it crosses the 85th character;
 * When we fold one or more lines of code, we place ``...`` in a comment at the point
   of the fold. These comments are: ``// ...`` (php), ``# ...`` (yaml/bash), ``{# ... #}``
   (twig), ``<!-- ... -->`` (xml/html), ``; ...`` (ini), ``...`` (text);
@@ -101,7 +103,8 @@ look and feel familiar, you should follow these rules:
   unless the next line is also a comment;
 * You should put a ``$`` in front of every bash line;
 * We prefer the ``::`` shorthand over ``.. code-block:: php`` to begin a PHP
-  code block.
+  code block;
+* You should use a form of *you* instead of *we*.
 
 An example::
 
