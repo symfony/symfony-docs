@@ -418,7 +418,7 @@ of the bundle:
     If you're following along with this example, you'll need to create a
     route that points to this action to see it work.
 
-Walking through this example:
+Take a look at the previous example in more detail:
 
 * **lines 9-12** In this section, you instantiate and work with the ``$product``
   object like any other, normal PHP object.
@@ -963,7 +963,7 @@ table, and ``product.category_id`` column, and new foreign key:
 Saving Related Entities
 ~~~~~~~~~~~~~~~~~~~~~~~
 
-Now, to see the code in action. Imagine you're inside a controller::
+Now you can see this new code in action! Imagine you're inside a controller::
 
     // ...
 

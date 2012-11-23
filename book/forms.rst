@@ -576,7 +576,7 @@ of code. Of course, you'll usually need much more flexibility when rendering:
             <input type="submit" />
         </form>
 
-Taking a look at each part:
+Take a look at each part:
 
 * ``form_enctype(form)`` - If at least one field is a file upload field, this
   renders the obligatory ``enctype="multipart/form-data"``;

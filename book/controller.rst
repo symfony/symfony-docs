@@ -11,7 +11,7 @@ a serialized JSON array, an image, a redirect, a 404 error or anything else
 you can dream up. The controller contains whatever arbitrary logic *your
 application* needs to render the content of a page.
 
-See how simple this is, by looking at a Symfony2 controller in action.
+See how simple this is by looking at a Symfony2 controller in action.
 The following controller would render a page that simply prints ``Hello world!``::
 
     use Symfony\Component\HttpFoundation\Response;

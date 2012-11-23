@@ -98,7 +98,7 @@ Decorating Templates
 --------------------
 
 More often than not, templates in a project share common elements, like the
-well-known header and footer. In Symfony2, this problem is thought about
+well-known header and footer. In Symfony2, you think about this problem
 differently: a template can be decorated by another one. This works exactly
 the same as PHP classes: template inheritance allows you to build a base
 "layout" template that contains all the common elements of your site and

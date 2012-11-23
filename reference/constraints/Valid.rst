@@ -16,7 +16,7 @@ object and all sub-objects associated with it.
 Basic Usage
 -----------
 
-In the following example, you create two classes ``Author`` and ``Address``
+In the following example, create two classes ``Author`` and ``Address``
 that both have constraints on their properties. Furthermore, ``Author`` stores
 an ``Address`` instance in the ``$address`` property.
 
