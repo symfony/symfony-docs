@@ -227,7 +227,7 @@ by using the following methods:
   returns the list of accepted languages ordered by descending quality;
 
 * :method:`Symfony\\Component\\HttpFoundation\\Request::getCharsets`:
-  returns the list of accepted languages ordered by descending quality;
+  returns the list of accepted charsets ordered by descending quality;
 
 .. versionadded:: 2.2
     The :class:`Symfony\\Component\\HttpFoundation\\AcceptHeader` class is new in Symfony 2.2.
