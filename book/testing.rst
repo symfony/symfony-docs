@@ -235,8 +235,9 @@ document::
         )
 
     The ``server`` array is the raw values that you'd expect to normally
-    find in the PHP `$_SERVER`_ superglobal. For example, to set the `Content-Type`
-    and `Referer` HTTP headers, you'd pass the following::
+    find in the PHP `$_SERVER`_ superglobal. For example, to set the `Content-Type`,
+    `Referer` and `X-Requested-With' HTTP headers, you'd pass the following (mind
+    the `HTTP_` prefix for non standard headers)::
 
         $client->request(
             'GET',
@@ -244,8 +245,9 @@ document::
             array(),
             array(),
             array(
-                'CONTENT_TYPE' => 'application/json',
-                'HTTP_REFERER' => '/foo/bar',
+                'CONTENT_TYPE'          => 'application/json',
+                'HTTP_REFERER'          => '/foo/bar',
+                'HTTP_X-Requested-With' => 'XMLHttpRequest',
             )
         );
 
