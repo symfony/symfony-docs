@@ -109,31 +109,33 @@ Array nodes
 ~~~~~~~~~~~
 
 It is possible to add a deeper level to the hierarchy, by adding an array
-node. The array node itself, may have a pre-defined set of variable nodes:
-
-.. code-block:: php
+node. The array node itself, may have a pre-defined set of variable nodes::
 
     $rootNode
-        ->arrayNode('connection')
-            ->scalarNode('driver')->end()
-            ->scalarNode('host')->end()
-            ->scalarNode('username')->end()
-            ->scalarNode('password')->end()
-        ->end()
-    ;
-
-Or you may define a prototype for each node inside an array node:
-
-.. code-block:: php
-
-    $rootNode
-        ->arrayNode('connections')
-            ->prototype('array')
+        ->children()
+            ->arrayNode('connection')
                 ->children()
                     ->scalarNode('driver')->end()
                     ->scalarNode('host')->end()
                     ->scalarNode('username')->end()
                     ->scalarNode('password')->end()
+                ->end()
+            ->end()
+        ->end()
+    ;
+
+Or you may define a prototype for each node inside an array node::
+
+    $rootNode
+        ->children()
+            ->arrayNode('connections')
+                ->prototype('array')
+                ->children()
+                    ->scalarNode('driver')->end()
+                    ->scalarNode('host')->end()
+                    ->scalarNode('username')->end()
+                    ->scalarNode('password')->end()
+                    ->end()
                 ->end()
             ->end()
         ->end()
@@ -155,23 +157,35 @@ Before defining the children of an array node, you can provide options like:
     There should be at least one element in the array (works only when ``isRequired()`` is also
     called).
 
-An example of this:
-
-.. code-block:: php
+An example of this::
 
     $rootNode
-        ->arrayNode('parameters')
-            ->isRequired()
-            ->requiresAtLeastOneElement()
-            ->useAttributeAsKey('name')
-            ->prototype('array')
-                ->children()
-                    ->scalarNode('name')->isRequired()->end()
-                    ->scalarNode('value')->isRequired()->end()
+        ->children()
+            ->arrayNode('parameters')
+                ->isRequired()
+                ->requiresAtLeastOneElement()
+                ->useAttributeAsKey('name')
+                ->prototype('array')
+                    ->children()
+                        ->scalarNode('value')->isRequired()->end()
+                    ->end()
                 ->end()
             ->end()
         ->end()
     ;
+
+In YAML, the configuration might look like this:
+
+.. code-block:: yaml
+
+    database:
+        parameters:
+            param1: { value: param1val }
+
+In XML, each ``parameters`` node would have a ``name`` attribute (along with
+``value``), which would be removed and used as the key for that element in
+the final array. The ``useAttributeAsKey`` is useful for normalizing how
+arrays are specified between different formats like XML and YAML.
 
 Default and required values
 ---------------------------
@@ -194,19 +208,21 @@ has a certain value:
 .. code-block:: php
 
     $rootNode
-        ->arrayNode('connection')
-            ->children()
-                ->scalarNode('driver')
-                    ->isRequired()
-                    ->cannotBeEmpty()
-                ->end()
-                ->scalarNode('host')
-                    ->defaultValue('localhost')
-                ->end()
-                ->scalarNode('username')->end()
-                ->scalarNode('password')->end()
-                ->booleanNode('memory')
-                    ->defaultFalse()
+        ->children()
+            ->arrayNode('connection')
+                ->children()
+                    ->scalarNode('driver')
+                        ->isRequired()
+                        ->cannotBeEmpty()
+                    ->end()
+                    ->scalarNode('host')
+                        ->defaultValue('localhost')
+                    ->end()
+                    ->scalarNode('username')->end()
+                    ->scalarNode('password')->end()
+                    ->booleanNode('memory')
+                        ->defaultFalse()
+                    ->end()
                 ->end()
             ->end()
         ->end()
@@ -240,22 +256,24 @@ with ``append()``::
         $rootNode = $treeBuilder->root('database');
 
         $rootNode
-            ->arrayNode('connection')
-                ->children()
-                    ->scalarNode('driver')
-                        ->isRequired()
-                        ->cannotBeEmpty()
+            ->children()
+                ->arrayNode('connection')
+                    ->children()
+                        ->scalarNode('driver')
+                            ->isRequired()
+                            ->cannotBeEmpty()
+                        ->end()
+                        ->scalarNode('host')
+                            ->defaultValue('localhost')
+                        ->end()
+                        ->scalarNode('username')->end()
+                        ->scalarNode('password')->end()
+                        ->booleanNode('memory')
+                            ->defaultFalse()
+                        ->end()
                     ->end()
-                    ->scalarNode('host')
-                        ->defaultValue('localhost')
-                    ->end()
-                    ->scalarNode('username')->end()
-                    ->scalarNode('password')->end()
-                    ->booleanNode('memory')
-                        ->defaultFalse()
-                    ->end()
+                    ->append($this->addParametersNode())
                 ->end()
-                ->append($this->addParametersNode())
             ->end()
         ;
 
@@ -273,7 +291,6 @@ with ``append()``::
             ->useAttributeAsKey('name')
             ->prototype('array')
                 ->children()
-                    ->scalarNode('name')->isRequired()->end()
                     ->scalarNode('value')->isRequired()->end()
                 ->end()
             ->end()
@@ -378,13 +395,17 @@ you can allow the following as well:
 By changing a string value into an associative array with ``name`` as the key::
 
     $rootNode
-        ->arrayNode('connection')
-           ->beforeNormalization()
-               ->ifString()
-               ->then(function($v) { return array('name'=> $v); })
-           ->end()
-           ->scalarNode('name')->isRequired()
-           // ...
+        ->children()
+            ->arrayNode('connection')
+                ->beforeNormalization()
+                ->ifString()
+                    ->then(function($v) { return array('name'=> $v); })
+                ->end()
+                ->children()
+                    ->scalarNode('name')->isRequired()
+                    // ...
+                ->end()
+            ->end()
         ->end()
     ;
 
@@ -397,13 +418,15 @@ builder implements a fluent interface for a well-known control structure.
 The builder is used for adding advanced validation rules to node definitions, like::
 
     $rootNode
-        ->arrayNode('connection')
-            ->children()
-                ->scalarNode('driver')
-                    ->isRequired()
-                    ->validate()
+        ->children()
+            ->arrayNode('connection')
+                ->children()
+                    ->scalarNode('driver')
+                        ->isRequired()
+                        ->validate()
                         ->ifNotInArray(array('mysql', 'sqlite', 'mssql'))
-                        ->thenInvalid('Invalid database driver "%s"')
+                            ->thenInvalid('Invalid database driver "%s"')
+                        ->end()
                     ->end()
                 ->end()
             ->end()
