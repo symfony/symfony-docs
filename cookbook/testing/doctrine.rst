@@ -32,11 +32,14 @@ which makes all of this quite easy::
          */
         private $em;
 
+        /**
+         * {@inheritDoc}
+         */
         public function setUp()
         {
             static::$kernel = static::createKernel();
             static::$kernel->boot();
-            $this->em = static::$kernel->getContainer()->get('doctrine.orm.entity_manager');
+            $this->em = static::$kernel->getContainer()->get('doctrine')->getEntityManager();
         }
 
         public function testSearchByCategoryName()
@@ -47,5 +50,14 @@ which makes all of this quite easy::
             ;
 
             $this->assertCount(1, $products);
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        protected function tearDown()
+        {
+            parent::tearDown();
+            $this->em->close();
         }
     }
