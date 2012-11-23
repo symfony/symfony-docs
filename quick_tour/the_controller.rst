@@ -1,8 +1,8 @@
 The Controller
 ==============
 
-Still with us after the first two parts? You are already becoming a Symfony2
-addict! Without further ado, let's discover what controllers can do for you.
+Still here after the first two parts? You are already becoming a Symfony2
+addict! Without further ado, discover what controllers can do for you.
 
 Using Formats
 -------------
@@ -74,7 +74,7 @@ method::
 
     return $this->redirect($this->generateUrl('_demo_hello', array('name' => 'Lucas')));
 
-The ``generateUrl()`` is the same method as the ``path()`` function we used in
+The ``generateUrl()`` is the same method as the ``path()`` function used in the
 templates. It takes the route name and an array of parameters as arguments and
 returns the associated friendly URL.
 
@@ -257,8 +257,8 @@ In this example, the resource will be cached for a day. But you can also use
 validation instead of expiration or a combination of both if that fits your
 needs better.
 
-Resource caching is managed by the Symfony2 built-in reverse proxy. But because 
-caching is managed using regular HTTP cache headers, you can replace the 
+Resource caching is managed by the Symfony2 built-in reverse proxy. But because
+caching is managed using regular HTTP cache headers, you can replace the
 built-in reverse proxy with Varnish or Squid and easily scale your application.
 
 .. note::
@@ -270,8 +270,8 @@ built-in reverse proxy with Varnish or Squid and easily scale your application.
 Final Thoughts
 --------------
 
-That's all there is to it, and I'm not even sure we have spent the full
-10 minutes. We briefly introduced bundles in the first part, and all the
-features we've learned about so far are part of the core framework bundle.
+That's all there is to it, and I'm not even sure you'll have spent the full
+10 minutes. You were briefly introduced to bundles in the first part, and all the
+features you've learned about so far are part of the core framework bundle.
 But thanks to bundles, everything in Symfony2 can be extended or replaced.
 That's the topic of the :doc:`next part of this tutorial<the_architecture>`.

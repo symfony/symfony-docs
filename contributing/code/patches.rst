@@ -29,7 +29,7 @@ Set up your user information with your real name and a working email address:
 
 .. tip::
 
-    If you are new to Git, we highly recommend you to read the excellent and
+    If you are new to Git, you are highly recommended to read the excellent and
     free `ProGit`_ book.
 
 .. tip::

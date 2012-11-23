@@ -8,7 +8,7 @@ to be called on the underlying object. In some cases, however, ``setName``
 may *not* be called. Setting ``by_reference`` ensures that the setter is
 called in all cases.
 
-To understand this further, let's look at a simple example::
+To explain this further, here's a simple example::
 
     $builder = $this->createFormBuilder($article);
     $builder
@@ -28,7 +28,7 @@ when you call ``bindRequest`` on the form::
 
 Notice that ``setAuthor`` is not called. The author is modified by reference.
 
-If we set ``by_reference`` to false, binding looks like this::
+If you set ``by_reference`` to false, binding looks like this::
 
     $article->setTitle('...');
     $author = $article->getAuthor();
