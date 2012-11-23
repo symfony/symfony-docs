@@ -20,7 +20,7 @@ Configuring the Request Context globally
 ----------------------------------------
 
 .. versionadded:: 2.1
-    The host and scheme parameters are available since Symfony 2.1
+    The ``host`` and ``scheme`` parameters are available since Symfony 2.1
 
 To configure the Request Context - which is used by the URL Generator - you can
 redefine the parameters it uses as default values to change the default host
