@@ -84,7 +84,7 @@ To get started, you'll need to download Symfony2 and get the basic Subversion se
 
         $ svn propset svn:ignore "bundles" web
 
-        $ svn ci -m "commit basic symfony ignore list (vendor, app/bootstrap*, app/config/parameters.ini, app/cache/*, app/logs/*, web/bundles)"
+        $ svn ci -m "commit basic Symfony ignore list (vendor, app/bootstrap*, app/config/parameters.ini, app/cache/*, app/logs/*, web/bundles)"
 
 6. The rest of the files can now be added and committed to the project:
 

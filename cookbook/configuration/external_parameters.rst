@@ -158,7 +158,7 @@ in the container. The following imports a file named ``parameters.php``.
 In ``parameters.php``, tell the service container the parameters that you wish
 to set. This is useful when important configuration is in a nonstandard
 format. The example below includes a Drupal database's configuration in
-the symfony service container.
+the Symfony service container.
 
 .. code-block:: php
 
