@@ -1,8 +1,41 @@
 .. index::
-   single: Console; Generating URLs
+   single: Console; Sending emails
 
-How to generate URLs with a custom Host in Console Commands
-===========================================================
+How to send emails from a Console Command
+=========================================
+
+Sending emails works different when invoced by a console command. 
+
+Memory spooling
+---------------
+
+Sending emails in a console command works the same way as described in the 
+:doc:`/cookbook/email/email` cookbook except if memory spooling is used.
+
+When using memory spooling (see the :doc:`/cookbook/email/spool` cookbook for more
+information), you must be aware that because of how symfony handles console 
+commands, emails are not sent automatically. You must take care of flushing 
+the queue yourself. Use the following code to send emails inside your 
+console command::
+
+    $container = $this->getContainer();
+    $mailer = $container->get('mailer');
+    $spool = $mailer->getTransport()->getSpool();
+    $transport = $container->get('swiftmailer.transport.real');
+
+    $spool->flushQueue($transport);
+    
+Another option is to create an environment which is only used by console
+commands and uses a different spooling method. 
+    
+.. note::
+
+    Taking care of the spooling is only needed when memory spooling is used. 
+    If you are using file spooling (or no spooling at all), there is no need
+    to flush the queue manually within the command.
+    
+Generate URLs with a custom Host
+--------------------------------
 
 Unfortunately, the command line context does not know about your VirtualHost
 or domain name. This means that if if you generate absolute URLs within a
@@ -17,7 +50,7 @@ There are two ways of configuring the request context: at the application level
 and per Command.
 
 Configuring the Request Context globally
-----------------------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. versionadded:: 2.1
     The ``host`` and ``scheme`` parameters are available since Symfony 2.1
@@ -57,7 +90,7 @@ via normal web requests, since those will override the defaults.
         $container->setParameter('router.request_context.scheme', 'https');
 
 Configuring the Request Context per Command
--------------------------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 To change it only in one command you can simply fetch the Request Context
 service and override its settings::
@@ -76,4 +109,3 @@ service and override its settings::
             // ... your code here
         }
     }
-
