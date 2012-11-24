@@ -45,10 +45,6 @@ Functions
 | ``form_rest(form, variables = {})``                | This will render all fields that have not yet been rendered, more                          |
 |                                                    | information in :ref:`the Twig Form reference<reference-forms-twig-rest>`.                  |
 +----------------------------------------------------+--------------------------------------------------------------------------------------------+
-| ``_form_is_choice_group(label)``                   | This will return ``true`` if the label is a choice group.                                  |
-+----------------------------------------------------+--------------------------------------------------------------------------------------------+
-| ``_form_is_choice_selected(form, choice)``         | This will return ``true`` if the given choice is selected.                                 |
-+----------------------------------------------------+--------------------------------------------------------------------------------------------+
 | ``is_granted(role, object = null, field = null)``  | This will return ``true`` if the current user has the required role, more                  |
 |                                                    | information in ":ref:`book-security-template`"                                             |
 +----------------------------------------------------+--------------------------------------------------------------------------------------------+
