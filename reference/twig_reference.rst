@@ -5,12 +5,12 @@ Symfony2 Twig Extensions
 ========================
 
 Twig is the default template engine for Symfony2. By itself, it already contains
-a lot of build-in functions, filters and tags (`http://twig.sensiolabs.org/documentation`_
+a lot of build-in functions, filters, tags and tests (`http://twig.sensiolabs.org/documentation`_
 then scroll to the bottom).
 
 Symfony2 adds more custom extension on top of Twig to integrate some components
 into the Twig templates. Below is information about all the custom functions,
-filters and tags that are added when using the Symfony2 Core Framework.
+filters, tags and tests that are added when using the Symfony2 Core Framework.
 
 There may also be tags in bundles you use that aren't listed here.
 
@@ -117,6 +117,15 @@ Tags
 | ...                                               | information in :ref:`book-translation-twig`                       |
 | ``{% endtranschoice %}``                          |                                                                   |
 +---------------------------------------------------+-------------------------------------------------------------------+
+
+Tests
+-----
+
++---------------------------------------------------+------------------------------------------------------------------------------+
+| Test Syntax                                       | Usage                                                                        |
++===================================================+==============================================================================+
+| ``selectedchoice(choice, selectedValue)``         | This will return ``true`` if the choice is selected for the given form value |
++---------------------------------------------------+------------------------------------------------------------------------------+
 
 Global Variables
 ----------------
