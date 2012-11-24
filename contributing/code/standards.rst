@@ -18,7 +18,7 @@ example containing most features described below:
 .. code-block:: php
 
     <?php
-
+    
     /*
      * This file is part of the Symfony package.
      *
@@ -27,15 +27,19 @@ example containing most features described below:
      * For the full copyright and license information, please view the LICENSE
      * file that was distributed with this source code.
      */
-
+    
     namespace Acme;
-
+    
+    /**
+     * FooBar class.
+     *
+     */
     class FooBar
     {
         const SOME_CONST = 42;
-
+    
         private $fooBar;
-
+    
         /**
          * @param string $dummy Some argument description
          */
@@ -43,17 +47,18 @@ example containing most features described below:
         {
             $this->fooBar = $this->transformText($dummy);
         }
-
+    
         /**
          * @param string $dummy Some argument description
          * @return string|null Transformed input
          */
         private function transformText($dummy, $options = array())
         {
-            $mergedOptions = array_merge($options, array(
-                'some_default' => 'values',
-            ));
-
+            $mergedOptions = array_merge(
+                $options,
+                array('some_default' => 'values', )
+            );
+    
             if (true === $dummy) {
                 return;
             }
@@ -64,10 +69,11 @@ example containing most features described below:
                     $dummy = ucwords($dummy);
                 }
             }
-
+    
             return $dummy;
         }
     }
+    
 
 Structure
 ---------
