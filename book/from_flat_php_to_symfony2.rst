@@ -131,7 +131,7 @@ is known as a "controller". The term :term:`controller` is a word you'll hear
 a lot, regardless of the language or framework you use. It refers simply
 to the area of *your* code that processes user input and prepares the response.
 
-In this case, our controller prepares data from the database and then includes
+In this case, the controller prepares data from the database and then includes
 a template to present that data. With the controller isolated, you could
 easily change *just* the template file if you needed to render the blog
 entries in some other format (e.g. ``list.json.php`` for JSON format).

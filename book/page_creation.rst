@@ -22,15 +22,13 @@ HTTP response.
 Symfony2 follows this philosophy and provides you with tools and conventions
 to keep your application organized as it grows in users and complexity.
 
-Sounds simple enough? Let's dive in!
-
 .. index::
    single: Page creation; Example
 
 The "Hello Symfony!" Page
 -------------------------
 
-Let's start with a spin off of the classic "Hello World!" application. When
+To begin with, a spin off of the classic "Hello World!" application. When
 you're finished, the user will be able to get a personal greeting (e.g. "Hello Symfony")
 by going to the following URL:
 
@@ -347,7 +345,7 @@ controller, and ``index.html.twig`` the template:
 
         Hello <?php echo $view->escape($name) ?>!
 
-Let's step through the Twig template line-by-line:
+Stepping through the Twig template line-by-line:
 
 * *line 2*: The ``extends`` token defines a parent template. The template
   explicitly defines a layout file inside of which it will be placed.

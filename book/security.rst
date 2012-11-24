@@ -20,7 +20,7 @@ perform a certain action.
 .. image:: /images/book/security_authentication_authorization.png
    :align: center
 
-Since the best way to learn is to see an example, let's dive right in.
+Since the best way to learn is to see an example, we'll dive right in.
 
 .. note::
 
