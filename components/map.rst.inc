@@ -75,6 +75,10 @@
 
   * :doc:`/components/serializer`
 
+* **Stopwatch**
+
+  * :doc:`/components/stopwatch`
+
 * **Templating**
 
   * :doc:`/components/templating`
