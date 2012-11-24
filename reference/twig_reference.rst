@@ -45,8 +45,15 @@ Functions
 | ``form_rest(form, variables = {})``                | This will render all fields that have not yet been rendered, more                          |
 |                                                    | information in :ref:`the Twig Form reference<reference-forms-twig-rest>`.                  |
 +----------------------------------------------------+--------------------------------------------------------------------------------------------+
+| ``csrf_token(intention)``                          | This will render a CSRF token, use this function if you want CSRF protection without       |
+|                                                    | creating a form                                                                            |
++----------------------------------------------------+--------------------------------------------------------------------------------------------+
 | ``is_granted(role, object = null, field = null)``  | This will return ``true`` if the current user has the required role, more                  |
 |                                                    | information in ":ref:`book-security-template`"                                             |
++----------------------------------------------------+--------------------------------------------------------------------------------------------+
+| ``logout_path(key)``                               | This will generate the relative logout URL for the given firewall                          |
++----------------------------------------------------+--------------------------------------------------------------------------------------------+
+| ``logout_url(key)``                                | Equal to ``logout_path(...)`` but this will generate an absolute url                       |
 +----------------------------------------------------+--------------------------------------------------------------------------------------------+
 | ``path(name, parameters = {})``                    | Get a relative url for the given route, more information in                                |
 |                                                    | ":ref:`book-templating-pages`".                                                            |
