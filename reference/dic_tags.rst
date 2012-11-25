@@ -6,7 +6,7 @@ to "flag" it to be used in some special way. For example, if you have a service
 that you would like to register as a listener to one of Symfony's core events,
 you can flag it with the ``kernel.event_listener`` tag.
 
-You can learn a little bit more about "tags" by reading the ":ref:`book-service-container-tags`"
+You can learn a little bit more about "tags" by reading the ":ref:`book-servicecontainer-tags`"
 section of the Service Container chapter.
 
 Below is information about all of the tags available inside Symfony2. There

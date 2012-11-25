@@ -21,10 +21,10 @@ Functions
 | Function Syntax                                    | Usage                                                                                      |
 +====================================================+============================================================================================+
 | ``asset(path, packageName = null)``                | Get the public path of the asset, more information in                                      |
-|                                                    | ":ref:`book-templating-assets`".                                                           |
+|                                                    | ":ref:`book-templating-linking-assets`".                                                   |
 +----------------------------------------------------+--------------------------------------------------------------------------------------------+
 | ``asset_version(packageName = null)``              | Get the current version of the package, more information in                                |
-|                                                    | ":ref:`book-templating-assets`".                                                           |
+|                                                    | ":ref:`book-templating-linking-assets`".                                                   |
 +----------------------------------------------------+--------------------------------------------------------------------------------------------+
 | ``form_enctype(view)``                             | This will render the required ``enctype="multipart/form-data"`` attribute                  |
 |                                                    | if the form contains at least one file upload field, more information in                   |
@@ -53,7 +53,7 @@ Functions
 |                                                    | information in ":ref:`book-security-template`"                                             |
 +----------------------------------------------------+--------------------------------------------------------------------------------------------+
 | ``path(name, parameters = {})``                    | Get a relative url for the given route, more information in                                |
-|                                                    | ":ref:`book-templating-pages`".                                                            |
+|                                                    | ":ref:`book-templating-linking-pages`".                                                    |
 +----------------------------------------------------+--------------------------------------------------------------------------------------------+
 | ``url(name, parameters = {})``                     | Equal to ``path(...)`` but it generates an absolute url                                    |
 +----------------------------------------------------+--------------------------------------------------------------------------------------------+
@@ -102,7 +102,7 @@ Tags
 | Tag Syntax                                        | Usage                                                             |
 +===================================================+===================================================================+
 | ``{% render 'controller' with {parameters} %}``   | This will render the Response Content for the given controller,   |
-|                                                   | more information in :ref:`templating-embedding-controller`.       |
+|                                                   | more information in :ref:`book-templating-embedding-controller`.  |
 +---------------------------------------------------+-------------------------------------------------------------------+
 | ``{% form_theme form 'file' %}``                  | This will look inside the given file for overridden form blocks,  |
 |                                                   | more information in :doc:`/cookbook/form/form_customization`.     |

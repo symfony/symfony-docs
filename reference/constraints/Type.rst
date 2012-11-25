@@ -6,9 +6,9 @@ should be an array, you can use this constraint with the ``array`` type option
 to validate this.
 
 +----------------+---------------------------------------------------------------------+
-| Applies to     | :ref:`property or method<validation-property-target>`               |
+| Applies to     | :ref:`property or method<book-validation-property-target>`          |
 +----------------+---------------------------------------------------------------------+
-| Options        | - :ref:`type<reference-constraint-type-type>`                       |
+| Options        | - :ref:`type<reference-constraints-type-type>`                      |
 |                | - `message`_                                                        |
 +----------------+---------------------------------------------------------------------+
 | Class          | :class:`Symfony\\Component\\Validator\\Constraints\\Type`           |
@@ -54,7 +54,7 @@ Options
 type
 ~~~~
 
-**type**: ``string`` [:ref:`default option<validation-default-option>`]
+**type**: ``string`` [:ref:`default option<book-validation-default-option>`]
 
 This required option is the fully qualified class name or one of the PHP datatypes
 as determined by PHP's ``is_`` functions.

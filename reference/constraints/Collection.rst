@@ -11,7 +11,7 @@ This constraint can also make sure that certain collection keys are present
 and that extra keys are not present.
 
 +----------------+--------------------------------------------------------------------------+
-| Applies to     | :ref:`property or method<validation-property-target>`                    |
+| Applies to     | :ref:`property or method<book-validation-property-target>`               |
 +----------------+--------------------------------------------------------------------------+
 | Options        | - `fields`_                                                              |
 |                | - `allowExtraFields`_                                                    |
@@ -161,7 +161,7 @@ Options
 fields
 ~~~~~~
 
-**type**: ``array`` [:ref:`default option<validation-default-option>`]
+**type**: ``array`` [:ref:`default option<book-validation-default-option>`]
 
 This option is required, and is an associative array defining all of the
 keys in the collection and, for each key, exactly which validator(s) should

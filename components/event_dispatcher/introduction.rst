@@ -93,8 +93,8 @@ Event Names and Event Objects
 
 When the dispatcher notifies listeners, it passes an actual ``Event`` object
 to those listeners. The base ``Event`` class is very simple: it contains a
-method for stopping :ref:`event
-propagation<event_dispatcher-event-propagation>`, but not much else.
+method for stopping :ref:`event propagation<components-eventdispatcher-event-propagation>`, 
+but not much else.
 
 Often times, data about a specific event needs to be passed along with the
 ``Event`` object so that the listeners have needed information. In the case of

@@ -217,7 +217,7 @@ would be ``/images/logo.png?version=5``.
 
     All percentage signs (``%``) in the format string must be doubled to escape
     the character. Without escaping, values might inadvertently be interpreted
-    as :ref:`book-service-container-parameters`.
+    as :ref:`book-servicecontainer-parameters`.
 
 .. tip::
 

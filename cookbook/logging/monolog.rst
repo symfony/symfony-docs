@@ -16,7 +16,7 @@ stack of handlers to write the logs (the handlers can be shared).
 .. tip::
 
     When injecting the logger in a service you can
-    :ref:`use a custom channel<dic_tags-monolog>` to see easily which
+    :ref:`use a custom channel<reference-dictags-monolog>` to see easily which
     part of the application logged the message.
 
 The basic handler is the ``StreamHandler`` which writes logs in a stream
@@ -164,7 +164,7 @@ only for a specific handler.
 A processor is simply a callable receiving the record as its first argument.
 
 Processors are configured using the ``monolog.processor`` DIC tag. See the
-:ref:`reference about it<dic_tags-monolog-processor>`.
+:ref:`reference about it<reference-dictags-monolog-processor>`.
 
 Adding a Session/Request Token
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

@@ -5,7 +5,7 @@ When applied to an array (or Traversable object), this constraint allows
 you to apply a collection of constraints to each element of the array.
 
 +----------------+------------------------------------------------------------------------+
-| Applies to     | :ref:`property or method<validation-property-target>`                  |
+| Applies to     | :ref:`property or method<book-validation-property-target>`             |
 +----------------+------------------------------------------------------------------------+
 | Options        | - `constraints`_                                                       |
 +----------------+------------------------------------------------------------------------+
@@ -59,7 +59,7 @@ Options
 constraints
 ~~~~~~~~~~~
 
-**type**: ``array`` [:ref:`default option<validation-default-option>`]
+**type**: ``array`` [:ref:`default option<book-validation-default-option>`]
 
 This required option is the array of validation constraints that you want
 to apply to each element of the underlying array.

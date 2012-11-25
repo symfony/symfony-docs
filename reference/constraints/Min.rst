@@ -4,7 +4,7 @@ Min
 Validates that a given number is *greater* than some minimum number.
 
 +----------------+--------------------------------------------------------------------+
-| Applies to     | :ref:`property or method<validation-property-target>`              |
+| Applies to     | :ref:`property or method<book-validation-property-target>`         |
 +----------------+--------------------------------------------------------------------+
 | Options        | - `limit`_                                                         |
 |                | - `message`_                                                       |
@@ -50,7 +50,7 @@ Options
 limit
 ~~~~~
 
-**type**: ``integer`` [:ref:`default option<validation-default-option>`]
+**type**: ``integer`` [:ref:`default option<book-validation-default-option>`]
 
 This required option is the "min" value. Validation will fail if the given
 value is **less** than this min value.

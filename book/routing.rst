@@ -74,8 +74,8 @@ for you to use in your controller (keep reading).
 
 The ``_controller`` parameter is a special key that tells Symfony which controller
 should be executed when a URL matches this route. The ``_controller`` string
-is called the :ref:`logical name<controller-string-syntax>`. It follows a
-pattern that points to a specific PHP class and method::
+is called the :ref:`logical name<book-routing-controller-logical-name>`. 
+It follows a pattern that points to a specific PHP class and method::
 
     // src/Acme/BlogBundle/Controller/BlogController.php
     namespace Acme\BlogBundle\Controller;
@@ -179,7 +179,7 @@ file:
     Even though all routes are loaded from a single file, it's common practice
     to include additional routing resources. To do so, just point out in the
     main routing configuration file which external files should be included.
-    See the :ref:`routing-include-external-resources` section for more
+    See the :ref:`book-routing-external-resources` section for more
     information.
 
 Basic Route Configuration
@@ -226,7 +226,7 @@ A basic route consists of just two parts: the ``pattern`` to match and a
 This route matches the homepage (``/``) and maps it to the ``AcmeDemoBundle:Main:homepage``
 controller. The ``_controller`` string is translated by Symfony2 into an
 actual PHP function and executed. That process will be explained shortly
-in the :ref:`controller-string-syntax` section.
+in the :ref:`book-routing-controller-logical-name` section.
 
 .. index::
    single: Routing; Placeholders
@@ -874,7 +874,7 @@ variables could be used as arguments to the ``showAction()`` method:
 
 Since the placeholders and ``defaults`` collection are merged together, even
 the ``$_controller`` variable is available. For a more detailed discussion,
-see :ref:`route-parameters-controller-arguments`.
+see :ref:`book-controller-route-parameters`.
 
 .. tip::
 

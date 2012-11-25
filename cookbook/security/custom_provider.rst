@@ -200,7 +200,7 @@ Now you make the user provider available as a service:
 
 .. note::
 
-    Make sure the services file is being imported. See :ref:`service-container-imports-directive`
+    Make sure the services file is being imported. See :ref:`book-servicecontainer-importing`
     for details.
 
 Modify ``security.yml``

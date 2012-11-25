@@ -298,7 +298,7 @@ add the ``allow_add`` option to your collection field::
 
 Note that ``'by_reference' => false`` was also added. Normally, the form
 framework would modify the tags on a `Task` object *without* actually
-ever calling `setTags`. By setting :ref:`by_reference<reference-form-types-by-reference>`
+ever calling `setTags`. By setting :ref:`by_reference<reference-forms-types-by-reference>`
 to `false`, `setTags` will be called. This will be important later as you'll
 see.
 
@@ -457,7 +457,7 @@ into new ``Tag`` objects and added to the ``tags`` property of the ``Task`` obje
 
     The trick is to make sure that the single "Task" is set on each "Tag".
     One easy way to do this is to add some extra logic to ``setTags()``,
-    which is called by the form framework since :ref:`by_reference<reference-form-types-by-reference>`
+    which is called by the form framework since :ref:`by_reference<reference-forms-types-by-reference>`
     is set to ``false``::
 
         // src/Acme/TaskBundle/Entity/Task.php

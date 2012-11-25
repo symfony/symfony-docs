@@ -886,7 +886,7 @@ the framework.
 .. tip::
 
     Be sure that ``swiftmailer`` entry appears in your application
-    configuration. As you mentioned in :ref:`service-container-extension-configuration`,
+    configuration. As you mentioned in :ref:`book-servicecontainer-extension-config`,
     the ``swiftmailer`` key invokes the service extension from the
     ``SwiftmailerBundle``, which registers the ``mailer`` service.
 

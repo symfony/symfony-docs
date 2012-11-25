@@ -6,7 +6,7 @@ as properties on an object being validated. This allows you to validate an
 object and all sub-objects associated with it.
 
 +----------------+---------------------------------------------------------------------+
-| Applies to     | :ref:`property or method<validation-property-target>`               |
+| Applies to     | :ref:`property or method<book-validation-property-target>`          |
 +----------------+---------------------------------------------------------------------+
 | Options        | - `traverse`_                                                       |
 +----------------+---------------------------------------------------------------------+

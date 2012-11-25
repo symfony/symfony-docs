@@ -75,7 +75,7 @@ just one line:
 
 The remainder of this recipe will explain how every part of the form's markup
 can be modified at several different levels. For more information about form
-rendering in general, see :ref:`form-rendering-template`.
+rendering in general, see :ref:`book-forms-rendering-template`.
 
 .. _cookbook-form-customization-form-themes:
 
@@ -198,7 +198,7 @@ this folder.
     will first look for the type-specific fragment (e.g. ``text_errors``) before
     falling back to its parent fragment name if it doesn't exist (e.g. ``field_errors``).
 
-    For more information on this topic, see :ref:`form-template-blocks`.
+    For more information on this topic, see :ref:`book-forms-template-blocks`.
 
 .. _cookbook-form-theming-methods:
 
@@ -929,6 +929,6 @@ customizations directly. Look at the following example:
         ))) ?>
 
 The array passed as the second argument contains form "variables". For
-more details about this concept in Twig, see :ref:`twig-reference-form-variables`.
+more details about this concept in Twig, see :ref:`reference-forms-twig-variables`.
 
 .. _`form_div_layout.html.twig`: https://github.com/symfony/symfony/blob/2.0/src/Symfony/Bridge/Twig/Resources/views/Form/form_div_layout.html.twig

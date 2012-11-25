@@ -10,7 +10,7 @@ field to display a ``select`` field of all, or some, of the ``Category``
 objects from the database.
 
 +-------------+------------------------------------------------------------------+
-| Rendered as | can be various tags (see :ref:`forms-reference-choice-tags`)     |
+| Rendered as | can be various tags (see :ref:`reference-forms-types-tags`)      |
 +-------------+------------------------------------------------------------------+
 | Options     | - `class`_                                                       |
 |             | - `property`_                                                    |

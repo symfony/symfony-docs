@@ -44,9 +44,9 @@ When you create a bundle, you have two choices on how to handle configuration:
     You can specify your services in a configuration file (e.g. ``services.yml``)
     that lives in your bundle and then import it from your main application
     configuration. This is really easy, quick and totally effective. If you
-    make use of :ref:`parameters<book-service-container-parameters>`, then
+    make use of :ref:`parameters<book-servicecontainer-parameters>`, then
     you still have the flexibility to customize your bundle from your application
-    configuration. See ":ref:`service-container-imports-directive`" for more
+    configuration. See ":ref:`book-servicecontainer-importing`" for more
     details.
 
 2. **Exposing Semantic Configuration** (*advanced*):
@@ -74,7 +74,7 @@ The second method has several specific advantages:
 * Smart merging when several configuration files (e.g. ``config_dev.yml``
   and ``config.yml``) override each other's configuration;
 
-* Configuration validation (if you use a :ref:`Configuration Class<cookbook-bundles-extension-config-class>`);
+* Configuration validation (if you use a :ref:`Configuration Class<cookbook-bundles-config-class>`);
 
 * IDE auto-completion when you create an XSD and developers use XML.
 
@@ -250,7 +250,7 @@ It's your job, then, to decide how these configurations should be merged
 together. You might, for example, have later values override previous values
 or somehow merge them together.
 
-Later, in the :ref:`Configuration Class<cookbook-bundles-extension-config-class>`
+Later, in the :ref:`Configuration Class<cookbook-bundles-config-class>`
 section, you'll learn of a truly robust way to handle this. But for now,
 you might just merge them manually::
 

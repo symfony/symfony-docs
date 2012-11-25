@@ -116,7 +116,7 @@ name (a "class::method" string, like ``Bundle\BlogBundle\PostController:indexAct
 
     The default implementation uses the
     :class:`Symfony\\Bundle\\FrameworkBundle\\EventListener\\RouterListener`
-    to define the ``_controller`` Request attribute (see :ref:`kernel-core-request`).
+    to define the ``_controller`` Request attribute (see :ref:`book-internals-kernel-request`).
 
 The
 :method:`Symfony\\Component\\HttpKernel\\Controller\\ControllerResolverInterface::getArguments`

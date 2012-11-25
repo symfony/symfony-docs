@@ -24,7 +24,7 @@ Glossary
         A *Bundle* is a directory containing a set of files (PHP files,
         stylesheets, JavaScripts, images, ...) that *implement* a single
         feature (a blog, a forum, etc). In Symfony2, (*almost*) everything
-        lives inside a bundle. (see :ref:`page-creation-bundles`)
+        lives inside a bundle. (see :ref:`book-pagecreation-bundles`)
 
    Front Controller
         A *Front Controller* is a short PHP script that lives in the web directory
@@ -77,7 +77,7 @@ Glossary
         itself. Despite the usual commercial connotations of the word, vendors
         in Symfony often (even usually) include free software. Any library you
         add to your Symfony2 project should go in the ``vendor`` directory. See
-        :ref:`The Architecture: Using Vendors <using-vendors>`.
+        :ref:`The Architecture: Using Vendors<quicktour-architecture-vendors>`.
 
    Acme
         *Acme* is a sample company name used in Symfony demos and documentation.
@@ -99,8 +99,8 @@ Glossary
    Kernel
         The *Kernel* is the core of Symfony2. The Kernel object handles HTTP
         requests using all the bundles and libraries registered to it. See
-        :ref:`The Architecture: The Application Directory <the-app-dir>` and the
-        :doc:`/book/internals` chapter.
+        :ref:`The Architecture: The Application Directory<quicktour-architecture-app-dir>` 
+        and the :doc:`/book/internals` chapter.
 
    Firewall
         In Symfony2, a *Firewall* doesn't have to do with networking. Instead,

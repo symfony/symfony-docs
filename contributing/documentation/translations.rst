@@ -29,7 +29,7 @@ for. Here is the list of the official *master* repositories:
 .. note::
 
     If you want to contribute translations for a new language, read the
-    :ref:`dedicated section <translations-adding-a-new-language>`.
+    :ref:`dedicated section<contributing-docs-translation-new-language>`.
 
 Joining the Translation Team
 ----------------------------

@@ -8,7 +8,7 @@ The "value" for each locale is either the two letter ISO639-1 *language* code
 the ISO3166 *country* code (e.g. ``fr_FR`` for French/France).
 
 +----------------+------------------------------------------------------------------------+
-| Applies to     | :ref:`property or method<validation-property-target>`                  |
+| Applies to     | :ref:`property or method<book-validation-property-target>`             |
 +----------------+------------------------------------------------------------------------+
 | Options        | - `message`_                                                           |
 +----------------+------------------------------------------------------------------------+

@@ -92,7 +92,7 @@ by running the following command from the command line:
 This command downloads all of the necessary vendor libraries - including
 Symfony itself - into the ``vendor/`` directory. For more information on
 how third-party vendor libraries are managed inside Symfony2, see
-":ref:`cookbook-managing-vendor-libraries`".
+":ref:`cookbook-workflow-managing-vendors`".
 
 Configuration and Setup
 ~~~~~~~~~~~~~~~~~~~~~~~

@@ -5,10 +5,10 @@ How to use Varnish to speed up my Website
 =========================================
 
 Because Symfony2's cache uses the standard HTTP cache headers, the
-:ref:`symfony-gateway-cache` can easily be replaced with any other reverse
+:ref:`book-cache-symfony-gateway` can easily be replaced with any other reverse
 proxy. Varnish is a powerful, open-source, HTTP accelerator capable of serving
-cached content quickly and including support for :ref:`Edge Side
-Includes<edge-side-includes>`.
+cached content quickly and including support for
+:ref:`Edge Side Includes<book-cache-edge-side-includes>`.
 
 .. index::
     single: Varnish; configuration
@@ -68,7 +68,7 @@ Cache Invalidation
 ------------------
 
 You should never need to invalidate cached data because invalidation is already
-taken into account natively in the HTTP cache models (see :ref:`http-cache-invalidation`).
+taken into account natively in the HTTP cache models (see :ref:`book-cache-invalidation`).
 
 Still, Varnish can be configured to accept a special HTTP ``PURGE`` method
 that will invalidate the cache for a given resource:

@@ -25,7 +25,7 @@ label you want to display as the second argument.
     {{ form_label(form.name, 'Your Name', { 'attr': {'class': 'foo'} }) }}
     {{ form_label(form.name, null, { 'label': 'Your name', 'attr': {'class': 'foo'} }) }}
 
-See ":ref:`twig-reference-form-variables`" to learn about the ``variables``
+See ":ref:`reference-forms-twig-variables`" to learn about the ``variables``
 argument.
 
 .. _reference-forms-twig-errors:
@@ -62,7 +62,7 @@ options that can be passed. These are discussed on a type-by-type basis.
 The ``attributes`` are not applied recursively to child fields if you're
 rendering many fields at once (e.g. ``form_widget(form)``).
 
-See ":ref:`twig-reference-form-variables`" to learn more about the ``variables``
+See ":ref:`reference-forms-twig-variables`" to learn more about the ``variables``
 argument.
 
 .. _reference-forms-twig-row:
@@ -82,7 +82,7 @@ The second argument to ``form_row`` is an array of variables. The templates
 provided in Symfony only allow to override the label as shown in the example
 above.
 
-See ":ref:`twig-reference-form-variables`" to learn about the ``variables``
+See ":ref:`reference-forms-twig-variables`" to learn about the ``variables``
 argument.
 
 .. _reference-forms-twig-rest:

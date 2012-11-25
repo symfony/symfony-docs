@@ -178,14 +178,14 @@ class called ``HelloController`` inside a bundle named ``AcmeHelloBundle``. The
 method ``indexAction()`` is then executed.
 
 For more details on the string format used to reference different controllers,
-see :ref:`controller-string-syntax`.
+see :ref:`book-routing-controller-logical-name`.
 
 .. note::
 
     This example places the routing configuration directly in the ``app/config/``
     directory. A better way to organize your routes is to place each route
     in the bundle it belongs to. For more information on this, see
-    :ref:`routing-include-external-resources`.
+    :ref:`book-routing-external-resources`.
 
 .. tip::
 
@@ -450,7 +450,7 @@ the controller used in the routing configuration. In this case, the target
 controller class will be ``HelloController`` inside some ``AcmeHelloBundle``.
 The array passed to the method becomes the arguments on the resulting controller.
 This same interface is used when embedding controllers into templates (see
-:ref:`templating-embedding-controller`). The target controller method should
+:ref:`book-templating-embedding-controller`). The target controller method should
 look something like the following::
 
     public function fancyAction($name, $color)

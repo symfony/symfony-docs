@@ -6,7 +6,7 @@ is simply blank (blank string or ``null``), see the  :doc:`/reference/constraint
 constraint. To ensure that a property is not null, see :doc:`/reference/constraints/NotNull`.
 
 +----------------+-----------------------------------------------------------------------+
-| Applies to     | :ref:`property or method<validation-property-target>`                 |
+| Applies to     | :ref:`property or method<book-validation-property-target>`            |
 +----------------+-----------------------------------------------------------------------+
 | Options        | - `message`_                                                          |
 +----------------+-----------------------------------------------------------------------+

@@ -6,7 +6,7 @@ set of *valid* choices. It can also be used to validate that each item in
 an array of items is one of those valid choices.
 
 +----------------+-----------------------------------------------------------------------+
-| Applies to     | :ref:`property or method<validation-property-target>`                 |
+| Applies to     | :ref:`property or method<book-validation-property-target>`            |
 +----------------+-----------------------------------------------------------------------+
 | Options        | - `choices`_                                                          |
 |                | - `callback`_                                                         |
@@ -195,7 +195,7 @@ Available Options
 choices
 ~~~~~~~
 
-**type**: ``array`` [:ref:`default option<validation-default-option>`]
+**type**: ``array`` [:ref:`default option<book-validation-default-option>`]
 
 A required option (unless `callback`_ is specified) - this is the array
 of options that should be considered in the valid set. The input value
