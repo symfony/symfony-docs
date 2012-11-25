@@ -126,7 +126,7 @@ to learn more about how to configure and develop inside your application.
 
 .. include:: _vendor_deps.rst.inc
 
-.. _svn-hosting:
+.. _cookbook-workflow-svn-hosting:
 
 Subversion hosting solutions
 ----------------------------

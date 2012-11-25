@@ -371,7 +371,7 @@ When working with template inheritance, here are some tips to keep in mind:
    single: Templating; Naming conventions
    single: Templating; File locations
 
-.. _template-naming-locations:
+.. _book-templating-naming-locations:
 
 Template Naming and Locations
 -----------------------------
@@ -481,7 +481,7 @@ few more.
 .. index::
    single: Templating; Including other templates
 
-.. _including-templates:
+.. _book-templating-including:
 
 Including other Templates
 ~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -565,7 +565,7 @@ template using the ``with`` command.
 .. index::
    single: Templating; Embedding action
 
-.. _templating-embedding-controller:
+.. _book-templating-embedding-controller:
 
 Embedding Controllers
 ~~~~~~~~~~~~~~~~~~~~~
@@ -653,7 +653,7 @@ Controllers are fast to execute and promote good code organization and reuse.
 .. index::
    single: Templating; Linking to pages
 
-.. _book-templating-pages:
+.. _book-templating-linking-pages:
 
 Linking to Pages
 ~~~~~~~~~~~~~~~~
@@ -776,7 +776,7 @@ correctly:
 .. index::
    single: Templating; Linking to assets
 
-.. _book-templating-assets:
+.. _book-templating-linking-assets:
 
 Linking to Assets
 ~~~~~~~~~~~~~~~~~
@@ -954,7 +954,7 @@ is equivalent to::
 
     return $response = new Response($content);
 
-.. _template-configuration:
+.. _book-templating-templating-config:
 
 The templating engine (or "service") is preconfigured to work automatically
 inside Symfony2. It can, of course, be configured further in the application
@@ -997,7 +997,7 @@ Several configuration options are available and are covered in the
 .. index::
     single: Template; Overriding templates
 
-.. _overriding-bundle-templates:
+.. _book-templating-overriding-bundles:
 
 Overriding Bundle Templates
 ---------------------------
@@ -1064,7 +1064,7 @@ subdirectory.
     You can also override templates from within a bundle by using bundle
     inheritance. For more information, see :doc:`/cookbook/bundles/inheritance`.
 
-.. _templating-overriding-core-templates:
+.. _book-templating-overriding-core:
 
 .. index::
     single: Template; Overriding exception templates
@@ -1220,7 +1220,7 @@ in a JavaScript string, use the ``js`` context:
 .. index::
    single: Templating; Formats
 
-.. _template-formats:
+.. _book-templating-debug:
 
 Debugging
 ---------

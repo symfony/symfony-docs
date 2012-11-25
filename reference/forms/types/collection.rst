@@ -328,6 +328,6 @@ error_bubbling
 
 .. include:: /reference/forms/types/options/_error_bubbling_body.rst.inc
 
-.. _reference-form-types-by-reference:
+.. _reference-forms-types-by-reference:
 
 .. include:: /reference/forms/types/options/by_reference.rst.inc

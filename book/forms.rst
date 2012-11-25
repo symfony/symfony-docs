@@ -341,7 +341,7 @@ object.
 That's it! If you re-submit the form with invalid data, you'll see the
 corresponding errors printed out with the form.
 
-.. _book-forms-html5-validation-disable:
+.. _book-forms-html5-validation:
 
 .. sidebar:: HTML5 Validation
 
@@ -538,7 +538,7 @@ passing the option in the options field array::
 .. index::
    single: Forms; Rendering in a template
 
-.. _form-rendering-template:
+.. _book-forms-rendering-template:
 
 Rendering a Form in a Template
 ------------------------------
@@ -732,7 +732,7 @@ that can be used with each.
 .. index::
    single: Forms; Creating form classes
 
-.. _book-form-creating-form-classes:
+.. _book-forms-creating-classes:
 
 Creating Form Classes
 ---------------------
@@ -1009,7 +1009,7 @@ entry and  the :doc:`collection</reference/forms/types/collection>` field type r
    single: Forms; Theming
    single: Forms; Customizing fields
 
-.. _form-theming:
+.. _book-forms-theming:
 
 Form Theming
 ------------
@@ -1104,7 +1104,7 @@ For a more extensive discussion, see :doc:`/cookbook/form/form_customization`.
 .. index::
    single: Forms; Template fragment naming
 
-.. _form-template-blocks:
+.. _book-forms-template-blocks:
 
 Form Fragment Naming
 ~~~~~~~~~~~~~~~~~~~~
@@ -1313,7 +1313,7 @@ are now used globally to define form output.
 .. index::
    single: Forms; CSRF protection
 
-.. _forms-csrf:
+.. _book-forms-csrf:
 
 CSRF Protection
 ---------------

@@ -165,7 +165,7 @@ argument::
         $request->query->get('foo[bar]', null, true);
         // returns 'bar'
 
-.. _component-foundation-attributes:
+.. _components-foundation-attributes:
 
 Last, but not the least, you can also store additional data in the request,
 thanks to the ``attributes`` public property, which is also an instance of

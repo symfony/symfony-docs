@@ -71,7 +71,7 @@ populate the ``$this->data`` property (it takes care of serializing the
         }
     }
 
-.. _data_collector_tag:
+.. _cookbook-profiler-dic-tag:
 
 Enabling Custom Data Collectors
 -------------------------------

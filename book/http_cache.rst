@@ -66,7 +66,7 @@ Nottingham's `Cache Tutorial`_.
    single: Cache; Reverse proxy
    single: Cache; Gateway
 
-.. _gateway-caches:
+.. _book-cache-gateway:
 
 Caching with a Gateway Cache
 ----------------------------
@@ -128,7 +128,7 @@ the HTTP cache directions set in the response.
 .. index::
    single: Cache; Symfony2 reverse proxy
 
-.. _`symfony-gateway-cache`:
+.. _book-cache-symfony-gateway:
 
 Symfony2 Reverse Proxy
 ~~~~~~~~~~~~~~~~~~~~~~
@@ -255,7 +255,7 @@ misses.
 .. index::
    single: Cache; HTTP
 
-.. _http-cache-introduction:
+.. _book-cache-http-intro:
 
 Introduction to HTTP Caching
 ----------------------------
@@ -384,7 +384,7 @@ header when none is set by the developer by following these rules:
   ``private`` directives have been explicitly added, Symfony2 adds the
   ``private`` directive automatically (except when ``s-maxage`` is set).
 
-.. _http-expiration-validation:
+.. _book-cache-expiration-validation:
 
 HTTP Expiration and Validation
 ------------------------------
@@ -637,7 +637,7 @@ the ``Response`` will be set to a 304 status code.
    single: Cache; Conditional get
    single: HTTP; 304
 
-.. _optimizing-cache-validation:
+.. _book-cache-optimizing-validation:
 
 Optimizing your Code with Validation
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -772,7 +772,7 @@ Additionally, most cache-related HTTP headers can be set via the single
   single: Cache; ESI
   single: ESI
 
-.. _edge-side-includes:
+.. _book-cache-edge-side-includes:
 
 Using Edge Side Includes
 ------------------------
@@ -989,7 +989,7 @@ The ``render`` helper supports two other useful options:
 .. index::
     single: Cache; Invalidation
 
-.. _http-cache-invalidation:
+.. _book-cache-invalidation:
 
 Cache Invalidation
 ------------------

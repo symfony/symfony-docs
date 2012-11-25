@@ -286,7 +286,7 @@ Now that you've created the customized form block, you need to tell Symfony
 to use it. Inside the template where you're actually rendering your form,
 tell Symfony to use the template via the ``form_theme`` tag:
 
-.. _cookbook-form-twig-theme-import-template:
+.. _cookbook-form-twig-import-template:
 
 .. code-block:: html+jinja
 
@@ -321,7 +321,7 @@ Now that you've created the customized form template, you need to tell Symfony
 to use it. Inside the template where you're actually rendering your form,
 tell Symfony to use the theme via the ``setTheme`` helper method:
 
-.. _cookbook-form-php-theme-import-template:
+.. _cookbook-form-php-import-template:
 
 .. code-block:: php
 
@@ -333,7 +333,7 @@ When the ``form.age`` widget is rendered, Symfony will use the customized
 ``integer_widget.html.php`` template and the ``input`` tag will be wrapped in
 the ``div`` element.
 
-.. _cookbook-form-twig-import-base-blocks:
+.. _cookbook-form-twig-base-blocks:
 
 Referencing Base Form Blocks (Twig specific)
 --------------------------------------------

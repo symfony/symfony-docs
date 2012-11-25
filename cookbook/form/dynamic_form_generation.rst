@@ -44,7 +44,7 @@ system to analyze the data on the object and modify the form based on the
 Product object's data. In this entry, you'll learn how to add this level of
 flexibility to your forms.
 
-.. _`cookbook-forms-event-subscriber`:
+.. _cookbook-form-event-subscriber:
 
 Adding An Event Subscriber To A Form Class
 ------------------------------------------
@@ -79,7 +79,7 @@ The event subscriber is passed the FormFactory object in its constructor so
 that your new subscriber is capable of creating the form widget once it is
 notified of the dispatched event during form creation.
 
-.. _`cookbook-forms-inside-subscriber-class`:
+.. _cookbook-form-inside-subscriber:
 
 Inside the Event Subscriber Class
 ---------------------------------

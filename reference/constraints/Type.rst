@@ -49,7 +49,7 @@ Basic Usage
 Options
 -------
 
-.. _reference-constraint-type-type:
+.. _reference-constraints-type-type:
 
 type
 ~~~~

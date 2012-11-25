@@ -355,7 +355,7 @@ blog, a forum, ...) and which can be easily shared with other developers. As
 of now, you have manipulated one bundle, ``AcmeDemoBundle``. You will learn
 more about bundles in the last chapter of this tutorial.
 
-.. _quick-tour-big-picture-environments:
+.. _quicktour-bigpicture-environments:
 
 Working with Environments
 -------------------------

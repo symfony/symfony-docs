@@ -508,7 +508,7 @@ directory (``app/cache``), a log directory (``app/logs``) and a directory
 for application-level resource files, such as templates (``app/Resources``).
 You'll learn more about each of these directories in later chapters.
 
-.. _autoloading-introduction-sidebar:
+.. _book-pagecreation-autoloading:
 
 .. sidebar:: Autoloading
 
@@ -548,7 +548,7 @@ more bundles that you create in this directory.
 
 But what exactly is a :term:`bundle`?
 
-.. _page-creation-bundles:
+.. _book-pagecreation-bundles:
 
 The Bundle System
 -----------------
@@ -839,7 +839,7 @@ options of each feature.
 .. index::
    single: Environments; Introduction
 
-.. _environments-summary:
+.. _book-pagecreation-environments:
 
 Environments
 ------------

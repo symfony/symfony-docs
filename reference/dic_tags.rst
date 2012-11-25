@@ -207,7 +207,7 @@ The ``priority`` value is optional, and defaults to 0. This value can be
 from -255 to 255, and the warmers will be executed in the order of their
 priority.
 
-.. _dic-tags-kernel-event-listener:
+.. _reference-dictags-kernel-event-listener:
 
 kernel.event_listener
 ---------------------
@@ -291,7 +291,7 @@ kernel.exception
 | :class:`Symfony\\Component\\HttpKernel\\EventListener\\ExceptionListener`                 | -128     |
 +-------------------------------------------------------------------------------------------+----------+
 
-.. _dic_tags-monolog:
+.. _reference-dictags-monolog:
 
 monolog.logger
 --------------
@@ -331,7 +331,7 @@ channel when injecting the logger in a service.
     This works only when the logger service is a constructor argument,
     not when it is injected through a setter.
 
-.. _dic_tags-monolog-processor:
+.. _reference-dictags-monolog-processor:
 
 monolog.processor
 -----------------
@@ -616,7 +616,7 @@ file, but it might either be blank or contain a little bit of information
 about loading those resources from the database. The file is key to trigger
 the ``load`` method on your custom loader.
 
-.. _reference-dic-tags-twig-extension:
+.. _reference-dictags-twig-extension:
 
 twig.extension
 --------------

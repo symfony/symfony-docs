@@ -49,7 +49,7 @@ bugs, consider joining us; it's a very easy process:
 * The documentation website is updated every other night from the master
   repository.
 
-.. _translations-adding-a-new-language:
+.. _contributing-docs-translation-new-language:
 
 Adding a new Language
 ---------------------

@@ -141,7 +141,7 @@ Each part will be explained in the next section.
                 anything: { id: ROLE_SUPERADMIN, value: 'ROLE_USER, ROLE_ADMIN' }
                 anything: { id: ROLE_SUPERADMIN, value: [ROLE_USER, ROLE_ADMIN] }
 
-.. _reference-security-firewall-form-login:
+.. _reference-config-security-firewall-form-login:
 
 Form Login Configuration
 ------------------------

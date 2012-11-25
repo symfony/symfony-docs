@@ -64,7 +64,7 @@ create a new file with the same name in the
 ``app/Resources/TwigBundle/views/Exception`` directory. This is the standard
 way of overriding any template that lives inside a bundle.
 
-.. _cookbook-error-pages-by-status-code:
+.. _cookbook-controller-status-error-pages:
 
 Customizing the 404 Page and other Error Pages
 ----------------------------------------------

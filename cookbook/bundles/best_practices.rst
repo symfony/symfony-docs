@@ -11,7 +11,7 @@ flexible, you should follow some best practices if you want to distribute them.
 .. index::
    pair: Bundle; Naming conventions
 
-.. _bundles-naming-conventions:
+.. _cookbook-bundles-naming-conventions:
 
 Bundle Name
 -----------

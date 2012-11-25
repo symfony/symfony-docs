@@ -223,7 +223,7 @@ The ``JMSSecurityExtraBundle`` also allows you to secure the parameters and retu
 values of methods. For more information, see the `JMSSecurityExtraBundle`_
 documentation.
 
-.. _securing-services-annotations-sidebar:
+.. _cookbook-security-services-annotations:
 
 .. sidebar:: Activating the Annotations Functionality for all Services
 

@@ -112,7 +112,7 @@ good idea to include this in your form tag:
 
     <form action="{{ path('form_submit') }}" method="post" {{ form_enctype(form) }}>
 
-.. _`twig-reference-form-variables`:
+.. _reference-forms-twig-variables:
 
 More about Form "Variables"
 ---------------------------

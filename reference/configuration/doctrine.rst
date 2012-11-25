@@ -207,7 +207,7 @@ can control. The following configuration options exist for a mapping:
     single: Configuration; Doctrine DBAL
     single: Doctrine; DBAL configuration
 
-.. _`reference-dbal-configuration`:
+.. _reference-config-doctrine-dbal:
 
 Doctrine DBAL Configuration
 ---------------------------

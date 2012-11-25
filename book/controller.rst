@@ -194,7 +194,7 @@ see :ref:`controller-string-syntax`.
 .. index::
    single: Controller; Controller arguments
 
-.. _route-parameters-controller-arguments:
+.. _book-controller-route-parameters:
 
 Route Parameters as Controller Arguments
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -483,7 +483,7 @@ value to each variable.
 .. index::
    single: Controller; Rendering templates
 
-.. _controller-rendering-templates:
+.. _book-controller-rendering-templates:
 
 Rendering Templates
 ~~~~~~~~~~~~~~~~~~~

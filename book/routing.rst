@@ -701,7 +701,7 @@ expression. To match ``GET`` *or* ``POST`` requests, you can use ``GET|POST``.
    single: Routing; Advanced example
    single: Routing; _format parameter
 
-.. _advanced-routing-example:
+.. _book-routing-advanced-example:
 
 Advanced Routing Example
 ~~~~~~~~~~~~~~~~~~~~~~~~
@@ -795,7 +795,7 @@ that are special: each adds a unique piece of functionality inside your applicat
    single: Routing; Controllers
    single: Controller; String naming format
 
-.. _controller-string-syntax:
+.. _book-routing-controller-logical-name:
 
 Controller Naming Pattern
 -------------------------
@@ -884,7 +884,7 @@ see :ref:`route-parameters-controller-arguments`.
 .. index::
    single: Routing; Importing routing resources
 
-.. _routing-include-external-resources:
+.. _book-routing-external-resources:
 
 Including External Routing Resources
 ------------------------------------

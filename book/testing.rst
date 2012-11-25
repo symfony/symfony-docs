@@ -224,7 +224,7 @@ document::
         $client->getResponse()->getContent()
     );
 
-.. _book-testing-request-method-sidebar:
+.. _book-testing-request-method:
 
 .. sidebar:: More about the ``request()`` method:
 

@@ -210,7 +210,7 @@ instance of ``Symfony\Component\HttpKernel\Event\FilterResponseEvent``:
         // ...
     }
 
-.. _event_dispatcher-closures-as-listeners:
+.. _components-eventdispatcher-creating-dispatching:
 
 .. index::
    single: Event Dispatcher; Creating and dispatching an event
@@ -460,7 +460,7 @@ subscriber and also shows how to pass the priority of each listener method.
 .. index::
    single: Event Dispatcher; Stopping event flow
 
-.. _event_dispatcher-event-propagation:
+.. _components-eventdispatcher-event-propagation:
 
 Stopping Event Flow/Propagation
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

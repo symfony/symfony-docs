@@ -265,7 +265,7 @@ great, your user can't actually add any new tags yet.
     for example in ``app/autoload.php``) or render each form field by hand
     using ``form_row``.
 
-.. _cookbook-form-collections-new-prototype:
+.. _cookbook-form-new-prototype:
 
 Allowing "new" tags with the "prototype"
 -----------------------------------------
@@ -489,10 +489,10 @@ into new ``Tag`` objects and added to the ``tags`` property of the ``Task`` obje
     If you have a ``OneToMany`` relationship, then the workaround is similar,
     except that you can simply call ``setTask`` from inside ``setTags``.
 
-.. _cookbook-form-collections-remove:
+.. _cookbook-form-remove-tags:
 
 Allowing tags to be removed
-----------------------------
+---------------------------
 
 The next step is to allow the deletion of a particular item in the collection.
 The solution is similar to allowing tags to be added.
