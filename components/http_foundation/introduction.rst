@@ -44,8 +44,8 @@ which is almost equivalent to the more verbose, but also more flexible,
         array(),
         $_COOKIE,
         $_FILES,
-        $_SERVER)
-    ;
+        $_SERVER
+    );
 
 Accessing Request Data
 ~~~~~~~~~~~~~~~~~~~~~~
