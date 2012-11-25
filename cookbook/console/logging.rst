@@ -74,7 +74,8 @@ In order to enable console application to automatically log uncaught exceptions
 for all commands you'd need to do something more.
 
 First, you have to extend :class:`Symfony\\Bundle\\FrameworkBundle\\Console\\Application`
-class to override its :method:`Symfony\\Bundle\\FrameworkBundle\\Console\\Application::run` method, where exception handling should happen::
+class to override its :method:`Symfony\\Bundle\\FrameworkBundle\\Console\\Application::run`
+method, where exception handling should happen::
 
     // src/Acme/DemoBundle/Console/Application.php
     namespace Acme\DemoBundle\Console;
