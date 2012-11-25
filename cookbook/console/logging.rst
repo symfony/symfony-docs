@@ -2,7 +2,7 @@
    single: Console; Enabling logging
 
 How to enable logging in Console Commands
-===============================
+=========================================
 
 The Console component doesn't provide any logging capabilities out of the box.
 Normally, you run console commands manually and observe the output, that's
@@ -14,20 +14,19 @@ output and process it. This can be especially handful if you already have
 some existing setup for aggregating and analyzing Symfony logs.
 
 There are basically two logging cases you would need:
- * Manually logging some information from your command
- * Logging not caught Exceptions
+ * Manually logging some information from your command;
+ * Logging not caught Exceptions.
 
 Manually logging from console command
-----------------------------------
+-------------------------------------
 
 This one is really simple. When you create console command within full framewok
-as described here (:doc:`/cookbook/console/console_command`), your command
-extends (:class:`Symfony\\Bundle\\FrameworkBundle\\Command\\ContainerAwareCommand`),
+as described :doc:`here</cookbook/console/console_command>`, your command
+extends :class:`Symfony\\Bundle\\FrameworkBundle\\Command\\ContainerAwareCommand`,
 so you can simply access standard logger service through the container and
 use it to do the logging::
 
     // src/Acme/DemoBundle/Command/GreetCommand.php
-
     namespace Acme\DemoBundle\Command;
 
     use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
@@ -39,7 +38,7 @@ use it to do the logging::
 
     class GreetCommand extends ContainerAwareCommand
     {
-        // ..
+        // ...
 
         protected function execute(InputInterface $input, OutputInterface $output)
         {
@@ -55,10 +54,10 @@ use it to do the logging::
 
             if ($input->getOption('yell')) {
                 $text = strtoupper($text);
-                $logger->warn('Yelled: ' . $text);
+                $logger->warn('Yelled: '.$text);
             }
             else {
-                $logger->info('Greeted: ' . $text);
+                $logger->info('Greeted: '.$text);
             }
 
             $output->writeln($text);
@@ -69,16 +68,15 @@ Depending on the environment you run your command you will get the results
 in ``app/dev.log`` or ``app/prod.log``.
 
 Enabling automatic Exceptions logging
-----------------
+-------------------------------------
 
 In order to enable console application to automatically log uncaught exceptions
 for all commands you'd need to do something more.
 
-First, you have to extend :class:`Symfony\Bundle\FrameworkBundle\Console\Application`
-class to override its ``run()`` method, where exception handling should happen::
+First, you have to extend :class:`Symfony\\Bundle\\FrameworkBundle\\Console\\Application`
+class to override its :method:`Symfony\\Bundle\\FrameworkBundle\\Console\\Application::run` method, where exception handling should happen::
 
     // src/Acme/DemoBundle/Console/Application.php
-
     namespace Acme\DemoBundle\Console;
 
     use Symfony\Bundle\FrameworkBundle\Console\Application as BaseApplication;
@@ -199,7 +197,7 @@ one.
 
 
 Logging non-0 exit statuses
--------------------------------------------
+---------------------------
 
 The logging capabilities of the console can be further extended by logging
 non-0 exit statuses. This way you will know if a command had any errors, even
@@ -228,7 +226,7 @@ In order to do that, you'd have to modify ``run()`` method of your extended
             if ($statusCode !== 0) {
                 /** @var $logger LoggerInterface */
                 $logger = $this->getKernel()->getContainer()->get('logger');
-                $logger->warn(sprintf('Command `%s` exited with non 0 status code', $this->getCommandName($input)));
+                $logger->warn(sprintf('Command `%s` exited with status code %d', $this->getCommandName($input), $statusCode));
             }
 
             // @codeCoverageIgnoreStart
