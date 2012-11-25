@@ -97,7 +97,7 @@ Each field type is rendered by a template fragment, which is determined in
 part by the value of your ``getName()`` method. For more information, see
 :ref:`cookbook-form-customization-form-themes`.
 
-In this case, since tge parent field is ``choice``, you don't *need* to do
+In this case, since the parent field is ``choice``, you don't *need* to do
 any work as the custom field type will automatically be rendered like a ``choice``
 type. But for the sake of this example, let's suppose that when your field
 is "expanded" (i.e. radio buttons or checkboxes, instead of a select field),
