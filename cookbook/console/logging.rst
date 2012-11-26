@@ -65,7 +65,7 @@ use it to do the logging::
     }
 
 Depending on the environment you run your command you will get the results
-in ``app/dev.log`` or ``app/prod.log``.
+in ``app/logs/dev.log`` or ``app/logs/prod.log``.
 
 Enabling automatic Exceptions logging
 -------------------------------------
