@@ -336,7 +336,7 @@ for importing service configuration from third-party bundles.
 Importing Configuration with ``imports``
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-So far, you've placed our ``my_mailer`` service container definition directly
+So far, you've placed your ``my_mailer`` service container definition directly
 in the application configuration file (e.g. ``app/config/config.yml``). Of
 course, since the ``Mailer`` class itself lives inside the ``AcmeHelloBundle``,
 it makes more sense to put the ``my_mailer`` container definition inside the
@@ -533,12 +533,12 @@ If you want to expose user friendly configuration in your own bundles, read the
 Referencing (Injecting) Services
 --------------------------------
 
-So far, our original ``my_mailer`` service is simple: it takes just one argument
+So far, the original ``my_mailer`` service is simple: it takes just one argument
 in its constructor, which is easily configurable. As you'll see, the real
 power of the container is realized when you need to create a service that
 depends on one or more other services in the container.
 
-Let's start with an example. Suppose you have a new service, ``NewsletterManager``,
+As an example, suppose you have a new service, ``NewsletterManager``,
 that helps to manage the preparation and delivery of an email message to
 a collection of addresses. Of course the ``my_mailer`` service is already
 really good at delivering email messages, so you'll use it inside ``NewsletterManager``
@@ -574,7 +574,7 @@ fairly easily from inside a controller::
 
 This approach is fine, but what if you decide later that the ``NewsletterManager``
 class needs a second or third constructor argument? What if you decide to
-refactor our code and rename the class? In both cases, you'd need to find every
+refactor your code and rename the class? In both cases, you'd need to find every
 place where the ``NewsletterManager`` is instantiated and modify it. Of course,
 the service container gives you a much more appealing option:
 
@@ -808,9 +808,9 @@ other third-party bundles to perform tasks such as rendering templates (``templa
 sending emails (``mailer``), or accessing information on the request (``request``).
 
 You can take this a step further by using these services inside services that
-you've created for your application. Let's modify the ``NewsletterManager``
+you've created for your application. Beginning by modifying the ``NewsletterManager``
 to use the real Symfony2 ``mailer`` service (instead of the pretend ``my_mailer``).
-Let's also pass the templating engine service to the ``NewsletterManager``
+Also pass the templating engine service to the ``NewsletterManager``
 so that it can generate the email content via a template::
 
     namespace Acme\HelloBundle\Newsletter;

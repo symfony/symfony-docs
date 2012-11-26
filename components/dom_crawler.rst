@@ -121,7 +121,10 @@ Access the attribute value of the first node of the current selection::
 
 Extract attribute and/or node values from the list of nodes::
 
-    $attributes = $crawler->filterXpath('//body/p')->extract(array('_text', 'class'));
+    $attributes = $crawler
+        ->filterXpath('//body/p')
+        ->extract(array('_text', 'class'))
+    ;
 
 .. note::
 
@@ -242,7 +245,8 @@ You can virtually set and get values on the form::
     // get back an array of values - in the "flat" array like above
     $values = $form->getValues();
 
-    // returns the values like PHP would see them, where "registration" is its own array
+    // returns the values like PHP would see them,
+    // where "registration" is its own array
     $values = $form->getPhpValues();
 
 To work with multi-dimensional fields::

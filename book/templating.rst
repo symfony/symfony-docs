@@ -751,8 +751,8 @@ To link to the page, just use the ``path`` Twig function and refer to the route:
 
         <a href="<?php echo $view['router']->generate('_welcome') ?>">Home</a>
 
-As expected, this will generate the URL ``/``. Let's see how this works with
-a more complicated route:
+As expected, this will generate the URL ``/``. Now for a more complicated
+route:
 
 .. configuration-block::
 
@@ -778,7 +778,7 @@ a more complicated route:
         return $collection;
 
 In this case, you need to specify both the route name (``article_show``) and
-a value for the ``{slug}`` parameter. Using this route, let's revisit the
+a value for the ``{slug}`` parameter. Using this route, revisit the
 ``recentList`` template from the previous section and link to the articles
 correctly:
 

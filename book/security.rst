@@ -20,7 +20,8 @@ perform a certain action.
 .. image:: /images/book/security_authentication_authorization.png
    :align: center
 
-Since the best way to learn is to see an example, let's dive right in.
+Since the best way to learn is to see an example, start by securing your
+application with HTTP Basic authentication.
 
 .. note::
 
@@ -1700,6 +1701,24 @@ To switch back to the original user, use the special ``_exit`` username:
 .. code-block:: text
 
     http://example.com/somewhere?_switch_user=_exit
+
+During impersonation, the user is provided with a special role called
+``ROLE_PREVIOUS_ADMIN``. In a template, for instance, this role can be used
+to show a link to exit impersonation:
+
+.. configuration-block::
+
+    .. code-block:: html+jinja
+
+        {% if is_granted('ROLE_PREVIOUS_ADMIN') %}
+            <a href="{{ path('homepage', {_switch_user: '_exit'}) }}">Exit impersonation</a>
+        {% endif %}
+
+    .. code-block:: html+php
+
+        <?php if ($view['security']->isGranted('ROLE_PREVIOUS_ADMIN')): ?>
+            <a href="<?php echo $view['router']->generate('homepage', array('_switch_user' => '_exit') ?>">Exit impersonation</a>
+        <?php endif; ?>
 
 Of course, this feature needs to be made available to a small group of users.
 By default, access is restricted to users having the ``ROLE_ALLOWED_TO_SWITCH``

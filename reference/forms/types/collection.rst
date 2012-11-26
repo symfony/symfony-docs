@@ -172,12 +172,12 @@ you need is the JavaScript:
                     // grab the prototype template
                     var newWidget = emailList.attr('data-prototype');
                     // replace the "__name__" used in the id and name of the prototype
-                    // with a number that's unique to our emails
+                    // with a number that's unique to your emails
                     // end name attribute looks like name="contact[emails][2]"
                     newWidget = newWidget.replace(/__name__/g, emailCount);
                     emailCount++;
 
-                    // create a new list element and add it to our list
+                    // create a new list element and add it to the list
                     var newLi = jQuery('<li></li>').html(newWidget);
                     newLi.appendTo(jQuery('#email-fields-list'));
 
