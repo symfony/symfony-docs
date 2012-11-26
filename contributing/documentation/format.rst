@@ -161,7 +161,7 @@ and to the PHP documentation:
 
     :phpclass:`SimpleXMLElement`
 
-    `DateTime::createFromFormat`_
+    :phpmethod:`DateTime::createFromFormat`
 
     :phpfunction:`iterator_to_array`
 
@@ -219,4 +219,3 @@ Installing the Sphinx extensions
 .. _Pygments website:        http://pygments.org/languages/
 .. _source:                  https://github.com/fabpot/sphinx-php
 .. _Sphinx quick setup:      http://sphinx-doc.org/tutorial.html#setting-up-the-documentation-sources
-.. _`DateTime::createFromFormat`: http://php.net/manual/en/datetime.createfromformat.php
