@@ -48,7 +48,7 @@ Functions
 | ``form_rest(form, variables = {})``                | This will render all fields that have not yet been rendered, more                          |
 |                                                    | information in :ref:`the Twig Form reference<reference-forms-twig-rest>`.                  |
 +----------------------------------------------------+--------------------------------------------------------------------------------------------+
-| ``csrf_token(intention)``                          | This will render a CSRF token, use this function if you want CSRF protection without       |
+| ``csrf_token(intention)``                          | This will render a CSRF token. Use this function if you want CSRF protection without       |
 |                                                    | creating a form                                                                            |
 +----------------------------------------------------+--------------------------------------------------------------------------------------------+
 | ``is_granted(role, object = null, field = null)``  | This will return ``true`` if the current user has the required role, more                  |
