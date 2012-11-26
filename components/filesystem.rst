@@ -152,7 +152,7 @@ recursive option::
     // set the mode of the video to 0600
     $fs->chmod('video.ogg', 0600);
     // change the mod of the src directory recursively
-    $fs->chmod('src', 0700, true);
+    $fs->chmod('src', 0700, 0000, true);
 
 .. note::
 
