@@ -76,7 +76,6 @@ example containing most features described below:
             return $dummy;
         }
     }
-    
 
 Structure
 ---------
