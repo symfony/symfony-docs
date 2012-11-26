@@ -66,7 +66,7 @@ with the event dispatcher that is used by the :class:`Symfony\\Component\\HttpKe
 
     $firewall = new Firewall($map, $dispatcher);
 
-    $dispatcher->register(KernelEvents::REQUEST, array($firewall, 'onKernelRequest');
+    $dispatcher->addListener(KernelEvents::REQUEST, array($firewall, 'onKernelRequest');
 
 The firewall is registered to listen to the ``kernel.request`` event that
 will be dispatched by the ``HttpKernel`` at the beginning of each request
