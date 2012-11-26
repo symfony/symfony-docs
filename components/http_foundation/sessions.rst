@@ -305,7 +305,10 @@ Examples of setting multiple flashes::
     $session->start();
 
     // add flash messages
-    $session->getFlashBag()->add('warning', 'Your config file is writable, it should be set read-only');
+    $session->getFlashBag()->add(
+        'warning',
+        'Your config file is writable, it should be set read-only'
+    );
     $session->getFlashBag()->add('error', 'Failed to update name');
     $session->getFlashBag()->add('error', 'Another error');
 
