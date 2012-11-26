@@ -567,12 +567,14 @@ something like this::
 Without using the service container, you can create a new ``NewsletterManager``
 fairly easily from inside a controller::
 
+    use Acme\HelloBundle\Newsletter\NewsletterManager;
+
+    // ...
+
     public function sendNewsletterAction()
     {
         $mailer = $this->get('my_mailer');
-        $newsletter = new Acme\HelloBundle\Newsletter\NewsletterManager(
-            $mailer
-        );
+        $newsletter = new NewsletterManager($mailer);
         // ...
     }
 

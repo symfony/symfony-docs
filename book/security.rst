@@ -423,9 +423,9 @@ Next, create the controller that will display the login form::
             $session = $request->getSession();
 
             // get the login error if there is one
-            if ($request->attributes->has(
-                SecurityContext::AUTHENTICATION_ERROR
-            )) {
+            if (
+                $request->attributes->has(SecurityContext::AUTHENTICATION_ERROR)
+            ) {
                 $error = $request->attributes->get(
                     SecurityContext::AUTHENTICATION_ERROR
                 );

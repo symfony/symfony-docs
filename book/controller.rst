@@ -473,7 +473,8 @@ value to each variable.
 
         $httpKernel = $this->container->get('http_kernel');
         $response = $httpKernel->forward(
-            'AcmeHelloBundle:Hello:fancy', array(
+            'AcmeHelloBundle:Hello:fancy',
+            array(
                 'name'  => $name,
                 'color' => 'green',
             )

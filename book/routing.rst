@@ -1070,7 +1070,7 @@ system. Take the ``blog_show`` example route from earlier::
     $params = $router->match('/blog/my-blog-post');
     // array(
     //     'slug' => 'my-blog-post',
-    //     '_controller' => 'AcmeBlogBundle:Blog:show'
+    //     '_controller' => 'AcmeBlogBundle:Blog:show',
     // )
 
     $uri = $router->generate('blog_show', array('slug' => 'my-blog-post'));
@@ -1105,7 +1105,7 @@ In an upcoming section, you'll learn how to generate URLs from inside templates.
 
         var url = Routing.generate(
             'blog_show',
-            { "slug": 'my-blog-post'}
+            {"slug": 'my-blog-post'}
         );
 
     For more information, see the documentation for that bundle.

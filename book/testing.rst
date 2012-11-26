@@ -144,9 +144,10 @@ for its ``DemoController`` (`DemoControllerTest`_) that reads as follows::
 
             $crawler = $client->request('GET', '/demo/hello/Fabien');
 
-            $this->assertGreaterThan(0, $crawler->filter(
-                'html:contains("Hello Fabien")'
-            )->count());
+            $this->assertGreaterThan(
+                0,
+                $crawler->filter('html:contains("Hello Fabien")')->count()
+            );
         }
     }
 
@@ -275,9 +276,11 @@ document::
         $this->assertCount(4, $crawler->filter('h2'));
 
         // Assert that the "Content-Type" header is "application/json"
-        $this->assertTrue($client->getResponse()->headers->contains(
-            'Content-Type',
-            'application/json')
+        $this->assertTrue(
+            $client->getResponse()->headers->contains(
+                'Content-Type',
+                'application/json'
+            )
         );
 
         // Assert that the response content matches a regexp.
