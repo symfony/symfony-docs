@@ -40,15 +40,15 @@ managers that use this connection.
 
         services:
             my.listener:
-                class: Acme\SearchBundle\Listener\SearchIndexer
+                class: Acme\SearchBundle\EventListener\SearchIndexer
                 tags:
                     - { name: doctrine.event_listener, event: postPersist }
             my.listener2:
-                class: Acme\SearchBundle\Listener\SearchIndexer2
+                class: Acme\SearchBundle\EventListener\SearchIndexer2
                 tags:
                     - { name: doctrine.event_listener, event: postPersist, connection: default }
             my.subscriber:
-                class: Acme\SearchBundle\Listener\SearchIndexerSubscriber
+                class: Acme\SearchBundle\EventListener\SearchIndexerSubscriber
                 tags:
                     - { name: doctrine.event_subscriber, connection: default }
 
@@ -65,13 +65,13 @@ managers that use this connection.
             </doctrine:config>
 
             <services>
-                <service id="my.listener" class="Acme\SearchBundle\Listener\SearchIndexer">
+                <service id="my.listener" class="Acme\SearchBundle\EventListener\SearchIndexer">
                     <tag name="doctrine.event_listener" event="postPersist" />
                 </service>
-                <service id="my.listener2" class="Acme\SearchBundle\Listener\SearchIndexer2">
+                <service id="my.listener2" class="Acme\SearchBundle\EventListener\SearchIndexer2">
                     <tag name="doctrine.event_listener" event="postPersist" connection="default" />
                 </service>
-                <service id="my.subscriber" class="Acme\SearchBundle\Listener\SearchIndexerSubscriber">
+                <service id="my.subscriber" class="Acme\SearchBundle\EventListener\SearchIndexerSubscriber">
                     <tag name="doctrine.event_subscriber" connection="default" />
                 </service>
             </services>
@@ -84,8 +84,8 @@ In the previous example, a service ``my.listener`` was configured as a Doctrine
 listener on the event ``postPersist``. That class behind that service must have
 a ``postPersist`` method, which will be called when the event is thrown::
 
-    // src/Acme/SearchBundle/Listener/SearchIndexer.php
-    namespace Acme\SearchBundle\Listener;
+    // src/Acme/SearchBundle/EventListener/SearchIndexer.php
+    namespace Acme\SearchBundle\EventListener;
 
     use Doctrine\ORM\Event\LifecycleEventArgs;
     use Acme\StoreBundle\Entity\Product;

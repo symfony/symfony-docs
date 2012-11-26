@@ -95,7 +95,7 @@ pattern
 
 This required option is the regular expression pattern that the input will
 be matched against. By default, this validator will fail if the input string
-does *not* match this regular expression (via the `preg_match`_ PHP function).
+does *not* match this regular expression (via the :phpfunction:`preg_match` PHP function).
 However, if `match`_ is set to false, then validation will fail if the input
 string *does* match this pattern.
 
@@ -115,5 +115,3 @@ message
 **type**: ``string`` **default**: ``This value is not valid``
 
 This is the message that will be shown if this validator fails.
-
-.. _`preg_match`: http://php.net/manual/en/function.preg-match.php

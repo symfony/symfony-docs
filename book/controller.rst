@@ -119,7 +119,7 @@ This controller is pretty straightforward:
 
 * *line 4*: Symfony2 takes advantage of PHP 5.3 namespace functionality to
   namespace the entire controller class. The ``use`` keyword imports the
-  ``Response`` class, which our controller must return.
+  ``Response`` class, which the controller must return.
 
 * *line 6*: The class name is the concatenation of a name for the controller
   class (i.e. ``Hello``) and the word ``Controller``. This is a convention
@@ -218,7 +218,7 @@ passed to that method::
     }
 
 The controller has a single argument, ``$name``, which corresponds to the
-``{name}`` parameter from the matched route (``ryan`` in our example). In
+``{name}`` parameter from the matched route (``ryan`` in the example). In
 fact, when executing your controller, Symfony2 matches each argument of
 the controller with a parameter from the matched route. Take the following
 example:

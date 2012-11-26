@@ -77,7 +77,7 @@ of your bundle::
             $calc = new Calculator();
             $result = $calc->add(30, 12);
 
-            // assert that our calculator added the numbers correctly!
+            // assert that your calculator added the numbers correctly!
             $this->assertEquals(42, $result);
         }
     }
@@ -260,7 +260,7 @@ document::
     To get you started faster, here is a list of the most common and
     useful test assertions::
 
-        // Assert that there is more than one h2 tag with the class "subtitle"
+        // Assert that there is at least one h2 tag with the class "subtitle"
         $this->assertGreaterThan(0, $crawler->filter('h2.subtitle')->count());
 
         // Assert that there are exactly 4 h2 tags on the page

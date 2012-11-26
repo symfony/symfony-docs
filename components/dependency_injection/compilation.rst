@@ -252,7 +252,8 @@ Creating a Compiler Pass
 ------------------------
 
 You can also create and register your own compiler passes with the container.
-To create a compiler pass it needs to implements the :class:`Symfony\\Component\\DependencyInjection\\Compiler\\CompilerPassInterface`
+To create a compiler pass it needs to implement the
+:class:`Symfony\\Component\\DependencyInjection\\Compiler\\CompilerPassInterface`
 interface. The compiler pass gives you an opportunity to manipulate the service
 definitions that have been compiled. This can be very powerful, but is not
 something needed in everyday use.

@@ -38,7 +38,14 @@ variables with
 which is almost equivalent to the more verbose, but also more flexible,
 :method:`Symfony\\Component\\HttpFoundation\\Request::__construct` call::
 
-    $request = new Request($_GET, $_POST, array(), $_COOKIE, $_FILES, $_SERVER);
+    $request = new Request(
+        $_GET,
+        $_POST,
+        array(),
+        $_COOKIE,
+        $_FILES,
+        $_SERVER
+    );
 
 Accessing Request Data
 ~~~~~~~~~~~~~~~~~~~~~~
@@ -184,7 +191,11 @@ Simulating a Request
 Instead of creating a Request based on the PHP globals, you can also simulate
 a Request::
 
-    $request = Request::create('/hello-world', 'GET', array('name' => 'Fabien'));
+    $request = Request::create(
+        '/hello-world',
+        'GET',
+        array('name' => 'Fabien')
+    );
 
 The :method:`Symfony\\Component\\HttpFoundation\\Request::create` method
 creates a request based on a path info, a method and some parameters (the
@@ -264,7 +275,11 @@ code, and an array of HTTP headers::
 
     use Symfony\Component\HttpFoundation\Response;
 
-    $response = new Response('Content', 200, array('content-type' => 'text/html'));
+    $response = new Response(
+        'Content',
+        200,
+        array('content-type' => 'text/html')
+    );
 
 These information can also be manipulated after the Response object creation::
 
@@ -419,7 +434,7 @@ Any type of response can be created via the
 right content and headers. A JSON response might look like this::
 
     use Symfony\Component\HttpFoundation\Response;
-    
+
     $response = new Response();
     $response->setContent(json_encode(array(
         'data' => 123
