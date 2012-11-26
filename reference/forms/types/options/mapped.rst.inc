@@ -1,5 +1,5 @@
-property_path
-~~~~~~~~~~~~~
+mapped
+~~~~~~
 
 **type**: ``boolean``
 
