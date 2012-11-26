@@ -550,8 +550,7 @@ would return. An ``ETag`` is like a fingerprint and is used to quickly compare
 if two different versions of a resource are equivalent. Like fingerprints,
 each ``ETag`` must be unique across all representations of the same resource.
 
-As an example here is a simple implementation that generates the ETag as
-the md5 of the content::
+To see a simple implementation, generate the ETag as the md5 of the content::
 
     public function indexAction()
     {

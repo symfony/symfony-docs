@@ -724,7 +724,7 @@ route:
         return $collection;
 
 In this case, you need to specify both the route name (``article_show``) and
-a value for the ``{slug}`` parameter. Using this route,     let's revisit the
+a value for the ``{slug}`` parameter. Using this route, revisit the
 ``recentList`` template from the previous section and link to the articles
 correctly:
 

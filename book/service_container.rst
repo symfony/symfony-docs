@@ -540,7 +540,7 @@ in its constructor, which is easily configurable. As you'll see, the real
 power of the container is realized when you need to create a service that
 depends on one or more other services in the container.
 
-Starting with an example, suppose you have a new service, ``NewsletterManager``,
+As an example, suppose you have a new service, ``NewsletterManager``,
 that helps to manage the preparation and delivery of an email message to
 a collection of addresses. Of course the ``my_mailer`` service is already
 really good at delivering email messages, so you'll use it inside ``NewsletterManager``

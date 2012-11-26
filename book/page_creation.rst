@@ -28,7 +28,7 @@ to keep your application organized as it grows in users and complexity.
 The "Hello Symfony!" Page
 -------------------------
 
-To begin with, a spin off of the classic "Hello World!" application. When
+Start by building a spin-off of the classic "Hello World!" application. When
 you're finished, the user will be able to get a personal greeting (e.g. "Hello Symfony")
 by going to the following URL:
 
@@ -345,7 +345,7 @@ controller, and ``index.html.twig`` the template:
 
         Hello <?php echo $view->escape($name) ?>!
 
-Stepping through the Twig template line-by-line:
+Step through the Twig template line-by-line:
 
 * *line 2*: The ``extends`` token defines a parent template. The template
   explicitly defines a layout file inside of which it will be placed.

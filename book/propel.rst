@@ -320,7 +320,7 @@ Your database has been updated, you can continue to write your application.
 Saving Related Objects
 ~~~~~~~~~~~~~~~~~~~~~~
 
-Now, for the code in action. Imagine you're inside a controller::
+Now, try the code in action. Imagine you're inside a controller::
 
     // ...
     use Acme\StoreBundle\Model\Category;
