@@ -141,7 +141,7 @@ example, you are granting the user who is currently logged in owner access to
 the Comment. The ``MaskBuilder::MASK_OWNER`` is a pre-defined integer bitmask;
 don't worry the mask builder will abstract away most of the technical details,
 but using this technique you can store many different permissions in one
-database row which gives us a considerable boost in performance.
+database row which gives a considerable boost in performance.
 
 .. tip::
 

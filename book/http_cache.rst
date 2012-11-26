@@ -410,7 +410,7 @@ on a cache to store and return "fresh" responses.
 
     The HTTP specification defines a simple but powerful language in which
     clients and servers can communicate. As a web developer, the request-response
-    model of the specification dominates our work. Unfortunately, the actual
+    model of the specification dominates your work. Unfortunately, the actual
     specification document - `RFC 2616`_ - can be difficult to read.
 
     There is an on-going effort (`HTTP Bis`_) to rewrite the RFC 2616. It does
@@ -550,8 +550,7 @@ would return. An ``ETag`` is like a fingerprint and is used to quickly compare
 if two different versions of a resource are equivalent. Like fingerprints,
 each ``ETag`` must be unique across all representations of the same resource.
 
-Let's walk through a simple implementation that generates the ETag as the
-md5 of the content::
+To see a simple implementation, generate the ETag as the md5 of the content::
 
     public function indexAction()
     {
@@ -868,7 +867,7 @@ independent of the rest of the page.
     }
 
 In this example, the full-page cache has a lifetime of ten minutes.
-Next, let's include the news ticker in the template by embedding an action.
+Next, include the news ticker in the template by embedding an action.
 This is done via the ``render`` helper (See :ref:`templating-embedding-controller`
 for more details).
 
@@ -889,7 +888,7 @@ By setting ``standalone`` to ``true``, you tell Symfony2 that the action
 should be rendered as an ESI tag. You might be wondering why you would want to
 use a helper instead of just writing the ESI tag yourself. That's because
 using a helper makes your application work even if there is no gateway cache
-installed. Let's see how it works.
+installed.
 
 When standalone is ``false`` (the default), Symfony2 merges the included page
 content within the main one before sending the response to the client. But

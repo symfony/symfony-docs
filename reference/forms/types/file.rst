@@ -22,7 +22,7 @@ The ``file`` type represents a file input in your form.
 Basic Usage
 -----------
 
-Let's say you have this form definition:
+Say you have this form definition:
 
 .. code-block:: php
 
@@ -47,7 +47,7 @@ used to move the ``attachment`` file to a permanent location:
 
         if ($form->isValid()) {
             $someNewFilename = ...
-        
+
             $form['attachment']->getData()->move($dir, $someNewFilename);
 
             // ...
