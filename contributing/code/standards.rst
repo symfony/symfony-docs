@@ -30,6 +30,9 @@ example containing most features described below:
 
     namespace Acme;
 
+    /**
+     * Coding standards demonstration.
+     */
     class FooBar
     {
         const SOME_CONST = 42;
@@ -46,13 +49,18 @@ example containing most features described below:
 
         /**
          * @param string $dummy Some argument description
+         *
          * @return string|null Transformed input
          */
         private function transformText($dummy, $options = array())
         {
-            $mergedOptions = array_merge($options, array(
-                'some_default' => 'values',
-            ));
+            $mergedOptions = array_merge(
+                $options,
+                array(
+                    'some_default' => 'values',
+                    'another_default' => 'more values',
+                )
+            );
 
             if (true === $dummy) {
                 return;
@@ -68,6 +76,7 @@ example containing most features described below:
             return $dummy;
         }
     }
+    
 
 Structure
 ---------
