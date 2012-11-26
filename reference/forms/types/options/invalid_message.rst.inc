@@ -13,4 +13,4 @@ number field.
 
 Normal (business logic) validation (such as when setting a minimum length for
 a field) should be set using validation messages with your validation rules
-(:ref:`reference<book-validation-constraint-configuration>`).
+(:ref:`reference<book-validation-constraint-config>`).

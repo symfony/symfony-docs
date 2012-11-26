@@ -418,7 +418,7 @@ global parameters available to use:
     All parameter and service names starting with a ``_`` are reserved for the
     framework, and new ones must not be defined by bundles.
 
-.. _cookbook-bundles-extension-config-class:
+.. _cookbook-bundles-config-class:
 
 Validation and Merging with a Configuration Class
 -------------------------------------------------
