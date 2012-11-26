@@ -146,7 +146,10 @@ array to its YAML representation:
 
     use Symfony\Component\Yaml\Dumper;
 
-    $array = array('foo' => 'bar', 'bar' => array('foo' => 'bar', 'bar' => 'baz'));
+    $array = array(
+        'foo' => 'bar',
+        'bar' => array('foo' => 'bar', 'bar' => 'baz')
+    );
 
     $dumper = new Dumper();
 
