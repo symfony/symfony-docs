@@ -84,7 +84,7 @@ In the previous example, a service ``my.listener`` was configured as a Doctrine
 listener on the event ``postPersist``. That class behind that service must have
 a ``postPersist`` method, which will be called when the event is thrown::
 
-    // src/Acme/SearchBundle/Listener/SearchIndexer.php
+    // src/Acme/SearchBundle/EventListener/SearchIndexer.php
     namespace Acme\SearchBundle\EventListener;
 
     use Doctrine\ORM\Event\LifecycleEventArgs;
