@@ -1,8 +1,8 @@
 .. index::
    single: Emails; Spooling
 
-How to Spool Email
-==================
+How to Spool Emails
+===================
 
 When you are using the ``SwiftmailerBundle`` to send an email from a Symfony2
 application, it will default to sending the email immediately. You may, however,
