@@ -1644,9 +1644,9 @@ To switch back to the original user, use the special ``_exit`` username:
 
     http://example.com/somewhere?_switch_user=_exit
 
-During impersonation the user is provided with a special role called
-``ROLE_PREVIOUS_ADMIN``. In a template, for instance, this role can decide
-if a link to exit impersonation needs to be shown:
+During impersonation, the user is provided with a special role called
+``ROLE_PREVIOUS_ADMIN``. In a template, for instance, this role can be used
+to show a link to exit impersonation:
 
 .. configuration-block::
 
