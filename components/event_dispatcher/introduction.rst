@@ -241,8 +241,8 @@ that serves to define and document your event:
          * The store.order event is thrown each time an order is created
          * in the system.
          *
-         * The event listener receives an Acme\StoreBundle\Event\FilterOrderEvent
-         * instance.
+         * The event listener receives an
+         * Acme\StoreBundle\Event\FilterOrderEvent instance.
          *
          * @var string
          */
