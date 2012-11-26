@@ -18,7 +18,9 @@ You can install the component in two different ways:
 Usage
 -----
 
-The Stopwatch component provides an easy and consistent way to measure execution time of certain parts of code, so that you don't constantly have to parse microtime by yourself. The basic usage is as simple as this::
+The Stopwatch component provides an easy and consistent way to measure execution
+time of certain parts of code, so that you don't constantly have to parse
+microtime by yourself. The basic usage is as simple as this::
 
     use Symfony\Component\Stopwatch\Stopwatch;
 
@@ -32,12 +34,15 @@ You also can provide a category name to an event::
 
     $stopwatch->start('eventName', 'categoryName');
 
-You can consider categories as a way of tagging events. The Symfony Profiler tool uses categories to nicely colorcode different events. 
+You can consider categories as a way of tagging events. The Symfony Profiler
+tool uses categories to nicely colorcode different events. 
 
 Periods
 -------
 
-As we all know from the real world, all stopwatches come with two buttons. One for starting and stopping the stopwatch, another to measure the lap time. And that's exactly what lap method does. ::
+As we all know from the real world, all stopwatches come with two buttons.
+One for starting and stopping the stopwatch, another to measure the lap time.
+And that's exactly what lap method does. ::
 
     $stopwatch = new Stopwatch();
     // Start event named 'foo'
@@ -67,7 +72,9 @@ Besides getting periods, we can get other useful information from the event obje
 Sections
 --------
 
-Sections are a way to logically split the timeline into groups. You can see how Symfony uses sections to nicely visualize framework lifecycle in the Symfony Profiler tool. Here is a basic usage of sections.::
+Sections are a way to logically split the timeline into groups. You can see
+how Symfony uses sections to nicely visualize framework lifecycle in the
+Symfony Profiler tool. Here is a basic usage of sections.::
 
     $stopwatch = new Stopwatch();
 
@@ -78,7 +85,8 @@ Sections are a way to logically split the timeline into groups. You can see how 
     $events = $stopwatch->getSectionEvents('section');
 
 
-You can reopen a closed section by calling the openSection method and specifying an id of the section to be reopened. e.g.::
+You can reopen a closed section by calling the openSection method and specifying
+an id of the section to be reopened. e.g.::
 
     $stopwatch->openSection('routing');
     $stopwatch->start('building_config_tree');
