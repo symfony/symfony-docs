@@ -47,7 +47,8 @@ The listener should then store the authenticated token in the security context::
             $unauthenticatedToken = new UsernamePasswordToken(
                 $username,
                 $password,
-                $this->providerKey);
+                $this->providerKey
+            );
 
             $authenticatedToken = $this
                 ->authenticationManager
@@ -65,7 +66,8 @@ The listener should then store the authenticated token in the security context::
 The authentication manager
 --------------------------
 
-The default authentication manager is an instance of :class:`Symfony\\Component\\Security\\Core\\Authentication\\AuthenticationProviderManager`::
+The default authentication manager is an instance of
+:class:`Symfony\\Component\\Security\\Core\\Authentication\\AuthenticationProviderManager`::
 
     use Symfony\Component\Security\Core\Authentication\AuthenticationProviderManager;
 
