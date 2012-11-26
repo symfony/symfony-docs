@@ -186,8 +186,12 @@ it into a format that's suitable for being rendered in an HTML form.
    ``task`` property via the ``getTask()`` and ``setTask()`` methods on the
    ``Task`` class. Unless a property is public, it *must* have a "getter" and
    "setter" method so that the form component can get and put data onto the
-   property. For a Boolean property, you can use an "isser" method (e.g.
-   ``isPublished()``) instead of a getter (e.g. ``getPublished()``).
+   property. For a Boolean property, you can use an "isser" or "hasser" method
+   (e.g. ``isPublished()`` or ``hasReminder()``) instead of a getter (e.g.
+   ``getPublished()`` or ``getReminder()``).
+
+   .. versionadded:: 2.1
+        Support for "hasser" methods was added in Symfony 2.1.
 
 .. index::
   single: Forms; Handling form submission

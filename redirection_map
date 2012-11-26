@@ -17,3 +17,4 @@
 /components/http_foundation /components/http_foundation/introduction
 /components/console /components/console/introduction
 /components/routing /components/routing/introduction
+/cookbook/console/generating_urls /cookbook/console/sending_emails
