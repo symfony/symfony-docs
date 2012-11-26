@@ -19,6 +19,7 @@ The Components
     process
     routing/index
     serializer
+    stopwatch
     templating
     yaml
 
