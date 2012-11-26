@@ -1477,7 +1477,9 @@ method to specify the option::
         {
             $collectionConstraint = new Collection(array(
                 'name' => new MinLength(5),
-                'email' => new Email(array('message' => 'Invalid email address')),
+                'email' => new Email(
+                    array('message' => 'Invalid email address')
+                ),
             ));
 
             return array('validation_constraint' => $collectionConstraint);

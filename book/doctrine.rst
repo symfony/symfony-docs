@@ -470,7 +470,9 @@ on its ``id`` value::
             ->find($id);
 
         if (!$product) {
-            throw $this->createNotFoundException('No product found for id '.$id);
+            throw $this->createNotFoundException(
+                'No product found for id '.$id
+            );
         }
 
         // ... do something, like pass the $product object into a template
@@ -555,7 +557,9 @@ you have a route that maps a product id to an update action in a controller::
         $product = $em->getRepository('AcmeStoreBundle:Product')->find($id);
 
         if (!$product) {
-            throw $this->createNotFoundException('No product found for id '.$id);
+            throw $this->createNotFoundException(
+                'No product found for id '.$id
+            );
         }
 
         $product->setName('New product name!');
@@ -1306,7 +1310,8 @@ and ``nullable``. Take a few examples:
 
         /**
          * A string field with length 255 that cannot be null
-         * (reflecting the default values for the "type", "length" and *nullable* options)
+         * (reflecting the default values for the "type", "length"
+         * and *nullable* options)
          *
          * @ORM\Column()
          */
