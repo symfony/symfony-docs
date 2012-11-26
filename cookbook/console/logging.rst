@@ -15,7 +15,7 @@ some existing setup for aggregating and analyzing Symfony logs.
 
 There are basically two logging cases you would need:
  * Manually logging some information from your command;
- * Logging not caught Exceptions.
+ * Logging uncaught Exceptions.
 
 Manually logging from console command
 -------------------------------------
@@ -175,7 +175,10 @@ method, where exception handling should happen::
 What happens above is we disable exception catching, so that parent run method
 would throw the exceptions. When exception is caught, we simple log it by
 accessing the ``logger`` service from the service container and then handle
-the rest in the same way parent run method does that.
+the rest in the same way parent run method does that (Since parent :method:`run<Symfony\\Bundle\\FrameworkBundle\\Console\\Application::run>`
+method will not handle exceptions rendering and status code handling when
+`catchExceptions` is set to false, it has to be done in the overridden
+method).
 
 For our extended Application class to work properly with console shell mode
 we have to do a small trick to intercept ``autoExit`` setter, and store the
