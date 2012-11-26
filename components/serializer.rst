@@ -50,8 +50,8 @@ which Encoders and Normalizer are going to be available::
 Serializing an object
 ~~~~~~~~~~~~~~~~~~~~~
 
-For the sake of this example, let's assume the following class already
-exists in our project::
+For the sake of this example, assume the following class already
+exists in your project::
 
     namespace Acme;
 

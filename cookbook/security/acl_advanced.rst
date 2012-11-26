@@ -60,8 +60,8 @@ tables are ordered from least rows to most rows in a typical application:
   referenced from other tables.
 - *acl_object_identities*: Each row in this table represents a single domain
   object instance.
-- *acl_object_identity_ancestors*: This table allows us to determine all the
-  ancestors of an ACL in a very efficient way.
+- *acl_object_identity_ancestors*: This table allows all the ancestors of
+  an ACL to be determined in a very efficient way.
 - *acl_entries*: This table contains all ACEs. This is typically the table
   with the most rows. It can contain tens of millions without significantly
   impacting performance.
