@@ -417,7 +417,7 @@ match, giving the ``page`` parameter a value of ``2``. Perfect.
 
 .. tip::
 
-    Routes with optional parameters at the end will not match on requests 
+    Routes with optional parameters at the end will not match on requests
     with a trailing slash (i.e. ``/blog/`` will not match, ``/blog`` will match).
 
 .. index::
@@ -1068,7 +1068,10 @@ a route+parameters back to a URL. The
 system. Take the ``blog_show`` example route from earlier::
 
     $params = $router->match('/blog/my-blog-post');
-    // array('slug' => 'my-blog-post', '_controller' => 'AcmeBlogBundle:Blog:show')
+    // array(
+    //     'slug' => 'my-blog-post',
+    //     '_controller' => 'AcmeBlogBundle:Blog:show'
+    // )
 
     $uri = $router->generate('blog_show', array('slug' => 'my-blog-post'));
     // /blog/my-blog-post
@@ -1081,9 +1084,12 @@ that route. With this information, any URL can easily be generated::
     {
         public function showAction($slug)
         {
-          // ...
+            // ...
 
-          $url = $this->get('router')->generate('blog_show', array('slug' => 'my-blog-post'));
+            $url = $this->get('router')->generate(
+                'blog_show',
+                array('slug' => 'my-blog-post')
+            );
         }
     }
 
@@ -1097,7 +1103,10 @@ In an upcoming section, you'll learn how to generate URLs from inside templates.
 
     .. code-block:: javascript
 
-        var url = Routing.generate('blog_show', { "slug": 'my-blog-post'});
+        var url = Routing.generate(
+            'blog_show',
+            { "slug": 'my-blog-post'}
+        );
 
     For more information, see the documentation for that bundle.
 

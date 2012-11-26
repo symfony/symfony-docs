@@ -570,7 +570,9 @@ fairly easily from inside a controller::
     public function sendNewsletterAction()
     {
         $mailer = $this->get('my_mailer');
-        $newsletter = new Acme\HelloBundle\Newsletter\NewsletterManager($mailer);
+        $newsletter = new Acme\HelloBundle\Newsletter\NewsletterManager(
+            $mailer
+        );
         // ...
     }
 
@@ -620,7 +622,10 @@ the service container gives you a much more appealing option:
         use Symfony\Component\DependencyInjection\Reference;
 
         // ...
-        $container->setParameter('newsletter_manager.class', 'Acme\HelloBundle\Newsletter\NewsletterManager');
+        $container->setParameter(
+            'newsletter_manager.class',
+            'Acme\HelloBundle\Newsletter\NewsletterManager'
+        );
 
         $container->setDefinition('my_mailer', ...);
         $container->setDefinition('newsletter_manager', new Definition(
@@ -710,7 +715,10 @@ Injecting the dependency by the setter method just needs a change of syntax:
         use Symfony\Component\DependencyInjection\Reference;
 
         // ...
-        $container->setParameter('newsletter_manager.class', 'Acme\HelloBundle\Newsletter\NewsletterManager');
+        $container->setParameter(
+            'newsletter_manager.class',
+            'Acme\HelloBundle\Newsletter\NewsletterManager'
+        );
 
         $container->setDefinition('my_mailer', ...);
         $container->setDefinition('newsletter_manager', new Definition(
@@ -769,12 +777,18 @@ it exists and do nothing if it doesn't:
         use Symfony\Component\DependencyInjection\ContainerInterface;
 
         // ...
-        $container->setParameter('newsletter_manager.class', 'Acme\HelloBundle\Newsletter\NewsletterManager');
+        $container->setParameter(
+            'newsletter_manager.class',
+            'Acme\HelloBundle\Newsletter\NewsletterManager'
+        );
 
         $container->setDefinition('my_mailer', ...);
         $container->setDefinition('newsletter_manager', new Definition(
             '%newsletter_manager.class%',
-            array(new Reference('my_mailer', ContainerInterface::IGNORE_ON_INVALID_REFERENCE))
+            array(new Reference(
+                'my_mailer',
+                ContainerInterface::IGNORE_ON_INVALID_REFERENCE
+            ))
         ));
 
 In YAML, the special ``@?`` syntax tells the service container that the dependency

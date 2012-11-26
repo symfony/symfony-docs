@@ -532,7 +532,9 @@ Including this template from any other template is simple:
             <h1>Recent Articles<h1>
 
             {% for article in articles %}
-                {% include 'AcmeArticleBundle:Article:articleDetails.html.twig' with {'article': article} %}
+                {% include 'AcmeArticleBundle:Article:articleDetails.html.twig'
+                       with {'article': article}
+                %}
             {% endfor %}
         {% endblock %}
 
@@ -582,10 +584,14 @@ articles::
     {
         public function recentArticlesAction($max = 3)
         {
-            // make a database call or other logic to get the "$max" most recent articles
+            // make a database call or other logic
+            // to get the "$max" most recent articles
             $articles = ...;
 
-            return $this->render('AcmeArticleBundle:Article:recentList.html.twig', array('articles' => $articles));
+            return $this->render(
+                'AcmeArticleBundle:Article:recentList.html.twig',
+                array('articles' => $articles)
+            );
         }
     }
 
@@ -761,7 +767,11 @@ correctly:
 
     .. code-block:: html+php
 
-        <a href="<?php echo $view['router']->generate('_welcome', array(), true) ?>">Home</a>
+        <a href="<?php echo $view['router']->generate(
+            '_welcome',
+            array(),
+            true
+        ) ?>">Home</a>
 
 .. index::
    single: Templating; Linking to assets
@@ -1008,7 +1018,10 @@ customize the markup specifically for your application. By digging into the
         // some logic to retrieve the blogs
         $blogs = ...;
 
-        $this->render('AcmeBlogBundle:Blog:index.html.twig', array('blogs' => $blogs));
+        $this->render(
+            'AcmeBlogBundle:Blog:index.html.twig',
+            array('blogs' => $blogs)
+        );
     }
 
 When the ``AcmeBlogBundle:Blog:index.html.twig`` is rendered, Symfony2 actually

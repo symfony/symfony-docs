@@ -554,7 +554,10 @@ them for you. Here's the same sample application, now built in Symfony2::
                 ->createQuery('SELECT p FROM AcmeBlogBundle:Post p')
                 ->execute();
 
-            return $this->render('AcmeBlogBundle:Blog:list.html.php', array('posts' => $posts));
+            return $this->render(
+                'AcmeBlogBundle:Blog:list.html.php',
+                array('posts' => $posts)
+            );
         }
 
         public function showAction($id)
@@ -570,7 +573,10 @@ them for you. Here's the same sample application, now built in Symfony2::
                 throw $this->createNotFoundException();
             }
 
-            return $this->render('AcmeBlogBundle:Blog:show.html.php', array('post' => $post));
+            return $this->render(
+                'AcmeBlogBundle:Blog:show.html.php',
+                array('post' => $post)
+            );
         }
     }
 
@@ -590,7 +596,10 @@ now quite a bit simpler:
     <ul>
         <?php foreach ($posts as $post): ?>
         <li>
-            <a href="<?php echo $view['router']->generate('blog_show', array('id' => $post->getId())) ?>">
+            <a href="<?php echo $view['router']->generate(
+                'blog_show',
+                array('id' => $post->getId())
+            ) ?>">
                 <?php echo $post->getTitle() ?>
             </a>
         </li>
@@ -605,7 +614,10 @@ The layout is nearly identical:
     <!DOCTYPE html>
     <html>
         <head>
-            <title><?php echo $view['slots']->output('title', 'Default title') ?></title>
+            <title><?php echo $view['slots']->output(
+                'title',
+                'Default title'
+            ) ?></title>
         </head>
         <body>
             <?php echo $view['slots']->output('_content') ?>

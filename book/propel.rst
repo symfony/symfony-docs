@@ -18,8 +18,8 @@ persist it to the database and fetch it back out.
 .. sidebar:: Code along with the example
 
     If you want to follow along with the example in this chapter, create an
-    ``AcmeStoreBundle`` via: 
-    
+    ``AcmeStoreBundle`` via:
+
     .. code-block:: bash
 
         $ php app/console generate:bundle --namespace=Acme/StoreBundle
@@ -171,19 +171,21 @@ Fetching Objects from the Database
 Fetching an object back from the database is even easier. For example, suppose
 you've configured a route to display a specific ``Product`` based on its ``id``
 value::
-    
+
     // ...
     use Acme\StoreBundle\Model\ProductQuery;
-    
+
     public function showAction($id)
     {
         $product = ProductQuery::create()
             ->findPk($id);
-    
+
         if (!$product) {
-            throw $this->createNotFoundException('No product found for id '.$id);
+            throw $this->createNotFoundException(
+                'No product found for id '.$id
+            );
         }
-    
+
         // ... do something, like pass the $product object into a template
     }
 
@@ -192,22 +194,24 @@ Updating an Object
 
 Once you've fetched an object from Propel, updating it is easy. Suppose you
 have a route that maps a product id to an update action in a controller::
-    
+
     // ...
     use Acme\StoreBundle\Model\ProductQuery;
-    
+
     public function updateAction($id)
     {
         $product = ProductQuery::create()
             ->findPk($id);
-    
+
         if (!$product) {
-            throw $this->createNotFoundException('No product found for id '.$id);
+            throw $this->createNotFoundException(
+                'No product found for id '.$id
+            );
         }
-    
+
         $product->setName('New product name!');
         $product->save();
-    
+
         return $this->redirect($this->generateUrl('homepage'));
     }
 
@@ -227,12 +231,12 @@ method on the object::
 
 Querying for Objects
 --------------------
-    
+
 Propel provides generated ``Query`` classes to run both basic and complex queries
 without any work::
-    
+
     \Acme\StoreBundle\Model\ProductQuery::create()->findPk($id);
-    
+
     \Acme\StoreBundle\Model\ProductQuery::create()
         ->filterByName('Foo')
         ->findOne();
@@ -287,13 +291,13 @@ Start by adding the ``category`` definition in your ``schema.xml``:
             <column name="name" type="varchar" primaryString="true" size="100" />
             <column name="price" type="decimal" />
             <column name="description" type="longvarchar" />
-    
+
             <column name="category_id" type="integer" />
             <foreign-key foreignTable="category">
                 <reference local="category_id" foreign="id" />
             </foreign-key>
         </table>
-    
+
         <table name="category">
             <column name="id" type="integer" required="true" primaryKey="true" autoIncrement="true" />
             <column name="name" type="varchar" primaryString="true" size="100" />
@@ -326,23 +330,23 @@ Now, let's see the code in action. Imagine you're inside a controller::
     use Acme\StoreBundle\Model\Category;
     use Acme\StoreBundle\Model\Product;
     use Symfony\Component\HttpFoundation\Response;
-    
+
     class DefaultController extends Controller
     {
         public function createProductAction()
         {
             $category = new Category();
             $category->setName('Main Products');
-    
+
             $product = new Product();
             $product->setName('Foo');
             $product->setPrice(19.99);
             // relate this product to the category
             $product->setCategory($category);
-    
+
             // save the whole
             $product->save();
-    
+
             return new Response(
                 'Created product id: '.$product->getId().' and category id: '.$category->getId()
             );
@@ -363,15 +367,15 @@ before.  First, fetch a ``$product`` object and then access its related
 
     // ...
     use Acme\StoreBundle\Model\ProductQuery;
-    
+
     public function showAction($id)
     {
         $product = ProductQuery::create()
             ->joinWithCategory()
             ->findPk($id);
-    
+
         $categoryName = $product->getCategory()->getName();
-    
+
         // ...
     }
 
@@ -395,7 +399,7 @@ inserted, updated, deleted, etc).
 To add a hook, just add a new method to the object class::
 
     // src/Acme/StoreBundle/Model/Product.php
-    
+
     // ...
     class Product extends BaseProduct
     {
