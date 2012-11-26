@@ -32,7 +32,7 @@ microtime by yourself. Instead, use the simple
     $stopwatch = new Stopwatch();
     // Start event named 'eventName'
     $stopwatch->start('eventName');
-    // some code goes here
+    // ... some code goes here
     $event = $stopwatch->stop('eventName');
 
 You also can provide a category name to an event::
@@ -53,11 +53,11 @@ method does::
     $stopwatch = new Stopwatch();
     // Start event named 'foo'
     $stopwatch->start('foo');
-    // some code goes here
+    // ... some code goes here
     $stopwatch->lap('foo');
-    // some code goes here
+    // ... some code goes here
     $stopwatch->lap('foo');
-    // some other code goes here
+    // ... some other code goes here
     $event = $stopwatch->stop('foo');
 
 Lap information is stored in periods within the event. To get lap information
