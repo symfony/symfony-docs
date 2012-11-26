@@ -288,10 +288,16 @@ of writing the HTML inside the controller, render a template instead:
     {
         public function indexAction($name)
         {
-            return $this->render('AcmeHelloBundle:Hello:index.html.twig', array('name' => $name));
+            return $this->render(
+                'AcmeHelloBundle:Hello:index.html.twig',
+                array('name' => $name)
+            );
 
             // render a PHP template instead
-            // return $this->render('AcmeHelloBundle:Hello:index.html.php', array('name' => $name));
+            // return $this->render(
+            //     'AcmeHelloBundle:Hello:index.html.php',
+            //     array('name' => $name)
+            // );
         }
     }
 
@@ -900,7 +906,9 @@ file of your choice::
     // app/AppKernel.php
     public function registerContainerConfiguration(LoaderInterface $loader)
     {
-        $loader->load(__DIR__.'/config/config_'.$this->getEnvironment().'.yml');
+        $loader->load(
+            __DIR__.'/config/config_'.$this->getEnvironment().'.yml'
+        );
     }
 
 You already know that the ``.yml`` extension can be changed to ``.xml`` or

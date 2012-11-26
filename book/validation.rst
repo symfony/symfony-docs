@@ -8,10 +8,10 @@ Validation is a very common task in web applications. Data entered in forms
 needs to be validated. Data also needs to be validated before it is written
 into a database or passed to a web service.
 
-Symfony2 ships with a `Validator`_ component that makes this task easy and 
-transparent. This component is based on the 
-`JSR303 Bean Validation specification`_. What? A Java specification in PHP? 
-You heard right, but it's not as bad as it sounds. Let's look at how it 
+Symfony2 ships with a `Validator`_ component that makes this task easy and
+transparent. This component is based on the
+`JSR303 Bean Validation specification`_. What? A Java specification in PHP?
+You heard right, but it's not as bad as it sounds. Let's look at how it
 can be used in PHP.
 
 .. index::
@@ -450,7 +450,10 @@ options can be specified in this way.
 
             public static function loadValidatorMetadata(ClassMetadata $metadata)
             {
-                $metadata->addPropertyConstraint('gender', new Choice(array('male', 'female')));
+                $metadata->addPropertyConstraint(
+                    'gender',
+                    new Choice(array('male', 'female'))
+                );
             }
         }
 
@@ -803,17 +806,20 @@ it looks like this::
         $emailConstraint->message = 'Invalid email address';
 
         // use the validator to validate the value
-        $errorList = $this->get('validator')->validateValue($email, $emailConstraint);
+        $errorList = $this->get('validator')->validateValue(
+            $email,
+            $emailConstraint
+        );
 
         if (count($errorList) == 0) {
             // this IS a valid email address, do something
         } else {
             // this is *not* a valid email address
             $errorMessage = $errorList[0]->getMessage()
-            
+
             // ... do something with the error
         }
-        
+
         // ...
     }
 
