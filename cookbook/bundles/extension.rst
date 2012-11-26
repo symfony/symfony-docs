@@ -457,6 +457,7 @@ and build a tree that defines your configuration in that class::
 
             return $treeBuilder;
         }
+    }
 
 This is a *very* simple example, but you can now use this class in your ``load()``
 method to merge your configuration and force validation. If any options other
