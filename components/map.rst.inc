@@ -40,6 +40,10 @@
 * :doc:`/components/event_dispatcher/index`
 
   * :doc:`/components/event_dispatcher/introduction`
+  
+* :doc:`/components/filesystem/index`
+
+  * :doc:`/components/filesystem/introduction`
 
 * **Finder**
 
