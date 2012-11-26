@@ -58,3 +58,5 @@ These options inherit from the :doc:`field</reference/forms/types/field>` type:
 .. include:: /reference/forms/types/options/label.rst.inc
 
 .. include:: /reference/forms/types/options/read_only.rst.inc
+
+.. _`Locale::getDefault()`: http://php.net/manual/en/locale.getdefault.php
