@@ -777,6 +777,12 @@ a slash. URLs matching this route might look like:
     each value of ``_format``. The ``_format`` parameter is a very powerful way
     to render the same content in different formats.
 
+.. note::
+
+    Sometimes you want to make some parts of your routes globally configurable.
+    Symfony2.1 provides you a way to use a Service Container parameter. Read
+    more about this in ":doc:`/cookbook/routing/service_container_parameters`.
+
 Special Routing Parameters
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
