@@ -16,4 +16,4 @@ you can set the ``property_path`` option to ``false``, but using
 described below:
 
 .. versionadded:: 2.1
-    Since 2.1, the ``mapped`` option has been added for this use-case
+    Since 2.1, the ``mapped`` option has been added for this use-case.
