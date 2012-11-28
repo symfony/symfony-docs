@@ -779,9 +779,9 @@ a slash. URLs matching this route might look like:
 
 .. note::
 
-    Sometimes you want to make some parts of your routes globally configurable.
-    Symfony2.1 provides you a way to use a Service Container parameter. Read
-    more about this in ":doc:`/cookbook/routing/service_container_parameters`.
+    Sometimes you want to make certain parts of your routes globally configurable.
+    Symfony2.1 provides you with a way to do this by leveraging service container
+    parameters. Read more about this in ":doc:`/cookbook/routing/service_container_parameters`.
 
 Special Routing Parameters
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
