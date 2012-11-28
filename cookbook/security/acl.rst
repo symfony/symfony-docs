@@ -105,7 +105,7 @@ Creating an ACL, and adding an ACE
             // ... setup $form, and bind data
 
             if ($form->isValid()) {
-                $entityManager = $this->getDoctrine()->getManager();
+                $entityManager = $this->getDoctrine()->getEntityManager();
                 $entityManager->persist($comment);
                 $entityManager->flush();
 
