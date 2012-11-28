@@ -24,7 +24,7 @@
   * :doc:`/cookbook/configuration/pdo_session_storage`
   * :doc:`/cookbook/configuration/apache_router`
 
-* **Console Commands**
+* :doc:`/cookbook/console/index`
 
   * :doc:`/cookbook/console/console_command`
   * :doc:`/cookbook/console/usage`
@@ -38,6 +38,10 @@
 * **Debugging**
 
   * :doc:`/cookbook/debugging`
+
+* **Deployment**
+
+* :doc:`/cookbook/deployment-tools`
 
 * :doc:`/cookbook/doctrine/index`
 
@@ -96,16 +100,6 @@
   * :doc:`/cookbook/routing/redirect_in_config`
   * :doc:`/cookbook/routing/method_parameters`
 
-* **symfony1**
-
-  * :doc:`/cookbook/symfony1`
-
-* :doc:`/cookbook/service_container/index`
-
-  * :doc:`/cookbook/service_container/event_listener`
-  * :doc:`/cookbook/service_container/scopes`
-  * :doc:`/cookbook/service_container/compiler_passes`
-
 * :doc:`/cookbook/security/index`
 
   * :doc:`/cookbook/security/entity_provider`
@@ -118,6 +112,16 @@
   * :doc:`/cookbook/security/securing_services`
   * :doc:`/cookbook/security/custom_provider`
   * :doc:`/cookbook/security/custom_authentication_provider`
+
+* :doc:`/cookbook/service_container/index`
+
+  * :doc:`/cookbook/service_container/event_listener`
+  * :doc:`/cookbook/service_container/scopes`
+  * :doc:`/cookbook/service_container/compiler_passes`
+
+* **symfony1**
+
+  * :doc:`/cookbook/symfony1`
 
 * :doc:`/cookbook/templating/index`
 
@@ -145,5 +149,3 @@
 
   * :doc:`/cookbook/workflow/new_project_git`
   * :doc:`/cookbook/workflow/new_project_svn`
-
-* :doc:`/cookbook/deployment-tools`
