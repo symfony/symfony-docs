@@ -91,10 +91,10 @@ might look like the following::
     // src/Acme/DemoBundle/Form/EventListener/AddNameFieldSubscriber.php
     namespace Acme\DemoBundle\Form\EventListener;
 
-    use Symfony\Component\Form\Event\DataEvent;
+    use Symfony\Component\Form\FormEvent;
+    use Symfony\Component\Form\FormEvents;
     use Symfony\Component\Form\FormFactoryInterface;
     use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-    use Symfony\Component\Form\FormEvents;
 
     class AddNameFieldSubscriber implements EventSubscriberInterface
     {
