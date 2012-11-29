@@ -731,3 +731,11 @@ the relationship between the removed ``Tag`` and ``Task`` object.
 
 .. _`Owning Side and Inverse Side`: http://docs.doctrine-project.org/en/latest/reference/unitofwork-associations.html
 .. _`JSFiddle`: http://jsfiddle.net/847Kf/4/
+
+.. _cookbook-form-collections-custom-prototype
+
+Render a custom prototype
+-------------------------
+
+Most of the time the provided prototype will be sufficient for your needs and does not need to be changed.
+Should you need to render a prototype for your own specific needs a
