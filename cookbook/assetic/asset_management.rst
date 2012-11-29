@@ -78,10 +78,8 @@ drawn from various sources such as from within a bundle:
 
 .. tip::
 
-    For the above example to work, you must either add your bundle to the list
-    of bundles that Assetic is allowed to handle (which is *none* in a default
-    Symfony installation), or remove the bundle list from the configuration
-    altogether:
+    For the above example to work, you must also add your bundle to the list
+    of bundles that Assetic handles, which is empty by default:
 
     .. code-block:: yaml
 
@@ -89,7 +87,7 @@ drawn from various sources such as from within a bundle:
         assetic:
             debug:          "%kernel.debug%"
             use_controller: false
-            #bundles:       [ ]
+            bundles:       [ AcmeFooBundle ]
             filters:
                 # ...
 
