@@ -88,6 +88,8 @@ typically set via a ``_locale`` attribute on your routes (see :ref:`book-transla
 .. index::
    single: Translations; Basic translation
 
+.. _basic-translation:
+
 Basic Translation
 -----------------
 
