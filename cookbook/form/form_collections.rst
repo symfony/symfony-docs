@@ -729,7 +729,7 @@ the relationship between the removed ``Tag`` and ``Task`` object.
     updated (whether you're adding new tags or removing existing tags) on
     each Tag object itself.
 
-.. _cookbook-form-collections-custom-prototype:
+.. _cookbook-form-collections-custom-prototype
 
 Render a custom prototype
 -------------------------
