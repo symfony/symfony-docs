@@ -26,6 +26,7 @@ The Components
     serializer
     stopwatch
     templating/index
+    translation
     yaml/index
 
 .. include:: /components/map.rst.inc
