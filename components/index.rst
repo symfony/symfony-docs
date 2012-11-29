@@ -21,6 +21,7 @@ The Components
     security/index
     serializer
     templating
+    translation
     yaml/index
 
 .. include:: /components/map.rst.inc

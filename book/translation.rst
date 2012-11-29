@@ -86,6 +86,8 @@ The locale used in translations is the one stored in the user session.
 .. index::
    single: Translations; Basic translation
 
+.. _basic-translation:
+
 Basic Translation
 -----------------
 
