@@ -739,3 +739,7 @@ Render a custom prototype
 
 Most of the time the provided prototype will be sufficient for your needs and does not need to be changed.
 Should you need to render a prototype for your own specific needs a
+But if you are in the situation were you need to have a complete custom prototype you can render it yourself:
+
+    .. code-block:: html+jinja
+        data-prototype="{% filter escape %}{% include 'AcmeTaskBundle:Task:prototypeTask.html.twig' with { 'form': form.task.get('prototype') } %}{% endfilter %}"
