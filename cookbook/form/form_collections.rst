@@ -803,5 +803,10 @@ contents of the collection when it already holds items:
 This makes sure the displayed items are the same as the newly inserted
 from the prototype.
 
+But if you are in the situation were you need to have a complete custom prototype you can render it yourself:
+
+    .. code-block:: html+jinja
+        data-prototype="{% filter escape %}{% include 'AcmeTaskBundle:Task:prototypeTask.html.twig' with { 'form': form.task.get('prototype') } %}{% endfilter %}"
+
 .. _`Owning Side and Inverse Side`: http://docs.doctrine-project.org/en/latest/reference/unitofwork-associations.html
 .. _`JSFiddle`: http://jsfiddle.net/847Kf/4/
