@@ -76,6 +76,23 @@ drawn from various sources such as from within a bundle:
                 <link rel="stylesheet" href="<?php echo $view->escape($url) ?>" />
             <?php endforeach; ?>
 
+.. tip::
+
+    For the above example to work, you must either add your bundle to the list
+    of bundles that Assetic is allowed to handle (which is *none* in a default
+    Symfony installation), or remove the bundle list from the configuration
+    altogether:
+
+    .. code-block:: yaml
+
+        # app/config/config.yml
+        assetic:
+            debug:          "%kernel.debug%"
+            use_controller: false
+            #bundles:       [ ]
+            filters:
+                # ...
+
 In this example, all of the files in the ``Resources/public/js/`` directory
 of the ``AcmeFooBundle`` will be loaded and served from a different location.
 The actual rendered tag might simply look like:
