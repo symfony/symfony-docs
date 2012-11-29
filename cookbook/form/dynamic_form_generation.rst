@@ -145,20 +145,16 @@ The ``FormEvents::PRE_SET_DATA`` line actually resolves to the string ``form.pre
 The `FormEvents class`_ serves an organizational purpose. It is a centralized location
 in which you can find all of the various form events available.
 
-While this example could have used the ``form.set_data`` event or even the ``form.post_set_data``
-events just as effectively, by using ``form.pre_set_data`` you guarantee that
+While this example could have used the ``form.post_set_data``
+event just as effectively, by using ``form.pre_set_data`` you guarantee that
 the data being retrieved from the ``Event`` object has in no way been modified
-by any other subscribers or listeners. This is because ``form.pre_set_data``
-passes a `DataEvent`_ object instead of the `FilterDataEvent`_ object passed
-by the ``form.set_data`` event. `DataEvent`_, unlike its child `FilterDataEvent`_,
-lacks a setData() method.
+by any other subscribers or listeners because ``form.pre_set_data`` is the
+first form event dispatched.
 
 .. note::
 
     You may view the full list of form events via the `FormEvents class`_,
     found in the form bundle.
 
-.. _`DataEvent`: https://github.com/symfony/symfony/blob/master/src/Symfony/Component/Form/Event/DataEvent.php
 .. _`FormEvents class`: https://github.com/symfony/Form/blob/master/FormEvents.php
 .. _`Form class`: https://github.com/symfony/symfony/blob/master/src/Symfony/Component/Form/Form.php
-.. _`FilterDataEvent`: https://github.com/symfony/symfony/blob/master/src/Symfony/Component/Form/Event/FilterDataEvent.php
