@@ -181,7 +181,9 @@ value::
             ->findPk($id);
 
         if (!$product) {
-            throw $this->createNotFoundException('No product found for id '.$id);
+            throw $this->createNotFoundException(
+                'No product found for id '.$id
+            );
         }
 
         // ... do something, like pass the $product object into a template
@@ -202,7 +204,9 @@ have a route that maps a product id to an update action in a controller::
             ->findPk($id);
 
         if (!$product) {
-            throw $this->createNotFoundException('No product found for id '.$id);
+            throw $this->createNotFoundException(
+                'No product found for id '.$id
+            );
         }
 
         $product->setName('New product name!');

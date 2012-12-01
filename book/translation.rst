@@ -14,7 +14,8 @@ the user::
     // text will *always* print out in English
     echo 'Hello World';
 
-    // text can be translated into the end-user's language or default to English
+    // text can be translated into the end-user's language or
+    // default to English
     echo $translator->trans('Hello World');
 
 .. note::
@@ -185,7 +186,10 @@ variable with a "placeholder"::
 
     public function indexAction($name)
     {
-        $t = $this->get('translator')->trans('Hello %name%', array('%name%' => $name));
+        $t = $this->get('translator')->trans(
+            'Hello %name%',
+            array('%name%' => $name)
+        );
 
         new Response($t);
     }
@@ -613,7 +617,15 @@ Message pluralization is a tough topic as the rules can be quite complex. For
 instance, here is the mathematic representation of the Russian pluralization
 rules::
 
-    (($number % 10 == 1) && ($number % 100 != 11)) ? 0 : ((($number % 10 >= 2) && ($number % 10 <= 4) && (($number % 100 < 10) || ($number % 100 >= 20))) ? 1 : 2);
+    (($number % 10 == 1) && ($number % 100 != 11))
+        ? 0
+        : ((($number % 10 >= 2)
+            && ($number % 10 <= 4)
+            && (($number % 100 < 10)
+            || ($number % 100 >= 20)))
+                ? 1
+                : 2
+    );
 
 As you can see, in Russian, you can have three different plural forms, each
 given an index of 0, 1 or 2. For each form, the plural is different, and

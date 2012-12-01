@@ -64,14 +64,14 @@ drawn from various sources such as from within a bundle:
 
         .. code-block:: html+jinja
 
-            {% stylesheets '@AcmeFooBundle/Resources/public/css/*' %}
+            {% stylesheets 'bundles/acme_foo/css/*' %}
                 <link rel="stylesheet" href="{{ asset_url }}" />
             {% endstylesheets %}
 
         .. code-block:: html+php
 
             <?php foreach ($view['assetic']->stylesheets(
-                                                 array('@AcmeFooBundle/Resources/public/css/*')
+                                                 array('bundles/acme_foo/css/*')
                                              ) as $url): ?>
                 <link rel="stylesheet" href="<?php echo $view->escape($url) ?>" />
             <?php endforeach; ?>
