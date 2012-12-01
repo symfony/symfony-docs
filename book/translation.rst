@@ -953,7 +953,7 @@ steps:
 .. _`i18n`: http://en.wikipedia.org/wiki/Internationalization_and_localization
 .. _`L10n`: http://en.wikipedia.org/wiki/Internationalization_and_localization
 .. _`strtr function`: http://www.php.net/manual/en/function.strtr.php
-.. _`ISO 31-11`: http://en.wikipedia.org/wiki/Interval_%28mathematics%29#The_ISO_notation
+.. _`ISO 31-11`: http://en.wikipedia.org/wiki/Interval_(mathematics)#Notations_for_intervals
 .. _`Translatable Extension`: https://github.com/l3pp4rd/DoctrineExtensions
 .. _`ISO3166 Alpha-2`: http://en.wikipedia.org/wiki/ISO_3166-1#Current_codes
 .. _`ISO639-1`: http://en.wikipedia.org/wiki/List_of_ISO_639-1_codes
