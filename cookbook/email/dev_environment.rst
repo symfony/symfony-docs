@@ -96,7 +96,12 @@ Now, suppose you're sending an email to ``recipient@example.com``.
             ->setSubject('Hello Email')
             ->setFrom('send@example.com')
             ->setTo('recipient@example.com')
-            ->setBody($this->renderView('HelloBundle:Hello:email.txt.twig', array('name' => $name)))
+            ->setBody(
+                $this->renderView(
+                    'HelloBundle:Hello:email.txt.twig',
+                    array('name' => $name)
+                )
+            )
         ;
         $this->get('mailer')->send($message);
 
@@ -150,10 +155,10 @@ you to open the report with details of the sent emails.
 
         <!-- app/config/config_dev.xml -->
 
-        <!-- 
+        <!--
             xmlns:webprofiler="http://symfony.com/schema/dic/webprofiler"
-            xsi:schemaLocation="http://symfony.com/schema/dic/webprofiler 
-            http://symfony.com/schema/dic/webprofiler/webprofiler-1.0.xsd"> 
+            xsi:schemaLocation="http://symfony.com/schema/dic/webprofiler
+            http://symfony.com/schema/dic/webprofiler/webprofiler-1.0.xsd">
         -->
 
         <webprofiler:config
