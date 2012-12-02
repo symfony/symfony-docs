@@ -421,8 +421,8 @@ Add a Touch of Symfony2
 ~~~~~~~~~~~~~~~~~~~~~~~
 
 Symfony2 to the rescue. Before actually using Symfony2, you need to download
-it. This can be done by using composer, which takes care of downloading the
-correct version and all it's dependencies and provides an autoloader. An 
+it. This can be done by using Composer, which takes care of downloading the
+correct version and all its dependencies and provides an autoloader. An 
 autoloader is a tool that makes it possible to start using PHP classes 
 without explicitly including the file containing the class.
 
@@ -440,9 +440,16 @@ content:
         }
     }
     
-After installing your dependencies, composer has generated ``vendor/autoload.php``,
-which takes care to include all files from the symfony framework as well as
-the files mentioned in the autoload section of your composer.json.
+Next, `download Composer`_ and then run the following command, which will download Symfony
+into a vendor/ directory:
+
+.. code-block:: bash
+
+    $ php composer.phar install
+
+Beside downloading your dependencies, Composer generates a ``vendor/autoload.php`` file,
+which takes care of autoloading for all the files in the Symfony Framework as well as 
+the files mentioned in the autoload section of your `composer.json`.
 
 Core to Symfony's philosophy is the idea that an application's main job is
 to interpret each request and return a response. To this end, Symfony2 provides
@@ -735,7 +742,7 @@ Learn more from the Cookbook
 * :doc:`/cookbook/controller/service`
 
 .. _`Doctrine`: http://www.doctrine-project.org
-.. _`download Symfony`: http://symfony.com/download
+.. _`download Composer`: http://getcomposer.org/download/
 .. _`Routing`: https://github.com/symfony/Routing
 .. _`Templating`: https://github.com/symfony/Templating
 .. _`KnpBundles.com`: http://knpbundles.com/
