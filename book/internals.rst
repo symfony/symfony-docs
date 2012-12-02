@@ -22,8 +22,7 @@ on top of the previous one.
 .. tip::
 
     Autoloading is not managed by the framework directly; it's done by using
-    Composer's autoloader (``vendor/autoload.php``), which is included in
-    the ``src/autoload.php`` file.
+    Composer's autoloader (``vendor/autoload.php``).
 
 ``HttpFoundation`` Component
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
