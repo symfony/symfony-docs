@@ -263,9 +263,8 @@ great, your user can't actually add any new tags yet.
     This directive limits recursion to 100 calls which may not be enough for
     rendering the form in the template if you render the whole form at
     once (e.g ``form_widget(form)``). To fix this you can set this directive
-    to a higher value (either via a PHP ini file or via :phpfunction:`ini_set`,
-    for example in ``app/autoload.php``) or render each form field by hand
-    using ``form_row``.
+    to a higher value (either via a PHP ini file or via :phpfunction:`ini_set`) 
+    or render each form field by hand using ``form_row``.
 
 .. _cookbook-form-collections-new-prototype:
 

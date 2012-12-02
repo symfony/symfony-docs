@@ -59,8 +59,7 @@ This class must implement two methods:
   (more on this later).
 
 Autoloading is handled automatically via `Composer`_, which means that you
-can use any PHP classes without doing anything at all! If you need more flexibility,
-you can extend the autoloader in the ``app/autoload.php`` file. All dependencies
+can use any PHP classes without doing anything at all! All dependencies
 are stored under the ``vendor/`` directory, but this is just a convention.
 You can store them wherever you want, globally on your server or locally
 in your projects.

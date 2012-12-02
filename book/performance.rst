@@ -46,7 +46,7 @@ Use Composer's Class Map Functionality
 --------------------------------------
 
 By default, the Symfony2 standard edition uses Composer's autoloader
-in the `autoload.php`_ file. This autoloader is easy to use, as it will
+in the `vendor/autoload.php` file. This autoloader is easy to use, as it will
 automatically find any new classes that you've placed in the registered
 directories.
 
@@ -138,5 +138,4 @@ is no longer a reason to use a bootstrap file.
 
 .. _`byte code caches`: http://en.wikipedia.org/wiki/List_of_PHP_accelerators
 .. _`APC`: http://php.net/manual/en/book.apc.php
-.. _`autoload.php`: https://github.com/symfony/symfony-standard/blob/master/app/autoload.php
 .. _`bootstrap file`: https://github.com/sensio/SensioDistributionBundle/blob/master/Composer/ScriptHandler.php

@@ -19,8 +19,7 @@ Dependencies (optional)
 
 To run the entire test suite, including tests that depend on external
 dependencies, Symfony2 needs to be able to autoload them. By default, they are
-autoloaded from `vendor/` under the main root directory (see
-`autoload.php.dist`).
+autoloaded from `vendor/` under the main root directory.
 
 The test suite needs the following third-party libraries:
 
