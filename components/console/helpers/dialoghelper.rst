@@ -4,9 +4,8 @@
 Dialog Helper
 =============
 
-The Dialog Helper provides functions to ask the user for more information.
-
-The DialogHelper is included in the default helper set, which you can get
+The Dialog Helper provides functions to ask the user for more information. 
+It is included in the default helper set, which you can get
 by calling :method:`Symfony\\Component\\Console\\Command\\Command::getHelperSet`::
 
     $dialog = $this->getHelperSet()->get('dialog');
@@ -30,16 +29,16 @@ the following to your command::
         return;
     }
 
-In this case, the user will be asked "Continue with this action", and unless
-they answer with ``y``, the task will stop running. The third argument to
-``askConfirmation`` is the default value to return if the user doesn't enter
-any input.
+In this case, the user will be asked "Continue with this action", and will return
+``true`` if the user answers with ``y`` or false in any other case. The third 
+argument to ``askConfirmation`` is the default value to return if the user doesn't 
+enter any input.
 
 Asking the User for information
 -------------------------------
 
 You can also ask question with more than a simple yes/no answer. For instance,
-you want to know a bundle name, you can add this to your command::
+if you want to know a bundle name, you can add this to your command::
 
     // ...
     $bundle = $dialog->ask(
@@ -49,8 +48,8 @@ you want to know a bundle name, you can add this to your command::
     );
 
 The user will be asked "Please enter the name of the bundle". They can type
-some name or if they leave it empty the default value (``AcmeDemoBundle`` here)
-is used. This value will be returned.
+some name which will be returned by the ``ask`` method. If they leave it empty
+the default value (``AcmeDemoBundle`` here) is returned.
 
 Validating the answer
 ---------------------
@@ -87,10 +86,12 @@ This methods has 2 new arguments, the full signature is::
     )
 
 The ``$validator`` is a callback which handles the validation. It should
-throw an exception if there is something wrong. The exception message displayed
+throw an exception if there is something wrong. The exception message is displayed
 in the console, so it is a good practice to put some usefull information 
 in it.
 
 You can set the max number of times to ask in the ``$attempts`` argument.
 If we reach this max number it will use the default value, which is given
-in the last argument. This is ``false`` by default, which means it is infinite.
+in the last argument. Using ``false`` means the amount of attempts is infinite.
+The user will be asked as long as he provides an invalid answer and will only
+be able to proceed if his input is valid.
