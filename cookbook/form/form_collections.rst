@@ -805,8 +805,18 @@ from the prototype.
 
 But if you are in the situation were you need to have a complete custom prototype you can render it yourself:
 
-    .. code-block:: html+jinja
-        data-prototype="{% filter escape %}{% include 'AcmeTaskBundle:Task:prototypeTask.html.twig' with { 'form': form.task.get('prototype') } %}{% endfilter %}"
+.. code-block:: html+jinja
+    data-prototype="{% filter escape %}{% include 'AcmeTaskBundle:Task:prototypeTask.html.twig' with { 'form': form.task.get('prototype') } %}{% endfilter %}"
+
+The included `AcmeTaskBundle:Task:prototypeTask.html.twig` contains the markup used for the prototype. This way you can not only easily structure your prototype-markup, you can
+also use this markup to render the contents of the collection when it already holds items:
+
+.. code-block:: html+jinja
+    {% for task in tasks %}
+        {% include 'AcmeTaskBundle:Task:prototypeTask.html.twig' with { 'form': form.task.vars.form } %}
+    {% endfor %}
+
+This makes sure the displayed items are the same as the newly inserted from the prototype.
 
 .. _`Owning Side and Inverse Side`: http://docs.doctrine-project.org/en/latest/reference/unitofwork-associations.html
 .. _`JSFiddle`: http://jsfiddle.net/847Kf/4/
