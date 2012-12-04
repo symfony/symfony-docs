@@ -8,6 +8,7 @@ Console Helpers
     :maxdepth: 2
 
     dialoghelper
+    formatterhelper
 
 The Console Components comes with some usefull helpers. These helpers contain
 function to ease some common tasks.
