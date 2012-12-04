@@ -357,10 +357,10 @@ Almost all modern web apps do this - including apps like WordPress.
 Stay Organized
 ~~~~~~~~~~~~~~
 
-But inside your front controller, how do you know which page should
-be rendered and how can you render each in a sane way? One way or another, you'll need to
-check the incoming URI and execute different parts of your code depending
-on that value. This can get ugly quickly::
+But inside your front controller, how do you know which page should be
+rendered and how can you render each in a same way? One way or another,
+you'll need to check the incoming URI and execute different parts of your
+code depending on that value. This can get ugly quickly::
 
     // index.php
     $request = Request::createFromGlobals();
