@@ -33,7 +33,7 @@ may also need to adjust the version (e.g. ``2.1.1`` or ``2.2.*``).
 
 You can research the component names and versions at `packagist.org`_.
 
-**3.** `Install composer`_ if you don't already have it present on your sysmte: 
+**3.** `Install composer`_ if you don't already have it present on your system: 
 
 **4.** Download the vendor libraries and generate the ``vendor/autoload.php`` file:
 
