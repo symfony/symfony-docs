@@ -729,9 +729,6 @@ the relationship between the removed ``Tag`` and ``Task`` object.
     updated (whether you're adding new tags or removing existing tags) on
     each Tag object itself.
 
-.. _`Owning Side and Inverse Side`: http://docs.doctrine-project.org/en/latest/reference/unitofwork-associations.html
-.. _`JSFiddle`: http://jsfiddle.net/847Kf/4/
-
 .. _cookbook-form-collections-custom-prototype
 
 Render a custom prototype
@@ -741,8 +738,13 @@ Most of the time the provided prototype will be sufficient for your needs
 and does not need to be changed. But if you are in the situation were
 you need to have a complete custom prototype you can render it yourself:
 
-    .. code-block:: html+jinja
-        data-prototype="{% filter escape %}{% include 'AcmeTaskBundle:Task:prototypeTask.html.twig' with { 'form': form.task.get('prototype') } %}{% endfilter %}"
+.. code-block:: html+jinja
+
+    data-prototype="{% filter escape %}
+        {% include 'AcmeTaskBundle:Task:prototypeTask.html.twig'
+            with { 'form': form.task.get('prototype') }
+        %}
+    {% endfilter %}"
 
 The included ``AcmeTaskBundle:Task:prototypeTask.html.twig`` contains the
 markup used for the prototype. This way you can not only easily structure
@@ -750,9 +752,15 @@ your prototype-markup, you can also use this markup to render the
 contents of the collection when it already holds items:
 
 .. code-block:: html+jinja
+
     {% for task in tasks %}
-        {% include 'AcmeTaskBundle:Task:prototypeTask.html.twig' with { 'form': form.task.vars.form } %}
+        {% include 'AcmeTaskBundle:Task:prototypeTask.html.twig'
+            with { 'form': form.task.vars.form }
+        %}
     {% endfor %}
 
 This makes sure the displayed items are the same as the newly inserted
 from the prototype.
+
+.. _`Owning Side and Inverse Side`: http://docs.doctrine-project.org/en/latest/reference/unitofwork-associations.html
+.. _`JSFiddle`: http://jsfiddle.net/847Kf/4/
