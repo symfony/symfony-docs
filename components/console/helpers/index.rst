@@ -1,11 +1,11 @@
 .. index::
     single: Console; Console Helpers
 
-Console Helpers
-===============
+The Console Helpers
+===================
 
 .. toctree::
-    :maxdepth: 2
+    :hidden:
 
     dialoghelper
     formatterhelper
