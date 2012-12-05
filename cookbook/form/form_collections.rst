@@ -599,7 +599,9 @@ the relationship between the removed ``Tag`` and ``Task`` object.
             $originalTags = array();
 
             // Create an array of the current Tag objects in the database
-            foreach ($task->getTags() as $tag) $originalTags[] = $tag;
+            foreach ($task->getTags() as $tag) {
+                $originalTags[] = $tag;
+            }
 
             $editForm = $this->createForm(new TaskType(), $task);
 
