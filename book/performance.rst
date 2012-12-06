@@ -56,7 +56,7 @@ finally finds the file it's looking for.
 
 The simplest solution is to tell Composer to build a "class map" (i.e. a
 big array of the locations of all the classes). This can be done from the
-command line, and might become part of your deploy process::
+command line, and might become part of your deploy process:
 
 .. code-block:: bash
 
