@@ -31,10 +31,16 @@ the ``test`` environment)::
             // Check that the profiler is enabled
             if ($profile = $client->getProfile()) {
                 // check the number of requests
-                $this->assertLessThan(10, $profile->getCollector('db')->getQueryCount());
+                $this->assertLessThan(
+                    10,
+                    $profile->getCollector('db')->getQueryCount()
+                );
 
                 // check the time spent in the framework
-                $this->assertLessThan(500, $profile->getCollector('time')->getTotalTime());
+                $this->assertLessThan(
+                    500,
+                    $profile->getCollector('time')->getTotalTime()
+                );
             }
         }
     }
@@ -46,7 +52,10 @@ finish. It's easy to achieve if you embed the token in the error message::
     $this->assertLessThan(
         30,
         $profile->get('db')->getQueryCount(),
-        sprintf('Checks that query count is less than 30 (token %s)', $profile->getToken())
+        sprintf(
+            'Checks that query count is less than 30 (token %s)',
+            $profile->getToken()
+        )
     );
 
 .. caution::

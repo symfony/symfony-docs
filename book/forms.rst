@@ -1565,7 +1565,9 @@ method to specify the option::
         {
             $collectionConstraint = new Collection(array(
                 'name' => new Length(array("min" => 5)),
-                'email' => new Email(array('message' => 'Invalid email address')),
+                'email' => new Email(
+                    array('message' => 'Invalid email address')
+                ),
             ));
 
             $resolver->setDefaults(array(

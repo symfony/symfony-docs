@@ -450,7 +450,7 @@ class, which can make this even easier::
     use Symfony\Component\HttpFoundation\JsonResponse;
 
     $response = new JsonResponse();
-    $response->setContent(array(
+    $response->setData(array(
         'data' => 123
     ));
 

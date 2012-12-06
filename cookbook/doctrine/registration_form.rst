@@ -194,7 +194,11 @@ Next, create the form for this ``Registration`` model::
         public function buildForm(FormBuilderInterface $builder, array $options)
         {
             $builder->add('user', new UserType());
-            $builder->add('terms', 'checkbox', array('property_path' => 'termsAccepted'));
+            $builder->add(
+                'terms',
+                'checkbox',
+                array('property_path' => 'termsAccepted')
+            );
         }
 
         public function getName()
@@ -227,9 +231,15 @@ controller for displaying the registration form::
     {
         public function registerAction()
         {
-            $form = $this->createForm(new RegistrationType(), new Registration());
+            $form = $this->createForm(
+                new RegistrationType(),
+                new Registration()
+            );
 
-            return $this->render('AcmeAccountBundle:Account:register.html.twig', array('form' => $form->createView()));
+            return $this->render(
+                'AcmeAccountBundle:Account:register.html.twig',
+                array('form' => $form->createView())
+            );
         }
     }
 
@@ -264,7 +274,10 @@ the validation and saves the data into the database::
             return $this->redirect(...);
         }
 
-        return $this->render('AcmeAccountBundle:Account:register.html.twig', array('form' => $form->createView()));
+        return $this->render(
+            'AcmeAccountBundle:Account:register.html.twig',
+            array('form' => $form->createView())
+        );
     }
 
 That's it! Your form now validates, and allows you to save the ``User``
