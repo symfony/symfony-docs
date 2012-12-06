@@ -55,23 +55,29 @@ First, create a simple Doctrine Entity class to work with::
 
         public function getAbsolutePath()
         {
-            return null === $this->path ? null : $this->getUploadRootDir().'/'.$this->path;
+            return null === $this->path
+                ? null
+                : $this->getUploadRootDir().'/'.$this->path;
         }
 
         public function getWebPath()
         {
-            return null === $this->path ? null : $this->getUploadDir().'/'.$this->path;
+            return null === $this->path
+                ? null
+                : $this->getUploadDir().'/'.$this->path;
         }
 
         protected function getUploadRootDir()
         {
-            // the absolute directory path where uploaded documents should be saved
+            // the absolute directory path where uploaded
+            // documents should be saved
             return __DIR__.'/../../../../web/'.$this->getUploadDir();
         }
 
         protected function getUploadDir()
         {
-            // get rid of the __DIR__ so it doesn't screw when displaying uploaded doc/image in the view.
+            // get rid of the __DIR__ so it doesn't screw up
+            // when displaying uploaded doc/image in the view.
             return 'uploads/documents';
         }
     }
@@ -213,8 +219,12 @@ object, which is what's returned after a ``file`` field is submitted::
         // use the original file name here but you should
         // sanitize it at least to avoid any security issues
 
-        // move takes the target directory and then the target filename to move to
-        $this->file->move($this->getUploadRootDir(), $this->file->getClientOriginalName());
+        // move takes the target directory and then the
+        // target filename to move to
+        $this->file->move(
+            $this->getUploadRootDir(),
+            $this->file->getClientOriginalName()
+        );
 
         // set the path property to the filename where you've saved the file
         $this->path = $this->file->getClientOriginalName();
@@ -266,7 +276,8 @@ Next, refactor the ``Document`` class to take advantage of these callbacks::
         {
             if (null !== $this->file) {
                 // do whatever you want to generate a unique name
-                $this->path = sha1(uniqid(mt_rand(), true)).'.'.$this->file->guessExtension();
+                $filename = sha1(uniqid(mt_rand(), true));
+                $this->path = $filename.'.'.$this->file->guessExtension();
             }
         }
 
@@ -373,7 +384,10 @@ property, instead of the actual filename::
             // you must throw an exception here if the file cannot be moved
             // so that the entity is not persisted to the database
             // which the UploadedFile move() method does
-            $this->file->move($this->getUploadRootDir(), $this->id.'.'.$this->file->guessExtension());
+            $this->file->move(
+                $this->getUploadRootDir(),
+                $this->id.'.'.$this->file->guessExtension()
+            );
 
             unset($this->file);
         }
@@ -398,7 +412,9 @@ property, instead of the actual filename::
 
         public function getAbsolutePath()
         {
-            return null === $this->path ? null : $this->getUploadRootDir().'/'.$this->id.'.'.$this->path;
+            return null === $this->path
+                ? null
+                : $this->getUploadRootDir().'/'.$this->id.'.'.$this->path;
         }
     }
 
