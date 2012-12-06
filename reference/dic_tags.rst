@@ -50,6 +50,8 @@ the AsseticBundle has several tags that aren't listed here.
 +-----------------------------------+---------------------------------------------------------------------------+
 | `twig.extension`_                 | Register a custom Twig Extension                                          |
 +-----------------------------------+---------------------------------------------------------------------------+
+| `twig.loader`_                    | Register a custom service that loads Twig templates                       |
++-----------------------------------+---------------------------------------------------------------------------+
 | `validator.constraint_validator`_ | Create your own custom validation constraint                              |
 +-----------------------------------+---------------------------------------------------------------------------+
 | `validator.initializer`_          | Register a service that initializes objects before validation             |
@@ -741,6 +743,37 @@ also have to be added as regular services:
         $container
             ->register('twig.extension.intl', 'Twig_Extensions_Extension_Intl')
             ->addTag('twig.extension')
+        ;
+
+twig.loader
+-----------
+
+**Purpose**: Register a custom service that loads Twig templates
+
+To enable a custom Twig template loader, add it as a regular service in one
+of your configuration, and tag it with ``twig.loader``:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        services:
+            twig.loader.your_loader_name:
+                class: Fully\Qualified\Loader\Class\Name
+                tags:
+                    - { name: twig.loader }
+
+    .. code-block:: xml
+
+        <service id="twig.loader.your_loader_name" class="Fully\Qualified\Loader\Class\Name">
+            <tag name="twig.loader" />
+        </service>
+
+    .. code-block:: php
+
+        $container
+            ->register('twig.loader.your_loader_name', 'Fully\Qualified\Loader\Class\Name')
+            ->addTag('twig.loader')
         ;
 
 validator.constraint_validator
