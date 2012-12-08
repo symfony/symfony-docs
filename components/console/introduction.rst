@@ -383,7 +383,7 @@ information, which updates as your command runs:
 To display progress details, use the :class:`Symfony\\Component\\Console\\Helper\\ProgressHelper`,
 pass it a total number of units, and advance the progress as your command executes::
 
-    $progress = $app->getHelperSet()->get('progress');
+    $progress = $this->getHelperSet()->get('progress');
 
     $progress->start($output, 50);
     $i = 0;
