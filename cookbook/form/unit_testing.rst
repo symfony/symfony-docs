@@ -4,8 +4,8 @@
 Testing forms
 =============
 
-The form component consists of 3 core objects: a FormType (extending
-:class:`Symfony\\Component\\Form\\AbstractType`), the
+The Form Component consists of 3 core objects: a FormType (implementing
+:class:`Symfony\\Component\\Form\\FormTypeInterface`), the
 :class:`Symfony\\Component\\Form\\Form` and the
 :class:`Symfony\\Component\\Form\\FormView`.
 
@@ -24,8 +24,8 @@ It is used to test the core types and you can use it to test yours too.
 .. note::
     
     Depending on the way you installed your Symfony or Symfony Form Component
-    the tests may not be downloaded. Use the --prefer-source or --dev options
-    with composer if this is the case.
+    the tests may not be downloaded. Use the --prefer-source option with
+    composer if this is the case.
 
 The Basics
 ----------
