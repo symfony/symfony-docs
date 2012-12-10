@@ -173,25 +173,29 @@ the ``src/`` directory using its ``registerNamespaceFallbacks`` method:
 .. code-block:: php
 
     // app/autoload.php
+
     // ...
     $loader->registerNamespaceFallbacks(array(
         __DIR__.'/../src',
     ));
 
-With symfony 2.1.5 with composer autoloader, you can use :
+Since 2.1.5, Symfony use the Composer autoloader instead of UniversalClassLoader, you should use the ``add()`` 
+method to register fallback namespaces:
 
 .. code-block:: php
 
     // app/autoload.php
+
     // ...
     $loader->add('', __DIR__.'/../src');
 
-List of directory scanned :
+List of directory scanned:
 
 .. code-block:: php
 
     // app/autoload.php
-    print_r( $loader->getFallbackDirs());
+
+    print_r($loader->getFallbackDirs());
 
 
 Using the Console
