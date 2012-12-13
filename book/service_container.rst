@@ -106,7 +106,7 @@ be specified in YAML, XML or PHP:
         services:
             my_mailer:
                 class:        Acme\HelloBundle\Mailer
-                arguments:    [sendmail]
+                arguments:    [ sendmail ]
 
     .. code-block:: xml
 
@@ -187,7 +187,7 @@ straightforward. Parameters make defining services more organized and flexible:
         services:
             my_mailer:
                 class:        "%my_mailer.class%"
-                arguments:    [%my_mailer.transport%]
+                arguments:    [ %my_mailer.transport% ]
 
     .. code-block:: xml
 
@@ -358,7 +358,7 @@ directories don't exist, create them.
         services:
             my_mailer:
                 class:        "%my_mailer.class%"
-                arguments:    [%my_mailer.transport%]
+                arguments:    [ %my_mailer.transport% ]
 
     .. code-block:: xml
 
@@ -598,7 +598,7 @@ the service container gives you a much more appealing option:
                 # ...
             newsletter_manager:
                 class:     "%newsletter_manager.class%"
-                arguments: [@my_mailer]
+                arguments: [ @my_mailer ]
 
     .. code-block:: xml
 
@@ -756,7 +756,7 @@ it exists and do nothing if it doesn't:
         services:
             newsletter_manager:
                 class:     "%newsletter_manager.class%"
-                arguments: [@?my_mailer]
+                arguments: [ @?my_mailer ]
 
     .. code-block:: xml
 
@@ -859,7 +859,7 @@ Configuring the service container is easy:
         services:
             newsletter_manager:
                 class:     "%newsletter_manager.class%"
-                arguments: [@mailer, @templating]
+                arguments: [ @mailer, @templating ]
 
     .. code-block:: xml
 
