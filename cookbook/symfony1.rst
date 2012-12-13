@@ -179,8 +179,8 @@ the ``src/`` directory using its ``registerNamespaceFallbacks`` method:
         __DIR__.'/../src',
     ));
 
-Since 2.1.5, Symfony use the Composer autoloader instead of UniversalClassLoader, you should use the ``add()`` 
-method to register fallback namespaces:
+When Symfony use the Composer autoloader instead of UniversalClassLoader, 
+you should use the ``add()`` method to register fallback namespaces:
 
 .. code-block:: php
 
