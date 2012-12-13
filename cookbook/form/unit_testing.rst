@@ -52,7 +52,7 @@ The simplest TypeTestCase implementation looks like the following::
             $form = $this->factory->create($type);
 
             $object = new TestObject();
-            $object->fromArray($formData)
+            $object->fromArray($formData);
 
             $form->bind($formData);
 
