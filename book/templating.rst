@@ -704,6 +704,53 @@ in your application configuration:
             ),
         ));
 
+.. versionadded:: 2.2
+    Default templates per render tag was added in Symfony 2.2
+
+You can define default templates per ``render`` tag (which will override any global default templates that is defined):
+
+.. configuration-block::
+
+    .. code-block:: jinja
+
+        {% render '...:news' with 
+            {}, 
+            {'standalone': 'js', 'default': 'AcmeDemoBundle:Default:content.html.twig'} 
+        %}
+
+    .. code-block:: php
+
+        <?php echo $view['actions']->render(
+            '...:news',
+            array(),
+            array(
+                'standalone' => 'js',
+                'default' => 'AcmeDemoBundle:Default:content.html.twig',
+            )
+        ) ?>
+
+Or you can also specify a string to display as the default content:
+
+.. configuration-block::
+
+    .. code-block:: jinja
+
+        {% render '...:news' with 
+            {}, 
+            {'standalone': 'js', 'default': 'Loading...'} 
+        %}
+
+    .. code-block:: php
+
+        <?php echo $view['actions']->render(
+            '...:news',
+            array(),
+            array(
+                'standalone' => 'js',
+                'default' => 'Loading...',
+            )
+        ) ?>
+
 .. index::
    single: Templating; Linking to pages
 
