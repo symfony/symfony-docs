@@ -40,6 +40,7 @@ Date Constraints
 Collection Constraints
 ~~~~~~~~~~~~~~~~~~~~~~
 
+* :doc:`OneOf </reference/constraints/OneOf>`
 * :doc:`Choice </reference/constraints/Choice>`
 * :doc:`Collection </reference/constraints/Collection>`
 * :doc:`Count </reference/constraints/Count>`
