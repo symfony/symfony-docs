@@ -41,7 +41,7 @@
 
 * **Deployment**
 
-* :doc:`/cookbook/deployment-tools`
+  * :doc:`/cookbook/deployment-tools`
 
 * :doc:`/cookbook/doctrine/index`
 
