@@ -13,9 +13,6 @@ but needs to enter his old password for security.
     This should **not** be used to validate a login form, since this is done
     automatically by the security system.
 
-When applied to an array (or Traversable object), this constraint allows
-you to apply a collection of constraints to each element of the array.
-
 +----------------+-------------------------------------------------------------------------------------------+
 | Applies to     | :ref:`property or method<validation-property-target>`                                     |
 +----------------+-------------------------------------------------------------------------------------------+
