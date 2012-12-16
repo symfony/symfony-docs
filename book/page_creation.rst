@@ -512,13 +512,13 @@ You'll learn more about each of these directories in later chapters.
 
 .. sidebar:: Autoloading
 
-    When Symfony is loading, a special file - ``app/autoload.php`` - is included.
-    This file is responsible for configuring the autoloader, which will autoload
-    your application files from the ``src/`` directory and third-party libraries
-    from the ``vendor/`` directory.
+    When Symfony is loading, a special file - ``vendor/autoload.php`` - is 
+    included. This file is created by Composer and will autoload all 
+    application files living in the `src/` folder as well as all 
+    third-party libraries mentioned in the ``composer.json`` file.
 
     Because of the autoloader, you never need to worry about using ``include``
-    or ``require`` statements. Instead, Symfony2 uses the namespace of a class
+    or ``require`` statements. Instead, Composer uses the namespace of a class
     to determine its location and automatically includes the file on your
     behalf the instant you need a class.
 
@@ -532,11 +532,6 @@ You'll learn more about each of these directories in later chapters.
             Acme\HelloBundle\Controller\HelloController
         Path:
             src/Acme/HelloBundle/Controller/HelloController.php
-
-    Typically, the only time you'll need to worry about the ``app/autoload.php``
-    file is when you're including a new third-party library in the ``vendor/``
-    directory. For more information on autoloading, see
-    :doc:`How to autoload Classes</components/class_loader>`.
 
 The Source (``src``) Directory
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -609,7 +604,6 @@ are used by your application (including the core Symfony bundles).
 
    A bundle can live *anywhere* as long as it can be autoloaded (via the
    autoloader configured at ``app/autoload.php``).
-
 Creating a Bundle
 ~~~~~~~~~~~~~~~~~
 
