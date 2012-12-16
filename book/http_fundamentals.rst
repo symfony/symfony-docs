@@ -504,7 +504,7 @@ regardless of how your project is developed. To name a few:
   the ``Request`` and ``Response`` classes, as well as other classes for handling
   sessions and file uploads;
 
-* :doc:`Routing</components/routing>` - Powerful and fast routing system that
+* :doc:`Routing</components/routing/introduction>` - Powerful and fast routing system that
   allows you to map a specific URI (e.g. ``/contact``) to some information
   about how that request should be handled (e.g. execute the ``contactAction()``
   method);
