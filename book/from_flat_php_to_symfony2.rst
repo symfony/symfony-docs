@@ -449,7 +449,7 @@ into a vendor/ directory:
 
 Beside downloading your dependencies, Composer generates a ``vendor/autoload.php`` file,
 which takes care of autoloading for all the files in the Symfony Framework as well as 
-the files mentioned in the autoload section of your `composer.json`.
+the files mentioned in the autoload section of your ``composer.json``.
 
 Core to Symfony's philosophy is the idea that an application's main job is
 to interpret each request and return a response. To this end, Symfony2 provides
