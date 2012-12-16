@@ -46,6 +46,15 @@ of an ``Author`` class exactly equal to ``null``, you could do the following:
             protected $firstName;
         }
 
+    .. code-block:: xml
+
+        <!-- src/Acme/BlogBundle/Resources/config/validation.xml -->
+        <class name="Acme\BlogBundle\Entity\Author">
+            <property name="firstName">
+                <constraint name="Null" />
+            </property>
+        </class>
+
 Options
 -------
 

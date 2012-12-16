@@ -38,8 +38,8 @@ To verify that the ``firstName`` field length of a class is between "2" and
                     - Length:
                         min: 2
                         max: 50
-                        minMessage: Your first name must be at least 2 characters length
-                        maxMessage: Your first name cannot be longer than than 50 characters length
+                        minMessage: "Your first name must be at least {{ limit }} characters length"
+                        maxMessage: "Your first name cannot be longer than than {{ limit }} characters length"
 
     .. code-block:: php-annotations
 
@@ -52,12 +52,26 @@ To verify that the ``firstName`` field length of a class is between "2" and
              * @Assert\Length(
              *      min = "2",
              *      max = "50",
-             *      minMessage = "Your first name must be at least 2 characters length",
-             *      maxMessage = "Your first name cannot be longer than than 50 characters length"
+             *      minMessage = "Your first name must be at least {{ limit }} characters length",
+             *      maxMessage = "Your first name cannot be longer than than {{ limit }} characters length"
              * )
              */
              protected $firstName;
         }
+
+    .. code-block:: xml
+
+        <!-- src/Acme/BlogBundle/Resources/config/validation.xml -->
+        <class name="Acme\EventBundle\Entity\Participant">
+            <property name="firstName">
+                <constraint name="Length">
+                    <option name="min">2</option>
+                    <option name="max">50</option>
+                    <option name="minMessage">Your first name must be at least {{ limit }} characters length</option>
+                    <option name="maxMessage">Your first name cannot be longer than than {{ limit }} characters length</option>
+                </constraint>
+            </property>
+        </class>
 
 Options
 -------

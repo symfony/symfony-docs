@@ -43,6 +43,15 @@ of an ``Author`` class were blank, you could do the following:
             protected $firstName;
         }
 
+    .. code-block:: xml
+
+        <!-- src/Acme/BlogBundle/Resources/config/validation.xml -->
+        <class name="Acme\BlogBundle\Entity\Author">
+            <property name="firstName">
+                <constraint name="Blank" />
+            </property>
+        </class>
+
 Options
 -------
 
