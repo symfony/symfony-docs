@@ -2,7 +2,7 @@ The Release Process
 ===================
 
 This document explains the Symfony release process (Symfony being the code
-hosted on the main symfony/symfony `Git repository`_).
+hosted on the main ``symfony/symfony`` `Git repository`_).
 
 Symfony manages its releases through a *time-based model*; a new Symfony
 release comes out every *six months*: one in *May* and one in *November*.
