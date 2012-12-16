@@ -114,7 +114,7 @@ That array told symfony1 exactly which file contained each class. In the
 production environment, this caused you to need to clear the cache when classes
 were added or moved.
 
-In Symfony2, a new class - ``UniversalClassLoader`` - handles this process.
+In Symfony2, a tool named `Composer`_ handles this process.
 The idea behind the autoloader is simple: the name of your class (including
 the namespace) must match up with the path to the file containing that class.
 Take the ``FrameworkExtraBundle`` from the Symfony2 Standard Edition as an
@@ -136,18 +136,7 @@ As you can see, the location of the file follows the namespace of the class.
 Specifically, the namespace, ``Sensio\Bundle\FrameworkExtraBundle``, spells out
 the directory that the file should live in
 (``vendor/sensio/framework-extra-bundle/Sensio/Bundle/FrameworkExtraBundle/``).
-This is because, in the ``app/autoload.php`` file, you'll configure Symfony to
-look for the ``Sensio`` namespace in the ``vendor/sensio`` directory:
-
-.. code-block:: php
-
-    // app/autoload.php
-
-    // ...
-    $loader->registerNamespaces(array(
-        ...,
-        'Sensio'           => __DIR__.'/../vendor/sensio/framework-extra-bundle',
-    ));
+Composer can then look for the file at this specific place and load it very fast.
 
 If the file did *not* live at this exact location, you'd receive a
 ``Class "Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle" does not exist.``
@@ -160,24 +149,24 @@ contains a different class). In order for a class to be autoloaded, you
 As mentioned before, for the autoloader to work, it needs to know that the
 ``Sensio`` namespace lives in the ``vendor/bundles`` directory and that, for
 example, the ``Doctrine`` namespace lives in the ``vendor/doctrine/orm/lib/``
-directory. This mapping is entirely controlled by you via the
-``app/autoload.php`` file.
+directory. This mapping is entirely controlled by Composer. Each 
+third-party library you load through composer has their settings defined
+and Composer takes care of everything for you.
+
+For this to work, all third-party libraries used by your project must be 
+defined in the `composer.json` file. 
 
 If you look at the ``HelloController`` from the Symfony2 Standard Edition you
 can see that it lives in the ``Acme\DemoBundle\Controller`` namespace. Yet, the
-``Acme`` namespace is not defined in the ``app/autoload.php``. By default you
-do not need to explicitly configure the location of bundles that live in the
-``src/`` directory. The ``UniversalClassLoader`` is configured to fallback to
-the ``src/`` directory using its ``registerNamespaceFallbacks`` method:
+``AcmeDemoBundle`` is not defined in your `composer.json` file. Nonetheless are
+the files autoloaded. This is because you can tell composer to autoload files 
+from specific directories without defining a dependency:
 
-.. code-block:: php
+.. code-block:: yaml
 
-    // app/autoload.php
-
-    // ...
-    $loader->registerNamespaceFallbacks(array(
-        __DIR__.'/../src',
-    ));
+    "autoload": {
+        "psr-0": { "": "src/" }
+    }
 
 Using the Console
 -----------------
@@ -312,3 +301,4 @@ primarily to configure objects that you can use. For more information, see
 the chapter titled ":doc:`/book/service_container`".
 
 .. _`Symfony2 Standard`: https://github.com/symfony/symfony-standard
+.. _`Composer`: http://getcomposer.org
