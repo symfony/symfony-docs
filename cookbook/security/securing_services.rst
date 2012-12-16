@@ -148,10 +148,10 @@ You can also secure method calls in any service with annotations by using the
 optional `JMSSecurityExtraBundle`_ bundle. This bundle is included in the
 Symfony2 Standard Distribution.
 
-To enable the annotations functionality, :ref:`tag<book-service-container-tags>`
+To enable the annotations functionality, :ref:`tag<book-servicecontainer-tags>`
 the service you want to secure with the ``security.secure_service`` tag
 (you can also automatically enable this functionality for all services, see
-the :ref:`sidebar<securing-services-annotations-sidebar>` below):
+the :ref:`sidebar<cookbook-security-services-annotations>` below):
 
 .. configuration-block::
 
@@ -223,7 +223,7 @@ The ``JMSSecurityExtraBundle`` also allows you to secure the parameters and retu
 values of methods. For more information, see the `JMSSecurityExtraBundle`_
 documentation.
 
-.. _securing-services-annotations-sidebar:
+.. _cookbook-security-services-annotations:
 
 .. sidebar:: Activating the Annotations Functionality for all Services
 

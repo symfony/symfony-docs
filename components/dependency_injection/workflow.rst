@@ -29,7 +29,7 @@ and if it is, the cached version of the container is used. If not then the conta
 is built from the application-level configuration and the bundles's extension
 configuration.
 
-Read :ref:`Dumping the Configuration for Performance<components-dependency-injection-dumping>`
+Read :ref:`Dumping the Configuration for Performance<components-di-dumping>`
 for more details.
 
 Application-level Configuration
@@ -40,9 +40,10 @@ files are loaded which are then merged when the extensions are processed. This
 allows for different configuration for different environments e.g. dev, prod.
 
 These files contain parameters and services that are loaded directly into
-the container as per :ref:`Setting Up the Container with Configuration Files<components-dependency-injection-loading-config>`.
+the container as per 
+:ref:`Setting Up the Container with Configuration Files<components-di-loading-config>`.
 They also contain configuration that is processed by extensions as per
-:ref:`Managing Configuration with Extensions<components-dependency-injection-extension>`.
+:ref:`Managing Configuration with Extensions<components-di-extensions>`.
 These are considered to be bundle configuration since each bundle contains
 an Extension class.
 
@@ -61,7 +62,7 @@ in the bundle's ``DependencyInjection`` directory.
 Compiler passes to allow Interaction between Bundles
 ----------------------------------------------------
 
-:ref:`Compiler passes<components-dependency-injection-compiler-passes>` are
+:ref:`Compiler passes<components-di-compiler-passes>` are
 used to allow interaction between different bundles as they cannot affect
 each other's configuration in the extension classes. One of the main uses is
 to process tagged services, allowing bundles to register services to picked

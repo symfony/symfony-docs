@@ -59,7 +59,7 @@ inside a bundle.
 
 A bundle is nothing more than a directory that houses everything related
 to a specific feature, including PHP classes, configuration, and even stylesheets
-and Javascript files (see :ref:`page-creation-bundles`).
+and Javascript files (see :ref:`book-pagecreation-bundles`).
 
 To create a bundle called ``AcmeHelloBundle`` (a play bundle that you'll
 build in this chapter), run the following command and follow the on-screen
@@ -247,7 +247,7 @@ application should greet you:
 
 .. tip::
 
-    You can also view your app in the "prod" :ref:`environment<environments-summary>`
+    You can also view your app in the "prod" :ref:`environment<book-pagecreation-environments>`
     by visiting:
 
     .. code-block:: text
@@ -496,7 +496,7 @@ these methods when starting - Symfony fills them in for you with sensible
 defaults.
 
 * ``registerBundles()``: Returns an array of all bundles needed to run the
-  application (see :ref:`page-creation-bundles`);
+  application (see :ref:`book-pagecreation-bundles`);
 
 * ``registerContainerConfiguration()``: Loads the main application configuration
   resource file (see the `Application Configuration`_ section).
@@ -508,7 +508,7 @@ directory (``app/cache``), a log directory (``app/logs``) and a directory
 for application-level resource files, such as templates (``app/Resources``).
 You'll learn more about each of these directories in later chapters.
 
-.. _autoloading-introduction-sidebar:
+.. _book-pagecreation-autoloading:
 
 .. sidebar:: Autoloading
 
@@ -548,7 +548,7 @@ more bundles that you create in this directory.
 
 But what exactly is a :term:`bundle`?
 
-.. _page-creation-bundles:
+.. _book-pagecreation-bundles:
 
 The Bundle System
 -----------------
@@ -639,7 +639,8 @@ called ``AcmeTestBundle.php``::
 
 .. tip::
 
-   The name ``AcmeTestBundle`` follows the standard :ref:`Bundle naming conventions<bundles-naming-conventions>`.
+   The name ``AcmeTestBundle`` follows the standard 
+   :ref:`Bundle naming conventions<cookbook-bundles-naming-conventions>`.
    You could also choose to shorten the name of the bundle to simply ``TestBundle``
    by naming this class ``TestBundle`` (and naming the file ``TestBundle.php``).
 
@@ -839,7 +840,7 @@ options of each feature.
 .. index::
    single: Environments; Introduction
 
-.. _environments-summary:
+.. _book-pagecreation-environments:
 
 Environments
 ------------

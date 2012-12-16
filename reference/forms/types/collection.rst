@@ -242,7 +242,7 @@ example for more details.
 
 The `prototype`_ option can be used to help render a prototype item that
 can be used - with JavaScript - to create new form items dynamically on the
-client side. For more information, see the above example and :ref:`cookbook-form-collections-new-prototype`.
+client side. For more information, see the above example and :ref:`cookbook-form-new-prototype`.
 
 .. caution::
 
@@ -262,7 +262,7 @@ that you can implement a "delete" button via JavaScript which simply removes
 a form element from the DOM. When the user submits the form, its absence
 from the submitted data will mean that it's removed from the final array.
 
-For more information, see :ref:`cookbook-form-collections-remove`.
+For more information, see :ref:`cookbook-form-remove-tags`.
 
 .. caution::
 
@@ -272,7 +272,7 @@ For more information, see :ref:`cookbook-form-collections-remove`.
     your application logic, when one of those objects is removed, you may want
     to delete it or at least remove its foreign key reference to the main object.
     None of this is handled automatically. For more information, see
-    :ref:`cookbook-form-collections-remove`.
+    :ref:`cookbook-form-remove-tags`.
 
 prototype
 ~~~~~~~~~
@@ -311,7 +311,7 @@ rendering your form, having the entire "form row" may be easier for you.
     of the element (e.g. ``div`` or ``table``) that surrounds your collection.
 
 For details on how to actually use this option, see the above example as well
-as :ref:`cookbook-form-collections-new-prototype`.
+as :ref:`cookbook-form-new-prototype`.
 
 Inherited options
 -----------------
@@ -328,6 +328,6 @@ error_bubbling
 
 .. include:: /reference/forms/types/options/_error_bubbling_body.rst.inc
 
-.. _reference-form-types-by-reference:
+.. _reference-forms-types-by-reference:
 
 .. include:: /reference/forms/types/options/by_reference.rst.inc

@@ -42,7 +42,7 @@ the framework and registers the autoloader (see below).
 Like any front controller, ``app.php`` uses a Kernel Class, ``AppKernel``, to
 bootstrap the application.
 
-.. _the-app-dir:
+.. _quicktour-architecture-app-dir:
 
 The ``app/`` Directory
 ~~~~~~~~~~~~~~~~~~~~~~
@@ -304,7 +304,7 @@ can override almost any part of another bundle!
 Do you understand now why Symfony2 is so flexible? Share your bundles between
 applications, store them locally or globally, your choice.
 
-.. _using-vendors:
+.. _quicktour-architecture-vendors:
 
 Using Vendors
 -------------

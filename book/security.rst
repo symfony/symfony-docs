@@ -214,7 +214,7 @@ sort of message indicating that access has been denied.
     When Symfony denies the user access, the user sees an error screen and
     receives a 403 HTTP status code (``Forbidden``). You can customize the
     access denied error screen by following the directions in the
-    :ref:`Error Pages<cookbook-error-pages-by-status-code>` cookbook entry
+    :ref:`Error Pages<cookbook-controller-status-error-pages>` cookbook entry
     to customize the 403 error page.
 
 Finally, if the ``admin`` user requests ``/admin/foo``, a similar process
@@ -513,7 +513,7 @@ The form has very few requirements. First, by submitting the form to ``/login_ch
 (via the ``login_check`` route), the security system will intercept the form
 submission and process the form for you automatically. Second, the security
 system expects the submitted fields to be called ``_username`` and ``_password``
-(these field names can be :ref:`configured<reference-security-firewall-form-login>`).
+(these field names can be :ref:`configured<reference-config-security-firewall-form-login>`).
 
 And that's it! When you submit the form, the security system will automatically
 check the user's credentials and either authenticate the user or send the
@@ -746,12 +746,13 @@ Securing by IP
 ~~~~~~~~~~~~~~
 
 Certain situations may arise when you may need to restrict access to a given
-route based on IP. This is particularly relevant in the case of :ref:`Edge Side Includes<edge-side-includes>`
-(ESI), for example, which utilize a route named "_internal". When
-ESI is used, the _internal route is required by the gateway cache to enable
-different caching options for subsections within a given page. This route
-comes with the ^/_internal prefix by default in the standard edition (assuming
-you've uncommented those lines from the routing file).
+route based on IP. This is particularly relevant in the case of 
+:ref:`Edge Side Includes<book-cache-edge-side-includes>` (ESI), for example,
+which utilize a route named "_internal". When ESI is used, the _internal
+route is required by the gateway cache to enable different caching options
+for subsections within a given page. This route comes with the ^/_internal
+prefix by default in the standard edition (assuming you've uncommented 
+those lines from the routing file).
 
 Here is an example of how you might secure this route from outside access:
 
@@ -1059,7 +1060,7 @@ field of that class.
 For more information on creating your own custom provider (e.g. if you needed
 to load users via a web service), see :doc:`/cookbook/security/custom_provider`.
 
-.. _book-security-encoding-user-password:
+.. _book-security-encoding-password:
 
 Encoding the User's Password
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~

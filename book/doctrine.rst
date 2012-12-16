@@ -149,7 +149,7 @@ just a simple PHP class.
 .. index::
     single: Doctrine; Adding mapping metadata
 
-.. _book-doctrine-adding-mapping:
+.. _book-doctrine-mapping:
 
 Add Mapping Information
 ~~~~~~~~~~~~~~~~~~~~~~~
@@ -592,7 +592,7 @@ As you might expect, the ``remove()`` method notifies Doctrine that you'd
 like to remove the given entity from the database. The actual ``DELETE`` query,
 however, isn't actually executed until the ``flush()`` method is called.
 
-.. _`book-doctrine-queries`:
+.. _book-doctrine-queries:
 
 Querying for Objects
 --------------------
@@ -804,7 +804,7 @@ You can use this new method just like the default finder methods of the reposito
     When using a custom repository class, you still have access to the default
     finder methods such as ``find()`` and ``findAll()``.
 
-.. _`book-doctrine-relations`:
+.. _book-doctrine-relations:
 
 Entity Relationships/Associations
 ---------------------------------

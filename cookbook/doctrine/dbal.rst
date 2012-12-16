@@ -61,7 +61,7 @@ To get started, configure the database connection parameters:
             ),
         ));
 
-For full DBAL configuration options, see :ref:`reference-dbal-configuration`.
+For full DBAL configuration options, see :ref:`reference-config-doctrine-dbal`.
 
 You can then access the Doctrine DBAL connection by accessing the
 ``database_connection`` service:

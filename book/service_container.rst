@@ -167,7 +167,7 @@ the behavior you'll need (it's more flexible and powerful), but you'll learn
 later how you can configure a service that has multiple instances in the
 ":doc:`/cookbook/service_container/scopes`" cookbook article.
 
-.. _book-service-container-parameters:
+.. _book-servicecontainer-parameters:
 
 Service Parameters
 ------------------
@@ -331,7 +331,7 @@ for importing service configuration from third-party bundles.
 .. index::
    single: Service Container; Imports
 
-.. _service-container-imports-directive:
+.. _book-servicecontainer-importing:
 
 Importing Configuration with ``imports``
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -423,7 +423,7 @@ directory.
 .. index::
    single: Service Container; Extension configuration
 
-.. _service-container-extension-configuration:
+.. _book-servicecontainer-extension-config:
 
 Importing Configuration via Container Extensions
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -886,11 +886,11 @@ the framework.
 .. tip::
 
     Be sure that ``swiftmailer`` entry appears in your application
-    configuration. As you mentioned in :ref:`service-container-extension-configuration`,
+    configuration. As you mentioned in :ref:`book-servicecontainer-extension-config`,
     the ``swiftmailer`` key invokes the service extension from the
     ``SwiftmailerBundle``, which registers the ``mailer`` service.
 
-.. _book-service-container-tags:
+.. _book-servicecontainer-tags:
 
 Tags
 ----

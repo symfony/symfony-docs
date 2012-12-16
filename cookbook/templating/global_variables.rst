@@ -21,8 +21,9 @@ Now, the variable ``ga_tracking`` is available in all Twig templates:
 
     <p>The google tracking code is: {{ ga_tracking }} </p>
 
-It's that easy! You can also take advantage of the built-in :ref:`book-service-container-parameters`
-system, which lets you isolate or reuse the value:
+It's that easy! You can also take advantage of the built-in 
+:ref:`book-servicecontainer-parameters` system, which lets you isolate or 
+reuse the value:
 
 .. code-block:: ini
 
@@ -44,5 +45,5 @@ More Complex Global Variables
 
 If the global variable you want to set is more complicated - say an object -
 then you won't be able to use the above method. Instead, you'll need to create
-a :ref:`Twig Extension<reference-dic-tags-twig-extension>` and return the
+a :ref:`Twig Extension<reference-dictags-twig-extension>` and return the
 global variable as one of the entries in the ``getGlobals`` method.

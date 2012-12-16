@@ -75,7 +75,7 @@ just one line:
 
 The remainder of this recipe will explain how every part of the form's markup
 can be modified at several different levels. For more information about form
-rendering in general, see :ref:`form-rendering-template`.
+rendering in general, see :ref:`book-forms-rendering-template`.
 
 .. _cookbook-form-customization-form-themes:
 
@@ -198,7 +198,7 @@ this folder.
     will first look for the type-specific fragment (e.g. ``text_errors``) before
     falling back to its parent fragment name if it doesn't exist (e.g. ``field_errors``).
 
-    For more information on this topic, see :ref:`form-template-blocks`.
+    For more information on this topic, see :ref:`book-forms-template-blocks`.
 
 .. _cookbook-form-theming-methods:
 
@@ -286,7 +286,7 @@ Now that you've created the customized form block, you need to tell Symfony
 to use it. Inside the template where you're actually rendering your form,
 tell Symfony to use the template via the ``form_theme`` tag:
 
-.. _cookbook-form-twig-theme-import-template:
+.. _cookbook-form-twig-import-template:
 
 .. code-block:: html+jinja
 
@@ -321,7 +321,7 @@ Now that you've created the customized form template, you need to tell Symfony
 to use it. Inside the template where you're actually rendering your form,
 tell Symfony to use the theme via the ``setTheme`` helper method:
 
-.. _cookbook-form-php-theme-import-template:
+.. _cookbook-form-php-import-template:
 
 .. code-block:: php
 
@@ -333,7 +333,7 @@ When the ``form.age`` widget is rendered, Symfony will use the customized
 ``integer_widget.html.php`` template and the ``input`` tag will be wrapped in
 the ``div`` element.
 
-.. _cookbook-form-twig-import-base-blocks:
+.. _cookbook-form-twig-base-blocks:
 
 Referencing Base Form Blocks (Twig specific)
 --------------------------------------------
@@ -929,6 +929,6 @@ customizations directly. Look at the following example:
         ))) ?>
 
 The array passed as the second argument contains form "variables". For
-more details about this concept in Twig, see :ref:`twig-reference-form-variables`.
+more details about this concept in Twig, see :ref:`reference-forms-twig-variables`.
 
 .. _`form_div_layout.html.twig`: https://github.com/symfony/symfony/blob/2.0/src/Symfony/Bridge/Twig/Resources/views/Form/form_div_layout.html.twig

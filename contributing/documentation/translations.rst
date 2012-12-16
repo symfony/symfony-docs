@@ -29,7 +29,7 @@ for. Here is the list of the official *master* repositories:
 .. note::
 
     If you want to contribute translations for a new language, read the
-    :ref:`dedicated section <translations-adding-a-new-language>`.
+    :ref:`dedicated section<contributing-docs-translation-new-language>`.
 
 Joining the Translation Team
 ----------------------------
@@ -49,7 +49,7 @@ bugs, consider joining us; it's a very easy process:
 * The documentation website is updated every other night from the master
   repository.
 
-.. _translations-adding-a-new-language:
+.. _contributing-docs-translation-new-language:
 
 Adding a new Language
 ---------------------

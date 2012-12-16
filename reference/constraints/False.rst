@@ -8,7 +8,7 @@ string "``0``".
 Also see :doc:`True <True>`.
 
 +----------------+---------------------------------------------------------------------+
-| Applies to     | :ref:`property or method<validation-property-target>`               |
+| Applies to     | :ref:`property or method<book-validation-property-target>`          |
 +----------------+---------------------------------------------------------------------+
 | Options        | - `message`_                                                        |
 +----------------+---------------------------------------------------------------------+

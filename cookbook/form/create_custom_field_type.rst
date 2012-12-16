@@ -221,7 +221,7 @@ the ``genders`` parameter value as the first argument to its to-be-created
 
 .. tip::
 
-    Make sure the services file is being imported. See :ref:`service-container-imports-directive`
+    Make sure the services file is being imported. See :ref:`book-servicecontainer-importing`
     for details.
 
 Be sure that the ``alias`` attribute of the tag corresponds with the value

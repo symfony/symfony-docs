@@ -18,19 +18,19 @@ control you need:
 
 2. Replace the default exception controller ``TwigBundle::Exception:show``
    with your own controller and handle it however you want (see
-   :ref:`exception_controller in the Twig reference<config-twig-exception-controller>`);
+   :ref:`exception_controller in the Twig reference<reference-config-twig-exception-controller>`);
 
 .. tip::
 
     The customization of exception handling is actually much more powerful
     than what's written here. An internal event, ``kernel.exception``, is thrown
     which allows complete control over exception handling. For more
-    information, see :ref:`kernel-kernel.exception`.
+    information, see :ref:`book-internals-kernel-exception`.
 
 All of the error templates live inside ``TwigBundle``. To override the
 templates, simply rely on the standard method for overriding templates that
 live inside a bundle. For more information, see
-:ref:`overriding-bundle-templates`.
+:ref:`book-templating-overriding-bundles`.
 
 For example, to override the default error template that's shown to the
 end-user, create a new template located at
@@ -64,7 +64,7 @@ create a new file with the same name in the
 ``app/Resources/TwigBundle/views/Exception`` directory. This is the standard
 way of overriding any template that lives inside a bundle.
 
-.. _cookbook-error-pages-by-status-code:
+.. _cookbook-controller-status-error-pages:
 
 Customizing the 404 Page and other Error Pages
 ----------------------------------------------

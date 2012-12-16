@@ -79,7 +79,7 @@ this on a system level. This can be done by setting the ``xdebug.file_link_forma
 PHP.ini value to the file link string. If this configuration value is set, then
 the ``ide`` option does not need to be specified.
 
-.. _reference-framework-test:
+.. _reference-config-framework-test:
 
 test
 ~~~~
@@ -102,7 +102,7 @@ set to ``false`` and only SSL_HTTPS connections are indicated as secure.
 
 You should enable this setting if your application is behind a reverse proxy.
 
-.. _reference-framework-form:
+.. _reference-config-framework-form:
 
 form
 ~~~~
@@ -141,7 +141,7 @@ is `protocol-relative`_ (i.e. starts with `//`) it will be added to both
 collections. URL's starting with ``http://`` will only be added to the
 ``http`` collection.
 
-.. _ref-framework-assets-version:
+.. _reference-config-framework-assets-version:
 
 assets_version
 ..............
@@ -217,7 +217,7 @@ would be ``/images/logo.png?version=5``.
 
     All percentage signs (``%``) in the format string must be doubled to escape
     the character. Without escaping, values might inadvertently be interpreted
-    as :ref:`book-service-container-parameters`.
+    as :ref:`book-servicecontainer-parameters`.
 
 .. tip::
 

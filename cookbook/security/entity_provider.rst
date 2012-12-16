@@ -191,7 +191,7 @@ for the purposes of this tutorial.
     method reloads the user on each request by using the ``id``.
 
 Below is an export of my ``User`` table from MySQL. For details on how to
-create user records and encode their password, see :ref:`book-security-encoding-user-password`.
+create user records and encode their password, see :ref:`book-security-encoding-password`.
 
 .. code-block:: text
 
@@ -255,7 +255,7 @@ The ``encoders`` section associates the ``sha1`` password encoder to the entity
 class. This means that Symfony will expect the password that's stored in
 the database to be encoded using this algorithm. For details on how to create
 a new User object with a properly encoded password, see the
-:ref:`book-security-encoding-user-password` section of the security chapter.
+:ref:`book-security-encoding-password` section of the security chapter.
 
 The ``providers`` section defines an ``administrators`` user provider. A
 user provider is a "source" of where users are loaded during authentication.

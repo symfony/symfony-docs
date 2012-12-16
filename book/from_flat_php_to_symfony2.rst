@@ -665,7 +665,7 @@ controller method is responsible for returning the final ``Response`` object.
 There's really not much else to it.
 
 For a visual representation of how Symfony2 handles each request, see the
-:ref:`request flow diagram<request-flow-figure>`.
+:ref:`request flow diagram<book-fundamentals-request-flow>`.
 
 Where Symfony2 Delivers
 ~~~~~~~~~~~~~~~~~~~~~~~
@@ -679,7 +679,8 @@ migrating the blog from flat PHP to Symfony2 has improved life:
   allows for new developers to be productive in your project more quickly;
 
 * 100% of the code you write is for *your* application. You **don't need
-  to develop or maintain low-level utilities** such as :ref:`autoloading<autoloading-introduction-sidebar>`,
+  to develop or maintain low-level utilities** such as 
+  :ref:`autoloading<book-pagecreation-autoloading>`,
   :doc:`routing</book/routing>`, or rendering :doc:`controllers</book/controller>`;
 
 * Symfony2 gives you **access to open source tools** such as Doctrine and the

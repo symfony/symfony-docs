@@ -16,8 +16,8 @@ code.
 
 .. note::
 
-    How to render templates is covered in the :ref:`controller <controller-rendering-templates>`
-    page of the book.
+    How to render templates is covered in the 
+    :ref:`controller<book-controller-rendering-templates>` page of the book.
 
 
 .. index::
@@ -104,7 +104,7 @@ by default. You can even `add your own extensions`_ to Twig as needed.
 .. tip::
 
     Registering a Twig extension is as easy as creating a new service and tagging
-    it with ``twig.extension`` :ref:`tag<reference-dic-tags-twig-extension>`.
+    it with ``twig.extension`` :ref:`tag<reference-dictags-twig-extension>`.
 
 As you'll see throughout the documentation, Twig also supports functions
 and new functions can be easily added. For example, the following uses a
@@ -161,8 +161,8 @@ Twig is fast. Each Twig template is compiled down to a native PHP class
 that is rendered at runtime. The compiled classes are located in the
 ``app/cache/{environment}/twig`` directory (where ``{environment}`` is the
 environment, such as ``dev`` or ``prod``) and in some cases can be useful
-while debugging. See :ref:`environments-summary` for more information on
-environments.
+while debugging. See :ref:`book-pagecreation-environments` for more information 
+on environments.
 
 When ``debug`` mode is enabled (common in the ``dev`` environment), a Twig
 template will be automatically recompiled when changes are made to it. This
@@ -294,7 +294,7 @@ A child template might look like this:
    The parent template is identified by a special string syntax
    (``::base.html.twig``) that indicates that the template lives in the
    ``app/Resources/views`` directory of the project. This naming convention is
-   explained fully in :ref:`template-naming-locations`.
+   explained fully in :ref:`book-templating-naming-locations`.
 
 The key to template inheritance is the ``{% extends %}`` tag. This tells
 the templating engine to first evaluate the base template, which sets up
@@ -351,7 +351,7 @@ When working with template inheritance, here are some tips to keep in mind:
 * If you find yourself duplicating content in a number of templates, it probably
   means you should move that content to a ``{% block %}`` in a parent template.
   In some cases, a better solution may be to move the content to a new template
-  and ``include`` it (see :ref:`including-templates`);
+  and ``include`` it (see :ref:`book-templating-including`);
 
 * If you need to get the content of a block from the parent template, you
   can use the ``{{ parent() }}`` function. This is useful if you want to add
@@ -371,7 +371,7 @@ When working with template inheritance, here are some tips to keep in mind:
    single: Templating; Naming conventions
    single: Templating; File locations
 
-.. _template-naming-locations:
+.. _book-templating-naming-locations:
 
 Template Naming and Locations
 -----------------------------
@@ -381,7 +381,7 @@ By default, templates can live in two different locations:
 * ``app/Resources/views/``: The applications ``views`` directory can contain
   application-wide base templates (i.e. your application's layouts) as well as
   templates that override bundle templates (see
-  :ref:`overriding-bundle-templates`);
+  :ref:`book-templating-overriding-bundles`);
 
 * ``path/to/bundle/Resources/views/``: Each bundle houses its templates in its
   ``Resources/views`` directory (and subdirectories). The majority of templates
@@ -418,7 +418,7 @@ lives in a specific location:
   that the template is not located in any bundle, but instead in the root
   ``app/Resources/views/`` directory.
 
-In the :ref:`overriding-bundle-templates` section, you'll find out how each
+In the :ref:`book-templating-overriding-bundles` section, you'll find out how each
 template living inside the ``AcmeBlogBundle``, for example, can be overridden
 by placing a template of the same name in the ``app/Resources/AcmeBlogBundle/views/``
 directory. This gives the power to override templates from any vendor bundle.
@@ -426,7 +426,7 @@ directory. This gives the power to override templates from any vendor bundle.
 .. tip::
 
     Hopefully the template naming syntax looks familiar - it's the same naming
-    convention used to refer to :ref:`controller-string-syntax`.
+    convention used to refer to :ref:`book-routing-controller-logical-name`.
 
 Template Suffix
 ~~~~~~~~~~~~~~~
@@ -448,13 +448,14 @@ of these two *engines* should be used. The first part of the extension,
 generate. Unlike the engine, which determines how Symfony2 parses the template,
 this is simply an organizational tactic used in case the same resource needs
 to be rendered as HTML (``index.html.twig``), XML (``index.xml.twig``),
-or any other format. For more information, read the :ref:`template-formats`
+or any other format. For more information, read the :ref:`book-templating-debug`
 section.
 
 .. note::
 
    The available "engines" can be configured and even new engines added.
-   See :ref:`Templating Configuration<template-configuration>` for more details.
+   See :ref:`Templating Configuration<book-templating-templating-config>`
+   for more details.
 
 .. index::
    single: Templating; Tags and helpers
@@ -481,7 +482,7 @@ few more.
 .. index::
    single: Templating; Including other templates
 
-.. _including-templates:
+.. _book-templating-including:
 
 Including other Templates
 ~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -565,7 +566,7 @@ template using the ``with`` command.
 .. index::
    single: Templating; Embedding action
 
-.. _templating-embedding-controller:
+.. _book-templating-embedding-controller:
 
 Embedding Controllers
 ~~~~~~~~~~~~~~~~~~~~~
@@ -653,7 +654,7 @@ Controllers are fast to execute and promote good code organization and reuse.
 .. index::
    single: Templating; Linking to pages
 
-.. _book-templating-pages:
+.. _book-templating-linking-pages:
 
 Linking to Pages
 ~~~~~~~~~~~~~~~~
@@ -776,7 +777,7 @@ correctly:
 .. index::
    single: Templating; Linking to assets
 
-.. _book-templating-assets:
+.. _book-templating-linking-assets:
 
 Linking to Assets
 ~~~~~~~~~~~~~~~~~
@@ -810,8 +811,8 @@ being used and generating the correct paths accordingly.
 Additionally, if you use the ``asset`` function, Symfony can automatically
 append a query string to your asset, in order to guarantee that updated static
 assets won't be cached when deployed. For example, ``/images/logo.png`` might
-look like ``/images/logo.png?v2``. For more information, see the :ref:`ref-framework-assets-version`
-configuration option.
+look like ``/images/logo.png?v2``. For more information, see the 
+:ref:`reference-config-framework-assets-version` configuration option.
 
 .. index::
    single: Templating; Including stylesheets and Javascripts
@@ -954,7 +955,7 @@ is equivalent to::
 
     return $response = new Response($content);
 
-.. _template-configuration:
+.. _book-templating-templating-config:
 
 The templating engine (or "service") is preconfigured to work automatically
 inside Symfony2. It can, of course, be configured further in the application
@@ -997,7 +998,7 @@ Several configuration options are available and are covered in the
 .. index::
     single: Template; Overriding templates
 
-.. _overriding-bundle-templates:
+.. _book-templating-overriding-bundles:
 
 Overriding Bundle Templates
 ---------------------------
@@ -1064,7 +1065,7 @@ subdirectory.
     You can also override templates from within a bundle by using bundle
     inheritance. For more information, see :doc:`/cookbook/bundles/inheritance`.
 
-.. _templating-overriding-core-templates:
+.. _book-templating-overriding-core:
 
 .. index::
     single: Template; Overriding exception templates
@@ -1220,7 +1221,7 @@ in a JavaScript string, use the ``js`` context:
 .. index::
    single: Templating; Formats
 
-.. _template-formats:
+.. _book-templating-debug:
 
 Debugging
 ---------
@@ -1314,7 +1315,7 @@ but can return any other format based on the format requested by the user.
 The request format is most often managed by the routing, where a route can
 be configured so that ``/contact`` sets the request format to ``html`` while
 ``/contact.xml`` sets the format to ``xml``. For more information, see the
-:ref:`Advanced Example in the Routing chapter <advanced-routing-example>`.
+:ref:`Advanced Example in the Routing chapter<book-routing-advanced-example>`.
 
 To create links that include the format parameter, include a ``_format``
 key in the parameter hash:

@@ -18,7 +18,7 @@ can do anything, including creating and assigning validation errors.
     add validator "violations".
 
 +----------------+------------------------------------------------------------------------+
-| Applies to     | :ref:`class<validation-class-target>`                                  |
+| Applies to     | :ref:`class<book-validation-class-target>`                             |
 +----------------+------------------------------------------------------------------------+
 | Options        | - `methods`_                                                           |
 +----------------+------------------------------------------------------------------------+
@@ -97,7 +97,7 @@ Options
 methods
 ~~~~~~~
 
-**type**: ``array`` **default**: ``array()`` [:ref:`default option<validation-default-option>`]
+**type**: ``array`` **default**: ``array()`` [:ref:`default option<book-validation-default-option>`]
 
 This is an array of the methods that should be executed during the validation
 process. Each method can be one of the following formats:

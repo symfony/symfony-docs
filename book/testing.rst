@@ -172,7 +172,7 @@ you'll use to crawl your site::
 
     $crawler = $client->request('GET', '/demo/hello/Fabien');
 
-The ``request()`` method (see :ref:`more about the request method<book-testing-request-method-sidebar>`)
+The ``request()`` method (see :ref:`more about the request method<book-testing-request-method>`)
 returns a :class:`Symfony\\Component\\DomCrawler\\Crawler` object which can
 be used to select elements in the Response, click on links, and submit forms.
 
@@ -224,7 +224,7 @@ document::
         $client->getResponse()->getContent()
     );
 
-.. _book-testing-request-method-sidebar:
+.. _book-testing-request-method:
 
 .. sidebar:: More about the ``request()`` method:
 
@@ -725,7 +725,7 @@ You can also override HTTP headers on a per request basis::
 .. tip::
 
     The test client is available as a service in the container in the ``test``
-    environment (or wherever the :ref:`framework.test<reference-framework-test>`
+    environment (or wherever the :ref:`framework.test<reference-config-framework-test>`
     option is enabled). This means you can override the service entirely
     if you need to.
 

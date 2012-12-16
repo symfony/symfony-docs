@@ -6,7 +6,7 @@ or a string (or an object that can be cast into a string) that follows
 a valid "HH:MM:SS" format.
 
 +----------------+------------------------------------------------------------------------+
-| Applies to     | :ref:`property or method<validation-property-target>`                  |
+| Applies to     | :ref:`property or method<book-validation-property-target>`             |
 +----------------+------------------------------------------------------------------------+
 | Options        | - `message`_                                                           |
 +----------------+------------------------------------------------------------------------+

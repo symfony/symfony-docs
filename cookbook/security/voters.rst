@@ -154,7 +154,7 @@ and tag it as a "security.voter":
 
    Be sure to import this configuration file from your main application
    configuration file (e.g. ``app/config/config.yml``). For more information
-   see :ref:`service-container-imports-directive`. To read more about defining
+   see :ref:`book-servicecontainer-importing`. To read more about defining
    services in general, see the :doc:`/book/service_container` chapter.
 
 Changing the Access Decision Strategy

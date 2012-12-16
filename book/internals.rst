@@ -116,7 +116,7 @@ name (a "class::method" string, like ``Bundle\BlogBundle\PostController:indexAct
 
     The default implementation uses the
     :class:`Symfony\\Bundle\\FrameworkBundle\\EventListener\\RouterListener`
-    to define the ``_controller`` Request attribute (see :ref:`kernel-core-request`).
+    to define the ``_controller`` Request attribute (see :ref:`book-internals-kernel-request`).
 
 The
 :method:`Symfony\\Component\\HttpKernel\\Controller\\ControllerResolverInterface::getArguments`
@@ -239,7 +239,7 @@ add the following code at the beginning of your listener method::
 .. index::
    single: Event; kernel.request
 
-.. _kernel-core-request:
+.. _book-internals-kernel-request:
 
 ``kernel.request`` Event
 ........................
@@ -345,7 +345,7 @@ The ``FrameworkBundle`` registers several listeners:
 .. index::
    single: Event; kernel.exception
 
-.. _kernel-kernel.exception:
+.. _book-internals-kernel-exception:
 
 ``kernel.exception`` Event
 ..........................
@@ -389,7 +389,7 @@ see the :doc:`Event Dispatcher Component Documentation</components/event_dispatc
 .. index::
    single: Profiler
 
-.. _internals-profiler:
+.. _book-internals-profiler:
 
 Profiler
 --------

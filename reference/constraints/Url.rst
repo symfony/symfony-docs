@@ -4,7 +4,7 @@ Url
 Validates that a value is a valid URL string.
 
 +----------------+---------------------------------------------------------------------+
-| Applies to     | :ref:`property or method<validation-property-target>`               |
+| Applies to     | :ref:`property or method<book-validation-property-target>`          |
 +----------------+---------------------------------------------------------------------+
 | Options        | - `message`_                                                        |
 |                | - `protocols`_                                                      |

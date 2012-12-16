@@ -4,7 +4,7 @@ MinLength
 Validates that the length of a string is at least as long as the given limit.
 
 +----------------+-------------------------------------------------------------------------+
-| Applies to     | :ref:`property or method<validation-property-target>`                   |
+| Applies to     | :ref:`property or method<book-validation-property-target>`              |
 +----------------+-------------------------------------------------------------------------+
 | Options        | - `limit`_                                                              |
 |                | - `message`_                                                            |
@@ -62,7 +62,7 @@ Options
 limit
 ~~~~~
 
-**type**: ``integer`` [:ref:`default option<validation-default-option>`]
+**type**: ``integer`` [:ref:`default option<book-validation-default-option>`]
 
 This required option is the "min" value. Validation will fail if the length
 of the give string is **less** than this number.

@@ -76,7 +76,7 @@ date_format
 **type**: ``integer`` or ``string`` **default**: ``IntlDateFormatter::MEDIUM``
 
 Defines the ``format`` option that will be passed down to the date field.
-See the :ref:`date type's format option<reference-forms-type-date-format>`
+See the :ref:`date type's format option<reference-forms-types-date-format>`
 for more details.
 
 .. include:: /reference/forms/types/options/hours.rst.inc

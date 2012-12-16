@@ -39,7 +39,7 @@ widespread standard structure:
 
     Most subversion hosting should follow this standard practice. This
     is the recommended layout in `Version Control with Subversion`_ and the
-    layout used by most free hosting (see :ref:`svn-hosting`).
+    layout used by most free hosting (see :ref:`cookbook-workflow-svn-hosting`).
 
 Initial Project Setup
 ---------------------
@@ -126,7 +126,7 @@ to learn more about how to configure and develop inside your application.
 
 .. include:: _vendor_deps.rst.inc
 
-.. _svn-hosting:
+.. _cookbook-workflow-svn-hosting:
 
 Subversion hosting solutions
 ----------------------------

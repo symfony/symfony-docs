@@ -6,7 +6,7 @@ unique. This is commonly used, for example, to prevent a new user to register
 using an email address that already exists in the system.
 
 +----------------+-------------------------------------------------------------------------------------+
-| Applies to     | :ref:`class<validation-class-target>`                                               |
+| Applies to     | :ref:`class<book-validation-class-target>`                                          |
 +----------------+-------------------------------------------------------------------------------------+
 | Options        | - `fields`_                                                                         |
 |                | - `message`_                                                                        |
@@ -81,7 +81,7 @@ Options
 fields
 ~~~~~~
 
-**type**: ``array``|``string`` [:ref:`default option<validation-default-option>`]
+**type**: ``array``|``string`` [:ref:`default option<book-validation-default-option>`]
 
 This required option is the field (or list of fields) on which this entity
 should be unique. For example, if you specified both the ``email`` and ``name``

@@ -6,7 +6,7 @@ the value as IPv4, but a number of different options exist to validate as
 IPv6 and many other combinations.
 
 +----------------+---------------------------------------------------------------------+
-| Applies to     | :ref:`property or method<validation-property-target>`               |
+| Applies to     | :ref:`property or method<book-validation-property-target>`          |
 +----------------+---------------------------------------------------------------------+
 | Options        | - `version`_                                                        |
 |                | - `message`_                                                        |

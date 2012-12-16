@@ -35,7 +35,7 @@ your application::
 So far, this is just an ordinary class that serves some purpose inside your
 application. The goal of validation is to tell you whether or not the data
 of an object is valid. For this to work, you'll configure a list of rules
-(called :ref:`constraints<validation-constraints>`) that the object must
+(called :ref:`constraints<book-validation-constraints>`) that the object must
 follow in order to be valid. These rules can be specified via a number of
 different formats (YAML, XML, annotations, or PHP).
 
@@ -246,7 +246,7 @@ For more information, see the :doc:`Forms</book/forms>` chapter.
 .. index::
    pair: Validation; Configuration
 
-.. _book-validation-configuration:
+.. _book-validation-config:
 
 Configuration
 -------------
@@ -279,7 +279,7 @@ annotations if you're using the annotation method to specify your constraints:
 .. index::
    single: Validation; Constraints
 
-.. _validation-constraints:
+.. _book-validation-constraints:
 
 Constraints
 -----------
@@ -307,7 +307,7 @@ the ":doc:`/cookbook/validation/custom_constraint`" article of the cookbook.
 .. index::
    single: Validation; Constraints configuration
 
-.. _book-validation-constraint-configuration:
+.. _book-validation-constraint-config:
 
 Constraint Configuration
 ~~~~~~~~~~~~~~~~~~~~~~~~
@@ -386,7 +386,7 @@ constraint, have several configuration options available. Suppose that the
             }
         }
 
-.. _validation-default-option:
+.. _book-validation-default-option:
 
 The options of a constraint can always be passed in as an array. Some constraints,
 however, also allow you to pass the value of one, "*default*", option in place
@@ -473,7 +473,7 @@ For information on translating the constraint messages, see
 .. index::
    single: Validation; Constraint targets
 
-.. _validator-constraint-targets:
+.. _book-validation-constraint-targets:
 
 Constraint Targets
 ------------------
@@ -485,7 +485,7 @@ to use, but the second allows you to specify more complex validation rules.
 .. index::
    single: Validation; Property constraints
 
-.. _validation-property-target:
+.. _book-validation-property-target:
 
 Properties
 ~~~~~~~~~~
@@ -640,7 +640,7 @@ Now, create the ``isPasswordLegal()`` method, and include the logic you need::
     constraint to a property with the same name later (or vice versa) without
     changing your validation logic.
 
-.. _validation-class-target:
+.. _book-validation-class-target:
 
 Classes
 ~~~~~~~

@@ -74,7 +74,7 @@ Field Options
 
 .. include:: /reference/forms/types/options/date_widget.rst.inc
 
-.. _form-reference-date-input:
+.. _reference-forms-types-date-input:
 
 .. include:: /reference/forms/types/options/date_input.rst.inc
 
@@ -103,7 +103,7 @@ Alternatively, you can specify a string to be displayed for the "blank" value::
 
 .. include:: /reference/forms/types/options/days.rst.inc
 
-.. _reference-forms-type-date-format:
+.. _reference-forms-types-date-format:
 
 .. include:: /reference/forms/types/options/date_format.rst.inc
 

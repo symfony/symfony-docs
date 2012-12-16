@@ -384,7 +384,7 @@ The Symfony Application Flow
 When you let Symfony handle each request, life is much easier. Symfony follows
 the same simple pattern for every request:
 
-.. _request-flow-figure:
+.. _book-fundamentals-request-flow:
 
 .. figure:: /images/request-flow.png
    :align: center

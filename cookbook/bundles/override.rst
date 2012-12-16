@@ -11,7 +11,7 @@ Templates
 ---------
 
 For information on overriding templates, see
-* :ref:`overriding-bundle-templates`.
+* :ref:`book-templating-overriding-bundles`.
 * :doc:`/cookbook/bundles/inheritance`
 
 Routing

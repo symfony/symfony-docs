@@ -112,7 +112,7 @@ from inside a controller::
 .. tip::
 
    This example shows you how to build your form directly in the controller.
-   Later, in the ":ref:`book-form-creating-form-classes`" section, you'll learn
+   Later, in the ":ref:`book-forms-creating-classes` section, you'll learn
    how to build your form in a standalone class, which is recommended as
    your form becomes reusable.
 
@@ -173,7 +173,7 @@ That's it! By printing ``form_widget(form)``, each field in the form is
 rendered, along with a label and error message (if there is one). As easy
 as this is, it's not very flexible (yet). Usually, you'll want to render each
 form field individually so you can control how the form looks. You'll learn how
-to do that in the ":ref:`form-rendering-template`" section.
+to do that in the ":ref:`book-forms-rendering-template`" section.
 
 Before moving on, notice how the rendered ``task`` input field has the value
 of the ``task`` property from the ``$task`` object (i.e. "Write a blog post").
@@ -341,7 +341,7 @@ object.
 That's it! If you re-submit the form with invalid data, you'll see the
 corresponding errors printed out with the form.
 
-.. _book-forms-html5-validation-disable:
+.. _book-forms-html5-validation:
 
 .. sidebar:: HTML5 Validation
 
@@ -372,17 +372,17 @@ Validation Groups
 
 .. tip::
 
-    If you're not using :ref:`validation groups <book-validation-validation-groups>`,
+    If you're not using :ref:`validation groups<book-validation-validation-groups>`,
     then you can skip this section.
 
-If your object takes advantage of :ref:`validation groups <book-validation-validation-groups>`,
+If your object takes advantage of :ref:`validation groups<book-validation-validation-groups>`,
 you'll need to specify which validation group(s) your form should use::
 
     $form = $this->createFormBuilder($users, array(
         'validation_groups' => array('registration'),
     ))->add(...);
 
-If you're creating :ref:`form classes<book-form-creating-form-classes>` (a
+If you're creating :ref:`form classes<book-forms-creating-classes>` (a
 good practice), then you'll need to add the following to the ``getDefaultOptions()``
 method::
 
@@ -439,7 +439,7 @@ the documentation for each type.
     any field. By default, the ``required`` option is set to ``true``, meaning
     that HTML5-ready browsers will apply client-side validation if the field
     is left blank. If you don't want this behavior, either set the ``required``
-    option on your field to ``false`` or :ref:`disable HTML5 validation<book-forms-html5-validation-disable>`.
+    option on your field to ``false`` or :ref:`disable HTML5 validation<book-forms-html5-validation>`.
 
     Also note that setting the ``required`` option to ``true`` will **not**
     result in server-side validation to be applied. In other words, if a
@@ -538,7 +538,7 @@ passing the option in the options field array::
 .. index::
    single: Forms; Rendering in a template
 
-.. _form-rendering-template:
+.. _book-forms-rendering-template:
 
 Rendering a Form in a Template
 ------------------------------
@@ -592,12 +592,12 @@ Take a look at each part:
   It's usually a good idea to place a call to this helper at the bottom of
   each form (in case you forgot to output a field or don't want to bother
   manually rendering hidden fields). This helper is also useful for taking
-  advantage of the automatic :ref:`CSRF Protection<forms-csrf>`.
+  advantage of the automatic :ref:`CSRF Protection<book-forms-csrf>`.
 
 The majority of the work is done by the ``form_row`` helper, which renders
 the label, errors and HTML form widget of each field inside a ``div`` tag
-by default. In the :ref:`form-theming` section, you'll learn how the ``form_row``
-output can be customized on many different levels.
+by default. In the :ref:`book-forms-theming` section, you'll learn how the 
+``form_row`` output can be customized on many different levels.
 
 .. tip::
 
@@ -732,7 +732,7 @@ that can be used with each.
 .. index::
    single: Forms; Creating form classes
 
-.. _book-form-creating-form-classes:
+.. _book-forms-creating-classes:
 
 Creating Form Classes
 ---------------------
@@ -836,7 +836,7 @@ HTML form and then translate user-submitted data back to the original object. As
 such, the topic of persisting the ``Task`` object to the database is entirely
 unrelated to the topic of forms. But, if you've configured the ``Task`` class
 to be persisted via Doctrine (i.e. you've added
-:ref:`mapping metadata<book-doctrine-adding-mapping>` for it), then persisting
+:ref:`mapping metadata<book-doctrine-mapping>` for it), then persisting
 it after a form submission can be done when the form is valid::
 
     if ($form->isValid()) {
@@ -1009,7 +1009,7 @@ entry and  the :doc:`collection</reference/forms/types/collection>` field type r
    single: Forms; Theming
    single: Forms; Customizing fields
 
-.. _form-theming:
+.. _book-forms-theming:
 
 Form Theming
 ------------
@@ -1104,7 +1104,7 @@ For a more extensive discussion, see :doc:`/cookbook/form/form_customization`.
 .. index::
    single: Forms; Template fragment naming
 
-.. _form-template-blocks:
+.. _book-forms-template-blocks:
 
 Form Fragment Naming
 ~~~~~~~~~~~~~~~~~~~~
@@ -1313,7 +1313,7 @@ are now used globally to define form output.
 .. index::
    single: Forms; CSRF protection
 
-.. _forms-csrf:
+.. _book-forms-csrf:
 
 CSRF Protection
 ---------------
@@ -1359,7 +1359,7 @@ The CSRF token can be customized on a form-by-form basis. For example::
 
 To disable CSRF protection, set the ``csrf_protection`` option to false.
 Customizations can also be made globally in your project. For more information,
-see the :ref:`form configuration reference <reference-framework-form>`
+see the :ref:`form configuration reference<reference-config-framework-form>`
 section.
 
 .. note::
@@ -1437,8 +1437,9 @@ class. But without a class, how can you add constraints to the data of your
 form?
 
 The answer is to setup the constraints yourself, and pass them into your
-form. The overall approach is covered a bit more in the :ref:`validation chapter<book-validation-raw-values>`,
-but here's a short example::
+form. The overall approach is covered a bit more in the 
+:ref:`validation chapter<book-validation-raw-values>`, but here's a 
+short example::
 
     // import the namespaces above your controller class
     use Symfony\Component\Validator\Constraints\Email;

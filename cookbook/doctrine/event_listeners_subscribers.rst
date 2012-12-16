@@ -21,7 +21,7 @@ Configuring the Listener/Subscriber
 -----------------------------------
 
 To register a service to act as an event listener or subscriber you just have
-to :ref:`tag<book-service-container-tags>` it with the appropriate name. Depending
+to :ref:`tag<book-servicecontainer-tags>` it with the appropriate name. Depending
 on your use-case, you can hook a listener into every DBAL connection and ORM
 entity manager or just into one specific DBAL connection and all the entity
 managers that use this connection.

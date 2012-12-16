@@ -65,7 +65,7 @@ of checkboxes depending on the ``expanded`` option:
 You can also use the ``choice_list`` option, which takes an object that can
 specify the choices for your widget.
 
-.. _forms-reference-choice-tags:
+.. _reference-forms-types-tags:
 
 .. include:: /reference/forms/types/options/select_how_rendered.rst.inc
 

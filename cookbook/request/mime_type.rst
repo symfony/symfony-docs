@@ -86,4 +86,4 @@ configured and will be notified when the Symfony kernel dispatches the
 .. tip::
 
     You can also register the listener in a configuration extension class (see
-    :ref:`service-container-extension-configuration` for more information).
+    :ref:`book-servicecontainer-extension-config` for more information).

@@ -23,7 +23,7 @@ the power of the `Swiftmailer`_ library.
             // ...
         }
 
-.. _swift-mailer-configuration:
+.. _cookbook-email-swiftmailer-config:
 
 Configuration
 -------------

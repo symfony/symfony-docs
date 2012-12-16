@@ -78,7 +78,7 @@ TwigBundle Configuration Reference
 Configuration
 -------------
 
-.. _config-twig-exception-controller:
+.. _reference-config-twig-exception-controller:
 
 exception_controller
 ....................
@@ -92,4 +92,5 @@ is what's responsible for rendering specific templates under different error
 conditions (see :doc:`/cookbook/controller/error_pages`). Modifying this
 option is advanced. If you need to customize an error page you should use
 the previous link. If you need to perform some behavior on an exception,
-you should add a listener to the ``kernel.exception`` event (see :ref:`dic-tags-kernel-event-listener`).
+you should add a listener to the ``kernel.exception`` event (see 
+:ref:`reference-dictags-kernel-event-listener`).
