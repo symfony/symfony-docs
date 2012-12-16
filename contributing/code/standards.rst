@@ -108,7 +108,7 @@ Naming Conventions
 
 * Use namespaces for all classes;
 
-* Prefix abstract classes with `Abstract`;
+* Abstract classes are often prefixed with `Abstract`;
 
 * Suffix interfaces with `Interface`;
 
