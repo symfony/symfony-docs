@@ -154,11 +154,11 @@ third-party library you load through composer has their settings defined
 and Composer takes care of everything for you.
 
 For this to work, all third-party libraries used by your project must be 
-defined in the `composer.json` file. 
+defined in the ``composer.json`` file. 
 
 If you look at the ``HelloController`` from the Symfony2 Standard Edition you
 can see that it lives in the ``Acme\DemoBundle\Controller`` namespace. Yet, the
-``AcmeDemoBundle`` is not defined in your `composer.json` file. Nonetheless are
+``AcmeDemoBundle`` is not defined in your ``composer.json`` file. Nonetheless are
 the files autoloaded. This is because you can tell composer to autoload files 
 from specific directories without defining a dependency:
 
