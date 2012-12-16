@@ -296,11 +296,15 @@ suggesting couple of different strategies to use for performing certain operatio
 
 .. code-block:: php
 
-    $availableLocales = $this->getAvailableLocales();
+    $availableLocales = array('English', 'French', 'Ukrainian');
     $dialog = $this->getHelperSet()->get('dialog');
-    $locale = $dialog->select($output, 'Please select your locale',
-        $availableLocales, 0);
-    var_dump($locale);
+    $localeIndex = $dialog->select(
+        $output,
+        'Please select your locale',
+        $availableLocales,
+        0
+    );
+    $output->writeln("Locale index is: $localeIndex");
 
 will produce the following typical console interaction:
 
@@ -308,18 +312,27 @@ will produce the following typical console interaction:
 
     $ app/console demo:installer
     Please select your locale
-      0   English
-      1   French
-      2   Ukrainian
+      [0]   English
+      [1]   French
+      [2]   Ukrainian
       ...
     > <Press 'Enter' to get default value>
-    int(0)
+    Locale index is: 0
 
 You can also get the value selected directly by specifying return type::
 
-    $locale = $dialog->select($output, 'Please select your locale',
-        $availableLocales, 0, array('return' => 'value'));
-    var_dump($locale); // Now default value would be "English"
+.. code-block:: php
+
+    $localeName = $dialog->select(
+        $output,
+        'Please select your locale',
+        $availableLocales,
+        0,
+        array('return' => 'value')
+    );
+    // Now default value would be "English"
+    $output->writeln("Locale is: $localeName");
+
 
 Displaying a Progress Bar
 -------------------------
