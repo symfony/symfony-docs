@@ -108,9 +108,11 @@ Naming Conventions
 
 * Use namespaces for all classes;
 
-* Abstract classes are often prefixed with `Abstract`;
+* Abstract classes are often prefixed with ``Abstract``;
 
-* Suffix interfaces with `Interface`;
+* Suffix interfaces with ``Interface``;
+
+* Suffix traits with ``Trait``;
 
 * Use alphanumeric characters and underscores for file names;
 
