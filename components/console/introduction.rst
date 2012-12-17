@@ -416,7 +416,7 @@ progress bar::
     $progress->setBarCharacter('<comment>=</comment>');
     // the unfinished part of the bar
     $progress->setEmptyBarCharacter(' ');
-    $progress->setProgressChar('|');
+    $progress->setProgressCharacter('|');
     $progress->setBarWidth(50);
 
 To see other available options, check the API documentation for
