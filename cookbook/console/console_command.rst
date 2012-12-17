@@ -61,6 +61,13 @@ This command will now automatically be available to run:
 .. code-block:: bash
 
     $ app/console demo:greet Fabien
+    
+
+.. note::
+
+    If you want to provide console commands in the ``Command`` directory and register them 
+    in a non-standard way (e.g. if you define commands as services), just override the method 
+    ``autoRegisterCommands`` in your ``Bundle`` class and return ``false``.
 
 Getting Services from the Service Container
 -------------------------------------------
