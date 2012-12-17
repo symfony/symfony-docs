@@ -151,6 +151,7 @@ Start by creating a simple class which represents the "registration"::
     {
         /**
          * @Assert\Type(type="Acme\AccountBundle\Entity\User")
+         * @Assert\Valid()
          */
         protected $user;
 
