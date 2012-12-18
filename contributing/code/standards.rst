@@ -108,7 +108,7 @@ Naming Conventions
 
 * Use namespaces for all classes;
 
-* Prefix abstract classes ``Abstract``. Please note some early Symfony2 classes
+* Prefix abstract classes with ``Abstract``. Please note some early Symfony2 classes
   do not follow this convention and have not been renamed for backward compatibility
   reasons. However all new abstract classes must follow this naming convention;
 
