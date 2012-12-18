@@ -2,8 +2,8 @@
    single: Doctrine; ORM configuration reference
    single: Configuration reference; Doctrine ORM
 
-Configuration Reference
-=======================
+Doctrine Configuration Reference
+================================
 
 .. configuration-block::
 
