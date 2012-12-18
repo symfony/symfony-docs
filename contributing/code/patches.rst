@@ -71,7 +71,7 @@ Get the Symfony2 source code:
 
 * Fork the `Symfony2 repository`_ (click on the "Fork" button);
 
-* After the "hardcore forking action" has completed, clone your fork locally
+* After the "forking action" has completed, clone your fork locally
   (this will create a `symfony` directory):
 
 .. code-block:: bash

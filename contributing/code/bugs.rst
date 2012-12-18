@@ -25,7 +25,7 @@ If your problem definitely looks like a bug, report it using the official bug
 * Describe the steps needed to reproduce the bug with short code examples
   (providing a unit test that illustrates the bug is best);
 
-* Give as much details as possible about your environment (OS, PHP version,
+* Give as much detail as possible about your environment (OS, PHP version,
   Symfony version, enabled extensions, ...);
 
 * *(optional)* Attach a :doc:`patch <patches>`.
