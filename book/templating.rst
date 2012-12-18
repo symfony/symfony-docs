@@ -707,7 +707,8 @@ in your application configuration:
 .. versionadded:: 2.2
     Default templates per render tag was added in Symfony 2.2
 
-You can define default templates per ``render`` tag (which will override any global default templates that is defined):
+You can define default templates per ``render`` tag (which will override
+any global default templates that is defined):
 
 .. configuration-block::
 
