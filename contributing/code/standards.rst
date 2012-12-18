@@ -15,7 +15,7 @@ documents.
 Since a picture - or some code - is worth a thousand words, here's a short
 example containing most features described below:
 
-.. code-block:: php+html
+.. code-block:: html+php
 
     <?php
 
