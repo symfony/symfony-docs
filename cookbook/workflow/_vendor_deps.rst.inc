@@ -40,7 +40,13 @@ To upgrade your libraries to new versions, run ``php composer.phar update``.
 
     .. code-block:: bash
 
-    $ php cofmposer.phar update doctrine/doctrine-fixtures-bundle
+    $ php composer.phar update doctrine/doctrine-fixtures-bundle
+
+    You can combine both steps into a single command:
+
+    .. code-block:: bash
+
+    $ php composer.phar require doctrine/doctrine-fixtures-bundle:@dev
 
 To learn more about Composer, see `GetComposer.org`_:
 
