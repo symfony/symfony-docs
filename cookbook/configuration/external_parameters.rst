@@ -99,18 +99,18 @@ The container also has support for setting PHP constants as parameters. To
 take advantage of this feature, map the name of your constant  to a parameter
 key, and define the type as ``constant``.
 
-    .. code-block:: xml
+.. code-block:: xml
 
-        <?xml version="1.0" encoding="UTF-8"?>
+    <?xml version="1.0" encoding="UTF-8"?>
 
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <container xmlns="http://symfony.com/schema/dic/services"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 
-            <parameters>
-                <parameter key="global.constant.value" type="constant">GLOBAL_CONSTANT</parameter>
-                <parameter key="my_class.constant.value" type="constant">My_Class::CONSTANT_NAME</parameter>
-            </parameters>
-        </container>
+        <parameters>
+            <parameter key="global.constant.value" type="constant">GLOBAL_CONSTANT</parameter>
+            <parameter key="my_class.constant.value" type="constant">My_Class::CONSTANT_NAME</parameter>
+        </parameters>
+    </container>
 
 .. note::
 
