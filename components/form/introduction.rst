@@ -102,13 +102,13 @@ snippet adds CSRF protection to the form factory::
     use Symfony\Component\Form\Extension\Csrf\CsrfProvider\SessionCsrfProvider;
     use Symfony\Component\HttpFoundation\Session\Session;
 
-    // generate a CSRF secret, which you *may* want to set as a constant
-    define('CSRF_SECRET', '<generated token>');
+    // generate a CSRF secret from somewhere
+    $csrfSecret = '<generated token>';
 
     // create a Session object from the HttpFoundation component
     $session = new Session();
 
-    $csrfProvider = new SessionCsrfProvider($session, CSRF_SECRET);
+    $csrfProvider = new SessionCsrfProvider($session, $csrfSecret);
 
     $formFactory = Forms::createFormFactoryBuilder()
         // ...
@@ -132,7 +132,7 @@ and validated when binding the form.
 
         use Symfony\Component\Form\Extension\Csrf\CsrfProvider\DefaultCsrfProvider;
 
-        $csrfProvider = new DefaultCsrfProvider(CSRF_SECRET);
+        $csrfProvider = new DefaultCsrfProvider($csrfSecret);
 
 Twig Templating
 ~~~~~~~~~~~~~~~
@@ -167,19 +167,19 @@ to bootstrap or access Twig and add the :class:`Symfony\\Bridge\\Twig\\Extension
 
     // the Twig file that holds all the default markup for rendering forms
     // this file comes with TwigBridge
-    define('DEFAULT_FORM_THEME', 'form_div_layout.html.twig');
+    $defaultFormTheme = 'form_div_layout.html.twig';
 
-    define('VENDOR_DIR', realpath(__DIR__ . '/../vendor'));
+    $vendorDir = realpath(__DIR__ . '/../vendor');
     // the path to TwigBridge so Twig can locate the form_div_layout.html.twig file
-    define('VENDOR_TWIG_BRIDGE_DIR', VENDOR_DIR . '/symfony/twig-bridge/Symfony/Bridge/Twig');
+    $vendorTwigBridgeDir = $vendorDir . '/symfony/twig-bridge/Symfony/Bridge/Twig';
     // the path to your other templates
-    define('VIEWS_DIR', realpath(__DIR__ . '/../views'));
+    $viewsDir = realpath(__DIR__ . '/../views');
 
     $twig = new Twig_Environment(new Twig_Loader_Filesystem(array(
-        VIEWS_DIR,
-        VENDOR_TWIG_BRIDGE_DIR . '/Resources/views/Form',
+        $viewsDir,
+        $vendorTwigBridgeDir . '/Resources/views/Form',
     )));
-    $formEngine = new TwigRendererEngine(array(DEFAULT_FORM_THEME));
+    $formEngine = new TwigRendererEngine(array($defaultFormTheme));
     $formEngine->setEnvironment($twig);
     // add the FormExtension to Twig
     $twig->addExtension(new FormExtension(new TwigRenderer($formEngine, $csrfProvider)));
@@ -294,9 +294,9 @@ Your integration with the Validation component will look something like this::
     use Symfony\Component\Form\Extension\Validator\ValidatorExtension;
     use Symfony\Component\Validator\Validation;
 
-    define('VENDOR_DIR', realpath(__DIR__ . '/../vendor'));
-    define('VENDOR_FORM_DIR', VENDOR_DIR . '/symfony/form/Symfony/Component/Form');
-    define('VENDOR_VALIDATOR_DIR', VENDOR_DIR . '/symfony/validator/Symfony/Component/Validator');
+    $vendorDir = realpath(__DIR__ . '/../vendor');
+    $vendorFormDir = $vendorDir . '/symfony/form/Symfony/Component/Form';
+    $vendorValidatorDir = $vendorDir . '/symfony/validator/Symfony/Component/Validator';
 
     // create the validator - details will vary
     $validator = Validation::createValidator();
@@ -304,13 +304,13 @@ Your integration with the Validation component will look something like this::
     // there are built-in translations for the core error messages
     $translator->addResource(
         'xlf',
-        VENDOR_FORM_DIR . '/Resources/translations/validators.en.xlf',
+        $vendorFormDir . '/Resources/translations/validators.en.xlf',
         'en',
         'validators'
     );
     $translator->addResource(
         'xlf',
-        VENDOR_VALIDATOR_DIR . '/Resources/translations/validators.en.xlf',
+        $vendorValidatorDir . '/Resources/translations/validators.en.xlf',
         'en',
         'validators'
     );
