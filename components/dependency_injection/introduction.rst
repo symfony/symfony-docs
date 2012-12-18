@@ -67,7 +67,7 @@ Then you can set the choice of transport in the container::
     $container = new ContainerBuilder();
     $container
         ->register('mailer', 'Mailer')
-            ->addArgument('sendmail');
+        ->addArgument('sendmail');
 
 This class is now much more flexible as you have separated the choice of
 transport out of the implementation and into the container.
@@ -83,7 +83,7 @@ it a parameter in the container and then referring to this parameter for the
     $container->setParameter('mailer.transport', 'sendmail');
     $container
         ->register('mailer', 'Mailer')
-            ->addArgument('%mailer.transport%');
+        ->addArgument('%mailer.transport%');
 
 Now that the ``mailer`` service is in the container you can inject it as
 a dependency of other classes. If you have a ``NewsletterManager`` class
@@ -111,11 +111,11 @@ Then you can register this as a service as well and pass the ``mailer`` service 
     $container->setParameter('mailer.transport', 'sendmail');
     $container
         ->register('mailer', 'Mailer')
-            ->addArgument('%mailer.transport%');
+        ->addArgument('%mailer.transport%');
 
     $container
         ->register('newsletter_manager', 'NewsletterManager')
-            ->addArgument(new Reference('mailer'));
+        ->addArgument(new Reference('mailer'));
 
 If the ``NewsletterManager`` did not require the ``Mailer`` and injecting
 it was only optional then you could use setter injection instead::
@@ -143,11 +143,11 @@ If you do want to though then the container can call the setter method::
     $container->setParameter('mailer.transport', 'sendmail');
     $container
         ->register('mailer', 'Mailer')
-            ->addArgument('%mailer.transport%');
+        ->addArgument('%mailer.transport%');
 
     $container
         ->register('newsletter_manager', 'NewsletterManager')
-            ->addMethodCall('setMailer', new Reference('mailer'));
+        ->addMethodCall('setMailer', new Reference('mailer'));
 
 You could then get your ``newsletter_manager`` service from the container
 like this::
