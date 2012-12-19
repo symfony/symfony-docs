@@ -193,9 +193,9 @@ for the purposes of this tutorial.
 Below is an export of my ``User`` table from MySQL. For details on how to
 create user records and encode their password, see :ref:`book-security-encoding-user-password`.
 
-.. code-block:: text
+.. code-block:: bash
 
-    mysql> select * from user;
+    $ mysql> select * from user;
     +----+----------+----------------------------------+------------------------------------------+--------------------+-----------+
     | id | username | salt                             | password                                 | email              | is_active |
     +----+----------+----------------------------------+------------------------------------------+--------------------+-----------+

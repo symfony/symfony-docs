@@ -90,9 +90,11 @@ a bundle. With the help of a console command, the ``Resources/public/``
 directory of each bundle is copied or symbolically-linked to the ``web/bundles/``
 directory. This allows you to keep assets organized inside your bundle, but
 still make them available to the public. To make sure that all bundles are
-available, run the following command::
+available, run the following command:
 
-    php app/console assets:install web
+.. code-block:: bash
+
+    $ php app/console assets:install web
 
 .. note::
 
@@ -185,16 +187,16 @@ Using the Console
 In symfony1, the console is in the root directory of your project and is
 called ``symfony``:
 
-.. code-block:: text
+.. code-block:: bash
 
-    php symfony
+    $ php symfony
 
 In Symfony2, the console is now in the app sub-directory and is called
 ``console``:
 
-.. code-block:: text
+.. code-block:: bash
 
-    php app/console
+    $ php app/console
 
 Applications
 ------------
@@ -262,7 +264,9 @@ In symfony1, the ``routing.yml`` and ``app.yml`` configuration files were
 automatically loaded inside any plugin. In Symfony2, routing and application
 configuration inside a bundle must be included manually. For example, to
 include a routing resource from a bundle called ``AcmeDemoBundle``, you can
-do the following::
+do the following:
+
+.. code-block:: yaml
 
     # app/config/routing.yml
     _hello:

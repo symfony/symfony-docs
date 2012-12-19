@@ -418,7 +418,8 @@ into new ``Tag`` objects and added to the ``tags`` property of the ``Task`` obje
     and call ``$em->persist($tag)`` on each, you'll receive an error from
     Doctrine:
 
-        A new entity was found through the relationship 'Acme\TaskBundle\Entity\Task#tags' that was not configured to cascade persist operations for entity...
+        A new entity was found through the relationship `Acme\TaskBundle\Entity\Task#tags`
+        that was not configured to cascade persist operations for entity...
 
     To fix this, you may choose to "cascade" the persist operation automatically
     from the ``Task`` object to any related tags. To do this, add the ``cascade``
