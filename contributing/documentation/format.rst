@@ -108,10 +108,6 @@ The current list of supported formats are the following:
 +-----------------+-------------+
 | html+jinja      | Twig        |
 +-----------------+-------------+
-| jinja+html      | Twig        |
-+-----------------+-------------+
-| php+html        | PHP         |
-+-----------------+-------------+
 | html+php        | PHP         |
 +-----------------+-------------+
 | ini             | INI         |

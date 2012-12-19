@@ -15,7 +15,7 @@ documents.
 Since a picture - or some code - is worth a thousand words, here's a short
 example containing most features described below:
 
-.. code-block:: php+html
+.. code-block:: html+php
 
     <?php
 
@@ -108,11 +108,15 @@ Naming Conventions
 
 * Use namespaces for all classes;
 
-* Abstract classes are often prefixed with ``Abstract``;
+* Prefix abstract classes with ``Abstract``. Please note some early Symfony2 classes
+  do not follow this convention and have not been renamed for backward compatibility
+  reasons. However all new abstract classes must follow this naming convention;
 
 * Suffix interfaces with ``Interface``;
 
 * Suffix traits with ``Trait``;
+
+* Suffix exceptions with ``Exception``;
 
 * Use alphanumeric characters and underscores for file names;
 

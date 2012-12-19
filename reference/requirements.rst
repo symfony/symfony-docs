@@ -12,7 +12,7 @@ the command line via:
 
 .. code-block:: bash
 
-    php app/check.php
+    $ php app/check.php
 
 Below is the list of required and optional requirements.
 
