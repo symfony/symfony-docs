@@ -25,7 +25,12 @@ with ``tests.bootstrap.php``:
 .. code-block:: xml
 
     <!-- app/phpunit.xml.dist -->
-    bootstrap = "tests.bootstrap.php"
+
+    <!-- ... -->
+    <phpunit
+        ...
+        bootstrap = "tests.bootstrap.php"
+    >
 
 Now, you can define in your ``phpunit.xml.dist`` file which environment you want the
 cache to be cleared:
