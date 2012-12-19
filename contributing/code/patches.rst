@@ -289,7 +289,6 @@ An example submission could now look as follows:
     Bug fix: no
     Feature addition: yes
     Backwards compatibility break: no
-    Symfony2 tests pass: yes
     Fixes the following tickets: #12, #43
     Todo: -
     License of the code: MIT
@@ -346,17 +345,6 @@ second and the last commits, and replace it by the word "squash" or just "s".
 When you save, git will start rebasing, and if successful, will ask you to
 edit the commit message, which by default is a listing of the commit messages
 of all the commits. When you finish, execute the push command.
-
-.. tip::
-
-    To automatically get your feature branch tested, you can add your fork to
-    `travis-ci.org`_. Just login using your github.com account and then simply
-    flip a single switch to enable automated testing. In your pull request,
-    instead of specifying "*Symfony2 tests pass: [yes|no]*", you can link to
-    the `travis-ci.org status icon`_. For more details, see the
-    `travis-ci.org Getting Started Guide`_. This could easily be done by clicking
-    on the wrench icon on the build page of Travis. First select your feature
-    branch and then copy the markdown to your PR description.
 
 .. _ProGit:                                http://git-scm.com/book
 .. _GitHub:                                https://github.com/signup/free
