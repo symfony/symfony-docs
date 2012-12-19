@@ -86,7 +86,7 @@ For simplicity, you'll often extend an
 the interface directly::
 
     // src/Acme/MainBundle/Form/Type/MyFormTypeExtension.php
-    namespace Acme\MainBundle\Form\Type\MyFormTypeExtension;
+    namespace Acme\MainBundle\Form\Type;
 
     use Symfony\Component\Form\AbstractTypeExtension;
 
