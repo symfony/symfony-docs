@@ -38,8 +38,8 @@ you might add the following:
                     - Count:
                         min: 1
                         max: 5
-                        minMessage: You must specify at least one email
-                        maxMessage: You cannot specify more than 5 emails
+                        minMessage: "You must specify at least one email"
+                        maxMessage: "You cannot specify more than {{ limit }} emails"
 
     .. code-block:: php-annotations
 
@@ -53,11 +53,26 @@ you might add the following:
              *      min = "1",
              *      max = "5",
              *      minMessage = "You must specify at least one email",
-             *      maxMessage = "You cannot specify more than 5 emails"
+             *      maxMessage = "You cannot specify more than {{ limit }} emails"
              * )
              */
              protected $emails = array();
         }
+
+    .. code-block:: xml
+
+        <!-- src/Acme/EventBundle/Resources/config/validation.xml -->
+        <class name="Acme\EventBundle\Entity\Participant">
+            <property name="emails">
+                <constraint name="Count">       
+                    <option name="min">1</option> 
+                    <option name="max">5</option> 
+                    <option name="minMessage">You must specify at least one email</option>
+                    <option name="maxMessage">You cannot specify more than {{ limit }} emails</option>
+                </constraint>
+            </property>
+        </class>
+
 
 Options
 -------

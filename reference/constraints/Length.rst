@@ -61,7 +61,7 @@ To verify that the ``firstName`` field length of a class is between "2" and
 
     .. code-block:: xml
 
-        <!-- src/Acme/BlogBundle/Resources/config/validation.xml -->
+        <!-- src/Acme/EventBundle/Resources/config/validation.xml -->
         <class name="Acme\EventBundle\Entity\Participant">
             <property name="firstName">
                 <constraint name="Length">

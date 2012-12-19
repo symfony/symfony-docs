@@ -48,6 +48,17 @@ method returns **false**:
                     - "False":
                         message: You've entered an invalid state.
 
+    .. code-block:: xml
+
+        <!-- src/Acme/BlogBundle/Resources/config/validation.xml -->
+        <class name="Acme\BlogBundle\Entity\Author">
+            <getter property="stateInvalid">
+                <constraint name="False">
+                    <option name="message">You've entered an invalid state.</option>
+                </constraint>
+            </getter>
+        </class>
+
     .. code-block:: php-annotations
 
         // src/Acme/BlogBundle/Entity/Author.php

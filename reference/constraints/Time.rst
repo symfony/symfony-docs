@@ -46,6 +46,15 @@ of the day when the event starts:
              protected $startsAt;
         }
 
+    .. code-block:: xml
+
+        <!-- src/Acme/EventBundle/Resources/config/validation.xml -->
+        <class name="Acme\EventBundle\Entity\Event">
+            <property name="startsAt">
+                <constraint name="Time" />         
+            </property>
+        </class>
+
 Options
 -------
 
