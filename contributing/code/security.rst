@@ -53,9 +53,9 @@ This section indexes security vulnerabilities that were fixed in Symfony
 releases, starting from Symfony 1.0.0:
 
 * November 29, 2012: `Security release: Symfony 2.0.19 and 2.1.4 <http://symfony.com/blog/security-release-symfony-2-0-19-and-2-1-4>`_
-* November 25, 2012: `Security release: symfony 1.4.20 released  <http://symfony.com/blog/security-release-symfony-1-4-20-released>`_
+* November 25, 2012: `Security release: symfony 1.4.20 released  <http://symfony.com/blog/security-release-symfony-1-4-20-released>`_ (`CVE-2012-5574 <http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2012-5574>`_)
 * August 28, 2012: `Security Release: Symfony 2.0.17 released <http://symfony.com/blog/security-release-symfony-2-0-17-released>`_
-* May 30, 2012: `Security Release: symfony 1.4.18 released <http://symfony.com/blog/security-release-symfony-1-4-18-released>`_
+* May 30, 2012: `Security Release: symfony 1.4.18 released <http://symfony.com/blog/security-release-symfony-1-4-18-released>`_ (`CVE-2012-2667 <http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2012-2667>`_)
 * February 24, 2012: `Security Release: Symfony 2.0.11 released <http://symfony.com/blog/security-release-symfony-2-0-11-released>`_
 * November 16, 2011: `Security Release: Symfony 2.0.6 <http://symfony.com/blog/security-release-symfony-2-0-6>`_
 * March 21, 2011: `symfony 1.3.10 and 1.4.10: security releases <http://symfony.com/blog/symfony-1-3-10-and-1-4-10-security-releases>`_
