@@ -131,14 +131,14 @@ parameter.ini by referencing the database-related parameters defined there:
         pdo:
             class: PDO
             arguments:
-                - "mysql:dbname=%database_name%"
+                - "mysql:host=%database_host%;port=%database_port%;dbname=%database_name%"
                 - %database_user%
                 - %database_password%
 
     .. code-block:: xml
 
         <service id="pdo" class="PDO">
-            <argument>mysql:dbname=%database_name%</argument>
+            <argument>mysql:host=%database_host%;port=%database_port%;dbname=%database_name%</argument>
             <argument>%database_user%</argument>
             <argument>%database_password%</argument>
         </service>
@@ -146,7 +146,7 @@ parameter.ini by referencing the database-related parameters defined there:
     .. code-block:: php
 
         $pdoDefinition = new Definition('PDO', array(
-            'mysql:dbname=%database_name%',
+            'mysql:host=%database_host%;port=%database_port%;dbname=%database_name%',
             '%database_user%',
             '%database_password%',
         ));
