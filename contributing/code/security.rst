@@ -21,6 +21,7 @@ confirmed, the core-team works on a solution following these steps:
 
 1. Send an acknowledgement to the reporter;
 2. Work on a patch;
+3. Get a CVE identifier from mitre.org;
 3. Write a security announcement for the official Symfony `blog`_ about the
    vulnerability. This post should contain the following information:
 
@@ -29,6 +30,7 @@ confirmed, the core-team works on a solution following these steps:
    * the affected versions;
    * the possible exploits;
    * how to patch/upgrade/workaround affected applications;
+   * the CVE identifier;
    * credits.
 4. Send the patch and the announcement to the reporter for review;
 5. Apply the patch to all maintained versions of Symfony;
