@@ -312,6 +312,22 @@ convenient for passwords::
         false
     );
 
+.. versionadded:: 2.2
+    Autocompletion for questions was added in Symfony 2.2.
+
+You can also specify an array of potential answers for a given question. These
+will be autocompleted as the user types::
+
+    $dialog = $this->getHelperSet()->get('dialog');
+    $bundleNames = array('AcmeDemoBundle', 'AcmeBlogBundle', 'AcmeStoreBundle');
+    $name = $dialog->ask(
+        $output,
+        'Please enter the name of a bundle',
+        'FooBundle',
+        $bundleNames
+    );
+
+
 .. caution::
 
     When you ask for a hidden response, Symfony will use either a binary, change
