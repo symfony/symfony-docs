@@ -1603,6 +1603,7 @@ this is a great approach.
     ;
 
 .. tip::
+
     If you are using Validation Groups, you need to either reference the 
     ``Default`` group when creating the form, or set the correct group on 
     the constraint you are adding.
