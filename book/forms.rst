@@ -1581,6 +1581,36 @@ an array of data, instead of an object. In most cases, it's better - and
 certainly more robust - to bind your form to an object. But for simple forms,
 this is a great approach.
 
+.. versionadded:: 2.1
+   It is now possible to add constraints directly to the fields using the 
+   ``constraints`` option, which accepts a single constraint or an array
+   of them.
+   
+::
+    use Symfony\Component\Validator\Constraints\MinLength;
+    use Symfony\Component\Validator\Constraints\NotBlank;
+
+    $builder
+       ->add('firstName', 'text', array(
+           'constraints' => new MinLength(3),
+       ))
+       ->add('lastName', 'text', array(
+           'constraints' => array(
+               new NotBlank(),
+               new MinLength(3),
+           ),
+       ))
+    ;
+
+.. tip::
+    If you are using Validation Groups, you need to either reference the 
+    ``Default`` group when creating the form, or set the correct group on 
+    the constraint you are adding.
+    
+::
+    new NotBlank(array('groups' => array('create', 'update'))
+    
+    
 Final Thoughts
 --------------
 
