@@ -53,7 +53,7 @@ Basic Usage
         <class name="Acme\BlogBundle\Entity\Blog">
             <property name="summary">
                 <constraint name="MaxLength">
-                    <value>100</value>
+                    <option name="limit">100</option>
                 </constraint>
             </property>
         </class>

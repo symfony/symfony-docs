@@ -42,6 +42,15 @@ were not blank, you could do the following:
             protected $firstName;
         }
 
+    .. code-block:: xml
+
+        <!-- src/Acme/BlogBundle/Resources/config/validation.xml -->
+        <class name="Acme\BlogBundle\Entity\Author">
+            <property name="firstName">
+                <constraint name="NotBlank" />
+            </property>
+        </class>
+
 Options
 -------
 

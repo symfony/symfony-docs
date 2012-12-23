@@ -42,6 +42,15 @@ were not strictly equal to ``null``, you would:
             protected $firstName;
         }
 
+    .. code-block:: xml
+
+        <!-- src/Acme/BlogBundle/Resources/config/validation.xml -->
+        <class name="Acme\BlogBundle\Entity\Author">
+            <property name="firstName">
+                <constraint name="NotNull" />
+            </property>
+        </class>
+
 Options
 -------
 

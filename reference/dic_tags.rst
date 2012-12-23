@@ -641,26 +641,28 @@ Your custom loader's ``load`` method is responsible for returning a
 
 Now, register your loader as a service and tag it with ``translation.loader``:
 
-.. code-block:: yaml
+.. configuration-block::
 
-    services:
-        main.translation.my_custom_loader:
-            class: Acme\MainBundle\Translation\MyCustomLoader
-            tags:
-                - { name: translation.loader, alias: bin }
+    .. code-block:: yaml
 
-.. code-block:: xml
+        services:
+            main.translation.my_custom_loader:
+                class: Acme\MainBundle\Translation\MyCustomLoader
+                tags:
+                    - { name: translation.loader, alias: bin }
 
-    <service id="main.translation.my_custom_loader" class="Acme\MainBundle\Translation\MyCustomLoader">
-        <tag name="translation.loader" alias="bin" />
-    </service>
+    .. code-block:: xml
 
-.. code-block:: php
+        <service id="main.translation.my_custom_loader" class="Acme\MainBundle\Translation\MyCustomLoader">
+            <tag name="translation.loader" alias="bin" />
+        </service>
 
-    $container
-        ->register('main.translation.my_custom_loader', 'Acme\MainBundle\Translation\MyCustomLoader')
-        ->addTag('translation.loader', array('alias' => 'bin'))
-    ;
+    .. code-block:: php
+
+        $container
+            ->register('main.translation.my_custom_loader', 'Acme\MainBundle\Translation\MyCustomLoader')
+            ->addTag('translation.loader', array('alias' => 'bin'))
+        ;
 
 The ``alias`` option is required and very important: it defines the file
 "suffix" that will be used for the resource files that use this loader. For

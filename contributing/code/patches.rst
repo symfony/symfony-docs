@@ -71,7 +71,7 @@ Get the Symfony2 source code:
 
 * Fork the `Symfony2 repository`_ (click on the "Fork" button);
 
-* After the "hardcore forking action" has completed, clone your fork locally
+* After the "forking action" has completed, clone your fork locally
   (this will create a `symfony` directory):
 
 .. code-block:: bash
@@ -251,8 +251,8 @@ You can now make a pull request on the ``symfony/symfony`` Github repository.
 
 .. tip::
 
-    Take care to point your pull request towards ``symfony:2.0`` if you want
-    the core team to pull a bugfix based on the 2.0 branch.
+    Take care to point your pull request towards ``symfony:2.1`` if you want
+    the core team to pull a bugfix based on the 2.1 branch.
 
 To ease the core team work, always include the modified components in your
 pull request message, like in:
@@ -266,6 +266,9 @@ pull request message, like in:
 
     Please use the title with "[WIP]" if the submission is not yet completed
     or the tests are incomplete or not yet passing.
+
+Pull Request Description
+~~~~~~~~~~~~~~~~~~~~~~~~
 
 The pull request description must include the following check list to ensure
 that contributions may be reviewed without needless feedback loops and that

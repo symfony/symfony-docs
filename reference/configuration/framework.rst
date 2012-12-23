@@ -88,7 +88,7 @@ trust_proxy_headers
 **type**: ``Boolean``
 
 Configures if HTTP headers (like ``HTTP_X_FORWARDED_FOR``, ``X_FORWARDED_PROTO``, and
-``X_FORWARDED_HOST``) are trusted as indication for an SSL connection. By default, it is
+``X_FORWARDED_HOST``) are trusted as an indication for an SSL connection. By default, it is
 set to ``false`` and only SSL_HTTPS connections are indicated as secure.
 
 You should enable this setting if your application is behind a reverse proxy.

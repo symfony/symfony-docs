@@ -15,7 +15,7 @@ documents.
 Since a picture - or some code - is worth a thousand words, here's a short
 example containing most features described below:
 
-.. code-block:: php
+.. code-block:: html+php
 
     <?php
 
@@ -40,7 +40,7 @@ example containing most features described below:
         private $fooBar;
 
         /**
-         * @param string $dummy Some argument description
+         * @param string $dummyy Some argument description
          */
         public function __construct($dummy)
         {
@@ -82,17 +82,17 @@ Structure
 
 * Add a single space after each comma delimiter;
 
-* Add a single space around operators (`==`, `&&`, ...);
+* Add a single space around operators (``==``, ``&&``, ...);
 
-* Add a blank line before `return` statements, unless the return is alone
-  inside a statement-group (like an `if` statement);
+* Add a blank line before ``return`` statements, unless the return is alone
+  inside a statement-group (like an ``if`` statement);
 
 * Use braces to indicate control structure body regardless of the number of
   statements it contains;
 
 * Define one class per file - this does not apply to private helper classes
   that are not intended to be instantiated from the outside and thus are not
-  concerned by the PSR-0 standard;
+  concerned by the `PSR-0`_ standard;
 
 * Declare class properties before methods;
 
@@ -108,9 +108,15 @@ Naming Conventions
 
 * Use namespaces for all classes;
 
-* Abstract classes are often prefixed with `Abstract`;
+* Prefix abstract classes with ``Abstract``. Please note some early Symfony2 classes
+  do not follow this convention and have not been renamed for backward compatibility
+  reasons. However all new abstract classes must follow this naming convention;
 
-* Suffix interfaces with `Interface`;
+* Suffix interfaces with ``Interface``;
+
+* Suffix traits with ``Trait``;
+
+* Suffix exceptions with ``Exception``;
 
 * Use alphanumeric characters and underscores for file names;
 
@@ -122,9 +128,9 @@ Documentation
 
 * Add PHPDoc blocks for all classes, methods, and functions;
 
-* Omit the `@return` tag if the method does not return anything;
+* Omit the ``@return`` tag if the method does not return anything;
 
-* The `@package` and `@subpackage` annotations are not used.
+* The ``@package`` and ``@subpackage`` annotations are not used.
 
 License
 -------

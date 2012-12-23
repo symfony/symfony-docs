@@ -176,7 +176,7 @@ The following controller shows you how to handle the entire process::
 
     When writing the template, don't forget to set the ``enctype`` attribute:
 
-    .. code-block:: html+php
+    .. code-block:: html+jinja
 
         <h1>Upload File</h1>
 

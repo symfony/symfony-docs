@@ -21,7 +21,8 @@ confirmed, the core-team works on a solution following these steps:
 
 1. Send an acknowledgement to the reporter;
 2. Work on a patch;
-3. Write a security announcement for the official Symfony `blog`_ about the
+3. Get a CVE identifier from mitre.org;
+4. Write a security announcement for the official Symfony `blog`_ about the
    vulnerability. This post should contain the following information:
 
    * a title that always include the "Security release" string;
@@ -29,13 +30,14 @@ confirmed, the core-team works on a solution following these steps:
    * the affected versions;
    * the possible exploits;
    * how to patch/upgrade/workaround affected applications;
+   * the CVE identifier;
    * credits.
-4. Send the patch and the announcement to the reporter for review;
-5. Apply the patch to all maintained versions of Symfony;
-6. Package new versions for all affected versions;
-7. Publish the post on the official Symfony `blog`_ (it must also be added to
+5. Send the patch and the announcement to the reporter for review;
+6. Apply the patch to all maintained versions of Symfony;
+7. Package new versions for all affected versions;
+8. Publish the post on the official Symfony `blog`_ (it must also be added to
    the "`Security Advisories`_" category);
-8. Update the security advisory list (see below).
+9. Update the security advisory list (see below).
 
 .. note::
 
@@ -52,10 +54,11 @@ Security Advisories
 This section indexes security vulnerabilities that were fixed in Symfony
 releases, starting from Symfony 1.0.0:
 
+* December 20, 2012: `Security release: Symfony 2.0.20 and 2.1.5 <http://symfony.com/blog/security-release-symfony-2-0-20-and-2-1-5-released>`_  (`CVE-2012-6431 <http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2012-6431>`_ and `CVE-2012-6432 <http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2012-6432>`_)
 * November 29, 2012: `Security release: Symfony 2.0.19 and 2.1.4 <http://symfony.com/blog/security-release-symfony-2-0-19-and-2-1-4>`_
-* November 25, 2012: `Security release: symfony 1.4.20 released  <http://symfony.com/blog/security-release-symfony-1-4-20-released>`_
+* November 25, 2012: `Security release: symfony 1.4.20 released  <http://symfony.com/blog/security-release-symfony-1-4-20-released>`_ (`CVE-2012-5574 <http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2012-5574>`_)
 * August 28, 2012: `Security Release: Symfony 2.0.17 released <http://symfony.com/blog/security-release-symfony-2-0-17-released>`_
-* May 30, 2012: `Security Release: symfony 1.4.18 released <http://symfony.com/blog/security-release-symfony-1-4-18-released>`_
+* May 30, 2012: `Security Release: symfony 1.4.18 released <http://symfony.com/blog/security-release-symfony-1-4-18-released>`_ (`CVE-2012-2667 <http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2012-2667>`_)
 * February 24, 2012: `Security Release: Symfony 2.0.11 released <http://symfony.com/blog/security-release-symfony-2-0-11-released>`_
 * November 16, 2011: `Security Release: Symfony 2.0.6 <http://symfony.com/blog/security-release-symfony-2-0-6>`_
 * March 21, 2011: `symfony 1.3.10 and 1.4.10: security releases <http://symfony.com/blog/symfony-1-3-10-and-1-4-10-security-releases>`_
