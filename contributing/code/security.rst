@@ -21,6 +21,7 @@ confirmed, the core-team works on a solution following these steps:
 
 1. Send an acknowledgement to the reporter;
 2. Work on a patch;
+3. Get a CVE identifier from mitre.org;
 3. Write a security announcement for the official Symfony `blog`_ about the
    vulnerability. This post should contain the following information:
 
@@ -29,6 +30,7 @@ confirmed, the core-team works on a solution following these steps:
    * the affected versions;
    * the possible exploits;
    * how to patch/upgrade/workaround affected applications;
+   * the CVE identifier;
    * credits.
 4. Send the patch and the announcement to the reporter for review;
 5. Apply the patch to all maintained versions of Symfony;
@@ -52,6 +54,7 @@ Security Advisories
 This section indexes security vulnerabilities that were fixed in Symfony
 releases, starting from Symfony 1.0.0:
 
+* December 20, 2012: `Security release: Symfony 2.0.20 and 2.1.5 <http://symfony.com/blog/security-release-symfony-2-0-20-and-2-1-5-released>`_  (`CVE-2012-6431 <http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2012-6431>`_ and `CVE-2012-6432 <http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2012-6432>`_)
 * November 29, 2012: `Security release: Symfony 2.0.19 and 2.1.4 <http://symfony.com/blog/security-release-symfony-2-0-19-and-2-1-4>`_
 * November 25, 2012: `Security release: symfony 1.4.20 released  <http://symfony.com/blog/security-release-symfony-1-4-20-released>`_ (`CVE-2012-5574 <http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2012-5574>`_)
 * August 28, 2012: `Security Release: Symfony 2.0.17 released <http://symfony.com/blog/security-release-symfony-2-0-17-released>`_
