@@ -623,8 +623,7 @@ The ``recentList`` template is perfectly straightforward:
     (e.g. ``/article/*slug*``). This is a bad practice. In the next section,
     you'll learn how to do this correctly.
 
-To include the controller, you'll need to refer to it using the standard string
-syntax for controllers (i.e. **bundle**:**controller**:**action**):
+To include the controller, you'll need to refer to it using an absolute url:
 
 .. configuration-block::
 
@@ -634,7 +633,7 @@ syntax for controllers (i.e. **bundle**:**controller**:**action**):
 
         {# ... #}
         <div id="sidebar">
-            {% render "AcmeArticleBundle:Article:recentArticles" with {'max': 3} %}
+            {% render url('latest_articles', { 'max': 3 }) %}
         </div>
 
     .. code-block:: html+php
@@ -645,6 +644,14 @@ syntax for controllers (i.e. **bundle**:**controller**:**action**):
         <div id="sidebar">
             <?php echo $view['actions']->render('AcmeArticleBundle:Article:recentArticles', array('max' => 3)) ?>
         </div>
+
+.. note::
+
+    Since Symfony 2.0.20, the Twig ``render`` tag now takes an absolute url
+    instead of a controller logical path. This fixes an important security
+    issue (`CVE-2012-6431`_) reported on the official blog. If your application
+    uses an older version of Symfony or still uses the previous ``render`` tag
+    syntax, we highly advise you to upgrade as soon as possible.
 
 Whenever you find that you need a variable or a piece of information that
 you don't have access to in a template, consider rendering a controller.
@@ -1372,3 +1379,4 @@ Learn more from the Cookbook
 .. _`tags`: http://twig.sensiolabs.org/doc/tags/index.html
 .. _`filters`: http://twig.sensiolabs.org/doc/filters/index.html
 .. _`add your own extensions`: http://twig.sensiolabs.org/doc/advanced.html#creating-an-extension
+.. _`CVE-2012-6431`: http://symfony.com/blog/security-release-symfony-2-0-20-and-2-1-5-released
