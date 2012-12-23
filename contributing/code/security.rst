@@ -22,7 +22,7 @@ confirmed, the core-team works on a solution following these steps:
 1. Send an acknowledgement to the reporter;
 2. Work on a patch;
 3. Get a CVE identifier from mitre.org;
-3. Write a security announcement for the official Symfony `blog`_ about the
+4. Write a security announcement for the official Symfony `blog`_ about the
    vulnerability. This post should contain the following information:
 
    * a title that always include the "Security release" string;
@@ -32,12 +32,12 @@ confirmed, the core-team works on a solution following these steps:
    * how to patch/upgrade/workaround affected applications;
    * the CVE identifier;
    * credits.
-4. Send the patch and the announcement to the reporter for review;
-5. Apply the patch to all maintained versions of Symfony;
-6. Package new versions for all affected versions;
-7. Publish the post on the official Symfony `blog`_ (it must also be added to
+5. Send the patch and the announcement to the reporter for review;
+6. Apply the patch to all maintained versions of Symfony;
+7. Package new versions for all affected versions;
+8. Publish the post on the official Symfony `blog`_ (it must also be added to
    the "`Security Advisories`_" category);
-8. Update the security advisory list (see below).
+9. Update the security advisory list (see below).
 
 .. note::
 
