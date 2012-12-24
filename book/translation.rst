@@ -816,6 +816,17 @@ texts* and complex expressions:
      Note that this only influences the current template, not any "included"
      templates (in order to avoid side effects).
 
+.. versionadded:: 2.2
+     You can now also set the translation variables for an entire Twig
+     template with a single tag:
+
+     .. code-block:: jinja
+
+            {% trans_default_vars {'%user%': user.name} %}
+
+     Note that this only influences the current template, not any "included"
+     templates (in order to avoid side effects).
+
 PHP Templates
 ~~~~~~~~~~~~~
 
