@@ -103,24 +103,39 @@ Each part will be explained in the next section.
                     http_digest:
                         provider: some_key_from_above
                     form_login:
+                        # submit the login form here
                         check_path: /login_check
+
+                        # the user is redirected here when he/she needs to login
                         login_path: /login
+
+                        # if true, forward the user to the login form instead of redirecting
                         use_forward: false
+
+                        # login success redirecting options (read further below)
                         always_use_default_target_path: false
-                        default_target_path: /
-                        target_path_parameter: _target_path
-                        use_referer: false
-                        failure_path: /foo
+                        default_target_path:            /
+                        target_path_parameter:          _target_path
+                        use_referer:                    false
+
+                        # login failure redirecting options (read further below)
+                        failure_path:    /foo
                         failure_forward: false
                         failure_handler: some.service.id
                         success_handler: some.service.id
+
+                        # field names for the username and password fields
                         username_parameter: _username
                         password_parameter: _password
+
+                        # csrf token options
                         csrf_parameter: _csrf_token
-                        intention: authenticate
-                        csrf_provider: my.csrf_provider.id
-                        post_only: true
-                        remember_me: false
+                        intention:      authenticate
+                        csrf_provider:  my.csrf_provider.id
+
+                        # by default, the login form *must* be a POST, not a GET
+                        post_only:      true
+                        remember_me:    false
                     remember_me:
                         token_provider: name
                         key: someS3cretKey
@@ -195,7 +210,9 @@ Form Login Configuration
 ------------------------
 
 When using the ``form_login`` authentication listener beneath a firewall,
-there are several common options for configuring the "form login" experience:
+there are several common options for configuring the "form login" experience.
+
+For even more details, see :doc:`/cookbook/security/form_login`.
 
 The Login Form and Process
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
