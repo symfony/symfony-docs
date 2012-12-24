@@ -5,32 +5,31 @@ Authorization
 =============
 
 When any of the authentication providers (see :ref:`authentication_providers`)
-has verified the still unauthenticated token, an authenticated token will
+has verified the still-unauthenticated token, an authenticated token will
 be returned. The authentication listener should set this token directly
 in the :class:`Symfony\\Component\\Security\\Core\\SecurityContextInterface`
 using its :method:`Symfony\\Component\\Security\\Core\\SecurityContextInterface::setToken`
 method.
 
-From then on, the user is authenticated, i.e. means identified.
-Now, other parts of the application can use the token to decide whether
-or not the user may request a certain URI, or modify a certain object.
-This decision will be made by an instance of :class:`Symfony\\Component\\Security\\Core\\Authorization\\AccessDecisionManagerInterface`.
+From then on, the user is authenticated, i.e. identified. Now, other parts
+of the application can use the token to decide whether or not the user may
+request a certain URI, or modify a certain object. This decision will be made
+by an instance of :class:`Symfony\\Component\\Security\\Core\\Authorization\\AccessDecisionManagerInterface`.
 
 An authorization decision will always be based on a few things:
 
-The current token
+* The current token
     For instance, the token's :method:`Symfony\\Component\\Security\\Core\\Authentication\\Token\\TokenInterface::getRoles`
     method may be used to retrieve the roles of the current user (e.g.
-    "ROLE_SUPER_ADMIN"), or a decision may be based on the class of the token.
-A set of attributes
+    ``ROLE_SUPER_ADMIN``), or a decision may be based on the class of the token.
+* A set of attributes
     Each attribute stands for a certain right the user should have, e.g.
-    "ROLE_ADMIN" to make sure the user is an administrator.
-An object (optional)
-    Any object on which to decide, e.g. the current :class:`Symfony\\Component\\HttpFoundation\\Request`
-    object, or an object for which access control needs to be checked, like
+    ``ROLE_ADMIN`` to make sure the user is an administrator.
+* An object (optional)
+    Any object on which for which access control needs to be checked, like
     an article or a comment object.
 
-Access decision manager
+Access Decision Manager
 -----------------------
 
 Since deciding whether or not a user is authorized to perform a certain
@@ -39,14 +38,14 @@ itself depends on multiple voters, and makes a final verdict based on all
 the votes (either positive, negative or neutral) it has received. It
 recognizes several strategies:
 
-``affirmative`` (default)
-    Grant access as soon as any voter returns an affirmative response
+* ``affirmative`` (default)
+    grant access as soon as any voter returns an affirmative response;
 
-``consensus``
-    Grant access if there are more voters granting access then there are denying
+* ``consensus``
+    grant access if there are more voters granting access than there are denying;
 
-``unanimous``
-    Only grant access if none of the voters has denied access
+* ``unanimous``
+    only grant access if none of the voters has denied access;
 
 .. code-block:: php
 
@@ -79,23 +78,28 @@ of :class:`Symfony\\Component\\Security\\Core\\Authorization\\Voter\\VoterInterf
 which means they have to implement a few methods which allows the decision
 manager to use them:
 
-``supportsAttribute($attribute)``
-    Will be used to check if the voter knows how to handle the given attribute.
-``supportsClass($class)``
-    Will be used to check if the voter is able to grant or deny access for
-    an object of the given class.
-``vote(TokenInterface $token, $object, array $attributes)``
-    This method will do the actual voting and return a value equal to one
+* ``supportsAttribute($attribute)``
+    will be used to check if the voter knows how to handle the given attribute;
+
+* ``supportsClass($class)``
+    will be used to check if the voter is able to grant or deny access for
+    an object of the given class;
+
+* ``vote(TokenInterface $token, $object, array $attributes)``
+    this method will do the actual voting and return a value equal to one
     of the class constants of :class:`Symfony\\Component\\Security\\Core\\Authorization\\Voter\\VoterInterface`,
     i.e. ``VoterInterface::ACCESS_GRANTED``, ``VoterInterface::ACCESS_DENIED``
-    or ``VoterInterface::ACCESS_ABSTAIN``.
+    or ``VoterInterface::ACCESS_ABSTAIN``;
 
 The security component contains some standard voters which cover many use
 cases:
 
+AuthenticatedVoter
+~~~~~~~~~~~~~~~~~~
+
 The :class:`Symfony\\Component\\Security\\Core\\Authorization\\Voter\\AuthenticatedVoter`
-voter supports the attributes "IS_AUTHENTICATED_FULLY", "IS_AUTHENTICATED_REMEMBERED",
-and "IS_AUTHENTICATED_ANONYMOUSLY" and grants access based on the current
+voter supports the attributes ``IS_AUTHENTICATED_FULLY``, ``IS_AUTHENTICATED_REMEMBERED``,
+and ``IS_AUTHENTICATED_ANONYMOUSLY`` and grants access based on the current
 level of authentication, i.e. is the user fully authenticated, or only based
 on a "remember-me" cookie, or even authenticated anonymously?
 
@@ -118,13 +122,14 @@ on a "remember-me" cookie, or even authenticated anonymously?
 
     $vote = $authenticatedVoter->vote($token, $object, array('IS_AUTHENTICATED_FULLY');
 
-The :class:`Symfony\\Component\\Security\\Core\\Authorization\\Voter\\RoleVoter`
-supports attributes starting with "ROLE_" and grants access to the user
-when the required "ROLE_*" attributes can all be found in the array of
-roles returned by the token's :method:`Symfony\\Component\\Security\\Core\\Authentication\\Token\\TokenInterface::getRoles`
-method.
+RoleVoter
+~~~~~~~~~
 
-.. code-block:: php
+The :class:`Symfony\\Component\\Security\\Core\\Authorization\\Voter\\RoleVoter`
+supports attributes starting with ``ROLE_`` and grants access to the user
+when the required ``ROLE_*`` attributes can all be found in the array of
+roles returned by the token's :method:`Symfony\\Component\\Security\\Core\\Authentication\\Token\\TokenInterface::getRoles`
+method::
 
     use Symfony\Component\Security\Core\Authorization\Voter\RoleVoter;
 
@@ -132,16 +137,17 @@ method.
 
     $roleVoter->vote($token, $object, 'ROLE_ADMIN');
 
+RoleHierarchyVoter
+~~~~~~~~~~~~~~~~~~
+
 The :class:`Symfony\\Component\\Security\\Core\\Authorization\\Voter\\RoleHierarchyVoter`
 extends :class:`Symfony\\Component\\Security\\Core\\Authorization\\Voter\\RoleVoter`
 and provides some additional functionality: it knows how to handle a
-hierarchy of roles. For instance, a "ROLE_SUPER_ADMIN" role may have subroles
-"ROLE_ADMIN" and "ROLE_USER", so that when a certain object requires the
-user to have the "ROLE_ADMIN" role, it grants access to users who in fact
-have the "ROLE_ADMIN" role, but also to users having the "ROLE_SUPER_ADMIN"
-role.
-
-.. code-block:: php
+hierarchy of roles. For instance, a ``ROLE_SUPER_ADMIN`` role may have subroles
+``ROLE_ADMIN`` and ``ROLE_USER``, so that when a certain object requires the
+user to have the ``ROLE_ADMIN`` role, it grants access to users who in fact
+have the ``ROLE_ADMIN`` role, but also to users having the ``ROLE_SUPER_ADMIN``
+role::
 
     use Symfony\Component\Security\Core\Authorization\Voter\RoleHierarchyVoter;
     use Symfony\Component\Security\Core\Role\RoleHierarchy;
@@ -179,26 +185,25 @@ first constructor argument::
 .. note::
 
     Most authentication tokens extend from :class:`Symfony\\Component\\Security\\Core\\Authentication\\Token\\AbstractToken`,
-    which means that the roles given to its constructor, will be
+    which means that the roles given to its constructor will be
     automatically converted from strings to these simple ``Role`` objects.
 
 Using the decision manager
 --------------------------
 
-The access listener
+The Access Listener
 ~~~~~~~~~~~~~~~~~~~
 
-Normally, the access decision manager will already be asked to decide whether
-or not the current user is entitled to make the current request. This is done
-by the :class:`Symfony\\Component\\Security\\Http\\Firewall\\AccessListener`,
+The access decision manager can be used at any point in a request to decide whether
+or not the current user is entitled to access a given resource. One optional,
+but useful, method for restricting access based on a URL pattern is the
+:class:`Symfony\\Component\\Security\\Http\\Firewall\\AccessListener`,
 which is one of the firewall listeners (see :ref:`firewall_listeners`) that
-will be triggered for each request matching the firewall map (see :ref:`firewall`).
+is triggered for each request matching the firewall map (see :ref:`firewall`).
 
 It uses an access map (which should be an instance of :class:`Symfony\\Component\\Security\\Http\\AccessMapInterface`)
 which contains request matchers and a corresponding set of attributes that
-are required for the current user to get access to the application.
-
-.. code-block:: php
+are required for the current user to get access to the application::
 
     use Symfony\Component\Security\Http\AccessMap;
     use Symfony\Component\HttpFoundation\RequestMatcher;
@@ -219,12 +224,10 @@ Security context
 ~~~~~~~~~~~~~~~~
 
 The access decision manager is also available to other parts of the application
-by means of the :method:`Symfony\\Component\\Security\\Core\\SecurityContext::isGranted`
+via the :method:`Symfony\\Component\\Security\\Core\\SecurityContext::isGranted`
 method of the :class:`Symfony\\Component\\Security\\Core\\SecurityContext`.
 A call to this method will directly delegate the question to the access
-decision manager.
-
-.. code-block:: php
+decision manager::
 
     use Symfony\Component\Security\SecurityContext;
     use Symfony\Component\Security\Core\Exception\AccessDeniedException;

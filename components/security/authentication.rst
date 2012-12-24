@@ -1,5 +1,5 @@
 .. index::
-   single: Security, Authentication Manager
+   single: Security, Authentication
 
 Authentication
 ==============
@@ -9,7 +9,7 @@ firewall map is able to extract the user's credentials from the current
 :class:`Symfony\\Component\\HttpFoundation\\Request` object, it should create
 a token, containing these credentials. The next thing the listener should
 do is ask the authentication manager to validate the given token, and return
-an authenticated token when the supplied credentials were found to be valid.
+an *authenticated* token if the supplied credentials were found to be valid.
 The listener should then store the authenticated token in the security context::
 
     use Symfony\Component\Security\Http\Firewall\ListenerInterface;
@@ -63,7 +63,7 @@ The listener should then store the authenticated token in the security context::
     A token can be of any class, as long as it implements
     :class:`Symfony\\Component\\Security\\Core\\Authentication\\Token\\TokenInterface`.
 
-The authentication manager
+The Authentication Manager
 --------------------------
 
 The default authentication manager is an instance of
@@ -101,11 +101,12 @@ Each provider (since it implements
 has a method :method:`Symfony\\Component\\Security\\Core\\Authentication\\Provider\\AuthenticationProviderInterface::supports`
 by which the ``AuthenticationProviderManager``
 can determine if it supports the given token. If this is the case, the
-manager then calls the provider's method :class:`Symfony\\Component\\Security\\Core\\Authentication\\Provider\\AuthenticationProviderInterface::authenticate`. This method
-should return an authenticated token or throw an :class:`Symfony\\Component\\Security\\Core\\Exception\\AuthenticationException`
+manager then calls the provider's method :class:`Symfony\\Component\\Security\\Core\\Authentication\\Provider\\AuthenticationProviderInterface::authenticate`.
+This method should return an authenticated token or throw an
+:class:`Symfony\\Component\\Security\\Core\\Exception\\AuthenticationException`
 (or any other exception extending it).
 
-Authenticating users by their username and password
+Authenticating Users by their Username and Password
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 An authentication provider will attempt to authenticate a user based on
@@ -159,7 +160,7 @@ password was valid::
     It is also possible to let multiple user providers try to find the user's
     data, using the :class:`Symfony\\Component\\Security\\Core\\User\\ChainUserProvider`.
 
-The password encoder factory
+The Password encoder Factory
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The :class:`Symfony\\Component\\Security\\Core\\Authentication\\Provider\\DaoAuthenticationProvider`
@@ -186,7 +187,7 @@ Each encoder should implement :class:`Symfony\\Component\\Security\\Core\\Encode
 or be an array with a ``class`` and an ``arguments`` key, which allows the
 encoder factory to construct the encoder only when it is needed.
 
-Password encoders
+Password Encoders
 ~~~~~~~~~~~~~~~~~
 
 When the :method:`Symfony\\Component\\Security\\Core\\Encoder\\EncoderFactory::getEncoder`
