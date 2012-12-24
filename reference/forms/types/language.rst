@@ -13,7 +13,7 @@ The "value" for each language is the *Unicode language identifier*
 
 .. note::
 
-   The locale of your user is guessed using `Locale::getDefault()`_
+   The locale of your user is guessed using :phpmethod:`Locale::getDefault`
 
 Unlike the ``choice`` type, you don't need to specify a ``choices`` or
 ``choice_list`` option as the field type automatically uses a large list
@@ -59,5 +59,3 @@ These options inherit from the :doc:`field</reference/forms/types/field>` type:
 .. include:: /reference/forms/types/options/label.rst.inc
 
 .. include:: /reference/forms/types/options/read_only.rst.inc
-
-.. _`Locale::getDefault()`: http://php.net/manual/en/locale.getdefault.php
