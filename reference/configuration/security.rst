@@ -120,6 +120,7 @@ Each part will be explained in the next section.
                         use_referer: false
                         failure_path: /foo
                         failure_forward: false
+                        failure_path_parameter: _failure_path
                         failure_handler: some.service.id
                         success_handler: some.service.id
                         username_parameter: _username
