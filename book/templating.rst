@@ -703,11 +703,11 @@ Symfony2 uses the standard ``render`` helper to configure ``hinclude`` tags:
 
     .. code-block:: jinja
 
-        {% render '...:news' with {}, {'standalone': 'js'} %}
+        {% render '...:news', {'standalone': 'js'} %}
 
     .. code-block:: php
 
-        <?php echo $view['actions']->render('...:news', array(), array('standalone' => 'js')) ?>
+        <?php echo $view['actions']->render('...:news', array('standalone' => 'js')) ?>
 
 .. note::
 
