@@ -14,6 +14,7 @@ The Components
     event_dispatcher/index
     finder
     http_foundation/index
+    http_kernel/index
     locale
     process
     routing/index
