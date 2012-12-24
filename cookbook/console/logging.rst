@@ -5,10 +5,10 @@ How to enable logging in Console Commands
 =========================================
 
 The Console component doesn't provide any logging capabilities out of the box.
-Normally, you run console commands manually and observe the output, that's
+Normally, you run console commands manually and observe the output, which is
 why logging is not provided. However, there are cases when you might need
 logging. For example, if you are running console commands unattended, such
-as from cron jobs or deployment scripts it may be easier to use Symfony's
+as from cron jobs or deployment scripts, it may be easier to use Symfony's
 logging capabilities instead of configuring other tools to gather console
 output and process it. This can be especially handful if you already have
 some existing setup for aggregating and analyzing Symfony logs.
@@ -17,14 +17,14 @@ There are basically two logging cases you would need:
  * Manually logging some information from your command;
  * Logging uncaught Exceptions.
 
-Manually logging from console command
--------------------------------------
+Manually logging from a console Command
+---------------------------------------
 
-This one is really simple. When you create console command within full framewok
-as described :doc:`here</cookbook/console/console_command>`, your command
-extends :class:`Symfony\\Bundle\\FrameworkBundle\\Command\\ContainerAwareCommand`,
-so you can simply access standard logger service through the container and
-use it to do the logging::
+This one is really simple. When you create a console command within the full
+framework as described in ":doc:`/cookbook/console/console_command`", your command
+extends :class:`Symfony\\Bundle\\FrameworkBundle\\Command\\ContainerAwareCommand`.
+This means that you  can simply access the standard logger service through the
+container and use it to do the logging::
 
     // src/Acme/DemoBundle/Command/GreetCommand.php
     namespace Acme\DemoBundle\Command;
@@ -64,18 +64,30 @@ use it to do the logging::
         }
     }
 
-Depending on the environment you run your command you will get the results
-in ``app/logs/dev.log`` or ``app/logs/prod.log``.
+Depending on the environment in which you run your command (and your logging
+setup), you should see the logged entries in ``app/logs/dev.log`` or ``app/logs/prod.log``.
 
 Enabling automatic Exceptions logging
 -------------------------------------
 
-In order to enable console application to automatically log uncaught exceptions
-for all commands you'd need to do something more.
+To get your console application to automatically log uncaught exceptions
+for all of your commands, you'll need to do a little bit more work.
 
-First, you have to extend :class:`Symfony\\Bundle\\FrameworkBundle\\Console\\Application`
-class to override its :method:`Symfony\\Bundle\\FrameworkBundle\\Console\\Application::run`
-method, where exception handling should happen::
+First, create a new sub-class of :class:`Symfony\\Bundle\\FrameworkBundle\\Console\\Application`
+and override its :method:`Symfony\\Bundle\\FrameworkBundle\\Console\\Application::run`
+method, where exception handling should happen:
+
+.. warning::
+
+    Due to the nature of the core :class:`Symfony\\Component\\Console\\Application`
+    class, much of the :method:`run<Symfony\\Bundle\\FrameworkBundle\\Console\\Application::run>`
+    method has to be duplicated and even a private property ``originalAutoExit``
+    re-implemented. This serves as an example of what you *could* do in your
+    code, though there is a high risk that something may break when upgrading
+    to future versions of Symfony.
+
+
+.. code-block:: php
 
     // src/Acme/DemoBundle/Console/Application.php
     namespace Acme\DemoBundle\Console;
@@ -113,7 +125,7 @@ method, where exception handling should happen::
          */
         public function run(InputInterface $input = null, OutputInterface $output = null)
         {
-            //make parent method throw exceptions, so we can log it
+            // make the parent method throw exceptions, so you can log it
             $this->setCatchExceptions(false);
 
             if (null === $input) {
@@ -165,27 +177,28 @@ method, where exception handling should happen::
 
         public function setAutoExit($bool)
         {
-            // parent property is private, so we need to intercept it in setter
+            // parent property is private, so we need to intercept it in a setter
             $this->originalAutoExit = (Boolean) $bool;
             parent::setAutoExit($bool);
         }
 
     }
 
-What happens above is we disable exception catching, so that parent run method
-would throw the exceptions. When exception is caught, we simple log it by
+In the code above, you disable exception catching so the parent ``run`` method
+will throw all exceptions. When an exception is caught, you simple log it by
 accessing the ``logger`` service from the service container and then handle
-the rest in the same way parent run method does that (Since parent :method:`run<Symfony\\Bundle\\FrameworkBundle\\Console\\Application::run>`
+the rest of the logic in the same way that the parent ``run`` method does
+(specifically, since the parent :method:`run<Symfony\\Bundle\\FrameworkBundle\\Console\\Application::run>`
 method will not handle exceptions rendering and status code handling when
-`catchExceptions` is set to false, it has to be done in the overridden
+``catchExceptions`` is set to false, it has to be done in the overridden
 method).
 
-For our extended Application class to work properly with console shell mode
-we have to do a small trick to intercept ``autoExit`` setter, and store the
+For the extended Application class to work properly with in console shell mode,
+you have to do a small trick to intercept the ``autoExit`` setter and store the
 setting in a different property, since the parent property is private.
 
-Now to be able to use our extended ``Application`` class we need to adjust
-``app/console`` script to use our class instead of the default::
+Now to be able to use your extended ``Application`` class you need to adjust
+the ``app/console`` script to use the new class instead of the default::
 
     // app/console
 
@@ -196,9 +209,8 @@ Now to be able to use our extended ``Application`` class we need to adjust
 
     // ...
 
-That's it! Thanks to autoloader, our class will now be used instead of original
+That's it! Thanks to autoloader, your class will now be used instead of original
 one.
-
 
 Logging non-0 exit statuses
 ---------------------------
@@ -207,15 +219,15 @@ The logging capabilities of the console can be further extended by logging
 non-0 exit statuses. This way you will know if a command had any errors, even
 if no exceptions were thrown.
 
-In order to do that, you'd have to modify ``run()`` method of your extended
-`Application` class in the following way::
+In order to do that, you'd have to modify the ``run()`` method of your extended
+``Application`` class in the following way::
 
     public function run(InputInterface $input = null, OutputInterface $output = null)
     {
-        //make parent method throw exceptions, so we can log it
+        // make the parent method throw exceptions, so you can log it
         $this->setCatchExceptions(false);
 
-        // store autoExit value before resetting it - we'd need it later
+        // store the autoExit value before resetting it - you'll need it later
         $autoExit = $this->originalAutoExit;
         $this->setAutoExit(false);
 
@@ -240,6 +252,3 @@ In order to do that, you'd have to modify ``run()`` method of your extended
 
         return $statusCode;
     }
-
-
-
