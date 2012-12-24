@@ -101,7 +101,7 @@ Tags
 +---------------------------------------------------+-------------------------------------------------------------------+
 | Tag Syntax                                        | Usage                                                             |
 +===================================================+===================================================================+
-| ``{% render 'controller' with {parameters} %}``   | This will render the Response Content for the given controller,   |
+| ``{% render url('route', {parameters}) %}``       | This will render the Response Content for the given controller,   |
 |                                                   | more information in :ref:`templating-embedding-controller`.       |
 +---------------------------------------------------+-------------------------------------------------------------------+
 | ``{% form_theme form 'file' %}``                  | This will look inside the given file for overridden form blocks,  |

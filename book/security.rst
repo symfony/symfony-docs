@@ -746,14 +746,16 @@ Securing by IP
 ~~~~~~~~~~~~~~
 
 Certain situations may arise when you may need to restrict access to a given
-route based on IP. This is particularly relevant in the case of :ref:`Edge Side Includes<edge-side-includes>`
-(ESI), for example, which utilize a route named "_internal". When
-ESI is used, the _internal route is required by the gateway cache to enable
-different caching options for subsections within a given page. This route
-comes with the ^/_internal prefix by default in the standard edition (assuming
-you've uncommented those lines from the routing file).
+route based on IP. This is particularly relevant in the case of
+:ref:`Edge Side Includes<edge-side-includes>` (ESI), for example. When ESI is
+enabled, it's recommended to secure access to ESI URLs. Indeed, some ESI may
+contain some private contents like the current logged in user's information. To
+prevent any direct access to these resources from a web browser by guessing the
+URL pattern, the ESI route must be secured to be only visible from the trusted
+reverse proxy cache.
 
-Here is an example of how you might secure this route from outside access:
+Here is an example of how you might secure all ESI routes that start with a
+given prefix, ``/esi``, from outside access:
 
 .. configuration-block::
 
@@ -763,21 +765,30 @@ Here is an example of how you might secure this route from outside access:
         security:
             # ...
             access_control:
-                - { path: ^/_internal, roles: IS_AUTHENTICATED_ANONYMOUSLY, ip: 127.0.0.1 }
+                - { path: ^/esi, roles: IS_AUTHENTICATED_ANONYMOUSLY, ip: 127.0.0.1 }
 
     .. code-block:: xml
 
             <access-control>
-                <rule path="^/_internal" role="IS_AUTHENTICATED_ANONYMOUSLY" ip="127.0.0.1" />
+                <rule path="^/esi" role="IS_AUTHENTICATED_ANONYMOUSLY" ip="127.0.0.1" />
             </access-control>
 
     .. code-block:: php
 
             'access_control' => array(
-                array('path' => '^/_internal', 'role' => 'IS_AUTHENTICATED_ANONYMOUSLY', 'ip' => '127.0.0.1'),
+                array('path' => '^/esi', 'role' => 'IS_AUTHENTICATED_ANONYMOUSLY', 'ip' => '127.0.0.1'),
             ),
 
 .. _book-security-securing-channel:
+
+.. note::
+
+    The Symfony 2.0.20 fixes an important security issue regarding ESI
+    routes. In the previous versions of Symfony, ESI URLs where handled by a
+    single route call ``_internal`` and defined in the main
+    ``app/config/routing.yml`` file. If your application handles ESI with the
+    ``_internal`` route, we highly advise you to upgrade your code by following
+    the guidelines of the `CVE-2012-6431 security advisory`_.
 
 Securing by Channel
 ~~~~~~~~~~~~~~~~~~~
@@ -1784,3 +1795,4 @@ Learn more from the Cookbook
 .. _`FOSUserBundle`: https://github.com/FriendsOfSymfony/FOSUserBundle
 .. _`implement the \Serializable interface`: http://php.net/manual/en/class.serializable.php
 .. _`functions-online.com`: http://www.functions-online.com/sha1.html
+.. _`CVE-2012-6431 security advisory`: http://symfony.com/blog/security-release-symfony-2-0-20-and-2-1-5-released

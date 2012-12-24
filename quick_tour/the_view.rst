@@ -186,12 +186,60 @@ the ``index`` template. To do this, use the ``render`` tag:
 .. code-block:: jinja
 
     {# src/Acme/DemoBundle/Resources/views/Demo/index.html.twig #}
-    {% render "AcmeDemoBundle:Demo:fancy" with {'name': name, 'color': 'green'} %}
+    {% render url('fancy', { 'name': name, 'color': 'green'}) %}
 
-Here, the ``AcmeDemoBundle:Demo:fancy`` string refers to the ``fancy`` action
-of the ``Demo`` controller. The arguments (``name`` and ``color``) act like
-simulated request variables (as if the ``fancyAction`` were handling a whole
-new request) and are made available to the controller::
+.. note::
+
+    Since Symfony 2.0.20, the Twig ``render`` tag now takes an absolute url
+    instead of a controller logical path. This fixes an important security
+    issue (`CVE-2012-6431`_) reported on the official blog. If your application
+    uses an older version of Symfony or still uses the previous ``render`` tag
+    syntax, we highly advise you to upgrade as soon as possible.
+
+Here, the ``render`` tag takes the url of the ``fancy`` route. This route has to
+be defined in one of your application's routing configuration files.
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # app/config/routing.yml
+        fancy:
+            pattern:   /included/fancy/{name}/{color}
+            defaults:  { _controller: AcmeDemoBundle:Demo:fancy }
+
+    .. code-block:: xml
+
+        <!-- app/config/routing.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <routes xmlns="http://symfony.com/schema/routing"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/routing http://symfony.com/schema/routing/routing-1.0.xsd">
+
+            <route id="fancy" pattern="/included/fancy/{name}/{color}">
+                <default key="_controller">AcmeDemoBundle:Demo:fancy</default>
+            </route>
+        </routes>
+
+    .. code-block:: php
+
+        // app/config/routing.php
+        use Symfony\Component\Routing\RouteCollection;
+        use Symfony\Component\Routing\Route;
+
+        $collection = new RouteCollection();
+        $collection->add('fancy', new Route('/included/fancy/{name}/{color}', array(
+            '_controller' => 'AcmeDemoBundle:Demo:fancy',
+        )));
+
+        return $collection;
+
+
+The ``fancy`` route maps the ``/included/fancy/{name}/{color}`` pattern to a
+``fancyAction`` method in the ``DemoController`` class of an ``AcmeDemoBundle``
+bundle. The arguments (``name`` and ``color``) act like simulated request
+variables (as if the ``fancyAction`` were handling a whole new request) and are
+made available to the controller::
 
     // src/Acme/DemoBundle/Controller/DemoController.php
 
@@ -202,7 +250,10 @@ new request) and are made available to the controller::
             // create some object, based on the $color variable
             $object = ...;
 
-            return $this->render('AcmeDemoBundle:Demo:fancy.html.twig', array('name' => $name, 'object' => $object));
+            return $this->render('AcmeDemoBundle:Demo:fancy.html.twig', array(
+                'name' => $name,
+                'object' => $object
+            ));
         }
 
         // ...
@@ -288,3 +339,4 @@ Ready for another 10 minutes with Symfony2?
 
 .. _Twig:          http://twig.sensiolabs.org/
 .. _documentation: http://twig.sensiolabs.org/documentation
+.. _`CVE-2012-6431`: http://symfony.com/blog/security-release-symfony-2-0-20-and-2-1-5-released
