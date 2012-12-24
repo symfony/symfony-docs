@@ -180,24 +180,9 @@ And what if you want to embed the result of another controller in a template?
 That's very useful when working with Ajax, or when the embedded template needs
 some variable not available in the main template.
 
-Suppose you've created a ``fancy`` action, and you want to include it inside
-the ``index`` template. To do this, use the ``render`` tag:
-
-.. code-block:: jinja
-
-    {# src/Acme/DemoBundle/Resources/views/Demo/index.html.twig #}
-    {% render url('fancy', { 'name': name, 'color': 'green'}) %}
-
-.. note::
-
-    Since Symfony 2.0.20, the Twig ``render`` tag now takes an absolute url
-    instead of a controller logical path. This fixes an important security
-    issue (`CVE-2012-6431`_) reported on the official blog. If your application
-    uses an older version of Symfony or still uses the previous ``render`` tag
-    syntax, we highly advise you to upgrade as soon as possible.
-
-Here, the ``render`` tag takes the url of the ``fancy`` route. This route has to
-be defined in one of your application's routing configuration files.
+Suppose you've created a ``fancyAction`` controller method, and you want to "render"
+it inside the ``index`` template. First, create a route to your new controller
+in one of your application's routing configuration files.
 
 .. configuration-block::
 
@@ -234,12 +219,18 @@ be defined in one of your application's routing configuration files.
 
         return $collection;
 
+To include the result (e.g. ``HTML``) of the controller, use the ``render`` tag:
 
-The ``fancy`` route maps the ``/included/fancy/{name}/{color}`` pattern to a
-``fancyAction`` method in the ``DemoController`` class of an ``AcmeDemoBundle``
-bundle. The arguments (``name`` and ``color``) act like simulated request
-variables (as if the ``fancyAction`` were handling a whole new request) and are
-made available to the controller::
+.. code-block:: jinja
+
+    {# src/Acme/DemoBundle/Resources/views/Demo/index.html.twig #}
+    {% render url('fancy', { 'name': name, 'color': 'green'}) %}
+
+.. include:: /book/_security-2012-6431.rst.inc
+
+The ``render`` tag will execute the ``AcmeDemoBundle:Demo:fancy`` controller
+and include its result. For example, your new ``fancyAction`` might look
+like this::
 
     // src/Acme/DemoBundle/Controller/DemoController.php
 
@@ -339,4 +330,3 @@ Ready for another 10 minutes with Symfony2?
 
 .. _Twig:          http://twig.sensiolabs.org/
 .. _documentation: http://twig.sensiolabs.org/documentation
-.. _`CVE-2012-6431`: http://symfony.com/blog/security-release-symfony-2-0-20-and-2-1-5-released

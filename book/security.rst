@@ -781,14 +781,7 @@ given prefix, ``/esi``, from outside access:
 
 .. _book-security-securing-channel:
 
-.. note::
-
-    The Symfony 2.0.20 fixes an important security issue regarding ESI
-    routes. In the previous versions of Symfony, ESI URLs where handled by a
-    single route call ``_internal`` and defined in the main
-    ``app/config/routing.yml`` file. If your application handles ESI with the
-    ``_internal`` route, we highly advise you to upgrade your code by following
-    the guidelines of the `CVE-2012-6431 security advisory`_.
+.. include:: /book/_security-2012-6431.rst.inc
 
 Securing by Channel
 ~~~~~~~~~~~~~~~~~~~
@@ -1795,4 +1788,3 @@ Learn more from the Cookbook
 .. _`FOSUserBundle`: https://github.com/FriendsOfSymfony/FOSUserBundle
 .. _`implement the \Serializable interface`: http://php.net/manual/en/class.serializable.php
 .. _`functions-online.com`: http://www.functions-online.com/sha1.html
-.. _`CVE-2012-6431 security advisory`: http://symfony.com/blog/security-release-symfony-2-0-20-and-2-1-5-released

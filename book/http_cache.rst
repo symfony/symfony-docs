@@ -882,19 +882,16 @@ matter), Symfony2 uses the standard ``render`` helper to configure ESI tags:
 
     .. code-block:: php
 
-        <?php echo $view['actions']->render('...:news', array('max' => 5), array('standalone' => true)) ?>
+        <?php echo $view['actions']->render(
+            $view['router']->generate('latest_news', array('max' => 5), true),
+            array(),
+            array('standalone' => true)
+        ) ?>
 
-.. note::
+.. include:: /book/_security-2012-6431.rst.inc
 
-    Since Symfony 2.0.20, the Twig ``render`` tag now takes an absolute url
-    instead of a controller logical path. This fixes an important security
-    issue (`CVE-2012-6431`_) reported on the official blog. If your application
-    uses an older version of Symfony or still uses the previous ``render`` tag
-    syntax, we highly advise you to upgrade as soon as possible.
-
-The ``render`` tag takes the absolute url of the embedded action. The latter has
-to be defined somewhere in one of the application's or bundles' routing
-configuration files:
+The ``render`` tag takes the absolute url to the embedded action. This means
+that you need to define a new route to the controller that you're embedding:
 
 .. code-block:: yaml
 
@@ -904,18 +901,22 @@ configuration files:
         defaults:     { _controller: AcmeNewsBundle:News:news }
         requirements: { max: \d+ }
 
+.. caution::
+
+    Unless you want this URL to be accessible to the outside world, you
+    should use Symfony's firewall to secure it (by allowing access to your
+    reverse proxy's IP range). See the :ref:`Securing by IP<book-security-securing-ip>`
+    section of the :doc:`Security Chapter </book/security>` for more information
+    on how to do this.
+
 .. tip::
 
-    The best practice is to mount all your ESI urls on a single prefix of your
-    choice. This has two main advantages. First, it eases the management of
-    ESI urls as you can easily identify the routes used to handle ESIs.
-    Secondly, it eases security management. Since an ESI route allows an action
-    to be accessed via a URL, you might want to protect it by using the Symfony2
-    firewall feature (by allowing access to your reverse proxy's IP range).
-    Securing all urls starting with the same prefix is easier than securing each
-    single url. See the :ref:`Securing by IP<book-security-securing-ip>` section
-    of the :doc:`Security Chapter </book/security>` for more information on how
-    to do this.
+    The best practice is to mount all your ESI urls on a single prefix (e.g.
+    ``/esi``) of your choice. This has two main advantages. First, it eases
+    the management of ESI urls as you can easily identify the routes used for ESI.
+    Second, it eases security management since securing all urls starting
+    with the same prefix is easier than securing each individual url. See
+    the above note for more details on securing ESI URLs.
 
 By setting ``standalone`` to ``true`` in the ``render`` Twig tag, you tell
 Symfony2 that the action should be rendered as an ESI tag. You might be
@@ -1058,4 +1059,3 @@ Learn more from the Cookbook
 .. _`P4 - Conditional Requests`: http://tools.ietf.org/html/draft-ietf-httpbis-p4-conditional-12
 .. _`P6 - Caching: Browser and intermediary caches`: http://tools.ietf.org/html/draft-ietf-httpbis-p6-cache-12
 .. _`ESI`: http://www.w3.org/TR/esi-lang
-.. _`CVE-2012-6431`: http://symfony.com/blog/security-release-symfony-2-0-20-and-2-1-5-released

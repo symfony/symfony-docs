@@ -101,8 +101,9 @@ Tags
 +---------------------------------------------------+-------------------------------------------------------------------+
 | Tag Syntax                                        | Usage                                                             |
 +===================================================+===================================================================+
-| ``{% render url('route', {parameters}) %}``       | This will render the Response Content for the given controller,   |
-|                                                   | more information in :ref:`templating-embedding-controller`.       |
+| ``{% render url('route', {parameters}) %}``       | This will render the Response Content for the given controller    |
+|                                                   | that the URL points to. For more information,                     |
+|                                                   | see :ref:`templating-embedding-controller`.                       |
 +---------------------------------------------------+-------------------------------------------------------------------+
 | ``{% form_theme form 'file' %}``                  | This will look inside the given file for overridden form blocks,  |
 |                                                   | more information in :doc:`/cookbook/form/form_customization`.     |
