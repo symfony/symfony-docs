@@ -269,6 +269,15 @@ You can combine VALUE_IS_ARRAY with VALUE_REQUIRED or VALUE_OPTIONAL like this:
             1
         );
 
+Console Helpers
+---------------
+
+The console component also contains a set of "helpers" - different small
+tools capable of helping you with different tasks:
+
+* :doc:`/component/console/helpers/dialoghelper`: interactively ask the user for information
+* :doc:`/component/console/helpers/formatterhelper`: customize the output colorization
+
 Testing Commands
 ----------------
 
