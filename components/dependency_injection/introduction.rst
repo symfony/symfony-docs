@@ -255,10 +255,10 @@ The ``newsletter_manager`` and ``mailer`` services can be set up using config fi
         $container->setParameter('mailer.transport', 'sendmail');
         $container
             ->register('mailer', 'Mailer')
-                ->addArgument('%mailer.transport%');
+            ->addArgument('%mailer.transport%');
 
         $container
             ->register('newsletter_manager', 'NewsletterManager')
-                ->addMethodCall('setMailer', new Reference('mailer'));
+            ->addMethodCall('setMailer', new Reference('mailer'));
 
 .. _Packagist: https://packagist.org/packages/symfony/dependency-injection
