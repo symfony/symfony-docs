@@ -108,6 +108,8 @@ This prints::
 
     HELLO FABIEN
 
+.. _components-console-coloring:
+
 Coloring the Output
 ~~~~~~~~~~~~~~~~~~~
 
@@ -267,69 +269,14 @@ You can combine VALUE_IS_ARRAY with VALUE_REQUIRED or VALUE_OPTIONAL like this:
             1
         );
 
-Asking the User for Information
--------------------------------
+Console Helpers
+---------------
 
-When creating commands, you have the ability to collect more information
-from the user by asking him/her questions. For example, suppose you want
-to confirm an action before actually executing it. Add the following to your
-command::
+The console component also contains a set of "helpers" - different small
+tools capable of helping you with different tasks:
 
-    $dialog = $this->getHelperSet()->get('dialog');
-    if (!$dialog->askConfirmation(
-            $output,
-            '<question>Continue with this action?</question>',
-            false
-        )) {
-        return;
-    }
-
-In this case, the user will be asked "Continue with this action", and unless
-they answer with ``y``, the task will stop running. The third argument to
-``askConfirmation`` is the default value to return if the user doesn't enter
-any input.
-
-You can also ask questions with more than a simple yes/no answer. For example,
-if you needed to know the name of something, you might do the following::
-
-    $dialog = $this->getHelperSet()->get('dialog');
-    $name = $dialog->ask(
-        $output,
-        'Please enter the name of the widget',
-        'foo'
-    );
-
-Ask Questions and validate the Response
----------------------------------------
-
-You can easily ask a question and validate the response with built-in methods::
-
-    $dialog = $this->getHelperSet()->get('dialog');
-
-    $validator = function ($value) {
-        if ('' === trim($value)) {
-            throw new \Exception('The value can not be empty');
-        }
-
-        return $value;
-    }
-
-    $password = $dialog->askAndValidate(
-        $output,
-        'Please enter the name of the widget',
-        $validator,
-        20,
-        'foo'
-    );
-
-The validation callback can be any callable PHP function and the fourth argument
-to :method:`Symfony\\Component\\Console\\Helper::askAndValidate` is the maximum
-number of attempts - set it to ``false`` (the default value) for unlimited
-attempts. The fifth argument is the default value.
-
-The callback must throw an exception in case the value is not acceptable. Please
-note that the callback **must** return the value. The value can be modified by
-the callback (it will be returned modified by the helper).
+* :doc:`/components/console/helpers/dialoghelper`: interactively ask the user for information
+* :doc:`/components/console/helpers/formatterhelper`: customize the output colorization
 
 Testing Commands
 ----------------
