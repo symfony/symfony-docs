@@ -133,6 +133,7 @@
   * :doc:`/cookbook/templating/global_variables`
   * :doc:`/cookbook/templating/PHP`
   * :doc:`/cookbook/templating/twig_extension`
+  * :doc:`/cookbook/templating/render_without_controller`
 
 * :doc:`/cookbook/testing/index`
 
