@@ -18,6 +18,7 @@ The Components
     locale
     process
     routing/index
+    security/index
     serializer
     stopwatch
     templating
