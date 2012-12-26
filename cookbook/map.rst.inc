@@ -11,6 +11,7 @@
   * :doc:`/cookbook/bundles/inheritance`
   * :doc:`/cookbook/bundles/override`
   * :doc:`/cookbook/bundles/extension`
+  * :doc:`/cookbook/bundles/prepend_extension`
 
 * :doc:`/cookbook/cache/index`
 

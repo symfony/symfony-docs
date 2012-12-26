@@ -483,6 +483,16 @@ normalization and advanced merging. You can read more about this in :doc:`the Co
 You can also see it action by checking out some of the core Configuration classes,
 such as the one from the `FrameworkBundle Configuration`_ or the `TwigBundle Configuration`_.
 
+Modifying the configuration of another Bundle
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+If you have multiple bundles that depend on each other, it may be useful
+to allow one ``Extension`` class to modify the configuration passed to another
+bundle's ``Extension`` class, as if the end-developer has actually placed that
+configuration in his/her ``app/config/config.yml`` file.
+
+For more details, see :doc:`/cookbook/bundles/prepend_extension`.
+
 Default Configuration Dump
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
