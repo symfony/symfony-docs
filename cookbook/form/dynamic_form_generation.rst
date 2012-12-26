@@ -82,7 +82,13 @@ Inside the Event Subscriber Class
 
 The goal is to create a "name" field *only* if the underlying Product object
 is new (e.g. hasn't been persisted to the database). Based on that, the subscriber
-might look like the following::
+might look like the following:
+
+.. versionadded:: 2.2
+    The ability to pass a string into :method:`FormInterface::add<Symfony\\Component\\Form\\FormInterface::add>`
+    was added in Symfony 2.2.
+
+.. code-block:: php
 
     // src/Acme/DemoBundle/Form/EventListener/AddNameFieldSubscriber.php
     namespace Acme\DemoBundle\Form\EventListener;
