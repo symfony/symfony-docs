@@ -400,9 +400,12 @@ one example:
         // Get the data-prototype explained earlier
         var prototype = collectionHolder.attr('data-prototype');
 
+        // count the current form inputs we have (e.g. 2), use that as the new index (e.g. 2)
+        var newIndex = collectionHolder.find(':input').length;
+
         // Replace '__name__' in the prototype's HTML to
-        // instead be a number based on the current collection's length.
-        var newForm = prototype.replace(/__name__/g, collectionHolder.children().length - 1);
+        // instead be a number based on how many items we have
+        var newForm = prototype.replace(/__name__/g, newIndex);
 
         // Display the form in the page in an li, before the "Add a tag" link li
         var $newFormLi = $('<li></li>').append(newForm);
