@@ -1,35 +1,28 @@
 .. index::
    single: Templating; Render template without custom controller
 
-How to render a template without a custom controller
+How to render a Template without a custom Controller
 ====================================================
 
-This guide explains how to render a template within another template and
-how to configure a page without a custom controller.
+Usually, when you need to create a page, you need to create a controller
+and render a template from within that controller. But if you're rendering
+a simple template that doesn't need any data passed into it, you can avoid
+creating the controller entirely, by using the built-in ``FrameworkBundle:Template:template``
+controller.
 
-The intention is, that there may be page in your application, that doesn't
-need a controller, because there is no action associated with them.
-
-Rendering a template in twig:
-
-.. code-block:: jinja
-
-    {% render "FrameworkBundle:Template:template" with {template: 'AcmeBundle::static.html.twig'} %}
-
-Directly routing to a template without custom controller with additional
-caching parameters:
+For example, suppose you want to render a ``AcmeBundle:Static:privacy.html.twig``
+template, which doesn't require that any variables are passed to it. You
+can do this without creating a controller:
 
 .. configuration-block::
 
     .. code-block:: yaml
 
-        acme_static:
-            pattern: /static
+        acme_privacy:
+            pattern: /privacy
             defaults:
                 _controller: FrameworkBundle:Template:template
-                template: 'AcmeBundle::static.html.twig'
-                maxAge: 86400
-                sharedMaxAge: 86400
+                template: 'AcmeBundle:Static:privacy.html.twig'
 
     .. code-block:: xml
 
@@ -39,11 +32,9 @@ caching parameters:
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/routing http://symfony.com/schema/routing/routing-1.0.xsd">
 
-            <route id="acme_static" pattern="/static">
+            <route id="acme_privacy" pattern="/privacy">
                 <default key="_controller">FrameworkBundle:Template:template</default>
-                <default key="template">AcmeBundle::static.html.twig</default>
-                <default key="maxAge">86400</default>
-                <default key="sharedMaxAge">86400</default>
+                <default key="template">AcmeBundle:Static:privacy.html.twig</default>
             </route>
         </routes>
 
@@ -53,15 +44,30 @@ caching parameters:
         use Symfony\Component\Routing\Route;
 
         $collection = new RouteCollection();
-        $collection->add('acme_static', new Route('/static', array(
+        $collection->add('acme_privacy', new Route('/privacy', array(
             '_controller'  => 'FrameworkBundle:Template:template',
-            'template'     => 'Acmebundle::static.html.twig',
-            'maxAge'       => 86400,
-            'sharedMaxAge' => 86400,
+            'template'     => 'AcmeBundle:Static:privacy.html.twig',
         )));
 
         return $collection;
 
-By default no caching headers were set. If you want to disable proxy
-caching, but want to keep browser caching enabled, set ``private`` to
-``false`` explictly.
+The ``FrameworkBundle:Template:template`` controller will simply render whatever
+template you've passed as the ``template`` default value.
+
+You can of course also use this trick when rendering embedded controllers
+from within a template. But since the purpose of rendering a controller from
+within a template is typically to prepare some data in a custom controller,
+this probably isn't useful, except to easily cache static partials, a feature
+which will become available in Symfony 2.2.
+
+.. configuration-block::
+
+    .. code-block:: html+jinja
+
+        {% render url('acme_privacy') %}
+
+    .. code-block:: html+php
+
+        <?php echo $view['actions']->render(
+            $view['router']->generate('acme_privacy', array(), true)
+        ) ?>
