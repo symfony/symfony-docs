@@ -20,7 +20,7 @@ Installation
 You can install the component in many different ways:
 
 * Use the official Git repository (https://github.com/symfony/Security);
-* :doc:`Install it via Composer</components/using_components>` (``symfony/security`` on `Packagist`_).
+* :doc:`Install it via Composer</components/using_components>` (`symfony/security`_ on Packagist).
 
 Sections
 --------
@@ -28,3 +28,5 @@ Sections
 * :doc:`/components/security/firewall`
 * :doc:`/components/security/authentication`
 * :doc:`/components/security/authorization`
+
+.. _symfony/security: https://packagist.org/packages/symfony/security

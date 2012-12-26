@@ -108,6 +108,8 @@ This prints::
 
     HELLO FABIEN
 
+.. _components-console-coloring:
+
 Coloring the Output
 ~~~~~~~~~~~~~~~~~~~
 
@@ -267,108 +269,6 @@ You can combine VALUE_IS_ARRAY with VALUE_REQUIRED or VALUE_OPTIONAL like this:
             1
         );
 
-Asking the User for Information
--------------------------------
-
-When creating commands, you have the ability to collect more information
-from the user by asking him/her questions. For example, suppose you want
-to confirm an action before actually executing it. Add the following to your
-command::
-
-    $dialog = $this->getHelperSet()->get('dialog');
-    if (!$dialog->askConfirmation(
-            $output,
-            '<question>Continue with this action?</question>',
-            false
-        )) {
-        return;
-    }
-
-In this case, the user will be asked "Continue with this action", and unless
-they answer with ``y``, the task will stop running. The third argument to
-``askConfirmation`` is the default value to return if the user doesn't enter
-any input.
-
-You can also ask questions with more than a simple yes/no answer. For example,
-if you needed to know the name of something, you might do the following::
-
-    $dialog = $this->getHelperSet()->get('dialog');
-    $name = $dialog->ask(
-        $output,
-        'Please enter the name of the widget',
-        'foo'
-    );
-
-.. versionadded:: 2.2
-    The ``askHiddenResponse`` method was added in Symfony 2.2.
-
-You can also ask question and hide the response. This is particularly
-convenient for passwords::
-
-    $dialog = $this->getHelperSet()->get('dialog');
-    $password = $dialog->askHiddenResponse(
-        $output,
-        'What is the database password?',
-        false
-    );
-
-.. caution::
-
-    When you ask for a hidden response, Symfony will use either a binary, change
-    stty mode or use another trick to hide the response. If none is available,
-    it will fallback and allow the response to be visible unless you pass ``false``
-    as the third argument like in the example above. In this case, a RuntimeException
-    would be thrown.
-
-Ask and validate response
--------------------------
-
-You can easily ask question and validate response with built-in methods::
-
-    $dialog = $this->getHelperSet()->get('dialog');
-
-    $validator = function ($value) {
-        if (trim($value) == '') {
-            throw new \Exception('The value can not be empty');
-        }
-    }
-
-    $password = $dialog->askAndValidate(
-        $output,
-        'Please enter the name of the widget',
-        $validator,
-        20,
-        'foo'
-    );
-
-The validation callback can be any callable PHP function, the fourth argument is
-the maximum number of attempts, set it to ``false`` for unlimited attempts. The
-fifth argument is the default value.
-
-.. versionadded:: 2.2
-    The ``askHiddenResponseAndValidate`` method was added in Symfony 2.2.
-
-You can also ask and validate a hidden response::
-
-    $dialog = $this->getHelperSet()->get('dialog');
-
-    $validator = function ($value) {
-        if (trim($value) == '') {
-            throw new \Exception('The password can not be empty');
-        }
-    }
-
-    $password = $dialog->askHiddenResponseAndValidate(
-        $output,
-        'Please enter the name of the widget',
-        $validator,
-        20,
-        false
-    );
-
-If you want to allow the response to be visible if it cannot be hidden for
-some reason, pass true as the fifth argument.
-
 Displaying a Progress Bar
 -------------------------
 
@@ -440,37 +340,14 @@ To see other available options, check the API documentation for
             }
         }
 
-Ask Questions and validate the Response
----------------------------------------
+Console Helpers
+---------------
 
-You can easily ask a question and validate the response with built-in methods::
+The console component also contains a set of "helpers" - different small
+tools capable of helping you with different tasks:
 
-    $dialog = $this->getHelperSet()->get('dialog');
-
-    $validator = function ($value) {
-        if ('' === trim($value)) {
-            throw new \Exception('The value can not be empty');
-        }
-
-        return $value;
-    }
-
-    $password = $dialog->askAndValidate(
-        $output,
-        'Please enter the name of the widget',
-        $validator,
-        20,
-        'foo'
-    );
-
-The validation callback can be any callable PHP function and the fourth argument
-to :method:`Symfony\\Component\\Console\\Helper::askAndValidate` is the maximum
-number of attempts - set it to ``false`` (the default value) for unlimited
-attempts. The fifth argument is the default value.
-
-The callback must throw an exception in case the value is not acceptable. Please
-note that the callback **must** return the value. The value can be modified by
-the callback (it will be returned modified by the helper).
+* :doc:`/components/console/helpers/dialoghelper`: interactively ask the user for information
+* :doc:`/components/console/helpers/formatterhelper`: customize the output colorization
 
 Testing Commands
 ----------------
