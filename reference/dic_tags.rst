@@ -752,29 +752,31 @@ twig.loader
 
 **Purpose**: Register a custom service that loads Twig templates
 
-To enable a custom Twig template loader, add it as a regular service in one
-of your configuration, and tag it with ``twig.loader``:
+By default, Symfony uses only one `Twig Loader`_ -
+:class:`Symfony\\Bundle\\TwigBundle\\Loader\\FilesystemLoader`. If you need
+to load Twig templates from another resource, you can create a service for
+the new loader and tag it with ``twig.loader``:
 
 .. configuration-block::
 
     .. code-block:: yaml
 
         services:
-            twig.loader.your_loader_name:
-                class: Fully\Qualified\Loader\Class\Name
+            acme.demo_bundle.loader.some_twig_loader:
+                class: Acme\DemoBundle\Loader\SomeTwigLoader
                 tags:
                     - { name: twig.loader }
 
     .. code-block:: xml
 
-        <service id="twig.loader.your_loader_name" class="Fully\Qualified\Loader\Class\Name">
+        <service id="acme.demo_bundle.loader.some_twig_loader" class="Acme\DemoBundle\Loader\SomeTwigLoader">
             <tag name="twig.loader" />
         </service>
 
     .. code-block:: php
 
         $container
-            ->register('twig.loader.your_loader_name', 'Fully\Qualified\Loader\Class\Name')
+            ->register('acme.demo_bundle.loader.some_twig_loader', 'Acme\DemoBundle\Loader\SomeTwigLoader')
             ->addTag('twig.loader')
         ;
 
@@ -808,3 +810,4 @@ For an example, see the ``EntityInitializer`` class inside the Doctrine Bridge.
 .. _`Twig official extension repository`: https://github.com/fabpot/Twig-extensions
 .. _`KernelEvents`: https://github.com/symfony/symfony/blob/2.1/src/Symfony/Component/HttpKernel/KernelEvents.php
 .. _`SwiftMailer's Plugin Documentation`: http://swiftmailer.org/docs/plugins.html
+.. _`Twig Loader`: http://twig.sensiolabs.org/doc/api.html#loaders
