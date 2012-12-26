@@ -74,6 +74,13 @@
 
   * :doc:`/components/serializer`
 
+* :doc:`/components/security/index`
+
+  * :doc:`/components/security/introduction`
+  * :doc:`/components/security/firewall`
+  * :doc:`/components/security/authentication`
+  * :doc:`/components/security/authorization`
+
 * **Templating**
 
   * :doc:`/components/templating`
