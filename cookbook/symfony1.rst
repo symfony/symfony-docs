@@ -170,6 +170,25 @@ from specific directories without defining a dependency:
         "psr-0": { "": "src/" }
     }
 
+When Symfony use the Composer autoloader instead of UniversalClassLoader, 
+you should use the ``add()`` method to register fallback namespaces:
+
+.. code-block:: php
+
+    // app/autoload.php
+
+    // ...
+    $loader->add('', __DIR__.'/../src');
+
+List of directory scanned:
+
+.. code-block:: php
+
+    // app/autoload.php
+
+    print_r($loader->getFallbackDirs());
+
+
 Using the Console
 -----------------
 
