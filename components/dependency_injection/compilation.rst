@@ -248,6 +248,29 @@ but also load a secondary one only if a certain parameter is set::
 
 .. _components-dependency-injection-compiler-passes:
 
+Prepending configuration passed to the Extension
+------------------------------------------------
+
+An Extension can prepend the configuration of any Bundle before the ``load()``
+method is called by implementing :class:`Symfony\\Component\\DependencyInjection\\Compiler\\PrependExtensionInterface`::
+
+    use Symfony\Component\DependencyInjection\Compiler\PrependExtensionInterface;
+    // ...
+
+    class AcmeDemoExtension implements ExtensionInterface, PrependExtensionInterface
+    {
+        // ...
+
+        public function prepend()
+        {
+            // ...
+
+            $container->prependExtensionConfig($name, $config);
+
+            // ...
+        }
+    }
+
 Creating a Compiler Pass
 ------------------------
 

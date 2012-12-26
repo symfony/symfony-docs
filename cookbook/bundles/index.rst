@@ -8,3 +8,4 @@ Bundles
     inheritance
     override
     extension
+    prepend_extension
