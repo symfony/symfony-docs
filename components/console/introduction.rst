@@ -23,10 +23,10 @@ You can install the component in many different ways:
 .. note::
 
     Windows does not support ANSI colors by default so the Console Component detects and
-    disables colors where Windows does not have support. However, if Windows is not 
-    configured with an ANSI driver and your console commands invoke other scripts which 
+    disables colors where Windows does not have support. However, if Windows is not
+    configured with an ANSI driver and your console commands invoke other scripts which
     emit ANSI color sequences, they will be shown as raw escape characters.
-  
+
     To enable ANSI colour support for Windows, please install `ANSICON_`.
 
 Creating a basic Command
