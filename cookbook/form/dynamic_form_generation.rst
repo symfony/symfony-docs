@@ -64,9 +64,9 @@ to an Event Subscriber::
     {
         public function buildForm(FormBuilderInterface $builder, array $options)
         {
-            $subscriber = new AddNameFieldSubscriber($builder->getFormFactory());
-            $builder->addEventSubscriber($subscriber);
             $builder->add('price');
+
+            $builder->addEventSubscriber(new AddNameFieldSubscriber());
         }
 
         public function getName()
@@ -74,10 +74,6 @@ to an Event Subscriber::
             return 'product';
         }
     }
-
-The event subscriber is passed the FormFactory object in its constructor so
-that your new subscriber is capable of creating the form widget once it is
-notified of the dispatched event during form creation.
 
 .. _`cookbook-forms-inside-subscriber-class`:
 
@@ -93,18 +89,10 @@ might look like the following::
 
     use Symfony\Component\Form\FormEvent;
     use Symfony\Component\Form\FormEvents;
-    use Symfony\Component\Form\FormFactoryInterface;
     use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
     class AddNameFieldSubscriber implements EventSubscriberInterface
     {
-        private $factory;
-
-        public function __construct(FormFactoryInterface $factory)
-        {
-            $this->factory = $factory;
-        }
-
         public static function getSubscribedEvents()
         {
             // Tells the dispatcher that you want to listen on the form.pre_set_data
@@ -128,7 +116,7 @@ might look like the following::
 
             // check if the product object is "new"
             if (!$data->getId()) {
-                $form->add($this->factory->createNamed('name', 'text'));
+                $form->add('name', 'text');
             }
         }
     }
