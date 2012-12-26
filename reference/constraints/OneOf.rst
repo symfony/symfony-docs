@@ -1,10 +1,5 @@
-Choice
-======
-
-.. caution::
-
-    The Choice constraint is deprecated since version 2.2 and will be removed
-    in Symfony 2.3. Use :doc:`/reference/constraints/Oneof` instead.
+OneOf
+=====
 
 This constraint is used to ensure that the given value is one of a given
 set of *valid* choices. It can also be used to validate that each item in
@@ -24,9 +19,9 @@ an array of items is one of those valid choices.
 |                | - `maxMessage`_                                                       |
 |                | - `strict`_                                                           |
 +----------------+-----------------------------------------------------------------------+
-| Class          | :class:`Symfony\\Component\\Validator\\Constraints\\Choice`           |
+| Class          | :class:`Symfony\\Component\\Validator\\Constraints\\OneOf`            |
 +----------------+-----------------------------------------------------------------------+
-| Validator      | :class:`Symfony\\Component\\Validator\\Constraints\\ChoiceValidator`  |
+| Validator      | :class:`Symfony\\Component\\Validator\\Constraints\\OneOfValidator`   |
 +----------------+-----------------------------------------------------------------------+
 
 Basic Usage
@@ -47,7 +42,7 @@ If your valid choice list is simple, you can pass them in directly via the
         Acme\BlogBundle\Entity\Author:
             properties:
                 gender:
-                    - Choice:
+                    - OneOf:
                         choices:  [male, female]
                         message:  Choose a valid gender.
 
@@ -56,7 +51,7 @@ If your valid choice list is simple, you can pass them in directly via the
         <!-- src/Acme/BlogBundle/Resources/config/validation.xml -->
         <class name="Acme\BlogBundle\EntityAuthor">
             <property name="gender">
-                <constraint name="Choice">
+                <constraint name="OneOf">
                     <option name="choices">
                         <value>male</value>
                         <value>female</value>
@@ -74,7 +69,7 @@ If your valid choice list is simple, you can pass them in directly via the
         class Author
         {
             /**
-             * @Assert\Choice(choices = {"male", "female"}, message = "Choose a valid gender.")
+             * @Assert\OneOf(choices = {"male", "female"}, message = "Choose a valid gender.")
              */
             protected $gender;
         }
@@ -83,15 +78,15 @@ If your valid choice list is simple, you can pass them in directly via the
 
         // src/Acme/BlogBundle/EntityAuthor.php
         use Symfony\Component\Validator\Mapping\ClassMetadata;
-        use Symfony\Component\Validator\Constraints\Choice;
-        
+        use Symfony\Component\Validator\Constraints\OneOf;
+
         class Author
         {
             protected $gender;
-            
+
             public static function loadValidatorMetadata(ClassMetadata $metadata)
             {
-                $metadata->addPropertyConstraint('gender', new Choice(array(
+                $metadata->addPropertyConstraint('gender', new OneOf(array(
                     'choices' => array('male', 'female'),
                     'message' => 'Choose a valid gender',
                 )));
@@ -117,7 +112,7 @@ form element.
         }
     }
 
-You can pass the name of this method to the `callback_` option of the ``Choice``
+You can pass the name of this method to the `callback_` option of the ``OneOf``
 constraint.
 
 .. configuration-block::
@@ -128,7 +123,7 @@ constraint.
         Acme\BlogBundle\Entity\Author:
             properties:
                 gender:
-                    - Choice: { callback: getGenders }
+                    - OneOf: { callback: getGenders }
 
     .. code-block:: php-annotations
 
@@ -138,7 +133,7 @@ constraint.
         class Author
         {
             /**
-             * @Assert\Choice(callback = "getGenders")
+             * @Assert\OneOf(callback = "getGenders")
              */
             protected $gender;
         }
@@ -148,7 +143,7 @@ constraint.
         <!-- src/Acme/BlogBundle/Resources/config/validation.xml -->
         <class name="Acme\BlogBundle\Entity\Author">
             <property name="gender">
-                <constraint name="Choice">
+                <constraint name="OneOf">
                     <option name="callback">getGenders</option>
                 </constraint>
             </property>
@@ -165,14 +160,14 @@ you can pass the class name and the method as an array.
         Acme\BlogBundle\Entity\Author:
             properties:
                 gender:
-                    - Choice: { callback: [Util, getGenders] }
+                    - OneOf: { callback: [Util, getGenders] }
 
     .. code-block:: xml
 
         <!-- src/Acme/BlogBundle/Resources/config/validation.xml -->
         <class name="Acme\BlogBundle\Entity\Author">
             <property name="gender">
-                <constraint name="Choice">
+                <constraint name="OneOf">
                     <option name="callback">
                         <value>Util</value>
                         <value>getGenders</value>
@@ -189,7 +184,7 @@ you can pass the class name and the method as an array.
         class Author
         {
             /**
-             * @Assert\Choice(callback = {"Util", "getGenders"})
+             * @Assert\OneOf(callback = {"Util", "getGenders"})
              */
             protected $gender;
         }
