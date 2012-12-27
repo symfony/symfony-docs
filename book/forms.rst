@@ -1586,7 +1586,8 @@ this is a great approach.
    ``constraints`` option, which accepts a single constraint or an array
    of them.
    
-::
+.. code-block:: php
+
     use Symfony\Component\Validator\Constraints\MinLength;
     use Symfony\Component\Validator\Constraints\NotBlank;
 
@@ -1608,7 +1609,8 @@ this is a great approach.
     ``Default`` group when creating the form, or set the correct group on 
     the constraint you are adding.
     
-::
+.. code-block:: php
+
     new NotBlank(array('groups' => array('create', 'update'))
     
     
