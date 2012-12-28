@@ -185,12 +185,16 @@ Beginning Development
 Now that you have a fully-functional Symfony2 application, you can begin
 development! Your distribution may contain some sample code - check the
 ``README.md`` file included with the distribution (open it as a text file)
-to learn about what sample code was included with your distribution and how
-you can remove it later.
+to learn about what sample code was included with your distribution.
 
 If you're new to Symfony, check out ":doc:`page_creation`", where you'll
 learn how to create pages, change configuration, and do everything else you'll
 need in your new application.
+
+.. note::
+
+    If you want to remove the sample code from your distribution, take a look
+    at this cookbook article: ":doc:`/cookbook/bundles/remove`"
 
 Using Source Control
 --------------------

@@ -122,7 +122,8 @@ to learn more about how to configure and develop inside your application.
 .. tip::
 
     The Symfony2 Standard Edition comes with some example functionality. To
-    remove the sample code, follow the instructions on the `Standard Edition Readme`_.
+    remove the sample code, follow the instructions in the
+    ":doc:`/components/bundles/remove`" article.
 
 .. include:: _vendor_deps.rst.inc
 
@@ -146,7 +147,6 @@ central repository to work. You then have several solutions:
 .. _`svn`: http://subversion.apache.org/
 .. _`Subversion`: http://subversion.apache.org/
 .. _`Symfony2 Standard Edition`: http://symfony.com/download
-.. _`Standard Edition Readme`: https://github.com/symfony/symfony-standard/blob/master/README.md
 .. _`Version Control with Subversion`: http://svnbook.red-bean.com/
 .. _`GitHub`: https://github.com/
 .. _`Google code`: http://code.google.com/hosting/
