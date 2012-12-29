@@ -40,7 +40,7 @@ example containing most features described below:
         private $fooBar;
 
         /**
-         * @param string $dummyy Some argument description
+         * @param string $dummy Some argument description
          */
         public function __construct($dummy)
         {
