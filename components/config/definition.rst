@@ -431,8 +431,8 @@ an array with with ``fixXmlConfig``.
 
 You can further control the normalization process if you need to. For example,
 you may want to allow a string to be set and used as a particular key or several
-keys to be set explicitly. So that, if everything apart from id is optional in this
-config:
+keys to be set explicitly. So that, if everything apart from ``name`` is optional
+in this config:
 
 .. code-block:: yaml
 
