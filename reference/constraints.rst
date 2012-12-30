@@ -40,6 +40,7 @@ Validation Constraints Reference
    constraints/File
    constraints/Image
 
+   constraints/CardScheme
    constraints/Luhn
 
    constraints/Callback
