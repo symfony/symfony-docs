@@ -50,6 +50,10 @@
 
   * :doc:`/components/http_foundation/introduction`
 
+* :doc:`/components/http_kernel/index`
+
+  * :doc:`/components/http_kernel/introduction`
+
 * **Locale**
 
   * :doc:`/components/locale`
