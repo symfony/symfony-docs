@@ -13,7 +13,11 @@ on all fields.
 
 .. include:: /reference/forms/types/options/required.rst.inc
 
+.. include:: /reference/forms/types/options/constraints.rst.inc
+
 .. include:: /reference/forms/types/options/cascade_validation.rst.inc
+
+.. include:: /reference/forms/types/options/disabled.rst.inc
 
 .. include:: /reference/forms/types/options/disabled.rst.inc
 
