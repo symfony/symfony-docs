@@ -93,18 +93,19 @@ schemes
 
 **type**: ``array``
 
-The name of the number scheme used to validate the credit card number. Valid values are:
+This option is required and represents the name of the number scheme used to 
+validate the credit card number. Valid values are:
 
-* AMEX
-* CHINA_UNIONPAY
-* DINERS
-* DISCOVER
-* INSTAPAYMENT
-* JCB
-* LASER
-* MAESTRO
-* MASTERCARD
-* VISA
+* ``AMEX``
+* ``CHINA_UNIONPAY``
+* ``DINERS``
+* ``DISCOVER``
+* ``INSTAPAYMENT``
+* ``JCB``
+* ``LASER``
+* ``MAESTRO``
+* ``MASTERCARD``
+* ``VISA``
 
 For more information about the used schemes, see `Wikipedia`_.
 
