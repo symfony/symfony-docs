@@ -325,7 +325,7 @@ working with forms, for example::
     {
         $form = $this->createForm(...);
 
-        $form->bindRequest($request);
+        $form->bind($request);
         // ...
     }
 
@@ -630,8 +630,8 @@ from any controller::
     // in another controller for another request
     $foo = $session->get('foo');
 
-    // set the user locale
-    $session->setLocale('fr');
+    // use a default value if the key doesn't exist
+    $filters = $session->get('filters', array());
 
 These attributes will remain on the user for the remainder of that user's
 session.
@@ -653,14 +653,11 @@ For example, imagine you're processing a form submit::
     {
         $form = $this->createForm(...);
 
-        $form->bindRequest($this->getRequest());
+        $form->bind($this->getRequest());
         if ($form->isValid()) {
             // do some sort of processing
 
-            $this->get('session')->setFlash(
-                'notice',
-                'Your changes were saved!'
-            );
+            $this->get('session')->getFlashBag()->add('notice', 'Your changes were saved!');
 
             return $this->redirect($this->generateUrl(...));
         }
@@ -679,19 +676,19 @@ the ``notice`` message:
 
     .. code-block:: html+jinja
 
-        {% if app.session.hasFlash('notice') %}
+        {% for flashMessage in app.session.flashbag.get('notice') %}
             <div class="flash-notice">
-                {{ app.session.flash('notice') }}
+                {{ flashMessage }}
             </div>
-        {% endif %}
+        {% endfor %}
 
     .. code-block:: php
 
-        <?php if ($view['session']->hasFlash('notice')): ?>
+        <?php foreach ($view['session']->getFlash('notice') as $message): ?>
             <div class="flash-notice">
-                <?php echo $view['session']->getFlash('notice') ?>
+                <?php echo "<div class='flash-error'>$message</div>" ?>
             </div>
-        <?php endif; ?>
+        <?php endforeach; ?>
 
 By design, flash messages are meant to live for exactly one request (they're
 "gone in a flash"). They're designed to be used across redirects exactly as
@@ -722,6 +719,11 @@ headers and content that's sent back to the client::
     useful methods for reading and mutating the ``Response`` headers. The
     header names are normalized so that using ``Content-Type`` is equivalent
     to ``content-type`` or even ``content_type``.
+
+.. tip::
+
+    There is also a special :class:`Symfony\\Component\\HttpFoundation\\JsonResponse`
+    class that helps return JSON responses. See :ref:`component-http-foundation-json-response`.
 
 .. index::
    single: Controller; Request object

@@ -689,6 +689,63 @@ Whenever you find that you need a variable or a piece of information that
 you don't have access to in a template, consider rendering a controller.
 Controllers are fast to execute and promote good code organization and reuse.
 
+Asynchronous Content with hinclude.js
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 2.1
+    hinclude.js support was added in Symfony 2.1
+
+Controllers can be embedded asynchronously using the hinclude.js_ javascript library.
+As the embedded content comes from another page (or controller for that matter),
+Symfony2 uses the standard ``render`` helper to configure ``hinclude`` tags:
+
+.. configuration-block::
+
+    .. code-block:: jinja
+
+        {% render url('...'), {'standalone': 'js'} %}
+
+    .. code-block:: php
+
+        <?php echo $view['actions']->render(
+            $view['router']->generate('...'),
+            array('standalone' => 'js')
+        ) ?>
+
+.. note::
+
+   hinclude.js_ needs to be included in your page to work.
+
+Default content (while loading or if javascript is disabled) can be set globally
+in your application configuration:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # app/config/config.yml
+        framework:
+            # ...
+            templating:
+                hinclude_default_template: AcmeDemoBundle::hinclude.html.twig
+
+    .. code-block:: xml
+
+        <!-- app/config/config.xml -->
+        <framework:config>
+            <framework:templating hinclude-default-template="AcmeDemoBundle::hinclude.html.twig" />
+        </framework:config>
+
+    .. code-block:: php
+
+        // app/config/config.php
+        $container->loadFromExtension('framework', array(
+            // ...
+            'templating'      => array(
+                'hinclude_default_template' => array('AcmeDemoBundle::hinclude.html.twig'),
+            ),
+        ));
+
 .. index::
    single: Templating; Linking to pages
 
@@ -1320,6 +1377,26 @@ The variables will only be dumped if Twig's ``debug`` setting (in ``config.yml``
 is ``true``. By default this means that the variables will be dumped in the
 ``dev`` environment but not the ``prod`` environment.
 
+Syntax Checking
+---------------
+
+.. versionadded:: 2.1
+    The ``twig:lint`` command was added in Symfony 2.1
+
+You can check for syntax errors in Twig templates using the ``twig:lint``
+console command:
+
+.. code-block:: bash
+
+    # You can check by filename:
+    $ php app/console twig:lint src/Acme/ArticleBundle/Resources/views/Article/recentList.html.twig
+
+    # or by directory:
+    $ php app/console twig:lint src/Acme/ArticleBundle/Resources/views
+
+    # or using the bundle name:
+    $ php app/console twig:lint @AcmeArticleBundle
+
 Template Formats
 ----------------
 
@@ -1411,4 +1488,4 @@ Learn more from the Cookbook
 .. _`tags`: http://twig.sensiolabs.org/doc/tags/index.html
 .. _`filters`: http://twig.sensiolabs.org/doc/filters/index.html
 .. _`add your own extensions`: http://twig.sensiolabs.org/doc/advanced.html#creating-an-extension
-
+.. _`hinclude.js`: http://mnot.github.com/hinclude/

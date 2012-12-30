@@ -100,6 +100,7 @@ node definition. Node type are available for:
 * scalar
 * boolean
 * array
+* enum (new in 2.1)
 * variable (no validation)
 
 and are created with ``node($name, $type)`` or their associated shortcut

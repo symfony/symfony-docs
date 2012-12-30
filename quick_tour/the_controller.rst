@@ -130,20 +130,25 @@ from any controller::
     // in another controller for another request
     $foo = $session->get('foo');
 
-    // set the user locale
-    $session->setLocale('fr');
+    // use a default value if the key doesn't exist
+    $filters = $session->get('filters', array());
 
 You can also store small messages that will only be available for the very
 next request::
 
     // store a message for the very next request (in a controller)
-    $session->setFlash('notice', 'Congratulations, your action succeeded!');
+    $session->getFlashBag()->add('notice', 'Congratulations, your action succeeded!');
 
-    // display the message back in the next request (in a template)
-    {{ app.session.flash('notice') }}
+    // display any messages back in the next request (in a template)
+
+    {% for flashMessage in app.session.flashbag.get('notice') %}
+        <div>{{ flashMessage }}</div>
+    {% endfor %}
 
 This is useful when you need to set a success message before redirecting
-the user to another page (which will then show the message).
+the user to another page (which will then show the message). Please note that
+when you use has() instead of get(), the flash message will not be cleared and
+thus remains available during the following requests.
 
 Securing Resources
 ------------------
@@ -164,9 +169,10 @@ fits most common needs:
 
         providers:
             in_memory:
-                users:
-                    user:  { password: userpass, roles: [ 'ROLE_USER' ] }
-                    admin: { password: adminpass, roles: [ 'ROLE_ADMIN' ] }
+                memory:
+                    users:
+                        user:  { password: userpass, roles: [ 'ROLE_USER' ] }
+                        admin: { password: adminpass, roles: [ 'ROLE_ADMIN' ] }
 
         firewalls:
             dev:
@@ -197,7 +203,7 @@ Moreover, the ``admin`` user has a ``ROLE_ADMIN`` role, which includes the
     configuration, but you can use any hashing algorithm by tweaking the
     ``encoders`` section.
 
-Going to the ``http://localhost/Symfony/web/app_dev.php/demo/secured/hello``
+Going to the ``http://localhost/app_dev.php/demo/secured/hello``
 URL will automatically redirect you to the login form because this resource is
 protected by a ``firewall``.
 

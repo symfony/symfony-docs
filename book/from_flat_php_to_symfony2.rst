@@ -420,34 +420,36 @@ Why should you have to reinvent solutions to all these routine problems?
 Add a Touch of Symfony2
 ~~~~~~~~~~~~~~~~~~~~~~~
 
-Symfony2 to the rescue. Before actually using Symfony2, you need to make
-sure PHP knows how to find the Symfony2 classes. This is accomplished via
-an autoloader that Symfony provides. An autoloader is a tool that makes it
-possible to start using PHP classes without explicitly including the file
-containing the class.
+Symfony2 to the rescue. Before actually using Symfony2, you need to download
+it. This can be done by using Composer, which takes care of downloading the
+correct version and all its dependencies and provides an autoloader. An 
+autoloader is a tool that makes it possible to start using PHP classes 
+without explicitly including the file containing the class.
 
-First, `download Symfony`_ and place it into a ``vendor/symfony/`` directory.
-Next, create an ``app/bootstrap.php`` file. Use it to ``require`` the two
-files in the application and to configure the autoloader:
+In your root directory, create a ``composer.json`` file with the following
+content:
 
-.. code-block:: html+php
+.. code-block:: json
 
-    <?php
-    // bootstrap.php
-    require_once 'model.php';
-    require_once 'controllers.php';
-    require_once 'vendor/symfony/src/Symfony/Component/ClassLoader/UniversalClassLoader.php';
+    {
+        "require": {
+            "symfony/symfony": "2.1.*"
+        },
+        "autoload": {
+            "files": ["model.php","controller.php"]
+        }
+    }
+    
+Next, `download Composer`_ and then run the following command, which will download Symfony
+into a vendor/ directory:
 
-    $loader = new Symfony\Component\ClassLoader\UniversalClassLoader();
-    $loader->registerNamespaces(array(
-        'Symfony' => __DIR__.'/../vendor/symfony/src',
-    ));
+.. code-block:: bash
 
-    $loader->register();
+    $ php composer.phar install
 
-This tells the autoloader where the ``Symfony`` classes are. With this, you
-can start using Symfony classes without using the ``require`` statement for
-the files that contain them.
+Beside downloading your dependencies, Composer generates a ``vendor/autoload.php`` file,
+which takes care of autoloading for all the files in the Symfony Framework as well as 
+the files mentioned in the autoload section of your ``composer.json``.
 
 Core to Symfony's philosophy is the idea that an application's main job is
 to interpret each request and return a response. To this end, Symfony2 provides
@@ -460,7 +462,7 @@ the HTTP response being returned. Use them to improve the blog:
 
     <?php
     // index.php
-    require_once 'app/bootstrap.php';
+    require_once 'vendor/bootstrap.php';
 
     use Symfony\Component\HttpFoundation\Request;
     use Symfony\Component\HttpFoundation\Response;
@@ -550,7 +552,7 @@ them for you. Here's the same sample application, now built in Symfony2::
     {
         public function listAction()
         {
-            $posts = $this->get('doctrine')->getEntityManager()
+            $posts = $this->get('doctrine')->getManager()
                 ->createQuery('SELECT p FROM AcmeBlogBundle:Post p')
                 ->execute();
 
@@ -563,7 +565,7 @@ them for you. Here's the same sample application, now built in Symfony2::
         public function showAction($id)
         {
             $post = $this->get('doctrine')
-                ->getEntityManager()
+                ->getManager()
                 ->getRepository('AcmeBlogBundle:Post')
                 ->find($id)
             ;
@@ -752,7 +754,7 @@ Learn more from the Cookbook
 * :doc:`/cookbook/controller/service`
 
 .. _`Doctrine`: http://www.doctrine-project.org
-.. _`download Symfony`: http://symfony.com/download
+.. _`download Composer`: http://getcomposer.org/download/
 .. _`Routing`: https://github.com/symfony/Routing
 .. _`Templating`: https://github.com/symfony/Templating
 .. _`KnpBundles.com`: http://knpbundles.com/

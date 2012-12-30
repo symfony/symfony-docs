@@ -365,6 +365,48 @@ To redirect the client to another URL, you can use the
 
     $response = new RedirectResponse('http://example.com/');
 
+Streaming a Response
+~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 2.1
+    Support for streamed responses was added in Symfony 2.1.
+
+The :class:`Symfony\\Component\\HttpFoundation\\StreamedResponse` class allows
+you to stream the Response back to the client. The response content is
+represented by a PHP callable instead of a string::
+
+    use Symfony\Component\HttpFoundation\StreamedResponse;
+
+    $response = new StreamedResponse();
+    $response->setCallback(function () {
+        echo 'Hello World';
+        flush();
+        sleep(2);
+        echo 'Hello World';
+        flush();
+    });
+    $response->send();
+
+Downloading Files
+~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 2.1
+    The ``makeDisposition`` method was added in Symfony 2.1.
+
+When uploading a file, you must add a ``Content-Disposition`` header to your
+response. While creating this header for basic file downloads is easy, using
+non-ASCII filenames is more involving. The
+:method:`Symfony\\Component\\HttpFoundation\\Response::makeDisposition`
+abstracts the hard work behind a simple API::
+
+    use Symfony\Component\HttpFoundation\ResponseHeaderBag;
+
+    $d = $response->headers->makeDisposition(ResponseHeaderBag::DISPOSITION_ATTACHMENT, 'foo.pdf');
+
+    $response->headers->set('Content-Disposition', $d);
+
+.. _component-http-foundation-json-response:
+
 Creating a JSON Response
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -380,10 +422,35 @@ right content and headers. A JSON response might look like this::
     )));
     $response->headers->set('Content-Type', 'application/json');
 
+.. versionadded:: 2.1
+    The :class:`Symfony\\Component\\HttpFoundation\\JsonResponse` class was added in Symfony 2.1.
+
+There is also a helpful :class:`Symfony\\Component\\HttpFoundation\\JsonResponse`
+class, which can make this even easier::
+
+    use Symfony\Component\HttpFoundation\JsonResponse;
+
+    $response = new JsonResponse();
+    $response->setData(array(
+        'data' => 123
+    ));
+
+This encodes your array of data to JSON and sets the ``Content-Type`` header
+to ``application/json``. If you're using JSONP, you can set the callback
+function that the data should be passed to::
+
+    $response->setCallback('handleResponse');
+
+In this case, the ``Content-Type`` header will be ``text/javascript`` and
+the response content will look like this:
+
+.. code-block:: javascript
+
+    handleResponse({'data': 123});
+
 Session
 -------
 
-TBD -- This part has not been written yet as it will probably be refactored
-soon in Symfony 2.1.
+The session information is in its own document: :doc:`/components/http_foundation/sessions`.
 
 .. _Packagist: https://packagist.org/packages/symfony/http-foundation

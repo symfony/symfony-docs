@@ -154,7 +154,10 @@ kernel::
     $kernel->loadClassCache();
     // wrap the default AppKernel with the AppCache one
     $kernel = new AppCache($kernel);
-    $kernel->handle(Request::createFromGlobals())->send();
+    $request = Request::createFromGlobals();
+    $response = $kernel->handle($request);
+    $response->send();
+    $kernel->terminate($request, $response);
 
 The caching kernel will immediately act as a reverse proxy - caching responses
 from your application and returning them to the client.
@@ -878,13 +881,12 @@ matter), Symfony2 uses the standard ``render`` helper to configure ESI tags:
 
     .. code-block:: jinja
 
-        {% render url('latest_news', { 'max': 5 }) with {}, {'standalone': true} %}
+        {% render url('latest_news', { 'max': 5 }), {'standalone': true} %}
 
     .. code-block:: php
 
         <?php echo $view['actions']->render(
             $view['router']->generate('latest_news', array('max' => 5), true),
-            array(),
             array('standalone' => true)
         ) ?>
 

@@ -52,7 +52,7 @@ In other words, if you create a custom ``Constraint`` (e.g. ``MyConstraint``),
 Symfony2 will automatically look for another class, ``MyConstraintValidator``
 when actually performing the validation.
 
-The validator class is also simple, and only has one required method: ``isValid``::
+The validator class is also simple, and only has one required method: ``validate``::
 
     // src/Acme/DemoBundle/Validator/Constraints/ContainsAlphanumericValidator.php
     namespace Acme\DemoBundle\Validator\Constraints;
@@ -62,22 +62,27 @@ The validator class is also simple, and only has one required method: ``isValid`
 
     class ContainsAlphanumericValidator extends ConstraintValidator
     {
-        public function isValid($value, Constraint $constraint)
+        public function validate($value, Constraint $constraint)
         {
             if (!preg_match('/^[a-zA-Za0-9]+$/', $value, $matches)) {
-                $this->setMessage($constraint->message, array('%string%' => $value));
-
-                return false;
+                $this->context->addViolation($constraint->message, array('%string%' => $value));
             }
-
-            return true;
         }
     }
 
 .. note::
 
-    Don't forget to call ``setMessage`` to construct an error message when the
-    value is invalid.
+    The ``validate`` method does not return a value; instead, it adds violations
+    to the validator's ``context`` property with an ``addViolation`` method
+    call if there are validation failures. Therefore, a value could be considered
+    as being valid if it causes no violations to be added to the context.
+    The first parameter of the ``addViolation`` call is the error message to
+    use for that violation.
+
+.. versionadded:: 2.1
+    The ``isValid`` method was renamed to ``validate`` in Symfony 2.1. The
+    ``setMessage`` method was also deprecated, in favor of calling ``addViolation``
+    on the context.
 
 Using the new Validator
 -----------------------
@@ -209,22 +214,15 @@ providing a target::
         return self::CLASS_CONSTRAINT;
     }
 
-With this, the validator ``isValid()`` method gets an object as its first argument::
+With this, the validator ``validate()`` method gets an object as its first argument::
 
     class ProtocolClassValidator extends ConstraintValidator
     {
-        public function isValid($protocol, Constraint $constraint)
+        public function validate($protocol, Constraint $constraint)
         {
             if ($protocol->getFoo() != $protocol->getBar()) {
-
-                $propertyPath = $this->context->getPropertyPath().'.foo';
-                $this->context->setPropertyPath($propertyPath);
-                $this->context->addViolation($constraint->getMessage(), array(), null);
-
-                return false;
+                $this->context->addViolationAtSubPath('foo', $constraint->message, array(), null);
             }
-
-            return true;
         }
     }
 

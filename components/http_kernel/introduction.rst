@@ -107,6 +107,9 @@ listeners to the events discussed below::
     // echo the content and send the headers
     $response->send();
 
+    // triggers the kernel.terminate event
+    $kernel->terminate($request, $response);
+
 See ":ref:`http-kernel-working-example`" for a more concrete implementation.
 
 For general information on adding listeners to the events below, see
@@ -148,7 +151,7 @@ the :ref:`kernel.response<component-http-kernel-kernel-response>` event.
    :align: center
 
 Other listeners simply initialize things or add more information to the request.
-For example, a listener might determine and set the locale on the Session
+For example, a listener might determine and set the locale on the ``Request``
 object.
 
 Another common listener is routing. A router listener may process the ``Request``
@@ -441,6 +444,45 @@ method, which sends the headers and prints the ``Response`` content.
     serializes the current user's information into the
     session so that it can be reloaded on the next request. 
 
+8) The ``kernel.terminate`` event
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 2.1
+    The ``kernel.terminate`` event is new to Symfony 2.1.
+
+**Typical Purposes**: To perform some "heavy" action after the response has
+been streamed to the user
+
+:ref:`Kernel Events Information Table<component-http-kernel-event-table>`
+
+The final event of the HttpKernel process is ``kernel.terminate`` and is unique
+because it occurs *after* the ``HttpKernel::handle`` method, and after the
+response is send to the user. Recall from above, then the code that uses
+the kernel, ends like this::
+
+    // echo the content and send the headers
+    $response->send();
+
+    // triggers the kernel.terminate event
+    $kernel->terminate($request, $response);
+
+As you can see, by calling ``$kernel->terminate`` after sending the response,
+you will trigger the ``kernel.terminate`` event where you can perform certain
+actions that you may have delayed in order to return the response as quickly
+as possible to the client (e.g. sending emails).
+
+.. note::
+
+    Using the ``kernel.terminate`` event is optional, and should only be
+    called if your kernel implements :class:`Symfony\\Component\\HttpKernel\\TerminableInterface`.
+
+.. sidebar:: ``kernel.terminate`` in the Symfony Framework
+
+    If you use the ``SwiftmailerBundle`` with Symfony2 and use ``memory``
+    spooling, then the :class:`Symfony\\Bundle\\SwiftmailerBundle\\EventListener\\EmailSenderListener`
+    is activated, which actually delivers any emails that you scheduled to
+    send during the request.
+
 .. _component-http-kernel-kernel-exception:
 
 Handling Exceptions:: the ``kernel.exception`` event
@@ -537,6 +579,8 @@ each event has their own event object:
 +-------------------+-------------------------------+-------------------------------------------------------------------------------------+
 | kernel.response   | ``KernelEvents::RESPONSE``    | :class:`Symfony\\Component\\HttpKernel\\Event\\FilterResponseEvent`                 |
 +-------------------+-------------------------------+-------------------------------------------------------------------------------------+
+| kernel.terminate  | ``KernelEvents::TERMINATE``   | :class:`Symfony\\Component\\HttpKernel\\Event\\PostResponseEvent`                   |
++-------------------+-------------------------------+-------------------------------------------------------------------------------------+
 | kernel.exception  | ``KernelEvents::EXCEPTION``   | :class:`Symfony\\Component\\HttpKernel\\Event\\GetResponseForExceptionEvent`        |
 +-------------------+-------------------------------+-------------------------------------------------------------------------------------+
 
@@ -580,6 +624,8 @@ a built-in ControllerResolver that can be used to create a working example::
 
     $response = $kernel->handle($request);
     $response->send();
+
+    $kernel->terminate($request, $response);
 
 Sub Requests
 ------------

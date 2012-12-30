@@ -134,14 +134,6 @@ focus on the most important methods that come from the
         }
 
         /**
-         * @inheritDoc
-         */
-        public function equals(UserInterface $user)
-        {
-            return $this->username === $user->getUsername();
-        }
-
-        /**
          * @see \Serializable::serialize()
          */
         public function serialize()
@@ -165,21 +157,36 @@ focus on the most important methods that come from the
 In order to use an instance of the ``AcmeUserBundle:User`` class in the Symfony
 security layer, the entity class must implement the
 :class:`Symfony\\Component\\Security\\Core\\User\\UserInterface`. This
-interface forces the class to implement the six following methods:
+interface forces the class to implement the five following methods:
 
-* ``getUsername()``
-* ``getSalt()``
-* ``getPassword()``
-* ``getRoles()``
+* ``getRoles()``,
+* ``getPassword()``,
+* ``getSalt()``,
+* ``getUsername()``,
 * ``eraseCredentials()``
-* ``equals()``
 
 For more details on each of these, see :class:`Symfony\\Component\\Security\\Core\\User\\UserInterface`.
 
-To keep it simple, the ``equals()`` method just compares the ``username`` field
-but it's also possible to do more checks depending on the complexity of your
-data model. On the other hand, the ``eraseCredentials()`` method remains empty
-for the purposes of this tutorial.
+.. versionadded:: 2.1
+    In Symfony 2.1, the ``equals`` method was removed from ``UserInterface``.
+    If you need to override the default implementation of comparison logic,
+    implement the new :class:`Symfony\\Component\\Security\\Core\\User\\EquatableInterface`
+    interface and implement the ``isEqualTo`` method.
+
+.. code-block:: php
+
+    // src/Acme/UserBundle/Entity/User.php
+
+    namespace Acme\UserBundle\Entity;
+
+    use Symfony\Component\Security\Core\User\EquatableInterface;
+
+    // ...
+
+    public function isEqualTo(UserInterface $user)
+    {
+        return $this->username === $user->getUsername();
+    }
 
 .. note::
 

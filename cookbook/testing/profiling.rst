@@ -34,8 +34,8 @@ environment)::
 
                 // check the time spent in the framework
                 $this->assertLessThan(
-                    0.5,
-                    $profile->getCollector('timer')->getTime()
+                    500,
+                    $profile->getCollector('time')->getTotalTime()
                 );
             }
         }
