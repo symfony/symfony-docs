@@ -48,6 +48,17 @@ characters at the beginning of your string:
             protected $description;
         }
 
+    .. code-block:: xml
+
+        <!-- src/Acme/BlogBundle/Resources/config/validation.xml -->
+        <class name="Acme\BlogBundle\Entity\Author">
+            <property name="description">
+                <constraint name="Regex">
+                    <option name="pattern">/^\w+/</option>
+                </constraint>
+            </property>
+        </class>
+
 Alternatively, you can set the `match`_ option to ``false`` in order to assert
 that a given string does *not* match. In the following example, you'll assert
 that the ``firstName`` field does not contain any numbers and give it a custom
@@ -84,6 +95,19 @@ message:
              */
             protected $firstName;
         }
+
+    .. code-block:: xml
+
+        <!-- src/Acme/BlogBundle/Resources/config/validation.xml -->
+        <class name="Acme\BlogBundle\Entity\Author">
+            <property name="firstName">
+                <constraint name="Regex">
+                    <option name="pattern">/\d/</option>
+                    <option name="match">false</option>
+                    <option name="message">Your name cannot contain a number</option>
+                </constraint>
+            </property>
+        </class>
 
 Options
 -------

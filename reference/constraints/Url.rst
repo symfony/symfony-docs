@@ -42,6 +42,15 @@ Basic Usage
             protected $bioUrl;
        }
 
+   .. code-block:: xml
+
+       <!-- src/Acme/BlogBundle/Resources/config/validation.xml -->
+       <class name="Acme\BlogBundle\Entity\Author">
+           <property name="bioUrl">
+               <constraint name="Url" />
+           </property>
+       </class>
+
 Options
 -------
 

@@ -44,6 +44,18 @@ add the following:
              protected $age;
         }
 
+    .. code-block:: xml
+
+        <!-- src/Acme/EventBundle/Resources/config/validation.yml -->
+        <class name="Acme\EventBundle\Entity\Participant">
+            <property name="age">
+                <constraint name="Max">
+                    <option name="limit">50</option>
+                    <option name="message">You must be 50 or under to enter.</option>
+                </constraint>
+            </property>
+        </class>
+
 Options
 -------
 

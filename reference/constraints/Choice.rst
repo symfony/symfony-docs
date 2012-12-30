@@ -49,7 +49,7 @@ If your valid choice list is simple, you can pass them in directly via the
     .. code-block:: xml
 
         <!-- src/Acme/BlogBundle/Resources/config/validation.xml -->
-        <class name="Acme\BlogBundle\EntityAuthor">
+        <class name="Acme\BlogBundle\Entity\Author">
             <property name="gender">
                 <constraint name="Choice">
                     <option name="choices">

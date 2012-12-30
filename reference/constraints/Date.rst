@@ -41,6 +41,15 @@ Basic Usage
              protected $birthday;
         }
 
+    .. code-block:: xml
+
+        <!-- src/Acme/BlogBundle/Resources/config/validation.xml -->
+        <class name="Acme\BlogBundle\Entity\Author">
+            <property name="birthday">
+                <constraint name="Date" />
+            </property>
+        </class>
+
 Options
 -------
 
