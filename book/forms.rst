@@ -1582,9 +1582,10 @@ certainly more robust - to bind your form to an object. But for simple forms,
 this is a great approach.
 
 .. versionadded:: 2.1
-   It is now possible to add constraints directly to the fields using the 
-   ``constraints`` option, which accepts a single constraint or an array
-   of them.
+   Constraints can be added directly to fields using the ``constraints`` option,
+   which accepts a single constraint or an array of constraints (before 2.1,
+   the option was called ``validation_constraint``, and only accepted a single
+   constraint).
    
 .. code-block:: php
 
