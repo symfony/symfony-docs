@@ -22,8 +22,8 @@ through a payment gateway.
 Basic Usage
 -----------
 
-To use the CardScheme validator, simply apply it to a property or method on an 
-object that will contain a credit card number.
+To use the ``CardScheme`` validator, simply apply it to a property or method
+on an  object that will contain a credit card number.
 
 .. configuration-block::
 
@@ -91,7 +91,7 @@ Available Options
 schemes
 -------
 
-**type**: ``array``
+**type**: ``array`` [:ref:`default option<validation-default-option>`]
 
 This option is required and represents the name of the number scheme used to 
 validate the credit card number. Valid values are:
@@ -107,13 +107,13 @@ validate the credit card number. Valid values are:
 * ``MASTERCARD``
 * ``VISA``
 
-For more information about the used schemes, see `Wikipedia`_.
+For more information about the used schemes, see `Wikipedia: Issuer identification number (IIN)`_.
 
 message
 ~~~~~~~
 
 **type**: ``string`` **default**: ``Unsupported card type or invalid card number``
 
-The default message supplied when the value does not pass the CardScheme check.
+The message shown when the value does not pass the ``CardScheme`` check.
 
-.. _`Wikipedia`: http://en.wikipedia.org/wiki/Bank_card_number#Issuer_identification_number_.28IIN.29
+.. _`Wikipedia: Issuer identification number (IIN)`: http://en.wikipedia.org/wiki/Bank_card_number#Issuer_identification_number_.28IIN.29
