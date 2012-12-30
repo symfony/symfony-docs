@@ -51,6 +51,22 @@ entry in that array:
             protected $favoriteColors = array();
        }
 
+    .. code-block:: xml
+
+        <!-- src/Acme/UserBundle/Resources/config/validation.xml -->
+        <class name="Acme\UserBundle\Entity\User">
+            <property name="favoriteColors">
+                <constraint name="All">         
+                    <option name="constraints">     
+                        <constraint name="NotBlank" />    
+                        <constraint name="Length">      
+                            <option name="min">5</option>  
+                        </constraint>                   
+                    </option>
+                </constraint>
+            </property>
+        </class>
+
 Now, each entry in the ``favoriteColors`` array will be validated to not
 be blank and to be at least 5 characters long.
 

@@ -43,6 +43,15 @@ Basic Usage
              protected $createdAt;
         }
 
+    .. code-block:: xml
+
+        <!-- src/Acme/UserBundle/Resources/config/validation.xml -->
+        <class name="Acme\BlogBundle\Entity\Author">
+            <property name="createdAt">
+                <constraint name="DateTime" />
+            </property>
+        </class>
+
 Options
 -------
 

@@ -58,6 +58,20 @@ the following:
              protected $height;
         }
 
+    .. code-block:: xml
+
+        <!-- src/Acme/EventBundle/Resources/config/validation.xml -->
+        <class name="Acme\EventBundle\Entity\Participant">
+            <property name="height">
+                <constraint name="Range">
+                    <option name="min">120</option>
+                    <option name="max">180</option>
+                    <option name="minMessage">You must be at least 120cm tall to enter</option>
+                    <option name="maxMessage">You cannot be taller than 180cm to enter</option>
+                </constraint>
+            </property>
+        </class>
+
 Options
 -------
 
