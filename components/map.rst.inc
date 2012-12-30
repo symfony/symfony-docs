@@ -59,6 +59,10 @@
   * :doc:`/components/http_foundation/session_configuration`
   * :doc:`/components/http_foundation/session_testing`
 
+* :doc:`/components/http_kernel/index`
+
+  * :doc:`/components/http_kernel/introduction`
+
 * **Locale**
 
   * :doc:`/components/locale`

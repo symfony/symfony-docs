@@ -23,9 +23,7 @@ Basic Usage
 -----------
 
 You might have a simple class like the following ``Mailer`` that
-you want to make available as a service:
-
-.. code-block:: php
+you want to make available as a service::
 
     class Mailer
     {
@@ -39,9 +37,7 @@ you want to make available as a service:
         // ...
     }
 
-You can register this in the container as a service:
-
-.. code-block:: php
+You can register this in the container as a service::
 
     use Symfony\Component\DependencyInjection\ContainerBuilder;
 
@@ -50,9 +46,7 @@ You can register this in the container as a service:
 
 An improvement to the class to make it more flexible would be to allow
 the container to set the ``transport`` used. If you change the class
-so this is passed into the constructor:
-
-.. code-block:: php
+so this is passed into the constructor::
 
     class Mailer
     {
@@ -66,14 +60,13 @@ so this is passed into the constructor:
         // ...
     }
 
-Then you can set the choice of transport in the container:
-
-.. code-block:: php
+Then you can set the choice of transport in the container::
 
     use Symfony\Component\DependencyInjection\ContainerBuilder;
 
     $container = new ContainerBuilder();
-    $container->register('mailer', 'Mailer')
+    $container
+        ->register('mailer', 'Mailer')
         ->addArgument('sendmail');
 
 This class is now much more flexible as you have separated the choice of
@@ -82,31 +75,25 @@ transport out of the implementation and into the container.
 Which mail transport you have chosen may be something other services need to
 know about. You can avoid having to change it in multiple places by making
 it a parameter in the container and then referring to this parameter for the
-``Mailer`` service's constructor argument:
-
-
-.. code-block:: php
+``Mailer`` service's constructor argument::
 
     use Symfony\Component\DependencyInjection\ContainerBuilder;
 
     $container = new ContainerBuilder();
     $container->setParameter('mailer.transport', 'sendmail');
-    $container->register('mailer', 'Mailer')
+    $container
+        ->register('mailer', 'Mailer')
         ->addArgument('%mailer.transport%');
 
 Now that the ``mailer`` service is in the container you can inject it as
 a dependency of other classes. If you have a ``NewsletterManager`` class
-like this:
-
-.. code-block:: php
-
-    use Mailer;
+like this::
 
     class NewsletterManager
     {
         private $mailer;
 
-        public function __construct(Mailer $mailer)
+        public function __construct(\Mailer $mailer)
         {
             $this->mailer = $mailer;
         }
@@ -114,9 +101,7 @@ like this:
         // ...
     }
 
-Then you can register this as a service as well and pass the ``mailer`` service into it:
-
-.. code-block:: php
+Then you can register this as a service as well and pass the ``mailer`` service into it::
 
     use Symfony\Component\DependencyInjection\ContainerBuilder;
     use Symfony\Component\DependencyInjection\Reference;
@@ -124,24 +109,22 @@ Then you can register this as a service as well and pass the ``mailer`` service 
     $container = new ContainerBuilder();
 
     $container->setParameter('mailer.transport', 'sendmail');
-    $container->register('mailer', 'Mailer')
+    $container
+        ->register('mailer', 'Mailer')
         ->addArgument('%mailer.transport%');
 
-    $container->register('newsletter_manager', 'NewsletterManager')
-        ->addArgument(new Reference('mailer');
+    $container
+        ->register('newsletter_manager', 'NewsletterManager')
+        ->addArgument(new Reference('mailer'));
 
 If the ``NewsletterManager`` did not require the ``Mailer`` and injecting
-it was only optional then you could use setter injection instead:
-
-.. code-block:: php
-
-    use Mailer;
+it was only optional then you could use setter injection instead::
 
     class NewsletterManager
     {
         private $mailer;
 
-        public function setMailer(Mailer $mailer)
+        public function setMailer(\Mailer $mailer)
         {
             $this->mailer = $mailer;
         }
@@ -150,9 +133,7 @@ it was only optional then you could use setter injection instead:
     }
 
 You can now choose not to inject a ``Mailer`` into the ``NewsletterManager``.
-If you do want to though then the container can call the setter method:
-
-.. code-block:: php
+If you do want to though then the container can call the setter method::
 
     use Symfony\Component\DependencyInjection\ContainerBuilder;
     use Symfony\Component\DependencyInjection\Reference;
@@ -160,16 +141,16 @@ If you do want to though then the container can call the setter method:
     $container = new ContainerBuilder();
 
     $container->setParameter('mailer.transport', 'sendmail');
-    $container->register('mailer', 'Mailer')
+    $container
+        ->register('mailer', 'Mailer')
         ->addArgument('%mailer.transport%');
 
-    $container->register('newsletter_manager', 'NewsletterManager')
-        ->addMethodCall('setMailer', new Reference('mailer');
+    $container
+        ->register('newsletter_manager', 'NewsletterManager')
+        ->addMethodCall('setMailer', new Reference('mailer'));
 
 You could then get your ``newsletter_manager`` service from the container
-like this:
-
-.. code-block:: php
+like this::
 
     use Symfony\Component\DependencyInjection\ContainerBuilder;
     use Symfony\Component\DependencyInjection\Reference;
@@ -201,9 +182,7 @@ Setting Up the Container with Configuration Files
 As well as setting up the services using PHP as above you can also use configuration
 files. To do this you also need to install :doc:`the Config Component</components/config/introduction>`.
 
-Loading an XML config file:
-
-.. code-block:: php
+Loading an XML config file::
 
     use Symfony\Component\DependencyInjection\ContainerBuilder;
     use Symfony\Component\Config\FileLocator;
@@ -213,9 +192,7 @@ Loading an XML config file:
     $loader = new XmlFileLoader($container, new FileLocator(__DIR__));
     $loader->load('services.xml');
 
-Loading a YAML config file:
-
-.. code-block:: php
+Loading a YAML config file::
 
     use Symfony\Component\DependencyInjection\ContainerBuilder;
     use Symfony\Component\Config\FileLocator;
@@ -276,10 +253,12 @@ The ``newsletter_manager`` and ``mailer`` services can be set up using config fi
 
         // ...
         $container->setParameter('mailer.transport', 'sendmail');
-        $container->register('mailer', 'Mailer')
-           ->addArgument('%mailer.transport%');
+        $container
+            ->register('mailer', 'Mailer')
+            ->addArgument('%mailer.transport%');
 
-        $container->register('newsletter_manager', 'NewsletterManager')
-           ->addMethodCall('setMailer', new Reference('mailer');
+        $container
+            ->register('newsletter_manager', 'NewsletterManager')
+            ->addMethodCall('setMailer', new Reference('mailer'));
 
 .. _Packagist: https://packagist.org/packages/symfony/dependency-injection
