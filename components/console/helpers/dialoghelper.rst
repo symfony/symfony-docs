@@ -148,3 +148,30 @@ You can also ask and validate a hidden response::
 
 If you want to allow the response to be visible if it cannot be hidden for
 some reason, pass true as the fifth argument.
+
+Let the user choose from a list of answers
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 2.2
+    The ``select`` method was added in Symfony 2.2.
+
+If you have a predefined set of answers the user can choose from, you
+could use the ``ask`` method described above or, to make sure the user
+provided a correct answer, the ``askAndValidate`` method. Both have
+the disadvantage that you need to handle incorrect values yourself.
+
+Instead, you can use the ``select`` method, which makes sure that the user
+can only enter a valid string from a predefined list::
+
+    $dialog = $app->getHelperSet()->get('dialog');
+    $colors = array('red', 'blue', 'yellow');
+    
+    $color = $dialog->select($output, 'Please select your favorite color (default to red)', $colors, 0);
+    
+    // Work with the color
+    
+If the user enters an invalid string, an error message is shown and the user
+is asked to provide the answer another time, till he enters a valid string.
+
+The last parameter is the index of the default value in the array or ``null`` if
+no default should be provided.
