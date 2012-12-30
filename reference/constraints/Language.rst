@@ -41,14 +41,14 @@ Basic Usage
             protected $preferredLanguage;
        }
 
-    .. code-block:: xml
+   .. code-block:: xml
 
-        <!-- src/Acme/UserBundle/Resources/config/validation.xml -->
-        <class name="Acme\UserBundle\Entity\User">
-            <property name="preferredLanguage">
-                <constraint name="Language" />
-            </property>
-        </class>
+       <!-- src/Acme/UserBundle/Resources/config/validation.xml -->
+       <class name="Acme\UserBundle\Entity\User">
+           <property name="preferredLanguage">
+               <constraint name="Language" />
+           </property>
+       </class>
 
 Options
 -------

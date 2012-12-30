@@ -51,7 +51,7 @@ of the day when the event starts:
         <!-- src/Acme/EventBundle/Resources/config/validation.xml -->
         <class name="Acme\EventBundle\Entity\Event">
             <property name="startsAt">
-                <constraint name="Time" />         
+                <constraint name="Time" />
             </property>
         </class>
 

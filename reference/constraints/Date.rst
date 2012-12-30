@@ -46,7 +46,7 @@ Basic Usage
         <!-- src/Acme/BlogBundle/Resources/config/validation.xml -->
         <class name="Acme\BlogBundle\Entity\Author">
             <property name="birthday">
-                <constraint name="Date" />         
+                <constraint name="Date" />
             </property>
         </class>
 
