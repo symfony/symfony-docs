@@ -41,6 +41,15 @@ Basic Usage
             protected $country;
        }
 
+   .. code-block:: xml
+
+       <!-- src/Acme/UserBundle/Resources/config/validation.xml -->
+       <class name="Acme\UserBundle\Entity\User">
+           <property name="country">
+               <constraint name="Country" />
+           </property>
+       </class>
+
 Options
 -------
 

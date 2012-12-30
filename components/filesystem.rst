@@ -16,8 +16,7 @@ Installation
 You can install the component in many different ways:
 
 * Use the official Git repository (https://github.com/symfony/Filesystem);
-* Install it via PEAR ( `pear.symfony.com/Filesystem`);
-* Install it via Composer (`symfony/filesystem` on Packagist).
+* Install it via Composer (``symfony/filesystem`` on `Packagist`_).
 
 Usage
 -----
@@ -240,3 +239,5 @@ thrown.
     returned a boolean and did not throw exceptions. As of 2.1, a
     :class:`Symfony\\Component\\Filesystem\\Exception\\IOException` is
     thrown if a directory creation fails.
+
+.. _`Packagist`: https://packagist.org/packages/symfony/filesystem

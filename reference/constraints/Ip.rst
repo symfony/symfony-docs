@@ -44,6 +44,15 @@ Basic Usage
             protected $ipAddress;
        }
 
+   .. code-block:: xml
+
+       <!-- src/Acme/BlogBundle/Resources/config/validation.xml -->
+       <class name="Acme\BlogBundle\Entity\Author">
+           <property name="ipAddress">
+               <constraint name="Ip" />
+           </property>
+       </class>
+
 Options
 -------
 
