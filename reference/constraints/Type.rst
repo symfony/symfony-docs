@@ -46,6 +46,18 @@ Basic Usage
             protected $age;
        }
 
+    .. code-block:: xml
+
+        <!-- src/Acme/BlogBundle/Resources/config/validation.xml -->
+        <class name="Acme\BlogBundle\Entity\Author">
+            <property name="age">
+                <constraint name="Type">
+                    <option name="type">integer</option>
+                    <option name="message">The value {{ value }} is not a valid {{ type }}.</option>
+                </constraint>
+            </property>
+        </class>
+
 Options
 -------
 
