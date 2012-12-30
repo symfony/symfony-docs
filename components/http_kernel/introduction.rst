@@ -294,7 +294,6 @@ on the event object that's passed to listeners on this event.
     stored in the ``attributes`` property of the ``Request`` object. Read the
     next section to see why this is important.
 
-
 4) Getting the Controller Arguments
 -----------------------------------
 
