@@ -78,7 +78,7 @@ Get the Symfony2 source code:
 
       $ git clone git@github.com:USERNAME/symfony.git
 
-* Add the upstream repository as a ``remote``:
+* Add the upstream repository as a remote:
 
 .. code-block:: bash
 
