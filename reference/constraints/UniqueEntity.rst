@@ -81,7 +81,7 @@ Options
 fields
 ~~~~~~
 
-**type**: ``array``|``string`` [:ref:`default option<validation-default-option>`]
+**type**: ``array`` | ``string`` [:ref:`default option<validation-default-option>`]
 
 This required option is the field (or list of fields) on which this entity
 should be unique. For example, if you specified both the ``email`` and ``name``
