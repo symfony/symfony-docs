@@ -46,7 +46,7 @@ Basic Usage
             protected $age;
         }
 
-   .. code-block:: xml
+    .. code-block:: xml
 
         <!-- src/Acme/BlogBundle/Resources/config/validation.xml -->
         <class name="Acme\BlogBundle\Entity\Author">
