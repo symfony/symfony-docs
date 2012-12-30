@@ -1520,67 +1520,53 @@ Adding Validation
 
 The only missing piece is validation. Usually, when you call ``$form->isValid()``,
 the object is validated by reading the constraints that you applied to that
-class. But without a class, how can you add constraints to the data of your
+class. If your form is binding to an object (i.e. you're using the ``data_class``
+option or passing an object to your form), this is almost always the approach
+you want to use. See :doc:`/book/validation` for more details.
+
+.. _form-option-constraints:
+
+But if you're not binding to an object and are instead retrieving a simple
+array of your submitted data, how can you add constraints to the data of your
 form?
 
-The answer is to setup the constraints yourself, and pass them into your
-form. The overall approach is covered a bit more in the :ref:`validation chapter<book-validation-raw-values>`,
-but here's a short example::
+The answer is to setup the constraints yourself, and attach them to the individual
+fields. The overall approach is covered a bit more in the :ref:`validation chapter<book-validation-raw-values>`,
+but here's a short example:
 
-    // import the namespaces above your controller class
-    use Symfony\Component\Validator\Constraints\Email;
-    use Symfony\Component\Validator\Constraints\Length;
-    use Symfony\Component\Validator\Constraints\Collection;
+.. versionadded:: 2.1
+   The ``constraints`` option, which accepts a single constraint or an array
+   of constraints (before 2.1, the option was called ``validation_constraint``,
+   and only accepted a single constraint) is new to Symfony 2.1.
+   
+.. code-block:: php
 
-    $collectionConstraint = new Collection(array(
-        'name' => new Length(array("min" => 5)),
-        'email' => new Email(array('message' => 'Invalid email address')),
-    ));
+    use Symfony\Component\Validator\Constraints\MinLength;
+    use Symfony\Component\Validator\Constraints\NotBlank;
 
-    // create a form, no default values, pass in the constraint option
-    $form = $this->createFormBuilder(null, array(
-        'constraints' => $collectionConstraint,
-    ))->add('email', 'email')
-        // ...
+    $builder
+       ->add('firstName', 'text', array(
+           'constraints' => new MinLength(3),
+       ))
+       ->add('lastName', 'text', array(
+           'constraints' => array(
+               new NotBlank(),
+               new MinLength(3),
+           ),
+       ))
     ;
 
-Now, when you call `$form->bind($request)`, the constraints setup here are run
-against your form's data. If you're using a form class, override the ``setDefaultOptions()``
-method to specify the option::
+.. tip::
 
-    namespace Acme\TaskBundle\Form\Type;
+    If you are using Validation Groups, you need to either reference the 
+    ``Default`` group when creating the form, or set the correct group on 
+    the constraint you are adding.
+    
+.. code-block:: php
 
-    use Symfony\Component\Form\AbstractType;
-    use Symfony\Component\Form\FormBuilder;
-    use Symfony\Component\OptionsResolver\OptionsResolverInterface;
-    use Symfony\Component\Validator\Constraints\Email;
-    use Symfony\Component\Validator\Constraints\Length;
-    use Symfony\Component\Validator\Constraints\Collection;
-
-    class ContactType extends AbstractType
-    {
-        // ...
-
-        public function setDefaultOptions(OptionsResolverInterface $resolver)
-        {
-            $collectionConstraint = new Collection(array(
-                'name' => new Length(array("min" => 5)),
-                'email' => new Email(
-                    array('message' => 'Invalid email address')
-                ),
-            ));
-
-            $resolver->setDefaults(array(
-                'constraints' => $collectionConstraint
-            ));
-        }
-    }
-
-Now, you have the flexibility to create forms - with validation - that return
-an array of data, instead of an object. In most cases, it's better - and
-certainly more robust - to bind your form to an object. But for simple forms,
-this is a great approach.
-
+    new NotBlank(array('groups' => array('create', 'update'))
+    
+    
 Final Thoughts
 --------------
 

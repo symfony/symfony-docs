@@ -604,6 +604,7 @@ are used by your application (including the core Symfony bundles).
 
    A bundle can live *anywhere* as long as it can be autoloaded (via the
    autoloader configured at ``app/autoload.php``).
+
 Creating a Bundle
 ~~~~~~~~~~~~~~~~~
 

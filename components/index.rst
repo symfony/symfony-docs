@@ -15,6 +15,7 @@ The Components
     filesystem
     finder
     http_foundation/index
+    http_kernel/index
     locale
     process
     routing/index

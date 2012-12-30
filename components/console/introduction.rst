@@ -20,6 +20,15 @@ You can install the component in many different ways:
 * Use the official Git repository (https://github.com/symfony/Console);
 * :doc:`Install it via Composer</components/using_components>` (``symfony/console`` on `Packagist`_).
 
+.. note::
+
+    Windows does not support ANSI colors by default so the Console Component detects and
+    disables colors where Windows does not have support. However, if Windows is not
+    configured with an ANSI driver and your console commands invoke other scripts which
+    emit ANSI color sequences, they will be shown as raw escape characters.
+
+    To enable ANSI colour support for Windows, please install `ANSICON_`.
+
 Creating a basic Command
 ------------------------
 
@@ -470,3 +479,4 @@ Learn More!
 * :doc:`/components/console/single_command_tool`
 
 .. _Packagist: https://packagist.org/packages/symfony/console
+.. _ANSICON: http://adoxa.3eeweb.com/ansicon/

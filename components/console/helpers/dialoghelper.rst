@@ -4,9 +4,10 @@
 Dialog Helper
 =============
 
-The Dialog Helper provides functions to ask the user for more information. 
-It is included in the default helper set, which you can get
-by calling :method:`Symfony\\Component\\Console\\Command\\Command::getHelperSet`::
+The :class:`Symfony\\Component\\Console\\Helper\\DialogHelper` provides
+functions to ask the user for more information. It is included in the default
+helper set, which you can get by calling
+:method:`Symfony\\Component\\Console\\Command\\Command::getHelperSet`::
 
     $dialog = $this->getHelperSet()->get('dialog');
 
@@ -19,7 +20,7 @@ Asking the User for confirmation
 --------------------------------
 
 Suppose you want to confirm an action before actually executing it. Add 
-the following to you command::
+the following to your command::
 
     // ...
     if (!$dialog->askConfirmation(
