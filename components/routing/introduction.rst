@@ -234,11 +234,11 @@ If you're using the ``YamlFileLoader``, then route definitions look like this:
     # routes.yml
     route1:
         pattern: /foo
-        defaults: { controller: 'MyController::fooAction' }
+        defaults: { _controller: 'MyController::fooAction' }
 
     route2:
         pattern: /foo/bar
-        defaults: { controller: 'MyController::foobarAction' }
+        defaults: { _controller: 'MyController::foobarAction' }
 
 To load this file, you can use the following code. This assumes that your
 ``routes.yml`` file is in the same directory as the below code::
