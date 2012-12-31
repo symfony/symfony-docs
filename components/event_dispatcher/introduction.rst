@@ -190,7 +190,7 @@ event to determine the exact ``Symfony\Component\EventDispatcher\Event``
 instance that's being passed. For example, the ``kernel.event`` event passes an
 instance of ``Symfony\Component\HttpKernel\Event\FilterResponseEvent``::
 
-    use Symfony\Component\HttpKernel\Event\FilterResponseEvent
+    use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
 
     public function onKernelResponse(FilterResponseEvent $event)
     {
