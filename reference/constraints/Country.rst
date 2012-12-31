@@ -50,6 +50,20 @@ Basic Usage
             </property>
         </class>
 
+    .. code-block:: php
+
+        // src/Acme/UserBundle/Entity/User.php
+        use Symfony\Component\Validator\Mapping\ClassMetadata;
+        use Symfony\Component\Validator\Constraints as Assert;
+
+        class User
+        {
+            public static function loadValidationMetadata(ClassMetadata $metadata)
+            {
+                $metadata->addPropertyConstraint('country', new Assert\Country());
+            }
+        }
+
 Options
 -------
 

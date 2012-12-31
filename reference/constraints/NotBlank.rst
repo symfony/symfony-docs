@@ -51,6 +51,20 @@ were not blank, you could do the following:
             </property>
         </class>
 
+    .. code-block:: php
+
+        // src/Acme/BlogBundle/Entity/Author.php
+        use Symfony\Component\Validator\Mapping\ClassMetadata;
+        use Symfony\Component\Validator\Constraints as Assert;
+
+        class Author
+        {
+            public static function loadValidatorMetadata(ClassMetadata $metadata)
+            {
+                $metadata->addPropertyConstraint('firstName', new Assert\NotBlank());
+            }
+        }
+
 Options
 -------
 

@@ -56,6 +56,23 @@ add the following:
             </property>
         </class>
 
+    .. code-block:: php
+
+        // src/Acme/EventBundle/Entity/Participant.php
+        use Symfony\Component\Validator\Mapping\ClassMetadata;
+        use Symfony\Component\Validator\Constraints as Assert;
+
+        class Participant
+        {
+            public static function loadValidatorMetadata(ClassMetadata $metadata)
+            {
+                $metadata->addPropertyConstraint('age', new Assert\Max(array(
+                    'limit'   => 50,
+                    'message' => "You must be 50 or under to enter.",
+                )));
+            }
+        }
+
 Options
 -------
 

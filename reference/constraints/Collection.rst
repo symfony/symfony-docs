@@ -120,9 +120,7 @@ blank but is no longer than 100 characters in length, you would do the following
 
         // src/Acme/BlogBundle/Entity/Author.php
         use Symfony\Component\Validator\Mapping\ClassMetadata;
-        use Symfony\Component\Validator\Constraints\Collection;
-        use Symfony\Component\Validator\Constraints\Email;
-        use Symfony\Component\Validator\Constraints\MaxLength;
+        use Symfony\Component\Validator\Constraints as Assert;
 
         class Author
         {
@@ -130,10 +128,10 @@ blank but is no longer than 100 characters in length, you would do the following
 
             public static function loadValidatorMetadata(ClassMetadata $metadata)
             {
-                $metadata->addPropertyConstraint('profileData', new Collection(array(
+                $metadata->addPropertyConstraint('profileData', new Assert\Collection(array(
                     'fields' => array(
-                        'personal_email' => new Email(),
-                        'lastName' => array(new NotBlank(), new MaxLength(100)),
+                        'personal_email' => new Assert\Email(),
+                        'lastName' => array(new Assert\NotBlank(), new Assert\MaxLength(100)),
                     ),
                     'allowMissingFields' => true,
                 )));

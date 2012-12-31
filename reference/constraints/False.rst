@@ -75,6 +75,20 @@ method returns **false**:
              }
         }
 
+    .. code-block:: php
+
+        // src/Acme/BlogBundle/Entity/Author.php
+        use Symfony\Component\Validator\Mapping\ClassMetadata;
+        use Symfony\Component\Validator\Constraints as Assert;
+
+        class Author
+        {
+            public static function loadValidatorMetadata(ClassMetadata $metadata)
+            {
+                $metadata->addGetterConstraint('stateInvalid', new Assert\False());
+            }
+        }
+
 .. caution::
 
     When using YAML, be sure to surround ``False`` with quotes (``"False"``)
