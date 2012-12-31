@@ -160,18 +160,30 @@ could use the ``ask`` method described above or, to make sure the user
 provided a correct answer, the ``askAndValidate`` method. Both have
 the disadvantage that you need to handle incorrect values yourself.
 
-Instead, you can use the ``select`` method, which makes sure that the user
-can only enter a valid string from a predefined list::
+Instead, you can use the 
+:method:`Symfony\\Component\\Console\\Helper\\DialogHelper::select`
+method, which makes sure that the user can only enter a valid string
+from a predefined list::
 
     $dialog = $app->getHelperSet()->get('dialog');
     $colors = array('red', 'blue', 'yellow');
     
-    $color = $dialog->select($output, 'Please select your favorite color (default to red)', $colors, 0);
+    $colorKey = $dialog->select($output, 'Please select your favorite color (default to red)', $colors, 0);
+    $output->writeln('You have just selected: ' . $colors[$color]);
     
-    // Work with the color
+    // ... do something with the color
     
 If the user enters an invalid string, an error message is shown and the user
 is asked to provide the answer another time, till he enters a valid string.
 
-The last parameter is the index of the default value in the array or ``null`` if
-no default should be provided.
+The ``select`` method takes 6 parameters:
+
+* ``output``: The output instance
+* ``question``: The question to ask
+* ``choices``: An array of strings with the choices the user can pick
+* ``default``: The index of the default value in the array or ``null`` if no 
+    default should be provided (default ``null``)
+* ``attempts``: Maximum number of times to ask or ``false`` for infinite times 
+    (default ``false``)
+* ``errorMessage``: Error message to display when wrong answer is entered (default
+    ``Value "%s" is invalid``)
