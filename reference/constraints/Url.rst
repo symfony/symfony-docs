@@ -29,18 +29,18 @@ Basic Usage
 
     .. code-block:: php-annotations
 
-       // src/Acme/BlogBundle/Entity/Author.php
-       namespace Acme\BlogBundle\Entity;
-       
-       use Symfony\Component\Validator\Constraints as Assert;
+        // src/Acme/BlogBundle/Entity/Author.php
+        namespace Acme\BlogBundle\Entity;
+        
+        use Symfony\Component\Validator\Constraints as Assert;
 
-       class Author
-       {
-           /**
-            * @Assert\Url()
-            */
-            protected $bioUrl;
-       }
+        class Author
+        {
+            /**
+             * @Assert\Url()
+             */
+             protected $bioUrl;
+        }
 
     .. code-block:: xml
 

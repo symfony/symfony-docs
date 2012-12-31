@@ -28,18 +28,16 @@ Basic Usage
 
     .. code-block:: php-annotations
 
-       // src/Acme/UserBundle/Entity/User.php
-       namespace Acme\UserBundle\Entity;
-       
-       use Symfony\Component\Validator\Constraints as Assert;
+        // src/Acme/UserBundle/Entity/User.php
+        use Symfony\Component\Validator\Constraints as Assert;
 
-       class User
-       {
-           /**
-            * @Assert\Country
-            */
-            protected $country;
-       }
+        class User
+        {
+            /**
+             * @Assert\Country
+             */
+             protected $country;
+        }
 
     .. code-block:: xml
 
