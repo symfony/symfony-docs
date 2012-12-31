@@ -1564,7 +1564,7 @@ Note that you will *not* need to implement a controller for the ``/logout``
 URL as the firewall takes care of everything. You *do*, however, need to create
 a route so that you can use it to generate the URL:
 
-.. warning::
+.. caution::
 
     As of Symfony 2.1, you *must* have a route that corresponds to your logout
     path. Without this route, logging out will not work.
