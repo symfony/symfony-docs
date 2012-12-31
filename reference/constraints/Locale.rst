@@ -45,14 +45,14 @@ Basic Usage
             protected $locale;
        }
 
-   .. code-block:: xml
+    .. code-block:: xml
 
-       <!-- src/Acme/UserBundle/Resources/config/validation.xml -->
-       <class name="Acme\UserBundle\Entity\User">
-           <property name="locale">
-               <constraint name="Locale" />
-           </property>
-       </class>
+        <!-- src/Acme/UserBundle/Resources/config/validation.xml -->
+        <class name="Acme\UserBundle\Entity\User">
+            <property name="locale">
+                <constraint name="Locale" />
+            </property>
+        </class>
 
 Options
 -------
