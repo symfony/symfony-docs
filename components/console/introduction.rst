@@ -27,7 +27,7 @@ You can install the component in many different ways:
     configured with an ANSI driver and your console commands invoke other scripts which
     emit ANSI color sequences, they will be shown as raw escape characters.
 
-    To enable ANSI colour support for Windows, please install `ANSICON_`.
+    To enable ANSI colour support for Windows, please install `ANSICON`_.
 
 Creating a basic Command
 ------------------------
