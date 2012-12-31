@@ -34,21 +34,21 @@ entry in that array:
 
     .. code-block:: php-annotations
 
-       // src/Acme/UserBundle/Entity/User.php
-       namespace Acme\UserBundle\Entity;
-       
-       use Symfony\Component\Validator\Constraints as Assert;
-
-       class User
-       {
-           /**
-            * @Assert\All({
-            *     @Assert\NotBlank
-            *     @Assert\MinLength(5),
-            * })
-            */
-            protected $favoriteColors = array();
-       }
+        // src/Acme/UserBundle/Entity/User.php
+        namespace Acme\UserBundle\Entity;
+        
+        use Symfony\Component\Validator\Constraints as Assert;
+  
+        class User
+        {
+            /**
+             * @Assert\All({
+             *     @Assert\NotBlank
+             *     @Assert\MinLength(5),
+             * })
+             */
+             protected $favoriteColors = array();
+        }
 
     .. code-block:: xml
 
@@ -69,6 +69,8 @@ entry in that array:
     .. code-block:: php
 
         // src/Acme/UserBundle/Enttiy/User.php
+        namespace Acme\UserBundle\Entity;
+       
         use Symfony\Component\Validator\Mapping\ClassMetadata;
         use Symfony\Component\Validator\Constraints as Assert;
 

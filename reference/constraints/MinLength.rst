@@ -31,6 +31,8 @@ Basic Usage
     .. code-block:: php-annotations
 
         // src/Acme/BlogBundle/Entity/Blog.php
+        namespace Acme\BlogBundle\Entity;
+
         use Symfony\Component\Validator\Constraints as Assert;
 
         class Blog
@@ -59,6 +61,8 @@ Basic Usage
     .. code-block:: php
 
         // src/Acme/BlogBundle/Entity/Blog.php
+        namespace Acme\BlogBundle\Entity;
+
         use Symfony\Component\Validator\Mapping\ClassMetadata;
         use Symfony\Component\Validator\Constraints as Assert;
 

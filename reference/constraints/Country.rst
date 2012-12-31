@@ -29,6 +29,8 @@ Basic Usage
     .. code-block:: php-annotations
 
         // src/Acme/UserBundle/Entity/User.php
+        namespace Acme\UserBundle\Entity;
+
         use Symfony\Component\Validator\Constraints as Assert;
 
         class User
@@ -51,6 +53,8 @@ Basic Usage
     .. code-block:: php
 
         // src/Acme/UserBundle/Entity/User.php
+        namespace Acme\UserBundle\Entity;
+
         use Symfony\Component\Validator\Mapping\ClassMetadata;
         use Symfony\Component\Validator\Constraints as Assert;
 

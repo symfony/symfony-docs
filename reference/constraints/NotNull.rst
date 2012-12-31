@@ -25,13 +25,17 @@ were not strictly equal to ``null``, you would:
 
     .. code-block:: yaml
 
-        properties:
-            firstName:
-                - NotNull: ~
+        # src/BlogBundle/Resources/config/validation.yml
+        Acme\BlogBundle\Entity\Author:
+            properties:
+                firstName:
+                    - NotNull: ~
 
     .. code-block:: php-annotations
 
         // src/Acme/BlogBundle/Entity/Author.php
+        namespace Acme\BlogBundle\Entity;
+
         use Symfony\Component\Validator\Constraints as Assert;
 
         class Author
@@ -54,6 +58,8 @@ were not strictly equal to ``null``, you would:
     .. code-block:: php
 
         // src/Acme/BlogBundle/Entity/Author.php
+        namespace Acme\BlogBundle\Entity;
+
         use Symfony\Component\Validator\Mapping\ClassMetadata;
         use Symfony\Component\Validator\Constraints as Assert;
 

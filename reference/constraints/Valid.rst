@@ -85,7 +85,9 @@ an ``Address`` instance in the ``$address`` property.
 
     .. code-block:: php-annotations
 
-        // src/Acme/HelloBundle/Address.php
+        // src/Acme/HelloBundle/Entity/Address.php
+        namespace Acme\HelloBundle\Entity;
+
         use Symfony\Component\Validator\Constraints as Assert;
 
         class Address
@@ -102,7 +104,9 @@ an ``Address`` instance in the ``$address`` property.
             protected $zipCode;
         }
 
-        // src/Acme/HelloBundle/Author.php
+        // src/Acme/HelloBundle/Entity/Author.php
+        namespace Acme\HelloBundle\Entity;
+
         class Author
         {
             /**
@@ -121,7 +125,9 @@ an ``Address`` instance in the ``$address`` property.
 
     .. code-block:: php
 
-        // src/Acme/HelloBundle/Address.php
+        // src/Acme/HelloBundle/Entity/Address.php
+        namespace Acme\HelloBundle\Entity;
+
         use Symfony\Component\Validator\Mapping\ClassMetadata;
         use Symfony\Component\Validator\Constraints\NotBlank;
         use Symfony\Component\Validator\Constraints\MaxLength;
@@ -140,7 +146,9 @@ an ``Address`` instance in the ``$address`` property.
             }
         }
 
-        // src/Acme/HelloBundle/Author.php
+        // src/Acme/HelloBundle/Entity/Author.php
+        namespace Acme\HelloBundle\Entity;
+
         use Symfony\Component\Validator\Mapping\ClassMetadata;
         use Symfony\Component\Validator\Constraints\NotBlank;
         use Symfony\Component\Validator\Constraints\MinLength;

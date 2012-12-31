@@ -26,13 +26,17 @@ of an ``Author`` class were blank, you could do the following:
 
     .. code-block:: yaml
 
-        properties:
-            firstName:
-                - Blank: ~
+        # src/BlogBundle/Resources/config/validation.yml
+        Acme\BlogBundle\Entity\Author:
+            properties:
+                firstName:
+                    - Blank: ~
 
     .. code-block:: php-annotations
 
         // src/Acme/BlogBundle/Entity/Author.php
+        namespace Acme\BlogBundle\Entity;
+
         use Symfony\Component\Validator\Constraints as Assert;
 
         class Author
@@ -55,6 +59,8 @@ of an ``Author`` class were blank, you could do the following:
     .. code-block:: php
 
         // src/Acme/BlogBundle/Entity/Author.php
+        namespace Acme\BlogBundle\Entity;
+
         use Symfony\Component\Validator\Mapping\ClassMetadata;
         use Symfony\Component\Validator\Constraints as Assert;
 
