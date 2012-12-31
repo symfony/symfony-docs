@@ -136,7 +136,7 @@ You can also ask and validate a hidden response::
         if (trim($value) == '') {
             throw new \Exception('The password can not be empty');
         }
-    }
+    };
 
     $password = $dialog->askHiddenResponseAndValidate(
         $output,

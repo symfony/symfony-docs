@@ -537,6 +537,7 @@ Comments and examples can be added to your configuration nodes using the
 
             return $treeBuilder;
         }
+    }
 
 This text appears as yaml comments in the output of the ``config:dump-reference``
 command.
