@@ -250,7 +250,7 @@ If you need to get full access to parsed data from ``Accept``, ``Accept-Language
     use Symfony\Component\HttpFoundation\AcceptHeader;
 
     $accept = AcceptHeader::fromString($request->headers->get('Accept'));
-    if ($accept->has('text/html') {
+    if ($accept->has('text/html')) {
         $item = $accept->get('html');
         $charset = $item->getAttribute('charset', 'utf-8');
         $quality = $item->getQuality();
