@@ -760,16 +760,8 @@ To do this, add the name of the repository class to your mapping definition.
             </entity>
         </doctrine-mapping>
 
-Doctrine can generate the repository class for you by running the same command
-used earlier to generate the missing getter and setter methods:
-
-.. code-block:: bash
-
-    $ php app/console doctrine:generate:entities Acme
-
-Next, add a new method - ``findAllOrderedByName()`` - to the newly generated
-repository class. This method will query for all of the ``Product`` entities,
-ordered alphabetically.
+create the repository class as shown below. The ``findAllOrderedByName()``
+method will query for all of the ``Product`` entities, ordered alphabetically.
 
 .. code-block:: php
 
