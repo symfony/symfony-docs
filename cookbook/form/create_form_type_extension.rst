@@ -168,6 +168,7 @@ database)::
 
             return $webPath;
         }
+    }
 
 Your form type extension class will need to do two things in order to extend
 the ``file`` form type:
