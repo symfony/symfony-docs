@@ -168,22 +168,21 @@ from a predefined list::
     $dialog = $app->getHelperSet()->get('dialog');
     $colors = array('red', 'blue', 'yellow');
     
-    $colorKey = $dialog->select($output, 'Please select your favorite color (default to red)', $colors, 0);
+    $color = $dialog->select(
+        $output, 
+        'Please select your favorite color (default to red)', 
+        $colors, 
+        0
+    );
     $output->writeln('You have just selected: ' . $colors[$color]);
     
     // ... do something with the color
     
+The option which should be selected by default is provided with the fourth
+parameter. The default is ``null``, which means that no option is the default one.
+
 If the user enters an invalid string, an error message is shown and the user
-is asked to provide the answer another time, till he enters a valid string.
-
-The ``select`` method takes 6 parameters:
-
-* ``output``: The output instance
-* ``question``: The question to ask
-* ``choices``: An array of strings with the choices the user can pick
-* ``default``: The index of the default value in the array or ``null`` if no 
-    default should be provided (default ``null``)
-* ``attempts``: Maximum number of times to ask or ``false`` for infinite times 
-    (default ``false``)
-* ``errorMessage``: Error message to display when wrong answer is entered (default
-    ``Value "%s" is invalid``)
+is asked to provide the answer another time, till he enters a valid string
+or the maximum attempts is reached (which you can define in the fifth
+parameter). The default value for the attempts is ``false``, which means infinite
+attempts. You can define your own error message in the sixth parameter.

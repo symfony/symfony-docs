@@ -20,7 +20,7 @@ pass it a total number of units, and advance the progress as your command execut
     $progress->start($output, 50);
     $i = 0;
     while ($i++ < 50) {
-        // do some work
+        // ... do some work
 
         // advance the progress bar 1 unit
         $progress->advance();
