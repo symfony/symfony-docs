@@ -205,7 +205,7 @@ zero tags when first created).
 
         {# ... #}
 
-        <form action="..." method="POST" {{ form_enctype(form) }}>
+        {{ form_start(form) }}
             {# render the task's only field: description #}
             {{ form_row(form.description) }}
 
@@ -216,10 +216,9 @@ zero tags when first created).
                     <li>{{ form_row(tag.name) }}</li>
                 {% endfor %}
             </ul>
+        {{ form_end(form) }}
 
-            {{ form_rest(form) }}
-            {# ... #}
-        </form>
+        {# ... #}
 
     .. code-block:: html+php
 
@@ -227,16 +226,17 @@ zero tags when first created).
 
         <!-- ... -->
 
-        <form action="..." method="POST" ...>
+        <?php echo $view['form']->start($form) ?>
+            <!-- render the task's only field: description -->
+            <?php echo $view['form']->row($form['description']) ?>
+
             <h3>Tags</h3>
             <ul class="tags">
                 <?php foreach($form['tags'] as $tag): ?>
                     <li><?php echo $view['form']->row($tag['name']) ?></li>
                 <?php endforeach; ?>
             </ul>
-
-            <?php echo $view['form']->rest($form) ?>
-        </form>
+        <?php echo $view['form']->end($form) ?>
 
         <!-- ... -->
 

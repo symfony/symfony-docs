@@ -145,35 +145,27 @@ helper functions:
     .. code-block:: html+jinja
 
         {# src/Acme/TaskBundle/Resources/views/Default/new.html.twig #}
-        <form action="{{ path('task_new') }}" method="post" {{ form_enctype(form) }}>
-            {{ form_widget(form) }}
-
-            <input type="submit" />
-        </form>
+        {{ form(form) }}
 
     .. code-block:: html+php
 
         <!-- src/Acme/TaskBundle/Resources/views/Default/new.html.php -->
-        <form action="<?php echo $view['router']->generate('task_new') ?>" method="post" <?php echo $view['form']->enctype($form) ?> >
-            <?php echo $view['form']->widget($form) ?>
-
-            <input type="submit" />
-        </form>
+        <?php echo $view['form']->form($form) ?>
 
 .. image:: /images/book/form-simple.png
     :align: center
 
 .. note::
 
-    This example assumes that you've created a route called ``task_new``
-    that points to the ``AcmeTaskBundle:Default:new`` controller that
-    was created earlier.
+    This example assumes that you submit the form in a "POST" request and to
+    the same URL that it was displayed in. You will learn later how to
+    change the request method and the target URL of the form.
 
-That's it! By printing ``form_widget(form)``, each field in the form is
-rendered, along with a label and error message (if there is one). As easy
-as this is, it's not very flexible (yet). Usually, you'll want to render each
-form field individually so you can control how the form looks. You'll learn how
-to do that in the ":ref:`form-rendering-template`" section.
+That's it! By printing ``form(form)``, each field in the form is rendered, along
+with a label and error message (if there is one). As easy as this is, it's not
+very flexible (yet). Usually, you'll want to render each form field individually
+so you can control how the form looks. You'll learn how to do that in the
+":ref:`form-rendering-template`" section.
 
 Before moving on, notice how the rendered ``task`` input field has the value
 of the ``task`` property from the ``$task`` object (i.e. "Write a blog post").
@@ -605,35 +597,30 @@ of code. Of course, you'll usually need much more flexibility when rendering:
     .. code-block:: html+jinja
 
         {# src/Acme/TaskBundle/Resources/views/Default/new.html.twig #}
-        <form action="{{ path('task_new') }}" method="post" {{ form_enctype(form) }}>
+        {{ form_start(form) }}
             {{ form_errors(form) }}
 
             {{ form_row(form.task) }}
             {{ form_row(form.dueDate) }}
 
-            {{ form_rest(form) }}
-
             <input type="submit" />
-        </form>
+        {{ form_end(form) }}
 
     .. code-block:: html+php
 
         <!-- src/Acme/TaskBundle/Resources/views/Default/newAction.html.php -->
-        <form action="<?php echo $view['router']->generate('task_new') ?>" method="post" <?php echo $view['form']->enctype($form) ?>>
+        <?php echo $view['form']->start($form) ?>
             <?php echo $view['form']->errors($form) ?>
 
             <?php echo $view['form']->row($form['task']) ?>
             <?php echo $view['form']->row($form['dueDate']) ?>
 
-            <?php echo $view['form']->rest($form) ?>
-
             <input type="submit" />
-        </form>
+        <?php echo $view['form']->end($form) ?>
 
 Take a look at each part:
 
-* ``form_enctype(form)`` - If at least one field is a file upload field, this
-  renders the obligatory ``enctype="multipart/form-data"``;
+* ``form_start(form)`` - Renders the start tag of the form.
 
 * ``form_errors(form)`` - Renders any errors global to the whole form
   (field-specific errors are displayed next to each field);
@@ -642,10 +629,8 @@ Take a look at each part:
   form widget for the given field (e.g. ``dueDate``) inside, by default, a
   ``div`` element;
 
-* ``form_rest(form)`` - Renders any fields that have not yet been rendered.
-  It's usually a good idea to place a call to this helper at the bottom of
-  each form (in case you forgot to output a field or don't want to bother
-  manually rendering hidden fields). This helper is also useful for taking
+* ``form_end()`` - Renders the end tag of the form and any fields that have not
+  yet been rendered. This is useful for rendering hidden fields and taking
   advantage of the automatic :ref:`CSRF Protection<forms-csrf>`.
 
 The majority of the work is done by the ``form_row`` helper, which renders
@@ -740,7 +725,7 @@ field:
 
     .. code-block:: html+jinja
 
-        {{ form_widget(form.task, { 'attr': {'class': 'task_field'} }) }}
+        {{ form_widget(form.task, {'attr': {'class': 'task_field'}}) }}
 
     .. code-block:: html+php
 
@@ -782,6 +767,75 @@ If you're using Twig, a full reference of the form rendering functions is
 available in the :doc:`reference manual</reference/forms/twig_reference>`.
 Read this to know everything about the helpers available and the options
 that can be used with each.
+
+.. index::
+   single: Forms; Changing the action and method
+
+.. _book-forms-changing-action-and-method:
+
+Changing the Action and Method of a Form
+----------------------------------------
+
+So far, we have used the ``form_start()`` helper to render the form's start tag
+and assumed that each form is submitted to the same URL in a POST request.
+Sometimes you want to change these parameters. You can do so in a few different
+ways. If you build your form in the controller, you can use ``setAction()`` and
+``setMethod()``::
+
+    $form = $this->createFormBuilder($task)
+        ->setAction($this->generateUrl('target_route'))
+        ->setMethod('GET')
+        ->add('task', 'text')
+        ->add('dueDate', 'date')
+        ->getForm();
+
+.. note::
+
+    This example assumes that you've created a route called ``target_route``
+    that points to the controller that processes the form.
+
+In :ref:`book-form-creating-form-classes` you will learn how to outsource the
+form building code into separate classes. When using such a form class in the
+controller, you can pass the action and method as form options::
+
+    $form = $this->createForm(new TaskType(), $task, array(
+        'action' => $this->generateUrl('target_route'),
+        'method' => 'GET',
+    ));
+
+At last, you can override the action and method in the template by passing them
+to the ``form()`` or the ``form_start()`` helper:
+
+.. configuration-block::
+
+    .. code-block:: html+jinja
+
+        {# src/Acme/TaskBundle/Resources/views/Default/new.html.twig #}
+        {{ form(form, {'action': path('target_route'), 'method': 'GET'}) }}
+
+        {{ form_start(form, {'action': path('target_route'), 'method': 'GET'}) }}
+
+    .. code-block:: html+php
+
+        <!-- src/Acme/TaskBundle/Resources/views/Default/newAction.html.php -->
+        <?php echo $view['form']->form($form, array(
+            'action' => $view['router']->generate('target_route'),
+            'method' => 'GET',
+        )) ?>
+
+        <?php echo $view['form']->start($form, array(
+            'action' => $view['router']->generate('target_route'),
+            'method' => 'GET',
+        )) ?>
+
+.. note::
+
+    If the form's method is not GET or POST, but PUT, PATCH or DELETE, Symfony2
+    will insert a hidden field with the name "_method" that stores this method.
+    The form will be submitted in a normal POST request, but Symfony2's router
+    is capable of detecting the "_method" parameter and will interpret the
+    request as PUT, PATCH or DELETE request. Read the cookbook chapter
+    ":doc:`/cookbook/routing/method_parameters`" for more information.
 
 .. index::
    single: Forms; Creating form classes
@@ -1143,7 +1197,7 @@ renders the form:
 
         {% form_theme form 'AcmeTaskBundle:Form:fields.html.twig' 'AcmeTaskBundle:Form:fields2.html.twig' %}
 
-        <form ...>
+        {{ form(form) }}
 
     .. code-block:: html+php
 
@@ -1152,7 +1206,7 @@ renders the form:
 
         <?php $view['form']->setTheme($form, array('AcmeTaskBundle:Form', 'AcmeTaskBundle:Form')) ?>
 
-        <form ...>
+        <?php echo $view['form']->form($form) ?>
 
 The ``form_theme`` tag (in Twig) "imports" the fragments defined in the given
 template and uses them when rendering the form. In other words, when the
@@ -1231,7 +1285,7 @@ are 4 possible *parts* of a form that can be rendered:
 
 .. note::
 
-    There are actually 3 other *parts*  - ``rows``, ``rest``, and ``enctype`` -
+    There are actually 2 other *parts*  - ``rows`` and ``rest`` -
     but you should rarely if ever need to worry about overriding them.
 
 By knowing the field type (e.g. ``textarea``) and which part you want to

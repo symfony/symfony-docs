@@ -251,32 +251,6 @@ The following controller shows you how to handle the entire process::
         return array('form' => $form->createView());
     }
 
-.. note::
-
-    When writing the template, don't forget to set the ``enctype`` attribute:
-
-    .. configuration-block::
-
-        .. code-block:: html+jinja
-
-            <h1>Upload File</h1>
-
-            <form action="#" method="post" {{ form_enctype(form) }}>
-                {{ form_widget(form) }}
-
-                <input type="submit" value="Upload Document" />
-            </form>
-
-        .. code-block:: html+php
-
-            <h1>Upload File</h1>
-
-            <form action="#" method="post" <?php echo $view['form']->enctype($form) ?>>
-                <?php echo $view['form']->widget($form) ?>
-
-                <input type="submit" value="Upload Document" />
-            </form>
-
 The previous controller will automatically persist the ``Document`` entity
 with the submitted name, but it will do nothing about the file and the ``path``
 property will be blank.
