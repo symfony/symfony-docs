@@ -740,15 +740,42 @@ you need to have a complete custom prototype you can render it yourself:
 
 .. code-block:: html+jinja
 
+    <!-- src/Acme/TaskBundle/Resources/views/Task/prototypeTask.html.twig -->
     data-prototype="{% filter escape %}
         {% include 'AcmeTaskBundle:Task:prototypeTask.html.twig'
-            with { 'form': form.task.get('prototype') }
+            with { 'task': form.task.get('prototype') }
         %}
     {% endfilter %}"
 
-The included ``AcmeTaskBundle:Task:prototypeTask.html.twig`` contains the
-markup used for the prototype. This way you can not only easily structure
-your prototype-markup, you can also use this markup to render the
+.. code-block:: html+php
+
+    <!-- src/Acme/TaskBundle/Resources/views/Task/prototypeTask.html.php -->
+    data-prototype="<?php
+        $prototype = $view->render(
+            'AcmeTaskBundle:Task:prototypeTask.html.php',
+            array('task' => $form->task->get('prototype')
+        );
+
+        echo $view->escape($prototype);
+    ?>"
+
+To be not confused let's have a look how the prototype-template might look like.
+
+.. code-block:: html+jinja
+    <tr>
+        <td>{{ form_widget(task.task) }}</td>
+        <td>{{ form_widget(task.dueDate) }}</td>
+    </tr>
+
+.. code-block:: html+php
+    <tr>
+        <td><?php echo $view['form']->widget($task->getTask()) ?></td>
+        <td><?php echo $view['form']->widget($task->getDueDate()) ?></td>
+    </tr>
+
+The included template contains the markup used for the prototype.
+This way you can not only easily structure your prototype-markup,
+you can also use this markup to render the
 contents of the collection when it already holds items:
 
 .. code-block:: html+jinja
@@ -758,6 +785,12 @@ contents of the collection when it already holds items:
             with { 'form': form.task.vars.form }
         %}
     {% endfor %}
+
+.. code-block:: html+php
+
+    <?php foreach ($tasks as $task) ?>
+        <?php echo $view->render('AcmeTaskBundle:Task:prototypeTask.html.php', array('form' => $form->task->vars->form)); ?>
+    <?php endforeach; ?>
 
 This makes sure the displayed items are the same as the newly inserted
 from the prototype.
