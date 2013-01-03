@@ -6,3 +6,5 @@ Workflow
 
     new_project_git
     new_project_svn
+    preparing_customized_distributions
+
