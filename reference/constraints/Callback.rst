@@ -90,6 +90,7 @@ those errors should be attributed::
                 $context->addViolation('This name sounds totally fake!', array(), null);
             }
         }
+    }
 
 Options
 -------

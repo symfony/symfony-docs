@@ -263,7 +263,7 @@ If you want to reuse some queries, you can add your own methods to the
         public function filterByExpensivePrice()
         {
             return $this
-                ->filterByPrice(array('min' => 1000))
+                ->filterByPrice(array('min' => 1000));
         }
     }
 

@@ -33,7 +33,7 @@ your autoloader to load the Routing component::
     use Symfony\Component\Routing\RouteCollection;
     use Symfony\Component\Routing\Route;
 
-    $route = new Route('/foo', array('controller' => 'MyController'))
+    $route = new Route('/foo', array('controller' => 'MyController'));
     $routes = new RouteCollection();
     $routes->add('route_name', $route);
 
@@ -322,9 +322,9 @@ automatically in the background if you want to use it. A basic example of the
 
     $router = new Router(
         new YamlFileLoader($locator),
-        "routes.yml",
+        'routes.yml',
         array('cache_dir' => __DIR__.'/cache'),
-        $requestContext,
+        $requestContext
     );
     $router->match('/foo/bar');
 

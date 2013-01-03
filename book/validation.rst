@@ -815,7 +815,7 @@ it looks like this::
             // this IS a valid email address, do something
         } else {
             // this is *not* a valid email address
-            $errorMessage = $errorList[0]->getMessage()
+            $errorMessage = $errorList[0]->getMessage();
 
             // ... do something with the error
         }
