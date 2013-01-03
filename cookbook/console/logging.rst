@@ -77,7 +77,7 @@ First, create a new sub-class of :class:`Symfony\\Bundle\\FrameworkBundle\\Conso
 and override its :method:`Symfony\\Bundle\\FrameworkBundle\\Console\\Application::run`
 method, where exception handling should happen:
 
-.. warning::
+.. caution::
 
     Due to the nature of the core :class:`Symfony\\Component\\Console\\Application`
     class, much of the :method:`run<Symfony\\Bundle\\FrameworkBundle\\Console\\Application::run>`
