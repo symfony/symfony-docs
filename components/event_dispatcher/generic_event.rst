@@ -74,7 +74,7 @@ the event arguments::
 
     $event = new GenericEvent(
         $subject,
-        array('type' => 'foo', 'counter' => 0))
+        array('type' => 'foo', 'counter' => 0)
     );
     $dispatcher->dispatch('foo', $event);
 

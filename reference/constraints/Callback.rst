@@ -88,6 +88,7 @@ those errors should be attributed::
                 $context->addViolationAtSubPath('firstname', 'This name sounds totally fake!', array(), null);
             }
         }
+    }
 
 Options
 -------
