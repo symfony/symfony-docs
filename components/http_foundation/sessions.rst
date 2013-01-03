@@ -48,7 +48,7 @@ Quick example::
     start on demand, that is, if any session request is made to read/write session
     data.
 
-.. warning::
+.. caution::
 
     Symfony sessions are incompatible with PHP ini directive ``session.auto_start = 1``
     This directive should be turned off in ``php.ini``, in the webserver directives or
