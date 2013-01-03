@@ -68,7 +68,7 @@ of an ``Author`` class were blank, you could do the following:
         {
             public static function loadValidatorMetadata(ClassMetadata $metadata)
             {
-                $metadata->addPropertyConstraint('firstName', new Assetc\Blank());
+                $metadata->addPropertyConstraint('firstName', new Assert\Blank());
             }
         }
 
