@@ -52,10 +52,11 @@ end-user, create a new template located at
 
 .. caution::
 
-    You **must not** use ``is_granted`` in your error pages, because the
-    router runs before the firewall. If the router throws an exception (for
-    instance, when the route does not match), the error page is not behind a
-    firewall and ``app.user`` is not defined.
+    You **must not** use ``is_granted`` in your error pages (or layout used
+    by your error pages), because the router runs before the firewall. If
+    the router throws an exception (for instance, when the route does not
+    match), then using ``is_granted`` will throw a further exception. You
+    can use ``is_granted`` safely by saying ``{% if app.security and is_granted('...') %}``.
 
 .. tip::
 
