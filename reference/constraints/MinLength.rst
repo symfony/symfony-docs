@@ -31,6 +31,8 @@ Basic Usage
     .. code-block:: php-annotations
 
         // src/Acme/BlogBundle/Entity/Blog.php
+        namespace Acme\BlogBundle\Entity;
+
         use Symfony\Component\Validator\Constraints as Assert;
 
         class Blog
@@ -55,6 +57,25 @@ Basic Usage
                 </constraint>
             </property>
         </class>
+
+    .. code-block:: php
+
+        // src/Acme/BlogBundle/Entity/Blog.php
+        namespace Acme\BlogBundle\Entity;
+
+        use Symfony\Component\Validator\Mapping\ClassMetadata;
+        use Symfony\Component\Validator\Constraints as Assert;
+
+        class Blog
+        {
+            public static function loadValidatorMetadata(ClassMetadata $metadata)
+            {
+                $metadata->addPropertyConstraint('summary', new Assert\MinLength(array(
+                    'limit'   => 3,
+                    'message' => 'Your name must have at least {{ limit }} characters.',
+                )));
+            }
+        }
 
 Options
 -------
