@@ -344,7 +344,7 @@ configuration, and tag it with ``kernel.event_subscriber``:
 
 .. note::
 
-    Your service must implement the :class:`Symfony\Component\EventDispatcher\EventSubscriberInterface`
+    Your service must implement the :class:`Symfony\\Component\\EventDispatcher\\EventSubscriberInterface`
     interface.
 
 .. note::
