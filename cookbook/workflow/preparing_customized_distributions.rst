@@ -154,9 +154,9 @@ When your distribution is finished it's time to try it:
 
        $ php composer.phar install
 
-4. Now, you have a starting point for your next project. And you
-   don't have to repeat the steps that were included in ``2.1-startup branch``.
-   Depending on your choice it can be a simple Acme removal or
+4. Now, you have a starting point for project ``Alpha``. And you
+   don't have to repeat the steps that were included in ``2.1-startup``
+   branch. Depending on your choice it can be a simple Acme removal or
    the installation of ``DoctrineFixturesBundle``,
    ``DoctrineMigrationsBundle``, ``FOSUserBundle``,``KnpMenuBundle``,
    ``SonataAdmin`` bundles, ``Behat``, and many others.
