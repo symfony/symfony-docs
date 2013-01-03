@@ -30,6 +30,8 @@ table:
     .. code-block:: php-annotations
 
         // Acme/UserBundle/Entity/User.php
+        namespace Acme\UserBundle\Entity;
+
         use Symfony\Component\Validator\Constraints as Assert;
         use Doctrine\ORM\Mapping as ORM;
 
