@@ -134,7 +134,7 @@ Here's an example of how this might look::
 
                 // ...
 
-                return new WebserviceUser($username, $password, $salt, $roles)
+                return new WebserviceUser($username, $password, $salt, $roles);
             }
 
             throw new UsernameNotFoundException(sprintf('Username "%s" does not exist.', $username));
