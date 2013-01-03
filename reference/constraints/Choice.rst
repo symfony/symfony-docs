@@ -64,6 +64,8 @@ If your valid choice list is simple, you can pass them in directly via the
     .. code-block:: php-annotations
 
         // src/Acme/BlogBundle/Entity/Author.php
+        namespace Acme\BlogBundle\Entity;
+
         use Symfony\Component\Validator\Constraints as Assert;
 
         class Author
@@ -77,8 +79,10 @@ If your valid choice list is simple, you can pass them in directly via the
     .. code-block:: php
 
         // src/Acme/BlogBundle/EntityAuthor.php
+        namespace Acme\BlogBundle\Entity;
+
         use Symfony\Component\Validator\Mapping\ClassMetadata;
-        use Symfony\Component\Validator\Constraints\Choice;
+        use Symfony\Component\Validator\Constraints as Assert;
         
         class Author
         {
@@ -86,7 +90,7 @@ If your valid choice list is simple, you can pass them in directly via the
             
             public static function loadValidatorMetadata(ClassMetadata $metadata)
             {
-                $metadata->addPropertyConstraint('gender', new Choice(array(
+                $metadata->addPropertyConstraint('gender', new Assert\Choice(array(
                     'choices' => array('male', 'female'),
                     'message' => 'Choose a valid gender',
                 )));
