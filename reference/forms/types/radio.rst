@@ -4,9 +4,9 @@
 radio Field Type
 ================
 
-Creates a single radio button. This should always be used for a field that
-has a Boolean value: if the radio button is selected, the field will be set
-to true, if the button is not selected, the value will be set to false.
+Creates a single radio button. If the radio button is selected, the field will
+be set to the specified value. Radio buttons cannot be unchecked - the value only
+changes when another radio button with the same name gets checked.
 
 The ``radio`` type isn't usually used directly. More commonly it's used
 internally by other types such as :doc:`choice</reference/forms/types/choice>`.
