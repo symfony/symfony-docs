@@ -68,7 +68,7 @@ entry in that array:
 
     .. code-block:: php
 
-        // src/Acme/UserBundle/Enttiy/User.php
+        // src/Acme/UserBundle/Entity/User.php
         namespace Acme\UserBundle\Entity;
        
         use Symfony\Component\Validator\Mapping\ClassMetadata;
