@@ -1541,17 +1541,17 @@ but here's a short example:
    
 .. code-block:: php
 
-    use Symfony\Component\Validator\Constraints\MinLength;
+    use Symfony\Component\Validator\Constraints\Length;
     use Symfony\Component\Validator\Constraints\NotBlank;
 
     $builder
        ->add('firstName', 'text', array(
-           'constraints' => new MinLength(3),
+           'constraints' => new Length(array('min' => 3)),
        ))
        ->add('lastName', 'text', array(
            'constraints' => array(
                new NotBlank(),
-               new MinLength(3),
+               new Length(array('min' => 3)),
            ),
        ))
     ;
