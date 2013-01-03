@@ -59,6 +59,24 @@ characters at the beginning of your string:
             </property>
         </class>
 
+    .. code-block:: php
+
+        // src/Acme/BlogBundle/Entity/Author.php
+        namespace Acme\BlogBundle\Entity;
+        
+        use Symfony\Component\Validator\Mapping\ClassMetadata;
+        use Symfony\Component\Validator\Constraints as Assert;
+
+        class Author
+        {
+            public static function loadValidatorMetadata(ClassMetadata $metadata)
+            {
+                $metadata->addPropertyConstraint('description', new Assert\Regex(array(
+                    'pattern' => '/^\w+/',
+                )));
+            }
+        }
+
 Alternatively, you can set the `match`_ option to ``false`` in order to assert
 that a given string does *not* match. In the following example, you'll assert
 that the ``firstName`` field does not contain any numbers and give it a custom
