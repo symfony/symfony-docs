@@ -37,7 +37,7 @@ it is possible to remove this need by extending the application::
         {
             // Keep the core default commands to have the HelpCommand
             // which is used when using the --help option
-            $defaultCommands = parent::getDefaultCommands()
+            $defaultCommands = parent::getDefaultCommands();
 
             $defaultCommands[] = new MyCommand();
 

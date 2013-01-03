@@ -200,7 +200,7 @@ instance of ``Symfony\Component\HttpKernel\Event\FilterResponseEvent``:
 
 .. code-block:: php
 
-    use Symfony\Component\HttpKernel\Event\FilterResponseEvent
+    use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
 
     public function onKernelResponse(FilterResponseEvent $event)
     {

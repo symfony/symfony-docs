@@ -366,7 +366,7 @@ on that value. This can get ugly quickly::
     $request = Request::createFromGlobals();
     $path = $request->getPathInfo(); // the URI path being requested
 
-    if (in_array($path, array('', '/')) {
+    if (in_array($path, array('', '/'))) {
         $response = new Response('Welcome to the homepage.');
     } elseif ($path == '/contact') {
         $response = new Response('Contact us');
