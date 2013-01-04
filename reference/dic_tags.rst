@@ -324,7 +324,7 @@ channel when injecting the logger in a service.
 
         $definition = new Definition('Fully\Qualified\Loader\Class\Name', array(new Reference('logger'));
         $definition->addTag('monolog.logger', array('channel' => 'acme'));
-        $container->register('my_service', $definition);;
+        $container->register('my_service', $definition);
 
 .. note::
 
