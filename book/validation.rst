@@ -371,7 +371,7 @@ constraint, have several configuration options available. Suppose that the
 
         // ...
         use Symfony\Component\Validator\Mapping\ClassMetadata;
-        use Symfony\Component\Validator\Constraints\NotBlank;
+        use Symfony\Component\Validator\Constraints\Choice;
 
         class Author
         {
