@@ -177,15 +177,15 @@ Symfony2 should welcome and congratulate you for your hard work so far!
 
 .. image:: /images/quick_tour/welcome.jpg
 
-.. note::
+.. tip::
     
     To get nice and short urls you should point the document root of your 
     webserver or virtual host to the ``Symfony/web/`` directory. Though 
     this is not required for development it is recommended at the time your 
     application goes into production as all system and configuration files
-    become inaccessible to clients. For information on configuring your 
-    specific web server document root, see the following documentation: 
-    `Apache`_ | `Nginx`_ .
+    become inaccessible to clients then. For information on configuring 
+    your specific web server document root, see the following 
+    documentation: `Apache`_ | `Nginx`_ .
 
 Beginning Development
 ---------------------
