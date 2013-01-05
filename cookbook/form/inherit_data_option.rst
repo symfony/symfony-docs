@@ -1,13 +1,12 @@
 .. index::
-   single: Form; Virtual forms
+   single: Form; The "inherit_data" option
 
-How to use the Virtual Form Field Option
-========================================
+Reducing Code Duplication with "inherit_data"
+=============================================
 
-The ``virtual`` form field option can be very useful when you have some
-duplicated fields in different entities.
-
-For example, imagine you have two entities, a ``Company`` and a ``Customer``::
+The ``inherit_data`` form field option can be very useful when you have some
+duplicated fields in different entities. For example, imagine you have two
+entities, a ``Company`` and a ``Customer``::
 
     // src/Acme/HelloBundle/Entity/Company.php
     namespace Acme\HelloBundle\Entity;
@@ -39,13 +38,10 @@ For example, imagine you have two entities, a ``Company`` and a ``Customer``::
         private $country;
     }
 
-Like you can see, each entity shares a few of the same fields: ``address``,
+As you can see, each entity shares a few of the same fields: ``address``,
 ``zipcode``, ``city``, ``country``.
 
-Now, you want to build two forms: one for a ``Company`` and the second for
-a ``Customer``.
-
-Start by creating a very simple ``CompanyType`` and ``CustomerType``::
+Let's build two forms for these entities, ``CompanyType`` and ``CustomerType``::
 
     // src/Acme/HelloBundle/Form/Type/CompanyType.php
     namespace Acme\HelloBundle\Form\Type;
@@ -79,8 +75,9 @@ Start by creating a very simple ``CompanyType`` and ``CustomerType``::
         }
     }
 
-Now, to deal with the four duplicated fields. Here is a (simple)
-location form type::
+Instead of including the duplicated fields ``address``, ``zipcode``, ``city``
+and ``country``in both of these forms, we will create a third form for that.
+We will call this form simply ``LocationType``::
 
     // src/Acme/HelloBundle/Form/Type/LocationType.php
     namespace Acme\HelloBundle\Form\Type;
@@ -102,7 +99,7 @@ location form type::
         public function setDefaultOptions(OptionsResolverInterface $resolver)
         {
             $resolver->setDefaults(array(
-                'virtual' => true
+                'inherit_data' => true
             ));
         }
 
@@ -112,20 +109,25 @@ location form type::
         }
     }
 
-You don't *actually* have a location field in each of your entities, so you
-can't directly link ``LocationType`` to ``CompanyType`` or ``CustomerType``.
-But you absolutely want to have a dedicated form type to deal with location (remember, DRY!).
+The location form has an interesting option set, namely ``inherit_data``. This
+option lets the form inherit its data from its parent form. If embedded in
+the company form, the fields of the location form will access the properties of
+the ``Company`` instance. If embedded in the customer form, the fields will
+access the properties of the ``Customer`` instance instead. Easy, eh?
 
-The ``virtual`` form field option is the solution.
+.. note::
 
-You can set the option ``'virtual' => true`` in the ``setDefaultOptions()`` method
-of ``LocationType`` and directly start using it in the two original form types.
+    Instead of setting the ``inherit_data`` option inside ``LocationType``, you
+    can also (just like with any option) pass it in the third argument of
+    ``$builder->add()``.
 
-Look at the result::
+Let's make this work by adding the location form to our two original forms::
 
-    // CompanyType
+    // src/Acme/HelloBundle/Form/Type/CompanyType.php
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        // ...
+
         $builder->add('foo', new LocationType(), array(
             'data_class' => 'Acme\HelloBundle\Entity\Company'
         ));
@@ -133,25 +135,15 @@ Look at the result::
 
 .. code-block:: php
 
-    // CustomerType
+    // src/Acme/HelloBundle/Form/Type/CustomerType.php
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        // ...
+
         $builder->add('bar', new LocationType(), array(
             'data_class' => 'Acme\HelloBundle\Entity\Customer'
         ));
     }
 
-With the virtual option set to false (default behavior), the Form Component
-expects each underlying object to have a ``foo`` (or ``bar``) property that
-is either some object or array which contains the four location fields.
-Of course, you don't have this object/array in your entities and you don't want it!
-
-With the virtual option set to true, the Form component skips the ``foo`` (or ``bar``)
-property, and instead "gets" and "sets" the 4 location fields directly
-on the underlying object!
-
-.. note::
-
-    Instead of setting the ``virtual`` option inside ``LocationType``, you
-    can (just like with any options) also pass it in as an array option to
-    the third argument of ``$builder->add()``.
+That's it! You have extracted duplicated field definitions to a separate
+location form that you can reuse wherever you need it.
