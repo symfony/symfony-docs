@@ -16,6 +16,7 @@ if the box is unchecked, the value will be set to false.
 | Inherited   | - `required`_                                                          |
 | options     | - `label`_                                                             |
 |             | - `read_only`_                                                         |
+|             | - `disabled`_                                                          |
 |             | - `error_bubbling`_                                                    |
 +-------------+------------------------------------------------------------------------+
 | Parent type | :doc:`field</reference/forms/types/field>`                             |
@@ -54,5 +55,7 @@ These options inherit from the :doc:`field</reference/forms/types/field>` type:
 .. include:: /reference/forms/types/options/label.rst.inc
 
 .. include:: /reference/forms/types/options/read_only.rst.inc
+
+.. include:: /reference/forms/types/options/disabled.rst.inc
 
 .. include:: /reference/forms/types/options/error_bubbling.rst.inc
