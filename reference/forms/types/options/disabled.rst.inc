@@ -2,7 +2,7 @@ disabled
 ~~~~~~~~
 
 .. versionadded:: 2.1
-    The ``disabled`` option was added in 2.1
+    The ``disabled`` option is new in version 2.1
         
 **type**: ``boolean``  **default**: ``false``
 
