@@ -679,6 +679,18 @@ In this section, you'll focus on how to secure different resources (e.g. URLs,
 method calls, etc) with different roles. Later, you'll learn more about how
 roles are created and assigned to users.
 
+Securing resources is done by defining access rules under the
+``access_control`` section of the security configuration. Each rule is
+composed of two parts:
+
+* Settings that describe **which** resource to secure (``path``, ``ip``,
+  ``host``, and ``methods``); these settings are used to create an instance of
+  :class:`Symfony\\Component\\HttpFoundation\\RequestMatcher` that will be
+  used to match the current Request object;
+
+* Settings that **enforce** access restrictions (``roles`` and
+  ``requires_channel``) when the rule matches the current Request.
+
 Securing Specific URL Patterns
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -766,18 +778,41 @@ given prefix, ``/esi``, from outside access:
             # ...
             access_control:
                 - { path: ^/esi, roles: IS_AUTHENTICATED_ANONYMOUSLY, ip: 127.0.0.1 }
+                - { path: ^/esi, roles: ROLE_NO_ACCESS }
 
     .. code-block:: xml
 
             <access-control>
                 <rule path="^/esi" role="IS_AUTHENTICATED_ANONYMOUSLY" ip="127.0.0.1" />
+                <rule path="^/esi" role="ROLE_NO_ACCESS" />
             </access-control>
 
     .. code-block:: php
 
             'access_control' => array(
                 array('path' => '^/esi', 'role' => 'IS_AUTHENTICATED_ANONYMOUSLY', 'ip' => '127.0.0.1'),
+                array('path' => '^/esi', 'role' => 'ROLE_NO_ACCESS'),
             ),
+
+Here is how it works when the path is ``/esi/something`` coming from the
+``10.0.0.1`` IP:
+
+* The first access control rule does not match and is ignored as the ``path``
+  matches but the ``ip`` does not;
+
+* The second access control rule matches (the only restriction being the
+  ``path`` and it matches): as the user cannot have the ``ROLE_NO_ACCESS``
+  role as it's not defined, access is denied (the ``ROLE_NO_ACCESS`` role can
+  be anything that does not match an existing role, it just serves as a trick
+  to always deny access).
+
+Now, if the same request comes from ``127.0.0.1``:
+
+* Now, the first access control rule does match as both the ``path`` and the
+  ``ip`` match: access is allowed as the user always has the
+  ``IS_AUTHENTICATED_ANONYMOUSLY`` role.
+
+* The second access rule is not examined as the first rule matched.
 
 .. _book-security-securing-channel:
 
@@ -786,8 +821,8 @@ given prefix, ``/esi``, from outside access:
 Securing by Channel
 ~~~~~~~~~~~~~~~~~~~
 
-Much like securing based on IP, requiring the use of SSL is as simple as
-adding a new access_control entry:
+You can also restrict access by requiring the use of SSL; just use the
+``requires_channel`` argument in any ``access_control`` entries:
 
 .. configuration-block::
 
