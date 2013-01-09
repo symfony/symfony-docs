@@ -94,7 +94,7 @@ schemes
 **type**: ``mixed`` [:ref:`default option<validation-default-option>`]
 
 This option is required and represents the name of the number scheme used to 
-validate the credit card number. It can either be a String or an Array. Valid
+validate the credit card number, it can either be a string or an array. Valid
 values are:
 
 * ``AMEX``
