@@ -128,7 +128,27 @@ rules::
         /**
          * @Assert\File(maxSize="6000000")
          */
-        public $file;
+        private $file;
+
+        /**
+         * Set file
+         *
+         * @param \Symfony\Component\HttpFoundation\File\UploadedFile $file
+         */
+        public function setFile($file)
+        {
+            $this->file = $file;
+        }
+
+        /**
+         * Get file
+         *
+         * @return \Symfony\Component\HttpFoundation\File\UploadedFile
+         */
+        public function getFile()
+        {
+            return $this->file;
+        }
 
         // ...
     }
@@ -269,6 +289,29 @@ Next, refactor the ``Document`` class to take advantage of these callbacks::
     class Document
     {
         /**
+         * a temp variable for storing the old image name
+         * used to delete the old image when updating the image field
+         * @var string $temp
+         */
+        private $temp;
+
+        /**
+         * Set file
+         *
+         * @param \Symfony\Component\HttpFoundation\File\UploadedFile $file
+         */
+        public function setFile($file)
+        {
+            $this->file = $file;
+            //check if we have an old image path
+            if ($this->path) {
+                //store the old name to delete after the update
+                $this->temp = $this->path;
+            }
+            $this->path = NULL;
+        }
+
+        /**
          * @ORM\PrePersist()
          * @ORM\PreUpdate()
          */
@@ -297,6 +340,14 @@ Next, refactor the ``Document`` class to take advantage of these callbacks::
             $this->file->move($this->getUploadRootDir(), $this->path);
 
             unset($this->file);
+
+            //check if we have an old image
+            if ($this->temp) {
+                // delete the old image
+                unlink($this->getUploadRootDir() . '/' . $this->temp);
+                // clear the temp image path
+                $this->temp = NULL;
+            }
         }
 
         /**
@@ -357,8 +408,22 @@ property, instead of the actual filename::
      */
     class Document
     {
-        // a property used temporarily while deleting
-        private $filenameForRemove;
+        private $temp;
+
+        /**
+         * Set file
+         *
+         * @param \Symfony\Component\HttpFoundation\File\UploadedFile $file
+         */
+        public function setFile($file)
+        {
+            $this->file = $file;
+            //check if we have an old image path
+            if (is_file($this->getAbsolutePath())) {
+                //store the old name to delete after the update
+                $this->temp = $this->getAbsolutePath();
+            }
+        }
 
         /**
          * @ORM\PrePersist()
@@ -390,6 +455,14 @@ property, instead of the actual filename::
             );
 
             unset($this->file);
+
+            //check if we have an old image
+            if ($this->temp) {
+                // delete the old image
+                unlink($this->temp);
+                // clear the temp image path
+                $this->temp = NULL;
+            }
         }
 
         /**
@@ -397,7 +470,7 @@ property, instead of the actual filename::
          */
         public function storeFilenameForRemove()
         {
-            $this->filenameForRemove = $this->getAbsolutePath();
+            $this->temp = $this->getAbsolutePath();
         }
 
         /**
@@ -405,8 +478,8 @@ property, instead of the actual filename::
          */
         public function removeUpload()
         {
-            if ($this->filenameForRemove) {
-                unlink($this->filenameForRemove);
+            if ($this->temp) {
+                unlink($this->temp);
             }
         }
 
