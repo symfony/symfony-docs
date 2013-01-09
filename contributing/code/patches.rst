@@ -279,6 +279,7 @@ your contributions can be included into Symfony2 as quickly as possible:
     Bug fix: [yes|no]
     Feature addition: [yes|no]
     Backwards compatibility break: [yes|no]
+    Deprecations: [what, when|no]
     Symfony2 tests pass: [yes|no]
     Fixes the following tickets: [comma separated list of tickets fixed by the PR]
     Todo: [list of todos pending]
