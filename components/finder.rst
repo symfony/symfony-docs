@@ -266,16 +266,19 @@ To restrict the matching file with your own strategy, use
 
     $finder->files()->filter($filter);
 
-The ``filter()`` method takes a Closure as an argument. For each matching file,
+The ``filter()`` method takes a PHP callable as an argument. For each matching file,
 it is called with the file as a :class:`Symfony\\Component\\Finder\\SplFileInfo`
 instance. The file is excluded from the result set if the Closure returns
 ``false``.
+
+.. versionadded:: 2.2
+    As of Symfony 2.2, the filter accepts any `PHP callable`_.
 
 Reading contents of returned files
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. versionadded:: 2.1
-   Method ``getContents()`` have been introduced in version 2.1.
+    Method ``getContents()`` have been introduced in version 2.1.
 
 The contents of returned files can be read with
 :method:`Symfony\\Component\\Finder\\SplFileInfo::getContents`::
@@ -290,9 +293,10 @@ The contents of returned files can be read with
         ...
     }
 
-.. _strtotime:    http://www.php.net/manual/en/datetime.formats.php
-.. _Iterator:     http://www.php.net/manual/en/spl.iterators.php
-.. _protocol:     http://www.php.net/manual/en/wrappers.php
-.. _Streams:      http://www.php.net/streams
-.. _IEC standard: http://physics.nist.gov/cuu/Units/binary.html
-.. _Packagist:    https://packagist.org/packages/symfony/finder
+.. _strtotime:      http://www.php.net/manual/en/datetime.formats.php
+.. _Iterator:       http://www.php.net/manual/en/spl.iterators.php
+.. _protocol:       http://www.php.net/manual/en/wrappers.php
+.. _Streams:        http://www.php.net/streams
+.. _IEC standard:   http://physics.nist.gov/cuu/Units/binary.html
+.. _Packagist:      https://packagist.org/packages/symfony/finder
+.. _`PHP callable`: http://php.net/types.callable
