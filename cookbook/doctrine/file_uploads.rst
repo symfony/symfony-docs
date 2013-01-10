@@ -122,13 +122,35 @@ rules::
 
     // src/Acme/DemoBundle/Entity/Document.php
 
+    use Symfony\Component\HttpFoundation\File\UploadedFile;
+
     // ...
     class Document
     {
         /**
          * @Assert\File(maxSize="6000000")
          */
-        public $file;
+        private $file;
+
+        /**
+         * Set file
+         *
+         * @param UploadedFile $file
+         */
+        public function setFile(UploadedFile $file)
+        {
+            $this->file = $file;
+        }
+
+        /**
+         * Get file
+         *
+         * @return UploadedFile
+         */
+        public function getFile()
+        {
+            return $this->file;
+        }
 
         // ...
     }
@@ -268,6 +290,24 @@ Next, refactor the ``Document`` class to take advantage of these callbacks::
      */
     class Document
     {
+        private $temp;
+
+        /**
+         * Set file
+         *
+         * @param UploadedFile $file
+         */
+        public function setFile(UploadedFile $file)
+        {
+            $this->file = $file;
+            // check if we have an old image path
+            if (isset($this->path)) {
+                // store the old name to delete after the update
+                $this->temp = $this->path;
+            }
+            $this->path = null;
+        }
+
         /**
          * @ORM\PrePersist()
          * @ORM\PreUpdate()
@@ -297,6 +337,14 @@ Next, refactor the ``Document`` class to take advantage of these callbacks::
             $this->file->move($this->getUploadRootDir(), $this->path);
 
             unset($this->file);
+
+            //check if we have an old image
+            if (isset($this->temp)) {
+                // delete the old image
+                unlink($this->getUploadRootDir().'/'.$this->temp);
+                // clear the temp image path
+                $this->temp = null;
+            }
         }
 
         /**
@@ -357,8 +405,22 @@ property, instead of the actual filename::
      */
     class Document
     {
-        // a property used temporarily while deleting
-        private $filenameForRemove;
+        private $temp;
+
+        /**
+         * Set file
+         *
+         * @param UploadedFile $file
+         */
+        public function setFile(UploadedFile $file)
+        {
+            $this->file = $file;
+            // check if we have an old image path
+            if (is_file($this->getAbsolutePath())) {
+                //store the old name to delete after the update
+                $this->temp = $this->getAbsolutePath();
+            }
+        }
 
         /**
          * @ORM\PrePersist()
@@ -390,6 +452,14 @@ property, instead of the actual filename::
             );
 
             unset($this->file);
+
+            //check if we have an old image
+            if (isset($this->temp)) {
+                // delete the old image
+                unlink($this->temp);
+                // clear the temp image path
+                $this->temp = null;
+            }
         }
 
         /**
@@ -397,7 +467,7 @@ property, instead of the actual filename::
          */
         public function storeFilenameForRemove()
         {
-            $this->filenameForRemove = $this->getAbsolutePath();
+            $this->temp = $this->getAbsolutePath();
         }
 
         /**
@@ -405,8 +475,8 @@ property, instead of the actual filename::
          */
         public function removeUpload()
         {
-            if ($this->filenameForRemove) {
-                unlink($this->filenameForRemove);
+            if ($this->temp) {
+                unlink($this->temp);
             }
         }
 
