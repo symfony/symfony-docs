@@ -895,10 +895,10 @@ given prefix, ``/esi``, from outside access:
 Here is how it works when the path is ``/esi/something`` coming from the
 ``10.0.0.1`` IP:
 
-* The first access control rule does not match and is ignored as the ``path``
-  matches but the ``ip`` does not;
+* The first access control rule is ignored as the ``path`` matches but the
+  ``ip`` does not;
 
-* The second access control rule matches (the only restriction being the
+* The second access control rule is enabled (the only restriction being the
   ``path`` and it matches): as the user cannot have the ``ROLE_NO_ACCESS``
   role as it's not defined, access is denied (the ``ROLE_NO_ACCESS`` role can
   be anything that does not match an existing role, it just serves as a trick
@@ -906,7 +906,7 @@ Here is how it works when the path is ``/esi/something`` coming from the
 
 Now, if the same request comes from ``127.0.0.1``:
 
-* Now, the first access control rule does match as both the ``path`` and the
+* Now, the first access control rule is enabled as both the ``path`` and the
   ``ip`` match: access is allowed as the user always has the
   ``IS_AUTHENTICATED_ANONYMOUSLY`` role.
 
