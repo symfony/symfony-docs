@@ -1254,7 +1254,7 @@ in a JavaScript string, use the ``js`` context:
 
 .. code-block:: js
 
-    var myMsg = 'Hello <?php echo $view->escape($name, 'js') ?>';
+    var myMsg = "Hello <?php echo $view->escape($name, 'js') ?>";
 
 .. index::
    single: Templating; Formats
