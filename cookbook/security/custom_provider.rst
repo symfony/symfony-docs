@@ -23,14 +23,14 @@ however you want and contain any data. The only requirement is that the
 class implements :class:`Symfony\\Component\\Security\\Core\\User\\UserInterface`.
 The methods in this interface should therefore be defined in the custom user
 class: :method:`Symfony\\Component\\Security\\Core\\User\\UserInterface::getRoles`,
-:method`Symfony\\Component\\Security\\Core\\User\\UserInterfacegetPassword`,
+:method:`Symfony\\Component\\Security\\Core\\User\\UserInterface::getPassword`,
 :method:`Symfony\\Component\\Security\\Core\\User\\UserInterface::getSalt`,
 :method:`Symfony\\Component\\Security\\Core\\User\\UserInterface::getUsername`,
 :method:`Symfony\\Component\\Security\\Core\\User\\UserInterface::eraseCredentials`.
-It is also usefull to implement the 
+It may also be useful to implement the
 :class:`Symfony\\Component\\Security\\Core\\User\\EquatableInterface` interface,
-to define a method how check if the user is equal to the current user. This
-interface requires a :method:`Symfony\\Component\\Security\\Core\\User\\EquatableInterface::isEqualTo`
+which defines a method to check if the user is equal to the current user. This
+interface requires an :method:`Symfony\\Component\\Security\\Core\\User\\EquatableInterface::isEqualTo`
 method.
 
 Let's see this in action::
@@ -103,8 +103,8 @@ Let's see this in action::
     }
 
 .. versionadded:: 2.1
-    The ``EquatableInterface`` was added in Symfony 2.1, use the ``equals()``
-    method of the ``UserInterface`` in Symfony 2.0
+    The ``EquatableInterface`` was added in Symfony 2.1. Use the ``equals()``
+    method of the ``UserInterface`` in Symfony 2.0.
 
 If you have more information about your users - like a "first name" - then
 you can add a ``firstName`` field to hold that data.
