@@ -91,10 +91,11 @@ Available Options
 schemes
 -------
 
-**type**: ``array`` [:ref:`default option<validation-default-option>`]
+**type**: ``mixed`` [:ref:`default option<validation-default-option>`]
 
 This option is required and represents the name of the number scheme used to 
-validate the credit card number. Valid values are:
+validate the credit card number, it can either be a string or an array. Valid
+values are:
 
 * ``AMEX``
 * ``CHINA_UNIONPAY``
