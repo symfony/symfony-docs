@@ -338,7 +338,7 @@ Next, refactor the ``Document`` class to take advantage of these callbacks::
 
             unset($this->file);
 
-            //check if we have an old image
+            // check if we have an old image
             if (isset($this->temp)) {
                 // delete the old image
                 unlink($this->getUploadRootDir().'/'.$this->temp);
