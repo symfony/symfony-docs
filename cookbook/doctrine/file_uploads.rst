@@ -133,7 +133,7 @@ rules::
         private $file;
 
         /**
-         * Set file
+         * Sets file
          *
          * @param UploadedFile $file
          */
@@ -417,7 +417,7 @@ property, instead of the actual filename::
             $this->file = $file;
             // check if we have an old image path
             if (is_file($this->getAbsolutePath())) {
-                //store the old name to delete after the update
+                // store the old name to delete after the update
                 $this->temp = $this->getAbsolutePath();
             }
         }
@@ -453,7 +453,7 @@ property, instead of the actual filename::
 
             unset($this->file);
 
-            //check if we have an old image
+            // check if we have an old image
             if (isset($this->temp)) {
                 // delete the old image
                 unlink($this->temp);
@@ -475,7 +475,7 @@ property, instead of the actual filename::
          */
         public function removeUpload()
         {
-            if ($this->temp) {
+            if (isset($this->temp)) {
                 unlink($this->temp);
             }
         }
