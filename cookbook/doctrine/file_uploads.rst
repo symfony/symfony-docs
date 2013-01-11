@@ -293,7 +293,7 @@ Next, refactor the ``Document`` class to take advantage of these callbacks::
         private $temp;
 
         /**
-         * Set file
+         * Sets file
          *
          * @param UploadedFile $file
          */
@@ -408,7 +408,7 @@ property, instead of the actual filename::
         private $temp;
 
         /**
-         * Set file
+         * Sets file
          *
          * @param UploadedFile $file
          */
