@@ -48,7 +48,7 @@ when compiling the container. Read the sidebar below for more details.
       *RequestA*) is passed to it. Life is good!
 
     * You've now made a subrequest in Symfony, which is a fancy way of saying
-      that you've called, for example, the `{% render ... %}` Twig function,
+      that you've called, for example, the `{{ render(...) }}` Twig function,
       which executes another controller. Internally, the old `request` service
       (*RequestA*) is actually replaced by a new request instance (*RequestB*).
       This happens in the background, and it's totally normal.
