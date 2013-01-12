@@ -170,7 +170,7 @@ And change the ``index.html.twig`` template to include it:
 
     {# override the body block from embedded.html.twig #}
     {% block content %}
-        {% include "AcmeDemoBundle:Demo:embedded.html.twig" %}
+        {{ include("AcmeDemoBundle:Demo:embedded.html.twig") }}
     {% endblock %}
 
 Embedding other Controllers
