@@ -133,7 +133,7 @@ rules::
         private $file;
 
         /**
-         * Sets file
+         * Sets file.
          *
          * @param UploadedFile $file
          */
@@ -143,7 +143,7 @@ rules::
         }
 
         /**
-         * Get file
+         * Get file.
          *
          * @return UploadedFile
          */
@@ -293,7 +293,7 @@ Next, refactor the ``Document`` class to take advantage of these callbacks::
         private $temp;
 
         /**
-         * Sets file
+         * Sets file.
          *
          * @param UploadedFile $file
          */
@@ -408,7 +408,7 @@ property, instead of the actual filename::
         private $temp;
 
         /**
-         * Sets file
+         * Sets file.
          *
          * @param UploadedFile $file
          */
