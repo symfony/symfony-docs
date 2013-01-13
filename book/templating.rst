@@ -560,6 +560,10 @@ template using the ``with`` command.
     maps (i.e. an array with named keys). If you needed to pass in multiple
     elements, it would look like this: ``{'foo': foo, 'bar': bar}``.
 
+.. versionadded:: 2.2
+    The ``include()`` function is a new Twig feature that's available in
+    Symfony 2.2. Prior, the ``{% include %}`` tag was used.
+
 .. index::
    single: Templating; Embedding action
 
@@ -715,10 +719,10 @@ in your application configuration:
         ));
 
 .. versionadded:: 2.2
-    Default templates per render tag was added in Symfony 2.2
+    Default templates per render function was added in Symfony 2.2
 
-You can define default templates per ``render`` tag (which will override
-any global default templates that is defined):
+You can define default templates per ``render`` function (which will override
+any global default template that is defined):
 
 .. configuration-block::
 

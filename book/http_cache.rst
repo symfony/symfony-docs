@@ -906,12 +906,13 @@ writing the ESI tag yourself. That's because using a helper makes your
 application work even if there is no gateway cache installed.
 
 When using the default ``render`` function (or setting the strategy to
-``default``), Symfony2 merges the included page content within the main one
-before sending the response to the client. But when using ``esi`` strategy,
-*and* if Symfony2 detects that it's talking to a gateway cache that supports
-ESI, it generates an ESI include tag. But if there is no gateway cache or if
-it does not support ESI, Symfony2 will just merge the included page content
-within the main one as it would have done if you had used ``render``.
+``default``), Symfony2 merges the included page content into the main one
+before sending the response to the client. But if you use the ``esi`` strategy
+(i.e. call ``render_esi``), *and* if Symfony2 detects that it's talking to
+a gateway cache that supports ESI, it generates an ESI include tag. But if
+there is no gateway cache or if it does not support ESI, Symfony2 will just
+merge the included page content within the main one as it would have done
+if you had used ``render``.
 
 .. note::
 
@@ -938,8 +939,8 @@ When using a controller reference, the ESI tag should reference the embedded
 action as an accessible URL so the gateway cache can fetch it independently of
 the rest of the page. Of course, an action can't be accessed via a URL unless
 it has a route that points to it. Symfony2 takes care of this via a generic
-route and controller. For the ESI include tag to work properly, you must
-define the ``_proxy`` route:
+route. For the ESI include tag to work properly, you must define the ``_proxy``
+route:
 
 .. configuration-block::
 
@@ -975,6 +976,12 @@ define the ``_proxy`` route:
 One great advantage of this caching strategy is that you can make your
 application as dynamic as needed and at the same time, hit the application as
 little as possible.
+
+.. tip::
+
+    The proxy route doesn't point to a real controller. Instead, it's handled
+    by an internal :class:`Symfony\\Component\\HttpKernel\\EventListener\\RouterProxyListener`
+    class. This listener only responds to local IP addresses or trusted proxies.
 
 .. note::
 

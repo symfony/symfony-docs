@@ -20,20 +20,27 @@ Functions
 .. versionadded:: 2.1
     The ``csrf_token``, ``logout_path`` and ``logout_url`` functions were added in Symfony2.1
 
+.. versionadded:: 2.3
+    The ``render`` and ``controller`` functions are new in Symfony 2.2. Prior,
+    the ``{% render %}`` tag was used and had a different signature.
+
 +----------------------------------------------------+--------------------------------------------------------------------------------------------+
 | Function Syntax                                    | Usage                                                                                      |
 +====================================================+============================================================================================+
-| ``render(controller('B:C:a', {params}))``          | This will render the Response Content for the given controller or                          |
-| ``render(path('route', {params}))``                | URL. For more information, see :ref:`templating-embedding-controller`.                     |
+| ``render(uri, options = {})``                      | This will render the Response Content for the given controller or                          |
+| ``render(controller('B:C:a', {params}))``          | URL. For more information, see :ref:`templating-embedding-controller`.                     |
+| ``render(path('route', {params}))``                |                                                                                            |
 | ``render(url('route', {params}))``                 |                                                                                            |
 +----------------------------------------------------+--------------------------------------------------------------------------------------------+
 | ``render_esi(controller('B:C:a', {params}))``      | This will generates an ESI tag when possible or fallback to the ``render``                 |
 | ``render_esi(url('route', {params}))``             | behavior otherwise. For more information, see :ref:`templating-embedding-controller`.      |
 | ``render_esi(path('route', {params}))``            |                                                                                            |
 +----------------------------------------------------+--------------------------------------------------------------------------------------------+
-| ``render_hinclude(controller('B:C:a', {params}))`` | This will generates an Hinclude tag for the given controller or URL.                       |
+| ``render_hinclude(controller(...))``               | This will generates an Hinclude tag for the given controller or URL.                       |
 | ``render_hinclude(url('route', {params}))``        | For more information, see :ref:`templating-embedding-controller`.                          |
 | ``render_hinclude(path('route', {params}))``       |                                                                                            |
++----------------------------------------------------+--------------------------------------------------------------------------------------------+
+| ``controller(attributes = {}, query = {})``        | Used along with the ``render`` tag to refer to the controller that you want to render      |
 +----------------------------------------------------+--------------------------------------------------------------------------------------------+
 | ``asset(path, packageName = null)``                | Get the public path of the asset, more information in                                      |
 |                                                    | ":ref:`book-templating-assets`".                                                           |

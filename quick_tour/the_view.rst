@@ -182,7 +182,7 @@ some variable not available in the main template.
 
 Suppose you've created a ``fancyAction`` controller method, and you want to
 "render" it inside the ``index`` template, which means including the result
-(e.g. ``HTML``) of the controller, use the ``render`` function:
+(e.g. ``HTML``) of the controller. To do this, use the ``render`` function:
 
 .. code-block:: jinja
 
