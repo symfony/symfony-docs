@@ -771,27 +771,27 @@ Take the following ``access_control`` entries as an example:
         security:
             # ...
             access_control:
-                - { path: ^/user, roles: ROLE_USER_IP, ip: 127.0.0.1 }
-                - { path: ^/user, roles: ROLE_USER_HOST, host: symfony.com }
-                - { path: ^/user, roles: ROLE_USER_METHOD, methods: [POST, PUT] }
-                - { path: ^/user, roles: ROLE_USER }
+                - { path: ^/admin/user, roles: ROLE_USER_IP, ip: 127.0.0.1 }
+                - { path: ^/admin/user, roles: ROLE_USER_HOST, host: symfony.com }
+                - { path: ^/admin/user, roles: ROLE_USER_METHOD, methods: [POST, PUT] }
+                - { path: ^/admin/user, roles: ROLE_USER }
 
     .. code-block:: xml
 
             <access-control>
-                <rule path="^/user" role="ROLE_USER_IP" ip="127.0.0.1" />
-                <rule path="^/user" role="ROLE_USER_HOST" host="symfony.com" />
-                <rule path="^/user" role="ROLE_USER_METHOD" method="POST, PUT" />
-                <rule path="^/user" role="ROLE_USER" />
+                <rule path="^/admin/user" role="ROLE_USER_IP" ip="127.0.0.1" />
+                <rule path="^/admin/user" role="ROLE_USER_HOST" host="symfony.com" />
+                <rule path="^/admin/user" role="ROLE_USER_METHOD" method="POST, PUT" />
+                <rule path="^/admin/user" role="ROLE_USER" />
             </access-control>
 
     .. code-block:: php
 
             'access_control' => array(
-                array('path' => '^/user', 'role' => 'ROLE_USER_IP', 'ip' => '127.0.0.1'),
-                array('path' => '^/user', 'role' => 'ROLE_USER_HOST', 'host' => 'symfony.com'),
-                array('path' => '^/user', 'role' => 'ROLE_USER_METHOD', 'method' => 'POST, PUT'),
-                array('path' => '^/user', 'role' => 'ROLE_USER'),
+                array('path' => '^/admin/user', 'role' => 'ROLE_USER_IP', 'ip' => '127.0.0.1'),
+                array('path' => '^/admin/user', 'role' => 'ROLE_USER_HOST', 'host' => 'symfony.com'),
+                array('path' => '^/admin/user', 'role' => 'ROLE_USER_METHOD', 'method' => 'POST, PUT'),
+                array('path' => '^/admin/user', 'role' => 'ROLE_USER'),
             ),
 
 For each incoming request, Symfony will decided which ``access_control``
