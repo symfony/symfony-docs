@@ -64,7 +64,7 @@ this is probably only useful if you'd like to cache this page partial (see
 
     .. code-block:: html+jinja
 
-        {% render url('acme_privacy') %}
+        {{ render(url('acme_privacy')) }}
 
     .. code-block:: html+php
 

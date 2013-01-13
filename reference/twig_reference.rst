@@ -23,6 +23,18 @@ Functions
 +----------------------------------------------------+--------------------------------------------------------------------------------------------+
 | Function Syntax                                    | Usage                                                                                      |
 +====================================================+============================================================================================+
+| ``render(controller('B:C:a', {params}))``          | This will render the Response Content for the given controller or                          |
+| ``render(path('route', {params}))``                | URL. For more information, see :ref:`templating-embedding-controller`.                     |
+| ``render(url('route', {params}))``                 |                                                                                            |
++----------------------------------------------------+--------------------------------------------------------------------------------------------+
+| ``render_esi(controller('B:C:a', {params}))``      | This will generates an ESI tag when possible or fallback to the ``render``                 |
+| ``render_esi(url('route', {params}))``             | behavior otherwise. For more information, see :ref:`templating-embedding-controller`.      |
+| ``render_esi(path('route', {params}))``            |                                                                                            |
++----------------------------------------------------+--------------------------------------------------------------------------------------------+
+| ``render_hinclude(controller('B:C:a', {params}))`` | This will generates an Hinclude tag for the given controller or URL.                       |
+| ``render_hinclude(url('route', {params}))``        | For more information, see :ref:`templating-embedding-controller`.                          |
+| ``render_hinclude(path('route', {params}))``       |                                                                                            |
++----------------------------------------------------+--------------------------------------------------------------------------------------------+
 | ``asset(path, packageName = null)``                | Get the public path of the asset, more information in                                      |
 |                                                    | ":ref:`book-templating-assets`".                                                           |
 +----------------------------------------------------+--------------------------------------------------------------------------------------------+
@@ -113,10 +125,6 @@ Tags
 +---------------------------------------------------+-------------------------------------------------------------------+
 | Tag Syntax                                        | Usage                                                             |
 +===================================================+===================================================================+
-| ``{% render url('route', {parameters}) %}``       | This will render the Response Content for the given controller    |
-|                                                   | that the URL points to. For more information,                     |
-|                                                   | see :ref:`templating-embedding-controller`.                       |
-+---------------------------------------------------+-------------------------------------------------------------------+
 | ``{% form_theme form 'file' %}``                  | This will look inside the given file for overridden form blocks,  |
 |                                                   | more information in :doc:`/cookbook/form/form_customization`.     |
 +---------------------------------------------------+-------------------------------------------------------------------+

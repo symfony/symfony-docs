@@ -532,9 +532,7 @@ Including this template from any other template is simple:
             <h1>Recent Articles<h1>
 
             {% for article in articles %}
-                {% include 'AcmeArticleBundle:Article:articleDetails.html.twig'
-                       with {'article': article}
-                %}
+                {{ include('AcmeArticleBundle:Article:articleDetails.html.twig', {'article': article}) }}
             {% endfor %}
         {% endblock %}
 
@@ -551,7 +549,7 @@ Including this template from any other template is simple:
             <?php endforeach; ?>
         <?php $view['slots']->stop() ?>
 
-The template is included using the ``{% include %}`` tag. Notice that the
+The template is included using the ``{{ include() }}`` function. Notice that the
 template name follows the same typical convention. The ``articleDetails.html.twig``
 template uses an ``article`` variable. This is passed in by the ``list.html.twig``
 template using the ``with`` command.
@@ -623,43 +621,8 @@ The ``recentList`` template is perfectly straightforward:
     (e.g. ``/article/*slug*``). This is a bad practice. In the next section,
     you'll learn how to do this correctly.
 
-Even though this controller will only be used internally, you'll need to
-create a route that points to the controller:
-
-.. configuration-block::
-
-    .. code-block:: yaml
-
-        latest_articles:
-            pattern:  /articles/latest/{max}
-            defaults: { _controller: AcmeArticleBundle:Article:recentArticles }
-
-    .. code-block:: xml
-
-        <?xml version="1.0" encoding="UTF-8" ?>
-
-        <routes xmlns="http://symfony.com/schema/routing"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/routing http://symfony.com/schema/routing/routing-1.0.xsd">
-
-            <route id="latest_articles" pattern="/articles/latest/{max}">
-                <default key="_controller">AcmeArticleBundle:Article:recentArticles</default>
-            </route>
-        </routes>
-
-    .. code-block:: php
-
-        use Symfony\Component\Routing\RouteCollection;
-        use Symfony\Component\Routing\Route;
-
-        $collection = new RouteCollection();
-        $collection->add('latest_articles', new Route('/articles/latest/{max}', array(
-            '_controller' => 'AcmeArticleBundle:Article:recentArticles',
-        )));
-
-        return $collection;
-
-To include the controller, you'll need to refer to it using an absolute url:
+To include the controller, you'll need to refer to it using the standard
+string syntax for controllers (i.e. **bundle**:**controller**:**action**):
 
 .. configuration-block::
 
@@ -669,7 +632,7 @@ To include the controller, you'll need to refer to it using an absolute url:
 
         {# ... #}
         <div id="sidebar">
-            {% render url('latest_articles', { 'max': 3 }) %}
+            {{ render(controller('AcmeArticleBundle:Article:recentArticles', { 'max': 3 })) }}
         </div>
 
     .. code-block:: html+php
@@ -679,11 +642,9 @@ To include the controller, you'll need to refer to it using an absolute url:
         <!-- ... -->
         <div id="sidebar">
             <?php echo $view['actions']->render(
-                $view['router']->generate('latest_articles', array('max' => 3), true)
+                new ControllerReference('AcmeArticleBundle:Article:recentArticles', array('max' => 3))
             ) ?>
         </div>
-
-.. include:: /book/_security-2012-6431.rst.inc
 
 Whenever you find that you need a variable or a piece of information that
 you don't have access to in a template, consider rendering a controller.
@@ -703,13 +664,20 @@ Symfony2 uses the standard ``render`` helper to configure ``hinclude`` tags:
 
     .. code-block:: jinja
 
-        {% render url('...'), {'standalone': 'js'} %}
+        {{ render_hinclude(controller('...')) }}
+
+        {{ render_hinclude(url('...')) }}
 
     .. code-block:: php
 
         <?php echo $view['actions']->render(
+            new ControllerReference('...'),
+            array('strategy' => 'hinclude')
+        ) ?>
+
+        <?php echo $view['actions']->render(
             $view['router']->generate('...'),
-            array('standalone' => 'js')
+            array('strategy' => 'hinclude')
         ) ?>
 
 .. note::
@@ -756,18 +724,14 @@ any global default templates that is defined):
 
     .. code-block:: jinja
 
-        {% render '...:news' with 
-            {}, 
-            {'standalone': 'js', 'default': 'AcmeDemoBundle:Default:content.html.twig'} 
-        %}
+        {{ render_hinclude(controller('...'),  {'default': 'AcmeDemoBundle:Default:content.html.twig'}) }}
 
     .. code-block:: php
 
         <?php echo $view['actions']->render(
-            '...:news',
-            array(),
+            new ControllerReference('...'),
             array(
-                'standalone' => 'js',
+                'strategy' => 'hinclude',
                 'default' => 'AcmeDemoBundle:Default:content.html.twig',
             )
         ) ?>
@@ -778,18 +742,14 @@ Or you can also specify a string to display as the default content:
 
     .. code-block:: jinja
 
-        {% render '...:news' with 
-            {}, 
-            {'standalone': 'js', 'default': 'Loading...'} 
-        %}
+        {{ render_hinclude(controller('...'), {'default': 'Loading...'}) }}
 
     .. code-block:: php
 
         <?php echo $view['actions']->render(
-            '...:news',
-            array(),
+            new ControllerReference('...'),
             array(
-                'standalone' => 'js',
+                'strategy' => 'hinclude',
                 'default' => 'Loading...',
             )
         ) ?>
