@@ -91,8 +91,29 @@ services related to testing your application (e.g. ``test.client``) are loaded.
 This setting should be present in your ``test`` environment (usually via
 ``app/config/config_test.yml``). For more information, see :doc:`/book/testing`.
 
+trusted_proxies
+~~~~~~~~~~~~~~~
+
+**type**: ``array``
+
+Configures the IP addresses that should be trusted as proxies. For more details,
+see :doc:`/components/http_foundation/trusting_proxies`.
+
+.. code-block:: yaml
+
+    framework:
+        trusted_proxies:  [192.0.0.1]
+
 trust_proxy_headers
 ~~~~~~~~~~~~~~~~~~~
+
+.. caution::
+
+    The ``trust_proxy_headers`` option is deprecated and will be removed in
+    Symfony 2.3. See `trusted_proxies`_ and :doc:`/components/http_foundation/trusting_proxies`
+    for details on how to properly trust proxy data.
+
+**Deprecated**: This option will be removed in Symfony 2.3. Instead, use
 
 **type**: ``Boolean``
 

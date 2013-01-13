@@ -49,6 +49,7 @@
 * :doc:`/components/http_foundation/index`
 
   * :doc:`/components/http_foundation/introduction`
+  * :doc:`/components/http_foundation/trusting_proxies`
 
 * :doc:`/components/http_kernel/index`
 
