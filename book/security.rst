@@ -921,8 +921,6 @@ Now, if the same request comes from ``127.0.0.1``:
 
 * The second access rule is not examined as the first rule matched.
 
-.. include:: /book/_security-2012-6431.rst.inc
-
 .. _book-security-securing-channel:
 
 Securing by Channel
