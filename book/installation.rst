@@ -118,30 +118,28 @@ If there are any issues, correct them now before moving on.
     a UNIX system, if your web server user is different from your command
     line user, you can run the following commands just once in your project
     to ensure that permissions will be setup properly.
-    
-    Note that not all web servers run as the user ``www-data`` as in the examples
-    below. You have to check which user the web server is being run as and put it
-    in for ``www-data``. This can be done by checking your process list to see
-    which user is running your web server processes.
-    
-    Depending on your system this may easily be accomplished with one of the
-    follwing commands:
-    
+
+    **Note that not all web servers run as the user** ``www-data`` as in the examples
+    below. Instead, check which user *your* web server is being run as and
+    use it place of ``www-data``.
+
+    On a UNIX system, this can be done with one of the following commands:
+
     .. code-block:: bash
     
         $ ps aux | grep httpd
-        
+
     or
-    
+
     .. code-block:: bash
-    
+
         $ ps aux | grep apache
-    
 
     **1. Using ACL on a system that supports chmod +a**
 
     Many systems allow you to use the ``chmod +a`` command. Try this first,
-    and if you get an error - try the next method:
+    and if you get an error - try the next method. Be sure to replace ``www-data``
+    with your web server user on the first ``chmod`` command:
 
     .. code-block:: bash
 
