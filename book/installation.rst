@@ -117,8 +117,26 @@ If there are any issues, correct them now before moving on.
     must be writable both by the web server and the command line user. On
     a UNIX system, if your web server user is different from your command
     line user, you can run the following commands just once in your project
-    to ensure that permissions will be setup properly. Change ``www-data``
-    to your web server user:
+    to ensure that permissions will be setup properly.
+    
+    Note that not all web servers run as the user ``www-data`` as in the examples
+    below. You have to check which user the web server is being run as and put it
+    in for ``www-data``. This can be done by checking your process list to see
+    which user is running your web server processes.
+    
+    Depending on your system this may easily be accomplished with one of the
+    follwing commands:
+    
+    .. code-block:: bash
+    
+        $ ps aux | grep httpd
+        
+    or
+    
+    .. code-block:: bash
+    
+        $ ps aux | grep apache
+    
 
     **1. Using ACL on a system that supports chmod +a**
 
@@ -132,7 +150,7 @@ If there are any issues, correct them now before moving on.
 
         $ sudo chmod +a "www-data allow delete,write,append,file_inherit,directory_inherit" app/cache app/logs
         $ sudo chmod +a "`whoami` allow delete,write,append,file_inherit,directory_inherit" app/cache app/logs
-
+    
     **2. Using Acl on a system that does not support chmod +a**
 
     Some systems don't support ``chmod +a``, but do support another utility
@@ -144,11 +162,6 @@ If there are any issues, correct them now before moving on.
 
         $ sudo setfacl -R -m u:www-data:rwx -m u:`whoami`:rwx app/cache app/logs
         $ sudo setfacl -dR -m u:www-data:rwx -m u:`whoami`:rwx app/cache app/logs
-
-    Note that not all web servers run as the user ``www-data``. You have to
-    check which user the web server is being run as and put it in for ``www-data``.
-    This can be done by checking your process list to see which user is running
-    your web server processes.
 
     **3. Without using ACL**
 
