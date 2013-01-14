@@ -780,27 +780,27 @@ Take the following ``access_control`` entries as an example:
         security:
             # ...
             access_control:
-                - { path: ^/user, roles: ROLE_USER_IP, ip: 127.0.0.1 }
-                - { path: ^/user, roles: ROLE_USER_HOST, host: symfony.com }
-                - { path: ^/user, roles: ROLE_USER_METHOD, methods: [POST, PUT] }
-                - { path: ^/user, roles: ROLE_USER }
+                - { path: ^/admin, roles: ROLE_USER_IP, ip: 127.0.0.1 }
+                - { path: ^/admin, roles: ROLE_USER_HOST, host: symfony.com }
+                - { path: ^/admin, roles: ROLE_USER_METHOD, methods: [POST, PUT] }
+                - { path: ^/admin, roles: ROLE_USER }
 
     .. code-block:: xml
 
             <access-control>
-                <rule path="^/user" role="ROLE_USER_IP" ip="127.0.0.1" />
-                <rule path="^/user" role="ROLE_USER_HOST" host="symfony.com" />
-                <rule path="^/user" role="ROLE_USER_METHOD" method="POST, PUT" />
-                <rule path="^/user" role="ROLE_USER" />
+                <rule path="^/admin" role="ROLE_USER_IP" ip="127.0.0.1" />
+                <rule path="^/admin" role="ROLE_USER_HOST" host="symfony.com" />
+                <rule path="^/admin" role="ROLE_USER_METHOD" method="POST, PUT" />
+                <rule path="^/admin" role="ROLE_USER" />
             </access-control>
 
     .. code-block:: php
 
             'access_control' => array(
-                array('path' => '^/user', 'role' => 'ROLE_USER_IP', 'ip' => '127.0.0.1'),
-                array('path' => '^/user', 'role' => 'ROLE_USER_HOST', 'host' => 'symfony.com'),
-                array('path' => '^/user', 'role' => 'ROLE_USER_METHOD', 'method' => 'POST, PUT'),
-                array('path' => '^/user', 'role' => 'ROLE_USER'),
+                array('path' => '^/admin', 'role' => 'ROLE_USER_IP', 'ip' => '127.0.0.1'),
+                array('path' => '^/admin', 'role' => 'ROLE_USER_HOST', 'host' => 'symfony.com'),
+                array('path' => '^/admin', 'role' => 'ROLE_USER_METHOD', 'method' => 'POST, PUT'),
+                array('path' => '^/admin', 'role' => 'ROLE_USER'),
             ),
 
 For each incoming request, Symfony will decided which ``access_control``
@@ -904,10 +904,10 @@ given prefix, ``/esi``, from outside access:
 Here is how it works when the path is ``/esi/something`` coming from the
 ``10.0.0.1`` IP:
 
-* The first access control rule does not match and is ignored as the ``path``
-  matches but the ``ip`` does not;
+* The first access control rule is ignored as the ``path`` matches but the
+  ``ip`` does not;
 
-* The second access control rule matches (the only restriction being the
+* The second access control rule is enabled (the only restriction being the
   ``path`` and it matches): as the user cannot have the ``ROLE_NO_ACCESS``
   role as it's not defined, access is denied (the ``ROLE_NO_ACCESS`` role can
   be anything that does not match an existing role, it just serves as a trick
@@ -915,7 +915,7 @@ Here is how it works when the path is ``/esi/something`` coming from the
 
 Now, if the same request comes from ``127.0.0.1``:
 
-* Now, the first access control rule does match as both the ``path`` and the
+* Now, the first access control rule is enabled as both the ``path`` and the
   ``ip`` match: access is allowed as the user always has the
   ``IS_AUTHENTICATED_ANONYMOUSLY`` role.
 
