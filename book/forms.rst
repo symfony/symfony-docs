@@ -1381,7 +1381,7 @@ But sometimes, you may just want to use a form without a class, and get back
 an array of the submitted data. This is actually really easy::
 
     // make sure you've imported the Request namespace above the class
-    use Symfony\Component\HttpFoundation\Request
+    use Symfony\Component\HttpFoundation\Request;
     // ...
 
     public function contactAction(Request $request)
