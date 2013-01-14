@@ -63,8 +63,8 @@ objects. Start by creating a simple ``Task`` class::
 .. note::
 
     The ``ArrayCollection`` is specific to Doctrine and is basically the
-    same as using an ``array`` (but it must be an ``ArrayCollection``) if
-    you're using Doctrine.
+    same as using an ``array`` (but it must be an ``ArrayCollection`` if
+    you're using Doctrine).
 
 Now, create a ``Tag`` class. As you saw above, a ``Task`` can have many ``Tag``
 objects::
