@@ -38,11 +38,12 @@ endpoint for filesystem operations::
 .. note::
 
     Methods :method:`Symfony\\Component\\Filesystem\\Filesystem::mkdir`,
-    :method:`Symfony\\Component\\Filesystem\\Filesystem::chown`,
-    :method:`Symfony\\Component\\Filesystem\\Filesystem::chgrp`,
-    :method:`Symfony\\Component\\Filesystem\\Filesystem::chown`,
-    :method:`Symfony\\Component\\Filesystem\\Filesystem::remove` and
-    :method:`Symfony\\Component\\Filesystem\\Filesystem::touch` can receive a
+    :method:`Symfony\\Component\\Filesystem\\Filesystem::exists`,
+    :method:`Symfony\\Component\\Filesystem\\Filesystem::touch`,
+    :method:`Symfony\\Component\\Filesystem\\Filesystem::remove`,
+    :method:`Symfony\\Component\\Filesystem\\Filesystem::chmod`,
+    :method:`Symfony\\Component\\Filesystem\\Filesystem::chown` and
+    :method:`Symfony\\Component\\Filesystem\\Filesystem::chgrp` can receive a
     string, an array or any object implementing :phpclass:`Traversable` as
     the target argument.
 
