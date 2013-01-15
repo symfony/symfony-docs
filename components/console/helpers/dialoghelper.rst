@@ -59,7 +59,7 @@ Hiding the User's Response
 .. versionadded:: 2.2
     The ``askHiddenResponse`` method was added in Symfony 2.2.
 
-You can also ask question and hide the response. This is particularly
+You can also ask a question and hide the response. This is particularly
 convenient for passwords::
 
     $dialog = $this->getHelperSet()->get('dialog');
