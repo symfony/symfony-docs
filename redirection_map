@@ -1,6 +1,7 @@
 /cookbook/doctrine/migrations /bundles/DoctrineFixturesBundle/index
 /cookbook/doctrine/doctrine_fixtures /bundles/DoctrineFixturesBundle/index
 /cookbook/doctrine/mongodb /bundles/DoctrineMongoDBBundle/index
+/cookbook/form/dynamic_form_generation /cookbook/form/dynamic_form_modification
 /cookbook/form/simple_signup_form_with_mongodb /bundles/DoctrineMongoDBBundle/form
 /cookbook/email /cookbook/email/email
 /cookbook/gmail /cookbook/email/gmail
