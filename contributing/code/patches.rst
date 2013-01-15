@@ -265,7 +265,13 @@ pull request message, like in:
 .. tip::
 
     Please use the title with "[WIP]" if the submission is not yet completed
-    or the tests are incomplete or not yet passing.
+    or the tests are incomplete or not yet passing. Also add a todo-list in
+    the pull-request description describing what still need to be done:
+
+    .. code-block:: text
+
+        - [ ] tests need to be updated
+        - [ ] documentation PR yet to be submitted
 
 The pull request description must include the following check list to ensure
 that contributions may be reviewed without needless feedback loops and that
@@ -273,27 +279,31 @@ your contributions can be included into Symfony2 as quickly as possible:
 
 .. code-block:: text
 
-    Bug fix: [yes|no]
-    Feature addition: [yes|no]
-    Backwards compatibility break: [yes|no]
-    Deprecations: [what, when|no]
-    Symfony2 tests pass: [yes|no]
-    Fixes the following tickets: [comma separated list of tickets fixed by the PR]
-    Todo: [list of todos pending]
-    License of the code: MIT
-    Documentation PR: [The reference to the documentation PR if any]
+    | Q             | A
+    | ------------- | ---
+    | Bug fix?      | [yes|no]
+    | New feature?  | [yes|no]
+    | BC breaks?    | [yes|no]
+    | Deprecations? | [yes|no]
+    | Tests pass?   | [yes|no]
+    | Fixed tickets | [comma separated list of tickets fixed by the PR]
+    | License       | MIT
+    | Doc PR        | [The reference to the documentation PR if any]
 
 An example submission could now look as follows:
 
 .. code-block:: text
 
-    Bug fix: no
-    Feature addition: yes
-    Backwards compatibility break: no
-    Fixes the following tickets: #12, #43
-    Todo: -
-    License of the code: MIT
-    Documentation PR: symfony/symfony-docs#123
+    | Q             | A
+    | ------------- | ---
+    | Bug fix?      | no
+    | New feature?  | no
+    | BC breaks?    | no
+    | Deprecations? | no
+    | Tests pass?   | yes
+    | Fixed tickets | #12, #43
+    | License       | MIT
+    | Doc PR        | symfony/symfony-docs#123
 
 In the pull request description, give as much details as possible about your
 changes (don't hesitate to give code examples to illustrate your points). If
