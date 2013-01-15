@@ -99,10 +99,24 @@ trusted_proxies
 Configures the IP addresses that should be trusted as proxies. For more details,
 see :doc:`/components/http_foundation/trusting_proxies`.
 
-.. code-block:: yaml
+.. configuration-block::
 
-    framework:
-        trusted_proxies:  [192.0.0.1]
+    .. code-block:: yaml
+
+        framework:
+            trusted_proxies:  [192.0.0.1]
+
+    .. code-block:: xml
+
+        <framework:config trusted-proxies="192.0.0.1">
+            <!-- ... -->
+        </framework>
+
+    .. code-block:: php
+
+        $container->loadFromExtension('framework', array(
+            'trusted_proxies' => array('192.0.0.1'),
+        ));
 
 trust_proxy_headers
 ~~~~~~~~~~~~~~~~~~~
@@ -112,8 +126,6 @@ trust_proxy_headers
     The ``trust_proxy_headers`` option is deprecated and will be removed in
     Symfony 2.3. See `trusted_proxies`_ and :doc:`/components/http_foundation/trusting_proxies`
     for details on how to properly trust proxy data.
-
-**Deprecated**: This option will be removed in Symfony 2.3. Instead, use
 
 **type**: ``Boolean``
 
