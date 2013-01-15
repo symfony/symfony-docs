@@ -200,10 +200,12 @@ Prepare your Patch for Submission
 When your patch is not about a bug fix (when you add a new feature or change
 an existing one for instance), it must also include the following:
 
-* An explanation of the changes in the relevant CHANGELOG file(s);
+* An explanation of the changes in the relevant CHANGELOG file(s) (the ``[BC
+  BREAK]`` or the ``[DEPRECATION]`` prefix must be used when relevant);
 
 * An explanation on how to upgrade an existing application in the relevant
-  UPGRADE file(s) if the changes break backward compatibility.
+  UPGRADE file(s) if the changes break backward compatibility or if you
+  deprecate something that will ultimately break backward compatibility.
 
 Step 3: Submit your Patch
 -------------------------
