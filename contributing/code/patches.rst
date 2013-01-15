@@ -305,6 +305,16 @@ An example submission could now look as follows:
     | License       | MIT
     | Doc PR        | symfony/symfony-docs#123
 
+For typos, minor changes in the PHPDocs, or changes in translation files, use
+the shorter version of the check-list:
+
+.. code-block:: text
+
+    | Q             | A
+    | ------------- | ---
+    | Fixed tickets | [comma separated list of tickets fixed by the PR]
+    | License       | MIT
+
 In the pull request description, give as much details as possible about your
 changes (don't hesitate to give code examples to illustrate your points). If
 your pull request is about adding a new feature or modifying an existing one,
