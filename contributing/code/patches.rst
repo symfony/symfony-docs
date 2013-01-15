@@ -264,17 +264,6 @@ pull request message, like in:
     [Yaml] fixed something
     [Form] [Validator] [FrameworkBundle] added something
 
-.. tip::
-
-    Please use the title with "[WIP]" if the submission is not yet completed
-    or the tests are incomplete or not yet passing. Also add a todo-list in
-    the pull-request description describing what still need to be done:
-
-    .. code-block:: text
-
-        - [ ] tests need to be updated
-        - [ ] documentation PR yet to be submitted
-
 The pull request description must include the following check list to ensure
 that contributions may be reviewed without needless feedback loops and that
 your contributions can be included into Symfony2 as quickly as possible:
@@ -316,6 +305,46 @@ the shorter version of the check-list:
     | ------------- | ---
     | Fixed tickets | [comma separated list of tickets fixed by the PR]
     | License       | MIT
+
+Some answers to the questions trigger some more requirements:
+
+ * If you answer yes to "Bug fix?", check if the bug is already listed in the
+   Symfony issues and reference it/them in "Fixed tickets";
+
+ * If you answer yes to "New feature?", you must submit a pull request to the
+   documentation and reference it under the "Doc PR" section;
+
+ * If you answer yes to "BC breaks?", the patch must contain updates to the
+   relevant CHANGELOG and UPGRADE files;
+
+ * If you answer yes to "Deprecations?", the patch must contain updates to the
+   relevant CHANGELOG and UPGRADE files;
+
+ * If you answer no to "Tests pass", you must add an item to a todo-list with
+   the actions that must be done to fix the tests;
+
+ * If the "license" is not MIT, just don't submit the pull request as it won't
+   be accepted anyway.
+
+If some of the previous requirements are not met, create a todo-list and add
+relevant items:
+
+.. code-block:: text
+
+    - [ ] fix the tests as they have not been updated yet
+    - [ ] submit changes to the documentation
+    - [ ] document the BC breaks
+
+If the code is not finished yet because you don't have time to finish it or
+because you want early feedback on your work, add an item to todo-list:
+
+.. code-block:: text
+
+    - [ ] finish the code
+    - [ ] gather feedback my changes
+
+As long as you have items in the todo-list, please prefix the pull request
+title with "[WIP]".
 
 In the pull request description, give as much details as possible about your
 changes (don't hesitate to give code examples to illustrate your points). If
