@@ -699,7 +699,7 @@ the ``ROLE_ADMIN`` role.
 .. caution::
 
     Understanding exactly how ``access_control`` works is **very** important
-    to make sure you application is properly secured. See :ref:`security-book-access-control-explanation`
+    to make sure your application is properly secured. See :ref:`security-book-access-control-explanation`
     below for detailed information.
 
 You can define as many URL patterns as you need - each is a regular expression.
