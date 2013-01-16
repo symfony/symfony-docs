@@ -11,6 +11,7 @@ using an email address that already exists in the system.
 | Options        | - `fields`_                                                                         |
 |                | - `message`_                                                                        |
 |                | - `em`_                                                                             |
+|                | - `repositoryMethod`_                                                                             |
 +----------------+-------------------------------------------------------------------------------------+
 | Class          | :class:`Symfony\\Bridge\\Doctrine\\Validator\\Constraints\\UniqueEntity`            |
 +----------------+-------------------------------------------------------------------------------------+
@@ -111,3 +112,11 @@ The name of the entity manager to use for making the query to determine the
 uniqueness. If it's left blank, the correct entity manager will determined for
 this class. For that reason, this option should probably not need to be
 used.
+
+repositoryMethod
+~~~~~~~~~~~~~~~~
+
+**type**: ``string``
+
+The name of the repository method to use for making the query to determine the
+uniqueness. If it's left blank, the findBy method will be used. This method should return a countable result.
