@@ -218,16 +218,16 @@ The Login Form and Process
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 *   ``login_path`` (type: ``string``, default: ``/login``)
-    This is the URL that the user will be redirected to (unless ``use_forward``
+    This is the path that the user will be redirected to (unless ``use_forward``
     is set to ``true``) when he/she tries to access a protected resource
     but isn't fully authenticated.
 
-    This URL **must** be accessible by a normal, un-authenticated user, else
+    This path **must** be accessible by a normal, un-authenticated user, else
     you may create a redirect loop. For details, see
     ":ref:`Avoid Common Pitfalls<book-security-common-pitfalls>`".
 
 *   ``check_path`` (type: ``string``, default: ``/login_check``)
-    This is the URL that your login form must submit to. The firewall will
+    This is the path that your login form must submit to. The firewall will
     intercept any requests (``POST`` requests only, by default) to this URL
     and process the submitted login credentials.
 
