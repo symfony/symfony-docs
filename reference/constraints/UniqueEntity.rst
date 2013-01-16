@@ -113,10 +113,12 @@ uniqueness. If it's left blank, the correct entity manager will determined for
 this class. For that reason, this option should probably not need to be
 used.
 
+
 repositoryMethod
 ~~~~~~~~~~~~~~~~
 
 **type**: ``string``
 
+.. versionadded:: 2.1
 The name of the repository method to use for making the query to determine the
 uniqueness. If it's left blank, the findBy method will be used. This method should return a countable result.
