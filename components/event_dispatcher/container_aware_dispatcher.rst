@@ -74,7 +74,7 @@ The ``EventSubscriberInterface`` will be exactly as you would expect::
 
     class StoreSubscriber implements EventSubscriberInterface
     {
-        static public function getSubscribedEvents()
+        public static function getSubscribedEvents()
         {
             return array(
                 'kernel.response' => array(
