@@ -404,7 +404,7 @@ subscribes to the ``kernel.response`` and ``store.order`` events:
 
     class StoreSubscriber implements EventSubscriberInterface
     {
-        static public function getSubscribedEvents()
+        public static function getSubscribedEvents()
         {
             return array(
                 'kernel.response' => array(
