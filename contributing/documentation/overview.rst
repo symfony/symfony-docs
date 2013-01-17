@@ -87,7 +87,7 @@ the documentation as quickly as possible:
     | Q             | A
     | ------------- | ---
     | Doc fix?      | [yes|no]
-    | New docs?     | [yes|no]
+    | New docs?     | [yes|no] (PR # on symfony/symfony if applicable)
     | Applies to    | [Symfony version numbers this applies to]
     | Fixed tickets | [comma separated list of tickets fixed by the PR]
 
@@ -98,7 +98,7 @@ An example submission could now look as follows:
     | Q             | A
     | ------------- | ---
     | Doc fix?      | yes
-    | New docs?     | no
+    | New docs?     | yes (symfony/symfony#2500)
     | Applies to    | all (or 2.1+)
     | Fixed tickets | #1075
 
