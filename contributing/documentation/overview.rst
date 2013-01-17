@@ -46,8 +46,12 @@ Next, create a dedicated branch for your changes (for organization):
 
 You can now make your changes directly to this branch and commit them. When
 you're done, push this branch to *your* GitHub fork and initiate a pull request.
-The pull request will be between your ``improving_foo_and_bar`` branch and
-the ``symfony-docs`` ``master`` branch.
+
+Creating a Pull Request
+~~~~~~~~~~~~~~~~~~~~~~~
+
+Following the example, create a pull request will be between your ``improving_foo_and_bar``
+branch and the ``symfony-docs`` ``master`` branch.
 
 .. image:: /images/docs-pull-request.png
    :align: center
@@ -60,8 +64,8 @@ the base branch to be 2.0 on the preview page:
 
 .. note::
 
-  All changes made to the 2.0 branch will be merged into 2.1 which in turn will be
-  merged into the master branch for the next release on a weekly basis.
+  All changes made to a branch (e.g. 2.0) will be merged up to each "newer"
+  branch (e.g. 2.1, master, etc) for the next release on a weekly basis.
 
 GitHub covers the topic of `pull requests`_ in detail.
 
@@ -69,6 +73,34 @@ GitHub covers the topic of `pull requests`_ in detail.
 
     The Symfony2 documentation is licensed under a Creative Commons
     Attribution-Share Alike 3.0 Unported :doc:`License <license>`.
+
+Pull Request Format
+~~~~~~~~~~~~~~~~~~~
+
+To ease the core team's work, the pull request description must include the
+following checklist to ensure that contributions may be reviewed without
+needless feedback loops and that your contributions can be included into
+the documentation as quickly as possible:
+
+.. code-block:: text
+
+    | Q             | A
+    | ------------- | ---
+    | Doc fix?      | [yes|no]
+    | New docs?     | [yes|no]
+    | Applies to    | [Symfony version numbers this applies to]
+    | Fixed tickets | [comma separated list of tickets fixed by the PR]
+
+An example submission could now look as follows:
+
+.. code-block:: text
+
+    | Q             | A
+    | ------------- | ---
+    | Doc fix?      | yes
+    | New docs?     | no
+    | Applies to    | all (or 2.1+)
+    | Fixed tickets | #1075
 
 .. tip::
 
