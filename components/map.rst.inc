@@ -58,6 +58,7 @@
   * :doc:`/components/http_foundation/sessions`
   * :doc:`/components/http_foundation/session_configuration`
   * :doc:`/components/http_foundation/session_testing`
+  * :doc:`/components/http_foundation/trusting_proxies`
 
 * :doc:`/components/http_kernel/index`
 
