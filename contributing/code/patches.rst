@@ -264,7 +264,7 @@ pull request message, like in:
     [Yaml] fixed something
     [Form] [Validator] [FrameworkBundle] added something
 
-The pull request description must include the following check list at the top
+The pull request description must include the following checklist at the top
 to ensure that contributions may be reviewed without needless feedback
 loops and that your contributions can be included into Symfony2 as quickly as
 possible:
