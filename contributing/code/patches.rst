@@ -264,9 +264,10 @@ pull request message, like in:
     [Yaml] fixed something
     [Form] [Validator] [FrameworkBundle] added something
 
-The pull request description must include the following check list to ensure
-that contributions may be reviewed without needless feedback loops and that
-your contributions can be included into Symfony2 as quickly as possible:
+The pull request description must include the following checklist at the top
+to ensure that contributions may be reviewed without needless feedback
+loops and that your contributions can be included into Symfony2 as quickly as
+possible:
 
 .. code-block:: text
 
@@ -296,8 +297,9 @@ An example submission could now look as follows:
     | License       | MIT
     | Doc PR        | symfony/symfony-docs#123
 
-For typos, minor changes in the PHPDocs, or changes in translation files, use
-the shorter version of the check-list:
+The whole table must be included (do **not** remove lines that you think are
+not relevant). For simple typos, minor changes in the PHPDocs, or changes in
+translation files, use the shorter version of the check-list:
 
 .. code-block:: text
 
