@@ -50,8 +50,8 @@ you're done, push this branch to *your* GitHub fork and initiate a pull request.
 Creating a Pull Request
 ~~~~~~~~~~~~~~~~~~~~~~~
 
-Following the example, create a pull request will be between your ``improving_foo_and_bar``
-branch and the ``symfony-docs`` ``master`` branch.
+Following the example, the pull request will default to be between your
+``improving_foo_and_bar`` branch and the ``symfony-docs`` ``master`` branch.
 
 .. image:: /images/docs-pull-request.png
    :align: center
@@ -77,10 +77,10 @@ GitHub covers the topic of `pull requests`_ in detail.
 Pull Request Format
 ~~~~~~~~~~~~~~~~~~~
 
-To ease the core team's work, the pull request description must include the
-following checklist to ensure that contributions may be reviewed without
-needless feedback loops and that your contributions can be included into
-the documentation as quickly as possible:
+Unless you're fixing some minor typos, the pull request description must**
+include the following checklist to ensure that contributions may be reviewed
+without needless feedback loops and that your contributions can be included
+into the documentation as quickly as possible:
 
 .. code-block:: text
 
