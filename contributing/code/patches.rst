@@ -265,7 +265,7 @@ pull request message, like in:
     [Form] [Validator] [FrameworkBundle] added something
 
 The pull request description must include the following check list at the top
-of to ensure that contributions may be reviewed without needless feedback
+to ensure that contributions may be reviewed without needless feedback
 loops and that your contributions can be included into Symfony2 as quickly as
 possible:
 
