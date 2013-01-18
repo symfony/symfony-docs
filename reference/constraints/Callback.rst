@@ -186,7 +186,7 @@ process. Each method can be one of the following formats:
     
         class MyStaticValidatorClass
         {
-            static public function isAuthorValid(Author $author, ExecutionContext $context)
+            public static function isAuthorValid(Author $author, ExecutionContext $context)
             {
                 // ...
             }
