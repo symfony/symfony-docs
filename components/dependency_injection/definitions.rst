@@ -134,20 +134,4 @@ You can also replace any existing method calls with an array of new ones with::
 Extending Definitions
 ~~~~~~~~~~~~~~~~~~~~~
 
-Sometimes you might need to extend i.e. an abstract service definition. In this
-case you can use a :class:`Symfony\\Component\\DependencyInjection\\DefinitionDecorator`.
-
-Pass in the id of the service you want to extend as constructor argument::
-
-    use Symfony\Component\DependencyInjection\DefinitionDecorator;
-
-    // ...
-
-    $decorator = new DefinitionDecorator('abstract_service_id');
-
-    // ... add arguments or method calls to the Definition
-
-    $container->setDefinition('concrete_service_id', $decorator);
-
-You don't need to worry about setting ``$decorator->setAbstract(false)``, the
-container will take care of that.
+See :doc:`/components/dependency_injection/parentservices`
