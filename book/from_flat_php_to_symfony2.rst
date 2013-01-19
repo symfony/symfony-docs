@@ -462,7 +462,7 @@ the HTTP response being returned. Use them to improve the blog:
 
     <?php
     // index.php
-    require_once 'vendor/bootstrap.php';
+    require_once 'vendor/autoload.php';
 
     use Symfony\Component\HttpFoundation\Request;
     use Symfony\Component\HttpFoundation\Response;
