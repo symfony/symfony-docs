@@ -395,7 +395,7 @@ one example:
 
     function addTagForm(collectionHolder, $newLinkLi) {
         // Get the data-prototype explained earlier
-        var prototype = collectionHolder.attr('data-prototype');
+        var prototype = collectionHolder.data('prototype');
 
         // get the new index
         var index = collectionHolder.data('index');
