@@ -412,7 +412,7 @@ one example:
         $newLinkLi.before($newFormLi);
     }
 
-.. note:
+.. note::
 
     It is better to separate your javascript in real JavaScript files than
     to write it inside the HTML as is done here.
