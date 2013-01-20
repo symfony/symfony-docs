@@ -28,7 +28,7 @@ Getting and Setting Service Definitions
 There are also some helpful methods for
 working with the service definitions.
 
-To find out if there is a definition for a service id:: 
+To find out if there is a definition for a service id::
 
     $container->hasDefinition($serviceId);
 
@@ -84,7 +84,7 @@ To get an array of the constructor arguments for a definition you can use::
 
 or to get a single argument by its position::
 
-    $definition->getArgument($index); 
+    $definition->getArgument($index);
     //e.g. $definition->getArguments(0) for the first argument
 
 You can add a new argument to the end of the arguments array using::
@@ -95,7 +95,7 @@ The argument can be a string, an array, a service parameter by using ``%paramete
 or a service id by using ::
 
     use Symfony\Component\DependencyInjection\Reference;
-  
+
     // ...
 
     $definition->addArgument(new Reference('service_id'));
@@ -131,3 +131,9 @@ You can also replace any existing method calls with an array of new ones with::
 
     $definition->setMethodCalls($methodCalls);
 
+.. tip::
+
+    There are more examples of specific ways of working with definitions
+    in the PHP code blocks of the configuration examples on pages such as
+    :doc:`/components/dependency_injection/factories` and
+    :doc:`/components/dependency_injection/parentservices`
