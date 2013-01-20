@@ -133,7 +133,7 @@ how the behavior has changed.
         The ``include()`` function is a new Twig feature that's available in
         Symfony 2.2. Prior, the ``{% include %}`` tag was used.
 
-Whenever a new version of minor of Symfony2 is released (e.g. 2.3, 2.4, etc),
+Whenever a new minor version of Symfony2 is released (e.g. 2.3, 2.4, etc),
 a new branch of the documentation is created from the ``master`` branch.
 At this point, all the ``versionadded`` tags for Symfony2 versions that have
 reached end-of-life will be removed. For example, if Symfony 2.5 were released
