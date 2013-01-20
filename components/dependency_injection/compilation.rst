@@ -256,11 +256,9 @@ but also load a secondary one only if a certain parameter is set::
     method::
 
         use Symfony\Component\DependencyInjection\ContainerBuilder;
-        use Symfony\Component\Config\FileLocator;
-        use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 
         $container = new ContainerBuilder();
-        $extension = new AcmeDemoExtension;
+        $extension = new AcmeDemoExtension();
         $container->registerExtension($extension);
         $container->loadFromExtension($extension->getAlias());
         $container->compile();
