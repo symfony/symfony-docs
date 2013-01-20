@@ -126,11 +126,21 @@ Whether to enable or not the serializer service in the service container. If ena
 the serializer will be loaded along with two encoders (:class:`Symfony\\Component\\Serializer\\Encoder\\JsonEncoder` 
 and :class:`Symfony\\Component\\Serializer\\Encoder\\XmlEncoder`)
 but none normalizer. The :class:`Symfony\\Component\\Serializer\\Normalizer\\GetSetMethodNormalizer` is broken by design
-so you are required to load it under your responsability. You can do creating a new service and tagging it appropiately.
+so you are required to load it under your responsability.
 
-You can add more normalizers and/or encoders by tagging them as ``serializer.encoder`` and
+You can load more normalizers and/or encoders by tagging them as ``serializer.encoder`` and
 ``serializer.normalizer``. It's also possible to set the priority of the tag in order to decide the
 matching order.
+
+Here an example on how to load the load 
+the :class:`Symfony\\Component\\Serializer\\Normalizer\\GetSetMethodNormalizer`:
+
+   # app/config/config.yml
+   services:
+      get_set_method_normalizer:
+         class: Symfony\\Component\\Serializer\\Normalizer\\GetSetMethodNormalizer
+         tags:
+            - { name: serializer.normalizer }
 
 templating
 ~~~~~~~~~~
