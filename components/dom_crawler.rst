@@ -9,8 +9,8 @@ The DomCrawler Component
 
 .. note::
 
-    While possible, the DomCrawler is not designed for manipulation of the
-    DOM or re-dumping HTML/XML.
+    While possible, the DomCrawler component is not designed for manipulation
+    of the DOM or re-dumping HTML/XML.
 
 Installation
 ------------
@@ -177,7 +177,7 @@ and :phpclass:`DOMNode` objects:
     $crawler->addNode($node);
     $crawler->add($document);
 
-.. note::
+.. sidebar:: Manipulating and Dumping a ``Crawler``
 
     These methods on the ``Crawler`` are intended to initially populate your
     ``Crawler`` and aren't intended to be used to further manipulate a DOM
