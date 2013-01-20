@@ -112,10 +112,11 @@ processed when the container is compiled at which point the Extensions are loade
     use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 
     $container = new ContainerBuilder();
+    $container->registerExtension(new AcmeDemoExtension);
+
     $loader = new YamlFileLoader($container, new FileLocator(__DIR__));
     $loader->load('config.yml');
 
-    $container->registerExtension(new AcmeDemoExtension);
     // ...
     $container->compile();
 
