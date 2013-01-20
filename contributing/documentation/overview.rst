@@ -110,6 +110,36 @@ An example submission could now look as follows:
     by going to the `Documentation Build Errors`_ page (it is updated each French
     night at 3AM when the server rebuilds the documentation).
 
+Documenting new Features or Behavior Changes
+--------------------------------------------
+
+If you're documenting a brand new feature or a change that's been made in
+Symfony2, you should precede your description of the change with a ``.. versionadded:: 2.X``
+tag and a short description:
+
+.. code-block:: text
+
+    .. versionadded:: 2.2
+        The ``askHiddenResponse`` method was added in Symfony 2.2.
+
+    You can also ask a question and hide the response. This is particularly...
+
+If you're documenting a behavior change, it may be helpful to *briefly* describe
+how the behavior has changed.
+
+.. code-block:: text
+
+    .. versionadded:: 2.2
+        The ``include()`` function is a new Twig feature that's available in
+        Symfony 2.2. Prior, the ``{% include %}`` tag was used.
+
+Whenever a new version of minor of Symfony2 is released (e.g. 2.3, 2.4, etc),
+a new branch of the documentation is created from the ``master`` branch.
+At this point, all the ``versionadded`` tags for Symfony2 versions that have
+reached end-of-life will be removed. For example, if Symfony 2.5 were released
+today, and 2.2 had recently reached its end-of-life, the 2.2 ``versionadded``
+tags would be removed from the new 2.5 branch.
+
 Standards
 ---------
 
