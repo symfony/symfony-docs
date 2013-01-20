@@ -688,6 +688,42 @@ Symfony2 uses the standard ``render`` helper to configure ``hinclude`` tags:
 
    hinclude.js_ needs to be included in your page to work.
 
+.. note::
+
+    When using a controller instead of an URL, you must enable the Symfony
+    ``proxy`` routing configuration:
+
+    .. configuration-block::
+
+        .. code-block:: yaml
+
+            # app/config/routing.yml
+            _proxy:
+                resource: "@FrameworkBundle/Resources/config/routing/proxy.xml"
+                prefix:   /proxy
+
+        .. code-block:: xml
+
+            <!-- app/config/routing.xml -->
+            <?xml version="1.0" encoding="UTF-8" ?>
+
+            <routes xmlns="http://symfony.com/schema/routing"
+                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                xsi:schemaLocation="http://symfony.com/schema/routing http://symfony.com/schema/routing/routing-1.0.xsd">
+
+                <import resource="@FrameworkBundle/Resources/config/routing/proxy.xml" prefix="/proxy" />
+            </routes>
+
+        .. code-block:: php
+
+            // app/config/routing.php
+            use Symfony\Component\Routing\RouteCollection;
+            use Symfony\Component\Routing\Route;
+
+            $collection->addCollection($loader->import('@FrameworkBundle/Resources/config/routing/proxy.xml', '/proxy'));
+
+            return $collection;
+
 Default content (while loading or if javascript is disabled) can be set globally
 in your application configuration:
 
