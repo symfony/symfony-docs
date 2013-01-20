@@ -136,4 +136,4 @@ You can also replace any existing method calls with an array of new ones with::
     There are more examples of specific ways of working with definitions
     in the PHP code blocks of the configuration examples on pages such as
     :doc:`/components/dependency_injection/factories` and
-    :doc:`/components/dependency_injection/parentservices`
+    :doc:`/components/dependency_injection/parentservices`.
