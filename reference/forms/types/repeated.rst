@@ -75,13 +75,11 @@ To render each field individually, use something like this:
 
     .. code-block:: jinja
 
-        {{ form_errors(form.password) }}
         {{ form_row(form.password.first) }}
         {{ form_row(form.password.second) }}
 
     .. code-block:: php
 
-        <?php echo $view['form']->errors($form['password']) ?>
         <?php echo $view['form']->row($form['password']['first']) ?>
         <?php echo $view['form']->row($form['password']['second']) ?>
 
