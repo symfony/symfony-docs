@@ -135,6 +135,8 @@ matching order.
 Here an example on how to load the load 
 the :class:`Symfony\\Component\\Serializer\\Normalizer\\GetSetMethodNormalizer`:
 
+.. code-block:: yaml
+
    # app/config/config.yml
    services:
       get_set_method_normalizer:
