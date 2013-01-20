@@ -405,7 +405,7 @@ one example:
         var newForm = prototype.replace(/\$\$name\$\$/g, index);
 
         // increase the index with one for the next item
-        collectionHolder.attr('index', index + 1);
+        collectionHolder.data('index', index + 1);
 
         // Display the form in the page in an li, before the "Add a tag" link li
         var $newFormLi = $('<li></li>').append(newForm);
