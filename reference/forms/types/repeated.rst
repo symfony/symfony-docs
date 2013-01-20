@@ -52,6 +52,44 @@ the actual type of the two underlying fields. The ``options`` option is passed
 to each of those individual fields, meaning - in this example - any option
 supported by the ``password`` type can be passed in this array.
 
+Rendering
+~~~~~~~~~
+
+The repeated field type is actually two underlying fields, which you can
+render all at once, or individually. To render all at once, use something
+like:
+
+.. configuration-block::
+
+    .. code-block:: jinja
+
+        {{ form_row(form.password) }}
+
+    .. code-block:: php
+
+        <?php echo $view['form']->row($form['password']) ?>
+
+To render each field individually, use something like this:
+
+.. configuration-block::
+
+    .. code-block:: jinja
+
+        {{ form_errors(form.password) }}
+        {{ form_row(form.password.first) }}
+        {{ form_row(form.password.second) }}
+
+    .. code-block:: php
+
+        <?php echo $view['form']->errors($form['password']) ?>
+        <?php echo $view['form']->row($form['password']['first']) ?>
+        <?php echo $view['form']->row($form['password']['second']) ?>
+
+.. note::
+
+    The sub-field names are ``first`` and ``second`` by default, but can
+    be controlled via the `first_name`_ and `second_name`_ options.
+
 Validation
 ~~~~~~~~~~
 
