@@ -214,7 +214,7 @@ benefit of merging multiple files and validation of the configuration::
         $processor = new Processor();
         $config = $processor->processConfiguration($configuration, $configs);
 
-        $container->setParameter('acme_demo.FOO', $config['foo'])
+        $container->setParameter('acme_demo.FOO', $config['foo']);
 
         // ...
     }
