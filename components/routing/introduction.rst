@@ -161,7 +161,7 @@ the :method:`Symfony\\Component\\Routing\\RouteCollection::addPrefix` method::
     $rootCollection->addCollection($subCollection);
 
 .. versionadded:: 2.2
-    The ``addPrefixs`` method is added in Symfony2.2. This was part of the
+    The ``addPrefix`` method is added in Symfony2.2. This was part of the
     ``addCollection`` method in older versions.
 
 Set the Request Parameters
