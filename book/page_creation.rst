@@ -8,7 +8,7 @@ Creating a new page in Symfony2 is a simple two-step process:
 
 * *Create a route*: A route defines the URL (e.g. ``/about``) to your page
   and specifies a controller (which is a PHP function) that Symfony2 should
-  execute when the URL of an incoming request matches the route pattern;
+  execute when the URL of an incoming request matches the route path;
 
 * *Create a controller*: A controller is a PHP function that takes the incoming
   request and transforms it into the Symfony2 ``Response`` object that's
@@ -147,7 +147,7 @@ the new route that defines the URL of the page that you're about to create:
 
         # src/Acme/HelloBundle/Resources/config/routing.yml
         hello:
-            pattern:  /hello/{name}
+            path:     /hello/{name}
             defaults: { _controller: AcmeHelloBundle:Hello:index }
 
     .. code-block:: xml
@@ -159,7 +159,7 @@ the new route that defines the URL of the page that you're about to create:
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/routing http://symfony.com/schema/routing/routing-1.0.xsd">
 
-            <route id="hello" pattern="/hello/{name}">
+            <route id="hello" path="/hello/{name}">
                 <default key="_controller">AcmeHelloBundle:Hello:index</default>
             </route>
         </routes>
@@ -177,9 +177,9 @@ the new route that defines the URL of the page that you're about to create:
 
         return $collection;
 
-The routing consists of two basic pieces: the ``pattern``, which is the URL
+The routing consists of two basic pieces: the ``path``, which is the URL
 that this route will match, and a ``defaults`` array, which specifies the
-controller that should be executed. The placeholder syntax in the pattern
+controller that should be executed. The placeholder syntax in the path
 (``{name}``) is a wildcard. It means that ``/hello/Ryan``, ``/hello/Fabien``
 or any other similar URL will match this route. The ``{name}`` placeholder
 parameter will also be passed to the controller so that you can use its value
