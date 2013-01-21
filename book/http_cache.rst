@@ -307,6 +307,8 @@ its creation more manageable:
 
 .. code-block:: php
 
+    use Symfony\Component\HttpFoundation\Response;
+
     $response = new Response();
 
     // mark the response as either public or private
@@ -642,6 +644,8 @@ The main goal of any caching strategy is to lighten the load on the application.
 Put another way, the less you do in your application to return a 304 response,
 the better. The ``Response::isNotModified()`` method does exactly that by
 exposing a simple and efficient pattern::
+
+    use Symfony\Component\HttpFoundation\Response;
 
     public function showAction($articleSlug)
     {
@@ -1013,6 +1017,8 @@ Here is how you can configure the Symfony2 reverse proxy to support the
     // app/AppCache.php
 
     use Symfony\Bundle\FrameworkBundle\HttpCache\HttpCache;
+    use Symfony\Component\HttpFoundation\Request;
+    use Symfony\Component\HttpFoundation\Response;
 
     class AppCache extends HttpCache
     {

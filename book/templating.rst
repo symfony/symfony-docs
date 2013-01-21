@@ -929,6 +929,8 @@ you're actually using the templating engine service. For example::
 
 is equivalent to:
 
+    use Symfony\Component\HttpFoundation\Response;
+
     $engine = $this->container->get('templating');
     $content = $engine->render('AcmeArticleBundle:Article:index.html.twig');
 

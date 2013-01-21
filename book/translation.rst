@@ -96,6 +96,9 @@ for example, that we're translating a simple message from inside a controller:
 
 .. code-block:: php
 
+    // ...
+    use Symfony\Component\HttpFoundation\Response;
+
     public function indexAction()
     {
         $t = $this->get('translator')->trans('Symfony2 is great');
@@ -171,6 +174,9 @@ Sometimes, a message containing a variable needs to be translated:
 
 .. code-block:: php
 
+    // ...
+    use Symfony\Component\HttpFoundation\Response;
+
     public function indexAction($name)
     {
         $t = $this->get('translator')->trans('Hello '.$name);
@@ -186,11 +192,14 @@ variable with a "placeholder":
 
 .. code-block:: php
 
+    // ...
+    use Symfony\Component\HttpFoundation\Response;
+
     public function indexAction($name)
     {
         $t = $this->get('translator')->trans('Hello %name%', array('%name%' => $name));
 
-        new Response($t);
+        return new Response($t);
     }
 
 Symfony2 will now look for a translation of the raw message (``Hello %name%``)
