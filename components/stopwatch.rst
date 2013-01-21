@@ -68,8 +68,8 @@ Lap information is stored in periods within the event. To get lap information
 Besides getting periods, you can get other useful information from the event object.
 For example::
 
-    $event->getCategory();      // Returns the category the evenent was started in
-    $event->getOrigin();        // Returns the start time of the Event in milliseconds
+    $event->getCategory();      // Returns the category the event was started in
+    $event->getOrigin();        // Returns the start time of the event in milliseconds
     $event->ensureStopped();    // Stops all not-already-stopped periods
     $event->getStartTime();     // Returns the start of the very first period
     $event->getEndTime();       // Returns the end time of the very last period
