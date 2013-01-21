@@ -85,7 +85,7 @@ placeholders as regular expressions.
 4. An array of options. These contain internal settings for the route and
 are the least commonly needed.
 
-5. A hostname. This is matched against the hostname of the request.  See
+5. A host. This is matched against the host of the request.  See
    :doc:`/components/routing/hostname_pattern` for more details.
 
 6. An array of schemes. These enforce a certain HTTP scheme (``http``, ``https``).
@@ -94,7 +94,7 @@ are the least commonly needed.
    ``GET``, ``POST``, ...).
 
 .. versionadded:: 2.2
-    The hostname was added in Symfony 2.2
+    Host matching support was added in Symfony 2.2
 
 Take the following route, which combines several of these ideas::
 
@@ -103,7 +103,7 @@ Take the following route, which combines several of these ideas::
        array('controller' => 'showArchive'), // default values
        array('month' => '[0-9]{4}-[0-9]{2}', 'subdomain' => 'www|m'), // requirements
        array(), // options
-       '{subdomain}.example.com', // hostname
+       '{subdomain}.example.com', // host
        array(), // schemes
        array() // methods
    );
@@ -142,9 +142,8 @@ Using Prefixes
 You can add routes or other instances of
 :class:`Symfony\\Component\\Routing\\RouteCollection` to *another* collection.
 This way you can build a tree of routes. Additionally you can define a prefix,
-default requirements, default options and hostname to all routes of a subtree
-with the :method:`Symfony\\Component\\Routing\\RouteCollection::addPrefix`
-method::
+default requirements, default options and host to all routes of a subtree with
+the :method:`Symfony\\Component\\Routing\\RouteCollection::addPrefix` method::
 
     $rootCollection = new RouteCollection();
 
@@ -155,7 +154,7 @@ method::
         '/prefix', // prefix
         array(), // requirements
         array(), // options
-        'admin.example.com', // hostname
+        'admin.example.com', // host
         array('https') // schemes
     );
 

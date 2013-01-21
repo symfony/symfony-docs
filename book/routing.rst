@@ -694,13 +694,13 @@ form via the same URL, while using distinct controllers for the two actions.
 
     If no ``methods`` are specified, the route will match on *all* methods.
 
-Adding a Hostname
-~~~~~~~~~~~~~~~~~
+Adding a Host
+~~~~~~~~~~~~~
 
 .. versionadded:: 2.2
-    Hostname matching support was added in Symfony 2.2
+    Host matching support was added in Symfony 2.2
 
-You can also match on the HTTP *hostname* of the incoming request. For more
+You can also match on the HTTP *host* of the incoming request. For more
 information, see :doc:`/components/routing/hostname_pattern` in the Routing
 component documentation.
 
@@ -1038,14 +1038,14 @@ from the new routing resource.
     :doc:`FrameworkExtraBundle documentation</bundles/SensioFrameworkExtraBundle/annotations/routing>`
     to see how.
 
-Adding a Hostname Pattern to Imported Routes
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Adding a Host regex to Imported Routes
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. versionadded:: 2.2
-    Hostname matching support was added in Symfony 2.2
+    Host matching support was added in Symfony 2.2
 
-You can set the hostname on imported routes. For more information, see
-:ref:`component-routing-hostname-imported`.
+You can set the host regex on imported routes. For more information, see
+:ref:`component-routing-host-imported`.
 
 .. index::
    single: Routing; Debugging

@@ -1,13 +1,13 @@
 .. index::
    single: Routing; Matching on Hostname
 
-How to match a route based on the Hostname
-==========================================
+How to match a route based on the Host
+======================================
 
 .. versionadded:: 2.2
-    Hostname matching support was added in Symfony 2.2
+    Host matching support was added in Symfony 2.2
 
-You can also match on the HTTP *hostname* of the incoming request.
+You can also match on the HTTP *host* of the incoming request.
 
 .. configuration-block::
 
@@ -15,7 +15,7 @@ You can also match on the HTTP *hostname* of the incoming request.
 
         mobile_homepage:
             path:     /
-            hostname: m.example.com
+            host:     m.example.com
             defaults: { _controller: AcmeDemoBundle:Main:mobileHomepage }
 
         homepage:
@@ -32,7 +32,7 @@ You can also match on the HTTP *hostname* of the incoming request.
                 http://symfony.com/schema/routing/routing-1.0.xsd"
         >
 
-            <route id="mobile_homepage" path="/" hostname="m.example.com">
+            <route id="mobile_homepage" path="/" host="m.example.com">
                 <default key="_controller">AcmeDemoBundle:Main:mobileHomepage</default>
             </route>
 
@@ -58,7 +58,7 @@ You can also match on the HTTP *hostname* of the incoming request.
         return $collection;
 
 Both routes match the same path ``/``, however the first one will match
-only if the hostname is ``m.example.com``.
+only if the host is ``m.example.com``.
 
 Placeholders and Requirements in Hostname Patterns
 --------------------------------------------------
@@ -78,7 +78,7 @@ dependency injection container parameter.
 
         mobile_homepage:
             path:     /
-            hostname: m.{domain}
+            host:     m.{domain}
             defaults: { _controller: AcmeDemoBundle:Main:mobileHomepage }
             requirements:
                 domain: %domain%
@@ -95,7 +95,7 @@ dependency injection container parameter.
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/routing http://symfony.com/schema/routing/routing-1.0.xsd">
 
-            <route id="mobile_homepage" path="/" hostname="m.example.com">
+            <route id="mobile_homepage" path="/" host="m.example.com">
                 <default key="_controller">AcmeDemoBundle:Main:mobileHomepage</default>
                 <requirement key="domain">%domain%</requirement>
             </route>
@@ -123,12 +123,12 @@ dependency injection container parameter.
 
         return $collection;
 
-.. _component-routing-hostname-imported:
+.. _component-routing-host-imported:
 
-Adding a Hostname Pattern to Imported Routes
+Adding a Host Regex to Imported Routes
 --------------------------------------------
 
-You can set a hostname on imported routes:
+You can set a host regex on imported routes:
 
 .. configuration-block::
 
@@ -137,7 +137,7 @@ You can set a hostname on imported routes:
         # app/config/routing.yml
         acme_hello:
             resource: "@AcmeHelloBundle/Resources/config/routing.yml"
-            hostname: "hello.example.com"
+            host:     "hello.example.com"
 
     .. code-block:: xml
 
@@ -148,7 +148,7 @@ You can set a hostname on imported routes:
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/routing http://symfony.com/schema/routing/routing-1.0.xsd">
 
-            <import resource="@AcmeHelloBundle/Resources/config/routing.xml" hostname="hello.example.com" />
+            <import resource="@AcmeHelloBundle/Resources/config/routing.xml" host="hello.example.com" />
         </routes>
 
     .. code-block:: php
@@ -161,5 +161,5 @@ You can set a hostname on imported routes:
 
         return $collection;
 
-The hostname ``hello.example.com`` will be set on each route loaded from the
-new routing resource.
+The host ``hello.example.com`` will be set on each route loaded from the new
+routing resource.
