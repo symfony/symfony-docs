@@ -289,6 +289,7 @@ HTTP-Digest Authentication
 --------------------------
 
 To use HTTP-Digest authentication you need to provide a realm and a key:
+
 .. configuration-block::
 
     .. code-block:: yaml
