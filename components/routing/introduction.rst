@@ -142,22 +142,28 @@ Using Prefixes
 You can add routes or other instances of
 :class:`Symfony\\Component\\Routing\\RouteCollection` to *another* collection.
 This way you can build a tree of routes. Additionally you can define a prefix,
-default requirements, default options and hostname to all routes of a subtree::
+default requirements, default options and hostname to all routes of a subtree
+with the :method:`Symfony\\Component\\Routing\\RouteCollection::addPrefix`
+method::
 
     $rootCollection = new RouteCollection();
 
     $subCollection = new RouteCollection();
     $subCollection->add(...);
     $subCollection->add(...);
-
-    $rootCollection->addCollection(
-        $subCollection,
+    $subCollection->addPrefix(
         '/prefix', // prefix
         array(), // requirements
         array(), // options
         'admin.example.com', // hostname
         array('https') // schemes
     );
+
+    $rootCollection->addCollection($subCollection);
+
+.. versionadded:: 2.2
+    The ``addPrefixs`` method is added in Symfony2.2. This was part of the
+    ``addCollection`` method in older versions.
 
 Set the Request Parameters
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
