@@ -655,7 +655,8 @@ see :doc:`/cookbook/security/form_login`.
 
     If you're using multiple firewalls and you authenticate against one firewall,
     you will *not* be authenticated against any other firewalls automatically.
-    Different firewalls are like different security systems. That's why,
+    Different firewalls are like different security systems. To do this you have
+    to explicitly specify the same context for different firewalls. But usually
     for most applications, having one main firewall is enough.
 
 Authorization
