@@ -140,6 +140,7 @@ focus on the most important methods that come from the
         {
             return serialize(array(
                 $this->id,
+                /* ... add other values ...  */
             ));
         }
 
@@ -150,6 +151,7 @@ focus on the most important methods that come from the
         {
             list (
                 $this->id,
+                /* ... add other values ...  */
             ) = unserialize($serialized);
         }
     }
