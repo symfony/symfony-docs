@@ -436,7 +436,7 @@ content:
             "symfony/symfony": "2.1.*"
         },
         "autoload": {
-            "files": ["model.php","controller.php"]
+            "files": ["model.php","controllers.php"]
         }
     }
     
