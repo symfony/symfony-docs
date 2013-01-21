@@ -35,19 +35,19 @@ microtime by yourself. Instead, use the simple
     // ... some code goes here
     $event = $stopwatch->stop('eventName');
 
-You also can provide a category name to an event::
+You can also provide a category name to an event::
 
     $stopwatch->start('eventName', 'categoryName');
 
-You can consider categories as a way of tagging events. The Symfony Profiler
-tool, for example, uses categories to nicely color-code different events. 
+You can consider categories as a way of tagging events. For example, the
+Symfony Profiler tool uses categories to nicely color-code different events.
 
 Periods
 -------
 
-As you know from the real world, all stopwatches come with two buttons.
-One for starting and stopping the stopwatch, another to measure the lap time.
-This is exactly what the :method:`Symfony\\Component\\Stopwatch\\Stopwatch::lap``
+As you know from the real world, all stopwatches come with two buttons:
+one to start and stop the stopwatch, and another to measure the lap time.
+This is exactly what the :method:``Symfony\\Component\\Stopwatch\\Stopwatch::lap``
 method does::
 
     $stopwatch = new Stopwatch();
@@ -60,28 +60,28 @@ method does::
     // ... some other code goes here
     $event = $stopwatch->stop('foo');
 
-Lap information is stored in periods within the event. To get lap information
-(aka periods) call::
+Lap information is stored as "periods" within the event. To get lap information
+call::
 
     $event->getPeriods();
 
-Besides getting periods, you can get other useful information from the event object.
+In addition to periods, you can get other useful information from the event object.
 For example::
 
-    $event->getCategory();      // Returns the category the evenent was started in
-    $event->getOrigin();        // Returns the start time of the Event in milliseconds
-    $event->ensureStopped();    // Stops all not-already-stopped periods
-    $event->getStartTime();     // Returns the start of the very first period
+    $event->getCategory();      // Returns the category the event was started in
+    $event->getOrigin();        // Returns the event start time in milliseconds
+    $event->ensureStopped();    // Stops all periods not already stopped
+    $event->getStartTime();     // Returns the start time of the very first period
     $event->getEndTime();       // Returns the end time of the very last period
-    $event->getDuration();      // Gets the duration (including all periods) of the event
-    $event->getMemory();        // Gets the max memory usage of all periods
+    $event->getDuration();      // Returns the event duration, including all periods
+    $event->getMemory();        // Returns the max memory usage of all periods
 
 Sections
 --------
 
 Sections are a way to logically split the timeline into groups. You can see
-how Symfony uses sections to nicely visualize framework lifecycle in the
-Symfony Profiler tool. Here is a basic usage of sections::
+how Symfony uses sections to nicely visualize the framework lifecycle in the
+Symfony Profiler tool. Here is a basic usage example using sections::
 
     $stopwatch = new Stopwatch();
 
@@ -91,8 +91,8 @@ Symfony Profiler tool. Here is a basic usage of sections::
 
     $events = $stopwatch->getSectionEvents('routing');
 
-You can reopen a closed section by calling the openSection method and specifying
-an id of the section to be reopened::
+You can reopen a closed section by calling the :method:``Symfony\\Component\\Stopwatch\\Stopwatch::openSection``
+method and specifying the id of the section to be reopened::
 
     $stopwatch->openSection('routing');
     $stopwatch->start('building_config_tree');
