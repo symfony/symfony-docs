@@ -284,3 +284,20 @@ A good configuration lies around at least 1000 iterations and sha512
 for the hash algorithm.
 
 .. _`PBKDF2`: http://en.wikipedia.org/wiki/PBKDF2
+
+HTTP-Digest Authentication
+--------------------------
+
+To use HTTP-Digest authentication you need to provide a realm and a key:
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # app/config/security.yml
+        security:
+            firewalls:
+               somename:
+                    http_digest:
+                        key: "a_random_string"
+                        realm: "secure-api"
+
