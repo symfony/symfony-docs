@@ -41,7 +41,7 @@ automatically selects the right template, here ``hello.xml.twig``:
 That's all there is to it. For standard formats, Symfony2 will also
 automatically choose the best ``Content-Type`` header for the response. If
 you want to support different formats for a single action, use the ``{_format}``
-placeholder in the route pattern instead::
+placeholder in the route path instead::
 
     // src/Acme/DemoBundle/Controller/DemoController.php
     use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;

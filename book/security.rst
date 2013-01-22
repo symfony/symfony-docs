@@ -1709,7 +1709,7 @@ a route so that you can use it to generate the URL:
 
         # app/config/routing.yml
         logout:
-            pattern:   /logout
+            path:   /logout
 
     .. code-block:: xml
 
@@ -1720,7 +1720,7 @@ a route so that you can use it to generate the URL:
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/routing http://symfony.com/schema/routing/routing-1.0.xsd">
 
-            <route id="logout" pattern="/logout" />
+            <route id="logout" path="/logout" />
 
         </routes>
 

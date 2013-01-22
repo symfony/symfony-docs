@@ -19,7 +19,7 @@ can do this without creating a controller:
     .. code-block:: yaml
 
         acme_privacy:
-            pattern: /privacy
+            path: /privacy
             defaults:
                 _controller: FrameworkBundle:Template:template
                 template: 'AcmeBundle:Static:privacy.html.twig'
@@ -32,7 +32,7 @@ can do this without creating a controller:
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/routing http://symfony.com/schema/routing/routing-1.0.xsd">
 
-            <route id="acme_privacy" pattern="/privacy">
+            <route id="acme_privacy" path="/privacy">
                 <default key="_controller">FrameworkBundle:Template:template</default>
                 <default key="template">AcmeBundle:Static:privacy.html.twig</default>
             </route>
@@ -90,7 +90,7 @@ other variables in your route, you can control exactly how your page is cached:
     .. code-block:: yaml
 
         acme_privacy:
-            pattern: /privacy
+            path: /privacy
             defaults:
                 _controller: FrameworkBundle:Template:template
                 template: 'AcmeBundle:Static:privacy.html.twig'
@@ -105,7 +105,7 @@ other variables in your route, you can control exactly how your page is cached:
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/routing http://symfony.com/schema/routing/routing-1.0.xsd">
 
-            <route id="acme_privacy" pattern="/privacy">
+            <route id="acme_privacy" path="/privacy">
                 <default key="_controller">FrameworkBundle:Template:template</default>
                 <default key="template">AcmeBundle:Static:privacy.html.twig</default>
                 <default key="maxAge">86400</default>

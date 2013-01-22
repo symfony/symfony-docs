@@ -179,7 +179,7 @@ Routing
 ~~~~~~~
 
 Symfony2 routes the request to the code that handles it by trying to match the
-requested URL against some configured patterns. By default, these patterns
+requested URL against some configured paths. By default, these paths
 (called routes) are defined in the ``app/config/routing.yml`` configuration
 file. When you're in the ``dev`` :ref:`environment<quick-tour-big-picture-environments>` -
 indicated by the app_**dev**.php front controller - the ``app/config/routing_dev.yml``
@@ -190,7 +190,7 @@ these "demo" pages are placed in that file:
 
     # app/config/routing_dev.yml
     _welcome:
-        pattern:  /
+        path:  /
         defaults: { _controller: AcmeDemoBundle:Welcome:index }
 
     _demo:
@@ -331,7 +331,7 @@ file, routes are defined as annotations on action methods::
         // ...
     }
 
-The ``@Route()`` annotation defines a new route with a pattern of
+The ``@Route()`` annotation defines a new route with a path of
 ``/hello/{name}`` that executes the ``helloAction`` method when matched. A
 string enclosed in curly brackets like ``{name}`` is called a placeholder. As
 you can see, its value can be retrieved through the ``$name`` method argument.
