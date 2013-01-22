@@ -293,6 +293,7 @@ To use HTTP-Digest authentication you need to provide a realm and a key:
 .. configuration-block::
 
    .. code-block:: yaml
+
       # app/config/security.yml
       security:
          firewalls:
@@ -302,6 +303,7 @@ To use HTTP-Digest authentication you need to provide a realm and a key:
                realm: "secure-api"
 
    .. code-block:: xml
+      <!-- app/config/security.xml -->
       <security:config>
          <firewall name="somename">
             <http-digest key="a_random_string" realm="secure-api" />
@@ -309,6 +311,8 @@ To use HTTP-Digest authentication you need to provide a realm and a key:
       </security:config>
 
    .. code-block:: php
+
+      // app/config/security.php
       $container->loadFromExtension('security', array(
            'firewalls' => array(
                'somename' => array(
