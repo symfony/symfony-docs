@@ -21,6 +21,11 @@ as INI files.
 The Symfony2 YAML Component implements the YAML 1.2 version of the
 specification.
 
+.. tip::
+
+    Learn more about the Yaml component in the
+    :doc:`/components/yaml/yaml_format` article.
+
 Installation
 ------------
 
