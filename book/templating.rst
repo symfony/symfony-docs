@@ -817,12 +817,12 @@ configuration:
     .. code-block:: yaml
 
         _welcome:
-            pattern:  /
+            path:     /
             defaults: { _controller: AcmeDemoBundle:Welcome:index }
 
     .. code-block:: xml
 
-        <route id="_welcome" pattern="/">
+        <route id="_welcome" path="/">
             <default key="_controller">AcmeDemoBundle:Welcome:index</default>
         </route>
 
@@ -855,12 +855,12 @@ route:
     .. code-block:: yaml
 
         article_show:
-            pattern:  /article/{slug}
+            path:     /article/{slug}
             defaults: { _controller: AcmeArticleBundle:Article:show }
 
     .. code-block:: xml
 
-        <route id="article_show" pattern="/article/{slug}">
+        <route id="article_show" path="/article/{slug}">
             <default key="_controller">AcmeArticleBundle:Article:show</default>
         </route>
 

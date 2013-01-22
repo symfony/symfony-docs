@@ -20,7 +20,7 @@ Your configuration will look like this:
         prefix:   /app
 
     root:
-        pattern: /
+        path:     /
         defaults:
             _controller: FrameworkBundle:Redirect:urlRedirect
             path: /app
