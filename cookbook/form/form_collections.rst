@@ -373,6 +373,10 @@ will be show next):
         // add the "add a tag" anchor and li to the tags ul
         collectionHolder.append($newLinkLi);
 
+        // count the current form inputs we have (e.g. 2), use that as the new
+        // index when inserting a new item (e.g. 2)
+        collectionHolder.data('index', collectionHolder.find(':input').length);
+
         $addTagLink.on('click', function(e) {
             // prevent the link from creating a "#" on the URL
             e.preventDefault();
@@ -398,21 +402,24 @@ one example:
 
     function addTagForm(collectionHolder, $newLinkLi) {
         // Get the data-prototype explained earlier
-        var prototype = collectionHolder.attr('data-prototype');
+        var prototype = collectionHolder.data('prototype');
 
-        // count the current form inputs we have (e.g. 2), use that as the new index (e.g. 2)
-        var newIndex = collectionHolder.find(':input').length;
+        // get the new index
+        var index = collectionHolder.data('index');
 
         // Replace '__name__' in the prototype's HTML to
         // instead be a number based on how many items we have
-        var newForm = prototype.replace(/__name__/g, newIndex);
+        var newForm = prototype.replace(/__name__/g, index);
+
+        // increase the index with one for the next item
+        collectionHolder.data('index', index + 1);
 
         // Display the form in the page in an li, before the "Add a tag" link li
         var $newFormLi = $('<li></li>').append(newForm);
         $newLinkLi.before($newFormLi);
     }
 
-.. note:
+.. note::
 
     It is better to separate your javascript in real JavaScript files than
     to write it inside the HTML as is done here.

@@ -71,7 +71,7 @@ below a certain file size and a valid PDF, add the following:
     .. code-block:: yaml
 
         # src/Acme/BlogBundle/Resources/config/validation.yml
-        Acme\BlogBundle\Entity\Author
+        Acme\BlogBundle\Entity\Author:
             properties:
                 bioFile:
                     - File:

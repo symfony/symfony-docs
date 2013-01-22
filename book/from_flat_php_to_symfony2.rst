@@ -436,7 +436,7 @@ content:
             "symfony/symfony": "2.1.*"
         },
         "autoload": {
-            "files": ["model.php","controller.php"]
+            "files": ["model.php","controllers.php"]
         }
     }
     
@@ -462,7 +462,7 @@ the HTTP response being returned. Use them to improve the blog:
 
     <?php
     // index.php
-    require_once 'vendor/bootstrap.php';
+    require_once 'vendor/autoload.php';
 
     use Symfony\Component\HttpFoundation\Request;
     use Symfony\Component\HttpFoundation\Response;
