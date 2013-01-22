@@ -303,6 +303,7 @@ To use HTTP-Digest authentication you need to provide a realm and a key:
                realm: "secure-api"
 
    .. code-block:: xml
+
       <!-- app/config/security.xml -->
       <security:config>
          <firewall name="somename">
