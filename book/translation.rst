@@ -766,9 +766,9 @@ texts* and complex expressions:
 
     Using the translation tags or filters have the same effect, but with
     one subtle difference: automatic output escaping is only applied to
-    variables translated using a filter. In other words, if you need to
-    be sure that your translated variable is *not* output escaped, you must
-    apply the raw filter after the translation filter:
+    translations using a filter. In other words, if you need to be sure
+    that your translated is *not* output escaped, you must apply the 
+    ``raw`` filter after the translation filter:
 
     .. code-block:: jinja
 
@@ -779,11 +779,9 @@ texts* and complex expressions:
 
             {% set message = '<h3>foo</h3>' %}
 
-            {# a variable translated via a filter is escaped by default #}
+            {# strings and variables translated via a filter is escaped by default #}
             {{ message|trans|raw }}
-
-            {# but static strings are never escaped #}
-            {{ '<h3>foo</h3>'|trans }}
+            {{ '<h3>bar</h3>'|trans|raw }}
 
 PHP Templates
 ~~~~~~~~~~~~~
