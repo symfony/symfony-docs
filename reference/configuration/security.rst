@@ -292,13 +292,30 @@ To use HTTP-Digest authentication you need to provide a realm and a key:
 
 .. configuration-block::
 
-    .. code-block:: yaml
+   .. code-block:: yaml
+      # app/config/security.yml
+      security:
+         firewalls:
+            somename:
+              http_digest:
+               key: "a_random_string"
+               realm: "secure-api"
 
-        # app/config/security.yml
-        security:
-            firewalls:
-               somename:
-                    http_digest:
-                        key: "a_random_string"
-                        realm: "secure-api"
+   .. code-block:: xml
+      <security:config>
+         <firewall name="somename">
+            <http-digest key="a_random_string" realm="secure-api" />
+         </firewall>
+      </security:config>
 
+   .. code-block:: php
+      $container->loadFromExtension('security', array(
+           'firewalls' => array(
+               'somename' => array(
+                   'http_digest' => array(
+                       'key'   => 'a_random_string',
+                       'realm' => 'secure-api',
+                   ),
+               ),
+           ),
+      ));
