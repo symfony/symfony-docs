@@ -639,11 +639,11 @@ A routing configuration map provides this information in a readable format:
 
     # app/config/routing.yml
     blog_list:
-        pattern:  /blog
+        path:     /blog
         defaults: { _controller: AcmeBlogBundle:Blog:list }
 
     blog_show:
-        pattern:  /blog/show/{id}
+        path:     /blog/show/{id}
         defaults: { _controller: AcmeBlogBundle:Blog:show }
 
 Now that Symfony2 is handling all the mundane tasks, the front controller

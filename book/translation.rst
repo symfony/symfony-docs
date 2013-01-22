@@ -299,7 +299,7 @@ priority message files.
 
 The filename of the translations is also important as Symfony2 uses a convention
 to determine details about the translations. Each message file must be named
-according to the following pattern: ``domain.locale.loader``:
+according to the following path: ``domain.locale.loader``:
 
 * **domain**: An optional way to organize messages into groups (e.g. ``admin``,
   ``navigation`` or the default ``messages``) - see `Using Message Domains`_;
@@ -571,14 +571,14 @@ by the routing system using the special ``_locale`` parameter:
     .. code-block:: yaml
 
         contact:
-            pattern:   /{_locale}/contact
+            path:      /{_locale}/contact
             defaults:  { _controller: AcmeDemoBundle:Contact:index, _locale: en }
             requirements:
                 _locale: en|fr|de
 
     .. code-block:: xml
 
-        <route id="contact" pattern="/{_locale}/contact">
+        <route id="contact" path="/{_locale}/contact">
             <default key="_controller">AcmeDemoBundle:Contact:index</default>
             <default key="_locale">en</default>
             <requirement key="_locale">en|fr|de</requirement>
