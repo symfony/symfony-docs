@@ -85,3 +85,4 @@
 * :doc:`/components/yaml/index`
 
   * :doc:`/components/yaml/introduction`
+  * :doc:`/components/yaml/yaml_format`
