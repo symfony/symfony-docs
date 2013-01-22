@@ -95,6 +95,9 @@ of text (called a *message*), use the
 :method:`Symfony\\Component\\Translation\\Translator::trans` method. Suppose,
 for example, that you're translating a simple message from inside a controller::
 
+    // ...
+    use Symfony\Component\HttpFoundation\Response;
+
     public function indexAction()
     {
         $t = $this->get('translator')->trans('Symfony2 is great');
@@ -168,6 +171,9 @@ Message Placeholders
 
 Sometimes, a message containing a variable needs to be translated::
 
+    // ...
+    use Symfony\Component\HttpFoundation\Response;
+
     public function indexAction($name)
     {
         $t = $this->get('translator')->trans('Hello '.$name);
@@ -181,6 +187,9 @@ will try to look up the exact message, including the variable portions
 for every possible iteration of the ``$name`` variable, you can replace the
 variable with a "placeholder"::
 
+    // ...
+    use Symfony\Component\HttpFoundation\Response;
+
     public function indexAction($name)
     {
         $t = $this->get('translator')->trans(
@@ -188,7 +197,7 @@ variable with a "placeholder"::
             array('%name%' => $name)
         );
 
-        new Response($t);
+        return new Response($t);
     }
 
 Symfony2 will now look for a translation of the raw message (``Hello %name%``)
