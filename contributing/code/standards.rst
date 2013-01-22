@@ -85,6 +85,9 @@ Structure
 
 * Add a single space around operators (``==``, ``&&``, ...);
 
+* Add a comma after each array item in a multi-line array, even after the	
+  last one;
+
 * Add a blank line before ``return`` statements, unless the return is alone
   inside a statement-group (like an ``if`` statement);
 
@@ -98,6 +101,9 @@ Structure
 * Declare class properties before methods;
 
 * Declare public methods first, then protected ones and finally private ones.
+
+* Use parentheses when instantiating classes regardless of the number of
+  arguments the constructor has.
 
 Naming Conventions
 ------------------
