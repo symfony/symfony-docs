@@ -937,41 +937,33 @@ component cache will only last for 60 seconds.
 
 When using a controller reference, the ESI tag should reference the embedded
 action as an accessible URL so the gateway cache can fetch it independently of
-the rest of the page. Of course, an action can't be accessed via a URL unless
-it has a route that points to it. Symfony2 takes care of this via a generic
-route. For the ESI include tag to work properly, you must define the ``_proxy``
-route:
+the rest of the page. Symfony2 takes care of generating a unique URL for any
+controller reference and it is able to route them properly thanks to a
+listener that must be enabled in your configuration:
 
 .. configuration-block::
 
     .. code-block:: yaml
 
-        # app/config/routing.yml
-        _proxy:
-            resource: "@FrameworkBundle/Resources/config/routing/proxy.xml"
-            prefix:   /proxy
+        # app/config/config.yml
+        framework:
+            # ...
+            router_proxy: { path: /_proxy }
 
     .. code-block:: xml
 
-        <!-- app/config/routing.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-
-        <routes xmlns="http://symfony.com/schema/routing"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/routing http://symfony.com/schema/routing/routing-1.0.xsd">
-
-            <import resource="@FrameworkBundle/Resources/config/routing/proxy.xml" prefix="/proxy" />
-        </routes>
+        <!-- app/config/config.xml -->
+        <framework:config>
+            <framework:router-proxy path="/_proxy" />
+        </framework:config>
 
     .. code-block:: php
 
-        // app/config/routing.php
-        use Symfony\Component\Routing\RouteCollection;
-        use Symfony\Component\Routing\Route;
-
-        $collection->addCollection($loader->import('@FrameworkBundle/Resources/config/routing/proxy.xml', '/proxy'));
-
-        return $collection;
+        // app/config/config.php
+        $container->loadFromExtension('framework', array(
+            // ...
+            'router_proxy' => array('path' => '/_proxy'),
+        ));
 
 One great advantage of this caching strategy is that you can make your
 application as dynamic as needed and at the same time, hit the application as
