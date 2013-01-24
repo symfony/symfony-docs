@@ -23,13 +23,13 @@ multiple Bundles. Or it can be used to enable an optional feature that depends
 on another Bundle being loaded as well.
 
 To give an Extension the power to do this, it needs to implement
-:class:`Symfony\\Component\\DependencyInjection\\Compiler\\PrependExtensionInterface`::
+:class:`Symfony\\Component\\DependencyInjection\\Extension\\PrependExtensionInterface`::
 
     // src/Acme/HelloBundle/DependencyInjection/AcmeHelloExtension.php
     namespace Acme\HelloBundle\DependencyInjection;
 
     use Symfony\Component\HttpKernel\DependencyInjection\Extension;
-    use Symfony\Component\DependencyInjection\PrependExtensionInterface;
+    use Symfony\Component\DependencyInjection\Extension\PrependExtensionInterface;
     use Symfony\Component\DependencyInjection\ContainerBuilder;
 
     class AcmeHelloExtension extends Extension implements PrependExtensionInterface
@@ -42,7 +42,7 @@ To give an Extension the power to do this, it needs to implement
         }
     }
 
-Inside the :method:`Symfony\\Component\\DependencyInjection\\Compiler\\PrependExtensionInterface::prepend`
+Inside the :method:`Symfony\\Component\\DependencyInjection\\Extension\\PrependExtensionInterface::prepend`
 method, developers have full access to the :class:`Symfony\\Component\\DependencyInjection\\ContainerBuilder`
 instance just before the :method:`Symfony\\Component\\DependencyInjection\\Extension\\ExtensionInterface::load`
 method is called on each of the registered Bundle Extensions. In order to
