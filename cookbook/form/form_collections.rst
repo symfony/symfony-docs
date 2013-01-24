@@ -358,7 +358,7 @@ will be show next):
 
 .. code-block:: javascript
 
-    // Get the div that holds the collection of tags
+    // Get the ul that holds the collection of tags
     var collectionHolder = $('ul.tags');
 
     // setup an "add a tag" link
