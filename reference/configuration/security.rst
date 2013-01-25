@@ -284,3 +284,43 @@ A good configuration lies around at least 1000 iterations and sha512
 for the hash algorithm.
 
 .. _`PBKDF2`: http://en.wikipedia.org/wiki/PBKDF2
+
+HTTP-Digest Authentication
+--------------------------
+
+To use HTTP-Digest authentication you need to provide a realm and a key:
+
+.. configuration-block::
+
+   .. code-block:: yaml
+
+      # app/config/security.yml
+      security:
+         firewalls:
+            somename:
+              http_digest:
+               key: "a_random_string"
+               realm: "secure-api"
+
+   .. code-block:: xml
+
+      <!-- app/config/security.xml -->
+      <security:config>
+         <firewall name="somename">
+            <http-digest key="a_random_string" realm="secure-api" />
+         </firewall>
+      </security:config>
+
+   .. code-block:: php
+
+      // app/config/security.php
+      $container->loadFromExtension('security', array(
+           'firewalls' => array(
+               'somename' => array(
+                   'http_digest' => array(
+                       'key'   => 'a_random_string',
+                       'realm' => 'secure-api',
+                   ),
+               ),
+           ),
+      ));
