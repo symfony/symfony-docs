@@ -493,6 +493,8 @@ that's responsible for generating the HTML (or other format) for the controller.
 The ``renderView()`` method renders a template and returns its content. The
 content from the template can be used to create a ``Response`` object::
 
+    use Symfony\Component\HttpFoundation\Response;
+
     $content = $this->renderView(
         'AcmeHelloBundle:Hello:index.html.twig',
         array('name' => $name)
@@ -704,6 +706,8 @@ The only requirement for a controller is to return a ``Response`` object. The
 :class:`Symfony\\Component\\HttpFoundation\\Response` class is a PHP
 abstraction around the HTTP response - the text-based message filled with HTTP
 headers and content that's sent back to the client::
+
+    use Symfony\Component\HttpFoundation\Response;
 
     // create a simple Response with a 200 status code (the default)
     $response = new Response('Hello '.$name, 200);

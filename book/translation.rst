@@ -97,6 +97,9 @@ of text (called a *message*), use the
 :method:`Symfony\\Component\\Translation\\Translator::trans` method. Suppose,
 for example, that you're translating a simple message from inside a controller::
 
+    // ...
+    use Symfony\Component\HttpFoundation\Response;
+
     public function indexAction()
     {
         $t = $this->get('translator')->trans('Symfony2 is great');
@@ -171,6 +174,9 @@ Message Placeholders
 
 Sometimes, a message containing a variable needs to be translated::
 
+    // ...
+    use Symfony\Component\HttpFoundation\Response;
+
     public function indexAction($name)
     {
         $t = $this->get('translator')->trans('Hello '.$name);
@@ -184,6 +190,9 @@ will try to look up the exact message, including the variable portions
 for every possible iteration of the ``$name`` variable, you can replace the
 variable with a "placeholder"::
 
+    // ...
+    use Symfony\Component\HttpFoundation\Response;
+
     public function indexAction($name)
     {
         $t = $this->get('translator')->trans(
@@ -191,7 +200,7 @@ variable with a "placeholder"::
             array('%name%' => $name)
         );
 
-        new Response($t);
+        return new Response($t);
     }
 
 Symfony2 will now look for a translation of the raw message (``Hello %name%``)
@@ -786,9 +795,9 @@ texts* and complex expressions:
 
     Using the translation tags or filters have the same effect, but with
     one subtle difference: automatic output escaping is only applied to
-    variables translated using a filter. In other words, if you need to
-    be sure that your translated variable is *not* output escaped, you must
-    apply the raw filter after the translation filter:
+    translations using a filter. In other words, if you need to be sure
+    that your translated is *not* output escaped, you must apply the 
+    ``raw`` filter after the translation filter:
 
     .. code-block:: jinja
 
@@ -799,11 +808,9 @@ texts* and complex expressions:
 
             {% set message = '<h3>foo</h3>' %}
 
-            {# a variable translated via a filter is escaped by default #}
+            {# strings and variables translated via a filter is escaped by default #}
             {{ message|trans|raw }}
-
-            {# but static strings are never escaped #}
-            {{ '<h3>foo</h3>'|trans }}
+            {{ '<h3>bar</h3>'|trans|raw }}
 
 .. versionadded:: 2.1
      You can now set the translation domain for an entire Twig template with a

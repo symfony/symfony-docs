@@ -363,6 +363,8 @@ need to check the incoming URI and execute different parts of your code dependin
 on that value. This can get ugly quickly::
 
     // index.php
+    use Symfony\Component\HttpFoundation\Request;
+    use Symfony\Component\HttpFoundation\Response;
     $request = Request::createFromGlobals();
     $path = $request->getPathInfo(); // the URI path being requested
 
@@ -457,6 +459,8 @@ the ``AcmeDemoBundle:Main:contact`` string is a short syntax that points to a
 specific PHP method ``contactAction`` inside a class called ``MainController``::
 
     // src/Acme/DemoBundle/Controller/MainController.php
+    use Symfony\Component\HttpFoundation\Response;
+
     class MainController
     {
         public function contactAction()

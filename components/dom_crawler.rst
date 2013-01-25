@@ -7,6 +7,11 @@ The DomCrawler Component
 
     The DomCrawler Component eases DOM navigation for HTML and XML documents.
 
+.. note::
+
+    While possible, the DomCrawler component is not designed for manipulation
+    of the DOM or re-dumping HTML/XML.
+
 Installation
 ------------
 
@@ -171,6 +176,22 @@ and :phpclass:`DOMNode` objects:
     $crawler->addNodes(array($node));
     $crawler->addNode($node);
     $crawler->add($document);
+
+.. sidebar:: Manipulating and Dumping a ``Crawler``
+
+    These methods on the ``Crawler`` are intended to initially populate your
+    ``Crawler`` and aren't intended to be used to further manipulate a DOM
+    (though this is possible). However, since the ``Crawler`` is a set of
+    :phpclass:`DOMElement` objects, you can use any method or property available
+    on :phpclass:`DOMElement`, :phpclass:`DOMNode` or :phpclass:`DOMDocument`.
+    For example, you could get the HTML of a ``Crawler`` with something like
+    this::
+    
+        $html = '';
+
+        foreach ($crawler as $domElement) {
+            $html.= $domElement->ownerDocument->saveHTML();
+        }
 
 Form and Link support
 ~~~~~~~~~~~~~~~~~~~~~

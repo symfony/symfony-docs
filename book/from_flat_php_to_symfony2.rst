@@ -436,7 +436,7 @@ content:
             "symfony/symfony": "2.1.*"
         },
         "autoload": {
-            "files": ["model.php","controller.php"]
+            "files": ["model.php","controllers.php"]
         }
     }
     
@@ -462,7 +462,7 @@ the HTTP response being returned. Use them to improve the blog:
 
     <?php
     // index.php
-    require_once 'vendor/bootstrap.php';
+    require_once 'vendor/autoload.php';
 
     use Symfony\Component\HttpFoundation\Request;
     use Symfony\Component\HttpFoundation\Response;
@@ -582,7 +582,7 @@ them for you. Here's the same sample application, now built in Symfony2::
         }
     }
 
-The two controllers are still lightweight. Each uses the Doctrine ORM library
+The two controllers are still lightweight. Each uses the :doc:`Doctrine ORM library</book/doctrine>`
 to retrieve objects from the database and the ``Templating`` component to
 render a template and return a ``Response`` object. The list template is
 now quite a bit simpler:
