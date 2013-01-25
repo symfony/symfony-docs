@@ -112,12 +112,19 @@ processed when the container is compiled at which point the Extensions are loade
     use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 
     $container = new ContainerBuilder();
+    $container->registerExtension(new AcmeDemoExtension);
+
     $loader = new YamlFileLoader($container, new FileLocator(__DIR__));
     $loader->load('config.yml');
 
-    $container->registerExtension(new AcmeDemoExtension);
     // ...
     $container->compile();
+
+.. note::
+
+    When loading a config file that uses an extension alias as a key, the
+    extension must already have been registered with the container builder
+    or an exception will be thrown.
 
 The values from those sections of the config files are passed into the first
 argument of the ``load`` method of the extension::
@@ -238,6 +245,25 @@ but also load a secondary one only if a certain parameter is set::
             $loader->load('advanced.xml');
         }
     }
+
+.. note::
+
+    Just registering an extension with the container is not enough to get
+    it included in the processed extensions when the container is compiled.
+    Loading config which uses the extension's alias as a key as in the above
+    examples will ensure it is loaded. The container builder can also be
+    told to load it with its
+    :method:`Symfony\\Component\\DependencyInjection\\ContainerBuilder::loadFromExtension`
+    method::
+
+        use Symfony\Component\DependencyInjection\ContainerBuilder;
+
+        $container = new ContainerBuilder();
+        $extension = new AcmeDemoExtension();
+        $container->registerExtension($extension);
+        $container->loadFromExtension($extension->getAlias());
+        $container->compile();
+
 
 .. note::
 

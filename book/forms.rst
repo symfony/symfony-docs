@@ -205,6 +205,7 @@ user must be bound to the form. Add the following functionality to your
 controller::
 
     // ...
+    use Symfony\Component\HttpFoundation\Request;
 
     public function newAction(Request $request)
     {

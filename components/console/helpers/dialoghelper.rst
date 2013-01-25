@@ -72,6 +72,7 @@ method::
                     'The name of the bundle should be suffixed with \'Bundle\''
                 );
             }
+            return $answer;
         },
         false,
         'AcmeDemoBundle'
@@ -89,8 +90,8 @@ This methods has 2 new arguments, the full signature is::
 
 The ``$validator`` is a callback which handles the validation. It should
 throw an exception if there is something wrong. The exception message is displayed
-in the console, so it is a good practice to put some useful information 
-in it.
+in the console, so it is a good practice to put some useful information in it. The callback 
+function should also return the value of the user's input if the validation was successful.
 
 You can set the max number of times to ask in the ``$attempts`` argument.
 If you reach this max number it will use the default value, which is given

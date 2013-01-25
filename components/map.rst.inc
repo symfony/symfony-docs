@@ -91,6 +91,7 @@
 
   * :doc:`/components/templating`
 
-* **YAML**
+* :doc:`/components/yaml/index`
 
-  * :doc:`/components/yaml`
+  * :doc:`/components/yaml/introduction`
+  * :doc:`/components/yaml/yaml_format`
