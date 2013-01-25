@@ -116,7 +116,8 @@ to learn more about how to configure and develop inside your application.
 .. tip::
 
     The Symfony2 Standard Edition comes with some example functionality. To
-    remove the sample code, follow the instructions on the `Standard Edition Readme`_.
+    remove the sample code, follow the instructions in the
+    ":doc:`/components/bundles/remove`" article.
 
 .. _cookbook-managing-vendor-libraries:
 
@@ -149,7 +150,6 @@ manage this is `Gitolite`_.
 
 .. _`git`: http://git-scm.com/
 .. _`Symfony2 Standard Edition`: http://symfony.com/download
-.. _`Standard Edition Readme`: https://github.com/symfony/symfony-standard/blob/master/README.md
 .. _`git submodules`: http://git-scm.com/book/en/Git-Tools-Submodules
 .. _`GitHub`: https://github.com/
 .. _`barebones repository`: http://git-scm.com/book/en/Git-Basics-Getting-a-Git-Repository
