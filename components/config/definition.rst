@@ -135,7 +135,6 @@ Or you may define a prototype for each node inside an array node::
                     ->scalarNode('host')->end()
                     ->scalarNode('username')->end()
                     ->scalarNode('password')->end()
-                    ->end()
                 ->end()
             ->end()
         ->end()
