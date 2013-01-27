@@ -119,7 +119,7 @@ If there are any issues, correct them now before moving on.
 
     **Note that not all web servers run as the user** ``www-data`` as in the examples
     below. Instead, check which user *your* web server is being run as and
-    use it place of ``www-data``.
+    use it in place of ``www-data``.
 
     On a UNIX system, this can be done with one of the following commands:
 
