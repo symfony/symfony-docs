@@ -113,16 +113,15 @@ uniqueness. If it's left blank, the correct entity manager will determined for
 this class. For that reason, this option should probably not need to be
 used.
 
-
 repositoryMethod
 ~~~~~~~~~~~~~~~~
 
 **type**: ``string`` **default**: ``findBy``
 
 .. versionadded:: 2.1
-    The ``repositoryMethod`` option was added in Symfony 2.1. Before, it was always using findBy.
-
-  
+    The ``repositoryMethod`` option was added in Symfony 2.1. Before, it
+    always used the ``findBy`` method.
 
 The name of the repository method to use for making the query to determine the
-uniqueness. If it's left blank, the findBy method will be used. This method should return a countable result.
+uniqueness. If it's left blank, the ``findBy`` method will be used. This
+method should return a countable result.
