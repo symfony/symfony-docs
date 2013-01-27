@@ -123,7 +123,7 @@ to learn more about how to configure and develop inside your application.
 
     The Symfony2 Standard Edition comes with some example functionality. To
     remove the sample code, follow the instructions in the
-    ":doc:`/components/bundles/remove`" article.
+    ":doc:`/cookbook/bundles/remove`" article.
 
 .. include:: _vendor_deps.rst.inc
 
