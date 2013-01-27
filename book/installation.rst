@@ -22,8 +22,6 @@ Downloading a Symfony2 Distribution
     First, check that you have installed and configured a Web server (such
     as Apache) with PHP 5.3.2 or higher. For more information on Symfony2
     requirements, see the :doc:`requirements reference</reference/requirements>`.
-    For information on configuring your specific web server document root, see the
-    following documentation: `Apache`_ | `Nginx`_ .
 
 Symfony2 packages "distributions", which are fully-functional applications
 that include the Symfony2 core libraries, a selection of useful bundles, a
@@ -189,6 +187,16 @@ first "real" Symfony2 webpage:
 Symfony2 should welcome and congratulate you for your hard work so far!
 
 .. image:: /images/quick_tour/welcome.jpg
+
+.. tip::
+    
+    To get nice and short urls you should point the document root of your 
+    webserver or virtual host to the ``Symfony/web/`` directory. Though 
+    this is not required for development it is recommended at the time your 
+    application goes into production as all system and configuration files
+    become inaccessible to clients then. For information on configuring 
+    your specific web server document root, see the following 
+    documentation: `Apache`_ | `Nginx`_ .
 
 Beginning Development
 ---------------------
