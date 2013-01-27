@@ -15,8 +15,8 @@ creation.
 A Service Configurator can be used, for example, when you a have a service that
 requires complex setup based on configuration settings coming from different
 sources/services. Using an external configurator, you can maintain the service
-implementation clean and decoupled from the other objects that provide the
-configuration for the service.
+implementation cleanly and keep it decoupled from the other objects that provide
+the configuration needed.
 
 Another interesting use case is when you have multiple objects that share a
 common configuration or that should be configured in a similar way at runtime.
@@ -66,9 +66,10 @@ and also a ``GreetingCardManager`` class::
     }
 
 
-As commented before, the formatters should be set at runtime depending on
-application settings, so we also have a ``EmailFormatterManager`` class which is
-responsible for loading and validating formatters enabled in the application::
+As mentioned before, the goal is to set the formatters at runtime depending on
+application settings. To do this, you also have an ``EmailFormatterManager``
+class which is responsible for loading and validating formatters enabled
+in the application::
 
     class EmailFormatterManager
     {
@@ -76,7 +77,11 @@ responsible for loading and validating formatters enabled in the application::
 
         public function loadFormatters()
         {
+            // code to configure which formatters to use
+            $enabledFormatters = array();
             // ...
+
+            $this->enabledFormatters = $enabledFormatters;
         }
 
         public function getEnabledFormatters()
@@ -110,7 +115,7 @@ create a configurator class to configure these instances::
         // ...
     }
 
-``EmailConfigurator`` task is to inject enabled filters to ``NewsletterManager``
+The ``EmailConfigurator``'s job is to inject the enabled filters into ``NewsletterManager``
 and ``GreetingCardManager`` because they are not aware of where the enabled
 filters come from. In the other hand, the ``EmailFormatterManager`` holds the
 knowledge about the enabled formatters and how to load them, keeping the single
@@ -125,67 +130,52 @@ The service config for the above classes would look something like this:
 
     .. code-block:: yaml
 
-        parameters:
-            # ...
-            newsletter_manager.class: NewsletterManager
-            greeting_card_manager.class: GreetingCardManager
-            email_formatter_manager.class: EmailFormatterManager
-            email_configurator.class: EmailConfigurator
-
         services:
             my_mailer:
                 # ...
 
             email_formatter_manager:
-                class:     "%email_formatter_manager.class%"
+                class:     EmailFormatterManager
                 # ...
 
             email_configurator:
-                class:     "%email_configurator.class%"
-                arguments: [@email_formatter_manager]
+                class:     EmailConfigurator
+                arguments: ["@email_formatter_manager"]
                 # ...
 
             newsletter_manager:
-                class:     "%newsletter_manager.class%"
+                class:     NewsletterManager
                 calls:
-                    - [setMailer, [@my_mailer]]
-                configurator: [@email_configurator, configure]
+                    - [setMailer, ["@my_mailer"]]
+                configurator: ["@email_configurator", configure]
 
             greeting_card_manager:
-                class:     "%greeting_card_manager.class%"
+                class:     GreetingCardManager
                 calls:
-                    - [setMailer, [@my_mailer]]
-                configurator: [@email_configurator, configure]
+                    - [setMailer, ["@my_mailer"]]
+                configurator: ["@email_configurator", configure]
 
 
     .. code-block:: xml
-
-        <parameters>
-            <!-- ... -->
-            <parameter key="newsletter_manager.class">NewsletterManager</parameter>
-            <parameter key="greeting_card_manager.class">GreetingCardManager</parameter>
-            <parameter key="email_formatter_manager.class">EmailFormatterManager</parameter>
-            <parameter key="email_configurator.class">EmailConfigurator</parameter>
-        </parameters>
 
         <services>
             <service id="my_mailer" ...>
               <!-- ... -->
             </service>
-            <service id="email_formatter_manager" class="%email_formatter_manager.class%">
+            <service id="email_formatter_manager" class="EmailFormatterManager">
               <!-- ... -->
             </service>
-            <service id="email_configurator" class="%email_configurator.class%">
+            <service id="email_configurator" class="EmailConfigurator">
                 <argument type="service" id="email_formatter_manager" />
               <!-- ... -->
             </service>
-            <service id="newsletter_manager" class="%newsletter_manager.class%">
+            <service id="newsletter_manager" class="NewsletterManager">
                 <call method="setMailer">
                      <argument type="service" id="my_mailer" />
                 </call>
                 <configurator service="email_configurator" method="configure" />
             </service>
-            <service id="greeting_card_manager" class="%greeting_card_manager.class%">
+            <service id="greeting_card_manager" class="GreetingCardManager">
                 <call method="setMailer">
                      <argument type="service" id="my_mailer" />
                 </call>
@@ -199,16 +189,15 @@ The service config for the above classes would look something like this:
         use Symfony\Component\DependencyInjection\Reference;
 
         // ...
-        $container->setParameter('newsletter_manager.class', 'NewsletterManager');
-        $container->setParameter('greeting_card_manager.class', 'GreetingCardManager');
-        $container->setParameter('email_formatter_manager.class', 'EmailFormatterManager');
-        $container->setParameter('email_configurator.class', 'EmailConfigurator');
-
         $container->setDefinition('my_mailer', ...);
-        $container->setDefinition('email_formatter_manager', ...);
-        $container->setDefinition('email_configurator', ...);
+        $container->setDefinition('email_formatter_manager', new Definition(
+            'EmailFormatterManager'
+        ));
+        $container->setDefinition('email_configurator', new Definition(
+            'EmailConfigurator'
+        ));
         $container->setDefinition('newsletter_manager', new Definition(
-            '%newsletter_manager.class%'
+            'NewsletterManager'
         ))->addMethodCall('setMailer', array(
             new Reference('my_mailer'),
         ))->setConfigurator(array(
@@ -216,7 +205,7 @@ The service config for the above classes would look something like this:
             'configure',
         )));
         $container->setDefinition('greeting_card_manager', new Definition(
-            '%greeting_card_manager.class%'
+            'GreetingCardManager'
         ))->addMethodCall('setMailer', array(
             new Reference('my_mailer'),
         ))->setConfigurator(array(
