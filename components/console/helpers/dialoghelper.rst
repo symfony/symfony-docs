@@ -150,11 +150,12 @@ You can also ask and validate a hidden response::
 If you want to allow the response to be visible if it cannot be hidden for
 some reason, pass true as the fifth argument.
 
-Let the user choose from a list of answers
+Let the user choose from a list of Answers
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. versionadded:: 2.2
-    The ``select`` method was added in Symfony 2.2.
+    The :method:`Symfony\\Component\\Console\\Helper\\DialogHelper::select` method
+    was added in Symfony 2.2.
 
 If you have a predefined set of answers the user can choose from, you
 could use the ``ask`` method described above or, to make sure the user
@@ -183,7 +184,7 @@ The option which should be selected by default is provided with the fourth
 parameter. The default is ``null``, which means that no option is the default one.
 
 If the user enters an invalid string, an error message is shown and the user
-is asked to provide the answer another time, till he enters a valid string
+is asked to provide the answer another time, until she enters a valid string
 or the maximum attempts is reached (which you can define in the fifth
 parameter). The default value for the attempts is ``false``, which means infinite
 attempts. You can define your own error message in the sixth parameter.
