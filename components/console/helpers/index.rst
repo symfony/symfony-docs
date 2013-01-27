@@ -10,7 +10,7 @@ The Console Helpers
     dialoghelper
     formatterhelper
 
-The Console Components comes with some usefull helpers. These helpers contain
+The Console Components comes with some useful helpers. These helpers contain
 function to ease some common tasks.
 
 .. include:: map.rst.inc
