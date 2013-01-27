@@ -53,6 +53,17 @@ the Finder instance.
     :phpfunction:`iterator_to_array` method, or get the number of items with
     :phpfunction:`iterator_count`.
 
+.. caution::
+
+    When searching through multiple locations passed to the
+    :method:`Symfony\\Component\\Finder\\Finder::in` method, a separate iterator
+    is created internally for every location. This means we have multiple result
+    sets aggregated into one.
+    Since :phpfunction:`iterator_to_array` uses keys of result sets by default,
+    when converting to an array, some keys might be duplicated and their values
+    overwritten. This can be avoided by passing ``false`` as a second parameter
+    to :phpfunction:`iterator_to_array`.
+
 Criteria
 --------
 
