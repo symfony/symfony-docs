@@ -205,7 +205,7 @@ Loading a YAML config file::
 .. note::
 
     If you want to load YAML config files then you will also need to install
-    :doc:`The YAML component</components/yaml>`.
+    :doc:`The YAML component</components/yaml/introduction>`.
 
 The ``newsletter_manager`` and ``mailer`` services can be set up using config files:
 
