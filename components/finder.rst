@@ -48,13 +48,15 @@ the Finder instance.
 
 .. tip::
 
-    A Finder instance is a PHP `Iterator`_. So, instead of iterating over the
+    A Finder instance is a PHP :phpclass:`Iterator`. So, instead of iterating over the
     Finder with ``foreach``, you can also convert it to an array with the
     :phpfunction:`iterator_to_array` method, or get the number of items with
     :phpfunction:`iterator_count`.
 
 Criteria
 --------
+
+There are lots of ways to filter and sort your results.
 
 Location
 ~~~~~~~~
@@ -99,7 +101,7 @@ And it also works with user-defined streams::
     Read the `Streams`_ documentation to learn how to create your own streams.
 
 Files or Directories
-~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~
 
 By default, the Finder returns files and directories; but the
 :method:`Symfony\\Component\\Finder\\Finder::files` and
@@ -220,7 +222,6 @@ instance. The file is excluded from the result set if the Closure returns
 ``false``.
 
 .. _strtotime:    http://www.php.net/manual/en/datetime.formats.php
-.. _Iterator:     http://www.php.net/manual/en/spl.iterators.php
 .. _protocol:     http://www.php.net/manual/en/wrappers.php
 .. _Streams:      http://www.php.net/streams
 .. _IEC standard: http://physics.nist.gov/cuu/Units/binary.html
