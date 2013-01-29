@@ -326,6 +326,17 @@ If you have several collections in your form, or worse, nested collections
 you may want to change the placeholder so that unrelated placeholders are not
 replaced with the same value.
 
+prototype_data
+~~~~~~~~~~~~~~
+
+.. versionadded:: 2.2
+    The ``prototype_data`` option was added in Symfony 2.2
+
+**type**: ``mixed`` **default**: ``null``
+
+This configures the ``data`` option of the prototype form.
+This option is useful if you want pre filled fields in the prototype form.
+
 Inherited options
 -----------------
 
