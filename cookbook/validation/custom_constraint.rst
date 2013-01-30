@@ -221,7 +221,7 @@ With this, the validator ``validate()`` method gets an object as its first argum
         public function validate($protocol, Constraint $constraint)
         {
             if ($protocol->getFoo() != $protocol->getBar()) {
-                $this->context->addViolationAtSubPath('foo', $constraint->message, array(), null);
+                $this->context->addViolationAt('foo', $constraint->message, array(), null);
             }
         }
     }
