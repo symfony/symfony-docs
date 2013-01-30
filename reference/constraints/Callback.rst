@@ -105,7 +105,7 @@ those errors should be attributed::
         
             // check if the name is actually a fake name
             if (in_array($this->getFirstName(), $fakeNames)) {
-                $context->addViolationAtSubPath('firstname', 'This name sounds totally fake!', array(), null);
+                $context->addViolationAt('firstname', 'This name sounds totally fake!', array(), null);
             }
         }
     }
