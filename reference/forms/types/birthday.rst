@@ -31,6 +31,8 @@ option defaults to 120 years ago to the current year.
 |                      | - `user_timezone`_                                                                                                     |
 |                      | - `invalid_message`_                                                                                                   |
 |                      | - `invalid_message_parameters`_                                                                                        |
+|                      | - `read_only`_                                                                                                         |
+|                      | - `disabled`_                                                                                                          |
 +----------------------+------------------------------------------------------------------------------------------------------------------------+
 | Parent type          | :doc:`date</reference/forms/types/date>`                                                                               |
 +----------------------+------------------------------------------------------------------------------------------------------------------------+
@@ -75,3 +77,6 @@ These options inherit from the :doc:`date</reference/forms/types/field>` type:
 
 .. include:: /reference/forms/types/options/invalid_message_parameters.rst.inc
 
+.. include:: /reference/forms/types/options/read_only.rst.inc
+
+.. include:: /reference/forms/types/options/disabled.rst.inc
