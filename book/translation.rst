@@ -812,16 +812,19 @@ texts* and complex expressions:
             {{ message|trans|raw }}
             {{ '<h3>bar</h3>'|trans|raw }}
 
+.. tip::
+
+    You can set the translation domain for an entire Twig template with a single tag:
+
+    .. code-block:: jinja
+
+           {% trans_default_domain "app" %}
+
+    Note that this only influences the current template, not any "included"
+    templates (in order to avoid side effects).
+
 .. versionadded:: 2.1
-     You can now set the translation domain for an entire Twig template with a
-     single tag:
-
-     .. code-block:: jinja
-
-            {% trans_default_domain "app" %}
-
-     Note that this only influences the current template, not any "included"
-     templates (in order to avoid side effects).
+    The ``trans_default_domain`` tag is new in Symfony2.1
 
 PHP Templates
 ~~~~~~~~~~~~~
