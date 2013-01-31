@@ -118,14 +118,14 @@ needs three parameters:
 2. The name of the class this information will be decoded to
 3. The encoder used to convert that information into an array
 
-JMSSerializationBundle
-----------------------
+JMSSerializer
+-------------
 
-A popular third-party bundle, `JMSSerializationBundle`_ exists and extends
-(and sometimes replaces) the serialization functionality. This includes the
+A popular third-party library, `JMS serializer`_, provides a more
+sophisticated albeit more complex solution. This library includes the
 ability to configure how your objects should be serialize/deserialized via
 annotations (as well as YML, XML and PHP), integration with the Doctrine ORM,
 and handling of other complex cases (e.g. circular references).
 
-.. _`JMSSerializationBundle`: https://github.com/schmittjoh/JMSSerializerBundle
+.. _`JMS serializer`: https://github.com/schmittjoh/serializer
 .. _Packagist: https://packagist.org/packages/symfony/serializer
