@@ -110,23 +110,26 @@ Filters
 Tags
 ----
 
-+---------------------------------------------------+-------------------------------------------------------------------+
-| Tag Syntax                                        | Usage                                                             |
-+===================================================+===================================================================+
-| ``{% render url('route', {parameters}) %}``       | This will render the Response Content for the given controller    |
-|                                                   | that the URL points to. For more information,                     |
-|                                                   | see :ref:`templating-embedding-controller`.                       |
-+---------------------------------------------------+-------------------------------------------------------------------+
-| ``{% form_theme form 'file' %}``                  | This will look inside the given file for overridden form blocks,  |
-|                                                   | more information in :doc:`/cookbook/form/form_customization`.     |
-+---------------------------------------------------+-------------------------------------------------------------------+
-| ``{% trans with {variables} %}...{% endtrans %}`` | This will translate and render the text, more information in      |
-|                                                   | :ref:`book-translation-twig`                                      |
-+---------------------------------------------------+-------------------------------------------------------------------+
-| ``{% transchoice count with {variables} %}``      | This will translate and render the text with pluralization, more  |
-| ...                                               | information in :ref:`book-translation-twig`                       |
-| ``{% endtranschoice %}``                          |                                                                   |
-+---------------------------------------------------+-------------------------------------------------------------------+
++---------------------------------------------------+--------------------------------------------------------------------+
+| Tag Syntax                                        | Usage                                                              |
++===================================================+====================================================================+
+| ``{% render url('route', {parameters}) %}``       | This will render the Response Content for the given controller     |
+|                                                   | that the URL points to. For more information,                      |
+|                                                   | see :ref:`templating-embedding-controller`.                        |
++---------------------------------------------------+--------------------------------------------------------------------+
+| ``{% form_theme form 'file' %}``                  | This will look inside the given file for overridden form blocks,   |
+|                                                   | more information in :doc:`/cookbook/form/form_customization`.      |
++---------------------------------------------------+--------------------------------------------------------------------+
+| ``{% trans with {variables} %}...{% endtrans %}`` | This will translate and render the text, more information in       |
+|                                                   | :ref:`book-translation-twig`                                       |
++---------------------------------------------------+--------------------------------------------------------------------+
+| ``{% transchoice count with {variables} %}``      | This will translate and render the text with pluralization, more   |
+| ...                                               | information in :ref:`book-translation-twig`                        |
+| ``{% endtranschoice %}``                          |                                                                    |
++---------------------------------------------------+--------------------------------------------------------------------+
+| ``{% trans_default_domain language %}``           | This will set the default domain for message catalogues in the     |
+|                                                   | current template                                                   |
++---------------------------------------------------+--------------------------------------------------------------------+
 
 Tests
 -----
