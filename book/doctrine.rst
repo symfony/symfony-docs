@@ -126,7 +126,7 @@ for you:
                 path: "%kernel.root_dir%/sqlite.db"
                 charset: UTF8
                 
-    .. code-block: xml
+    .. code-block:: xml
     
         <!-- app/config/config.xml -->
         <doctrine:config
@@ -137,7 +137,7 @@ for you:
             <!-- ... -->
         </doctrine:config>
         
-    .. code-block: php
+    .. code-block:: php
     
         // app/config/config.php
         $container->loadFromExtension('doctrine', array(
