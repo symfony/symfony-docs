@@ -117,36 +117,38 @@ for you:
     If you want to use SQLite as your database, you need to set the path
     where your database file should be stored:
     
-    .. code-block:: yaml
+    .. configuration-block::
+    
+        .. code-block:: yaml
 
-        # app/config/config.yml
-        doctrine:
-            dbal:
-                driver: pdo_sqlite
-                path: "%kernel.root_dir%/sqlite.db"
-                charset: UTF8
-                
-    .. code-block:: xml
-    
-        <!-- app/config/config.xml -->
-        <doctrine:config
-            driver="pdo_sqlite"
-            path="%kernel.root_dir%/sqlite.db"
-            charset="UTF-8"
-        >
-            <!-- ... -->
-        </doctrine:config>
+            # app/config/config.yml
+            doctrine:
+                dbal:
+                    driver: pdo_sqlite
+                    path: "%kernel.root_dir%/sqlite.db"
+                    charset: UTF8
+                    
+        .. code-block:: xml
         
-    .. code-block:: php
-    
-        // app/config/config.php
-        $container->loadFromExtension('doctrine', array(
-            'dbal' => array(
-                'driver'  => 'pdo_sqlite',
-                'path'    => '%kernel.root_dir%/sqlite.db',
-                'charset' => 'UTF-8',
-            ),
-        ));
+            <!-- app/config/config.xml -->
+            <doctrine:config
+                driver="pdo_sqlite"
+                path="%kernel.root_dir%/sqlite.db"
+                charset="UTF-8"
+            >
+                <!-- ... -->
+            </doctrine:config>
+            
+        .. code-block:: php
+        
+            // app/config/config.php
+            $container->loadFromExtension('doctrine', array(
+                'dbal' => array(
+                    'driver'  => 'pdo_sqlite',
+                    'path'    => '%kernel.root_dir%/sqlite.db',
+                    'charset' => 'UTF-8',
+                ),
+            ));
 
 Creating an Entity Class
 ~~~~~~~~~~~~~~~~~~~~~~~~
