@@ -741,7 +741,7 @@ Translations in Templates
 Most of the time, translation occurs in templates. Symfony2 provides native
 support for both Twig and PHP templates.
 
-.. _book-translation-twig:
+.. _book-translation-tags:
 
 Twig Templates
 ~~~~~~~~~~~~~~
@@ -777,6 +777,8 @@ You can also specify the message domain and pass some additional variables:
     {% transchoice count with {'%name%': 'Fabien'} from "app" %}
         {0} There is no apples|{1} There is one apple|]1,Inf] There are %count% apples
     {% endtranschoice %}
+
+.. _book-translation-filters:
 
 The ``trans`` and ``transchoice`` filters can be used to translate *variable
 texts* and complex expressions:

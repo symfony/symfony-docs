@@ -77,10 +77,10 @@ Filters
 |                                                                                 | spaces and capitalizes the string)                                |
 +---------------------------------------------------------------------------------+-------------------------------------------------------------------+
 | ``text|trans(arguments = {}, domain = 'messages', locale = null)``              | This will translate the text into the current language, more      |
-|                                                                                 | information in :ref:`book-translation-twig`.                      |
+|                                                                                 | information in :ref:`book-translation-filers`.                    |
 +---------------------------------------------------------------------------------+-------------------------------------------------------------------+
 | ``text|transchoice(count, arguments = {}, domain = 'messages', locale = null)`` | This will translate the text with pluralization, more information |
-|                                                                                 | in :ref:`book-translation-twig`.                                  |
+|                                                                                 | in :ref:`book-translation-filters`.                               |
 +---------------------------------------------------------------------------------+-------------------------------------------------------------------+
 | ``variable|yaml_encode(inline = 0)``                                            | This will transform the variable text into a YAML syntax.         |
 +---------------------------------------------------------------------------------+-------------------------------------------------------------------+
@@ -121,10 +121,10 @@ Tags
 |                                                   | more information in :doc:`/cookbook/form/form_customization`.      |
 +---------------------------------------------------+--------------------------------------------------------------------+
 | ``{% trans with {variables} %}...{% endtrans %}`` | This will translate and render the text, more information in       |
-|                                                   | :ref:`book-translation-twig`                                       |
+|                                                   | :ref:`book-translation-tags`                                       |
 +---------------------------------------------------+--------------------------------------------------------------------+
 | ``{% transchoice count with {variables} %}``      | This will translate and render the text with pluralization, more   |
-| ...                                               | information in :ref:`book-translation-twig`                        |
+| ...                                               | information in :ref:`book-translation-tags`                        |
 | ``{% endtranschoice %}``                          |                                                                    |
 +---------------------------------------------------+--------------------------------------------------------------------+
 | ``{% trans_default_domain language %}``           | This will set the default domain for message catalogues in the     |
