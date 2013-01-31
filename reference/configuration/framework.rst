@@ -323,7 +323,6 @@ Full Default Configuration
 
             # session configuration
             session:
-                auto_start:           false
                 storage_id:           session.storage.native
                 handler_id:           session.handler.native_file
                 name:                 ~
@@ -397,6 +396,10 @@ Full Default Configuration
                 cache:                file
                 file_cache_dir:       "%kernel.cache_dir%/annotations"
                 debug:                true
+
+.. versionadded:: 2.1
+    The ```framework.session.auto_start`` setting has been removed in Symfony2.1,
+    it will start on demand now.
 
 .. _`protocol-relative`: http://tools.ietf.org/html/rfc3986#section-4.2
 .. _`sprintf()`: http://php.net/manual/en/function.sprintf.php
