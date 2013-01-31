@@ -4,6 +4,11 @@
 How to use HTTP Methods beyond GET and POST in Routes
 =====================================================
 
+.. versionadded:: 2.2
+    This functionality is disabled by default in Symfony 2.2. To enable it, 
+    you must call :method:`Request::enableHttpMethodParameterOverride <Symfony\\Component\\HttpFoundation\\Request::enableHttpMethodParameterOverride>` 
+    before you handle the request.
+
 The HTTP method of a request is one of the requirements that can be checked
 when seeing if it matches a route. This is introduced in the routing chapter
 of the book ":doc:`/book/routing`" with examples using GET and POST. You can
