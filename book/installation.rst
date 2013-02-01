@@ -57,7 +57,7 @@ something like this:
 
 .. code-block:: text
 
-    www/ <- your web root directory
+    www/ <- your web server directory (sometimes named htdocs or public)
         Symfony/ <- the unpacked archive
             app/
                 cache/
@@ -76,6 +76,22 @@ something like this:
     You can easily override the default directory structure. See
     :doc:`/cookbook/configuration/override_dir_structure` for more
     information.
+
+All public files and the front controller that handles incoming requests in
+a Symfony2 application live in the ``Symfony/web/`` directory. So, assuming
+you unpacked the archive into your web server's or virtual host's document root,
+your application's URLs will start with ``http://localhost/Symfony/web/``.
+To get nice and short URLs you should point the document root of your web
+server or virtual host to the ``Symfony/web/`` directory. Though this is not
+required for development it is recommended when your application goes into
+production as all system and configuration files become inaccessible to clients.
+For information on configuring your specific web server document root, see
+the following documentation: `Apache`_ | `Nginx`_ .
+
+.. note::
+
+    The following examples assume you don't touch the document root settings
+    so all URLs start with ``http://localhost/Symfony/web/``
 
 Updating Vendors
 ~~~~~~~~~~~~~~~~
