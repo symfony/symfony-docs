@@ -676,12 +676,12 @@ Symfony2 uses the standard ``render`` helper to configure ``hinclude`` tags:
 
         <?php echo $view['actions']->render(
             new ControllerReference('...'),
-            array('strategy' => 'hinclude')
+            array('renderer' => 'hinclude')
         ) ?>
 
         <?php echo $view['actions']->render(
             $view['router']->generate('...'),
-            array('strategy' => 'hinclude')
+            array('renderer' => 'hinclude')
         ) ?>
 
 .. note::
@@ -691,7 +691,7 @@ Symfony2 uses the standard ``render`` helper to configure ``hinclude`` tags:
 .. note::
 
     When using a controller instead of a URL, you must enable the Symfony
-    ``router_proxy`` configuration:
+    ``fragments`` configuration:
 
     .. configuration-block::
 
@@ -700,13 +700,13 @@ Symfony2 uses the standard ``render`` helper to configure ``hinclude`` tags:
             # app/config/config.yml
             framework:
                 # ...
-                router_proxy: { path: /_proxy }
+                fragments: { path: /_fragment }
 
         .. code-block:: xml
 
             <!-- app/config/config.xml -->
             <framework:config>
-                <framework:router-proxy path="/_proxy" />
+                <framework:fragments path="/_fragment" />
             </framework:config>
 
         .. code-block:: php
@@ -714,7 +714,7 @@ Symfony2 uses the standard ``render`` helper to configure ``hinclude`` tags:
             // app/config/config.php
             $container->loadFromExtension('framework', array(
                 // ...
-                'router_proxy' => array('path' => '/_proxy'),
+                'fragments' => array('path' => '/_fragment'),
             ));
 
 Default content (while loading or if javascript is disabled) can be set globally
@@ -764,7 +764,7 @@ any global default template that is defined):
         <?php echo $view['actions']->render(
             new ControllerReference('...'),
             array(
-                'strategy' => 'hinclude',
+                'renderer' => 'hinclude',
                 'default' => 'AcmeDemoBundle:Default:content.html.twig',
             )
         ) ?>
@@ -782,7 +782,7 @@ Or you can also specify a string to display as the default content:
         <?php echo $view['actions']->render(
             new ControllerReference('...'),
             array(
-                'strategy' => 'hinclude',
+                'renderer' => 'hinclude',
                 'default' => 'Loading...',
             )
         ) ?>
