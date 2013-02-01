@@ -7,13 +7,18 @@ The DomCrawler Component
 
     The DomCrawler Component eases DOM navigation for HTML and XML documents.
 
+.. note::
+
+    While possible, the DomCrawler component is not designed for manipulation
+    of the DOM or re-dumping HTML/XML.
+
 Installation
 ------------
 
 You can install the component in many different ways:
 
 * Use the official Git repository (https://github.com/symfony/DomCrawler);
-* Install it via Composer (``symfony/dom-crawler`` on `Packagist`_).
+* :doc:`Install it via Composer</components/using_components>` (``symfony/dom-crawler`` on `Packagist`_).
 
 Usage
 -----
@@ -121,7 +126,10 @@ Access the attribute value of the first node of the current selection::
 
 Extract attribute and/or node values from the list of nodes::
 
-    $attributes = $crawler->filterXpath('//body/p')->extract(array('_text', 'class'));
+    $attributes = $crawler
+        ->filterXpath('//body/p')
+        ->extract(array('_text', 'class'))
+    ;
 
 .. note::
 
@@ -169,6 +177,22 @@ and :phpclass:`DOMNode` objects:
     $crawler->addNode($node);
     $crawler->add($document);
 
+.. sidebar:: Manipulating and Dumping a ``Crawler``
+
+    These methods on the ``Crawler`` are intended to initially populate your
+    ``Crawler`` and aren't intended to be used to further manipulate a DOM
+    (though this is possible). However, since the ``Crawler`` is a set of
+    :phpclass:`DOMElement` objects, you can use any method or property available
+    on :phpclass:`DOMElement`, :phpclass:`DOMNode` or :phpclass:`DOMDocument`.
+    For example, you could get the HTML of a ``Crawler`` with something like
+    this::
+    
+        $html = '';
+
+        foreach ($crawler as $domElement) {
+            $html.= $domElement->ownerDocument->saveHTML();
+        }
+
 Form and Link support
 ~~~~~~~~~~~~~~~~~~~~~
 
@@ -179,7 +203,7 @@ Links
 
 To find a link by name (or a clickable image by its ``alt`` attribute), use
 the ``selectLink`` method on an existing crawler. This returns a Crawler
-instance with just the selected link(s). Calling ``link()`` gives us a special
+instance with just the selected link(s). Calling ``link()`` gives you a special
 :class:`Symfony\\Component\\DomCrawler\\Link` object::
 
     $linksCrawler = $crawler->selectLink('Go elsewhere...');
@@ -242,7 +266,8 @@ You can virtually set and get values on the form::
     // get back an array of values - in the "flat" array like above
     $values = $form->getValues();
 
-    // returns the values like PHP would see them, where "registration" is its own array
+    // returns the values like PHP would see them,
+    // where "registration" is its own array
     $values = $form->getPhpValues();
 
 To work with multi-dimensional fields::

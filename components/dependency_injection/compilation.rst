@@ -112,12 +112,19 @@ processed when the container is compiled at which point the Extensions are loade
     use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 
     $container = new ContainerBuilder();
+    $container->registerExtension(new AcmeDemoExtension);
+
     $loader = new YamlFileLoader($container, new FileLocator(__DIR__));
     $loader->load('config.yml');
 
-    $container->registerExtension(new AcmeDemoExtension);
     // ...
     $container->compile();
+
+.. note::
+
+    When loading a config file that uses an extension alias as a key, the
+    extension must already have been registered with the container builder
+    or an exception will be thrown.
 
 The values from those sections of the config files are passed into the first
 argument of the ``load`` method of the extension::
@@ -213,7 +220,7 @@ benefit of merging multiple files and validation of the configuration::
         $processor = new Processor();
         $config = $processor->processConfiguration($configuration, $configs);
 
-        $container->setParameter('acme_demo.FOO', $config['foo'])
+        $container->setParameter('acme_demo.FOO', $config['foo']);
 
         // ...
     }
@@ -241,6 +248,25 @@ but also load a secondary one only if a certain parameter is set::
 
 .. note::
 
+    Just registering an extension with the container is not enough to get
+    it included in the processed extensions when the container is compiled.
+    Loading config which uses the extension's alias as a key as in the above
+    examples will ensure it is loaded. The container builder can also be
+    told to load it with its
+    :method:`Symfony\\Component\\DependencyInjection\\ContainerBuilder::loadFromExtension`
+    method::
+
+        use Symfony\Component\DependencyInjection\ContainerBuilder;
+
+        $container = new ContainerBuilder();
+        $extension = new AcmeDemoExtension();
+        $container->registerExtension($extension);
+        $container->loadFromExtension($extension->getAlias());
+        $container->compile();
+
+
+.. note::
+
     If you need to manipulate the configuration loaded by an extension then
     you cannot do it from another extension as it uses a fresh container.
     You should instead use a compiler pass which works with the full container
@@ -252,7 +278,8 @@ Creating a Compiler Pass
 ------------------------
 
 You can also create and register your own compiler passes with the container.
-To create a compiler pass it needs to implements the :class:`Symfony\\Component\\DependencyInjection\\Compiler\\CompilerPassInterface`
+To create a compiler pass it needs to implement the
+:class:`Symfony\\Component\\DependencyInjection\\Compiler\\CompilerPassInterface`
 interface. The compiler pass gives you an opportunity to manipulate the service
 definitions that have been compiled. This can be very powerful, but is not
 something needed in everyday use.
@@ -334,7 +361,7 @@ worlds though by using configuration files and then dumping and caching the resu
 configuration. The ``PhpDumper`` makes dumping the compiled container easy::
 
     use Symfony\Component\DependencyInjection\ContainerBuilder;
-    use Symfony\Component\DependencyInjection\Dumper\PhpDumper
+    use Symfony\Component\DependencyInjection\Dumper\PhpDumper;
 
     $file = __DIR__ .'/cache/container.php';
 

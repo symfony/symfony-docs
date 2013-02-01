@@ -307,6 +307,8 @@ its creation more manageable::
 
     // ...
 
+    use Symfony\Component\HttpFoundation\Response;
+
     $response = new Response();
 
     // mark the response as either public or private
@@ -410,7 +412,7 @@ on a cache to store and return "fresh" responses.
 
     The HTTP specification defines a simple but powerful language in which
     clients and servers can communicate. As a web developer, the request-response
-    model of the specification dominates our work. Unfortunately, the actual
+    model of the specification dominates your work. Unfortunately, the actual
     specification document - `RFC 2616`_ - can be difficult to read.
 
     There is an on-going effort (`HTTP Bis`_) to rewrite the RFC 2616. It does
@@ -550,8 +552,7 @@ would return. An ``ETag`` is like a fingerprint and is used to quickly compare
 if two different versions of a resource are equivalent. Like fingerprints,
 each ``ETag`` must be unique across all representations of the same resource.
 
-Let's walk through a simple implementation that generates the ETag as the
-md5 of the content::
+To see a simple implementation, generate the ETag as the md5 of the content::
 
     public function indexAction()
     {
@@ -647,6 +648,8 @@ The main goal of any caching strategy is to lighten the load on the application.
 Put another way, the less you do in your application to return a 304 response,
 the better. The ``Response::isNotModified()`` method does exactly that by
 exposing a simple and efficient pattern::
+
+    use Symfony\Component\HttpFoundation\Response;
 
     public function showAction($articleSlug)
     {
@@ -868,7 +871,7 @@ independent of the rest of the page.
     }
 
 In this example, the full-page cache has a lifetime of ten minutes.
-Next, let's include the news ticker in the template by embedding an action.
+Next, include the news ticker in the template by embedding an action.
 This is done via the ``render`` helper (See :ref:`templating-embedding-controller`
 for more details).
 
@@ -879,17 +882,51 @@ matter), Symfony2 uses the standard ``render`` helper to configure ESI tags:
 
     .. code-block:: jinja
 
-        {% render '...:news' with {}, {'standalone': true} %}
+        {% render url('latest_news', { 'max': 5 }) with {}, {'standalone': true} %}
 
     .. code-block:: php
 
-        <?php echo $view['actions']->render('...:news', array(), array('standalone' => true)) ?>
+        <?php echo $view['actions']->render(
+            $view['router']->generate('latest_news', array('max' => 5), true),
+            array(),
+            array('standalone' => true)
+        ) ?>
 
-By setting ``standalone`` to ``true``, you tell Symfony2 that the action
-should be rendered as an ESI tag. You might be wondering why you would want to
-use a helper instead of just writing the ESI tag yourself. That's because
-using a helper makes your application work even if there is no gateway cache
-installed. Let's see how it works.
+.. include:: /book/_security-2012-6431.rst.inc
+
+The ``render`` tag takes the absolute url to the embedded action. This means
+that you need to define a new route to the controller that you're embedding:
+
+.. code-block:: yaml
+
+    # app/config/routing.yml
+    latest_news:
+        pattern:      /esi/latest-news/{max}
+        defaults:     { _controller: AcmeNewsBundle:News:news }
+        requirements: { max: \d+ }
+
+.. caution::
+
+    Unless you want this URL to be accessible to the outside world, you
+    should use Symfony's firewall to secure it (by allowing access to your
+    reverse proxy's IP range). See the :ref:`Securing by IP<book-security-securing-ip>`
+    section of the :doc:`Security Chapter </book/security>` for more information
+    on how to do this.
+
+.. tip::
+
+    The best practice is to mount all your ESI urls on a single prefix (e.g.
+    ``/esi``) of your choice. This has two main advantages. First, it eases
+    the management of ESI urls as you can easily identify the routes used for ESI.
+    Second, it eases security management since securing all urls starting
+    with the same prefix is easier than securing each individual url. See
+    the above note for more details on securing ESI URLs.
+
+By setting ``standalone`` to ``true`` in the ``render`` Twig tag, you tell
+Symfony2 that the action should be rendered as an ESI tag. You might be
+wondering why you would want to use a helper instead of just writing the ESI tag
+yourself. That's because using a helper makes your application work even if
+there is no gateway cache installed.
 
 When standalone is ``false`` (the default), Symfony2 merges the included page
 content within the main one before sending the response to the client. But
@@ -910,7 +947,7 @@ of the master page.
 
 .. code-block:: php
 
-    public function newsAction()
+    public function newsAction($max)
     {
       // ...
 
@@ -919,52 +956,6 @@ of the master page.
 
 With ESI, the full page cache will be valid for 600 seconds, but the news
 component cache will only last for 60 seconds.
-
-A requirement of ESI, however, is that the embedded action be accessible
-via a URL so the gateway cache can fetch it independently of the rest of
-the page. Of course, an action can't be accessed via a URL unless it has
-a route that points to it. Symfony2 takes care of this via a generic route
-and controller. For the ESI include tag to work properly, you must define
-the ``_internal`` route:
-
-.. configuration-block::
-
-    .. code-block:: yaml
-
-        # app/config/routing.yml
-        _internal:
-            resource: "@FrameworkBundle/Resources/config/routing/internal.xml"
-            prefix:   /_internal
-
-    .. code-block:: xml
-
-        <!-- app/config/routing.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-
-        <routes xmlns="http://symfony.com/schema/routing"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/routing http://symfony.com/schema/routing/routing-1.0.xsd">
-
-            <import resource="@FrameworkBundle/Resources/config/routing/internal.xml" prefix="/_internal" />
-        </routes>
-
-    .. code-block:: php
-
-        // app/config/routing.php
-        use Symfony\Component\Routing\RouteCollection;
-        use Symfony\Component\Routing\Route;
-
-        $collection->addCollection($loader->import('@FrameworkBundle/Resources/config/routing/internal.xml', '/_internal'));
-
-        return $collection;
-
-.. tip::
-
-    Since this route allows all actions to be accessed via a URL, you might
-    want to protect it by using the Symfony2 firewall feature (by allowing
-    access to your reverse proxy's IP range). See the :ref:`Securing by IP<book-security-securing-ip>`
-    section of the :doc:`Security Chapter </book/security>` for more information
-    on how to do this.
 
 One great advantage of this caching strategy is that you can make your
 application as dynamic as needed and at the same time, hit the application as
@@ -1021,6 +1012,8 @@ Here is how you can configure the Symfony2 reverse proxy to support the
 
     // ...
     use Symfony\Bundle\FrameworkBundle\HttpCache\HttpCache;
+    use Symfony\Component\HttpFoundation\Request;
+    use Symfony\Component\HttpFoundation\Response;
 
     class AppCache extends HttpCache
     {

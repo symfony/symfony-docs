@@ -131,14 +131,14 @@ parameter.ini by referencing the database-related parameters defined there:
         pdo:
             class: PDO
             arguments:
-                - "mysql:dbname=%database_name%"
+                - "mysql:host=%database_host%;port=%database_port%;dbname=%database_name%"
                 - %database_user%
                 - %database_password%
 
     .. code-block:: xml
 
         <service id="pdo" class="PDO">
-            <argument>mysql:dbname=%database_name%</argument>
+            <argument>mysql:host=%database_host%;port=%database_port%;dbname=%database_name%</argument>
             <argument>%database_user%</argument>
             <argument>%database_password%</argument>
         </service>
@@ -146,7 +146,7 @@ parameter.ini by referencing the database-related parameters defined there:
     .. code-block:: php
 
         $pdoDefinition = new Definition('PDO', array(
-            'mysql:dbname=%database_name%',
+            'mysql:host=%database_host%;port=%database_port%;dbname=%database_name%',
             '%database_user%',
             '%database_password%',
         ));
@@ -182,3 +182,25 @@ For PostgreSQL, the statement should look like this:
         session_time integer NOT NULL,
         CONSTRAINT session_pkey PRIMARY KEY (session_id)
     );
+
+Microsoft SQL Server
+~~~~~~~~~~~~~~~~~~~~
+
+For MSSQL, the statement might look like the following:
+
+.. code-block:: sql
+
+    CREATE TABLE [dbo].[session](
+	    [session_id] [nvarchar](255) NOT NULL,
+	    [session_value] [ntext] NOT NULL,
+        [session_time] [int] NOT NULL,
+		PRIMARY KEY CLUSTERED(
+			[session_id] ASC
+		) WITH (
+		    PAD_INDEX  = OFF,
+		    STATISTICS_NORECOMPUTE  = OFF,
+		    IGNORE_DUP_KEY = OFF,
+		    ALLOW_ROW_LOCKS  = ON,
+		    ALLOW_PAGE_LOCKS  = ON
+		) ON [PRIMARY]
+    ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]

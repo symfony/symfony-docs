@@ -28,7 +28,7 @@ Installation
 You can install the component in many different ways:
 
 * Use the official Git repository (https://github.com/symfony/Serializer);
-* Install it via Composer (``symfony/serializer`` on `Packagist`_).
+* :doc:`Install it via Composer</components/using_components>` (``symfony/serializer`` on `Packagist`_).
 
 Usage
 -----
@@ -50,8 +50,8 @@ which Encoders and Normalizer are going to be available::
 Serializing an object
 ~~~~~~~~~~~~~~~~~~~~~
 
-For the sake of this example, let's assume the following class already
-exists in our project::
+For the sake of this example, assume the following class already
+exists in your project::
 
     namespace Acme;
 
@@ -118,14 +118,14 @@ needs three parameters:
 2. The name of the class this information will be decoded to
 3. The encoder used to convert that information into an array
 
-JMSSerializationBundle
-----------------------
+JMSSerializer
+-------------
 
-A popular third-party bundle, `JMSSerializationBundle`_ exists and extends
-(and sometimes replaces) the serialization functionality. This includes the
+A popular third-party library, `JMS serializer`_, provides a more
+sophisticated albeit more complex solution. This library includes the
 ability to configure how your objects should be serialize/deserialized via
 annotations (as well as YML, XML and PHP), integration with the Doctrine ORM,
 and handling of other complex cases (e.g. circular references).
 
-.. _`JMSSerializationBundle`: https://github.com/schmittjoh/JMSSerializerBundle
+.. _`JMS serializer`: https://github.com/schmittjoh/serializer
 .. _Packagist: https://packagist.org/packages/symfony/serializer

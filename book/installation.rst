@@ -22,8 +22,6 @@ Downloading a Symfony2 Distribution
     First, check that you have installed and configured a Web server (such
     as Apache) with PHP 5.3.2 or higher. For more information on Symfony2
     requirements, see the :doc:`requirements reference</reference/requirements>`.
-    For information on configuring your specific web server document root, see the
-    following documentation: `Apache`_ | `Nginx`_ .
 
 Symfony2 packages "distributions", which are fully-functional applications
 that include the Symfony2 core libraries, a selection of useful bundles, a
@@ -75,8 +73,8 @@ something like this:
 
 .. note::
 
-    You can easily override the default directory structure. See 
-    :doc:`/cookbook/configuration/override_dir_structure` for more 
+    You can easily override the default directory structure. See
+    :doc:`/cookbook/configuration/override_dir_structure` for more
     information.
 
 Updating Vendors
@@ -117,13 +115,29 @@ If there are any issues, correct them now before moving on.
     must be writable both by the web server and the command line user. On
     a UNIX system, if your web server user is different from your command
     line user, you can run the following commands just once in your project
-    to ensure that permissions will be setup properly. Change ``www-data``
-    to your web server user:
+    to ensure that permissions will be setup properly.
+
+    **Note that not all web servers run as the user** ``www-data`` as in the examples
+    below. Instead, check which user *your* web server is being run as and
+    use it in place of ``www-data``.
+
+    On a UNIX system, this can be done with one of the following commands:
+
+    .. code-block:: bash
+    
+        $ ps aux | grep httpd
+
+    or
+
+    .. code-block:: bash
+
+        $ ps aux | grep apache
 
     **1. Using ACL on a system that supports chmod +a**
 
     Many systems allow you to use the ``chmod +a`` command. Try this first,
-    and if you get an error - try the next method:
+    and if you get an error - try the next method. Be sure to replace ``www-data``
+    with your web server user on the first ``chmod`` command:
 
     .. code-block:: bash
 
@@ -132,23 +146,18 @@ If there are any issues, correct them now before moving on.
 
         $ sudo chmod +a "www-data allow delete,write,append,file_inherit,directory_inherit" app/cache app/logs
         $ sudo chmod +a "`whoami` allow delete,write,append,file_inherit,directory_inherit" app/cache app/logs
-
+    
     **2. Using Acl on a system that does not support chmod +a**
 
-    Some systems don't support ``chmod +a``, but do support another utility 
+    Some systems don't support ``chmod +a``, but do support another utility
     called ``setfacl``. You may need to `enable ACL support`_ on your partition
-    and install setfacl before using it (as is the case with Ubuntu), like 
+    and install setfacl before using it (as is the case with Ubuntu), like
     so:
 
     .. code-block:: bash
 
         $ sudo setfacl -R -m u:www-data:rwx -m u:`whoami`:rwx app/cache app/logs
         $ sudo setfacl -dR -m u:www-data:rwx -m u:`whoami`:rwx app/cache app/logs
-
-    Note that not all web servers run as the user ``www-data``. You have to
-    check which user the web server is being run as and put it in for ``www-data``.
-    This can be done by checking your process list to see which user is running
-    your web server processes.
 
     **3. Without using ACL**
 
@@ -179,18 +188,32 @@ Symfony2 should welcome and congratulate you for your hard work so far!
 
 .. image:: /images/quick_tour/welcome.jpg
 
+.. tip::
+    
+    To get nice and short urls you should point the document root of your 
+    webserver or virtual host to the ``Symfony/web/`` directory. Though 
+    this is not required for development it is recommended at the time your 
+    application goes into production as all system and configuration files
+    become inaccessible to clients then. For information on configuring 
+    your specific web server document root, see the following 
+    documentation: `Apache`_ | `Nginx`_ .
+
 Beginning Development
 ---------------------
 
 Now that you have a fully-functional Symfony2 application, you can begin
 development! Your distribution may contain some sample code - check the
 ``README.md`` file included with the distribution (open it as a text file)
-to learn about what sample code was included with your distribution and how
-you can remove it later.
+to learn about what sample code was included with your distribution.
 
-If you're new to Symfony, join us in the ":doc:`page_creation`", where you'll
+If you're new to Symfony, check out ":doc:`page_creation`", where you'll
 learn how to create pages, change configuration, and do everything else you'll
 need in your new application.
+
+.. note::
+
+    If you want to remove the sample code from your distribution, take a look
+    at this cookbook article: ":doc:`/cookbook/bundles/remove`"
 
 Using Source Control
 --------------------

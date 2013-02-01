@@ -25,7 +25,7 @@ would do with `git`_.
 The Subversion Repository
 -------------------------
 
-For this article we will suppose that your repository layout follows the
+For this article it's assumed that your repository layout follows the
 widespread standard structure:
 
 .. code-block:: text
@@ -69,7 +69,7 @@ To get started, you'll need to download Symfony2 and get the basic Subversion se
    subversion repository. Some files (like the cache) are generated and
    others (like the database configuration) are meant to be customized
    on each machine. This makes use of the ``svn:ignore`` property, so that
-   we can ignore specific files.
+   specific files can be ignored.
 
    .. code-block:: bash
 
@@ -84,7 +84,7 @@ To get started, you'll need to download Symfony2 and get the basic Subversion se
 
         $ svn propset svn:ignore "bundles" web
 
-        $ svn ci -m "commit basic symfony ignore list (vendor, app/bootstrap*, app/config/parameters.ini, app/cache/*, app/logs/*, web/bundles)"
+        $ svn ci -m "commit basic Symfony ignore list (vendor, app/bootstrap*, app/config/parameters.ini, app/cache/*, app/logs/*, web/bundles)"
 
 6. The rest of the files can now be added and committed to the project:
 
@@ -122,7 +122,8 @@ to learn more about how to configure and develop inside your application.
 .. tip::
 
     The Symfony2 Standard Edition comes with some example functionality. To
-    remove the sample code, follow the instructions on the `Standard Edition Readme`_.
+    remove the sample code, follow the instructions in the
+    ":doc:`/cookbook/bundles/remove`" article.
 
 .. include:: _vendor_deps.rst.inc
 
@@ -146,7 +147,6 @@ central repository to work. You then have several solutions:
 .. _`svn`: http://subversion.apache.org/
 .. _`Subversion`: http://subversion.apache.org/
 .. _`Symfony2 Standard Edition`: http://symfony.com/download
-.. _`Standard Edition Readme`: https://github.com/symfony/symfony-standard/blob/master/README.md
 .. _`Version Control with Subversion`: http://svnbook.red-bean.com/
 .. _`GitHub`: https://github.com/
 .. _`Google code`: http://code.google.com/hosting/

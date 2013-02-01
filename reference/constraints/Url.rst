@@ -29,19 +29,44 @@ Basic Usage
 
     .. code-block:: php-annotations
 
-       // src/Acme/BlogBundle/Entity/Author.php
-       namespace Acme\BlogBundle\Entity;
-       
-       use Symfony\Component\Validator\Constraints as Assert;
+        // src/Acme/BlogBundle/Entity/Author.php
+        namespace Acme\BlogBundle\Entity;
+        
+        use Symfony\Component\Validator\Constraints as Assert;
 
-       class Author
-       {
-           /**
-            * @Assert\Url()
-            */
-            protected $bioUrl;
-       }
+        class Author
+        {
+            /**
+             * @Assert\Url()
+             */
+             protected $bioUrl;
+        }
 
+    .. code-block:: xml
+
+        <!-- src/Acme/BlogBundle/Resources/config/validation.xml -->
+        <class name="Acme\BlogBundle\Entity\Author">
+            <property name="bioUrl">
+                <constraint name="Url" />
+            </property>
+        </class>
+
+    .. code-block:: php
+
+        // src/Acme/BlogBundle/Entity/Author.php
+        namespace Acme\BlogBundle\Entity;
+        
+        use Symfomy\Component\Validator\Mapping\ClassMetadata;
+        use Symfony\Component\Validator\Constraints as Assert;
+  
+        class Author
+        {
+            public static function loadValidatorMetadata(ClassMetadata $metadata)
+            {
+                $metadata->addPropertyConstraint('bioUrl', new Assert\Url());
+            }
+        }
+  
 Options
 -------
 

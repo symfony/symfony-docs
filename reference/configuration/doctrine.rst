@@ -2,8 +2,8 @@
    single: Doctrine; ORM configuration reference
    single: Configuration reference; Doctrine ORM
 
-Configuration Reference
-=======================
+Doctrine Configuration Reference
+================================
 
 .. configuration-block::
 
@@ -212,14 +212,10 @@ can control. The following configuration options exist for a mapping:
 Doctrine DBAL Configuration
 ---------------------------
 
-.. note::
-
-    DoctrineBundle supports all parameters that default Doctrine drivers
-    accept, converted to the XML or YAML naming standards that Symfony
-    enforces. See the Doctrine `DBAL documentation`_ for more information.
-
-Besides default Doctrine options, there are some Symfony-related ones that you
-can configure. The following block shows all possible configuration keys:
+DoctrineBundle supports all parameters that default Doctrine drivers
+accept, converted to the XML or YAML naming standards that Symfony
+enforces. See the Doctrine `DBAL documentation`_ for more information.
+The following block shows all possible configuration keys:
 
 .. configuration-block::
 
@@ -233,12 +229,15 @@ can configure. The following block shows all possible configuration keys:
                 user:                 user
                 password:             secret
                 driver:               pdo_mysql
+                # the DBAL driverClass option
                 driver_class:         MyNamespace\MyDriverImpl
+                # the DBAL driverOptions option
                 options:
                     foo: bar
                 path:                 "%kernel.data_dir%/data.sqlite"
                 memory:               true
                 unix_socket:          /tmp/mysql.sock
+                # the DBAL wrapperClass option
                 wrapper_class:        MyDoctrineDbalConnectionWrapper
                 charset:              UTF8
                 logging:              "%kernel.debug%"
@@ -304,4 +303,4 @@ which is the first one defined or the one configured via the
 Each connection is also accessible via the ``doctrine.dbal.[name]_connection``
 service where ``[name]`` if the name of the connection.
 
-.. _DBAL documentation: http://docs.doctrine-project.org/projects/doctrine-dbal/en/latest/index.html
+.. _DBAL documentation: http://docs.doctrine-project.org/projects/doctrine-dbal/en/latest/reference/configuration.html

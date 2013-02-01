@@ -76,7 +76,7 @@ of your bundle::
             $calc = new Calculator();
             $result = $calc->add(30, 12);
 
-            // assert that our calculator added the numbers correctly!
+            // assert that your calculator added the numbers correctly!
             $this->assertEquals(42, $result);
         }
     }
@@ -144,7 +144,10 @@ for its ``DemoController`` (`DemoControllerTest`_) that reads as follows::
 
             $crawler = $client->request('GET', '/demo/hello/Fabien');
 
-            $this->assertGreaterThan(0, $crawler->filter('html:contains("Hello Fabien")')->count());
+            $this->assertGreaterThan(
+                0,
+                $crawler->filter('html:contains("Hello Fabien")')->count()
+            );
         }
     }
 
@@ -216,7 +219,10 @@ Or, test against the Response content directly if you just want to assert that
 the content contains some text, or if the Response is not an XML/HTML
 document::
 
-    $this->assertRegExp('/Hello Fabien/', $client->getResponse()->getContent());
+    $this->assertRegExp(
+        '/Hello Fabien/',
+        $client->getResponse()->getContent()
+    );
 
 .. _book-testing-request-method-sidebar:
 
@@ -235,8 +241,9 @@ document::
         )
 
     The ``server`` array is the raw values that you'd expect to normally
-    find in the PHP `$_SERVER`_ superglobal. For example, to set the `Content-Type`
-    and `Referer` HTTP headers, you'd pass the following::
+    find in the PHP `$_SERVER`_ superglobal. For example, to set the `Content-Type`,
+    `Referer` and `X-Requested-With' HTTP headers, you'd pass the following (mind
+    the `HTTP_` prefix for non standard headers)::
 
         $client->request(
             'GET',
@@ -244,8 +251,9 @@ document::
             array(),
             array(),
             array(
-                'CONTENT_TYPE' => 'application/json',
-                'HTTP_REFERER' => '/foo/bar',
+                'CONTENT_TYPE'          => 'application/json',
+                'HTTP_REFERER'          => '/foo/bar',
+                'HTTP_X-Requested-With' => 'XMLHttpRequest',
             )
         );
 
@@ -257,14 +265,23 @@ document::
     To get you started faster, here is a list of the most common and
     useful test assertions::
 
-        // Assert that there is more than one h2 tag with the class "subtitle"
-        $this->assertGreaterThan(0, $crawler->filter('h2.subtitle')->count());
+        // Assert that there is at least one h2 tag
+        // with the class "subtitle"
+        $this->assertGreaterThan(
+            0,
+            $crawler->filter('h2.subtitle')->count()
+        );
 
         // Assert that there are exactly 4 h2 tags on the page
         $this->assertCount(4, $crawler->filter('h2'));
 
         // Assert that the "Content-Type" header is "application/json"
-        $this->assertTrue($client->getResponse()->headers->contains('Content-Type', 'application/json'));
+        $this->assertTrue(
+            $client->getResponse()->headers->contains(
+                'Content-Type',
+                'application/json'
+            )
+        );
 
         // Assert that the response content matches a regexp.
         $this->assertRegExp('/foo/', $client->getResponse()->getContent());
@@ -274,10 +291,15 @@ document::
         // Assert that the response status code is 404
         $this->assertTrue($client->getResponse()->isNotFound());
         // Assert a specific 200 status code
-        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+        $this->assertEquals(
+            200,
+            $client->getResponse()->getStatusCode()
+        );
 
         // Assert that the response is a redirect to /demo/contact
-        $this->assertTrue($client->getResponse()->isRedirect('/demo/contact'));
+        $this->assertTrue(
+            $client->getResponse()->isRedirect('/demo/contact')
+        );
         // or simply check that the response is a redirect to any URL
         $this->assertTrue($client->getResponse()->isRedirect());
 
@@ -521,8 +543,10 @@ The Crawler can extract information from the nodes::
     // Returns the node value for the first node
     $crawler->text();
 
-    // Extracts an array of attributes for all nodes (_text returns the node value)
-    // returns an array for each element in crawler, each with the value and href
+    // Extracts an array of attributes for all nodes
+    // (_text returns the node value)
+    // returns an array for each element in crawler,
+    // each with the value and href
     $info = $crawler->extract(array('_text', 'href'));
 
     // Executes a lambda for each node and return an array of results

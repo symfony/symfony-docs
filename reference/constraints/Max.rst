@@ -34,6 +34,8 @@ add the following:
     .. code-block:: php-annotations
 
         // src/Acme/EventBundle/Entity/Participant.php
+        namespace Acme\EventBundle\Entity;
+
         use Symfony\Component\Validator\Constraints as Assert;
 
         class Participant
@@ -42,6 +44,37 @@ add the following:
              * @Assert\Max(limit = 50, message = "You must be 50 or under to enter.")
              */
              protected $age;
+        }
+
+    .. code-block:: xml
+
+        <!-- src/Acme/EventBundle/Resources/config/validation.yml -->
+        <class name="Acme\EventBundle\Entity\Participant">
+            <property name="age">
+                <constraint name="Max">
+                    <option name="limit">50</option>
+                    <option name="message">You must be 50 or under to enter.</option>
+                </constraint>
+            </property>
+        </class>
+
+    .. code-block:: php
+
+        // src/Acme/EventBundle/Entity/Participant.php
+        namespace Acme\EventBundle\Entity;
+
+        use Symfony\Component\Validator\Mapping\ClassMetadata;
+        use Symfony\Component\Validator\Constraints as Assert;
+
+        class Participant
+        {
+            public static function loadValidatorMetadata(ClassMetadata $metadata)
+            {
+                $metadata->addPropertyConstraint('age', new Assert\Max(array(
+                    'limit'   => 50,
+                    'message' => "You must be 50 or under to enter.",
+                )));
+            }
         }
 
 Options
@@ -69,6 +102,4 @@ invalidMessage
 **type**: ``string`` **default**: ``This value should be a valid number``
 
 The message that will be shown if the underlying value is not a number (per
-the `is_numeric`_ PHP function).
-
-.. _`is_numeric`: http://www.php.net/manual/en/function.is-numeric.php
+the :phpfunction:`is_numeric` PHP function).

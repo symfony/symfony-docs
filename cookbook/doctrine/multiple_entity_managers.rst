@@ -64,7 +64,7 @@ two connections, one for each entity manager.
 
 .. note::
 
-    When working with multiple connections and entity managers, you should be 
+    When working with multiple connections and entity managers, you should be
     explicit about which configuration you want. If you *do* omit the name of
     the connection or entity manager, the default (i.e. ``default``) is used.
 
@@ -98,7 +98,7 @@ the default entity manager (i.e. ``default``) is returned::
             // both return the "default" em
             $em = $this->get('doctrine')->getManager();
             $em = $this->get('doctrine')->getManager('default');
-            
+
             $customerEm =  $this->get('doctrine')->getManager('customer');
         }
     }
@@ -115,17 +115,20 @@ The same applies to repository call::
         {
             // Retrieves a repository managed by the "default" em
             $products = $this->get('doctrine')
-                             ->getRepository('AcmeStoreBundle:Product')
-                             ->findAll();
+                ->getRepository('AcmeStoreBundle:Product')
+                ->findAll()
+            ;
 
             // Explicit way to deal with the "default" em
             $products = $this->get('doctrine')
-                             ->getRepository('AcmeStoreBundle:Product', 'default')
-                             ->findAll();
+                ->getRepository('AcmeStoreBundle:Product', 'default')
+                ->findAll()
+            ;
 
             // Retrieves a repository managed by the "customer" em
             $customers = $this->get('doctrine')
-                              ->getRepository('AcmeCustomerBundle:Customer', 'customer')
-                              ->findAll();
+                ->getRepository('AcmeCustomerBundle:Customer', 'customer')
+                ->findAll()
+            ;
         }
     }

@@ -22,15 +22,13 @@ HTTP response.
 Symfony2 follows this philosophy and provides you with tools and conventions
 to keep your application organized as it grows in users and complexity.
 
-Sounds simple enough? Let's dive in!
-
 .. index::
    single: Page creation; Example
 
 The "Hello Symfony!" Page
 -------------------------
 
-Let's start with a spin off of the classic "Hello World!" application. When
+Start by building a spin-off of the classic "Hello World!" application. When
 you're finished, the user will be able to get a personal greeting (e.g. "Hello Symfony")
 by going to the following URL:
 
@@ -290,10 +288,16 @@ of writing the HTML inside the controller, render a template instead:
     {
         public function indexAction($name)
         {
-            return $this->render('AcmeHelloBundle:Hello:index.html.twig', array('name' => $name));
+            return $this->render(
+                'AcmeHelloBundle:Hello:index.html.twig',
+                array('name' => $name)
+            );
 
             // render a PHP template instead
-            // return $this->render('AcmeHelloBundle:Hello:index.html.php', array('name' => $name));
+            // return $this->render(
+            //     'AcmeHelloBundle:Hello:index.html.php',
+            //     array('name' => $name)
+            // );
         }
     }
 
@@ -347,7 +351,7 @@ controller, and ``index.html.twig`` the template:
 
         Hello <?php echo $view->escape($name) ?>!
 
-Let's step through the Twig template line-by-line:
+Step through the Twig template line-by-line:
 
 * *line 2*: The ``extends`` token defines a parent template. The template
   explicitly defines a layout file inside of which it will be placed.
@@ -826,7 +830,8 @@ options of each feature.
     three formats (YAML, XML and PHP). Each has its own advantages and
     disadvantages. The choice of which to use is up to you:
 
-    * *YAML*: Simple, clean and readable;
+    * *YAML*: Simple, clean and readable (learn more about yaml in
+    * ":doc:`/components/yaml/yaml_format`");
 
     * *XML*: More powerful than YAML at times and supports IDE autocompletion;
 
@@ -902,7 +907,9 @@ file of your choice::
     // app/AppKernel.php
     public function registerContainerConfiguration(LoaderInterface $loader)
     {
-        $loader->load(__DIR__.'/config/config_'.$this->getEnvironment().'.yml');
+        $loader->load(
+            __DIR__.'/config/config_'.$this->getEnvironment().'.yml'
+        );
     }
 
 You already know that the ``.yml`` extension can be changed to ``.xml`` or

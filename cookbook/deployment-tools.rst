@@ -1,8 +1,8 @@
 .. index::
    single: Deployment
 
-Deploying a Symfony2 Application
-================================
+How to deploy a Symfony2 application
+====================================
 
 .. note::
 

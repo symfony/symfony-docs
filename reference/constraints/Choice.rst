@@ -49,7 +49,7 @@ If your valid choice list is simple, you can pass them in directly via the
     .. code-block:: xml
 
         <!-- src/Acme/BlogBundle/Resources/config/validation.xml -->
-        <class name="Acme\BlogBundle\EntityAuthor">
+        <class name="Acme\BlogBundle\Entity\Author">
             <property name="gender">
                 <constraint name="Choice">
                     <option name="choices">
@@ -64,6 +64,8 @@ If your valid choice list is simple, you can pass them in directly via the
     .. code-block:: php-annotations
 
         // src/Acme/BlogBundle/Entity/Author.php
+        namespace Acme\BlogBundle\Entity;
+
         use Symfony\Component\Validator\Constraints as Assert;
 
         class Author
@@ -77,8 +79,10 @@ If your valid choice list is simple, you can pass them in directly via the
     .. code-block:: php
 
         // src/Acme/BlogBundle/EntityAuthor.php
+        namespace Acme\BlogBundle\Entity;
+
         use Symfony\Component\Validator\Mapping\ClassMetadata;
-        use Symfony\Component\Validator\Constraints\Choice;
+        use Symfony\Component\Validator\Constraints as Assert;
         
         class Author
         {
@@ -86,7 +90,7 @@ If your valid choice list is simple, you can pass them in directly via the
             
             public static function loadValidatorMetadata(ClassMetadata $metadata)
             {
-                $metadata->addPropertyConstraint('gender', new Choice(array(
+                $metadata->addPropertyConstraint('gender', new Assert\Choice(array(
                     'choices' => array('male', 'female'),
                     'message' => 'Choose a valid gender',
                 )));
@@ -279,7 +283,5 @@ strict
 **type**: ``Boolean`` **default**: ``false``
 
 If true, the validator will also check the type of the input value. Specifically,
-this value is passed to as the third argument to the PHP `in_array`_ method
+this value is passed to as the third argument to the PHP :phpfunction:`in_array` method
 when checking to see if a value is in the valid choices array.
-
-.. _`in_array`: http://php.net/manual/en/function.in-array.php

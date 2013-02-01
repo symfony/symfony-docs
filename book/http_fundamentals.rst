@@ -118,7 +118,7 @@ from the xkcd web server:
    :align: center
 
 Translated into HTTP, the response sent back to the browser will look something
-like this: 
+like this:
 
 .. code-block:: text
 
@@ -145,7 +145,7 @@ known as HTTP headers. For example, one important HTTP response header is
 ``Content-Type``. The body of the same resource could be returned in multiple
 different formats like HTML, XML, or JSON and the ``Content-Type`` header uses
 Internet Media Types like ``text/html`` to tell the client which format is
-being returned. A list of common media types can be found on Wikipedia's 
+being returned. A list of common media types can be found on Wikipedia's
 `List of common media types`_ article.
 
 Many other headers exist, some of which are very powerful. For example, certain
@@ -259,9 +259,9 @@ the user is connecting via a secured connection (i.e. ``https``).
     :method:`Symfony\\Component\\HttpFoundation\\ParameterBag::all` and more.
     In fact, every public property used in the previous example is some instance
     of the ParameterBag.
-    
+
     .. _book-fundamentals-attributes:
-    
+
     The Request class also has a public ``attributes`` property, which holds
     special data related to how the application works internally. For the
     Symfony2 framework, the ``attributes`` holds the values returned by the
@@ -269,7 +269,7 @@ the user is connecting via a secured connection (i.e. ``https``).
     wildcard), and even the name of the matched route (``_route``). The
     ``attributes`` property exists entirely to be a place where you can
     prepare and store context-specific information about the request.
-    
+
 
 Symfony also provides a ``Response`` class: a simple PHP representation of
 an HTTP response message. This allows your application to use an object-oriented
@@ -357,16 +357,18 @@ Almost all modern web apps do this - including apps like WordPress.
 Stay Organized
 ~~~~~~~~~~~~~~
 
-But inside your front controller, how do you know which page should
-be rendered and how can you render each in a sane way? One way or another, you'll need to
-check the incoming URI and execute different parts of your code depending
+Inside your front controller, you have to figure out which code should be
+executed and what the content to return should be. To figure this out, you'll 
+need to check the incoming URI and execute different parts of your code depending
 on that value. This can get ugly quickly::
 
     // index.php
+    use Symfony\Component\HttpFoundation\Request;
+    use Symfony\Component\HttpFoundation\Response;
     $request = Request::createFromGlobals();
     $path = $request->getPathInfo(); // the URI path being requested
 
-    if (in_array($path, array('', '/')) {
+    if (in_array($path, array('', '/'))) {
         $response = new Response('Welcome to the homepage.');
     } elseif ($path == '/contact') {
         $response = new Response('Contact us');
@@ -400,7 +402,7 @@ with many other tools Symfony makes available - to create and return a ``Respons
 object. In other words, the controller is where *your* code goes: it's where
 you interpret the request and create a response.
 
-It's that easy! Let's review:
+It's that easy! To review:
 
 * Each request executes a front controller file;
 
@@ -413,7 +415,7 @@ It's that easy! Let's review:
 A Symfony Request in Action
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Without diving into too much detail, let's see this process in action. Suppose
+Without diving into too much detail, here is this process in action. Suppose
 you want to add a ``/contact`` page to your Symfony application. First, start
 by adding an entry for ``/contact`` to your routing configuration file:
 
@@ -447,7 +449,7 @@ by adding an entry for ``/contact`` to your routing configuration file:
 
 .. note::
 
-   This example uses :doc:`YAML</components/yaml>` to define the routing
+   This example uses :doc:`YAML</components/yaml/introduction>` to define the routing
    configuration. Routing configuration can also be written in other formats
    such as XML or PHP.
 
@@ -457,6 +459,8 @@ the ``AcmeDemoBundle:Main:contact`` string is a short syntax that points to a
 specific PHP method ``contactAction`` inside a class called ``MainController``::
 
     // src/Acme/DemoBundle/Controller/MainController.php
+    use Symfony\Component\HttpFoundation\Response;
+
     class MainController
     {
         public function contactAction()
@@ -465,14 +469,14 @@ specific PHP method ``contactAction`` inside a class called ``MainController``::
         }
     }
 
-In this very simple example, the controller simply creates a 
-:class:`Symfony\\Component\\HttpFoundation\\Response` object with the HTML 
+In this very simple example, the controller simply creates a
+:class:`Symfony\\Component\\HttpFoundation\\Response` object with the HTML
 "``<h1>Contact us!</h1>"``. In the :doc:`controller chapter</book/controller>`,
 you'll learn how a controller can render templates, allowing your "presentation"
 code (i.e. anything that actually writes out HTML) to live in a separate
 template file. This frees up the controller to worry only about the hard
 stuff: interacting with the database, handling submitted data, or sending
-email messages. 
+email messages.
 
 Symfony2: Build your App, not your Tools.
 -----------------------------------------
@@ -504,7 +508,7 @@ regardless of how your project is developed. To name a few:
   the ``Request`` and ``Response`` classes, as well as other classes for handling
   sessions and file uploads;
 
-* :doc:`Routing</components/routing>` - Powerful and fast routing system that
+* :doc:`Routing</components/routing/introduction>` - Powerful and fast routing system that
   allows you to map a specific URI (e.g. ``/contact``) to some information
   about how that request should be handled (e.g. execute the ``contactAction()``
   method);

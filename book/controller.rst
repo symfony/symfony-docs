@@ -11,7 +11,7 @@ a serialized JSON array, an image, a redirect, a 404 error or anything else
 you can dream up. The controller contains whatever arbitrary logic *your
 application* needs to render the content of a page.
 
-To see how simple this is, let's look at a Symfony2 controller in action.
+See how simple this is by looking at a Symfony2 controller in action.
 The following controller would render a page that simply prints ``Hello world!``::
 
     use Symfony\Component\HttpFoundation\Response;
@@ -115,11 +115,11 @@ a controller object. Controllers are also called *actions*.
     will house several controllers/actions (e.g. ``updateAction``, ``deleteAction``,
     etc).
 
-This controller is pretty straightforward, but let's walk through it:
+This controller is pretty straightforward:
 
 * *line 4*: Symfony2 takes advantage of PHP 5.3 namespace functionality to
   namespace the entire controller class. The ``use`` keyword imports the
-  ``Response`` class, which our controller must return.
+  ``Response`` class, which the controller must return.
 
 * *line 6*: The class name is the concatenation of a name for the controller
   class (i.e. ``Hello``) and the word ``Controller``. This is a convention
@@ -218,7 +218,7 @@ passed to that method::
     }
 
 The controller has a single argument, ``$name``, which corresponds to the
-``{name}`` parameter from the matched route (``ryan`` in our example). In
+``{name}`` parameter from the matched route (``ryan`` in the example). In
 fact, when executing your controller, Symfony2 matches each argument of
 the controller with a parameter from the matched route. Take the following
 example:
@@ -472,10 +472,13 @@ value to each variable.
     object::
 
         $httpKernel = $this->container->get('http_kernel');
-        $response = $httpKernel->forward('AcmeHelloBundle:Hello:fancy', array(
-            'name'  => $name,
-            'color' => 'green',
-        ));
+        $response = $httpKernel->forward(
+            'AcmeHelloBundle:Hello:fancy',
+            array(
+                'name'  => $name,
+                'color' => 'green',
+            )
+        );
 
 .. index::
    single: Controller; Rendering templates
@@ -490,14 +493,22 @@ that's responsible for generating the HTML (or other format) for the controller.
 The ``renderView()`` method renders a template and returns its content. The
 content from the template can be used to create a ``Response`` object::
 
-    $content = $this->renderView('AcmeHelloBundle:Hello:index.html.twig', array('name' => $name));
+    use Symfony\Component\HttpFoundation\Response;
+
+    $content = $this->renderView(
+        'AcmeHelloBundle:Hello:index.html.twig',
+        array('name' => $name)
+    );
 
     return new Response($content);
 
 This can even be done in just one step with the ``render()`` method, which
 returns a ``Response`` object containing the content from the template::
 
-    return $this->render('AcmeHelloBundle:Hello:index.html.twig', array('name' => $name));
+    return $this->render(
+        'AcmeHelloBundle:Hello:index.html.twig',
+        array('name' => $name)
+    );
 
 In both cases, the ``Resources/views/Hello/index.html.twig`` template inside
 the ``AcmeHelloBundle`` will be rendered.
@@ -507,11 +518,20 @@ The Symfony templating engine is explained in great detail in the
 
 .. tip::
 
+    You can even avoid calling the ``render`` method by using the ``@Template``
+    annotation. See the :doc:`FrameworkExtraBundle documentation</bundles/SensioFrameworkExtraBundle/annotations/view>`
+    more details.
+
+.. tip::
+
     The ``renderView`` method is a shortcut to direct use of the ``templating``
     service. The ``templating`` service can also be used directly::
 
         $templating = $this->get('templating');
-        $content = $templating->render('AcmeHelloBundle:Hello:index.html.twig', array('name' => $name));
+        $content = $templating->render(
+            'AcmeHelloBundle:Hello:index.html.twig',
+            array('name' => $name)
+        );
 
 .. note::
 
@@ -519,7 +539,10 @@ The Symfony templating engine is explained in great detail in the
     be careful to avoid the pitfall of making your directory structure unduly
     elaborate::
 
-        $templating->render('AcmeHelloBundle:Hello/Greetings:index.html.twig', array('name' => $name));
+        $templating->render(
+            'AcmeHelloBundle:Hello/Greetings:index.html.twig',
+            array('name' => $name)
+        );
         // index.html.twig found in Resources/views/Hello/Greetings is rendered.
 
 .. index::
@@ -636,7 +659,10 @@ For example, imagine you're processing a form submit::
         if ($form->isValid()) {
             // do some sort of processing
 
-            $this->get('session')->setFlash('notice', 'Your changes were saved!');
+            $this->get('session')->setFlash(
+                'notice',
+                'Your changes were saved!'
+            );
 
             return $this->redirect($this->generateUrl(...));
         }
@@ -683,6 +709,8 @@ The only requirement for a controller is to return a ``Response`` object. The
 :class:`Symfony\\Component\\HttpFoundation\\Response` class is a PHP
 abstraction around the HTTP response - the text-based message filled with HTTP
 headers and content that's sent back to the client::
+
+    use Symfony\Component\HttpFoundation\Response;
 
     // create a simple Response with a 200 status code (the default)
     $response = new Response('Hello '.$name, 200);

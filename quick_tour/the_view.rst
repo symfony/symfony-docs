@@ -17,7 +17,7 @@ Getting familiar with Twig
 
 .. tip::
 
-    If you want to learn Twig, we highly recommend you to read its official
+    If you want to learn Twig, it's highly recommended you read its official
     `documentation`_. This section is just a quick overview of the main
     concepts.
 
@@ -98,7 +98,7 @@ Decorating Templates
 --------------------
 
 More often than not, templates in a project share common elements, like the
-well-known header and footer. In Symfony2, we like to think about this problem
+well-known header and footer. In Symfony2, you think about this problem
 differently: a template can be decorated by another one. This works exactly
 the same as PHP classes: template inheritance allows you to build a base
 "layout" template that contains all the common elements of your site and
@@ -180,18 +180,57 @@ And what if you want to embed the result of another controller in a template?
 That's very useful when working with Ajax, or when the embedded template needs
 some variable not available in the main template.
 
-Suppose you've created a ``fancy`` action, and you want to include it inside
-the ``index`` template. To do this, use the ``render`` tag:
+Suppose you've created a ``fancyAction`` controller method, and you want to "render"
+it inside the ``index`` template. First, create a route to your new controller
+in one of your application's routing configuration files.
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # app/config/routing.yml
+        fancy:
+            pattern:   /included/fancy/{name}/{color}
+            defaults:  { _controller: AcmeDemoBundle:Demo:fancy }
+
+    .. code-block:: xml
+
+        <!-- app/config/routing.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <routes xmlns="http://symfony.com/schema/routing"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/routing http://symfony.com/schema/routing/routing-1.0.xsd">
+
+            <route id="fancy" pattern="/included/fancy/{name}/{color}">
+                <default key="_controller">AcmeDemoBundle:Demo:fancy</default>
+            </route>
+        </routes>
+
+    .. code-block:: php
+
+        // app/config/routing.php
+        use Symfony\Component\Routing\RouteCollection;
+        use Symfony\Component\Routing\Route;
+
+        $collection = new RouteCollection();
+        $collection->add('fancy', new Route('/included/fancy/{name}/{color}', array(
+            '_controller' => 'AcmeDemoBundle:Demo:fancy',
+        )));
+
+        return $collection;
+
+To include the result (e.g. ``HTML``) of the controller, use the ``render`` tag:
 
 .. code-block:: jinja
 
     {# src/Acme/DemoBundle/Resources/views/Demo/index.html.twig #}
-    {% render "AcmeDemoBundle:Demo:fancy" with {'name': name, 'color': 'green'} %}
+    {% render url('fancy', { 'name': name, 'color': 'green'}) %}
 
-Here, the ``AcmeDemoBundle:Demo:fancy`` string refers to the ``fancy`` action
-of the ``Demo`` controller. The arguments (``name`` and ``color``) act like
-simulated request variables (as if the ``fancyAction`` were handling a whole
-new request) and are made available to the controller::
+.. include:: /book/_security-2012-6431.rst.inc
+
+The ``render`` tag will execute the ``AcmeDemoBundle:Demo:fancy`` controller
+and include its result. For example, your new ``fancyAction`` might look
+like this::
 
     // src/Acme/DemoBundle/Controller/DemoController.php
 
@@ -202,7 +241,10 @@ new request) and are made available to the controller::
             // create some object, based on the $color variable
             $object = ...;
 
-            return $this->render('AcmeDemoBundle:Demo:fancy.html.twig', array('name' => $name, 'object' => $object));
+            return $this->render('AcmeDemoBundle:Demo:fancy.html.twig', array(
+                'name' => $name,
+                'object' => $object
+            ));
         }
 
         // ...

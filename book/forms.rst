@@ -201,6 +201,7 @@ user must be bound to the form. Add the following functionality to your
 controller::
 
     // ...
+    use Symfony\Component\HttpFoundation\Request;
 
     public function newAction(Request $request)
     {
@@ -524,7 +525,7 @@ the correct values of a number of field options.
 * ``max_length``: If the field is some sort of text field, then the ``max_length``
   option can be guessed from the validation constraints (if ``MaxLength`` or ``Max``
   is used) or from the Doctrine metadata (via the field's length).
-  
+
 .. note::
 
   These field options are *only* guessed if you're using Symfony to guess
@@ -576,7 +577,7 @@ of code. Of course, you'll usually need much more flexibility when rendering:
             <input type="submit" />
         </form>
 
-Let's take a look at each part:
+Take a look at each part:
 
 * ``form_enctype(form)`` - If at least one field is a file upload field, this
   renders the obligatory ``enctype="multipart/form-data"``;
@@ -1029,7 +1030,7 @@ In PHP, each form "fragment" is rendered via an individual template file.
 To customize any part of how a form renders, you just need to override the
 existing template by creating a new one.
 
-To understand how this works, let's customize the ``form_row`` fragment and
+To understand how this works, customize the ``form_row`` fragment and
 add a class attribute to the ``div`` element that surrounds each row. To
 do this, create a new template file that will store the new markup:
 
@@ -1259,7 +1260,7 @@ to define form output.
     ever be needed in a single template.
 
     .. caution::
-    
+
         This ``{% form_theme form _self %}`` functionality will *only* work
         if your template extends another. If your template does not, you
         must point ``form_theme`` to a separate template.
@@ -1381,7 +1382,7 @@ But sometimes, you may just want to use a form without a class, and get back
 an array of the submitted data. This is actually really easy::
 
     // make sure you've imported the Request namespace above the class
-    use Symfony\Component\HttpFoundation\Request
+    use Symfony\Component\HttpFoundation\Request;
     // ...
 
     public function contactAction(Request $request)
@@ -1477,7 +1478,9 @@ method to specify the option::
         {
             $collectionConstraint = new Collection(array(
                 'name' => new MinLength(5),
-                'email' => new Email(array('message' => 'Invalid email address')),
+                'email' => new Email(
+                    array('message' => 'Invalid email address')
+                ),
             ));
 
             return array('validation_constraint' => $collectionConstraint);
@@ -1514,7 +1517,7 @@ Learn more from the Cookbook
 * :doc:`File Field Reference </reference/forms/types/file>`
 * :doc:`Creating Custom Field Types </cookbook/form/create_custom_field_type>`
 * :doc:`/cookbook/form/form_customization`
-* :doc:`/cookbook/form/dynamic_form_generation`
+* :doc:`/cookbook/form/dynamic_form_modification`
 * :doc:`/cookbook/form/data_transformers`
 
 .. _`Symfony2 Form Component`: https://github.com/symfony/Form

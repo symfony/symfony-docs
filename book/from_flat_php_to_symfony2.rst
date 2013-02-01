@@ -131,7 +131,7 @@ is known as a "controller". The term :term:`controller` is a word you'll hear
 a lot, regardless of the language or framework you use. It refers simply
 to the area of *your* code that processes user input and prepares the response.
 
-In this case, our controller prepares data from the database and then includes
+In this case, the controller prepares data from the database and then includes
 a template to present that data. With the controller isolated, you could
 easily change *just* the template file if you needed to render the blog
 entries in some other format (e.g. ``list.json.php`` for JSON format).
@@ -426,7 +426,7 @@ an autoloader that Symfony provides. An autoloader is a tool that makes it
 possible to start using PHP classes without explicitly including the file
 containing the class.
 
-First, `download symfony`_ and place it into a ``vendor/symfony/`` directory.
+First, `download Symfony`_ and place it into a ``vendor/symfony/`` directory.
 Next, create an ``app/bootstrap.php`` file. Use it to ``require`` the two
 files in the application and to configure the autoloader:
 
@@ -554,7 +554,10 @@ them for you. Here's the same sample application, now built in Symfony2::
                 ->createQuery('SELECT p FROM AcmeBlogBundle:Post p')
                 ->execute();
 
-            return $this->render('AcmeBlogBundle:Blog:list.html.php', array('posts' => $posts));
+            return $this->render(
+                'AcmeBlogBundle:Blog:list.html.php',
+                array('posts' => $posts)
+            );
         }
 
         public function showAction($id)
@@ -570,11 +573,14 @@ them for you. Here's the same sample application, now built in Symfony2::
                 throw $this->createNotFoundException();
             }
 
-            return $this->render('AcmeBlogBundle:Blog:show.html.php', array('post' => $post));
+            return $this->render(
+                'AcmeBlogBundle:Blog:show.html.php',
+                array('post' => $post)
+            );
         }
     }
 
-The two controllers are still lightweight. Each uses the Doctrine ORM library
+The two controllers are still lightweight. Each uses the :doc:`Doctrine ORM library</book/doctrine>`
 to retrieve objects from the database and the ``Templating`` component to
 render a template and return a ``Response`` object. The list template is
 now quite a bit simpler:
@@ -590,7 +596,10 @@ now quite a bit simpler:
     <ul>
         <?php foreach ($posts as $post): ?>
         <li>
-            <a href="<?php echo $view['router']->generate('blog_show', array('id' => $post->getId())) ?>">
+            <a href="<?php echo $view['router']->generate(
+                'blog_show',
+                array('id' => $post->getId())
+            ) ?>">
                 <?php echo $post->getTitle() ?>
             </a>
         </li>
@@ -605,7 +614,10 @@ The layout is nearly identical:
     <!DOCTYPE html>
     <html>
         <head>
-            <title><?php echo $view['slots']->output('title', 'Default title') ?></title>
+            <title><?php echo $view['slots']->output(
+                'title',
+                'Default title'
+            ) ?></title>
         </head>
         <body>
             <?php echo $view['slots']->output('_content') ?>
@@ -740,7 +752,7 @@ Learn more from the Cookbook
 * :doc:`/cookbook/controller/service`
 
 .. _`Doctrine`: http://www.doctrine-project.org
-.. _`download symfony`: http://symfony.com/download
+.. _`download Symfony`: http://symfony.com/download
 .. _`Routing`: https://github.com/symfony/Routing
 .. _`Templating`: https://github.com/symfony/Templating
 .. _`KnpBundles.com`: http://knpbundles.com/

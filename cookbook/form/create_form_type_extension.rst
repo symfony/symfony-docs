@@ -106,20 +106,20 @@ tag:
 
         services:
             acme_demo_bundle.image_type_extension:
-                class: Acme\DemoBundle\Form\Type\ImageTypeExtension
+                class: Acme\DemoBundle\Form\Extension\ImageTypeExtension
                 tags:
                     - { name: form.type_extension, alias: file }
 
     .. code-block:: xml
 
-        <service id="acme_demo_bundle.image_type_extension" class="Acme\DemoBundle\Form\Type\ImageTypeExtension">
+        <service id="acme_demo_bundle.image_type_extension" class="Acme\DemoBundle\Form\Extension\ImageTypeExtension">
             <tag name="form.type_extension" alias="file" />
         </service>
 
     .. code-block:: php
 
         $container
-            ->register('acme_demo_bundle.image_type_extension', 'Acme\DemoBundle\Form\Type\ImageTypeExtension')
+            ->register('acme_demo_bundle.image_type_extension', 'Acme\DemoBundle\Form\Extension\ImageTypeExtension')
             ->addTag('form.type_extension', array('alias' => 'file'));
 
 The ``alias`` key of the tag is the type of field that this extension should
@@ -170,6 +170,7 @@ database)::
 
             return $webPath;
         }
+    }
 
 Your form type extension class will need to do two things in order to extend
 the ``file`` form type:
@@ -239,8 +240,12 @@ it in the view::
             if ($form->hasAttribute('image_path')) {
                 $parentData = $form->getParent()->getData();
 
-                $propertyPath = new PropertyPath($form->getAttribute('image_path'));
-                $imageUrl = $propertyPath->getValue($parentData);
+                if (null != $parentData) {
+                    $propertyPath = new PropertyPath($form->getAttribute('image_path'));
+                    $imageUrl = $propertyPath->getValue($parentData);
+                } else {
+                    $imageUrl = null;
+                }
                 // set an "image_url" variable that will be available when rendering this field
                 $view->set('image_url', $imageUrl);
             }

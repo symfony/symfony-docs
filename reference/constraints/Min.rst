@@ -34,6 +34,8 @@ the following:
     .. code-block:: php-annotations
 
         // src/Acme/EventBundle/Entity/Participant.php
+        namespace Acme\EventBundle\Entity;
+
         use Symfony\Component\Validator\Constraints as Assert;
 
         class Participant
@@ -69,6 +71,4 @@ invalidMessage
 **type**: ``string`` **default**: ``This value should be a valid number``
 
 The message that will be shown if the underlying value is not a number (per
-the `is_numeric`_ PHP function).
-
-.. _`is_numeric`: http://www.php.net/manual/en/function.is-numeric.php
+the :phpfunction:`is_numeric` PHP function).

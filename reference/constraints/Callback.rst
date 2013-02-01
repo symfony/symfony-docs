@@ -43,6 +43,8 @@ Setup
     .. code-block:: php-annotations
 
         // src/Acme/BlogBundle/Entity/Author.php
+        namespace Acme\BlogBundle\Entity;
+
         use Symfony\Component\Validator\Constraints as Assert;
 
         /**
@@ -62,6 +64,24 @@ Setup
                 </option>
             </constraint>
         </class>
+
+    .. code-block:: php
+
+        // src/Acme/BlogBundle/Entity/Author.php
+        namespace Acme\BlogBundle\Entity;
+
+        use Symfony\Component\Validator\Mapping\ClassMetadata;
+        use Symfony\Component\Validator\Constraints as Assert;
+
+        class Author
+        {
+            public static function loadValidatorMetadata(ClassMetadata $metadata)
+            {
+                $metadata->addConstraint(new Assert\Callback(array(
+                    'methods' => array('isAuthorValid'),
+                )));
+            }
+        }
 
 The Callback Method
 -------------------
@@ -90,6 +110,7 @@ those errors should be attributed::
                 $context->addViolation('This name sounds totally fake!', array(), null);
             }
         }
+    }
 
 Options
 -------
@@ -167,7 +188,7 @@ process. Each method can be one of the following formats:
     
         class MyStaticValidatorClass
         {
-            static public function isAuthorValid(Author $author, ExecutionContext $context)
+            public static function isAuthorValid(Author $author, ExecutionContext $context)
             {
                 // ...
             }

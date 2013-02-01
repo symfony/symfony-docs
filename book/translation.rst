@@ -14,7 +14,8 @@ the user::
     // text will *always* print out in English
     echo 'Hello World';
 
-    // text can be translated into the end-user's language or default to English
+    // text can be translated into the end-user's language or
+    // default to English
     echo $translator->trans('Hello World');
 
 .. note::
@@ -94,6 +95,9 @@ of text (called a *message*), use the
 :method:`Symfony\\Component\\Translation\\Translator::trans` method. Suppose,
 for example, that you're translating a simple message from inside a controller::
 
+    // ...
+    use Symfony\Component\HttpFoundation\Response;
+
     public function indexAction()
     {
         $t = $this->get('translator')->trans('Symfony2 is great');
@@ -167,6 +171,9 @@ Message Placeholders
 
 Sometimes, a message containing a variable needs to be translated::
 
+    // ...
+    use Symfony\Component\HttpFoundation\Response;
+
     public function indexAction($name)
     {
         $t = $this->get('translator')->trans('Hello '.$name);
@@ -180,11 +187,17 @@ will try to look up the exact message, including the variable portions
 for every possible iteration of the ``$name`` variable, you can replace the
 variable with a "placeholder"::
 
+    // ...
+    use Symfony\Component\HttpFoundation\Response;
+
     public function indexAction($name)
     {
-        $t = $this->get('translator')->trans('Hello %name%', array('%name%' => $name));
+        $t = $this->get('translator')->trans(
+            'Hello %name%',
+            array('%name%' => $name)
+        );
 
-        new Response($t);
+        return new Response($t);
     }
 
 Symfony2 will now look for a translation of the raw message (``Hello %name%``)
@@ -584,7 +597,15 @@ Message pluralization is a tough topic as the rules can be quite complex. For
 instance, here is the mathematic representation of the Russian pluralization
 rules::
 
-    (($number % 10 == 1) && ($number % 100 != 11)) ? 0 : ((($number % 10 >= 2) && ($number % 10 <= 4) && (($number % 100 < 10) || ($number % 100 >= 20))) ? 1 : 2);
+    (($number % 10 == 1) && ($number % 100 != 11))
+        ? 0
+        : ((($number % 10 >= 2)
+            && ($number % 10 <= 4)
+            && (($number % 100 < 10)
+            || ($number % 100 >= 20)))
+                ? 1
+                : 2
+    );
 
 As you can see, in Russian, you can have three different plural forms, each
 given an index of 0, 1 or 2. For each form, the plural is different, and
@@ -691,6 +712,8 @@ Translations in Templates
 Most of the time, translation occurs in templates. Symfony2 provides native
 support for both Twig and PHP templates.
 
+.. _book-translation-twig:
+
 Twig Templates
 ~~~~~~~~~~~~~~
 
@@ -743,9 +766,9 @@ texts* and complex expressions:
 
     Using the translation tags or filters have the same effect, but with
     one subtle difference: automatic output escaping is only applied to
-    variables translated using a filter. In other words, if you need to
-    be sure that your translated variable is *not* output escaped, you must
-    apply the raw filter after the translation filter:
+    translations using a filter. In other words, if you need to be sure
+    that your translated is *not* output escaped, you must apply the 
+    ``raw`` filter after the translation filter:
 
     .. code-block:: jinja
 
@@ -756,11 +779,9 @@ texts* and complex expressions:
 
             {% set message = '<h3>foo</h3>' %}
 
-            {# a variable translated via a filter is escaped by default #}
+            {# strings and variables translated via a filter is escaped by default #}
             {{ message|trans|raw }}
-
-            {# but static strings are never escaped #}
-            {{ '<h3>foo</h3>'|trans }}
+            {{ '<h3>bar</h3>'|trans|raw }}
 
 PHP Templates
 ~~~~~~~~~~~~~
@@ -789,7 +810,7 @@ locale to use for translation::
         'Symfony2 is great',
         array(),
         'messages',
-        'fr_FR',
+        'fr_FR'
     );
 
     $this->get('translator')->transChoice(
@@ -797,7 +818,7 @@ locale to use for translation::
         10,
         array('%count%' => 10),
         'messages',
-        'fr_FR',
+        'fr_FR'
     );
 
 Translating Database Content
@@ -939,7 +960,7 @@ steps:
 .. _`i18n`: http://en.wikipedia.org/wiki/Internationalization_and_localization
 .. _`L10n`: http://en.wikipedia.org/wiki/Internationalization_and_localization
 .. _`strtr function`: http://www.php.net/manual/en/function.strtr.php
-.. _`ISO 31-11`: http://en.wikipedia.org/wiki/Interval_%28mathematics%29#The_ISO_notation
+.. _`ISO 31-11`: http://en.wikipedia.org/wiki/Interval_(mathematics)#Notations_for_intervals
 .. _`Translatable Extension`: https://github.com/l3pp4rd/DoctrineExtensions
 .. _`ISO3166 Alpha-2`: http://en.wikipedia.org/wiki/ISO_3166-1#Current_codes
 .. _`ISO639-1`: http://en.wikipedia.org/wiki/List_of_ISO_639-1_codes

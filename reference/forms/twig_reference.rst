@@ -9,8 +9,10 @@ rendering forms. There are several different functions available, and each
 is responsible for rendering a different part of a form (e.g. labels, errors,
 widgets, etc).
 
-form_label(form.name, label, variables)
----------------------------------------
+.. _reference-forms-twig-label:
+
+form_label(view, label, variables)
+----------------------------------
 
 Renders the label for the given field. You can optionally pass the specific
 label you want to display as the second argument.
@@ -26,8 +28,10 @@ label you want to display as the second argument.
 See ":ref:`twig-reference-form-variables`" to learn about the ``variables``
 argument.
 
-form_errors(form.name)
-----------------------
+.. _reference-forms-twig-errors:
+
+form_errors(view)
+-----------------
 
 Renders any errors for the given field.
 
@@ -38,8 +42,10 @@ Renders any errors for the given field.
     {# render any "global" errors #}
     {{ form_errors(form) }}
 
-form_widget(form.name, variables)
----------------------------------
+.. _reference-forms-twig-widget:
+
+form_widget(view, variables)
+----------------------------
 
 Renders the HTML widget of a given field. If you apply this to an entire form
 or collection of fields, each underlying form row will be rendered.
@@ -59,8 +65,10 @@ rendering many fields at once (e.g. ``form_widget(form)``).
 See ":ref:`twig-reference-form-variables`" to learn more about the ``variables``
 argument.
 
-form_row(form.name, variables)
-------------------------------
+.. _reference-forms-twig-row:
+
+form_row(view, variables)
+-------------------------
 
 Renders the "row" of a given field, which is the combination of the field's
 label, errors and widget.
@@ -77,7 +85,9 @@ above.
 See ":ref:`twig-reference-form-variables`" to learn about the ``variables``
 argument.
 
-form_rest(form, variables)
+.. _reference-forms-twig-rest:
+
+form_rest(view, variables)
 --------------------------
 
 This renders all fields that have not yet been rendered for the given form.
@@ -89,7 +99,9 @@ obvious (since it'll render the field for you).
 
     {{ form_rest(form) }}
 
-form_enctype(form)
+.. _reference-forms-twig-enctype:
+
+form_enctype(view)
 ------------------
 
 If the form contains at least one file upload field, this will render the

@@ -64,14 +64,14 @@ drawn from various sources such as from within a bundle:
 
         .. code-block:: html+jinja
 
-            {% stylesheets '@AcmeFooBundle/Resources/public/css/*' %}
+            {% stylesheets 'bundles/acme_foo/css/*' %}
                 <link rel="stylesheet" href="{{ asset_url }}" />
             {% endstylesheets %}
 
         .. code-block:: html+php
 
             <?php foreach ($view['assetic']->stylesheets(
-                                                 array('@AcmeFooBundle/Resources/public/css/*')
+                                                 array('bundles/acme_foo/css/*')
                                              ) as $url): ?>
                 <link rel="stylesheet" href="<?php echo $view->escape($url) ?>" />
             <?php endforeach; ?>
@@ -173,7 +173,7 @@ and deployment processes.
 
 To use a filter, you first need to specify it in the Assetic configuration.
 Adding a filter here doesn't mean it's being used - it just means that it's
-available to use (we'll use the filter below).
+available to use (you'll use the filter below).
 
 For example to use the JavaScript YUI Compressor the following config should
 be added:

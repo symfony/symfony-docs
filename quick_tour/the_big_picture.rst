@@ -20,13 +20,13 @@ First, check that you have installed and configured a Web server (such as
 Apache) with PHP 5.3.2 or higher.
 
 .. tip::
-   
+
     If you have PHP 5.4, you could use the built-in web server. The built-in
     server should be used only for development purpose, but it can help you
     to start your project quickly and easily.
 
     Just use this command to launch the server:
-    
+
     .. code-block:: bash
 
         $ php -S localhost:80 -t /path/to/www
@@ -88,6 +88,23 @@ URL to see the diagnostics for your machine:
 .. code-block:: text
 
     http://localhost/Symfony/web/config.php
+
+.. note::
+
+    All of the example URLs assume that you've downloaded and unzipped ``Symfony``
+    directly into the web server web root. If you've followed the directions
+    above and done this, then add ``/Symfony/web`` after ``localhost`` for all
+    the URLs you see:
+
+    .. code-block:: text
+
+        http://localhost/Symfony/web/config.php
+
+    To get nice and short urls you should point the document root of your
+    webserver or virtual host to the ``Symfony/web/`` directory. In that
+    case, your URLs will look like ``http://localhost/config.php`` or
+    ``http://site.local/config.php``, if you created a virtual host to a
+    local domain called, for example, ``site.local``.
 
 If there are any outstanding issues listed, correct them. You might also tweak
 your configuration by following any given recommendations. When everything is
@@ -223,7 +240,7 @@ the ``Acme\DemoBundle\Controller\WelcomeController`` class::
 
 .. tip::
 
-    You could have used the full class and method name - 
+    You could have used the full class and method name -
     ``Acme\DemoBundle\Controller\WelcomeController::indexAction`` - for the
     ``_controller`` value. But if you follow some simple conventions, the
     logical name is shorter and allows for more flexibility.
@@ -347,12 +364,12 @@ templates work in Symfony2.
 Bundles
 ~~~~~~~
 
-You might have wondered why the :term:`bundle` word is used in many names we
+You might have wondered why the :term:`bundle` word is used in many names you
 have seen so far. All the code you write for your application is organized in
 bundles. In Symfony2 speak, a bundle is a structured set of files (PHP files,
 stylesheets, JavaScripts, images, ...) that implements a single feature (a
 blog, a forum, ...) and which can be easily shared with other developers. As
-of now, we have manipulated one bundle, ``AcmeDemoBundle``. You will learn
+of now, you have manipulated one bundle, ``AcmeDemoBundle``. You will learn
 more about bundles in the last chapter of this tutorial.
 
 .. _quick-tour-big-picture-environments:

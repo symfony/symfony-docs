@@ -28,18 +28,43 @@ Basic Usage
 
     .. code-block:: php-annotations
 
-       // src/Acme/UserBundle/Entity/User.php
-       namespace Acme\UserBundle\Entity;
-       
-       use Symfony\Component\Validator\Constraints as Assert;
+        // src/Acme/UserBundle/Entity/User.php
+        namespace Acme\UserBundle\Entity;
 
-       class User
-       {
-           /**
-            * @Assert\Country
-            */
-            protected $country;
-       }
+        use Symfony\Component\Validator\Constraints as Assert;
+
+        class User
+        {
+            /**
+             * @Assert\Country
+             */
+             protected $country;
+        }
+
+    .. code-block:: xml
+
+        <!-- src/Acme/UserBundle/Resources/config/validation.xml -->
+        <class name="Acme\UserBundle\Entity\User">
+            <property name="country">
+                <constraint name="Country" />
+            </property>
+        </class>
+
+    .. code-block:: php
+
+        // src/Acme/UserBundle/Entity/User.php
+        namespace Acme\UserBundle\Entity;
+
+        use Symfony\Component\Validator\Mapping\ClassMetadata;
+        use Symfony\Component\Validator\Constraints as Assert;
+
+        class User
+        {
+            public static function loadValidationMetadata(ClassMetadata $metadata)
+            {
+                $metadata->addPropertyConstraint('country', new Assert\Country());
+            }
+        }
 
 Options
 -------

@@ -35,9 +35,9 @@ when compiling the container. Read the sidebar below for more details.
 
     Imagine you've configured a `my_mailer` service. You haven't configured
     the scope of the service, so it defaults to `container`. In other words,
-    everytime you ask the container for the `my_mailer` service, you get
+    every time you ask the container for the `my_mailer` service, you get
     the same object back. This is usually how you want your services to work.
-    
+
     Imagine, however, that you need the `request` service in your `my_mailer`
     service, maybe because you're reading the URL of the current request.
     So, you add it as a constructor argument. Let's look at why this presents
@@ -67,7 +67,7 @@ when compiling the container. Read the sidebar below for more details.
 .. note::
 
     A service can of course depend on a service from a wider scope without
-    any issue. 
+    any issue.
 
 Setting the Scope in the Definition
 -----------------------------------
@@ -116,7 +116,7 @@ new service in the `request` scope.
 But this is not always possible (for instance, a twig extension must be in
 the `container` scope as the Twig environment needs it as a dependency).
 In these cases, you should pass the entire container into your service and
-retrieve your dependency from the container each time we need it to be sure
+retrieve your dependency from the container each time you need it to be sure
 you have the right instance::
 
     // src/Acme/HelloBundle/Mail/Mailer.php

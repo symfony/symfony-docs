@@ -15,7 +15,7 @@ documents.
 Since a picture - or some code - is worth a thousand words, here's a short
 example containing most features described below:
 
-.. code-block:: php
+.. code-block:: html+php
 
     <?php
 
@@ -30,6 +30,9 @@ example containing most features described below:
 
     namespace Acme;
 
+    /**
+     * Coding standards demonstration.
+     */
     class FooBar
     {
         const SOME_CONST = 42;
@@ -46,13 +49,19 @@ example containing most features described below:
 
         /**
          * @param string $dummy Some argument description
+         * @param array $options
+         *
          * @return string|null Transformed input
          */
         private function transformText($dummy, $options = array())
         {
-            $mergedOptions = array_merge($options, array(
-                'some_default' => 'values',
-            ));
+            $mergedOptions = array_merge(
+                $options,
+                array(
+                    'some_default' => 'values',
+                    'another_default' => 'more values',
+                )
+            );
 
             if (true === $dummy) {
                 return;
@@ -74,21 +83,27 @@ Structure
 
 * Add a single space after each comma delimiter;
 
-* Add a single space around operators (`==`, `&&`, ...);
+* Add a single space around operators (``==``, ``&&``, ...);
 
-* Add a blank line before `return` statements, unless the return is alone
-  inside a statement-group (like an `if` statement);
+* Add a comma after each array item in a multi-line array, even after the	
+  last one;
+
+* Add a blank line before ``return`` statements, unless the return is alone
+  inside a statement-group (like an ``if`` statement);
 
 * Use braces to indicate control structure body regardless of the number of
   statements it contains;
 
 * Define one class per file - this does not apply to private helper classes
   that are not intended to be instantiated from the outside and thus are not
-  concerned by the PSR-0 standard;
+  concerned by the `PSR-0`_ standard;
 
 * Declare class properties before methods;
 
 * Declare public methods first, then protected ones and finally private ones.
+
+* Use parentheses when instantiating classes regardless of the number of
+  arguments the constructor has.
 
 Naming Conventions
 ------------------
@@ -100,7 +115,15 @@ Naming Conventions
 
 * Use namespaces for all classes;
 
-* Suffix interfaces with `Interface`;
+* Prefix abstract classes with ``Abstract``. Please note some early Symfony2 classes
+  do not follow this convention and have not been renamed for backward compatibility
+  reasons. However all new abstract classes must follow this naming convention;
+
+* Suffix interfaces with ``Interface``;
+
+* Suffix traits with ``Trait``;
+
+* Suffix exceptions with ``Exception``;
 
 * Use alphanumeric characters and underscores for file names;
 
@@ -112,9 +135,9 @@ Documentation
 
 * Add PHPDoc blocks for all classes, methods, and functions;
 
-* Omit the `@return` tag if the method does not return anything;
+* Omit the ``@return`` tag if the method does not return anything;
 
-* The `@package` and `@subpackage` annotations are not used.
+* The ``@package`` and ``@subpackage`` annotations are not used.
 
 License
 -------

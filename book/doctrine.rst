@@ -4,7 +4,7 @@
 Databases and Doctrine
 ======================
 
-Let's face it, one of the most common and challenging tasks for any application
+One of the most common and challenging tasks for any application
 involves persisting and reading information to and from a database. Fortunately,
 Symfony comes integrated with `Doctrine`_, a library whose sole goal is to
 give you powerful tools to make this easy. In this chapter, you'll learn the
@@ -15,8 +15,8 @@ be.
 
     Doctrine is totally decoupled from Symfony and using it is optional.
     This chapter is all about the Doctrine ORM, which aims to let you map
-    objects to a relational database (such as *MySQL*, *PostgreSQL* or 
-    *Microsoft SQL*). If you prefer to use raw database queries, this is 
+    objects to a relational database (such as *MySQL*, *PostgreSQL* or
+    *Microsoft SQL*). If you prefer to use raw database queries, this is
     easy, and explained in the ":doc:`/cookbook/doctrine/dbal`" cookbook entry.
 
     You can also persist data to `MongoDB`_ using Doctrine ODM library. For
@@ -140,7 +140,7 @@ just a simple PHP class.
 .. tip::
 
     Once you learn the concepts behind Doctrine, you can have Doctrine create
-    this entity class for you:
+    simple entity classes for you:
 
     .. code-block:: bash
 
@@ -313,6 +313,12 @@ for the ``Product`` class. This is a safe command - you can run it over and
 over again: it only generates getters and setters that don't exist (i.e. it
 doesn't replace your existing methods).
 
+.. caution::
+
+    Keep in mind that Doctrine's entity generator produces simple getters/setters. 
+    You should check generated entities and adjust getter/setter logic to your own 
+    needs.
+
 .. sidebar:: More about ``doctrine:generate:entities``
 
     With the ``doctrine:generate:entities`` command you can:
@@ -418,7 +424,7 @@ of the bundle:
     If you're following along with this example, you'll need to create a
     route that points to this action to see it work.
 
-Let's walk through this example:
+Take a look at the previous example in more detail:
 
 * **lines 9-12** In this section, you instantiate and work with the ``$product``
   object like any other, normal PHP object.
@@ -470,11 +476,20 @@ on its ``id`` value::
             ->find($id);
 
         if (!$product) {
-            throw $this->createNotFoundException('No product found for id '.$id);
+            throw $this->createNotFoundException(
+                'No product found for id '.$id
+            );
         }
 
         // ... do something, like pass the $product object into a template
     }
+
+.. tip::
+
+    You can achieve the equivalent of this without writing any code by using
+    the ``@ParamConverter`` shortcut. See the
+    :doc:`FrameworkExtraBundle documentation</bundles/SensioFrameworkExtraBundle/annotations/converters>`
+    for more details.
 
 When you query for a particular type of object, you always use what's known
 as its "repository". You can think of a repository as a PHP class whose only
@@ -548,7 +563,9 @@ you have a route that maps a product id to an update action in a controller::
         $product = $em->getRepository('AcmeStoreBundle:Product')->find($id);
 
         if (!$product) {
-            throw $this->createNotFoundException('No product found for id '.$id);
+            throw $this->createNotFoundException(
+                'No product found for id '.$id
+            );
         }
 
         $product->setName('New product name!');
@@ -956,7 +973,7 @@ table, and ``product.category_id`` column, and new foreign key:
 Saving Related Entities
 ~~~~~~~~~~~~~~~~~~~~~~~
 
-Now, let's see the code in action. Imagine you're inside a controller::
+Now you can see this new code in action! Imagine you're inside a controller::
 
     // ...
 
@@ -1299,7 +1316,8 @@ and ``nullable``. Take a few examples:
 
         /**
          * A string field with length 255 that cannot be null
-         * (reflecting the default values for the "type", "length" and *nullable* options)
+         * (reflecting the default values for the "type", "length"
+         * and *nullable* options)
          *
          * @ORM\Column()
          */
@@ -1371,7 +1389,7 @@ Some notable or interesting tasks include:
 
   .. caution::
 
-      Don't forget to add the ``--no-debug`` switch, because the debug flag is 
+      Don't forget to add the ``--no-debug`` switch, because the debug flag is
       always set to true, even if the environment is set to ``prod``.
 
 * ``doctrine:mapping:import`` - allows Doctrine to introspect an existing

@@ -10,6 +10,7 @@
   * :doc:`/cookbook/bundles/best_practices`
   * :doc:`/cookbook/bundles/inheritance`
   * :doc:`/cookbook/bundles/override`
+  * :doc:`/cookbook/bundles/remove`
   * :doc:`/cookbook/bundles/extension`
 
 * :doc:`/cookbook/cache/index`
@@ -24,11 +25,12 @@
   * :doc:`/cookbook/configuration/pdo_session_storage`
   * :doc:`/cookbook/configuration/apache_router`
 
-* **Console Commands**
+* :doc:`/cookbook/console/index`
 
   * :doc:`/cookbook/console/console_command`
   * :doc:`/cookbook/console/usage`
-  * :doc:`/cookbook/console/generating_urls`
+  * :doc:`/cookbook/console/sending_emails`
+  * :doc:`/cookbook/console/logging`
 
 * :doc:`/cookbook/controller/index`
 
@@ -38,6 +40,10 @@
 * **Debugging**
 
   * :doc:`/cookbook/debugging`
+
+* **Deployment**
+
+  * :doc:`/cookbook/deployment-tools`
 
 * :doc:`/cookbook/doctrine/index`
 
@@ -68,7 +74,7 @@
 
   * :doc:`/cookbook/form/form_customization`
   * :doc:`/cookbook/form/data_transformers`
-  * :doc:`/cookbook/form/dynamic_form_generation`
+  * :doc:`/cookbook/form/dynamic_form_modification`
   * :doc:`/cookbook/form/form_collections`
   * :doc:`/cookbook/form/create_custom_field_type`
   * :doc:`/cookbook/form/create_form_type_extension`
@@ -96,16 +102,6 @@
   * :doc:`/cookbook/routing/redirect_in_config`
   * :doc:`/cookbook/routing/method_parameters`
 
-* **symfony1**
-
-  * :doc:`/cookbook/symfony1`
-
-* :doc:`/cookbook/service_container/index`
-
-  * :doc:`/cookbook/service_container/event_listener`
-  * :doc:`/cookbook/service_container/scopes`
-  * :doc:`/cookbook/service_container/compiler_passes`
-
 * :doc:`/cookbook/security/index`
 
   * :doc:`/cookbook/security/entity_provider`
@@ -119,11 +115,22 @@
   * :doc:`/cookbook/security/custom_provider`
   * :doc:`/cookbook/security/custom_authentication_provider`
 
+* :doc:`/cookbook/service_container/index`
+
+  * :doc:`/cookbook/service_container/event_listener`
+  * :doc:`/cookbook/service_container/scopes`
+  * :doc:`/cookbook/service_container/compiler_passes`
+
+* **symfony1**
+
+  * :doc:`/cookbook/symfony1`
+
 * :doc:`/cookbook/templating/index`
 
   * :doc:`/cookbook/templating/global_variables`
   * :doc:`/cookbook/templating/PHP`
   * :doc:`/cookbook/templating/twig_extension`
+  * :doc:`/cookbook/templating/render_without_controller`
 
 * :doc:`/cookbook/testing/index`
 
@@ -145,5 +152,3 @@
 
   * :doc:`/cookbook/workflow/new_project_git`
   * :doc:`/cookbook/workflow/new_project_svn`
-
-* :doc:`/cookbook/deployment-tools`

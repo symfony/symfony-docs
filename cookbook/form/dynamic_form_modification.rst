@@ -1,7 +1,7 @@
 .. index::
    single: Form; Events
 
-How to Dynamically Generate Forms Using Form Events
+How to Dynamically Modify Forms Using Form Events
 ===================================================
 
 Before jumping right into dynamic form generation, let's have a quick review
@@ -35,7 +35,7 @@ of what a bare form class looks like::
 
 Let's assume for a moment that this form utilizes an imaginary "Product" class
 that has only two relevant properties ("name" and "price"). The form generated
-from this class will look the exact same regardless of a new Product is being created
+from this class will look the exact same regardless if a new Product is being created
 or if an existing product is being edited (e.g. a product fetched from the database).
 
 Suppose now, that you don't want the user to be able to change the ``name`` value
@@ -49,7 +49,7 @@ flexibility to your forms.
 Adding An Event Subscriber To A Form Class
 ------------------------------------------
 
-So, instead of directly adding that "name" widget via our ProductType form
+So, instead of directly adding that "name" widget via your ProductType form
 class, let's delegate the responsibility of creating that particular field
 to an Event Subscriber::
 
@@ -76,7 +76,7 @@ to an Event Subscriber::
     }
 
 The event subscriber is passed the FormFactory object in its constructor so
-that our new subscriber is capable of creating the form widget once it is
+that your new subscriber is capable of creating the form widget once it is
 notified of the dispatched event during form creation.
 
 .. _`cookbook-forms-inside-subscriber-class`:
@@ -107,7 +107,7 @@ might look like the following::
 
         public static function getSubscribedEvents()
         {
-            // Tells the dispatcher that we want to listen on the form.pre_set_data
+            // Tells the dispatcher that you want to listen on the form.pre_set_data
             // event and that the preSetData method should be called.
             return array(FormEvents::PRE_SET_DATA => 'preSetData');
         }
@@ -118,9 +118,9 @@ might look like the following::
             $form = $event->getForm();
 
             // During form creation setData() is called with null as an argument
-            // by the FormBuilder constructor. We're only concerned with when
+            // by the FormBuilder constructor. You're only concerned with when
             // setData is called with an actual Entity object in it (whether new
-            // or fetched with Doctrine). This if statement lets us skip right
+            // or fetched with Doctrine). This if statement lets you skip right
             // over the null condition.
             if (null === $data) {
                 return;
@@ -146,7 +146,7 @@ The `FormEvents class`_ serves an organizational purpose. It is a centralized lo
 in which you can find all of the various form events available.
 
 While this example could have used the ``form.set_data`` event or even the ``form.post_set_data``
-events just as effectively, by using ``form.pre_set_data`` we guarantee that
+events just as effectively, by using ``form.pre_set_data`` you guarantee that
 the data being retrieved from the ``Event`` object has in no way been modified
 by any other subscribers or listeners. This is because ``form.pre_set_data``
 passes a `DataEvent`_ object instead of the `FilterDataEvent`_ object passed

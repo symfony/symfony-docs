@@ -7,7 +7,7 @@ How to Set External Parameters in the Service Container
 In the chapter :doc:`/cookbook/configuration/environments`, you learned how
 to manage your application configuration. At times, it may benefit your application
 to store certain credentials outside of your project code. Database configuration
-is one such example. The flexibility of the symfony service container allows
+is one such example. The flexibility of the Symfony service container allows
 you to easily do this.
 
 Environment Variables
@@ -99,18 +99,18 @@ The container also has support for setting PHP constants as parameters. To
 take advantage of this feature, map the name of your constant  to a parameter
 key, and define the type as ``constant``.
 
-    .. code-block:: xml
+.. code-block:: xml
 
-        <?xml version="1.0" encoding="UTF-8"?>
+    <?xml version="1.0" encoding="UTF-8"?>
 
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <container xmlns="http://symfony.com/schema/dic/services"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 
-            <parameters>
-                <parameter key="global.constant.value" type="constant">GLOBAL_CONSTANT</parameter>
-                <parameter key="my_class.constant.value" type="constant">My_Class::CONSTANT_NAME</parameter>
-            </parameters>
-        </container>
+        <parameters>
+            <parameter key="global.constant.value" type="constant">GLOBAL_CONSTANT</parameter>
+            <parameter key="my_class.constant.value" type="constant">My_Class::CONSTANT_NAME</parameter>
+        </parameters>
+    </container>
 
 .. note::
 
@@ -158,7 +158,7 @@ in the container. The following imports a file named ``parameters.php``.
 In ``parameters.php``, tell the service container the parameters that you wish
 to set. This is useful when important configuration is in a nonstandard
 format. The example below includes a Drupal database's configuration in
-the symfony service container.
+the Symfony service container.
 
 .. code-block:: php
 

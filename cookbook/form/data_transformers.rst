@@ -117,7 +117,7 @@ issue field in some form.
                 $entityManager = $options['em'];
                 $transformer = new IssueToNumberTransformer($entityManager);
 
-                // add a normal text field, but add our transformer to it
+                // add a normal text field, but add your transformer to it
                 $builder->add(
                     $builder->create('issue', 'text')
                         ->prependNormTransformer($transformer)
@@ -164,11 +164,11 @@ types of underlying data.
 In any form, the 3 different types of data are:
 
 1) **App data** - This is the data in the format used in your application
-(e.g. an ``Issue`` object). If you call ``Form::getData`` or ``Form::setData``, 
+(e.g. an ``Issue`` object). If you call ``Form::getData`` or ``Form::setData``,
 you're dealing with the "app" data.
 
 2) **Norm Data** - This is a normalized version of your data, and is commonly
-the same as your "app" data (though not in our example). It's not commonly
+the same as your "app" data (though not in this example). It's not commonly
 used directly.
 
 3) **Client Data** - This is the format that's used to fill in the form fields
@@ -190,11 +190,11 @@ Which transformer you need depends on your situation.
 
 To use the client transformer, call ``appendClientTransformer``.
 
-So why did we use the norm transformer?
----------------------------------------
+So why use the norm transformer?
+--------------------------------
 
-In our example, the field is a ``text`` field, and we always expect a text
-field to be a simple, scalar format in the "norm" and "client" formats. For
+In this example, the field is a ``text`` field, and a text field is always
+expected to be a simple, scalar format in the "norm" and "client" formats. For
 this reason, the most appropriate transformer was the "norm" transformer
 (which converts to/from the *norm* format - string issue number - to the *app*
 format - Issue object).

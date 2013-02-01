@@ -22,7 +22,7 @@ Installation
 You can install the component in many different ways:
 
 * Use the official Git repository (https://github.com/symfony/HttpFoundation);
-* Install it via Composer (``symfony/http-foundation`` on `Packagist`_).
+* :doc:`Install it via Composer</components/using_components>` (``symfony/http-foundation`` on `Packagist`_).
 
 Request
 -------
@@ -38,7 +38,14 @@ variables with
 which is almost equivalent to the more verbose, but also more flexible,
 :method:`Symfony\\Component\\HttpFoundation\\Request::__construct` call::
 
-    $request = new Request($_GET, $_POST, array(), $_COOKIE, $_FILES, $_SERVER);
+    $request = new Request(
+        $_GET,
+        $_POST,
+        array(),
+        $_COOKIE,
+        $_FILES,
+        $_SERVER
+    );
 
 Accessing Request Data
 ~~~~~~~~~~~~~~~~~~~~~~
@@ -160,8 +167,8 @@ argument::
 
 .. _component-foundation-attributes:
 
-Last, but not the least, you can also store additional data in the request,
-thanks to the ``attributes`` public property, which is also an instance of
+Finally, you can also store additional data in the request,
+thanks to the public ``attributes`` property, which is also an instance of
 :class:`Symfony\\Component\\HttpFoundation\\ParameterBag`. This is mostly used
 to attach information that belongs to the Request and that needs to be
 accessed from many different points in your application. For information
@@ -184,7 +191,11 @@ Simulating a Request
 Instead of creating a Request based on the PHP globals, you can also simulate
 a Request::
 
-    $request = Request::create('/hello-world', 'GET', array('name' => 'Fabien'));
+    $request = Request::create(
+        '/hello-world',
+        'GET',
+        array('name' => 'Fabien')
+    );
 
 The :method:`Symfony\\Component\\HttpFoundation\\Request::create` method
 creates a request based on a path info, a method and some parameters (the
@@ -214,6 +225,21 @@ the
 method tells you if the request contains a Session which was started in one of
 the previous requests.
 
+Accessing `Accept-*` Headers Data
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+You can easily access basic data extracted from ``Accept-*`` headers
+by using the following methods:
+
+* :method:`Symfony\\Component\\HttpFoundation\\Request::getAcceptableContentTypes`:
+  returns the list of accepted content types ordered by descending quality;
+
+* :method:`Symfony\\Component\\HttpFoundation\\Request::getLanguages`:
+  returns the list of accepted languages ordered by descending quality;
+
+* :method:`Symfony\\Component\\HttpFoundation\\Request::getCharsets`:
+  returns the list of accepted charsets ordered by descending quality;
+
 Accessing other Data
 ~~~~~~~~~~~~~~~~~~~~
 
@@ -230,7 +256,11 @@ code, and an array of HTTP headers::
 
     use Symfony\Component\HttpFoundation\Response;
 
-    $response = new Response('Content', 200, array('content-type' => 'text/html'));
+    $response = new Response(
+        'Content',
+        200,
+        array('content-type' => 'text/html')
+    );
 
 These information can also be manipulated after the Response object creation::
 
@@ -334,6 +364,21 @@ To redirect the client to another URL, you can use the
     use Symfony\Component\HttpFoundation\RedirectResponse;
 
     $response = new RedirectResponse('http://example.com/');
+
+Creating a JSON Response
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+Any type of response can be created via the
+:class:`Symfony\\Component\\HttpFoundation\\Response` class by setting the
+right content and headers. A JSON response might look like this::
+
+    use Symfony\Component\HttpFoundation\Response;
+
+    $response = new Response();
+    $response->setContent(json_encode(array(
+        'data' => 123
+    )));
+    $response->headers->set('Content-Type', 'application/json');
 
 Session
 -------

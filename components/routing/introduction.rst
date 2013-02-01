@@ -14,7 +14,7 @@ Installation
 You can install the component in many different ways:
 
 * Use the official Git repository (https://github.com/symfony/Routing);
-* Install it via Composer (``symfony/routing`` on `Packagist`_).
+* :doc:`Install it via Composer</components/using_components>` (``symfony/routing`` on `Packagist`_).
 
 Usage
 -----
@@ -33,7 +33,7 @@ your autoloader to load the Routing component::
     use Symfony\Component\Routing\RouteCollection;
     use Symfony\Component\Routing\Route;
 
-    $route = new Route('/foo', array('controller' => 'MyController'))
+    $route = new Route('/foo', array('controller' => 'MyController'));
     $routes = new RouteCollection();
     $routes->add('route_name', $route);
 
@@ -234,11 +234,11 @@ If you're using the ``YamlFileLoader``, then route definitions look like this:
     # routes.yml
     route1:
         pattern: /foo
-        defaults: { controller: 'MyController::fooAction' }
+        defaults: { _controller: 'MyController::fooAction' }
 
     route2:
         pattern: /foo/bar
-        defaults: { controller: 'MyController::foobarAction' }
+        defaults: { _controller: 'MyController::foobarAction' }
 
 To load this file, you can use the following code. This assumes that your
 ``routes.yml`` file is in the same directory as the below code::
@@ -322,9 +322,9 @@ automatically in the background if you want to use it. A basic example of the
 
     $router = new Router(
         new YamlFileLoader($locator),
-        "routes.yml",
+        'routes.yml',
         array('cache_dir' => __DIR__.'/cache'),
-        $requestContext,
+        $requestContext
     );
     $router->match('/foo/bar');
 

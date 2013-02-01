@@ -18,12 +18,21 @@ Installation
 You can install the component in many different ways:
 
 * Use the official Git repository (https://github.com/symfony/Console);
-* Install it via Composer (``symfony/console`` on `Packagist`_).
+* :doc:`Install it via Composer</components/using_components>` (``symfony/console`` on `Packagist`_).
+
+.. note::
+
+    Windows does not support ANSI colors by default so the Console Component detects and
+    disables colors where Windows does not have support. However, if Windows is not
+    configured with an ANSI driver and your console commands invoke other scripts which
+    emit ANSI color sequences, they will be shown as raw escape characters.
+
+    To enable ANSI colour support for Windows, please install `ANSICON`_.
 
 Creating a basic Command
 ------------------------
 
-To make a console command to greet us from the command line, create ``GreetCommand.php``
+To make a console command that greets you from the command line, create ``GreetCommand.php``
 and add the following to it::
 
     namespace Acme\DemoBundle\Command;
@@ -108,6 +117,8 @@ This prints::
 
     HELLO FABIEN
 
+.. _components-console-coloring:
+
 Coloring the Output
 ~~~~~~~~~~~~~~~~~~~
 
@@ -137,6 +148,18 @@ Available foreground and background colors are: ``black``, ``red``, ``green``,
 ``yellow``, ``blue``, ``magenta``, ``cyan`` and ``white``.
 
 And available options are: ``bold``, ``underscore``, ``blink``, ``reverse`` and ``conceal``.
+
+You can also set these colors and options inside the tagname::
+
+    // green text
+    $output->writeln('<fg=green>foo</fg=green>');
+
+    // black text on a cyan background
+    $output->writeln('<fg=black;bg=cyan>foo</fg=black;bg=cyan>');
+
+    // bold text on a yellow background
+    $output->writeln('<bg=yellow;options=bold>foo</bg=yellow;options=bold>');
+
 
 Using Command Arguments
 -----------------------
@@ -255,37 +278,14 @@ You can combine VALUE_IS_ARRAY with VALUE_REQUIRED or VALUE_OPTIONAL like this:
             1
         );
 
-Asking the User for Information
--------------------------------
+Console Helpers
+---------------
 
-When creating commands, you have the ability to collect more information
-from the user by asking him/her questions. For example, suppose you want
-to confirm an action before actually executing it. Add the following to your
-command::
+The console component also contains a set of "helpers" - different small
+tools capable of helping you with different tasks:
 
-    $dialog = $this->getHelperSet()->get('dialog');
-    if (!$dialog->askConfirmation(
-            $output,
-            '<question>Continue with this action?</question>',
-            false
-        )) {
-        return;
-    }
-
-In this case, the user will be asked "Continue with this action", and unless
-they answer with ``y``, the task will stop running. The third argument to
-``askConfirmation`` is the default value to return if the user doesn't enter
-any input.
-
-You can also ask questions with more than a simple yes/no answer. For example,
-if you needed to know the name of something, you might do the following::
-
-    $dialog = $this->getHelperSet()->get('dialog');
-    $name = $dialog->ask(
-        $output,
-        'Please enter the name of the widget',
-        'foo'
-    );
+* :doc:`/components/console/helpers/dialoghelper`: interactively ask the user for information
+* :doc:`/components/console/helpers/formatterhelper`: customize the output colorization
 
 Testing Commands
 ----------------
@@ -408,3 +408,4 @@ Learn More!
 * :doc:`/components/console/single_command_tool`
 
 .. _Packagist: https://packagist.org/packages/symfony/console
+.. _ANSICON: http://adoxa.3eeweb.com/ansicon/

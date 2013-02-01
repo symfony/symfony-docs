@@ -5,3 +5,4 @@ HTTP Foundation
     :maxdepth: 2
 
     introduction
+    trusting_proxies

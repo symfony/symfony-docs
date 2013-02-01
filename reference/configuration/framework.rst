@@ -91,13 +91,46 @@ services related to testing your application (e.g. ``test.client``) are loaded.
 This setting should be present in your ``test`` environment (usually via
 ``app/config/config_test.yml``). For more information, see :doc:`/book/testing`.
 
+trusted_proxies
+~~~~~~~~~~~~~~~
+
+**type**: ``array``
+
+Configures the IP addresses that should be trusted as proxies. For more details,
+see :doc:`/components/http_foundation/trusting_proxies`.
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        framework:
+            trusted_proxies:  [192.0.0.1]
+
+    .. code-block:: xml
+
+        <framework:config trusted-proxies="192.0.0.1">
+            <!-- ... -->
+        </framework>
+
+    .. code-block:: php
+
+        $container->loadFromExtension('framework', array(
+            'trusted_proxies' => array('192.0.0.1'),
+        ));
+
 trust_proxy_headers
 ~~~~~~~~~~~~~~~~~~~
+
+.. caution::
+
+    The ``trust_proxy_headers`` option is deprecated and will be removed in
+    Symfony 2.3. See `trusted_proxies`_ and :doc:`/components/http_foundation/trusting_proxies`
+    for details on how to properly trust proxy data.
 
 **type**: ``Boolean``
 
 Configures if HTTP headers (like ``HTTP_X_FORWARDED_FOR``, ``X_FORWARDED_PROTO``, and
-``X_FORWARDED_HOST``) are trusted as indication for an SSL connection. By default, it is
+``X_FORWARDED_HOST``) are trusted as an indication for an SSL connection. By default, it is
 set to ``false`` and only SSL_HTTPS connections are indicated as secure.
 
 You should enable this setting if your application is behind a reverse proxy.
@@ -226,8 +259,8 @@ would be ``/images/logo.png?version=5``.
     is not limited to producing versioned query strings.
 
     The pattern receives the asset's original path and version as its first and
-    second parameters, respectively. Since the asset's path is one parameter, we
-    cannot modify it in-place (e.g. ``/images/logo-v5.png``); however, we can
+    second parameters, respectively. Since the asset's path is one parameter, you
+    cannot modify it in-place (e.g. ``/images/logo-v5.png``); however, you can
     prefix the asset's path using a pattern of ``version-%%2$s/%%1$s``, which
     would result in the path ``version-5/images/logo.png``.
 

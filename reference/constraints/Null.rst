@@ -29,7 +29,7 @@ of an ``Author`` class exactly equal to ``null``, you could do the following:
         Acme\BlogBundle\Entity\Author:
             properties:
                 firstName:
-                    - Null: ~
+                    - 'Null': ~
 
     .. code-block:: php-annotations
 
@@ -44,6 +44,31 @@ of an ``Author`` class exactly equal to ``null``, you could do the following:
              * @Assert\Null()
              */
             protected $firstName;
+        }
+
+    .. code-block:: xml
+
+        <!-- src/Acme/BlogBundle/Resources/config/validation.xml -->
+        <class name="Acme\BlogBundle\Entity\Author">
+            <property name="firstName">
+                <constraint name="Null" />
+            </property>
+        </class>
+
+    .. code-block:: php
+
+        // src/Acme/BlogBundle/Entity/Author.php
+        namespace Acme\BlogBundle\Entity;
+        
+        use Symfony\Component\Validator\Mapping\ClassMetadata;
+        use Symfony\Component\Validator\Constraints as Assert;
+
+        class Author
+        {
+            public static function loadValidatorMetadata(ClassMetadata $metadata)
+            {
+                $metadata->addPropertyConstraint('firstName', Assert\Null());
+            }
         }
 
 Options

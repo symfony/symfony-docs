@@ -34,21 +34,58 @@ entry in that array:
 
     .. code-block:: php-annotations
 
-       // src/Acme/UserBundle/Entity/User.php
-       namespace Acme\UserBundle\Entity;
-       
-       use Symfony\Component\Validator\Constraints as Assert;
+        // src/Acme/UserBundle/Entity/User.php
+        namespace Acme\UserBundle\Entity;
+        
+        use Symfony\Component\Validator\Constraints as Assert;
+  
+        class User
+        {
+            /**
+             * @Assert\All({
+             *     @Assert\NotBlank
+             *     @Assert\MinLength(5),
+             * })
+             */
+             protected $favoriteColors = array();
+        }
 
-       class User
-       {
-           /**
-            * @Assert\All({
-            *     @Assert\NotBlank
-            *     @Assert\MinLength(5),
-            * })
-            */
-            protected $favoriteColors = array();
-       }
+    .. code-block:: xml
+
+        <!-- src/Acme/UserBundle/Resources/config/validation.xml -->
+        <class name="Acme\UserBundle\Entity\User">
+            <property name="favoriteColors">
+                <constraint name="All">
+                    <option name="constraints">
+                        <constraint name="NotBlank" />
+                        <constraint name="MinLength">
+                            <option name="limit">5</option>
+                        </constraint>
+                    </option>
+                </constraint>
+            </property>
+        </class>
+
+    .. code-block:: php
+
+        // src/Acme/UserBundle/Entity/User.php
+        namespace Acme\UserBundle\Entity;
+       
+        use Symfony\Component\Validator\Mapping\ClassMetadata;
+        use Symfony\Component\Validator\Constraints as Assert;
+
+        class User
+        {
+            public static function loadValidatorMetadata(ClassMetadata $metadata)
+            {
+                $metadata->addPropertyConstraint('favoriteColors', new Assert\All(array(
+                    'constraints' => array(
+                        new Assert\NotBlank(),
+                        new Assert\MinLength(array('limit' => 5)),
+                    ),
+                )));
+            }
+        }
 
 Now, each entry in the ``favoriteColors`` array will be validated to not
 be blank and to be at least 5 characters long.

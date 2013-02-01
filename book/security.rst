@@ -20,7 +20,8 @@ perform a certain action.
 .. image:: /images/book/security_authentication_authorization.png
    :align: center
 
-Since the best way to learn is to see an example, let's dive right in.
+Since the best way to learn is to see an example, start by securing your
+application with HTTP Basic authentication.
 
 .. note::
 
@@ -424,17 +425,22 @@ Next, create the controller that will display the login form::
 
             // get the login error if there is one
             if ($request->attributes->has(SecurityContext::AUTHENTICATION_ERROR)) {
-                $error = $request->attributes->get(SecurityContext::AUTHENTICATION_ERROR);
+                $error = $request->attributes->get(
+                    SecurityContext::AUTHENTICATION_ERROR
+                );
             } else {
                 $error = $session->get(SecurityContext::AUTHENTICATION_ERROR);
                 $session->remove(SecurityContext::AUTHENTICATION_ERROR);
             }
 
-            return $this->render('AcmeSecurityBundle:Security:login.html.twig', array(
-                // last username entered by the user
-                'last_username' => $session->get(SecurityContext::LAST_USERNAME),
-                'error'         => $error,
-            ));
+            return $this->render(
+                'AcmeSecurityBundle:Security:login.html.twig',
+                array(
+                    // last username entered by the user
+                    'last_username' => $session->get(SecurityContext::LAST_USERNAME),
+                    'error'         => $error,
+                )
+            );
         }
     }
 
@@ -681,6 +687,12 @@ URL pattern. You've seen this already in the first example of this chapter,
 where anything matching the regular expression pattern ``^/admin`` requires
 the ``ROLE_ADMIN`` role.
 
+.. caution::
+
+    Understanding exactly how ``access_control`` works is **very** important
+    to make sure your application is properly secured. See :ref:`security-book-access-control-explanation`
+    below for detailed information.
+
 You can define as many URL patterns as you need - each is a regular expression.
 
 .. configuration-block::
@@ -721,33 +733,35 @@ You can define as many URL patterns as you need - each is a regular expression.
     the ``^``) would correctly match ``/admin/foo`` but would also match URLs
     like ``/foo/admin``.
 
-For each incoming request, Symfony2 tries to find a matching access control
-rule (the first one wins). If the user isn't authenticated yet, the authentication
-process is initiated (i.e. the user is given a chance to login). However,
-if the user *is* authenticated but doesn't have the required role, an
-:class:`Symfony\\Component\\Security\\Core\\Exception\\AccessDeniedException`
-exception is thrown, which you can handle and turn into a nice "access denied"
-error page for the user. See :doc:`/cookbook/controller/error_pages` for
-more information.
+.. _security-book-access-control-explanation:
 
-Since Symfony uses the first access control rule it matches, a URL like ``/admin/users/new``
-will match the first rule and require only the ``ROLE_SUPER_ADMIN`` role.
-Any URL like ``/admin/blog`` will match the second rule and require ``ROLE_ADMIN``.
+Understanding how ``access_control`` works
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-.. _book-security-securing-ip:
+For each incoming request, Symfony2 checks each ``access_control`` entry
+to find *one* that matches the current request. As soon as it finds a matching
+``access_control`` entry, it stops - only the **first** matching ``access_control``
+is used to enforce access.
 
-Securing by IP
-~~~~~~~~~~~~~~
+Each ``access_control`` has several options that configure two different
+things: (a) :ref:`should the incoming request match this access control entry<security-book-access-control-matching-options>`
+and (b) :ref:`once it matches, should some sort of access restriction be enforced<security-book-access-control-enforcement-options>`:
 
-Certain situations may arise when you may need to restrict access to a given
-route based on IP. This is particularly relevant in the case of :ref:`Edge Side Includes<edge-side-includes>`
-(ESI), for example, which utilize a route named "_internal". When
-ESI is used, the _internal route is required by the gateway cache to enable
-different caching options for subsections within a given page. This route
-comes with the ^/_internal prefix by default in the standard edition (assuming
-you've uncommented those lines from the routing file).
+.. _security-book-access-control-matching-options:
 
-Here is an example of how you might secure this route from outside access:
+**(a) Matching Options**
+
+Symfony2 creates an instance of :class:`Symfony\\Component\\HttpFoundation\\RequestMatcher`
+for each ``access_control`` entry, which determines whether or not a given
+access control should be used on this request. The following ``access_control``
+options are used for matching:
+
+* ``path``
+* ``ip``
+* ``host``
+* ``methods``
+
+Take the following ``access_control`` entries as an example:
 
 .. configuration-block::
 
@@ -757,27 +771,156 @@ Here is an example of how you might secure this route from outside access:
         security:
             # ...
             access_control:
-                - { path: ^/_internal, roles: IS_AUTHENTICATED_ANONYMOUSLY, ip: 127.0.0.1 }
+                - { path: ^/admin, roles: ROLE_USER_IP, ip: 127.0.0.1 }
+                - { path: ^/admin, roles: ROLE_USER_HOST, host: symfony.com }
+                - { path: ^/admin, roles: ROLE_USER_METHOD, methods: [POST, PUT] }
+                - { path: ^/admin, roles: ROLE_USER }
 
     .. code-block:: xml
 
             <access-control>
-                <rule path="^/_internal" role="IS_AUTHENTICATED_ANONYMOUSLY" ip="127.0.0.1" />
+                <rule path="^/admin" role="ROLE_USER_IP" ip="127.0.0.1" />
+                <rule path="^/admin" role="ROLE_USER_HOST" host="symfony.com" />
+                <rule path="^/admin" role="ROLE_USER_METHOD" method="POST, PUT" />
+                <rule path="^/admin" role="ROLE_USER" />
             </access-control>
 
     .. code-block:: php
 
             'access_control' => array(
-                array('path' => '^/_internal', 'role' => 'IS_AUTHENTICATED_ANONYMOUSLY', 'ip' => '127.0.0.1'),
+                array('path' => '^/admin', 'role' => 'ROLE_USER_IP', 'ip' => '127.0.0.1'),
+                array('path' => '^/admin', 'role' => 'ROLE_USER_HOST', 'host' => 'symfony.com'),
+                array('path' => '^/admin', 'role' => 'ROLE_USER_METHOD', 'method' => 'POST, PUT'),
+                array('path' => '^/admin', 'role' => 'ROLE_USER'),
             ),
+
+For each incoming request, Symfony will decided which ``access_control``
+to use based on the URI, the client's IP address, the incoming host name,
+and the request method. Remember, the first rule that matches is used, and
+if ``ip``, ``host`` or ``method`` are not specified for an entry, that ``access_control``
+will match any ``ip``, ``host`` or ``method``:
+
++-----------------+-------------+-------------+------------+--------------------------------+-------------------------------------------------------------+
+| **URI**         | **IP**      | **HOST**    | **METHOD** | ``access_control``             | Why?                                                        |
++-----------------+-------------+-------------+------------+--------------------------------+-------------------------------------------------------------+
+| ``/admin/user`` | 127.0.0.1   | example.com | GET        | rule #1 (``ROLE_USER_IP``)     | The URI matches ``path`` and the IP matches ``ip``.         |
++-----------------+-------------+-------------+------------+--------------------------------+-------------------------------------------------------------+
+| ``/admin/user`` | 127.0.0.1   | symfony.com | GET        | rule #1 (``ROLE_USER_IP``)     | The ``path`` and ``ip`` still match. This would also match  |
+|                 |             |             |            |                                | the ``ROLE_USER_HOST`` entry, but *only* the **first**      |
+|                 |             |             |            |                                | ``access_control`` match is used.                           |
++-----------------+-------------+-------------+------------+--------------------------------+-------------------------------------------------------------+
+| ``/admin/user`` | 168.0.0.1   | symfony.com | GET        | rule #2 (``ROLE_USER_HOST``)   | The ``ip`` doesn't match the first rule, so the second      |
+|                 |             |             |            |                                | rule (which matches) is used.                               |
++-----------------+-------------+-------------+------------+--------------------------------+-------------------------------------------------------------+
+| ``/admin/user`` | 168.0.0.1   | symfony.com | POST       | rule #2 (``ROLE_USER_HOST``)   | The second rule still matches. This would also match the    |
+|                 |             |             |            |                                | third rule (``ROLE_USER_METHOD``), but only the **first**   |
+|                 |             |             |            |                                | matched ``access_control`` is used.                         |
++-----------------+-------------+-------------+------------+--------------------------------+-------------------------------------------------------------+
+| ``/admin/user`` | 168.0.0.1   | example.com | POST       | rule #3 (``ROLE_USER_METHOD``) | The ``ip`` and ``host`` don't match the first two entries,  |
+|                 |             |             |            |                                | but the third - ``ROLE_USER_METHOD`` - matches and is used. |
++-----------------+-------------+-------------+------------+--------------------------------+-------------------------------------------------------------+
+| ``/admin/user`` | 168.0.0.1   | example.com | GET        | rule #4 (``ROLE_USER``)        | The ``ip``, ``host`` and ``method`` prevent the first       |
+|                 |             |             |            |                                | three entries from matching. But since the URI matches the  |
+|                 |             |             |            |                                | ``path`` pattern of the ``ROLE_USER`` entry, it is used.    |
++-----------------+-------------+-------------+------------+--------------------------------+-------------------------------------------------------------+
+| ``/foo``        | 127.0.0.1   | symfony.com | POST       | matches no entries             | This doesn't match any ``access_control`` rules, since its  |
+|                 |             |             |            |                                | URI doesn't match any of the ``path`` values.               |
++-----------------+-------------+-------------+------------+--------------------------------+-------------------------------------------------------------+
+
+.. _security-book-access-control-enforcement-options:
+
+**(b) Access Enforcement**
+
+Once Symfony2 has decided which ``access_control`` entry matches (if any),
+it then *enforces* access restrictions based on the ``roles`` and ``requires_channel``
+options:
+
+* ``role`` If the user does not have the given role(s), then access is denied
+  (internally, an :class:`Symfony\\Component\\Security\\Core\\Exception\\AccessDeniedException`
+  is thrown);
+
+* ``requires_channel`` If the incoming request's channel (e.g. ``http``)
+  does not match this value (e.g. ``https``), the user will be redirected
+  (e.g. redirected from ``http`` to ``https``, or vice versa).
+
+.. tip::
+
+    If access is denied, the system will try to authenticate the user if not
+    already (e.g. redirect the user to the login page). If the user is already
+    logged in, the 403 "access denied" error page will be shown. See
+    :doc:`/cookbook/controller/error_pages` for more information.
+
+.. _book-security-securing-ip:
+
+Securing by IP
+~~~~~~~~~~~~~~
+
+Certain situations may arise when you may need to restrict access to a given
+path based on IP. This is particularly relevant in the case of
+:ref:`Edge Side Includes<edge-side-includes>` (ESI), for example. When ESI is
+enabled, it's recommended to secure access to ESI URLs. Indeed, some ESI may
+contain some private content like the current logged in user's information. To
+prevent any direct access to these resources from a web browser (by guessing the
+ESI URL pattern), the ESI route **must** be secured to be only visible from
+the trusted reverse proxy cache.
+
+Here is an example of how you might secure all ESI routes that start with a
+given prefix, ``/esi``, from outside access:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # app/config/security.yml
+        security:
+            # ...
+            access_control:
+                - { path: ^/esi, roles: IS_AUTHENTICATED_ANONYMOUSLY, ip: 127.0.0.1 }
+                - { path: ^/esi, roles: ROLE_NO_ACCESS }
+
+    .. code-block:: xml
+
+            <access-control>
+                <rule path="^/esi" role="IS_AUTHENTICATED_ANONYMOUSLY" ip="127.0.0.1" />
+                <rule path="^/esi" role="ROLE_NO_ACCESS" />
+            </access-control>
+
+    .. code-block:: php
+
+            'access_control' => array(
+                array('path' => '^/esi', 'role' => 'IS_AUTHENTICATED_ANONYMOUSLY', 'ip' => '127.0.0.1'),
+                array('path' => '^/esi', 'role' => 'ROLE_NO_ACCESS'),
+            ),
+
+Here is how it works when the path is ``/esi/something`` coming from the
+``10.0.0.1`` IP:
+
+* The first access control rule is ignored as the ``path`` matches but the
+  ``ip`` does not;
+
+* The second access control rule is enabled (the only restriction being the
+  ``path`` and it matches): as the user cannot have the ``ROLE_NO_ACCESS``
+  role as it's not defined, access is denied (the ``ROLE_NO_ACCESS`` role can
+  be anything that does not match an existing role, it just serves as a trick
+  to always deny access).
+
+Now, if the same request comes from ``127.0.0.1``:
+
+* Now, the first access control rule is enabled as both the ``path`` and the
+  ``ip`` match: access is allowed as the user always has the
+  ``IS_AUTHENTICATED_ANONYMOUSLY`` role.
+
+* The second access rule is not examined as the first rule matched.
+
+.. include:: /book/_security-2012-6431.rst.inc
 
 .. _book-security-securing-channel:
 
 Securing by Channel
 ~~~~~~~~~~~~~~~~~~~
 
-Much like securing based on IP, requiring the use of SSL is as simple as
-adding a new access_control entry:
+You can also require a user to access a URL via SSL; just use the
+``requires_channel`` argument in any ``access_control`` entries:
 
 .. configuration-block::
 
@@ -1539,6 +1682,8 @@ is defined by the ``target`` parameter above (e.g. the ``homepage``). For
 more information on configuring the logout, see the
 :doc:`Security Configuration Reference</reference/configuration/security>`.
 
+.. _book-security-template:
+
 Access Control in Templates
 ---------------------------
 
@@ -1641,6 +1786,24 @@ To switch back to the original user, use the special ``_exit`` username:
 .. code-block:: text
 
     http://example.com/somewhere?_switch_user=_exit
+
+During impersonation, the user is provided with a special role called
+``ROLE_PREVIOUS_ADMIN``. In a template, for instance, this role can be used
+to show a link to exit impersonation:
+
+.. configuration-block::
+
+    .. code-block:: html+jinja
+
+        {% if is_granted('ROLE_PREVIOUS_ADMIN') %}
+            <a href="{{ path('homepage', {_switch_user: '_exit'}) }}">Exit impersonation</a>
+        {% endif %}
+
+    .. code-block:: html+php
+
+        <?php if ($view['security']->isGranted('ROLE_PREVIOUS_ADMIN')): ?>
+            <a href="<?php echo $view['router']->generate('homepage', array('_switch_user' => '_exit') ?>">Exit impersonation</a>
+        <?php endif; ?>
 
 Of course, this feature needs to be made available to a small group of users.
 By default, access is restricted to users having the ``ROLE_ALLOWED_TO_SWITCH``
@@ -1754,7 +1917,7 @@ Learn more from the Cookbook
 * :doc:`/cookbook/security/remember_me`
 
 .. _`Symfony's security component`: https://github.com/symfony/Security
-.. _`JMSSecurityExtraBundle`: https://github.com/schmittjoh/JMSSecurityExtraBundle
+.. _`JMSSecurityExtraBundle`: http://jmsyst.com/bundles/JMSSecurityExtraBundle/1.0
 .. _`FOSUserBundle`: https://github.com/FriendsOfSymfony/FOSUserBundle
 .. _`implement the \Serializable interface`: http://php.net/manual/en/class.serializable.php
 .. _`functions-online.com`: http://www.functions-online.com/sha1.html

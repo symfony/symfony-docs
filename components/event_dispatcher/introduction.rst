@@ -24,7 +24,7 @@ The Symfony2 Event Dispatcher component implements the `Observer`_ pattern in
 a simple and effective way to make all these things possible and to make your
 projects truly extensible.
 
-Take a simple example from the `Symfony2 HttpKernel component`_. Once a
+Take a simple example from the :doc:`/components/http_kernel/introduction`. Once a
 ``Response`` object has been created, it may be useful to allow other elements
 in the system to modify it (e.g. add some cache headers) before it's actually
 used. To make this possible, the Symfony2 kernel throws an event -
@@ -50,7 +50,7 @@ Installation
 You can install the component in many different ways:
 
 * Use the official Git repository (https://github.com/symfony/EventDispatcher);
-* Install it via Composer (``symfony/event-dispatcher`` on `Packagist`_).
+* :doc:`Install it via Composer</components/using_components>` (``symfony/event-dispatcher`` on `Packagist`_).
 
 Usage
 -----
@@ -200,7 +200,7 @@ instance of ``Symfony\Component\HttpKernel\Event\FilterResponseEvent``:
 
 .. code-block:: php
 
-    use Symfony\Component\HttpKernel\Event\FilterResponseEvent
+    use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
 
     public function onKernelResponse(FilterResponseEvent $event)
     {
@@ -241,8 +241,8 @@ that serves to define and document your event:
          * The store.order event is thrown each time an order is created
          * in the system.
          *
-         * The event listener receives an Acme\StoreBundle\Event\FilterOrderEvent
-         * instance.
+         * The event listener receives an
+         * Acme\StoreBundle\Event\FilterOrderEvent instance.
          *
          * @var string
          */
@@ -404,7 +404,7 @@ subscribes to the ``kernel.response`` and ``store.order`` events:
 
     class StoreSubscriber implements EventSubscriberInterface
     {
-        static public function getSubscribedEvents()
+        public static function getSubscribedEvents()
         {
             return array(
                 'kernel.response' => array(
@@ -487,7 +487,6 @@ Now, any listeners to ``store.order`` that have not yet been called will *not*
 be called.
 
 .. _Observer: http://en.wikipedia.org/wiki/Observer_pattern
-.. _`Symfony2 HttpKernel component`: https://github.com/symfony/HttpKernel
 .. _Closures: http://php.net/manual/en/functions.anonymous.php
 .. _PHP callable: http://www.php.net/manual/en/language.pseudo-types.php#language.types.callback
 .. _Packagist: https://packagist.org/packages/symfony/event-dispatcher

@@ -71,7 +71,7 @@ below a certain file size and a valid PDF, add the following:
     .. code-block:: yaml
 
         # src/Acme/BlogBundle/Resources/config/validation.yml
-        Acme\BlogBundle\Entity\Author
+        Acme\BlogBundle\Entity\Author:
             properties:
                 bioFile:
                     - File:
@@ -83,6 +83,8 @@ below a certain file size and a valid PDF, add the following:
     .. code-block:: php-annotations
 
         // src/Acme/BlogBundle/Entity/Author.php
+        namespace Acme\BlogBundle\Entity;
+
         use Symfony\Component\Validator\Constraints as Assert;
 
         class Author
@@ -116,15 +118,13 @@ below a certain file size and a valid PDF, add the following:
     .. code-block:: php
 
         // src/Acme/BlogBundle/Entity/Author.php
-        // ...
+        namespace Acme\BlogBundle\Entity;
 
         use Symfony\Component\Validator\Mapping\ClassMetadata;
         use Symfony\Component\Validator\Constraints\File;
 
         class Author
         {
-            // ...
-
             public static function loadValidatorMetadata(ClassMetadata $metadata)
             {
                 $metadata->addPropertyConstraint('bioFile', new File(array(

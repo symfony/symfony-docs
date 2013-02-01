@@ -28,7 +28,7 @@ Installation
 You can install the component in many different ways:
 
 * Use the official Git repository (https://github.com/symfony/Locale);
-* Install it via Composer (``symfony/locale`` on `Packagist`_).
+* :doc:`Install it via Composer</components/using_components>` (``symfony/locale`` on `Packagist`_).
 
 Usage
 -----
@@ -42,7 +42,9 @@ When using the ClassLoader component following code is sufficient to supplement 
     if (!function_exists('intl_get_error_code')) {
         require __DIR__.'/path/to/src/Symfony/Component/Locale/Resources/stubs/functions.php';
 
-        $loader->registerPrefixFallbacks(array(__DIR__.'/path/to/src/Symfony/Component/Locale/Resources/stubs'));
+        $loader->registerPrefixFallbacks(
+            array(__DIR__.'/path/to/src/Symfony/Component/Locale/Resources/stubs')
+        );
     }
 
 :class:`Symfony\\Component\\Locale\\Locale` class enriches native :phpclass:`Locale` class with additional features:
@@ -62,9 +64,5 @@ When using the ClassLoader component following code is sufficient to supplement 
     // Get the locale names for a given code or get all locale codes
     $locales = Locale::getDisplayLocales('en');
     $localeCodes = Locale::getLocales();
-
-    // Get ICU versions
-    $icuVersion = Locale::getIcuVersion();
-    $icuDataVersion = Locale::getIcuDataVersion();
 
 .. _Packagist: https://packagist.org/packages/symfony/locale

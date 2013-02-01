@@ -180,7 +180,7 @@ your listener to be called just before any controller is executed.
 With this configuration, your ``TokenListener`` ``onKernelController`` method
 will be executed on each request. If the controller that is about to be executed
 implements ``TokenAuthenticatedController``, token authentication is
-applied. This lets us have a "before" filter on any controller that you
+applied. This lets you have a "before" filter on any controller that you
 want.
 
 After filters with the ``kernel.response`` Event
@@ -275,6 +275,6 @@ event:
 That's it! The ``TokenListener`` is now notified before every controller is
 executed (``onKernelController``) and after every controller returns a response
 (``onKernelResponse``). By making specific controllers implement the ``TokenAuthenticatedController``
-interface, our listener knows which controllers it should take action on.
+interface, your listener knows which controllers it should take action on.
 And by storing a value in the request's "attributes" bag, the ``onKernelResponse``
 method knows to add the extra header. Have fun!

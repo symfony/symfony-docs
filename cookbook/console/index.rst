@@ -6,4 +6,5 @@ Console
 
     console_command
     usage
-    generating_urls
+    sending_emails
+    logging

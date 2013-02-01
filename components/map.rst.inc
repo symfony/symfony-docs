@@ -1,3 +1,5 @@
+* :doc:`/components/using_components`
+
 * **Class Loader**
 
   * :doc:`/components/class_loader`
@@ -14,6 +16,7 @@
   * :doc:`/components/console/introduction`
   * :doc:`/components/console/usage`
   * :doc:`/components/console/single_command_tool`
+  * :doc:`/components/console/helpers/index`
 
 * **CSS Selector**
 
@@ -27,6 +30,7 @@
   * :doc:`/components/dependency_injection/compilation`
   * :doc:`/components/dependency_injection/tags`
   * :doc:`/components/dependency_injection/factories`
+  * :doc:`/components/dependency_injection/configurators`
   * :doc:`/components/dependency_injection/parentservices`
   * :doc:`/components/dependency_injection/advanced`
   * :doc:`/components/dependency_injection/workflow`
@@ -46,6 +50,11 @@
 * :doc:`/components/http_foundation/index`
 
   * :doc:`/components/http_foundation/introduction`
+  * :doc:`/components/http_foundation/trusting_proxies`
+
+* :doc:`/components/http_kernel/index`
+
+  * :doc:`/components/http_kernel/introduction`
 
 * **Locale**
 
@@ -55,18 +64,26 @@
 
   * :doc:`/components/process`
 
-* **Routing**
+* :doc:`/components/routing/index`
 
-  * :doc:`/components/routing`
+  * :doc:`/components/routing/introduction`
 
 * **Serializer**
 
   * :doc:`/components/serializer`
 
+* :doc:`/components/security/index`
+
+  * :doc:`/components/security/introduction`
+  * :doc:`/components/security/firewall`
+  * :doc:`/components/security/authentication`
+  * :doc:`/components/security/authorization`
+
 * **Templating**
 
   * :doc:`/components/templating`
 
-* **YAML**
+* :doc:`/components/yaml/index`
 
-  * :doc:`/components/yaml`
+  * :doc:`/components/yaml/introduction`
+  * :doc:`/components/yaml/yaml_format`

@@ -29,7 +29,7 @@ Set up your user information with your real name and a working email address:
 
 .. tip::
 
-    If you are new to Git, we highly recommend you to read the excellent and
+    If you are new to Git, you are highly recommended to read the excellent and
     free `ProGit`_ book.
 
 .. tip::
@@ -71,14 +71,14 @@ Get the Symfony2 source code:
 
 * Fork the `Symfony2 repository`_ (click on the "Fork" button);
 
-* After the "hardcore forking action" has completed, clone your fork locally
+* After the "forking action" has completed, clone your fork locally
   (this will create a `symfony` directory):
 
 .. code-block:: bash
 
       $ git clone git@github.com:USERNAME/symfony.git
 
-* Add the upstream repository as ``remote``:
+* Add the upstream repository as a remote:
 
 .. code-block:: bash
 
@@ -200,10 +200,12 @@ Prepare your Patch for Submission
 When your patch is not about a bug fix (when you add a new feature or change
 an existing one for instance), it must also include the following:
 
-* An explanation of the changes in the relevant CHANGELOG file(s);
+* An explanation of the changes in the relevant CHANGELOG file(s) (the ``[BC
+  BREAK]`` or the ``[DEPRECATION]`` prefix must be used when relevant);
 
 * An explanation on how to upgrade an existing application in the relevant
-  UPGRADE file(s) if the changes break backward compatibility.
+  UPGRADE file(s) if the changes break backward compatibility or if you
+  deprecate something that will ultimately break backward compatibility.
 
 Step 3: Submit your Patch
 -------------------------
@@ -262,38 +264,89 @@ pull request message, like in:
     [Yaml] fixed something
     [Form] [Validator] [FrameworkBundle] added something
 
-.. tip::
-
-    Please use the title with "[WIP]" if the submission is not yet completed
-    or the tests are incomplete or not yet passing.
-
-The pull request description must include the following check list to ensure
-that contributions may be reviewed without needless feedback loops and that
-your contributions can be included into Symfony2 as quickly as possible:
+The pull request description must include the following checklist at the top
+to ensure that contributions may be reviewed without needless feedback
+loops and that your contributions can be included into Symfony2 as quickly as
+possible:
 
 .. code-block:: text
 
-    Bug fix: [yes|no]
-    Feature addition: [yes|no]
-    Backwards compatibility break: [yes|no]
-    Symfony2 tests pass: [yes|no]
-    Fixes the following tickets: [comma separated list of tickets fixed by the PR]
-    Todo: [list of todos pending]
-    License of the code: MIT
-    Documentation PR: [The reference to the documentation PR if any]
+    | Q             | A
+    | ------------- | ---
+    | Bug fix?      | [yes|no]
+    | New feature?  | [yes|no]
+    | BC breaks?    | [yes|no]
+    | Deprecations? | [yes|no]
+    | Tests pass?   | [yes|no]
+    | Fixed tickets | [comma separated list of tickets fixed by the PR]
+    | License       | MIT
+    | Doc PR        | [The reference to the documentation PR if any]
 
 An example submission could now look as follows:
 
 .. code-block:: text
 
-    Bug fix: no
-    Feature addition: yes
-    Backwards compatibility break: no
-    Symfony2 tests pass: yes
-    Fixes the following tickets: #12, #43
-    Todo: -
-    License of the code: MIT
-    Documentation PR: symfony/symfony-docs#123
+    | Q             | A
+    | ------------- | ---
+    | Bug fix?      | no
+    | New feature?  | no
+    | BC breaks?    | no
+    | Deprecations? | no
+    | Tests pass?   | yes
+    | Fixed tickets | #12, #43
+    | License       | MIT
+    | Doc PR        | symfony/symfony-docs#123
+
+The whole table must be included (do **not** remove lines that you think are
+not relevant). For simple typos, minor changes in the PHPDocs, or changes in
+translation files, use the shorter version of the check-list:
+
+.. code-block:: text
+
+    | Q             | A
+    | ------------- | ---
+    | Fixed tickets | [comma separated list of tickets fixed by the PR]
+    | License       | MIT
+
+Some answers to the questions trigger some more requirements:
+
+ * If you answer yes to "Bug fix?", check if the bug is already listed in the
+   Symfony issues and reference it/them in "Fixed tickets";
+
+ * If you answer yes to "New feature?", you must submit a pull request to the
+   documentation and reference it under the "Doc PR" section;
+
+ * If you answer yes to "BC breaks?", the patch must contain updates to the
+   relevant CHANGELOG and UPGRADE files;
+
+ * If you answer yes to "Deprecations?", the patch must contain updates to the
+   relevant CHANGELOG and UPGRADE files;
+
+ * If you answer no to "Tests pass", you must add an item to a todo-list with
+   the actions that must be done to fix the tests;
+
+ * If the "license" is not MIT, just don't submit the pull request as it won't
+   be accepted anyway.
+
+If some of the previous requirements are not met, create a todo-list and add
+relevant items:
+
+.. code-block:: text
+
+    - [ ] fix the tests as they have not been updated yet
+    - [ ] submit changes to the documentation
+    - [ ] document the BC breaks
+
+If the code is not finished yet because you don't have time to finish it or
+because you want early feedback on your work, add an item to todo-list:
+
+.. code-block:: text
+
+    - [ ] finish the code
+    - [ ] gather feedback my changes
+
+As long as you have items in the todo-list, please prefix the pull request
+title with "[WIP]".
 
 In the pull request description, give as much details as possible about your
 changes (don't hesitate to give code examples to illustrate your points). If
@@ -346,17 +399,6 @@ second and the last commits, and replace it by the word "squash" or just "s".
 When you save, git will start rebasing, and if successful, will ask you to
 edit the commit message, which by default is a listing of the commit messages
 of all the commits. When you finish, execute the push command.
-
-.. tip::
-
-    To automatically get your feature branch tested, you can add your fork to
-    `travis-ci.org`_. Just login using your github.com account and then simply
-    flip a single switch to enable automated testing. In your pull request,
-    instead of specifying "*Symfony2 tests pass: [yes|no]*", you can link to
-    the `travis-ci.org status icon`_. For more details, see the
-    `travis-ci.org Getting Started Guide`_. This could easily be done by clicking
-    on the wrench icon on the build page of Travis. First select your feature
-    branch and then copy the markdown to your PR description.
 
 .. _ProGit:                                http://git-scm.com/book
 .. _GitHub:                                https://github.com/signup/free

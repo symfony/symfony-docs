@@ -10,12 +10,12 @@ at its core, the skills used to master a symfony1 project continue to be
 very relevant when developing in Symfony2. Sure, ``app.yml`` is gone, but
 routing, controllers and templates all remain.
 
-In this chapter, we'll walk through the differences between symfony1 and Symfony2.
+This chapter walks through the differences between symfony1 and Symfony2.
 As you'll see, many tasks are tackled in a slightly different way. You'll
 come to appreciate these minor differences as they promote stable, predictable,
 testable and decoupled code in your Symfony2 applications.
 
-So, sit back and relax as we take you from "then" to "now".
+So, sit back and relax as you travel from "then" to "now".
 
 Directory Structure
 -------------------
@@ -61,7 +61,7 @@ In other words, the code that drives your application lives in many different
 places.
 
 In Symfony2, life is much simpler because *all* Symfony2 code must live in
-a bundle. In our pretend symfony1 project, all the code *could* be moved
+a bundle. In the pretend symfony1 project, all the code *could* be moved
 into one or more plugins (which is a very good practice, in fact). Assuming
 that all modules, PHP classes, schema, routing configuration, etc were moved
 into a plugin, the symfony1 ``plugins/`` directory would be very similar
@@ -90,9 +90,11 @@ a bundle. With the help of a console command, the ``Resources/public/``
 directory of each bundle is copied or symbolically-linked to the ``web/bundles/``
 directory. This allows you to keep assets organized inside your bundle, but
 still make them available to the public. To make sure that all bundles are
-available, run the following command::
+available, run the following command:
 
-    php app/console assets:install web
+.. code-block:: bash
+
+    $ php app/console assets:install web
 
 .. note::
 
@@ -134,7 +136,7 @@ The file itself lives at
 ``vendor/bundle/Sensio/Bundle/FrameworkExtraBundle/SensioFrameworkExtraBundle.php``.
 As you can see, the location of the file follows the namespace of the class.
 Specifically, the namespace, ``Sensio\Bundle\FrameworkExtraBundle``, spells out
-the directory that the file should live in 
+the directory that the file should live in
 (``vendor/bundle/Sensio/Bundle/FrameworkExtraBundle``). This is because, in the
 ``app/autoload.php`` file, you'll configure Symfony to look for the ``Sensio``
 namespace in the ``vendor/bundle`` directory:
@@ -185,16 +187,16 @@ Using the Console
 In symfony1, the console is in the root directory of your project and is
 called ``symfony``:
 
-.. code-block:: text
+.. code-block:: bash
 
-    php symfony
+    $ php symfony
 
 In Symfony2, the console is now in the app sub-directory and is called
 ``console``:
 
-.. code-block:: text
+.. code-block:: bash
 
-    php app/console
+    $ php app/console
 
 Applications
 ------------
@@ -251,7 +253,7 @@ In Symfony2, the bundles are activated inside the application kernel::
             ...,
             new Acme\DemoBundle\AcmeDemoBundle(),
         );
-        
+
         return $bundles;
     }
 
@@ -262,7 +264,9 @@ In symfony1, the ``routing.yml`` and ``app.yml`` configuration files were
 automatically loaded inside any plugin. In Symfony2, routing and application
 configuration inside a bundle must be included manually. For example, to
 include a routing resource from a bundle called ``AcmeDemoBundle``, you can
-do the following::
+do the following:
+
+.. code-block:: yaml
 
     # app/config/routing.yml
     _hello:

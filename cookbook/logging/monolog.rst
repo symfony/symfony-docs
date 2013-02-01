@@ -10,14 +10,34 @@ inspired by the Python LogBook library.
 Usage
 -----
 
-In Monolog each logger defines a logging channel. Each channel has a
-stack of handlers to write the logs (the handlers can be shared).
+To log a message simply get the logger service from the container in
+your controller::
+
+    public function indexAction()
+    {
+        $logger = $this->get('logger');
+        $logger->info('I just got the logger');
+        $logger->err('An error occurred');
+
+        // ...
+    }
+
+The ``logger`` service has different methods for different the logging levels.
+See :class:`Symfony\\Component\\HttpKernel\\Log\\LoggerInterface` for details
+on which methods are available.
+
+Handlers and Channels: Writing logs to different Locations
+----------------------------------------------------------
+
+In Monolog each logger defines a logging channel, which organizes your log
+messages into different "categories". Then, each channel has a stack of handlers
+to write the logs (the handlers can be shared).
 
 .. tip::
 
     When injecting the logger in a service you can
-    :ref:`use a custom channel<dic_tags-monolog>` to see easily which
-    part of the application logged the message.
+    :ref:`use a custom channel<dic_tags-monolog>` control which "channel"
+    the logger will log to.
 
 The basic handler is the ``StreamHandler`` which writes logs in a stream
 (by default in the ``app/logs/prod.log`` in the prod environment and
@@ -28,19 +48,6 @@ prod environment: ``FingersCrossedHandler``. It allows you to store the
 messages in a buffer and to log them only if a message reaches the
 action level (ERROR in the configuration provided in the standard
 edition) by forwarding the messages to another handler.
-
-To log a message simply get the logger service from the container in
-your controller::
-
-    $logger = $this->get('logger');
-    $logger->info('We just got the logger');
-    $logger->err('An error occurred');
-
-.. tip::
-
-    Using only the methods of the
-    :class:`Symfony\\Component\\HttpKernel\\Log\\LoggerInterface` interface
-    allows to change the logger implementation without changing your code.
 
 Using several handlers
 ~~~~~~~~~~~~~~~~~~~~~~
@@ -54,7 +61,7 @@ allows you to log the messages in several ways easily.
 
         monolog:
             handlers:
-                syslog:
+                applog:
                     type: stream
                     path: /var/log/symfony.log
                     level: error
@@ -65,7 +72,9 @@ allows you to log the messages in several ways easily.
                 file:
                     type: stream
                     level: debug
-
+                syslog:
+                    type: syslog
+                    level: error
     .. code-block:: xml
 
         <container xmlns="http://symfony.com/schema/dic/services"
@@ -76,7 +85,7 @@ allows you to log the messages in several ways easily.
 
             <monolog:config>
                 <monolog:handler
-                    name="syslog"
+                    name="applog"
                     type="stream"
                     path="/var/log/symfony.log"
                     level="error"
@@ -91,6 +100,11 @@ allows you to log the messages in several ways easily.
                     name="file"
                     type="stream"
                     level="debug"
+                />
+                <monolog:handler
+                    name="syslog"
+                    type="syslog"
+                    level="error"
                 />
             </monolog:config>
         </container>

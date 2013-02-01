@@ -14,6 +14,12 @@ used to return content to the user, populate email bodies, and more. You'll
 learn shortcuts, clever ways to extend templates and how to reuse template
 code.
 
+.. note::
+
+    How to render templates is covered in the :ref:`controller <controller-rendering-templates>`
+    page of the book.
+
+
 .. index::
    single: Templating; What is a template?
 
@@ -526,7 +532,9 @@ Including this template from any other template is simple:
             <h1>Recent Articles<h1>
 
             {% for article in articles %}
-                {% include 'AcmeArticleBundle:Article:articleDetails.html.twig' with {'article': article} %}
+                {% include 'AcmeArticleBundle:Article:articleDetails.html.twig'
+                       with {'article': article}
+                %}
             {% endfor %}
         {% endblock %}
 
@@ -576,10 +584,14 @@ articles::
     {
         public function recentArticlesAction($max = 3)
         {
-            // make a database call or other logic to get the "$max" most recent articles
+            // make a database call or other logic
+            // to get the "$max" most recent articles
             $articles = ...;
 
-            return $this->render('AcmeArticleBundle:Article:recentList.html.twig', array('articles' => $articles));
+            return $this->render(
+                'AcmeArticleBundle:Article:recentList.html.twig',
+                array('articles' => $articles)
+            );
         }
     }
 
@@ -611,8 +623,43 @@ The ``recentList`` template is perfectly straightforward:
     (e.g. ``/article/*slug*``). This is a bad practice. In the next section,
     you'll learn how to do this correctly.
 
-To include the controller, you'll need to refer to it using the standard string
-syntax for controllers (i.e. **bundle**:**controller**:**action**):
+Even though this controller will only be used internally, you'll need to
+create a route that points to the controller:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        latest_articles:
+            pattern:  /articles/latest/{max}
+            defaults: { _controller: AcmeArticleBundle:Article:recentArticles }
+
+    .. code-block:: xml
+
+        <?xml version="1.0" encoding="UTF-8" ?>
+
+        <routes xmlns="http://symfony.com/schema/routing"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/routing http://symfony.com/schema/routing/routing-1.0.xsd">
+
+            <route id="latest_articles" pattern="/articles/latest/{max}">
+                <default key="_controller">AcmeArticleBundle:Article:recentArticles</default>
+            </route>
+        </routes>
+
+    .. code-block:: php
+
+        use Symfony\Component\Routing\RouteCollection;
+        use Symfony\Component\Routing\Route;
+
+        $collection = new RouteCollection();
+        $collection->add('latest_articles', new Route('/articles/latest/{max}', array(
+            '_controller' => 'AcmeArticleBundle:Article:recentArticles',
+        )));
+
+        return $collection;
+
+To include the controller, you'll need to refer to it using an absolute url:
 
 .. configuration-block::
 
@@ -622,7 +669,7 @@ syntax for controllers (i.e. **bundle**:**controller**:**action**):
 
         {# ... #}
         <div id="sidebar">
-            {% render "AcmeArticleBundle:Article:recentArticles" with {'max': 3} %}
+            {% render url('latest_articles', { 'max': 3 }) %}
         </div>
 
     .. code-block:: html+php
@@ -631,8 +678,12 @@ syntax for controllers (i.e. **bundle**:**controller**:**action**):
 
         <!-- ... -->
         <div id="sidebar">
-            <?php echo $view['actions']->render('AcmeArticleBundle:Article:recentArticles', array('max' => 3)) ?>
+            <?php echo $view['actions']->render(
+                $view['router']->generate('latest_articles', array('max' => 3), true)
+            ) ?>
         </div>
+
+.. include:: /book/_security-2012-6431.rst.inc
 
 Whenever you find that you need a variable or a piece of information that
 you don't have access to in a template, consider rendering a controller.
@@ -640,6 +691,8 @@ Controllers are fast to execute and promote good code organization and reuse.
 
 .. index::
    single: Templating; Linking to pages
+
+.. _book-templating-pages:
 
 Linking to Pages
 ~~~~~~~~~~~~~~~~
@@ -689,8 +742,8 @@ To link to the page, just use the ``path`` Twig function and refer to the route:
 
         <a href="<?php echo $view['router']->generate('_welcome') ?>">Home</a>
 
-As expected, this will generate the URL ``/``. Let's see how this works with
-a more complicated route:
+As expected, this will generate the URL ``/``. Now for a more complicated
+route:
 
 .. configuration-block::
 
@@ -716,7 +769,7 @@ a more complicated route:
         return $collection;
 
 In this case, you need to specify both the route name (``article_show``) and
-a value for the ``{slug}`` parameter. Using this route, let's revisit the
+a value for the ``{slug}`` parameter. Using this route, revisit the
 ``recentList`` template from the previous section and link to the articles
 correctly:
 
@@ -753,10 +806,16 @@ correctly:
 
     .. code-block:: html+php
 
-        <a href="<?php echo $view['router']->generate('_welcome', array(), true) ?>">Home</a>
+        <a href="<?php echo $view['router']->generate(
+            '_welcome',
+            array(),
+            true
+        ) ?>">Home</a>
 
 .. index::
    single: Templating; Linking to assets
+
+.. _book-templating-assets:
 
 Linking to Assets
 ~~~~~~~~~~~~~~~~~
@@ -929,6 +988,8 @@ you're actually using the templating engine service. For example::
 
 is equivalent to::
 
+    use Symfony\Component\HttpFoundation\Response;
+
     $engine = $this->container->get('templating');
     $content = $engine->render('AcmeArticleBundle:Article:index.html.twig');
 
@@ -998,7 +1059,10 @@ customize the markup specifically for your application. By digging into the
         // some logic to retrieve the blogs
         $blogs = ...;
 
-        $this->render('AcmeBlogBundle:Blog:index.html.twig', array('blogs' => $blogs));
+        $this->render(
+            'AcmeBlogBundle:Blog:index.html.twig',
+            array('blogs' => $blogs)
+        );
     }
 
 When the ``AcmeBlogBundle:Blog:index.html.twig`` is rendered, Symfony2 actually
@@ -1349,3 +1413,4 @@ Learn more from the Cookbook
 .. _`tags`: http://twig.sensiolabs.org/doc/tags/index.html
 .. _`filters`: http://twig.sensiolabs.org/doc/filters/index.html
 .. _`add your own extensions`: http://twig.sensiolabs.org/doc/advanced.html#creating-an-extension
+
