@@ -40,9 +40,9 @@ Symfony2 distribution. Here, you'll need to make two choices:
   on your computer, you should download Symfony2 "without vendors", as it
   adds a bit more flexibility when including third-party/vendor libraries.
 
-Download one of the archives somewhere under your local web server's root
-directory and unpack it. From a UNIX command line, this can be done with
-one of the following commands (replacing ``###`` with your actual filename):
+Download one of the archives somewhere under your local web server's root directory
+and unpack it. From a UNIX command line, this can be done with one of the following
+commands (replacing ``###`` with your actual filename):
 
 .. code-block:: bash
 
@@ -57,7 +57,7 @@ something like this:
 
 .. code-block:: text
 
-    www/ <- your web root directory
+    www/ <- your web server directory (sometimes named htdocs or public)
         Symfony/ <- the unpacked archive
             app/
                 cache/
@@ -76,6 +76,23 @@ something like this:
     You can easily override the default directory structure. See
     :doc:`/cookbook/configuration/override_dir_structure` for more
     information.
+
+All public files and the frontcontroller that handles incoming requests in
+a Symfony2 application live in the ``Symfony/web/`` directory. So, assuming
+you unpacked the archive into your webserver's or virtual host's document root
+your application's URLs will start with ``http://localhost/Symfony/web/``.
+To get nice and short URLs you should point the document root of your
+webserver or virtual host to the ``Symfony/web/`` directory. Though
+this is not required for development it is recommended at the time your
+application goes into production as all system and configuration files
+become inaccessible to clients then. For information on configuring
+your specific web server document root, see the following
+documentation: `Apache`_ | `Nginx`_ .
+
+.. note::
+
+    The following examples assume you don't touch the document root settings
+    so all URLs start with ``http://localhost/Symfony/web/``
 
 Updating Vendors
 ~~~~~~~~~~~~~~~~
@@ -124,7 +141,7 @@ If there are any issues, correct them now before moving on.
     On a UNIX system, this can be done with one of the following commands:
 
     .. code-block:: bash
-    
+
         $ ps aux | grep httpd
 
     or
@@ -146,7 +163,7 @@ If there are any issues, correct them now before moving on.
 
         $ sudo chmod +a "www-data allow delete,write,append,file_inherit,directory_inherit" app/cache app/logs
         $ sudo chmod +a "`whoami` allow delete,write,append,file_inherit,directory_inherit" app/cache app/logs
-    
+
     **2. Using Acl on a system that does not support chmod +a**
 
     Some systems don't support ``chmod +a``, but do support another utility
@@ -187,16 +204,6 @@ first "real" Symfony2 webpage:
 Symfony2 should welcome and congratulate you for your hard work so far!
 
 .. image:: /images/quick_tour/welcome.jpg
-
-.. tip::
-    
-    To get nice and short urls you should point the document root of your 
-    webserver or virtual host to the ``Symfony/web/`` directory. Though 
-    this is not required for development it is recommended at the time your 
-    application goes into production as all system and configuration files
-    become inaccessible to clients then. For information on configuring 
-    your specific web server document root, see the following 
-    documentation: `Apache`_ | `Nginx`_ .
 
 Beginning Development
 ---------------------
