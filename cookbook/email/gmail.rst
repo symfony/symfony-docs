@@ -55,15 +55,15 @@ You're done!
 
     If you are using Symfony Standard Edition, configure the parameters at ``parameters.yml``:
 
-    .. code-block:: yaml
+.. code-block:: yaml
 
-        # app/config/parameters.yml
-        parameters:
-            ...
-            mailer_transport: gmail
-            mailer_host:      ~
-            mailer_user:      your_gmail_username
-            mailer_password:  your_gmail_password
+    # app/config/parameters.yml
+    parameters:
+        ...
+        mailer_transport: gmail
+        mailer_host:      ~
+        mailer_user:      your_gmail_username
+        mailer_password:  your_gmail_password
 
 .. note::
 
