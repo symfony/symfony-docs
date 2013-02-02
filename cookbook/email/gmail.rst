@@ -53,7 +53,7 @@ You're done!
 
 .. tip::
 
-    If you are using Symfony Standard Edition, configure the parameters at ``parameters.yml``:
+    If you are using the Symfony Standard Edition, configure the parameters at ``parameters.yml``:
 
     .. code-block:: yaml
 
