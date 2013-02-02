@@ -55,8 +55,6 @@ You're done!
 
     If you are using Symfony Standard Edition, configure the parameters at ``parameters.yml``:
 
-.. configuration-block::
-
     .. code-block:: yaml
 
         # app/config/parameters.yml
