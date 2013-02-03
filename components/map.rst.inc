@@ -30,6 +30,7 @@
   * :doc:`/components/dependency_injection/compilation`
   * :doc:`/components/dependency_injection/tags`
   * :doc:`/components/dependency_injection/factories`
+  * :doc:`/components/dependency_injection/configurators`
   * :doc:`/components/dependency_injection/parentservices`
   * :doc:`/components/dependency_injection/advanced`
   * :doc:`/components/dependency_injection/workflow`
