@@ -63,6 +63,7 @@
   * :doc:`/cookbook/email/gmail`
   * :doc:`/cookbook/email/dev_environment`
   * :doc:`/cookbook/email/spool`
+  * :doc:`/cookbook/email/testing`
 
 * :doc:`/cookbook/event_dispatcher/index`
 
@@ -143,6 +144,7 @@
   * :doc:`/cookbook/testing/profiling`
   * :doc:`/cookbook/testing/doctrine`
   * :doc:`/cookbook/testing/bootstrap`
+  * (email) :doc:`/cookbook/email/testing`
 
 * :doc:`/cookbook/validation/index`
 
