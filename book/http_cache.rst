@@ -895,28 +895,28 @@ matter), Symfony2 uses the standard ``render`` helper to configure ESI tags:
 
         <?php echo $view['actions']->render(
             new ControllerReference('...:news', array('max' => 5)),
-            array('strategy' => 'esi'))
+            array('renderer' => 'esi'))
         ?>
 
         <?php echo $view['actions']->render(
             $view['router']->generate('latest_news', array('max' => 5), true),
-            array('strategy' => 'esi')
+            array('renderer' => 'esi')
         ) ?>
 
-By using the ``esi`` rendering strategy (via the ``render_esi`` Twig
-function), you tell Symfony2 that the action should be rendered as an ESI tag.
-You might be wondering why you would want to use a helper instead of just
-writing the ESI tag yourself. That's because using a helper makes your
-application work even if there is no gateway cache installed.
+By using the ``esi`` renderer (via the ``render_esi`` Twig function), you
+tell Symfony2 that the action should be rendered as an ESI tag. You might be
+wondering why you would want to use a helper instead of just writing the ESI
+tag yourself. That's because using a helper makes your application work even
+if there is no gateway cache installed.
 
-When using the default ``render`` function (or setting the strategy to
-``default``), Symfony2 merges the included page content into the main one
-before sending the response to the client. But if you use the ``esi`` strategy
-(i.e. call ``render_esi``), *and* if Symfony2 detects that it's talking to
-a gateway cache that supports ESI, it generates an ESI include tag. But if
-there is no gateway cache or if it does not support ESI, Symfony2 will just
-merge the included page content within the main one as it would have done
-if you had used ``render``.
+When using the default ``render`` function (or setting the renderer to
+``inline``), Symfony2 merges the included page content into the main one
+before sending the response to the client. But if you use the ``esi`` renderer
+(i.e. call ``render_esi``), *and* if Symfony2 detects that it's talking to a
+gateway cache that supports ESI, it generates an ESI include tag. But if there
+is no gateway cache or if it does not support ESI, Symfony2 will just merge
+the included page content within the main one as it would have done if you had
+used ``render``.
 
 .. note::
 
@@ -952,13 +952,13 @@ listener that must be enabled in your configuration:
         # app/config/config.yml
         framework:
             # ...
-            router_proxy: { path: /_proxy }
+            fragments: { path: /_fragment }
 
     .. code-block:: xml
 
         <!-- app/config/config.xml -->
         <framework:config>
-            <framework:router-proxy path="/_proxy" />
+            <framework:fragments path="/_fragment" />
         </framework:config>
 
     .. code-block:: php
@@ -966,18 +966,17 @@ listener that must be enabled in your configuration:
         // app/config/config.php
         $container->loadFromExtension('framework', array(
             // ...
-            'router_proxy' => array('path' => '/_proxy'),
+            'fragments' => array('path' => '/_fragment'),
         ));
 
-One great advantage of this caching strategy is that you can make your
-application as dynamic as needed and at the same time, hit the application as
-little as possible.
+One great advantage of the ESI renderer is that you can make your application
+as dynamic as needed and at the same time, hit the application as little as
+possible.
 
 .. tip::
 
-    The proxy route doesn't point to a real controller. Instead, it's handled
-    by an internal :class:`Symfony\\Component\\HttpKernel\\EventListener\\RouterProxyListener`
-    class. This listener only responds to local IP addresses or trusted proxies.
+    The listener listener only responds to local IP addresses or trusted
+    proxies.
 
 .. note::
 

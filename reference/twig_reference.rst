@@ -27,8 +27,8 @@ Functions
 +----------------------------------------------------+--------------------------------------------------------------------------------------------+
 | Function Syntax                                    | Usage                                                                                      |
 +====================================================+============================================================================================+
-| ``render(uri, options = {})``                      | This will render the Response Content for the given controller or                          |
-| ``render(controller('B:C:a', {params}))``          | URL. For more information, see :ref:`templating-embedding-controller`.                     |
+| ``render(uri, options = {})``                      | This will render the fragment for the given controller or URL                              |
+| ``render(controller('B:C:a', {params}))``          | For more information, see :ref:`templating-embedding-controller`.                          |
 | ``render(path('route', {params}))``                |                                                                                            |
 | ``render(url('route', {params}))``                 |                                                                                            |
 +----------------------------------------------------+--------------------------------------------------------------------------------------------+
@@ -40,7 +40,7 @@ Functions
 | ``render_hinclude(url('route', {params}))``        | For more information, see :ref:`templating-embedding-controller`.                          |
 | ``render_hinclude(path('route', {params}))``       |                                                                                            |
 +----------------------------------------------------+--------------------------------------------------------------------------------------------+
-| ``controller(attributes = {}, query = {})``        | Used along with the ``render`` tag to refer to the controller that you want to render      |
+| ``controller(attributes = {}, query = {})``        | Used along with the ``render`` tag to refer to the controller that you want to render.     |
 +----------------------------------------------------+--------------------------------------------------------------------------------------------+
 | ``asset(path, packageName = null)``                | Get the public path of the asset, more information in                                      |
 |                                                    | ":ref:`book-templating-assets`".                                                           |
