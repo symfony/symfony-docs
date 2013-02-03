@@ -1,18 +1,18 @@
 .. index::
    single: Emails; Testing
 
-How to functionally test an Email is sent
-=========================================
+How to test that an Email is sent in a functional Test
+======================================================
 
-Sending e-mails with Symfony2 is pretty straight forward thanks to the
+Sending e-mails with Symfony2 is pretty straightforward thanks to the
 ``SwiftmailerBundle``, which leverages the power of the `Swiftmailer`_ library.
 
-To functionally test that e-mails are sent, and even assert their subjects,
-content or any other headers we can use :ref:`the Symfony2 Profiler <internals-profiler>`.
+To functionally test that an email was sent, and even assert the email subject,
+content or any other headers, you can use :ref:`the Symfony2 Profiler <internals-profiler>`.
 
-Let's start with an easy controller action that sends an e-mail::
+Start with an easy controller action that sends an e-mail::
 
-    public function indexAction($name)
+    public function sendEmailAction($name)
     {
         $message = \Swift_Message::newInstance()
             ->setSubject('Hello Email')
@@ -28,9 +28,10 @@ Let's start with an easy controller action that sends an e-mail::
 
 .. note::
 
-    Don't forget to enable profiler as explained in :doc:`/cookbook/testing/profiling`.
+    Don't forget to enable the profiler as explained in :doc:`/cookbook/testing/profiling`.
 
-And the ``WebTestCase`` to assert the e-mail content should be similar to::
+In your functional test, use the ``swiftmailer`` collector on the profiler
+to get information about the messages send on the previous request::
 
     // src/Acme/DemoBundle/Tests/Controller/MailControllerTest.php
     use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
@@ -40,7 +41,7 @@ And the ``WebTestCase`` to assert the e-mail content should be similar to::
         public function testMailIsSentAndContentIsOk()
         {
             $client = static::createClient();
-            $crawler = $client->request('GET', 'your_action_route_here');
+            $crawler = $client->request('POST', '/path/to/above/action');
 
             $mailCollector = $client->getProfile()->getCollector('swiftmailer');
 
@@ -59,3 +60,4 @@ And the ``WebTestCase`` to assert the e-mail content should be similar to::
         }
     }
 
+.. _Swiftmailer: http://swiftmailer.org/
