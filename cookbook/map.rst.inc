@@ -134,6 +134,7 @@
 * :doc:`/cookbook/templating/index`
 
   * :doc:`/cookbook/templating/global_variables`
+  * :doc:`/cookbook/templating/namespaced_paths`
   * :doc:`/cookbook/templating/PHP`
   * :doc:`/cookbook/templating/twig_extension`
   * :doc:`/cookbook/templating/render_without_controller`
