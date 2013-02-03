@@ -25,7 +25,15 @@ Configuration
     * enabled
     * field_name
 * `session`_
-    * `lifetime`_
+    * `cookie_lifetime`_
+    * `cookie_path`_
+    * `cookie_domain`_
+    * `cookie_secure`_
+    * `cookie_httponly`_
+    * `gc_divisor`_
+    * `gc_probability`_
+    * `gc_maxlifetime`_
+    * `save_path`_
 * `templating`_
     * `assets_base_urls`_
     * `assets_version`_
@@ -137,13 +145,100 @@ csrf_protection
 session
 ~~~~~~~
 
-lifetime
-........
+cookie_lifetime
+...............
+
+.. versionadded:: 2.1
+    This option was formerly know as ``lifetime``
 
 **type**: ``integer`` **default**: ``0``
 
 This determines the lifetime of the session - in seconds. By default it will use
 ``0``, which means the cookie is valid for the length of the browser session.
+
+cookie_path
+...........
+
+.. versionadded:: 2.1
+    This option was formerly know as ``path``
+
+**type**: ``string`` **default**: ``/``
+
+This determines the path to set in the session cookie. By default it will use ``/``.
+
+cookie_domain
+.............
+
+.. versionadded:: 2.1
+    This option was formerly know as ``domain``
+
+**type**: ``string`` **default**: ````
+
+This determines the domain to set in the session cookie. By default it's blank meaning the
+host name of the server which generated the cookie according to the cookie specification.
+
+cookie_secure
+.............
+
+.. versionadded:: 2.1
+    This option was formerly know as ``secure``
+
+**type**: ``Boolean`` **default**: ``false``
+
+This determines whether cookies should only be sent over secure connections.
+
+cookie_httponly
+...............
+
+.. versionadded:: 2.1
+    This option was formerly know as ``httponly``
+
+**type**: ``Boolean`` **default**: ``false``
+
+This determines whether cookies should only accesible through the HTTP protocol. This means
+that the cookie won't be accesible by scripting languages, such as Javascript. This setting
+can effectively help to reduce identity theft through XSS attacks.
+
+gc_probability
+..............
+
+.. versionadded:: 2.1
+    The ``gc_probability`` option is new in version 2.1
+
+**type**: ``integer`` **default**: ``1``
+
+This defines the probability that the garbage collector (GC) process is started on every session
+initialization. The probability is calculated by using ``gc_probability`` / ``gc_divisor``,
+e.g. 1/100 means there is a 1% chance that the GC process start on each request.
+
+gc_divisor
+..........
+
+.. versionadded:: 2.1
+    The ``gc_divisor`` option is new in version 2.1
+
+**type**: ``integer`` **default**: ``1``
+
+See ``gc_probability``_.
+
+gc_maxlifetime
+..............
+
+.. versionadded:: 2.1
+    The ``gc_maxlifetime`` option is new in version 2.1
+
+**type**: ``integer`` **default**: ``14400``
+
+This determines the number of seconds after whih data will be seen as `garbage` and potentially cleaned up.
+Garbage collection may occur during session start and depends on ``gc_divisor``_ and ``gc_probability``_.
+
+save_path
+..............
+
+**type**: ``string`` **default**: ``%kernel.cache.dir%/sessions``
+
+This determines the argument to be passed to the save handler. If you choose the default files handler,
+this is the path where the files are created.
 
 templating
 ~~~~~~~~~~
