@@ -123,6 +123,23 @@ URL to see the diagnostics for your machine:
 
         http://localhost/Symfony/web/config.php
 
+.. note::
+
+    All of the example URLs assume that you've downloaded and unzipped ``Symfony``
+    directly into the web server web root. If you've followed the directions
+    above and done this, then add ``/Symfony/web`` after ``localhost`` for all
+    the URLs you see:
+
+    .. code-block:: text
+
+        http://localhost/Symfony/web/config.php
+
+    To get nice and short urls you should point the document root of your
+    webserver or virtual host to the ``Symfony/web/`` directory. In that
+    case, your URLs will look like ``http://localhost/config.php`` or
+    ``http://site.local/config.php``, if you created a virtual host to a
+    local domain called, for example, ``site.local``.
+
 If there are any outstanding issues listed, correct them. You might also tweak
 your configuration by following any given recommendations. When everything is
 fine, click on "*Bypass configuration and go to the Welcome page*" to request

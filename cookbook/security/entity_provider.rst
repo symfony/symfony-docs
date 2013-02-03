@@ -185,7 +185,7 @@ For more details on each of these, see :class:`Symfony\\Component\\Security\\Cor
 
     public function isEqualTo(UserInterface $user)
     {
-        return $this->username === $user->getUsername();
+        return $this->id === $user->getId();
     }
 
 .. note::

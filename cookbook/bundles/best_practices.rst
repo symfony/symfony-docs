@@ -263,7 +263,7 @@ The end user can provide values in any configuration file:
 
     .. code-block:: ini
 
-        ; app/config/parameters.ini
+        ; app/config/config.ini
         [parameters]
         acme_hello.email.from = fabien@example.com
 

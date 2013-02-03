@@ -44,6 +44,8 @@ you might add the following:
     .. code-block:: php-annotations
 
         // src/Acme/EventBundle/Entity/Participant.php
+        namespace Acme\EventBundle\Entity;
+
         use Symfony\Component\Validator\Constraints as Assert;
 
         class Participant
@@ -73,6 +75,26 @@ you might add the following:
             </property>
         </class>
 
+    .. code-block:: php
+
+        // src/Acme/EventBundle/Entity/Participant.php
+        namespace Acme\EventBundle\Entity;
+
+        use Symfony\Component\Validator\Mapping\ClassMetadata;
+        use Symfony\Component\Validator\Constraints as Assert;
+
+        class Participant
+        {
+            public static function loadValidatorMetadata(ClassMetadata $data)
+            {
+                $metadata->addPropertyConstraint('emails', new Assert\Count(array(
+                    'min'        => 1,
+                    'max'        => 5,
+                    'minMessage' => 'You must specify at least one email',
+                    'maxMessage' => 'You cannot specify more than {{ limit }} emails',
+                )));
+            }
+        }
 
 Options
 -------

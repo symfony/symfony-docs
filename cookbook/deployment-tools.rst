@@ -71,7 +71,7 @@ Common Post-Deployment Tasks
 After deploying your actual source code, there are a number of common things
 you'll need to do:
 
-A) Configure your ``app/config/parameters.ini`` file
+A) Configure your ``app/config/parameters.yml`` file
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 This file should be customized on each system. The method you use to

@@ -19,12 +19,9 @@ Installing a Symfony2 Distribution
 
 .. tip::
 
-    First, check that you have installed and configured a Web server (such as
-    Apache) with the most recent PHP version possible (PHP 5.3.8 or newer is
-    recommended). For more information on Symfony2 requirements, see the
-    :doc:`requirements reference</reference/requirements>`. For information on
-    configuring your specific web server document root, see the following
-    documentation: `Apache`_ | `Nginx`_ .
+    First, check that you have installed and configured a Web server (such
+    as Apache) with PHP 5.3.8 or higher. For more information on Symfony2
+    requirements, see the :doc:`requirements reference</reference/requirements>`.
 
 Symfony2 packages "distributions", which are fully-functional applications
 that include the Symfony2 core libraries, a selection of useful bundles, a
@@ -218,7 +215,7 @@ If there are any issues, correct them now before moving on.
 
     **Note that not all web servers run as the user** ``www-data`` as in the examples
     below. Instead, check which user *your* web server is being run as and
-    use it place of ``www-data``.
+    use it in place of ``www-data``.
 
     On a UNIX system, this can be done with one of the following commands:
 
@@ -287,14 +284,23 @@ Symfony2 should welcome and congratulate you for your hard work so far!
 
 .. image:: /images/quick_tour/welcome.png
 
+.. tip::
+    
+    To get nice and short urls you should point the document root of your 
+    webserver or virtual host to the ``Symfony/web/`` directory. Though 
+    this is not required for development it is recommended at the time your 
+    application goes into production as all system and configuration files
+    become inaccessible to clients then. For information on configuring 
+    your specific web server document root, see the following 
+    documentation: `Apache`_ | `Nginx`_ .
+
 Beginning Development
 ---------------------
 
 Now that you have a fully-functional Symfony2 application, you can begin
 development! Your distribution may contain some sample code - check the
 ``README.md`` file included with the distribution (open it as a text file)
-to learn about what sample code was included with your distribution and how
-you can remove it later.
+to learn about what sample code was included with your distribution.
 
 If you're new to Symfony, check out ":doc:`page_creation`", where you'll
 learn how to create pages, change configuration, and do everything else you'll
@@ -302,6 +308,11 @@ need in your new application.
 
 Be sure to also check out the :doc:`Cookbook</cookbook/index>`, which contains
 a wide variety of articles about solving specific problems with Symfony.
+
+.. note::
+
+    If you want to remove the sample code from your distribution, take a look
+    at this cookbook article: ":doc:`/cookbook/bundles/remove`"
 
 Using Source Control
 --------------------

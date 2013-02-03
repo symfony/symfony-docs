@@ -10,6 +10,7 @@
     compilation
     tags
     factories
+    configurators
     parentservices
     advanced
     workflow

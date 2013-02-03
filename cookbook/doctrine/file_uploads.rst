@@ -165,7 +165,7 @@ The following controller shows you how to handle the entire process::
                 $em->persist($document);
                 $em->flush();
 
-                $this->redirect($this->generateUrl(...));
+                return $this->redirect($this->generateUrl(...));
             }
         }
 
@@ -203,7 +203,7 @@ in a moment to handle the file upload::
         $em->persist($document);
         $em->flush();
 
-        $this->redirect(...);
+        return $this->redirect(...);
     }
 
 The ``upload()`` method will take advantage of the :class:`Symfony\\Component\\HttpFoundation\\File\\UploadedFile`
@@ -323,7 +323,7 @@ call to ``$document->upload()`` should be removed from the controller::
         $em->persist($document);
         $em->flush();
 
-        $this->redirect(...);
+        return $this->redirect(...);
     }
 
 .. note::

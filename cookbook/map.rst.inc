@@ -10,6 +10,7 @@
   * :doc:`/cookbook/bundles/best_practices`
   * :doc:`/cookbook/bundles/inheritance`
   * :doc:`/cookbook/bundles/override`
+  * :doc:`/cookbook/bundles/remove`
   * :doc:`/cookbook/bundles/extension`
   * :doc:`/cookbook/bundles/prepend_extension`
 
@@ -63,6 +64,7 @@
   * :doc:`/cookbook/email/gmail`
   * :doc:`/cookbook/email/dev_environment`
   * :doc:`/cookbook/email/spool`
+  * :doc:`/cookbook/email/testing`
 
 * :doc:`/cookbook/event_dispatcher/index`
 
@@ -75,7 +77,7 @@
 
   * :doc:`/cookbook/form/form_customization`
   * :doc:`/cookbook/form/data_transformers`
-  * :doc:`/cookbook/form/dynamic_form_generation`
+  * :doc:`/cookbook/form/dynamic_form_modification`
   * :doc:`/cookbook/form/form_collections`
   * :doc:`/cookbook/form/create_custom_field_type`
   * :doc:`/cookbook/form/create_form_type_extension`
@@ -143,6 +145,7 @@
   * :doc:`/cookbook/testing/profiling`
   * :doc:`/cookbook/testing/doctrine`
   * :doc:`/cookbook/testing/bootstrap`
+  * (email) :doc:`/cookbook/email/testing`
 
 * :doc:`/cookbook/validation/index`
 
