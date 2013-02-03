@@ -11,7 +11,7 @@ using an email address that already exists in the system.
 | Options        | - `fields`_                                                                         |
 |                | - `message`_                                                                        |
 |                | - `em`_                                                                             |
-|                | - `repositoryMethod`_                                                                             |
+|                | - `repositoryMethod`_                                                               |
 +----------------+-------------------------------------------------------------------------------------+
 | Class          | :class:`Symfony\\Bridge\\Doctrine\\Validator\\Constraints\\UniqueEntity`            |
 +----------------+-------------------------------------------------------------------------------------+
