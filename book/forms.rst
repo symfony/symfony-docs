@@ -854,7 +854,7 @@ the choice is ultimately up to you.
         public function setDefaultOptions(OptionsResolverInterface $resolver)
         {
             $resolver->setDefaults(array(
-                'data_class' => 'Acme\TaskBundle\Entity\Task',
+                'data_class' => 'Acme\\TaskBundle\\Entity\\Task',
             ));
         }
 
@@ -993,7 +993,7 @@ create a form class so that a ``Category`` object can be modified by the user::
         public function setDefaultOptions(OptionsResolverInterface $resolver)
         {
             $resolver->setDefaults(array(
-                'data_class' => 'Acme\TaskBundle\Entity\Category',
+                'data_class' => 'Acme\\TaskBundle\\Entity\\Category',
             ));
         }
 
@@ -1026,7 +1026,7 @@ the ``cascade_validation`` option to ``TaskType``::
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'Acme\TaskBundle\Entity\Task',
+            'data_class' => 'Acme\\TaskBundle\\Entity\\Task',
             'cascade_validation' => true,
         ));
     }
@@ -1434,7 +1434,7 @@ The CSRF token can be customized on a form-by-form basis. For example::
         public function setDefaultOptions(OptionsResolverInterface $resolver)
         {
             $resolver->setDefaults(array(
-                'data_class'      => 'Acme\TaskBundle\Entity\Task',
+                'data_class'      => 'Acme\\TaskBundle\\Entity\\Task',
                 'csrf_protection' => true,
                 'csrf_field_name' => '_token',
                 // a unique key to help generate the secret token
