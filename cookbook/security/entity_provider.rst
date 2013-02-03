@@ -138,7 +138,7 @@ focus on the most important methods that come from the
          */
         public function equals(UserInterface $user)
         {
-            return $this->username === $user->getUsername();
+            return $this->id === $user->getId();
         }
 
         /**
@@ -176,7 +176,7 @@ interface forces the class to implement the six following methods:
 
 For more details on each of these, see :class:`Symfony\\Component\\Security\\Core\\User\\UserInterface`.
 
-To keep it simple, the ``equals()`` method just compares the ``username`` field
+To keep it simple, the ``equals()`` method just compares the ``id`` field
 but it's also possible to do more checks depending on the complexity of your
 data model. On the other hand, the ``eraseCredentials()`` method remains empty
 for the purposes of this tutorial.
