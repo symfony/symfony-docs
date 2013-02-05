@@ -267,11 +267,35 @@ configuration inside a bundle must be included manually. For example, to
 include a routing resource from a bundle called ``AcmeDemoBundle``, you can
 do the following:
 
-.. code-block:: yaml
+.. configuration-block::
 
-    # app/config/routing.yml
-    _hello:
-        resource: "@AcmeDemoBundle/Resources/config/routing.yml"
+    .. code-block:: yaml
+
+        # app/config/routing.yml
+        _hello:
+            resource: "@AcmeDemoBundle/Resources/config/routing.yml"
+
+    .. code-block:: xml
+
+        <!-- app/config/routing.yml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+
+        <routes xmlns="http://symfony.com/schema/routing"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/routing http://symfony.com/schema/routing/routing-1.0.xsd">
+
+            <import resource="@AcmeDemoBundle/Resources/config/routing.xml" />
+        </routes>
+
+    .. code-block:: php
+
+        // app/config/routing.php
+        use Symfony\Component\Routing\RouteCollection;
+
+        $collection = new RouteCollection();
+        $collection->addCollection($loader->import("@AcmeHelloBundle/Resources/config/routing.php"));
+
+        return $collection;
 
 This will load the routes found in the ``Resources/config/routing.yml`` file
 of the ``AcmeDemoBundle``. The special ``@AcmeDemoBundle`` is a shortcut syntax
@@ -279,11 +303,25 @@ that, internally, resolves to the full path to that bundle.
 
 You can use this same strategy to bring in configuration from a bundle:
 
-.. code-block:: yaml
+.. configuration-block::
 
-    # app/config/config.yml
-    imports:
-        - { resource: "@AcmeDemoBundle/Resources/config/config.yml" }
+    .. code-block:: yaml
+
+        # app/config/config.yml
+        imports:
+            - { resource: "@AcmeDemoBundle/Resources/config/config.yml" }
+
+    .. code-block:: xml
+
+        <!-- app/config/config.xml -->
+        <imports>
+            <import resource="@AcmeDemoBundle/Resources/config/config.xml" />
+        </imports>
+
+    .. code-block:: php
+
+        // app/config/config.php
+        $this->import('@AcmeDemoBundle/Resources/config/config.php')
 
 In Symfony2, configuration is a bit like ``app.yml`` in symfony1, except much
 more systematic. With ``app.yml``, you could simply create any keys you wanted.
@@ -300,10 +338,22 @@ used them in your application:
 In Symfony2, you can also create arbitrary entries under the ``parameters``
 key of your configuration:
 
-.. code-block:: yaml
+.. configuration-block::
 
-    parameters:
-        email.from_address: foo.bar@example.com
+    .. code-block:: yaml
+
+        parameters:
+            email.from_address: foo.bar@example.com
+
+    .. code-block:: xml
+
+        <parameters>
+            <parameter key="email.from_address">foo.bar@example.com</parameter>
+        </parameters>
+
+    .. code-block:: php
+
+        $container->setParameter('email.from_address', 'foo.bar@example.com');
 
 You can now access this from a controller, for example::
 
