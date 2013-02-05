@@ -32,6 +32,8 @@ day, and year) or three select boxes (see the `widget_` option).
 +----------------------+-----------------------------------------------------------------------------+
 | Inherited            | - `invalid_message`_                                                        |
 | options              | - `invalid_message_parameters`_                                             |
+|                      | - `read_only`_                                                              |
+|                      | - `disabled`_                                                               |
 +----------------------+-----------------------------------------------------------------------------+
 | Parent type          | ``field`` (if text), ``form`` otherwise                                     |
 +----------------------+-----------------------------------------------------------------------------+
@@ -121,3 +123,7 @@ These options inherit from the :doc:`field</reference/forms/types/field>` type:
 .. include:: /reference/forms/types/options/invalid_message.rst.inc
 
 .. include:: /reference/forms/types/options/invalid_message_parameters.rst.inc
+
+.. include:: /reference/forms/types/options/read_only.rst.inc
+
+.. include:: /reference/forms/types/options/disabled.rst.inc

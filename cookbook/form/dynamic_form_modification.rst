@@ -11,11 +11,11 @@ of what a bare form class looks like::
     namespace Acme\DemoBundle\Form\Type;
 
     use Symfony\Component\Form\AbstractType;
-    use Symfony\Component\Form\FormBuilder;
+    use Symfony\Component\Form\FormBuilderInterface;
 
     class ProductType extends AbstractType
     {
-        public function buildForm(FormBuilder $builder, array $options)
+        public function buildForm(FormBuilderInterface $builder, array $options)
         {
             $builder->add('name');
             $builder->add('price');
@@ -57,16 +57,16 @@ to an Event Subscriber::
     namespace Acme\DemoBundle\Form\Type;
 
     use Symfony\Component\Form\AbstractType;
-    use Symfony\Component\Form\FormBuilder;
+    use Symfony\Component\Form\FormBuilderInterface;
     use Acme\DemoBundle\Form\EventListener\AddNameFieldSubscriber;
 
     class ProductType extends AbstractType
     {
-        public function buildForm(FormBuilder $builder, array $options)
+        public function buildForm(FormBuilderInterface $builder, array $options)
         {
-            $subscriber = new AddNameFieldSubscriber($builder->getFormFactory());
-            $builder->addEventSubscriber($subscriber);
             $builder->add('price');
+
+            $builder->addEventSubscriber(new AddNameFieldSubscriber());
         }
 
         public function getName()
@@ -75,10 +75,6 @@ to an Event Subscriber::
         }
     }
 
-The event subscriber is passed the FormFactory object in its constructor so
-that your new subscriber is capable of creating the form widget once it is
-notified of the dispatched event during form creation.
-
 .. _`cookbook-forms-inside-subscriber-class`:
 
 Inside the Event Subscriber Class
@@ -86,25 +82,23 @@ Inside the Event Subscriber Class
 
 The goal is to create a "name" field *only* if the underlying Product object
 is new (e.g. hasn't been persisted to the database). Based on that, the subscriber
-might look like the following::
+might look like the following:
+
+.. versionadded:: 2.2
+    The ability to pass a string into :method:`FormInterface::add<Symfony\\Component\\Form\\FormInterface::add>`
+    was added in Symfony 2.2.
+
+.. code-block:: php
 
     // src/Acme/DemoBundle/Form/EventListener/AddNameFieldSubscriber.php
     namespace Acme\DemoBundle\Form\EventListener;
 
-    use Symfony\Component\Form\Event\DataEvent;
-    use Symfony\Component\Form\FormFactoryInterface;
-    use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+    use Symfony\Component\Form\FormEvent;
     use Symfony\Component\Form\FormEvents;
+    use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
     class AddNameFieldSubscriber implements EventSubscriberInterface
     {
-        private $factory;
-
-        public function __construct(FormFactoryInterface $factory)
-        {
-            $this->factory = $factory;
-        }
-
         public static function getSubscribedEvents()
         {
             // Tells the dispatcher that you want to listen on the form.pre_set_data
@@ -112,7 +106,7 @@ might look like the following::
             return array(FormEvents::PRE_SET_DATA => 'preSetData');
         }
 
-        public function preSetData(DataEvent $event)
+        public function preSetData(FormEvent $event)
         {
             $data = $event->getData();
             $form = $event->getForm();
@@ -128,7 +122,7 @@ might look like the following::
 
             // check if the product object is "new"
             if (!$data->getId()) {
-                $form->add($this->factory->createNamed('text', 'name'));
+                $form->add('name', 'text');
             }
         }
     }
@@ -145,20 +139,16 @@ The ``FormEvents::PRE_SET_DATA`` line actually resolves to the string ``form.pre
 The `FormEvents class`_ serves an organizational purpose. It is a centralized location
 in which you can find all of the various form events available.
 
-While this example could have used the ``form.set_data`` event or even the ``form.post_set_data``
-events just as effectively, by using ``form.pre_set_data`` you guarantee that
+While this example could have used the ``form.post_set_data``
+event just as effectively, by using ``form.pre_set_data`` you guarantee that
 the data being retrieved from the ``Event`` object has in no way been modified
-by any other subscribers or listeners. This is because ``form.pre_set_data``
-passes a `DataEvent`_ object instead of the `FilterDataEvent`_ object passed
-by the ``form.set_data`` event. `DataEvent`_, unlike its child `FilterDataEvent`_,
-lacks a setData() method.
+by any other subscribers or listeners because ``form.pre_set_data`` is the
+first form event dispatched.
 
 .. note::
 
     You may view the full list of form events via the `FormEvents class`_,
     found in the form bundle.
 
-.. _`DataEvent`: https://github.com/symfony/symfony/blob/master/src/Symfony/Component/Form/Event/DataEvent.php
 .. _`FormEvents class`: https://github.com/symfony/Form/blob/master/FormEvents.php
 .. _`Form class`: https://github.com/symfony/symfony/blob/master/src/Symfony/Component/Form/Form.php
-.. _`FilterDataEvent`: https://github.com/symfony/symfony/blob/master/src/Symfony/Component/Form/Event/FilterDataEvent.php

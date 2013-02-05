@@ -22,7 +22,7 @@ value:
 .. code-block:: yaml
 
     my_controller:
-        pattern:   /
+        path:   /
         defaults:  { _controller: my_controller:indexAction }
 
 To use a controller in this way, it must be defined in the service container

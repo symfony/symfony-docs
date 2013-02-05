@@ -83,11 +83,9 @@ to override one of the following methods:
 
 * ``buildView()``
 
-* ``getDefaultOptions()``
+* ``setDefaultOptions()``
 
-* ``getAllowedOptionValues()``
-
-* ``buildViewBottomUp()``
+* ``finishView()``
 
 For more information on what those methods do, you can refer to the
 :doc:`Creating Custom Field Types</cookbook/form/create_custom_field_type>`
@@ -175,7 +173,7 @@ database)::
 Your form type extension class will need to do two things in order to extend
 the ``file`` form type:
 
-#. Override the ``getDefaultOptions`` method in order to add an image_path
+#. Override the ``setDefaultOptions`` method in order to add an image_path
    option;
 #. Override the ``buildForm`` and ``buildView`` methods in order to pass the image
    url to the view.
@@ -189,10 +187,10 @@ it in the view::
     namespace Acme\DemoBundle\Form\Extension;
 
     use Symfony\Component\Form\AbstractTypeExtension;
-    use Symfony\Component\Form\FormBuilder;
     use Symfony\Component\Form\FormView;
     use Symfony\Component\Form\FormInterface;
     use Symfony\Component\Form\Util\PropertyPath;
+    use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
     class ImageTypeExtension extends AbstractTypeExtension
     {
@@ -209,24 +207,11 @@ it in the view::
         /**
          * Add the image_path option
          *
-         * @param array $options
+         * @param \Symfony\Component\OptionsResolver\OptionsResolverInterface $resolver
          */
-        public function getDefaultOptions(array $options)
+        public function setDefaultOptions(OptionsResolverInterface $resolver)
         {
-            return array('image_path' => null);
-        }
-
-        /**
-         * Store the image_path option as a builder attribute
-         *
-         * @param \Symfony\Component\Form\FormBuilder $builder
-         * @param array $options
-         */
-        public function buildForm(FormBuilder $builder, array $options)
-        {
-            if (null !== $options['image_path']) {
-                $builder->setAttribute('image_path', $options['image_path']);
-            }
+            $resolver->setOptional(array('image_path'));
         }
 
         /**
@@ -234,18 +219,20 @@ it in the view::
          *
          * @param \Symfony\Component\Form\FormView $view
          * @param \Symfony\Component\Form\FormInterface $form
+         * @param array $options
          */
-        public function buildView(FormView $view, FormInterface $form)
+        public function buildView(FormView $view, FormInterface $form, array $options)
         {
-            if ($form->hasAttribute('image_path')) {
+            if (array_key_exists('image_path', $options)) {
                 $parentData = $form->getParent()->getData();
 
-                if (null != $parentData) {
-                    $propertyPath = new PropertyPath($form->getAttribute('image_path'));
+                if (null !== $parentData) {
+                    $propertyPath = new PropertyPath($options['image_path']);
                     $imageUrl = $propertyPath->getValue($parentData);
                 } else {
-                    $imageUrl = null;
+                     $imageUrl = null;
                 }
+
                 // set an "image_url" variable that will be available when rendering this field
                 $view->set('image_url', $imageUrl);
             }
@@ -274,7 +261,7 @@ Specifically, you need to override the ``file_widget`` block:
         {% block file_widget %}
             {% spaceless %}
 
-            {{ block('field_widget') }}
+            {{ block('form_widget') }}
             {% if image_url is not null %}
                 <img src="{{ asset(image_url) }}"/>
             {% endif %}
@@ -308,11 +295,11 @@ next to the file field. For example::
     namespace Acme\DemoBundle\Form\Type;
 
     use Symfony\Component\Form\AbstractType;
-    use Symfony\Component\Form\FormBuilder;
+    use Symfony\Component\Form\FormBuilderInterface;
 
     class MediaType extends AbstractType
     {
-        public function buildForm(FormBuilder $builder, array $options)
+        public function buildForm(FormBuilderInterface $builder, array $options)
         {
             $builder
                 ->add('name', 'text')

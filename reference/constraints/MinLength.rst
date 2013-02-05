@@ -1,6 +1,12 @@
 MinLength
 =========
 
+.. caution::
+
+    The MinLength constraint is deprecated since version 2.1 and will be removed
+    in Symfony 2.3. Use :doc:`/reference/constraints/Length` with the ``min``
+    option instead.
+
 Validates that the length of a string is at least as long as the given limit.
 
 +----------------+-------------------------------------------------------------------------+

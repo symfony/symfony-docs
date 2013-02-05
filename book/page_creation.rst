@@ -8,7 +8,7 @@ Creating a new page in Symfony2 is a simple two-step process:
 
 * *Create a route*: A route defines the URL (e.g. ``/about``) to your page
   and specifies a controller (which is a PHP function) that Symfony2 should
-  execute when the URL of an incoming request matches the route pattern;
+  execute when the URL of an incoming request matches the route path;
 
 * *Create a controller*: A controller is a PHP function that takes the incoming
   request and transforms it into the Symfony2 ``Response`` object that's
@@ -103,7 +103,7 @@ an entry when you generated the ``AcmeHelloBundle``:
     .. code-block:: yaml
 
         # app/config/routing.yml
-        AcmeHelloBundle:
+        acme_hello:
             resource: "@AcmeHelloBundle/Resources/config/routing.yml"
             prefix:   /
 
@@ -147,7 +147,7 @@ the new route that defines the URL of the page that you're about to create:
 
         # src/Acme/HelloBundle/Resources/config/routing.yml
         hello:
-            pattern:  /hello/{name}
+            path:     /hello/{name}
             defaults: { _controller: AcmeHelloBundle:Hello:index }
 
     .. code-block:: xml
@@ -159,7 +159,7 @@ the new route that defines the URL of the page that you're about to create:
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/routing http://symfony.com/schema/routing/routing-1.0.xsd">
 
-            <route id="hello" pattern="/hello/{name}">
+            <route id="hello" path="/hello/{name}">
                 <default key="_controller">AcmeHelloBundle:Hello:index</default>
             </route>
         </routes>
@@ -177,9 +177,9 @@ the new route that defines the URL of the page that you're about to create:
 
         return $collection;
 
-The routing consists of two basic pieces: the ``pattern``, which is the URL
+The routing consists of two basic pieces: the ``path``, which is the URL
 that this route will match, and a ``defaults`` array, which specifies the
-controller that should be executed. The placeholder syntax in the pattern
+controller that should be executed. The placeholder syntax in the path
 (``{name}``) is a wildcard. It means that ``/hello/Ryan``, ``/hello/Fabien``
 or any other similar URL will match this route. The ``{name}`` placeholder
 parameter will also be passed to the controller so that you can use its value
@@ -512,13 +512,13 @@ You'll learn more about each of these directories in later chapters.
 
 .. sidebar:: Autoloading
 
-    When Symfony is loading, a special file - ``app/autoload.php`` - is included.
-    This file is responsible for configuring the autoloader, which will autoload
-    your application files from the ``src/`` directory and third-party libraries
-    from the ``vendor/`` directory.
+    When Symfony is loading, a special file - ``vendor/autoload.php`` - is 
+    included. This file is created by Composer and will autoload all 
+    application files living in the `src/` folder as well as all 
+    third-party libraries mentioned in the ``composer.json`` file.
 
     Because of the autoloader, you never need to worry about using ``include``
-    or ``require`` statements. Instead, Symfony2 uses the namespace of a class
+    or ``require`` statements. Instead, Composer uses the namespace of a class
     to determine its location and automatically includes the file on your
     behalf the instant you need a class.
 
@@ -532,11 +532,6 @@ You'll learn more about each of these directories in later chapters.
             Acme\HelloBundle\Controller\HelloController
         Path:
             src/Acme/HelloBundle/Controller/HelloController.php
-
-    Typically, the only time you'll need to worry about the ``app/autoload.php``
-    file is when you're including a new third-party library in the ``vendor/``
-    directory. For more information on autoloading, see
-    :doc:`How to autoload Classes</components/class_loader>`.
 
 The Source (``src``) Directory
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -733,20 +728,13 @@ format you prefer:
 
         # app/config/config.yml
         imports:
-            - { resource: parameters.ini }
+            - { resource: parameters.yml }
             - { resource: security.yml }
 
         framework:
             secret:          "%secret%"
-            charset:         UTF-8
             router:          { resource: "%kernel.root_dir%/config/routing.yml" }
-            form:            true
-            csrf_protection: true
-            validation:      { enable_annotations: true }
-            templating:      { engines: ['twig'] } #assets_version: SomeVersionScheme
-            session:
-                default_locale: "%locale%"
-                auto_start:     true
+            # ...
 
         # Twig Configuration
         twig:
@@ -759,19 +747,13 @@ format you prefer:
 
         <!-- app/config/config.xml -->
         <imports>
-            <import resource="parameters.ini" />
+            <import resource="parameters.yml" />
             <import resource="security.yml" />
         </imports>
 
-        <framework:config charset="UTF-8" secret="%secret%">
+        <framework:config secret="%secret%">
             <framework:router resource="%kernel.root_dir%/config/routing.xml" />
-            <framework:form />
-            <framework:csrf-protection />
-            <framework:validation annotations="true" />
-            <framework:templating assets-version="SomeVersionScheme">
-                <framework:engine id="twig" />
-            </framework:templating>
-            <framework:session default-locale="%locale%" auto-start="true" />
+            <!-- ... -->
         </framework:config>
 
         <!-- Twig Configuration -->
@@ -781,23 +763,13 @@ format you prefer:
 
     .. code-block:: php
 
-        $this->import('parameters.ini');
+        $this->import('parameters.yml');
         $this->import('security.yml');
 
         $container->loadFromExtension('framework', array(
             'secret'          => '%secret%',
-            'charset'         => 'UTF-8',
             'router'          => array('resource' => '%kernel.root_dir%/config/routing.php'),
-            'form'            => array(),
-            'csrf-protection' => array(),
-            'validation'      => array('annotations' => true),
-            'templating'      => array(
-                'engines' => array('twig'),
-                #'assets_version' => "SomeVersionScheme",
-            ),
-            'session' => array(
-                'default_locale' => "%locale%",
-                'auto_start'     => true,
+            // ...
             ),
         ));
 
@@ -836,6 +808,32 @@ options of each feature.
     * *XML*: More powerful than YAML at times and supports IDE autocompletion;
 
     * *PHP*: Very powerful but less readable than standard configuration formats.
+
+Default Configuration Dump
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 2.1
+    The ``config:dump-reference`` command was added in Symfony 2.1
+
+You can dump the default configuration for a bundle in yaml to the console using
+the ``config:dump-reference`` command.  Here is an example of dumping the default
+FrameworkBundle configuration:
+
+.. code-block:: text
+
+    app/console config:dump-reference FrameworkBundle
+
+The extension alias (configuration key) can also be used:
+
+.. code-block:: text
+
+    app/console config:dump-reference framework
+
+.. note::
+
+    See the cookbook article: :doc:`How to expose a Semantic Configuration for
+    a Bundle</cookbook/bundles/extension>` for information on adding
+    configuration for your own bundle.
 
 .. index::
    single: Environments; Introduction

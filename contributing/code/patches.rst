@@ -14,8 +14,8 @@ Before working on Symfony2, setup a friendly environment with the following
 software:
 
 * Git;
-* PHP version 5.3.2 or above;
-* PHPUnit 3.5.11 or above.
+* PHP version 5.3.3 or above;
+* PHPUnit 3.6.4 or above.
 
 Configure Git
 ~~~~~~~~~~~~~
@@ -253,8 +253,8 @@ You can now make a pull request on the ``symfony/symfony`` Github repository.
 
 .. tip::
 
-    Take care to point your pull request towards ``symfony:2.0`` if you want
-    the core team to pull a bugfix based on the 2.0 branch.
+    Take care to point your pull request towards ``symfony:2.1`` if you want
+    the core team to pull a bugfix based on the 2.1 branch.
 
 To ease the core team work, always include the modified components in your
 pull request message, like in:

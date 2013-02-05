@@ -12,6 +12,7 @@
   * :doc:`/cookbook/bundles/override`
   * :doc:`/cookbook/bundles/remove`
   * :doc:`/cookbook/bundles/extension`
+  * :doc:`/cookbook/bundles/prepend_extension`
 
 * :doc:`/cookbook/cache/index`
 
@@ -54,6 +55,7 @@
   * :doc:`/cookbook/doctrine/reverse_engineering`
   * :doc:`/cookbook/doctrine/multiple_entity_managers`
   * :doc:`/cookbook/doctrine/custom_dql_functions`
+  * :doc:`/cookbook/doctrine/resolve_target_entity`
   * :doc:`/cookbook/doctrine/registration_form`
 
 * :doc:`/cookbook/email/index`
@@ -87,6 +89,7 @@
 
   * :doc:`/cookbook/logging/monolog`
   * :doc:`/cookbook/logging/monolog_email`
+  * :doc:`/cookbook/logging/channels_handlers`
 
 * :doc:`/cookbook/profiler/index`
 
@@ -102,6 +105,7 @@
   * :doc:`/cookbook/routing/slash_in_parameter`
   * :doc:`/cookbook/routing/redirect_in_config`
   * :doc:`/cookbook/routing/method_parameters`
+  * :doc:`/cookbook/routing/service_container_parameters`
 
 * :doc:`/cookbook/security/index`
 
@@ -115,6 +119,7 @@
   * :doc:`/cookbook/security/securing_services`
   * :doc:`/cookbook/security/custom_provider`
   * :doc:`/cookbook/security/custom_authentication_provider`
+  * :doc:`/cookbook/security/target_path`
 
 * :doc:`/cookbook/service_container/index`
 
@@ -154,3 +159,4 @@
 
   * :doc:`/cookbook/workflow/new_project_git`
   * :doc:`/cookbook/workflow/new_project_svn`
+

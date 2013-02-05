@@ -425,12 +425,12 @@ by adding an entry for ``/contact`` to your routing configuration file:
 
         # app/config/routing.yml
         contact:
-            pattern:  /contact
+            path:     /contact
             defaults: { _controller: AcmeDemoBundle:Main:contact }
 
     .. code-block:: xml
 
-        <route id="contact" pattern="/contact">
+        <route id="contact" path="/contact">
             <default key="_controller">AcmeBlogBundle:Main:contact</default>
         </route>
 

@@ -28,6 +28,8 @@ the AsseticBundle has several tags that aren't listed here.
 +-----------------------------------+---------------------------------------------------------------------------+
 | `kernel.event_listener`_          | Listen to different events/hooks in Symfony                               |
 +-----------------------------------+---------------------------------------------------------------------------+
+| `kernel.event_subscriber`_        | To subscribe to a set of different events/hooks in Symfony                |
++-----------------------------------+---------------------------------------------------------------------------+
 | `monolog.logger`_                 | Logging with a custom logging channel                                     |
 +-----------------------------------+---------------------------------------------------------------------------+
 | `monolog.processor`_              | Add a custom processor for logging                                        |
@@ -47,6 +49,8 @@ the AsseticBundle has several tags that aren't listed here.
 | `translation.loader`_             | Register a custom service that loads translations                         |
 +-----------------------------------+---------------------------------------------------------------------------+
 | `twig.extension`_                 | Register a custom Twig Extension                                          |
++-----------------------------------+---------------------------------------------------------------------------+
+| `twig.loader`_                    | Register a custom service that loads Twig templates                       |
 +-----------------------------------+---------------------------------------------------------------------------+
 | `validator.constraint_validator`_ | Create your own custom validation constraint                              |
 +-----------------------------------+---------------------------------------------------------------------------+
@@ -93,7 +97,7 @@ the interface directly::
     class MyFormTypeExtension extends AbstractTypeExtension
     {
         // ... fill in whatever methods you want to override
-        // like buildForm(), buildView(), buildViewBottomUp(), getDefaultOptions() or getAllowedOptionValues()
+        // like buildForm(), buildView(), finishView(), setDefaultOptions()
     }
 
 In order for Symfony to know about your form extension and use it, give it
@@ -243,13 +247,15 @@ kernel.request
 +-------------------------------------------------------------------------------------------+-----------+
 | :class:`Symfony\\Component\\HttpKernel\\EventListener\\ProfilerListener`                  | 1024      |
 +-------------------------------------------------------------------------------------------+-----------+
-| :class:`Symfony\\Bundle\\FrameworkBundle\\EventListener\\RouterListener`                  | 0 and 255 |
-+-------------------------------------------------------------------------------------------+-----------+
 | :class:`Symfony\\Bundle\\FrameworkBundle\\EventListener\\TestSessionListener`             | 192       |
 +-------------------------------------------------------------------------------------------+-----------+
 | :class:`Symfony\\Bundle\\FrameworkBundle\\EventListener\\SessionListener`                 | 128       |
 +-------------------------------------------------------------------------------------------+-----------+
-| :class:`Symfony\\Component\\Security\\Http\\Firewall`                                     | 64        |
+| :class:`Symfony\\Component\\HttpKernel\\EventListener\\RouterListener`                    | 32        |
++-------------------------------------------------------------------------------------------+-----------+
+| :class:`Symfony\\Component\\HttpKernel\\EventListener\\LocaleListener`                    | 16        |
++-------------------------------------------------------------------------------------------+-----------+
+| :class:`Symfony\\Component\\Security\\Http\\Firewall`                                     | 8         |
 +-------------------------------------------------------------------------------------------+-----------+
 
 kernel.controller
@@ -279,6 +285,8 @@ kernel.response
 +-------------------------------------------------------------------------------------------+----------+
 | :class:`Symfony\\Bundle\\WebProfilerBundle\\EventListener\\WebDebugToolbarListener`       | -128     |
 +-------------------------------------------------------------------------------------------+----------+
+| :class:`Symfony\\Component\\HttpKernel\\EventListener\\StreamedResponseListener`          | -1024    |
++-------------------------------------------------------------------------------------------+----------+
 
 kernel.exception
 ................
@@ -290,6 +298,61 @@ kernel.exception
 +-------------------------------------------------------------------------------------------+----------+
 | :class:`Symfony\\Component\\HttpKernel\\EventListener\\ExceptionListener`                 | -128     |
 +-------------------------------------------------------------------------------------------+----------+
+
+kernel.terminate
+................
+
++-------------------------------------------------------------------------------------------+----------+
+| Listener Class Name                                                                       | Priority |
++-------------------------------------------------------------------------------------------+----------+
+| :class:`Symfony\\Bundle\\SwiftmailerBundle\\EventListener\\EmailSenderListener`           | 0        |
++-------------------------------------------------------------------------------------------+----------+
+
+.. _dic-tags-kernel-event-subscriber:
+
+kernel.event_subscriber
+-----------------------
+
+**Purpose**: To subscribe to a set of different events/hooks in Symfony
+
+.. versionadded:: 2.1
+   The ability to add kernel event subscribers is new to 2.1.
+
+To enable a custom subscriber, add it as a regular service in one of your
+configuration, and tag it with ``kernel.event_subscriber``:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        services:
+            kernel.subscriber.your_subscriber_name:
+                class: Fully\Qualified\Subscriber\Class\Name
+                tags:
+                    - { name: kernel.event_subscriber }
+
+    .. code-block:: xml
+
+        <service id="kernel.subscriber.your_subscriber_name" class="Fully\Qualified\Subscriber\Class\Name">
+            <tag name="kernel.event_subscriber" />
+        </service>
+
+    .. code-block:: php
+
+        $container
+            ->register('kernel.subscriber.your_subscriber_name', 'Fully\Qualified\Subscriber\Class\Name')
+            ->addTag('kernel.event_subscriber')
+        ;
+
+.. note::
+
+    Your service must implement the :class:`Symfony\\Component\\EventDispatcher\\EventSubscriberInterface`
+    interface.
+
+.. note::
+
+    If your service is created by a factory, you **MUST** correctly set the ``class``
+    parameter for this tag to work correctly.
 
 .. _dic_tags-monolog:
 
@@ -684,6 +747,39 @@ also have to be added as regular services:
             ->addTag('twig.extension')
         ;
 
+twig.loader
+-----------
+
+**Purpose**: Register a custom service that loads Twig templates
+
+By default, Symfony uses only one `Twig Loader`_ -
+:class:`Symfony\\Bundle\\TwigBundle\\Loader\\FilesystemLoader`. If you need
+to load Twig templates from another resource, you can create a service for
+the new loader and tag it with ``twig.loader``:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        services:
+            acme.demo_bundle.loader.some_twig_loader:
+                class: Acme\DemoBundle\Loader\SomeTwigLoader
+                tags:
+                    - { name: twig.loader }
+
+    .. code-block:: xml
+
+        <service id="acme.demo_bundle.loader.some_twig_loader" class="Acme\DemoBundle\Loader\SomeTwigLoader">
+            <tag name="twig.loader" />
+        </service>
+
+    .. code-block:: php
+
+        $container
+            ->register('acme.demo_bundle.loader.some_twig_loader', 'Acme\DemoBundle\Loader\SomeTwigLoader')
+            ->addTag('twig.loader')
+        ;
+
 validator.constraint_validator
 ------------------------------
 
@@ -712,5 +808,6 @@ For an example, see the ``EntityInitializer`` class inside the Doctrine Bridge.
 
 .. _`Twig's documentation`: http://twig.sensiolabs.org/doc/advanced.html#creating-an-extension
 .. _`Twig official extension repository`: https://github.com/fabpot/Twig-extensions
-.. _`KernelEvents`: https://github.com/symfony/symfony/blob/2.0/src/Symfony/Component/HttpKernel/KernelEvents.php
+.. _`KernelEvents`: https://github.com/symfony/symfony/blob/2.1/src/Symfony/Component/HttpKernel/KernelEvents.php
 .. _`SwiftMailer's Plugin Documentation`: http://swiftmailer.org/docs/plugins.html
+.. _`Twig Loader`: http://twig.sensiolabs.org/doc/api.html#loaders

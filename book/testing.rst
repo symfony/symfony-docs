@@ -17,7 +17,8 @@ it has its own excellent `documentation`_.
 
 .. note::
 
-    Symfony2 works with PHPUnit 3.5.11 or later.
+    Symfony2 works with PHPUnit 3.5.11 or later, though version 3.6.4 is
+    needed to test the Symfony core code itself.
 
 Each test - whether it's a unit test or a functional test - is a PHP class
 that should live in the `Tests/` subdirectory of your bundles. If you follow
@@ -436,13 +437,19 @@ HTTP layer. For a list of services available in your application, use the
 Accessing the Profiler Data
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-On each request, the Symfony profiler collects and stores a lot of data about
-the internal handling of that request. For example, the profiler could be
-used to verify that a given page executes less than a certain number of database
+On each request, you can enable the Symfony profiler to collect data about the
+internal handling of that request. For example, the profiler could be used to
+verify that a given page executes less than a certain number of database
 queries when loading.
 
 To get the Profiler for the last request, do the following::
 
+    // enable the profiler for the very next request
+    $client->enableProfiler();
+
+    $crawler = $client->request('GET', '/profiler');
+
+    // get the profile
     $profile = $client->getProfile();
 
 For specific details on using the profiler inside a test, see the
