@@ -7,19 +7,45 @@ How to Inject Variables into all Templates (i.e. Global Variables)
 Sometimes you want a variable to be accessible to all the templates you use.
 This is possible inside your ``app/config/config.yml`` file:
 
-.. code-block:: yaml
+.. configuration-block::
 
-    # app/config/config.yml
-    twig:
-        # ...
-        globals:
-            ga_tracking: UA-xxxxx-x
+    .. code-block:: yaml
+
+        # app/config/config.yml
+        twig:
+            # ...
+            globals:
+                ga_tracking: UA-xxxxx-x
+
+    .. code-block:: xml
+
+        <!-- app/config/config.xml -->
+        <twig:config ...>
+            <!-- ... -->
+            <twig:global key="ga_tracking">UA-xxxxx-x</twig:global>
+        </twig:config>
+
+    .. code-block:: php
+
+        // app/config/config.php
+        $container->loadFromExtension('twig', array(
+             ...,
+             'globals' => array(
+                 'ga_tracking' => 'UA-xxxxx-x',
+             ),
+        ));
 
 Now, the variable ``ga_tracking`` is available in all Twig templates:
 
-.. code-block:: html+jinja
+.. configuration-block::
 
-    <p>The google tracking code is: {{ ga_tracking }} </p>
+    .. code-block:: html+jinja
+
+        <p>The google tracking code is: {{ ga_tracking }}</p>
+
+    .. code-block:: html+php
+
+        <p>The google tracking code is: <?php echo $ga_tracking; ?></p>
 
 It's that easy! You can also take advantage of the built-in :ref:`book-service-container-parameters`
 system, which lets you isolate or reuse the value:
@@ -30,12 +56,30 @@ system, which lets you isolate or reuse the value:
     [parameters]
         ga_tracking: UA-xxxxx-x
 
-.. code-block:: yaml
+.. configuration-block::
 
-    # app/config/config.yml
-    twig:
-        globals:
-            ga_tracking: "%ga_tracking%"
+    .. code-block:: yaml
+
+        # app/config/config.yml
+        twig:
+            globals:
+                ga_tracking: "%ga_tracking%"
+
+    .. code-block:: xml
+
+        <!-- app/config/config.xml -->
+        <twig:config ...>
+            <twig:global key="ga_tracking">%ga_tracking%</twig:global>
+        </twig:config>
+
+    .. code-block:: php
+
+        // app/config/config.php
+        $container->loadFromExtension('twig', array(
+             'globals' => array(
+                 'ga_tracking' => '%ga_tracking%',
+             ),
+        ));
 
 The same variable is available exactly as before.
 
