@@ -92,7 +92,7 @@ If your valid choice list is simple, you can pass them in directly via the
             {
                 $metadata->addPropertyConstraint('gender', new Assert\Choice(array(
                     'choices' => array('male', 'female'),
-                    'message' => 'Choose a valid gender',
+                    'message' => 'Choose a valid gender.',
                 )));
             }
         }
