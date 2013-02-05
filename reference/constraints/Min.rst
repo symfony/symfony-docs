@@ -41,7 +41,7 @@ the following:
         class Participant
         {
             /**
-             * @Assert\Min(limit = "18", message = "You must be 18 or older to enter")
+             * @Assert\Min(limit = "18", message = "You must be 18 or older to enter.")
              */
              protected $age;
         }
@@ -53,7 +53,7 @@ the following:
             <property name="age">
                 <constraint name="Min">
                     <option name="limit">18</option>
-                    <option name="message">You must be 18 or older to enter</option>
+                    <option name="message">You must be 18 or older to enter.</option>
                 </constraint>
             </property>
         </class>
@@ -72,7 +72,7 @@ the following:
             {
                 $metadata->addPropertyConstraint('age', new Assert\Min(array(
                     'limit'   => '18',
-                    'message' => 'You must be 18 or older to enter',
+                    'message' => 'You must be 18 or older to enter.',
                 ));
             }
         }
