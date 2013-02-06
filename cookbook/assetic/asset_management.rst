@@ -339,7 +339,7 @@ the following change in your ``config_dev.yml`` file:
 
 .. note::
 
-You'll also have to remove the ```_assetic``` route in your ```app/config_dev.yml``` file.
+    You'll also have to remove the ``_assetic`` route in your ``app/config_dev.yml`` file.
 
 Next, since Symfony is no longer generating these assets for you, you'll
 need to dump them manually. To do so, run the following:
