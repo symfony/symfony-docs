@@ -996,7 +996,7 @@ steps:
   a specific convention;
 
 * Manage the user's locale, which is stored on the request, but can also
-  be set once the user's session.
+  be set on the user's session.
 
 .. _`i18n`: http://en.wikipedia.org/wiki/Internationalization_and_localization
 .. _`L10n`: http://en.wikipedia.org/wiki/Internationalization_and_localization
