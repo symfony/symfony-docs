@@ -179,8 +179,26 @@ application configuration file with the following code.
         # app/config/security.yml
         security:
             access_decision_manager:
-                # Strategy can be: affirmative, unanimous or consensus
+                # strategy can be: affirmative, unanimous or consensus
                 strategy: unanimous
+
+    .. code-block:: xml
+
+        <!-- app/config/security.xml -->
+        <config>
+            <!-- strategy can be: affirmative, unanimous or consensus -->
+            <access-decision-manager strategy="unanimous">
+        </config>
+
+    .. code-block:: php
+
+        // app/config/security.xml
+        $container->loadFromExtension('security', array(
+            // strategy can be: affirmative, unanimous or consensus
+            'access_decision_manager' => array(
+                'strategy' => 'unanimous',
+            ),
+        ));
 
 That's it! Now, when deciding whether or not a user should have access,
 the new voter will deny access to any user in the list of blacklisted IPs.
