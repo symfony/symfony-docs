@@ -313,7 +313,7 @@ First, enable form login under your firewall:
             <config>
                 <firewall name="secured_area" pattern="^/">
                     <anonymous />
-                    <form-login login_path="/login" check_path="/login_check" />
+                    <form-login login_path="login" check_path="login_check" />
                 </firewall>
             </config>
         </srv:container>
@@ -327,8 +327,8 @@ First, enable form login under your firewall:
                     'pattern' => '^/',
                     'anonymous' => array(),
                     'form_login' => array(
-                        'login_path' => '/login',
-                        'check_path' => '/login_check',
+                        'login_path' => 'login',
+                        'check_path' => 'login_check',
                     ),
                 ),
             ),
@@ -558,7 +558,7 @@ see :doc:`/cookbook/security/form_login`.
 
     **1. Create the correct routes**
 
-    First, be sure that you've defined the ``/login`` and ``/login_check``
+    First, be sure that you've defined the ``login`` and ``login_check``
     routes correctly and that they correspond to the ``login_path`` and
     ``check_path`` config values. A misconfiguration here can mean that you're
     redirected to a 404 page instead of the login page, or that submitting
