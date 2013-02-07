@@ -78,6 +78,23 @@ have a ``Symfony/`` directory that looks like this:
 
         $ php bin/vendors install
 
+All public files and the frontcontroller that handles incoming requests in
+a Symfony2 application live in the ``Symfony/web/`` directory. So, assuming
+you unpacked the archive into your webserver's or virtual host's document root
+your application's URLs will start with ``http://localhost/Symfony/web/``.
+To get nice and short URLs you should point the document root of your
+webserver or virtual host to the ``Symfony/web/`` directory. In that
+case, your URLs will look like ``http://localhost/config.php`` or
+``http://site.local/config.php``, if you created a virtual host to a
+local domain called, for example, ``site.local``. For information on configuring
+your specific web server document root, see the following
+documentation: `Apache`_ | `Nginx`_ .
+
+.. note::
+
+    The following examples assume you don't touch the document root settings
+    so all URLs start with ``http://localhost/Symfony/web/``
+
 Checking the Configuration
 --------------------------
 
@@ -88,23 +105,6 @@ URL to see the diagnostics for your machine:
 .. code-block:: text
 
     http://localhost/Symfony/web/config.php
-
-.. note::
-
-    All of the example URLs assume that you've downloaded and unzipped ``Symfony``
-    directly into the web server web root. If you've followed the directions
-    above and done this, then add ``/Symfony/web`` after ``localhost`` for all
-    the URLs you see:
-
-    .. code-block:: text
-
-        http://localhost/Symfony/web/config.php
-
-    To get nice and short urls you should point the document root of your
-    webserver or virtual host to the ``Symfony/web/`` directory. In that
-    case, your URLs will look like ``http://localhost/config.php`` or
-    ``http://site.local/config.php``, if you created a virtual host to a
-    local domain called, for example, ``site.local``.
 
 If there are any outstanding issues listed, correct them. You might also tweak
 your configuration by following any given recommendations. When everything is
