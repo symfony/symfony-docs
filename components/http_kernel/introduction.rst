@@ -562,11 +562,12 @@ a built-in ControllerResolver that can be used to create a working example::
     use Symfony\Component\Routing\RequestContext;
 
     $routes = new RouteCollection();
-    $routes->add('hello', new Route('/hello/{name}', array('_controller' =>
-        function (Request $request) {
-            return new Response(sprintf("Hello %s", $request->get('name')));
-        }
-    )));
+    $routes->add('hello', new Route('/hello/{name}', array(
+            '_controller' => function (Request $request) {
+                return new Response(sprintf("Hello %s", $request->get('name')));
+            }
+        ),
+    ));
 
     $request = Request::createFromGlobals();
 

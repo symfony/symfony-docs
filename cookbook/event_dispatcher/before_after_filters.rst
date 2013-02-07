@@ -174,7 +174,10 @@ your listener to be called just before any controller is executed.
         use Symfony\Component\DependencyInjection\Definition;
 
         $listener = new Definition('Acme\DemoBundle\EventListener\TokenListener', array('%tokens%'));
-        $listener->addTag('kernel.event_listener', array('event' => 'kernel.controller', 'method' => 'onKernelController'));
+        $listener->addTag('kernel.event_listener', array(
+            'event'  => 'kernel.controller',
+            'method' => 'onKernelController'
+        ));
         $container->setDefinition('demo.tokens.action_listener', $listener);
 
 With this configuration, your ``TokenListener`` ``onKernelController`` method
@@ -268,8 +271,14 @@ event:
         use Symfony\Component\DependencyInjection\Definition;
 
         $listener = new Definition('Acme\DemoBundle\EventListener\TokenListener', array('%tokens%'));
-        $listener->addTag('kernel.event_listener', array('event' => 'kernel.controller', 'method' => 'onKernelController'));
-        $listener->addTag('kernel.event_listener', array('event' => 'kernel.response', 'method' => 'onKernelResponse'));
+        $listener->addTag('kernel.event_listener', array(
+            'event'  => 'kernel.controller',
+            'method' => 'onKernelController'
+        ));
+        $listener->addTag('kernel.event_listener', array(
+            'event'  => 'kernel.response',
+            'method' => 'onKernelResponse'
+        ));
         $container->setDefinition('demo.tokens.action_listener', $listener);
 
 That's it! The ``TokenListener`` is now notified before every controller is

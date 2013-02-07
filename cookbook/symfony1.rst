@@ -149,7 +149,7 @@ namespace in the ``vendor/bundle`` directory:
     $loader->registerNamespaces(array(
         // ...
 
-        'Sensio'           => __DIR__.'/../vendor/bundles',
+        'Sensio' => __DIR__.'/../vendor/bundles',
     ));
 
 If the file did *not* live at this exact location, you'd receive a
@@ -240,7 +240,8 @@ class::
     // config/ProjectConfiguration.class.php
     public function setup()
     {
-        $this->enableAllPluginsExcept(array(... some plugins here));
+        // some plugins here
+        $this->enableAllPluginsExcept(array(...));
     }
 
 In Symfony2, the bundles are activated inside the application kernel::

@@ -376,7 +376,7 @@ right content and headers. A JSON response might look like this::
 
     $response = new Response();
     $response->setContent(json_encode(array(
-        'data' => 123
+        'data' => 123,
     )));
     $response->headers->set('Content-Type', 'application/json');
 

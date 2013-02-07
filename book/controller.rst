@@ -437,7 +437,7 @@ object that's returned from that controller::
     {
         $response = $this->forward('AcmeHelloBundle:Hello:fancy', array(
             'name'  => $name,
-            'color' => 'green'
+            'color' => 'green',
         ));
 
         // ... further modify the response or return it directly

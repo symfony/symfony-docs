@@ -32,9 +32,9 @@ as integration of other related components:
     .. code-block:: php
 
         $container->loadFromExtension('framework', array(
-            // ...
-            'form'            => true,
-            // ...
+            ...,
+            'form' => true,
+            ...,
         ));
 
 When you create a bundle, you have two choices on how to handle configuration:
@@ -225,7 +225,7 @@ The array passed to your ``load()`` method will look like this::
         array(
             'foo' => 'fooValue',
             'bar' => 'barValue',
-        )
+        ),
     )
 
 Notice that this is an *array of arrays*, not just a single flat array of the
@@ -394,7 +394,7 @@ configuration value:
         // app/config/config.php
         $container->loadFromExtension('acme_hello', array(
             'my_type' => 'foo',
-            // ...
+            ...,
         ));
 
 Global Parameters

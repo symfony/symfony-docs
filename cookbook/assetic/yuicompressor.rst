@@ -89,7 +89,8 @@ the view layer, this work is done in your templates:
 
         <?php foreach ($view['assetic']->javascripts(
             array('@AcmeFooBundle/Resources/public/js/*'),
-            array('yui_js')) as $url): ?>
+            array('yui_js')
+        ) as $url): ?>
             <script src="<?php echo $view->escape($url) ?>"></script>
         <?php endforeach; ?>
 
@@ -116,7 +117,8 @@ can be repeated to minify your stylesheets.
 
         <?php foreach ($view['assetic']->stylesheets(
             array('@AcmeFooBundle/Resources/public/css/*'),
-            array('yui_css')) as $url): ?>
+            array('yui_css')
+        ) as $url): ?>
             <link rel="stylesheet" type="text/css" media="screen" href="<?php echo $view->escape($url) ?>" />
         <?php endforeach; ?>
 
@@ -141,7 +143,8 @@ apply this filter when debug mode is off.
 
         <?php foreach ($view['assetic']->javascripts(
             array('@AcmeFooBundle/Resources/public/js/*'),
-            array('?yui_js')) as $url): ?>
+            array('?yui_js')
+        ) as $url): ?>
             <script src="<?php echo $view->escape($url) ?>"></script>
         <?php endforeach; ?>
 

@@ -52,7 +52,7 @@ In order to use the spool, use the following configuration:
             'spool' => array(
                 'type' => 'file',
                 'path' => '/path/to/spool',
-            )
+            ),
         ));
 
 .. tip::

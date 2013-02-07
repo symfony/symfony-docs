@@ -98,10 +98,10 @@ authentication (i.e. the old-school username/password box):
         $container->loadFromExtension('security', array(
             'firewalls' => array(
                 'secured_area' => array(
-                    'pattern' => '^/',
-                    'anonymous' => array(),
+                    'pattern'    => '^/',
+                    'anonymous'  => array(),
                     'http_basic' => array(
-                        'realm' => 'Secured Demo Area',
+                        'realm'  => 'Secured Demo Area',
                     ),
                 ),
             ),
@@ -111,8 +111,8 @@ authentication (i.e. the old-school username/password box):
             'providers' => array(
                 'in_memory' => array(
                     'users' => array(
-                        'ryan' => array('password' => 'ryanpass', 'roles' => 'ROLE_USER'),
-                        'admin' => array('password' => 'kitten', 'roles' => 'ROLE_ADMIN'),
+                        'ryan'  => array('password' => 'ryanpass', 'roles' => 'ROLE_USER'),
+                        'admin' => array('password' => 'kitten', 'roles'   => 'ROLE_ADMIN'),
                     ),
                 ),
             ),
@@ -319,8 +319,8 @@ First, enable form login under your firewall:
         $container->loadFromExtension('security', array(
             'firewalls' => array(
                 'secured_area' => array(
-                    'pattern' => '^/',
-                    'anonymous' => array(),
+                    'pattern'    => '^/',
+                    'anonymous'  => array(),
                     'form_login' => array(
                         'login_path' => '/login',
                         'check_path' => '/login_check',
@@ -634,11 +634,11 @@ see :doc:`/cookbook/security/form_login`.
 
             'firewalls' => array(
                 'login_firewall' => array(
-                    'pattern' => '^/login$',
+                    'pattern'   => '^/login$',
                     'anonymous' => array(),
                 ),
                 'secured_area' => array(
-                    'pattern' => '^/',
+                    'pattern'    => '^/',
                     'form_login' => array(),
                 ),
             ),
@@ -719,7 +719,7 @@ You can define as many URL patterns as you need - each is a regular expression.
 
         // app/config/security.php
         $container->loadFromExtension('security', array(
-            // ...
+            ...,
             'access_control' => array(
                 array('path' => '^/admin/users', 'role' => 'ROLE_SUPER_ADMIN'),
                 array('path' => '^/admin', 'role' => 'ROLE_ADMIN'),
@@ -1068,12 +1068,12 @@ In fact, you've seen this already in the example in this chapter.
 
         // app/config/security.php
         $container->loadFromExtension('security', array(
-            // ...
+            ...,
             'providers' => array(
                 'default_provider' => array(
                     'users' => array(
-                        'ryan' => array('password' => 'ryanpass', 'roles' => 'ROLE_USER'),
-                        'admin' => array('password' => 'kitten', 'roles' => 'ROLE_ADMIN'),
+                        'ryan'  => array('password' => 'ryanpass', 'roles' => 'ROLE_USER'),
+                        'admin' => array('password' => 'kitten', 'roles'   => 'ROLE_ADMIN'),
                     ),
                 ),
             ),
@@ -1249,7 +1249,7 @@ do the following:
             'providers' => array(
                 'in_memory' => array(
                     'users' => array(
-                        'ryan' => array('password' => 'bb87a29949f3a1ee0559f8a57357487151281386', 'roles' => 'ROLE_USER'),
+                        'ryan'  => array('password' => 'bb87a29949f3a1ee0559f8a57357487151281386', 'roles' => 'ROLE_USER'),
                         'admin' => array('password' => '74913f5cd5f61ec0bcfdb775414c2fb3d161b620', 'roles' => 'ROLE_ADMIN'),
                     ),
                 ),
@@ -1298,8 +1298,7 @@ configure the encoder for that user:
 
         // app/config/security.php
         $container->loadFromExtension('security', array(
-            // ...
-
+            ...,
             'encoders' => array(
                 'Acme\UserBundle\Entity\User' => 'sha512',
             ),
@@ -1499,10 +1498,10 @@ the first provider is always used:
         $container->loadFromExtension('security', array(
             'firewalls' => array(
                 'secured_area' => array(
-                    // ...
+                    ...,
                     'provider' => 'user_db',
                     'http_basic' => array(
-                        // ...
+                        ...,
                         'provider' => 'in_memory',
                     ),
                     'form_login' => array(),
@@ -1613,7 +1612,7 @@ the firewall can handle this automatically for you when you activate the
         $container->loadFromExtension('security', array(
             'firewalls' => array(
                 'secured_area' => array(
-                    // ...
+                    ...,
                     'logout' => array('path' => 'logout', 'target' => '/'),
                 ),
             ),
@@ -1768,7 +1767,7 @@ done by activating the ``switch_user`` firewall listener:
         $container->loadFromExtension('security', array(
             'firewalls' => array(
                 'main'=> array(
-                    // ...
+                    ...,
                     'switch_user' => true
                 ),
             ),
@@ -1802,7 +1801,11 @@ to show a link to exit impersonation:
     .. code-block:: html+php
 
         <?php if ($view['security']->isGranted('ROLE_PREVIOUS_ADMIN')): ?>
-            <a href="<?php echo $view['router']->generate('homepage', array('_switch_user' => '_exit') ?>">Exit impersonation</a>
+            <a
+                href="<?php echo $view['router']->generate('homepage', array('_switch_user' => '_exit') ?>"
+            >
+                Exit impersonation
+            </a>
         <?php endif; ?>
 
 Of course, this feature needs to be made available to a small group of users.

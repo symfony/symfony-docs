@@ -45,12 +45,14 @@ are shown here:
         // app/config/security.php
         $container->loadFromExtension('security', array(
             'firewalls' => array(
-                'main' => array('remember_me' => array(
-                    'key'      => '%secret%',
-                    'lifetime' => 31536000, // 365 days in seconds
-                    'path'     => '/',
-                    'domain'   => '', // Defaults to the current domain from $_SERVER
-                )),
+                'main' => array(
+                    'remember_me' => array(
+                        'key'      => '%secret%',
+                        'lifetime' => 31536000, // 365 days in seconds
+                        'path'     => '/',
+                        'domain'   => '', // Defaults to the current domain from $_SERVER
+                    ),
+                ),
             ),
         ));
 
