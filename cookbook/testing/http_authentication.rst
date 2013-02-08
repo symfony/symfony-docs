@@ -34,3 +34,23 @@ key in your firewall, along with the ``form_login`` key:
             firewalls:
                 your_firewall_name:
                     http_basic:
+
+    .. code-block:: xml
+
+        <!-- app/config/config_test.xml -->
+        <security:config>
+            <firewall name="your_firewall_name">
+              <http-basic />
+           </firewall>
+        </security:config>
+
+    .. code-block:: php
+
+        // app/config/config_test.php
+        $container->loadFromExtension('security', array(
+            'firewalls' => array(
+                'your_firewall_name' => array(
+                    'http-basic' => array(),
+                ),
+            ),
+        ));
