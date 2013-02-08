@@ -51,6 +51,20 @@ In the development configuration file, change the ``transport`` setting to
 
 You're done!
 
+.. tip::
+
+    If you are using the Symfony Standard Edition, configure the parameters at ``parameters.yml``:
+
+    .. code-block:: yaml
+
+        # app/config/parameters.yml
+        parameters:
+            ...
+            mailer_transport: gmail
+            mailer_host:      ~
+            mailer_user:      your_gmail_username
+            mailer_password:  your_gmail_password
+
 .. note::
 
     The ``gmail`` transport is simply a shortcut that uses the ``smtp`` transport
