@@ -140,6 +140,7 @@ focus on the most important methods that come from the
         {
             return serialize(array(
                 $this->id,
+                $this->username,
             ));
         }
 
@@ -150,6 +151,7 @@ focus on the most important methods that come from the
         {
             list (
                 $this->id,
+                $this->username,
             ) = unserialize($serialized);
         }
     }
