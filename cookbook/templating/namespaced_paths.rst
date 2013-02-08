@@ -13,7 +13,6 @@ format (see :ref:`template-naming-locations`).
 Twig also natively offers a feature called "namespaced paths", and support
 is built-in automatically for all of your bundles.
 
-
 Take the following paths as an example:
 
 .. code-block:: jinja
@@ -55,25 +54,23 @@ directory:
     .. code-block:: xml
 
         <!-- app/config/config.xml -->
-
         <?xml version="1.0" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
                    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                    xmlns:twig="http://symfony.com/schema/dic/twig"
-                >
+        >
 
             <twig:config debug="%kernel.debug%" strict-variables="%kernel.debug%">
                 <twig:path namespace="foo_bar">%kernel.root_dir%/../vendor/acme/foo-bar/templates</twig:path>
             </twig:config>
         </container>
 
-
     .. code-block:: php
 
         // app/config/config.php
         $container->loadFromExtension('twig', array(
             'paths' => array(
-                '%kernel.root_dir%/../vendor/acme/foo-bar/templates' => 'foo_bar'
+                '%kernel.root_dir%/../vendor/acme/foo-bar/templates' => 'foo_bar',
             );
         ));
 
