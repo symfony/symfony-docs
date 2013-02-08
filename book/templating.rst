@@ -376,6 +376,11 @@ When working with template inheritance, here are some tips to keep in mind:
 Template Naming and Locations
 -----------------------------
 
+.. versionadded:: 2.2
+    Namespaced path support was added in 2.2, allowing for template names
+    like ``@AcmeDemoBundle/layout.html.twig``. See :doc:`/cookbook/templating/namespaced_paths`
+    for more details.
+
 By default, templates can live in two different locations:
 
 * ``app/Resources/views/``: The applications ``views`` directory can contain
