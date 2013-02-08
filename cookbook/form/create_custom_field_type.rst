@@ -104,26 +104,45 @@ is "expanded" (i.e. radio buttons or checkboxes, instead of a select field),
 you want to always render it in a ``ul`` element. In your form theme template
 (see above link for details), create a ``gender_widget`` block to handle this:
 
-.. code-block:: html+jinja
+.. configuration-block::
 
-    {# src/Acme/DemoBundle/Resources/views/Form/fields.html.twig #}
-    {% block gender_widget %}
-        {% spaceless %}
-            {% if expanded %}
-                <ul {{ block('widget_container_attributes') }}>
-                {% for child in form %}
-                    <li>
-                        {{ form_widget(child) }}
-                        {{ form_label(child) }}
-                    </li>
-                {% endfor %}
-                </ul>
-            {% else %}
-                {# just let the choice widget render the select tag #}
-                {{ block('choice_widget') }}
-            {% endif %}
-        {% endspaceless %}
-    {% endblock %}
+    .. code-block:: html+jinja
+
+        {# src/Acme/DemoBundle/Resources/views/Form/fields.html.twig #}
+        {% block gender_widget %}
+            {% spaceless %}
+                {% if expanded %}
+                    <ul {{ block('widget_container_attributes') }}>
+                    {% for child in form %}
+                        <li>
+                            {{ form_widget(child) }}
+                            {{ form_label(child) }}
+                        </li>
+                    {% endfor %}
+                    </ul>
+                {% else %}
+                    {# just let the choice widget render the select tag #}
+                    {{ block('choice_widget') }}
+                {% endif %}
+            {% endspaceless %}
+        {% endblock %}
+
+    .. code-block:: html+php
+
+        <!-- src/Acme/DemoBundle/Resources/views/Form/gender_widget.html.twig -->
+        <?php if ($expanded) : ?>
+            <ul <?php $view['slots']->output('widget_container_attributes') ?>>
+            <?php foreach ($form as $child) : ?>
+                <li>
+                    <?php echo $view['form']->widget($child) ?>
+                    <?php echo $view['form']->label($child) ?>
+                </li>
+            <?php endforeach ?>
+            </ul>
+        <?php else : ?>
+            <!-- just let the choice widget render the select tag -->
+            <?php echo $view['form']->renderBlock('choice_widget') ?>
+        <?php endif ?>
 
 .. note::
 
@@ -132,13 +151,35 @@ you want to always render it in a ``ul`` element. In your form theme template
     Further, the main config file should point to the custom form template
     so that it's used when rendering all forms.
 
-    .. code-block:: yaml
+    .. configuration-block::
 
-        # app/config/config.yml
-        twig:
-            form:
-                resources:
-                    - 'AcmeDemoBundle:Form:fields.html.twig'
+        .. code-block:: yaml
+
+            # app/config/config.yml
+            twig:
+                form:
+                    resources:
+                        - 'AcmeDemoBundle:Form:fields.html.twig'
+
+        .. code-block:: xml
+
+            <!-- app/config/config.xml -->
+            <twig:config>
+                <twig:form>
+                    <twig:resource>AcmeDemoBundle:Form:fields.html.twig</twig:resource>
+                </twig:form>
+            </twig:config>
+
+        .. code-block:: php
+
+            // app/config/config.php
+            $container->loadFromExtension('twig', array(
+                'form' => array(
+                    'resources' => array(
+                        'AcmeDemoBundle:Form:fields.html.twig',
+                    ),
+                ),
+            ));
 
 Using the Field Type
 --------------------
@@ -194,6 +235,12 @@ example, suppose that you're storing the gender parameters in configuration:
             </parameter>
         </parameters>
 
+    .. code-block:: php
+
+        // app/config/config.php
+        $container->setParameter('genders.m', 'Male');
+        $container->setParameter('genders.f', 'Female');
+
 To use the parameter, define your custom field type as a service, injecting
 the ``genders`` parameter value as the first argument to its to-be-created
 ``__construct`` function:
@@ -219,6 +266,21 @@ the ``genders`` parameter value as the first argument to its to-be-created
             <tag name="form.type" alias="gender" />
         </service>
 
+    .. code-block:: php
+
+        // src/Acme/DemoBundle/Resources/config/services.php
+        use Symfony\Component\DependencyInjection\Definition;
+
+        $container
+            ->setDefinition('acme_demo.form.type.gender', new Definition(
+                'Acme\DemoBundle\Form\Type\GenderType',
+                array('%genders%')
+            ))
+            ->addTag('form.type', array(
+                'alias' => 'gender',
+            ))
+        ;
+
 .. tip::
 
     Make sure the services file is being imported. See :ref:`service-container-imports-directive`
@@ -231,8 +293,8 @@ method to ``GenderType``, which receives the gender configuration::
 
     // src/Acme/DemoBundle/Form/Type/GenderType.php
     namespace Acme\DemoBundle\Form\Type;
-    // ...
 
+    // ...
     class GenderType extends AbstractType
     {
         private $genderChoices;
