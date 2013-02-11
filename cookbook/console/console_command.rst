@@ -112,7 +112,7 @@ should be used instead of :class:`Symfony\\Component\\Console\\Application`::
 
 To be able to use the fully set up service container for your console tests
 you can extend your test from
-:class:`Symfony\Bundle\FrameworkBundle\Test\WebTestCase`::
+:class:`Symfony\\Bundle\\FrameworkBundle\\Test\\WebTestCase`::
 
     use Symfony\Component\Console\Tester\CommandTester;
     use Symfony\Bundle\FrameworkBundle\Console\Application;
