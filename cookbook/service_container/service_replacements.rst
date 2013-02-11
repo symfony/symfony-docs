@@ -44,3 +44,7 @@ implementation (``yoursbundle.my.service``) instead.
 
     If old service was tagged, the tags will be removed, you have to properly
     tag yours definition to behave correctly, as replacement.
+
+Old service will be still accessible witch changed ID, by default changed
+ID will have ``.orig`` suffix, but you can change it for some completely
+different, by setting ``renameTo`` argument on tag.
