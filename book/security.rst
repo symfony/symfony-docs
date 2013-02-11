@@ -409,12 +409,11 @@ submission (i.e.  ``/login_check``):
     to this URL.
 
 .. versionadded:: 2.1
-    As of Symfony 2.1, you *must* have routes configured for your ``login_path``
-    (e.g. ``/login``), ``check_path`` (e.g. ``/login_check``) and ``logout``
-    (e.g. ``/logout`` - see `Logging Out`_) URLs.
+    As of Symfony 2.1, you *must* have routes configured for your ``login_path``,
+    ``check_path`` ``logout`` keys. These keys can be route names (as shown
+    in this example) or URLs that have routes configured for them.
 
-Notice that the name of the ``login`` route isn't important. What's important
-is that the URL of the route (``/login``) matches the ``login_path`` config
+Notice that the name of the ``login`` route matches the``login_path`` config
 value, as that's where the security system will redirect users that need
 to login.
 
@@ -1667,7 +1666,7 @@ the firewall can handle this automatically for you when you activate the
             'firewalls' => array(
                 'secured_area' => array(
                     // ...
-                    'logout' => array('path' => 'logout', 'target' => '/'),
+                    'logout' => array('path' => '/logout', 'target' => '/'),
                 ),
             ),
             // ...
