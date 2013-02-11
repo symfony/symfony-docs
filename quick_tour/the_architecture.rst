@@ -140,14 +140,16 @@ PHP. Have a look at the default configuration:
         #esi:             ~
         #translator:      { fallback: "%locale%" }
         secret:          "%secret%"
-        router:          { resource: "%kernel.root_dir%/config/routing.yml" }
+        router:
+            resource: "%kernel.root_dir%/config/routing.yml"
+            strict_requirements: "%kernel.debug%"
         form:            true
         csrf_protection: true
         validation:      { enable_annotations: true }
         templating:      { engines: ['twig'] } #assets_version: SomeVersionScheme
         default_locale:  "%locale%"
-        session:
-            auto_start:     true
+        trusted_proxies: ~
+        session:         ~
 
     # Twig Configuration
     twig:
@@ -159,13 +161,13 @@ PHP. Have a look at the default configuration:
         debug:          "%kernel.debug%"
         use_controller: false
         bundles:        [ ]
-        # java: /usr/bin/java
+        #java: /usr/bin/java
         filters:
             cssrewrite: ~
-            # closure:
-            #     jar: "%kernel.root_dir%/java/compiler.jar"
-            # yui_css:
-            #     jar: "%kernel.root_dir%/java/yuicompressor-2.4.2.jar"
+            #closure:
+            #    jar: "%kernel.root_dir%/Resources/java/compiler.jar"
+            #yui_css:
+            #    jar: "%kernel.root_dir%/Resources/java/yuicompressor-2.4.7.jar"
 
     # Doctrine Configuration
     doctrine:
@@ -188,10 +190,7 @@ PHP. Have a look at the default configuration:
         host:      "%mailer_host%"
         username:  "%mailer_user%"
         password:  "%mailer_password%"
-
-    jms_security_extra:
-        secure_controllers:  true
-        secure_all_services: false
+        spool:     { type: memory }
 
 Each entry like ``framework`` defines the configuration for a specific bundle.
 For example, ``framework`` configures the ``FrameworkBundle`` while ``swiftmailer``
