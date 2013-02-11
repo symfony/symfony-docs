@@ -443,6 +443,14 @@ property, instead of the actual filename::
                 return;
             }
 
+            // check if we have an old image
+            if (isset($this->temp)) {
+                // delete the old image
+                unlink($this->temp);
+                // clear the temp image path
+                $this->temp = null;
+            }
+
             // you must throw an exception here if the file cannot be moved
             // so that the entity is not persisted to the database
             // which the UploadedFile move() method does
@@ -452,14 +460,6 @@ property, instead of the actual filename::
             );
 
             unset($this->file);
-
-            // check if we have an old image
-            if (isset($this->temp)) {
-                // delete the old image
-                unlink($this->temp);
-                // clear the temp image path
-                $this->temp = null;
-            }
         }
 
         /**
