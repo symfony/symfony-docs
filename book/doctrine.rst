@@ -111,6 +111,44 @@ for you:
         [mysqld]
         collation-server = utf8_general_ci
         character-set-server = utf8
+        
+.. note::
+    
+    If you want to use SQLite as your database, you need to set the path
+    where your database file should be stored:
+    
+    .. configuration-block::
+    
+        .. code-block:: yaml
+
+            # app/config/config.yml
+            doctrine:
+                dbal:
+                    driver: pdo_sqlite
+                    path: "%kernel.root_dir%/sqlite.db"
+                    charset: UTF8
+                    
+        .. code-block:: xml
+        
+            <!-- app/config/config.xml -->
+            <doctrine:config
+                driver="pdo_sqlite"
+                path="%kernel.root_dir%/sqlite.db"
+                charset="UTF-8"
+            >
+                <!-- ... -->
+            </doctrine:config>
+            
+        .. code-block:: php
+        
+            // app/config/config.php
+            $container->loadFromExtension('doctrine', array(
+                'dbal' => array(
+                    'driver'  => 'pdo_sqlite',
+                    'path'    => '%kernel.root_dir%/sqlite.db',
+                    'charset' => 'UTF-8',
+                ),
+            ));
 
 Creating an Entity Class
 ~~~~~~~~~~~~~~~~~~~~~~~~
