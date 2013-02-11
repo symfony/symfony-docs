@@ -1,8 +1,8 @@
 .. index::
    single: Console; Single command application
 
-How to build an Application that is a single Command
-====================================================
+Building a Single Command Application
+=====================================
 
 When building a command line tool, you may not need to provide several commands.
 In such case, having to pass the command name each time is tedious. Fortunately,
