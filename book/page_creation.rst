@@ -802,8 +802,7 @@ options of each feature.
     three formats (YAML, XML and PHP). Each has its own advantages and
     disadvantages. The choice of which to use is up to you:
 
-    * *YAML*: Simple, clean and readable (learn more about yaml in
-    * ":doc:`/components/yaml/yaml_format`");
+    * *YAML*: Simple, clean and readable (learn more about yaml in ":doc:`/components/yaml/yaml_format`");
 
     * *XML*: More powerful than YAML at times and supports IDE autocompletion;
 
