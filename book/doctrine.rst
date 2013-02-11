@@ -86,7 +86,7 @@ for you:
 
     $ php app/console doctrine:database:create
 
-.. sidebar:: Setting Up The Database to be UTF8
+.. sidebar:: Setting Up The Database
 
     One mistake even seasoned developers make when starting a Symfony2 project
     is forgetting to setup default charset and collation on their database,
@@ -111,45 +111,6 @@ for you:
         [mysqld]
         collation-server = utf8_general_ci
         character-set-server = utf8
-        
-Using SQLite
-~~~~~~~~~~~~
-    
-If you want to use SQLite as your database, you need to set the path
-where your database file should be stored:
-
-.. configuration-block::
-
-    .. code-block:: yaml
-
-        # app/config/config.yml
-        doctrine:
-            dbal:
-                driver: pdo_sqlite
-                path: "%kernel.root_dir%/sqlite.db"
-                charset: UTF8
-
-    .. code-block:: xml
-
-        <!-- app/config/config.xml -->
-        <doctrine:config
-            driver="pdo_sqlite"
-            path="%kernel.root_dir%/sqlite.db"
-            charset="UTF-8"
-        >
-            <!-- ... -->
-        </doctrine:config>
-
-    .. code-block:: php
-
-        // app/config/config.php
-        $container->loadFromExtension('doctrine', array(
-            'dbal' => array(
-                'driver'  => 'pdo_sqlite',
-                'path'    => '%kernel.root_dir%/sqlite.db',
-                'charset' => 'UTF-8',
-            ),
-        ));
 
 Creating an Entity Class
 ~~~~~~~~~~~~~~~~~~~~~~~~
@@ -179,7 +140,7 @@ just a simple PHP class.
 .. tip::
 
     Once you learn the concepts behind Doctrine, you can have Doctrine create
-    simple entity classes for you:
+    this entity class for you:
 
     .. code-block:: bash
 
@@ -351,12 +312,6 @@ This command makes sure that all of the getters and setters are generated
 for the ``Product`` class. This is a safe command - you can run it over and
 over again: it only generates getters and setters that don't exist (i.e. it
 doesn't replace your existing methods).
-
-.. caution::
-
-    Keep in mind that Doctrine's entity generator produces simple getters/setters. 
-    You should check generated entities and adjust getter/setter logic to your own 
-    needs.
 
 .. sidebar:: More about ``doctrine:generate:entities``
 
@@ -1447,6 +1402,16 @@ Some notable or interesting tasks include:
    the ``DoctrineFixturesBundle`` bundle installed. To learn how to do it,
    read the ":doc:`/bundles/DoctrineFixturesBundle/index`" entry of the
    documentation.
+
+.. tip::
+
+    This page shows working with Doctrine within a controller. You may also
+    want to work with Doctrine elsewhere in your application. The
+    :method:`Symfony\\Bundle\\FrameworkBundle\\Controller\\Controller::getDoctrine`
+    method of the controller returns the ``doctrine`` service, you can work with
+    this in the same way elsewhere by injecting this into your own
+    services. See :doc:`/book/service_container` for more on creating
+    your own services.
 
 Summary
 -------
