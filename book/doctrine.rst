@@ -86,7 +86,7 @@ for you:
 
     $ php app/console doctrine:database:create
 
-.. sidebar:: Setting Up The Database
+.. sidebar:: Setting Up The Database to be UTF8
 
     One mistake even seasoned developers make when starting a Symfony2 project
     is forgetting to setup default charset and collation on their database,
@@ -112,43 +112,44 @@ for you:
         collation-server = utf8_general_ci
         character-set-server = utf8
         
-.. note::
+Using SQLite
+~~~~~~~~~~~~
     
-    If you want to use SQLite as your database, you need to set the path
-    where your database file should be stored:
-    
-    .. configuration-block::
-    
-        .. code-block:: yaml
+If you want to use SQLite as your database, you need to set the path
+where your database file should be stored:
 
-            # app/config/config.yml
-            doctrine:
-                dbal:
-                    driver: pdo_sqlite
-                    path: "%kernel.root_dir%/sqlite.db"
-                    charset: UTF8
-                    
-        .. code-block:: xml
-        
-            <!-- app/config/config.xml -->
-            <doctrine:config
-                driver="pdo_sqlite"
-                path="%kernel.root_dir%/sqlite.db"
-                charset="UTF-8"
-            >
-                <!-- ... -->
-            </doctrine:config>
-            
-        .. code-block:: php
-        
-            // app/config/config.php
-            $container->loadFromExtension('doctrine', array(
-                'dbal' => array(
-                    'driver'  => 'pdo_sqlite',
-                    'path'    => '%kernel.root_dir%/sqlite.db',
-                    'charset' => 'UTF-8',
-                ),
-            ));
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # app/config/config.yml
+        doctrine:
+            dbal:
+                driver: pdo_sqlite
+                path: "%kernel.root_dir%/sqlite.db"
+                charset: UTF8
+
+    .. code-block:: xml
+
+        <!-- app/config/config.xml -->
+        <doctrine:config
+            driver="pdo_sqlite"
+            path="%kernel.root_dir%/sqlite.db"
+            charset="UTF-8"
+        >
+            <!-- ... -->
+        </doctrine:config>
+
+    .. code-block:: php
+
+        // app/config/config.php
+        $container->loadFromExtension('doctrine', array(
+            'dbal' => array(
+                'driver'  => 'pdo_sqlite',
+                'path'    => '%kernel.root_dir%/sqlite.db',
+                'charset' => 'UTF-8',
+            ),
+        ));
 
 Creating an Entity Class
 ~~~~~~~~~~~~~~~~~~~~~~~~
