@@ -1,11 +1,11 @@
 .. index::
-   single: Config; Define and process configuration values
+   single: Config; Defining and processing configuration values
 
-Define and process configuration values
-=======================================
+Defining and processing configuration values
+============================================
 
-Validate configuration values
------------------------------
+Validating configuration values
+-------------------------------
 
 After loading configuration values from all kinds of resources, the values
 and their structure can be validated using the "Definition" part of the Config
@@ -38,8 +38,8 @@ they are when first encountered. Also, some keys are only available when
 another key has a specific value (in the sample configuration above: the
 ``memory`` key only makes sense when the ``driver`` is ``sqlite``).
 
-Define a hierarchy of configuration values using the TreeBuilder
-----------------------------------------------------------------
+Defining a hierarchy of configuration values using the TreeBuilder
+------------------------------------------------------------------
 
 All the rules concerning configuration values can be defined using the
 :class:`Symfony\\Component\\Config\\Definition\\Builder\\TreeBuilder`.
@@ -66,8 +66,8 @@ should be returned from a custom ``Configuration`` class which implements the
         }
     }
 
-Add node definitions to the tree
---------------------------------
+Adding node definitions to the tree
+-----------------------------------
 
 Variable nodes
 ~~~~~~~~~~~~~~
