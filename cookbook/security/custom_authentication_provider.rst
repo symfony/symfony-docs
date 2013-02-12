@@ -219,6 +219,11 @@ the ``PasswordDigest`` header value matches with the user's password.
 
         protected function validateDigest($digest, $nonce, $created, $secret)
         {
+            // Check created time is not in the future
+            if (strtotime($created) > time()) {
+                return false;
+            }
+
             // Expire timestamp after 5 minutes
             if (time() - strtotime($created) > 300) {
                 return false;
