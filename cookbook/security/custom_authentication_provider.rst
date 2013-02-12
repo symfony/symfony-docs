@@ -220,7 +220,7 @@ the ``PasswordDigest`` header value matches with the user's password.
         protected function validateDigest($digest, $nonce, $created, $secret)
         {
             // Expire timestamp after 5 minutes
-            if (abs(time() - strtotime($created)) > 300) {
+            if (time() - strtotime($created) > 300) {
                 return false;
             }
 
