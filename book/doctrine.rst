@@ -1407,7 +1407,7 @@ without any arguments:
 
     $ php app/console
 
-A list of available command will print out, many of which start with the
+A list of available commands will print out, many of which start with the
 ``doctrine:`` prefix. You can find out more information about any of these
 commands (or any Symfony command) by running the ``help`` command. For example,
 to get details about the ``doctrine:database:create`` task, run:
