@@ -21,3 +21,11 @@ Full Default Configuration
 
             # gives you the opportunity to look at the collected data before following the redirect
             intercept_redirects: false
+
+    .. code-block:: xml
+
+        <web-profiler:config
+            toolbar="false"
+            verbose="true"
+            intercept_redirects="false"
+        />
