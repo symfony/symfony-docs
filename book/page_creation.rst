@@ -831,7 +831,7 @@ options of each feature.
     disadvantages. The choice of which to use is up to you:
 
     * *YAML*: Simple, clean and readable (learn more about yaml in
-    * ":doc:`/components/yaml/yaml_format`");
+      ":doc:`/components/yaml/yaml_format`");
 
     * *XML*: More powerful than YAML at times and supports IDE autocompletion;
 
