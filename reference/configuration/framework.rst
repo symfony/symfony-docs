@@ -377,27 +377,33 @@ Full Default Configuration
     .. code-block:: yaml
 
         framework:
-
-            # general configuration
+            charset:              ~
+            secret:               ~
             trust_proxy_headers:  false
-            secret:               ~ # Required
+            trusted_proxies:      []
             ide:                  ~
             test:                 ~
             default_locale:       en
 
             # form configuration
             form:
-                enabled:              true
+                enabled:              false
             csrf_protection:
-                enabled:              true
+                enabled:              false
                 field_name:           _token
 
             # esi configuration
             esi:
-                enabled:              true
+                enabled:              false
+
+            # fragments configuration
+            fragments:
+                enabled:              false
+                path:                 /_fragment
 
             # profiler configuration
             profiler:
+                enabled:              false
                 only_exceptions:      false
                 only_master_requests:  false
                 dsn:                  file:%kernel.cache_dir%/profiler
@@ -417,11 +423,17 @@ Full Default Configuration
                 type:                 ~
                 http_port:            80
                 https_port:           443
-                # if false, an empty URL will be generated if a route is missing required parameters
-                strict_requirements:  %kernel.debug%
+
+                # set to true to throw an exception when a parameter does not match the requirements
+                # set to false to disable exceptions when a parameter does not match the requirements (and return null instead)
+                # set to null to disable parameter checks against requirements
+                # 'true' is the preferred configuration in development mode, while 'false' or 'null' might be preferred in production
+                strict_requirements:  true
 
             # session configuration
             session:
+
+                # DEPRECATED! Session starts on demand
                 auto_start:           false
                 storage_id:           session.storage.native
                 handler_id:           session.handler.native_file
@@ -472,8 +484,8 @@ Full Default Configuration
                 loaders:              []
                 packages:
 
-                    # A collection of named packages
-                    some_package_name:
+                    # Prototype
+                    name:
                         version:              ~
                         version_format:       %%s?%%s
                         base_urls:
@@ -482,20 +494,22 @@ Full Default Configuration
 
             # translator configuration
             translator:
-                enabled:              true
+                enabled:              false
                 fallback:             en
 
             # validation configuration
             validation:
-                enabled:              true
+                enabled:              false
                 cache:                ~
                 enable_annotations:   false
+                translation_domain:   validators
 
             # annotation configuration
             annotations:
                 cache:                file
-                file_cache_dir:       "%kernel.cache_dir%/annotations"
-                debug:                true
+                file_cache_dir:       %kernel.cache_dir%/annotations
+                debug:                %kernel.debug%
+
 
 .. _`protocol-relative`: http://tools.ietf.org/html/rfc3986#section-4.2
 .. _`sprintf()`: http://php.net/manual/en/function.sprintf.php
