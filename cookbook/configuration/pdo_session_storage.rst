@@ -82,7 +82,8 @@ configuration format of your choice):
         $container->loadFromExtension('framework', array(
             // ...
             'session' => array(
-                ...,
+                // ...
+
                 'storage_id' => 'session.storage.pdo',
             ),
         ));

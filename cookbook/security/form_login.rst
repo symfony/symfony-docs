@@ -67,7 +67,8 @@ the following config:
         $container->loadFromExtension('security', array(
             'firewalls' => array(
                 'main' => array('form_login' => array(
-                    ...,
+                    // ...
+
                     'default_target_path' => '/admin',
                 )),
             ),
@@ -111,7 +112,8 @@ of what URL they had requested previously by setting the
         $container->loadFromExtension('security', array(
             'firewalls' => array(
                 'main' => array('form_login' => array(
-                    ...,
+                    // ...
+
                     'always_use_default_target_path' => true,
                 )),
             ),
@@ -153,7 +155,8 @@ this by setting ``use_referer`` to true (it defaults to false):
         $container->loadFromExtension('security', array(
             'firewalls' => array(
                 'main' => array('form_login' => array(
-                    ...,
+                    // ...
+
                     'use_referer' => true,
                 )),
             ),
@@ -282,7 +285,8 @@ following config:
         $container->loadFromExtension('security', array(
             'firewalls' => array(
                 'main' => array('form_login' => array(
-                    ...,
+                    // ...
+
                     'failure_path' => login_failure,
                 )),
             ),

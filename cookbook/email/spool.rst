@@ -47,7 +47,8 @@ In order to use the spool, use the following configuration:
 
         // app/config/config.php
         $container->loadFromExtension('swiftmailer', array(
-             ...,
+             // ...
+
             'spool' => array(
                 'type' => 'file',
                 'path' => '/path/to/spool',

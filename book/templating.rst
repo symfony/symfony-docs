@@ -1021,7 +1021,8 @@ configuration file:
 
         // app/config/config.php
         $container->loadFromExtension('framework', array(
-            ...,
+            // ...
+
             'templating' => array(
                 'engines' => array('twig'),
             ),
