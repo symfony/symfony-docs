@@ -131,7 +131,7 @@ you want to always render it in a ``ul`` element. In your form theme template
 
         <!-- src/Acme/DemoBundle/Resources/views/Form/gender_widget.html.twig -->
         <?php if ($expanded) : ?>
-            <ul <?php $view['slots']->output('widget_container_attributes') ?>>
+            <ul <?php $view['form']->block($form, 'widget_container_attributes') ?>>
             <?php foreach ($form as $child) : ?>
                 <li>
                     <?php echo $view['form']->widget($child) ?>

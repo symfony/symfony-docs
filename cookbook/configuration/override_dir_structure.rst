@@ -117,7 +117,7 @@ may need to modify the paths inside these files::
             <!-- app/config/config.xml -->
 
             <!-- ... -->
-            <assetic:config read_from="%kernel.root_dir%/../../public_html" />
+            <assetic:config read-from="%kernel.root_dir%/../../public_html" />
 
         .. code-block:: php
 

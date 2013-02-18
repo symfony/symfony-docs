@@ -29,7 +29,7 @@ This is possible inside your ``app/config/config.yml`` file:
 
         // app/config/config.php
         $container->loadFromExtension('twig', array(
-             ...,
+             // ...
              'globals' => array(
                  'ga_tracking' => 'UA-xxxxx-x',
              ),
@@ -37,15 +37,9 @@ This is possible inside your ``app/config/config.yml`` file:
 
 Now, the variable ``ga_tracking`` is available in all Twig templates:
 
-.. configuration-block::
+.. code-block:: html+jinja
 
-    .. code-block:: html+jinja
-
-        <p>The google tracking code is: {{ ga_tracking }}</p>
-
-    .. code-block:: html+php
-
-        <p>The google tracking code is: <?php echo $ga_tracking; ?></p>
+    <p>The google tracking code is: {{ ga_tracking }}</p>
 
 It's that easy! You can also take advantage of the built-in :ref:`book-service-container-parameters`
 system, which lets you isolate or reuse the value:

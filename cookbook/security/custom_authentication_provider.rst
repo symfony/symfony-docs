@@ -499,10 +499,9 @@ You are finished! You can now define parts of your app as under WSSE protection.
     .. code-block:: xml
 
         <config>
-            <firewall name="wsse_secured"
-                pattern="/api/.*"
-                wsse="true"
-            />
+            <firewall name="wsse_secured" pattern="/api/.*">
+                <wsse />
+            </firewall>
         </config>
 
     .. code-block:: php

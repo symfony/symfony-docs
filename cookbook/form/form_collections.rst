@@ -471,7 +471,7 @@ into new ``Tag`` objects and added to the ``tags`` property of the ``Task`` obje
                     <!-- ... -->
                     <one-to-many field="tags" target-entity="Tag">
                         <cascade>
-                            <cascade-persists />
+                            <cascade-persist />
                         </cascade>
                     </one-to-many>
                 </entity>

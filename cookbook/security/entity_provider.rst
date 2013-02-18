@@ -268,10 +268,9 @@ then be checked against your User entity records in the database:
                 <entity class="AcmeUserBundle:User" property="username" />
             </provider>
 
-            <firewall name="admin_area"
-                pattern="^/admin"
-                http_basic
-            />
+            <firewall name="admin_area" pattern="^/admin">
+                <http-basic />
+            </firewall>
 
             <rule path="^/admin" role="ROLE_ADMIN" />
         </config>

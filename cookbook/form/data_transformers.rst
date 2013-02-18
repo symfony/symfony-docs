@@ -293,7 +293,7 @@ it's recognized as a custom field type:
 
         $container
             ->setDefinition('acme_demo.type.issue_selector', array(
-                '@doctrine.orm.entity_manager'
+                new Reference('doctrine.orm.entity_manager'),
             ))
             ->addTag('form.type', array(
                 'alias' => 'issue_selector',
