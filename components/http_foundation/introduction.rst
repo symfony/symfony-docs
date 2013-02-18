@@ -115,19 +115,19 @@ methods to retrieve and update its data:
 The :class:`Symfony\\Component\\HttpFoundation\\ParameterBag` instance also
 has some methods to filter the input values:
 
-* :method:`Symfony\\Component\\HttpFoundation\\Request::getAlpha`: Returns
+* :method:`Symfony\\Component\\HttpFoundation\\ParameterBag::getAlpha`: Returns
   the alphabetic characters of the parameter value;
 
-* :method:`Symfony\\Component\\HttpFoundation\\Request::getAlnum`: Returns
+* :method:`Symfony\\Component\\HttpFoundation\\ParameterBag::getAlnum`: Returns
   the alphabetic characters and digits of the parameter value;
 
-* :method:`Symfony\\Component\\HttpFoundation\\Request::getDigits`: Returns
+* :method:`Symfony\\Component\\HttpFoundation\\ParameterBag::getDigits`: Returns
   the digits of the parameter value;
 
-* :method:`Symfony\\Component\\HttpFoundation\\Request::getInt`: Returns the
+* :method:`Symfony\\Component\\HttpFoundation\\ParameterBag::getInt`: Returns the
   parameter value converted to integer;
 
-* :method:`Symfony\\Component\\HttpFoundation\\Request::filter`: Filters the
+* :method:`Symfony\\Component\\HttpFoundation\\ParameterBag::filter`: Filters the
   parameter by using the PHP ``filter_var()`` function.
 
 All getters takes up to three arguments: the first one is the parameter name
