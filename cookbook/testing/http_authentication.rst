@@ -39,9 +39,9 @@ key in your firewall, along with the ``form_login`` key:
 
         <!-- app/config/config_test.xml -->
         <security:config>
-            <firewall name="your_firewall_name">
-              <http-basic />
-           </firewall>
+            <security:firewall name="your_firewall_name">
+              <security:http-basic />
+           </security:firewall>
         </security:config>
 
     .. code-block:: php
@@ -50,7 +50,7 @@ key in your firewall, along with the ``form_login`` key:
         $container->loadFromExtension('security', array(
             'firewalls' => array(
                 'your_firewall_name' => array(
-                    'http-basic' => array(),
+                    'http_basic' => array(),
                 ),
             ),
         ));
