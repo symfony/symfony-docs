@@ -270,11 +270,18 @@ Redirecting after Login
 * ``target_path_parameter`` (type: ``string``, default: ``_target_path``)
 * ``use_referer`` (type: ``Boolean``, default: ``false``)
 
+.. _reference-security-pbkdf2:
+
 Using the PBKDF2 encoder: security and speed
 --------------------------------------------
 
+.. versionadded:: 2.2
+    The PBKDF2 password encoder was added in Symfony 2.2.
+
 The `PBKDF2`_ encoder provides a high level of Cryptographic security, as
 recommended by the National Institute of Standards and Technology (NIST).
+
+You can see an example of the ``pbkdf2`` encoder in the YAML block on this page.
 
 But using PBKDF2 also warrants a warning: using it (with a high number
 of iterations) slows down the process. Thus, PBKDF2 should be used with
@@ -283,7 +290,72 @@ caution and care.
 A good configuration lies around at least 1000 iterations and sha512
 for the hash algorithm.
 
-.. _`PBKDF2`: http://en.wikipedia.org/wiki/PBKDF2
+.. _reference-security-bcrypt:
+
+Using the BCrypt Password Encoder
+---------------------------------
+
+.. versionadded:: 2.2
+    The BCrypt password encoder was added in Symfony 2.2.
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # app/config/security.yml
+        security:
+            # ...
+            encoders:
+                Symfony\Component\Security\Core\User\User:
+                    algorithm: bcrypt
+                    cost:      15
+
+    .. code-block:: xml
+
+        <!-- app/config/security.xml -->
+        <config>
+            <!-- ... -->
+            <encoder
+                class="Symfony\Component\Security\Core\User\User"
+                algorithm="bcrypt"
+                cost="15"
+            />
+        </config>
+
+    .. code-block:: php
+
+        // app/config/security.php
+        $container->loadFromExtension('security', array(
+            // ...
+            'encoders' => array(
+                'Symfony\Component\Security\Core\User\User' => array(
+                    'algorithm' => 'bcrypt',
+                    'cost'      => 15,
+                ),
+            ),
+        ));
+
+The ``cost`` can be in the range of ``4-31`` and determines how long a password
+will be encoded. Each increment of ``cost`` *doubles* the time it takes to
+encode a password.
+
+If you don't provide the ``cost`` option, the default cost of ``13`` is used.
+
+.. note::
+
+    You can change the cost at any time — even if you already have some
+    passwords encoded using a different cost. New passwords will be encoded
+    using the new cost, while the already encoded ones will be validated
+    using a cost that was used back when they were encoded.
+
+A salt for each new password is generated automatically and need not be
+persisted. Since an encoded password contains the salt used to encode it,
+persisting the encoded password alone is enough.
+
+.. note::
+
+    All the encoded passwords are ``60`` characters long, so make sure to
+    allocate enough space for them to be persisted.
 
 HTTP-Digest Authentication
 --------------------------
@@ -325,3 +397,4 @@ To use HTTP-Digest authentication you need to provide a realm and a key:
            ),
       ));
 
+.. _`PBKDF2`: http://en.wikipedia.org/wiki/PBKDF2

@@ -1336,72 +1336,8 @@ that the hashed password can't be decoded (i.e. you can't determine the password
 from the hashed password).
 
 .. versionadded:: 2.2
-    As of Symfony 2.2 you can also use the PBKDF2 password encoder.
-
-Using the BCrypt Password Encoder
-.................................
-
-.. versionadded:: 2.2
-    The BCrypt password encoder was added in Symfony 2.2.
-
-.. configuration-block::
-
-    .. code-block:: yaml
-
-        # app/config/security.yml
-        security:
-            # ...
-            encoders:
-                Symfony\Component\Security\Core\User\User:
-                    algorithm: bcrypt
-                    cost:      15
-
-    .. code-block:: xml
-
-        <!-- app/config/security.xml -->
-        <config>
-            <!-- ... -->
-            <encoder
-                class="Symfony\Component\Security\Core\User\User"
-                algorithm="bcrypt"
-                cost="15"
-            />
-        </config>
-
-    .. code-block:: php
-
-        // app/config/security.php
-        $container->loadFromExtension('security', array(
-            // ...
-            'encoders' => array(
-                'Symfony\Component\Security\Core\User\User' => array(
-                    'algorithm' => 'bcrypt',
-                    'cost'      => 15,
-                ),
-            ),
-        ));
-
-``cost`` can be in the range of ``4-31`` and determines how long a password
-will be encoded. Each increment of ``cost`` *doubles* the time it takes to
-encode a password.
-
-If you don't provide the ``cost`` option, the default cost of ``13`` is used.
-
-.. note::
-
-    You can change the cost at any time — even if you already have some
-    passwords encoded using a different cost. New passwords will be encoded
-    using the new cost, while the already encoded ones will be validated
-    using a cost that was used back when they were encoded.
-
-A salt for each new password is generated automatically and need not be
-persisted. Since an encoded password contains the salt used to encode it,
-persisting the encoded password alone is enough.
-
-.. note::
-
-    All the encoded passwords are ``60`` characters long, so make sure to
-    allocate enough space for them to be persisted.
+    As of Symfony 2.2 you can also use the :ref:`PBKDF2<reference-security-pbkdf2>`
+    and :ref:`BCrypt<reference-security-bcrypt>` password encoders.
 
 Determining the Hashed Password
 ...............................
