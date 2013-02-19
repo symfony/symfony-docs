@@ -1,8 +1,23 @@
 .. index::
    single: Forms; Twig form function reference
 
-Twig Template Form Function Reference
-=====================================
+Twig Template Form Function and Variable Reference
+==================================================
+
+When working with forms in a template, there are two powerful things at your
+disposal:
+
+* :ref:`Functions<reference-form-twig-functions>` for rendering each part of a form
+* :ref:`Variables<twig-reference-form-variables>` for getting *any* information about any field
+
+You'll use functions often to render your fields. Variables, on the other
+hand, are less commonly-used, but infinitely powerful since you can access
+a fields label, id attribute, errors, and anything else about the field.
+
+.. _reference-form-twig-functions:
+
+Form Rendering Functions
+------------------------
 
 This reference manual covers all the possible Twig functions available for
 rendering forms. There are several different functions available, and each
@@ -114,8 +129,10 @@ good idea to include this in your form tag:
 
 .. _`twig-reference-form-variables`:
 
-More about Form "Variables"
----------------------------
+More about Form Variables
+-------------------------
+
+For a full list of variables, see: :ref:`reference-form-twig-variables`.
 
 In almost every Twig function above, the final argument is an array of "variables"
 that are used when rendering that one part of the form. For example, the
@@ -173,5 +190,47 @@ to see what options you have available.
 
         {# does **not** work - the variables are not recursive #}
         {{ form_widget(form, { 'attr': {'class': 'foo'} }) }}
+
+.. _reference-form-twig-variables:
+
+Form Variables Reference
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+The following variables are common to every field type. Certain field types
+may have even more variables and some variables here only really apply to
+certain types.
+
++-----------------+-----------------------------------------------------------------------------------------+
+| Variable        | Usage                                                                                   |
++=================+=========================================================================================+
+| ``id``          | The ``id`` HTML attribute to be rendered                                                |
++-----------------+-----------------------------------------------------------------------------------------+
+| ``name``        | The name of the field (e.g. ``title``) - but not the ``name``                           |
+|                 | HTML attribute, which is ``full_name``                                                  |
++-----------------+-----------------------------------------------------------------------------------------+
+| ``full_name``   | The ``name`` HTML attribute to be rendered                                              |
++-----------------+-----------------------------------------------------------------------------------------+
+| ``errors``      | An array of any errors attached to *this* specific field (e.g. ``form.title.errors``).  |
+|                 | Note that you can't use ``form.errors`` to determine if a form is valid,                |
+|                 | since this only returns "global" errors: some individual fields may have errors         |
++-----------------+-----------------------------------------------------------------------------------------+
+| ``value``       | The value that will be used when rendering (commonly the ``value`` HTML attribute)      |
++-----------------+-----------------------------------------------------------------------------------------+
+| ``read_only``   | If ``true``, ``disabled="disabled"`` is added to the field                              |
++-----------------+-----------------------------------------------------------------------------------------+
+| ``required``    | If ``true``, a ``required`` attribute is added to the field to activate HTML5           |
+|                 | validation. Additionally, a ``required`` class is added to the label.                   |
++-----------------+-----------------------------------------------------------------------------------------+
+| ``max_length``  | Adds a ``maxlength`` HTML attribute to the element                                      |
++-----------------+-----------------------------------------------------------------------------------------+
+| ``pattern``     | Adds a ``pattern`` HTML attribute to the element                                        |
++-----------------+-----------------------------------------------------------------------------------------+
+| ``label``       | The string label that will be rendered                                                  |
++-----------------+-----------------------------------------------------------------------------------------+
+| ``multipart``   | If ``true``, ``form_enctype`` will render ``enctype="multipart/form-data"``.            |
+|                 | This only applies to the parent form element.                                           |
++-----------------+-----------------------------------------------------------------------------------------+
+| ``attr``        | A key-value array that will be rendered as HTML attributes on the field                 |
++-----------------+-----------------------------------------------------------------------------------------+
 
 .. _`form_div_layout.html.twig`: https://github.com/symfony/symfony/blob/2.0/src/Symfony/Bridge/Twig/Resources/views/Form/form_div_layout.html.twig
