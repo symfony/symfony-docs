@@ -21,7 +21,7 @@ as integration of other related components:
 
         framework:
             # ...
-            form:            true
+            form: true
 
     .. code-block:: xml
 
@@ -33,7 +33,7 @@ as integration of other related components:
 
         $container->loadFromExtension('framework', array(
             // ...
-            'form'            => true,
+            'form' => true,
             // ...
         ));
 
