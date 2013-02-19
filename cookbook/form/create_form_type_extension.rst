@@ -112,14 +112,19 @@ tag:
 
     .. code-block:: xml
 
-        <service id="acme_demo_bundle.image_type_extension" class="Acme\DemoBundle\Form\Extension\ImageTypeExtension">
+        <service id="acme_demo_bundle.image_type_extension"
+            class="Acme\DemoBundle\Form\Extension\ImageTypeExtension"
+        >
             <tag name="form.type_extension" alias="file" />
         </service>
 
     .. code-block:: php
 
         $container
-            ->register('acme_demo_bundle.image_type_extension', 'Acme\DemoBundle\Form\Extension\ImageTypeExtension')
+            ->register(
+                'acme_demo_bundle.image_type_extension',
+                'Acme\DemoBundle\Form\Extension\ImageTypeExtension'
+            )
             ->addTag('form.type_extension', array('alias' => 'file'));
 
 The ``alias`` key of the tag is the type of field that this extension should
@@ -219,8 +224,8 @@ it in the view::
         /**
          * Store the image_path option as a builder attribute
          *
-         * @param \Symfony\Component\Form\FormBuilder $builder
-         * @param array $options
+         * @param FormBuilder $builder
+         * @param array       $options
          */
         public function buildForm(FormBuilder $builder, array $options)
         {
@@ -232,8 +237,8 @@ it in the view::
         /**
          * Pass the image url to the view
          *
-         * @param \Symfony\Component\Form\FormView $view
-         * @param \Symfony\Component\Form\FormInterface $form
+         * @param FormView      $view
+         * @param FormInterface $form
          */
         public function buildView(FormView $view, FormInterface $form)
         {

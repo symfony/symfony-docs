@@ -62,16 +62,44 @@ information. By convention, this information is usually configured in an
     The parameters defined in that file are referenced by the main configuration
     file when setting up Doctrine:
 
-    .. code-block:: yaml
+    .. configuration-block::
 
-        # app/config/config.yml
-        doctrine:
-            dbal:
-                driver:   "%database_driver%"
-                host:     "%database_host%"
-                dbname:   "%database_name%"
-                user:     "%database_user%"
-                password: "%database_password%"
+        .. code-block:: yaml
+
+            # app/config/config.yml
+            doctrine:
+                dbal:
+                    driver:   "%database_driver%"
+                    host:     "%database_host%"
+                    dbname:   "%database_name%"
+                    user:     "%database_user%"
+                    password: "%database_password%"
+
+        .. code-block:: xml
+
+            <!-- app/config/config.xml -->
+            <doctrine:config>
+                <doctrine:dbal
+                    driver="%database_driver%"
+                    host="%database_host%"
+                    dbname="%database_name%"
+                    user="%database_user%"
+                    password="%database_password%"
+                >
+            </doctrine:config>
+
+        .. code-block:: php
+        
+            // app/config/config.php
+            $configuration->loadFromExtension('doctrine', array(
+                'dbal' => array(
+                    'driver'   => '%database_driver%',
+                    'host'     => '%database_host%',
+                    'dbname'   => '%database_name%',
+                    'user'     => '%database_user%',
+                    'password' => '%database_password%',
+                ),
+            ));
 
     By separating the database information into a separate file, you can
     easily keep different versions of the file on each server. You can also
@@ -909,6 +937,24 @@ To relate the ``Category`` and ``Product`` entities, start by creating a
                     mappedBy: category
             # don't forget to init the collection in entity __construct() method
 
+    .. code-block:: xml
+
+        <!-- src/Acme/StoreBundle/Resources/config/doctrine/Category.orm.xml -->
+        <doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
+                            http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+
+            <entity name="Acme\StoreBundle\Entity\Category">
+                <!-- ... -->
+                <one-to-many field="products"
+                    target-entity="product"
+                    mapped-by="category"
+                />
+
+                <!-- don't forget to init the collection in entity __construct() method -->
+            </entity>
+        </doctrine-mapping>
 
 First, since a ``Category`` object will relate to many ``Product`` objects,
 a ``products`` array property is added to hold those ``Product`` objects.
@@ -965,6 +1011,28 @@ object, you'll want to add a ``$category`` property to the ``Product`` class:
                     joinColumn:
                         name: category_id
                         referencedColumnName: id
+
+    .. code-block:: xml
+
+        <!-- src/Acme/StoreBundle/Resources/config/doctrine/Product.orm.xml -->
+        <doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
+                            http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+
+            <entity name="Acme\StoreBundle\Entity\Product">
+                <!-- ... -->
+                <many-to-one field="category"
+                    target-entity="products"
+                    join-column="category"
+                >
+                    <join-column
+                        name="category_id"
+                        referenced-column-name="id"
+                    />
+                </many-to-one>
+            </entity>
+        </doctrine-mapping>
 
 Finally, now that you've added a new property to both the ``Category`` and
 ``Product`` classes, tell Doctrine to generate the missing getter and setter
@@ -1386,6 +1454,21 @@ and ``nullable``. Take a few examples:
                 column: email_address
                 length: 150
                 unique: true
+
+    .. code-block:: xml
+
+        <!--
+            A string field length 255 that cannot be null
+            (reflecting the default values for the "length" and *nullable* options)
+            type attribute is necessary in yaml definitions
+        -->
+        <field name="name" type="string" />
+        <field name="email"
+            type="string"
+            column="email_address"
+            length="150"
+            unique="true"
+        />
 
 .. note::
 

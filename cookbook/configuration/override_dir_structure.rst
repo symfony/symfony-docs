@@ -101,14 +101,33 @@ may need to modify the paths inside these files::
     If you use the AsseticBundle you need to configure this, so it can use
     the correct ``web`` directory:
 
-    .. code-block:: yaml
+    .. configuration-block::
 
-        # app/config/config.yml
+        .. code-block:: yaml
 
-        # ...
-        assetic:
+            # app/config/config.yml
+
             # ...
-            read_from: "%kernel.root_dir%/../../public_html"
+            assetic:
+                # ...
+                read_from: "%kernel.root_dir%/../../public_html"
+
+        .. code-block:: xml
+
+            <!-- app/config/config.xml -->
+
+            <!-- ... -->
+            <assetic:config read-from="%kernel.root_dir%/../../public_html" />
+
+        .. code-block:: php
+
+            // app/config/config.php
+
+            // ...
+            $container->loadFromExtension('assetic', array(
+                // ...
+                'read_from' => '%kernel.root_dir%/../../public_html',
+            ));
 
     Now you just need to dump the assets again and your application should
     work:

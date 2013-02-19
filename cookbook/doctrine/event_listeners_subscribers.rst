@@ -77,6 +77,44 @@ managers that use this connection.
             </services>
         </container>
 
+    .. code-block:: php
+
+        use Symfony\Component\DependencyInjection\Definition;
+
+        $container->loadFromExtension('doctrine', array(
+            'dbal' => array(
+                'default_connection' => 'default',
+                'connections' => array(
+                    'default' => array(
+                        'driver' => 'pdo_sqlite',
+                        'memory' => true,
+                    ),
+                ),
+            ),
+        ));
+
+        $container
+            ->setDefinition(
+                'my.listener',
+                new Definition('Acme\SearchBundle\EventListener\SearchIndexer')
+            )
+            ->addTag('doctrine.event_listener', array('event' => 'postPersist'))
+        ;
+        $container
+            ->setDefinition(
+                'my.listener2',
+                new Definition('Acme\SearchBundle\EventListener\SearchIndexer2')
+            )
+            ->addTag('doctrine.event_listener', array('event' => 'postPersist', 'connection' => 'default'))
+        ;
+        $container
+            ->setDefinition(
+                'my.subscriber',
+                new Definition('Acme\SearchBundle\EventListener\SearchIndexerSubscriber')
+            )
+            ->addTag('doctrine.event_subscriber', array('connection' => 'default'))
+        ;
+
 Creating the Listener Class
 ---------------------------
 
@@ -99,7 +137,7 @@ a ``postPersist`` method, which will be called when the event is thrown::
 
             // perhaps you only want to act on some "Product" entity
             if ($entity instanceof Product) {
-                // do something with the Product
+                // ... do something with the Product
             }
         }
     }
