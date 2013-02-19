@@ -113,10 +113,10 @@ for you:
         [mysqld]
         collation-server = utf8_general_ci
         character-set-server = utf8
-        
+
 Using SQLite
 ~~~~~~~~~~~~
-    
+
 If you want to use SQLite as your database, you need to set the path
 where your database file should be stored:
 
@@ -356,8 +356,8 @@ doesn't replace your existing methods).
 
 .. caution::
 
-    Keep in mind that Doctrine's entity generator produces simple getters/setters. 
-    You should check generated entities and adjust getter/setter logic to your own 
+    Keep in mind that Doctrine's entity generator produces simple getters/setters.
+    You should check generated entities and adjust getter/setter logic to your own
     needs.
 
 .. sidebar:: More about ``doctrine:generate:entities``
@@ -1444,6 +1444,16 @@ Some notable or interesting tasks include:
    the ``DoctrineFixturesBundle`` bundle installed. To learn how to do it,
    read the ":doc:`/bundles/DoctrineFixturesBundle/index`" entry of the
    documentation.
+
+.. tip::
+
+    This page shows working with Doctrine within a controller. You may also
+    want to work with Doctrine elsewhere in your application. The
+    :method:`Symfony\\Bundle\\FrameworkBundle\\Controller\\Controller::getDoctrine`
+    method of the controller returns the ``doctrine`` service, you can work with
+    this in the same way elsewhere by injecting this into your own
+    services. See :doc:`/book/service_container` for more on creating
+    your own services.
 
 Summary
 -------
