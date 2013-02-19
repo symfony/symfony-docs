@@ -618,7 +618,7 @@ header value::
             return $response;
         }
 
-        // ... do more work to populate the response will the full content
+        // ... do more work to populate the response with the full content
 
         return $response;
     }
