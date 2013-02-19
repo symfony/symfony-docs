@@ -296,8 +296,8 @@ First, enable form login under your firewall:
                     pattern:    ^/
                     anonymous: ~
                     form_login:
-                        login_path:  /login
-                        check_path:  /login_check
+                        login_path:  login
+                        check_path:  login_check
 
     .. code-block:: xml
 
@@ -313,7 +313,7 @@ First, enable form login under your firewall:
             <config>
                 <firewall name="secured_area" pattern="^/">
                     <anonymous />
-                    <form-login login_path="/login" check_path="/login_check" />
+                    <form-login login_path="login" check_path="login_check" />
                 </firewall>
             </config>
         </srv:container>
@@ -327,8 +327,8 @@ First, enable form login under your firewall:
                     'pattern' => '^/',
                     'anonymous' => array(),
                     'form_login' => array(
-                        'login_path' => '/login',
-                        'check_path' => '/login_check',
+                        'login_path' => 'login',
+                        'check_path' => 'login_check',
                     ),
                 ),
             ),
@@ -355,10 +355,11 @@ First, enable form login under your firewall:
             'form_login' => array(),
 
 Now, when the security system initiates the authentication process, it will
-redirect the user to the login form (``/login`` by default). Implementing
-this login form visually is your job. First, create two routes: one that
-will display the login form (i.e. ``/login``) and one that will handle the
-login form submission (i.e. ``/login_check``):
+redirect the user to the login form (``/login`` by default). Implementing this
+login form visually is your job. First, the create two routes we used in the
+security configuration: the ``login`` route will display the login form (i.e.
+``/login``) and the ``login_check`` route will handle the login form
+submission (i.e.  ``/login_check``):
 
 .. configuration-block::
 
@@ -408,12 +409,11 @@ login form submission (i.e. ``/login_check``):
     to this URL.
 
 .. versionadded:: 2.1
-    As of Symfony 2.1, you *must* have routes configured for your ``login_path``
-    (e.g. ``/login``), ``check_path`` (e.g. ``/login_check``) and ``logout``
-    (e.g. ``/logout`` - see `Logging Out`_) URLs.
+    As of Symfony 2.1, you *must* have routes configured for your ``login_path``,
+    ``check_path`` ``logout`` keys. These keys can be route names (as shown
+    in this example) or URLs that have routes configured for them.
 
-Notice that the name of the ``login`` route isn't important. What's important
-is that the URL of the route (``/login``) matches the ``login_path`` config
+Notice that the name of the ``login`` route matches the``login_path`` config
 value, as that's where the security system will redirect users that need
 to login.
 
@@ -557,7 +557,7 @@ see :doc:`/cookbook/security/form_login`.
 
     **1. Create the correct routes**
 
-    First, be sure that you've defined the ``/login`` and ``/login_check``
+    First, be sure that you've defined the ``login`` and ``login_check``
     routes correctly and that they correspond to the ``login_path`` and
     ``check_path`` config values. A misconfiguration here can mean that you're
     redirected to a 404 page instead of the login page, or that submitting
@@ -1671,7 +1671,7 @@ the firewall can handle this automatically for you when you activate the
             'firewalls' => array(
                 'secured_area' => array(
                     // ...
-                    'logout' => array('path' => 'logout', 'target' => '/'),
+                    'logout' => array('path' => '/logout', 'target' => '/'),
                 ),
             ),
             // ...

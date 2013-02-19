@@ -303,7 +303,7 @@ override the translation messages of a bundle in any of the top 2 directories.
 
 The override mechanism works at a key level: only the overridden keys need
 to be listed in a higher priority message file. When a key is not found
-in a message file, the translator will automatically fallback to the lower
+in a message file, the translator will automatically fall back to the lower
 priority message files.
 
 The filename of the translations is also important as Symfony2 uses a convention
@@ -996,7 +996,7 @@ steps:
   a specific convention;
 
 * Manage the user's locale, which is stored on the request, but can also
-  be set once the user's session.
+  be set on the user's session.
 
 .. _`i18n`: http://en.wikipedia.org/wiki/Internationalization_and_localization
 .. _`L10n`: http://en.wikipedia.org/wiki/Internationalization_and_localization

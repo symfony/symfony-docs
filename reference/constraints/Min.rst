@@ -47,9 +47,40 @@ the following:
         class Participant
         {
             /**
-             * @Assert\Min(limit = "18", message = "You must be 18 or older to enter")
+             * @Assert\Min(limit = "18", message = "You must be 18 or older to enter.")
              */
              protected $age;
+        }
+
+    .. code-block:: xml
+
+        <!-- src/Acme/EventBundle/Resources/config/validation.yml -->
+        <class name="Acme\EventBundle\Entity\Participant">
+            <property name="age">
+                <constraint name="Min">
+                    <option name="limit">18</option>
+                    <option name="message">You must be 18 or older to enter.</option>
+                </constraint>
+            </property>
+        </class>
+
+    .. code-block:: php
+
+        // src/Acme/EventBundle/Entity/Participant.php
+        namespace Acme\EventBundle\Entity\Participant;
+
+        use Symfony\Component\Validator\Mapping\ClassMetadata;
+        use Symfony\Component\Validator\Constraints as Assert;
+
+        class Participant
+        {
+            public static function loadValidatorMetadata(ClassMetadata $metadata)
+            {
+                $metadata->addPropertyConstraint('age', new Assert\Min(array(
+                    'limit'   => '18',
+                    'message' => 'You must be 18 or older to enter.',
+                ));
+            }
         }
 
 Options
