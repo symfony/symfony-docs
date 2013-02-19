@@ -490,7 +490,8 @@ invokes the service container extension inside the ``FrameworkBundle``:
             'form'            => array(),
             'csrf-protection' => array(),
             'router'          => array('resource' => '%kernel.root_dir%/config/routing.php'),
-            ...,
+
+            // ...
         ));
 
 When the configuration is parsed, the container looks for an extension that

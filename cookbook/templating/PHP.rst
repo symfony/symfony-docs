@@ -38,7 +38,8 @@ your application configuration file:
     .. code-block:: php
 
         $container->loadFromExtension('framework', array(
-            ...,
+            // ...
+
             'templating'      => array(
                 'engines' => array('twig', 'php'),
             ),

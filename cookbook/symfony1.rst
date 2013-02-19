@@ -147,7 +147,8 @@ namespace in the ``vendor/bundle`` directory:
 
     // ...
     $loader->registerNamespaces(array(
-        ...,
+        // ...
+
         'Sensio'           => __DIR__.'/../vendor/bundles',
     ));
 

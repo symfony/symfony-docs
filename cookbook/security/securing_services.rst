@@ -260,7 +260,8 @@ documentation.
 
             // app/config/config.php
             $container->loadFromExtension('jms_security_extra', array(
-                ...,
+                // ...
+
                 'secure_all_services' => true,
             ));
 
