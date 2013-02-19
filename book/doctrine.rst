@@ -88,7 +88,7 @@ for you:
 
     $ php app/console doctrine:database:create
 
-.. sidebar:: Setting Up The Database
+.. sidebar:: Setting Up The Database to be UTF8
 
     One mistake even seasoned developers make when starting a Symfony2 project
     is forgetting to setup default charset and collation on their database,
@@ -113,6 +113,45 @@ for you:
         [mysqld]
         collation-server = utf8_general_ci
         character-set-server = utf8
+        
+Using SQLite
+~~~~~~~~~~~~
+    
+If you want to use SQLite as your database, you need to set the path
+where your database file should be stored:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # app/config/config.yml
+        doctrine:
+            dbal:
+                driver: pdo_sqlite
+                path: "%kernel.root_dir%/sqlite.db"
+                charset: UTF8
+
+    .. code-block:: xml
+
+        <!-- app/config/config.xml -->
+        <doctrine:config
+            driver="pdo_sqlite"
+            path="%kernel.root_dir%/sqlite.db"
+            charset="UTF-8"
+        >
+            <!-- ... -->
+        </doctrine:config>
+
+    .. code-block:: php
+
+        // app/config/config.php
+        $container->loadFromExtension('doctrine', array(
+            'dbal' => array(
+                'driver'  => 'pdo_sqlite',
+                'path'    => '%kernel.root_dir%/sqlite.db',
+                'charset' => 'UTF-8',
+            ),
+        ));
 
 Creating an Entity Class
 ~~~~~~~~~~~~~~~~~~~~~~~~
@@ -1370,7 +1409,7 @@ without any arguments:
 
     $ php app/console
 
-A list of available command will print out, many of which start with the
+A list of available commands will print out, many of which start with the
 ``doctrine:`` prefix. You can find out more information about any of these
 commands (or any Symfony command) by running the ``help`` command. For example,
 to get details about the ``doctrine:database:create`` task, run:

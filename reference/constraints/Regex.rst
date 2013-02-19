@@ -127,6 +127,26 @@ message:
             </property>
         </class>
 
+    .. code-block:: php
+
+        // src/Acme/BlogBundle/Entity/Author.php
+        namespace Acme\BlogBundle\Entity;
+
+        use Symfony\Component\Validator\Mapping\ClassMetadata;
+        use Symfony\Component\Validator\Constraints as Assert;
+
+        class Author
+        {
+            public static function loadValidatorMetadata(ClassMetadata $metadata)
+            {
+                $metadata->addPropertyConstraint('firstName', new Assert\Regex(array(
+                    'pattern' => '/\d/',
+                    'match'   => false,
+                    'message' => 'Your name cannot contain a number',
+                )));
+            }
+        }
+
 Options
 -------
 
