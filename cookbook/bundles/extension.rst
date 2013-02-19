@@ -496,7 +496,8 @@ As long as your bundle's configuration is located in the standard location
 (``YourBundle\DependencyInjection\Configuration``) and does not have a
 ``__construct()`` it will work automatically.  If you have something
 different, your ``Extension`` class must override the
-``Extension::getConfiguration()`` method and return an instance of your
+:method:`Extension::getConfiguration() <Symfony\\Component\\HttpKernel\\DependencyInjection\\Extension::getConfiguration>`
+method and return an instance of your
 ``Configuration``.
 
 Comments and examples can be added to your configuration nodes using the
@@ -548,9 +549,9 @@ When creating an extension, follow these simple conventions:
 * The extension should provide an XSD schema.
 
 If you follow these simple conventions, your extensions will be registered
-automatically by Symfony2. If not, override the Bundle
-:method:`Symfony\\Component\\HttpKernel\\Bundle\\Bundle::build` method in
-your bundle::
+automatically by Symfony2. If not, override the
+:method:`Bundle::build() <Symfony\\Component\\HttpKernel\\Bundle\\Bundle::build>`
+method in your bundle::
 
     // ...
     use Acme\HelloBundle\DependencyInjection\UnconventionalExtensionClass;
