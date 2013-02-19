@@ -494,7 +494,7 @@ be output to the console in yaml.
 
 As long as your bundle's configuration is located in the standard location
 (``YourBundle\DependencyInjection\Configuration``) and does not have a
-``__constructor()`` it will work automatically.  If you have a something
+``__construct()`` it will work automatically.  If you have a something
 different your ``Extension`` class will have to override the
 ``Extension::getConfiguration()`` method.  Have it return an instance of your
 ``Configuration``.
