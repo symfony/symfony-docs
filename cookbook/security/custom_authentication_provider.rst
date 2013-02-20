@@ -401,7 +401,7 @@ to service ids that do not exist yet: ``wsse.security.authentication.provider`` 
           new Definition(
             'Acme\DemoBundle\Security\Firewall\WsseListener', array(
               new Reference('security.context'),
-              new Reference('security.authentication.manager'))
+              new Reference('security.authentication.manager')),
         ));
 
 Now that your services are defined, tell your security context about your
@@ -461,7 +461,7 @@ security configuration:
         // app/config/security.php
         $container->loadFromExtension('security', array(
             'factories' => array(
-              "%kernel.root_dir%/../src/Acme/DemoBundle/Resources/config/security_factories.php"
+                "%kernel.root_dir%/../src/Acme/DemoBundle/Resources/config/security_factories.php",
             ),
         ));
 

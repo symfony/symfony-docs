@@ -51,7 +51,8 @@ drawn from various sources such as from within a bundle:
     .. code-block:: html+php
 
         <?php foreach ($view['assetic']->javascripts(
-            array('@AcmeFooBundle/Resources/public/js/*')) as $url): ?>
+            array('@AcmeFooBundle/Resources/public/js/*')
+        ) as $url): ?>
             <script type="text/javascript" src="<?php echo $view->escape($url) ?>"></script>
         <?php endforeach; ?>
 
@@ -71,8 +72,8 @@ drawn from various sources such as from within a bundle:
         .. code-block:: html+php
 
             <?php foreach ($view['assetic']->stylesheets(
-                                                 array('bundles/acme_foo/css/*')
-                                             ) as $url): ?>
+                array('bundles/acme_foo/css/*')
+            ) as $url): ?>
                 <link rel="stylesheet" href="<?php echo $view->escape($url) ?>" />
             <?php endforeach; ?>
 
@@ -116,9 +117,12 @@ them as a single file:
     .. code-block:: html+php
 
         <?php foreach ($view['assetic']->javascripts(
-            array('@AcmeFooBundle/Resources/public/js/*',
-                  '@AcmeBarBundle/Resources/public/js/form.js',
-                  '@AcmeBarBundle/Resources/public/js/calendar.js')) as $url): ?>
+            array(
+                '@AcmeFooBundle/Resources/public/js/*',
+                '@AcmeBarBundle/Resources/public/js/form.js',
+                '@AcmeBarBundle/Resources/public/js/calendar.js',
+            )
+        ) as $url): ?>
             <script src="<?php echo $view->escape($url) ?>"></script>
         <?php endforeach; ?>
 
@@ -149,8 +153,11 @@ combine third party assets, such as jQuery, with your own into a single file:
     .. code-block:: html+php
 
         <?php foreach ($view['assetic']->javascripts(
-            array('@AcmeFooBundle/Resources/public/js/thirdparty/jquery.js',
-                  '@AcmeFooBundle/Resources/public/js/*')) as $url): ?>
+            array(
+                '@AcmeFooBundle/Resources/public/js/thirdparty/jquery.js',
+                '@AcmeFooBundle/Resources/public/js/*',
+            )
+        ) as $url): ?>
             <script src="<?php echo $view->escape($url) ?>"></script>
         <?php endforeach; ?>
 
@@ -223,7 +230,8 @@ into your template:
 
         <?php foreach ($view['assetic']->javascripts(
             array('@AcmeFooBundle/Resources/public/js/*'),
-            array('yui_js')) as $url): ?>
+            array('yui_js')
+        ) as $url): ?>
             <script src="<?php echo $view->escape($url) ?>"></script>
         <?php endforeach; ?>
 

@@ -354,10 +354,10 @@ or perform more complex requests::
     // or
     $photo = array(
         'tmp_name' => '/path/to/photo.jpg',
-        'name' => 'photo.jpg',
-        'type' => 'image/jpeg',
-        'size' => 123,
-        'error' => UPLOAD_ERR_OK
+        'name'     => 'photo.jpg',
+        'type'     => 'image/jpeg',
+        'size'     => 123,
+        'error'    => UPLOAD_ERR_OK
     );
     $client->request(
         'POST',

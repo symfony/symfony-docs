@@ -80,7 +80,7 @@ configuration format of your choice):
         use Symfony\Component\DependencyInjection\Reference;
 
         $container->loadFromExtension('framework', array(
-            // ...
+            ...,
             'session' => array(
                 // ...
 

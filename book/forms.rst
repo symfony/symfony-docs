@@ -390,7 +390,7 @@ method::
     public function getDefaultOptions(array $options)
     {
         return array(
-            'validation_groups' => array('registration')
+            'validation_groups' => array('registration'),
         );
     }
 
@@ -1222,9 +1222,11 @@ file:
 
         // app/config/config.php
         $container->loadFromExtension('twig', array(
-            'form' => array('resources' => array(
-                'AcmeTaskBundle:Form:fields.html.twig',
-             ))
+            'form' => array(
+                'resources' => array(
+                    'AcmeTaskBundle:Form:fields.html.twig',
+                ),
+            ),
             // ...
         ));
 
@@ -1301,10 +1303,13 @@ file:
 
         // app/config/config.php
         $container->loadFromExtension('framework', array(
-            'templating' => array('form' =>
-                array('resources' => array(
-                    'AcmeTaskBundle:Form',
-             )))
+            'templating' => array(
+                'form' => array(
+                    'resources' => array(
+                        'AcmeTaskBundle:Form',
+                    ),
+                ),
+            )
             // ...
         ));
 

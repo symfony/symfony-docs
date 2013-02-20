@@ -85,11 +85,13 @@ You can now reference these parameters wherever you need them.
 
     .. code-block:: php
 
-        $container->loadFromExtension('doctrine', array('dbal' => array(
-            'driver'   => 'pdo_mysql',
-            'dbname'   => 'symfony2_project',
-            'user'     => '%database.user%',
-            'password' => '%database.password%',
+        $container->loadFromExtension('doctrine', array(
+            'dbal' => array(
+                'driver'   => 'pdo_mysql',
+                'dbname'   => 'symfony2_project',
+                'user'     => '%database.user%',
+                'password' => '%database.password%',
+            )
         ));
 
 Constants

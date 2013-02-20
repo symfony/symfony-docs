@@ -547,7 +547,10 @@ Including this template from any other template is simple:
             <h1>Recent Articles</h1>
 
             <?php foreach ($articles as $article): ?>
-                <?php echo $view->render('AcmeArticleBundle:Article:articleDetails.html.php', array('article' => $article)) ?>
+                <?php echo $view->render(
+                    'AcmeArticleBundle:Article:articleDetails.html.php',
+                    array('article' => $article)
+                ) ?>
             <?php endforeach; ?>
         <?php $view['slots']->stop() ?>
 
