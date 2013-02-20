@@ -43,8 +43,8 @@ Changing the Default Page
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
 First, the default page can be set (i.e. the page the user is redirected to
-if no previous page was stored in the session). To set it to ``/admin`` use
-the following config:
+if no previous page was stored in the session). To set it to the
+``default_security_target`` route use the following config:
 
 .. configuration-block::
 
@@ -56,7 +56,7 @@ the following config:
                 main:
                     form_login:
                         # ...
-                        default_target_path: /admin
+                        default_target_path: default_security_target
 
     .. code-block:: xml
 
@@ -64,7 +64,7 @@ the following config:
         <config>
             <firewall>
                 <form-login
-                    default_target_path="/admin"                    
+                    default_target_path="default_security_target"
                 />
             </firewall>
         </config>
@@ -79,13 +79,14 @@ the following config:
 
                     'form_login' => array(
                         // ...
-                        'default_target_path' => '/admin',
+                        'default_target_path' => 'default_security_target',
                     ),
                 ),
             ),
         ));
 
-Now, when no URL is set in the session, users will be sent to ``/admin``.
+Now, when no URL is set in the session, users will be sent to the
+``default_security_target`` route.
 
 Always Redirect to the Default Page
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -276,8 +277,8 @@ Redirecting on Login Failure
 In addition to redirecting the user after a successful login, you can also set
 the URL that the user should be redirected to after a failed login (e.g. an
 invalid username or password was submitted). By default, the user is redirected
-back to the login form itself. You can set this to a different URL with the
-following config:
+back to the login form itself. You can set this to a different route (e.g.
+``login_failure``) with the following config:
 
 .. configuration-block::
 
@@ -289,7 +290,7 @@ following config:
                 main:
                     form_login:
                         # ...
-                        failure_path: /login_failure
+                        failure_path: login_failure
                         
     .. code-block:: xml
 
@@ -312,7 +313,7 @@ following config:
 
                     'form_login' => array(
                         // ...
-                        'failure_path' => login_failure,
+                        'failure_path' => 'login_failure',
                     ),
                 ),
             ),
