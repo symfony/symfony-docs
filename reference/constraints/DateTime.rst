@@ -64,7 +64,7 @@ Basic Usage
         {
             public static function loadValidatorMetadata(ClassMetadata $metadata)
             {
-                $metadata->addPropertyConstraint('createdAt', new Assert\DataTime());
+                $metadata->addPropertyConstraint('createdAt', new Assert\DateTime());
             }
         }
 
