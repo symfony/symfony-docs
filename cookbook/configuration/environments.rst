@@ -115,7 +115,8 @@ activated by modifying the default value in the ``dev`` configuration file:
 
         $container->loadFromExtension('web_profiler', array(
             'toolbar' => true,
-            ...,
+
+            // ...
         ));
 
 .. index::
@@ -205,9 +206,10 @@ environment by using this code and changing the environment string.
             $container->loadFromExtension('doctrine', array(
                 'dbal' => array(
                     'logging'  => '%kernel.debug%',
-                    ...,
+
+                    // ...
                 ),
-                ...
+                // ...
             ));
 
 .. index::

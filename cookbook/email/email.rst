@@ -16,7 +16,8 @@ the power of the `Swiftmailer`_ library.
         public function registerBundles()
         {
             $bundles = array(
-                ...,
+                // ...
+
                 new Symfony\Bundle\SwiftmailerBundle\SwiftmailerBundle(),
             );
 

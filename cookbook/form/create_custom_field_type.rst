@@ -227,7 +227,7 @@ the ``genders`` parameter value as the first argument to its to-be-created
 Be sure that the ``alias`` attribute of the tag corresponds with the value
 returned by the ``getName`` method defined earlier. You'll see the importance
 of this in a moment when you use the custom field type. But first, add a ``__construct``
-argument to ``GenderType``, which receives the gender configuration::
+method to ``GenderType``, which receives the gender configuration::
 
     // src/Acme/DemoBundle/Form/Type/GenderType.php
     namespace Acme\DemoBundle\Form\Type;

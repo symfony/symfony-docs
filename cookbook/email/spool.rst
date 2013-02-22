@@ -88,7 +88,8 @@ In order to use the spool with a file, use the following configuration:
 
         // app/config/config.php
         $container->loadFromExtension('swiftmailer', array(
-             ...,
+             // ...
+
             'spool' => array(
                 'type' => 'file',
                 'path' => '/path/to/spool',

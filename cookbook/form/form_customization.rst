@@ -436,7 +436,8 @@ form is rendered.
             'form' => array('resources' => array(
                 'AcmeDemoBundle:Form:fields.html.twig',
              )),
-             ...,
+
+             // ...
         ));
 
 By default, Twig uses a *div* layout when rendering forms. Some people, however,
@@ -470,7 +471,8 @@ resource to use such a layout:
             'form' => array('resources' => array(
                 'form_table_layout.html.twig',
              )),
-             ...,
+
+             // ...
         ));
 
 If you only want to make the change in one template, add the following line to
@@ -525,7 +527,8 @@ form is rendered.
                 array('resources' => array(
                     'AcmeDemoBundle:Form',
              ))),
-             ...,
+
+             // ...
         ));
 
 By default, the PHP engine uses a *div* layout when rendering forms. Some people,
@@ -563,7 +566,8 @@ resource to use such a layout:
                 array('resources' => array(
                     'FrameworkBundle:FormTable',
              ))),
-             ...,
+
+             // ...
         ));
 
 If you only want to make the change in one template, add the following line to

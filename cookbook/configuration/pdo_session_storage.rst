@@ -88,7 +88,7 @@ configuration format of your choice):
         $container->loadFromExtension('framework', array(
             // ...
             'session' => array(
-                ...,
+                // ...,
                 'handler_id' => 'session.handler.pdo',
             ),
         ));
