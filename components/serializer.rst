@@ -42,7 +42,7 @@ which Encoders and Normalizer are going to be available::
     use Symfony\Component\Serializer\Encoder\JsonEncoder;
     use Symfony\Component\Serializer\Normalizer\GetSetMethodNormalizer;
 
-    $encoders = array('xml' => new XmlEncoder(), 'json' => new JsonEncoder());
+    $encoders = array(new XmlEncoder(), new JsonEncoder());
     $normalizers = array(new GetSetMethodNormalizer());
 
     $serializer = new Serializer($normalizers, $encoders);
