@@ -132,7 +132,9 @@ good idea to include this in your form tag:
 More about Form Variables
 -------------------------
 
-For a full list of variables, see: :ref:`reference-form-twig-variables`.
+.. tip::
+
+    For a full list of variables, see: :ref:`reference-form-twig-variables`.
 
 In almost every Twig function above, the final argument is an array of "variables"
 that are used when rendering that one part of the form. For example, the
@@ -200,6 +202,27 @@ The following variables are common to every field type. Certain field types
 may have even more variables and some variables here only really apply to
 certain types.
 
+Assuming you have a ``form`` variable in your template, and you want to reference
+the variables on the ``name`` field, accessing the variables is done by using
+a public ``vars`` property on the :class:`Symfony\\Component\\Form\\FormView`
+object:
+
+.. configuration-block::
+
+    .. code-block:: html+jinja
+
+        <label for="{{ form.name.vars.id }}"
+            class="{{ form.name.vars.required ? 'required' : '' }}">
+            {{ form.name.label }}
+        </label>
+
+    .. code-block:: html+php
+
+        <label for="<?php echo $view['form']->get('name')->vars['id'] ?>"
+            class="<?php echo $view['form']->get('name')->vars['required'] ? 'required' : '' ?>">
+            <?php echo $view['form']->get('name')->vars['label'] ?>
+        </label>
+
 +-----------------+-----------------------------------------------------------------------------------------+
 | Variable        | Usage                                                                                   |
 +=================+=========================================================================================+
@@ -228,7 +251,7 @@ certain types.
 | ``label``       | The string label that will be rendered                                                  |
 +-----------------+-----------------------------------------------------------------------------------------+
 | ``multipart``   | If ``true``, ``form_enctype`` will render ``enctype="multipart/form-data"``.            |
-|                 | This only applies to the parent form element.                                           |
+|                 | This only applies to the root form element.                                             |
 +-----------------+-----------------------------------------------------------------------------------------+
 | ``attr``        | A key-value array that will be rendered as HTML attributes on the field                 |
 +-----------------+-----------------------------------------------------------------------------------------+
