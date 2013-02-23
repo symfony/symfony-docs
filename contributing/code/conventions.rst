@@ -77,6 +77,8 @@ must be used instead (where ``XXX`` is the name of the related thing):
     "replaceXXX", on the other hand, cannot add new elements. If an unrecognized
     key as passed to "replaceXXX" it must throw an exception.
 
+.. _contributing-code-conventions-deprecations:
+
 Deprecations
 ------------
 
@@ -99,6 +101,9 @@ the feature was replaced.
 
 A PHP ``E_USER_DEPRECATED`` error must also be triggered to help people with
 the migration starting one or two minor versions before the version where the
-feature will be removed (depending of the criticality of the removal)::
+feature will be removed (depending on the criticality of the removal)::
 
-    trigger_error('XXX() is deprecated since version 2.X and will be removed in 2.Y. Use XXX instead.', E_USER_DEPRECATED);
+    trigger_error(
+        'XXX() is deprecated since version 2.X and will be removed in 2.Y. Use XXX instead.',
+        E_USER_DEPRECATED
+    );
