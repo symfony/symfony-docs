@@ -80,7 +80,7 @@ Basic Usage
             {
                 $metadata->addPropertyConstraint('email', new Assert\Email(array(
                     'message' => 'The email "{{ value }}" is not a valid email.',
-                    'check'   => true,
+                    'checkMX'   => true,
                 )));
             }
         }
