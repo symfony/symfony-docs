@@ -153,8 +153,9 @@ Work on your Patch
 Work on the code as much as you want and commit as much as you want; but keep
 in mind the following:
 
-* Follow the coding :doc:`standards <standards>` (use `git diff --check` to
-  check for trailing spaces -- also read the tip below);
+* Read about the Symfony :doc:`conventions <conventions>` and follow the
+  coding :doc:`standards <standards>` (use `git diff --check` to check for
+  trailing spaces -- also read the tip below);
 
 * Add unit tests to prove that the bug is fixed or that the new feature
   actually works;
