@@ -148,6 +148,8 @@ Symfony's security system works by determining who a user is (i.e. authenticatio
 and then checking to see if that user should have access to a specific resource
 or URL.
 
+.. _book-security-firewalls:
+
 Firewalls (Authentication)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -656,8 +658,9 @@ see :doc:`/cookbook/security/form_login`.
     If you're using multiple firewalls and you authenticate against one firewall,
     you will *not* be authenticated against any other firewalls automatically.
     Different firewalls are like different security systems. To do this you have
-    to explicitly specify the same context for different firewalls. But usually
-    for most applications, having one main firewall is enough.
+    to explicitly specify the same :ref:`reference-security-firewall-context`
+    for different firewalls. But usually for most applications, having one
+    main firewall is enough.
 
 Authorization
 -------------
