@@ -230,6 +230,10 @@ object:
             <?php echo $view['form']->get('name')->vars['label'] ?>
         </label>
 
+.. versionadded:: 2.1
+    The ``valid``, ``label_attr``, ``compound``, and ``disabled`` variables
+    are new in Symfony 2.1.
+
 +-----------------+-----------------------------------------------------------------------------------------+
 | Variable        | Usage                                                                                   |
 +=================+=========================================================================================+
@@ -243,10 +247,15 @@ object:
 | ``errors``      | An array of any errors attached to *this* specific field (e.g. ``form.title.errors``).  |
 |                 | Note that you can't use ``form.errors`` to determine if a form is valid,                |
 |                 | since this only returns "global" errors: some individual fields may have errors         |
+|                 | Instead, use the ``valid`` option                                                       |
++-----------------+-----------------------------------------------------------------------------------------+
+| ``valid``       | Returns ``true`` or ``false`` depending on whether the whole form is valid              |
 +-----------------+-----------------------------------------------------------------------------------------+
 | ``value``       | The value that will be used when rendering (commonly the ``value`` HTML attribute)      |
 +-----------------+-----------------------------------------------------------------------------------------+
-| ``read_only``   | If ``true``, ``disabled="disabled"`` is added to the field                              |
+| ``read_only``   | If ``true``, ``readonly="readonly"`` is added to the field                              |
++-----------------+-----------------------------------------------------------------------------------------+
+| ``disabled``    | If ``true``, ``disabled="disabled"`` is added to the field                              |
 +-----------------+-----------------------------------------------------------------------------------------+
 | ``required``    | If ``true``, a ``required`` attribute is added to the field to activate HTML5           |
 |                 | validation. Additionally, a ``required`` class is added to the label.                   |
@@ -261,6 +270,11 @@ object:
 |                 | This only applies to the root form element.                                             |
 +-----------------+-----------------------------------------------------------------------------------------+
 | ``attr``        | A key-value array that will be rendered as HTML attributes on the field                 |
++-----------------+-----------------------------------------------------------------------------------------+
+| ``label_attr``  | A key-value array that will be rendered as HTML attributes on the label                 |
++-----------------+-----------------------------------------------------------------------------------------+
+| ``compound``    | Whether or not a field is actually a holder for a group of children fields              |
+|                 | (for example, a ``choice`` field, which is actually a group of checkboxes               |
 +-----------------+-----------------------------------------------------------------------------------------+
 
 .. _`form_div_layout.html.twig`: https://github.com/symfony/symfony/blob/2.1/src/Symfony/Bridge/Twig/Resources/views/Form/form_div_layout.html.twig
