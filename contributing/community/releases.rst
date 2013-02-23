@@ -84,6 +84,15 @@ be scheduled for the next major version: Symfony 3.0.
     The work on Symfony 3.0 will start whenever enough major features breaking
     backward compatibility are waiting on the todo-list.
 
+Deprecations
+------------
+
+When a feature implementation cannot be replaced with a better one without
+breaking backward compatibility, there is still the possibility to deprecate
+the old implementation and add a new preferred one along side. Read the
+:doc:`conventions <../code/conventions>` document to learn more about how
+deprecations are handled in Symfony.
+
 Rationale
 ---------
 
