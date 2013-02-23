@@ -21,7 +21,7 @@ as integration of other related components:
 
         framework:
             # ...
-            form:            true
+            form: true
 
     .. code-block:: xml
 
@@ -33,7 +33,7 @@ as integration of other related components:
 
         $container->loadFromExtension('framework', array(
             // ...
-            'form'            => true,
+            'form' => true,
             // ...
         ));
 
@@ -548,9 +548,9 @@ When creating an extension, follow these simple conventions:
 * The extension should provide an XSD schema.
 
 If you follow these simple conventions, your extensions will be registered
-automatically by Symfony2. If not, override the Bundle
-:method:`Symfony\\Component\\HttpKernel\\Bundle\\Bundle::build` method in
-your bundle::
+automatically by Symfony2. If not, override the
+:method:`Bundle::build() <Symfony\\Component\\HttpKernel\\Bundle\\Bundle::build>`
+method in your bundle::
 
     // ...
     use Acme\HelloBundle\DependencyInjection\UnconventionalExtensionClass;
