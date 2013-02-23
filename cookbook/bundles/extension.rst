@@ -494,9 +494,10 @@ be output to the console in yaml.
 
 As long as your bundle's configuration is located in the standard location
 (``YourBundle\DependencyInjection\Configuration``) and does not have a
-``__constructor()`` it will work automatically.  If you have a something
-different your ``Extension`` class will have to override the
-``Extension::getConfiguration()`` method.  Have it return an instance of your
+``__construct()`` it will work automatically.  If you have something
+different, your ``Extension`` class must override the
+:method:`Extension::getConfiguration() <Symfony\\Component\\HttpKernel\\DependencyInjection\\Extension::getConfiguration>`
+method and return an instance of your
 ``Configuration``.
 
 Comments and examples can be added to your configuration nodes using the
