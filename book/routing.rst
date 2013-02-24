@@ -1067,13 +1067,13 @@ a route+parameters back to a URL. The
 :method:`Symfony\\Component\\Routing\\Router::generate` methods form this bi-directional
 system. Take the ``blog_show`` example route from earlier::
 
-    $params = $this->('router')->match('/blog/my-blog-post');
+    $params = $this->get('router')->match('/blog/my-blog-post');
     // array(
     //     'slug' => 'my-blog-post',
     //     '_controller' => 'AcmeBlogBundle:Blog:show',
     // )
 
-    $uri = $this->('router')->generate('blog_show', array('slug' => 'my-blog-post'));
+    $uri = $this->get('router')->generate('blog_show', array('slug' => 'my-blog-post'));
     // /blog/my-blog-post
 
 To generate a URL, you need to specify the name of the route (e.g. ``blog_show``)
