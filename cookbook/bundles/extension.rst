@@ -293,7 +293,10 @@ configuration::
     {
         // ... prepare your $config variable
 
-        $loader = new XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
+        $loader = new XmlFileLoader(
+            $container,
+            new FileLocator(__DIR__.'/../Resources/config')
+        );
         $loader->load('services.xml');
     }
 
@@ -305,7 +308,10 @@ option is passed and set to true::
     {
         // ... prepare your $config variable
 
-        $loader = new XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
+        $loader = new XmlFileLoader(
+            $container,
+            new FileLocator(__DIR__.'/../Resources/config')
+        );
 
         if (isset($config['enabled']) && $config['enabled']) {
             $loader->load('services.xml');
@@ -351,14 +357,22 @@ Add the following to the ``load()`` method to do this::
     {
         // ... prepare your $config variable
 
-        $loader = new XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
+        $loader = new XmlFileLoader(
+            $container,
+            new FileLocator(__DIR__.'/../Resources/config')
+        );
         $loader->load('services.xml');
 
         if (!isset($config['my_type'])) {
-            throw new \InvalidArgumentException('The "my_type" option must be set');
+            throw new \InvalidArgumentException(
+                'The "my_type" option must be set'
+            );
         }
 
-        $container->setParameter('acme_hello.my_service_type', $config['my_type']);
+        $container->setParameter(
+            'acme_hello.my_service_type',
+            $config['my_type']
+        );
     }
 
 Now, the user can effectively configure the service by specifying the ``my_type``
