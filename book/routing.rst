@@ -1067,13 +1067,13 @@ a route+parameters back to a URL. The
 :method:`Symfony\\Component\\Routing\\Router::generate` methods form this bi-directional
 system. Take the ``blog_show`` example route from earlier::
 
-    $params = $router->match('/blog/my-blog-post');
+    $params = $this->('router')->match('/blog/my-blog-post');
     // array(
     //     'slug' => 'my-blog-post',
     //     '_controller' => 'AcmeBlogBundle:Blog:show',
     // )
 
-    $uri = $router->generate('blog_show', array('slug' => 'my-blog-post'));
+    $uri = $this->('router')->generate('blog_show', array('slug' => 'my-blog-post'));
     // /blog/my-blog-post
 
 To generate a URL, you need to specify the name of the route (e.g. ``blog_show``)
@@ -1086,12 +1086,21 @@ that route. With this information, any URL can easily be generated::
         {
             // ...
 
-            $url = $this->get('router')->generate(
+            $url = $this->generateUrl(
                 'blog_show',
                 array('slug' => 'my-blog-post')
             );
         }
     }
+
+.. note::
+
+    In controllers extending from the base
+    :class:`Symfony\\Bundle\\FrameworkBundle\\Controller\\Controller`,
+    you can use the
+    :method:`Symfony\\Bundle\\FrameworkBundle\\Controller\\Controller::generateUrl`
+    method which call's the router service's
+    :method:`Symfony\\Component\\Routing\\Router::generate` method.
 
 In an upcoming section, you'll learn how to generate URLs from inside templates.
 
