@@ -76,6 +76,21 @@ drawn from various sources such as from within a bundle:
                 <link rel="stylesheet" href="<?php echo $view->escape($url) ?>" />
             <?php endforeach; ?>
 
+.. tip::
+
+    For the above example to work, you must also add your bundle to the list
+    of bundles that Assetic handles, which is empty by default:
+
+    .. code-block:: yaml
+
+        # app/config/config.yml
+        assetic:
+            debug:          "%kernel.debug%"
+            use_controller: false
+            bundles:       [ AcmeFooBundle ]
+            filters:
+                # ...
+
 In this example, all of the files in the ``Resources/public/js/`` directory
 of the ``AcmeFooBundle`` will be loaded and served from a different location.
 The actual rendered tag might simply look like:
@@ -87,10 +102,42 @@ The actual rendered tag might simply look like:
 .. note::
 
     This is a key point: once you let Assetic handle your assets, the files are
-    served from a different location. This *can* cause problems with CSS files
+    served from a different location. This *will* cause problems with CSS files
     that reference images by their relative path. However, this can be fixed
     by using the ``cssrewrite`` filter, which updates paths in CSS files
     to reflect their new location.
+    
+    Unfortunately, the ``cssrewrite`` filter does not work when using the
+    ``@AcmeFooBundle`` syntax to reference the assets. This is a known
+    limitation. A workaround is to use the ``output`` option to change the
+    location the files are served from to a path from which the relative paths
+    work, e.g.: 
+
+    .. configuration-block::
+
+        .. code-block:: html+jinja
+
+            {% stylesheets
+                output='bundles/acmefoo/css/compiled.css'
+                '@AcmeFooBundle/Resources/public/css/*'
+            %}
+                <link rel="stylesheet" href="{{ asset_url }}" />
+            {% endstylesheets %}
+
+        .. code-block:: html+php
+
+            <?php foreach ($view['assetic']->stylesheets(
+                array('@AcmeFooBundle/Resources/public/css/*'),
+                array(),
+                array('output' => 'bundles/acmefoo/css/compiled.css')
+            ) as $url): ?>
+                <link rel="stylesheet" href="<?php echo $view->escape($url) ?>" />
+            <?php endforeach; ?>
+    
+    Of course, this assumes that all the CSS files you serve in this block use
+    relative paths that start from the same location, which is not always
+    convenient. This is the reason this is called a *workaround* and not a
+    *solution*.
 
 Combining Assets
 ~~~~~~~~~~~~~~~~
