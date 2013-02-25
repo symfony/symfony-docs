@@ -1169,7 +1169,7 @@ a template helper function:
           Read this blog post.
         </a>
 
-    .. code-block:: php
+    .. code-block:: html+php
 
         <a href="<?php echo $view['router']->generate('blog_show', array('slug' => 'my-blog-post')) ?>">
             Read this blog post.
@@ -1185,7 +1185,7 @@ Absolute URLs can also be generated.
           Read this blog post.
         </a>
 
-    .. code-block:: php
+    .. code-block:: html+php
 
         <a href="<?php echo $view['router']->generate('blog_show', array('slug' => 'my-blog-post'), true) ?>">
             Read this blog post.
