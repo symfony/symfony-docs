@@ -179,10 +179,12 @@ Array node options
 Before defining the children of an array node, you can provide options like:
 
 ``useAttributeAsKey()``
-    Provide the name of a child node, whose value should be used as the key in the resulting array
+    Provide the name of a child node, whose value should be used as the key in the resulting array.
 ``requiresAtLeastOneElement()``
     There should be at least one element in the array (works only when ``isRequired()`` is also
     called).
+``addDefaultsIfNotSet()``
+    If any child nodes have default values, use them if explicit values haven't been provided.
 
 An example of this::
 
@@ -195,6 +197,16 @@ An example of this::
                 ->prototype('array')
                     ->children()
                         ->scalarNode('value')->isRequired()->end()
+                    ->end()
+                ->end()
+            ->end()
+            ->arrayNode('settings')
+                ->useDefaultsIfNotSet()
+                ->children()
+                    ->scalarNode('name')
+                        ->isRequired()
+                        ->cannotBeEmpty()
+                        ->defaultValue('value')
                     ->end()
                 ->end()
             ->end()
