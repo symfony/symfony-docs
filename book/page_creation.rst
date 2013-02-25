@@ -77,7 +77,7 @@ the bundle is registered with the kernel::
     public function registerBundles()
     {
         $bundles = array(
-            // ...
+            ...,
             new Acme\HelloBundle\AcmeHelloBundle(),
         );
         // ...
@@ -648,8 +648,7 @@ Now that you've created the bundle, enable it via the ``AppKernel`` class::
     public function registerBundles()
     {
         $bundles = array(
-            // ...
-
+            ...,
             // register your bundles
             new Acme\TestBundle\AcmeTestBundle(),
         );

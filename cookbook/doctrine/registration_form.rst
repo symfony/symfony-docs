@@ -103,9 +103,9 @@ Next, create the form for the ``User`` model::
         {
             $builder->add('email', 'email');
             $builder->add('plainPassword', 'repeated', array(
-               'first_name' => 'password',
+               'first_name'  => 'password',
                'second_name' => 'confirm',
-               'type' => 'password',
+               'type'        => 'password',
             ));
         }
 

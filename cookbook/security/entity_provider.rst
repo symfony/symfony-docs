@@ -384,7 +384,11 @@ The code below shows the implementation of the
                 // if there is no record matching the criteria.
                 $user = $q->getSingleResult();
             } catch (NoResultException $e) {
-                throw new UsernameNotFoundException(sprintf('Unable to find an active admin AcmeUserBundle:User object identified by "%s".', $username), null, 0, $e);
+                $message = sprintf(
+                    'Unable to find an active admin AcmeUserBundle:User object identified by "%s".',
+                    $username
+                );
+                throw new UsernameNotFoundException($message, null, 0, $e);
             }
 
             return $user;
@@ -394,7 +398,12 @@ The code below shows the implementation of the
         {
             $class = get_class($user);
             if (!$this->supportsClass($class)) {
-                throw new UnsupportedUserException(sprintf('Instances of "%s" are not supported.', $class));
+                throw new UnsupportedUserException(
+                    sprintf(
+                        'Instances of "%s" are not supported.',
+                        $class
+                    )
+                );
             }
 
             return $this->find($user->getId());
@@ -402,7 +411,8 @@ The code below shows the implementation of the
 
         public function supportsClass($class)
         {
-            return $this->getEntityName() === $class || is_subclass_of($class, $this->getEntityName());
+            return $this->getEntityName() === $class
+                || is_subclass_of($class, $this->getEntityName());
         }
     }
 

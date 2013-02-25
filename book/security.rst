@@ -101,10 +101,10 @@ authentication (i.e. the old-school username/password box):
         $container->loadFromExtension('security', array(
             'firewalls' => array(
                 'secured_area' => array(
-                    'pattern' => '^/',
-                    'anonymous' => array(),
+                    'pattern'    => '^/',
+                    'anonymous'  => array(),
                     'http_basic' => array(
-                        'realm' => 'Secured Demo Area',
+                        'realm'  => 'Secured Demo Area',
                     ),
                 ),
             ),
@@ -152,6 +152,8 @@ How Security Works: Authentication and Authorization
 Symfony's security system works by determining who a user is (i.e. authentication)
 and then checking to see if that user should have access to a specific resource
 or URL.
+
+.. _book-security-firewalls:
 
 Firewalls (Authentication)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -324,8 +326,8 @@ First, enable form login under your firewall:
         $container->loadFromExtension('security', array(
             'firewalls' => array(
                 'secured_area' => array(
-                    'pattern' => '^/',
-                    'anonymous' => array(),
+                    'pattern'    => '^/',
+                    'anonymous'  => array(),
                     'form_login' => array(
                         'login_path' => 'login',
                         'check_path' => 'login_check',
@@ -643,11 +645,11 @@ see :doc:`/cookbook/security/form_login`.
 
             'firewalls' => array(
                 'login_firewall' => array(
-                    'pattern' => '^/login$',
+                    'pattern'   => '^/login$',
                     'anonymous' => array(),
                 ),
                 'secured_area' => array(
-                    'pattern' => '^/',
+                    'pattern'    => '^/',
                     'form_login' => array(),
                 ),
             ),
@@ -664,8 +666,10 @@ see :doc:`/cookbook/security/form_login`.
 
     If you're using multiple firewalls and you authenticate against one firewall,
     you will *not* be authenticated against any other firewalls automatically.
-    Different firewalls are like different security systems. That's why,
-    for most applications, having one main firewall is enough.
+    Different firewalls are like different security systems. To do this you have
+    to explicitly specify the same :ref:`reference-security-firewall-context`
+    for different firewalls. But usually for most applications, having one
+    main firewall is enough.
 
 Authorization
 -------------
@@ -728,7 +732,7 @@ You can define as many URL patterns as you need - each is a regular expression.
 
         // app/config/security.php
         $container->loadFromExtension('security', array(
-            // ...
+            ...,
             'access_control' => array(
                 array('path' => '^/admin/users', 'role' => 'ROLE_SUPER_ADMIN'),
                 array('path' => '^/admin', 'role' => 'ROLE_ADMIN'),
@@ -1080,7 +1084,7 @@ In fact, you've seen this already in the example in this chapter.
 
         // app/config/security.php
         $container->loadFromExtension('security', array(
-            // ...
+            ...,
             'providers' => array(
                 'default_provider' => array(
                     'memory' => array(
@@ -1323,8 +1327,7 @@ configure the encoder for that user:
 
         // app/config/security.php
         $container->loadFromExtension('security', array(
-            // ...
-
+            ...,
             'encoders' => array(
                 'Acme\UserBundle\Entity\User' => 'sha512',
             ),
@@ -1551,10 +1554,10 @@ the first provider is always used:
         $container->loadFromExtension('security', array(
             'firewalls' => array(
                 'secured_area' => array(
-                    // ...
+                    ...,
                     'provider' => 'user_db',
                     'http_basic' => array(
-                        // ...
+                        ...,
                         'provider' => 'in_memory',
                     ),
                     'form_login' => array(),
@@ -1825,7 +1828,7 @@ done by activating the ``switch_user`` firewall listener:
         $container->loadFromExtension('security', array(
             'firewalls' => array(
                 'main'=> array(
-                    // ...
+                    ...,
                     'switch_user' => true
                 ),
             ),
@@ -1859,7 +1862,11 @@ to show a link to exit impersonation:
     .. code-block:: html+php
 
         <?php if ($view['security']->isGranted('ROLE_PREVIOUS_ADMIN')): ?>
-            <a href="<?php echo $view['router']->generate('homepage', array('_switch_user' => '_exit') ?>">Exit impersonation</a>
+            <a
+                href="<?php echo $view['router']->generate('homepage', array('_switch_user' => '_exit') ?>"
+            >
+                Exit impersonation
+            </a>
         <?php endif; ?>
 
 Of course, this feature needs to be made available to a small group of users.

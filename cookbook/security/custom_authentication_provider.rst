@@ -219,6 +219,11 @@ the ``PasswordDigest`` header value matches with the user's password.
 
         protected function validateDigest($digest, $nonce, $created, $secret)
         {
+            // Check created time is not in the future
+            if (strtotime($created) > time()) {
+                return false;
+            }
+
             // Expire timestamp after 5 minutes
             if (time() - strtotime($created) > 300) {
                 return false;
@@ -401,7 +406,7 @@ to service ids that do not exist yet: ``wsse.security.authentication.provider`` 
           new Definition(
             'Acme\DemoBundle\Security\Firewall\WsseListener', array(
               new Reference('security.context'),
-              new Reference('security.authentication.manager'))
+              new Reference('security.authentication.manager')),
         ));
 
 Now that your services are defined, tell your security context about your

@@ -93,7 +93,7 @@ In order to use the spool with a file, use the following configuration:
             'spool' => array(
                 'type' => 'file',
                 'path' => '/path/to/spool',
-            )
+            ),
         ));
 
 .. tip::

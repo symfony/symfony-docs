@@ -76,7 +76,10 @@ file and register it as a listener by adding the ``kernel.event_listener`` tag:
 
         # app/config/config.php
         $definition = new Definition('Acme\DemoBundle\RequestListener');
-        $definition->addTag('kernel.event_listener', array('event' => 'kernel.request', 'method' => 'onKernelRequest'));
+        $definition->addTag('kernel.event_listener', array(
+            'event'  => 'kernel.request',
+            'method' => 'onKernelRequest',
+        ));
         $container->setDefinition('acme.demobundle.listener.request', $definition);
 
 At this point, the ``acme.demobundle.listener.request`` service has been

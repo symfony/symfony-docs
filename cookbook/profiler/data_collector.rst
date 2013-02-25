@@ -166,5 +166,8 @@ tag in your configuration. For example, assuming your template is in some
 
         $container
             ->register('data_collector.your_collector_name', 'Acme\DebugBundle\Collector\Class\Name')
-            ->addTag('data_collector', array('template' => 'AcmeDebugBundle:Collector:templatename', 'id' => 'your_collector_name'))
+            ->addTag('data_collector', array(
+                'template' => 'AcmeDebugBundle:Collector:templatename',
+                'id'       => 'your_collector_name',
+            ))
         ;

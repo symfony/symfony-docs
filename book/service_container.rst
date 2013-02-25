@@ -300,10 +300,10 @@ arrays.
         use Symfony\Component\DependencyInjection\Definition;
 
         $container->setParameter('my_mailer.gateways', array('mail1', 'mail2', 'mail3'));
-        $container->setParameter('my_multilang.language_fallback',
-                                 array('en' => array('en', 'fr'),
-                                       'fr' => array('fr', 'en'),
-                                ));
+        $container->setParameter('my_multilang.language_fallback', array(
+            'en' => array('en', 'fr'),
+            'fr' => array('fr', 'en'),
+        ));
 
 
 Importing other Container Configuration Resources
@@ -725,7 +725,7 @@ Injecting the dependency by the setter method just needs a change of syntax:
         $container->setDefinition('newsletter_manager', new Definition(
             '%newsletter_manager.class%'
         ))->addMethodCall('setMailer', array(
-            new Reference('my_mailer')
+            new Reference('my_mailer'),
         ));
 
 .. note::
@@ -786,10 +786,12 @@ it exists and do nothing if it doesn't:
         $container->setDefinition('my_mailer', ...);
         $container->setDefinition('newsletter_manager', new Definition(
             '%newsletter_manager.class%',
-            array(new Reference(
-                'my_mailer',
-                ContainerInterface::IGNORE_ON_INVALID_REFERENCE
-            ))
+            array(
+                new Reference(
+                    'my_mailer',
+                    ContainerInterface::IGNORE_ON_INVALID_REFERENCE
+                )
+            )
         ));
 
 In YAML, the special ``@?`` syntax tells the service container that the dependency
@@ -873,7 +875,7 @@ Configuring the service container is easy:
             '%newsletter_manager.class%',
             array(
                 new Reference('mailer'),
-                new Reference('templating')
+                new Reference('templating'),
             )
         ));
 

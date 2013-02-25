@@ -99,8 +99,8 @@ Take the following route, which combines several of these ideas::
    $parameters = $matcher->match('/archive/2012-01');
    // array(
    //     'controller' => 'showArchive',
-   //     'month' => '2012-01',
-   //     '_route' => ...
+   //     'month'      => '2012-01',
+   //     '_route'     => ...
    //  )
 
    $parameters = $matcher->match('/archive/foo');
@@ -202,7 +202,7 @@ a certain route::
     $generator = new UrlGenerator($routes, $context);
 
     $url = $generator->generate('show_post', array(
-        'slug' => 'my-blog-post'
+        'slug' => 'my-blog-post',
     ));
     // /show/my-blog-post
 

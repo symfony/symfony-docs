@@ -320,9 +320,9 @@ Now, activate the ``assets_version`` option:
 
         // app/config/config.php
         $container->loadFromExtension('framework', array(
-            // ...
+            ...,
             'templating'      => array(
-                'engines' => array('twig'),
+                'engines'        => array('twig'),
                 'assets_version' => 'v2',
             ),
         ));
