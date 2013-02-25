@@ -329,7 +329,7 @@ method takes an instance of
 :class:`Symfony\\Component\\HttpFoundation\\Cookie` as an argument.
 
 You can clear a cookie via the
-:method:`Symfony\\Component\\HttpFoundation\\Response::clearCookie` method.
+:method:`Symfony\\Component\\HttpFoundation\\ResponseHeaderBag::method_clearCookie` method.
 
 Managing the HTTP Cache
 ~~~~~~~~~~~~~~~~~~~~~~~
