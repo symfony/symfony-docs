@@ -1095,11 +1095,11 @@ that route. With this information, any URL can easily be generated::
 
 .. note::
 
-    In controllers extending from the base
+    In controllers that extend Symfony's base
     :class:`Symfony\\Bundle\\FrameworkBundle\\Controller\\Controller`,
     you can use the
     :method:`Symfony\\Bundle\\FrameworkBundle\\Controller\\Controller::generateUrl`
-    method which call's the router service's
+    method, which call's the router service's
     :method:`Symfony\\Component\\Routing\\Router::generate` method.
 
 In an upcoming section, you'll learn how to generate URLs from inside templates.
