@@ -227,7 +227,7 @@ has a certain value:
                 ->end()
             ->end()
             ->arrayNode('settings')
-                ->useDefaultsIfNotSet()
+                ->addDefaultsIfNotSet()
                 ->children()
                     ->scalarNode('name')
                         ->isRequired()
