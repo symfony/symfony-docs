@@ -5,7 +5,7 @@
 The PropertyAccess Component
 ============================
 
-    PropertyAccess component provides function to read and write from/to an
+    The PropertyAccess component provides function to read and write from/to an
     object or array using a simple string notation.
 
 .. versionadded:: 2.2
@@ -18,26 +18,26 @@ Installation
 You can install the component in two different ways:
 
 * Use the official Git repository (https://github.com/symfony/PropertyAccess);
-* :doc:`Install it via Composer</components/using_components>` * (``symfony/property-access`` on `Packagist`_).
+* :doc:`Install it via Composer</components/using_components>` (``symfony/property-access`` on `Packagist`_).
 
 Usage
 -----
 
 The entry point of this component is the
-:method:`Symfony\\Component\\PropertyAccess\\PropertyAccess::getPropertyAccessor`
+:method:`PropertyAccess::getPropertyAccessor<Symfony\\Component\\PropertyAccess\\PropertyAccess::getPropertyAccessor>`
 factory. This factory will create a new instance of the
-:class:`Symfony\\Component\\PropertyAccess\PropertyAccessor` class with the
+:class:`Symfony\\Component\\PropertyAccess\\PropertyAccessor` class with the
 default configuration::
 
     use Symfony\Component\PropertyAccess\PropertyAccess;
 
-    $accessor = PropertyAccess:getPropertyAccessor();
+    $accessor = PropertyAccess::getPropertyAccessor();
 
-Reading from arrays
+Reading from Arrays
 -------------------
 
 You can read an array with the
-:method:`Symfony\\Component\\PropertyAccess\PropertyAccessor::getValue`
+:method:`PropertyAccessor::getValue<Symfony\\Component\\PropertyAccess\\PropertyAccessor::getValue>`
 method. This is done using the index notation that is used in PHP::
 
     // ...
@@ -65,37 +65,37 @@ You can also use multi dimensional arrays::
     echo $accessor->getValue($persons, '[0][first_name]'); // 'Wouter'
     echo $accessor->getValue($persons, '[1][first_name]'); // 'Ryan'
 
-Reading from objects
+Reading from Objects
 --------------------
 
-The ``getValue`` method is a very robust method. You can see all features if
-you are working with objects.
+The ``getValue`` method is a very robust method, and you can see all of its
+features when working with objects.
 
-Using properties
-~~~~~~~~~~~~~~~~
+Accessing public Properties
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-We can read properties without the index notation, instead we use the dot
-notation::
+To read from properties, use the "dot" notation::
 
     // ...
     $person = new Person();
     $person->firstName = 'Wouter';
 
-    echo $accessor->getValue($person, 'first_name'); // 'Wouter'
+    echo $accessor->getValue($person, 'firstName'); // 'Wouter'
 
     $child = new Person();
     $child->firstName = 'Bar';
     $person->children = array($child);
 
-    echo $accessor->getValue($person, 'children[0].first_name'); // 'Bar'
+    echo $accessor->getValue($person, 'children[0].firstName'); // 'Bar'
 
 .. caution::
 
-    This option is the last option used by the ``PropertyAccessor``. It tries
-    to find the other options before using the property. If you have a public
-    property that have a getter to, it will use the getter.
+    Accessing public properties is the last option used by ``PropertyAccessor``.
+    It tries to access the value using the below methods first before using
+    the property directly. For example, if you have a public property that
+    has a getter method, it will use the getter.
 
-Using getters
+Using Getters
 ~~~~~~~~~~~~~
 
 The ``getValue`` method also supports reading using getters. The method will
@@ -118,11 +118,11 @@ property name (``first_name`` becomes ``FirstName``) and prefixes it with
 
     echo $accessor->getValue($person, 'first_name'); // 'Wouter'
 
-Using hassers/issers
+Using Hassers/Issers
 ~~~~~~~~~~~~~~~~~~~~
 
 And it doesn't even stop there. If there is no getter found, the accessor will
-look for a isser or hasser. This method is created using the same way as
+look for an isser or hasser. This method is created using the same way as
 getters, this means that you can do something like this::
 
     // ...
@@ -156,7 +156,7 @@ This will produce: ``He is an author``
 Magic Methods
 ~~~~~~~~~~~~~
 
-At last, the ``getValue`` can use the magic ``__get`` too::
+At last, ``getValue`` can use the magic ``__get`` method too::
 
     // ...
     class Person
@@ -175,12 +175,12 @@ At last, the ``getValue`` can use the magic ``__get`` too::
 
     echo $accessor->getValue($person, 'Wouter'); // array(...)
 
-Writing to arrays
+Writing to Arrays
 -----------------
 
-The ``PropertyAccessor`` class can do more than just reading an array, it can
+The ``PropertyAccessor`` class can do more than just read an array, it can
 also write to an array. This can be achieved using the
-:method:`Symfony\\Component\\PropertyAccess\\PropertyAccessor::setValue`
+:method:`PropertyAccessor::setValue<Symfony\\Component\\PropertyAccess\\PropertyAccessor::setValue>`
 method::
 
     // ...
@@ -192,7 +192,7 @@ method::
     // or
     // echo $person['first_name']; // 'Wouter'
 
-Writing to objects
+Writing to Objects
 ------------------
 
 The ``setValue`` method has the same features as the ``getValue`` method. You
@@ -228,7 +228,7 @@ can use setters, the magic ``__set`` or properties to set values::
     echo $person->getLastName(); // 'de Jong'
     echo $person->children; // array(Person());
 
-Mixing objects and arrays
+Mixing Objects and Arrays
 -------------------------
 
 You can also mix objects and arrays::

@@ -18,6 +18,7 @@ The Components
     http_kernel/index
     locale
     process
+    property_access/index
     routing/index
     security/index
     serializer
