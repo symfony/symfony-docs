@@ -225,7 +225,7 @@ The array passed to your ``load()`` method will look like this::
         array(
             'foo' => 'fooValue',
             'bar' => 'barValue',
-        )
+        ),
     )
 
 Notice that this is an *array of arrays*, not just a single flat array of the
@@ -408,7 +408,7 @@ configuration value:
         // app/config/config.php
         $container->loadFromExtension('acme_hello', array(
             'my_type' => 'foo',
-            // ...
+            ...,
         ));
 
 Global Parameters

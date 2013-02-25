@@ -290,8 +290,8 @@ add the ``allow_add`` option to your collection field::
         $builder->add('description');
 
         $builder->add('tags', 'collection', array(
-            'type' => new TagType(),
-            'allow_add' => true,
+            'type'         => new TagType(),
+            'allow_add'    => true,
             'by_reference' => false,
         ));
     }
@@ -519,8 +519,8 @@ Start by adding the ``allow_delete`` option in the form Type::
         $builder->add('description');
 
         $builder->add('tags', 'collection', array(
-            'type' => new TagType(),
-            'allow_add' => true,
+            'type'         => new TagType(),
+            'allow_add'    => true,
             'allow_delete' => true,
             'by_reference' => false,
         ));

@@ -153,7 +153,7 @@ array to its YAML representation:
 
     $array = array(
         'foo' => 'bar',
-        'bar' => array('foo' => 'bar', 'bar' => 'baz')
+        'bar' => array('foo' => 'bar', 'bar' => 'baz'),
     );
 
     $dumper = new Dumper();

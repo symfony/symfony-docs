@@ -39,7 +39,7 @@ respectively to ``/usr/bin/coffee`` and ``/usr/bin/node``:
         $container->loadFromExtension('assetic', array(
             'filters' => array(
                 'coffee' => array(
-                    'bin' => '/usr/bin/coffee',
+                    'bin'  => '/usr/bin/coffee',
                     'node' => '/usr/bin/node',
                 ),
             ),
@@ -63,7 +63,8 @@ templates:
 
         <?php foreach ($view['assetic']->javascripts(
             array('@AcmeFooBundle/Resources/public/js/example.coffee'),
-            array('coffee')) as $url): ?>
+            array('coffee')
+        ) as $url): ?>
             <script src="<?php echo $view->escape($url) ?>" type="text/javascript"></script>
         <?php endforeach; ?>
 
@@ -88,9 +89,12 @@ You can also combine multiple CoffeeScript files into a single output file:
     .. code-block:: html+php
 
         <?php foreach ($view['assetic']->javascripts(
-            array('@AcmeFooBundle/Resources/public/js/example.coffee',
-                  '@AcmeFooBundle/Resources/public/js/another.coffee'),
-            array('coffee')) as $url): ?>
+            array(
+                '@AcmeFooBundle/Resources/public/js/example.coffee',
+                '@AcmeFooBundle/Resources/public/js/another.coffee',
+            ),
+            array('coffee')
+        ) as $url): ?>
             <script src="<?php echo $view->escape($url) ?>" type="text/javascript"></script>
         <?php endforeach; ?>
 
@@ -143,8 +147,8 @@ applied to all ``.coffee`` files:
         $container->loadFromExtension('assetic', array(
             'filters' => array(
                 'coffee' => array(
-                    'bin' => '/usr/bin/coffee',
-                    'node' => '/usr/bin/node',
+                    'bin'      => '/usr/bin/coffee',
+                    'node'     => '/usr/bin/node',
                     'apply_to' => '\.coffee$',
                 ),
             ),
@@ -168,9 +172,11 @@ being run through the CoffeeScript filter):
     .. code-block:: html+php
 
         <?php foreach ($view['assetic']->javascripts(
-            array('@AcmeFooBundle/Resources/public/js/example.coffee',
-                  '@AcmeFooBundle/Resources/public/js/another.coffee',
-                  '@AcmeFooBundle/Resources/public/js/regular.js'),
-            as $url): ?>
+            array(
+                '@AcmeFooBundle/Resources/public/js/example.coffee',
+                '@AcmeFooBundle/Resources/public/js/another.coffee',
+                '@AcmeFooBundle/Resources/public/js/regular.js',
+            )
+        ) as $url): ?>
             <script src="<?php echo $view->escape($url) ?>" type="text/javascript"></script>
         <?php endforeach; ?>

@@ -539,9 +539,9 @@ the configuration for the development environment:
 
         // enable the web profiler
         $container->loadFromExtension('web_profiler', array(
-            'toolbar' => true,
+            'toolbar'             => true,
             'intercept-redirects' => true,
-            'verbose' => true,
+            'verbose'             => true,
         ));
 
 When ``only-exceptions`` is set to ``true``, the profiler only collects data

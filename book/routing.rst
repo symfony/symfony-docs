@@ -171,7 +171,7 @@ file:
         // app/config/config.php
         $container->loadFromExtension('framework', array(
             // ...
-            'router'        => array('resource' => '%kernel.root_dir%/config/routing.php'),
+            'router' => array('resource' => '%kernel.root_dir%/config/routing.php'),
         ));
 
 .. tip::
@@ -397,7 +397,7 @@ This is done by including it in the ``defaults`` collection:
         $collection = new RouteCollection();
         $collection->add('blog', new Route('/blog/{page}', array(
             '_controller' => 'AcmeBlogBundle:Blog:index',
-            'page' => 1,
+            'page'        => 1,
         )));
 
         return $collection;
@@ -466,7 +466,7 @@ Take a quick look at the routes that have been created so far:
         $collection = new RouteCollection();
         $collection->add('blog', new Route('/blog/{page}', array(
             '_controller' => 'AcmeBlogBundle:Blog:index',
-            'page' => 1,
+            'page'        => 1,
         )));
 
         $collection->add('blog_show', new Route('/blog/{show}', array(
@@ -528,7 +528,7 @@ requirements can easily be added for each parameter. For example:
         $collection = new RouteCollection();
         $collection->add('blog', new Route('/blog/{page}', array(
             '_controller' => 'AcmeBlogBundle:Blog:index',
-            'page' => 1,
+            'page'        => 1,
         ), array(
             'page' => '\d+',
         )));
@@ -598,7 +598,7 @@ URL:
         $collection = new RouteCollection();
         $collection->add('homepage', new Route('/{culture}', array(
             '_controller' => 'AcmeDemoBundle:Main:homepage',
-            'culture' => 'en',
+            'culture'     => 'en',
         ), array(
             'culture' => 'en|fr',
         )));
@@ -747,11 +747,11 @@ routing system can be:
         $collection = new RouteCollection();
         $collection->add('homepage', new Route('/articles/{culture}/{year}/{title}.{_format}', array(
             '_controller' => 'AcmeDemoBundle:Article:show',
-            '_format' => 'html',
+            '_format'     => 'html',
         ), array(
             'culture' => 'en|fr',
             '_format' => 'html|rss',
-            'year' => '\d+',
+            'year'    => '\d+',
         )));
 
         return $collection;
@@ -1069,7 +1069,7 @@ system. Take the ``blog_show`` example route from earlier::
 
     $params = $this->get('router')->match('/blog/my-blog-post');
     // array(
-    //     'slug' => 'my-blog-post',
+    //     'slug'        => 'my-blog-post',
     //     '_controller' => 'AcmeBlogBundle:Blog:show',
     // )
 

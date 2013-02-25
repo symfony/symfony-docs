@@ -144,7 +144,7 @@ like this::
         array(
             'foo' => 'fooValue',
             'bar' => 'barValue',
-        )
+        ),
     )
 
 Whilst you can manually manage merging the different files, it is much better
