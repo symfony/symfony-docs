@@ -149,7 +149,7 @@ cookie_lifetime
 ...............
 
 .. versionadded:: 2.1
-    This option was formerly know as ``lifetime``
+    This option was formerly known as ``lifetime``
 
 **type**: ``integer`` **default**: ``0``
 
@@ -160,7 +160,7 @@ cookie_path
 ...........
 
 .. versionadded:: 2.1
-    This option was formerly know as ``path``
+    This option was formerly known as ``path``
 
 **type**: ``string`` **default**: ``/``
 
@@ -170,7 +170,7 @@ cookie_domain
 .............
 
 .. versionadded:: 2.1
-    This option was formerly know as ``domain``
+    This option was formerly known as ``domain``
 
 **type**: ``string`` **default**: ``''``
 
@@ -182,7 +182,7 @@ cookie_secure
 .............
 
 .. versionadded:: 2.1
-    This option was formerly know as ``secure``
+    This option was formerly known as ``secure``
 
 **type**: ``Boolean`` **default**: ``false``
 
@@ -192,7 +192,7 @@ cookie_httponly
 ...............
 
 .. versionadded:: 2.1
-    This option was formerly know as ``httponly``
+    This option was formerly known as ``httponly``
 
 **type**: ``Boolean`` **default**: ``false``
 
