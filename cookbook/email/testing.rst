@@ -56,7 +56,10 @@ to get information about the messages send on the previous request::
             $this->assertEquals('Hello Email', $message->getSubject());
             $this->assertEquals('send@example.com', key($message->getFrom()));
             $this->assertEquals('recipient@example.com', key($message->getTo()));
-            $this->assertEquals('You should see me from the profiler!', $message->getBody());
+            $this->assertEquals(
+                'You should see me from the profiler!',
+                $message->getBody()
+            );
         }
     }
 

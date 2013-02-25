@@ -27,7 +27,11 @@ event is just one of the core kernel events::
         {
             // You get the exception object from the received event
             $exception = $event->getException();
-            $message = 'My Error says: ' . $exception->getMessage() . ' with code: ' . $exception->getCode();
+            $message = sprintf(
+                'My Error says: %s with code: %s',
+                $exception->getMessage(),
+                $exception->getCode()
+            );
 
             // Customize your response object to display the exception details
             $response = new Response();
