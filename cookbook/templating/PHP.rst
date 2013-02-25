@@ -38,8 +38,9 @@ your application configuration file:
     .. code-block:: php
 
         $container->loadFromExtension('framework', array(
-            ...,
-            'templating'      => array(
+            // ...
+
+            'templating' => array(
                 'engines' => array('twig', 'php'),
             ),
         ));
@@ -225,7 +226,10 @@ If you create a ``fancy`` action, and want to include it into the
 .. code-block:: html+php
 
     <!-- src/Acme/HelloBundle/Resources/views/Hello/index.html.php -->
-    <?php echo $view['actions']->render('AcmeHelloBundle:Hello:fancy', array('name' => $name, 'color' => 'green')) ?>
+    <?php echo $view['actions']->render('AcmeHelloBundle:Hello:fancy', array(
+        'name'  => $name,
+        'color' => 'green'
+    )) ?>
 
 Here, the ``AcmeHelloBundle:Hello:fancy`` string refers to the ``fancy`` action of the
 ``Hello`` controller::
@@ -239,7 +243,10 @@ Here, the ``AcmeHelloBundle:Hello:fancy`` string refers to the ``fancy`` action 
             // create some object, based on the $color variable
             $object = ...;
 
-            return $this->render('AcmeHelloBundle:Hello:fancy.html.php', array('name' => $name, 'object' => $object));
+            return $this->render('AcmeHelloBundle:Hello:fancy.html.php', array(
+                'name'   => $name,
+                'object' => $object
+            ));
         }
 
         // ...

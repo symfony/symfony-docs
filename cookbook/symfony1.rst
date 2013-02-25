@@ -228,7 +228,8 @@ class::
     // config/ProjectConfiguration.class.php
     public function setup()
     {
-        $this->enableAllPluginsExcept(array(... some plugins here));
+        // some plugins here
+        $this->enableAllPluginsExcept(array(...));
     }
 
 In Symfony2, the bundles are activated inside the application kernel::

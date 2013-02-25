@@ -134,7 +134,7 @@ password was valid::
             'admin' => array(
                 // password is "foo"
                 'password' => '5FZ2Z8QIkA7UTZ4BYkoC+GsReLf569mSKDsfods6LYQ8t+a8EW9oaircfMpmaLbPBh4FOBiiFyLfuZmTSUwzZg==',
-                'roles' => array('ROLE_ADMIN'),
+                'roles'    => array('ROLE_ADMIN'),
             ),
         )
     );
@@ -179,8 +179,9 @@ receives an array of encoders::
 
     $encoders = array(
         'Symfony\\Component\\Security\\Core\\User\\User' => $defaultEncoder,
-        'Acme\\Entity\\LegacyUser' => $weakEncoder,
-        ...,
+        'Acme\\Entity\\LegacyUser'                       => $weakEncoder,
+
+        // ...
     );
 
     $encoderFactory = new EncoderFactory($encoders);

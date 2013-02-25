@@ -433,7 +433,7 @@ Symfony2 will discover these files and use them when translating either
             return array(
                 'symfony2' => array(
                     'is' => array(
-                        'great' => 'Symfony2 is great',
+                        'great'   => 'Symfony2 is great',
                         'amazing' => 'Symfony2 is amazing',
                     ),
                     'has' => array(

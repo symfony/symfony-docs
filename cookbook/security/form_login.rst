@@ -74,10 +74,14 @@ the following config:
         // app/config/security.php
         $container->loadFromExtension('security', array(
             'firewalls' => array(
-                'main' => array('form_login' => array(
-                    ...,
-                    'default_target_path' => '/admin',
-                )),
+                'main' => array(
+                    // ...
+
+                    'form_login' => array(
+                        // ...
+                        'default_target_path' => '/admin',
+                    ),
+                ),
             ),
         ));
 
@@ -118,10 +122,14 @@ of what URL they had requested previously by setting the
         // app/config/security.php
         $container->loadFromExtension('security', array(
             'firewalls' => array(
-                'main' => array('form_login' => array(
-                    ...,
-                    'always_use_default_target_path' => true,
-                )),
+                'main' => array(
+                    // ...
+
+                    'form_login' => array(
+                        // ...
+                        'always_use_default_target_path' => true,
+                    ),
+                ),
             ),
         ));
 
@@ -160,10 +168,14 @@ this by setting ``use_referer`` to true (it defaults to false):
         // app/config/security.php
         $container->loadFromExtension('security', array(
             'firewalls' => array(
-                'main' => array('form_login' => array(
-                    ...,
-                    'use_referer' => true,
-                )),
+                'main' => array(
+                    // ...
+
+                    'form_login' => array(
+                        // ...
+                        'use_referer' => true,
+                    ),
+                ),
             ),
         ));
 
@@ -250,9 +262,11 @@ option to another value.
         // app/config/security.php
         $container->loadFromExtension('security', array(
             'firewalls' => array(
-                'main' => array('form_login' => array(
-                    'target_path_parameter' => redirect_url,
-                )),
+                'main' => array(
+                    'form_login' => array(
+                        'target_path_parameter' => redirect_url,
+                    ),
+                ),
             ),
         ));
 
@@ -293,9 +307,13 @@ following config:
         // app/config/security.php
         $container->loadFromExtension('security', array(
             'firewalls' => array(
-                'main' => array('form_login' => array(
-                    ...,
-                    'failure_path' => login_failure,
-                )),
+                'main' => array(
+                    // ...
+
+                    'form_login' => array(
+                        // ...
+                        'failure_path' => login_failure,
+                    ),
+                ),
             ),
         ));

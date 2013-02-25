@@ -21,7 +21,7 @@ as integration of other related components:
 
         framework:
             # ...
-            form:            true
+            form: true
 
     .. code-block:: xml
 
@@ -33,7 +33,7 @@ as integration of other related components:
 
         $container->loadFromExtension('framework', array(
             // ...
-            'form'            => true,
+            'form' => true,
             // ...
         ));
 
@@ -225,7 +225,7 @@ The array passed to your ``load()`` method will look like this::
         array(
             'foo' => 'fooValue',
             'bar' => 'barValue',
-        )
+        ),
     )
 
 Notice that this is an *array of arrays*, not just a single flat array of the
@@ -293,7 +293,10 @@ configuration::
     {
         // ... prepare your $config variable
 
-        $loader = new XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
+        $loader = new XmlFileLoader(
+            $container,
+            new FileLocator(__DIR__.'/../Resources/config')
+        );
         $loader->load('services.xml');
     }
 
@@ -305,7 +308,10 @@ option is passed and set to true::
     {
         // ... prepare your $config variable
 
-        $loader = new XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
+        $loader = new XmlFileLoader(
+            $container,
+            new FileLocator(__DIR__.'/../Resources/config')
+        );
 
         if (isset($config['enabled']) && $config['enabled']) {
             $loader->load('services.xml');
@@ -351,14 +357,22 @@ Add the following to the ``load()`` method to do this::
     {
         // ... prepare your $config variable
 
-        $loader = new XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
+        $loader = new XmlFileLoader(
+            $container,
+            new FileLocator(__DIR__.'/../Resources/config')
+        );
         $loader->load('services.xml');
 
         if (!isset($config['my_type'])) {
-            throw new \InvalidArgumentException('The "my_type" option must be set');
+            throw new \InvalidArgumentException(
+                'The "my_type" option must be set'
+            );
         }
 
-        $container->setParameter('acme_hello.my_service_type', $config['my_type']);
+        $container->setParameter(
+            'acme_hello.my_service_type',
+            $config['my_type']
+        );
     }
 
 Now, the user can effectively configure the service by specifying the ``my_type``
@@ -394,7 +408,7 @@ configuration value:
         // app/config/config.php
         $container->loadFromExtension('acme_hello', array(
             'my_type' => 'foo',
-            // ...
+            ...,
         ));
 
 Global Parameters
@@ -504,9 +518,10 @@ be output to the console in yaml.
 
 As long as your bundle's configuration is located in the standard location
 (``YourBundle\DependencyInjection\Configuration``) and does not have a
-``__constructor()`` it will work automatically.  If you have a something
-different your ``Extension`` class will have to override the
-``Extension::getConfiguration()`` method.  Have it return an instance of your
+``__construct()`` it will work automatically.  If you have something
+different, your ``Extension`` class must override the
+:method:`Extension::getConfiguration() <Symfony\\Component\\HttpKernel\\DependencyInjection\\Extension::getConfiguration>`
+method and return an instance of your
 ``Configuration``.
 
 Comments and examples can be added to your configuration nodes using the
@@ -558,9 +573,9 @@ When creating an extension, follow these simple conventions:
 * The extension should provide an XSD schema.
 
 If you follow these simple conventions, your extensions will be registered
-automatically by Symfony2. If not, override the Bundle
-:method:`Symfony\\Component\\HttpKernel\\Bundle\\Bundle::build` method in
-your bundle::
+automatically by Symfony2. If not, override the
+:method:`Bundle::build() <Symfony\\Component\\HttpKernel\\Bundle\\Bundle::build>`
+method in your bundle::
 
     // ...
     use Acme\HelloBundle\DependencyInjection\UnconventionalExtensionClass;

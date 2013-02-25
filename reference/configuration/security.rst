@@ -102,7 +102,9 @@ Each part will be explained in the next section.
                     access_denied_handler: some.service.id
                     entry_point: some.service.id
                     provider: some_key_from_above
-                    context: name
+                    # manages where each firewall stores session information
+                    # See "Firewall Context" below for more details
+                    context: context_key
                     stateless: false
                     x509:
                         provider: some_key_from_above
@@ -272,7 +274,7 @@ Redirecting after Login
 
 .. _reference-security-pbkdf2:
 
-Using the PBKDF2 encoder: security and speed
+Using the PBKDF2 encoder: Security and Speed
 --------------------------------------------
 
 .. versionadded:: 2.2
@@ -305,6 +307,7 @@ Using the BCrypt Password Encoder
         # app/config/security.yml
         security:
             # ...
+
             encoders:
                 Symfony\Component\Security\Core\User\User:
                     algorithm: bcrypt
@@ -356,6 +359,66 @@ persisting the encoded password alone is enough.
 
     All the encoded passwords are ``60`` characters long, so make sure to
     allocate enough space for them to be persisted.
+
+    .. _reference-security-firewall-context:
+
+Firewall Context
+----------------
+
+Most applications will only need one :ref:`firewall<book-security-firewalls>`.
+But if your application *does* use multiple firewalls, you'll notice that
+if you're authenticated in one firewall, you're not automatically authenticated
+in another. In other words, the systems don't share a common "context": each
+firewall acts like a separate security system.
+
+However, each firewall has an optional ``context`` key (which defaults to
+the name of the firewall), which is used when storing and retrieving security
+data to and from the session. If this key were set to the same value across
+multiple firewalls, the "context" could actually be shared:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # app/config/security.yml
+        security:
+            # ...
+
+            firewalls:
+                somename:
+                    # ...
+                    context: my_context
+                othername:
+                    # ...
+                    context: my_context
+
+    .. code-block:: xml
+
+       <!-- app/config/security.xml -->
+       <security:config>
+          <firewall name="somename" context="my_context">
+            <! ... ->
+          </firewall>
+          <firewall name="othername" context="my_context">
+            <! ... ->
+          </firewall>
+       </security:config>
+
+    .. code-block:: php
+
+       // app/config/security.php
+       $container->loadFromExtension('security', array(
+            'firewalls' => array(
+                'somename' => array(
+                    // ...
+                    'context' => 'my_context'
+                ),
+                'othername' => array(
+                    // ...
+                    'context' => 'my_context'
+                ),
+            ),
+       ));
 
 HTTP-Digest Authentication
 --------------------------

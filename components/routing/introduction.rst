@@ -210,7 +210,7 @@ a certain route::
     $generator = new UrlGenerator($routes, $context);
 
     $url = $generator->generate('show_post', array(
-        'slug' => 'my-blog-post'
+        'slug' => 'my-blog-post',
     ));
     // /show/my-blog-post
 

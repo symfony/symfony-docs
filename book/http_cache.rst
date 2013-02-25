@@ -621,7 +621,7 @@ header value::
             return $response;
         }
 
-        // ... do more work to populate the response will the full content
+        // ... do more work to populate the response with the full content
 
         return $response;
     }
@@ -854,7 +854,7 @@ First, to use ESI, be sure to enable it in your application configuration:
 
         // app/config/config.php
         $container->loadFromExtension('framework', array(
-            // ...
+            ...,
             'esi'    => array('enabled' => true),
         ));
 
@@ -900,7 +900,7 @@ matter), Symfony2 uses the standard ``render`` helper to configure ESI tags:
 
         <?php echo $view['actions']->render(
             $view['router']->generate('latest_news', array('max' => 5), true),
-            array('renderer' => 'esi')
+            array('renderer' => 'esi'),
         ) ?>
 
 By using the ``esi`` renderer (via the ``render_esi`` Twig function), you

@@ -272,9 +272,11 @@ annotations if you're using the annotation method to specify your constraints:
     .. code-block:: php
 
         // app/config/config.php
-        $container->loadFromExtension('framework', array('validation' => array(
-            'enable_annotations' => true,
-        )));
+        $container->loadFromExtension('framework', array(
+            'validation' => array(
+                'enable_annotations' => true,
+            ),
+        ));
 
 .. index::
    single: Validation; Constraints

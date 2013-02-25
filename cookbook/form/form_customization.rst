@@ -433,10 +433,13 @@ form is rendered.
 
         // app/config/config.php
         $container->loadFromExtension('twig', array(
-            'form' => array('resources' => array(
-                'AcmeDemoBundle:Form:fields.html.twig',
-             )),
-             ...,
+            'form' => array(
+                'resources' => array(
+                    'AcmeDemoBundle:Form:fields.html.twig',
+                ),
+            ),
+
+            // ...
         ));
 
 By default, Twig uses a *div* layout when rendering forms. Some people, however,
@@ -467,10 +470,13 @@ resource to use such a layout:
 
         // app/config/config.php
         $container->loadFromExtension('twig', array(
-            'form' => array('resources' => array(
-                'form_table_layout.html.twig',
-             )),
-             ...,
+            'form' => array(
+                'resources' => array(
+                    'form_table_layout.html.twig',
+                ),
+            ),
+
+            // ...
         ));
 
 If you only want to make the change in one template, add the following line to
@@ -521,11 +527,15 @@ form is rendered.
         // app/config/config.php
         // PHP
         $container->loadFromExtension('framework', array(
-            'templating' => array('form' =>
-                array('resources' => array(
-                    'AcmeDemoBundle:Form',
-             ))),
-             ...,
+            'templating' => array(
+                'form' => array(
+                    'resources' => array(
+                        'AcmeDemoBundle:Form',
+                    ),
+                ),
+             ),
+
+             // ...
         ));
 
 By default, the PHP engine uses a *div* layout when rendering forms. Some people,
@@ -559,11 +569,15 @@ resource to use such a layout:
 
         // app/config/config.php
         $container->loadFromExtension('framework', array(
-            'templating' => array('form' =>
-                array('resources' => array(
-                    'FrameworkBundle:FormTable',
-             ))),
-             ...,
+            'templating' => array(
+                'form' => array(
+                    'resources' => array(
+                        'FrameworkBundle:FormTable',
+                    ),
+                ),
+            ),
+
+             // ...
         ));
 
 If you only want to make the change in one template, add the following line to
@@ -942,9 +956,11 @@ customizations directly. Look at the following example:
     .. code-block:: php
 
         <!-- render a widget, but add a "foo" class to it -->
-        <?php echo $view['form']->widget($form['name'], array('attr' => array(
-            'class' => 'foo',
-        ))) ?>
+        <?php echo $view['form']->widget($form['name'], array(
+            'attr' => array(
+                'class' => 'foo',
+            ),
+        )) ?>
 
 The array passed as the second argument contains form "variables". For
 more details about this concept in Twig, see :ref:`twig-reference-form-variables`.

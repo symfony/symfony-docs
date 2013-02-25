@@ -66,7 +66,8 @@ It can now be used from a template:
 
         <?php foreach ($view['assetic']->images(
             array('@AcmeFooBundle/Resources/public/images/example.jpg'),
-            array('jpegoptim')) as $url): ?>
+            array('jpegoptim')
+        ) as $url): ?>
             <img src="<?php echo $view->escape($url) ?>" alt="Example"/>
         <?php endforeach; ?>
 
@@ -104,7 +105,7 @@ remove these by using the ``strip_all`` option:
         $container->loadFromExtension('assetic', array(
             'filters' => array(
                 'jpegoptim' => array(
-                    'bin' => 'path/to/jpegoptim',
+                    'bin'       => 'path/to/jpegoptim',
                     'strip_all' => 'true',
                 ),
             ),
