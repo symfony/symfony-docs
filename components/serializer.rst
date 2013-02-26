@@ -96,6 +96,22 @@ The first parameter of the :method:`Symfony\\Component\\Serializer\\Serializer::
 is the object to be serialized and the second is used to choose the proper encoder,
 in this case :class:`Symfony\\Component\\Serializer\\Encoder\\JsonEncoder`.
 
+As an option, there's a way to ignore attributes from the origin object to be
+serialized, to remove those attributes use
+:method:`Symfony\\Component\\Serializer\\Normalizer\\GetSetMethodNormalizer::setIgnoredAttributes`
+method on normalizer definition::
+
+    use Symfony\Component\Serializer\Serializer;
+    use Symfony\Component\Serializer\Encoder\JsonEncoder;
+    use Symfony\Component\Serializer\Normalizer\GetSetMethodNormalizer;
+
+    $normalizer = new GetSetMethodNormalizer();
+    $normalizer->setIgnoredAttributes(array('age'));
+    $encoder = new JsonEncoder();
+
+    $serializer = new Serializer(array($normalizer), array($encoder));
+    $serializer->serialize($person, 'json'); // Output: {"name":"foo"}
+
 Deserializing an Object
 ~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -117,6 +133,32 @@ needs three parameters:
 1. The information to be decoded
 2. The name of the class this information will be decoded to
 3. The encoder used to convert that information into an array
+
+Sometimes property names from the serialized content are underscored, in a
+regular configuration those attributes will use get/set methods as
+``getCamel_case``, when ``getCamelCase`` method is preferable. To change that
+behavior use
+:method:`Symfony\\Component\\Serializer\\Normalizer\\GetSetMethodNormalizer::setCamelizedAttributes`
+on normalizer definition::
+
+        $encoder = new JsonEncoder();
+        $normalizer = new GetSetMethodNormalizer();
+        $normalizer->setCamelizedAttributes(array('camel_case'));
+
+        $serializer = new Serializer(array($normalizer), array($encoder));
+
+        $json = <<<EOT
+        {
+            "name":       "foo",
+            "age":        "19",
+            "camel_case": "bar"
+        }
+        EOT;
+
+        $person = $serializer->deserialize($json, 'Acme\Person', 'json');
+
+As a final result, Person object uses ``camelCase`` attribute for
+``camel_case`` json parameter, the same applies on getters and setters.
 
 JMSSerializer
 -------------
