@@ -23,6 +23,7 @@ forms, which is useful when creating forms that expose one-to-many relationships
 | Inherited   | - `label`_                                                                  |
 | options     | - `error_bubbling`_                                                         |
 |             | - `by_reference`_                                                           |
+|             | - `empty_data`_                                                             |
 +-------------+-----------------------------------------------------------------------------+
 | Parent type | :doc:`form</reference/forms/types/form>`                                    |
 +-------------+-----------------------------------------------------------------------------+
@@ -344,3 +345,5 @@ error_bubbling
 .. _reference-form-types-by-reference:
 
 .. include:: /reference/forms/types/options/by_reference.rst.inc
+
+.. include:: /reference/forms/types/options/empty_data.rst.inc
