@@ -179,9 +179,10 @@ but still serve them as a single file:
         <?php endforeach; ?>
 
 In the ``dev`` environment, each file is still served individually, so that
-you can debug problems more easily. However, in the ``prod`` environment,
-this will be rendered as a single ``script`` tag, which contains the contents
-of all of the JavaScript files.
+you can debug problems more easily. However, in the ``prod`` environment
+(or more specifically, when the ``debug`` flag is ``false``), this will be
+rendered as a single ``script`` tag, which contains the contents of all of
+the JavaScript files.
 
 .. tip::
 
