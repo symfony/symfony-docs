@@ -289,7 +289,7 @@ pattern:
 
     # src/Acme/HelloBundle/Resources/config/routing.yml
     hello: # The route name
-        pattern:  /hello/{name}
+        path:  /hello/{name}
         defaults: { _controller: AcmeHelloBundle:Hello:index }
 
 Using Assets: images, JavaScripts, and stylesheets

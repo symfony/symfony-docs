@@ -37,7 +37,7 @@ To test that it's working, let's create a very basic route for demo bundle:
 
     # app/config/routing.yml
     hello:
-        pattern:  /hello/{name}
+        path:  /hello/{name}
         defaults: { _controller: AcmeDemoBundle:Demo:hello }
 
 

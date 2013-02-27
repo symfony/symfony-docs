@@ -12,14 +12,17 @@ The Components
     dom_crawler
     dependency_injection/index
     event_dispatcher/index
+    filesystem
     finder
     http_foundation/index
     http_kernel/index
     locale
     process
+    property_access/index
     routing/index
     security/index
     serializer
+    stopwatch
     templating
     yaml/index
 

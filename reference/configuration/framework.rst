@@ -15,7 +15,6 @@ routing and more.
 Configuration
 -------------
 
-* `charset`_
 * `secret`_
 * `ide`_
 * `test`_
@@ -26,19 +25,19 @@ Configuration
     * enabled
     * field_name
 * `session`_
-    * `lifetime`_
+    * `cookie_lifetime`_
+    * `cookie_path`_
+    * `cookie_domain`_
+    * `cookie_secure`_
+    * `cookie_httponly`_
+    * `gc_divisor`_
+    * `gc_probability`_
+    * `gc_maxlifetime`_
+    * `save_path`_
 * `templating`_
     * `assets_base_urls`_
     * `assets_version`_
     * `assets_version_format`_
-
-charset
-~~~~~~~
-
-**type**: ``string`` **default**: ``UTF-8``
-
-The character set that's used throughout the framework. It becomes the service
-container parameter named ``kernel.charset``.
 
 secret
 ~~~~~~
@@ -146,13 +145,104 @@ csrf_protection
 session
 ~~~~~~~
 
-lifetime
-........
+cookie_lifetime
+...............
+
+.. versionadded:: 2.1
+    This option was formerly know as ``lifetime``
 
 **type**: ``integer`` **default**: ``0``
 
 This determines the lifetime of the session - in seconds. By default it will use
 ``0``, which means the cookie is valid for the length of the browser session.
+
+cookie_path
+...........
+
+.. versionadded:: 2.1
+    This option was formerly know as ``path``
+
+**type**: ``string`` **default**: ``/``
+
+This determines the path to set in the session cookie. By default it will use ``/``.
+
+cookie_domain
+.............
+
+.. versionadded:: 2.1
+    This option was formerly know as ``domain``
+
+**type**: ``string`` **default**: ``''``
+
+This determines the domain to set in the session cookie. By default it's blank,
+meaning the host name of the server which generated the cookie according
+to the cookie specification.
+
+cookie_secure
+.............
+
+.. versionadded:: 2.1
+    This option was formerly know as ``secure``
+
+**type**: ``Boolean`` **default**: ``false``
+
+This determines whether cookies should only be sent over secure connections.
+
+cookie_httponly
+...............
+
+.. versionadded:: 2.1
+    This option was formerly know as ``httponly``
+
+**type**: ``Boolean`` **default**: ``false``
+
+This determines whether cookies should only accesible through the HTTP protocol.
+This means that the cookie won't be accesible by scripting languages, such
+as JavaScript. This setting can effectively help to reduce identity theft
+through XSS attacks.
+
+gc_probability
+..............
+
+.. versionadded:: 2.1
+    The ``gc_probability`` option is new in version 2.1
+
+**type**: ``integer`` **default**: ``1``
+
+This defines the probability that the garbage collector (GC) process is started
+on every session initialization. The probability is calculated by using
+``gc_probability`` / ``gc_divisor``, e.g. 1/100 means there is a 1% chance
+that the GC process will start on each request.
+
+gc_divisor
+..........
+
+.. versionadded:: 2.1
+    The ``gc_divisor`` option is new in version 2.1
+
+**type**: ``integer`` **default**: ``100``
+
+See `gc_probability`_.
+
+gc_maxlifetime
+..............
+
+.. versionadded:: 2.1
+    The ``gc_maxlifetime`` option is new in version 2.1
+
+**type**: ``integer`` **default**: ``14400``
+
+This determines the number of seconds after which data will be seen as "garbage"
+and potentially cleaned up. Garbage collection may occur during session start
+and depends on `gc_divisor`_ and `gc_probability`_.
+
+save_path
+.........
+
+**type**: ``string`` **default**: ``%kernel.cache.dir%/sessions``
+
+This determines the argument to be passed to the save handler. If you choose
+the default file handler, this is the path where the files are created.
 
 templating
 ~~~~~~~~~~
@@ -173,6 +263,15 @@ URL's for ``http`` and ``https`` requests. If a URL starts with ``https://`` or
 is `protocol-relative`_ (i.e. starts with `//`) it will be added to both
 collections. URL's starting with ``http://`` will only be added to the
 ``http`` collection.
+
+.. versionadded:: 2.1
+    Unlike most configuration blocks, successive values for ``assets_base_urls``
+    will overwrite each other instead of being merged. This behavior was chosen
+    because developers will typically define base URL's for each environment.
+    Given that most projects tend to inherit configurations
+    (e.g. ``config_test.yml`` imports ``config_dev.yml``) and/or share a common
+    base configuration (i.e. ``config.yml``), merging could yield a set of base
+    URL's for multiple environments.
 
 .. _ref-framework-assets-version:
 
@@ -278,36 +377,44 @@ Full Default Configuration
     .. code-block:: yaml
 
         framework:
-
-            # general configuration
             charset:              ~
-            secret:               ~ # Required
+            secret:               ~
+            trust_proxy_headers:  false
+            trusted_proxies:      []
             ide:                  ~
             test:                 ~
-            trust_proxy_headers:  false
+            default_locale:       en
 
             # form configuration
             form:
-                enabled:              true
+                enabled:              false
             csrf_protection:
-                enabled:              true
+                enabled:              false
                 field_name:           _token
 
             # esi configuration
             esi:
-                enabled:              true
+                enabled:              false
+
+            # fragments configuration
+            fragments:
+                enabled:              false
+                path:                 /_fragment
 
             # profiler configuration
             profiler:
+                enabled:              false
                 only_exceptions:      false
                 only_master_requests:  false
-                dsn:                  "sqlite:%kernel.cache_dir%/profiler.db"
+                dsn:                  file:%kernel.cache_dir%/profiler
                 username:
                 password:
                 lifetime:             86400
                 matcher:
                     ip:                   ~
-                    path:                 ~
+
+                    # use the urldecoded format
+                    path:                 ~ # Example: ^/path to resource/
                     service:              ~
 
             # router configuration
@@ -317,29 +424,59 @@ Full Default Configuration
                 http_port:            80
                 https_port:           443
 
+                # set to true to throw an exception when a parameter does not match the requirements
+                # set to false to disable exceptions when a parameter does not match the requirements (and return null instead)
+                # set to null to disable parameter checks against requirements
+                # 'true' is the preferred configuration in development mode, while 'false' or 'null' might be preferred in production
+                strict_requirements:  true
+
             # session configuration
             session:
-                auto_start:           ~
-                default_locale:       en
+                # DEPRECATED! Session starts on demand
+                auto_start:           false
                 storage_id:           session.storage.native
+                handler_id:           session.handler.native_file
                 name:                 ~
-                lifetime:             0
+                cookie_lifetime:      ~
+                cookie_path:          ~
+                cookie_domain:        ~
+                cookie_secure:        ~
+                cookie_httponly:      ~
+                gc_divisor:           ~
+                gc_probability:       ~
+                gc_maxlifetime:       ~
+                save_path:            %kernel.cache_dir%/sessions
+
+                # DEPRECATED! Please use: cookie_lifetime
+                lifetime:             ~
+
+                # DEPRECATED! Please use: cookie_path
                 path:                 ~
+
+                # DEPRECATED! Please use: cookie_domain
                 domain:               ~
+
+                # DEPRECATED! Please use: cookie_secure
                 secure:               ~
+
+                # DEPRECATED! Please use: cookie_httponly
                 httponly:             ~
 
             # templating configuration
             templating:
                 assets_version:       ~
-                assets_version_format:  "%%s?%%s"
+                assets_version_format:  %%s?%%s
+                hinclude_default_template:  ~
+                form:
+                    resources:
+
+                        # Default:
+                        - FrameworkBundle:Form
                 assets_base_urls:
                     http:                 []
                     ssl:                  []
                 cache:                ~
                 engines:              # Required
-                form:
-                    resources:        [FrameworkBundle:Form]
 
                     # Example:
                     - twig
@@ -349,26 +486,32 @@ Full Default Configuration
                     # Prototype
                     name:
                         version:              ~
-                        version_format:       ~
+                        version_format:       %%s?%%s
                         base_urls:
                             http:                 []
                             ssl:                  []
 
             # translator configuration
             translator:
-                enabled:              true
+                enabled:              false
                 fallback:             en
 
             # validation configuration
             validation:
-                enabled:              true
+                enabled:              false
                 cache:                ~
                 enable_annotations:   false
+                translation_domain:   validators
 
             # annotation configuration
             annotations:
                 cache:                file
-                file_cache_dir:       "%kernel.cache_dir%/annotations"
-                debug:                true
+                file_cache_dir:       %kernel.cache_dir%/annotations
+                debug:                %kernel.debug%
+
+
+.. versionadded:: 2.1
+    The ```framework.session.auto_start`` setting has been removed in Symfony2.1,
+    it will start on demand now.
 
 .. _`protocol-relative`: http://tools.ietf.org/html/rfc3986#section-4.2

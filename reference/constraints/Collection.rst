@@ -5,7 +5,7 @@ This constraint is used when the underlying data is a collection (i.e. an
 array or an object that implements ``Traversable`` and ``ArrayAccess``),
 but you'd like to validate different keys of that collection in different
 ways. For example, you might validate the ``email`` key using the ``Email``
-constraint and the ``inventory`` key of the collection with the ``Min`` constraint.
+constraint and the ``inventory`` key of the collection with the ``Range`` constraint.
 
 This constraint can also make sure that certain collection keys are present
 and that extra keys are not present.
@@ -62,9 +62,9 @@ blank but is no longer than 100 characters in length, you would do the following
                             personal_email: Email
                             short_bio:
                                 - NotBlank
-                                - MaxLength:
-                                    limit:   100
-                                    message: Your short bio is too long!
+                                - Length:
+                                    max:   100
+                                    maxMessage: Your short bio is too long!
                         allowMissingFields: true
 
     .. code-block:: php-annotations
@@ -82,9 +82,9 @@ blank but is no longer than 100 characters in length, you would do the following
              *         "personal_email" = @Assert\Email,
              *         "short_bio" = {
              *             @Assert\NotBlank(),
-             *             @Assert\MaxLength(
-             *                 limit = 100,
-             *                 message = "Your bio is too long!"
+             *             @Assert\Length(
+             *                 max = 100,
+             *                 maxMessage = "Your bio is too long!"
              *             )
              *         }
              *     },
@@ -109,9 +109,9 @@ blank but is no longer than 100 characters in length, you would do the following
                         </value>
                         <value key="short_bio">
                             <constraint name="NotBlank" />
-                            <constraint name="MaxLength">
-                                <option name="limit">100</option>
-                                <option name="message">Your bio is too long!</option>
+                            <constraint name="Length">
+                                <option name="max">100</option>
+                                <option name="maxMessage">Your bio is too long!</option>
                             </constraint>
                         </value>
                     </option>
@@ -137,7 +137,10 @@ blank but is no longer than 100 characters in length, you would do the following
                 $metadata->addPropertyConstraint('profileData', new Assert\Collection(array(
                     'fields' => array(
                         'personal_email' => new Assert\Email(),
-                        'lastName' => array(new Assert\NotBlank(), new Assert\MaxLength(100)),
+                        'lastName' => array(
+                            new Assert\NotBlank(),
+                            new Assert\Length(array("max" => 100)),
+                        ),
                     ),
                     'allowMissingFields' => true,
                 )));

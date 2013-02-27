@@ -1,6 +1,12 @@
 Max
 ===
 
+.. caution::
+
+    The Max constraint is deprecated since version 2.1 and will be removed
+    in Symfony 2.3. Use :doc:`/reference/constraints/Range` with the ``max``
+    option instead.
+
 Validates that a given number is *less* than some maximum number.
 
 +----------------+--------------------------------------------------------------------+

@@ -65,4 +65,8 @@ When using the ClassLoader component following code is sufficient to supplement 
     $locales = Locale::getDisplayLocales('en');
     $localeCodes = Locale::getLocales();
 
+    // Get ICU versions
+    $icuVersion = Locale::getIntlIcuVersion();
+    $icuDataVersion = Locale::getIcuDataVersion();
+
 .. _Packagist: https://packagist.org/packages/symfony/locale
