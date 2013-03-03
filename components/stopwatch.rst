@@ -47,7 +47,7 @@ Periods
 
 As you know from the real world, all stopwatches come with two buttons:
 one to start and stop the stopwatch, and another to measure the lap time.
-This is exactly what the :method:``Symfony\\Component\\Stopwatch\\Stopwatch::lap``
+This is exactly what the :method:`Symfony\\Component\\Stopwatch\\Stopwatch::lap``
 method does::
 
     $stopwatch = new Stopwatch();
