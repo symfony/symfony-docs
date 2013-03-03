@@ -91,7 +91,7 @@ Symfony Profiler tool. Here is a basic usage example using sections::
 
     $events = $stopwatch->getSectionEvents('routing');
 
-You can reopen a closed section by calling the :method:``Symfony\\Component\\Stopwatch\\Stopwatch::openSection``
+You can reopen a closed section by calling the :method:`Symfony\\Component\\Stopwatch\\Stopwatch::openSection``
 method and specifying the id of the section to be reopened::
 
     $stopwatch->openSection('routing');
