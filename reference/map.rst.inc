@@ -9,10 +9,12 @@
   * :doc:`doctrine </reference/configuration/doctrine>`
   * :doc:`security </reference/configuration/security>`
   * :doc:`assetic </reference/configuration/assetic>`
-  * :doc:`swiftmailer </reference/configuration/swiftmailer>`
+  * :doc:`swiftMailer </reference/configuration/swiftmailer>`
   * :doc:`twig </reference/configuration/twig>`
   * :doc:`monolog </reference/configuration/monolog>`
   * :doc:`web_profiler </reference/configuration/web_profiler>`
+
+* :doc:`Configuration in the Kernel </reference/configuration/kernel>`
 
 * **Forms and Validation**
 

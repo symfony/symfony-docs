@@ -23,6 +23,8 @@ directory structure is:
         app.php
         ...
 
+.. _override-cache-dir:
+
 Override the ``cache`` directory
 --------------------------------
 
@@ -52,6 +54,8 @@ the location of the cache directory to ``app/{environment}/cache``.
     otherwise some unexpected behaviour may happen. Each environment generates
     its own cached config files, and so each needs its own directory to store
     those cache files.
+
+.. _override-logs-dir:
 
 Override the ``logs`` directory
 -------------------------------
