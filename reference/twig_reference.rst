@@ -77,10 +77,11 @@ Filters
 |                                                                                 | spaces and capitalizes the string)                                |
 +---------------------------------------------------------------------------------+-------------------------------------------------------------------+
 | ``text|trans(arguments = {}, domain = 'messages', locale = null)``              | This will translate the text into the current language, more      |
-|                                                                                 | information in :ref:`book-translation-filers`.                    |
+|                                                                                 | information in .                                                  |
+|                                                                                 | :ref:`Translation Filters<book-translation-filters>`.             |
 +---------------------------------------------------------------------------------+-------------------------------------------------------------------+
 | ``text|transchoice(count, arguments = {}, domain = 'messages', locale = null)`` | This will translate the text with pluralization, more information |
-|                                                                                 | in :ref:`book-translation-filters`.                               |
+|                                                                                 | in :ref:`Translation Filters<book-translation-filters>`.          |
 +---------------------------------------------------------------------------------+-------------------------------------------------------------------+
 | ``variable|yaml_encode(inline = 0)``                                            | This will transform the variable text into a YAML syntax.         |
 +---------------------------------------------------------------------------------+-------------------------------------------------------------------+
