@@ -476,7 +476,7 @@ The code below shows the implementation of the
 
 To finish the implementation, the configuration of the security layer must be
 changed to tell Symfony to use the new custom entity provider instead of the
-generic Doctrine entity provider. It's trival to achieve by removing the
+generic Doctrine entity provider. It's trivial to achieve by removing the
 ``property`` field in the ``security.providers.administrators.entity`` section
 of the ``security.yml`` file.
 
