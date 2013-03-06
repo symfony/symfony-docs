@@ -952,6 +952,26 @@ should render with the subdirectory (e.g. ``/my_app/images/logo.png``). The
 ``asset`` function takes care of this by determining how your application is
 being used and generating the correct paths accordingly.
 
+.. tip::
+    
+    .. versionadded:: 2.3.0
+        Regex css and js matching added
+
+    You also can match js or css file with *, the first matched asset file will be included.
+    It is useful when you want to use assets from bundles suplied by third-party vendors.
+        
+    .. configuration-block::
+
+        .. code-block:: html+jinja
+
+            <script src="{{ asset('js/jquery*.js') }}" type="text/javascript"></script>
+
+        .. code-block:: html+php
+
+            <link href="<?php echo $view['assets']->getUrl('js/jquery*.js') ?>" type="text/javascript"></script>            
+
+    Resulting template will include link to js/jquery-1.8.3.js if it exists.
+
 Additionally, if you use the ``asset`` function, Symfony can automatically
 append a query string to your asset, in order to guarantee that updated static
 assets won't be cached when deployed. For example, ``/images/logo.png`` might
