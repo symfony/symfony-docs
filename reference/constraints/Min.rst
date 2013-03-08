@@ -73,7 +73,7 @@ the following:
                 $metadata->addPropertyConstraint('age', new Assert\Min(array(
                     'limit'   => '18',
                     'message' => 'You must be 18 or older to enter.',
-                ));
+                )));
             }
         }
 
