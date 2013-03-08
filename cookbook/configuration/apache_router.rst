@@ -13,12 +13,33 @@ Change Router Configuration Parameters
 To dump Apache routes you must first tweak some configuration parameters to tell
 Symfony2 to use the ``ApacheUrlMatcher`` instead of the default one:
 
-.. code-block:: yaml
+.. configuration-block::
 
-    # app/config/config_prod.yml
-    parameters:
-        router.options.matcher.cache_class: ~ # disable router cache
-        router.options.matcher_class: Symfony\Component\Routing\Matcher\ApacheUrlMatcher
+    .. code-block:: yaml
+
+        # app/config/config_prod.yml
+        parameters:
+            router.options.matcher.cache_class: ~ # disable router cache
+            router.options.matcher_class: Symfony\Component\Routing\Matcher\ApacheUrlMatcher
+
+    .. code-block:: xml
+
+        <!-- app/config/config_prod.xml -->
+        <parameters>
+            <parameter key="router.options.matcher.cache_class">null</parameter> <!-- disable router cache -->
+            <parameter key="router.options.matcher_class">
+                Symfony\Component\Routing\Matcher\ApacheUrlMatcher
+            </parameter>
+        </parameters>
+
+    .. code-block:: php
+
+        // app/config/config_prod.php
+        $container->setParameter('router.options.matcher.cache_class', null); // disable router cache
+        $container->setParameter(
+            'router.options.matcher_class',
+            'Symfony\Component\Routing\Matcher\ApacheUrlMatcher'
+        );
 
 .. tip::
 
@@ -33,13 +54,28 @@ Generating mod_rewrite rules
 
 To test that it's working, let's create a very basic route for demo bundle:
 
-.. code-block:: yaml
+.. configuration-block::
 
-    # app/config/routing.yml
-    hello:
-        path:  /hello/{name}
-        defaults: { _controller: AcmeDemoBundle:Demo:hello }
+    .. code-block:: yaml
 
+        # app/config/routing.yml
+        hello:
+            pattern:  /hello/{name}
+            defaults: { _controller: AcmeDemoBundle:Demo:hello }
+
+    .. code-block:: xml
+
+        <!-- app/config/routing.xml -->
+        <route id="hello" pattern="/hello/{name}">
+            <default key="_controller">AcmeDemoBundle:Demo:hello</default>
+        </route>
+
+    .. code-block:: php
+
+        // app/config/routing.php
+        $collection->add('hello', new Route('/hello/{name}', array(
+            '_controller' => 'AcmeDemoBundle:Demo:hello',
+        )));
 
 Now generate **url_rewrite** rules:
 

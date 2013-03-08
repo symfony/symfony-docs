@@ -217,26 +217,66 @@ Now you make the user provider available as a service:
 Modify ``security.yml``
 -----------------------
 
-In ``/app/config/security.yml`` everything comes together. Add the user provider
+Everything comes together in your security configuration. Add the user provider
 to the list of providers in the "security" section. Choose a name for the user provider
 (e.g. "webservice") and mention the id of the service you just defined.
 
-.. code-block:: yaml
+.. configuration-block::
 
-    security:
-        providers:
-            webservice:
-                id: webservice_user_provider
+    .. code-block:: yaml
+
+        // app/config/security.yml
+        security:
+            providers:
+                webservice:
+                    id: webservice_user_provider
+
+    .. code-block:: xml
+
+        <!-- app/config/security.xml -->
+        <config>
+            <provider name="webservice" id="webservice_user_provider" />
+        </config>
+
+    .. code-block:: php
+
+        // app/config/security.php
+        $container->loadFromExtension('security', array(
+            'providers' => array(
+                'webservice' => array(
+                    'id' => 'webservice_user_provider',
+                ),
+            ),
+        ));
 
 Symfony also needs to know how to encode passwords that are supplied by website
 users, e.g. by filling in a login form. You can do this by adding a line to the
-"encoders" section in ``/app/config/security.yml``.
+"encoders" section in your security configuration:
 
-.. code-block:: yaml
+.. configuration-block::
 
-    security:
-        encoders:
-            Acme\WebserviceUserBundle\Security\User\WebserviceUser: sha512
+    .. code-block:: yaml
+
+        # app/config/security.yml
+        security:
+            encoders:
+                Acme\WebserviceUserBundle\Security\User\WebserviceUser: sha512
+
+    .. code-block:: xml
+
+        <!-- app/config/security.xml -->
+        <config>
+            <encoder class="Acme\WebserviceUserBundle\Security\User\WebserviceUser">sha512</encoder>
+        </config>
+
+    .. code-block:: php
+
+        // app/config/security.php
+        $container->loadFromExtension('security', array(
+            'encoders' => array(
+                'Acme\WebserviceUserBundle\Security\User\WebserviceUser' => 'sha512',
+            ),
+        ));
 
 The value here should correspond with however the passwords were originally
 encoded when creating your users (however those users were created). When
@@ -263,15 +303,42 @@ options, the password may be encoded multiple times and encoded to base64.
 
     Additionally, the hash, by default, is encoded multiple times and encoded
     to base64. For specific details, see `MessageDigestPasswordEncoder`_.
-    To prevent this, configure it in ``security.yml``:
+    To prevent this, configure it in your configuration file:
 
-    .. code-block:: yaml
+    .. configuration-block::
 
-        security:
-            encoders:
-                Acme\WebserviceUserBundle\Security\User\WebserviceUser:
-                    algorithm: sha512
-                    encode_as_base64: false
-                    iterations: 1
+        .. code-block:: yaml
+
+            # app/config/security.yml
+            security:
+                encoders:
+                    Acme\WebserviceUserBundle\Security\User\WebserviceUser:
+                        algorithm: sha512
+                        encode_as_base64: false
+                        iterations: 1
+
+        .. code-block:: xml
+
+            <!-- app/config/security.xml -->
+            <config>
+                <encoder class="Acme\WebserviceUserBundle\Security\User\WebserviceUser"
+                    algorithm="sha512"
+                    encode-as-base64="false"
+                    iterations="1"
+                />
+            </config>
+
+        .. code-block:: php
+
+            // app/config/security.php
+            $container->loadFromExtension('security', array(
+                'encoders' => array(
+                    'Acme\WebserviceUserBundle\Security\User\WebserviceUser' => array(
+                        'algorithm'         => 'sha512',
+                        'encode_as_base64'  => false,
+                        'iterations'        => 1,
+                    ),
+                ),
+            ));
 
 .. _MessageDigestPasswordEncoder: https://github.com/symfony/symfony/blob/master/src/Symfony/Component/Security/Core/Encoder/MessageDigestPasswordEncoder.php

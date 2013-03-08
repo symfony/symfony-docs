@@ -22,7 +22,7 @@ will be covered in this cookbook entry.
 Basic Setup
 -----------
 
-First, create a simple Doctrine Entity class to work with::
+First, create a simple ``Doctrine`` Entity class to work with::
 
     // src/Acme/DemoBundle/Entity/Document.php
     namespace Acme\DemoBundle\Entity;
@@ -118,20 +118,68 @@ look like this::
     }
 
 Next, create this property on your ``Document`` class and add some validation
-rules::
+rules:
 
-    // src/Acme/DemoBundle/Entity/Document.php
+.. configuration-block::
 
-    // ...
-    class Document
-    {
-        /**
-         * @Assert\File(maxSize="6000000")
-         */
-        public $file;
+    .. code-block:: yaml
+
+        # src/Acme/DemoBundle/Resources/config/validation.yml
+        Acme\DemoBundle\Entity\Document:
+            properties:
+                file:
+                    - File:
+                        maxSize: 6000000
+
+    .. code-block:: php-annotations
+
+        // src/Acme/DemoBundle/Entity/Document.php
+        namespace Acme\DemoBundle\Entity;
 
         // ...
-    }
+        use Symfony\Component\Validator\Constraints as Assert;
+
+        class Document
+        {
+            /**
+             * @Assert\File(maxSize="6000000")
+             */
+            public $file;
+
+            // ...
+        }
+
+    .. code-block:: xml
+
+        <!-- src/Acme/DemoBundle/Resources/config/validation.yml -->
+        <class name="Acme\DemoBundle\Entity\Document">
+            <property name="file">
+                <constraint name="File">
+                    <option name="maxSize">6000000</option>
+                </constraint>
+            </property>
+        </class>
+
+    .. code-block:: php
+
+        // src/Acme/DemoBundle/Entity/Document.php
+        namespace Acme\DemoBundle\Entity;
+
+        // ...
+        use Symfony\Component\Validator\Mapping\ClassMetadata;
+        use Symfony\Component\Validator\Constraints as Assert;
+
+        class Document
+        {
+            // ...
+            
+            public static function loadValidatorMetadata(ClassMetadata $metadata)
+            {
+                $metadata->addPropertyConstraint('file', new Assert\File(array(
+                    'maxSize' => 6000000,
+                )));
+            }
+        }
 
 .. note::
 
@@ -141,6 +189,7 @@ rules::
 
 The following controller shows you how to handle the entire process::
 
+    // ...
     use Acme\DemoBundle\Entity\Document;
     use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
     // ...
@@ -176,15 +225,27 @@ The following controller shows you how to handle the entire process::
 
     When writing the template, don't forget to set the ``enctype`` attribute:
 
-    .. code-block:: html+jinja
+    .. configuration-block::
 
-        <h1>Upload File</h1>
+        .. code-block:: html+jinja
 
-        <form action="#" method="post" {{ form_enctype(form) }}>
-            {{ form_widget(form) }}
+            <h1>Upload File</h1>
 
-            <input type="submit" value="Upload Document" />
-        </form>
+            <form action="#" method="post" {{ form_enctype(form) }}>
+                {{ form_widget(form) }}
+
+                <input type="submit" value="Upload Document" />
+            </form>
+
+        .. code-block:: html+php
+
+            <h1>Upload File</h1>
+
+            <form action="#" method="post" <?php echo $view['form']->enctype($form) ?>>
+                <?php echo $view['form']->widget($form) ?>
+
+                <input type="submit" value="Upload Document" />
+            </form>
 
 The previous controller will automatically persist the ``Document`` entity
 with the submitted name, but it will do nothing about the file and the ``path``

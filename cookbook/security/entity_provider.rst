@@ -258,6 +258,64 @@ then be checked against your User entity records in the database:
             access_control:
                 - { path: ^/admin, roles: ROLE_ADMIN }
 
+    .. code-block:: xml
+
+        <!-- app/config/security.xml -->
+        <config>
+            <encoder class="Acme\UserBundle\Entity\User"
+                algorithm="sha1"
+                encode-as-base64="false"
+                iterations="1"
+            />
+
+            <role id="ROLE_ADMIN">ROLE_USER</role>
+            <role id="ROLE_SUPER_ADMIN">ROLE_USER, ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH</role>
+
+            <provider name="administrators">
+                <entity class="AcmeUserBundle:User" property="username" />
+            </provider>
+
+            <firewall name="admin_area" pattern="^/admin">
+                <http-basic />
+            </firewall>
+
+            <rule path="^/admin" role="ROLE_ADMIN" />
+        </config>
+
+    .. code-block:: php
+
+        // app/config/security.php
+        $container->loadFromExtension('security', array(
+            'encoders' => array(
+                'Acme\UserBundle\Entity\User' => array(
+                    'algorithm'         => 'sha1',
+                    'encode_as_base64'  => false,
+                    'iterations'        => 1,
+                ),
+            ),
+            'role_hierarchy' => array(
+                'ROLE_ADMIN'       => 'ROLE_USER',
+                'ROLE_SUPER_ADMIN' => array('ROLE_USER', 'ROLE_ADMIN', 'ROLE_ALLOWED_TO_SWITCH'),
+            ),
+            'providers' => array(
+                'administrator' => array(
+                    'entity' => array(
+                        'class'    => 'AcmeUserBundle:User',
+                        'property' => 'username',
+                    ),
+                ),
+            ),
+            'firewalls' => array(
+                'admin_area' => array(
+                    'pattern' => '^/admin',
+                    'http_basic' => null,
+                ),
+            ),
+            'access_control' => array(
+                array('path' => '^/admin', 'role' => 'ROLE_ADMIN'),
+            ),
+        ));
+
 The ``encoders`` section associates the ``sha1`` password encoder to the entity
 class. This means that Symfony will expect the password that's stored in
 the database to be encoded using this algorithm. For details on how to create
@@ -433,6 +491,34 @@ of the ``security.yml`` file.
                 administrators:
                     entity: { class: AcmeUserBundle:User }
             # ...
+    
+    .. code-block:: xml
+
+        <!-- app/config/security.xml -->
+        <config>
+            <!-- ... -->
+
+            <provider name="administrator">
+                <entity class="AcmeUserBundle:User" />
+            </provider>
+
+            <!-- ... -->
+        </config>
+
+    .. code-block:: php
+
+        // app/config/security.php
+        $container->loadFromExtension('security', array(
+            ...,
+            'providers' => array(
+                'administrator' => array(
+                    'entity' => array(
+                        'class' => 'AcmeUserBundle:User',
+                    ),
+                ),
+            ),
+            ...,
+        ));
 
 By doing this, the security layer will use an instance of ``UserRepository`` and
 call its ``loadUserByUsername()`` method to fetch a user from the database
