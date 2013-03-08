@@ -179,7 +179,7 @@ In your controller, you'll now initialize a new instance of ``TaskType``::
             if ('POST' === $request->getMethod()) {
                 $form->bindRequest($request);
                 if ($form->isValid()) {
-                    // maybe do some form processing, like saving the Task and Tag objects
+                    // ... maybe do some form processing, like saving the Task and Tag objects
                 }
             }
 
@@ -458,6 +458,24 @@ into new ``Tag`` objects and added to the ``tags`` property of the ``Task`` obje
                     tags:
                         targetEntity: Tag
                         cascade:      [persist]
+
+        .. code-block:: xml
+
+            <!-- src/Acme/TaskBundle/Resources/config/doctrine/Task.orm.xml -->
+            <doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
+                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
+                                http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+
+                <entity name="Acme\TaskBundle\Entity\Task" ...>
+                    <!-- ... -->
+                    <one-to-many field="tags" target-entity="Tag">
+                        <cascade>
+                            <cascade-persist />
+                        </cascade>
+                    </one-to-many>
+                </entity>
+            </doctrine-mapping>
 
     A second potential issue deals with the `Owning Side and Inverse Side`_
     of Doctrine relationships. In this example, if the "owning" side of the

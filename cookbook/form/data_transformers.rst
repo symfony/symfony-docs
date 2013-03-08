@@ -65,7 +65,9 @@ for converting to and from the issue number and the Issue object::
          * Transforms a string (number) to an object (issue).
          *
          * @param  string $number
+         *
          * @return Issue|null
+         *
          * @throws TransformationFailedException if object (issue) is not found.
          */
         public function reverseTransform($number)
@@ -287,6 +289,17 @@ it's recognized as a custom field type:
             <tag name="form.type" alias="issue_selector" />
         </service>
 
+    .. code-block:: php
+
+        $container
+            ->setDefinition('acme_demo.type.issue_selector', array(
+                new Reference('doctrine.orm.entity_manager'),
+            ))
+            ->addTag('form.type', array(
+                'alias' => 'issue_selector',
+            ))
+        ;
+
 Now, whenever you need to use your special ``issue_selector`` field type,
 it's quite easy::
 
@@ -311,4 +324,3 @@ it's quite easy::
             return 'task';
         }
     }
-

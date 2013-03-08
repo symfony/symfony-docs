@@ -743,6 +743,7 @@ and customize the ``field_errors`` fragment.
         <?php endif ?>
 
 .. tip::
+
     See :ref:`cookbook-form-theming-methods` for how to apply this customization.
 
 You can also customize the error output for just one specific field type.
@@ -796,6 +797,7 @@ class to the ``div`` element around each row:
         </div>
 
 .. tip::
+
     See :ref:`cookbook-form-theming-methods` for how to apply this customization.
 
 Adding a "Required" Asterisk to Field Labels
@@ -850,6 +852,7 @@ original template:
     <?php endif ?>
 
 .. tip::
+
     See :ref:`cookbook-form-theming-methods` for how to apply this customization.
 
 Adding "help" messages
@@ -919,6 +922,7 @@ To render a help message below a field, pass in a ``help`` variable:
         <?php echo $view['form']->widget($form['title'], array('help' => 'foobar')) ?>
 
 .. tip::
+
     See :ref:`cookbook-form-theming-methods` for how to apply this customization.
 
 Using Form Variables

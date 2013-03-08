@@ -119,11 +119,19 @@ key, and define the type as ``constant``.
     This only works for XML configuration. If you're *not* using XML, simply
     import an XML file to take advantage of this functionality:
 
-    .. code-block:: yaml
+    .. configuration-block::
 
-        # app/config/config.yml
-        imports:
-            - { resource: parameters.xml }
+        .. code-block:: yaml
+
+            # app/config/config.yml
+            imports:
+                - { resource: parameters.xml }
+
+        .. code-block:: php
+
+            // app/config/config.php
+            $loader->import('parameters.xml');
+
 
 Miscellaneous Configuration
 ---------------------------
