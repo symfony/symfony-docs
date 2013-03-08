@@ -231,6 +231,24 @@ looks up the value of each parameter and uses it in the service definition.
 
         <argument type="string">http://symfony.com/?foo=%%s&bar=%%d</argument>
 
+.. versionadded:: 2.1
+    Escaping the ``@`` character in YAML parameter values is new in Symfony 2.1.9
+    and Symfony 2.2.1.
+
+.. note::
+
+    If you want to use a string that starts with an ``@`` sign as a parameter
+    value (i.e. a very safe mailer password) in a yaml file, you need to escape
+    it by adding another ``@`` sign (This only applies to the YAML format):
+
+    .. code-block:: yaml
+
+        # app/config/parameters.yml
+        parameters:
+            # This will be parsed as string "@securepass"
+            mailer_password: "@@securepass"
+
+
 The purpose of parameters is to feed information into services. Of course
 there was nothing wrong with defining the service without using any parameters.
 Parameters, however, have several advantages:
