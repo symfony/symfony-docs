@@ -30,6 +30,7 @@ Basic Usage
 The ``Collection`` constraint allows you to validate the different keys of
 a collection individually. Take the following example::
 
+    // src/Acme/BlogBundle/Entity/Author.php
     namespace Acme\BlogBundle\Entity;
 
     class Author
@@ -53,7 +54,7 @@ blank but is no longer than 100 characters in length, you would do the following
 
     .. code-block:: yaml
 
-        # src/BlogBundle/Resources/config/validation.yml
+        # src/Acme/BlogBundle/Resources/config/validation.yml
         Acme\BlogBundle\Entity\Author:
             properties:
                 profileData:
