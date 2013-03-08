@@ -26,13 +26,13 @@ then clone your fork:
     $ git clone git://github.com/YOURUSERNAME/symfony-docs.git
 
 Consistent with Symfony's source code, the documentation repository is split into
-three branches: ``2.0`` for the current Symfony 2.0.x release, ``2.1`` for the
-current Symfony 2.1.x release and ``master`` as the development branch for
-upcoming releases.
+multiple branches: ``2.0``, ``2.1``, ``2.2`` corresponding to the different
+versions of Symfony itself. The ``master`` branch holds the documentation
+for the development branch of the code.
 
-Unless you're documenting a feature that's new to Symfony 2.1, your changes
-should always be based on the 2.0 branch instead of the master branch. To do
-this checkout the 2.0 branch before the next step:
+Unless you're documenting a feature that was introduced *after* Symfony 2.0
+(e.g. in Symfony 2.1), your changes should always be based on the 2.0 branch.
+To do this checkout the 2.0 branch before the next step:
 
 .. code-block:: bash
 
