@@ -359,13 +359,13 @@ to service ids that do not exist yet: ``wsse.security.authentication.provider`` 
 
         # src/Acme/DemoBundle/Resources/config/services.yml
         services:
-          wsse.security.authentication.provider:
-            class:  Acme\DemoBundle\Security\Authentication\Provider\WsseProvider
-            arguments: ['', %kernel.cache_dir%/security/nonces]
+            wsse.security.authentication.provider:
+                class:  Acme\DemoBundle\Security\Authentication\Provider\WsseProvider
+                arguments: ['', %kernel.cache_dir%/security/nonces]
 
-          wsse.security.authentication.listener:
-            class:  Acme\DemoBundle\Security\Firewall\WsseListener
-            arguments: [@security.context, @security.authentication.manager]
+            wsse.security.authentication.listener:
+                class:  Acme\DemoBundle\Security\Firewall\WsseListener
+                arguments: [@security.context, @security.authentication.manager]
 
 
     .. code-block:: xml
@@ -375,19 +375,19 @@ to service ids that do not exist yet: ``wsse.security.authentication.provider`` 
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
-           <services>
-               <service id="wsse.security.authentication.provider"
-                 class="Acme\DemoBundle\Security\Authentication\Provider\WsseProvider" public="false">
-                   <argument /> <!-- User Provider -->
-                   <argument>%kernel.cache_dir%/security/nonces</argument>
-               </service>
+            <services>
+                <service id="wsse.security.authentication.provider"
+                    class="Acme\DemoBundle\Security\Authentication\Provider\WsseProvider" public="false">
+                    <argument /> <!-- User Provider -->
+                    <argument>%kernel.cache_dir%/security/nonces</argument>
+                </service>
 
-               <service id="wsse.security.authentication.listener"
-                 class="Acme\DemoBundle\Security\Firewall\WsseListener" public="false">
-                   <argument type="service" id="security.context"/>
-                   <argument type="service" id="security.authentication.manager" />
-               </service>
-           </services>
+                <service id="wsse.security.authentication.listener"
+                    class="Acme\DemoBundle\Security\Firewall\WsseListener" public="false">
+                    <argument type="service" id="security.context"/>
+                    <argument type="service" id="security.authentication.manager" />
+                </service>
+            </services>
         </container>
 
     .. code-block:: php
@@ -397,17 +397,22 @@ to service ids that do not exist yet: ``wsse.security.authentication.provider`` 
         use Symfony\Component\DependencyInjection\Reference;
 
         $container->setDefinition('wsse.security.authentication.provider',
-          new Definition(
-            'Acme\DemoBundle\Security\Authentication\Provider\WsseProvider',
-            array('', '%kernel.cache_dir%/security/nonces')
-        ));
+            new Definition(
+                'Acme\DemoBundle\Security\Authentication\Provider\WsseProvider', array(
+                    '',
+                    '%kernel.cache_dir%/security/nonces',
+                )
+            )
+        );
 
         $container->setDefinition('wsse.security.authentication.listener',
-          new Definition(
-            'Acme\DemoBundle\Security\Firewall\WsseListener', array(
-              new Reference('security.context'),
-              new Reference('security.authentication.manager')),
-        ));
+            new Definition(
+                'Acme\DemoBundle\Security\Firewall\WsseListener', array(
+                    new Reference('security.context'),
+                    new Reference('security.authentication.manager'),
+                )
+            )
+        );
 
 Now that your services are defined, tell your security context about your
 factory in your bundle class:
@@ -437,13 +442,35 @@ factory in your bundle class:
 
 You are finished! You can now define parts of your app as under WSSE protection.
 
-.. code-block:: yaml
+.. configuration-block::
 
-    security:
-        firewalls:
-            wsse_secured:
-                pattern:   /api/.*
-                wsse:      true
+    .. code-block:: yaml
+
+        security:
+            firewalls:
+                wsse_secured:
+                    pattern:   /api/.*
+                    wsse:      true
+
+    .. code-block:: xml
+
+        <config>
+            <firewall name="wsse_secured" pattern="/api/.*">
+                <wsse />
+            </firewall>
+        </config>
+
+    .. code-block:: php
+
+        $container->loadFromExtension('security', array(
+            'firewalls' => array(
+                'wsse_secured' => array(
+                    'pattern' => '/api/.*',
+                    'wsse'    => true,
+                ),
+            ),
+        ));
+    
 
 Congratulations!  You have written your very own custom security authentication
 provider!
@@ -516,13 +543,38 @@ in order to put it to use.
 The lifetime of each wsse request is now configurable, and can be
 set to any desirable value per firewall.
 
-.. code-block:: yaml
+.. configuration-block::
 
-    security:
-        firewalls:
-            wsse_secured:
-                pattern:   /api/.*
-                wsse:      { lifetime: 30 }
+    .. code-block:: yaml
+
+        security:
+            firewalls:
+                wsse_secured:
+                    pattern:   /api/.*
+                    wsse:      { lifetime: 30 }
+
+    .. code-block:: xml
+
+        <config>
+            <firewall name="wsse_secured"
+                pattern="/api/.*"
+            >
+                <wsse lifetime="30" />
+            </firewall>
+        </config>
+
+    .. code-block:: php
+
+        $container->loadFromExtension('security', array(
+            'firewalls' => array(
+                'wsse_secured' => array(
+                    'pattern' => '/api/.*',
+                    'wsse'    => array(
+                        'lifetime' => 30,
+                    ),
+                ),
+            ),
+        ));
 
 The rest is up to you! Any relevant configuration items can be defined
 in the factory and consumed or passed to the other classes in the container.

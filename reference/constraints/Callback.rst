@@ -156,6 +156,18 @@ process. Each method can be one of the following formats:
             {
             }
 
+        .. code-block:: xml
+
+            <!-- src/Acme/BlogBundle/Resources/config/validation.xml -->
+            <class name="Acme\BlogBundle\Entity\Author">
+                <constraint name="Callback">
+                    <option name="methods">
+                        <value>Acme\BlogBundle\MyStaticValidatorClass</value>
+                        <value>isAuthorValid</value>
+                    </option>
+                </constraint>
+            </class>
+
         .. code-block:: php
 
             // src/Acme/BlogBundle/Entity/Author.php

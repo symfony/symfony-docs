@@ -56,6 +56,99 @@ The following configuration code shows how you can configure two entity managers
                         mappings:
                             AcmeCustomerBundle: ~
 
+    .. code-block:: xml
+
+        <?xml version="1.0" encoding="UTF-8"?>
+
+        <srv:container xmlns="http://symfony.com/schema/dic/doctrine"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:srv="http://symfony.com/schema/dic/services"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd
+                                http://symfony.com/schema/dic/doctrine http://symfony.com/schema/dic/doctrine/doctrine-1.0.xsd">
+
+            <config>
+                <dbal default-connection="default">
+                    <connection name="default"
+                        driver="%database_driver%"
+                        host="%database_host%"
+                        port="%database_port%"
+                        dbname="%database_name%"
+                        user="%database_user%"
+                        password="%database_password%"
+                        charset="UTF8"
+                    />
+
+                    <connection name="customer"
+                        driver="%database_driver2%"
+                        host="%database_host2%"
+                        port="%database_port2%"
+                        dbname="%database_name2%"
+                        user="%database_user2%"
+                        password="%database_password2%"
+                        charset="UTF8"
+                    />
+                </dbal>
+
+                <orm default-entity-manager="default">
+                    <entity-manager name="default" connection="default">
+                        <mapping name="AcmeDemoBundle" />
+                        <mapping name="AcmeStoreBundle" />
+                    </entity-manager>
+
+                    <entity-manager name="customer" connection="customer">
+                        <mapping name="AcmeCustomerBundle" />
+                    </entity-manager>
+                </orm>
+            </config>
+        </srv:container>
+
+    .. code-block:: php
+
+        $container->loadFromExtension('doctrine', array(
+            'dbal' => array(
+                'default_connection' => 'default',
+                'connections' => array(
+                    'default' => array(
+                        'driver'   => '%database_driver%',
+                        'host'     => '%database_host%',
+                        'port'     => '%database_port%',
+                        'dbname'   => '%database_name%',
+                        'user'     => '%database_user%',
+                        'password' => '%database_password%',
+                        'charset'  => 'UTF8',
+                    ),
+                    'customer' => array(
+                        'driver'   => '%database_driver2%',
+                        'host'     => '%database_host2%',
+                        'port'     => '%database_port2%',
+                        'dbname'   => '%database_name2%',
+                        'user'     => '%database_user2%',
+                        'password' => '%database_password2%',
+                        'charset'  => 'UTF8',
+                    ),
+                ),
+            ),
+
+            'orm' => array(
+                'default_entity_manager' => 'default',
+                'entity_managers' => array(
+                    'default' => array(
+                        'connection' => 'default',
+                        'mappings'   => array(
+                            'AcmeDemoBundle'  => null,
+                            'AcmeStoreBundle' => null,
+                        ),
+                    ),
+                    'customer' => array(
+                        'connection' => 'customer',
+                        'mappings'   => array(
+                            'AcmeCustomerBundle' => null,
+                        ),
+                    ),
+                ),
+            ),
+        ));
+
 In this case, you've defined two entity managers and called them ``default``
 and ``customer``. The ``default`` entity manager manages entities in the
 ``AcmeDemoBundle`` and ``AcmeStoreBundle``, while the ``customer`` entity
