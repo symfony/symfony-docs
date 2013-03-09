@@ -118,23 +118,27 @@ trusted_proxies
 Configures the IP addresses that should be trusted as proxies. For more details,
 see :doc:`/components/http_foundation/trusting_proxies`.
 
+.. versionadded:: 2.3
+    CIDR notation support was introduced, so you can whitelist whole
+    subnets (e.g. ``10.0.0.0/8``, ``fc00::/7``).
+
 .. configuration-block::
 
     .. code-block:: yaml
 
         framework:
-            trusted_proxies:  [192.0.0.1]
+            trusted_proxies:  [192.0.0.1, 10.0.0.0/8]
 
     .. code-block:: xml
 
-        <framework:config trusted-proxies="192.0.0.1">
+        <framework:config trusted-proxies="192.0.0.1, 10.0.0.0/8">
             <!-- ... -->
         </framework>
 
     .. code-block:: php
 
         $container->loadFromExtension('framework', array(
-            'trusted_proxies' => array('192.0.0.1'),
+            'trusted_proxies' => array('192.0.0.1', '10.0.0.0/8'),
         ));
 
 .. _reference-framework-form:
