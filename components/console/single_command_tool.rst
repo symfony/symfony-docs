@@ -47,3 +47,8 @@ it is possible to remove this need by extending the application::
 
 When calling your console script, the command `MyCommand` will then always
 be used, without having to pass its name.
+
+.. note::
+
+  If your command accepts one or more arguments, you may also want to override
+  getDefinition() method.
