@@ -37,8 +37,8 @@ label you want to display as the second argument.
     {{ form_label(form.name) }}
 
     {# The two following syntaxes are equivalent #}
-    {{ form_label(form.name, 'Your Name', { 'attr': {'class': 'foo'} }) }}
-    {{ form_label(form.name, null, { 'label': 'Your name', 'attr': {'class': 'foo'} }) }}
+    {{ form_label(form.name, 'Your Name', { 'label_attr': {'class': 'foo'} }) }}
+    {{ form_label(form.name, null, { 'label': 'Your name', 'label_attr': {'class': 'foo'} }) }}
 
 See ":ref:`twig-reference-form-variables`" to learn about the ``variables``
 argument.
