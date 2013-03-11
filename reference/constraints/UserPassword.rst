@@ -4,6 +4,14 @@ UserPassword
 .. versionadded:: 2.1
    This constraint is new in version 2.1.
 
+.. note::
+
+    The `UserPassword` constraint class is defined in the
+    `Symfony\Component\Security\Core\Validator\Constraints` namespace since
+    Symfony 2.2. The `UserPassword` defined in the
+    `Symfony\Component\Security\Core\Validator\Constraint` namespace is
+    deprecated and will be removed in Symfony 2.3.
+
 This validates that an input value is equal to the current authenticated
 user's password. This is useful in a form where a user can change his password,
 but needs to enter his old password for security.
