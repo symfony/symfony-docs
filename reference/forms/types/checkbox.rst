@@ -19,7 +19,7 @@ if the box is unchecked, the value will be set to false.
 |             | - `disabled`_                                                          |
 |             | - `error_bubbling`_                                                    |
 +-------------+------------------------------------------------------------------------+
-| Parent type | :doc:`field</reference/forms/types/field>`                             |
+| Parent type | :doc:`form</reference/forms/types/form>`                               |
 +-------------+------------------------------------------------------------------------+
 | Class       | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\CheckboxType` |
 +-------------+------------------------------------------------------------------------+
@@ -48,7 +48,7 @@ not affect the value that's set on your object.
 Inherited options
 -----------------
 
-These options inherit from the :doc:`field</reference/forms/types/field>` type:
+These options inherit from the :doc:`form</reference/forms/types/form>` type:
 
 .. include:: /reference/forms/types/options/required.rst.inc
 

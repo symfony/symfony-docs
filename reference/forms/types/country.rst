@@ -52,7 +52,7 @@ These options inherit from the :doc:`choice</reference/forms/types/choice>` type
 
 .. include:: /reference/forms/types/options/error_bubbling.rst.inc
 
-These options inherit from the :doc:`field</reference/forms/types/field>` type:
+These options inherit from the :doc:`form</reference/forms/types/form>` type:
 
 .. include:: /reference/forms/types/options/required.rst.inc
 

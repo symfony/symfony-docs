@@ -12,7 +12,7 @@ The hidden type represents a hidden input field.
 | Inherited   | - ``data``                                                           |
 | options     | - ``property_path``                                                  |
 +-------------+----------------------------------------------------------------------+
-| Parent type | :doc:`field</reference/forms/types/field>`                           |
+| Parent type | :doc:`form</reference/forms/types/form>`                             |
 +-------------+----------------------------------------------------------------------+
 | Class       | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\HiddenType` |
 +-------------+----------------------------------------------------------------------+
@@ -20,7 +20,7 @@ The hidden type represents a hidden input field.
 Inherited Options
 -----------------
 
-These options inherit from the :doc:`field</reference/forms/types/field>` type:
+These options inherit from the :doc:`form</reference/forms/types/form>` type:
 
 .. include:: /reference/forms/types/options/data.rst.inc
 
