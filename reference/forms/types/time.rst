@@ -29,7 +29,7 @@ as a ``DateTime`` object, a string, a timestamp or an array.
 |                      | - `read_only`_                                                              |
 |                      | - `disabled`_                                                               |
 +----------------------+-----------------------------------------------------------------------------+
-| Parent type          | form                                                                        |
+| Parent type          | :doc:`form</reference/forms/types/form>`                                    |
 +----------------------+-----------------------------------------------------------------------------+
 | Class                | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\TimeType`          |
 +----------------------+-----------------------------------------------------------------------------+
@@ -113,7 +113,7 @@ this format.
 Inherited options
 -----------------
 
-These options inherit from the :doc:`field</reference/forms/types/field>` type:
+These options inherit from the :doc:`form</reference/forms/types/form>` type:
 
 .. include:: /reference/forms/types/options/invalid_message.rst.inc
 

@@ -27,7 +27,7 @@ how the input and output of the data is handled.
 |             | - `invalid_message`_                                                |
 |             | - `invalid_message_parameters`_                                     |
 +-------------+---------------------------------------------------------------------+
-| Parent type | :doc:`field</reference/forms/types/field>`                          |
+| Parent type | :doc:`form</reference/forms/types/form>`                            |
 +-------------+---------------------------------------------------------------------+
 | Class       | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\MoneyType` |
 +-------------+---------------------------------------------------------------------+
@@ -44,7 +44,7 @@ Specifies the currency that the money is being specified in. This determines
 the currency symbol that should be shown by the text box. Depending on
 the currency - the currency symbol may be shown before or after the input
 text field.
-    
+
 This can also be set to false to hide the currency symbol.
 
 divisor
@@ -80,7 +80,7 @@ to ``0``).
 Inherited Options
 -----------------
 
-These options inherit from the :doc:`field</reference/forms/types/field>` type:
+These options inherit from the :doc:`form</reference/forms/types/form>` type:
 
 .. include:: /reference/forms/types/options/required.rst.inc
 
