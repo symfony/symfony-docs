@@ -120,7 +120,9 @@ Creating the Listener Class
 
 In the previous example, a service ``my.listener`` was configured as a Doctrine
 listener on the event ``postPersist``. That class behind that service must have
-a ``postPersist`` method, which will be called when the event is thrown::
+a ``postPersist`` method, which will be called when the event is thrown.
+
+.. code-block::php
 
     // src/Acme/SearchBundle/EventListener/SearchIndexer.php
     namespace Acme\SearchBundle\EventListener;
@@ -158,6 +160,7 @@ Creating the Subscriber Class
 A doctrine event subscriber must implement the ``Doctrine\Common\EventSubscriber``
 interface and an event method for each event it subscribes to.
 
+.. code-block::php
 
     // src/Acme/SearchBundle/EventListener/SearchIndexerSubscriber.php
     namespace Acme\SearchBundle\EventListener;
@@ -175,14 +178,17 @@ interface and an event method for each event it subscribes to.
                 'postUpdate',
             );
         }
+
         public function postUpdate(LifecycleEventArgs $args)
         {
             $this->index($args);
         }
+
         public function postPersist(LifecycleEventArgs $args)
         {
             $this->index($args);
         }
+
         public function index(LifecycleEventArgs $args)
         {
             $entity = $args->getEntity();
@@ -195,7 +201,7 @@ interface and an event method for each event it subscribes to.
         }
     }
 
-.. hint::
+.. tip::
 
     Doctrine event subscribers can not return a flexible array of methods to
     call for the events like the :ref:`Symfony event subscriber <event_dispatcher-using-event-subscribers>`
