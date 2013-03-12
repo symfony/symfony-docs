@@ -45,7 +45,7 @@ method. This is done using the index notation that is used in PHP::
         'first_name' => 'Wouter',
     );
 
-    echo $accessor->getValue($persons, '[first_name]'); // 'Wouter'
+    echo $accessor->getValue($person, '[first_name]'); // 'Wouter'
     echo $accessor->getValue($person, '[age]'); // null
 
 As you can see, the method will return ``null`` if the index does not exists.
