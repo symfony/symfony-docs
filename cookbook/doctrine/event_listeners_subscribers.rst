@@ -152,4 +152,56 @@ specific type of entity (e.g. a ``Product`` entity but not a ``BlogPost``
 entity), you should check for the class name of the entity in your method
 (as shown above).
 
+Creating the Subscriber Class
+-----------------------------
+
+A doctrine event subscriber must implement the ``Doctrine\Common\EventSubscriber``
+interface and an event method for each event it subscribes to.
+
+
+    // src/Acme/SearchBundle/EventListener/SearchIndexerSubscriber.php
+    namespace Acme\SearchBundle\EventListener;
+
+    use Doctrine\Common\EventSubscriber;
+    use Doctrine\ORM\Event\LifecycleEventArgs;
+    use Acme\StoreBundle\Entity\Product;
+
+    class SearchIndexerSubscriber implements EventSubscriber
+    {
+        public function getSubscribedEvents()
+        {
+            return array(
+                'postPersist',
+                'postUpdate',
+            );
+        }
+        public function postUpdate(LifecycleEventArgs $args)
+        {
+            $this->index($args);
+        }
+        public function postPersist(LifecycleEventArgs $args)
+        {
+            $this->index($args);
+        }
+        public function index(LifecycleEventArgs $args)
+        {
+            $entity = $args->getEntity();
+            $entityManager = $args->getEntityManager();
+
+            // perhaps you only want to act on some "Product" entity
+            if ($entity instanceof Product) {
+                // ... do something with the Product
+            }
+        }
+    }
+
+.. hint::
+
+    Doctrine event subscribers can not return a flexible array of methods to
+    call for the events like the :ref:`Symfony event subscriber <event_dispatcher-using-event-subscribers>`
+    can do. Doctrine event subscribers must return a simple array of the event
+    names they subscribe to. Doctrine will then expect methods on the subscriber
+    with the names of the subscribed events, just as when using an event listener.
+
+
 .. _`The Event System`: http://docs.doctrine-project.org/projects/doctrine-orm/en/2.1/reference/events.html
