@@ -1,4 +1,4 @@
-keen.. index::
+.. index::
    single: Validation
 
 Validation
@@ -462,7 +462,8 @@ options can be specified in this way.
 This is purely meant to make the configuration of the most common option of
 a constraint shorter and quicker.
 
-Every constraint has an extra option, `code`, which allows you to specify an error code on a per-use basis.
+Every constraint has an extra option, `code`, which allows you to specify an error
+code on a per-use basis.
 
 If you're ever unsure of how to specify an option, either check the API documentation
 for the constraint or play it safe by always passing in an array of options
