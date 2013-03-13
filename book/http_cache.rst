@@ -885,7 +885,7 @@ matter), Symfony2 uses the standard ``render`` helper to configure ESI tags:
 
     .. code-block:: jinja
 
-        {% render url('latest_news', { 'max': 5 }), {'standalone': true} %}
+        {% render url('latest_news', { 'max': 5 }) with {}, {'standalone': true} %}
 
     .. code-block:: php
 
