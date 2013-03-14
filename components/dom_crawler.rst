@@ -190,7 +190,7 @@ and :phpclass:`DOMNode` objects:
         $html = '';
 
         foreach ($crawler as $domElement) {
-            $html.= $domElement->ownerDocument->saveHTML();
+            $html.= $domElement->ownerDocument->saveHTML($domElement);
         }
 
 Form and Link support
