@@ -196,8 +196,8 @@ cookie_httponly
 
 **type**: ``Boolean`` **default**: ``false``
 
-This determines whether cookies should only accesible through the HTTP protocol.
-This means that the cookie won't be accesible by scripting languages, such
+This determines whether cookies should only accessible through the HTTP protocol.
+This means that the cookie won't be accessible by scripting languages, such
 as JavaScript. This setting can effectively help to reduce identity theft
 through XSS attacks.
 
