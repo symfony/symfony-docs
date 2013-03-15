@@ -24,7 +24,7 @@ directories::
 
     use Symfony\Component\Finder\Finder;
 
-    $finder = new Finder();
+    $finder = Finder::create();
     $finder->files()->in(__DIR__);
 
     foreach ($finder as $file) {
@@ -99,7 +99,7 @@ And it also works with user-defined streams::
     $s3 = new \Zend_Service_Amazon_S3($key, $secret);
     $s3->registerStreamWrapper("s3");
 
-    $finder = new Finder();
+    $finder = Finder::create();
     $finder->name('photos*')->size('< 100K')->date('since 1 hour ago');
     foreach ($finder->in('s3://bucket-name') as $file) {
         // ... do something
