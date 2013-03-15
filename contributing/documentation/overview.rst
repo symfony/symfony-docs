@@ -38,6 +38,11 @@ To do this checkout the 2.0 branch before the next step:
 
     $ git checkout 2.0
 
+.. tip::
+
+    Your base branch (e.g. 2.0) will become the "Applies to" in the :ref:`doc-contributing-pr-format`
+    that you'll use later.
+
 Next, create a dedicated branch for your changes (for organization):
 
 .. code-block:: bash
@@ -73,6 +78,8 @@ GitHub covers the topic of `pull requests`_ in detail.
 
     The Symfony2 documentation is licensed under a Creative Commons
     Attribution-Share Alike 3.0 Unported :doc:`License <license>`.
+
+.. _doc-contributing-pr-format:
 
 Pull Request Format
 ~~~~~~~~~~~~~~~~~~~
