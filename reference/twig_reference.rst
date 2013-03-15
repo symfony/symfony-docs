@@ -20,7 +20,7 @@ Functions
 .. versionadded:: 2.1
     The ``csrf_token``, ``logout_path`` and ``logout_url`` functions were added in Symfony2.1
 
-.. versionadded:: 2.3
+.. versionadded:: 2.2
     The ``render`` and ``controller`` functions are new in Symfony 2.2. Prior,
     the ``{% render %}`` tag was used and had a different signature.
 
