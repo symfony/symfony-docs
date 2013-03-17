@@ -72,7 +72,7 @@ add the following:
             {
                 $metadata->addPropertyConstraint('age', new Assert\Max(array(
                     'limit'   => 50,
-                    'message' => "You must be 50 or under to enter.",
+                    'message' => 'You must be 50 or under to enter.',
                 )));
             }
         }

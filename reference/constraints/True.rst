@@ -50,7 +50,7 @@ Then you can constrain this method with ``True``.
         Acme\BlogBundle\Entity\Author:
             getters:
                 tokenValid:
-                    - "True": { message: "The token is invalid" }
+                    - "True": { message: "The token is invalid." }
 
     .. code-block:: php-annotations
 
@@ -78,7 +78,7 @@ Then you can constrain this method with ``True``.
         <class name="Acme\BlogBundle\Entity\Author">
             <getter property="tokenValid">
                 <constraint name="True">
-                    <option name="message">The token is invalid...</option>
+                    <option name="message">The token is invalid.</option>
                 </constraint>
             </getter>
         </class>
@@ -98,7 +98,7 @@ Then you can constrain this method with ``True``.
             public static function loadValidatorMetadata(ClassMetadata $metadata)
             {
                 $metadata->addGetterConstraint('tokenValid', new True(array(
-                    'message' => 'The token is invalid',
+                    'message' => 'The token is invalid.',
                 )));
             }
 
