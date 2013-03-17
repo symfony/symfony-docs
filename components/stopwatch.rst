@@ -47,7 +47,7 @@ Periods
 
 As you know from the real world, all stopwatches come with two buttons:
 one to start and stop the stopwatch, and another to measure the lap time.
-This is exactly what the :method:``Symfony\\Component\\Stopwatch\\Stopwatch::lap``
+This is exactly what the :method:`Symfony\\Component\\Stopwatch\\Stopwatch::lap``
 method does::
 
     $stopwatch = new Stopwatch();
@@ -91,7 +91,7 @@ Symfony Profiler tool. Here is a basic usage example using sections::
 
     $events = $stopwatch->getSectionEvents('routing');
 
-You can reopen a closed section by calling the :method:``Symfony\\Component\\Stopwatch\\Stopwatch::openSection``
+You can reopen a closed section by calling the :method:`Symfony\\Component\\Stopwatch\\Stopwatch::openSection``
 method and specifying the id of the section to be reopened::
 
     $stopwatch->openSection('routing');
