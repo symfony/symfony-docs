@@ -344,7 +344,7 @@ controller, and ``index.html.twig`` the template:
             Hello {{ name }}!
         {% endblock %}
 
-    .. code-block:: php
+    .. code-block:: html+php
 
         <!-- src/Acme/HelloBundle/Resources/views/Hello/index.html.php -->
         <?php $view->extend('::base.html.php') ?>
@@ -385,7 +385,7 @@ and in the ``app`` directory:
             </body>
         </html>
 
-    .. code-block:: php
+    .. code-block:: html+php
 
         <!-- app/Resources/views/base.html.php -->
         <!DOCTYPE html>

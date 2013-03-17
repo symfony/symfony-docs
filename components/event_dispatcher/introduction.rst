@@ -389,6 +389,10 @@ indexed by event names and whose values are either the method name to call or
 an array composed of the method name to call and a priority. The example
 above shows how to register several listener methods for the same event in
 subscriber and also shows how to pass the priority of each listener method.
+The higher the priority, the earlier the method is called. In the above
+example, when the ``kernel.response`` event is triggered, the methods
+``onKernelResponsePre``, ``onKernelResponseMid``, and ``onKernelResponsePost``
+are called in that order.
 
 .. index::
    single: Event Dispatcher; Stopping event flow

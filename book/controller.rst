@@ -102,7 +102,7 @@ a controller object. Controllers are also called *actions*.
     {
         public function indexAction($name)
         {
-          return new Response('<html><body>Hello '.$name.'!</body></html>');
+            return new Response('<html><body>Hello '.$name.'!</body></html>');
         }
     }
 
@@ -684,7 +684,7 @@ the ``notice`` message:
             </div>
         {% endfor %}
 
-    .. code-block:: php
+    .. code-block:: html+php
 
         <?php foreach ($view['session']->getFlash('notice') as $message): ?>
             <div class="flash-notice">

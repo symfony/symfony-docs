@@ -1251,7 +1251,7 @@ this classic example:
 
 .. configuration-block::
 
-    .. code-block:: jinja
+    .. code-block:: html+jinja
 
         Hello {{ name }}
 
@@ -1259,12 +1259,16 @@ this classic example:
 
         Hello <?php echo $name ?>
 
-Imagine that the user enters the following code as his/her name::
+Imagine that the user enters the following code as his/her name:
+
+.. code-block:: text
 
     <script>alert('hello!')</script>
 
 Without any output escaping, the resulting template will cause a JavaScript
-alert box to pop up::
+alert box to pop up:
+
+.. code-block:: html
 
     Hello <script>alert('hello!')</script>
 
@@ -1274,7 +1278,9 @@ inside the secure area of an unknowing, legitimate user.
 
 The answer to the problem is output escaping. With output escaping on, the
 same template will render harmlessly, and literally print the ``script``
-tag to the screen::
+tag to the screen:
+
+.. code-block:: html
 
     Hello &lt;script&gt;alert(&#39;helloe&#39;)&lt;/script&gt;
 
@@ -1306,7 +1312,9 @@ Output Escaping in PHP
 
 Output escaping is not automatic when using PHP templates. This means that
 unless you explicitly choose to escape a variable, you're not protected. To
-use output escaping, use the special ``escape()`` view method::
+use output escaping, use the special ``escape()`` view method:
+
+.. code-block:: html+php
 
     Hello <?php echo $view->escape($name) ?>
 
@@ -1315,7 +1323,7 @@ within an HTML context (and thus the variable is escaped to be safe for HTML).
 The second argument lets you change the context. For example, to output something
 in a JavaScript string, use the ``js`` context:
 
-.. code-block:: js
+.. code-block:: html+php
 
     var myMsg = 'Hello <?php echo $view->escape($name, 'js') ?>';
 
