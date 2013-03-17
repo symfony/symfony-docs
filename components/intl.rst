@@ -25,14 +25,14 @@ If you install the component via Composer, the following classes and functions
 of the intl extension will be automatically provided if the intl extension is
 not loaded:
 
-* :phpclass:``Collator``
-* :phpclass:``IntlDateFormatter``
-* :phpclass:``Locale``
-* :phpclass:``NumberFormatter``
-* :phpfunction:``intl_error_name``
-* :phpfunction:``intl_is_failure``
-* :phpfunction:``intl_get_error_code``
-* :phpfunction:``intl_get_error_message``
+* :phpclass:`Collator`
+* :phpclass:`IntlDateFormatter`
+* :phpclass:`Locale`
+* :phpclass:`NumberFormatter`
+* :phpfunction:`intl_error_name`
+* :phpfunction:`intl_is_failure`
+* :phpfunction:`intl_get_error_code`
+* :phpfunction:`intl_get_error_message`
 
 If you don't use Composer but the Symfony ClassLoader component, you need to
 load them manually by adding the following lines to your autoload code::
@@ -59,14 +59,14 @@ locales, `install the intl extension`_ instead.
 Locale
 ~~~~~~
 
-The only method supported in the :phpclass:``Locale`` class is
+The only method supported in the :phpclass:`Locale` class is
 :phpmethod:`Locale::getDefault`. This method will always return "en". All other
 methods will throw an exception when used.
 
 NumberFormatter
 ~~~~~~~~~~~~~~~
 
-Numbers can be formatted with the :phpclass:``NumberFormatter`` class.
+Numbers can be formatted with the :phpclass:`NumberFormatter` class.
 The following methods are supported. All other methods are not supported and
 will throw an exception when used.
 
@@ -288,7 +288,7 @@ class::
         'Data' => array(
             'entry1',
             'entry2',
-            ...
+            // ...
         ),
     ));
 
@@ -314,7 +314,7 @@ Writes an array or an array-like object to a .php resource bundle::
         'Data' => array(
             'entry1',
             'entry2',
-            ...
+            // ...
         ),
     ));
 
