@@ -1799,7 +1799,7 @@ to show a link to exit impersonation:
     .. code-block:: html+jinja
 
         {% if is_granted('ROLE_PREVIOUS_ADMIN') %}
-            <a href="{{ path('homepage', { _switch_user: '_exit' }) }}">Exit impersonation</a>
+            <a href="{{ path('homepage', {_switch_user: '_exit'}) }}">Exit impersonation</a>
         {% endif %}
 
     .. code-block:: html+php
