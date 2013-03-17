@@ -86,19 +86,19 @@ Setup
 The Callback Method
 -------------------
 
-The callback method is passed a special ``ExecutionContext`` object. You
+The callback method is passed a special ``ExecutionContextInterface`` object. You
 can set "violations" directly on this object and determine to which field
 those errors should be attributed::
 
     // ...
-    use Symfony\Component\Validator\ExecutionContext;
+    use Symfony\Component\Validator\ExecutionContextInterface;
     
     class Author
     {
         // ...
         private $firstName;
     
-        public function isAuthorValid(ExecutionContext $context)
+        public function isAuthorValid(ExecutionContextInterface $context)
         {
             // somehow you have an array of "fake names"
             $fakeNames = array();
@@ -125,7 +125,7 @@ process. Each method can be one of the following formats:
 
     If the name of a method is a simple string (e.g. ``isAuthorValid``), that
     method will be called on the same object that's being validated and the
-    ``ExecutionContext`` will be the only argument (see the above example).
+    ``ExecutionContextInterface`` will be the only argument (see the above example).
 
 2) **Static array callback**
 
@@ -189,16 +189,16 @@ process. Each method can be one of the following formats:
 
     In this case, the static method ``isAuthorValid`` will be called on the
     ``Acme\BlogBundle\MyStaticValidatorClass`` class. It's passed both the original
-    object being validated (e.g. ``Author``) as well as the ``ExecutionContext``::
+    object being validated (e.g. ``Author``) as well as the ``ExecutionContextInterface``::
 
         namespace Acme\BlogBundle;
     
-        use Symfony\Component\Validator\ExecutionContext;
+        use Symfony\Component\Validator\ExecutionContextInterface;
         use Acme\BlogBundle\Entity\Author;
     
         class MyStaticValidatorClass
         {
-            public static function isAuthorValid(Author $author, ExecutionContext $context)
+            public static function isAuthorValid(Author $author, ExecutionContextInterface $context)
             {
                 // ...
             }
