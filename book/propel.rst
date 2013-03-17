@@ -35,12 +35,12 @@ information.  By convention, this information is usually configured in an
 
     ; app/config/parameters.ini
     [parameters]
-        database_driver   = mysql
-        database_host     = localhost
-        database_name     = test_project
-        database_user     = root
-        database_password = password
-        database_charset  = UTF8
+    database_driver   = mysql
+    database_host     = localhost
+    database_name     = test_project
+    database_user     = root
+    database_password = password
+    database_charset  = UTF8
 
 .. note::
 
