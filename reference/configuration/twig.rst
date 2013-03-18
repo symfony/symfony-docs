@@ -9,7 +9,7 @@ TwigBundle Configuration Reference
     .. code-block:: yaml
 
         twig:
-            exception_controller:  Symfony\Bundle\TwigBundle\Controller\ExceptionController::showAction
+            exception_controller:  twig.controller.exception:showAction
             form:
                 resources:
 
@@ -86,7 +86,7 @@ Configuration
 exception_controller
 ....................
 
-**type**: ``string`` **default**: ``Symfony\\Bundle\\TwigBundle\\Controller\\ExceptionController::showAction``
+**type**: ``string`` **default**: ``twig.controller.exception:showAction``
 
 This is the controller that is activated after an exception is thrown anywhere
 in your application. The default controller
