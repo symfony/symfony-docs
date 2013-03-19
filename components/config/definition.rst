@@ -327,8 +327,8 @@ make both of these ``auto_connect``.
 
 .. caution::
 
-    The target key will not be altered if it's mixed like ``foo-bar_moo`` or if
-    it already exists.
+    The target key will not be altered if it's mixed like 
+    ``foo-bar_moo`` or if it already exists.
 
 Another difference between Yaml and XML is in the way arrays of values may
 be represented. In Yaml you may have:
