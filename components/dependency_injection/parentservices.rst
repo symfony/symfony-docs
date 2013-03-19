@@ -276,8 +276,8 @@ when the child services are instantiated.
 
 The parent service is abstract as it should not be directly retrieved from the
 container or passed into another service. It exists merely as a "template" that
-other services can use. This is why it has no ``class`` configured which would
-cause an exception to be raised for a non-abstract service.
+other services can use. This is why it can have no ``class`` configured which
+would cause an exception to be raised for a non-abstract service.
 
 .. note::
 
