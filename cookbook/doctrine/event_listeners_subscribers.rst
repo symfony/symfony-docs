@@ -17,6 +17,8 @@ Doctrine defines two types of objects that can listen to Doctrine events:
 listeners and subscribers. Both are very similar, but listeners are a bit
 more straightforward. For more, see `The Event System`_ on Doctrine's website.
 
+The Doctrine website also explains all existing events that can be listened to.
+
 Configuring the Listener/Subscriber
 -----------------------------------
 
@@ -167,6 +169,7 @@ interface and an event method for each event it subscribes to.
 
     use Doctrine\Common\EventSubscriber;
     use Doctrine\ORM\Event\LifecycleEventArgs;
+    // for doctrine 2.4: Doctrine\Common\Persistence\Event\LifecycleEventArgs;
     use Acme\StoreBundle\Entity\Product;
 
     class SearchIndexerSubscriber implements EventSubscriber
@@ -209,5 +212,6 @@ interface and an event method for each event it subscribes to.
     names they subscribe to. Doctrine will then expect methods on the subscriber
     with the names of the subscribed events, just as when using an event listener.
 
+For a full reference, see chapter `The Event System` in the doctrine documentation.
 
-.. _`The Event System`: http://docs.doctrine-project.org/projects/doctrine-orm/en/2.1/reference/events.html
+.. _`The Event System`: http://docs.doctrine-project.org/projects/doctrine-orm/en/latest/reference/events.html
