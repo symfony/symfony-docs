@@ -137,3 +137,10 @@ You can also replace any existing method calls with an array of new ones with::
     in the PHP code blocks of the configuration examples on pages such as
     :doc:`/components/dependency_injection/factories` and
     :doc:`/components/dependency_injection/parentservices`.
+
+.. note::
+
+    The methods here that change service definitions can only be used before
+    the container is compiled, once the container is compiled you cannot
+     manipulate service definitions further. To learn more about compiling
+     the container see :doc:`/components/dependency_injection/compilation`
