@@ -20,7 +20,7 @@ So, sit back and relax as you travel from "then" to "now".
 Directory Structure
 -------------------
 
-When looking at a Symfony2 project - for example, the `Symfony2 Standard`_ -
+When looking at a Symfony2 project - for example, the `Symfony2 Standard Edition`_ -
 you'll notice a very different directory structure than in symfony1. The
 differences, however, are somewhat superficial.
 
@@ -133,13 +133,13 @@ example::
     }
 
 The file itself lives at
-``vendor/bundle/Sensio/Bundle/FrameworkExtraBundle/SensioFrameworkExtraBundle.php``.
+``vendor/bundles/Sensio/Bundle/FrameworkExtraBundle/SensioFrameworkExtraBundle.php``.
 As you can see, the location of the file follows the namespace of the class.
 Specifically, the namespace, ``Sensio\Bundle\FrameworkExtraBundle``, spells out
 the directory that the file should live in
-(``vendor/bundle/Sensio/Bundle/FrameworkExtraBundle``). This is because, in the
+(``vendor/bundles/Sensio/Bundle/FrameworkExtraBundle``). This is because, in the
 ``app/autoload.php`` file, you'll configure Symfony to look for the ``Sensio``
-namespace in the ``vendor/bundle`` directory:
+namespace in the ``vendor/bundles`` directory:
 
 .. code-block:: php
 
