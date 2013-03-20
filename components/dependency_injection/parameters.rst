@@ -150,19 +150,19 @@ making the class of a service a parameter:
     The percent sign inside a parameter or argument, as part of the string, must
     be escaped with another percent sign:
 
-.. configuration-block::
+    .. configuration-block::
 
-    .. code-block:: yaml
+        .. code-block:: yaml
 
-        arguments: ['http://symfony.com/?foo=%%s&bar=%%d']
+            arguments: ['http://symfony.com/?foo=%%s&bar=%%d']
 
-    .. code-block:: xml
+        .. code-block:: xml
 
-        <argument type="string">http://symfony.com/?foo=%%s&bar=%%d</argument>
+            <argument type="string">http://symfony.com/?foo=%%s&bar=%%d</argument>
 
-    .. code-block:: php
+        .. code-block:: php
 
-        ->addArgument('http://symfony.com/?foo=%%s&bar=%%d');
+            ->addArgument('http://symfony.com/?foo=%%s&bar=%%d');
 
 Array Parameters
 ----------------
@@ -228,22 +228,29 @@ The container also has support for setting PHP constants as parameters. To
 take advantage of this feature, map the name of your constant  to a parameter
 key, and define the type as ``constant``.
 
-.. code-block:: xml
+.. configuration-block::
 
-    <?xml version="1.0" encoding="UTF-8"?>
+    .. code-block:: xml
 
-    <container xmlns="http://symfony.com/schema/dic/services"
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+        <?xml version="1.0" encoding="UTF-8"?>
 
-        <parameters>
-            <parameter key="global.constant.value" type="constant">GLOBAL_CONSTANT</parameter>
-            <parameter key="my_class.constant.value" type="constant">My_Class::CONSTANT_NAME</parameter>
-        </parameters>
-    </container>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+            <parameters>
+                <parameter key="global.constant.value" type="constant">GLOBAL_CONSTANT</parameter>
+                <parameter key="my_class.constant.value" type="constant">My_Class::CONSTANT_NAME</parameter>
+            </parameters>
+        </container>
+
+    .. code-block:: php
+
+            $container->setParameter('global.constant.value', GLOBAL_CONSTANT);
+            $container->setParameter('my_class.constant.value', My_Class::CONSTANT_NAME);
 
 .. note::
 
-    This only works for XML configuration. If you're *not* using XML, simply
+    This does not works for Yaml configuration. If you're using Yaml, you can
     import an XML file to take advantage of this functionality:
 
     .. configuration-block::
@@ -253,9 +260,3 @@ key, and define the type as ``constant``.
             # app/config/config.yml
             imports:
                 - { resource: parameters.xml }
-
-        .. code-block:: php
-
-            // app/config/config.php
-            $loader->import('parameters.xml');
-
