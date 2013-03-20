@@ -6,6 +6,7 @@
 
     introduction
     types
+    parameters
     definitions
     compilation
     tags

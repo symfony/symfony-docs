@@ -2,31 +2,13 @@
    single: Dependency Injection; Service definitions
 
 
-Working with Container Parameters and Definitions
-=================================================
-
-Getting and Setting Container Parameters
-----------------------------------------
-
-Working with container parameters is straight forward using the container's
-accessor methods for parameters. You can check if a parameter has been defined
-in the container with::
-
-     $container->hasParameter($name);
-
-You can retrieve parameters set in the container with::
-
-    $container->getParameter($name);
-
-and set a parameter in the container with::
-
-    $container->setParameter($name, $value);
+Working with Container Service Definitions
+==========================================
 
 Getting and Setting Service Definitions
 ---------------------------------------
 
-There are also some helpful methods for
-working with the service definitions.
+There are some helpful methods for working with the service definitions.
 
 To find out if there is a definition for a service id::
 
