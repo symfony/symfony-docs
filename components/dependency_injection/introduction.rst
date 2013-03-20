@@ -213,7 +213,6 @@ The ``newsletter_manager`` and ``mailer`` services can be set up using config fi
 
     .. code-block:: yaml
 
-        # src/Acme/HelloBundle/Resources/config/services.yml
         parameters:
             # ...
             mailer.transport: sendmail
@@ -229,7 +228,6 @@ The ``newsletter_manager`` and ``mailer`` services can be set up using config fi
 
     .. code-block:: xml
 
-        <!-- src/Acme/HelloBundle/Resources/config/services.xml -->
         <parameters>
             <!-- ... -->
             <parameter key="mailer.transport">sendmail</parameter>
