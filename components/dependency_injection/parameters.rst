@@ -73,7 +73,7 @@ makes it easier to change rather than being tied up with the service definition:
         services:
             mailer:
                 class:     Mailer
-                arguments: [%mailer.transport%]
+                arguments: ['%mailer.transport%']
 
     .. code-block:: xml
 
@@ -85,7 +85,6 @@ makes it easier to change rather than being tied up with the service definition:
             <service id="mailer" class="Mailer">
                 <argument>%mailer.transport%</argument>
             </service>
-
         </services>
 
     .. code-block:: php
@@ -114,8 +113,8 @@ making the class of a service a parameter:
 
         services:
             mailer:
-                class:     %mailer.class%
-                arguments: [%mailer.transport%]
+                class:     '%mailer.class%'
+                arguments: ['%mailer.transport%']
 
     .. code-block:: xml
 
@@ -151,15 +150,25 @@ making the class of a service a parameter:
     The percent sign inside a parameter or argument, as part of the string, must
     be escaped with another percent sign:
 
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        arguments: ['http://symfony.com/?foo=%%s&bar=%%d']
+
     .. code-block:: xml
 
         <argument type="string">http://symfony.com/?foo=%%s&bar=%%d</argument>
+
+    .. code-block:: php
+
+        ->addArgument('http://symfony.com/?foo=%%s&bar=%%d');
 
 Array Parameters
 ----------------
 
 Parameters do not need to be flat strings, they can also be arrays. For the XML
-format, you need to use the type="collection" attribute for all parameters that are
+format, you need to use the ``type="collection"`` attribute for all parameters that are
 arrays.
 
 .. configuration-block::
