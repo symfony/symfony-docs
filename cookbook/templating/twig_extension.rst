@@ -56,18 +56,9 @@ As an example you'll create a price filter to format a given number into price::
 Register an Extension as a Service
 ----------------------------------
 
-Now you must let Service Container know about your newly created Twig Extension:
+Now you must let the Service Container know about your newly created Twig Extension:
 
 .. configuration-block::
-
-    .. code-block:: xml
-
-        <!-- src/Acme/DemoBundle/Resources/config/services.xml -->
-        <services>
-            <service id="acme.twig.acme_extension" class="Acme\DemoBundle\Twig\AcmeExtension">
-                <tag name="twig.extension" />
-            </service>
-        </services>
 
     .. code-block:: yaml
 
@@ -77,6 +68,15 @@ Now you must let Service Container know about your newly created Twig Extension:
                 class: Acme\DemoBundle\Twig\AcmeExtension
                 tags:
                     - { name: twig.extension }
+
+    .. code-block:: xml
+
+        <!-- src/Acme/DemoBundle/Resources/config/services.xml -->
+        <services>
+            <service id="acme.twig.acme_extension" class="Acme\DemoBundle\Twig\AcmeExtension">
+                <tag name="twig.extension" />
+            </service>
+        </services>
 
     .. code-block:: php
 
