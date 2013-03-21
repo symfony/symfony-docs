@@ -43,12 +43,32 @@ it is possible to remove this need by extending the application::
 
             return $defaultCommands;
         }
+
+        /**
+         * Overridden so that the application doesn't expect the command
+         * name to be the first argument.
+         */
+        public function getDefinition()
+        {
+            $inputDefinition = parent::getDefinition();
+            // clear out the normal first argument, which is the command name
+            $inputDefinition->setArguments();
+
+            return $inputDefinition;
+        }
     }
 
 When calling your console script, the command `MyCommand` will then always
 be used, without having to pass its name.
 
-.. note::
+You can also simplify how you execute the application::
 
-    If your command accepts one or more arguments, you may also want to override
-    the :method:`Symfony\\Component\\Console\\getDefaultInputDefinition` method.
+    #!/usr/bin/env php
+    <?php
+    // command.php
+
+    use Acme\Tool\MyApplication;
+
+    $application = new MyApplication();
+    $application->run();
+

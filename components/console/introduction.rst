@@ -85,8 +85,8 @@ You also need to create the file to run at the command line which creates
 an ``Application`` and adds commands to it::
 
     #!/usr/bin/env php
-    # app/console
     <?php
+    // app/console
 
     use Acme\DemoBundle\Command\GreetCommand;
     use Symfony\Component\Console\Application;
