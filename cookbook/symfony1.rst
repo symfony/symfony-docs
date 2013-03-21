@@ -367,4 +367,4 @@ In reality, the Symfony2 configuration is much more powerful and is used
 primarily to configure objects that you can use. For more information, see
 the chapter titled ":doc:`/book/service_container`".
 
-.. _`Symfony2 Standard`: https://github.com/symfony/symfony-standard
+.. _`Symfony2 Standard Edition`: https://github.com/symfony/symfony-standard
