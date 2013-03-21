@@ -50,5 +50,5 @@ be used, without having to pass its name.
 
 .. note::
 
-  If your command accepts one or more arguments, you may also want to override
-  getDefinition() method.
+    If your command accepts one or more arguments, you may also want to override
+    the :method:`Symfony\\Component\\Console\\getDefaultInputDefinition` method.
