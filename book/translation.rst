@@ -775,7 +775,7 @@ You can also specify the message domain and pass some additional variables:
     {% trans with {'%name%': 'Fabien'} from "app" into "fr" %}Hello %name%{% endtrans %}
 
     {% transchoice count with {'%name%': 'Fabien'} from "app" %}
-        {0} There is no apples|{1} There is one apple|]1,Inf] There are %count% apples
+        {0} %name%, there is no apples|{1} %name%, there is one apple|]1,Inf] %name%, there are %count% apples
     {% endtranschoice %}
 
 .. _book-translation-filters:
