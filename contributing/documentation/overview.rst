@@ -149,7 +149,7 @@ look and feel familiar, you should follow these rules:
 * The code follows the :doc:`Symfony Coding Standards</contributing/code/standards>`
   as well as the `Twig Coding Standards`_;
 * Each line should break approximately after the first word that crosses the
-  72nd character (so most lines end up being 72-78 lines);
+  72nd character (so most lines end up being 72-78 characters);
 * To avoid horizontal scrolling on code blocks, we prefer to break a line
   correctly if it crosses the 85th character;
 * When you fold one or more lines of code, place ``...`` in a comment at the point
