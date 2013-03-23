@@ -78,8 +78,10 @@ Each part will be explained in the next section.
                 # Example custom provider
                 some_custom_provider:
                     id:                   ~
-                    chain:
-                        providers:            []
+
+                # Chain some providers
+                chain:
+                    providers:            [ entity, memory ]
 
             firewalls:            # Required
                 # Examples:
