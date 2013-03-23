@@ -345,7 +345,6 @@ Full Default Configuration
     .. code-block:: yaml
 
         framework:
-            charset:              ~
             secret:               ~
             trusted_proxies:      []
             ide:                  ~
