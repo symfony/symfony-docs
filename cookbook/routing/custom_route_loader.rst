@@ -7,7 +7,8 @@ How to Create a Custom Route Loader
 Loading Routes
 --------------
 
-The routes in a Symfony application are loaded by the :class:`Symfony\\Bundle\\FrameworkBundle\\Routing\\DelegatingLoader`.
+The routes in a Symfony application are loaded by the
+:class:`Symfony\\Bundle\\FrameworkBundle\\Routing\\DelegatingLoader`.
 This loader uses several other loaders (delegates) to load resources of
 different types, for instance Yaml files or ``@Route`` and ``@Method`` annotations
 in controller files. The specialized loaders implement :class:`Symfony\\Component\\Config\\Loader\\LoaderInterface`
@@ -25,7 +26,7 @@ Take these lines from ``routing.yml``:
 
 The main loader tries all the delegate loaders and calls their
 :method:`Symfony\\Component\\Config\\Loader\\LoaderInterface::supports`
-with the given resource ("@AcmeDemoBundle/Controller/DemoController.php")
+with the given resource (``@AcmeDemoBundle/Controller/DemoController.php``)
 and type ("annotation") as arguments. When one of the loader returns ``true``,
 its method :method:`Symfony\\Component\\Config\\Loader\\LoaderInterface::load`
 will be called, and the loader returns a :class:`Symfony\\Component\\Routing\\RouteCollection`
@@ -34,14 +35,14 @@ containing :class:`Symfony\\Component\\Routing\\Route` objects.
 Creating a Custom Loader
 ------------------------
 
-To load routes in another way then using annotations, Yaml or XML files,
+To load routes in another way than using annotations, Yaml or XML files,
 you need to create a custom route loader. This loader should implement
 :class:`Symfony\\Component\\Config\\Loader\\LoaderInterface`.
 
 The sample loader below supports resources of type "extra". The resource
 name itself is not used in the example::
 
-    namespace Acme\DemoBundleBundle\Routing;
+    namespace Acme\DemoBundle\Routing;
 
     use Symfony\Component\Config\Loader\LoaderInterface;
     use Symfony\Component\Config\Loader\LoaderResolver;
@@ -118,7 +119,7 @@ Now define a service for the ``ExtraLoader``:
 
             <services>
                 <service id="acme_demo.routing_loader" class="Acme\DemoBundle\Routing\ExtraLoader">
-                    <tag name="routing.loader"></tag>
+                    <tag name="routing.loader" />
                 </service>
             </services>
         </container>
@@ -139,13 +140,34 @@ Notice the tag ``routing.loader``. All services with this tag will be marked
 as potential route loaders and added as specialized routers to the
 :class:`Symfony\\Bundle\\FrameworkBundle\\Routing\\DelegatingLoader`.
 
-Finally, we only need to add a few extra lines in ``routing.yml``:
+Finally, we only need to add a few extra lines to the routing configuration:
 
-.. code-block:: yaml
+.. configuration-block::
 
-    AcmeDemoBundle_Extra:
-        resource: .
-        type: extra
+    .. code-block:: yaml
+
+        AcmeDemoBundle_Extra:
+            resource: .
+            type: extra
+
+    .. code-block:: xml
+
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <routes xmlns="http://symfony.com/schema/routing"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/routing http://symfony.com/schema/routing/routing-1.0.xsd">
+
+            <import resource="." type="extra" />
+        </routes>
+
+    .. code-block:: php
+
+        use Symfony\Component\Routing\RouteCollection;
+
+        $collection = new RouteCollection();
+        $collection->addCollection($loader->import('.', 'extra'));
+
+        return $collection;
 
 The ``resource`` key is irrelevant, but required. The important part here
 is the ``type`` key. Its value should be "extra". This is the type which
