@@ -231,6 +231,12 @@ looks up the value of each parameter and uses it in the service definition.
 
         <argument type="string">http://symfony.com/?foo=%%s&bar=%%d</argument>
 
+.. versionadded:: 2.3
+
+    Since version 2.3 it is possible to escape strings that start with an ``@`` for
+    parameters (i.e. a very safe mailer password) by using ``@@`` (similar to
+    the ``%%`` escaping strategy). This applies only to the YAML format.
+
 The purpose of parameters is to feed information into services. Of course
 there was nothing wrong with defining the service without using any parameters.
 Parameters, however, have several advantages:
