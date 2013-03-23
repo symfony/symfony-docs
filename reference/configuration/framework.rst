@@ -18,7 +18,7 @@ Configuration
 * `secret`_
 * `ide`_
 * `test`_
-* `trust_proxy_headers`_
+* `trusted_proxies`_
 * `form`_
     * enabled
 * `csrf_protection`_
@@ -116,23 +116,6 @@ see :doc:`/components/http_foundation/trusting_proxies`.
         $container->loadFromExtension('framework', array(
             'trusted_proxies' => array('192.0.0.1'),
         ));
-
-trust_proxy_headers
-~~~~~~~~~~~~~~~~~~~
-
-.. caution::
-
-    The ``trust_proxy_headers`` option is deprecated and will be removed in
-    Symfony 2.3. See `trusted_proxies`_ and :doc:`/components/http_foundation/trusting_proxies`
-    for details on how to properly trust proxy data.
-
-**type**: ``Boolean``
-
-Configures if HTTP headers (like ``HTTP_X_FORWARDED_FOR``, ``X_FORWARDED_PROTO``, and
-``X_FORWARDED_HOST``) are trusted as an indication for an SSL connection. By default, it is
-set to ``false`` and only SSL_HTTPS connections are indicated as secure.
-
-You should enable this setting if your application is behind a reverse proxy.
 
 .. _reference-framework-form:
 
@@ -379,7 +362,6 @@ Full Default Configuration
         framework:
             charset:              ~
             secret:               ~
-            trust_proxy_headers:  false
             trusted_proxies:      []
             ide:                  ~
             test:                 ~
