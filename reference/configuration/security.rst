@@ -62,26 +62,28 @@ Each part will be explained in the next section.
             providers:            # Required
                 # Examples:
                 memory:
-                    name:                memory
+                    name:                   my_in_memory_provider
                     users:
                         foo:
-                            password:            foo
-                            roles:               ROLE_USER
+                            password:           foo
+                            roles:              ROLE_USER
                         bar:
-                            password:            bar
-                            roles:               [ROLE_USER, ROLE_ADMIN]
-                entity:
+                            password:           bar
+                            roles:              [ROLE_USER, ROLE_ADMIN]
+
+                my_entity_provider:
                     entity:
-                        class:               SecurityBundle:User
-                        property:            username
+                        class:              SecurityBundle:User
+                        property:           username
 
                 # Example custom provider
-                some_custom_provider:
+                my_some_custom_provider:
                     id:                   ~
 
                 # Chain some providers
-                chain:
-                    providers:            [ entity, memory ]
+                my_chain_provider:
+                    chain:
+                        providers:          [ my_in_memory_provider, my_entity_provider ]
 
             firewalls:            # Required
                 # Examples:
