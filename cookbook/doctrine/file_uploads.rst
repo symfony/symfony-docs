@@ -304,8 +304,10 @@ Next, refactor the ``Document`` class to take advantage of these callbacks::
             if (isset($this->path)) {
                 // store the old name to delete after the update
                 $this->temp = $this->path;
+                $this->path = null;
+            } else {
+                $this->path = 'initial';
             }
-            $this->path = null;
         }
 
         /**
@@ -419,6 +421,8 @@ property, instead of the actual filename::
             if (is_file($this->getAbsolutePath())) {
                 // store the old name to delete after the update
                 $this->temp = $this->getAbsolutePath();
+            } else {
+                $this->path = 'initial';
             }
         }
 
