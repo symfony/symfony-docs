@@ -82,7 +82,7 @@ Copy
 ~~~~
 
 This method is used to copy files. If the target already exists, the file is
-copied only if the source modification date is earlier than the target. This
+copied only if the source modification date is later than the target. This
 behavior can be overridden by the third boolean argument::
 
     // works only if image-ICC has been modified after image.jpg
