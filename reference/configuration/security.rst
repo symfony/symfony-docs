@@ -56,12 +56,8 @@ Each part will be explained in the next section.
                     iterations:          5000
 
                 # Example options/values for what a custom encoder might look like
-                Acme\Your\Class\Name:
-                    algorithm:            ~
-                    ignore_case:          false
-                    encode_as_base64:     true
-                    iterations:           5000
-                    id:                   ~
+                Acme\DemoBundle\Entity\User3:
+                    id:                   my.encoder.id
 
             providers:            # Required
                 # Examples:
