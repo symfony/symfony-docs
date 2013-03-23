@@ -146,7 +146,7 @@ recursive option::
 Chmod
 ~~~~~
 
-Chmod is used to change the mode of a file. The third argument is a boolean
+Chmod is used to change the mode of a file. The fourth argument is a boolean
 recursive option::
 
     // set the mode of the video to 0600
