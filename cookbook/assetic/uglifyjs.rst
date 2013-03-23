@@ -2,17 +2,17 @@
    single: Assetic; UglifyJs
 
 How to Minify JavaScripts with UglifyJs
-=============================================================
+=======================================
 
 `UglifyJs`_ is a javascript parser/compressor/beautifier toolkit. It can be used
 to combine and minify javascript assets so they need less HTTP requests and makes
 the website load faster.
 
 Install UglifyJs
--------------------------------
+----------------
 
-UglifyJs is build as an node.js npm module and can be installed using npm. First, you
-need to `install node.js`_. Afterwards you can install UglifyJs using npm:
+UglifyJs is build as an node.js npm module and can be installed using npm. First,
+you need to `install node.js`_. Afterwards you can install UglifyJs using npm:
 
 .. code-block:: bash
     
@@ -25,13 +25,13 @@ need to `install node.js`_. Afterwards you can install UglifyJs using npm:
     
     .. code-block:: bash
     
-        $ npm install uglifyjs /path/to/symfony/app
+        $ npm install uglifyjs /path/to/symfony/app/Resources
         
-    It is recommended that you install uglifyjs in your app folder and add the ``node_modules``
-    folder to version control.
+    It is recommended that you install UglifyJs in your ``app/Resources`` folder
+    and add the ``node_modules`` folder to version control.
 
 Configure the UglifyJs Filter
--------------------------
+-----------------------------
 
 Now we need to configure symfony2 to use the UglifyJs Filter when processing your
 stylesheets:
@@ -68,8 +68,8 @@ stylesheets:
         
 .. note::
 
-    The path where uglifyjs is installed may vary depending on your system.
-    To find out where npm stores the bin folder, you can use the following
+    The path where UglifyJs is installed may vary depending on your system.
+    To find out where npm stores the ``bin`` folder, you can use the following
     command:
     
     .. code-block:: bash
@@ -77,9 +77,9 @@ stylesheets:
         $ npm bin -g
         
     It should output a folder on your system, inside which you should find
-    the uglifyjs executable.
+    the UglifyJs executable.
     
-    If you installed uglifyjs locally, you can find the bin folder inside
+    If you installed UglifyJs locally, you can find the bin folder inside
     the ``node_modules`` folder. It's called ``.bin`` in this case.
 
 You now have access to the ``uglifyjs`` Filter in your application. 
@@ -149,7 +149,7 @@ apply this filter when debug mode is off.
     Instead of adding the filter to the asset tags, you can also globally
     enable it by adding the apply-to attribute to the filter configuration, for
     example in the ``uglifyjs`` filter ``apply_to: "\.js$"``. To only have the filter
-    applied in production, add this to the config_prod file rather than the
+    applied in production, add this to the ``config_prod`` file rather than the
     common config file. For details on applying filters by file extension,
     see :ref:`cookbook-assetic-apply-to`.
 
