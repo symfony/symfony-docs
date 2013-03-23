@@ -131,9 +131,6 @@ session
 cookie_lifetime
 ...............
 
-.. versionadded:: 2.1
-    This option was formerly known as ``lifetime``
-
 **type**: ``integer`` **default**: ``0``
 
 This determines the lifetime of the session - in seconds. By default it will use
@@ -142,18 +139,12 @@ This determines the lifetime of the session - in seconds. By default it will use
 cookie_path
 ...........
 
-.. versionadded:: 2.1
-    This option was formerly known as ``path``
-
 **type**: ``string`` **default**: ``/``
 
 This determines the path to set in the session cookie. By default it will use ``/``.
 
 cookie_domain
 .............
-
-.. versionadded:: 2.1
-    This option was formerly known as ``domain``
 
 **type**: ``string`` **default**: ``''``
 
@@ -164,18 +155,12 @@ to the cookie specification.
 cookie_secure
 .............
 
-.. versionadded:: 2.1
-    This option was formerly known as ``secure``
-
 **type**: ``Boolean`` **default**: ``false``
 
 This determines whether cookies should only be sent over secure connections.
 
 cookie_httponly
 ...............
-
-.. versionadded:: 2.1
-    This option was formerly known as ``httponly``
 
 **type**: ``Boolean`` **default**: ``false``
 
@@ -428,21 +413,6 @@ Full Default Configuration
                 gc_probability:       ~
                 gc_maxlifetime:       ~
                 save_path:            %kernel.cache_dir%/sessions
-
-                # DEPRECATED! Please use: cookie_lifetime
-                lifetime:             ~
-
-                # DEPRECATED! Please use: cookie_path
-                path:                 ~
-
-                # DEPRECATED! Please use: cookie_domain
-                domain:               ~
-
-                # DEPRECATED! Please use: cookie_secure
-                secure:               ~
-
-                # DEPRECATED! Please use: cookie_httponly
-                httponly:             ~
 
             # templating configuration
             templating:
