@@ -9,8 +9,7 @@ The OptionsResolver Component
     arrays. It supports default values, option constraints and lazy options.
 
 .. versionadded:: 2.1
-    The OptionsResolver Component is new in Symfony2.1, it can be found in the
-    Form component in older versions.
+    The OptionsResolver Component is new in Symfony2.1
 
 Installation
 ------------
@@ -201,7 +200,7 @@ Default values that depend on another option
 
 If you add a ``gender`` option to the ``Person`` class, it should get a
 default value which guess the gender based on the first name. You can do that
-easilly by using a Closure as default value::
+easily by using a Closure as default value::
 
     use Symfony\Component\OptionsResolver\Options;
 
@@ -220,6 +219,11 @@ easilly by using a Closure as default value::
             },
         ));
     }
+
+.. caution::
+
+    The first argument of the Closure must be typehinted as `Options`,
+    otherwise it is considered as the value.
 
 Configure allowed values
 ------------------------
@@ -260,6 +264,11 @@ be anything, but it must be a string. You can configure these types by calling
             'firstName' => 'string',
         ));
     }
+
+Possible types are the one associated with the ``is_*`` php functions or a
+class name. You can also pass an array of types as value. For instance,
+``array('null', 'string')`` allows ``firstName`` to be ``null`` or a
+``string``.
 
 There is also a
 :method:`Symfony\\Component\\OptionsResolver\\OptionsResolver::addAllowedTypes`
