@@ -23,11 +23,11 @@ You can install the component in several different ways:
 Usage
 -----
 
-Imagine we have a ``Person`` class which has 2 options: ``firstName`` and
-``lastName``. We are going to handles these options with the OptionsResolver
+Imagine you have a ``Person`` class which has 2 options: ``firstName`` and
+``lastName``. These options are going to be handled by the OptionsResolver
 Component.
 
-First of all, we create some basic skeleton::
+First of all, you should create some basic skeleton::
 
     class Person
     {
@@ -38,11 +38,11 @@ First of all, we create some basic skeleton::
         }
     }
 
-Now, we should handle the ``$options`` parameter with the OptionsResolver
-class. We just instantiate a
-:class:`Symfony\\Component\\OptionsResolver\\OptionsResolver` class and let it
-resolve the options by calling
-:method:`Symfony\\Component\\OptionsResolver::resolve`::
+Now, you should handle the ``$options`` parameter with the
+:class:`Symfony\\Component\\OptionsResolver\\OptionsResolver` class. To do
+this, you should instantiate the ``OptionsResolver`` class and let it resolve
+the options by calling
+:method:`Symfony\\Component\\OptionsResolver\\OptionsResolver::resolve`::
 
     use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -269,7 +269,7 @@ Normalize the Options
 ---------------------
 
 Some values needs to be normalized before you can use them. For instance, the
-``firstName`` should always start with an uppercase letter. To do that, we can
+``firstName`` should always start with an uppercase letter. To do that, you can
 write normalizers. These Closures will be executed after all options are
 passed and return the normalized value. You can configure these normalizers by
 calling
