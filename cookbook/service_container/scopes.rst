@@ -98,6 +98,9 @@ Each scenario is detailed in the following sections.
 Using a synchronized Service
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+.. versionadded:: 2.3
+    Synchronized services are new in Symfony 2.3.
+
 Injecting the container or setting your service to a narrower scope have
 drawbacks. For synchronized services (like the ``request``), using setter
 injection is the best option as it has no drawbacks and everything works
@@ -127,7 +130,7 @@ without any special code in your service or in your definition::
         }
     }
 
-Whenever the ``request`` is entered or leaved, the service container will
+Whenever the ``request`` scope is entered or left, the service container will
 automatically call the ``setRequest()`` method with the current ``request``
 instance.
 
@@ -210,7 +213,7 @@ your code. This should also be taken into account when declaring your service:
 Changing the Scope of your Service
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Changing the scope of a service should be done set in its definition:
+Changing the scope of a service should be done in its definition:
 
 .. configuration-block::
 
