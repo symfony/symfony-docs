@@ -61,15 +61,15 @@ Each part will be explained in the next section.
 
             providers:            # Required
                 # Examples:
-                memory:
-                    name:                   my_in_memory_provider
-                    users:
-                        foo:
-                            password:           foo
-                            roles:              ROLE_USER
-                        bar:
-                            password:           bar
-                            roles:              [ROLE_USER, ROLE_ADMIN]
+                my_in_memory_provider:
+                    memory:
+                        users:
+                            foo:
+                                password:           foo
+                                roles:              ROLE_USER
+                            bar:
+                                password:           bar
+                                roles:              [ROLE_USER, ROLE_ADMIN]
 
                 my_entity_provider:
                     entity:
