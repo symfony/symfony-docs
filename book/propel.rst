@@ -68,7 +68,7 @@ you:
 
     In this example, you have one configured connection, named ``default``. If
     you want to configure more than one connection, read the `PropelBundle
-    configuration section <Working With Symfony2 - Configuration>`_.
+    configuration section`_.
 
 Creating a Model Class
 ~~~~~~~~~~~~~~~~~~~~~~
@@ -434,7 +434,7 @@ Commands
 You should read the dedicated section for `Propel commands in Symfony2`_.
 
 .. _`Working With Symfony2`: http://propelorm.org/cookbook/symfony2/working-with-symfony2.html#installation
-.. _`Working With Symfony2 - Configuration`: http://propelorm.org/cookbook/symfony2/working-with-symfony2.html#configuration
+.. _`PropelBundle configuration section`: http://propelorm.org/cookbook/symfony2/working-with-symfony2.html#configuration
 .. _`Relationships`: http://propelorm.org/documentation/04-relationships.html
 .. _`Behaviors reference section`: http://propelorm.org/documentation/#behaviors_reference
 .. _`Propel commands in Symfony2`: http://propelorm.org/cookbook/symfony2/working-with-symfony2#the_commands
