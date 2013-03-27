@@ -18,7 +18,7 @@ Configuration
 * `secret`_
 * `ide`_
 * `test`_
-* `trust_proxy_headers`_
+* `trusted_proxies`_
 * `form`_
     * enabled
 * `csrf_protection`_
@@ -117,23 +117,6 @@ see :doc:`/components/http_foundation/trusting_proxies`.
             'trusted_proxies' => array('192.0.0.1'),
         ));
 
-trust_proxy_headers
-~~~~~~~~~~~~~~~~~~~
-
-.. caution::
-
-    The ``trust_proxy_headers`` option is deprecated and will be removed in
-    Symfony 2.3. See `trusted_proxies`_ and :doc:`/components/http_foundation/trusting_proxies`
-    for details on how to properly trust proxy data.
-
-**type**: ``Boolean``
-
-Configures if HTTP headers (like ``HTTP_X_FORWARDED_FOR``, ``X_FORWARDED_PROTO``, and
-``X_FORWARDED_HOST``) are trusted as an indication for an SSL connection. By default, it is
-set to ``false`` and only SSL_HTTPS connections are indicated as secure.
-
-You should enable this setting if your application is behind a reverse proxy.
-
 .. _reference-framework-form:
 
 form
@@ -148,9 +131,6 @@ session
 cookie_lifetime
 ...............
 
-.. versionadded:: 2.1
-    This option was formerly known as ``lifetime``
-
 **type**: ``integer`` **default**: ``0``
 
 This determines the lifetime of the session - in seconds. By default it will use
@@ -159,18 +139,12 @@ This determines the lifetime of the session - in seconds. By default it will use
 cookie_path
 ...........
 
-.. versionadded:: 2.1
-    This option was formerly known as ``path``
-
 **type**: ``string`` **default**: ``/``
 
 This determines the path to set in the session cookie. By default it will use ``/``.
 
 cookie_domain
 .............
-
-.. versionadded:: 2.1
-    This option was formerly known as ``domain``
 
 **type**: ``string`` **default**: ``''``
 
@@ -181,18 +155,12 @@ to the cookie specification.
 cookie_secure
 .............
 
-.. versionadded:: 2.1
-    This option was formerly known as ``secure``
-
 **type**: ``Boolean`` **default**: ``false``
 
 This determines whether cookies should only be sent over secure connections.
 
 cookie_httponly
 ...............
-
-.. versionadded:: 2.1
-    This option was formerly known as ``httponly``
 
 **type**: ``Boolean`` **default**: ``false``
 
@@ -377,9 +345,7 @@ Full Default Configuration
     .. code-block:: yaml
 
         framework:
-            charset:              ~
             secret:               ~
-            trust_proxy_headers:  false
             trusted_proxies:      []
             ide:                  ~
             test:                 ~
@@ -432,8 +398,6 @@ Full Default Configuration
 
             # session configuration
             session:
-                # DEPRECATED! Session starts on demand
-                auto_start:           false
                 storage_id:           session.storage.native
                 handler_id:           session.handler.native_file
                 name:                 ~
@@ -446,21 +410,6 @@ Full Default Configuration
                 gc_probability:       ~
                 gc_maxlifetime:       ~
                 save_path:            %kernel.cache_dir%/sessions
-
-                # DEPRECATED! Please use: cookie_lifetime
-                lifetime:             ~
-
-                # DEPRECATED! Please use: cookie_path
-                path:                 ~
-
-                # DEPRECATED! Please use: cookie_domain
-                domain:               ~
-
-                # DEPRECATED! Please use: cookie_secure
-                secure:               ~
-
-                # DEPRECATED! Please use: cookie_httponly
-                httponly:             ~
 
             # templating configuration
             templating:
@@ -508,10 +457,5 @@ Full Default Configuration
                 cache:                file
                 file_cache_dir:       %kernel.cache_dir%/annotations
                 debug:                %kernel.debug%
-
-
-.. versionadded:: 2.1
-    The ```framework.session.auto_start`` setting has been removed in Symfony2.1,
-    it will start on demand now.
 
 .. _`protocol-relative`: http://tools.ietf.org/html/rfc3986#section-4.2

@@ -115,14 +115,18 @@ an ``Address`` instance in the ``$address`` property.
             </property>
             <property name="zipCode">
                 <constraint name="NotBlank" />
-                <constraint name="MaxLength">5</constraint>
+                <constraint name="Length">
+                    <option name="max">5</option>
+                </constraint>
             </property>
         </class>
 
         <class name="Acme\HelloBundle\Entity\Author">
             <property name="firstName">
                 <constraint name="NotBlank" />
-                <constraint name="MinLength">4</constraint>
+                <constraint name="Length">
+                    <option name="min">4</option>
+                </constraint>
             </property>
             <property name="lastName">
                 <constraint name="NotBlank" />
