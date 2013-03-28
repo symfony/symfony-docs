@@ -238,7 +238,7 @@ not to the property:
         # src/Acme/BlogBundle/Resources/config/validation.yml
         Acme\DemoBundle\Entity\AcmeEntity:
             constraints:
-                ContainsAlphanumeric: ~
+                Acme\DemoBundle\Validator\Constraints\ContainsAlphanumeric: ~
 
     .. code-block:: php-annotations
 
@@ -254,5 +254,5 @@ not to the property:
 
         <!-- src/Acme/BlogBundle/Resources/config/validation.xml -->
         <class name="Acme\DemoBundle\Entity\AcmeEntity">
-            <constraint name="ContainsAlphanumeric" />
+            <constraint name="Acme\DemoBundle\Validator\Constraints\ContainsAlphanumeric" />
         </class>
