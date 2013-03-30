@@ -237,8 +237,7 @@ looks up the value of each parameter and uses it in the service definition.
     For example, you may want to pass in the ``request`` service as an argument.
     In these cases, you may receive a ``ScopeWideningInjectionException``.
     To understand this problem better and learn how to solve it, refer to
-    the cookbook article :doc:`/cookbook/service_container/scopes` for a
-    few solutions.
+    the cookbook article :doc:`/cookbook/service_container/scopes`.
 
 The purpose of parameters is to feed information into services. Of course
 there was nothing wrong with defining the service without using any parameters.
