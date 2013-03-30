@@ -26,7 +26,6 @@ day, and year) or three select boxes (see the `widget_` option).
 |                      | - `months`_                                                                 |
 |                      | - `days`_                                                                   |
 |                      | - `format`_                                                                 |
-|                      | - `pattern`_                                                                |
 |                      | - `data_timezone`_                                                          |
 |                      | - `user_timezone`_                                                          |
 +----------------------+-----------------------------------------------------------------------------+
@@ -106,8 +105,6 @@ Alternatively, you can specify a string to be displayed for the "blank" value::
 .. _reference-forms-type-date-format:
 
 .. include:: /reference/forms/types/options/date_format.rst.inc
-
-.. include:: /reference/forms/types/options/date_pattern.rst.inc
 
 .. include:: /reference/forms/types/options/data_timezone.rst.inc
 
