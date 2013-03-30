@@ -27,7 +27,7 @@ You can install the component in many different ways:
 Request
 -------
 
-The most common way to create request is to base it on the current PHP global
+The most common way to create a request is to base it on the current PHP global
 variables with
 :method:`Symfony\\Component\\HttpFoundation\\Request::createFromGlobals`::
 
