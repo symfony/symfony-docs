@@ -360,7 +360,7 @@ an example:
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/routing http://symfony.com/schema/routing/routing-1.0.xsd">
 
-            <route id="acme_privacy" pattern="/about.html">
+            <route id="about" pattern="/about.html">
                 <default key="_controller">FrameworkBundle:Template:template</default>
                 <default key="template">AcmeBundle:Static:about.html.twig</default>
             </route>
@@ -372,7 +372,7 @@ an example:
         use Symfony\Component\Routing\Route;
 
         $collection = new RouteCollection();
-        $collection->add('acme_privacy', new Route('/about.html', array(
+        $collection->add('about', new Route('/about.html', array(
             '_controller'  => 'FrameworkBundle:Template:template',
             'template'     => 'AcmeBundle:Static:about.html.twig',
         )));
