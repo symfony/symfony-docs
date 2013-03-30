@@ -184,34 +184,31 @@ a parent for a service.
             # ...
             newsletter_manager.class: NewsletterManager
             greeting_card_manager.class: GreetingCardManager
-            mail_manager.class: MailManager
         services:
             my_mailer:
                 # ...
             my_email_formatter:
                 # ...
             mail_manager:
-                class:     "%mail_manager.class%"
                 abstract:  true
                 calls:
                     - [ setMailer, [ @my_mailer ] ]
                     - [ setEmailFormatter, [ @my_email_formatter] ]
-            
+
             newsletter_manager:
                 class:     "%newsletter_manager.class%"
                 parent: mail_manager
-            
+
             greeting_card_manager:
                 class:     "%greeting_card_manager.class%"
                 parent: mail_manager
-            
+
     .. code-block:: xml
 
         <parameters>
             <!-- ... -->
             <parameter key="newsletter_manager.class">NewsletterManager</parameter>
             <parameter key="greeting_card_manager.class">GreetingCardManager</parameter>
-            <parameter key="mail_manager.class">MailManager</parameter>
         </parameters>
 
         <services>
@@ -221,7 +218,7 @@ a parent for a service.
             <service id="my_email_formatter" ...>
               <!-- ... -->
             </service>
-            <service id="mail_manager" class="%mail_manager.class%" abstract="true">
+            <service id="mail_manager" abstract="true">
                 <call method="setMailer">
                      <argument type="service" id="my_mailer" />
                 </call>
@@ -242,12 +239,10 @@ a parent for a service.
         // ...
         $container->setParameter('newsletter_manager.class', 'NewsletterManager');
         $container->setParameter('greeting_card_manager.class', 'GreetingCardManager');
-        $container->setParameter('mail_manager.class', 'MailManager');
 
         $container->setDefinition('my_mailer', ...);
         $container->setDefinition('my_email_formatter', ...);
         $container->setDefinition('mail_manager', new Definition(
-            '%mail_manager.class%'
         ))->setAbstract(
             true
         )->addMethodCall('setMailer', array(
@@ -279,16 +274,15 @@ when the child services are instantiated.
    defined on the ``mail_manager`` service will not be executed when the
    child services are instantiated.
 
-The parent class is abstract as it should not be directly instantiated. Setting
-it to abstract in the config file as has been done above will mean that it
-can only be used as a parent service and cannot be used directly as a service
-to inject and will be removed at compile time. In other words, it exists merely
-as a "template" that other services can use.
+The parent service is abstract as it should not be directly retrieved from the
+container or passed into another service. It exists merely as a "template" that
+other services can use. This is why it can have no ``class`` configured which
+would cause an exception to be raised for a non-abstract service.
 
 .. note::
 
-   In order for parent dependencies to resolve, the ``ContainerBuilder`` must 
-   first be compiled. See :doc:`/components/dependency_injection/compilation` 
+   In order for parent dependencies to resolve, the ``ContainerBuilder`` must
+   first be compiled. See :doc:`/components/dependency_injection/compilation`
    for more details.
 
 Overriding Parent Dependencies
@@ -308,7 +302,6 @@ to the ``NewsletterManager`` class, the config would look like this:
             # ...
             newsletter_manager.class: NewsletterManager
             greeting_card_manager.class: GreetingCardManager
-            mail_manager.class: MailManager
         services:
             my_mailer:
                 # ...
@@ -317,29 +310,27 @@ to the ``NewsletterManager`` class, the config would look like this:
             my_email_formatter:
                 # ...
             mail_manager:
-                class:     "%mail_manager.class%"
                 abstract:  true
                 calls:
                     - [ setMailer, [ @my_mailer ] ]
                     - [ setEmailFormatter, [ @my_email_formatter] ]
-            
+
             newsletter_manager:
                 class:     "%newsletter_manager.class%"
                 parent: mail_manager
                 calls:
                     - [ setMailer, [ @my_alternative_mailer ] ]
-            
+
             greeting_card_manager:
                 class:     "%greeting_card_manager.class%"
                 parent: mail_manager
-            
+
     .. code-block:: xml
 
         <parameters>
             <!-- ... -->
             <parameter key="newsletter_manager.class">NewsletterManager</parameter>
             <parameter key="greeting_card_manager.class">GreetingCardManager</parameter>
-            <parameter key="mail_manager.class">MailManager</parameter>
         </parameters>
 
         <services>
@@ -352,7 +343,7 @@ to the ``NewsletterManager`` class, the config would look like this:
             <service id="my_email_formatter" ...>
               <!-- ... -->
             </service>
-            <service id="mail_manager" class="%mail_manager.class%" abstract="true">
+            <service id="mail_manager" abstract="true">
                 <call method="setMailer">
                      <argument type="service" id="my_mailer" />
                 </call>
@@ -377,13 +368,11 @@ to the ``NewsletterManager`` class, the config would look like this:
         // ...
         $container->setParameter('newsletter_manager.class', 'NewsletterManager');
         $container->setParameter('greeting_card_manager.class', 'GreetingCardManager');
-        $container->setParameter('mail_manager.class', 'MailManager');
 
         $container->setDefinition('my_mailer', ...);
         $container->setDefinition('my_alternative_mailer', ...);
         $container->setDefinition('my_email_formatter', ...);
         $container->setDefinition('mail_manager', new Definition(
-            '%mail_manager.class%'
         ))->setAbstract(
             true
         )->addMethodCall('setMailer', array(
@@ -442,30 +431,27 @@ If you had the following config:
         parameters:
             # ...
             newsletter_manager.class: NewsletterManager
-            mail_manager.class: MailManager
         services:
             my_filter:
                 # ...
             another_filter:
                 # ...
             mail_manager:
-                class:     "%mail_manager.class%"
                 abstract:  true
                 calls:
                     - [ setFilter, [ @my_filter ] ]
-                    
+
             newsletter_manager:
                 class:     "%newsletter_manager.class%"
                 parent: mail_manager
                 calls:
                     - [ setFilter, [ @another_filter ] ]
-            
+
     .. code-block:: xml
 
         <parameters>
             <!-- ... -->
             <parameter key="newsletter_manager.class">NewsletterManager</parameter>
-            <parameter key="mail_manager.class">MailManager</parameter>
         </parameters>
 
         <services>
@@ -475,7 +461,7 @@ If you had the following config:
             <service id="another_filter" ...>
               <!-- ... -->
             </service>
-            <service id="mail_manager" class="%mail_manager.class%" abstract="true">
+            <service id="mail_manager" abstract="true">
                 <call method="setFilter">
                      <argument type="service" id="my_filter" />
                 </call>
@@ -500,7 +486,6 @@ If you had the following config:
         $container->setDefinition('my_filter', ...);
         $container->setDefinition('another_filter', ...);
         $container->setDefinition('mail_manager', new Definition(
-            '%mail_manager.class%'
         ))->setAbstract(
             true
         )->addMethodCall('setFilter', array(
@@ -518,5 +503,13 @@ In this example, the ``setFilter`` of the ``newsletter_manager`` service
 will be called twice, resulting in the ``$filters`` array containing both
 ``my_filter`` and ``another_filter`` objects. This is great if you just want
 to add additional filters to the subclasses. If you want to replace the filters
-passed to the subclass, removing the parent setting from the config will 
+passed to the subclass, removing the parent setting from the config will
 prevent the base class from calling ``setFilter``.
+
+.. tip::
+
+    In the examples shown there is a similar relationship between the parent
+    and child services and the underlying parent and child classes. This does
+    not need to be the case though, you can extract common parts of similar
+    service definitions into a parent service without also inheriting a parent
+    class.

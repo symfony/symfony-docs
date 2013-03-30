@@ -10,9 +10,7 @@ into a database or passed to a web service.
 
 Symfony2 ships with a `Validator`_ component that makes this task easy and
 transparent. This component is based on the
-`JSR303 Bean Validation specification`_. What? A Java specification in PHP?
-You heard right, but it's not as bad as it sounds. Let's look at how it
-can be used in PHP.
+`JSR303 Bean Validation specification`_.
 
 .. index::
    single: Validation; The basics

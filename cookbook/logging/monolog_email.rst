@@ -14,7 +14,7 @@ it is broken down.
 
     .. code-block:: yaml
 
-        # app/config/config.yml
+        # app/config/config_prod.yml
         monolog:
             handlers:
                 mail:
@@ -33,7 +33,7 @@ it is broken down.
 
     .. code-block:: xml
 
-        <!-- app/config/config.xml -->
+        <!-- app/config/config_prod.xml -->
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xmlns:monolog="http://symfony.com/schema/dic/monolog"
@@ -64,7 +64,7 @@ it is broken down.
         
     .. code-block:: php
             
-        // app/config/config.php
+        // app/config/config_prod.php
         $container->loadFromExtension('monolog', array(
             'handlers' => array(
                 'mail' => array(
@@ -112,7 +112,7 @@ get logged on the server as well as the emails being sent:
 
     .. code-block:: yaml
 
-        # app/config/config.yml
+        # app/config/config_prod.yml
         monolog:
             handlers:
                 main:
@@ -138,7 +138,7 @@ get logged on the server as well as the emails being sent:
 
     .. code-block:: xml
 
-        <!-- app/config/config.xml -->
+        <!-- app/config/config_prod.xml -->
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xmlns:monolog="http://symfony.com/schema/dic/monolog"
@@ -181,7 +181,7 @@ get logged on the server as well as the emails being sent:
 
     .. code-block:: php
 
-        // app/config/config.php
+        // app/config/config_prod.php
         $container->loadFromExtension('monolog', array(
             'handlers' => array(
                 'main' => array(

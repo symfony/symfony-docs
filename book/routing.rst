@@ -476,7 +476,7 @@ Take a quick look at the routes that have been created so far:
         return $collection;
 
 Can you spot the problem? Notice that both routes have patterns that match
-URL's that look like ``/blog/*``. The Symfony router will always choose the
+URLs that look like ``/blog/*``. The Symfony router will always choose the
 **first** matching route it finds. In other words, the ``blog_show`` route
 will *never* be matched. Instead, a URL like ``/blog/my-blog-post`` will match
 the first route (``blog``) and return a nonsense value of ``my-blog-post``
