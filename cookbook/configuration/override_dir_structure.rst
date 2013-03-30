@@ -91,6 +91,19 @@ may need to modify the paths inside these files::
     require_once __DIR__.'/../Symfony/app/bootstrap.php.cache';
     require_once __DIR__.'/../Symfony/app/AppKernel.php';
 
+Since Symfony 2.1 (in which Composer is introduced), you also need to change
+the ``extra.symfony-web-dir`` option in the ``composer.json`` file:
+
+.. code-block:: json
+
+    {
+        ...
+        "extra": {
+            ...
+            "symfony-web-dir": "my_new_web_dir"
+        }
+    }
+
 .. tip::
 
     Some shared hosts have a ``public_html`` web directory root. Renaming
