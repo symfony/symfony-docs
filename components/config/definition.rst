@@ -270,7 +270,7 @@ has a certain value:
 Optional Sections
 -----------------
 
-.. versionadded:: 2.1
+.. versionadded:: 2.2
     The ``canBeEnabled`` and ``canBeDisabled`` methods are new in Symfony 2.2
 
 If you have entire sections which are optional and can be enabled/disabled,

@@ -854,7 +854,7 @@ First, to use ESI, be sure to enable it in your application configuration:
 
         // app/config/config.php
         $container->loadFromExtension('framework', array(
-            ...,
+            // ...
             'esi'    => array('enabled' => true),
         ));
 
@@ -891,7 +891,7 @@ matter), Symfony2 uses the standard ``render`` helper to configure ESI tags:
         {# ... or a URL #}
         {{ render_esi(url('latest_news', { 'max': 5 })) }}
 
-    .. code-block:: php
+    .. code-block:: html+php
 
         <?php echo $view['actions']->render(
             new ControllerReference('...:news', array('max' => 5)),

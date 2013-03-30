@@ -493,7 +493,7 @@ Finally, create the corresponding template:
 
     .. code-block:: html+php
 
-        <?php // src/Acme/SecurityBundle/Resources/views/Security/login.html.php ?>
+        <!-- src/Acme/SecurityBundle/Resources/views/Security/login.html.php -->
         <?php if ($error): ?>
             <div><?php echo $error->getMessage() ?></div>
         <?php endif; ?>
@@ -732,7 +732,7 @@ You can define as many URL patterns as you need - each is a regular expression.
 
         // app/config/security.php
         $container->loadFromExtension('security', array(
-            ...,
+            // ...
             'access_control' => array(
                 array('path' => '^/admin/users', 'role' => 'ROLE_SUPER_ADMIN'),
                 array('path' => '^/admin', 'role' => 'ROLE_ADMIN'),
@@ -1082,7 +1082,7 @@ In fact, you've seen this already in the example in this chapter.
 
         // app/config/security.php
         $container->loadFromExtension('security', array(
-            ...,
+            // ...
             'providers' => array(
                 'default_provider' => array(
                     'memory' => array(
@@ -1325,7 +1325,7 @@ configure the encoder for that user:
 
         // app/config/security.php
         $container->loadFromExtension('security', array(
-            ...,
+            // ...
             'encoders' => array(
                 'Acme\UserBundle\Entity\User' => 'sha512',
             ),
@@ -1559,10 +1559,10 @@ the first provider is always used:
         $container->loadFromExtension('security', array(
             'firewalls' => array(
                 'secured_area' => array(
-                    ...,
+                    // ...
                     'provider' => 'user_db',
                     'http_basic' => array(
-                        ...,
+                        // ...
                         'provider' => 'in_memory',
                     ),
                     'form_login' => array(),
@@ -1674,7 +1674,7 @@ the firewall can handle this automatically for you when you activate the
             'firewalls' => array(
                 'secured_area' => array(
                     // ...
-                    'logout' => array('path' => '/logout', 'target' => '/'),
+                    'logout' => array('path' => 'logout', 'target' => '/'),
                 ),
             ),
             // ...
@@ -1833,7 +1833,7 @@ done by activating the ``switch_user`` firewall listener:
         $container->loadFromExtension('security', array(
             'firewalls' => array(
                 'main'=> array(
-                    ...,
+                    // ...
                     'switch_user' => true
                 ),
             ),
