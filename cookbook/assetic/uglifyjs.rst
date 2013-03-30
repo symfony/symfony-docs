@@ -16,7 +16,7 @@ you need to `install node.js`_. Afterwards you can install UglifyJs using npm:
 
 .. code-block:: bash
     
-    $ npm install -g uglifyjs
+    $ npm install -g uglify-js@1
     
 .. note::
 
@@ -25,10 +25,16 @@ you need to `install node.js`_. Afterwards you can install UglifyJs using npm:
     
     .. code-block:: bash
     
-        $ npm install uglifyjs /path/to/symfony/app/Resources
+        $ npm install uglify-js@1 /path/to/symfony/app/Resources
         
     It is recommended that you install UglifyJs in your ``app/Resources`` folder
     and add the ``node_modules`` folder to version control.
+    
+.. tip::
+    
+    This cookbook uses UglifyJs 1 instead of the newer version 2 to be compatible
+    with old assetic versions. If you wantt to use UglifyJs version 2, make sure 
+    to also use the assetic filter for this version and apply the correct configuration.
 
 Configure the UglifyJs Filter
 -----------------------------
