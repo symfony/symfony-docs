@@ -1,11 +1,11 @@
 .. index::
     single: Console; Events
 
-.. versionadded:: 2.3
-    The feature described in this chapter was added in 2.3.
-
 Using Events
 ============
+
+.. versionadded:: 2.3
+    Console events were added in Symfony 2.3.
 
 The Application class of the Console component allows you to optionally hook
 into the lifecycle of a console application via events. Instead of reinventing
@@ -18,7 +18,7 @@ the wheel, it uses the Symfony EventDispatcher component to do the work::
     $application->setDispatcher($dispatcher);
     $application->run();
 
-The ``ConsoleEvents::COMMAND`` event
+The ``ConsoleEvents::COMMAND`` Event
 ------------------------------------
 
 **Typical Purposes**: Doing something before any command is run (like logging
@@ -57,8 +57,8 @@ been executed.
 
 After the command has been executed, the ``ConsoleEvents::TERMINATE`` event is
 dispatched. It can be used to do any actions that need to be executed for all
-commands or to cleanup what you initiated in the ``ConsoleEvents::COMMAND``
-command (like sending logs, closing a database connection, sending emails,
+commands or to cleanup what you initiated in a ``ConsoleEvents::COMMAND``
+listener (like sending logs, closing a database connection, sending emails,
 ...). A listener might also change the exit code.
 
 Listeners receive a
@@ -94,7 +94,7 @@ The ``ConsoleEvents::EXCEPTION`` event
 command.
 
 Whenever an exception is thrown by a command, the ``ConsoleEvents::EXCEPTION``
-command is dispatched. A listener can wrap or change the exception or do
+event is dispatched. A listener can wrap or change the exception or do
 anything useful before the exception is thrown by the application.
 
 Listeners receive a
