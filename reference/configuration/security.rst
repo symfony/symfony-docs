@@ -56,34 +56,34 @@ Each part will be explained in the next section.
                     iterations:          5000
 
                 # Example options/values for what a custom encoder might look like
-                Acme\Your\Class\Name:
-                    algorithm:            ~
-                    ignore_case:          false
-                    encode_as_base64:     true
-                    iterations:           5000
-                    id:                   ~
+                Acme\DemoBundle\Entity\User3:
+                    id:                   my.encoder.id
 
             providers:            # Required
                 # Examples:
-                memory:
-                    name:                memory
-                    users:
-                        foo:
-                            password:            foo
-                            roles:               ROLE_USER
-                        bar:
-                            password:            bar
-                            roles:               [ROLE_USER, ROLE_ADMIN]
-                entity:
+                my_in_memory_provider:
+                    memory:
+                        users:
+                            foo:
+                                password:           foo
+                                roles:              ROLE_USER
+                            bar:
+                                password:           bar
+                                roles:              [ROLE_USER, ROLE_ADMIN]
+
+                my_entity_provider:
                     entity:
-                        class:               SecurityBundle:User
-                        property:            username
+                        class:              SecurityBundle:User
+                        property:           username
 
                 # Example custom provider
-                some_custom_provider:
+                my_some_custom_provider:
                     id:                   ~
+
+                # Chain some providers
+                my_chain_provider:
                     chain:
-                        providers:            []
+                        providers:          [ my_in_memory_provider, my_entity_provider ]
 
             firewalls:            # Required
                 # Examples:
