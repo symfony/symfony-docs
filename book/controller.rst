@@ -347,7 +347,7 @@ an example:
     .. code-block:: yaml
 
         about:
-            pattern: /about.html
+            path: /about.html
             defaults:
                 _controller: FrameworkBundle:Template:template
                 template: 'AcmeBundle:Static:about.html.twig'
@@ -360,7 +360,7 @@ an example:
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/routing http://symfony.com/schema/routing/routing-1.0.xsd">
 
-            <route id="about" pattern="/about.html">
+            <route id="about" path="/about.html">
                 <default key="_controller">FrameworkBundle:Template:template</default>
                 <default key="template">AcmeBundle:Static:about.html.twig</default>
             </route>
