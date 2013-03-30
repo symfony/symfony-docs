@@ -259,6 +259,8 @@ will be called after another event - ``kernel.controller`` - is dispatched.
     There are also a few other variations on the above process (e.g. if
     you're registering your controllers as services).
 
+.. _component-http-kernel-kernel-controller:
+
 3) The ``kernel.controller`` event
 ----------------------------------
 
@@ -443,6 +445,8 @@ method, which sends the headers and prints the ``Response`` content.
     :class:`Symfony\\Component\\Security\\Http\\Firewall\\ContextListener`
     serializes the current user's information into the
     session so that it can be reloaded on the next request. 
+
+.. _component-http-kernel-kernel-terminate:
 
 8) The ``kernel.terminate`` event
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
