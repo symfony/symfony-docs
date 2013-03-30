@@ -122,6 +122,10 @@
   * :doc:`/cookbook/security/custom_authentication_provider`
   * :doc:`/cookbook/security/target_path`
 
+* **Serializer**
+
+  * :doc:`/cookbook/serializer`
+
 * :doc:`/cookbook/service_container/index`
 
   * :doc:`/cookbook/service_container/event_listener`

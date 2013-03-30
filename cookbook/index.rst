@@ -12,6 +12,7 @@ The Cookbook
     form/index
     validation/index
     configuration/index
+    serializer
     service_container/index
     bundles/index
     email/index
