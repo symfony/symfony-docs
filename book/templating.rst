@@ -1300,8 +1300,13 @@ is being escaped for HTML output.
 In some cases, you'll need to disable output escaping when you're rendering
 a variable that is trusted and contains markup that should not be escaped.
 Suppose that administrative users are able to write articles that contain
-HTML code. By default, Twig will escape the article body. To render it normally,
-add the ``raw`` filter: ``{{ article.body|raw }}``.
+HTML code. By default, Twig will escape the article body.
+
+To render it normally, add the ``raw`` filter: 
+
+.. code-block:: jinja
+
+    {{ article.body|raw }}
 
 You can also disable output escaping inside a ``{% block %}`` area or
 for an entire template. For more information, see `Output Escaping`_ in
