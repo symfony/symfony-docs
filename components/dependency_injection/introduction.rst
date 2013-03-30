@@ -181,8 +181,8 @@ Setting Up the Container with Configuration Files
 As well as setting up the services using PHP as above you can also use
 configuration files. This allows you to use XML or Yaml to write the definitions
 for the services rather than using PHP to define the services as in the above
-examples. In anything but the smallest applications it make sense to organise
-the service definitions by moving them out into one or more configuration files.
+examples. In anything but the smallest applications it make sense to organize
+the service definitions by moving them into one or more configuration files.
 To do this you also need to install
 :doc:`the Config Component</components/config/introduction>`.
 
@@ -211,7 +211,7 @@ Loading a YAML config file::
     If you want to load YAML config files then you will also need to install
     :doc:`The YAML component</components/yaml/introduction>`.
 
-If you do want to use PHP to create the services then you can move this
+If you *do* want to use PHP to create the services then you can move this
 into a separate config file and load it in a similar way::
 
     use Symfony\Component\DependencyInjection\ContainerBuilder;
