@@ -1017,10 +1017,10 @@ Here is how you can configure the Symfony2 reverse proxy to support the
 
     class AppCache extends HttpCache
     {
-        protected function invalidate(Request $request)
+        protected function invalidate(Request $request, $catch = false)
         {
             if ('PURGE' !== $request->getMethod()) {
-                return parent::invalidate($request);
+                return parent::invalidate($request, $catch);
             }
 
             $response = new Response();
