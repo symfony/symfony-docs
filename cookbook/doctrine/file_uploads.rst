@@ -118,7 +118,38 @@ look like this::
     }
 
 Next, create this property on your ``Document`` class and add some validation
-rules:
+rules::
+
+use Symfony\Component\HttpFoundation\File\UploadedFile;
+
+    // ...
+    class Document
+    {
+        /**
+         * @Assert\File(maxSize="6000000")
+         */
+        private $file;
+
+        /**
+         * Sets file.
+         *
+         * @param UploadedFile $file
+         */
+        public function setFile(UploadedFile $file = null)
+        {
+            $this->file = $file;
+        }
+
+        /**
+         * Get file.
+         *
+         * @return UploadedFile
+         */
+        public function getFile()
+        {
+            return $this->file;
+        }
+    }
 
 .. configuration-block::
 
@@ -144,7 +175,7 @@ rules:
             /**
              * @Assert\File(maxSize="6000000")
              */
-            public $file;
+            private $file;
 
             // ...
         }
@@ -273,7 +304,7 @@ object, which is what's returned after a ``file`` field is submitted::
     public function upload()
     {
         // the file property can be empty if the field is not required
-        if (null === $this->file) {
+        if (null === $this->getFile()) {
             return;
         }
 
@@ -282,16 +313,16 @@ object, which is what's returned after a ``file`` field is submitted::
 
         // move takes the target directory and then the
         // target filename to move to
-        $this->file->move(
+        $this->getFile()->move(
             $this->getUploadRootDir(),
-            $this->file->getClientOriginalName()
+            $this->getFile()->getClientOriginalName()
         );
 
         // set the path property to the filename where you've saved the file
-        $this->path = $this->file->getClientOriginalName();
+        $this->path = $this->getFile()->getClientOriginalName();
 
         // clean up the file property as you won't need it anymore
-        $this->file = null;
+        $this->setFile(null);
     }
 
 Using Lifecycle Callbacks
@@ -329,16 +360,36 @@ Next, refactor the ``Document`` class to take advantage of these callbacks::
      */
     class Document
     {
+        private $temp;
+
+        /**
+         * Sets file.
+         *
+         * @param UploadedFile $file
+         */
+        public function setFile(UploadedFile $file = null)
+        {
+            $this->file = $file;
+            // check if we have an old image path
+            if (isset($this->path)) {
+                // store the old name to delete after the update
+                $this->temp = $this->path;
+                $this->path = null;
+            } else {
+                $this->path = 'initial';
+            }
+        }
+
         /**
          * @ORM\PrePersist()
          * @ORM\PreUpdate()
          */
         public function preUpload()
         {
-            if (null !== $this->file) {
+            if (null !== $this->getFile()) {
                 // do whatever you want to generate a unique name
                 $filename = sha1(uniqid(mt_rand(), true));
-                $this->path = $filename.'.'.$this->file->guessExtension();
+                $this->path = $filename.'.'.$this->getFile()->guessExtension();
             }
         }
 
@@ -348,16 +399,24 @@ Next, refactor the ``Document`` class to take advantage of these callbacks::
          */
         public function upload()
         {
-            if (null === $this->file) {
+            if (null === $this->getFile()) {
                 return;
             }
 
             // if there is an error when moving the file, an exception will
             // be automatically thrown by move(). This will properly prevent
             // the entity from being persisted to the database on error
-            $this->file->move($this->getUploadRootDir(), $this->path);
+            $this->getFile()->move($this->getUploadRootDir(), $this->path);
 
-            unset($this->file);
+            $this->setFile(null);
+
+            // check if we have an old image
+            if (isset($this->temp)) {
+                // delete the old image
+                unlink($this->getUploadRootDir().'/'.$this->temp);
+                // clear the temp image path
+                $this->temp = null;
+            }
         }
 
         /**
@@ -418,8 +477,24 @@ property, instead of the actual filename::
      */
     class Document
     {
-        // a property used temporarily while deleting
-        private $filenameForRemove;
+        private $temp;
+
+        /**
+         * Sets file.
+         *
+         * @param UploadedFile $file
+         */
+        public function setFile(UploadedFile $file = null)
+        {
+            $this->file = $file;
+            // check if we have an old image path
+            if (is_file($this->getAbsolutePath())) {
+                // store the old name to delete after the update
+                $this->temp = $this->getAbsolutePath();
+            } else {
+                $this->path = 'initial';
+            }
+        }
 
         /**
          * @ORM\PrePersist()
@@ -427,8 +502,8 @@ property, instead of the actual filename::
          */
         public function preUpload()
         {
-            if (null !== $this->file) {
-                $this->path = $this->file->guessExtension();
+            if (null !== $this->getFile()) {
+                $this->path = $this->getFile()->guessExtension();
             }
         }
 
@@ -438,19 +513,27 @@ property, instead of the actual filename::
          */
         public function upload()
         {
-            if (null === $this->file) {
+            if (null === $this->getFile()) {
                 return;
+            }
+
+            // check if we have an old image
+            if (isset($this->temp)) {
+                // delete the old image
+                unlink($this->temp);
+                // clear the temp image path
+                $this->temp = null;
             }
 
             // you must throw an exception here if the file cannot be moved
             // so that the entity is not persisted to the database
             // which the UploadedFile move() method does
-            $this->file->move(
+            $this->getFile()->move(
                 $this->getUploadRootDir(),
-                $this->id.'.'.$this->file->guessExtension()
+                $this->id.'.'.$this->getFile()->guessExtension()
             );
 
-            unset($this->file);
+            $this->setFile(null);
         }
 
         /**
@@ -458,7 +541,7 @@ property, instead of the actual filename::
          */
         public function storeFilenameForRemove()
         {
-            $this->filenameForRemove = $this->getAbsolutePath();
+            $this->temp = $this->getAbsolutePath();
         }
 
         /**
@@ -466,8 +549,8 @@ property, instead of the actual filename::
          */
         public function removeUpload()
         {
-            if ($this->filenameForRemove) {
-                unlink($this->filenameForRemove);
+            if (isset($this->temp)) {
+                unlink($this->temp);
             }
         }
 

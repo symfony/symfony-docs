@@ -354,14 +354,6 @@ or perform more complex requests::
         'image/jpeg',
         123
     );
-    // or
-    $photo = array(
-        'tmp_name' => '/path/to/photo.jpg',
-        'name'     => 'photo.jpg',
-        'type'     => 'image/jpeg',
-        'size'     => 123,
-        'error'    => UPLOAD_ERR_OK
-    );
     $client->request(
         'POST',
         '/submit',

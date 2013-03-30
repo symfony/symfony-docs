@@ -79,12 +79,23 @@ GitHub covers the topic of `pull requests`_ in detail.
     The Symfony2 documentation is licensed under a Creative Commons
     Attribution-Share Alike 3.0 Unported :doc:`License <license>`.
 
+You can also prefix the title of your pull request in a few cases:
+
+* ``[WIP]`` (Work in Progress) is used when you are not yet finished with your
+  pull request, but you would like it to be reviewed. The pull request won't
+  be merged until you say it is ready.
+
+* ``[WCM]`` (Waiting Code Merge) is used when you're documenting a new feature
+  or change that hasn't been accepted yet into the core code. The pull request
+  will not be merged until it is merged in the core code (or closed if the
+  change is rejected).
+
 .. _doc-contributing-pr-format:
 
 Pull Request Format
 ~~~~~~~~~~~~~~~~~~~
 
-Unless you're fixing some minor typos, the pull request description must**
+Unless you're fixing some minor typos, the pull request description **must**
 include the following checklist to ensure that contributions may be reviewed
 without needless feedback loops and that your contributions can be included
 into the documentation as quickly as possible:

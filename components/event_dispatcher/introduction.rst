@@ -317,6 +317,8 @@ the ``getOrder`` method::
 .. index::
    single: Event Dispatcher; Event subscribers
 
+.. _event_dispatcher-using-event-subscribers:
+
 Using Event Subscribers
 ~~~~~~~~~~~~~~~~~~~~~~~
 
