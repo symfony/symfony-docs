@@ -28,6 +28,11 @@ container and customizing objects from any third-party bundle. You'll begin
 writing code that is more reusable, testable and decoupled, simply because
 the service container makes writing good code so easy.
 
+.. tip::
+
+    If you want to know a lot more after reading this chapter, check out
+    the :doc:`Dependency Injection Component Documentation</components/dependency_injection/introduction>`.
+
 .. index::
    single: Service Container; What is a service?
 
@@ -238,6 +243,11 @@ The choice of using or not using parameters is up to you. High-quality
 third-party bundles will *always* use parameters as they make the service
 stored in the container more configurable. For the services in your application,
 however, you may not need the flexibility of parameters.
+
+Array Parameters
+~~~~~~~~~~~~~~~~
+
+Parameters can also contain array values. See :ref:`component-di-parameters-array`.
 
 Importing other Container Configuration Resources
 -------------------------------------------------

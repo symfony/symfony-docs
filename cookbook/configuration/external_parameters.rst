@@ -94,6 +94,12 @@ You can now reference these parameters wherever you need them.
             )
         ));
 
+Constants
+---------
+
+The container also has support for setting PHP constants as parameters.
+See :ref:`component-di-parameters-constants` for more details.
+
 Miscellaneous Configuration
 ---------------------------
 

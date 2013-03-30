@@ -2,7 +2,7 @@
    single: Dependency Injection; Parameters
 
 Introduction to Parameters
-=================================
+==========================
 
 You can define parameters in the service container which can then be used
 directly or as part of service definitions. This can help to separate out
@@ -11,13 +11,13 @@ values that you will want to change more regularly.
 Getting and Setting Container Parameters
 ----------------------------------------
 
-Working with container parameters is straight forward using the container's
+Working with container parameters is straightforward using the container's
 accessor methods for parameters. You can check if a parameter has been defined
 in the container with::
 
      $container->hasParameter('mailer.transport');
 
-You can retrieve parameters set in the container with::
+You can retrieve a parameter set in the container with::
 
     $container->getParameter('mailer.transport');
 
@@ -29,7 +29,7 @@ and set a parameter in the container with::
 
     You can only set a parameter before the container is compiled. To learn
     more about compiling the container see
-    :doc:`/components/dependency_injection/compilation`
+    :doc:`/components/dependency_injection/compilation`.
 
 Parameters in Configuration Files
 ---------------------------------
@@ -54,14 +54,14 @@ You can also use the ``parameters`` section of a config file to set parameters:
         $container->setParameter('mailer.transport', 'sendmail');
 
 As well as retrieving the parameter values directly from the container you
-can use them in the config files. You can refer to parameters elsewhere in
-the config files by surrounding them with percent (``%``) signs, e.g.
-``%mailer.transport%``. One use is for this is to inject the values into your
-services. This allows you to configure different versions of services between
-applications or multiple services based on the same class but configured
-differently within a single application. You could inject the choice of mail
-transport into the ``Mailer`` class directly but by making it a parameter it
-makes it easier to change rather than being tied up with the service definition:
+can use them in the config files. You can refer to parameters elsewhere by
+surrounding them with percent (``%``) signs, e.g. ``%mailer.transport%``.
+One use for this is to inject the values into your services. This allows
+you to configure different versions of services between applications or multiple
+services based on the same class but configured differently within a single
+application. You could inject the choice of mail transport into the ``Mailer``
+class directly but by making it a parameter. This makes it easier to change
+rather than being tied up and hidden with the service definition:
 
 .. configuration-block::
 
@@ -97,8 +97,8 @@ makes it easier to change rather than being tied up with the service definition:
             ->register('mailer', 'Mailer')
             ->addArgument('%mailer.transport%');
 
-If we were using this elsewhere as well, then it would only need changing
-in one place if a different transport was required.
+If you were using this elsewhere as well, then you would only need to change
+the parameter value in one place if needed.
 
 You can also use the parameters in the service definition, for example,
 making the class of a service a parameter:
@@ -164,6 +164,8 @@ making the class of a service a parameter:
 
             ->addArgument('http://symfony.com/?foo=%%s&bar=%%d');
 
+.. _component-di-parameters-array:
+
 Array Parameters
 ----------------
 
@@ -220,6 +222,8 @@ arrays.
             'en' => array('en', 'fr'),
             'fr' => array('fr', 'en'),
         ));
+
+.. _component-di-parameters-constants:
 
 Constants as Parameters
 -----------------------
