@@ -526,5 +526,5 @@ prevent the base class from calling ``setFilter``.
     In the examples shown there is a similar relationship between the parent
     and child services and the underlying parent and child classes. This does
     not need to be the case though, you can extract common parts of similar
-    service definitions into a parent service without also extracting a parent
+    service definitions into a parent service without also inheriting a parent
     class.
