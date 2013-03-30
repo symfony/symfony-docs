@@ -4,8 +4,8 @@
 How to install 3rd party bundles
 ================================
 
-Most bundles provide a documentation of installation. However, most
-steps are common for any bundle.
+Most bundles provide their own installation instructions. However the
+basic steps for installing a bundle are the same.
 
 Add composer dependencies
 -------------------------
@@ -29,14 +29,14 @@ https://packagist.org/packages/friendsofsymfony/user-bundle.
     has a Packagist package it shows a link to the package. It's a
     really usefull site to begin searching for bundles.
 
-Now you have the package name, you should determine the version you
+Now that you have the package name, you should determine the version you
 want to use. Usually different versions of a bundle correspond to a
 particular version of Symfony, this should be in the ``README`` file (in
 the Package, which you can view on Github or KnpBundles). If it isn't
 in the ``README``, you can use the version you want. In the case of the
 FOSUserBundle, the ``README`` file has a caution that version 1.2.0 must be
-used for Symfony2.0 and 1.3 for Symfony2.1+. Let's use development
-version for this exmaple.
+used for Symfony2.0 and 1.3 for Symfony2.1+. Let's use the development
+version for this example.
 
 Now we can add the bundle to our ``composer.json`` file and update the
 dependencies. You can do this manually:
@@ -75,7 +75,7 @@ Enable the bundle
 -----------------
 
 Now the bundle is installed into our Symfony project (in
-``vendor/friendsofsymfony/``) and the autoloader recognises this
+``vendor/friendsofsymfony/``) and the autoloader recognizes this
 bundle. The only thing we need to do now is registering the bundle in
 the ``AppKernel``::
 
@@ -101,7 +101,7 @@ Configure the bundle
 --------------------
 
 Usually bundles require some configuration to be added to app's
-``app/config/config.yml`` file. Bundle's documentation will likely
+``app/config/config.yml`` file. The bundle's documentation will likely
 describe that configuration. But you can also get a reference of the
 bundle's config via ``config:dump-reference`` command.
 
