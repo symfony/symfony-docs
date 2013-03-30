@@ -4,6 +4,18 @@
 How to Create a Custom Route Loader
 ===================================
 
+A custom route loader allows you to add routes to an application, without
+writing them down in for instance a Yaml file. This comes in handy when
+you have made a bundle and don't want to manually add the routes for the
+bundle to ``app/config/routing.yml``. Especially when you want to make the
+bundle reusable, or when you have open-sourced it, this would slow down
+the installation process and make it error-prone.
+
+But you can also use a custom route loader when your routes correspond
+to a certain pattern and you don't want to or can't write them all out by
+hand. For instance when you have CRUD controllers of which the routes all
+correspond to a pattern like ``*_new``, ``*_edit``, etc.
+
 Loading Routes
 --------------
 
@@ -11,8 +23,10 @@ The routes in a Symfony application are loaded by the
 :class:`Symfony\\Bundle\\FrameworkBundle\\Routing\\DelegatingLoader`.
 This loader uses several other loaders (delegates) to load resources of
 different types, for instance Yaml files or ``@Route`` and ``@Method`` annotations
-in controller files. The specialized loaders implement :class:`Symfony\\Component\\Config\\Loader\\LoaderInterface`
-and therefore have two important methods: :method:`Symfony\\Component\\Config\\Loader\\LoaderInterface::supports`
+in controller files. The specialized loaders implement
+:class:`Symfony\\Component\\Config\\Loader\\LoaderInterface`
+and therefore have two important methods:
+:method:`Symfony\\Component\\Config\\Loader\\LoaderInterface::supports`
 and :method:`Symfony\\Component\\Config\\Loader\\LoaderInterface::load`.
 
 Take these lines from ``routing.yml``:
@@ -85,12 +99,12 @@ name itself is not used in the example::
 
         public function getResolver()
         {
-            // irrelevant to us, since we don't use a loader resolver
+            // will be explained later
         }
 
         public function setResolver(LoaderResolver $resolver)
         {
-            // also irrelevant
+            // same here
         }
     }
 
@@ -169,13 +183,64 @@ Finally, we only need to add a few extra lines to the routing configuration:
 
         return $collection;
 
-The ``resource`` key is irrelevant, but required. The important part here
-is the ``type`` key. Its value should be "extra". This is the type which
-our ``ExtraLoader`` supports and this will make sure its ``load()`` method
-is called.
+The important part here is the ``type`` key. Its value should be "extra".
+This is the type which our ``ExtraLoader`` supports and this will make sure
+its ``load()`` method gets called. The ``resource`` key is insignificant
+for the ``ExtraLoader``, so we set it to ".".
 
 .. note::
 
-    The routes defined using the extra loader will be automatically cached
-    by the framework. So whenever you change something to the behavior of
-    the loader, don't forget to clear the cache.
+    The routes defined using custom route loaders will be automatically
+    cached by the framework. So whenever you change something to the behavior
+    of the loader, don't forget to clear the cache.
+
+
+More Advanced Loaders
+---------------------
+
+In most cases it's better not to implement
+:class:`Symfony\\Component\\Config\\Loader\\LoaderInterface`
+yourself, but extend from :class:`Symfony\\Component\\Config\\Loader\\Loader`.
+This class knows how to use a :class:`Symfony\\Component\\Config\\Loader\\LoaderResolver`
+to load secondary routing resources.
+
+Of course you still need to implement
+:method:`Symfony\\Component\\Config\\Loader\\LoaderInterface::supports`
+and :method:`Symfony\\Component\\Config\\Loader\\LoaderInterface::load`.
+Whenever you want to load another resource, for instance a Yaml routing
+configuration file, you can call the
+:method:`Symfony\\Component\\Config\\Loader\\Loader::import` method::
+
+    namespace Acme\DemoBundle\Routing;
+
+    use Symfony\Component\Config\Loader\Loader;
+    use Symfony\Component\Routing\RouteCollection;
+
+    class AdvancedLoader extends Loader
+    {
+        public function load($resource, $type = null)
+        {
+            $collection = new RouteCollection();
+
+            $resource = '@AcmeDemoBundle/Resources/config/import_routing.yml';
+            $type = 'yaml';
+
+            $importedRoutes = $this->import($resource, $type);
+
+            $collection->addCollection($importedRoutes);
+
+            return $collection;
+        }
+
+        public function supports($resource, $type = null)
+        {
+            return $type === 'advanced_extra';
+        }
+    }
+
+.. note::
+
+    The resource name and type of the imported routing configuration can
+    be anything that would normally be supported by the routing configuration
+    loader (Yaml, XML, PHP, annotation, etc.).
+
