@@ -61,7 +61,7 @@ can be accessed via several public properties:
 
 * ``attributes``: no equivalent - used by your app to store other data (see :ref:`below<component-foundation-attributes>`)
 
-* ``files``: equivalent of ``$_FILE``;
+* ``files``: equivalent of ``$_FILES``;
 
 * ``server``: equivalent of ``$_SERVER``;
 
