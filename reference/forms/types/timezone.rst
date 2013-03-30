@@ -18,6 +18,9 @@ you should just use the ``choice`` type directly.
 +-------------+------------------------------------------------------------------------+
 | Rendered as | can be various tags (see :ref:`forms-reference-choice-tags`)           |
 +-------------+------------------------------------------------------------------------+
+| Overriden   | - `choice_list`_                                                       |
+| Options     |                                                                        |
++-------------+------------------------------------------------------------------------+
 | Inherited   | - `multiple`_                                                          |
 | options     | - `expanded`_                                                          |
 |             | - `preferred_choices`_                                                 |
@@ -31,6 +34,17 @@ you should just use the ``choice`` type directly.
 +-------------+------------------------------------------------------------------------+
 | Class       | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\TimezoneType` |
 +-------------+------------------------------------------------------------------------+
+
+Overriden Options
+-----------------
+
+choice_list
+~~~~~~~~~~~
+
+**default**: :class:`Symfony\\Component\\Form\\Extension\\Core\\ChoiceList\\TimezoneChoiceList`
+
+The Timezone type defaults the choice_list to all timezones returned by
+:phpmethod:`DateTimeZone::listIdentifiers`, broken down by continent.
 
 Inherited options
 -----------------

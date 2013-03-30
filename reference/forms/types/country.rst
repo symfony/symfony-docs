@@ -22,6 +22,9 @@ you should just use the ``choice`` type directly.
 +-------------+-----------------------------------------------------------------------+
 | Rendered as | can be various tags (see :ref:`forms-reference-choice-tags`)          |
 +-------------+-----------------------------------------------------------------------+
+| Overriden   | - `choices`_                                                          |
+| Options     |                                                                       |
++-------------+-----------------------------------------------------------------------+
 | Inherited   | - `multiple`_                                                         |
 | options     | - `expanded`_                                                         |
 |             | - `preferred_choices`_                                                |
@@ -35,6 +38,18 @@ you should just use the ``choice`` type directly.
 +-------------+-----------------------------------------------------------------------+
 | Class       | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\CountryType` |
 +-------------+-----------------------------------------------------------------------+
+
+Overriden Options
+-----------------
+
+choices
+~~~~~~~
+
+**default**: :method:`Symfony\\Component\\Locale\\Locale::getDisplayCountries`
+
+The Country type defaults the choices option to the all locales which are
+returned by :method:`Symfony\\Component\\Locale\\Locale::getDisplayCountries`.
+It uses the default locale to determine the language.
 
 Inherited options
 -----------------

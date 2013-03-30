@@ -30,6 +30,9 @@ day, and year) or three select boxes (see the `widget_` option).
 |                      | - `data_timezone`_                                                          |
 |                      | - `user_timezone`_                                                          |
 +----------------------+-----------------------------------------------------------------------------+
+| Overriden Options    | - `by_reference`_                                                           |
+|                      | - `error_bubbling`_                                                         |
++----------------------+-----------------------------------------------------------------------------+
 | Inherited            | - `invalid_message`_                                                        |
 | options              | - `invalid_message_parameters`_                                             |
 +----------------------+-----------------------------------------------------------------------------+
@@ -112,6 +115,21 @@ Alternatively, you can specify a string to be displayed for the "blank" value::
 .. include:: /reference/forms/types/options/data_timezone.rst.inc
 
 .. include:: /reference/forms/types/options/user_timezone.rst.inc
+
+Overriden Options
+-----------------
+
+by_reference
+~~~~~~~~~~~~
+
+**default**: ``false``
+
+The ``DateTime`` classes are treated as immutable objects.
+
+error_bubbling
+~~~~~~~~~~~~~~
+
+**default**: ``false``
 
 Inherited options
 -----------------
