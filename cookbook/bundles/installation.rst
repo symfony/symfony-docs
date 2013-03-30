@@ -4,21 +4,20 @@
 How to install 3rd party bundles
 ================================
 
-Most bundles provide their own installation instructions. However the
+Most bundles provide their own installation instructions. However, the
 basic steps for installing a bundle are the same.
 
 Add composer dependencies
 -------------------------
 
-Starting from Symfony2.1 dependencies are managed with Composer. It's
-a good idea to learn some basics of Composer in
-`their documentation`_.
+Starting from Symfony 2.1 dependencies are managed with Composer. It's
+a good idea to learn some basics of Composer in `their documentation`_.
 
 Before you can use composer to install a bundle, you should look for a
 `Packagist`_ package of that bundle. For example, for the
 `FOSUserBundle`_ you should look for a
 ``friendsofsymfony/user-bundle`` package and it does exists:
-https://packagist.org/packages/friendsofsymfony/user-bundle.
+https://packagist.org/packages/friendsofsymfony/user-bundle .
 
 .. note::
 
@@ -35,7 +34,7 @@ particular version of Symfony, this should be in the ``README`` file (in
 the Package, which you can view on Github or KnpBundles). If it isn't
 in the ``README``, you can use the version you want. In the case of the
 FOSUserBundle, the ``README`` file has a caution that version 1.2.0 must be
-used for Symfony2.0 and 1.3 for Symfony2.1+. Let's use the development
+used for Symfony 2.0 and 1.3 for Symfony 2.1+. Let's use the development
 version for this example.
 
 Now we can add the bundle to our ``composer.json`` file and update the
