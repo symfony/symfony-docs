@@ -66,7 +66,7 @@ can be accessed via several public properties:
 * ``server``: equivalent of ``$_SERVER``;
 
 * ``headers``: mostly equivalent to a sub-set of ``$_SERVER``
-  (``$request->headers->get('Content-Type')``).
+  (``$request->headers->get('user-agent')``).
 
 Each property is a :class:`Symfony\\Component\\HttpFoundation\\ParameterBag`
 instance (or a sub-class of), which is a data holder class:
