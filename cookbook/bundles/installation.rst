@@ -8,13 +8,13 @@ Most bundles provide a documentation of installation. However, most
 steps are common for any bundle.
 
 Add composer dependencies
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-------------------------
 
-Starting from Symfony2.1 dependencies are managed via Composer. It's
-a good idea to learn some basics of Composer here:
-http://getcomposer.org/doc/00-intro.md.
+Starting from Symfony2.1 dependencies are managed with Composer. It's
+a good idea to learn some basics of Composer in
+`their documentation`_.
 
-Before you can use composer to install a bundle you should look for a
+Before you can use composer to install a bundle, you should look for a
 `Packagist`_ package of that bundle. For example, for the
 `FOSUserBundle`_ you should look for a
 ``friendsofsymfony/user-bundle`` package and it does exists:
@@ -25,25 +25,25 @@ https://packagist.org/packages/friendsofsymfony/user-bundle.
     Packagist is the main archive for Composer. If you are searching
     for a bundle, the best thing you can do is check out
     `KnpBundles`_, it is the unofficial achive of Symfony Bundles. If
-    a bundle contains a README file, it is displayed there and if it
+    a bundle contains a ``README`` file, it is displayed there and if it
     has a Packagist package it shows a link to the package. It's a
     really usefull site to begin searching for bundles.
 
 Now you have the package name, you should determine the version you
 want to use. Usually different versions of a bundle correspond to a
-particular version of Symfony, this should be in the README file (in
+particular version of Symfony, this should be in the ``README`` file (in
 the Package, which you can view on Github or KnpBundles). If it isn't
-in the README, you can use the version you want. In the case of
-FOSUserBundle README file has a caution that version 1.2.0 must be
+in the ``README``, you can use the version you want. In the case of the
+FOSUserBundle, the ``README`` file has a caution that version 1.2.0 must be
 used for Symfony2.0 and 1.3 for Symfony2.1+. Let's use development
 version for this exmaple.
 
-Now we can add the bundle to our composer.json file and update the
+Now we can add the bundle to our ``composer.json`` file and update the
 dependencies. You can do this manually:
 
 1. **Add it to the ``composer.json`` file:**
 
-   .. code-block:: javascript
+   .. code-block:: json
 
        {
            ...,
@@ -72,14 +72,12 @@ Or you can do this in one command:
     $ php composer.phar require friendsofsymfony/user-bundle:dev-master
 
 Enable the bundle
-~~~~~~~~~~~~~~~~~
+-----------------
 
 Now the bundle is installed into our Symfony project (in
-vendor/friendsofsymfony/) and the autoloader recognises this
+``vendor/friendsofsymfony/``) and the autoloader recognises this
 bundle. The only thing we need to do now is registering the bundle in
-the AppKernel:
-
-.. code-block:: php
+the ``AppKernel``::
 
     // app/AppKernel.php
 
@@ -88,10 +86,10 @@ the AppKernel:
     {
         // ...
 
-	public function registerBundles()
-	{
-	    $bundles = array(
-                ...,
+        public function registerBundles()
+        {
+            $bundles = array(
+                // ...,
                 new FOS\UserBundle\FOSUserBundle(),
             );
 
@@ -100,10 +98,10 @@ the AppKernel:
     }
 
 Configure the bundle
-~~~~~~~~~~~~~~~~~~~~
+--------------------
 
 Usually bundles require some configuration to be added to app's
-app/config/config.yml file. Bundle's documentation will likely
+``app/config/config.yml`` file. Bundle's documentation will likely
 describe that configuration. But you can also get a reference of the
 bundle's config via ``config:dump-reference`` command.
 
@@ -134,8 +132,9 @@ The output will look like this:
         java:                 /usr/bin/java
         node:                 /usr/local/bin/node
         node_paths:           []
-        ...
+        # ...
 
-.. _Packagist:     https://packagist.org
-.. _FOSUserBundle: https://github.com/FriendsOfSymfony/FOSUserBundle
-.. _KnpBundles:    http://knpbundles.com/
+.. _their documentation: http://getcomposer.org/doc/00-intro.md
+.. _Packagist:           https://packagist.org
+.. _FOSUserBundle:       https://github.com/FriendsOfSymfony/FOSUserBundle
+.. _KnpBundles:          http://knpbundles.com/
