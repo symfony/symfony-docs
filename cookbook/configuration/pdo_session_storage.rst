@@ -54,7 +54,7 @@ configuration format of your choice):
 
         <!-- app/config/config.xml -->
         <framework:config>
-            <framework:session handler-id="session.handler.pdo" lifetime="3600" auto-start="true"/>
+            <framework:session handler-id="session.handler.pdo" cookie-lifetime="3600" auto-start="true"/>
         </framework:config>
 
         <parameters>
