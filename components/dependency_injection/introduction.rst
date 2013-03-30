@@ -153,7 +153,6 @@ You could then get your ``newsletter_manager`` service from the container
 like this::
 
     use Symfony\Component\DependencyInjection\ContainerBuilder;
-    use Symfony\Component\DependencyInjection\Reference;
 
     $container = new ContainerBuilder();
 
