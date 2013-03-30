@@ -28,14 +28,16 @@ https://packagist.org/packages/friendsofsymfony/user-bundle .
     has a Packagist package it shows a link to the package. It's a
     really usefull site to begin searching for bundles.
 
-Now that you have the package name, you should determine the version you
-want to use. Usually different versions of a bundle correspond to a
-particular version of Symfony, this should be in the ``README`` file (in
-the Package, which you can view on Github or KnpBundles). If it isn't
-in the ``README``, you can use the version you want. In the case of the
-FOSUserBundle, the ``README`` file has a caution that version 1.2.0 must be
-used for Symfony 2.0 and 1.3 for Symfony 2.1+. Let's use the development
-version for this example.
+Now that you have the package name, you should determine the version
+you want to use. Usually different versions of a bundle correspond to
+a particular version of Symfony, this should be in the ``README`` file
+(in the Package, which you can view on Github or KnpBundles). If it
+isn't in the ``README``, you can use the version you want. In the case
+of the FOSUserBundle, the ``README`` file has a caution that version
+1.2.0 must be used for Symfony 2.0 and 1.3+ for Symfony
+2.1+. Packagist provides require statements for all existing
+versions. For the current development version it is now
+``"friendsofsymfony/user-bundle": "2.0.*@dev"``.
 
 Now we can add the bundle to our ``composer.json`` file and update the
 dependencies. You can do this manually:
@@ -48,7 +50,7 @@ dependencies. You can do this manually:
            ...,
            "require": {
                ...,
-               "friendsofsymfony/user-bundle": "dev-master"
+               "friendsofsymfony/user-bundle": "2.0.*@dev"
            }
        }
 
@@ -68,7 +70,7 @@ Or you can do this in one command:
 
 .. code-block:: bash
 
-    $ php composer.phar require friendsofsymfony/user-bundle:dev-master
+    $ php composer.phar require friendsofsymfony/user-bundle:2.0.*@dev
 
 Enable the bundle
 -----------------
