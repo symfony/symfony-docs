@@ -278,7 +278,8 @@ To work with multi-dimensional fields::
         <input name="multi[dimensional]" />
     </form>
 
-You must specify the fully qualified name of the field::
+You must specify the values of multi-dimensional fields as arrays itself to
+address which fields' values should be changed::
 
     // Set a single field
     $form->setValues(array('multi' => array('value')));
