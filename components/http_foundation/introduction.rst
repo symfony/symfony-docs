@@ -409,7 +409,7 @@ represented by a PHP callable instead of a string::
 .. _component-http-foundation-serving-files:
 
 Serving Files
-~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~
 
 .. versionadded:: 2.1
     The ``makeDisposition`` method was added in Symfony 2.1.
@@ -427,7 +427,8 @@ abstracts the hard work behind a simple API::
     $response->headers->set('Content-Disposition', $d);
 
 .. versionadded:: 2.2
-    The :class:`Symfony\\Component\\HttpFoundation\\BinaryFileResponse` class was added in Symfony 2.2.
+    The :class:`Symfony\\Component\\HttpFoundation\\BinaryFileResponse`
+    class was added in Symfony 2.2.
 
 Alternatively, if you are serving a static file, you can use a
 :class:`Symfony\\Component\\HttpFoundation\\BinaryFileResponse`::
@@ -437,10 +438,9 @@ Alternatively, if you are serving a static file, you can use a
     $file = 'path/to/file.txt';
     $response = new BinaryFileResponse($file);
 
-The :class:`Symfony\\Component\\HttpFoundation\\BinaryFileResponse` will
-automatically handle ``Range`` and ``If-Range`` headers from the request.
-You can also set the ``Content-Type`` of the sent file, or change its
-``Content-Disposition``::
+The ``BinaryFileResponse`` will automatically handle ``Range`` and
+``If-Range`` headers from the request. You can also set the ``Content-Type``
+of the sent file, or change its ``Content-Disposition``::
 
     $response->headers->set('Content-Type', 'text/plain')
     $response->setContentDisposition(ResponseHeaderBag::DISPOSITION_ATTACHMENT, 'filename.txt');
@@ -464,7 +464,8 @@ right content and headers. A JSON response might look like this::
     $response->headers->set('Content-Type', 'application/json');
 
 .. versionadded:: 2.1
-    The :class:`Symfony\\Component\\HttpFoundation\\JsonResponse` class was added in Symfony 2.1.
+    The :class:`Symfony\\Component\\HttpFoundation\\JsonResponse`
+    class was added in Symfony 2.1.
 
 There is also a helpful :class:`Symfony\\Component\\HttpFoundation\\JsonResponse`
 class, which can make this even easier::

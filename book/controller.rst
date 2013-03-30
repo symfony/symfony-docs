@@ -727,6 +727,7 @@ headers and content that's sent back to the client::
 .. tip::
 
     There are also special classes to make certain kinds of responses easier:
+
     - For JSON, there is :class:`Symfony\\Component\\HttpFoundation\\JsonResponse`.
       See :ref:`component-http-foundation-json-response`.
     - For files, there is :class:`Symfony\\Component\\HttpFoundation\\JsonResponse`.
