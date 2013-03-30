@@ -26,6 +26,7 @@ as a ``DateTime`` object, a string, a timestamp or an array.
 +----------------------+-----------------------------------------------------------------------------+
 | Inherited            | - `invalid_message`_                                                        |
 | options              | - `invalid_message_parameters`_                                             |
+|                      | - `virtual`_                                                                |
 +----------------------+-----------------------------------------------------------------------------+
 | Parent type          | form                                                                        |
 +----------------------+-----------------------------------------------------------------------------+
@@ -116,3 +117,7 @@ These options inherit from the :doc:`field</reference/forms/types/field>` type:
 .. include:: /reference/forms/types/options/invalid_message.rst.inc
 
 .. include:: /reference/forms/types/options/invalid_message_parameters.rst.inc
+
+These options inherit from the :doc:`date</reference/forms/types/form>` type:
+
+.. include:: /reference/forms/types/options/virtual.rst.inc

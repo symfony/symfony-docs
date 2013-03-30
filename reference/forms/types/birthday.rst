@@ -31,6 +31,7 @@ option defaults to 120 years ago to the current year.
 |                      | - `user_timezone`_                                                                                                     |
 |                      | - `invalid_message`_                                                                                                   |
 |                      | - `invalid_message_parameters`_                                                                                        |
+|                      | - `virtual`_                                                                                                           |
 +----------------------+------------------------------------------------------------------------------------------------------------------------+
 | Parent type          | :doc:`date</reference/forms/types/date>`                                                                               |
 +----------------------+------------------------------------------------------------------------------------------------------------------------+
@@ -75,3 +76,6 @@ These options inherit from the :doc:`date</reference/forms/types/field>` type:
 
 .. include:: /reference/forms/types/options/invalid_message_parameters.rst.inc
 
+These options inherit from the :doc:`date</reference/forms/types/form>` type:
+
+.. include:: /reference/forms/types/options/virtual.rst.inc
