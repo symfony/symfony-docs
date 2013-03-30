@@ -169,7 +169,7 @@ from the ``$personalData`` property, no validation error would occur.
     for fields within a Collection.
 
 Required and Optional Field Constraints
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Constraints for fields within a collection can be wrapped in the ``Required`` or
 ``Optional`` constraint to control whether they should always be applied (``Required``)
@@ -228,9 +228,10 @@ field is optional but must be a valid email if supplied, you can do the followin
             }
         }
 
-Even without ``allowMissingFields`` set to true, you can now omit the ``alternate_email`` property complete from the profileData array, since
-it is ``Optional``. However, if the the ``personal_email`` field does not exist in the array there will be a
-constraint violation that the field is missing, since it is ``Required``.
+Even without ``allowMissingFields`` set to true, you can now omit the ``alternate_email`` property 
+complete from the profileData array, since it is ``Optional``. However, if the the ``personal_email`` 
+field does not exist in the array there will be a constraint violation that the field is missing, 
+since it is ``Required``.
 
 Options
 -------
