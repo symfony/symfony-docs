@@ -706,7 +706,7 @@ Symfony2 uses the standard ``render`` helper to configure ``hinclude`` tags:
 
     .. code-block:: jinja
 
-        {% render url('...'), {'standalone': 'js'} %}
+        {% render url('...') with {}, {'standalone': 'js'} %}
 
     .. code-block:: php
 
