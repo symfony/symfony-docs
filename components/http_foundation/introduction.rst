@@ -172,7 +172,8 @@ thanks to the public ``attributes`` property, which is also an instance of
 :class:`Symfony\\Component\\HttpFoundation\\ParameterBag`. This is mostly used
 to attach information that belongs to the Request and that needs to be
 accessed from many different points in your application. For information
-on how this is used in the Symfony2 framework, see :ref:`the Symfony2 book<book-fundamentals-attributes>`.
+on how this is used in the Symfony2 framework, see
+:ref:`the Symfony2 book<book-fundamentals-attributes>`.
 
 Identifying a Request
 ~~~~~~~~~~~~~~~~~~~~~
