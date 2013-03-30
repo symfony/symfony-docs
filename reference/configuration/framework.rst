@@ -20,6 +20,7 @@ Configuration
 * `ide`_
 * `test`_
 * `trust_proxy_headers`_
+* `trusted_proxies`_
 * `form`_
     * enabled
 * `csrf_protection`_
