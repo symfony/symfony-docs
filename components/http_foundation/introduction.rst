@@ -211,7 +211,7 @@ Based on such a request, you can override the PHP global variables via
 
 .. tip::
 
-    You can also duplicate an existing query via
+    You can also duplicate an existing request via
     :method:`Symfony\\Component\\HttpFoundation\\Request::duplicate` or
     change a bunch of parameters with a single call to
     :method:`Symfony\\Component\\HttpFoundation\\Request::initialize`.
