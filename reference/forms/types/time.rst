@@ -23,6 +23,7 @@ as a ``DateTime`` object, a string, a timestamp or an array.
 |                      | - `seconds`_                                                                |
 |                      | - `data_timezone`_                                                          |
 |                      | - `user_timezone`_                                                          |
+|                      | - `empty_value`_                                                            |
 +----------------------+-----------------------------------------------------------------------------+
 | Overridden Options   | - `by_reference`_                                                           |
 |                      | - `error_bubbling`_                                                         |
@@ -115,6 +116,8 @@ this format.
 .. include:: /reference/forms/types/options/data_timezone.rst.inc
 
 .. include:: /reference/forms/types/options/user_timezone.rst.inc
+
+.. include:: /reference/forms/types/options/empty_value.rst.inc
 
 Overridden Options
 ------------------

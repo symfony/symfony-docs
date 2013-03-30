@@ -28,6 +28,7 @@ data can be a ``DateTime`` object, a string, a timestamp or an array.
 |                      | - `with_seconds`_                                                           |
 |                      | - `data_timezone`_                                                          |
 |                      | - `user_timezone`_                                                          |
+|                      | - `empty_value`_                                                          |
 +----------------------+-----------------------------------------------------------------------------+
 | Inherited            | - `invalid_message`_                                                        |
 | options              | - `invalid_message_parameters`_                                             |
@@ -100,6 +101,8 @@ for more details.
 .. include:: /reference/forms/types/options/data_timezone.rst.inc
 
 .. include:: /reference/forms/types/options/user_timezone.rst.inc
+
+.. include:: /reference/forms/types/options/empty_value.rst.inc
 
 Inherited options
 -----------------
