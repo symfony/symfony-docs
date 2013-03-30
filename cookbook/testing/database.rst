@@ -59,16 +59,16 @@ easy to pass a mock object within a test::
                 ->method('getBonus')
                 ->will($this->returnValue(1100));   
             
-            // Now, mock tthe repository so it returns the mock of the employee
+            // Now, mock the repository so it returns the mock of the employee
             $employeeRepository = $this->getMockBuilder('\Doctrine\ORM\EntityRepository')
                 ->disableOriginalConstructor()
                 ->getMock();
             $employeeRepository->expects($this->once())
-                ->method('__call')
+                ->method('find')
                 ->will($this->returnValue($employee));
                 
             // Last, mock the EntityManager to return the mock of the repository
-            $entityManager = $this->getMockBuilder('\Doctrine\ORM\EntityManager')
+            $entityManager = $this->getMockBuilder('\Doctrine\Common\Persistence\ObjectManager')
                 ->disableOriginalConstructor()
                 ->getMock();
             $entityManager->expects($this->once())
@@ -83,14 +83,6 @@ easy to pass a mock object within a test::
 We are building our mocks from the inside out, first creating the employee which 
 gets returned by the ``Repository`` which itself gets returned by the ``EntityManager``.
 This way, no real class is involved in testing.
-
-.. note::
-    
-    As a ``Repository`` doesn't have a ``find()`` method but uses the magic method 
-    ``__call``, you cannot define a mock method on ``find()`` but must instead use 
-    ``__call``. It's possible to implement the ``find()`` method in your ``Repository`` 
-    and use it when mocking. In this case, make sure to mock your ``Repository`` 
-    class instead of the generic ``EntityRepository``.
     
 Changing database settings for functional tests
 -----------------------------------------------
@@ -100,15 +92,43 @@ Most of the time you want to use a dedicated database connection to make sure
 not to overwrite data you entered when developing the application and also
 to be able to clear the database before every test.
 
-To do this, you can specify the database configuration inside your ``app/config/config_test.yml``::
+To do this, you can specify a database configuration which overwrites the default
+configuration:
 
+.. code-block:: yaml
+
+    # app/config/config_test.yml
     doctrine:
+        # ...
         dbal:
             host: localhost
             dbname: testdb
             user: testdb
             password: testdb
             
+.. code-block:: xml
+
+    <!-- app/config/config_test.xml -->
+    <doctrine:config>
+        <doctrine:dbal
+            host="localhost"
+            dbname="testdb"
+            user="testdb"
+            password="testdb"
+        >
+    </doctrine:config>
+
+.. code-block:: php
+
+    // app/config/config_test.php
+    $configuration->loadFromExtension('doctrine', array(
+        'dbal' => array(
+            'host'     => 'localhost',
+            'dbname'   => 'testdb',
+            'user'     => 'testdb',
+            'password' => 'testdb',
+        ),
+    ));
+            
 Make sure that your database runs on localhost and has the defined database and
 user credentials set up.
-
