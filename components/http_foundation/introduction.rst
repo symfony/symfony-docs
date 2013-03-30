@@ -128,7 +128,7 @@ has some methods to filter the input values:
   parameter value converted to integer;
 
 * :method:`Symfony\\Component\\HttpFoundation\\ParameterBag::filter`: Filters the
-  parameter by using the PHP ``filter_var()`` function.
+  parameter by using the PHP :phpfunction:`filter_var` function.
 
 All getters takes up to three arguments: the first one is the parameter name
 and the second one is the default value to return if the parameter does not
