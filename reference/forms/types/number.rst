@@ -30,6 +30,8 @@ you want to use for your number.
 Field Options
 -------------
 
+.. include:: /reference/forms/types/options/precision.rst.inc
+
 precision
 ~~~~~~~~~
 
