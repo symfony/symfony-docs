@@ -114,12 +114,10 @@ from the command line, you need to overwrite the HelperSet used by the command::
         // ...
         $commandTester = new CommandTester($command);
         
-        $dialog = new DialogHelper();
+        $dialog = $command->getHelper('dialog');
         $dialog->setInputStream($this->getInputStream('Test\n')); 
         // Equals to a user inputing "Test" and hitting ENTER
         // If you need to enter a confirmation, "yes\n" will work
-        
-        $command->setHelperSet(new HelperSet(array($dialog)));
         
         $commandTester->execute(array('command' => $command->getName()));
     
