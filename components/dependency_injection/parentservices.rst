@@ -196,15 +196,15 @@ a parent for a service.
                 calls:
                     - [ setMailer, [ @my_mailer ] ]
                     - [ setEmailFormatter, [ @my_email_formatter] ]
-            
+
             newsletter_manager:
                 class:     "%newsletter_manager.class%"
                 parent: mail_manager
-            
+
             greeting_card_manager:
                 class:     "%greeting_card_manager.class%"
                 parent: mail_manager
-            
+
     .. code-block:: xml
 
         <parameters>
@@ -287,8 +287,8 @@ as a "template" that other services can use.
 
 .. note::
 
-   In order for parent dependencies to resolve, the ``ContainerBuilder`` must 
-   first be compiled. See :doc:`/components/dependency_injection/compilation` 
+   In order for parent dependencies to resolve, the ``ContainerBuilder`` must
+   first be compiled. See :doc:`/components/dependency_injection/compilation`
    for more details.
 
 Overriding Parent Dependencies
@@ -322,17 +322,17 @@ to the ``NewsletterManager`` class, the config would look like this:
                 calls:
                     - [ setMailer, [ @my_mailer ] ]
                     - [ setEmailFormatter, [ @my_email_formatter] ]
-            
+
             newsletter_manager:
                 class:     "%newsletter_manager.class%"
                 parent: mail_manager
                 calls:
                     - [ setMailer, [ @my_alternative_mailer ] ]
-            
+
             greeting_card_manager:
                 class:     "%greeting_card_manager.class%"
                 parent: mail_manager
-            
+
     .. code-block:: xml
 
         <parameters>
@@ -453,13 +453,13 @@ If you had the following config:
                 abstract:  true
                 calls:
                     - [ setFilter, [ @my_filter ] ]
-                    
+
             newsletter_manager:
                 class:     "%newsletter_manager.class%"
                 parent: mail_manager
                 calls:
                     - [ setFilter, [ @another_filter ] ]
-            
+
     .. code-block:: xml
 
         <parameters>
@@ -518,5 +518,13 @@ In this example, the ``setFilter`` of the ``newsletter_manager`` service
 will be called twice, resulting in the ``$filters`` array containing both
 ``my_filter`` and ``another_filter`` objects. This is great if you just want
 to add additional filters to the subclasses. If you want to replace the filters
-passed to the subclass, removing the parent setting from the config will 
+passed to the subclass, removing the parent setting from the config will
 prevent the base class from calling ``setFilter``.
+
+.. tip::
+
+    In the examples shown there is a similar relationship between the parent
+    and child services and the underlying parent and child classes. This does
+    not need to be the case though, you can extract common parts of similar
+    service definitions into a parent service without also extracting a parent
+    class.
