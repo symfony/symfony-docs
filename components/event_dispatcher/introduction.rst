@@ -380,6 +380,8 @@ can be the way to go, especially for optional dependencies.
 .. index::
    single: Event Dispatcher; Event subscribers
 
+.. _event_dispatcher-using-event-subscribers:
+
 Using Event Subscribers
 ~~~~~~~~~~~~~~~~~~~~~~~
 
