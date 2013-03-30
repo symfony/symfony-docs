@@ -121,10 +121,8 @@ Creating the Listener Class
 ---------------------------
 
 In the previous example, a service ``my.listener`` was configured as a Doctrine
-listener on the event ``postPersist``. That class behind that service must have
-a ``postPersist`` method, which will be called when the event is thrown.
-
-.. code-block::php
+listener on the event ``postPersist``. The class behind that service must have
+a ``postPersist`` method, which will be called when the event is dispatched::
 
     // src/Acme/SearchBundle/EventListener/SearchIndexer.php
     namespace Acme\SearchBundle\EventListener;
@@ -153,16 +151,14 @@ itself.
 One important thing to notice is that a listener will be listening for *all*
 entities in your application. So, if you're interested in only handling a
 specific type of entity (e.g. a ``Product`` entity but not a ``BlogPost``
-entity), you should check for the class name of the entity in your method
+entity), you should check for the entity's class type in your method
 (as shown above).
 
 Creating the Subscriber Class
 -----------------------------
 
 A doctrine event subscriber must implement the ``Doctrine\Common\EventSubscriber``
-interface and an event method for each event it subscribes to.
-
-.. code-block::php
+interface and have an event method for each event it subscribes to::
 
     // src/Acme/SearchBundle/EventListener/SearchIndexerSubscriber.php
     namespace Acme\SearchBundle\EventListener;
@@ -208,10 +204,10 @@ interface and an event method for each event it subscribes to.
 
     Doctrine event subscribers can not return a flexible array of methods to
     call for the events like the :ref:`Symfony event subscriber <event_dispatcher-using-event-subscribers>`
-    can do. Doctrine event subscribers must return a simple array of the event
+    can. Doctrine event subscribers must return a simple array of the event
     names they subscribe to. Doctrine will then expect methods on the subscriber
-    with the names of the subscribed events, just as when using an event listener.
+    with the same name as each subscribed event, just as when using an event listener.
 
-For a full reference, see chapter `The Event System` in the doctrine documentation.
+For a full reference, see chapter `The Event System`_ in the Doctrine documentation.
 
 .. _`The Event System`: http://docs.doctrine-project.org/projects/doctrine-orm/en/latest/reference/events.html
