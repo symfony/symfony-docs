@@ -150,7 +150,7 @@ When PHP imports the request query, it handles request parameters like
 ``foo[bar]=bar`` in a special way as it creates an array. So you can get the
 ``foo`` parameter and you will get back an array with a ``bar`` element. But
 sometimes, you might want to get the value for the "original" parameter name:
-``foo[bar]``. This is possible with all the `ParameterBag` getters like
+``foo[bar]``. This is possible with all the ``ParameterBag`` getters like
 :method:`Symfony\\Component\\HttpFoundation\\Request::get` via the third
 argument::
 
@@ -172,7 +172,7 @@ thanks to the public ``attributes`` property, which is also an instance of
 :class:`Symfony\\Component\\HttpFoundation\\ParameterBag`. This is mostly used
 to attach information that belongs to the Request and that needs to be
 accessed from many different points in your application. For information
-on how this is used in the Symfony2 framework, see :ref:`read more<book-fundamentals-attributes>`.
+on how this is used in the Symfony2 framework, see :ref:`the Symfony2 book<book-fundamentals-attributes>`.
 
 Identifying a Request
 ~~~~~~~~~~~~~~~~~~~~~
