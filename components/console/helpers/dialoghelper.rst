@@ -109,12 +109,9 @@ from the command line, you need to overwrite the HelperSet used by the command::
     use Symfony\Component\Console\Helper\HelperSet;
     
     // ...
-    
     public function testExecute()
     {
-    
-        // ..
-
+        // ...
         $commandTester = new CommandTester($command);
         
         $dialog = new DialogHelper();
@@ -126,8 +123,7 @@ from the command line, you need to overwrite the HelperSet used by the command::
         
         $commandTester->execute(array('command' => $command->getName()));
     
-        // assert
-        
+        // $this->assertRegExp('/.../', $commandTester->getDisplay());
     }
     
     protected function getInputStream($input)
