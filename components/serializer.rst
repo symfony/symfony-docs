@@ -11,6 +11,9 @@ The Serializer Component
 In order to do so, the Serializer Component follows the following
 simple schema.
 
+.. _component-serializer-encoders:
+.. _component-serializer-normalizers:
+
 .. image:: /images/components/serializer/serializer_workflow.png
 
 As you can see in the picture above, an array is used as a man in

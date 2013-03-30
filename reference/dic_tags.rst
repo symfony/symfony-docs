@@ -42,6 +42,10 @@ the AsseticBundle has several tags that aren't listed here.
 +-----------------------------------+---------------------------------------------------------------------------+
 | `security.listener.factory`_      | Necessary when creating a custom authentication system                    |
 +-----------------------------------+---------------------------------------------------------------------------+
+| `serializer.encoder`_             | Register a new encoder in the ``serializer`` service                      |
++-----------------------------------+---------------------------------------------------------------------------+
+| `serializer.normalizer`_          | Register a new normalizer in the ``serializer`` service                   |
++-----------------------------------+---------------------------------------------------------------------------+
 | `swiftmailer.plugin`_             | Register a custom SwiftMailer Plugin                                      |
 +-----------------------------------+---------------------------------------------------------------------------+
 | `templating.helper`_              | Make your service available in PHP templates                              |
@@ -559,6 +563,32 @@ is used behind the scenes to determine if the user should have access. The
 ``security.voter`` tag allows you to add your own custom voter to that system.
 
 For more information, read the cookbook article: :doc:`/cookbook/security/voters`.
+
+.. _reference-dic-tags-serializer-encoder:
+
+serializer.encoder
+------------------
+
+**Purpose**: Register a new encoder in the ``serializer`` service
+
+The class that's tagged should implement the :class:`Symfony\\Component\\Serializer\\Encoder\\EncoderInterface`
+and :class:`Symfony\\Component\\Serializer\\Encoder\\DecoderInterface`.
+
+You have to :ref:`enable the serializer service<configuration-framework-serializer>`
+in order to use this tag.
+
+.. _reference-dic-tags-serializer-normalizer:
+
+serializer.normalizer
+---------------------
+
+**Purpose**: Register a new normalizer in the Serializer service
+
+The class that's tagged should implement the :class:`Symfony\\Component\\Serializer\\Normalizer\\NormalizerInterface`
+and :class:`Symfony\\Component\\Serializer\\Normalizer\\DenormalizerInterface`.
+
+You have to :ref:`enable the serializer service<configuration-framework-serializer>`
+in order to use this tag.
 
 swiftmailer.plugin
 ------------------
