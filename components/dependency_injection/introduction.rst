@@ -229,7 +229,6 @@ config files:
 
     .. code-block:: yaml
 
-        # src/Acme/HelloBundle/Resources/config/services.yml
         parameters:
             # ...
             mailer.transport: sendmail
@@ -245,7 +244,6 @@ config files:
 
     .. code-block:: xml
 
-        <!-- src/Acme/HelloBundle/Resources/config/services.xml -->
         <parameters>
             <!-- ... -->
             <parameter key="mailer.transport">sendmail</parameter>
