@@ -329,9 +329,9 @@ new "tag" forms. To render it, make the following change to your template:
 
 .. tip::
 
-    The ``form.tags.vars.prototype`` is form element that looks and feels just
+    The ``form.tags.vars.prototype`` is a form element that looks and feels just
     like the individual ``form_widget(tag)`` elements inside your ``for`` loop.
-    This means that you can call ``form_widget``, ``form_row``, or ``form_label``
+    This means that you can call ``form_widget``, ``form_row`` or ``form_label``
     on it. You could even choose to render only one of its fields (e.g. the
     ``name`` field):
 
