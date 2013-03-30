@@ -11,7 +11,7 @@ that *the expected format will be different for different users*. You
 can override it by passing the format as a string.
 
 For more information on valid formats, see `Date/Time Format Syntax`_. For
-example, to render a single text box that expects the user to end ``yyyy-MM-dd``,
+example, to render a single text box that expects the user to enter ``yyyy-MM-dd``,
 use the following options::
 
     $builder->add('date_created', 'date', array(

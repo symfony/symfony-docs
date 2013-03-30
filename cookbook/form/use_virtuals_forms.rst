@@ -49,7 +49,11 @@ Start by creating a very simple ``CompanyType`` and ``CustomerType``::
 
     // src/Acme/HelloBundle/Form/Type/CompanyType.php
     namespace Acme\HelloBundle\Form\Type;
+    
+    use Symfony\Component\Form\AbstractType;
+    use Symfony\Component\Form\FormBuilder;
 
+    use Symfony\Component\Form\AbstractType;
     use Symfony\Component\Form\FormBuilderInterface;
 
     class CompanyType extends AbstractType
@@ -68,6 +72,7 @@ Start by creating a very simple ``CompanyType`` and ``CustomerType``::
     namespace Acme\HelloBundle\Form\Type;
 
     use Symfony\Component\Form\FormBuilderInterface;
+    use Symfony\Component\Form\AbstractType;
 
     class CustomerType extends AbstractType
     {
@@ -85,6 +90,7 @@ location form type::
     // src/Acme/HelloBundle/Form/Type/LocationType.php
     namespace Acme\HelloBundle\Form\Type;
 
+    use Symfony\Component\Form\AbstractType;
     use Symfony\Component\Form\FormBuilderInterface;
     use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 

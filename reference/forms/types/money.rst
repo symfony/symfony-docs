@@ -45,7 +45,8 @@ the currency symbol that should be shown by the text box. Depending on
 the currency - the currency symbol may be shown before or after the input
 text field.
     
-This can also be set to false to hide the currency symbol.
+This can be any `3 letter ISO 4217 code`_. You can also set this to false to
+hide the currency symbol.
 
 divisor
 ~~~~~~~
@@ -95,3 +96,5 @@ These options inherit from the :doc:`field</reference/forms/types/field>` type:
 .. include:: /reference/forms/types/options/invalid_message.rst.inc
 
 .. include:: /reference/forms/types/options/invalid_message_parameters.rst.inc
+
+.. _`3 letter ISO 4217 code`: http://en.wikipedia.org/wiki/ISO_4217

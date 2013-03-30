@@ -6,6 +6,7 @@
   * :doc:`Tests </contributing/code/tests>`
   * :doc:`Coding Standards</contributing/code/standards>`
   * :doc:`Code Conventions</contributing/code/conventions>`
+  * :doc:`Git</contributing/code/git>`  
   * :doc:`License </contributing/code/license>`
 
 * **Documentation**

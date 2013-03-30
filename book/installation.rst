@@ -66,11 +66,10 @@ Distribution:
 
 .. tip::
 
-    To download the vendor files faster and without unnecessary directories
-    (e.g. "Tests"), add the ``--prefer-dist`` option at the end of any Composer
-    command.
+    To download the vendor files faster, add the ``--prefer-dist`` option at
+    the end of any Composer command.
 
-This command may take several minutes to run as Composer download the Standard
+This command may take several minutes to run as Composer downloads the Standard
 Distribution along with all of the vendor libraries that it needs. When it finishes,
 you should have a directory that looks something like this:
 

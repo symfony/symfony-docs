@@ -158,7 +158,9 @@ for its ``DemoController`` (`DemoControllerTest`_) that reads as follows::
     kernel of your application. In most cases, this happens automatically.
     However, if your kernel is in a non-standard directory, you'll need
     to modify your ``phpunit.xml.dist`` file to set the ``KERNEL_DIR`` environment
-    variable to the directory of your kernel::
+    variable to the directory of your kernel:
+
+    .. code-block:: xml
 
         <phpunit>
             <!-- ... -->
@@ -351,14 +353,6 @@ or perform more complex requests::
         'photo.jpg',
         'image/jpeg',
         123
-    );
-    // or
-    $photo = array(
-        'tmp_name' => '/path/to/photo.jpg',
-        'name'     => 'photo.jpg',
-        'type'     => 'image/jpeg',
-        'size'     => 123,
-        'error'    => UPLOAD_ERR_OK
     );
     $client->request(
         'POST',
