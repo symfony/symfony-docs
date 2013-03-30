@@ -199,9 +199,9 @@ a request::
     );
 
 The :method:`Symfony\\Component\\HttpFoundation\\Request::create` method
-creates a request based on a path info, a method and some parameters (the
+creates a request based on a URI, a method and some parameters (the
 query parameters or the request ones depending on the HTTP method); and of
-course, you an also override all other variables as well (by default, Symfony
+course, you can also override all other variables as well (by default, Symfony
 creates sensible defaults for all the PHP global variables).
 
 Based on such a request, you can override the PHP global variables via
@@ -223,7 +223,7 @@ If you have a session attached to the Request, you can access it via the
 :method:`Symfony\\Component\\HttpFoundation\\Request::getSession` method;
 the
 :method:`Symfony\\Component\\HttpFoundation\\Request::hasPreviousSession`
-method tells you if the request contains a Session which was started in one of
+method tells you if the request contains a session which was started in one of
 the previous requests.
 
 Accessing `Accept-*` Headers Data
