@@ -406,13 +406,15 @@ represented by a PHP callable instead of a string::
     });
     $response->send();
 
-Downloading Files
+.. _component-http-foundation-serving-files:
+
+Serving Files
 ~~~~~~~~~~~~~~~~~
 
 .. versionadded:: 2.1
     The ``makeDisposition`` method was added in Symfony 2.1.
 
-When uploading a file, you must add a ``Content-Disposition`` header to your
+When sending a file, you must add a ``Content-Disposition`` header to your
 response. While creating this header for basic file downloads is easy, using
 non-ASCII filenames is more involving. The
 :method:`Symfony\\Component\\HttpFoundation\\Response::makeDisposition`
@@ -423,6 +425,26 @@ abstracts the hard work behind a simple API::
     $d = $response->headers->makeDisposition(ResponseHeaderBag::DISPOSITION_ATTACHMENT, 'foo.pdf');
 
     $response->headers->set('Content-Disposition', $d);
+
+.. versionadded:: 2.2
+    The :class:`Symfony\\Component\\HttpFoundation\\BinaryFileResponse` class was added in Symfony 2.2.
+
+Alternatively, if you are serving a static file, you can use a
+:class:`Symfony\\Component\\HttpFoundation\\BinaryFileResponse`::
+
+    use Symfony\Component\HttpFoundation\BinaryFileResponse
+    
+    $file = 'path/to/file.txt';
+    $response = new BinaryFileResponse($file);
+
+The :class:`Symfony\\Component\\HttpFoundation\\BinaryFileResponse` will
+automatically handle ``Range`` and ``If-Range`` headers from the request.
+You can also set the ``Content-Type`` of the sent file, or change its
+``Content-Disposition``::
+
+    $response->headers->set('Content-Type', 'text/plain')
+    $response->setContentDisposition(ResponseHeaderBag::DISPOSITION_ATTACHMENT, 'filename.txt');
+    
 
 .. _component-http-foundation-json-response:
 
