@@ -234,8 +234,8 @@ looks up the value of each parameter and uses it in the service definition.
 .. note::
 
     It can be useful to pass other services in as arguments to your custom service.
-    For example, you may want to pass in the `request` service as an argument.
-    In these cases, you may receive a `ScopeWideningInjectionException`.
+    For example, you may want to pass in the ``request`` service as an argument.
+    In these cases, you may receive a ``ScopeWideningInjectionException``.
     To understand this problem better and learn how to solve it, refer to
     the cookbook article :doc:`/cookbook/service_container/scopes` for a
     few solutions.
