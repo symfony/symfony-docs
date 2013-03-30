@@ -281,13 +281,13 @@ To work with multi-dimensional fields::
 You must specify the fully qualified name of the field::
 
     // Set a single field
-    $form->setValue('multi[0]', 'value');
+    $form->setValues(array('multi' => array('value')));
 
     // Set multiple fields at once
-    $form->setValue('multi', array(
+    $form->setValues(array('multi' => array(
         1             => 'value',
         'dimensional' => 'an other value'
-    ));
+    )));
 
 This is great, but it gets better! The ``Form`` object allows you to interact
 with your form like a browser, selecting radio values, ticking checkboxes,
