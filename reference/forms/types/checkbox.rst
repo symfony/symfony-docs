@@ -12,7 +12,6 @@ if the box is unchecked, the value will be set to false.
 | Rendered as | ``input`` ``checkbox`` field                                           |
 +-------------+------------------------------------------------------------------------+
 | Options     | - `value`_                                                             |
-|             | - `checked`_                                                             |
 +-------------+------------------------------------------------------------------------+
 | Inherited   | - `required`_                                                          |
 | options     | - `label`_                                                             |
@@ -47,12 +46,6 @@ value
 
 The value that's actually used as the value for the checkbox. This does
 not affect the value that's set on your object.
-
-checked
-~~~~~~~
-
-**type**: ``mixed`` **default**: ``1``
-
 
 Inherited options
 -----------------
