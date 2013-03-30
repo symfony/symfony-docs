@@ -178,8 +178,13 @@ should be as few times as possible at the entry point to your application.
 Setting Up the Container with Configuration Files
 -------------------------------------------------
 
-As well as setting up the services using PHP as above you can also use configuration
-files. To do this you also need to install :doc:`the Config Component</components/config/introduction>`.
+As well as setting up the services using PHP as above you can also use
+configuration files. This allows you to use XML or Yaml to write the definitions
+for the services rather than using PHP to define the services as in the above
+examples. In anything but the smallest applications it make sense to organise
+the service definitions by moving them out into one or more configuration files.
+To do this you also need to install
+:doc:`the Config Component</components/config/introduction>`.
 
 Loading an XML config file::
 
@@ -206,7 +211,19 @@ Loading a YAML config file::
     If you want to load YAML config files then you will also need to install
     :doc:`The YAML component</components/yaml/introduction>`.
 
-The ``newsletter_manager`` and ``mailer`` services can be set up using config files:
+If you do want to use PHP to create the services then you can move this
+into a separate config file and load it in a similar way::
+
+    use Symfony\Component\DependencyInjection\ContainerBuilder;
+    use Symfony\Component\Config\FileLocator;
+    use Symfony\Component\DependencyInjection\Loader\PhpFileLoader;
+
+    $container = new ContainerBuilder();
+    $loader = new PhpFileLoader($container, new FileLocator(__DIR__));
+    $loader->load('services.php');
+
+You can now set up the ``newsletter_manager`` and ``mailer`` services using
+config files:
 
 .. configuration-block::
 
