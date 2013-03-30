@@ -268,16 +268,16 @@ assets_base_urls
 
 **default**: ``{ http: [], ssl: [] }``
 
-This option allows you to define base URL's to be used for assets referenced
+This option allows you to define base URLs to be used for assets referenced
 from ``http`` and ``ssl`` (``https``) pages. A string value may be provided in
-lieu of a single-element array. If multiple base URL's are provided, Symfony2
+lieu of a single-element array. If multiple base URLs are provided, Symfony2
 will select one from the collection each time it generates an asset's path.
 
 For your convenience, ``assets_base_urls`` can be set directly with a string or
 array of strings, which will be automatically organized into collections of base
-URL's for ``http`` and ``https`` requests. If a URL starts with ``https://`` or
+URLs for ``http`` and ``https`` requests. If a URL starts with ``https://`` or
 is `protocol-relative`_ (i.e. starts with `//`) it will be added to both
-collections. URL's starting with ``http://`` will only be added to the
+collections. URLs starting with ``http://`` will only be added to the
 ``http`` collection.
 
 .. versionadded:: 2.1

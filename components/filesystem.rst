@@ -82,7 +82,7 @@ Copy
 ~~~~
 
 This method is used to copy files. If the target already exists, the file is
-copied only if the source modification date is earlier than the target. This
+copied only if the source modification date is later than the target. This
 behavior can be overridden by the third boolean argument::
 
     // works only if image-ICC has been modified after image.jpg
@@ -146,7 +146,7 @@ recursive option::
 Chmod
 ~~~~~
 
-Chmod is used to change the mode of a file. The third argument is a boolean
+Chmod is used to change the mode of a file. The fourth argument is a boolean
 recursive option::
 
     // set the mode of the video to 0600

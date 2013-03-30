@@ -138,7 +138,7 @@ All blocks have access to the ``collector`` object.
 .. tip::
 
     Built-in templates use a base64 encoded image for the toolbar (``<img
-    src="src="data:image/png;base64,..."``). You can easily calculate the
+    src="data:image/png;base64,..."``). You can easily calculate the
     base64 value for an image with this little script: ``echo
     base64_encode(file_get_contents($_SERVER['argv'][1]));``.
 
