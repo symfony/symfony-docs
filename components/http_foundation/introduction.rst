@@ -219,7 +219,7 @@ Based on such a request, you can override the PHP global variables via
 Accessing the Session
 ~~~~~~~~~~~~~~~~~~~~~
 
-If you have a session attached to the Request, you can access it via the
+If you have a session attached to the request, you can access it via the
 :method:`Symfony\\Component\\HttpFoundation\\Request::getSession` method;
 the
 :method:`Symfony\\Component\\HttpFoundation\\Request::hasPreviousSession`
