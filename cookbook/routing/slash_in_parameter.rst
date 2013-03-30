@@ -16,8 +16,8 @@ Configure the Route
 -------------------
 
 By default, the Symfony routing components requires that the parameters 
-match the following regex path: ``[^/]+``. This means that all characters 
-are allowed except ``/``. 
+match the following regex path: ``[^/\-]++``. This means that all characters 
+are allowed except ``/`` and ``-``. 
 
 You must explicitly allow ``/`` to be part of your parameter by specifying 
 a more permissive regex path.
