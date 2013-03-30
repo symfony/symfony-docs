@@ -48,7 +48,7 @@ choices
 
 **default**: :method:`Symfony\\Component\\Locale\\Locale::getDisplayLanguages`
 
-The choices option defaults to all language returned by
+The choices option defaults to all languages returned by
 :method:`Symfony\\Component\\Locale\\Locale::getDisplayLanguages`. It uses the
 default locale to specify the language.
 
