@@ -189,8 +189,8 @@ this is done via the "path info" of the request, which can be accessed via the
 Simulating a Request
 ~~~~~~~~~~~~~~~~~~~~
 
-Instead of creating a Request based on the PHP globals, you can also simulate
-a Request::
+Instead of creating a request based on the PHP globals, you can also simulate
+a request::
 
     $request = Request::create(
         '/hello-world',
