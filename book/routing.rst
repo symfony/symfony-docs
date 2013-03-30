@@ -763,6 +763,7 @@ a slash. URLs matching this route might look like:
 
 * ``/articles/en/2010/my-post``
 * ``/articles/fr/2010/my-post.rss``
+* ``/articles/en/2013/my-latest-post.html``
 
 .. _book-routing-format-param:
 
@@ -1014,11 +1015,12 @@ instead of simply ``/hello/{name}``:
 The string ``/admin`` will now be prepended to the pattern of each route
 loaded from the new routing resource.
 
-.. tip::
+Annotations
+~~~~~~~~~~~
 
-    You can also define routes using annotations. See the
-    :doc:`FrameworkExtraBundle documentation</bundles/SensioFrameworkExtraBundle/annotations/routing>`
-    to see how.
+You can define your routes in your controllers by using annotations. See the
+:doc:`FrameworkExtraBundle documentation</bundles/SensioFrameworkExtraBundle/annotations/routing>`
+to see how.
 
 .. index::
    single: Routing; Debugging
@@ -1035,7 +1037,7 @@ the command by running the following from the root of your project.
 
     $ php app/console router:debug
 
-The command will print a helpful list of *all* the configured routes in
+This command will print a helpful list of *all* the configured routes in
 your application:
 
 .. code-block:: text
@@ -1053,6 +1055,18 @@ the route name after the command:
 .. code-block:: bash
 
     $ php app/console router:debug article_show
+
+Likewise, if you want to test whether a URL matches a given route, you can use the ``router:match`` console command.
+
+.. code-block:: bash
+
+    $ php app/console router:match /blog/my-latest-post
+
+This command will print which route the URL matches.
+
+.. code-block:: text
+
+    Route "blog_show" matches
 
 .. index::
    single: Routing; Generating URLs
