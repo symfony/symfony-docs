@@ -20,7 +20,7 @@ So, sit back and relax as you travel from "then" to "now".
 Directory Structure
 -------------------
 
-When looking at a Symfony2 project - for example, the `Symfony2 Standard`_ -
+When looking at a Symfony2 project - for example, the `Symfony2 Standard Edition`_ -
 you'll notice a very different directory structure than in symfony1. The
 differences, however, are somewhat superficial.
 
@@ -355,5 +355,5 @@ In reality, the Symfony2 configuration is much more powerful and is used
 primarily to configure objects that you can use. For more information, see
 the chapter titled ":doc:`/book/service_container`".
 
-.. _`Symfony2 Standard`: https://github.com/symfony/symfony-standard
 .. _`Composer`: http://getcomposer.org
+.. _`Symfony2 Standard Edition`: https://github.com/symfony/symfony-standard

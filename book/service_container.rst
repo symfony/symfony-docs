@@ -28,6 +28,11 @@ container and customizing objects from any third-party bundle. You'll begin
 writing code that is more reusable, testable and decoupled, simply because
 the service container makes writing good code so easy.
 
+.. tip::
+
+    If you want to know a lot more after reading this chapter, check out
+    the :doc:`Dependency Injection Component Documentation</components/dependency_injection/introduction>`.
+
 .. index::
    single: Service Container; What is a service?
 
@@ -222,15 +227,6 @@ The end result is exactly the same as before - the difference is only in
 to look for parameters with those names. When the container is built, it
 looks up the value of each parameter and uses it in the service definition.
 
-.. note::
-
-    The percent sign inside a parameter or argument, as part of the string, must
-    be escaped with another percent sign:
-
-    .. code-block:: xml
-
-        <argument type="string">http://symfony.com/?foo=%%s&bar=%%d</argument>
-
 The purpose of parameters is to feed information into services. Of course
 there was nothing wrong with defining the service without using any parameters.
 Parameters, however, have several advantages:
@@ -251,60 +247,7 @@ however, you may not need the flexibility of parameters.
 Array Parameters
 ~~~~~~~~~~~~~~~~
 
-Parameters do not need to be flat strings, they can also be arrays. For the XML
-format, you need to use the type="collection" attribute for all parameters that are
-arrays.
-
-.. configuration-block::
-
-    .. code-block:: yaml
-
-        # app/config/config.yml
-        parameters:
-            my_mailer.gateways:
-                - mail1
-                - mail2
-                - mail3
-            my_multilang.language_fallback:
-                en:
-                    - en
-                    - fr
-                fr:
-                    - fr
-                    - en
-
-    .. code-block:: xml
-
-        <!-- app/config/config.xml -->
-        <parameters>
-            <parameter key="my_mailer.gateways" type="collection">
-                <parameter>mail1</parameter>
-                <parameter>mail2</parameter>
-                <parameter>mail3</parameter>
-            </parameter>
-            <parameter key="my_multilang.language_fallback" type="collection">
-                <parameter key="en" type="collection">
-                    <parameter>en</parameter>
-                    <parameter>fr</parameter>
-                </parameter>
-                <parameter key="fr" type="collection">
-                    <parameter>fr</parameter>
-                    <parameter>en</parameter>
-                </parameter>
-            </parameter>
-        </parameters>
-
-    .. code-block:: php
-
-        // app/config/config.php
-        use Symfony\Component\DependencyInjection\Definition;
-
-        $container->setParameter('my_mailer.gateways', array('mail1', 'mail2', 'mail3'));
-        $container->setParameter('my_multilang.language_fallback', array(
-            'en' => array('en', 'fr'),
-            'fr' => array('fr', 'en'),
-        ));
-
+Parameters can also contain array values. See :ref:`component-di-parameters-array`.
 
 Importing other Container Configuration Resources
 -------------------------------------------------
@@ -965,6 +908,7 @@ its id:
 Learn more
 ----------
 
+* :doc:`/components/dependency_injection/parameters`
 * :doc:`/components/dependency_injection/compilation`
 * :doc:`/components/dependency_injection/definitions`
 * :doc:`/components/dependency_injection/factories`
