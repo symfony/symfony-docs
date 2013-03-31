@@ -244,8 +244,8 @@ save_path
 
 This determines the argument to be passed to the save handler. If you choose
 the default file handler, this is the path where the files are created. You can
-also set this value to the ``save_path`` of your ``php.ini`` by overriding setting it to
-``null``:
+also set this value to the ``save_path`` of your ``php.ini`` by setting the
+value to ``null``:
 
 .. configuration-block::
 
