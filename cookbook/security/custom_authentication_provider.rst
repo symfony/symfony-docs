@@ -365,7 +365,7 @@ to service ids that do not exist yet: ``wsse.security.authentication.provider`` 
 
             wsse.security.authentication.listener:
                 class:  Acme\DemoBundle\Security\Firewall\WsseListener
-                arguments: [@security.context, @security.authentication.manager]
+                arguments: ["@security.context", "@security.authentication.manager"]
 
 
     .. code-block:: xml

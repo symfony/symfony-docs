@@ -43,7 +43,7 @@ service container configuration:
                 # ...
             newsletter_manager:
                 class:     NewsletterManager
-                arguments: [@my_mailer]
+                arguments: ["@my_mailer"]
 
     .. code-block:: xml
 

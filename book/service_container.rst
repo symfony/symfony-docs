@@ -599,7 +599,7 @@ the service container gives you a much more appealing option:
                 # ...
             newsletter_manager:
                 class:     "%newsletter_manager.class%"
-                arguments: [@my_mailer]
+                arguments: ["@my_mailer"]
 
     .. code-block:: xml
 
@@ -757,7 +757,7 @@ it exists and do nothing if it doesn't:
         services:
             newsletter_manager:
                 class:     "%newsletter_manager.class%"
-                arguments: [@?my_mailer]
+                arguments: ["@?my_mailer"]
 
     .. code-block:: xml
 
@@ -862,7 +862,7 @@ Configuring the service container is easy:
         services:
             newsletter_manager:
                 class:     "%newsletter_manager.class%"
-                arguments: [@mailer, @templating]
+                arguments: ["@mailer", "@templating"]
 
     .. code-block:: xml
 
