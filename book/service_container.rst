@@ -187,7 +187,7 @@ straightforward. Parameters make defining services more organized and flexible:
         services:
             my_mailer:
                 class:        "%my_mailer.class%"
-                arguments:    [%my_mailer.transport%]
+                arguments:    ["%my_mailer.transport%"]
 
     .. code-block:: xml
 
@@ -358,7 +358,7 @@ directories don't exist, create them.
         services:
             my_mailer:
                 class:        "%my_mailer.class%"
-                arguments:    [%my_mailer.transport%]
+                arguments:    ["%my_mailer.transport%"]
 
     .. code-block:: xml
 

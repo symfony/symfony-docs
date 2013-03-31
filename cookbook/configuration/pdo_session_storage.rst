@@ -41,7 +41,7 @@ configuration format of your choice):
 
             session.storage.pdo:
                 class:     Symfony\Component\HttpFoundation\SessionStorage\PdoSessionStorage
-                arguments: ["@pdo", %session.storage.options%, %pdo.db_options%]
+                arguments: ["@pdo", "%session.storage.options%", "%pdo.db_options%"]
 
     .. code-block:: xml
 
@@ -133,8 +133,8 @@ parameter.ini by referencing the database-related parameters defined there:
             class: PDO
             arguments:
                 - "mysql:host=%database_host%;port=%database_port%;dbname=%database_name%"
-                - %database_user%
-                - %database_password%
+                - "%database_user%"
+                - "%database_password%"
 
     .. code-block:: xml
 
