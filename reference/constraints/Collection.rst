@@ -179,6 +179,8 @@ For example, if you want to require that the ``personal_email`` field of the
 ``profileData`` array is not blank and is a valid email but the ``alternate_email``
 field is optional but must be a valid email if supplied, you can do the following:
 
+.. configuration-block::
+
     .. code-block:: php-annotations
 
         // src/Acme/BlogBundle/Entity/Author.php
