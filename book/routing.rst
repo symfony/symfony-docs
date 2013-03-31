@@ -1015,12 +1015,11 @@ instead of simply ``/hello/{name}``:
 The string ``/admin`` will now be prepended to the pattern of each route
 loaded from the new routing resource.
 
-Annotations
-~~~~~~~~~~~
+.. tip::
 
-You can define your routes in your controllers by using annotations. See the
-:doc:`FrameworkExtraBundle documentation</bundles/SensioFrameworkExtraBundle/annotations/routing>`
-to see how.
+    You can also define routes using annotations. See the
+    :doc:`FrameworkExtraBundle documentation</bundles/SensioFrameworkExtraBundle/annotations/routing>`
+    to see how.
 
 .. index::
    single: Routing; Debugging
@@ -1056,7 +1055,8 @@ the route name after the command:
 
     $ php app/console router:debug article_show
 
-Likewise, if you want to test whether a URL matches a given route, you can use the ``router:match`` console command.
+Likewise, if you want to test whether a URL matches a given route, you can
+use the ``router:match`` console command:
 
 .. code-block:: bash
 
