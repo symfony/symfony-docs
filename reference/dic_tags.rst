@@ -30,6 +30,8 @@ the AsseticBundle has several tags that aren't listed here.
 +-----------------------------------+---------------------------------------------------------------------------+
 | `kernel.event_subscriber`_        | To subscribe to a set of different events/hooks in Symfony                |
 +-----------------------------------+---------------------------------------------------------------------------+
+| `kernel.fragment_renderer`_       | Add new HTTP content rendering strategies                                 |
++-----------------------------------+---------------------------------------------------------------------------+
 | `monolog.logger`_                 | Logging with a custom logging channel                                     |
 +-----------------------------------+---------------------------------------------------------------------------+
 | `monolog.processor`_              | Add a custom processor for logging                                        |
@@ -353,6 +355,13 @@ configuration, and tag it with ``kernel.event_subscriber``:
 
     If your service is created by a factory, you **MUST** correctly set the ``class``
     parameter for this tag to work correctly.
+
+.. _dic-tags-kernel-fragment-renderer:
+
+kernel.fragment_renderer
+-----------------------
+
+**Purpose**: Add new HTTP content rendering strategies
 
 .. _dic_tags-monolog:
 
