@@ -62,8 +62,6 @@ These options inherit from the :doc:`date</reference/forms/types/date>` type:
 .. include:: /reference/forms/types/options/days.rst.inc
 
 .. include:: /reference/forms/types/options/date_format.rst.inc
-    
-.. include:: /reference/forms/types/options/date_pattern.rst.inc
 
 .. include:: /reference/forms/types/options/data_timezone.rst.inc
 
