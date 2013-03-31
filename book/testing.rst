@@ -345,6 +345,16 @@ or perform more complex requests::
     // Directly submit a form (but using the Crawler is easier!)
     $client->request('POST', '/submit', array('name' => 'Fabien'));
 
+    // Submit a raw JSON string in the requst body
+    $client->request(
+        'POST',
+        '/submit',
+        array(),
+        array(),
+        array('CONTENT_TYPE' => 'application/json'),
+        '{"name":"Fabien"}'
+    );
+
     // Form submission with a file upload
     use Symfony\Component\HttpFoundation\File\UploadedFile;
 

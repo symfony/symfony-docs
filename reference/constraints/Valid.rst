@@ -244,7 +244,7 @@ Options
 traverse
 ~~~~~~~~
 
-**type**: ``string`` **default**: ``true``
+**type**: ``boolean`` **default**: ``true``
 
 If this constraint is applied to a property that holds an array of objects,
 then each object in that array will be validated only if this option is set
