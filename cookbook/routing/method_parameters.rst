@@ -4,11 +4,6 @@
 How to use HTTP Methods beyond GET and POST in Routes
 =====================================================
 
-.. versionadded:: 2.2
-    This functionality is disabled by default in Symfony 2.2. To enable it, 
-    you must call :method:`Request::enableHttpMethodParameterOverride <Symfony\\Component\\HttpFoundation\\Request::enableHttpMethodParameterOverride>` 
-    before you handle the request.
-
 The HTTP method of a request is one of the requirements that can be checked
 when seeing if it matches a route. This is introduced in the routing chapter
 of the book ":doc:`/book/routing`" with examples using GET and POST. You can
@@ -75,6 +70,15 @@ delete it by matching on GET, PUT and DELETE.
         ), array(), array(), '', array('DELETE')));
 
         return $collection;
+
+Faking the Method with _method
+------------------------------
+
+.. note::
+
+    The ``_method`` functionality shown here is disabled by default in Symfony 2.2.
+    To enable it, you must call :method:`Request::enableHttpMethodParameterOverride <Symfony\\Component\\HttpFoundation\\Request::enableHttpMethodParameterOverride>` 
+    before you handle the request (e.g. in your front controller).
 
 Unfortunately, life isn't quite this simple, since most browsers do not
 support sending PUT and DELETE requests. Fortunately Symfony2 provides you
