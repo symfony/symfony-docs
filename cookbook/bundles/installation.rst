@@ -1,23 +1,21 @@
 .. index::
    single: Bundle; Installation
 
-How to install 3rd party bundles
+How to install 3rd party Bundles
 ================================
 
 Most bundles provide their own installation instructions. However, the
 basic steps for installing a bundle are the same.
 
-Add composer dependencies
+Add Composer Dependencies
 -------------------------
 
-Starting from Symfony 2.1 dependencies are managed with Composer. It's
+Starting from Symfony 2.1, dependencies are managed with Composer. It's
 a good idea to learn some basics of Composer in `their documentation`_.
 
 Before you can use composer to install a bundle, you should look for a
-`Packagist`_ package of that bundle. For example, for the
-`FOSUserBundle`_ you should look for a
-``friendsofsymfony/user-bundle`` package and it does exists:
-https://packagist.org/packages/friendsofsymfony/user-bundle .
+`Packagist`_ package of that bundle. For example, if you search for the popular
+`FOSUserBundle`_ you will find a packaged called `friendsofsymfony/user-bundle`_.
 
 .. note::
 
@@ -26,23 +24,24 @@ https://packagist.org/packages/friendsofsymfony/user-bundle .
     `KnpBundles`_, it is the unofficial achive of Symfony Bundles. If
     a bundle contains a ``README`` file, it is displayed there and if it
     has a Packagist package it shows a link to the package. It's a
-    really usefull site to begin searching for bundles.
+    really useful site to begin searching for bundles.
 
 Now that you have the package name, you should determine the version
 you want to use. Usually different versions of a bundle correspond to
-a particular version of Symfony, this should be in the ``README`` file
-(in the Package, which you can view on Github or KnpBundles). If it
-isn't in the ``README``, you can use the version you want. In the case
-of the FOSUserBundle, the ``README`` file has a caution that version
-1.2.0 must be used for Symfony 2.0 and 1.3+ for Symfony
-2.1+. Packagist provides require statements for all existing
-versions. For the current development version it is now
-``"friendsofsymfony/user-bundle": "2.0.*@dev"``.
+a particular version of Symfony. This information should be in the ``README``
+file. If it isn't, you can use the version you want. If you choose an incompatible
+version, Composer will throw dependency errors when you try to install. If
+this happens, you can try a different version.
 
-Now we can add the bundle to our ``composer.json`` file and update the
+In the case of the FOSUserBundle, the ``README`` file has a caution that version
+1.2.0 must be used for Symfony 2.0 and 1.3+ for Symfony 2.1+. Packagist displays
+example ``require`` statements for all existing versions of a package. The
+current development version of FOSUserBundle is ``"friendsofsymfony/user-bundle": "2.0.*@dev"``.
+
+Now you can add the bundle to your ``composer.json`` file and update the
 dependencies. You can do this manually:
 
-1. **Add it to the ``composer.json`` file:**
+1. **Add it to the composer.json file:**
 
    .. code-block:: json
 
@@ -72,13 +71,12 @@ Or you can do this in one command:
 
     $ php composer.phar require friendsofsymfony/user-bundle:2.0.*@dev
 
-Enable the bundle
+Enable the Bundle
 -----------------
 
-Now the bundle is installed into our Symfony project (in
-``vendor/friendsofsymfony/``) and the autoloader recognizes this
-bundle. The only thing we need to do now is registering the bundle in
-the ``AppKernel``::
+At this point, the bundle is installed in your Symfony project (in
+``vendor/friendsofsymfony/``) and the autoloader recognizes its classes.
+The only thing you need to do now is register the bundle in ``AppKernel``::
 
     // app/AppKernel.php
 
@@ -98,15 +96,15 @@ the ``AppKernel``::
         }
     }
 
-Configure the bundle
+Configure the Bundle
 --------------------
 
-Usually bundles require some configuration to be added to app's
+Usually a bundle requires some configuration to be added to app's
 ``app/config/config.yml`` file. The bundle's documentation will likely
 describe that configuration. But you can also get a reference of the
-bundle's config via ``config:dump-reference`` command.
+bundle's config via the ``config:dump-reference`` command.
 
-For instance, in order to look the reference of the assetic config we
+For instance, in order to look the reference of the ``assetic`` config you
 can use this:
 
 .. code-block:: bash
@@ -135,7 +133,14 @@ The output will look like this:
         node_paths:           []
         # ...
 
+Other Setup
+-----------
+
+At this point, check the ``README`` file of your brand new bundle to see
+what do to next.
+
 .. _their documentation: http://getcomposer.org/doc/00-intro.md
 .. _Packagist:           https://packagist.org
 .. _FOSUserBundle:       https://github.com/FriendsOfSymfony/FOSUserBundle
+.. _`friendsofsymfony/user-bundle`: https://packagist.org/packages/friendsofsymfony/user-bundle
 .. _KnpBundles:          http://knpbundles.com/

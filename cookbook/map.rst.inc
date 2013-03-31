@@ -7,6 +7,7 @@
 
 * :doc:`/cookbook/bundles/index`
 
+  * :doc:`/cookbook/bundles/installation`
   * :doc:`/cookbook/bundles/best_practices`
   * :doc:`/cookbook/bundles/inheritance`
   * :doc:`/cookbook/bundles/override`
