@@ -26,7 +26,6 @@ option defaults to 120 years ago to the current year.
 |                      | - `months`_                                                                                                            |
 |                      | - `days`_                                                                                                              |
 |                      | - `format`_                                                                                                            |
-|                      | - `pattern`_                                                                                                           |
 |                      | - `data_timezone`_                                                                                                     |
 |                      | - `user_timezone`_                                                                                                     |
 |                      | - `invalid_message`_                                                                                                   |
