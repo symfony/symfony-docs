@@ -56,7 +56,7 @@ end-user, create a new template located at
     by your error pages), because the router runs before the firewall. If
     the router throws an exception (for instance, when the route does not
     match), then using ``is_granted`` will throw a further exception. You
-    can use ``is_granted`` safely by saying ``{% if app.user is not null and is_granted('...') %}``.
+    can use ``is_granted`` safely by saying ``{% if app.user and is_granted('...') %}``.
 
 .. tip::
 
