@@ -446,7 +446,7 @@ The code below shows the implementation of the
                     'Unable to find an active admin AcmeUserBundle:User object identified by "%s".',
                     $username
                 );
-                throw new UsernameNotFoundException($message,, 0, $e);
+                throw new UsernameNotFoundException($message, 0, $e);
             }
 
             return $user;
