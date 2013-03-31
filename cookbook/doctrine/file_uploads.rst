@@ -120,7 +120,7 @@ look like this::
 Next, create this property on your ``Document`` class and add some validation
 rules::
 
-use Symfony\Component\HttpFoundation\File\UploadedFile;
+    use Symfony\Component\HttpFoundation\File\UploadedFile;
 
     // ...
     class Document
