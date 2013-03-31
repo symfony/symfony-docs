@@ -225,7 +225,7 @@ The ``newsletter_manager`` and ``mailer`` services can be set up using config fi
             newsletter_manager:
                 class:     NewsletterManager
                 calls:
-                    - [ setMailer, [ @mailer ] ]
+                    - [ setMailer, ["@mailer"] ]
 
     .. code-block:: xml
 

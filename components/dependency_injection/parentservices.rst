@@ -64,14 +64,14 @@ The service config for these classes would look something like this:
             newsletter_manager:
                 class:     "%newsletter_manager.class%"
                 calls:
-                    - [ setMailer, [ @my_mailer ] ]
-                    - [ setEmailFormatter, [ @my_email_formatter] ]
+                    - [ setMailer, ["@my_mailer"] ]
+                    - [ setEmailFormatter, ["@my_email_formatter"] ]
 
             greeting_card_manager:
                 class:     "%greeting_card_manager.class%"
                 calls:
-                    - [ setMailer, [ @my_mailer ] ]
-                    - [ setEmailFormatter, [ @my_email_formatter] ]
+                    - [ setMailer, ["@my_mailer"] ]
+                    - [ setEmailFormatter, ["@my_email_formatter"] ]
 
     .. code-block:: xml
 
@@ -194,8 +194,8 @@ a parent for a service.
                 class:     "%mail_manager.class%"
                 abstract:  true
                 calls:
-                    - [ setMailer, [ @my_mailer ] ]
-                    - [ setEmailFormatter, [ @my_email_formatter] ]
+                    - [ setMailer, ["@my_mailer"] ]
+                    - [ setEmailFormatter, ["@my_email_formatter"] ]
             
             newsletter_manager:
                 class:     "%newsletter_manager.class%"
@@ -320,14 +320,14 @@ to the ``NewsletterManager`` class, the config would look like this:
                 class:     "%mail_manager.class%"
                 abstract:  true
                 calls:
-                    - [ setMailer, [ @my_mailer ] ]
-                    - [ setEmailFormatter, [ @my_email_formatter] ]
+                    - [ setMailer, ["@my_mailer"] ]
+                    - [ setEmailFormatter, ["@my_email_formatter"] ]
             
             newsletter_manager:
                 class:     "%newsletter_manager.class%"
                 parent: mail_manager
                 calls:
-                    - [ setMailer, [ @my_alternative_mailer ] ]
+                    - [ setMailer, ["@my_alternative_mailer"] ]
             
             greeting_card_manager:
                 class:     "%greeting_card_manager.class%"
@@ -452,13 +452,13 @@ If you had the following config:
                 class:     "%mail_manager.class%"
                 abstract:  true
                 calls:
-                    - [ setFilter, [ @my_filter ] ]
+                    - [ setFilter, ["@my_filter"] ]
                     
             newsletter_manager:
                 class:     "%newsletter_manager.class%"
                 parent: mail_manager
                 calls:
-                    - [ setFilter, [ @another_filter ] ]
+                    - [ setFilter, ["@another_filter"] ]
             
     .. code-block:: xml
 

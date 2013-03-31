@@ -398,7 +398,7 @@ configuration.
 
         # app/config/config.yml
         imports:
-            - { resource: @AcmeHelloBundle/Resources/config/services.yml }
+            - { resource: "@AcmeHelloBundle/Resources/config/services.yml" }
 
     .. code-block:: xml
 
@@ -690,7 +690,7 @@ Injecting the dependency by the setter method just needs a change of syntax:
             newsletter_manager:
                 class:     "%newsletter_manager.class%"
                 calls:
-                    - [ setMailer, [ @my_mailer ] ]
+                    - [ setMailer, ["@my_mailer"] ]
 
     .. code-block:: xml
 
