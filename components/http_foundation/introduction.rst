@@ -244,8 +244,10 @@ by using the following methods:
 Accessing other Data
 ~~~~~~~~~~~~~~~~~~~~
 
-The Request class has many other methods that you can use to access the
-request information. Have a look at the API for more information about them.
+The ``Request`` class has many other methods that you can use to access the
+request information. Have a look at
+:class:`the Request API<Symfony\\Component\\HttpFoundation\\Request>`
+for more information about them.
 
 Response
 --------
