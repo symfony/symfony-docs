@@ -243,7 +243,34 @@ save_path
 **type**: ``string`` **default**: ``%kernel.cache.dir%/sessions``
 
 This determines the argument to be passed to the save handler. If you choose
-the default file handler, this is the path where the files are created.
+the default file handler, this is the path where the files are created. You can
+also set this value to the ``save_path`` of your ``php.ini`` by overriding setting it to
+``null``:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # app/config/config.yml
+        framework:
+            session:
+                save_path: null
+
+    .. code-block:: xml
+
+        <!-- app/config/config.xml -->
+        <framework:config>
+            <framework:session save-path="null" />
+        </framework:config>
+
+    .. code-block:: php
+
+        // app/config/config.php
+        $container->loadFromExtension('framework', array(
+            'session' => array(
+                'save_path' => null,
+            ),
+        ));
 
 templating
 ~~~~~~~~~~
