@@ -16,6 +16,7 @@ Configuration
 -------------
 
 * `secret`_
+* `http_method_override`_
 * `ide`_
 * `test`_
 * `trusted_proxies`_
@@ -50,6 +51,21 @@ This is a string that should be unique to your application. In practice,
 it's used for generating the CSRF tokens, but it could be used in any other
 context where having a unique string is useful. It becomes the service container
 parameter named ``kernel.secret``.
+
+http_method_override
+~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 2.3
+    The ``http_method_override`` option is new in Symfony 2.3.
+
+**type**: ``Boolean`` **default**: ``true``
+
+This determines whether the ``_method`` request parameter is used as the intended
+HTTP method on POST requests. If enabled, the
+:method:`Request::enableHttpMethodParameterOverride <Symfony\\Component\\HttpFoundation\\Request::enableHttpMethodParameterOverride>`
+gets called automatically. It becomes the service container parameter named
+``kernel.http_method_override``. For more information, see
+:doc:`/cookbook/routing/method_parameters`.
 
 ide
 ~~~
@@ -362,6 +378,7 @@ Full Default Configuration
 
         framework:
             secret:               ~
+            http_method_override: true
             trusted_proxies:      []
             ide:                  ~
             test:                 ~
@@ -387,7 +404,7 @@ Full Default Configuration
             profiler:
                 enabled:              false
                 only_exceptions:      false
-                only_master_requests:  false
+                only_master_requests: false
                 dsn:                  file:%kernel.cache_dir%/profiler
                 username:
                 password:
