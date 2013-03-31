@@ -24,6 +24,7 @@
   * :doc:`/cookbook/configuration/external_parameters`
   * :doc:`/cookbook/configuration/pdo_session_storage`
   * :doc:`/cookbook/configuration/apache_router`
+  * :doc:`/cookbook/configuration/web_server_configuration`
 
 * :doc:`/cookbook/console/index`
 

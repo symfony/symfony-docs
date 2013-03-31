@@ -439,6 +439,8 @@ the same basic and recommended directory structure:
 
 * ``web/``: This is the web root directory and contains any publicly accessible files;
 
+.. _the-web-directory:
+
 The Web Directory
 ~~~~~~~~~~~~~~~~~
 
