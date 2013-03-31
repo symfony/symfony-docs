@@ -52,6 +52,8 @@ it's used for generating the CSRF tokens, but it could be used in any other
 context where having a unique string is useful. It becomes the service container
 parameter named ``kernel.secret``.
 
+.. _configuration-framework-http_method_override:
+
 http_method_override
 ~~~~~~~~~~~~~~~~~~~~
 
