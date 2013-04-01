@@ -85,12 +85,28 @@ of your ``AcmeStoreBundle``:
 .. code-block:: xml
 
     <?xml version="1.0" encoding="UTF-8"?>
-    <database name="default" namespace="Acme\StoreBundle\Model" defaultIdMethod="native">
+    <database name="default"
+        namespace="Acme\StoreBundle\Model"
+        defaultIdMethod="native"
+    >
         <table name="product">
-            <column name="id" type="integer" required="true" primaryKey="true" autoIncrement="true" />
-            <column name="name" type="varchar" primaryString="true" size="100" />
-            <column name="price" type="decimal" />
-            <column name="description" type="longvarchar" />
+            <column name="id"
+                type="integer"
+                required="true"
+                primaryKey="true"
+                autoIncrement="true"
+            />
+            <column name="name"
+                type="varchar"
+                primaryString="true"
+                size="100"
+            />
+            <column name="price"
+                type="decimal"
+            />
+            <column name="description"
+                type="longvarchar"
+            />
         </table>
     </database>
 
@@ -221,8 +237,8 @@ Updating an object involves just three steps:
 Deleting an Object
 ~~~~~~~~~~~~~~~~~~
 
-Deleting an object is very similar, but requires a call to the ``delete()``
-method on the object::
+Deleting an object is very similar to updating, but requires a call to the
+``delete()`` method on the object::
 
     $product->delete();
 
