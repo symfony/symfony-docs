@@ -162,7 +162,7 @@ in the previous example takes the ``templating`` service as an argument:
                 factory_service:  newsletter_factory
                 factory_method:   get
                 arguments:
-                    -             "@templating"
+                    - "@templating"
 
     .. code-block:: xml
 

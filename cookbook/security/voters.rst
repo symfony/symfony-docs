@@ -117,7 +117,7 @@ and tag it as a "security.voter":
                 arguments:  ["@service_container", [123.123.123.123, 171.171.171.171]]
                 public:     false
                 tags:
-                    -       { name: security.voter }
+                    - { name: security.voter }
 
     .. code-block:: xml
 

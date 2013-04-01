@@ -690,7 +690,7 @@ Injecting the dependency by the setter method just needs a change of syntax:
             newsletter_manager:
                 class:     "%newsletter_manager.class%"
                 calls:
-                    - [ setMailer, ["@my_mailer"] ]
+                    - [setMailer, ["@my_mailer"]]
 
     .. code-block:: xml
 
