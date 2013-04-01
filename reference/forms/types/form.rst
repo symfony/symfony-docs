@@ -19,6 +19,8 @@ on all fields.
 
 .. include:: /reference/forms/types/options/read_only.rst.inc
 
+.. include:: /reference/forms/types/options/disabled.rst.inc
+
 .. include:: /reference/forms/types/options/trim.rst.inc
 
 .. include:: /reference/forms/types/options/mapped.rst.inc
