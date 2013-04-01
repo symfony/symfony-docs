@@ -185,16 +185,14 @@ field is optional but must be a valid email if supplied, you can do the followin
         namespace Acme\BlogBundle\Entity;
 
         use Symfony\Component\Validator\Constraints as Assert;
-        use Symfony\Component\Validator\Constraints\Collection\Optional;
-        use Symfony\Component\Validator\Constraints\Collection\Required;
 
         class Author
         {
             /**
              * @Assert\Collection(
              *     fields={
-             *         "personal_email"  = @Required({@Assert\NotBlank, @Assert\Email}),
-             *         "alternate_email" = @Optional({@Assert\Email}),
+             *         "personal_email"  = @Assert\Collection\Required({@Assert\NotBlank, @Assert\Email}),
+             *         "alternate_email" = @Assert\Collection\Optional({@Assert\Email}),
              *     }
              * )
              */
@@ -210,8 +208,6 @@ field is optional but must be a valid email if supplied, you can do the followin
 
         use Symfony\Component\Validator\Mapping\ClassMetadata;
         use Symfony\Component\Validator\Constraints as Assert;
-        use Symfony\Component\Validator\Constraints\Collection\Optional;
-        use Symfony\Component\Validator\Constraints\Collection\Required;
 
         class Author
         {
@@ -221,8 +217,8 @@ field is optional but must be a valid email if supplied, you can do the followin
             {
                 $metadata->addPropertyConstraint('profileData', new Assert\Collection(array(
                     'fields' => array(
-                        'personal_email'  => new Required(array(new Assert\NotBlank(), new Assert\Email())),
-                        'alternate_email' => new Optional(array(new Assert\Email())),
+                        'personal_email'  => new Assert\Collection\Required(array(new Assert\NotBlank(), new Assert\Email())),
+                        'alternate_email' => new Assert\Collection\Optional(array(new Assert\Email())),
                     ),
                 )));
             }
