@@ -7,7 +7,7 @@ Databases and Propel
 One of the most common and challenging tasks for any application
 involves persisting and reading information to and from a database. Symfony2
 does not come integrated with any ORMs but the Propel integration is easy.
-To get started, read `Working With Symfony2`_.
+To install Propel, read `Working With Symfony2`_ on the Propel documentation.
 
 A Simple Example: A Product
 ---------------------------
