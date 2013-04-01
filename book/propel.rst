@@ -214,9 +214,9 @@ have a route that maps a product id to an update action in a controller::
 
 Updating an object involves just three steps:
 
-#. fetching the object from Propel;
-#. modifying the object;
-#. saving it.
+#. fetching the object from Propel (line 6 - 13);
+#. modifying the object (line 15);
+#. saving it (line 16).
 
 Deleting an Object
 ~~~~~~~~~~~~~~~~~~
