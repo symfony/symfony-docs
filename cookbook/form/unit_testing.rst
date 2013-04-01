@@ -149,7 +149,7 @@ Adding custom Extensions
 ------------------------
 
 It often happens that you use some options that are added by
-:doc:`form extensions<cookbook/form/create_form_type_extension>`. One of the
+:doc:`form extensions</cookbook/form/create_form_type_extension>`. One of the
 cases may be the ``ValidatorExtension`` with its ``invalid_message`` option.
 The ``TypeTestCase`` loads only the core form extension so an "Invalid option"
 exception will be raised if you try to use it for testing a class that depends
