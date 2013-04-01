@@ -164,9 +164,7 @@ that if either of the ``personal_email`` or ``short_bio`` elements were missing
 from the ``$personalData`` property, no validation error would occur.
 
 .. versionadded:: 2.1
-    The ``Required`` and ``Optional`` constraint classes were added to give additional
-    flexibility over the existing ``allowExtraFields`` and ``allowMissingFields`` options
-    for fields within a Collection.
+    The ``Required`` and ``Optional`` constraints are new to Symfony 2.1.
 
 Required and Optional Field Constraints
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -195,13 +193,13 @@ field is optional but must be a valid email if supplied, you can do the followin
             /**
              * @Assert\Collection(
              *     fields={
-             *         "personal_email" = @Required({@Assert\NotBlank, @Assert\Email}),
+             *         "personal_email"  = @Required({@Assert\NotBlank, @Assert\Email}),
              *         "alternate_email" = @Optional({@Assert\Email}),
              *     }
              * )
              */
              protected $profileData = array(
-                 'personal_email'
+                 'personal_email',
              );
         }
 
@@ -217,15 +215,15 @@ field is optional but must be a valid email if supplied, you can do the followin
 
         class Author
         {
-            private $options = array();
+            protected $profileData = array('personal_email');
 
             public static function loadValidatorMetadata(ClassMetadata $metadata)
             {
                 $metadata->addPropertyConstraint('profileData', new Assert\Collection(array(
                     'fields' => array(
-                        'personal_email' => new Required(array(new Assert\NotBlank(), new Assert\Email())),
+                        'personal_email'  => new Required(array(new Assert\NotBlank(), new Assert\Email())),
                         'alternate_email' => new Optional(array(new Assert\Email())),
-                    )
+                    ),
                 )));
             }
         }
