@@ -173,7 +173,7 @@ Constraints for fields within a collection can be wrapped in the ``Required`` or
 ``Optional`` constraint to control whether they should always be applied (``Required``)
 or only applied when the field is present (``Optional``).
 
-For example, if you want to require that the ``personal_email`` field of the
+For instance, if you want to require that the ``personal_email`` field of the
 ``profileData`` array is not blank and is a valid email but the ``alternate_email``
 field is optional but must be a valid email if supplied, you can do the following:
 
