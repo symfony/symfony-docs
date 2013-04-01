@@ -161,12 +161,11 @@ How to Dynamically Generate Forms based on user data
 ====================================================
 
 Sometimes you want a form to be generated dynamically based not only on data
-from this form (see :doc:`Dynamic form generation</cookbook/dynamic_form_generation>`)
-but also on something else. For example depending on the user currently using
-the application. If you have a social website where a user can only message
-people who are his friends on the website, then the current user doesn't need to
-be included as a field of your form, but a "choice list" of whom to message
-should only contain users that are the current user's friends.
+from this form but also on something else. For example depending on the user
+currently using the application. If you have a social website where a user can
+only message people who are his friends on the website, then the current user
+doesn't need to be included as a field of your form, but a "choice list" of
+whom to message should only contain users that are the current user's friends.
 
 Creating the form type
 ----------------------
