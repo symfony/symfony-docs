@@ -322,7 +322,7 @@ object, which is what's returned after a ``file`` field is submitted::
         $this->path = $this->getFile()->getClientOriginalName();
 
         // clean up the file property as you won't need it anymore
-        $this->setFile(null);
+        $this->file = null;
     }
 
 Using Lifecycle Callbacks
@@ -417,7 +417,7 @@ Next, refactor the ``Document`` class to take advantage of these callbacks::
                 // clear the temp image path
                 $this->temp = null;
             }
-            $this->setFile(null);
+            $this->file = null;
         }
 
         /**
