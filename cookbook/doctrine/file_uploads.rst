@@ -408,7 +408,7 @@ Next, refactor the ``Document`` class to take advantage of these callbacks::
             // the entity from being persisted to the database on error
             $this->getFile()->move($this->getUploadRootDir(), $this->path);
 
-            $this->setFile(null);
+
 
             // check if we have an old image
             if (isset($this->temp)) {
@@ -417,6 +417,7 @@ Next, refactor the ``Document`` class to take advantage of these callbacks::
                 // clear the temp image path
                 $this->temp = null;
             }
+            $this->setFile(null);
         }
 
         /**
