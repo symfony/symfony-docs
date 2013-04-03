@@ -424,9 +424,6 @@ Our subscriber would now look like::
          */
         private $om;
 
-        /**
-         * @param factory FormFactoryInterface
-         */
         public function __construct(FormFactoryInterface $factory, ObjectManager $om)
         {
             $this->factory = $factory;
@@ -435,16 +432,13 @@ Our subscriber would now look like::
 
         public static function getSubscribedEvents()
         {
-            return [
+            return array(
                 FormEvents::PRE_BIND => 'preBind',
                 FormEvents::PRE_SET_DATA => 'preSetData',
-            ];
+            );
         }
 
-        /**
-         * @param event DataEvent
-         */
-        public function preSetData(DataEvent $event)
+        public function preSetData(FormEvent $event)
         {
             $meetup = $event->getData()->getMeetup();
 
@@ -459,7 +453,7 @@ Our subscriber would now look like::
             $this->customizeForm($form, $positions);
         }
 
-        public function preBind(DataEvent $event)
+        public function preBind(FormEvent $event)
         {
             $data = $event->getData();
             $id = $data['event'];
@@ -538,6 +532,6 @@ And this should tie everything together. We can now retrieve our form from the
 controller, display it to a user, and validate it with the right choice options
 set for every possible kind of sport that our users are registering for.
 
-.. _`DataEvent`: https://github.com/symfony/symfony/blob/master/src/Symfony/Component/Form/Event/DataEvent.php
+.. _`FormEvent`: https://github.com/symfony/symfony/blob/master/src/Symfony/Component/Form/FormEvent.php
 .. _`FormEvents class`: https://github.com/symfony/Form/blob/master/FormEvents.php
 .. _`Form class`: https://github.com/symfony/symfony/blob/master/src/Symfony/Component/Form/Form.php
