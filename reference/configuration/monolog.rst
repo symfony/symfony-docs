@@ -54,7 +54,7 @@ Monolog Configuration Reference
                     subject:              ~
                     email_prototype:
                         id:                   ~ # Required (when the email_prototype is used)
-                        factory-method:       ~
+                        method:               ~
                     channels:
                         type:                 ~
                         elements:             []
