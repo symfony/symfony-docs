@@ -1338,14 +1338,14 @@ call this method and the ``created`` field will be set to the current date.
 
 This can be repeated for any of the other lifecycle events, which include:
 
-* ``preRemove``
-* ``postRemove``
-* ``prePersist``
-* ``postPersist``
-* ``preUpdate``
-* ``postUpdate``
-* ``postLoad``
-* ``loadClassMetadata``
+* ``PreRemove``
+* ``PostRemove``
+* ``PrePersist``
+* ``PostPersist``
+* ``PreUpdate``
+* ``PostUpdate``
+* ``PostLoad``
+* ``LoadClassMetadata``
 
 For more information on what these lifecycle events mean and lifecycle callbacks
 in general, see Doctrine's `Lifecycle Events documentation`_
