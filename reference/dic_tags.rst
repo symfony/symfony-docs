@@ -65,6 +65,8 @@ data_collector
 For details on creating your own custom data collection, read the cookbook
 article: :doc:`/cookbook/profiler/data_collector`.
 
+.. _dic-tags-form-type:
+
 form.type
 ---------
 
