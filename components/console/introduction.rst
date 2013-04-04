@@ -160,6 +160,39 @@ You can also set these colors and options inside the tagname::
     // bold text on a yellow background
     $output->writeln('<bg=yellow;options=bold>foo</bg=yellow;options=bold>');
 
+Verbosity Levels
+~~~~~~~~~~~~~~~~
+
+The console has 3 levels of verbosity. These are defined in the
+:class:`Symfony\\Component\\Console\\Output\\OutputInterface`:
+
+==================================  ===============================
+Option                              Value
+==================================  ===============================
+OutputInterface::VERBOSITY_QUIET    Do not output any messages
+OutputInterface::VERBOSITY_NORMAL   The default verbosity level
+OutputInterface::VERBOSITY_VERBOSE  Increased verbosity of messages
+==================================  ===============================
+
+You can specify the quiet verbosity level with the ``--quiet`` or ``-q``
+option. The ``--verbose`` or ``-v`` option is used when you want an increased
+level of verbosity.
+
+.. tip::
+
+    The full exception stacktrace is printed if the ``VERBOSITY_VERBOSE``
+    level is used.
+
+It is possible to print a message in a command for only a specific verbosity
+level. For example::
+
+    if (OutputInterface::VERBOSITY_VERBOSE === $output->getVerbosity()) {
+        $output->writeln(...);
+    }
+
+When the quiet level is used, all output is suppressed as the default
+:method:`Symfony\Component\Console\Output::write<Symfony\\Component\\Console\\Output::write>`
+method returns without actually printing.
 
 Using Command Arguments
 -----------------------

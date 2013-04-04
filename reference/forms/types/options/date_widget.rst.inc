@@ -12,3 +12,5 @@ The basic way in which this field should be rendered. Can be one of the followin
 
 * ``single_text``: renders a single input of type date (text in Symfony 2.0). User's 
   input is validated based on the `format`_ option.
+
+.. include:: /reference/forms/types/options/_date_limitation.rst.inc
