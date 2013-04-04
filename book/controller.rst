@@ -335,52 +335,15 @@ working with forms, for example::
 Creating Static Pages
 ---------------------
 
+You can create a static page without creating any controller. Using only the
+routing file, you just have to indicate the "FrameworkBundle:Template:template"
+as the controller and link the template file, with its logical path.
+
 .. versionadded:: 2.2
-    The ``FrameworkBundle:Template:template`` internal controller is new in
-    Symfony 2.2.
+    The ability to cache templates rendered via ``FrameworkBundle:Template:template``
+    is new in Symfony 2.2.
 
-Basically, a static page is just a route that maps a static template. Below is
-an example:
-
-.. configuration-block::
-
-    .. code-block:: yaml
-
-        about:
-            path: /about.html
-            defaults:
-                _controller: FrameworkBundle:Template:template
-                template: 'AcmeBundle:Static:about.html.twig'
-
-    .. code-block:: xml
-
-        <?xml version="1.0" encoding="UTF-8" ?>
-
-        <routes xmlns="http://symfony.com/schema/routing"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/routing http://symfony.com/schema/routing/routing-1.0.xsd">
-
-            <route id="about" path="/about.html">
-                <default key="_controller">FrameworkBundle:Template:template</default>
-                <default key="template">AcmeBundle:Static:about.html.twig</default>
-            </route>
-        </routes>
-
-    .. code-block:: php
-
-        use Symfony\Component\Routing\RouteCollection;
-        use Symfony\Component\Routing\Route;
-
-        $collection = new RouteCollection();
-        $collection->add('about', new Route('/about.html', array(
-            '_controller'  => 'FrameworkBundle:Template:template',
-            'template'     => 'AcmeBundle:Static:about.html.twig',
-        )));
-
-        return $collection;
-
-You can also add some caching options to your static page, see
-:doc:`cookbook/templating/render_without_controller`.
+Use it ! See :doc:`cookbook/templating/render_without_controller`.
 
 The Base Controller Class
 -------------------------
