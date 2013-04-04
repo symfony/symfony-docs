@@ -26,15 +26,16 @@ a command in a sub-process::
     $process = new Process('ls -lsa');
     $process->setTimeout(3600);
     $process->run();
+    
+    // executes after the the command finishes
     if (!$process->isSuccessful()) {
         throw new \RuntimeException($process->getErrorOutput());
     }
 
     print $process->getOutput();
 
-The :method:`Symfony\\Component\\Process\\Process::run` method takes care
-of the subtle differences between the different platforms when executing the
-command.
+The component takes care of the subtle differences between the different platforms
+when executing the command.
 
 When executing a long running command (like rsync-ing files to a remote
 server), you can give feedback to the end user in real-time by passing an
@@ -45,6 +46,41 @@ anonymous function to the
 
     $process = new Process('ls -lsa');
     $process->run(function ($type, $buffer) {
+        if ('err' === $type) {
+            echo 'ERR > '.$buffer;
+        } else {
+            echo 'OUT > '.$buffer;
+        }
+    });
+    
+.. versionadded:: 2.1
+    The non-blocking feature was added in 2.1.
+    
+You can also start the subprocess and then let it run asynchronously, retrieving
+output and the status in your main process whenever you need it. Use the 
+:method:`Symfony\\Component\\Process\\Process::start` method to start an asynchronous
+process, the :method:`Symfony\\Component\\Process\\Process::isRunning` method
+to check if the process is done and the
+:method:`Symfony\\Component\\Process\\Process::getOutput` method to get the output::
+
+    $process = new Process('ls -lsa');
+    $process->start();
+    
+    while ($process->isRunning()) {
+        // waiting for process to finish
+    }
+
+    echo $process->getOutput();
+    
+You can also wait for a process to end if you started it asynchronously and
+are done doing other stuff::
+
+    $process = new Process('ls -lsa');
+    $process->start();
+    
+    // do other things
+    
+    $process->wait(function ($type, $buffer) {
         if ('err' === $type) {
             echo 'ERR > '.$buffer;
         } else {
