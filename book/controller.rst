@@ -335,13 +335,13 @@ working with forms, for example::
 Creating Static Pages
 ---------------------
 
+.. versionadded:: 2.2
+The ability to cache templates rendered via ``FrameworkBundle:Template:template``
+    is new in Symfony 2.2.
+
 You can create a static page without creating any controller. Using only the
 routing file, you just have to indicate the "FrameworkBundle:Template:template"
 as the controller and the logical path of your template.
-
-.. versionadded:: 2.2
-    The ability to cache templates rendered via ``FrameworkBundle:Template:template``
-    is new in Symfony 2.2.
 
 Use it ! See :doc:`cookbook/templating/render_without_controller`.
 
