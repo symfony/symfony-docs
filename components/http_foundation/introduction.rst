@@ -387,6 +387,18 @@ represented by a PHP callable instead of a string::
     });
     $response->send();
 
+.. note::
+
+    The ``flush()`` function does not flush bufferring. So if
+    ``ob_start()`` has been called before or php.ini option
+    ``output_buffering`` is not disabled (which is on some
+    installations by default), you have to call ``ob_flush()`` before
+    ``flush()``.
+
+    But not only php can buffer output. Your web-server can also do
+    it. Even more, if you use fastcgi, buffering can't be disabled at
+    all.
+
 Downloading Files
 ~~~~~~~~~~~~~~~~~
 
