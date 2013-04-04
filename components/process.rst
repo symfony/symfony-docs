@@ -100,7 +100,7 @@ instead::
     $process->run();
 
 .. versionadded:: 2.1
-    The ``ProcessBuilder`` class has been as of 2.1.
+    The ``ProcessBuilder`` class was added in Symfony 2.1.
 
 To make your code work better on all platforms, you might want to use the
 :class:`Symfony\\Component\\Process\\ProcessBuilder` class instead::
