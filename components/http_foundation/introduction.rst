@@ -389,15 +389,13 @@ represented by a PHP callable instead of a string::
 
 .. note::
 
-    The ``flush()`` function does not flush bufferring. So if
-    ``ob_start()`` has been called before or php.ini option
-    ``output_buffering`` is not disabled (which is on some
-    installations by default), you have to call ``ob_flush()`` before
-    ``flush()``.
+    The ``flush()`` function does not flush buffering. If ``ob_start()`` has
+    been called before or the ``output_buffering`` php.ini option is enabled,
+    you must call ``ob_flush()`` before ``flush()``.
 
-    But not only php can buffer output. Your web-server can also do
-    it. Even more, if you use fastcgi, buffering can't be disabled at
-    all.
+    Additionally, PHP isn't the only layer that can buffer output. Your web
+    server might also buffer based on its configuration. Even more, if you
+    use fastcgi, buffering can't be disabled at all.
 
 Downloading Files
 ~~~~~~~~~~~~~~~~~
