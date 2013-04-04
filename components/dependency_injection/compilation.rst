@@ -316,7 +316,10 @@ something needed in everyday use.
 The compiler pass must have the ``process`` method which is passed the container
 being compiled::
 
-    class CustomCompilerPass
+    use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
+    use Symfony\Component\DependencyInjection\ContainerBuilder;
+
+    class CustomCompilerPass implements CompilerPassInterface
     {
         public function process(ContainerBuilder $container)
         {

@@ -406,13 +406,25 @@ represented by a PHP callable instead of a string::
     });
     $response->send();
 
-Downloading Files
-~~~~~~~~~~~~~~~~~
+.. note::
+
+    The ``flush()`` function does not flush buffering. If ``ob_start()`` has
+    been called before or the ``output_buffering`` php.ini option is enabled,
+    you must call ``ob_flush()`` before ``flush()``.
+
+    Additionally, PHP isn't the only layer that can buffer output. Your web
+    server might also buffer based on its configuration. Even more, if you
+    use fastcgi, buffering can't be disabled at all.
+
+.. _component-http-foundation-serving-files:
+
+Serving Files
+~~~~~~~~~~~~~
 
 .. versionadded:: 2.1
     The ``makeDisposition`` method was added in Symfony 2.1.
 
-When uploading a file, you must add a ``Content-Disposition`` header to your
+When sending a file, you must add a ``Content-Disposition`` header to your
 response. While creating this header for basic file downloads is easy, using
 non-ASCII filenames is more involving. The
 :method:`Symfony\\Component\\HttpFoundation\\Response::makeDisposition`
@@ -423,6 +435,33 @@ abstracts the hard work behind a simple API::
     $d = $response->headers->makeDisposition(ResponseHeaderBag::DISPOSITION_ATTACHMENT, 'foo.pdf');
 
     $response->headers->set('Content-Disposition', $d);
+
+.. versionadded:: 2.2
+    The :class:`Symfony\\Component\\HttpFoundation\\BinaryFileResponse`
+    class was added in Symfony 2.2.
+
+Alternatively, if you are serving a static file, you can use a
+:class:`Symfony\\Component\\HttpFoundation\\BinaryFileResponse`::
+
+    use Symfony\Component\HttpFoundation\BinaryFileResponse
+    
+    $file = 'path/to/file.txt';
+    $response = new BinaryFileResponse($file);
+
+The ``BinaryFileResponse`` will automatically handle ``Range`` and
+``If-Range`` headers from the request. It also supports ``X-Sendfile``
+(see for `Nginx`_ and `Apache`_). To make use of it, you need to determine
+whether or not the ``X-Sendfile-Type`` header should be trusted and call
+:method:`Symfony\\Component\\HttpFoundation\\BinaryFileResponse::trustXSendfileTypeHeader`
+if it should::
+
+    $response::trustXSendfileTypeHeader();
+
+You can still set the ``Content-Type`` of the sent file, or change its ``Content-Disposition``::
+
+    $response->headers->set('Content-Type', 'text/plain')
+    $response->setContentDisposition(ResponseHeaderBag::DISPOSITION_ATTACHMENT, 'filename.txt');
+    
 
 .. _component-http-foundation-json-response:
 
@@ -442,7 +481,8 @@ right content and headers. A JSON response might look like this::
     $response->headers->set('Content-Type', 'application/json');
 
 .. versionadded:: 2.1
-    The :class:`Symfony\\Component\\HttpFoundation\\JsonResponse` class was added in Symfony 2.1.
+    The :class:`Symfony\\Component\\HttpFoundation\\JsonResponse`
+    class was added in Symfony 2.1.
 
 There is also a helpful :class:`Symfony\\Component\\HttpFoundation\\JsonResponse`
 class, which can make this even easier::
@@ -473,3 +513,5 @@ Session
 The session information is in its own document: :doc:`/components/http_foundation/sessions`.
 
 .. _Packagist: https://packagist.org/packages/symfony/http-foundation
+.. _Nginx: http://wiki.nginx.org/XSendfile
+.. _Apache: https://tn123.org/mod_xsendfile/

@@ -93,7 +93,11 @@ use the Serializer service created before::
     $person->setName('foo');
     $person->setAge(99);
 
-    $serializer->serialize($person, 'json'); // Output: {"name":"foo","age":99}
+    $jsonContent = $serializer->serialize($person, 'json');
+
+    // $jsonContent contains {"name":"foo","age":99}
+
+    echo $jsonContent; // or return it in a Response 
 
 The first parameter of the :method:`Symfony\\Component\\Serializer\\Serializer::serialize`
 is the object to be serialized and the second is used to choose the proper encoder,

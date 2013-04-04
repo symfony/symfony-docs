@@ -681,7 +681,7 @@ be accomplished with the following route configuration:
 
         return $collection;
 
-.. versionadded::
+.. versionadded:: 2.2
     The ``methods`` option is added in Symfony2.2. Use the ``_method``
     requirement in older versions.
 
