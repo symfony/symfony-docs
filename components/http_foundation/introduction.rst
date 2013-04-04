@@ -439,8 +439,15 @@ Alternatively, if you are serving a static file, you can use a
     $response = new BinaryFileResponse($file);
 
 The ``BinaryFileResponse`` will automatically handle ``Range`` and
-``If-Range`` headers from the request. You can also set the ``Content-Type``
-of the sent file, or change its ``Content-Disposition``::
+``If-Range`` headers from the request. It also supports ``X-Sendfile``
+(see for `Nginx`_ and `Apache`_). To make use of it, you need to determine
+whether or not the ``X-Sendfile-Type`` header should be trusted and call
+:method:`Symfony\\Component\\HttpFoundation\\BinaryFileResponse::trustXSendfileTypeHeader`
+if it should::
+
+    $response::trustXSendfileTypeHeader();
+
+You can still set the ``Content-Type`` of the sent file, or change its ``Content-Disposition``::
 
     $response->headers->set('Content-Type', 'text/plain')
     $response->setContentDisposition(ResponseHeaderBag::DISPOSITION_ATTACHMENT, 'filename.txt');
@@ -496,3 +503,5 @@ Session
 The session information is in its own document: :doc:`/components/http_foundation/sessions`.
 
 .. _Packagist: https://packagist.org/packages/symfony/http-foundation
+.. _Nginx: http://wiki.nginx.org/XSendfile
+.. _Apache: https://tn123.org/mod_xsendfile/

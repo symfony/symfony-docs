@@ -731,7 +731,7 @@ headers and content that's sent back to the client::
     - For JSON, there is :class:`Symfony\\Component\\HttpFoundation\\JsonResponse`.
       See :ref:`component-http-foundation-json-response`.
     - For files, there is :class:`Symfony\\Component\\HttpFoundation\\BinaryFileResponse`.
-      See :ref:`component-http-foundation-serving-files
+      See :ref:`component-http-foundation-serving-files`.
 
 .. index::
    single: Controller; Request object
