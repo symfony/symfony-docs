@@ -6,7 +6,19 @@ How to configure Empty Data for a Form Class
 
 The ``empty_data`` option allows you to specify an empty data set for your
 form class. This empty data set would be used if you bind your form, but
-haven't yet called ``setData()``.
+haven't called ``setData()`` on your form or passed in data when you created
+you form. For example::
+
+    public function indexAction()
+    {
+        $blog = // ...
+
+        // $blog is passed in as the data, so the empty_data option is not needed
+        $form = $this->createForm(new BlogType(), $blog);
+
+        // no data is passed in, so empty_data is used to get the "starting data"
+        $form = $this->createForm(new BlogType());
+    }
 
 By default, ``empty_data`` is set to ``null``. Or, if you have specified
 a ``data_class`` option for your form class, it will default to a new instance
@@ -22,12 +34,34 @@ One reason you might use this option is if you want to use a constructor
 that takes arguments. Remember, the default ``data_class`` option calls
 that constructor with no arguments::
 
-    public function getDefaultOptions()
+    // src/Acme/DemoBundle/Form/Type/BlogType.php
+    // ...
+
+    use Symfony\Component\Form\AbstractType;
+    use Acme\DemoBundle\Entity\Blog;
+
+    class BlogType extends AbstractType
     {
-        return array(
-            'empty_data' => new User($this->someDependency),
-        );
+        private $someDependency;
+
+        public function __construct($someDependency)
+        {
+            $this->someDependency = $someDependency;
+        }
+        // ...
+
+        public function getDefaultOptions()
+        {
+            return array(
+                'empty_data' => new Blog($this->someDependency),
+            );
+        }
     }
+
+You can instantiate your class however you want. In this example, we pass
+some dependency into the ``BlogType`` when we instantiate it, then use that
+to instantiate the ``Blog`` object. The point is, you can set ``empty_data``
+to the exact "new" object that you want to use.
 
 Option 2: Provide a Closure
 ---------------------------
@@ -37,11 +71,14 @@ if it is needed.
 
 The closure must accept a ``FormInterface`` instance as the first argument::
 
+    use Symfony\Component\Form\FormInterface;
+    // ...
+
     public function getDefaultOptions()
     {
         return array(
             'empty_data' => function (FormInterface $form) {
-                return new User($form->get('username')->getData());
+                return new Blog($form->get('title')->getData());
             },
         );
     }
