@@ -12,3 +12,4 @@ Form
     create_form_type_extension
     use_virtuals_forms
     unit_testing
+    use_empty_data

@@ -27,6 +27,7 @@ option.
 |             | - `read_only`_                                                              |
 |             | - `disabled`_                                                               |
 |             | - `error_bubbling`_                                                         |
+|             | - `virtual`_                                                                |
 +-------------+-----------------------------------------------------------------------------+
 | Parent type | :doc:`form</reference/forms/types/form>` (if expanded), ``field`` otherwise |
 +-------------+-----------------------------------------------------------------------------+
@@ -122,3 +123,7 @@ These options inherit from the :doc:`field</reference/forms/types/field>` type:
 .. include:: /reference/forms/types/options/disabled.rst.inc
 
 .. include:: /reference/forms/types/options/error_bubbling.rst.inc
+
+These options inherit from the :doc:`date</reference/forms/types/form>` type:
+
+.. include:: /reference/forms/types/options/virtual.rst.inc
