@@ -296,7 +296,7 @@ the following guidelines in mind while you develop.
 
 * **Not all routing parameters need to be arguments on your controller**
 
-    If, for example, the ``last_name`` weren't important for your controller,
+    If, for example, the ``last_name`` is not important for your controller,
     you could omit it entirely::
 
         public function indexAction($first_name, $color)
