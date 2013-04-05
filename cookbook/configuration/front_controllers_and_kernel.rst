@@ -30,8 +30,8 @@ The front controller
 ====================
 
 The `front controller`_ is a well-known design pattern; it is a
-section of
-code that *all* requests served by an application run through.
+section of code that *all* requests served by an application run
+through.
 
 In the `Symfony 2 Standard Edition`_, this role is taken by the
 ``app.php``_ and ``app_dev.php``_ files in the ``web/`` directory.
@@ -86,21 +86,22 @@ only that is not used for web, but for command line requests.
 The ``AppKernel``
 =================
 
-The Kernel object is the core of Symfony2. The Kernel is responsible for
-setting up all the bundles that make up your application and providing
-them with the application's configuration. It then creates the service
-container before serving requests in its
+The :class:`Symfony\\Component\\HttpKernel\\Kernel` is the core of
+Symfony2. It is responsible for setting up all the bundles that make up
+your application and providing them with the application's
+configuration. It then creates the service container before serving
+requests in its
 :method:`Symfony\\Component\\HttpKernel\\HttpKernelInterface::handle`
 method.
 
-There are two `template methods`_ related to the first two of these
-steps which the
-:class:`base HttpKernel <Symfony\\Component\\HttpKernel\\HttpKernel>`
-does not implement:
+There are two methods declared in the
+:class:`Symfony\\Component\\HttpKernel\\KernelInterface` that are
+left unimplemented in :class:`Symfony\\Component\\HttpKernel\\Kernel`
+and thus serve as `template methods`_:
 
-* :method:`Symfony\\Component\\HttpKernel\\HttpKernel::registerBundles`,
-   which must return an array of all bundles needed to
-   run the application;
+* :method:`Symfony\\Component\\HttpKernel\\KernelInterface::registerBundles`,
+   which must return an array of all bundles needed to run the
+   application;
 
 * :method:`Symfony\\Component\\HttpKernel\\KernelInterface::registerContainerConfiguration`,
    which loads the application configuration.
@@ -115,10 +116,10 @@ Again, the Symfony2 Standard Edition provides an `AppKernel`_ in
 uses the name of the environment, which is passed to the Kernel's
 :method:`constructor<Symfony\\Component\\HttpKernel\\Kernel::__construct>`
 and is available via
-:method:`getEnvironment()<Symfony\\Component\\HttpKernel\\Kernel::getEnvironment>`,
-to decide which bundles to create in ``registerBundles()``. This method
-is meant to be extended by you when you start adding bundles to your
-application.
+:method:`Symfony\\Component\\HttpKernel\\Kernel::getEnvironment`,
+to decide which bundles to create. The logic for that is in
+``registerBundles()``, a method meant to be extended by you when you
+start adding bundles to your application.
 
 You are, of course, free to create your own, alternative or additional
 ``AppKernel`` variants. All you need is to adapt your (or add a new) front
@@ -182,5 +183,4 @@ are, of course, free to implement this method differently if you need
 .. _decorate: http://en.wikipedia.org/wiki/Decorator_pattern
 .. _Debug Component: https://github.com/symfony/symfony/pull/7441
 .. _RewriteRule shipped with the Standard Edition: https://github.com/symfony/symfony-standard/blob/master/web/.htaccess)
-.. _base HTTPKernel: https://github.com/symfony/symfony/blob/master/src/Symfony/Component/HttpKernel/HttpKernel.php
 .. _template methods: http://en.wikipedia.org/wiki/Template_method_pattern
