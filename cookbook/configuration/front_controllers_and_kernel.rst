@@ -39,8 +39,8 @@ These are the very first PHP scripts executed when a request is
 processed.
 
 The main purpose of the front controller is to create an instance of the
-``AppKernel`` (more on that in a second), make it handle the reques and
-return the resulting response to the browser.
+``AppKernel`` (more on that in a second), make it handle the request
+and return the resulting response to the browser.
 
 Because every request is routed through it, the front controller can be
 used to perform global initializations prior to setting up the kernel or
@@ -67,12 +67,17 @@ will use ``app.php`` as the default one.
 
 .. note::
 
-    When adding a custom front controller and/or using the
-    provided RewriteRule in production, make sure to appropriately
-    secure it agains unauthorized access.
+    Pretty much every other web server should be able to achieve a
+    behavior similar to that of the RewriteRule described above.
+    Check your server documentation for details.
 
-    For example, you don't want to make the debug toolbar available
-    to arbitraty users in your production environment.
+.. note::
+
+    Make sure you appropriately
+    secure your front controllers against unauthorized access.
+
+    For example, you don't want to make a debugging environment
+    available to arbitraty users in your production environment.
 
 Technically, the ``app/console``_ used when running
 Symfony on the command line is also a front controller,
@@ -104,7 +109,7 @@ To fill these (small) blanks, your application needs to subclass the
 Kernel and implement these methods. The resulting class is
 conventionally called the ``AppKernel``.
 
-Again, the Symfony2 Standard Edition provides an ```AppKernel```_ in
+Again, the Symfony2 Standard Edition provides an `AppKernel`_ in
  the
 ``app/`` directory. This class
 uses the name of the environment, which is passed to the Kernel's
@@ -117,30 +122,56 @@ application.
 
 You are, of course, free to create your own, alternative or additional
 ``AppKernel`` variants. All you need is to adapt your (or add a new) front
-controller to make use of the new kernel. Adding additional kernel
-implementations might be useful to
+controller to make use of the new kernel.
 
-* easily switch between different set of bundles to work with, without
-  creating too complicated ``if...else...`` constructs in the
-  :method:`Symfony\\Component\\HttpKernel\\HttpKernel::registerBundles`
-  method or
-* add more sophisticated ways of loading the application's configuration
-  from a different set of files.
+.. note::
+
+    The name and location of the ``AppKernel`` is not fixed. When
+    putting multiple Kernels into a single application,
+    it might therefore make sense to add additional sub-directories,
+    for example ``app/admin/AdminKernel.php`` and
+    ``app/api/ApiKernel.php``. All that matters is that your front
+    controller is able to create an instance of the appropriate
+    kernel.
+
+Having different ``AppKernels`` might be useful to enable different
+front controllers (on potentially different servers) to run parts of
+your application independently (for example, the admin UI,
+the frontend UI and database migrations).
+
+.. note::
+
+    There's a lot more the ``AppKernel`` can be used for,
+    for example :doc:`overriding the default
+    directory structure
+    </cookbook/configuration /override_dir_structure>`. But odds are
+    high that you don't need to change such things on the fly by
+    having several ``AppKernel`` implementations at hand.
 
 The environments
 ================
 
-Environments have been covered extensively
-:doc:`in the previous chapter</cookbook/configuration/environments>`.
-You probably remember that an environment is nothing more than a name (a
-string) passed to the Kernel's constructor which is in turn used to
-determine which set of configuration files the Kernel is supposed to
-load - and this is what the missing
-:method:`Symfony\\Component\\HttpKernel\\KernelInterface::registerContainerConfiguration`
-method is used for.
+We just mentioned another method the ``AppKernel`` has to implement -
+:method:`Symfony\\Component\\HttpKernel\\KernelInterface::registerContainerConfiguration`.
+This method is responsible for loading the application's
+configuration from the right *environment*.
 
-The Standard Edition's ``AppKernel``_ class implements this method by
-simply loading the ``app/config/config_*environment*.yml`` file.
+Environments have been covered extensively
+:doc:`in the previous chapter</cookbook/configuration/environments>`,
+ and you probably remember that the Standard Edition comes with three
+ of them - ``dev``, ``prod`` and ``test``.
+
+More technically, these names are nothing more than strings passed
+from the front controller to the ``AppKernel``'s constructor. This
+name can then be used in
+:method:`Symfony\\Component\\HttpKernel\\KernelInterface::registerContainerConfiguration`
+method to decide which configuration files to load.
+
+The Standard
+Edition's ``AppKernel``_ class implements this method by
+simply loading the ``app/config/config_*environment*.yml`` file. You
+are, of course, free to implement this method differently if you need
+ a more sophisticated way of loading your configuration.
 
 .. _front controller: http://en.wikipedia.org/wiki/Front_Controller_pattern
 .. _Symfony 2 Standard Edition: https://github.com/symfony/symfony-standard
