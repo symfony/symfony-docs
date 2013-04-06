@@ -2,7 +2,7 @@
    single: HTTP
    single: HttpFoundation, Sessions
 
-Integrating with legacy sessions
+Integrating with Legacy Sessions
 ================================
 
 Sometimes it may be necessary to integrate Symfony into a legacy application
@@ -41,9 +41,9 @@ migration of your application to Symfony Sessions.
 
 .. note::
 
-Symfony Sessions store data like attributes in special 'Bags' which use a
-key in the ``$_SESSION`` superglobal. This means that a Symfony Session
-cannot access arbitary keys in ``$_SESSION`` that may be set by the legacy
-application, although all the ``$_SESSION`` contents will be saved when
-the session is saved.
+    Symfony Sessions store data like attributes in special 'Bags' which use a
+    key in the ``$_SESSION`` superglobal. This means that a Symfony Session
+    cannot access arbitary keys in ``$_SESSION`` that may be set by the legacy
+    application, although all the ``$_SESSION`` contents will be saved when
+    the session is saved.
 
