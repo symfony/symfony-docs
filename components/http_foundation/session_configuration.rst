@@ -248,7 +248,9 @@ You can configure these by injecting a configured storage engine into the sessio
     use Symfony\Component\HttpFoundation\Session\Storage\SessionStorageInterface;
     use Symfony\Component\HttpFoundation\Session\Storage\Handler\PdoSessionHandler;
 
-    $storage = new NativeSessionStorage(array(), new PdoSessionHandler(), SessionStorageInterface::NO_START_ON_DEMAND_STRICT);
+    $storage = new NativeSessionStorage(array(),
+                                        new PdoSessionHandler(),
+                                        SessionStorageInterface::NO_START_ON_DEMAND_STRICT);
     $session = new Session($storage);
 
 
