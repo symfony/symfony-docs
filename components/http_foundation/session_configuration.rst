@@ -227,7 +227,8 @@ In versions 2.1-2.2, Symfony Sessions automatically invoked ``$session->start()`
 any attempt was made to access session data (effectively 'start on demand').
 From Symfony 2.3 this behaviour can be controlled.
 
-There are three modes defined by :class:`Symfony\\Component\\HttpFoundation\\Session\\Storage\\SessionStorageInterface`
+There are three modes defined by
+:class:`Symfony\\Component\\HttpFoundation\\Session\\Storage\\SessionStorageInterface`
 
 The settings are as follows:
 
