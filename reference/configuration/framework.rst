@@ -26,6 +26,8 @@ Configuration
     * enabled
     * field_name
 * `session`_
+    * `name`_
+    * `mock_name`_
     * `auto_start`_
     * `on_demand`_
     * `cookie_lifetime`_
@@ -149,6 +151,43 @@ csrf_protection
 
 session
 ~~~~~~~
+
+on_demand
+.........
+
+**type**:  ``string`` **default**: ``on``
+
+Can be values
+
+  - ``on`` - start automatically if not started upon session read/write
+  - ``off`` - do not start session automatically on data read/write, if an attempt is
+    make to do so, throw a ``\RuntimeException``
+  - ``off_lax`` - do not start session automatically on data read/write, but if an attempt
+    is made to read or write to the session, allow access to the relevent bag.
+    If data is written to the bags and a session is subsequently started, it will be
+    overwritten.
+
+auto_start
+..........
+
+**type**:  ``Boolean`` **default**: ``false``
+
+This controls the ``SessionListener`` which will automatically start the session
+during the Request cycle.
+
+name
+....
+
+**type**:  ``string``
+
+Sets the session cookie name
+
+mock_name
+.........
+
+**type**:  ``string``
+
+Sets the mock session cookie name
 
 cookie_lifetime
 ...............
