@@ -27,7 +27,7 @@ a command in a sub-process::
     $process->setTimeout(3600);
     $process->run();
     
-    // executes after the the command finishes
+    // executes after the command finishes
     if (!$process->isSuccessful()) {
         throw new \RuntimeException($process->getErrorOutput());
     }
@@ -78,7 +78,7 @@ are done doing other stuff::
     $process = new Process('ls -lsa');
     $process->start();
     
-    // do other things
+    // ... do other things
     
     $process->wait(function ($type, $buffer) {
         if ('err' === $type) {
