@@ -442,11 +442,17 @@ EventDispatcher aware Events and Listeners
 
 .. versionadded:: 2.1
     The ``Event`` object contains a reference to the invoking dispatcher since Symfony 2.1
+    This was removed in Symfony 2.3
 
-The ``EventDispatcher`` always injects a reference to itself in the passed event
-object.  This means that all listeners have direct access to the
-``EventDispatcher`` object that notified the listener via the passed ``Event``
-object's :method:`Symfony\\Component\\EventDispatcher\\Event::getDispatcher`
+.. versionadded:: 2.3
+    The ``EventDispactherAwareEvent`` object contains a reference to the invoking dispatcher since Symfony 2.3
+
+The ``EventDispatcher`` will inject a reference to itself in the passed event
+object if that event object is an instance of
+:class:`Symfony\\Component\\EventDispatcher\\EventDispatcherAwareEvent`.
+This means that all listeners have direct access to the
+``EventDispatcher`` object that notified the listener via the
+:method:`Symfony\\Component\\EventDispatcher\\EventDispatcherAwareEvent::getDispatcher`
 method.
 
 This can lead to some advanced applications of the ``EventDispatcher`` including
@@ -455,14 +461,14 @@ more listeners into the dispatcher object. Examples follow:
 
 Lazy loading listeners::
 
-    use Symfony\Component\EventDispatcher\Event;
+    use Symfony\Component\EventDispatcher\EventDispatcherAwareEvent;
     use Acme\StoreBundle\Event\StoreSubscriber;
 
     class Foo
     {
         private $started = false;
 
-        public function myLazyListener(Event $event)
+        public function myLazyListener(EventDispatcherAwareEvent $event)
         {
             if (false === $this->started) {
                 $subscriber = new StoreSubscriber();
@@ -477,11 +483,11 @@ Lazy loading listeners::
 
 Dispatching another event from within a listener::
 
-    use Symfony\Component\EventDispatcher\Event;
+    use Symfony\Component\EventDispatcher\EventDispatcherAwareEvent;
 
     class Foo
     {
-        public function myFooListener(Event $event)
+        public function myFooListener(EventDispatcherAwareEvent $event)
         {
             $event->getDispatcher()->dispatch('log', $event);
 
