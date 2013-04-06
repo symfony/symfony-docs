@@ -26,6 +26,8 @@ Configuration
     * enabled
     * field_name
 * `session`_
+    * `auto_start`_
+    * `on_demand`_
     * `cookie_lifetime`_
     * `cookie_path`_
     * `cookie_domain`_
@@ -462,6 +464,8 @@ Full Default Configuration
             session:
                 storage_id:           session.storage.native
                 handler_id:           session.handler.native_file
+                auto_start:           false
+                on_demand:            on #on, off or off_lax
                 name:                 ~
                 cookie_lifetime:      ~
                 cookie_path:          ~
