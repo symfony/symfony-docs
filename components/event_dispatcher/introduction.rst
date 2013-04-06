@@ -445,7 +445,8 @@ EventDispatcher aware Events and Listeners
     This was removed in Symfony 2.3
 
 .. versionadded:: 2.3
-    The ``EventDispactherAwareEvent`` object contains a reference to the invoking dispatcher since Symfony 2.3
+    The ``EventDispactherAwareEvent`` object contains a reference to the invoking dispatcher
+    since Symfony 2.3
 
 The ``EventDispatcher`` will inject a reference to itself in the passed event
 object if that event object is an instance of
@@ -544,7 +545,7 @@ Dispatcher Shortcuts
 .. versionadded:: 2.1
     ``EventDispatcher::dispatch()`` method returns the event since Symfony 2.1.
 
-The :method:`EventDispatcher::dispatch<Symfony\\Component\\EventDispatcher\\EventDispatcher::dispatch>`
+The :method:`EventDispatcher::dispatch<Symfony\\Component\\EventDispatcher\\EventDispatcher::dispatch()`
 method always returns an :class:`Symfony\\Component\\EventDispatcher\\Event`
 object. This allows for various shortcuts. For example if one does not need
 a custom event object, one can simply rely on a plain
