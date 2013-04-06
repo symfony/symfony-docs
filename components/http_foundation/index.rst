@@ -8,4 +8,5 @@ HTTP Foundation
     sessions
     session_configuration
     session_testing
+    session_php_legacy
     trusting_proxies
