@@ -23,6 +23,10 @@
 
   * :doc:`/components/css_selector`
 
+* **Debug**
+
+  * :doc:`/components/debug`
+
 * :doc:`/components/dependency_injection/index`
 
   * :doc:`/components/dependency_injection/introduction`
