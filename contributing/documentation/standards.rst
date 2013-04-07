@@ -14,6 +14,8 @@ Sphinx
 * The ``::`` shorthand is *preferred* over ``.. code-block:: php`` to begin a PHP
   code block (read `the Sphinx documentation`_ to see when you should use the
   shorthand);
+* Inline hyperlinks are **not** used. Seperate the link and their target
+  definition, which you add on the bottom of the page;
 * You should use a form of *you* instead of *we*.
 
 Example
