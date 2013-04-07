@@ -52,6 +52,8 @@ the highlighted pseudo-language:
 
     A list of supported languages is available on the `Pygments website`_.
 
+.. _docs-configuration-blocks:
+
 Configuration Blocks
 ~~~~~~~~~~~~~~~~~~~~
 

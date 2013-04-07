@@ -65,6 +65,17 @@ Code Examples
   unless the next line is also a comment;
 * You should put a ``$`` in front of every bash line.
 
+Formats
+~~~~~~~
+
+Configuration examples should show all supported formats using
+:ref:`configuration blocks <docs-configuration-blocks>`. The supported formats
+(and their orders) are:
+
+* **Configuration** (including services and routing): Yaml, Xml, Php
+* **Validation**: Yaml, Annotations, Xml, Php
+* **Doctrine Mapping**: Annotations, Yaml, Xml, Php
+
 Example
 ~~~~~~~
 
