@@ -24,9 +24,8 @@ a command in a sub-process::
     use Symfony\Component\Process\Process;
 
     $process = new Process('ls -lsa');
-    $process->setTimeout(3600);
     $process->run();
-    
+
     // executes after the the command finishes
     if (!$process->isSuccessful()) {
         throw new \RuntimeException($process->getErrorOutput());
@@ -109,5 +108,35 @@ To make your code work better on all platforms, you might want to use the
 
     $builder = new ProcessBuilder(array('ls', '-lsa'));
     $builder->getProcess()->run();
+
+Process Timeout
+---------------
+
+You can limit the amount of time a process takes to complete by setting a
+timeout (in seconds)::
+
+    use Symfony\Component\Process\Process;
+
+    $process = new Process('ls -lsa');
+    $process->setTimeout(3600);
+    $process->run();
+
+If the timeout is reached, a
+:class:`Symfony\\Process\\Exception\\RuntimeException` is thrown.
+
+For long running commands, it is your responsibility to perform the timeout
+check regularly::
+
+    $process->setTimeout(3600);
+    $process->start();
+
+    while ($condition) {
+        // ...
+
+        // check if the timeout is reached
+        $process->checkTimeout();
+
+        usleep(200000);
+    }
 
 .. _Packagist: https://packagist.org/packages/symfony/process
