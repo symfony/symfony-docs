@@ -49,6 +49,7 @@ to *`decorate`_* the kernel with additional features. Examples include:
 * Configure the autoloader or add additional autoloading mechanisms
 * Add HTTP level caching by wrapping the kernel with an instance of
 :doc:`AppCache</book/http_cache#symfony2-reverse-proxy>`
+* Enabling the `Debug component`_
 
 When using Apache and the `RewriteRule shipped with the
 Standard Edition`_, the front controller can be chosen by requesting
@@ -180,5 +181,6 @@ are, of course, free to implement this method differently if you need
 .. _app/console: https://github.com/symfony/symfony-standard/blob/master/app/console
 .. _AppKernel: https://github.com/symfony/symfony-standard/blob/master/app/AppKernel.php
 .. _decorate: http://en.wikipedia.org/wiki/Decorator_pattern
+.. _Debug Component: https://github.com/symfony/symfony/pull/7441
 .. _RewriteRule shipped with the Standard Edition: https://github.com/symfony/symfony-standard/blob/master/web/.htaccess)
 .. _template methods: http://en.wikipedia.org/wiki/Template_method_pattern
