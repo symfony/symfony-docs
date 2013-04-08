@@ -72,6 +72,8 @@ example containing most features described below:
                 } else {
                     $dummy = ucwords($dummy);
                 }
+            } else {
+                throw new \RuntimeException(sprintf('Unrecognized dummy option "%s"', $dummy));
             }
 
             return $dummy;
@@ -100,10 +102,12 @@ Structure
 
 * Declare class properties before methods;
 
-* Declare public methods first, then protected ones and finally private ones.
+* Declare public methods first, then protected ones and finally private ones;
 
 * Use parentheses when instantiating classes regardless of the number of
-  arguments the constructor has.
+  arguments the constructor has;
+
+* Exception message strings should be concatenated using :phpfunction:`sprintf`.
 
 Naming Conventions
 ------------------
