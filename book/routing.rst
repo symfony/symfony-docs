@@ -1055,19 +1055,6 @@ the route name after the command:
 
     $ php app/console router:debug article_show
 
-Likewise, if you want to test whether a URL matches a given route, you can
-use the ``router:match`` console command:
-
-.. code-block:: bash
-
-    $ php app/console router:match /blog/my-latest-post
-
-This command will print which route the URL matches.
-
-.. code-block:: text
-
-    Route "blog_show" matches
-
 .. index::
    single: Routing; Generating URLs
 
