@@ -5,11 +5,8 @@
 The OptionsResolver Component
 =============================
 
-    The OptionsResolver Component helps you at configuring objects with option
+    The OptionsResolver Component helps you configure objects with option
     arrays. It supports default values, option constraints and lazy options.
-
-.. versionadded:: 2.1
-    The OptionsResolver Component is new in Symfony2.1
 
 Installation
 ------------
@@ -26,7 +23,7 @@ Imagine you have a ``Person`` class which has 2 options: ``firstName`` and
 ``lastName``. These options are going to be handled by the OptionsResolver
 Component.
 
-First of all, you should create some basic skeleton::
+First, create the ``Person`` class::
 
     class Person
     {
@@ -37,11 +34,11 @@ First of all, you should create some basic skeleton::
         }
     }
 
-Now, you should handle the ``$options`` parameter with the
-:class:`Symfony\\Component\\OptionsResolver\\OptionsResolver` class. To do
-this, you should instantiate the ``OptionsResolver`` class and let it resolve
-the options by calling
-:method:`Symfony\\Component\\OptionsResolver\\OptionsResolver::resolve`::
+You could of course set the ``$options`` value directly on the property. Instead,
+use the :class:`Symfony\\Component\\OptionsResolver\\OptionsResolver` class
+and let it resolve the options by calling
+:method:`Symfony\\Component\\OptionsResolver\\OptionsResolver::resolve`.
+The advantages of doing this will become more obvious as you continue::
 
     use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -56,7 +53,7 @@ the options by calling
 The ``$options`` property is an instance of
 :class:`Symfony\\Component\\OptionsResolver\\Options`, which implements
 :phpclass:`ArrayAccess`, :phpclass:`Iterator` and :phpclass:`Countable`. That
-means you can handle it as a normal array::
+means you can handle it just like a normal array::
 
     // ...
     public function getFirstName()
@@ -75,7 +72,7 @@ means you can handle it as a normal array::
         return $name;
     }
 
-Let's use the class::
+Now, try to actually use the class::
 
     $person = new Person(array(
         'firstName' => 'Wouter',
@@ -84,18 +81,19 @@ Let's use the class::
 
     echo $person->getFirstName();
 
-As you see, you get a
-:class:`Symfony\\Component\\OptionsResolver\\Exception\\InvalidOptionsException`
-which tells you that the options ``firstName`` and ``lastName`` not exists.
-You need to configure the ``OptionsResolver`` first, so it knows which options
-should be resolved.
+Right now, you'll receive a 
+:class:`Symfony\\Component\\OptionsResolver\\Exception\\InvalidOptionsException`,
+which tells you that the options ``firstName`` and ``lastName`` do not exist.
+This is because you need to configure the ``OptionsResolver`` first, so it
+knows which options should be resolved.
 
 .. tip::
 
     To check if an option exists, you can use the
-    :method:`Symfony\\Component\\OptionsResolver\\OptionsResolver::isKnown` isser.
+    :method:`Symfony\\Component\\OptionsResolver\\OptionsResolver::isKnown`
+    function.
 
-A best practise is to put the configuration in a method (e.g.
+A best practice is to put the configuration in a method (e.g.
 ``setDefaultOptions``). You call this method in the constructor to configure
 the ``OptionsResolver`` class::
 
@@ -123,8 +121,8 @@ the ``OptionsResolver`` class::
 Required Options
 ----------------
 
-The ``firstName`` option is required; the class can't work without that
-option. You can set the required options by calling
+Suppose the ``firstName`` option is required: the class can't work without
+it. You can set the required options by calling
 :method:`Symfony\\Component\\OptionsResolver\\OptionsResolver::setRequired`::
 
     // ...
@@ -141,7 +139,7 @@ You are now able to use the class without errors::
 
     echo $person->getFirstName(); // 'Wouter'
 
-If you don't pass a required option, an
+If you don't pass a required option, a
 :class:`Symfony\\Component\\OptionsResolver\\Exception\\MissingOptionsException`
 will be thrown.
 
@@ -195,12 +193,12 @@ that is passed has 2 parameters:
   instance), with all the default options
 * ``$value``, the previous set default value
 
-Default values that depend on another option
+Default Values that depend on another Option
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-If you add a ``gender`` option to the ``Person`` class, it should get a
-default value which guess the gender based on the first name. You can do that
-easily by using a Closure as default value::
+Suppose you add a ``gender`` option to the ``Person`` class, whose default
+value you guess based on the first name. You can do that easily by using a
+Closure as the default value::
 
     use Symfony\Component\OptionsResolver\Options;
 
@@ -222,10 +220,10 @@ easily by using a Closure as default value::
 
 .. caution::
 
-    The first argument of the Closure must be typehinted as `Options`,
+    The first argument of the Closure must be typehinted as ``Options``,
     otherwise it is considered as the value.
 
-Configure allowed values
+Configure allowed Values
 ------------------------
 
 Not all values are valid values for options. For instance, the ``gender``
@@ -243,10 +241,10 @@ values by calling
         ));
     }
 
-There is also a
+There is also an
 :method:`Symfony\\Component\\OptionsResolver\\OptionsResolver::addAllowedValues`
 method, which you can use if you want to add an allowed value to the previous
-setted allowed values.
+set allowed values.
 
 Configure allowed Types
 ~~~~~~~~~~~~~~~~~~~~~~~
@@ -266,18 +264,18 @@ be anything, but it must be a string. You can configure these types by calling
     }
 
 Possible types are the one associated with the ``is_*`` php functions or a
-class name. You can also pass an array of types as value. For instance,
+class name. You can also pass an array of types as the value. For instance,
 ``array('null', 'string')`` allows ``firstName`` to be ``null`` or a
 ``string``.
 
-There is also a
+There is also an
 :method:`Symfony\\Component\\OptionsResolver\\OptionsResolver::addAllowedTypes`
 method, which you can use to add an allowed type to the previous allowed types.
 
 Normalize the Options
 ---------------------
 
-Some values needs to be normalized before you can use them. For instance, the
+Some values need to be normalized before you can use them. For instance, the
 ``firstName`` should always start with an uppercase letter. To do that, you can
 write normalizers. These Closures will be executed after all options are
 passed and return the normalized value. You can configure these normalizers by
