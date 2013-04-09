@@ -462,6 +462,8 @@ of your configuration, and tag it with ``routing.loader``:
             ->addTag('routing.loader')
         ;
 
+For more information, see :doc:`/cookbook/routing/custom_route_loader`.
+
 security.listener.factory
 -------------------------
 

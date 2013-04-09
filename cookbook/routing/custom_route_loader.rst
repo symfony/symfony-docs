@@ -1,20 +1,20 @@
 .. index::
    single: Routing; Custom route loader
 
-How to Create a Custom Route Loader
+How to create a custom Route Loader
 ===================================
 
-A custom route loader allows you to add routes to an application, without
-writing them down in for instance a Yaml file. This comes in handy when
-you have made a bundle and don't want to manually add the routes for the
-bundle to ``app/config/routing.yml``. Especially when you want to make the
-bundle reusable, or when you have open-sourced it, this would slow down
-the installation process and make it error-prone.
+A custom route loader allows you to add routes to an application without
+including them, for example, in a Yaml file. This comes in handy when
+you have a bundle but don't want to manually add the routes for the bundle
+to ``app/config/routing.yml``. This may be especially important when you want
+to make the bundle reusable, or when you have open-sourced it as this would
+slow down the installation process and make it error-prone.
 
-But you can also use a custom route loader when your routes correspond
-to a certain pattern and you don't want to or can't write them all out by
-hand. For instance when you have CRUD controllers of which the routes all
-correspond to a pattern like ``*_new``, ``*_edit``, etc.
+Alternatively, you could also use a custom route loader when you want your
+routes to be automatically generated or located based on some convention or
+pattern. One example is the `FOSRestBundle`_ where routing is generated based
+off the names of the action methods in a controller.
 
 .. note::
 
@@ -44,23 +44,24 @@ Take these lines from ``routing.yml``:
         type:     annotation
         prefix:   /demo
 
-The main loader tries all the delegate loaders and calls their
-:method:`Symfony\\Component\\Config\\Loader\\LoaderInterface::supports`
-with the given resource (``@AcmeDemoBundle/Controller/DemoController.php``)
-and type ("annotation") as arguments. When one of the loader returns ``true``,
-its method :method:`Symfony\\Component\\Config\\Loader\\LoaderInterface::load`
-will be called, and the loader returns a :class:`Symfony\\Component\\Routing\\RouteCollection`
+When the main loader parses this, it tries all the delegate loaders and calls
+their :method:`Symfony\\Component\\Config\\Loader\\LoaderInterface::supports`
+method with the given resource (``@AcmeDemoBundle/Controller/DemoController.php``)
+and type (``annotation``) as arguments. When one of the loader returns ``true``,
+its :method:`Symfony\\Component\\Config\\Loader\\LoaderInterface::load` method
+will be called, which should return a :class:`Symfony\\Component\\Routing\\RouteCollection`
 containing :class:`Symfony\\Component\\Routing\\Route` objects.
 
 Creating a Custom Loader
 ------------------------
 
-To load routes in another way than using annotations, Yaml or XML files,
-you need to create a custom route loader. This loader should implement
-:class:`Symfony\\Component\\Config\\Loader\\LoaderInterface`.
+To load routes from some custom source (i.e. from something other than annotations,
+Yaml or XML files), you need to create a custom route loader. This loader
+should implement :class:`Symfony\\Component\\Config\\Loader\\LoaderInterface`.
 
-The sample loader below supports resources of type "extra". The resource
-name itself is not used in the example::
+The sample loader below supports loading routing resources with a type of
+``extra``. The type ``extra`` isn't important - you can just invent any resource
+type you want. The resource name itself is not actually used in the example::
 
     namespace Acme\DemoBundle\Routing;
 
@@ -105,12 +106,13 @@ name itself is not used in the example::
 
         public function getResolver()
         {
-            // will be explained later
+            // needed, but can be blank, unless you want to load other resources
+            // and if you do, using the Loader base class is easier (see below)
         }
 
         public function setResolver(LoaderResolver $resolver)
         {
-            // same here
+            // same as above
         }
     }
 
@@ -160,12 +162,17 @@ Notice the tag ``routing.loader``. All services with this tag will be marked
 as potential route loaders and added as specialized routers to the
 :class:`Symfony\\Bundle\\FrameworkBundle\\Routing\\DelegatingLoader`.
 
-Finally, we only need to add a few extra lines to the routing configuration:
+Using the Custom Loader
+~~~~~~~~~~~~~~~~~~~~~~~
+
+If you did nothing else, your custom routing loader would *not* be called.
+Instead, you only need to add a few extra lines to the routing configuration:
 
 .. configuration-block::
 
     .. code-block:: yaml
 
+        # app/config/routing.yml
         AcmeDemoBundle_Extra:
             resource: .
             type: extra
@@ -182,6 +189,7 @@ Finally, we only need to add a few extra lines to the routing configuration:
 
     .. code-block:: php
 
+        // app/config/routing.php
         use Symfony\Component\Routing\RouteCollection;
 
         $collection = new RouteCollection();
@@ -197,9 +205,8 @@ for the ``ExtraLoader``, so we set it to ".".
 .. note::
 
     The routes defined using custom route loaders will be automatically
-    cached by the framework. So whenever you change something to the behavior
-    of the loader, don't forget to clear the cache.
-
+    cached by the framework. So whenever you change something in the loader
+    class itself, don't forget to clear the cache.
 
 More Advanced Loaders
 ---------------------
@@ -213,8 +220,8 @@ to load secondary routing resources.
 Of course you still need to implement
 :method:`Symfony\\Component\\Config\\Loader\\LoaderInterface::supports`
 and :method:`Symfony\\Component\\Config\\Loader\\LoaderInterface::load`.
-Whenever you want to load another resource, for instance a Yaml routing
-configuration file, you can call the
+Whenever you want to load another resource - for instance a Yaml routing
+configuration file - you can call the
 :method:`Symfony\\Component\\Config\\Loader\\Loader::import` method::
 
     namespace Acme\DemoBundle\Routing;
