@@ -279,7 +279,7 @@ using a processor.
 
             monolog.processor.session_request:
                 class: Acme\MyBundle\SessionRequestProcessor
-                arguments:  [ @session ]
+                arguments:  ["@session"]
                 tags:
                     - { name: monolog.processor, method: processRecord }
 

@@ -361,11 +361,11 @@ to service ids that do not exist yet: ``wsse.security.authentication.provider`` 
         services:
             wsse.security.authentication.provider:
                 class:  Acme\DemoBundle\Security\Authentication\Provider\WsseProvider
-                arguments: ['', %kernel.cache_dir%/security/nonces]
+                arguments: ["", "%kernel.cache_dir%/security/nonces"]
 
             wsse.security.authentication.listener:
                 class:  Acme\DemoBundle\Security\Firewall\WsseListener
-                arguments: [@security.context, @security.authentication.manager]
+                arguments: ["@security.context", "@security.authentication.manager"]
 
 
     .. code-block:: xml
