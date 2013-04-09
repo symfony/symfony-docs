@@ -335,11 +335,10 @@ working with forms, for example::
 Creating Static Pages
 ---------------------
 
-You can create a static page without creating any controller. Using only the
-routing file, you just have to indicate the "FrameworkBundle:Template:template"
-as the controller and the logical path of your template.
+You can create a static page without even creating a controller (only a route
+and template are needed).
 
-Use it ! See :doc:`/cookbook/templating/render_without_controller`.
+Use it! See :doc:`/cookbook/templating/render_without_controller`.
 
 The Base Controller Class
 -------------------------
