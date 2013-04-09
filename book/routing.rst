@@ -763,6 +763,7 @@ a slash. URLs matching this route might look like:
 
 * ``/articles/en/2010/my-post``
 * ``/articles/fr/2010/my-post.rss``
+* ``/articles/en/2013/my-latest-post.html``
 
 .. _book-routing-format-param:
 
@@ -1046,7 +1047,7 @@ the command by running the following from the root of your project.
 
     $ php app/console router:debug
 
-The command will print a helpful list of *all* the configured routes in
+This command will print a helpful list of *all* the configured routes in
 your application:
 
 .. code-block:: text

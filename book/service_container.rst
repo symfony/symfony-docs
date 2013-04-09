@@ -244,6 +244,23 @@ looks up the value of each parameter and uses it in the service definition.
             # This will be parsed as string "@securepass"
             mailer_password: "@@securepass"
 
+.. note::
+
+    The percent sign inside a parameter or argument, as part of the string, must
+    be escaped with another percent sign:
+
+    .. code-block:: xml
+
+        <argument type="string">http://symfony.com/?foo=%%s&bar=%%d</argument>
+
+.. caution::
+
+    You may receive a 
+    :class:`Symfony\\Component\\DependencyInjection\\Exception\\ScopeWideningInjectionException`
+    when passing the ``request`` service as an argument. To understand this
+    problem better and learn how to solve it, refer to the cookbook article
+    :doc:`/cookbook/service_container/scopes`.
+
 The purpose of parameters is to feed information into services. Of course
 there was nothing wrong with defining the service without using any parameters.
 Parameters, however, have several advantages:

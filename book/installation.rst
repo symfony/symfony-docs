@@ -294,8 +294,10 @@ Symfony2 should welcome and congratulate you for your hard work so far!
     this is not required for development it is recommended at the time your 
     application goes into production as all system and configuration files
     become inaccessible to clients then. For information on configuring 
-    your specific web server document root, see the following 
-    documentation: `Apache`_ | `Nginx`_ .
+    your specific web server document root, read
+    :doc:`/cookbook/configuration/web_server_configuration`
+    or consult the official documentation of your webserver:
+    `Apache`_ | `Nginx`_ .
 
 Beginning Development
 ---------------------
