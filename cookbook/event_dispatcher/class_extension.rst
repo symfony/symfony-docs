@@ -116,7 +116,7 @@ and *add* the method ``bar()``:
         }
     }
 
-Finally, add the new ``bar`` method to the ``Foo`` class by register an
+Finally, add the new ``bar`` method to the ``Foo`` class by registering an
 instance of ``Bar`` with the ``foo.method_is_not_found`` event:
 
 .. code-block:: php
