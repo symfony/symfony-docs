@@ -7,7 +7,7 @@ Databases and Propel
 One of the most common and challenging tasks for any application
 involves persisting and reading information to and from a database. Symfony2
 does not come integrated with any ORMs but the Propel integration is easy.
-To get started, read `Working With Symfony2`_.
+To install Propel, read `Working With Symfony2`_ on the Propel documentation.
 
 A Simple Example: A Product
 ---------------------------
@@ -28,7 +28,7 @@ Configuring the Database
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
 Before you can start, you'll need to configure your database connection
-information.  By convention, this information is usually configured in an
+information. By convention, this information is usually configured in an
 ``app/config/parameters.ini`` file:
 
 .. code-block:: ini
@@ -42,20 +42,17 @@ information.  By convention, this information is usually configured in an
     database_password = password
     database_charset  = UTF8
 
-.. note::
+These parameters defined in ``parameters.ini`` can now be included in the
+configuration file (``config.yml``):
 
-    Defining the configuration via ``parameters.ini`` is just a convention. The
-    parameters defined in that file are referenced by the main configuration
-    file when setting up Propel:
+.. code-block:: yaml
 
-    .. code-block:: yaml
-
-        propel:
-            dbal:
-                driver:     "%database_driver%"
-                user:       "%database_user%"
-                password:   "%database_password%"
-                dsn:        "%database_driver%:host=%database_host%;dbname=%database_name%;charset=%database_charset%"
+    propel:
+        dbal:
+            driver:     "%database_driver%"
+            user:       "%database_user%"
+            password:   "%database_password%"
+            dsn:        "%database_driver%:host=%database_host%;dbname=%database_name%;charset=%database_charset%"
 
 Now that Propel knows about your database, Symfony2 can create the database for
 you:
@@ -88,12 +85,28 @@ of your ``AcmeStoreBundle``:
 .. code-block:: xml
 
     <?xml version="1.0" encoding="UTF-8"?>
-    <database name="default" namespace="Acme\StoreBundle\Model" defaultIdMethod="native">
+    <database name="default"
+        namespace="Acme\StoreBundle\Model"
+        defaultIdMethod="native"
+    >
         <table name="product">
-            <column name="id" type="integer" required="true" primaryKey="true" autoIncrement="true" />
-            <column name="name" type="varchar" primaryString="true" size="100" />
-            <column name="price" type="decimal" />
-            <column name="description" type="longvarchar" />
+            <column name="id"
+                type="integer"
+                required="true"
+                primaryKey="true"
+                autoIncrement="true"
+            />
+            <column name="name"
+                type="varchar"
+                primaryString="true"
+                size="100"
+            />
+            <column name="price"
+                type="decimal"
+            />
+            <column name="description"
+                type="longvarchar"
+            />
         </table>
     </database>
 
@@ -217,15 +230,15 @@ have a route that maps a product id to an update action in a controller::
 
 Updating an object involves just three steps:
 
-#. fetching the object from Propel;
-#. modifying the object;
-#. saving it.
+#. fetching the object from Propel (line 6 - 13);
+#. modifying the object (line 15);
+#. saving it (line 16).
 
 Deleting an Object
 ~~~~~~~~~~~~~~~~~~
 
-Deleting an object is very similar, but requires a call to the ``delete()``
-method on the object::
+Deleting an object is very similar to updating, but requires a call to the
+``delete()`` method on the object::
 
     $product->delete();
 
