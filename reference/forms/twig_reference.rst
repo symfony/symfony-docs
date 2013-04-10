@@ -213,7 +213,7 @@ object:
 
         <label for="{{ form.name.vars.id }}"
             class="{{ form.name.vars.required ? 'required' : '' }}">
-            {{ form.name.label }}
+            {{ form.name.vars.label }}
         </label>
 
     .. code-block:: html+php
