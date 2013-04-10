@@ -17,6 +17,7 @@ The Components
     http_foundation/index
     http_kernel/index
     locale
+    options_resolver
     process
     property_access/index
     routing/index

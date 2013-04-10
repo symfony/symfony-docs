@@ -770,6 +770,7 @@ a slash. URLs matching this route might look like:
 
 * ``/articles/en/2010/my-post``
 * ``/articles/fr/2010/my-post.rss``
+* ``/articles/en/2013/my-latest-post.html``
 
 .. _book-routing-format-param:
 
@@ -1062,7 +1063,7 @@ the command by running the following from the root of your project.
 
     $ php app/console router:debug
 
-The command will print a helpful list of *all* the configured routes in
+This command will print a helpful list of *all* the configured routes in
 your application:
 
 .. code-block:: text
@@ -1081,16 +1082,18 @@ the route name after the command:
 
     $ php app/console router:debug article_show
 
-.. versionadded:: 2.1
-    The ``router:match`` command was added in Symfony 2.1
-
-You can check which, if any, route matches a path with the ``router:match``
-console command:
+Likewise, if you want to test whether a URL matches a given route, you can
+use the ``router:match`` console command:
 
 .. code-block:: bash
 
-    $ php app/console router:match /articles/en/2012/article.rss
-    Route "article_show" matches
+    $ php app/console router:match /blog/my-latest-post
+
+This command will print which route the URL matches.
+
+.. code-block:: text
+
+    Route "blog_show" matches
 
 .. index::
    single: Routing; Generating URLs

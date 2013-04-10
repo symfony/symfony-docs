@@ -26,6 +26,7 @@
   * :doc:`/cookbook/configuration/external_parameters`
   * :doc:`/cookbook/configuration/pdo_session_storage`
   * :doc:`/cookbook/configuration/apache_router`
+  * :doc:`/cookbook/configuration/web_server_configuration`
 
 * :doc:`/cookbook/console/index`
 
@@ -109,6 +110,7 @@
   * :doc:`/cookbook/routing/redirect_in_config`
   * :doc:`/cookbook/routing/method_parameters`
   * :doc:`/cookbook/routing/service_container_parameters`
+  * :doc:`/cookbook/routing/custom_route_loader`
 
 * :doc:`/cookbook/security/index`
 

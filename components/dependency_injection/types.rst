@@ -43,7 +43,7 @@ service container configuration:
                 # ...
             newsletter_manager:
                 class:     NewsletterManager
-                arguments: [@my_mailer]
+                arguments: ["@my_mailer"]
 
     .. code-block:: xml
 
@@ -119,7 +119,7 @@ accepts the dependency::
             newsletter_manager:
                 class:     NewsletterManager
                 calls:
-                    - [ setMailer, [ @my_mailer ] ]
+                    - [setMailer, ["@my_mailer"]]
 
     .. code-block:: xml
 
@@ -186,7 +186,7 @@ Another possibility is just setting public fields of the class directly::
             newsletter_manager:
                 class:     NewsletterManager
                 properties:
-                    mailer: @my_mailer
+                    mailer: "@my_mailer"
 
     .. code-block:: xml
 

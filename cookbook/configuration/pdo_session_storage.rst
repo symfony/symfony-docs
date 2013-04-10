@@ -48,7 +48,7 @@ configuration format of your choice):
 
             session.handler.pdo:
                 class:     Symfony\Component\HttpFoundation\Session\Storage\Handler\PdoSessionHandler
-                arguments: [@pdo, %pdo.db_options%]
+                arguments: ["@pdo", "%pdo.db_options%"]
 
     .. code-block:: xml
 
@@ -137,8 +137,8 @@ parameter.ini by referencing the database-related parameters defined there:
             class: PDO
             arguments:
                 - "mysql:host=%database_host%;port=%database_port%;dbname=%database_name%"
-                - %database_user%
-                - %database_password%
+                - "%database_user%"
+                - "%database_password%"
 
     .. code-block:: xml
 

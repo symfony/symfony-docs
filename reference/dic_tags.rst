@@ -374,7 +374,7 @@ channel when injecting the logger in a service.
         services:
             my_service:
                 class: Fully\Qualified\Loader\Class\Name
-                arguments: [@logger]
+                arguments: ["@logger"]
                 tags:
                     - { name: monolog.logger, channel: acme }
 
@@ -526,6 +526,8 @@ of your configuration, and tag it with ``routing.loader``:
             ->register('routing.loader.your_loader_name', 'Fully\Qualified\Loader\Class\Name')
             ->addTag('routing.loader')
         ;
+
+For more information, see :doc:`/cookbook/routing/custom_route_loader`.
 
 security.listener.factory
 -------------------------
