@@ -1313,7 +1313,7 @@ the current date, only when the entity is first persisted (i.e. inserted):
             type: entity
             # ...
             lifecycleCallbacks:
-                prePersist: [ setCreatedValue ]
+                prePersist: [setCreatedValue]
 
     .. code-block:: xml
 

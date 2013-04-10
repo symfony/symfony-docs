@@ -236,11 +236,11 @@ config files:
         services:
             mailer:
                 class:     Mailer
-                arguments: [%mailer.transport%]
+                arguments: ["%mailer.transport%"]
             newsletter_manager:
                 class:     NewsletterManager
                 calls:
-                    - [ setMailer, [ @mailer ] ]
+                    - [setMailer, ["@mailer"]]
 
     .. code-block:: xml
 

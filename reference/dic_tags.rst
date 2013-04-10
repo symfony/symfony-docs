@@ -372,7 +372,7 @@ channel when injecting the logger in a service.
         services:
             my_service:
                 class: Fully\Qualified\Loader\Class\Name
-                arguments: [@logger]
+                arguments: ["@logger"]
                 tags:
                     - { name: monolog.logger, channel: acme }
 
