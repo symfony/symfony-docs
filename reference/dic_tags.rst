@@ -358,12 +358,15 @@ configuration, and tag it with ``kernel.event_subscriber``:
     If your service is created by a factory, you **MUST** correctly set the ``class``
     parameter for this tag to work correctly.
 
-.. _dic-tags-kernel-fragment-renderer:
-
 kernel.fragment_renderer
------------------------
+------------------------
 
-**Purpose**: Add new HTTP content rendering strategies
+**Purpose**: Add a new HTTP content rendering strategy.
+
+To add a new rendering strategy - in addition to the core strategies like
+``EsiFragmentRenderer`` - create a class that implements
+:class:`Symfony\\Component\\HttpKernel\\Fragment\\FragmentRendererInterface`,
+register it as a service, then tag it with ``kernel.fragment_renderer``.
 
 .. _dic_tags-monolog:
 
