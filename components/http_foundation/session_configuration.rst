@@ -235,7 +235,8 @@ The settings are as follows:
   - ``SessionStorageInterface::NO_START_ON_DEMAND_STRICT`` - The session will not be started on demand
     and any attempt to read or write session data will result in a ``\RuntimeException``
   - ``SessionStorageInterface::START_ON_DEMAND`` - The session will be started if it hasn't already been
-    when any attempt is made to read ro write session data.
+    when any attempt is made to read or write session data. This setting reflects the default behaviour
+    since Symfony 2.1
   - ``SessionStorageInterface::NO_START_ON_DEMAND_LAX`` - The sessions will not be started on demand
     when session data is read or written to. It will allow access to the unitialized ``BagInterface``.
     If this session is subsequently started manually after data is written to a ``BagInterface`` will
