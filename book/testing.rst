@@ -345,7 +345,7 @@ or perform more complex requests::
     // Directly submit a form (but using the Crawler is easier!)
     $client->request('POST', '/submit', array('name' => 'Fabien'));
 
-    // Submit a raw JSON string in the requst body
+    // Submit a raw JSON string in the request body
     $client->request(
         'POST',
         '/submit',

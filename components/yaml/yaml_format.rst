@@ -114,7 +114,7 @@ Numbers
 Nulls
 ~~~~~
 
-Nulls in YAML can be expressed with ``null`` or ``-``.
+Nulls in YAML can be expressed with ``null`` or ``~``.
 
 Booleans
 ~~~~~~~~
